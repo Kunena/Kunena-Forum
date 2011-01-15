@@ -171,6 +171,7 @@
 					ADD `access` int(11) NOT NULL default '0' AFTER `accesstype`,
 					ADD KEY `category_access` (accesstype,access);
 			</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_whoisonline` ADD INDEX `userip` ( `userip` );</query>			
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 			<query mode="silenterror">
@@ -249,6 +250,8 @@
 			<query>DROP TABLE IF EXISTS `#__kunena_subscriptions`</query>
 			<query>DROP TABLE IF EXISTS `#__kunena_subscriptions_categories`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `channels` TEXT NULL DEFAULT NULL AFTER `published`</query>
+			<!-- From Kunena 1.6.3: whoisonline optimization -->
+			<query mode="silenterror">ALTER TABLE `#__kunena_whoisonline` ADD INDEX `userip` ( `userip` );</query>			
 		</version>
 	</upgrade>
 </comupgrade>

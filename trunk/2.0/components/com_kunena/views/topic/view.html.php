@@ -356,31 +356,55 @@ class KunenaViewTopic extends KunenaView {
 			$integration = KunenaFactory::getProfile();
 			$integration->trigger ( 'profileIntegration', $triggerParams );
 
-			if ($this->config->showuserstats) {
-				if ($this->config->userlist_usertype)
-					$this->usertype = $this->profile->getType ( $this->topic->category_id );
-				$this->userrankimage = $this->profile->getRank ( $this->topic->category_id, 'image' );
-				$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
-				$this->userposts = $this->profile->posts;
-				$activityIntegration = KunenaFactory::getActivityIntegration ();
-				$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
-				$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
-			}
-
 			//karma points and buttons
 			$me = KunenaFactory::getUser ();
+			$this->userkarma_title = $this->userkarma_minus = $this->userkarma_plus = '';
 			if ($this->config->showkarma && $this->profile->userid) {
-				$this->userkarma = JText::_ ( 'COM_KUNENA_KARMA' ) . ": " . $this->profile->karma;
-
+				$this->userkarma_title = JText::_ ( 'COM_KUNENA_KARMA' ) . ": " . $this->profile->karma;
 				if ($me->userid && $me->userid != $this->profile->userid) {
-					$this->userkarma .= ' ' . CKunenaLink::GetKarmaLink ( 'decrease', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_ ( 'COM_KUNENA_KARMA_SMITE' ) . '"> </span>' );
-					$this->userkarma .= ' ' . CKunenaLink::GetKarmaLink ( 'increase', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_ ( 'COM_KUNENA_KARMA_APPLAUD' ) . '"> </span>' );
+					$this->userkarma_minus = ' ' . CKunenaLink::GetKarmaLink ( 'decrease', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_ ( 'COM_KUNENA_KARMA_SMITE' ) . '"> </span>' );
+					$this->userkarma_plus = ' ' . CKunenaLink::GetKarmaLink ( 'increase', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_ ( 'COM_KUNENA_KARMA_APPLAUD' ) . '"> </span>' );
 				}
 			}
 
-			$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
+			// FIXME: we need to change how profilebox integration works
+			/*
+			$integration = KunenaFactory::getProfile();
+			$triggerParams = array(
+				'username' => &$this->username,
+				'messageobject' => &$this->msg,
+				'subject' => &$this->subjectHtml,
+				'messagetext' => &$this->messageHtml,
+				'signature' => &$this->signatureHtml,
+				'karma' => &$this->userkarma_title,
+				'karmaplus' => &$this->userkarma_plus,
+				'karmaminus' => &$this->userkarma_minus,
+				'layout' => $layout
+			);
 
-			$profiles [$this->profile->userid] = $this->loadTemplate ( "profile_{$layout}" );
+			$profileHtml = $integration->showProfile($this->msg->userid, $triggerParams);
+			*/
+			$profileHtml = '';
+			if (!$profileHtml) {
+				// Use integration
+				$profiles [$this->profile->userid] = $profileHtml;
+			} else {
+				$this->userkarma = "{$this->userkarma_title} {$this->userkarma_minus} {$this->userkarma_plus}";
+				// Use kunena profile
+				if ($this->config->showuserstats) {
+					if ($this->config->userlist_usertype)
+						$this->usertype = $this->profile->getType ( $this->topic->category_id );
+					$this->userrankimage = $this->profile->getRank ( $this->topic->category_id, 'image' );
+					$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
+					$this->userposts = $this->profile->posts;
+					$activityIntegration = KunenaFactory::getActivityIntegration ();
+					$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
+					$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
+				}
+				$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
+
+				$profiles [$this->profile->userid] = $this->loadTemplate ( "profile_{$layout}" );
+			}
 		}
 		echo $profiles [$this->profile->userid];
 	}

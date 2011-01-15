@@ -303,7 +303,7 @@ class KunenaRouter {
 			// If we have catid, view cannot be listcat
 			$vars ['view'] = 'showcat';
 		}
-		if (isset($vars['id']) && $vars ['view'] == 'showcat') {
+		if (isset($vars['id']) && isset ( $vars ['view'] ) && $vars ['view'] == 'showcat') {
 			// If we have id, view cannot be showcat
 			$vars ['view'] = 'view';
 		}

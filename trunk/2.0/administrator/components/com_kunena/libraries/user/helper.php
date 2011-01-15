@@ -115,7 +115,7 @@ class KunenaUserHelper {
 			$query = "SELECT s.userid, s.time
 				FROM #__session AS s
 				INNER JOIN #__kunena_users AS k ON k.userid=s.userid
-				WHERE s.client_id=0
+				WHERE s.client_id=0 AND s.userid>0
 				GROUP BY s.userid
 				ORDER BY s.time DESC";
 

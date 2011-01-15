@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+15-January-2010 Matias
+^ [#22786] Merge revisions 4165-4187 from trunk/1.6
+
 14-January-2010 Matias
 ^ [#22569] Rewrite KunenaControllerTopic::move()
 # [#22792] Fix KunenaForumTopic::move() to move topic into another category with category updates
@@ -621,7 +624,17 @@ Kunena 2.0.0-DEV
 
 Kunena 1.6.3
 
-Kunena 1.6.3
+14-January-2011 fxstein
+^ [#24385] Performance optimization for high joomla guest counts by CB team (Thanks Beat!)
+
+13-January-2011 Matias
+# [#23920] Fix a bug when getting subscribers if string gets passed instead of an array
+# [#24357] CommunityBuilder integration: Fix white pages in CommunityBuilder backend
+# [#24357] CommunityBuilder integration: Fix broken sidebar modes in Community Builder Forum Plugin
+# [#24357] Change rank detection code to check category administrators (used in ACL integration)
+# [#24358] Fix broken Moderator rank detection
+# [#24359] Router: Undefined index 'func' in ParseRoute
+# [#23920] Fix another Kunena Internal Error when posting (subscriptions)
 
 7-January-2011 Matias
 ^ [#15886] Merged revisions 4157-4162 from /branches/1.6-xillibit-fixes-20111205

@@ -24,7 +24,7 @@ defined('_JEXEC') or die;
 	<a class="kadmin-mainmenu icon-syncusers-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a>
 	<a class="kadmin-mainmenu icon-recount-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=recount"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>
 	<a class="kadmin-mainmenu icon-trash-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showtrashview"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a>
-	<a class="kadmin-mainmenu icon-stats-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showstats"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></a>
-	<a class="kadmin-mainmenu icon-systemreport-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showsystemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>
+	<a class="kadmin-mainmenu icon-stats-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=stats"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></a>
+	<a class="kadmin-mainmenu icon-systemreport-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=kunenareport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>
 	<a class="kadmin-mainmenu icon-support-sm" href="http://www.kunena.org" target="_blank"><?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?></a>
 </div>

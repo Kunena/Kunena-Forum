@@ -35,6 +35,7 @@ Kunena 2.0.0-DEV
 
 15-January-2010 Xillibit
 ^ [#24395] Backend in MVC (Stats and k report configuration)
+^ [#24395] Backend in MVC (Stats and k report configuration) (commit missed files)
 
 15-January-2010 Matias
 ^ [#22786] Merge revisions 4165-4187 from trunk/1.6

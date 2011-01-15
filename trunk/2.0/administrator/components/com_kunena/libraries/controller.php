@@ -98,10 +98,10 @@ class KunenaController extends JController {
 				$app->enqueueMessage ( $version_warning, 'notice' );
 			}
 		} else {
-			if (!$app->getMenu ()->getActive ()) {
+			/*if (!$app->getMenu ()->getActive ()) {
 				// FIXME:
 				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			}
+			}*/
 		}
 
 		// Get the document object.
@@ -138,7 +138,9 @@ class KunenaController extends JController {
 			$view->assignRef ( 'document', $document );
 
 			// Render the view.
-			if ($vFormat=='html') {
+			if ($app->isAdmin()) {
+				$view->display ();
+			} elseif ($vFormat=='html') {
 				$view->displayAll ();
 			} else {
 				$view->displayLayout ();

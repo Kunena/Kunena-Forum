@@ -35,6 +35,8 @@ Kunena 2.0.0-DEV
 
 15-January-2010 Matias
 ^ [#22786] Merge revisions 4165-4187 from trunk/1.6
+# [#23443] Administrator: category manager doesn't work
+# [#23443] Don't fail to load the page if there's no matching menu item
 
 14-January-2010 Matias
 ^ [#22569] Rewrite KunenaControllerTopic::move()

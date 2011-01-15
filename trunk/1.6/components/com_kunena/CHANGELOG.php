@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+14-January-2011 fxstein
+^ [#24385] Performance optimization for high joomla guest counts by CB team (Thanks Beat!)
+
 13-January-2011 Matias
 # [#23920] Fix a bug when getting subscribers if string gets passed instead of an array
 # [#24357] CommunityBuilder integration: Fix white pages in CommunityBuilder backend

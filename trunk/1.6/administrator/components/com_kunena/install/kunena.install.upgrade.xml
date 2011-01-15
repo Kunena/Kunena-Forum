@@ -171,6 +171,7 @@
 					ADD `access` int(11) NOT NULL default '0' AFTER `accesstype`,
 					ADD KEY `category_access` (accesstype,access);
 			</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_whoisonline` ADD INDEX `userip` ( `userip` );</query>			
 		</version>
 	</upgrade>
 </comupgrade>

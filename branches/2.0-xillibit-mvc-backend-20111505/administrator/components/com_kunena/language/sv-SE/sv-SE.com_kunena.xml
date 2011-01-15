@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<!DOCTYPE install>
+<install type="language" version="1.5" client="administrator" method="upgrade">
+	<name>Kunena Forum - Swedish</name>
+	<tag>sv-SE</tag>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
+	<author>Jorgen Sjoholm</author>
+	<authorEmail>jorgen.sjoholm@resurspoolen.se</authorEmail>
+	<authorUrl>----</authorUrl>
+	<copyright>(C) 2010 Jorgen Sjoholm</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>Kunena Forum for Swedish</description>
+
+	<files>
+		<filename>sv-SE.com_kunena.ini</filename>
+		<filename>sv-SE.com_kunena.install.ini</filename>
+		<filename>sv-SE.com_kunena.menu.ini</filename>
+	</files>
+</install>

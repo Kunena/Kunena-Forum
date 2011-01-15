@@ -115,14 +115,14 @@ class KunenaViewTopics extends KunenaView {
 				$description = $topic->first_post_message;
 				$date = new JDate($topic->first_post_time);
 				$userid = $topic->first_post_userid;
-				$username = KunenaFactory::getUser($userid)->getName($topic->first_post_guestname);
+				$username = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
 			} else {
 				$id = $topic->last_post_id;
 				$page = ceil ( $topic->posts / $this->config->messages_per_page );
 				$description = $topic->last_post_message;
 				$date = new JDate($topic->last_post_time);
 				$userid = $topic->last_post_userid;
-				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guestname);
+				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
 			}
 			$title = $topic->subject;
 			$url = CKunenaLink::GetThreadPageURL('view', $topic->category_id, $topic->id, $page, $this->config->messages_per_page, $id, true );

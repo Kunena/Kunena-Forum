@@ -207,8 +207,9 @@ class KunenaForumTopic extends JObject {
 			return false;
 		}
 
+		$me = KunenaFactory::getUser();
 		// Then look at users who have read the thread
-		$query = "SELECT userid, readtopics FROM #__kunena_sessions WHERE readtopics LIKE '%{$this->id}%' AND userid!={$this->_db->quote($this->userid)}";
+		$query = "SELECT userid, readtopics FROM #__kunena_sessions WHERE readtopics LIKE '%{$this->id}%' AND userid!={$this->_db->quote($me->userid)}";
 		$this->_db->setQuery ( $query );
 		$sessions = $this->_db->loadObjectList ();
 		$dberror = KunenaError::checkDatabaseError ();

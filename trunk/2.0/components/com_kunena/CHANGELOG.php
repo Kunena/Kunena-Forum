@@ -51,6 +51,8 @@ Kunena 2.0.0-DEV
 # [#23443] Fix regression: Profile next to message broke during merge
 # [#23443] Fix regression: View Topics / User defaults to userid=0 instead of current user
 # [#23443] Fix old URL redirection for RSS feed
+# [#23443] Fix undefined property in KunenaForumTopic::markNew()
+# [#23443] Fix undefined property in RSS feed
 
 14-January-2010 Matias
 ^ [#22569] Rewrite KunenaControllerTopic::move()

@@ -282,17 +282,17 @@ switch ($view) {
 				$mode = 'posts';
 				break;
 		}
-		$limit = $kunena_config->rss_time_limit;
+		$limit = $kunena_config->rss_timelimit;
 		switch ($limit) {
 			case 'week':
 				$limit = 168;
 				break;
-			case 'month':
-				$limit = 720;
-				break;
 			case 'year':
-			default:
 				$limit = 8760;
+				break;
+			case 'month':
+			default:
+				$limit = 720;
 				break;
 		}
 		JRequest::setVar ( 'mode', $mode );

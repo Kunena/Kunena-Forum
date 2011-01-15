@@ -134,24 +134,24 @@ class KunenaControllerCategories extends KunenaController {
 		if ($category->exists() && !$category->authorise ( 'admin' )) {
 			// Category exists and user is not admin in category
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
-		} elseif (!$category->exists() && !$me->isAdmin ( intval ( $post ['parent'] ) )) {
-			// Category doesn't exist and user is not admin in parent, parent=0 needs global admin rights
-			$parent = KunenaForumCategoryHelper::get ( intval ( $post ['parent'] ) );
+		} elseif (!$category->exists() && !$me->isAdmin ( intval ( $post ['parent_id'] ) )) {
+			// Category doesn't exist and user is not admin in parent, parent_id=0 needs global admin rights
+			$parent = KunenaForumCategoryHelper::get ( intval ( $post ['parent_id'] ) );
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $parent->name ) ), 'notice' );
 		} elseif (! $category->isCheckedOut ( $me->userid )) {
 			// Nobody can change id or statistics
 			$ignore = array('option', 'view', 'task', 'catid', 'id', 'id_last_msg','numTopics','numPosts','time_last_msg');
-			// User needs to be admin in parent (both new and old) in order to move category, parent=0 needs global admin rights
-			if (!$me->isAdmin ( intval ( $post ['parent'] )) || ($category->exists() && !$me->isAdmin ( $category->parent_id ))) {
-				$ignore = array_merge($ignore, array('parent', 'ordering'));
-				$post ['parent'] = $category->parent_id;
+			// User needs to be admin in parent (both new and old) in order to move category, parent_id=0 needs global admin rights
+			if (!$me->isAdmin ( intval ( $post ['parent_id'] )) || ($category->exists() && !$me->isAdmin ( $category->parent_id ))) {
+				$ignore = array_merge($ignore, array('parent_id', 'ordering'));
+				$post ['parent_id'] = $category->parent_id;
 			}
 			// Only global admin can change access control and class_sfx (others are inherited from parent)
 			if (!$me->isAdmin ()) {
 				$access = array('accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'class_sfx');
-				if (!$category->exists() || intval ($post ['parent']) != $category->parent_id) {
+				if (!$category->exists() || intval ($post ['parent_id']) != $category->parent_id) {
 					// If category didn't exist or is moved, copy access and class_sfx from parent
-					$parent = KunenaForumCategoryHelper::get (intval ( $post ['parent']));
+					$parent = KunenaForumCategoryHelper::get (intval ( $post ['parent_id']));
 					$category->bind(array_intersect_key($parent->getProperties(), array_flip($access)));
 				}
 				$ignore = array_merge($ignore, $access);
@@ -311,7 +311,7 @@ class KunenaControllerCategories extends KunenaController {
 		$row->load ( $id );
 
 		// Ensure that we have the right ordering
-		$where = 'parent=' . $db->quote ( $row->parent_id );
+		$where = 'parent_id=' . $db->quote ( $row->parent_id );
 		$row->reorder ( $where );
 		$row->move ( $direction, $where );
 	}

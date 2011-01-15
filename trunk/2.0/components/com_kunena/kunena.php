@@ -13,7 +13,8 @@ defined ( '_JEXEC' ) or die ();
 // Initialize Kunena (if Kunena System Plugin isn't enabled)
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
-$view = JRequest::getWord ( 'view' );
+// Support legacy urls (they need to be redirected)
+$view = JRequest::getWord ( 'func', JRequest::getWord ( 'view' ) );
 
 // Load view if it exists
 if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {

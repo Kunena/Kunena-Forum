@@ -37,7 +37,7 @@ class KunenaModelTopics extends KunenaModel {
 		$this->setState ( 'layout', $layout );
 
 		$userid = JRequest::getInt ( 'userid', -1 );
-		if ($userid == 0) {
+		if ($userid < 0) {
 			$userid = KunenaFactory::getUser()->userid;
 		} elseif($userid > 0) {
 			$userid = KunenaFactory::getUser($userid)->userid;

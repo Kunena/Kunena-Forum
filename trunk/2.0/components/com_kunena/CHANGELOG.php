@@ -47,6 +47,9 @@ Kunena 2.0.0-DEV
 # [#22569] Topics view: finer control on state (include itemid + mode)
 # [#22569] Show Topic / Create view in menutiem administration
 # [#22569] Topics view: Add time selection option for "All"
+# [#23443] Redirect from legacy urls (func=xxx) does not work
+# [#23443] Fix regression: Profile next to message broke during merge
+# [#23443] Fix regression: View Topics / User defaults to userid=0 instead of current user
 
 14-January-2010 Matias
 ^ [#22569] Rewrite KunenaControllerTopic::move()

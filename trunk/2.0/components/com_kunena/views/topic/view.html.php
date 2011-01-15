@@ -385,7 +385,7 @@ class KunenaViewTopic extends KunenaView {
 			$profileHtml = $integration->showProfile($this->msg->userid, $triggerParams);
 			*/
 			$profileHtml = '';
-			if (!$profileHtml) {
+			if ($profileHtml) {
 				// Use integration
 				$profiles [$this->profile->userid] = $profileHtml;
 			} else {

@@ -52,7 +52,8 @@ if(JDEBUG){
 	$__profiler->mark('Start');
 }
 
-$func = JString::strtolower ( JRequest::getCmd ( 'view', '' ) );
+$func = strtolower (JRequest::getWord ( 'func', JRequest::getWord ( 'view' ) ) );
+JRequest::setVar ( 'view', $func );
 JRequest::setVar ( 'func', $func );
 $format = JRequest::getCmd ( 'format', 'html' );
 
@@ -142,7 +143,7 @@ if (empty($_POST) && $format == 'html') {
 }
 
 // Convert legacy urls into new ones
-$view = JRequest::getWord ( 'view', JRequest::getWord ( 'func') );
+$view = JRequest::getWord ( 'view' );
 $layout = JRequest::getWord ( 'layout', 'default' );
 $config = KunenaFactory::getConfig ();
 $redirect = false;

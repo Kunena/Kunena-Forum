@@ -41,6 +41,8 @@ Kunena 2.0.0-DEV
 # [#23443] Administration: fix missing public/admin group permissions in category manager
 # [#23443] Administration: fix fatal error general statistics page
 # [#23443] Administration: fix notices in report configuration
+# [#23443] Administration: Undefined property: KunenaForumCategory::$parent in categories controller
+# [#23443] Administration: Undefined property: KunenaUser::$id in categories view
 
 14-January-2010 Matias
 ^ [#22569] Rewrite KunenaControllerTopic::move()

@@ -190,7 +190,7 @@ function submitbutton(pressbutton)
 							<tr class="row<?php echo $k; ?>">
 								<td width="5"><?php echo $i + 1; ?></td>
 								<td width="5">
-									<input type="checkbox" id="cb<?php echo $i; ?>" name="cid[]" value="<?php echo intval($ml->id); ?>" onclick="isChecked(this.checked);" />
+									<input type="checkbox" id="cb<?php echo $i; ?>" name="cid[]" value="<?php echo intval($ml->userid); ?>" onclick="isChecked(this.checked);" />
 								</td>
 								<td><?php echo $this->escape($ml->name); ?></td>
 								<td><?php echo $this->escape($ml->username); ?></td>

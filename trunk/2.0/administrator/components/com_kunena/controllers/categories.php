@@ -142,14 +142,14 @@ class KunenaControllerCategories extends KunenaController {
 			// Nobody can change id or statistics
 			$ignore = array('option', 'view', 'task', 'catid', 'id', 'id_last_msg','numTopics','numPosts','time_last_msg');
 			// User needs to be admin in parent (both new and old) in order to move category, parent=0 needs global admin rights
-			if (!$me->isAdmin ( intval ( $post ['parent'] )) || ($category->exists() && !$me->isAdmin ( $category->parent ))) {
+			if (!$me->isAdmin ( intval ( $post ['parent'] )) || ($category->exists() && !$me->isAdmin ( $category->parent_id ))) {
 				$ignore = array_merge($ignore, array('parent', 'ordering'));
-				$post ['parent'] = $category->parent;
+				$post ['parent'] = $category->parent_id;
 			}
 			// Only global admin can change access control and class_sfx (others are inherited from parent)
 			if (!$me->isAdmin ()) {
 				$access = array('accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'class_sfx');
-				if (!$category->exists() || intval ($post ['parent']) != $category->parent) {
+				if (!$category->exists() || intval ($post ['parent']) != $category->parent_id) {
 					// If category didn't exist or is moved, copy access and class_sfx from parent
 					$parent = KunenaForumCategoryHelper::get (intval ( $post ['parent']));
 					$category->bind(array_intersect_key($parent->getProperties(), array_flip($access)));
@@ -311,7 +311,7 @@ class KunenaControllerCategories extends KunenaController {
 		$row->load ( $id );
 
 		// Ensure that we have the right ordering
-		$where = 'parent=' . $db->quote ( $row->parent );
+		$where = 'parent=' . $db->quote ( $row->parent_id );
 		$row->reorder ( $where );
 		$row->move ( $direction, $where );
 	}

@@ -20,12 +20,12 @@ class plgSystemKunena extends JPlugin {
 		}
 
 		// Check if Kunena API exists
-		$kunena_api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-		if (! is_file ( $kunena_api ))
+		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		if (! is_file ( $api ))
 			return false;
 
 		// Load Kunena API
-		require_once ($kunena_api);
+		require_once $api;
 
 		parent::__construct ( $subject, $config );
 	}

@@ -37,6 +37,7 @@ Kunena 2.0.0-DEV
 ^ [#22786] Merge revisions 4165-4187 from trunk/1.6
 # [#23443] Administrator: category manager doesn't work
 # [#23443] Don't fail to load the page if there's no matching menu item
+# [#23443] J1.5: kimport was importing the same file twice if using parameters 'kunena.factory' vs 'factory'
 
 14-January-2010 Matias
 ^ [#22569] Rewrite KunenaControllerTopic::move()

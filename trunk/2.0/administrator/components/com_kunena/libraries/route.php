@@ -150,7 +150,7 @@ abstract class KunenaRoute {
 			// Use first item in kunenamenu
 			$Itemid = reset(self::$childlist['kunenamenu'][0]);
 		}
-		if ($Itemid)
+		if ($Itemid && isset(self::$menu[$Itemid]))
 			return self::$menu[$Itemid];
 
 		return null;

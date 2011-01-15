@@ -11,8 +11,8 @@ defined ( '_JEXEC' ) or die ();
 
 // Minimum version requirements
 DEFINE('KUNENA_MIN_PHP', '5.2.3');
-DEFINE('KUNENA_MIN_MYSQL', '4.1.19');
-DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.20' );
+DEFINE('KUNENA_MIN_MYSQL', '5.0.4');
+DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.22' );
 
 jimport ( 'joomla.application.component.model' );
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
@@ -470,10 +470,6 @@ class KunenaModelInstall extends JModel {
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena',JPATH_SITE);
 
-		// TODO: remove dependence
-		require_once (KPATH_ADMIN . '/api.php');
-		kimport('kunena.factory');
-
 		$this->createMenu(false);
 
 		kimport('kunena.forum.topic.helper');
@@ -588,8 +584,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function migrateConfig() {
-		require_once KPATH_ADMIN.'/api.php';
-		kimport('kunena.factory');
 		$config = KunenaFactory::getConfig();
 		$version = $this->getVersion();
 		if (version_compare ( $version->version, '1.0.4', "<=" ) ) {
@@ -1389,7 +1383,6 @@ class KunenaModelInstall extends JModel {
 		jimport( 'joomla.utilities.string' );
 		jimport( 'joomla.application.component.helper' );
 
-		kimport ('factory');
 		$config = KunenaFactory::getConfig();
 
 		$component_id = JComponentHelper::getComponent('com_kunena')->id;
@@ -1532,7 +1525,6 @@ class KunenaModelInstall extends JModel {
 		jimport ( 'joomla.utilities.string' );
 		jimport ( 'joomla.application.component.helper' );
 
-		kimport ( 'factory' );
 		$config = KunenaFactory::getConfig ();
 
 		$component_id = JComponentHelper::getComponent ( 'com_kunena' )->id;

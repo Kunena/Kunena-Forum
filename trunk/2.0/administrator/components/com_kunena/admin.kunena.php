@@ -20,7 +20,7 @@
  **/
 defined( '_JEXEC' ) or die();
 
-require_once (JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php');
+require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 $view = JRequest::getCmd ( 'view' );
 $task = JRequest::getCmd ( 'task' );
@@ -2617,17 +2617,17 @@ function generateSystemReport () {
 	} else {
 		$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
 	}
-	
+
 	// Get Kunena default template
 	$ktemplate = KunenaFactory::getTemplate();
 	$ktempaltedetails = $ktemplate->getTemplateDetails();
 
 	// Get database collation
 	$collation = getTablesCollation();
-	
+
 	// Get Joomla! template details
 	$templatedetails = getJoomlaTemplate($JVersion);
-	
+
 	// Get Joomla! menu details
 	$joomlamenudetails = getJoomlaMenuDetails($JVersion);
 
@@ -2667,7 +2667,7 @@ function generateSystemReport () {
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$templatedetails->name.' | [u]author:[/u] '.$templatedetails->author.' | [u]version:[/u] '.$templatedetails->version.' | [u]creationdate:[/u] '.$templatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
 	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Third-party SEF components:[/b] '.$sh404sef.' | '.$joomsef.' | '.$acesef.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' | '.$plg_kjomsocialmykunena.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
-	
+
 	return $report;
 }
 
@@ -2676,7 +2676,7 @@ function getJoomlaTemplate($jversion) {
 	if ($jversion->RELEASE == '1.5') {
 		$templatedetails = new stdClass();
 		// Get Joomla! frontend assigned template for Joomla! 1.5
-		
+
 		$query = ' SELECT template '
 				.' FROM #__templates_menu '
 				.' WHERE client_id = 0 AND menuid = 0 ';
@@ -2758,7 +2758,7 @@ function getJoomlaMenuDetails($jversion) {
 
 function getTablesCollation() {
 	$kunena_db = JFactory::getDBO ();
-	
+
 	// Check each table in the database if the collation is on utf8
 	$tableslist = $kunena_db->getTableList();
 	$collation = '';

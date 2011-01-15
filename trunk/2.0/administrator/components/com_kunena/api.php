@@ -50,14 +50,12 @@ function kimport($path)
 			$file .= '/'.array_pop( $parts );
 		}
 		$file .= '.php';
-		if (file_exists($file)) {
-			$class = str_replace( '.', '', $path);
+		$class = str_replace( '.', '', $path);
+		if (file_exists($file) && !class_exists($class)) {
 			JLoader::register($class, $file);
 			$paths[$path] = 1;
 			$res = true;
 		}
-	} else {
-		$res = JLoader::import($path, dirname(__FILE__).'/libraries');
 	}
 	return $res;
 }

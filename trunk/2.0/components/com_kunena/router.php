@@ -11,7 +11,8 @@
  **/
 defined( '_JEXEC' ) or die();
 
-require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/api.php');
+require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+
 kimport('kunena.error');
 kimport('kunena.forum.category.helper');
 kimport('kunena.forum.topic.helper');

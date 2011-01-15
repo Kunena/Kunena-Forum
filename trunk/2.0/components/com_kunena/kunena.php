@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 // Initialize Kunena (if Kunena System Plugin isn't enabled)
-require_once (JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php');
+require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 $view = JRequest::getWord ( 'view' );
 

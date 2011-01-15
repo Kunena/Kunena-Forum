@@ -1358,6 +1358,7 @@ class KunenaModelInstall extends JModel {
 	 * and if not, adds a forum link in the mainmenu.
 	 */
 	function createMenu() {
+/*
 		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=entrypage', 'access'=>0, 'params'=>'\r\ncatids=0');
 		$submenu = array(
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=listcat', 'access'=>0, 'default'=>'categories', 'params'=>'\r\ncatid=0'),
@@ -1366,6 +1367,66 @@ class KunenaModelInstall extends JModel {
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=latest&do=noreplies', 'access'=>1, 'params'=>'\r\ndo=noreplies'),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=latest&do=mylatest', 'access'=>1, 'default'=>'my' , 'params'=>'\r\ndo=mylatest'),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=profile', 'access'=>1, 'params'=>'\r\nintegration=1'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RULES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=rules', 'access'=>0, 'params'=>'\r\ndo=rules'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_HELP' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=help', 'access'=>0, 'params'=>'\r\ndo=help'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_SEARCH' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=search', 'access'=>0),
+		);
+*/
+		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=home', 'access'=>0, 'params'=>
+'catids=0
+page_title=
+show_page_title=1
+pageclass_sfx=
+menu_image=-1
+secure=0');
+		$submenu = array(
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=categories', 'access'=>0, 'default'=>'categories', 'params'=>
+'page_title=
+show_page_title=1
+pageclass_sfx=
+menu_image=-1
+secure=0'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RECENT' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=topics&mode=replies', 'access'=>0, 'default'=>'recent', 'params'=>
+'topics_catselection=0
+topics_categories=0
+topics_time=720
+page_title=
+show_page_title=1
+pageclass_sfx=
+menu_image=-1
+secure=0'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=topic&layout=create', 'access'=>1, 'params'=>
+'page_title=
+show_page_title=1
+pageclass_sfx=
+menu_image=-1
+secure=0'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=topics&mode=noreplies', 'access'=>1, 'params'=>
+'topics_catselection=1
+topics_categories=0
+topics_time=-1
+page_title=
+show_page_title=1
+pageclass_sfx=
+menu_image=-1
+secure=0
+'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>1, 'default'=>'my' , 'params'=>
+'topics_catselection=1
+topics_categories=0
+topics_time=-1
+page_title=
+show_page_title=1
+pageclass_sfx=
+menu_image=-1
+secure=0'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=user', 'access'=>1, 'params'=>
+'integration=1
+page_title=
+show_page_title=1
+pageclass_sfx=
+menu_image=-1
+secure=0'),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RULES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=rules', 'access'=>0, 'params'=>'\r\ndo=rules'),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_HELP' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=help', 'access'=>0, 'params'=>'\r\ndo=help'),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_SEARCH' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=search', 'access'=>0),

@@ -18,7 +18,7 @@
 		</url>
 		<!-- Add fields to the parameters object for the layout. -->
 		<params addpath="/administrator/components/com_kunena/elements">
-			<param name="catids" 
+			<param name="catids"
 				type="kunenacategorylist"
 				label="COM_KUNENA_MENU_ALLOWEDCAT"
 				description="COM_KUNENA_MENU_ALLOWEDCAT_DESC"

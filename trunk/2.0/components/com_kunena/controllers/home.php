@@ -27,6 +27,8 @@ class KunenaControllerHome extends KunenaController {
 		$app = JFactory::getApplication ();
 		$menu = $app->getMenu ();
 		$home = $menu->getActive ();
+		// TODO: maybe add error
+		if (!$home) return;
 		$view = '';
 
 		// We need to highlight default menu item and show it instead of home page -- there's nothing to see in this view

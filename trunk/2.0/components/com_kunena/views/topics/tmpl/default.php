@@ -27,6 +27,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			<form id="timeselect" name="timeselect" method="post" target="_self" action="<?php echo $this->escape(JURI::getInstance()->toString());?>">
 			<?php
 			// make the select list for time selection
+			$timesel[] = JHTML::_('select.option', -1, JText::_('COM_KUNENA_SHOW_ALL'));
 			$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
 			$timesel[] = JHTML::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
 			$timesel[] = JHTML::_('select.option', 8, JText::_('COM_KUNENA_SHOW_8_HOURS'));

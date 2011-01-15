@@ -43,6 +43,10 @@ Kunena 2.0.0-DEV
 # [#23443] Administration: fix notices in report configuration
 # [#23443] Administration: Undefined property: KunenaForumCategory::$parent in categories controller
 # [#23443] Administration: Undefined property: KunenaUser::$id in categories view
++ [#22569] Use new views and layouts in the menu (upgrade logic missing)
+# [#22569] Topics view: finer control on state (include itemid + mode)
+# [#22569] Show Topic / Create view in menutiem administration
+# [#22569] Topics view: Add time selection option for "All"
 
 14-January-2010 Matias
 ^ [#22569] Rewrite KunenaControllerTopic::move()

@@ -204,9 +204,9 @@ class CKunenaViewMessage {
 		}
 
 		//karma points and buttons
+		$this->userkarma_minus = $this->userkarma_plus = '';
 		if ($this->config->showkarma && $this->profile->userid) {
 			$this->userkarma = JText::_('COM_KUNENA_KARMA') . ": " . $this->profile->karma;
-			$this->userkarma_minus = $this->userkarma_plus = '';
 			if ($this->my->id && $this->my->id != $this->profile->userid) {
 				$this->userkarma_minus = CKunenaLink::GetKarmaLink ( 'decrease', $this->catid, $this->id, $this->userid, '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
 				$this->userkarma_plus = CKunenaLink::GetKarmaLink ( 'increase', $this->catid, $this->id, $this->userid, '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );

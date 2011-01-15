@@ -33,8 +33,14 @@ Legend:
 
 Kunena 1.6.3
 
+15-January-2011 Matias
+^ [#15886] Merged revisions 4181-4182 from /branches/1.6-LDAsvens-bugs-2011-01-13
+
 14-January-2011 fxstein
 ^ [#24385] Performance optimization for high joomla guest counts by CB team (Thanks Beat!)
+
+13-January-2011 svens(LDA)
+# [#24366] Joomla 1.6: Missing backend translations
 
 13-January-2011 Matias
 # [#23920] Fix a bug when getting subscribers if string gets passed instead of an array

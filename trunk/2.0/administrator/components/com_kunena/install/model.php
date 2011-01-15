@@ -584,6 +584,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function migrateConfig() {
+		kimport('kunena.factory');
 		$config = KunenaFactory::getConfig();
 		$version = $this->getVersion();
 		if (version_compare ( $version->version, '1.0.4', "<=" ) ) {
@@ -1382,6 +1383,7 @@ class KunenaModelInstall extends JModel {
 	function createMenuJ15($menu, $submenu) {
 		jimport( 'joomla.utilities.string' );
 		jimport( 'joomla.application.component.helper' );
+		kimport('kunena.factory');
 
 		$config = KunenaFactory::getConfig();
 
@@ -1524,6 +1526,7 @@ class KunenaModelInstall extends JModel {
 	function createMenuJ16($menu, $submenu) {
 		jimport ( 'joomla.utilities.string' );
 		jimport ( 'joomla.application.component.helper' );
+		kimport('kunena.factory');
 
 		$config = KunenaFactory::getConfig ();
 

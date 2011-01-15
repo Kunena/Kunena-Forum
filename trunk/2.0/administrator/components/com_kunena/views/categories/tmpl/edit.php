@@ -79,6 +79,19 @@ function submitbutton(pressbutton)
 							<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
 						</tr>
 						<?php endif; ?>
+						<?php if ($this->category->accesstype != 'none') : ?>
+						<tr>
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE'); ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($this->category->accesstype)); ?></td>
+							<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
+						</tr>
+						<tr>
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESS'); ?></td>
+							<td valign="top"><?php echo $this->options ['access']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESS_DESC'); ?></td>
+						</tr>
+						<?php endif; ?>
+						<?php if ($this->me->isAdmin() && $this->category->accesstype == 'none') : ?>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
 							<td valign="top"><?php echo $this->options ['pub_access']; ?></td>
@@ -99,6 +112,7 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo $this->options ['admin_recurse']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1DESC'); ?></td>
 						</tr>
+						<?php endif; ?>
 						<?php if (!$this->category->id || $this->category->parent_id): ?>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>

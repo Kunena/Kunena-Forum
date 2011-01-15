@@ -38,6 +38,7 @@ Kunena 2.0.0-DEV
 # [#23443] Administrator: category manager doesn't work
 # [#23443] Don't fail to load the page if there's no matching menu item
 # [#23443] J1.5: kimport was importing the same file twice if using parameters 'kunena.factory' vs 'factory'
+# [#23443] Administration: fix missing public/admin group permissions in category manager
 
 14-January-2010 Matias
 ^ [#22569] Rewrite KunenaControllerTopic::move()

@@ -34,6 +34,7 @@ class KunenaViewCategories extends KunenaView {
 	}
 
 	function displayEdit() {
+		$this->me = KunenaFactory::getUser();
 		$this->assignRef ( 'category', $this->get ( 'Item' ) );
 		$this->assignRef ( 'options', $this->get ( 'Options' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );

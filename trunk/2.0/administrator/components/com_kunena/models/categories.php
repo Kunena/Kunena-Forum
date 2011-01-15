@@ -251,6 +251,8 @@ class KunenaModelCategories extends JModel {
 
 		$lists = array ();
 		$lists ['access'] = KunenaFactory::getAccessControl()->getAccessLevelsList($category);
+		$lists ['pub_access'] = $accessLists ['pub_access'];
+		$lists ['admin_access'] = $accessLists ['admin_access'];
 		$lists ['categories'] = JHTML::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
 		$lists ['published'] = JHTML::_ ( 'select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published );
 		$lists ['pub_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->pub_recurse );

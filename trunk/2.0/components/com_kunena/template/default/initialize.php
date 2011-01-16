@@ -18,8 +18,8 @@ $template = KunenaFactory::getTemplate();
 $template->loadMootools();
 
 // We load mediaxboxadvanced library
-CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'js/mediaboxadvanced/css/mediaboxAdv.css');
-CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/mediaboxadvanced/js/mediaboxAdv.js' );
+CKunenaTools::addStyleSheet ( KPATH_COMPONENT_RELATIVE . '/js/mediaboxadvanced/css/mediaboxAdv.css');
+CKunenaTools::addScript( KPATH_COMPONENT_RELATIVE . '/js/mediaboxadvanced/js/mediaboxAdv.js' );
 
 // New Kunena JS for default template
 $template->addScript ( 'js/default-min.js' );
@@ -43,13 +43,13 @@ if (file_exists ( JPATH_ROOT .DS. "templates" .DS. $app->getTemplate() .DS. 'css
 		$template->addStyleSheet ( 'css/kunena.default-min.css' );
 	}
 }
-$cssurl = JURI::base() . "components/com_kunena/template/default/css";
+$cssurl = JURI::root(true, '/components/com_kunena/template/default/css');
 ?>
 <!--[if lte IE 7]>
 <link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css" />
 <![endif]-->
 <?php
-$mediaurl = JURI::base() . "components/com_kunena/template/default/media";
+$mediaurl = JURI::root(true, '/components/com_kunena/template/default/media');
 
 $styles = <<<EOF
 	/* Kunena Custom CSS */

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+16-January-2010 Matias
+# [#23443] Fix some broken css/javascript urls
+
 15-January-2010 Matias
 ^ [#22786] Merge revisions 4165-4187 from trunk/1.6
 # [#23443] Administrator: category manager doesn't work

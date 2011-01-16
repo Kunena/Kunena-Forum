@@ -215,13 +215,13 @@ class CKunenaPolls {
    function call_javascript_form()
    {
     	$template = KunenaTemplate::getInstance();
-		$template->addScript(KUNENA_DIRECTURL . 'plugin/poll/js/kunena.poll-min.js');
+		$template->addScript('plugin/poll/js/kunena.poll-min.js');
 		$this->document->addScriptDeclaration('// <![CDATA[
 	   var KUNENA_POLL_CATS_NOT_ALLOWED = "'.JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED').'";
 	   var KUNENA_EDITOR_HELPLINE_OPTION = "'.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION').'";
 	   var KUNENA_POLL_OPTION_NAME = "'.JText::_('COM_KUNENA_POLL_OPTION_NAME').'";
 	   var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'.JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW').'";
-	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";
+	   var KUNENA_ICON_ERROR = "'.JURI::root(true, '/administrator/images/publish_x.png').');
 	   var kunena_ajax_url_poll = "'.CKunenaLink::GetJsonURL('pollcatsallowed').'";
 	// ]]>');
    }

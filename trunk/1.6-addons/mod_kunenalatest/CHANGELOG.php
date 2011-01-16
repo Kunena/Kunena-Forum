@@ -28,6 +28,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaLatest 1.6.3-DEV
+
+16-January-2010 Xillibit
+^ [#24415] Update version to 1.6.3-DEV
++ [#24415] New configuration setting to show or hide more link
+# [#24416] Make tooltips visible when you choose others models than latestposts and latesttopics
+# [#24416] Wrong path for sticky image
+
 KunenaLatest 1.6.2
 
 25-December-2010 fxstein

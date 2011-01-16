@@ -38,7 +38,7 @@ $this->k=0;
 ?>
 <?php $this->common->display ( 'pathway' )?>
 
-<form class="postform form-validate" id="postform" action="<?php echo JURI::root(true) ?>"
+<form class="postform form-validate" id="postform" action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>"
 	method="post" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
 	<input type="hidden" name="option" value="com_kunena" />
 	<input type="hidden" name="view" value="topic" />

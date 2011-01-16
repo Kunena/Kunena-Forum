@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+16-January-2010 Xillibit
+# [#23443] Forms edit and default_message has wrong urls and action go joomla root
+
 16-January-2010 Matias
 # [#23443] Fix some broken css/javascript urls
 

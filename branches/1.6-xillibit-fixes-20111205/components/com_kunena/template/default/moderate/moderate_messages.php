@@ -46,7 +46,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 		foreach ( $this->MessagesToApprove as $mes ) { ?>
 			<tr class="k<?php echo $this->tabclass [$k^=1];?>" >
 				<td class="kcol-mid kcol-ktopicicon">
-				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($mes->catid), intval($mes->id), '1', intval($this->config->messages_per_page), CKunenaTools::topicIcon($mes), '' ) ?>
+				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($mes->catid), intval($mes->id), '1', intval($this->config->messages_per_page), CKunenaTools::topicIcon($mes), '', '' ) ?>
 				</td>
 				<td class="kcol-mid kcol-ktopictitle">
 				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($mes->catid), intval($mes->id), KunenaParser::parseText ($mes->subject), KunenaParser::stripBBCode ( $mes->message, 500), 'follow', 'ktopic-title km' ); ?>

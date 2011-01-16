@@ -37,6 +37,7 @@ Kunena 1.6.3
 # [#24368] Set the subject for all replies on moderate doesn't work
 # [#24374] Fix PHP notices and warnings
 # [#24412] bulk actions delete permanently and restore shows up to moderators even if they have no permission to do those tasks
+^ [#24413] Add title parameter in function CKunenaLink::GetThreadPageLink for module latest
 
 13-January-2011 Xillibit
 # [#24367] Kunena report function shows form even if id is empty

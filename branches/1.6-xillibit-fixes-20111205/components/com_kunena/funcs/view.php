@@ -678,7 +678,7 @@ class CKunenaView {
 		if ($startpage > 1) {
 			if ($endpage < $totalpages)
 				$endpage --;
-			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, 1, $this->config->messages_per_page, 1, '', $rel = 'follow' ) . '</li>';
+			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, 1, $this->config->messages_per_page, 1, '', '', $rel = 'follow' ) . '</li>';
 			if ($startpage > 2) {
 				$output .= '<li class="more">...</li>';
 			}
@@ -688,7 +688,7 @@ class CKunenaView {
 			if ($page == $i) {
 				$output .= '<li class="active">' . $i . '</li>';
 			} else {
-				$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $i, $this->config->messages_per_page, $i, '', $rel = 'follow' ) . '</li>';
+				$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $i, $this->config->messages_per_page, $i, '', '', $rel = 'follow' ) . '</li>';
 			}
 		}
 
@@ -697,7 +697,7 @@ class CKunenaView {
 				$output .= '<li class="more">...</li>';
 			}
 
-			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $totalpages, $this->config->messages_per_page, $totalpages, '', $rel = 'follow' ) . '</li>';
+			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $totalpages, $this->config->messages_per_page, $totalpages, '', '', $rel = 'follow' ) . '</li>';
 		}
 
 		$output .= '</ul>';

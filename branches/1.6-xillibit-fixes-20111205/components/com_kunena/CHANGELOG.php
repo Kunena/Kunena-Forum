@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+16-January-2011 Xillibit
+# [#24368] Set the subject for all replies on moderate doesn't work
+
 13-January-2011 Xillibit
 # [#24367] Kunena report function shows form even if id is empty
 
@@ -59,7 +62,7 @@ Kunena 1.6.3
 05-January-2011 Xillibit
 # [#24064] Fix some undefined variables in kunena report configuration
 # [#24156] Error message on start of installation on archive which is not here
-# [#24155] When posting as anonymous, no username is displayed in listcat and showcat 
+# [#24155] When posting as anonymous, no username is displayed in listcat and showcat
 
 4-January-2011 Matias
 # [#24083] Joomla 1.6: generate Kunena Menu during installation

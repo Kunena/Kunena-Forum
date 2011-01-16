@@ -35,6 +35,8 @@ KunenaLatest 1.6.3-DEV
 + [#24415] New configuration setting to show or hide more link
 # [#24416] Make tooltips visible when you choose others models than latestposts and latesttopics
 # [#24416] Wrong path for sticky image
+# [#24416] Sticky icon is displayed twice is setting is enabled
+^ [#24415] Update version to 1.6.3-DEV (missing in mod_kunenalatest.xml)
 
 KunenaLatest 1.6.2
 

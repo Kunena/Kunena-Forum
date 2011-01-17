@@ -45,6 +45,7 @@ Kunena 2.0.0-DEV
 # [#23443] Fix bug from legacy post/edit -> edit/123 redirection missing mesid
 # [#23443] Fix some undefined variables
 # [#23443] Display/Edit topic: attachments do not show up
+# [#23443] Topic: Allow reply topic without mesid
 
 16-January-2010 Xillibit
 # [#23443] Forms edit and default_message has wrong urls and action go joomla root

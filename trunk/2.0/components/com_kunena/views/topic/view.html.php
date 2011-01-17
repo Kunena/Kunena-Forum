@@ -160,6 +160,10 @@ class KunenaViewTopic extends KunenaView {
 		$this->my = JFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 		$mesid = $this->state->get('item.mesid');
+		if (!$mesid) {
+			$this->topic = KunenaForumTopicHelper::get($this->state->get('item.id'));
+			$mesid = $this->topic->first_post_id;
+		}
 
 		$parent = KunenaForumMessageHelper::get($mesid);
 		if (!$parent->authorise('reply')) {

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+17-January-2010 Xillibit
+# [#24443] BBCode help input need to be disabled to avoid to be edited
+
 16-January-2011 Xillibit
 # [#24368] Set the subject for all replies on moderate doesn't work
 # [#24374] Fix PHP notices and warnings

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+17-January-2010 Xillibit
+# [#24443] BBCode help input need to be disabled to avoid to be edited
+
 17-January-2010 Matias
 ^ [#22569] Legacy support: Make SEF mapping (&do=xxx) to work
 ^ [#22569] BuildRoute: Add support for short URIs like: /forum/12-category/123-topic/edit/124

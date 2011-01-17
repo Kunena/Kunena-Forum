@@ -246,7 +246,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		<?php endif; ?>
 		<!-- end of extendable secondary toolbar -->
 		<tr>
-			<td class="kposthint"><input type="text" name="helpbox" id="helpbox" size="45" class="kinputbox" maxlength="100"
+			<td class="kposthint"><input type="text" name="helpbox" id="helpbox" size="45" class="kinputbox" disabled="disabled" maxlength="100"
 				value="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')); ?>" /></td>
 		</tr>
 	</table>

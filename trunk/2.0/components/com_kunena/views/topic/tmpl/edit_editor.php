@@ -92,12 +92,12 @@ $kunena_config = KunenaFactory::getConfig ();
 			//Check if the poll is allowed
 			if ($kunena_config->pollenabled) {
 				if ( empty($this->category->allow_polls) ) $this->category->allow_polls = '';
-				$display_poll = $kunena_poll->get_poll_allowed($this->id, $this->message->parent, $this->message->exists(), $this->category->allow_polls);
+				$display_poll = $kunena_poll->get_poll_allowed($this->message->id, $this->message->parent, $this->message->exists(), $this->category->allow_polls);
 				if (!isset($this->polldatasedit[0]->polltimetolive)) {
 					$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 				}
-				$kunena_poll->call_js_poll_edit($this->message->exists(), $this->id);
-				$html_poll_edit = $kunena_poll->get_input_poll($this->message->exists(), $this->id, $this->polldatasedit);
+				$kunena_poll->call_js_poll_edit($this->message->exists(), $this->message->id);
+				$html_poll_edit = $kunena_poll->get_input_poll($this->message->exists(), $this->message->id, $this->polldatasedit);
 				JHTML::_('behavior.calendar');
 			?>
 			<span id="kpoll-not-allowed"><?php if(!$display_poll) { echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED'); } ?></span>
@@ -118,7 +118,7 @@ $kunena_config = KunenaFactory::getConfig ();
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
 
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-				<?php echo JHTML::_('calendar', $this->escape($this->polldatasedit[0]->polltimetolive), 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:$(\'helpbox\').set(\'value\', \''.KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN').'\')')); ?> 
+				<?php echo JHTML::_('calendar', $this->escape($this->polldatasedit[0]->polltimetolive), 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:$(\'helpbox\').set(\'value\', \''.KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN').'\')')); ?>
 
 			</div>
 			<?php

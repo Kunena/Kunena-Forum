@@ -282,7 +282,7 @@ kbbcode.addFunction('Gallery', function() {
 ?>
 <?php if (!isset($this->category->allow_polls)) $this->category->allow_polls = ''; //display only the poll icon in the first message of the thread
 
-$poll_allowed = $kunena_poll->get_poll_allowed($this->id, $this->message->parent, $this->message->exists(), $this->category->allow_polls, $this->config);
+$poll_allowed = $kunena_poll->get_poll_allowed($this->message->id, $this->message->parent, $this->message->exists(), $this->category->allow_polls, $this->config);
 
 if( $poll_allowed ){ ?>
 

@@ -112,7 +112,6 @@ class KunenaViewTopic extends KunenaView {
 	protected function DisplayCreate($tpl = null) {
 		$this->setLayout('edit');
 		$this->catid = $this->state->get('item.catid');
-		$this->id = $this->state->get('item.id');
 		$this->my = JFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
@@ -158,11 +157,11 @@ class KunenaViewTopic extends KunenaView {
 	protected function DisplayReply($tpl = null) {
 		$this->setLayout('edit');
 		$this->catid = $this->state->get('item.catid');
-		$this->id = $this->state->get('item.id');
 		$this->my = JFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
+		$mesid = $this->state->get('item.mesid');
 
-		$parent = KunenaForumMessageHelper::get($this->id);
+		$parent = KunenaForumMessageHelper::get($mesid);
 		if (!$parent->authorise('reply')) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage ( $parent->getError(), 'notice' );
@@ -179,11 +178,11 @@ class KunenaViewTopic extends KunenaView {
 
 	protected function displayEdit($tpl = null) {
 		$this->catid = $this->state->get('item.catid');
-		$this->id = $this->state->get('item.id');
 		$this->my = JFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
+		$mesid = $this->state->get('item.mesid');
 
-		$this->message = KunenaForumMessageHelper::get($this->id);
+		$this->message = KunenaForumMessageHelper::get($mesid);
 		if (!$this->message->authorise('edit')) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage ( $this->message->getError(), 'notice' );
@@ -208,7 +207,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->display($tpl);
 	}
 
-	protected function displayMove($tpl = null) {
+	protected function displayModerate($tpl = null) {
 		$this->mesid = JRequest::getInt('mesid', 0);
 		$this->id = $this->state->get('item.id');
 		$this->catid = $this->state->get('item.catid');
@@ -564,13 +563,13 @@ class KunenaViewTopic extends KunenaView {
 
 
 	function hasThreadHistory() {
-		if (! $this->config->showhistory || $this->id == 0)
+		if (! $this->config->showhistory || !$this->topic->exists())
 			return false;
 		return true;
 	}
 
 	function displayThreadHistory() {
-		if (! $this->config->showhistory || $this->id == 0)
+		if (! $this->config->showhistory || !$this->topic->exists())
 			return;
 
 		$db = JFactory::getDBO();

@@ -128,7 +128,7 @@ abstract class KunenaRoute {
 		$Itemid = 0;
 		$active = self::getActive();
 		if ($active) {
-			// Find Kunena entry page from current menu
+			// Find Kunena home page from current menu
 			$root = self::getKunenaRoot($active);
 			$list = self::getSubMenus($root);
 			if (count($list) > 1) {

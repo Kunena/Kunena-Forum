@@ -42,6 +42,9 @@ class KunenaModelTopic extends KunenaModel {
 		$id = JRequest::getInt ( 'id', 0 );
 		$this->setState ( 'item.id', $id );
 
+		$id = JRequest::getInt ( 'mesid', 0 );
+		$this->setState ( 'item.mesid', $id );
+
 		$access = KunenaFactory::getAccessControl();
 		$value = $access->getAllowedHold($me, $catid);
 		$this->setState ( 'hold', $value );

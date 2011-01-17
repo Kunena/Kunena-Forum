@@ -33,11 +33,25 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+17-January-2010 Matias
+^ [#22569] Legacy support: Make SEF mapping (&do=xxx) to work
+^ [#22569] BuildRoute: Add support for short URIs like: /forum/12-category/123-topic/edit/124
+^ [#22569] Make posting/moderation forms to regognise mesid vs id
+^ [#22569] Rename topic/move layout into moderate
+# [#22569] BuildRoute: Filter catid, id, view, layout and mesid parameters before adding them into URI
+
 16-January-2010 Xillibit
 # [#23443] Forms edit and default_message has wrong urls and action go joomla root
 
 16-January-2010 Matias
 # [#23443] Fix some broken css/javascript urls
+^ [#22569] BuildRoute: Regognise Kunena 2.0 views and layouts
+^ [#22569] BuildRoute: Simplify and optimize menu item override logic
+# [#22569] BuildRoute: Fix bug where default values do not get removed when there's no menu item
+^ [#22569] BuildRoute: Simplify logic when using short category section
+^ [#22569] BuildRoute: Simplify logic when using short topic section
+^ [#22569] ParseRoute: Optimize fetching query variables from menu item
+^ [#22569] ParseRoute: Simplify logic when getting query variables from SEF URI
 
 15-January-2010 Matias
 ^ [#22786] Merge revisions 4165-4187 from trunk/1.6

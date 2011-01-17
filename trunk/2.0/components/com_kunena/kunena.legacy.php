@@ -144,7 +144,11 @@ if (empty($_POST) && $format == 'html') {
 
 // Convert legacy urls into new ones
 $view = JRequest::getWord ( 'view' );
-$layout = JRequest::getWord ( 'layout', null );
+
+// SEF turns &do=xxx into &layout=xxx, so we need to get both variables
+$layout = JRequest::getWord ( 'do', JRequest::getWord ( 'layout', null ) );
+JRequest::setVar ( 'do' );
+
 $config = KunenaFactory::getConfig ();
 $redirect = false;
 switch ($view) {
@@ -170,9 +174,9 @@ switch ($view) {
 	case 'unapproved' :
 	case 'deleted' :
 		$redirect = true;
-		$mode = JRequest::getWord ( 'do', $view );
-		JRequest::setVar ( 'do' );
 		$view = 'topics';
+		// Handle both &func=noreplies and &func=latest&do=noreplies
+		$mode = $layout ? $layout : $view;
 		switch ($mode) {
 			case 'latest':
 				$layout = 'default';
@@ -212,7 +216,7 @@ switch ($view) {
 				break;
 			case 'userposts':
 				JRequest::setVar ( 'userid', '0' );
-				// continue
+				// Continue in latestposts
 			case 'latestposts':
 				$layout = 'posts';
 				$mode = 'recent';
@@ -252,9 +256,8 @@ switch ($view) {
 		$view = 'user';
 		$task = JRequest::getCmd ( 'task', '' );
 		if ($task) $kunena_app->enqueueMessage(JText::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
-		$mode = JRequest::getWord ( 'do' );
-		JRequest::setVar ( 'do' );
-		switch ($mode) {
+		// Handle &do=xxx
+		switch ($layout) {
 			case 'edit':
 				$layout = 'edit';
 				break;
@@ -306,35 +309,43 @@ switch ($view) {
 		$view = 'topic';
 
 		// Support old &parentid=123 and &replyto=123 variables
-		$id = JRequest::getInt ( 'id', 0 );
+		$id = JRequest::getInt ( 'id', null );
 		if (!$id) {
-			$id = JRequest::getInt ( 'parentid', 0 );
+			$id = JRequest::getInt ( 'parentid', null );
 		}
 		if (!$id) {
-			$id = JRequest::getInt ( 'replyto', 0 );
+			$id = JRequest::getInt ( 'replyto', null );
 		}
 		JRequest::setVar ( 'parentid' );
 		JRequest::setVar ( 'replyto' );
-		JRequest::setVar ( 'id', $id );
 
-		$mode = JRequest::getWord ( 'do' );
-		JRequest::setVar ( 'do' );
+		// Convert URI to have both id and mesid
+		kimport('kunena.forum.message.helper');
+		$message = KunenaForumMessageHelper::get($id);
+		$mesid = null;
+		if ($message->exists()) {
+			$id = $message->thread;
+			if ($id != $message->id) $mesid = $message->id;
+		}
+		JRequest::setVar ( 'id', $id );
+		JRequest::setVar ( 'mesid', $mesid );
+
 		$action = JRequest::getCmd ( 'action', '' );
 		if ($action) {
 			$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_DEPRECATED_ACTION' ), 'error' );
 		} else {
-			switch ($mode) {
+			// Handle &do=xxx
+			switch ($layout) {
 				case 'new' :
 					$layout = 'create';
 					break;
 
+				case 'quote' :
+					JRequest::setVar ( 'quote', 1 );
+					// Continue in reply
+
 				case 'reply' :
 					$layout = 'reply';
-					break;
-
-				case 'quote' :
-					$layout = 'reply';
-					JRequest::setVar ( 'quote', 1 );
 					break;
 
 				case 'edit' :
@@ -342,13 +353,15 @@ switch ($view) {
 					break;
 
 				case 'moderate' :
-					$layout = 'move';
-					JRequest::setVar ( 'id' );
-					JRequest::setVar ( 'mesid', $id );
+					$layout = 'moderate';
+					// Always add &mesid=x
+					if (!$mesid) JRequest::setVar ( 'mesid', $id );
 					break;
 
 				case 'moderatethread' :
-					$layout = 'move';
+					$layout = 'moderate';
+					// Always remove &mesid=x
+					JRequest::setVar ( 'mesid' );
 					break;
 
 				default :
@@ -361,9 +374,13 @@ if ($redirect) {
 	JRequest::setVar ( 'func' );
 	JRequest::setVar ( 'view', $view );
 	JRequest::setVar ( 'layout', $layout );
+	// FIXME: using wrong Itemid
 	$kunena_app->redirect (KunenaRoute::_(null, false));
 }
 
+// Convert layout back to do to make old code to work
+JRequest::setVar ( 'do', $layout );
+JRequest::setVar ( 'layout' );
 
 global $message;
 global $kunena_this_cat;

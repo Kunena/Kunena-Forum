@@ -154,7 +154,7 @@ $this->k=0;
 
 				<?php
 				// Include attachments template if we have any
-				if ( isset ( $this->attachments ) ) echo $this->loadTemplate('attachments')
+				if ( isset ( $this->attachments ) ) $this->displayAttachments();
 				?>
 			</td>
 		</tr>

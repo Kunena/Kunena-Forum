@@ -18,11 +18,11 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 </div>
 <div>
-<?php if (!empty($this->attachments)) : ?>
+<?php if (!empty($this->message->attachments)) : ?>
 <div class="kmsgattach">
 	<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
 		<ul class="kfile-attach">
-		<?php foreach($this->attachments as $attachment) : ?>
+		<?php foreach($this->message->attachments as $attachment) : ?>
 			<li>
 				<?php echo $attachment->thumblink; ?>
 				<span>

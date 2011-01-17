@@ -637,9 +637,9 @@ class KunenaViewTopic extends KunenaView {
 		return $this->numLink;
 	}
 
-	function displayAttachments($attachments) {
-		$this->attachments = $attachments;
-		CKunenaTools::loadTemplate ( '/view/message.attachments.php' );
+	function displayAttachments($attachments=null) {
+		if ($attachments) $this->attachments = $attachments;
+		echo $this->loadTemplate ( 'attachments' );
 	}
 
 	function canSubscribe() {

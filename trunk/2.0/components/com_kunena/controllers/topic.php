@@ -95,6 +95,7 @@ class KunenaControllerTopic extends KunenaController {
 			if (preg_match('/\D*(\d+)/', $key, $matches))
 				$intkey = (int)$matches[1];
 			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key);
+			die();
 		}
 
 		// Save message

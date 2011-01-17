@@ -39,6 +39,11 @@ Kunena 2.0.0-DEV
 ^ [#22569] Make posting/moderation forms to regognise mesid vs id
 ^ [#22569] Rename topic/move layout into moderate
 # [#22569] BuildRoute: Filter catid, id, view, layout and mesid parameters before adding them into URI
+- [#22570] Remove deprecated code: funcs/posts.php
+# [#23443] Topic view: wrong username in Last edit by...
+# [#23443] Enable SEF category feature only inside few views in order to avoid conflicts
+# [#23443] Fix bug from legacy post/edit -> edit/123 redirection missing mesid
+# [#23443] Fix some undefined variables
 
 16-January-2010 Xillibit
 # [#23443] Forms edit and default_message has wrong urls and action go joomla root

@@ -24,11 +24,12 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayEdit($tpl = null) {
+		// FIXME: Check that user is allowed to edit profile
 		$this->displayCommon($tpl);
 	}
 
 	protected function displayCommon($tpl = null) {
-		$userid = JFactory::getUser()->id;
+		$userid = JRequest::getInt('userid');
 
 		kimport('kunena.html.parser');
 		require_once(KPATH_SITE.'/lib/kunena.timeformat.class.php');
@@ -36,7 +37,7 @@ class KunenaViewUser extends KunenaView {
 		$this->_app = JFactory::getApplication ();
 		$this->config = KunenaFactory::getConfig ();
 		$this->my = JFactory::getUser ();
-		$this->do = 'default'; // $do;
+		$this->do = JRequest::getWord('layout');
 
 		if (!$userid) {
 			$this->user = $this->my;
@@ -261,7 +262,7 @@ class KunenaViewUser extends KunenaView {
 		switch ($this->do) {
 			case 'edit':
 				$user = JFactory::getUser();
-				if ($user->id == $this->profile->userid) CKunenaTools::loadTemplate('/profile/edittab.php');
+				if ($user->id == $this->user->id) echo $this->loadTemplate('tab');
 				break;
 			default:
 				echo $this->loadTemplate('tab');

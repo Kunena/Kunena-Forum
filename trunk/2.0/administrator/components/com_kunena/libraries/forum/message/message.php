@@ -234,12 +234,12 @@ class KunenaForumMessage extends JObject {
 	}
 
 	public function edit($fields = array(), $user=null) {
-		$category = $this->getCategory();
 		$user = KunenaUserHelper::get($user);
 
 		$this->bind($fields, array ('name', 'email', 'subject', 'message', 'modified_reason' ));
 
 		// Update rest of the information
+		$category = $this->getCategory();
 		$this->hold = $category->review ? (int)!$category->authorise ('moderate', $user, true) : 0;
 		$this->modified_by = $user->userid;
 		$this->modified_time = JFactory::getDate()->toUnix();

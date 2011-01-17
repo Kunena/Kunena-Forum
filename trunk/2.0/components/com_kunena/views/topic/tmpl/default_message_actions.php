@@ -27,7 +27,7 @@ if ($this->message->modified_time) {
 <div class="kmessage-editmarkup-cover">
 	<?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
 	<span class="kmessage-editmarkup" <?php echo $datehover ?>>
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . CKunenaLink::getProfileLink( $this->message->userid ) . '.'; ?>
+		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . CKunenaLink::getProfileLink( $this->message->modified_by ) . '.'; ?>
 		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
 	</span>
 	<?php endif ?>

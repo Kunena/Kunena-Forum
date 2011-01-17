@@ -350,6 +350,8 @@ switch ($view) {
 
 				case 'edit' :
 					$layout = 'edit';
+					// Always add &mesid=x
+					if (!$mesid) JRequest::setVar ( 'mesid', $id );
 					break;
 
 				case 'moderate' :

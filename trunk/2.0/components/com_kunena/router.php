@@ -33,6 +33,8 @@ class KunenaRouter {
 		'users'=>array('layout'=>'default'),
 		'statistics'=>array('layout'=>'default'),
 	);
+	static $sefviews = array (''=>1, 'home'=>1, 'categories'=>1, 'category'=>1, 'topic'=>1);
+	static $parsevars = array ('do'=>1, 'task'=>1, 'userid'=>1, 'id'=>1, 'mesid'=>1, 'page'=>1, 'sel'=>1 );
 	// List of legacy views from previous releases
 	static $functions = array (
 		'listcat'=>1,
@@ -126,7 +128,6 @@ class KunenaRouter {
 	 * @return segments
 	 */
 	function BuildRoute(&$query) {
-		$parsevars = array ('do', 'task', 'userid', 'id', 'mesid', 'page', 'sel' );
 		$segments = array ();
 
 		// If Kunena SEF is not enabled, do nothing
@@ -192,7 +193,8 @@ class KunenaRouter {
 				if (empty ( $catname )) {
 					// If category name is empty (or doesn't exist), use numeric catid
 					$segments [] = $catid;
-				} elseif ($config->sefcats && ! isset ( self::$views[$catname] ) && !self::isCategoryConflict($catid, $catname)) {
+				} elseif ($config->sefcats && isset(self::$sefviews[$view]) && ! isset ( self::$views[$catname] ) && !self::isCategoryConflict($catid, $catname)) {
+					// TODO: avoid all illegal category names
 					// If there's no naming conflict, we can use category name
 					$segments [] = $catname;
 				} else {
@@ -261,7 +263,7 @@ class KunenaRouter {
 		}
 
 		// Rest of the known parameters are in var-value form
-		foreach ( $parsevars as $var ) {
+		foreach ( self::$parsevars as $var=>$dummy ) {
 			if (isset ( $query [$var] )) {
 				$segments [] = "{$var}-{$query[$var]}";
 				unset ( $query [$var] );
@@ -283,7 +285,7 @@ class KunenaRouter {
 		if (!$active && $segments[0] == 'kunena') array_shift ( $segments );
 
 		// Enable SEF category feature
-		$sefcats = KunenaFactory::getConfig ()->sefcats;
+		$sefcats = KunenaFactory::getConfig ()->sefcats && isset(self::$sefviews[$vars['view']]);
 
 		// Handle all segments
 		while ( ($segment = array_shift ( $segments )) !== null ) {
@@ -312,7 +314,7 @@ class KunenaRouter {
 			} elseif (empty ( $var ) && empty ( $value )) {
 				// Invalid parameter, skip it
 				continue;
-			} elseif ($sefcats && empty($vars ['catid']) && ($value !== null || ! isset ( self::$views[$var] ))) {
+			} elseif ($sefcats && empty($vars ['catid']) && (($value !== null && ! isset ( self::$parsevars[$var] )) || ! isset ( self::$views[$var] ))) {
 				// We have SEF category: translate category name into catid=123
 				// TODO: cache filtered values to gain some speed -- I would like to start using category names instead of catids if it gets fast enough
 				$var = 'catid';

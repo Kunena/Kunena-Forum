@@ -52,8 +52,8 @@ class KunenaForumCategory extends JObject {
 		return KunenaForumCategoryHelper::get($identifier, $reload);
 	}
 
-	public function getChildren() {
-		return KunenaForumCategoryHelper::getChildren($this->id);
+	public function getChildren($levels = 0) {
+		return KunenaForumCategoryHelper::getChildren($this->id, $levels);
 	}
 
 	function exists($exists = null) {

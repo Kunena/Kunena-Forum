@@ -67,8 +67,14 @@ class KunenaForumCategoryHelper {
 		$session = KunenaFactory::getSession ();
 		$readlist = $session->readtopics;
 		$prevCheck = $session->lasttime;
-		$categories = self::getCategories($catids, false, 'none');
-		$catlist = implode(',', array_keys($categories));
+		$categories = self::getCategories($catids);
+		$catlist = array();
+		foreach ($categories as $category) {
+			$catlist += $category->getChannels();
+			$catlist += $category->getChildren();
+		}
+		if (empty($catlist)) return;
+		$catlist = implode(',', array_keys($catlist));
 		$db = JFactory::getDBO ();
 		$query = "SELECT DISTINCT(category_id), COUNT(*) AS new
 			FROM #__kunena_topics
@@ -84,6 +90,7 @@ class KunenaForumCategoryHelper {
 		}
 		foreach ($categories as $category) {
 			$channels = $category->getChannels();
+			$channels += $category->getChildren();
 			$category->getNewCount(array_sum(array_intersect_key($new, $channels)));
 		}
 	}

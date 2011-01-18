@@ -13,7 +13,10 @@ defined('_JEXEC') or die;
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
 ?>
-<div class="kadmin-functitle icon-systemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
+<div id="kadmin">
+	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+	<div class="kadmin-right">
+	<div class="kadmin-functitle icon-systemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
 		<script type="text/javascript">
 			window.addEvent('domready', function(){
 				$('link_sel_all').addEvent('click', function(e){
@@ -31,3 +34,8 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="1" />
 		</form>
+		</div>
+	<div class="kadmin-footer">
+		<?php echo KunenaVersion::getLongVersionHTML (); ?>
+	</div>
+</div>

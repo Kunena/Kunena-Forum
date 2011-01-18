@@ -109,21 +109,6 @@ switch ($task)
 
         break;
 
-    case "showtrashview":
-        CKunenaToolbar::_TRASHVIEW_MENU();
-
-        break;
-
-    case "trashpurge":
-        CKunenaToolbar::_TRASHVIEW_PURGE();
-
-        break;
-
-	case "showsystemreport":
-        CKunenaToolbar::_SYSTEMREPORT_MENU();
-
-        break;
-
 	case "showTemplates":
         CKunenaToolbar::_SHOWTEMPLATES_MENU();
 

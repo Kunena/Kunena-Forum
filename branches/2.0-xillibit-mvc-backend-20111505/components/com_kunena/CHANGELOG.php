@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-January-2010 Xillibit
+^ [#24395] Backend in MVC (trash manager)(odered items and pagination doesn't work yet)
+
 15-January-2010 Xillibit
 ^ [#24395] Backend in MVC (Stats and k report configuration)
 ^ [#24395] Backend in MVC (Stats and k report configuration) (commit missed files)

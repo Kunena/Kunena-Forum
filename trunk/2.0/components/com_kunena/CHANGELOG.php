@@ -39,7 +39,8 @@ Kunena 2.0.0-DEV
 # [#23443] Category template: Fix Undefined property
 # [#23443] Categories view: New topics indication doesn't work
 + [#23443] Add category channels support for new topics indication
-+ [#23443] Include children categories into new topic counter
++ [#23443] KunenaFomrumCategoryHelper: Include children categories into new topic counter
+# [#23443] Fix caching bugs
 
 17-January-2010 Xillibit
 # [#24443] BBCode help input need to be disabled to avoid to be edited

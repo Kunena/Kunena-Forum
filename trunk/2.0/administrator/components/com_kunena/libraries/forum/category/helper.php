@@ -285,13 +285,14 @@ class KunenaForumCategoryHelper {
 	// Internal functions:
 
 	static protected function loadCategories() {
-		$cache = JFactory::getCache('com_kunena', 'output');
+		// FIXME: caching has still some issues - will disable it for now
+/*		$cache = JFactory::getCache('com_kunena', 'output');
 		$data = $cache->get('instances', 'com_kunena.categories');
 		if ($data !== false) {
 			list(self::$_instances, self::$_tree, self::$_names) = unserialize($data);
 			return;
 		}
-
+*/
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_categories ORDER BY ordering, name";
 		$db->setQuery ( $query );
@@ -322,7 +323,7 @@ class KunenaForumCategoryHelper {
 				self::$_instances [$id]->section = !self::$_instances [$id]->level;
 			}
 		}
-		$cache->store(serialize(array(self::$_instances, self::$_tree, self::$_names)), 'instances', 'com_kunena.categories');
+//		$cache->store(serialize(array(self::$_instances, self::$_tree, self::$_names)), 'instances', 'com_kunena.categories');
 	}
 
 	static public function compareByNameAsc($a, $b) {

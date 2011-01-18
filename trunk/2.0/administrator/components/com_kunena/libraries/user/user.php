@@ -192,21 +192,22 @@ class KunenaUser extends JObject {
 
 	public function getAllowedCategories($rule = 'read') {
 		if (!isset($this->_allowed[$rule])) {
-			$key = "com_kunena.user{$this->userid}.{$rule}";
+			$key = "com_kunena.user{$this->userid}_{$rule}";
 			if ($this->userid) {
 				$app = JFactory::getApplication();
 				$allowed = $app->getUserState($key);
 			} else {
 				$cache = JFactory::getCache('com_kunena', 'output');
 				$allowed = $cache->get($key, 'com_kunena');
+				if ($allowed) $allowed = unserialize($allowed);
 			}
-			if (!$allowed) {
+			if (!is_array($allowed)) {
 				$acl = KunenaFactory::getAccessControl ();
 				$allowed = $acl->getAllowedCategories ( $this->userid, $rule );
 				if ($this->userid) {
 					$app->setUserState($key, $allowed);
 				} else {
-					$cache->store($allowed, $key, 'com_kunena');
+					$cache->store(serialize($allowed), $key, 'com_kunena');
 				}
 			}
 			$this->_allowed[$rule] = $allowed;

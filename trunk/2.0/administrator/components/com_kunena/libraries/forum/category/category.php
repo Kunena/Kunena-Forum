@@ -27,6 +27,7 @@ class KunenaForumCategory extends JObject {
 	protected $_posts = false;
 	protected $_lastid = false;
 	protected $_authcache = array();
+	protected $_new = 0;
 
 	/**
 	 * Constructor
@@ -59,6 +60,11 @@ class KunenaForumCategory extends JObject {
 		$return = $this->_exists;
 		if ($exists !== null) $this->_exists = $exists;
 		return $return;
+	}
+
+	public function getNewCount($count=false) {
+		if ($count !== false) $this->_new = $count;
+		return $this->_new;
 	}
 
 	public function getTopics() {

@@ -67,24 +67,25 @@ class KunenaForumCategoryHelper {
 		$session = KunenaFactory::getSession ();
 		$readlist = $session->readtopics;
 		$prevCheck = $session->lasttime;
-
-		$catlist = implode(',', $catids);
+		$categories = self::getCategories($catids, false, 'none');
+		$catlist = implode(',', array_keys($categories));
 		$db = JFactory::getDBO ();
-		$query = "SELECT category_id, COUNT(*) AS new
+		$query = "SELECT DISTINCT(category_id), COUNT(*) AS new
 			FROM #__kunena_topics
 			WHERE category_id IN ($catlist) AND hold='0' AND last_post_time>{$db->Quote($prevCheck)} AND id NOT IN ({$readlist})
 			GROUP BY category_id";
 		$db->setQuery ( $query );
-		$newlist = $db->loadObjectList ('category_id');
+		$newlist = (array) $db->loadObjectList ('category_id');
 		if (KunenaError::checkDatabaseError()) return;
+		if (empty($newlist)) return;
 		$new = array();
-		foreach ($catids AS $id) {
-			if (isset($newlist[$id]))
-				$new[$id] = $newlist[$id]->new;
-			else
-				$new[$id] = 0;
+		foreach ($newlist AS $id=>$item) {
+			$new[$id] = (int) $item->new;
 		}
-		return $new;
+		foreach ($categories as $category) {
+			$channels = $category->getChannels();
+			$category->getNewCount(array_sum(array_intersect_key($new, $channels)));
+		}
 	}
 
 	static public function getCategoriesByAccess($accesstype='joomla', $groupids = false) {

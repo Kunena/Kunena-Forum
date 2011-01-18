@@ -38,7 +38,7 @@ foreach ( $this->categories[0] as $section ) :
 		<tr class="k<?php echo $tabclass [$k ^= 1], isset ( $category->class_sfx ) ? ' k' . $this->escape($tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
 			id="kcat<?php echo intval($category->id) ?>">
 			<td class="kcol-first kcol-category-icon">
-				<?php echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->getCategoryIcon($category->id) ) ?>
+				<?php echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->getCategoryIcon($category) ) ?>
 			</td>
 
 			<td class="kcol-mid kcol-kcattitle">
@@ -46,8 +46,8 @@ foreach ( $this->categories[0] as $section ) :
 			<?php
 				// Show new posts, locked, review
 				echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->escape($category->name ) );
-				if (!empty($this->new[$category->id])) {
-					echo '<sup class="knewchar">(' . intval($this->new[$category->id]) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
+				if ($category->getNewCount()) {
+					echo '<sup class="knewchar">(' . $category->getNewCount() . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
 				}
 				if ($category->locked) {
 					echo CKunenaTools::showIcon ( 'kforumlocked', JText::_('COM_KUNENA_GEN_LOCKED_FORUM') );
@@ -70,7 +70,7 @@ foreach ( $this->categories[0] as $section ) :
 			<?php foreach ( $this->categories [$category->id] as $childforum ) : ?>
 			<div class="kcc-subcat km">
 			<?php
-				echo $this->getCategoryIcon($childforum->id, true);
+				echo $this->getCategoryIcon($childforum, true);
 				echo CKunenaLink::GetCategoryLink ( 'showcat', intval($childforum->id), $this->escape($childforum->name), '','', KunenaHtmlParser::stripBBCode ( $childforum->description ) );
 				echo '<span class="kchildcount ks">(' . $childforum->getTopics() . "/" . $childforum->getPosts() . ')</span>';
 			?>

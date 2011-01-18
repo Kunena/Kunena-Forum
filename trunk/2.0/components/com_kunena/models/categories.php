@@ -66,7 +66,7 @@ class KunenaModelCategories extends KunenaModel {
 			return array();
 
 		if ($this->config->shownew && $this->me->userid) {
-			$this->new = KunenaForumCategoryHelper::getNewTopics(array_keys($allsubcats));
+			KunenaForumCategoryHelper::getNewTopics(array_keys($allsubcats));
 		}
 
 		$modcats = array ();
@@ -149,11 +149,6 @@ class KunenaModelCategories extends KunenaModel {
 		}
 
 		return $this->_items;
-	}
-
-	public function getNew() {
-		$this->getCategories();
-		return $this->new;
 	}
 
 	/**

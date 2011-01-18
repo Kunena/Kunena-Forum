@@ -151,6 +151,11 @@ class KunenaModelCategories extends KunenaModel {
 		return $this->_items;
 	}
 
+	public function getNew() {
+		$this->getCategories();
+		return $this->new;
+	}
+
 	/**
 	 * Escapes a value for output in a view script.
 	 *

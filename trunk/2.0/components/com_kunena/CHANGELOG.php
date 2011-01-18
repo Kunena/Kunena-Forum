@@ -36,6 +36,8 @@ Kunena 2.0.0-DEV
 18-January-2010 Matias
 # [#23443] Fix fatal error in KunenaUserHelper::loadUsers()
 # [#23443] Fix white page in menu manager because of missing JElementKunenaCategories on legacy menuitems
+# [#23443] Category template: Fix Undefined property
+# [#23443] Categories view: New topics indication doesn't work
 
 17-January-2010 Xillibit
 # [#24443] BBCode help input need to be disabled to avoid to be edited

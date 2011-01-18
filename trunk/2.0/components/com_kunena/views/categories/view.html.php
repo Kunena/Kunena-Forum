@@ -22,6 +22,7 @@ class KunenaViewCategories extends KunenaView {
 			$this->setError($this->categories->getError());
 		}
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
+		$this->assignRef ( 'new', $this->get ( 'New' ) );
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 

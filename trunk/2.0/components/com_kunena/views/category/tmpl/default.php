@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 			<a name="forumtop"> </a>
 			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', CKunenaTools::showIcon ( 'kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
 		</td>
-		<?php if (isset ( $this->newTopicHtml ) || isset ( $this->markReadHtml ) || isset ( $this->subscribeCatHtml )) : ?>
+		<?php if (!empty ( $this->newTopicHtml ) || !empty ( $this->markReadHtml ) || !empty ( $this->subscribeCatHtml )) : ?>
 		<td class="klist-actions-forum">
 			<div class="kmessage-buttons-row"><?php echo $this->newTopicHtml .' ' . $this->markReadHtml . ' ' . $this->subscribeCatHtml; ?></div>
 		</td>
@@ -103,7 +103,7 @@ defined ( '_JEXEC' ) or die ();
 			<a name="forumbottom"> </a>
 			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', CKunenaTools::showIcon ( 'kforumtop', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
 		</td>
-		<?php if (isset ( $this->newTopicHtml ) || isset ( $this->markReadHtml ) || isset ( $this->subscribeCatHtml )) : ?>
+		<?php if (!empty ( $this->newTopicHtml ) || !empty ( $this->markReadHtml ) || !empty ( $this->subscribeCatHtml )) : ?>
 		<td class="klist-actions-forum">
 			<div class="kmessage-buttons-row"><?php echo $this->newTopicHtml .' ' . $this->markReadHtml . ' ' . $this->subscribeCatHtml; ?></div>
 		</td>

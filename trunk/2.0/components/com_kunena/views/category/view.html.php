@@ -59,6 +59,7 @@ class KunenaViewCategory extends KunenaView {
 			$this->markReadHtml = CKunenaLink::GetCategoryActionLink ( 'markthisread', $this->category->id, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
 		}
 
+		$this->subscribeCatHtml = '';
 		// Is user allowed to subscribe category?
 		if ($this->category->authorise ( 'subscribe', null, true )) {
 			// FIXME: add into library:

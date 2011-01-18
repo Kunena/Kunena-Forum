@@ -3231,12 +3231,6 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	height: 24px;
 	margin: 5px 5px 0 -29px;
 }
-#Kunena span.kpdf {
-	background: url("../images/icons/pdf.png") no-repeat left center;
-	width: 24px;
-	height: 24px;
-	margin: 5px 33px 0 -29px;
-}
 #Kunena div.krss-block {
 	float: right;
 }

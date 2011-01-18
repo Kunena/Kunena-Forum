@@ -168,7 +168,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $board_ofset = '0.00'; // DEPRECATED, needed in installer
 	var $offline_message = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
 	var $enablerss = 1;
-	var $enablepdf = 1;
 	var $threads_per_page = 20;
 	var $messages_per_page = 6;
 	var $messages_per_page_search = 15;
@@ -358,7 +357,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $show_session_starttime = 0;
 	// New for 1.6.2: configuration option to set all users or only registred users to see userlist
 	var $userlist_allowed = 0;
-	
+
 	public function __construct($userinfo = null) {
 		parent::__construct ();
 	}

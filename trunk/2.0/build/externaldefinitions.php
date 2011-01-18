@@ -34,9 +34,6 @@ class CUserPoints {}
 // AlphaUserPoints
 class AlphaUserPointsHelper {}
 
-// PDF
-class Cezpdf {}
-
 // UddeIM
 class uddeIMAPI {}
 

@@ -84,7 +84,6 @@
 		<field name="board_ofset" type="text" null="1" />
 		<field name="offline_message" type="text" null="1" />
 		<field name="enablerss" type="int(11)" null="1" />
-		<field name="enablepdf" type="int(11)" null="1" />
 		<field name="threads_per_page" type="int(11)" null="1" />
 		<field name="messages_per_page" type="int(11)" null="1" />
 		<field name="messages_per_page_search" type="int(11)" null="1" />

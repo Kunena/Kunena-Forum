@@ -41,6 +41,7 @@ Kunena 2.0.0-DEV
 + [#23443] Add category channels support for new topics indication
 + [#23443] KunenaFomrumCategoryHelper: Include children categories into new topic counter
 # [#23443] Fix caching bugs
+- [#22570] Remove deprecated PDF support
 
 17-January-2010 Xillibit
 # [#24443] BBCode help input need to be disabled to avoid to be edited

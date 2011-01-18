@@ -483,7 +483,7 @@ if ($func == "json") {
 }
 
 $format = JRequest::getCmd ( 'format', 'html' );
-if ($func != 'fb_pdf' && $func != 'pdf' && $format == 'html') {
+if ($format == 'html') {
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/initialize.php' )) {
 		require_once ( KUNENA_ABSTMPLTPATH . '/initialize.php' );
 	} else {
@@ -501,13 +501,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 } else {
 	// =======================================================================================
 	// Forum is online:
-
-	jimport ( 'joomla.version' );
-	$jversion = new JVersion ();
-	if (($func == 'fb_pdf' || $func == 'pdf') && $jversion->RELEASE != '1.6') {
-		include (JPATH_COMPONENT.DS.'lib'.DS.'kunena.pdf.php');
-		$kunena_app->close ();
-	}
 
 	if ($format != 'html') {
 		echo "Kunena: Unsupported output format {$format}, please use only format=html or .html";
@@ -925,22 +918,18 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// Bottom Module
 	CKunenaTools::showModulePosition( 'kunena_bottom' );
 
-	// PDF and RSS
-	if ($kunena_config->enablerss || $kunena_config->enablepdf) {
+	// RSS
+	if ($kunena_config->enablerss) {
 		if ($catid>0) {
 			$category = KunenaForumCategoryHelper::get($catid);
 			if ($category->pub_access == 0 && $category->parent_id) $rss_params = '&amp;catid=' . (int) $catid;
 		} else {
 			$rss_params = '';
 		}
-		if (isset($rss_params) || $kunena_config->enablepdf) {
+		if (isset($rss_params)) {
 			jimport ( 'joomla.version' );
 			$jversion = new JVersion ();
 			echo '<div class="krss-block">';
-			if ($kunena_config->enablepdf && $func == 'view' && $jversion->RELEASE != '1.6') {
-				// FIXME: add better translation:
-				echo CKunenaLink::GetPDFLink($catid, $limit, $limitstart, $id, CKunenaTools::showIcon ( 'kpdf', JText::_('PDF') ), 'nofollow', '', JText::_('PDF'));
-			}
 			if ($kunena_config->enablerss && isset($rss_params)) {
 				$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
 				echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );

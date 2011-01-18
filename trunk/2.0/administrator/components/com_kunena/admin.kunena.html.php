@@ -407,13 +407,6 @@ table.kadmin-stat caption {
 							alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PDF') ?></td>
-								<td align="left" valign="top"><?php echo $lists ['enablepdf'];
-						?>
-						</td>
-						<td align="left" valign="top"><img src="<?php echo JURI::root (); ?>administrator/components/com_kunena/images/pdf_button.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_PDF_DESC') ?></td>
-					</tr>
-					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE') ?>
 						</td>
 								<td align="left" valign="top"><?php echo $lists ['debug'];

@@ -88,7 +88,7 @@ defined( '_JEXEC' ) or die();
 		<div class="klatest-post-info">
 			<?php if ($this->topic->ordering) echo $this->getIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') ); ?>
 			<?php if (!empty($this->topic->avatar)) : ?>
-			<span class="ktopic-latest-post-avatar"> <?php echo CKunenaLink::GetProfileLink ( $this->topic->last_post_userid, $this->topic_avatar ) ?></span>
+			<span class="ktopic-latest-post-avatar"> <?php echo CKunenaLink::GetProfileLink ( $this->topic->last_post_userid, $this->topic->avatar ) ?></span>
 			<?php endif; ?>
 
 			<span class="ktopic-latest-post">

@@ -162,7 +162,8 @@ switch ($view) {
 		$page = JRequest::getInt ( 'page', 1 );
 		JRequest::setVar ( 'page' );
 		if ($page > 0) {
-			JRequest::setVar ( 'limitstart', $config->threads_per_page * ($page - 1));
+			JRequest::setVar ( 'limitstart', $config->messages_per_page * ($page - 1));
+			JRequest::setVar ( 'limit', $config->messages_per_page );
 		}
 		break;
 	case 'latest' :
@@ -239,7 +240,8 @@ switch ($view) {
 		$page = JRequest::getInt ( 'page', 1 );
 		JRequest::setVar ( 'page' );
 		if ($page > 0) {
-			JRequest::setVar ( 'limitstart', $config->threads_per_page * ($page - 1));
+			JRequest::setVar ( 'limitstart', $config->threads_per_page * ($page - 1) );
+			JRequest::setVar ( 'limit', $config->threads_per_page );
 		}
 		JRequest::setVar ( 'mode', $mode );
 		break;

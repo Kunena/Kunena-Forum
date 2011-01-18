@@ -33,6 +33,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+18-January-2010 Matias
+# [#23443] Fix fatal error in KunenaUserHelper::loadUsers()
+# [#23443] Fix white page in menu manager because of missing JElementKunenaCategories on legacy menuitems
+
 17-January-2010 Xillibit
 # [#24443] BBCode help input need to be disabled to avoid to be edited
 

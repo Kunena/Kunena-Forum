@@ -54,6 +54,10 @@ class KunenaUserHelper {
 	}
 
 	static public function loadUsers($userids = array()) {
+		if (!is_array($userids)) {
+			JError::raiseError ( 500, __CLASS__ . '::' . __FUNCTION__.'(): Parameter $userids is not array' );
+		}
+
 		static $loaded = false;
 
 		// Make sure that userids are unique and that indexes are correct
@@ -81,7 +85,7 @@ class KunenaUserHelper {
 		if (empty ( $e_userids ))
 			return array ();
 
-		$userlist = implode ( ',', $e_userids );
+		$userlist = implode ( ',', array_keys($e_userids) );
 
 		$db = JFactory::getDBO ();
 		$query = "SELECT u.name, u.username, u.block as blocked, ku.*

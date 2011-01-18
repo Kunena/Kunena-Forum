@@ -314,7 +314,7 @@ class KunenaRouter {
 			} elseif (empty ( $var ) && empty ( $value )) {
 				// Invalid parameter, skip it
 				continue;
-			} elseif ($sefcats && empty($vars ['catid']) && (($value !== null && ! isset ( self::$parsevars[$var] )) || ! isset ( self::$views[$var] ))) {
+			} elseif ($sefcats && empty($vars ['catid']) && (($value !== null && ! isset ( self::$parsevars[$var] )) || (! isset ( self::$views[$var] ) && ! isset ( self::$functions[$var] )))) {
 				// We have SEF category: translate category name into catid=123
 				// TODO: cache filtered values to gain some speed -- I would like to start using category names instead of catids if it gets fast enough
 				$var = 'catid';

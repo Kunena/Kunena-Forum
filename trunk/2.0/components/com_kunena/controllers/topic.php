@@ -123,7 +123,13 @@ class KunenaControllerTopic extends KunenaController {
 				if ( !empty($opt) ) $optvalue[] = $opt;
 			}
 
-			if ( !empty($optvalue) ) $this->poll->save_new_poll ( $polltimetolive, $polltitle, $topic->id, $optvalue );
+			if ( !empty($optvalue) ) {
+				require_once KPATH_SITE . '/lib/kunena.poll.class.php';
+				$poll = CKunenaPolls::getInstance();
+				$poll->save_new_poll ( $polltimetolive, $polltitle, $topic->id, $optvalue );
+				$topic->poll_id = $topic->id;
+				$topic->save();
+			}
 		}
 
 		// Update Tags
@@ -228,14 +234,21 @@ class KunenaControllerTopic extends KunenaController {
 			}
 
 			//need to check if the poll exist, if it's not the case the poll is insered like new poll
+			require_once KPATH_SITE . '/lib/kunena.poll.class.php';
 			if (! $message->getTopic()->poll_id) {
-				if ( !empty($optvalue) ) $this->poll->save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
+				$poll = CKunenaPolls::getInstance();
+				if ( !empty($optvalue) ) {
+					$poll->save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
+					$topic->poll_id = $this->id;
+					$topic->save();
+				}
 			} else {
+				$poll = CKunenaPolls::getInstance();
 				if (empty ( $polltitle ) && empty($poll_optionsID)) {
 					//The poll is deleted because the polltitle and the options are empty
-					$this->poll->delete_poll ( $this->id );
+					$poll->delete_poll ( $this->id );
 				} else {
-					$this->poll->update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optionsnumbers, $poll_optionsID );
+					$poll->update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optionsnumbers, $poll_optionsID );
 				}
 			}
 		}

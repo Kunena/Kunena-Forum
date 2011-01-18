@@ -42,6 +42,8 @@ Kunena 2.0.0-DEV
 + [#23443] KunenaFomrumCategoryHelper: Include children categories into new topic counter
 # [#23443] Fix caching bugs
 - [#22570] Remove deprecated PDF support
+# [#23443] Topic/Create: current category isn't selected and the topic ends into wrong category by default
+# [#23443] Topic/Create: cannot create new polls
 
 17-January-2010 Xillibit
 # [#24443] BBCode help input need to be disabled to avoid to be edited

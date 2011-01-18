@@ -453,6 +453,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		//Offer an moderator a few tools
+		$this->message_edit = $this->message_moderate = '';
 		$this->message_delete = $this->message_undelete = $this->message_permdelete = $this->message_publish = '';
 		if (CKunenaTools::isModerator ( $me->userid, $this->topic->category_id )) {
 			unset($this->message_closed);

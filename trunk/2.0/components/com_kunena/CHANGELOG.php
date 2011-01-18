@@ -36,7 +36,7 @@ Kunena 2.0.0-DEV
 18-January-2010 Matias
 # [#23443] Fix fatal error in KunenaUserHelper::loadUsers()
 # [#23443] Fix white page in menu manager because of missing JElementKunenaCategories on legacy menuitems
-# [#23443] Category template: Fix Undefined property
+# [#23443] Fix Undefined properties in various views
 # [#23443] Categories view: New topics indication doesn't work
 + [#23443] Add category channels support for new topics indication
 + [#23443] KunenaFomrumCategoryHelper: Include children categories into new topic counter

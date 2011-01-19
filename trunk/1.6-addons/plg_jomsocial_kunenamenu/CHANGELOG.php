@@ -27,11 +27,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-JomsocialKunenaMenu 1.6.3-DEV
+JomsocialKunenaMenu 1.6.2
+
+17-January-2011 fxstein
+^ [#19002] Revert version info to 1.6.2 - has never been released for that plugin.
+
+17-January-2011 nobody
 ^ [#19002] Update version to 1.6.3-DEV
 + [#22905] JomSocial: Kunena Forum Menu plug-in - show/hide items
-
-JomsocialKunenaMenu 1.6.2
 
 24-December-2010 fxstein
 ^ [#19002] Merged revisions 3803-4058 from /branches/1.6-addons-LDAsvens-language-20101030

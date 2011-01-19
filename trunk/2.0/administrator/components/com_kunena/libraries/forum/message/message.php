@@ -293,6 +293,7 @@ class KunenaForumMessage extends JObject {
 
 	protected function updateAttachments() {
 		// Save new attachments and update message text
+		$message = $this->message;
 		foreach ($this->_attachments_add as $tmpid=>$attachment) {
 			$attachment->mesid = $this->id;
 			if (!$attachment->save()) {
@@ -317,6 +318,9 @@ class KunenaForumMessage extends JObject {
 		}
 		// Remove missing temporary attachments from the message text
 		$this->message = trim(preg_replace('/\[attachment\:\d+\].*?\[\/attachment\]/u', '', $this->message));
+
+		// Return true if we changed the message contents
+		return ($this->message != $message);
 	}
 
 	/**
@@ -418,17 +422,22 @@ class KunenaForumMessage extends JObject {
 		}
 
 		if (!$this->thread) {
-			// Update missing topic information into database
+			// Update missing topic information
 			$this->_thread = $this->thread = $this->id;
+			$update = true;
+		}
+
+		// Update attachments and message text
+		$update += $this->updateAttachments();
+
+		// Did we change anything?
+		if ($update) {
 			$table->bind ( $this->getProperties () );
 			if (! $table->store ()) {
 				$this->setError ( $table->getError () );
 				return false;
 			}
 		}
-
-		// Update attachments and message text (allowed to fail)
-		$this->updateAttachments();
 
 		// Cascade changes to other tables
 		$this->update();

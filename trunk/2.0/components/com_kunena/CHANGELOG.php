@@ -38,6 +38,7 @@ Kunena 2.0.0-DEV
 # [#23443] Editing announcement is broken if it's unpublished
 # [#23443] Do not cache our top menu as mod_mainmenu has its own cache
 # [#23443] Topic/Create: changing topic icon has no effect
+# [#23443] KunenaForumMessage::save(): Update message contents if there's attachment added/removed from it
 
 18-January-2010 Matias
 # [#23443] Fix fatal error in KunenaUserHelper::loadUsers()

@@ -34,6 +34,9 @@ Legend:
 Kunena 2.0.0-DEV
 
 19-January-2010 Xillibit
+# [#24395] Trash manager get messages on hold=2 instead of hold=3
+
+18-January-2010 Xillibit
 ^ [#24395] Backend in MVC (trash manager)(odered items and pagination doesn't work yet)
 
 15-January-2010 Xillibit

@@ -147,15 +147,16 @@ class KunenaModelKunenareport extends JModel {
 	 * @since	1.6
 	 */
 	protected function _getKunenaConfiguration() {
+		kimport('kunena.error');
 		$kunena_db = JFactory::getDBO ();
 		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."kunena_config'" );
 		$table_config = $kunena_db->loadResult ();
-		//if (KunenaError::checkDatabaseError()) return;
+		if (KunenaError::checkDatabaseError()) return;
 
 		if ($table_config) {
 			$kunena_db->setQuery("SELECT * FROM #__kunena_config");
 			$kconfig = (object)$kunena_db->loadObject ();
-			//if (KunenaError::checkDatabaseError()) return;
+			if (KunenaError::checkDatabaseError()) return;
 
 			$kconfigsettings = '[table]';
 			$kconfigsettings .= '[th]Kunena config settings:[/th]';
@@ -178,6 +179,7 @@ class KunenaModelKunenareport extends JModel {
 	 * @since	1.6
 	 */
 	protected function _getJoomlaTemplate($jversion) {
+		kimport('kunena.error');
   		$kunena_db = JFactory::getDBO ();
 		if ($jversion->RELEASE == '1.5') {
 			$templatedetails = new stdClass();
@@ -188,7 +190,7 @@ class KunenaModelKunenareport extends JModel {
 				.' WHERE client_id = 0 AND menuid = 0 ';
 			$kunena_db->setQuery($query);
 			$jdefaultemplate = $kunena_db->loadResult();
-			//if (KunenaError::checkDatabaseError()) return;
+			if (KunenaError::checkDatabaseError()) return;
 
 			$templatedetails->name = $jdefaultemplate;
 
@@ -232,6 +234,7 @@ class KunenaModelKunenareport extends JModel {
 	 * @since	1.6
 	 */
 	protected function _getJoomlaMenuDetails($jversion) {
+		kimport('kunena.error');
 		$kunena_db = JFactory::getDBO ();
 		if ($jversion->RELEASE == '1.5') {
 			// Get Kunena menu items
@@ -240,7 +243,7 @@ class KunenaModelKunenareport extends JModel {
 				." WHERE menutype = {$kunena_db->Quote('kunenamenu')} OR name='forum' ORDER BY id ASC";
 			$kunena_db->setQuery($query);
 			$kmenustype = $kunena_db->loadObjectlist();
-			//if (KunenaError::checkDatabaseError()) return;
+			if (KunenaError::checkDatabaseError()) return;
 
 			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
 			foreach($kmenustype as $item) {
@@ -253,14 +256,14 @@ class KunenaModelKunenareport extends JModel {
 				." WHERE type='component' AND title ='Kunena Forum' ORDER BY id ASC";
 			$kunena_db->setQuery($query);
 			$kmenuparentid = $kunena_db->loadResult();
-			//if (KunenaError::checkDatabaseError()) return;
+			if (KunenaError::checkDatabaseError()) return;
 
 			$query = "SELECT id, menutype, title, alias, link, path "
 				." FROM #__menu "
 				." WHERE parent_id={$kunena_db->Quote($kmenuparentid)} AND type='component' OR title='Kunena Forum' OR title='Kunena' ORDER BY id ASC";
 			$kunena_db->setQuery($query);
 			$kmenustype = $kunena_db->loadObjectlist();
-			//if (KunenaError::checkDatabaseError()) return;
+			if (KunenaError::checkDatabaseError()) return;
 
 			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
 			foreach($kmenustype as $item) {
@@ -280,6 +283,7 @@ class KunenaModelKunenareport extends JModel {
 	 * @since	1.6
 	 */
 	protected function _getTablesCollation() {
+		kimport('kunena.error');
 		$kunena_db = JFactory::getDBO ();
 
 		// Check each table in the database if the collation is on utf8
@@ -289,7 +293,7 @@ class KunenaModelKunenareport extends JModel {
 			if (preg_match('`_kunena_`',$table)) {
 				$kunena_db->setQuery("SHOW FULL FIELDS FROM " .$table. "");
 				$fullfields = $kunena_db->loadObjectList ();
-				//if (KunenaError::checkDatabaseError()) return;
+				if (KunenaError::checkDatabaseError()) return;
 
 				$fieldTypes = array('tinytext','text','char','varchar');
 

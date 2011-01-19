@@ -48,8 +48,9 @@ class KunenaModelTrash extends JModel {
 	 * @since	1.6
 	 */
 	 public function getItems() {
+	 	kimport('kunena.error');
 		$kunena_db = &JFactory::getDBO ();
-		$where 	= ' WHERE hold=2 ';
+		$where 	= ' WHERE hold=3 ';
 		$query = 'SELECT a.*, b.name AS cats_name, c.username FROM #__kunena_messages AS a
 		INNER JOIN #__kunena_categories AS b ON a.catid=b.id
 		LEFT JOIN #__users AS c ON a.userid=c.id'
@@ -57,7 +58,7 @@ class KunenaModelTrash extends JModel {
 
 		$kunena_db->setQuery ( $query );
 		$trashitems = $kunena_db->loadObjectList ();
-		//if (KunenaError::checkDatabaseError()) return;
+		if (KunenaError::checkDatabaseError()) return;
 
 		return $trashitems;
 	}
@@ -82,13 +83,14 @@ class KunenaModelTrash extends JModel {
 	 * @since	1.6
 	 */
 	public function getPurgeItems() {
+		kimport('kunena.error');
 		$kunena_db = &JFactory::getDBO ();
 		$ids = $this->_getCids();
 
 		$ids = implode ( ',', $ids );
 		$kunena_db->setQuery ( "SELECT * FROM #__kunena_messages WHERE hold=2 AND id IN ($ids)");
 		$items = $kunena_db->loadObjectList ();
-		//if (KunenaError::checkDatabaseError()) return;
+		if (KunenaError::checkDatabaseError()) return;
 
 		return $items;
 	}

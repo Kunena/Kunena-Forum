@@ -175,7 +175,7 @@ abstract class KunenaAccess {
 		return $hold;
 	}
 
-	function getSubscribers($catid, $topic, $subscriptions = false, $moderators = false, $admins = false, $excludeList = array(0)) {
+	function getSubscribers($catid, $topic, $subscriptions = false, $moderators = false, $admins = false, $excludeList = null) {
 		$topic = KunenaForumTopicHelper::get($topic);
 		if (!$topic->exists())
 			return array();
@@ -226,7 +226,16 @@ abstract class KunenaAccess {
 		} else {
 			$query->select("0 AS admin");
 		}
-		if (!is_array($excludeList)) $excludeList = explode(',', $excludeList);
+		if (empty($excludeList)) {
+			// false, null, '', 0 and array(): get all subscribers
+			$excludeList = array();
+		} elseif (is_array($excludeList)) {
+			// array() needs to be flipped to get userids into keys
+			$excludeList = array_flip($excludeList);
+		} else {
+			// Others: let's assume that we have comma separated list of values (string)
+			$excludeList = array_flip(explode(',', (string) $excludeList));
+		}
 		$userlist = array_diff_key($userlist, $excludeList);
 		$userids = array();
 		if (!empty($userlist)) {
@@ -237,8 +246,6 @@ abstract class KunenaAccess {
 			$userids = (array) $db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 		}
-
-		unset($subslist, $modlist, $adminlist, $userlist);
 		return $userids;
 	}
 

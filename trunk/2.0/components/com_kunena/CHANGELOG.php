@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-January-2010 Xillibit
+# [#23443] Missing language strings for COM_KUNENA_LIB_*
+
 19-January-2010 Matias
 # [#23443] KunenaUserHelper::loadUsers(): Do not load online users, make sure that input is correct
 # [#23443] Editing announcement is broken if it's unpublished

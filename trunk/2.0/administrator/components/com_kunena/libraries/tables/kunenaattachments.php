@@ -37,7 +37,6 @@ class TableKunenaAttachments extends KunenaTable
 		$user = KunenaUserHelper::get($this->userid);
 		$message = KunenaForumMessageHelper::get($this->mesid);
 		if (!$user->exists()) {
-			// FIXME: add language strings:
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_USER'));
 		}
 		if (!$message->exists()) {

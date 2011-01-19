@@ -108,16 +108,14 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayMenu($tpl = null) {
-		$cache = JFactory::getCache('com_kunena', 'output');
+		// Menu module has already caching in it
 		$menu = KunenaRoute::getMenu ();
 		$key = $menu ? "{$menu->id}.{$menu->name}" : '0';
-		if ($cache->start($key, 'com_kunena.view.common.menu')) return;
 		$result = $this->loadTemplate($tpl);
 		if (JError::isError($result)) {
 			return $result;
 		}
 		echo $result;
-		$cache->end();
 	}
 
 	function displayLoginBox($tpl = null) {

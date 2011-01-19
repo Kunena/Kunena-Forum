@@ -113,7 +113,7 @@ class CKunenaAnnouncement {
 		if (! $id) {
 			$query = "SELECT * FROM #__kunena_announcement WHERE published='1' ORDER BY created DESC";
 		} else {
-			$query = "SELECT * FROM #__kunena_announcement WHERE id={$this->db->Quote($id)} AND published='1'";
+			$query = "SELECT * FROM #__kunena_announcement WHERE id={$this->db->Quote($id)}" . ($this->canEdit ? '': " AND published='1'");
 		}
 		$this->db->setQuery ( $query, 0, 1 );
 		$announcement = $this->db->loadObject ();

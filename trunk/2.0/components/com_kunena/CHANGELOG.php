@@ -33,6 +33,12 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-January-2010 Matias
+# [#23443] KunenaUserHelper::loadUsers(): Do not load online users, make sure that input is correct
+# [#23443] Editing announcement is broken if it's unpublished
+# [#23443] Do not cache our top menu as mod_mainmenu has its own cache
+# [#23443] Topic/Create: changing topic icon has no effect
+
 18-January-2010 Matias
 # [#23443] Fix fatal error in KunenaUserHelper::loadUsers()
 # [#23443] Fix white page in menu manager because of missing JElementKunenaCategories on legacy menuitems

@@ -58,34 +58,15 @@ class KunenaUserHelper {
 			JError::raiseError ( 500, __CLASS__ . '::' . __FUNCTION__.'(): Parameter $userids is not array' );
 		}
 
-		static $loaded = false;
-
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
 		foreach($userids as $userid){
 			$e_userids[intval($userid)] = intval($userid);
 		}
-		$userids = $e_userids;
-
-		if (!$loaded) {
-			// Before we do anything to cache the users, check if we should add active users
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-			$who = CKunenaWhoIsOnline::GetInstance();
-			$e_userids += $who->getActiveUsersList();
-
-			// Also get latest user and add to the list
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
-			$kunena_stats = CKunenaStats::getInstance ( );
-			$kunena_stats->loadLastUser();
-			$e_userids[intval($kunena_stats->lastestmemberid)] = intval($kunena_stats->lastestmemberid);
-			$loaded = true;
-		}
 		unset($e_userids[0]);
-		$e_userids = array_diff_key($e_userids, self::$_instances);
-		if (empty ( $e_userids ))
-			return array ();
+		if (empty($e_userids)) return array();
 
-		$userlist = implode ( ',', array_keys($e_userids) );
+		$userlist = implode ( ',', $e_userids );
 
 		$db = JFactory::getDBO ();
 		$query = "SELECT u.name, u.username, u.block as blocked, ku.*
@@ -102,7 +83,7 @@ class KunenaUserHelper {
 			$instance->bind ( $user );
 			$instance->exists(true);
 			self::$_instances [$instance->userid] = $instance;
-			if (in_array($instance->userid, $userids)) $list [$instance->userid] = $instance;
+			$list [$instance->userid] = $instance;
 		}
 
 		// Finally call integration preload as well

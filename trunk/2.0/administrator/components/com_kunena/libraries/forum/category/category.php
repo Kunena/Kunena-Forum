@@ -102,7 +102,7 @@ class KunenaForumCategory extends JObject {
 		$topic = new KunenaForumTopic();
 		$message = new KunenaForumMessage();
 		$topic->category_id = $message->catid = $this->id;
-		$topic->bind($fields, array ('subject'));
+		$topic->bind($fields, array ('subject', 'icon_id'));
 		$message->setTopic($topic);
 		$message->name = $user->getName('');
 		$message->userid = $user->userid;

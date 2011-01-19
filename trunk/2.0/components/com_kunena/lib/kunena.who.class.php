@@ -83,6 +83,8 @@ class CKunenaWhoIsOnline {
     	$users = $this->db->loadObjectList('userid');
     	KunenaError::checkDatabaseError();
 
+    	KunenaUserHelper::loadUsers(array_keys($users));
+
     	return $users;
 	}
 

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+19-January-2010 Xillibit
+# [#24277] Kunena userlist under J! 1.6 grab super admin with userid=62 instead of 42 (Part 2)
+
 17-January-2010 Xillibit
 # [#24443] BBCode help input need to be disabled to avoid to be edited
 

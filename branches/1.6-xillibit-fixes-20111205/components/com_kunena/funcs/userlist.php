@@ -25,16 +25,16 @@ class CKunenaUserlist {
 		$this->config = KunenaFactory::getConfig ();
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
-		
+
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
-		
+
 		$this->search = JRequest::getVar ( 'search', '' );
 		$this->limitstart = JRequest::getInt ( 'limitstart', 0 );
 		$this->limit = $querylimit = JRequest::getInt ( 'limit', (int)$this->config->userlist_rows );
 
 		jimport ( 'joomla.html.pagination' );
-		
+
 		if( !$this->isAllowed() ) return false;
 
 		$filter_order = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order', 'filter_order', 'registerDate', 'cmd' );
@@ -65,25 +65,19 @@ class CKunenaUserlist {
 			$this->limitstart = 0;
 		}
 
-		// this is need to show something when the user choose all, but we need to limit even the 'all' with a number	
+		// this is need to show something when the user choose all, but we need to limit even the 'all' with a number
  		if ( $this->limit == 0 ) $querylimit = '150';
-		
+
+ 		$useridAdmin = $jversion->RELEASE == '1.5' ? '62' : '42';
+
 		// Select query
 		$query = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id WHERE (block=0 OR activation!='')";
 		$this->searchuri = "";
 		if ($this->search != "") {
-			if($jversion->RELEASE == '1.5') {
-			 $query .= " AND (name LIKE '%{$this->db->getEscaped($this->search)}%' OR username LIKE '%{$this->db->getEscaped($this->search)}%') AND u.id NOT IN (62)";
-			} elseif ( $jversion->RELEASE == '1.6' ) {
-				$query .= " AND (name LIKE '%{$this->db->getEscaped($this->search)}%' OR username LIKE '%{$this->db->getEscaped($this->search)}%') AND u.id NOT IN (42)";
-			}
+			 $query .= " AND (name LIKE '%{$this->db->getEscaped($this->search)}%' OR username LIKE '%{$this->db->getEscaped($this->search)}%') AND u.id NOT IN (".$useridAdmin.")";
 			$this->searchuri .= "&search=" . $this->search;
 		} else {
-			if ($jversion->RELEASE == '1.5') {
-				$query .= " AND u.id NOT IN (62)";
-			} elseif ( $jversion->RELEASE == '1.6' ) {
-				$query .= " AND u.id NOT IN (42)";
-			}
+			$query .= " AND u.id NOT IN (".$useridAdmin.")";
 		}
 		$query .= $orderby;
 		$query .= " LIMIT $this->limitstart, $querylimit";
@@ -141,7 +135,7 @@ class CKunenaUserlist {
 			CKunenaTools::loadTemplate('/forumjump.php');
 		}
 	}
-	
+
 	function isAllowed() {
 		if ($this->config->userlist_allowed == 1 && $this->my->id == 0 ) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERLIST_NOT_ALLOWED' ), 'error' );

@@ -27,7 +27,7 @@ $this->common->display ('pathway');
 			<?php endif; ?>
 		</div>
 		<div class="fltrt">
-			<?php $this->common->display ('forumjump'); ?>
+			<?php $this->displayForumjump(); ?>
 		</div>
 	</div>
 </div>

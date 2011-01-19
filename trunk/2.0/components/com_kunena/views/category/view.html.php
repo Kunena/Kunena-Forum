@@ -109,12 +109,6 @@ class KunenaViewCategory extends KunenaView {
 		}
 	}
 
-	function displayForumJump() {
-		if ($this->config->enableforumjump) {
-			CKunenaTools::loadTemplate('/forumjump.php');
-		}
-	}
-
 	function displaySubCategories() {
 		$children = $this->category->getChildren();
 		if (!empty($children)) {

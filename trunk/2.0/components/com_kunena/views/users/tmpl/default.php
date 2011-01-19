@@ -48,7 +48,7 @@ function validate() {
 				</form>
 			</div>
 			<div class="userlist-jump">
-				<?php $this->common->display('forumjump'); ?>
+				<?php $this->displayForumjump(); ?>
 			</div>
 		</div>
 	</div>

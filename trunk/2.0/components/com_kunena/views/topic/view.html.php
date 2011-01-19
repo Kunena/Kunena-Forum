@@ -344,12 +344,6 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->loadTemplate('actions');
 	}
 
-	function displayForumJump() {
-		if ($this->config->enableforumjump) {
-			CKunenaTools::loadTemplate('/forumjump.php');
-		}
-	}
-
 	function displayMessageProfile($layout = '') {
 		static $profiles = array ();
 

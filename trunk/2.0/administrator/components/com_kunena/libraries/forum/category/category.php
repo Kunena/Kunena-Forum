@@ -197,8 +197,12 @@ class KunenaForumCategory extends JObject {
 	public function getModerators($includeGlobal = true) {
 		$access = KunenaFactory::getAccessControl();
 		$userlist = array();
-		if (!empty($this->id)) $userlist = $access->getModerators($this->id);
-		if ($includeGlobal) $userlist += $access->getModerators();
+		if (!empty($this->id)) {
+			$userlist += $access->getModerators($this->id);
+		}
+		if ($includeGlobal) {
+			$userlist += $access->getModerators();
+		}
 		foreach ($userlist as $userid => $val) {
 			$userlist[$userid] = $userid;
 		}

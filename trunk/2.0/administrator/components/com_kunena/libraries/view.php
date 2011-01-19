@@ -127,6 +127,13 @@ class KunenaView extends JView {
 		$this->common->display();
 	}
 
+	function displayForumJump() {
+		if (KunenaFactory::getConfig()->enableforumjump) {
+			$this->common->catid = !empty($this->category->id) ? $this->category->id : 0;
+			echo $this->common->display('forumjump');
+		}
+	}
+
 	function setTitle($title) {
 		$this->document->setTitle ( $this->document->getTitle() .' :: '. strip_tags($title) );
 	}

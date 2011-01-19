@@ -421,10 +421,11 @@ class KunenaForumMessage extends JObject {
 			$this->_hold = 1;
 		}
 
+		$update = 0;
 		if (!$this->thread) {
 			// Update missing topic information
 			$this->_thread = $this->thread = $this->id;
-			$update = true;
+			++$update;
 		}
 
 		// Update attachments and message text

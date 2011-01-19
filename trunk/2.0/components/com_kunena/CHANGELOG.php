@@ -40,6 +40,8 @@ Kunena 2.0.0-DEV
 # [#23443] Topic/Create: changing topic icon has no effect
 # [#23443] KunenaForumMessage::save(): Update message contents if there's attachment added/removed from it
 ^ [#22786] Merge revisions 4187-4234 from trunk/1.6
+# [#23443] Fix default selection in forumjump
+- [#22570] Remove deprecated templates/default/forumjump.php
 
 18-January-2010 Matias
 # [#23443] Fix fatal error in KunenaUserHelper::loadUsers()

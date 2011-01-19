@@ -214,7 +214,9 @@ abstract class KunenaRoute {
 			$menus = $app->getMenu ();
 			$todo = isset(self::$childlist[$menutype][0]) ? self::$childlist[$menutype][0] : array();
 			while (($id = array_shift($todo)) !== null) {
-				if (!$menus->authorize($id)) continue;
+				// Support both J1.6 and J1.5
+				$authorise = isset($item->parent_id) ? $menus->authorise($item->id) : $menus->authorize($id, JFactory::getUser()->aid);
+				if ( !$authorise ) continue;
 				$item = self::$menu[$id];
 				if ($item->type == 'component' && $item->component == 'com_kunena') {
 					self::$subtree[$menutype][$id] = $id;
@@ -261,7 +263,9 @@ abstract class KunenaRoute {
 			if ( isset(self::$menu[$Itemid]->menutype) ) $menutype = self::$menu[$Itemid]->menutype;
 			$todo = array(intval($Itemid));
 			while (($id = array_shift($todo)) !== null) {
-				if ( isset( self::$menu[$id]) && $menus->authorize($id) ) {
+				// Support both J1.6 and J1.5
+				$authorise = isset($item->parent_id) ? $menus->authorise($item->id) : $menus->authorize($id, JFactory::getUser()->aid);
+				if ( isset( self::$menu[$id]) && $authorise ) {
 					$item = self::$menu[$id];
 					if ($item->type == 'component' && $item->component == 'com_kunena') {
 						self::$subtree[$Itemid][$id] = $id;
@@ -284,12 +288,13 @@ abstract class KunenaRoute {
 	protected static function checkHomePage($item, $query) {
 		jimport('joomla.html.parameter');
 		$params = new JParameter($item->params);
-		$catids = $params->get('catids');
 		if (empty ( $query ['catid'] )) return 0;
+		$catids = $params->get('catids', array());
 		if (!is_array($catids)) {
-			$catids = explode(',', $params->get('catids'));
+			$catids = explode(',', $catids);
 		}
-		if (empty ( $catids ) || in_array(0, $catids)) return 0;
+		unset($catids[0]);
+		if (empty ( $catids )) return 0;
 		if (in_array($query ['catid'], $catids)) return 0;
 		return;
 	}

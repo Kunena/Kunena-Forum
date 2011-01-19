@@ -42,6 +42,7 @@ Kunena 2.0.0-DEV
 ^ [#22786] Merge revisions 4187-4234 from trunk/1.6
 # [#23443] Fix default selection in forumjump
 - [#22570] Remove deprecated templates/default/forumjump.php
+# [#23443] Statistics: sections and categories mized up
 
 18-January-2010 Matias
 # [#23443] Fix fatal error in KunenaUserHelper::loadUsers()

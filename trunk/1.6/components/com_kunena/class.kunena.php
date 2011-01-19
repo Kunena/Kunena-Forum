@@ -493,7 +493,7 @@ class CKunenaTools {
 		return $acl->isModerator($uid, $catid);
 	}
 
-	function getEMailToList($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
+	function getEMailToList($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = null) {
 		$acl = KunenaFactory::getAccessControl();
 		return $acl->getSubscribers($catid, $thread, $subscriptions, $moderators, $admins, $excludeList);
 	}

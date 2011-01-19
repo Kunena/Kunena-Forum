@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+19-January-2011 Matias
+# [#24480] Regression: Do not send email to author itself
+
 15-January-2011 Matias
 ^ [#15886] Merged revisions 4181-4182 from /branches/1.6-LDAsvens-bugs-2011-01-13
 

@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.environment.uri' );
+kimport ('kunena.route.legacy');
 
 abstract class KunenaRoute {
 	static $childlist = false;
@@ -33,6 +34,8 @@ abstract class KunenaRoute {
 		}
 		else if (is_numeric($uri)) {
 			return intval($uri);
+		} elseif ($uri instanceof JURI) {
+			$link = $uri;
 		} else {
 			$link = new JURI ( (string)$uri );
 		}
@@ -66,22 +69,26 @@ abstract class KunenaRoute {
 			return JRoute::_($uri, $xhtml, $ssl);
 		}
 		$menu = self::getCurrentMenu();
-		$key = ($menu ? $menu->id : 0) .'-'.(int)$xhtml.(int)$ssl.$uri;
+
+		$key = ($menu ? $menu->id : 0) .'-'.(int)$xhtml.(int)$ssl. ($uri instanceof JURI ? 'index.php?' . $uri->getQuery () : $uri);
 		if (isset(self::$uris[$key])) {
 			return self::$uris[$key];
 		}
 		if (!$uri) {
 			$link = self::current(true);
 			$link->delVar ( 'Itemid' );
-		} else if (is_numeric($uri)) {
+		} elseif (is_numeric($uri)) {
 			self::buildMenuTree();
 			$item = self::$menu[intval($uri)];
 			return JRoute::_($item->link."&Itemid={$item->id}");
+		} elseif ($uri instanceof JURI) {
+			$link = $uri;
 		} else {
 			$link = new JURI ( (string)$uri );
 		}
 
 		if (JFactory::getApplication()->isSite()) {
+			KunenaRouteLegacy::convert($link);
 			$query = $link->getQuery ( true );
 			$Itemid = self::_getItemID ( $query );
 			$link->setVar ( 'Itemid', $Itemid );

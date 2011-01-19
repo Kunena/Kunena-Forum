@@ -43,6 +43,7 @@ Kunena 2.0.0-DEV
 # [#23443] Fix default selection in forumjump
 - [#22570] Remove deprecated templates/default/forumjump.php
 # [#23443] Statistics: sections and categories mized up
++ [#22569] Add KunenaRouteLegacy class to convert old URIs into new ones
 
 18-January-2010 Matias
 # [#23443] Fix fatal error in KunenaUserHelper::loadUsers()

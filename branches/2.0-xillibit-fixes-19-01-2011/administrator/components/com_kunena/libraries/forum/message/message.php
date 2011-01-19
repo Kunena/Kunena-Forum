@@ -206,6 +206,7 @@ class KunenaForumMessage extends JObject {
 			'move'=>array('Read'),
 			'approve'=>array('Read'),
 			'delete'=>array('Read','Own','EditTime', 'Delete'),
+			'thankyou'=>array('Read'),
 			'undelete'=>array('Read'),
 			'permdelete'=>array('Read'),
 			'attachment.read'=>array('Read'),

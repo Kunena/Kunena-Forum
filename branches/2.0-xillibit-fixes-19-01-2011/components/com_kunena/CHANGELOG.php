@@ -35,6 +35,8 @@ Kunena 2.0.0-DEV
 
 19-January-2010 Xillibit
 # [#23443] Missing language strings for COM_KUNENA_LIB_*
+# [#23443] Not possible to give thank you to users
+# [#23443] Fatal error: Call to undefined method KunenaForumMessage::emailToSubscribers() in controllers\topic.php on line 511
 
 19-January-2010 Matias
 # [#23443] KunenaUserHelper::loadUsers(): Do not load online users, make sure that input is correct

@@ -299,11 +299,11 @@ class KunenaRouter {
 				if (empty($vars ['catid'])) {
 					// First number is always category
 					$var = 'catid';
-					if ($vars ['view'] == 'home' || $vars ['view'] == 'entrypage') $vars ['view'] = KunenaForumCategoryHelper::get($value)->parent_id ? 'category' : 'categories';
+					if ($vars ['view'] != 'topic') $vars ['view'] = KunenaForumCategoryHelper::get($value)->parent_id ? 'category' : 'categories';
 				} elseif (empty($vars ['id'])) {
 					// Second number is always topic
 					$var = 'id';
-					if ($vars ['view'] == 'home' || $vars ['view'] == 'entrypage') $vars ['view'] = 'topic';
+					$vars ['view'] = 'topic';
 				} elseif (empty($vars ['mesid'])) {
 					// Third number is always message
 					$var = 'mesid';
@@ -327,7 +327,7 @@ class KunenaRouter {
 						break;
 					}
 				}
-				if ($vars ['view'] == 'home' || $vars ['view'] == 'entrypage') $vars ['view'] = KunenaForumCategoryHelper::get($value)->parent_id ? 'category' : 'categories';
+				if ($vars ['view'] != 'topic') $vars ['view'] = KunenaForumCategoryHelper::get($value)->parent_id ? 'category' : 'categories';
 			} elseif ($value === null) {
 				// Variable must be either view or layout
 				$value = $var;

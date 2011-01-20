@@ -35,6 +35,7 @@ Kunena 2.0.0-DEV
 
 20-January-2010 Xillibit
 ^ [#24515] Put some old codes into mvc in frontend (report)
+^ [#24515] Put some old codes into mvc in frontend (credits)
 
 20-January-2010 Matias
 ^ [#22786] Merge revisions 4245-4247 from /branches/2.0-xillibit-fixes-19-01-2011

@@ -1,21 +1,15 @@
 <?php
 /**
-* @version $Id$
-* Kunena Component
-* @package Kunena
-*
-* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.org
-*
-* Based on FireBoard Component
-* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.bestofjoomla.com
-**/
-defined( '_JEXEC' ) or die();
+ * @version $Id: listcat.php 3901 2010-11-15 14:14:02Z mahagr $
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined ( '_JEXEC' ) or die ();
 
-$kunena_config = KunenaFactory::getConfig ();
 ?>
 <div class="kblock kcredits">
 	<div class="kheader">
@@ -51,8 +45,7 @@ $kunena_config = KunenaFactory::getConfig ();
 			<div class="kcredits-more">
 				<?php $catid = (int)$catid;
 				// Add a link to go back to the latest category we where viewing...
-				echo '<div>'. JText::_('COM_KUNENA_CREDITS_GO_BACK') . ' ' .
-				CKunenaLink::GetCategoryLink('showcat', $catid, JText::_('COM_KUNENA_USER_RETURN_B'), $rel='nofollow') . '</div>';
+				echo '<div>'. JText::_('COM_KUNENA_CREDITS_GO_BACK') . ' ' .'<a href="javascript: history.go(-1)" title="'.JText::_('COM_KUNENA_CREDITS_GO_BACK').'">'.JText::_('COM_KUNENA_USER_RETURN_B').'</a></div>';
 				?>
 			</div>
 			<!-- Version Info -->

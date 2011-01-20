@@ -122,8 +122,9 @@ class CKunenaStats {
 			$this->totaltitles = 0;
 			$this->totalmsgs = 0;
 			kimport('kunena.forum.category.helper');
-			$categories = KunenaForumCategoryHelper::getCategories();
+			$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 			foreach ($categories as $category) {
+				if (!$category->published) continue;
 				$this->totaltitles += $category->numTopics;
 				$this->totalmsgs += $category->numPosts;
 			}
@@ -135,8 +136,9 @@ class CKunenaStats {
 			$this->totalsections = 0;
 			$this->totalcats = 0;
 			kimport('kunena.forum.category.helper');
-			$categories = KunenaForumCategoryHelper::getCategories();
+			$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 			foreach ($categories as $category) {
+				if (!$category->published) continue;
 				if ($category->parent_id == 0)
 					$this->totalsections ++;
 				else

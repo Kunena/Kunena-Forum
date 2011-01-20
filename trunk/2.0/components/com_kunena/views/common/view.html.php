@@ -81,8 +81,9 @@ class KunenaViewCommon extends KunenaView {
 
 	function displayWhosonline($tpl = null) {
 		if (KunenaFactory::getConfig()->showwhoisonline > 0) {
+			$moderator = KunenaFactory::getUser()->isModerator();
 			$cache = JFactory::getCache('com_kunena', 'output');
-			if ($cache->start(0, 'com_kunena.view.common.whosonline')) return;
+			if ($cache->start(0, "com_kunena.view.common.whosonline.{$moderator}")) return;
 			// FIXME: refactor code
 			require_once(KUNENA_PATH .DS. 'class.kunena.php');
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');

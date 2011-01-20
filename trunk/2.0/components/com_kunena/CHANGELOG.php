@@ -39,6 +39,8 @@ Kunena 2.0.0-DEV
 # [#23443] Administrator/Statistics: Fix Most Popular Members
 # [#23443] Administrator/Report: Fix fatal errors, warnings and notices
 # [#23443] Administrator/Trash Manager: disable view as it's currently broken
+# [#23443] Change forum statistics to be global (all categories, topics, posts), not just what user sees
+# [#23443] Whoisonline: cache different version from the page to moderators/admins vs other users
 
 19-January-2010 Xillibit
 # [#23443] Missing language strings for COM_KUNENA_LIB_*

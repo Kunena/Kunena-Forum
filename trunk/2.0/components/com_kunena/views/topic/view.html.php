@@ -413,6 +413,7 @@ class KunenaViewTopic extends KunenaView {
 			$this->ipLink = CKunenaLink::GetMessageIPLink ( $this->message->ip );
 		}
 		$this->signatureHtml = KunenaHtmlParser::parseBBCode ( $this->profile->signature );
+		$this->attachments = $this->message->getAttachments();
 		echo $this->loadTemplate("message");
 	}
 

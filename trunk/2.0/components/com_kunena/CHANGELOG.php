@@ -43,6 +43,8 @@ Kunena 2.0.0-DEV
 # [#23443] Whoisonline: cache different version from the page to moderators/admins vs other users
 # [#23443] Templates: Profile position setting doesn't work
 # [#23443] Topic/Create: Poll and Anonymous settings do not show up or hide when user changes category
+# [#23443] Hide confidential information also from moderators who are not moderating current category
+# [#23443] Do not show inline attachments 2 times
 
 19-January-2010 Xillibit
 # [#23443] Missing language strings for COM_KUNENA_LIB_*

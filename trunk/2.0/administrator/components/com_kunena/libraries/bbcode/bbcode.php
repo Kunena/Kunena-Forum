@@ -743,7 +743,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			return true;
 
 		$me = KunenaFactory::getUser ();
-		if ((!empty($bbcode->parent->msg->userid) && $bbcode->parent->msg->userid == $me->userid) || CKunenaTools::isModerator($me->userid)) {
+		if ((!empty($bbcode->parent->message->userid) && $bbcode->parent->message->userid == $me->userid) || $me->isModerator($bbcode->parent->message->catid)) {
 			// Display but highlight the fact that it is hidden from everyone except admins and mods
 			return '<b>' . JText::_ ( 'COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT' ) . '</b><div class="kmsgtext-confidential">' . $content . '</div>';
 		}

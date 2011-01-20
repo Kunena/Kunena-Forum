@@ -24,9 +24,9 @@ defined ( '_JEXEC' ) or die ();
 		<ul class="kfile-attach">
 		<?php foreach($this->attachments as $attachment) : ?>
 			<li>
-				<?php echo $attachment->thumblink; ?>
+				<?php echo $attachment->getThumbnailLink(); ?>
 				<span>
-					<?php echo $attachment->textLink; ?>
+					<?php echo $attachment->getTextLink(); ?>
 				</span>
 			</li>
 		<?php endforeach; ?>

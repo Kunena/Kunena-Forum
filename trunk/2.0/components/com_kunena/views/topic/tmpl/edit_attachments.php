@@ -20,7 +20,8 @@ defined ( '_JEXEC' ) or die ();
 					<input type="checkbox" name="attach-id[]" checked="checked" value="<?php echo intval($attachment->id); ?>" />
 					<a href="#" class="kattachment-insert" style="display: none;"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
 				</span>
-				<?php echo $attachment->thumblink; ?>
+				<?php echo $attachment->getThumbnailLink(); ?>
+
 				<span>
 					<span class="kfilename"><?php echo $this->escape($attachment->filename); ?></span>
 					<span><?php echo '('.number_format(intval($attachment->size)/1024,0,'',',').'KB)'; ?></span>

@@ -108,8 +108,6 @@ class KunenaModelTopic extends KunenaModel {
 			$this->messages = KunenaForumMessageHelper::getMessagesByTopic($this->getState ( 'item.id'),
 				$this->getState ( 'list.start'), $this->getState ( 'list.limit'), $this->getState ( 'list.direction'), $this->getState ( 'hold'));
 
-			//$attachments = KunenaForumMessageAttachmentHelper::getByMessage($this->messages);
-
 			// First collect the message ids of the first message and all replies
 			$userlist = array();
 			$ids = array();
@@ -121,20 +119,10 @@ class KunenaModelTopic extends KunenaModel {
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
 			KunenaUserHelper::loadUsers($userlist);
-		}
 
-		// Load attachments
-		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
-		$attachments = CKunenaAttachments::getInstance();
-		$message_attachments = $attachments->get(implode(',', $ids));
-
-		// Now that we have all relevant messages in messages, asign any matching attachments
-		foreach ( $this->messages as $message ){
-			// Assign attachments
-			if (isset($message_attachments[$message->id]))
-				$message->attachments = $message_attachments[$message->id];
+			// Get attachments
+			KunenaForumMessageAttachmentHelper::getByMessage($this->messages);
 		}
-		// Done with attachments
 
 		return $this->messages;
 	}

@@ -51,6 +51,10 @@ Kunena 2.0.0-DEV
 * [#24494] Security (Low/Low): User can make XSS attack to himself (thanks Ervis Tusha)
 # [#23443] If category has no moderators, send email to admins instead
 # [#23443] Fatal errors in JomSocial activity integration
+# [#22569] Topic/Edit: Convert topic history to use KunenaForumMessage objects
++ [#22569] Add missing logic from CKunenaAttachments to KunenaForumMessageAttachment class
+- [#22570] Convert or comment out deprecated usage of CKunenaAttachments class
+- [#22570] Remove deprecated CKunenaAttachments class and its files
 
 19-January-2010 Xillibit
 # [#23443] Missing language strings for COM_KUNENA_LIB_*

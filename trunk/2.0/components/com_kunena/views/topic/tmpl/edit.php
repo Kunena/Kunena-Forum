@@ -152,10 +152,7 @@ $this->k=0;
 					<a href="#" class="kattachment-insert kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
 				</div>
 
-				<?php
-				// Include attachments template if we have any
-				if ( isset ( $this->attachments ) ) $this->displayAttachments();
-				?>
+				<?php $this->displayAttachments($this->message); ?>
 			</td>
 		</tr>
 		<?php endif; ?>

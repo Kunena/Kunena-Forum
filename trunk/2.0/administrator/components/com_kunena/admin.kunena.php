@@ -1816,11 +1816,13 @@ function deleteAttachment($id, $redirect, $message) {
 		return;
 	}
 
-	require_once (KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+	// FIXME: deprecated class
+	/*
 	$attachments = CKunenaAttachments::getInstance();
 	$attachments->deleteAttachment($id);
 
 	$kunena_app->enqueueMessage ( JText::_($message) );
+	*/
 	$kunena_app->redirect ( $redirect );
 }
 

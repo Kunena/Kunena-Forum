@@ -223,12 +223,16 @@ class CKunenaAjaxHelper {
 	}
 
 	protected function _uploadFile ($do) {
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.attachments.class.php');
+		// FIXME:
+/*
 		$attachments = CKunenaAttachments::getInstance();
 		return $attachments->upload();
+*/
 	}
 
 	protected function _removeAttachment($data) {
+		//FIXME:
+/*
 		$result = array ();
 
 		// only registered users when the board is online will endup here
@@ -289,6 +293,7 @@ class CKunenaAjaxHelper {
 		}
 
 		return $result;
+*/
 	}
 
 	protected function _modTopicList ($data) {

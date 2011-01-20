@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.view' );
+kimport ('kunena.forum.message.attachment.helper');
 
 /**
  * Topic View
@@ -197,10 +198,8 @@ class KunenaViewTopic extends KunenaView {
 		$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->topic->subject;
 		$this->action = 'edit';
 
-		// Load attachments
-		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
-		$attachments = CKunenaAttachments::getInstance ();
-		$this->attachments = array_pop($attachments->get($this->message->id));
+		// Get attachments
+		$this->attachments = $this->message->getAttachments();
 
 		//save the options for query after and load the text options, the number options is for create the fields in the form after
 		if ($this->topic->poll_id) {
@@ -575,27 +574,9 @@ class KunenaViewTopic extends KunenaView {
 			return;
 
 		$db = JFactory::getDBO();
-		//get all the messages for this thread
-		$query = "SELECT m.*, t.* FROM #__kunena_messages AS m
-			LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid
-			WHERE thread='{$this->message->thread}' AND hold='0'
-			ORDER BY time DESC";
-		$db->setQuery ( $query, 0, $this->config->historylimit );
-		$this->messages = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError ())
-			return;
-
-		$this->replycount = count ( $this->messages );
-
-		//get attachments
-		$mesids = array ();
-		foreach ( $this->messages as $mes ) {
-			$mesids [] = $mes->id;
-		}
-		$mesids = implode ( ',', $mesids );
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
-		$attachments = CKunenaAttachments::getInstance ();
-		$this->attachmentslist = $attachments->get ( $mesids );
+		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, 10, $ordering='DESC');
+		$this->historycount = count ( $this->history );
+		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
 
 		echo $this->loadTemplate ( 'history' );
 	}
@@ -639,9 +620,14 @@ class KunenaViewTopic extends KunenaView {
 		return $this->numLink;
 	}
 
-	function displayAttachments($attachments=null) {
-		if ($attachments) $this->attachments = $attachments;
-		echo $this->loadTemplate ( 'attachments' );
+	function displayAttachments($message=null) {
+		if ($message instanceof KunenaForumMessage) {
+			$this->attachments = $message->getAttachments();
+			if (!empty($this->attachments)) echo $this->loadTemplate ( 'attachments' );
+		} else {
+			// FIXME:
+			echo 'ERROR: no message provided (attachments)';
+		}
 	}
 
 	function canSubscribe() {

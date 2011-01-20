@@ -1293,8 +1293,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		$attachments = &$bbcode->parent->attachments;
 		$attachment = null;
 		if (! empty ( $default )) {
-			$attobj = CKunenaAttachments::getInstance ();
-			$attachment = $attobj->getAttachment ( $default );
+			$attachment = KunenaForumMessageAttachmentHelper::get ($default);
 			if (is_object ( $attachment )) {
 				unset ( $attachments [$attachment->id] );
 			}
@@ -1325,10 +1324,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			if (is_object ( $attachment ) && is_file ( JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}" )) {
 				$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
 				$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
-				if (empty ( $attachment->imagelink )) {
+				$image = $attachment->getImageLink();
+				if (empty ( $image )) {
 					return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
 				} else {
-					return "<div class=\"kmsgimage\">{$attachment->imagelink}</div>";
+					return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
 				}
 			} else {
 				return '<div class="kmsgattach"><h4>' . JText::sprintf ( 'COM_KUNENA_ATTACHMENT_DELETED', $content ) . '</h4></div>';

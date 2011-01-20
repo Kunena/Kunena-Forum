@@ -58,6 +58,74 @@ class KunenaForumMessageAttachment extends JObject {
 		return $return;
 	}
 
+	function isImage($mime) {
+		return (stripos ( $mime, 'image/' ) !== false);
+	}
+
+	function getTextLink() {
+		$this->generate();
+		return $this->_textLink;
+	}
+
+	function getImageLink() {
+		$this->generate();
+		return $this->_imagelink;
+	}
+
+	function getThumbnailLink() {
+		$this->generate();
+		return $this->_thumblink;
+	}
+
+	protected function generate() {
+		if (!isset($this->_shorttype)) {
+			$this->_shorttype = $this->isImage($this->filetype) ? 'image' : $this->filetype;
+			$this->_shortname = CKunenaTools::shortenFileName($this->filename);
+
+			$config = KunenaFactory::getConfig();
+			$this->_imagelink = null;
+			switch (strtolower ( $this->_shorttype )) {
+				case 'image' :
+					// Check for thumbnail and if available, use for display
+					if (file_exists ( JPATH_ROOT . '/' . $this->folder . '/thumb/' . $this->filename )) {
+						$thumb = $this->folder . '/thumb/' . $this->filename;
+						$imgsize = '';
+					} else {
+						$thumb = $this->folder . '/' . $this->filename;
+						$imgsize = 'width="' . $config->thumbwidth . 'px" height="' . $config->thumbheight . 'px"';
+					}
+
+					$img = '<img title="' . $this->escape ( $this->filename ) . '" ' . $imgsize . ' src="' . JURI::ROOT () . $thumb . '" alt="' . $this->escape ( $this->filename ) . '" />';
+					$this->_thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)? 'lightbox[thumb' . intval ( $this->mesid ). ']':'' );
+					$img = '<img title="' . $this->escape ( $this->filename ) . '" src="' . JURI::ROOT () . $this->escape ( $this->folder ) . '/' . $this->escape ( $this->filename ) . '" alt="' . $this->escape ( $this->filename ) . '" />';
+					$this->_imagelink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[imagelink' . intval ( $this->mesid ) .']':'' );
+					$this->_textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[simple' . $this->mesid . ']' . ' nofollow':' nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
+					break;
+				default :
+					// Filetype without thumbnail or icon support - use default file icon
+					$img = '<img src="' . KUNENA_URLICONSPATH . 'attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+					$this->_thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), 'nofollow' );
+					$this->_textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
+			}
+			$this->_disabled = false;
+			if (! KunenaFactory::getUser()->exists()) {
+				if ($this->shorttype == 'image' && ! $config->showimgforguest) {
+					$this->_disabled = true;
+					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG' );
+				}
+				if ($this->shorttype != 'image' && ! $config->showfileforguest) {
+					$this->_disabled = true;
+					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' );
+				}
+				if ($this->_disabled) {
+					$this->_thumblink = '<img src="' . KUNENA_URLICONSPATH . 'attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+					$this->_imagelink = null;
+					$this->size = 0;
+				}
+			}
+		}
+	}
+
 	public function getMessage() {
 		return KunenaForumMessageHelper::get($this->mesid);
 	}
@@ -167,6 +235,9 @@ class KunenaForumMessageAttachment extends JObject {
 	 * @since 1.6
 	 */
 	public function save($updateOnly = false) {
+		// Do not save altered message
+		if ($this->_disabled) return;
+
 		// Create the messages table object
 		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
@@ -251,5 +322,9 @@ class KunenaForumMessageAttachment extends JObject {
 		if (JFile::exists($filetoDelete)) {
 			JFile::delete($filetoDelete);
 		}
+	}
+
+	protected function escape($var) {
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 }

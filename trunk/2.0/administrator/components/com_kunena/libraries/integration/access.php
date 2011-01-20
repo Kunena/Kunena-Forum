@@ -190,6 +190,9 @@ abstract class KunenaAccess {
 			$modlist = array();
 			if (!empty($this->moderatorsByCatid[0])) $modlist += $this->moderatorsByCatid[0];
 			if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
+
+			// If category has no moderators, send email to admins instead
+			if (empty($modlist)) $admins = true;
 		}
 		if ($admins) {
 			if ($this->adminsByCatid === false) {
@@ -252,6 +255,7 @@ abstract class KunenaAccess {
 	protected function loadAdmins($list = array()) {
 		foreach ( $list as $item ) {
 			$userid = intval ( $item->userid );
+			if (!$userid) continue;
 			$catid = intval ( $item->catid );
 			$this->adminsByUserid [$userid] [$catid] = 1;
 			$this->adminsByCatid [$catid] [$userid] = 1;
@@ -262,6 +266,7 @@ abstract class KunenaAccess {
 	protected function loadModerators($list = array()) {
 		foreach ( $list as $item ) {
 			$userid = intval ( $item->userid );
+			if (!$userid) continue;
 			$catid = intval ( $item->catid );
 			$this->moderatorsByUserid [$userid] [$catid] = 1;
 			$this->moderatorsByCatid [$catid] [$userid] = 1;

@@ -49,6 +49,7 @@ Kunena 2.0.0-DEV
 # [#23443] Forumjump form uses old func=showcat instead new view=category
 # [#23443] KunenaProfileKunena::getProfileURL(): always return URL with userid in it (needed for caching)
 * [#24494] Security (Low/Low): User can make XSS attack to himself (thanks Ervis Tusha)
+# [#23443] If category has no moderators, send email to admins instead
 
 19-January-2010 Xillibit
 # [#23443] Missing language strings for COM_KUNENA_LIB_*

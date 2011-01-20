@@ -33,7 +33,7 @@ class KunenaProfileKunena extends KunenaProfile
 		$user = KunenaFactory::getUser($user);
 		$my = JFactory::getUser();
 		if ($user === false) return false;
-		$userid = $my->id != $user->userid ? "&userid={$user->userid}" : '';
+		$userid = "&userid={$user->userid}";
 		$do = $task ? '&do='.$task : '';
 		return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}", $xhtml);
 	}

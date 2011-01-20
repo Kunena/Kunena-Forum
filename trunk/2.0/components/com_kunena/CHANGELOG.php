@@ -35,11 +35,13 @@ Kunena 2.0.0-DEV
 
 20-January-2010 Matias
 ^ [#22786] Merge revisions 4245-4247 from /branches/2.0-xillibit-fixes-19-01-2011
+^ [#22786] Merge revisions 4200-4247 from /branches/2.0-xillibit-mvc-backend-20111505
 
 19-January-2010 Xillibit
 # [#23443] Missing language strings for COM_KUNENA_LIB_*
 # [#23443] Not possible to give thank you to users
 # [#23443] Fatal error: Call to undefined method KunenaForumMessage::emailToSubscribers() in KunenaControllerTopic
+# [#24395] Trash manager get messages on hold=2 instead of hold=3
 
 19-January-2010 Matias
 # [#23443] KunenaUserHelper::loadUsers(): Do not load online users, make sure that input is correct
@@ -54,6 +56,9 @@ Kunena 2.0.0-DEV
 + [#22569] Add KunenaRouteLegacy class to convert old URIs into new ones
 # [#23443] KunenaRoute: Fix menu authorization in both J1.5 and J1.6
 # [#23443] KunenaRouter: Make New Topic with catid to work
+
+18-January-2010 Xillibit
+^ [#24395] Backend in MVC (trash manager) (odered items and pagination doesn't work yet)
 
 18-January-2010 Matias
 # [#23443] Fix fatal error in KunenaUserHelper::loadUsers()
@@ -96,6 +101,9 @@ Kunena 2.0.0-DEV
 ^ [#22569] BuildRoute: Simplify logic when using short topic section
 ^ [#22569] ParseRoute: Optimize fetching query variables from menu item
 ^ [#22569] ParseRoute: Simplify logic when getting query variables from SEF URI
+
+15-January-2010 Xillibit
+^ [#24395] Backend in MVC (Stats and k report configuration)
 
 15-January-2010 Matias
 ^ [#22786] Merge revisions 4165-4187 from trunk/1.6

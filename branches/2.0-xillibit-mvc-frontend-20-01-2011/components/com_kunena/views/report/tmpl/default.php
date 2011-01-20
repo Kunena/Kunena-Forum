@@ -1,31 +1,16 @@
 <?php
 /**
-* @version $Id$
-* Kunena Component
-* @package Kunena
-*
-* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.org
-*
-* Based on FireBoard Component
-* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.bestofjoomla.com
-*
-* Based on Joomlaboard Component
-* @copyright (C) 2000 - 2004 TSMF / Jan de Graaff / All Rights Reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @author TSMF & Jan de Graaff
-**/
+ * @version $Id: listcat.php 3901 2010-11-15 14:14:02Z mahagr $
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined ( '_JEXEC' ) or die ();
 
-// Dont allow direct linking
-defined( '_JEXEC' ) or die();
-
-$this->id = JRequest::getInt('id', 0);
-$this->catid = JRequest::getInt('catid', 0);
 ?>
-
 <div class="kblock kreport">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></span></h2>
@@ -40,7 +25,9 @@ $this->catid = JRequest::getInt('catid', 0);
 					<textarea id = "kreport-msg" name = "text" cols = "40" rows = "10" class = "inputbox"></textarea>
 					<input type = "hidden" name = "id" value = "<?php echo intval($this->id); ?>"/>
 					<input type = "hidden" name = "catid" value = "<?php echo intval($this->catid); ?>"/>
-					<input type = "hidden" name = "do" value = "sendreport"/>
+					<input type="hidden" name="option" value="com_kunena" />
+					<input type="hidden" name="view" value="report" />
+					<input type="hidden" name="task" value="submit" />
 					<?php echo JHTML::_( 'form.token' ); ?>
 					<input class="kbutton ks" type = "submit" name = "Submit" value = "<?php echo JText::_('COM_KUNENA_REPORT_SEND') ?>"/>
 				</form>

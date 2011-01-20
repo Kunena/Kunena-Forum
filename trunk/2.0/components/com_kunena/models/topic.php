@@ -36,6 +36,12 @@ class KunenaModelTopic extends KunenaModel {
 		$active = $active ? (int) $active->id : 0;
 		$layout = JRequest::getCmd ( 'layout', 'default' );
 
+		$template = KunenaFactory::getTemplate();
+		$profile_location = $template->params->get('avatarPosition', 'left');
+		$profile_direction = $profile_location == 'left' || $profile_location == 'right' ? 'vertical' : 'horizontal';
+		$this->setState ( 'profile.location', $profile_location );
+		$this->setState ( 'profile.direction', $profile_direction );
+
 		$catid = JRequest::getInt ( 'catid', 0 );
 		$this->setState ( 'item.catid', $catid );
 

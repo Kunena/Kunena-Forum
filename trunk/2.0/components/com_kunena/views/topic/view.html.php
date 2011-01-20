@@ -120,7 +120,7 @@ class KunenaViewTopic extends KunenaView {
 		$arraypollcatid = array();
 		foreach ($categories as $category) {
 			if ($category->parent_id && $category->allow_anonymous) {
-				$arrayanynomousbox[] = '"'.$category->id.'":'.$item->post_anonymous;
+				$arrayanynomousbox[] = '"'.$category->id.'":'.$category->post_anonymous;
 			}
 			if ($category->parent_id && $category->allow_polls) {
 				$arraypollcatid[] = '"'.$category->id.'":1';
@@ -138,7 +138,7 @@ class KunenaViewTopic extends KunenaView {
 		$cat_params['direction'] = 1;
 		$cat_params['action'] = 'topic.create';
 
-		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $this->catid);
+		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $this->catid, 'postcatid');
 
 		$this->category = KunenaForumCategoryHelper::get($this->catid);
 		if (!$this->selectcatlist || ($this->catid && !$this->category->authorise('topic.create'))) {
@@ -344,10 +344,11 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->loadTemplate('actions');
 	}
 
-	function displayMessageProfile($layout = '') {
+	function displayMessageProfile() {
 		static $profiles = array ();
 
 		if (! isset ( $profiles [$this->profile->userid] )) {
+			$direction = $this->state->get('profile.direction');
 			// Modify profile values by integration
 			$triggerParams = array ('userid' => $this->profile->userid, 'userinfo' => &$this->profile );
 			$integration = KunenaFactory::getProfile();
@@ -376,7 +377,7 @@ class KunenaViewTopic extends KunenaView {
 				'karma' => &$this->userkarma_title,
 				'karmaplus' => &$this->userkarma_plus,
 				'karmaminus' => &$this->userkarma_minus,
-				'layout' => $layout
+				'layout' => $direction
 			);
 
 			$profileHtml = $integration->showProfile($this->msg->userid, $triggerParams);
@@ -400,7 +401,7 @@ class KunenaViewTopic extends KunenaView {
 				}
 				$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
 
-				$profiles [$this->profile->userid] = $this->loadTemplate ( "profile_{$layout}" );
+				$profiles [$this->profile->userid] = $this->loadTemplate ( "profile_{$direction}" );
 			}
 		}
 		echo $profiles [$this->profile->userid];
@@ -477,6 +478,7 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function displayMessages() {
+		$location = $this->state->get('profile.location');
 		$this->mmm = 0;
 		$replydir = $this->state->get('list.direction') == 'asc' ? 1 : -1;
 		if ($replydir < 0) $this->replynum = $this->total - $this->state->get('list.start') + 1;
@@ -507,7 +509,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->msgsuffix = '-new';
 			}
 
-			echo $this->loadtemplate('left');
+			echo $this->loadtemplate($location);
 		}
 	}
 

@@ -45,6 +45,8 @@ Kunena 2.0.0-DEV
 # [#23443] Topic/Create: Poll and Anonymous settings do not show up or hide when user changes category
 # [#23443] Hide confidential information also from moderators who are not moderating current category
 # [#23443] Do not show inline attachments 2 times
+# [#23443] Hide moderator actions in recent if user is not a moderator
+# [#23443] Forumjump form uses old func=showcat instead new view=category
 
 19-January-2010 Xillibit
 # [#23443] Missing language strings for COM_KUNENA_LIB_*

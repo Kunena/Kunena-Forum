@@ -26,10 +26,10 @@ class KunenaViewTopics extends KunenaView {
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
-		$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
 		$this->actionMove = false;
 		if (CKunenaTools::isModerator ( $this->me->userid )) {
 			$this->actionMove = true;
+			$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
@@ -64,10 +64,10 @@ class KunenaViewTopics extends KunenaView {
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
-		$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
 		$this->actionMove = false;
 		if (CKunenaTools::isModerator ( $this->me->userid )) {
 			$this->actionMove = true;
+			$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
@@ -103,10 +103,10 @@ class KunenaViewTopics extends KunenaView {
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
-		$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
 		$this->actionMove = false;
 		if (CKunenaTools::isModerator ( $this->me->userid )) {
 			$this->actionMove = true;
+			$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));

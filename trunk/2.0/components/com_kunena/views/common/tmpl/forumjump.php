@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <form id="jumpto" name="jumpto" method="post" target="_self" action="<?php echo KunenaRoute::_('index.php?option=com_kunena');?>">
 	<span class="kright">
-		<input type="hidden" name="func" value="showcat" />
+		<input type="hidden" name="view" value="category" />
 		<?php echo $this->categorylist; ?>
 		<input type="submit" name="Go" class="kbutton ks" value="<?php echo JText::_('COM_KUNENA_GO'); ?>" />
 	</span>

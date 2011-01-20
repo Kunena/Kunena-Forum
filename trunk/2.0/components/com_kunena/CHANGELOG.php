@@ -36,6 +36,9 @@ Kunena 2.0.0-DEV
 20-January-2010 Matias
 ^ [#22786] Merge revisions 4245-4247 from /branches/2.0-xillibit-fixes-19-01-2011
 ^ [#22786] Merge revisions 4200-4247 from /branches/2.0-xillibit-mvc-backend-20111505
+# [#23443] Administrator/Statistics: Fix Most Popular Members
+# [#23443] Administrator/Report: Fix fatal errors, warnings and notices
+# [#23443] Administrator/Trash Manager: disable view as it's currently broken
 
 19-January-2010 Xillibit
 # [#23443] Missing language strings for COM_KUNENA_LIB_*

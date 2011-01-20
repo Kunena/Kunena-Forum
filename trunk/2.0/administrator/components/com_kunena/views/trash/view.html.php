@@ -17,6 +17,9 @@ kimport ( 'kunena.view' );
  */
 class KunenaViewTrash extends KunenaView {
 function display() {
+	$app = JFactory::getApplication();
+	$app->enqueueMessage('Trash Manager is under construction and does not work yet!', 'error');
+	return ' ';
 	$this->assignRef ( 'state', $this->get ( 'State' ) );
 	switch ($this->getLayout ()) {
 			case 'purge' :

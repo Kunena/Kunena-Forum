@@ -52,14 +52,15 @@ class KunenaControllerTrash extends KunenaController {
 				// FIXME: we do have delete() for topics and messages and they are doing also cleanup (removing thanks, polls etc)
 				// first load topics/messages by KunenaForumTopic/MessageHelper
 				// then foreach (...) { $message->authorise(); $message->delete() }
-					
+
 				require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
 				$poll = CKunenaPolls::getInstance();
 				require_once (KUNENA_PATH_LIB  .'/kunena.moderation.class.php');
 				$kunena_mod = CKunenaModeration::getInstance();
+				$db = JFactory::getDBO();
 				foreach ($ids as $id ) {
-					$kunena_db->setQuery ( "SELECT a.parent, a.id, b.threadid FROM #__kunena_messages AS a INNER JOIN #__kunena_polls AS b ON b.threadid=a.id WHERE threadid='{$id}'" );
-					$mes = $kunena_db->loadObjectList ();
+					$db->setQuery ( "SELECT a.parent, a.id, b.threadid FROM #__kunena_messages AS a INNER JOIN #__kunena_polls AS b ON b.threadid=a.id WHERE threadid='{$id}'" );
+					$mes = $db->loadObjectList ();
 					//if (KunenaError::checkDatabaseError()) return;
 					if( !empty($mes[0])) {
 						// FIXME : maybe create a function in poll class to check if a poll exist
@@ -88,7 +89,7 @@ class KunenaControllerTrash extends KunenaController {
 
 	function restore() {
 		// FIXME: check token
-		
+
 		$app = JFactory::getApplication ();
 		$kunena_db = JFactory::getDBO ();
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
@@ -107,7 +108,7 @@ class KunenaControllerTrash extends KunenaController {
 		KunenaUserHelper::recount();
 		// FIXME: recount topics as well
 		KunenaForumCategoryHelper::recount ();
-		
+
 		$app->enqueueMessage ( JText::_('COM_KUNENA_TRASH_RESTORE_DONE') );
 		$app->redirect(KunenaRoute::_($this->baseurl, false));
 	}

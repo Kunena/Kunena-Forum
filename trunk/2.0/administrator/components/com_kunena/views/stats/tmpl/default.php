@@ -136,15 +136,15 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		<tbody>
 			<?php
 		  foreach ($top_profiles as $profile) {
-			if ($profile->uhits == $top_profiles[0]->uhits)
+			if ($profile->hits == $top_profiles[0]->hits)
 				$barwidth = 100;
 			else
-				$barwidth = round(($profile->uhits * 100) / $top_profiles[0]->uhits);
+				$barwidth = round(($profile->hits * 100) / $top_profiles[0]->hits);
 			?>
 			<tr>
-			<td><?php echo $profile->username; ?></td>
+			<td><?php echo KunenaUser::getInstance($profile->id)->getName(); ?></td>
 			<td ><img style="margin-bottom:1px" src="<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>" /> </td>
-			<td ><?php echo $profile->uhits;?></td>
+			<td ><?php echo $profile->hits;?></td>
 			</tr>
 			<?php
 				}

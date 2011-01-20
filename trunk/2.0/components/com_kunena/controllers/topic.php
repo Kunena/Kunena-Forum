@@ -508,7 +508,7 @@ class KunenaControllerTopic extends KunenaController {
 			$category->last_post_guest_name = $message->name;
 			$category->save();
 
-			$message->emailToSubscribers($url, $this->config->allowsubscriptions, $this->config->mailmod, $this->config->mailadmin);
+			$message->sendNotification();
 		} else {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_FAIL' ), 'notice' );
 		}

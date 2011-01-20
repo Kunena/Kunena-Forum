@@ -259,6 +259,7 @@ class KunenaForumTopic extends JObject {
 			'sticky'=>array('Read'),
 			'lock'=>array('Read'),
 			'post.read'=>array('Read'),
+			'post.thankyou'=>array('Read','NotMoved'),
 			'post.reply'=>array('Read','NotHold','NotMoved','Unlocked'),
 			'post.edit'=>array('Read','Unlocked','Own'),
 			'post.move'=>array('Read'),

@@ -40,6 +40,8 @@ Kunena 2.0.0-DEV
 ^ [#24515] Hide report and credits views/layouts from backend
 # [#24515] Convert old report URL into new form
 # [#24515] Improve security checks on report
+# [#23443] Toggler doesn't work in new views
+# [#23443] Links parsed by BBCode do not have target="_blank" rel="nofollow" in them
 
 20-January-2010 Xillibit
 ^ [#24515] Move &func=report into mvc in frontend

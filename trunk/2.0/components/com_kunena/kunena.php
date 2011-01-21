@@ -16,6 +16,13 @@ require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 // Support legacy urls (they need to be redirected)
 $view = JRequest::getWord ( 'func', JRequest::getWord ( 'view' ) );
 
+// TODO: Move toggler support
+$document = JFactory::getDocument();
+$document->addScriptDeclaration('// <![CDATA[
+var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
+var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
+// ]]>');
+
 // Load view if it exists
 if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
 

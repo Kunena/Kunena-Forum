@@ -64,6 +64,9 @@ abstract class KunenaHtmlParser {
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(false);
+		$bbcode->SetDetectURLs(true);
+		$bbcode->SetURLPattern('<a href="{$url/h}" target="_blank" rel="nofollow">{$text/h}</a>');
+		$bbcode->SetURLTarget('_blank');
 		$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent ( $txt );
 		return $txt;
@@ -84,6 +87,9 @@ abstract class KunenaHtmlParser {
 		$bbcode = KunenaBBCode::getInstance();
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
+		$bbcode->SetDetectURLs(true);
+		$bbcode->SetURLPattern('<a href="{$url/h}" target="_blank" rel="nofollow">{$text/h}</a>');
+		$bbcode->SetURLTarget('_blank');
 		$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent ( $txt );
 		return $txt;
@@ -95,6 +101,9 @@ abstract class KunenaHtmlParser {
 		$bbcode = KunenaBBCode::getInstance();
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
+		$bbcode->SetDetectURLs(true);
+		$bbcode->SetURLPattern('<a href="{$url/h}" target="_blank" rel="nofollow">{$text/h}</a>');
+		$bbcode->SetURLTarget('_blank');
 		$txt = strip_tags($bbcode->Parse($txt));
 		$txt = self::prepareContent ( $txt );
 		return $txt;

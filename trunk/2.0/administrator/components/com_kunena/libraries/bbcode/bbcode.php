@@ -274,7 +274,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				'class' => 'link',
 				'allow_in' => array('listitem', 'block', 'columns', 'inline'),
 				'content' => BBCODE_REQUIRED,
-				'plain_start' => "<a href=\"{\$link}\">",
+				'plain_start' => "<a href=\"{\$link}\" rel=\"nofollow\" target=\"_blank\">",
 				'plain_end' => "</a>",
 				'plain_content' => array('_content', '_default'),
 				'plain_link' => array('_default', '_content'),
@@ -610,7 +610,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			if ($bbcode->url_target !== false)
 				if (! ($bbcode->url_targetable == 'override' && isset ( $params ['target'] )))
 					$target = " target=\"" . htmlspecialchars ( $bbcode->url_target ) . "\"";
-			return '<a href="' . htmlspecialchars ( $url ) . '" class="bbcode_url"' . $target . '>' . $content . '</a>';
+			return '<a href="' . htmlspecialchars ( $url ) . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
 		}
 		return htmlspecialchars ( $params ['_tag'] ) . $content . htmlspecialchars ( $params ['_endtag'] );
 	}

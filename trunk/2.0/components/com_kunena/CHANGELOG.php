@@ -44,6 +44,7 @@ Kunena 2.0.0-DEV
 # [#23443] Links parsed by BBCode do not have target="_blank" rel="nofollow" in them
 # [#23443] Topic/Create: Showing poll and anonymous options works only in FireFox
 # [#23443] Administration, Category Manager: cannot assign groups to new category
+# [#23443] Administration, Category Manager: new category cannot be seen before logout/login
 
 20-January-2010 Xillibit
 ^ [#24515] Move &func=report into mvc in frontend

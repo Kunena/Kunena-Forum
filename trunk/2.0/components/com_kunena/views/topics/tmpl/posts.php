@@ -58,7 +58,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 	<div class="kcontainer">
 		<div class="kbody">
 			<form action="index.php" method="post" name="kBulkActionForm">
-				<table class="kblocktable<?php echo $this->escape($this->category->class_sfx); ?>" id="kflattable">
+				<table class="kblocktable" id="kflattable">
 
 					<?php if (empty ( $this->messages ) && empty ( $this->subcategories )) : ?>
 					<tr class="krow2"><td class="kcol-first"><?php echo JText::_('COM_KUNENA_NO_POSTS') ?></td></tr>

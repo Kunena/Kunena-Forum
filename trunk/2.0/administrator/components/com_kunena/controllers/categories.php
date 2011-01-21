@@ -160,6 +160,12 @@ class KunenaControllerCategories extends KunenaController {
 			$category->bind ( $post, $ignore );
 
 			$success = $category->save ();
+
+			// Update read access
+			$read = $app->getUserState("com_kunena.user{$me->userid}_read");
+			$read[$category->id] = $category->id;
+			$app->setUserState("com_kunena.user{$me->userid}_read");
+
 			if (! $success) {
 				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $this->escape ( $category->getError () ) ), 'notice' );
 			}

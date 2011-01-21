@@ -43,7 +43,7 @@ abstract class JHTMLKunenaForum {
 			$options = array();
 		}
 		if (!is_array($selected)) {
-			if ((int)$selected)
+			if (is_numeric($selected))
 				$selected = array((int)$selected);
 			else
 				$selected = array();

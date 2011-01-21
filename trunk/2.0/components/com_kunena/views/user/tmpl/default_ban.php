@@ -48,7 +48,7 @@ JHTML::_('behavior.calendar');
 					<td class="kcol-mid">
 						<input class="inputbox" type="text" maxlength="21" name="expiration" id="expiration" value="<?php echo $this->escape($this->baninfo->expiration) ?>" />
 						<?php // FIXME: use our own image ?>
-						<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('expiration','%Y-%m-%d');$('expiration').removeProperty('style');" />
+						<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('expiration','%Y-%m-%d');$('expiration').setStyle('display');" />
 					</td>
 				</tr>
 				<tr class="krow<?php echo ($i^=1)+1;?>">

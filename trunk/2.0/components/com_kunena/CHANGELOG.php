@@ -42,6 +42,8 @@ Kunena 2.0.0-DEV
 # [#24515] Improve security checks on report
 # [#23443] Toggler doesn't work in new views
 # [#23443] Links parsed by BBCode do not have target="_blank" rel="nofollow" in them
+# [#23443] Topic/Create: Showing poll and anonymous options works only in FireFox
+# [#23443] Administration, Category Manager: cannot assign groups to new category
 
 20-January-2010 Xillibit
 ^ [#24515] Move &func=report into mvc in frontend

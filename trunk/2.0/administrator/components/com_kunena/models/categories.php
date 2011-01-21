@@ -181,6 +181,8 @@ class KunenaModelCategories extends JModel {
 				$category->parent_id = $parent_id;
 				$category->published = 0;
 				$category->ordering = 9999;
+				$category->accesstype = 'none';
+				$category->access = 0;
 				$category->pub_recurse = 1;
 				$category->admin_recurse = 1;
 				$category->pub_access = 0;

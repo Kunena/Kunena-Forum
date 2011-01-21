@@ -1458,11 +1458,9 @@ class KunenaModelInstall extends JModel {
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		if (! $parentid) {
 			$params = new JParameter('');
-			foreach ($menu['params'] as $pkey=>$pval) {
-				$params->set($pkey, $pval);
-			}
+			$params->bind($menu['params']);
 			$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							($parentid, 'kunenamenu', {$this->db->quote($menu['name'])}, {$this->db->quote($menu['alias'])}, {$this->db->quote($menu['link'])}, 'component', 1, 0, $component_id, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, {$this->db->quote($params->render())}, 0, 0, 0);";
+							($parentid, 'kunenamenu', {$this->db->quote($menu['name'])}, {$this->db->quote($menu['alias'])}, {$this->db->quote($menu['link'])}, 'component', 1, 0, $component_id, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, {$this->db->quote($params->toString('INI'))}, 0, 0, 0);";
 			$this->db->setQuery ( $query );
 			$this->db->query ();
 			if ($this->db->getErrorNum ())
@@ -1480,13 +1478,10 @@ class KunenaModelInstall extends JModel {
 			if ($this->db->getErrorNum ())
 				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 			if (! $id) {
-				$paramlist = !empty($menuitem['params']) ? $menuitem['params'] : array();
 				$params = new JParameter('');
-				foreach ($paramlist as $pkey=>$pval) {
-					$params->set($pkey, $pval);
-				}
+				$params->bind($menuitem['params']);
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-								($id, 'kunenamenu', {$this->db->quote($menuitem['name'])}, {$this->db->quote($menuitem['alias'])}, {$this->db->quote($menuitem['link'])},'component', 1, $parentid, $component_id, 1, $ordering, 0, '0000-00-00 00:00:00', 0, 0, {$menuitem['access']}, 0, {$this->db->quote($params->render())}, 0, 0, 0);";
+								($id, 'kunenamenu', {$this->db->quote($menuitem['name'])}, {$this->db->quote($menuitem['alias'])}, {$this->db->quote($menuitem['link'])},'component', 1, $parentid, $component_id, 1, $ordering, 0, '0000-00-00 00:00:00', 0, 0, {$menuitem['access']}, 0, {$this->db->quote($params->toString('INI'))}, 0, 0, 0);";
 				$this->db->setQuery ( $query );
 				$this->db->query ();
 				if ($this->db->getErrorNum ())
@@ -1586,6 +1581,7 @@ class KunenaModelInstall extends JModel {
 
 		$table = JTable::getInstance ( 'menu' );
 		$params = '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}';
+		// FIXME: add menu params for current item, too
 		$data = array (
 			'menutype' => 'kunenamenu',
 			'title' => $menu ['name'],

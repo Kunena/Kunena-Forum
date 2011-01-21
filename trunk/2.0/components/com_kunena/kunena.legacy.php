@@ -451,13 +451,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		case 'report' :
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.report.class.php');
-			$report = new CKunenaReport();
-			$report->display();
-
-			break;
-
 		case 'search' :
 		case 'advsearch' :
 			require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.search.class.php');
@@ -677,11 +670,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			}
 
 			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(false) );
-			break;
-
-		case 'credits' :
-			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.credits.php');
-
 			break;
 	}
 

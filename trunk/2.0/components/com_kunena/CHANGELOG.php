@@ -33,6 +33,18 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+21-January-2010 Matias
+^ [#22786] Merge revisions 4259-4264 from /branches/2.0-xillibit-mvc-frontend-20-01-2011
+# [#24515] Fix undefined variables and small bugs in report and credits views
+^ [#24515] Move report view into layout of topic view
+^ [#24515] Hide report and credits views/layouts from backend
+# [#24515] Convert old report URL into new form
+# [#24515] Improve security checks on report
+
+20-January-2010 Xillibit
+^ [#24515] Move &func=report into mvc in frontend
+^ [#24515] Move &func=credits into mvc in frontend
+
 20-January-2010 Matias
 ^ [#22786] Merge revisions 4245-4247 from /branches/2.0-xillibit-fixes-19-01-2011
 ^ [#22786] Merge revisions 4200-4247 from /branches/2.0-xillibit-mvc-backend-20111505

@@ -210,6 +210,36 @@ class KunenaViewTopic extends KunenaView {
 		$this->display($tpl);
 	}
 
+	protected function displayReport($tpl = null) {
+		$this->catid = $this->state->get('item.catid');
+		$this->id = $this->state->get('item.id');
+		$this->mesid = $this->state->get('item.mesid');
+		$app = JFactory::getApplication();
+		$config = KunenaFactory::getConfig ();
+		$me = KunenaFactory::getUser ();
+
+		if (!$me->exists() || $config->reportmsg == 0) {
+			// Deny access if report feature has been disabled or user is guest
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ), 'notice' );
+			return;
+		}
+		if (!$this->mesid) {
+			$this->topic = KunenaForumTopicHelper::get($this->id);
+			if (!$this->topic->authorise('read')) {
+				$app->enqueueMessage ( $this->topic->getError(), 'notice' );
+				return;
+			}
+		} else {
+			$this->message = KunenaForumMessageHelper::get($this->mesid);
+			if (!$this->message->authorise('read')) {
+				$app->enqueueMessage ( $this->message->getError(), 'notice' );
+				return;
+			}
+			$this->topic = $this->message->getTopic();
+		}
+		$this->display($tpl);
+	}
+
 	protected function displayModerate($tpl = null) {
 		$this->mesid = JRequest::getInt('mesid', 0);
 		$this->id = $this->state->get('item.id');

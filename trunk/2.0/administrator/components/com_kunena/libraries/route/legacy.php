@@ -155,6 +155,24 @@ class KunenaRouteLegacy {
 						break;
 				}
 				break;
+			case 'report' :
+				$changed = true;
+				$uri->setVar('view', 'topic');
+				$uri->setVar('layout', 'report');
+
+				// Convert URI to have both id and mesid
+				$id = $uri->getVar ( 'id' );
+				$message = KunenaForumMessageHelper::get ( $id );
+				$mesid = null;
+				if ($message->exists ()) {
+					$id = $message->thread;
+					if ($id != $message->id)
+						$mesid = $message->id;
+				}
+				if ($id) $uri->setVar ( 'id', $id );
+				if ($mesid) $uri->setVar ( 'mesid', $mesid );
+				break;
+
 			case 'userlist' :
 				$changed = true;
 				$uri->setVar('view', 'users');

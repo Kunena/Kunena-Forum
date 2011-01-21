@@ -32,6 +32,7 @@ class KunenaRouter {
 		'user'=>array('layout'=>'default', 'userid'=>'0'),
 		'users'=>array('layout'=>'default'),
 		'statistics'=>array('layout'=>'default'),
+		'credits'=>array('layout'=>'default'),
 	);
 	static $sefviews = array (''=>1, 'home'=>1, 'categories'=>1, 'category'=>1, 'topic'=>1);
 	static $parsevars = array ('do'=>1, 'task'=>1, 'userid'=>1, 'id'=>1, 'mesid'=>1, 'page'=>1, 'sel'=>1 );
@@ -56,6 +57,7 @@ class KunenaRouter {
 		'userlist'=>1,
 		'rss'=>1,
 		'post'=>1,
+//		'report'=>1,
 
 		'announcement'=>1,
 		'article'=>1,
@@ -66,7 +68,6 @@ class KunenaRouter {
 		'help'=>1,
 		'review'=>1,
 		'rules'=>1,
-		'report'=>1,
 		'search'=>1,
 		'advsearch'=>1,
 		'markthisread'=>1,
@@ -75,7 +76,6 @@ class KunenaRouter {
 		'karma'=>1,
 		'bulkactions'=>1,
 		'templatechooser'=>1,
-		'credits'=>1,
 		'json'=>1,
 		'pdf'=>1,
 		'entrypage'=>1,
@@ -307,6 +307,7 @@ class KunenaRouter {
 				} elseif (empty($vars ['mesid'])) {
 					// Third number is always message
 					$var = 'mesid';
+					$vars ['view'] = 'topic';
 				} else {
 					// Invalid parameter, skip it
 					continue;

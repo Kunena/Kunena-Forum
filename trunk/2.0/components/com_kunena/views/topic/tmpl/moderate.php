@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: moderate.php 3905 2010-11-15 18:46:01Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

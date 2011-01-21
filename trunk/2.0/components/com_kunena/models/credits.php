@@ -10,13 +10,15 @@
  */
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.view' );
+kimport ( 'kunena.model' );
 
 /**
- * Home View
+ * Credits Model for Kunena
+ *
+ * @package		Kunena
+ * @subpackage	com_kunena
+ * @since		2.0
  */
-class KunenaViewHome extends KunenaView {
-	function displayDefault($tpl = null) {
-		echo " ";
-	}
+class KunenaModelCredits extends KunenaModel {
+
 }

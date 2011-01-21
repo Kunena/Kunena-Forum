@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id$
+ * @version		$Id: view.html.php 3901 2010-11-15 14:14:02Z mahagr $
  * Kunena Component
  * @package Kunena
  *
@@ -13,10 +13,11 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.view' );
 
 /**
- * Home View
+ * Credits View
  */
-class KunenaViewHome extends KunenaView {
+class KunenaViewCredits extends KunenaView {
 	function displayDefault($tpl = null) {
-		echo " ";
+
+		parent::display ();
 	}
 }

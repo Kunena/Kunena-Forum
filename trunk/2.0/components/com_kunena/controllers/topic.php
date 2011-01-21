@@ -28,8 +28,9 @@ require_once KPATH_SITE . '/lib/kunena.link.class.php';
 class KunenaControllerTopic extends KunenaController {
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->id = JRequest::getInt('id', 0);
 		$this->catid = JRequest::getInt('catid', 0);
+		$this->id = JRequest::getInt('id', 0);
+		$this->mesid = JRequest::getInt('mesid', 0);
 		$this->config = KunenaFactory::getConfig();
 		$this->me = KunenaFactory::getUser();
 	}
@@ -480,6 +481,101 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ) );
 		}
 		//$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
+	}
+
+	function report() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		$config = KunenaFactory::getConfig ();
+		$me = KunenaFactory::getUser ();
+
+		if (!$me->exists() || $config->reportmsg == 0) {
+			// Deny access if report feature has been disabled or user is guest
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ), 'notice' );
+			$this->redirectBack ();
+		}
+
+		jimport ( 'joomla.mail.helper' );
+		if (! $config->email || ! JMailHelper::isEmailAddress ( $config->email )) {
+			// Error: email address is invalid
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		// Get target object for the report
+		if ($this->mesid) {
+			$message = $target = KunenaForumMessageHelper::get($this->mesid);
+			$topic = $target->getTopic();
+			$messagetext = $message->message;
+			$baduser = KunenaFactory::getUser($message->userid);
+		} else {
+			$topic = $target = KunenaForumTopicHelper::get($this->id);
+			$messagetext = $topic->first_post_message;
+			$baduser = KunenaFactory::getUser($topic->first_post_userid);
+		}
+		if (!$target->authorise('read')) {
+			// Deny access if user cannot read target
+			$app->enqueueMessage ( $target->getError(), 'notice' );
+			$this->redirectBack ();
+		}
+		$category = $topic->getCategory();
+
+		$reason = JRequest::getString ( 'reason' );
+		$text = JRequest::getString ( 'text' );
+
+		if (empty ( $reason ) && empty ( $text )) {
+			// Do nothing: empty subject or reason is empty
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_FORG0T_SUB_MES' ) );
+			$this->redirectBack ();
+		} else {
+			$acl = KunenaFactory::getAccessControl();
+			$emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false, $me->userid);
+
+			if (!empty ( $emailToList )) {
+				$mailsender = JMailHelper::cleanAddress ( $config->board_title . ' ' . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ': ' . $me->getName() );
+				$mailsubject = "[" . $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . JText::_ ( 'COM_KUNENA_REPORT_MSG' ) . ": ";
+				if ($reason) {
+					$mailsubject .= $reason;
+				} else {
+					$mailsubject .= $topic->subject;
+				}
+
+				jimport ( 'joomla.environment.uri' );
+				$uri = & JURI::getInstance ( JURI::base () );
+				$msglink = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $topic->category_id, $topic->id, 0, NULL, $target->id ) );
+
+				$mailmessage = "" . JText::_ ( 'COM_KUNENA_REPORT_RSENDER' ) . " {$me->username} ($me->name)";
+				$mailmessage .= "\n";
+				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_RREASON' ) . " " . $reason;
+				$mailmessage .= "\n";
+				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_RMESSAGE' ) . " " . $text;
+				$mailmessage .= "\n\n";
+				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_POSTER' ) . " {$baduser->username} ($baduser->name)";
+				$mailmessage .= "\n";
+				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_SUBJECT' ) . ": " . $topic->subject;
+				$mailmessage .= "\n";
+				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_MESSAGE' ) . "\n-----\n" . KunenaHtmlParser::stripBBCode($messagetext);
+				$mailmessage .= "\n-----\n\n";
+				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_LINK' ) . " " . $msglink;
+				$mailmessage .= "\n\n\n\n** Powered by Kunena! - http://www.kunena.org **";
+				$mailmessage = JMailHelper::cleanBody ( strtr ( $mailmessage, array ('&#32;' => '' ) ) );
+
+				echo "<pre>";print_r($mailmessage);echo "</pre>";die();
+				foreach ( $emailToList as $emailTo ) {
+					if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
+						continue;
+
+					JUtility::sendMail ( $config->email, $mailsender, $emailTo->email, $mailsubject, $mailmessage );
+				}
+
+				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );
+				$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, 0, NULL, $this->id, false ) );
+			}
+		}
 	}
 
 	public function approve() {

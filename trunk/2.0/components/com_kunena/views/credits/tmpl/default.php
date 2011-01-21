@@ -1,21 +1,15 @@
 <?php
 /**
-* @version $Id$
-* Kunena Component
-* @package Kunena
-*
-* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.org
-*
-* Based on FireBoard Component
-* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.bestofjoomla.com
-**/
-defined( '_JEXEC' ) or die();
+ * @version $Id: listcat.php 3901 2010-11-15 14:14:02Z mahagr $
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined ( '_JEXEC' ) or die ();
 
-$kunena_config = KunenaFactory::getConfig ();
 ?>
 <div class="kblock kcredits">
 	<div class="kheader">
@@ -49,11 +43,10 @@ $kunena_config = KunenaFactory::getConfig ();
 				<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE'); ?> <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?>
 			</div>
 			<div class="kcredits-more">
-				<?php $catid = (int)$catid;
-				// Add a link to go back to the latest category we where viewing...
-				echo '<div>'. JText::_('COM_KUNENA_CREDITS_GO_BACK') . ' ' .
-				CKunenaLink::GetCategoryLink('showcat', $catid, JText::_('COM_KUNENA_USER_RETURN_B'), $rel='nofollow') . '</div>';
-				?>
+				<div>
+					<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK') ?>
+					<a href="javascript: history.go(-1)" title="<?php echo JText::_('COM_KUNENA_CREDITS_GO_BACK') ?>"><?php echo JText::_('COM_KUNENA_USER_RETURN_B') ?></a>
+				</div>
 			</div>
 			<!-- Version Info -->
 			<div class="kfooter"><?php echo JText::_('COM_KUNENA_COPYRIGHT');?> &copy; 2008 - 2010 <a href = "http://www.kunena.org" target = "_blank">Kunena</a>, <?php echo JText::_('COM_KUNENA_LICENSE');?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
@@ -61,15 +54,3 @@ $kunena_config = KunenaFactory::getConfig ();
 		</div>
 	</div>
 </div>
-<!-- Begin: Forum Jump -->
-<div class="kblock">
-	<div class="kheader">
-		<h2><span><?php echo JText::_('COM_KUNENA_GO_TO_CATEGORY'); ?></span></h2>
-	</div>
-	<div class="kcontainer">
-		<div class="khelprulesjump">
-			<?php KunenaForum::display('common', 'forumjump') ?>
-		</div>
-	</div>
-</div>
-<!-- Finish: Forum Jump -->

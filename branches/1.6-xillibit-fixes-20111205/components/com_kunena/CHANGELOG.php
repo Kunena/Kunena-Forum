@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+22-January-2010 Xillibit
+# [#24559] Hide confidential information also from moderators who are not moderating current category
+
 19-January-2010 Xillibit
 # [#24277] Kunena userlist under J! 1.6 grab super admin with userid=62 instead of 42 (Part 2)
 

@@ -88,8 +88,16 @@ class KunenaViewCommon extends KunenaView {
 			require_once(KUNENA_PATH .DS. 'class.kunena.php');
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
 			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-			$online = CKunenaWhoIsOnline::getInstance();
-			$online->displayWhoIsOnline();
+			online = CKunenaWhoIsOnline::getInstance();
+			$this->users = 		$online->getActiveUsersList();
+			$this->totaluser = 	$online->getTotalRegistredUsers ();
+			$this->totalguests = 	$online->getTotalGuestUsers ();
+			$this->who_name = 	$online->getTitleWho ($totaluser, $totalguests);
+			$result = $this->loadTemplate($tpl);
+			if (JError::isError($result)) {
+				return $result;
+			}
+			echo $result;
 			$cache->end();
 		} else echo " ";
 	}
@@ -103,7 +111,27 @@ class KunenaViewCommon extends KunenaView {
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
 			$kunena_stats = CKunenaStats::getInstance ( );
-			$kunena_stats->showFrontStats ();
+			$kunena_stats->loadGenStats();
+			$kunena_stats->loadLastUser();
+			$this->lastestmemberid = $kunena_stats->lastestmemberid;
+			$kunena_stats->loadLastDays();
+			$this->todayopen = $kunena_stats->todayopen;
+			$this->yesterdayopen = $kunena_statsa->yesterdayopen;
+			$this->todayanswer = $kunena_stats->todayanswer;
+			$this->yesterdayanswer = $kunena_stats->yesterdayanswer;
+			$kunena_stats->loadTotalTopics();
+			$this->totaltitles = $kunena_stats->totaltitles;
+			$this->totalmessages = $kunena_stats->totalmsgs;
+			$kunena_stats->loadTotalCategories();
+			$this->totalsections = $kunena_stats->totalsections;
+			$this->totalcats = $kunena_stats->totalcats;
+			$this->userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
+			$this->userlist2 = CKunenaLink::GetUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
+			$result = $this->loadTemplate($tpl);
+			if (JError::isError($result)) {
+				return $result;
+			}
+			echo $result;
 			$cache->end();
 		} else echo " ";
 	}

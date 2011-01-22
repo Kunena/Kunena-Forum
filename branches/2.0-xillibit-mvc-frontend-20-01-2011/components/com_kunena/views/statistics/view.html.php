@@ -17,6 +17,38 @@ kimport ( 'kunena.view' );
  */
 class KunenaViewStatistics extends KunenaView {
 	function displayDefault($tpl = null) {
-		echo " ";
+		$this->config = KunenaFactory::getConfig ();
+		$document = JFactory::getDocument();
+		$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' .      $kunena_config->board_title);
+
+		$this->userlist = CKunenaLink::GetUserlistLink('', intval($this->get('TotalMembers')));
+		$this->lastestmemberid = $this->get('LastestMemberID');
+		$this->lastestmembername = $this->get('LastUser');
+		$this->totaltitles = $this->get('totaltitles');
+		$this->messages = $this->get('totalmsgs');
+		$this->totalsections = $this->get('totalsections');
+		$this->totalcats = $this->get('totalcats');
+
+		$this->todayopen = $this->get('todayopen');
+		$this->yesterdayopen = $this->get('yesterdayopen');
+		$this->todayanswer = $this->get('todayanswer');
+		$this->yesterdayanswer = $this->get('yesterdayanswer');
+
+		$this->topthanks =  $this->get('topthanks');
+		$this->topuserthanks =  $this->get('topuserthanks');
+
+		$this->topposters = $this->get('topposters');
+		$this->topmessage = $this->get('topmessage');
+
+		$this->topprofiles = $this->get('topprofiles');
+		$this->topprofilehits = $this->get('topprofilehits');
+
+		$this->toptitles = $this->get('toptitles');
+		$this->toptitlehits = $this->get('toptitlehits');
+
+		$this->toppolls = $this->get('toppolls');
+		$this->toppollvotes = $this->get('toppollvotes');
+
+		parent::display ();
 	}
 }

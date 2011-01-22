@@ -319,7 +319,7 @@ class CKunenaLink {
 	}
 
 	function GetStatsURL() {
-		return KunenaRoute::_ ( 'index.php?option=com_kunena&view=stats' );
+		return KunenaRoute::_ ( 'index.php?option=com_kunena&view=statistics' );
 	}
 
 	//

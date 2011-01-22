@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+22-January-2010 Matias
+# [#23443] Topic/Create: Topic Tags showing up for all users, not just moderators
+
 21-January-2010 Matias
 ^ [#22786] Merge revisions 4259-4264 from /branches/2.0-xillibit-mvc-frontend-20-01-2011
 # [#24515] Fix undefined variables and small bugs in report and credits views

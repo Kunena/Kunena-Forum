@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2008 - 2010 www.kunena.org All rights reserved
+* @Copyright (C) 2008 - 2011 www.kunena.org All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -32,6 +32,13 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.3
+
+22-January-2011 svens(LDA)
+^ [#24560] update de-DE (thanks Rich)
+^ [#24560] update ar-AA (thanks baazza)
+^ [#24560] update di-FI (thanks Morrti)
+^ [#24560] update es-ES (thanks Kunena Spanish Team)
+^ [#24560] update ru-RU (thanks Zarkos)
 
 19-January-2011 Matias
 # [#24480] Regression: Do not send email to author itself

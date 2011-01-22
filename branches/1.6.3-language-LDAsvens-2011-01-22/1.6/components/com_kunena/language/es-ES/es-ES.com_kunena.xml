@@ -2,21 +2,21 @@
 <!-- $Id$ -->
 <!DOCTYPE install>
 <install type="language" version="1.5" client="site" method="upgrade">
-	<name>Kunena Forum - Spanish</name>
-	<tag>es-ES</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
-	<author>Kunena Spanish Team</author>
-	<authorEmail>kunenaspanish@kunenaspanish.com</authorEmail>
-	<authorUrl>http://www.KunenaSpanish.com</authorUrl>
-	<copyright>(C) 2008 - 2010 Kunena Spanish Team All rights reserved</copyright>
-	<license>GNU/GPL</license>
-	<description>Spanish language file for Kunena Forum Component</description>
+        <name>Kunena Forum - Spanish</name>
+        <tag>es-ES</tag>
+        <creationDate>2011-01-04</creationDate>
+        <version>1.6.3-DEV</version>
+        <build>4059</build>
+        <author>Kunena Spanish Team</author>
+        <authorEmail>kunenaspanish@kunenaspanish.com</authorEmail>
+        <authorUrl>http://www.KunenaSpanish.com</authorUrl>
+        <copyright>(C) 2008 - 2011 Kunena Spanish Team All rights reserved</copyright>
+        <license>GNU/GPL</license>
+        <description>Spanish language file for Kunena Forum Component</description>
 
-	<files>
-		<filename>es-ES.com_kunena.ini</filename>
-		<filename>es-ES.com_kunena.tpl_default.ini</filename>
-		<filename>es-ES.com_kunena.tpl_example.ini</filename>
-	</files>
+        <files>
+                <filename>es-ES.com_kunena.ini</filename>
+                <filename>es-ES.com_kunena.tpl_default.ini</filename>
+                <filename>es-ES.com_kunena.tpl_example.ini</filename>
+        </files>
 </install>

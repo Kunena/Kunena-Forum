@@ -30,6 +30,11 @@ Legend:
 
 KunenaLatest 1.6.3-DEV
 
+23-January-2010 LDA(svens)
+^ [#24560] update de-DE (thanks rich)
+^ [#24560] update ru-RU (thanks Zarkos)
+^ [#24560] update fi-FI (thanks Mortti)
+
 16-January-2010 Xillibit
 ^ [#24415] Update version to 1.6.3-DEV
 + [#24415] New configuration setting to show or hide more link

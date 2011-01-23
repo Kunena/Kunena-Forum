@@ -30,6 +30,10 @@ Legend:
 
 KunenaSearch 1.6.3-DEV
 
+23-January-2010 LDA(svens)
+^ [#24560] update de-DE (thanks rich)
++ [#24560] added ru-RU (thanks zarkos)
+
 30-December-2010 Xillibit
 ^ [#22592] Update version info to 1.6.3-DEV
 + [#23293] Add french translation for the module

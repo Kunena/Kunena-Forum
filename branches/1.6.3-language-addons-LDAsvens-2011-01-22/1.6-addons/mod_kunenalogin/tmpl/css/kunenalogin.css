@@ -1,0 +1,161 @@
+@charset "UTF-8";
+
+/*					VERTICAL STYLE
+----------------------------------------------------------*/
+
+.klogin-vert li a {
+	text-decoration: none;
+	line-height: 1.5em;
+}
+.klogin-vert ul.klogin-loginlink li {
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	text-decoration: none;
+	list-style: none !important;
+}
+.klogin-vert ul.klogin-logoutlink li {
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	list-style: none !important;
+}
+.klogin-vert div.klogin-links {
+	text-align: center;
+}
+.klogin-vert div.klogin-avatar {
+	text-align: center !important;
+	padding: 5px;
+}
+.klogin-vert div.klogin-lastvisit ul,
+.klogin-vert ul.klogin-logoutlink {
+	padding: 0;
+	margin: 10px 0;
+}
+.klogin-vert div.klogin-lastvisit li {
+	background: none;
+	list-style: none !important;
+}
+.klogin-vert div.klogin-lastvisit {
+	text-align: center;
+}
+.klogin-vert span.klogin-lasttext {
+	font-weight: bold;
+}
+.klogin-vert span.klogin-lastdate {
+	clear: both;
+}
+.klogin-vert div.klogin-hiname {
+	text-align: center;
+}
+
+/*					HORIZONTAL STYLE
+----------------------------------------------------------*/
+.klogin-horiz {
+	display: block;
+	padding:0;
+}
+.klogin-horiz li a {
+	text-decoration: none;
+	line-height: 1.3em;
+}
+.klogin-horiz div.klogin-lastvisit {
+	text-align: center;
+}
+.klogin-horiz ul.klogin-greeting,
+.klogin-horiz ul.klogin-logoutlink {
+	float: left;
+	display: inline;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+.klogin-horiz ul.klogin-logoutform li {
+	padding: 0;
+	margin: 0;
+}
+.klogin-horiz ul.klogin-logoutform input.klogin-username,
+.klogin-horiz ul.klogin-logoutform input.klogin-passwd {
+	width: 100px;
+	padding: 0;
+	margin: 0;
+}
+.klogin-horiz ul {
+	padding: 0 !important;
+	margin: 0 !important;
+	float:left;
+}
+.klogin-horiz div.klogin-middle li {
+	background: none;
+	margin-right:10px;
+	text-align:left;
+}
+.klogin-horiz div.klogin-middle li.klogin-logout-button {
+	padding-top:10px;
+}
+.klogin-horiz ul li {
+	margin: 0;
+	padding-left: 10px !important;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	text-decoration: none;
+	list-style: none !important;
+	float:none !important;
+}
+.klogin-horiz ul.klogin-logoutfield li {
+	padding-left: 0px !important;
+	background: none !important;
+}
+.klogin-horiz ul.klogin-logoutfield li.klogin-klogout-pwd {
+	padding: 5px 0 0 0;
+}
+.klogin-horiz ul.klogin-logoutfield li.klogin-klogout-uname {
+	padding: 0 5px 0 0;
+}
+.klogin-horiz ul.klogin-logoutfield input.kbutton {
+	margin: 0 5px;
+}
+.klogin-horiz ul.klogin-logoutlink li.klogin-forgotpass,
+.klogin-horiz ul.klogin-logoutlink li.klogin-forgotname,
+.klogin-horiz ul.klogin-logoutlink li.klogin-register {
+	margin: 0;
+	padding: 0 0 0 10px !important;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	list-style: none !important;
+}
+.klogin-horiz div.klogin-avatar,
+.klogin-horiz div.klogin-middle {
+	background: transparent;
+	float: left;
+	margin-right: 0px;
+	padding: 1px;
+}
+.klogin-horiz div.klogin-info {
+	background: transparent;
+	float: left;
+	margin-right: 0px;
+	text-align: left;
+	padding: 1px;
+}
+.klogin-horiz div.klogin-avatar-right {
+	background: transparent;
+	float: right;
+	margin-right: 15px;
+	text-align: center;
+	padding: 1px;
+}
+.klogin-horiz ul.klogin-greeting li {
+	background: none;
+	list-style-image: none !important;
+	list-style-type: none;
+}
+.klogin-horiz img {
+	margin: 0 10px 0;
+}
+.klogin-horiz div.klogin-links {
+	float: left;
+}
+.klogin-horiz span.klogin-lasttext {
+	font-weight: bold;
+}
+.klogin-horiz span.klogin-lastdate {
+	font-weight: normal;
+}

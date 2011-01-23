@@ -44,9 +44,9 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 				echo CKunenaLink::GetThreadLink ( 'view', $item->catid, $item->id, JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0', $this->params->get ( 'messagelength' ) ), 'follow' );
 			else :
 				if ($this->topic_ordering == 'ASC') :
-					echo CKunenaLink::GetThreadPageLink ( 'view', intval($item->catid), intval($item->thread), $threadPages, intval($this->kunena_config->messages_per_page), JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), intval($item->id), JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0',  $this->params->get ( 'messagelength' ) ) );
+					echo CKunenaLink::GetThreadPageSpecialLink ( 'view', intval($item->catid), intval($item->thread), $threadPages, intval($this->kunena_config->messages_per_page), JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), intval($item->id), '','', JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0',  $this->params->get ( 'messagelength' ) ) );
 				else :
-					echo CKunenaLink::GetThreadPageLink ( 'view', intval($item->catid), intval($item->thread), 1, intval($this->kunena_config->messages_per_page), JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), intval($item->id), JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0',  $this->params->get ( 'messagelength' ) ) );
+					echo CKunenaLink::GetThreadPageSpecialLink ( 'view', intval($item->catid), intval($item->thread), 1, intval($this->kunena_config->messages_per_page), JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), intval($item->id), '','', JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0',  $this->params->get ( 'messagelength' ) ) );
 				endif;
 			endif;
 			if ($item->unread) {

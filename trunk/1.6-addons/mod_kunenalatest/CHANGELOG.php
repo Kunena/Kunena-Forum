@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.3-DEV
 
+23-January-2010 Xillibit
+# [#24416] Make tooltips visible when you choose others models than latestposts and latesttopics (Part 2)
+
 16-January-2010 Xillibit
 ^ [#24415] Update version to 1.6.3-DEV
 + [#24415] New configuration setting to show or hide more link

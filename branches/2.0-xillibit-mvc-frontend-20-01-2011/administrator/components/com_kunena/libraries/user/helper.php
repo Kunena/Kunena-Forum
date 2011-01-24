@@ -196,4 +196,23 @@ class KunenaUserHelper {
 		$db->query ();
 		KunenaError::checkDatabaseError ();
 	}
+
+	public function getTitleWho ($totaluser,$totalguests) {
+		$who_name = '<strong>'.$totaluser.' </strong>';
+		if($totaluser==1) {
+			$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER').'&nbsp;';
+		} else {
+			$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS').'&nbsp;';
+		}
+		$who_name .= JText::_('COM_KUNENA_WHO_AND');
+		$who_name .= '<strong> '. $totalguests.' </strong>';
+		if($totalguests==1) {
+			$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST').'&nbsp;';
+		} else {
+			$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS').'&nbsp;';
+		}
+		$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
+
+		return $who_name;
+	}
 }

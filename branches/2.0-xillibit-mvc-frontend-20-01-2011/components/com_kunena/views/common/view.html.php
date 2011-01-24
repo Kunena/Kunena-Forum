@@ -87,12 +87,12 @@ class KunenaViewCommon extends KunenaView {
 			// FIXME: refactor code
 			require_once(KUNENA_PATH .DS. 'class.kunena.php');
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-			online = CKunenaWhoIsOnline::getInstance();
-			$this->users = 		$online->getActiveUsersList();
-			$this->totaluser = 	$online->getTotalRegistredUsers ();
-			$this->totalguests = 	$online->getTotalGuestUsers ();
-			$this->who_name = 	$online->getTitleWho ($totaluser, $totalguests);
+
+			$this->users =	KunenaUserHelper::getActiveUsersList();
+			$onlineusers = KunenaUserHelper::getOnlineCount();
+			$this->totaluser = $onlineusers['user'];
+			$this->totalguests = $onlineusers['guest'];
+			$this->who_name = 	KunenaUserHelper::getTitleWho ($this->totaluser, $this->totalguests);
 			$result = $this->loadTemplate($tpl);
 			if (JError::isError($result)) {
 				return $result;

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+24-January-2010 Xillibit
+^ [#24515] Put some old codes into mvc in frontend (whoisonline and frontstats only in common)
+
 22-January-2010 Xillibit
 ^ [#24515] Put some old codes into mvc in frontend (statistics)
 

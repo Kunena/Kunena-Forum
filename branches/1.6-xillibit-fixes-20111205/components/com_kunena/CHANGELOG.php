@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+24-January-2010 Xillibit
+# [#24590] Topic/Create: Showing poll and anonymous options works only in FireFox
+
 23-January-2010 Xillibit
 ^ [#24413] Add title parameter in function CKunenaLink::GetThreadPageLink for module latest (Part 2)
 

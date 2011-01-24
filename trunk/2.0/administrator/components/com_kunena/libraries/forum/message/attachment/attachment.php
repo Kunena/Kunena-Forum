@@ -109,11 +109,11 @@ class KunenaForumMessageAttachment extends JObject {
 			}
 			$this->_disabled = false;
 			if (! KunenaFactory::getUser()->exists()) {
-				if ($this->shorttype == 'image' && ! $config->showimgforguest) {
+				if ($this->_shorttype == 'image' && ! $config->showimgforguest) {
 					$this->_disabled = true;
 					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG' );
 				}
-				if ($this->shorttype != 'image' && ! $config->showfileforguest) {
+				if ($this->_shorttype != 'image' && ! $config->showfileforguest) {
 					$this->_disabled = true;
 					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' );
 				}

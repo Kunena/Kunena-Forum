@@ -42,6 +42,7 @@ Kunena 2.0.0-DEV
 # [#23443] KunenaViewUser: Show embedded user posts, thankyous, subscriptions and favorites
 # [#23443] Fix approve authorization in KunenaForumCategory::authorise()
 # [#23443] Make clean variation from topics layouts and show them in user view
+# [#23443] Fix notices in KunenaUser and KunenaForumMessageAttachment
 
 23-January-2010 Matias
 # [#22569] KunenaModel classes: add support for embedded mode

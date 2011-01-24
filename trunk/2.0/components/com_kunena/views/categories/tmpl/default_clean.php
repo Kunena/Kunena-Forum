@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
 $tabclass = array ("row1", "row2" );
 $mmm=0;
-foreach ( $this->categories[0] as $section ) :
+foreach ( $this->sections as $section ) :
 	$htmlClassBlockTable = !empty ( $section->class_sfx ) ? ' kblocktable' . $this->escape($section->class_sfx) : '';
 	$htmlClassTitleCover = !empty ( $section->class_sfx ) ? ' ktitle-cover' . $this->escape($section->class_sfx) : '';
 ?>

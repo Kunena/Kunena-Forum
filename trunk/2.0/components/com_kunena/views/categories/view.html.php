@@ -22,6 +22,7 @@ class KunenaViewCategories extends KunenaView {
 			$this->setError($this->categories->getError());
 		}
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
+		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
@@ -119,5 +120,11 @@ class KunenaViewCategories extends KunenaView {
 			}
 		}
 		return '';
+	}
+
+	function displayInfoMessage() {
+		$this->common->header = $this->escape($this->category->name);
+		$this->common->body = '<p>'.JText::sprintf('COM_KUNENA_VIEW_CATEGORIES_INFO_EMPTY', $this->escape($this->category->name)).'</p>';
+		echo $this->common->display('default');
 	}
 }

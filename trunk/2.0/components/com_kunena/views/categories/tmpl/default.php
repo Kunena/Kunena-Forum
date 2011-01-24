@@ -36,9 +36,9 @@ $this->common->display ('pathway');
 
 <?php
 if (count ( $this->categories )) {
-	echo $this->loadTemplate('list');
+	echo $this->loadTemplate('clean');
 } else {
-	//$this->displayInfoMessage ();
+	$this->displayInfoMessage ();
 }
 $this->common->display('whosonline');
 $this->common->display('stats');

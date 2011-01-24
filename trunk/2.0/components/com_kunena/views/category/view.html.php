@@ -115,7 +115,7 @@ class KunenaViewCategory extends KunenaView {
 		$children = $this->category->getChildren();
 		if (!empty($children)) {
 			$params = array('catid'=>$this->category->id);
-			KunenaForum::display('categories', 'default', 'list', $params);
+			KunenaForum::display('categories', 'default', 'clean', $params);
 			$this->subcategories = true;
 		}
 	}

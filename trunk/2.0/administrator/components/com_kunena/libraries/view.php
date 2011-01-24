@@ -135,6 +135,8 @@ class KunenaView extends JView {
 	}
 
 	function setTitle($title) {
-		$this->document->setTitle ( $this->document->getTitle() .' :: '. strip_tags($title) );
+		if (!$this->state->get('embedded')) {
+			$this->document->setTitle ( KunenaFactory::getConfig()->board_title .' :: '. strip_tags($title) );
+		}
 	}
 }

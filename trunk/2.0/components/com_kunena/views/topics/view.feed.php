@@ -38,9 +38,32 @@ class KunenaViewTopics extends KunenaView {
 		$this->template = KunenaTemplate::getInstance();
 
 		// TODO: if start != 0, add information from it into description
-		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->document->setGenerator('Kunena Forum (Joomla)');
-		$this->document->setTitle ( "{$title} - {$this->config->board_title}" );
+
+		switch ($this->state->get ( 'list.mode' )) {
+			case 'topics' :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+				break;
+			case 'sticky' :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
+				break;
+			case 'locked' :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
+				break;
+			case 'noreplies' :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
+				break;
+			case 'unapproved' :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
+				break;
+			case 'deleted' :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
+				break;
+			case 'replies' :
+			default :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
+		}
+		$this->setTitle ( $title );
 
 		// Create image for feed
 		$image = new JFeedImage();
@@ -66,7 +89,24 @@ class KunenaViewTopics extends KunenaView {
 		// TODO: if start != 0, add information from it into description
 		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->document->setGenerator('Kunena Forum (Joomla)');
-		$this->document->setTitle ( "{$title} - {$this->config->board_title}" );
+
+		switch ($this->state->get ( 'list.mode' )) {
+			case 'posted' :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
+				break;
+			case 'started' :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
+				break;
+			case 'favorites' :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
+				break;
+			case 'subscriptions' :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
+				break;
+			default :
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
+		}
+		$this->setTitle ( $title );
 
 		// Create image for feed
 		$image = new JFeedImage();
@@ -93,7 +133,25 @@ class KunenaViewTopics extends KunenaView {
 		// TODO: if start != 0, add information from it into description
 		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->document->setGenerator('Kunena Forum (Joomla)');
-		$this->document->setTitle ( "{$title} - {$this->config->board_title}" );
+
+		switch ($this->state->get ( 'list.mode' )) {
+			case 'unapproved':
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				break;
+			case 'deleted':
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				break;
+			case 'mythanks':
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				break;
+			case 'thankyou':
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				break;
+			case 'recent':
+			default:
+				$title =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+		}
+		$this->setTitle ( $title );
 
 		// Create image for feed
 		$image = new JFeedImage();

@@ -129,6 +129,7 @@ class KunenaForum {
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
 		if ($viewName != 'common') {
+			$params['layout'] = $layout;
 			// Push the model into the view (as default).
 			$model = new $model ();
 			$model->initialize($params);

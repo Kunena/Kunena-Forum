@@ -140,7 +140,7 @@ class KunenaForumTopicHelper {
 		if (!empty($params['replied'])) $whereuser[] = '(ut.owner=0 AND ut.posts>0)';
 		if (!empty($params['posted'])) $whereuser[] = 'ut.posts>0';
 		if (!empty($params['favorited'])) $whereuser[] = 'ut.favorite=1';
-		if (!empty($params['subscriped'])) $whereuser[] = 'ut.subscribed=1';
+		if (!empty($params['subscribed'])) $whereuser[] = 'ut.subscribed=1';
 
 		$kwids = array();
 		if (!empty($params['keywords'])) {

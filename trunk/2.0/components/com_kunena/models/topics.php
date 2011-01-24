@@ -29,26 +29,25 @@ class KunenaModelTopics extends KunenaModel {
 
 	protected function populateState() {
 		$app = JFactory::getApplication ();
-		$params = $app->getPageParameters('com_kunena');
+		$params = $this->getParameters();
 		$config = KunenaFactory::getConfig ();
 
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
-		$layout = JRequest::getWord ( 'layout', 'default' );
+		$layout = $this->getWord ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
 
-		if ($layout == 'user') {
-			$userid = JRequest::getInt ( 'userid', -1 );
-			if ($userid < 0) {
-				$userid = KunenaFactory::getUser()->userid;
-			} elseif($userid > 0) {
-				$userid = KunenaFactory::getUser($userid)->userid;
-			} else {
-				$userid = 0;
-			}
-			$this->setState ( 'user', $userid );
+		$userid = $this->getInt ( 'userid', -1 );
+		if ($userid < 0) {
+			$userid = KunenaFactory::getUser()->userid;
+		} elseif($userid > 0) {
+			$userid = KunenaFactory::getUser($userid)->userid;
+		} else {
+			$userid = 0;
 		}
-		$mode = JRequest::getWord ( 'mode', 'latest' );
+		$this->setState ( 'user', $userid );
+
+		$mode = $this->getWord ( 'mode', 'latest' );
 		$this->setState ( 'list.mode', $mode );
 
 		$latestcategory = $params->get('topics_categories', $config->latestcategory );
@@ -59,23 +58,23 @@ class KunenaModelTopics extends KunenaModel {
 		$this->setState ( 'list.categories', $latestcategory );
 		$this->setState ( 'list.categories.in', (bool)$params->get('topics_catselection', $config->latestcategory_in) );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $config->show_list_time), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $config->show_list_time), 'int' );
 		// FIXME: last visit and all
 		$this->setState ( 'list.time', $value );
 
 		// List state information
-		$value = $app->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_limit", 'limit', 0, 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_limit", 'limit', 0, 'int' );
 		if ($value < 1) $value = $config->threads_per_page;
 		$this->setState ( 'list.limit', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_start", 'limitstart', 0, 'int' );
-		//$value = JRequest::getInt ( 'limitstart', 0 );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_start", 'limitstart', 0, 'int' );
+		//$value = $this->getInt ( 'limitstart', 0 );
 		$this->setState ( 'list.start', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_direction", 'filter_order_Dir', 'desc', 'word' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_direction", 'filter_order_Dir', 'desc', 'word' );
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );

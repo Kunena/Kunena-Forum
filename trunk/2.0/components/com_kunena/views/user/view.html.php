@@ -124,116 +124,108 @@ class KunenaViewUser extends KunenaView {
 			$this->profile->save();
 		}
 
+		$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName()));
 		parent::display();
 	}
 
-	function displayReviewPosts()
-	{
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
-		$review = new CKunenaReview();
-		$obj->embedded = 1;
-		$review->display();
+	function displayUnapprovedPosts() {
+		$params = array(
+			'topics_categories' => 0,
+			'topics_catselection' => 1,
+			'mode' => 'unapproved',
+			'sel' => -1,
+			'limit' => 6,
+			'filter_order' => 'time',
+			'limitstart' => 0,
+			'filter_order_Dir' => 'desc',
+		);
+		KunenaForum::display('topics', 'posts', null, $params);
 	}
 
-	function displayUserPosts()
-	{
-		// TODO: pass parameters
-		KunenaForum::display('topics', 'posts');
+	function displayUserPosts() {
+		$params = array(
+			'topics_categories' => 0,
+			'topics_catselection' => 1,
+			'userid' => -1,
+			'mode' => 'latest',
+			'sel' => 8760,
+			'limit' => 6,
+			'filter_order' => 'time',
+			'limitstart' => 0,
+			'filter_order_Dir' => 'desc',
+		);
+		KunenaForum::display('topics', 'posts', null, $params);
 	}
 
-	function displayGotThankYou()
-	{
-		//FIXME
-		return;
-
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-		$obj = new CKunenaLatestX('gotthankyouposts',0);
-		$obj->user = $this->user;
-		$obj->embedded = 1;
-		$obj->getGotThankYouPosts();
-		$obj->displayPosts();
+	function displayGotThankYou() {
+		$params = array(
+			'topics_categories' => 0,
+			'topics_catselection' => 1,
+			'userid' => -1,
+			'mode' => 'mythanks',
+			'sel' => -1,
+			'limit' => 6,
+			'filter_order' => 'time',
+			'limitstart' => 0,
+			'filter_order_Dir' => 'desc',
+		);
+		KunenaForum::display('topics', 'posts', null, $params);
 	}
 
-	function displaySaidThankYou()
-	{
-		//FIXME
-		return;
-
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-		$obj = new CKunenaLatestX('saidthankyouposts',0);
-		$obj->user = $this->user;
-		$obj->embedded = 1;
-		$obj->getSaidThankYouPosts();
-		$obj->displayPosts();
-	}
-	function displayOwnTopics()
-	{
-		//FIXME
-		return;
-
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-		$obj = new CKunenaLatestX('owntopics', 0);
-		$obj->user = $this->user;
-		$obj->embedded = 1;
-		$obj->getOwnTopics();
-		$obj->displayFlat();
-		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+	function displaySaidThankYou() {
+		$params = array(
+			'topics_categories' => 0,
+			'topics_catselection' => 1,
+			'userid' => -1,
+			'mode' => 'thankyou',
+			'sel' => -1,
+			'limit' => 6,
+			'filter_order' => 'time',
+			'limitstart' => 0,
+			'filter_order_Dir' => 'desc',
+		);
+		KunenaForum::display('topics', 'posts', null, $params);
 	}
 
-	function displayUserTopics()
-	{
-		//FIXME
-		return;
-
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-		$obj = new CKunenaLatestX('usertopics', 0);
-		$obj->user = $this->user;
-		$obj->embedded = 1;
-		$obj->getUserTopics();
-		$obj->displayFlat();
-		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+	function displayFavorites() {
+		$params = array(
+			'topics_categories' => 0,
+			'topics_catselection' => 1,
+			'userid' => -1,
+			'mode' => 'favorites',
+			'sel' => -1,
+			'limit' => 6,
+			'filter_order' => 'time',
+			'limitstart' => 0,
+			'filter_order_Dir' => 'desc',
+		);
+		KunenaForum::display('topics', 'user', null, $params);
 	}
 
-	function displayFavorites()
-	{
-		//FIXME
-		return;
-
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-		$obj = new CKunenaLatestX('favorites', 0);
-		$obj->user = $this->user;
-		$obj->embedded = 1;
-		$obj->getFavorites();
-		$obj->displayFlat();
-		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+	function displaySubscriptions() {
+		$params = array(
+			'topics_categories' => 0,
+			'topics_catselection' => 1,
+			'userid' => -1,
+			'mode' => 'subscriptions',
+			'sel' => -1,
+			'limit' => 6,
+			'filter_order' => 'time',
+			'limitstart' => 0,
+			'filter_order_Dir' => 'desc',
+		);
+		KunenaForum::display('topics', 'user', null, $params);
 	}
 
-	function displaySubscriptions()
-	{
-		//FIXME
-		return;
-
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-		$obj = new CKunenaLatestX('subscriptions', 0);
-		$obj->user = $this->user;
-		$obj->embedded = 1;
-		$obj->getSubscriptions();
-		$obj->displayFlat();
-		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
-	}
-
-	function displayCategoriesSubscriptions()
-	{
-		//FIXME
-		return;
-
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-		$obj = new CKunenaLatestX('catsSubscriptions', 0);
-		$obj->user = $this->user;
-		$obj->embedded = 1;
-		$obj->getCategoriesSubscriptions();
-		$obj->displayFlatCats();
-		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+	function displayCategoriesSubscriptions() {
+		$params = array(
+			'userid' => -1,
+			'limit' => 6,
+			'filter_order' => 'time',
+			'limitstart' => 0,
+			'filter_order_Dir' => 'desc',
+		);
+		//KunenaForum::display('categories', 'user', null, $params);
 	}
 
 	function displayBanUser() {

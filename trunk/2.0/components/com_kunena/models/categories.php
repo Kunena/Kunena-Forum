@@ -26,10 +26,10 @@ class KunenaModelCategories extends KunenaModel {
 	protected function populateState() {
 		$app = JFactory::getApplication ();
 
-		$catid = JRequest::getInt ( 'catid', 0 );
+		$catid = $this->getInt ( 'catid', 0 );
 		$this->setState ( 'item.id', $catid );
 
-		$layout = JRequest::getCmd ( 'layout', 'default' );
+		$layout = $this->getCmd ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
 	}
 

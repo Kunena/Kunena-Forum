@@ -21,8 +21,6 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
-		$this->headerText =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
-		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
@@ -35,6 +33,31 @@ class KunenaViewTopics extends KunenaView {
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
+
+		switch ($this->state->get ( 'list.mode' )) {
+			case 'topics' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+				break;
+			case 'sticky' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
+				break;
+			case 'locked' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
+				break;
+			case 'noreplies' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
+				break;
+			case 'unapproved' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
+				break;
+			case 'deleted' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
+				break;
+			case 'replies' :
+			default :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
+		}
+		$this->title = $this->headerText;
 
 		//meta description and keywords
 		$limit = $this->state->get('list.limit');
@@ -49,7 +72,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->document->setMetadata ( 'robots', 'noindex, follow' );
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $metaDesc );
-		$this->document->setTitle ( "{$this->title} ({$pagesTxt}) - {$this->config->board_title}" );
+		$this->setTitle ( "{$this->title} ({$pagesTxt})" );
 
 		$this->display($tpl);
 	}
@@ -59,8 +82,6 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
-		$this->headerText =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
-		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
@@ -73,6 +94,24 @@ class KunenaViewTopics extends KunenaView {
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
+
+		switch ($this->state->get ( 'list.mode' )) {
+			case 'posted' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
+				break;
+			case 'started' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
+				break;
+			case 'favorites' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
+				break;
+			case 'subscriptions' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
+				break;
+			default :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
+		}
+		$this->title = $this->headerText;
 
 		//meta description and keywords
 		$limit = $this->state->get('list.limit');
@@ -87,7 +126,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->document->setMetadata ( 'robots', 'noindex, follow' );
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $metaDesc );
-		$this->document->setTitle ( "{$this->title} ({$pagesTxt}) - {$this->config->board_title}" );
+		$this->setTitle ( "{$this->title} ({$pagesTxt})" );
 
 		$this->display($tpl);
 	}
@@ -98,8 +137,6 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
-		$this->headerText =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
-		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
@@ -112,6 +149,25 @@ class KunenaViewTopics extends KunenaView {
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
+
+		switch ($this->state->get ( 'list.mode' )) {
+			case 'unapproved':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				break;
+			case 'deleted':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				break;
+			case 'mythanks':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				break;
+			case 'thankyou':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				break;
+			case 'recent':
+			default:
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+		}
+		$this->title = $this->headerText;
 
 		//meta description and keywords
 		$limit = $this->state->get('list.limit');
@@ -126,7 +182,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->document->setMetadata ( 'robots', 'noindex, follow' );
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $metaDesc );
-		$this->document->setTitle ( "{$this->title} ({$pagesTxt}) - {$this->config->board_title}" );
+		$this->setTitle ( "{$this->title} ({$pagesTxt})" );
 
 		$this->display($tpl);
 	}

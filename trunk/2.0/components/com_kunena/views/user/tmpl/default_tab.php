@@ -54,7 +54,7 @@ JHTML::_('behavior.tooltip');
 		<?php if (CKunenaTools::isModerator($this->my->id)): ?>
 		<dt class="open" title="<?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?>"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?></dt>
 		<dd style="display: none;">
-			<?php $this->displayReviewPosts(); ?>
+			<?php $this->displayUnapprovedPosts(); ?>
 		</dd>
 		<?php endif; ?>
 		<dt class="open" title="<?php echo JText::_('COM_KUNENA_USERPOSTS'); ?>"><?php echo JText::_('COM_KUNENA_USERPOSTS'); ?></dt>
@@ -69,16 +69,6 @@ JHTML::_('behavior.tooltip');
 		</dd>
 		<?php endif; ?>
 		<?php if ($this->my->id == $this->user->id): ?>
-		<!--
-		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_OWNTOPICS'); ?>"><?php echo JText::_('COM_KUNENA_OWNTOPICS'); ?></dt>
-		<dd style="display: none;">
-			<?php //$this->displayOwnTopics(); ?>
-		</dd>
-		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_USERTOPICS'); ?>"><?php echo JText::_('COM_KUNENA_USERTOPICS'); ?></dt>
-		<dd style="display: none;">
-			<?php //$this->displayUserTopics(); ?>
-		</dd>
-		-->
 		<?php if ($this->config->allowsubscriptions) :?>
 		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?>"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
 		<dd style="display: none;">

@@ -36,28 +36,28 @@ class KunenaModelCategories extends JModel {
 		$app = JFactory::getApplication ();
 
 		// List state information
-		$value = $app->getUserStateFromRequest ( "com_kunena.categories.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.categories.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
-		$value = $app->getUserStateFromRequest ( 'com_kunena.categories.list.ordering', 'filter_order', 'ordering', 'cmd' );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.categories.list.ordering', 'filter_order', 'ordering', 'cmd' );
 		$this->setState ( 'list.ordering', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.categories.list.start", 'limitstart', 0, 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.categories.list.start", 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
-		$value = $app->getUserStateFromRequest ( 'com_kunena.categories.list.direction', 'filter_order_Dir', 'asc', 'word' );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.categories.list.direction', 'filter_order_Dir', 'asc', 'word' );
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $app->getUserStateFromRequest ( 'com_kunena.categories.list.search', 'search', '', 'string' );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.categories.list.search', 'search', '', 'string' );
 		$this->setState ( 'list.search', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.categories.list.levels", 'levellimit', 10, 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.categories.list.levels", 'levellimit', 10, 'int' );
 		$this->setState ( 'list.levels', $value );
 
-		$catid = JRequest::getInt ( 'catid', 0 );
-		$layout = JRequest::getWord ( 'layout', 'edit' );
+		$catid = $this->getInt ( 'catid', 0 );
+		$layout = $this->getWord ( 'layout', 'edit' );
 		if ($layout == 'edit') {
 			$parent_id = 0;
 		} else {

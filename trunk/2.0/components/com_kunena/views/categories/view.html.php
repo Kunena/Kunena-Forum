@@ -37,6 +37,7 @@ class KunenaViewCategories extends KunenaView {
 			$this->document->setMetadata ( 'keywords', $metaKeys );
 			$this->document->setDescription ( $metaDesc );
 
+			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') );
 			$this->display ($tpl);
 		}
 	}
@@ -61,6 +62,7 @@ class KunenaViewCategories extends KunenaView {
 			$this->document->setMetadata ( 'keywords', $metaKeys );
 			$this->document->setDescription ( $metaDesc );
 
+			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_USER') );
 			$this->display ($tpl);
 		}
 	}

@@ -34,7 +34,7 @@ class KunenaModelTopic extends KunenaModel {
 		$config = KunenaFactory::getConfig ();
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
-		$layout = JRequest::getCmd ( 'layout', 'default' );
+		$layout = $this->getCmd ( 'layout', 'default' );
 
 		$template = KunenaFactory::getTemplate();
 		$profile_location = $template->params->get('avatarPosition', 'left');
@@ -42,31 +42,31 @@ class KunenaModelTopic extends KunenaModel {
 		$this->setState ( 'profile.location', $profile_location );
 		$this->setState ( 'profile.direction', $profile_direction );
 
-		$catid = JRequest::getInt ( 'catid', 0 );
+		$catid = $this->getInt ( 'catid', 0 );
 		$this->setState ( 'item.catid', $catid );
 
-		$id = JRequest::getInt ( 'id', 0 );
+		$id = $this->getInt ( 'id', 0 );
 		$this->setState ( 'item.id', $id );
 
-		$id = JRequest::getInt ( 'mesid', 0 );
+		$id = $this->getInt ( 'mesid', 0 );
 		$this->setState ( 'item.mesid', $id );
 
 		$access = KunenaFactory::getAccessControl();
 		$value = $access->getAllowedHold($me, $catid);
 		$this->setState ( 'hold', $value );
 
-		$value = JRequest::getInt ( 'limit', 0 );
+		$value = $this->getInt ( 'limit', 0 );
 		if ($value < 1) $value = $config->messages_per_page;
 		$this->setState ( 'list.limit', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
-		$value = JRequest::getInt ( 'limitstart', 0 );
+		$value = $this->getInt ( 'limitstart', 0 );
 		if ($value < 0) $value = 0;
 		$this->setState ( 'list.start', $value );
 
-		//$value = $app->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_direction", 'filter_order_Dir', 'desc', 'word' );
+		//$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_direction", 'filter_order_Dir', 'desc', 'word' );
 		if ($me->ordering != '0') {
 			$value = $me->ordering == '1' ? 'desc' : 'asc';
 		} else {

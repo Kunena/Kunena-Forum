@@ -143,7 +143,7 @@ class KunenaForumCategory extends JObject {
 			'topic.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
 			'topic.edit'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.move'=>array('Read', 'NotBanned', 'Moderate'),
-			'topic.approve'=>array('Read',' NotBanned', 'Moderate'),
+			'topic.approve'=>array('Read','NotBanned', 'Moderate'),
 			'topic.delete'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.undelete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.permdelete'=>array('Read', 'NotBanned', 'Admin'),

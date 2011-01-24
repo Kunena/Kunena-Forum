@@ -92,6 +92,8 @@ class KunenaViewCategory extends KunenaView {
 			$this->document->setMetadata ( 'keywords', $metaKeys );
 			$this->document->setDescription ( $metaDesc );
 
+			$this->setTitle( JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', $this->category->name) . " ({$page}/{$pages})" );
+
 			parent::display ();
 		}
 	}
@@ -112,7 +114,8 @@ class KunenaViewCategory extends KunenaView {
 	function displaySubCategories() {
 		$children = $this->category->getChildren();
 		if (!empty($children)) {
-			KunenaForum::display('categories', 'default', 'list');
+			$params = array('catid'=>$this->category->id);
+			KunenaForum::display('categories', 'default', 'list', $params);
 			$this->subcategories = true;
 		}
 	}

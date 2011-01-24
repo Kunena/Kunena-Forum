@@ -33,6 +33,18 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+24-January-2010 Matias
+# [#23443] Fix bug in KunenaForumTopicHelper::getLatestTopics(): typo in subscribed parameter
+# [#23443] KunenaForum::display(): model doesn't regognize layout
+# [#23443] KunenaModelTopics::populateState(): should support userid in every layout
+# [#23443] Set title only inside views, not in pathway etc..
++ [#22569] Add title for every view/layout
+# [#23443] KunenaViewUser: Show embedded user posts, thankyous, subscriptions and favorites
+# [#23443] Fix approve authorization in KunenaForumCategory::authorise()
+
+23-January-2010 Matias
+# [#22569] KunenaModel classes: add support for embedded mode
+
 22-January-2010 Matias
 # [#23443] Topic/Create: Topic Tags showing up for all users, not just moderators
 

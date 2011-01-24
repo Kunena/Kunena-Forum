@@ -107,6 +107,8 @@ class KunenaViewTopic extends KunenaView {
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $this->escape($metaDesc) );
 
+		$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_TOPICS_DEFAULT', $this->topic->subject));
+
 		$this->display($tpl);
 	}
 

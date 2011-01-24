@@ -18,6 +18,7 @@ kimport ( 'kunena.view' );
 class KunenaViewCredits extends KunenaView {
 	function displayDefault($tpl = null) {
 
+		$this->setTitle( JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT') );
 		parent::display ();
 	}
 }

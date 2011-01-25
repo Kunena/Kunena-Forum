@@ -9,7 +9,7 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>sven@kunena.com</authorEmail>
 	<authorUrl>http://www.kunena.com</authorUrl>
-	<version>0.0.0</version>
+	<version>1.0.0 Alpha</version>
 	<description>MOD_KUNENATRANSLATE_DESC</description>
 	<install>
 		<sql>
@@ -17,7 +17,7 @@
 			<file driver="mysql">install.sql</file>	
 		</sql>
   	</install>
-	<administration>
+	<administration folder="admin">
 		<menu>Kunena Translate</menu>
 		<files>
 			<filename>CHANGELOG.php</filename>

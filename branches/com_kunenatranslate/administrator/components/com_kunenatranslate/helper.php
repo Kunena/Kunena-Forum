@@ -16,24 +16,27 @@ defined('_JEXEC') or die('Restricted access');
 class KunenaTranslateHelper
 {
 	var $x = 0;
-	var $files;
+	var $files = null;
+	var $clientdata = null;
+	var $type = null;
+	var $dir = null;
 	
-    public function scan_dir($dir) {
-        if(!$temp = @scandir($dir)) {
-        	echo "<font color='red'>".JText::_('Error! Files not found!')."</font><br>";
+    public function scan_dir() {
+        if(!$temp = @scandir($this->dir)) {
+        	JError::raiseWarning('', JText::_('Error! Files not found!'));
         	return;
         }
         for($i=0; $i < count($temp); $i++) {
         	if($temp[$i] != "." && $temp[$i] != "..") {
-        		if(is_file("$dir/$temp[$i]"))
-        			$this->files[] = "$dir/$temp[$i]";
-        		elseif(is_dir("$dir/$temp[$i]"))
-        			$stack[] = "$dir/$temp[$i]";
+        		if(is_file("$this->dir/$temp[$i]"))
+        			$this->files[] = "$this->dir/$temp[$i]";
+        		elseif(is_dir("$this->dir/$temp[$i]"))
+        			$stack[] = "$this->dir/$temp[$i]";
         	}
         	if((count($temp) - 1) == $i) {
         		if(isset($stack[$this->x])) {
         			$i = -1;
-        			$dir = $stack[$this->x];
+        			$this->dir = $stack[$this->x];
         			$temp = scandir($stack[$this->x]);
         			$this->x++;
         		}
@@ -43,15 +46,14 @@ class KunenaTranslateHelper
     /* Used ti exlude special folders
      * 
      * @param $folderl array of foldernames to kill
-     * @param $fulllist array of all files
-     * @return $fulllist array
+     * @return true if success
      */
-    static public function killfolder($folderl, &$fulllist){
+    public function killfolder($folderl){
     	$isArray	= is_array($folderl);
     	if (!$isArray) $folderl = array($folderl);
-    	foreach ($fulllist as $k=>$fulll){
+    	foreach ($this->files as $k=>$fulll){
     		foreach ($folderl as $folder){
-    			if (strpos($fulll, $folder) !== false) unset($fulllist[$k]);
+    			if (strpos($fulll, $folder) !== false) unset($this->files[$k]);
     		}
     	}
     	return true;
@@ -64,7 +66,8 @@ class KunenaTranslateHelper
      * @param $extension string wanted extension Default php
      * @return $list array of wanted filenames
      */
-    static public function getfiles($list, $extension='php'){
+    public function getfiles($extension='php'){
+    	$list = $this->files;
     	foreach ($list as $k=>$v){
     		$pathinfo = pathinfo($v);
     		if($pathinfo['extension'] != $extension)
@@ -224,7 +227,7 @@ class KunenaTranslateHelper
 		return $res;
 	}
 	
-/*
+     /**
 	 * Compare the DB with the found languagestrings
 	 * show which are new, which are old
 	 * @param array db
@@ -242,17 +245,21 @@ class KunenaTranslateHelper
 		// TODO find better way to do the compare
 		//look if there are new strings in php/xml
 		if($task == 'update'){
-			foreach ($phpxml as $pk=>$vk){
-				foreach ($dbase as $dk=>$v){
-					$dkey = array_keys($phpxml[$pk],$v->label);
-					foreach ($dkey as $vkey){
-						unset($phpxml[$pk][$vkey]);
-					}
-				}	
+			if(!empty($dbase)){
+				foreach ($phpxml as $pk=>$vk){
+					foreach ($dbase as $dk=>$v){
+						$dkey = array_keys($phpxml[$pk],$v->label);
+						foreach ($dkey as $vkey){
+							unset($phpxml[$pk][$vkey]);
+						}
+					}	
+				}
 			}
-			foreach ($phpxml as $v){
-				foreach ($v as $value) {
-					$res['new'][] = $value;
+			foreach ($phpxml as $pxv){
+				if(!empty($pxv)){
+					foreach ($pxv as $value) {
+						$res['new'][] = $value;
+					}
 				}
 			}
 		}//look if there are old strings in teh ini file
@@ -274,7 +281,7 @@ class KunenaTranslateHelper
 		return $res;
 	}
 	
-	/*
+	/**
 	 * Show the files on screen
 	 * @param array
 	 * @return $res string
@@ -294,19 +301,99 @@ class KunenaTranslateHelper
 		return $res;
 	}
 	
+	/**
+	 * Loads the config XML file and returns the client list
+	 * 
+	 * @param boolean $htmllist false for array, true for HTML Selectlist
+	 * @return array or html selectlist
+	 */
 	static public function getClientList($htmllist=false){
-		$client		= array(
-					array('text'=>'Backend', 'value'=>'backend'),
-					array('text'=>'Install', 'value'=>'install'),
-					array('text'=>'Backend Menu', 'value'=>'backendmenu'),
-					array('text'=>'Frontend','value'=>'frontend'),
-					array('text'=>'Default Template', 'value'=>'tpl_default'),
-					array('text'=>'Example Template', 'value'=>'tpl_example'),
-					array('text'=>'Skinner Template', 'value'=>'tpl_skinner'), 
-					);
+		$client = array();
+		$xml = self::loadXML();
+		$files = $xml->document->getElementbyPath('files');
+		foreach ($files->children() as $child){
+			$client[] = array('text' => $child->attributes('name'),
+						'value' => $child->name() );
+		}
 		if($htmllist){
 			$client = JHTML::_('select.genericlist', $client, 'client','', 'value','text');
 		}
 		return $client;
+	}
+	
+	/**
+	 * Loads the XML config file and returns a Object
+	 * 
+	 * @param $filename string Name of the XML-File
+	 * @return object JSimpleXML Object of the XML-File 
+	 */
+	static protected function loadXML($filename='Kunena'){
+		$xml = new JSimpleXML();
+		$xml->loadFile(JPATH_COMPONENT_ADMINISTRATOR.DS.'conf'.DS.$filename.'.xml');
+		
+		return $xml;
+	}
+	
+	/**
+	 * Load the specific data for an client
+	 * 
+	 * @param string $client
+	 * @param string language code
+	 * @return string inifile path if param $lang is set
+	 */
+	public function loadClientData($client, $lang=null){
+		$xml = $this->loadXML();
+		$this->type = $xml->document->attributes('type');
+		$this->clientdata = $xml->document->getElementbyPath('files/'.$client);
+		if($lang){
+			$ini = self::createIniPath($lang);
+			return $ini;
+		}
+		else self::createPath();
+	}
+	
+	/**
+	 * creates the path where to search and inifile location
+	 */
+	protected function createPath(){
+		$area = $this->clientdata->attributes('type');
+		$path = $this->clientdata->getElementByPath('dir');
+		if($area == 'administrator'){
+			switch ($this->type){
+				case 'component':
+					$dir = JPATH_ADMINISTRATOR.DS.'components'.DS.$path->data();
+					break;
+			}	
+		}elseif ($area == 'site'){
+			switch ($this->type){
+				case 'component':
+					$dir = JPATH_SITE.DS.'components'.DS.$path->data();
+					break;
+			}
+		}else{
+			JError::raiseWarning('', JText::sprintf( 'Invalid clienttype %s', $this->type) );
+			$this->dir = false;
+			return ;
+		}
+		$this->dir = $dir;
+	}
+	
+	/**
+	 * create & give back of the path to the languagefile
+	 * @param $lang language code
+	 * @return mixed string with path or false
+	 */
+	protected function createIniPath($lang){
+		$area = $this->clientdata->attributes('type');
+		$ini = $this->clientdata->getElementByPath('ini');
+		if($area == 'administrator'){
+			$dir = JPATH_ADMINISTRATOR.DS.'language'.DS.$lang.DS.$lang.'.'.$ini->data();
+		}elseif ($area == 'site'){
+			$dir = JPATH_SITE.DS.'language'.DS.$lang.DS.$lang.'.'.$ini->data();
+		}else{
+			JError::raiseWarning('', JText::sprintf( 'Invalid clienttype %s', $this->type) );
+			return false;
+		}
+		return $dir;		
 	}
 }

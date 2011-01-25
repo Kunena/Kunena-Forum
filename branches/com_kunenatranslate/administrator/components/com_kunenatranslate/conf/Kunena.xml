@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<!DOCTYPE ktranslate>
+<ktranslate type="component">
+<!-- TODO add type="component" and site or admin area -->
+	<name>Kunena</name>
+	<files>
+		<backend name="Backend" type="administrator">
+			<dir>com_kunena</dir>
+			<ini>com_kunena.ini</ini>
+			<kills>
+				<kill>archive</kill>
+				<kill>images</kill>
+				<kill>install</kill>
+				<kill>language</kill>
+				<kill>media</kill>
+				<kill>svn</kill>
+				<kill>kunena.xml</kill>
+			</kills>
+		</backend>
+		<install name="Install" type="administrator">
+			<dir>com_kunena/install</dir>
+			<ini>com_kunena.install.ini</ini>
+			<kills>
+				<kill>media</kill>
+				<kill>svn</kill>
+			</kills>
+		</install>
+		<backendmenu name="Backend Menu" type="administrator">
+			<dir>com_kunena/kunena.xml'</dir>
+			<ini>com_kunena.menu.ini</ini>
+		</backendmenu>
+		<frontend name="Frontend" type="site">
+			<dir>com_kunena</dir>
+			<ini>com_kunena.ini</ini>
+			<kills>
+				<kill>language</kill>
+				<kill>svn</kill>
+				<kill>template</kill>
+			</kills>
+		</frontend>
+		<tpl_default name="Default Template" type="site">
+			<dir>com_kunena/template/default</dir>
+			<ini>com_kunena.tpl_default.ini</ini>
+			<kills>
+				<kill>language</kill>
+				<kill>svn</kill>
+				<kill>images</kill>
+				<kill>css</kill>
+				<kill>media</kill>
+			</kills>
+		</tpl_default>
+		<tpl_example name="Example Template" type="site">
+			<dir>com_kunena/template/example</dir>
+			<ini>com_kunena.tpl_example.ini</ini>
+			<kills>
+				<kill>language</kill>
+				<kill>svn</kill>
+				<kill>images</kill>
+				<kill>css</kill>
+				<kill>media</kill>
+			</kills>	
+		</tpl_example>
+		<tpl_skinner name="Skinner Template" type="site">
+			<dir>com_kunena/template/skinner</dir>
+			<ini>com_kunena.tpl_skinner.ini</ini>
+			<kills>
+				<kill>language</kill>
+				<kill>svn</kill>
+				<kill>images</kill>
+				<kill>css</kill>
+				<kill>media</kill>
+			</kills>
+		</tpl_skinner> 
+	</files>
+</ktranslate> 

@@ -13,10 +13,10 @@
 	<description>MOD_KUNENATRANSLATE_DESC</description>
 	<install>
 		<sql>
-			<file charset="uft8" driver="mysql">install.kunenatranslate.sql</file>
-			<file charset="uft8" driver="mysqli">install.kunenatranslate.sql</file>
+			<file charset="utf8" driver="mysql">install.sql</file>
+			<file driver="mysql">install.sql</file>	
 		</sql>
-	</install>
+  	</install>
 	<administration>
 		<menu>Kunena Translate</menu>
 		<files>
@@ -24,7 +24,9 @@
 			<filename>controller.php</filename>
 			<filename>dummy.ini</filename>
 			<filename>helper.php</filename>
+			<filename>install.sql</filename>
 			<filename>kunenatranslate.php</filename>
+			<folder>conf</folder>
 			<folder>controllers</folder>
 			<folder>models</folder>
 			<folder>tables</folder>

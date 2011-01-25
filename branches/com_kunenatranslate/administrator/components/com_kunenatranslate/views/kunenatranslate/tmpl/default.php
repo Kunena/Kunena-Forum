@@ -43,27 +43,29 @@ JToolBarHelper::deleteList();?>
 	</thead>
 	<tbody>
 		<?php $k = 0;
-		foreach ($this->labels as $i=>$v):
-			$link = '<a href="index.php?option=com_kunenatranslate&task=edit&layout=form&cid[]='.$v->id.'" >'.$v->label.'</a>';
-			$lang = '';
-			if(!empty($v->lang)){
-				$n = count($v->lang);
-				foreach ($v->lang as $ii=>$val){
-					$lang .= $val->lang;
-					if($n>1 && $n-1>$ii) $lang .= ', ';  
+		if(!empty($this->labels)):
+			foreach ($this->labels as $i=>$v):
+				$link = '<a href="index.php?option=com_kunenatranslate&task=edit&layout=form&cid[]='.$v->id.'" >'.$v->label.'</a>';
+				$lang = '';
+				if(!empty($v->lang)){
+					$n = count($v->lang);
+					foreach ($v->lang as $ii=>$val){
+						$lang .= $val->lang;
+						if($n>1 && $n-1>$ii) $lang .= ', ';  
+					}
 				}
-			}
-			?>
-			<tr class="row<?php echo $k;?>">
-				<td><?php echo $i+1; ?></td>
-				<td><?php echo JHTML::_('grid.id', $i, $v->id)?></td>
-				<td><?php echo $link; ?></td>
-				<td><?php echo $lang; ?></td>
-				<td><?php echo $v->client; ?></td>
-				<td><?php echo $v->id; ?></td>
-			</tr>
-			<?php $k = 1- $k;
-			endforeach;?>
+				?>
+				<tr class="row<?php echo $k;?>">
+					<td><?php echo $i+1; ?></td>
+					<td><?php echo JHTML::_('grid.id', $i, $v->id)?></td>
+					<td><?php echo $link; ?></td>
+					<td><?php echo $lang; ?></td>
+					<td><?php echo $v->client; ?></td>
+					<td><?php echo $v->id; ?></td>
+				</tr>
+				<?php $k = 1- $k;
+				endforeach;
+			endif;?>
 	</tbody>
 </table>
 

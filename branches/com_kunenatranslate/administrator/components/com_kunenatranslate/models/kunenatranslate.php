@@ -42,11 +42,13 @@ class KunenaTranslateModelKunenaTranslate extends JModel {
 		$table = $this->getTable('Translation');
 		$trans = $table->loadTranslations($this->_id);
 
-		foreach ($labels as $k=>$v){
-			$labels[$k]->lang = '';
-			foreach ($trans as $value) {
-				if($v->id == $value->labelid)
-					$labels[$k]->lang[] = $value;
+		if(!empty($labels)){
+			foreach ($labels as $k=>$v){
+				$labels[$k]->lang = '';
+				foreach ($trans as $value) {
+					if($v->id == $value->labelid)
+						$labels[$k]->lang[] = $value;
+				}
 			}
 		}
 		

@@ -98,23 +98,9 @@ class KunenaTranslateModelImport extends JModel{
 	}
 	
 	function _getPathIni($client,$lang){
-		switch ($client){
-				case 'frontend':
-					$inifile	= JPATH_SITE .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.ini';
-					break;
-				case 'template':
-					$inifile	= JPATH_SITE .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.tpl_default.ini';
-					break;
-				case 'backend':
-					$inifile	= JPATH_ADMINISTRATOR .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.ini';
-					break;
-				case 'install':
-					$inifile	= JPATH_ADMINISTRATOR .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.install.ini';
-					break;
-				case 'adminmenu':
-					$inifile	= JPATH_ADMINISTRATOR .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.menu.ini';
-					break;
-		}
+		require_once (dirname(__FILE__).DS.'..'.DS.'helper.php');
+		$helper = new KunenaTranslateHelper();
+		$inifile = $helper->loadClientData($client,$lang);
 		return $inifile;
 	}
 	

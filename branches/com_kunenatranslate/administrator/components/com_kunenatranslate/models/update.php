@@ -24,59 +24,32 @@ class KunenaTranslateModelUpdate extends JModel{
 	function getUpdate(){
 		require_once (dirname(__FILE__).DS.'..'.DS.'helper.php');
 		$helper = new KunenaTranslateHelper();
-		
-		$this->client	= JRequest::getWord('client');
-		switch ($this->client){
-				case 'backend':
-					$dir		= JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena';
-					$kill		= array('archive', 'images', 'install', 'language',  'media', 'svn', 'kunena.xml');
-					$temp		= false;
-					break;	
-				case 'install':
-					$dir		= JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' .DS. 'install';
-					$kill		= array('media', 'svn');
-					$temp		= false;
-					break;
-				case 'backendmenu':
-					$dir		= JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' .DS. 'kunena.xml';
-					$kill		= array();
-					$temp		= false;
-					break;
-				case 'frontend':
-					$dir		= JPATH_SITE . DS . 'components' . DS . 'com_kunena';
-					$kill		= array('language' , 'svn', 'template');
-					$temp		= false;
-					break;
-				case 'tpl_default':
-					$dir		= JPATH_SITE . DS . 'components' . DS . 'com_kunena' .DS. 'template' .DS. 'default';
-					$kill		= array('language' , 'svn', 'images', 'css', 'media');
-					$temp		= true;
-					break;
-				case 'tpl_example':
-					$dir		= JPATH_SITE . DS . 'components' . DS . 'com_kunena' .DS. 'template' .DS. 'example';
-					$kill		= array('language' , 'svn', 'images', 'css', 'media');
-					$temp		= true;
-					break;
-				case 'tpl_skinner':
-					$dir		= JPATH_SITE . DS . 'components' . DS . 'com_kunena' .DS. 'template' .DS. 'skinner';
-					$kill		= array('language' , 'svn', 'images', 'css', 'media');
-					$temp		= true;
-					break;
-			}
-		$helper->scan_dir($dir);
-		$helper->killfolder($kill,&$helper->files);
+		//get the configdata for the client
+		$client	= JRequest::getWord('client');
+		$helper->loadClientData($client);
+		//scan for files		
+		$helper->scan_dir();
+		//get the array of folder/files to ignore
+		$kill = array(0);
+		$kills = $helper->clientdata->getElementByPath('kills');
+		foreach ( $kills->children() as $child) {
+			if($child->name() == 'kill'){
+				$kill[] = $child->data();
+			};
+		}
+		$helper->killfolder($kill);
 		$phplist = '';
-		$phplist	= $helper->getfiles($helper->files);
-		$xmllist	= $helper->getfiles($helper->files, 'xml');
+		$phplist	= $helper->getfiles();
+		$xmllist	= $helper->getfiles('xml');
 		$langstrings = $helper->readphpxml($phplist,$xmllist);
-		$labels = $this->_loadLabels();
+		$labels = $this->_loadLabels($client);
 		$res = $helper->getCompared($labels,$langstrings, JRequest::getVar('task') );
 		return $res;
 	}
 	
-	private function _loadLabels(){
+	private function _loadLabels($client){
 		$row =& $this->getTable('Label');
-		$res = $row->loadLabels(null, $this->client);
+		$res = $row->loadLabels(null, $client);
 		return $res;
 	}
 	

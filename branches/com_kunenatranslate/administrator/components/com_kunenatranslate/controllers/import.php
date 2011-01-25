@@ -31,7 +31,7 @@ class KunenaTranslateControllerImport extends KunenaTranslateController
 		$msg = 'Import success';
 		if($res == false){
 			$msg = 'Import failed';
-			$this->setRedirect('index.php?option=com_kunenatranslate&view=import' , $msg);
+			$this->setRedirect('index.php?option=com_kunenatranslate&view=import&task=importview' , $msg);
 		}elseif(is_array($res)){
 			$this->setMessage($msg);
 			JRequest::setVar('exist', $res);
@@ -39,7 +39,7 @@ class KunenaTranslateControllerImport extends KunenaTranslateController
 			JRequest::setVar('view', 'import');
 			parent::display();
 		}else{
-			$this->setRedirect('index.php?option=com_kunenatranslate&view=import' , $msg);
+			$this->setRedirect('index.php?option=com_kunenatranslate&view=import&task=importview' , $msg);
 		}
 	}
 	

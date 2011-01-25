@@ -28,6 +28,9 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+25-Januar-2010 svens(LDA)
+^ [#23420] move options into XML
+
 26-December-2010 svens(LDA)
 + [#23422] look for putdated labels
 + [#23427] build files from database

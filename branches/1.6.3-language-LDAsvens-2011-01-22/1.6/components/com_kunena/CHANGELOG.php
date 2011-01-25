@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+26-January-2011 svens(LDA)
+^ [#24560] update es-ES (thanks Kunena Spanish Team)
+
 22-January-2011 svens(LDA)
 ^ [#24560] update de-DE (thanks Rich)
 ^ [#24560] update ar-AA (thanks baazza)

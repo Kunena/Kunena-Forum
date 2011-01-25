@@ -283,8 +283,9 @@ class KunenaViewTopic extends KunenaView {
 		}
 		$this->topiclist = JHTML::_ ( 'select.genericlist', $options, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_topics' );
 
-		$options=array();
-		$this->categorylist = CKunenaTools::KSelectList ( 'targetcategory', $options, 'class="inputbox kmove_selectbox"', false, 'kmod_categories', $this->catid );
+		$options = array ();
+		$cat_params = array ('sections'=>0, 'catid'=>0);
+		$this->assignRef ( 'categorylist', JHTML::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid));
 		if (isset($this->message)) $this->user = KunenaFactory::getUser($this->message->userid);
 
 		if ($this->mesid) {

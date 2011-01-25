@@ -61,6 +61,9 @@ function validate() {
 	<div class="kcontainer" id="userlist-tbody">
 		<div class="kbody">
 			<form action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>" method="post" name="adminForm">
+				<input type="hidden" name="view" value="users">
+				<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.order'); ?>" />
+				<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.order_dir'); ?>" />
 				<table>
 					<tr class="ksth userlist">
 						<th class="frst"> # </th>
@@ -180,9 +183,6 @@ function validate() {
 					</tr>
 					<?php endforeach; ?>
 				</table>
-				<input type="hidden" name="option" value="com_kunena">
-				<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.order'); ?>" />
-				<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.order_dir'); ?>" />
 			</form>
 			<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>" onsubmit="return false;">
 				<table class="kblocktable" id="kuserlist-bottom">

@@ -80,7 +80,7 @@ table.kadmin-stat caption {
 	function installKTemplate()
 	{ ?>
 		<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></div><br />
-		<form enctype="multipart/form-data" action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=installTemplate" method="post" name="adminForm">
+		<form enctype="multipart/form-data" action="<?php echo KunenaRoute::_('index.php?option=com_kunena&task=installTemplate') ?>" method="post" name="adminForm">
 			<table class="adminform">
 				<tr>
 					<th colspan="2"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD' ); ?></th>
@@ -110,7 +110,7 @@ table.kadmin-stat caption {
         }
 		JHTML::_('behavior.tooltip');?>
 	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></div><br />
-		<form action="index.php" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
 			<table class="adminlist">
 			<thead>
 				<tr>

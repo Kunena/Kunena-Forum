@@ -38,19 +38,18 @@ $this->k=0;
 ?>
 <?php $this->common->display ( 'pathway' )?>
 
-<form class="postform form-validate" id="postform" action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>"
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" class="postform form-validate" id="postform"
 	method="post" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
-	<input type="hidden" name="option" value="com_kunena" />
 	<input type="hidden" name="view" value="topic" />
+	<?php if ($this->message->exists()) : ?>
+	<input type="hidden" name="task" value="edit" />
+	<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
+	<?php else: ?>
+	<input type="hidden" name="task" value="post" />
+	<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>" />
+	<?php endif; ?>
 	<?php if (!isset($this->selectcatlist)) : ?>
 	<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>" />
-	<?php endif; ?>
-	<?php if ($this->message->exists()) : ?>
-	<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
-	<input type="hidden" name="task" value="edit" />
-	<?php else: ?>
-	<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>" />
-	<input type="hidden" name="task" value="post" />
 	<?php endif; ?>
 	<?php echo JHTML::_( 'form.token' ); ?>
 

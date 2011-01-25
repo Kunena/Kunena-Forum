@@ -24,7 +24,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 				});
 			});
 		</script>
-		<form action="index.php" method="post" name="adminForm" class="adminform">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" class="adminform">
 		<fieldset><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?><br /></fieldset>
 		<fieldset>
 			<div><a href="#" id="link_sel_all" ><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a></div>

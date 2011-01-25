@@ -20,8 +20,7 @@ kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';
 	</div>
 	<div class="kcontainer">
 		<div class="kbody" id="kmod-container">
-			<form action="<?php echo JURI::root(true) ?>" method="post" name="myform">
-				<input type="hidden" name="option" value="com_kunena" />
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="myform">
 				<input type="hidden" name="view" value="topic" />
 				<input type="hidden" name="task" value="move" />
 				<input type="hidden" name="catid" value="<?php echo $this->category->id; ?>" />

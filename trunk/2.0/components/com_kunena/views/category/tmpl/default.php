@@ -60,7 +60,10 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<form action="index.php" method="post" name="kBulkActionForm">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="kBulkActionForm">
+				<input type="hidden" name="view" value="category" />
+				<input type="hidden" name="task" value="bulkactions" />
+				<?php echo JHTML::_( 'form.token' ); ?>
 				<table class="kblocktable<?php echo $this->escape($this->category->class_sfx); ?>" id="kflattable">
 
 					<?php if (empty ( $this->topics ) && empty ( $this->subcategories )) : ?>
@@ -88,9 +91,6 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif; ?>
 					<?php endif; ?>
 				</table>
-				<input type="hidden" name="option" value="com_kunena" />
-				<input type="hidden" name="func" value="bulkactions" />
-				<?php echo JHTML::_( 'form.token' ); ?>
 			</form>
 		</div>
 	</div>

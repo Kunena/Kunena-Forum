@@ -18,8 +18,7 @@ defined ( '_JEXEC' ) or die ();
 	<div class="kcontainer">
 		<div class="kbody">
 			<div id="kreport-container">
-				<form method="post" action="<?php echo CKunenaLink::GetReportURL(); ?>" class="kform-report">
-					<input type="hidden" name="option" value="com_kunena" />
+				<form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" class="kform-report">
 					<input type="hidden" name="view" value="topic" />
 					<input type="hidden" name="task" value="report" />
 					<input type="hidden" name="catid" value="<?php echo intval($this->catid); ?>"/>

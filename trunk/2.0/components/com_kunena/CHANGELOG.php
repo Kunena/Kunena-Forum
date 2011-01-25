@@ -43,6 +43,10 @@ Kunena 2.0.0-DEV
 # [#23443] Fix approve authorization in KunenaForumCategory::authorise()
 # [#23443] Make clean variation from topics layouts and show them in user view
 # [#23443] Fix notices in KunenaUser and KunenaForumMessageAttachment
+# [#23443] Topic/Moderate: remove Top level from category selection
+# [#23443] Topic/Moderate: posting form redirects to home page and does nothing
+# [#23443] User ban doesn't work
+# [#23443] Change action attribute in most forms to point into single location
 
 23-January-2010 Matias
 # [#22569] KunenaModel classes: add support for embedded mode

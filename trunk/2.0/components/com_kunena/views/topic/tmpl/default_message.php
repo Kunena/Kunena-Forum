@@ -37,7 +37,6 @@ defined ( '_JEXEC' ) or die ();
 <?php if ( $this->topic->authorise('reply') ) : ?>
 <div id="kreply<?php echo intval($this->message->id) ?>_form" class="kreply-form" style="display: none">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="postform" enctype="multipart/form-data">
-		<input type="hidden" name="option" value="com_kunena" />
 		<input type="hidden" name="view" value="topic" />
 		<input type="hidden" name="task" value="post" />
 		<input type="hidden" name="parentid" value="<?php echo intval($this->message->id) ?>" />

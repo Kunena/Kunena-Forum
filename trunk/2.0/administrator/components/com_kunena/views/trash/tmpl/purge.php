@@ -16,7 +16,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
-	<form action="index.php?option=com_kunena" method="post" name="adminForm">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
 			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%"></table>
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
 				<tr>

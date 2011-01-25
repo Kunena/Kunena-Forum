@@ -19,7 +19,11 @@ JHTML::_('behavior.calendar');
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<form id="kform-ban" name="kformban" action="index.php" method="post">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kform-ban" name="kformban" method="post">
+				<input type="hidden" name="view" value="user" />
+				<input type="hidden" name="task" value="ban" />
+				<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
+				<?php echo JHTML::_( 'form.token' ); ?>
 			<table id="kaddban" class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : ''; ?>">
 				<tbody>
 				<tr class="krow<?php echo ($i^=1)+1;?>">
@@ -100,11 +104,6 @@ JHTML::_('behavior.calendar');
 				<tr class="krow<?php echo ($i^=1)+1;?>">
 					<td class="kcol-addban-center" style="text-align:center;" colspan="2">
 						<input class="kbutton kbutton ks" type="submit" value="<?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?>" name="Submit" />
-						<input type="hidden" name="option" value="com_kunena" />
-						<input type="hidden" name="func" value="profile" />
-						<input type="hidden" name="do" value="ban" />
-						<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
-						<?php echo JHTML::_( 'form.token' ); ?>
 					</td>
 				</tr>
 				</tbody>

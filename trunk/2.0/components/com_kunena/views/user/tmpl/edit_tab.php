@@ -11,7 +11,10 @@
  **/
 defined( '_JEXEC' ) or die();
 ?>
-<form action="<?php echo JRoute::_( 'index.php' ); ?>" method="post" name="kuserform" class="form-validate" enctype="multipart/form-data">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="kuserform" class="form-validate" enctype="multipart/form-data">
+	<input type="hidden" name="view" value="user" />
+	<input type="hidden" name="task" value="save" />
+	<?php echo JHTML::_( 'form.token' ); ?>
 <div id="kprofile-edit">
 	<dl class="tabs">
 		<dt class="open"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER'); ?></dt>
@@ -33,10 +36,6 @@ defined( '_JEXEC' ) or die();
 			<?php $this->displayEditSettings(); ?>
 		</dd>
 	</dl>
-	<input type="hidden" name="option" value="com_kunena" />
-	<input type="hidden" name="view" value="user" />
-	<input type="hidden" name="task" value="save" />
-	<?php echo JHTML::_( 'form.token' ); ?>
 	<div class="kbutton-container">
 		<button class="kbutton ks validate" type="submit"><?php echo JText::_('COM_KUNENA_GEN_SAVE'); ?></button>
 		<input type="button" name="cancel" class="kbutton" value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CANCEL') . ' ');?>"

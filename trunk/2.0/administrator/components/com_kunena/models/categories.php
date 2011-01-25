@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
 kimport('kunena.forum.category.helper');
+kimport('kunena.model');
 
 /**
  * Categories Model for Kunena
@@ -20,7 +21,7 @@ kimport('kunena.forum.category.helper');
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaModelCategories extends JModel {
+class KunenaModelCategories extends KunenaModel {
 	protected $__state_set = false;
 	protected $_items = false;
 	protected $_items_order = false;

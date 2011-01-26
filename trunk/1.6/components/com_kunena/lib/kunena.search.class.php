@@ -100,12 +100,17 @@ class CKunenaSearch {
 			$this->limit = $this->limit = $this->config->messages_per_page_search;
 
 		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
-			$this->params ['catids'] = implode ( ',', JRequest::getVar ( 'catids', array (0), 'post', 'array' ) );
+			$catids = JRequest::getVar ( 'catids', array (0), 'post', 'array' );
+			JArrayHelper::toInteger($catids);
+			$this->params ['catids'] = implode ( ',', $catids );
 			$url = CKunenaLink::GetSearchURL ( $this->func, $q, $this->limitstart, $this->limit, $this->getUrlParams () );
 			header ( "HTTP/1.1 303 See Other" );
 			header ( "Location: " . htmlspecialchars_decode ( $url ) );
 			$this->app->close ();
 		}
+		$catids = explode ( ',', $this->params ['catids']);
+		JArrayHelper::toInteger($catids);
+		$this->params ['catids'] = implode ( ',', $catids);
 
 		if ($q == JText::_('COM_KUNENA_GEN_SEARCH_BOX'))
 			$q = '';
@@ -366,7 +371,7 @@ class CKunenaSearch {
 		}
 
 		$this->tabclass = array ("row1", "row2" );
-		
+
 		$searchdatelist	= array();
 		$searchdatelist[] 	= JHTML::_('select.option',  'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT') );
 		$searchdatelist[] 	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_SEARCH_DATE_YESTERDAY') );
@@ -378,12 +383,12 @@ class CKunenaSearch {
 		$searchdatelist[] 	= JHTML::_('select.option',  '365', JText::_('COM_KUNENA_SEARCH_DATE_YEAR') );
 		$searchdatelist[] 	= JHTML::_('select.option',  'all', JText::_('COM_KUNENA_SEARCH_DATE_ANY') );
 		$this->searchdatelist   = JHTML::_('select.genericlist',  $searchdatelist, 'searchdate', 'class="ks"', 'value', 'text',$this->params['searchdate'] );
-		
+
 		$beforeafterlist	= array();
 		$beforeafterlist[] 	= JHTML::_('select.option',  'after', JText::_('COM_KUNENA_SEARCH_DATE_NEWER') );
 		$beforeafterlist[] 	= JHTML::_('select.option',  'before', JText::_('COM_KUNENA_SEARCH_DATE_OLDER') );
 		$this->beforeafterlist= JHTML::_('select.genericlist',  $beforeafterlist, 'beforeafter', 'class="ks"', 'value', 'text',$this->params['beforeafter'] );
-		
+
 		$sortbylist	= array();
 		$sortbylist[] 	= JHTML::_('select.option',  'title', JText::_('COM_KUNENA_SEARCH_SORTBY_TITLE') );
 		//$sortbylist[] 	= JHTML::_('select.option',  'replycount', JText::_('COM_KUNENA_SEARCH_SORTBY_POSTS') );
@@ -393,14 +398,14 @@ class CKunenaSearch {
 		//$sortbylist[] 	= JHTML::_('select.option',  'postusername', JText::_('COM_KUNENA_SEARCH_SORTBY_USER') );
 		$sortbylist[] 	= JHTML::_('select.option',  'forum', JText::_('COM_KUNENA_SEARCH_SORTBY_FORUM') );
 		$this->sortbylist= JHTML::_('select.genericlist',  $sortbylist, 'sortby', 'class="ks"', 'value', 'text',$this->params['sortby'] );
-		
+
 		$limitlist	= array();
 		$limitlist[] 	= JHTML::_('select.option',  '5', JText::_('COM_KUNENA_SEARCH_LIMIT5') );
 		$limitlist[] 	= JHTML::_('select.option',  '10', JText::_('COM_KUNENA_SEARCH_LIMIT10') );
 		$limitlist[] 	= JHTML::_('select.option',  '15', JText::_('COM_KUNENA_SEARCH_LIMIT15') );
 		$limitlist[] 	= JHTML::_('select.option',  '20', JText::_('COM_KUNENA_SEARCH_LIMIT20') );
 		$this->limitlist= JHTML::_('select.genericlist',  $limitlist, 'limit', 'class="ks"', 'value', 'text',$this->limit );
-		
+
 		//category select list
 		$options = array ();
 		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS') );

@@ -42,6 +42,9 @@ Kunena 1.6.3
 23-January-2010 Xillibit
 ^ [#24413] Add title parameter in function CKunenaLink::GetThreadPageLink for module latest (Part 2)
 
+22-January-2011 Matias
+# [#24563] Search does not check all variables
+
 22-January-2010 Xillibit
 # [#24559] Hide confidential information also from moderators who are not moderating current category
 

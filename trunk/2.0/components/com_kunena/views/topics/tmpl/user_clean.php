@@ -11,19 +11,18 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="ktopicsform">
+	<input type="hidden" name="view" value="topics" />
+	<?php echo JHTML::_( 'form.token' ); ?>
 <div class="kblock kflat">
 	<div class="kheader">
 		<?php if (!empty($this->actionDropdown)) : ?>
-		<span class="kcheckbox select-toggle"><input id="kcbcheckall" type="checkbox" name="toggle" value="" /></span>
+		<span class="kcheckbox select-toggle"><input class="kcheckall" type="checkbox" name="toggle" value="" /></span>
 		<?php endif; ?>
 		<h2><span><?php echo $this->escape($this->headerText); ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="kBulkActionForm">
-				<input type="hidden" name="view" value="topics" />
-				<input type="hidden" name="task" value="bulkactions" />
-				<?php echo JHTML::_( 'form.token' ); ?>
 				<table class="kblocktable" id="kflattable">
 
 					<?php if (empty ( $this->topics ) && empty ( $this->subcategories )) : ?>
@@ -38,12 +37,12 @@ defined ( '_JEXEC' ) or die ();
 						<td colspan="<?php echo empty($this->actionDropdown) ? 5 : 6 ?>" class="kcol-first krowmoderation">
 							<?php if (!empty($this->embedded)) echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow'); ?>
 							<?php if (!empty($this->actionDropdown)) : ?>
-							<?php echo JHTML::_('select.genericlist', $this->actionDropdown, 'do', 'class="inputbox" size="1"', 'value', 'text', 0, 'kBulkChooseActions'); ?>
+							<?php echo JHTML::_('select.genericlist', $this->actionDropdown, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 							<?php if ($this->actionMove) :
 								$options = array (JHTML::_ ( 'select.option', '0', "&nbsp;" ));
-								echo JHTML::_('kunenaforum.categorylist', 'bulkactions', 0, $options, array(), 'class="inputbox fbs" size="1" disabled="disabled"', 'value', 'text', 0);
+								echo JHTML::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" size="1" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');
 								endif;?>
-							<input type="submit" name="kBulkActionsGo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+							<input type="submit" name="kcheckgo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 							<?php endif; ?>
 						</td>
 					</tr>
@@ -51,7 +50,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif; ?>
 					<?php endif; ?>
 				</table>
-			</form>
 		</div>
 	</div>
 </div>
+</form>

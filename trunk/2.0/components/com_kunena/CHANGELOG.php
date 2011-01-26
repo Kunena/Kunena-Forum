@@ -33,6 +33,14 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+26-January-2010 Matias
+# [#22569] Modify bulk actions javascript/logic to be more flexible
+^ [#22569] Convert bulk actions into KunenaControllerTopics tasks
+
+25-January-2010 Matias
+# [#22569] Neither of Mark Topics Read buttons works -- move into controllers
+# [#22569] Move Subscribe / Unsubscribe category into category controller
+
 24-January-2010 Matias
 # [#23443] Fix bug in KunenaForumTopicHelper::getLatestTopics(): typo in subscribed parameter
 # [#23443] KunenaForum::display(): model doesn't regognize layout

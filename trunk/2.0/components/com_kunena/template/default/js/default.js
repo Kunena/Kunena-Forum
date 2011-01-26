@@ -735,125 +735,27 @@ window.addEvent('domready', function(){
 		$$('.kreply-form').setStyle('display', 'none');
 	});
 	
-	/* Javascript with mootools logic for bulkactions
-	 * 
-	 * 
-	 */
-	$$('.kDelete_bulkcheckboxes').each(function(el){
-		el.addEvent('change', function(e){
-			if(el.get('value')=='1'){
+	/* Logic for bulkactions */
+	$$('input.kcheckall').addEvent('click', function(e){
+		this.getParent('form').getElements('input.kcheck').each(function(el){
+			if(el.get('checked')==false){
+				el.set('checked',true);
+				el.set('value','1');
+			} else {
 				el.set('value','0');
 				el.set('checked',false);
-			} else {
-				el.set('value','1');
-				el.set('checked',true);
 			}
-		});
+		}); 
 	});
-	/* Need to have the same code following in a different variation because the id need to be unique, maybe there is a better solution
-	 * 
-	 * 
-	 */
-	if($('kBulkChooseActions') != undefined){
-		$('kBulkChooseActions').addEvent('change', function(e){
-			if(this.get('value') == 'bulkMove'){
-				$('bulkactions').removeProperty('disabled');
-			} else {
-				$('bulkactions').setProperty('disabled','disabled');
-			}	
-		});
-	}
-	if($('kcbcheckall_userposts') != undefined){
-		$('kcbcheckall_userposts').addEvent('click', function(e){
-			$$('.kDelete_bulkcheckboxes_userposts').each(function(el){
-				if(el.get('checked')==false){
-					el.set('checked',true);
-					el.set('value','1');
-				} else {
-					el.set('value','0');
-					el.set('checked',false);
-				}
-			});
-		});
-	}
-	if($('kcbcheckall_gotthankyouposts') != undefined){
-		$('kcbcheckall_gotthankyouposts').addEvent('click', function(e){
-			$$('.kDelete_bulkcheckboxes_gotthankyouposts').each(function(el){
-				if(el.get('checked')==false){
-					el.set('checked',true);
-					el.set('value','1');
-				} else {
-					el.set('value','0');
-					el.set('checked',false);
-				}
-			});
-		});
-	}
-	if($('kcbcheckall_saidthankyouposts') != undefined){
-		$('kcbcheckall_saidthankyouposts').addEvent('click', function(e){
-			$$('.kDelete_bulkcheckboxes_saidthankyouposts').each(function(el){
-				if(el.get('checked')==false){
-					el.set('checked',true);
-					el.set('value','1');
-				} else {
-					el.set('value','0');
-					el.set('checked',false);
-				}
-			});
-		});
-	}
-	if($('kcbcheckall') != undefined){
-		$('kcbcheckall').addEvent('click', function(e){
-			$$('.kDelete_bulkcheckboxes').each(function(el){
-				if(el.get('checked')==false){
-					el.set('checked',true);
-					el.set('value','1');
-				} else {
-					el.set('value','0');
-					el.set('checked',false);
-				}
-			});
-		});
-	}
-	if($('kcbcheckall_subscriptions') != undefined){
-		$('kcbcheckall_subscriptions').addEvent('click', function(e){
-			$$('.kDelete_bulkcheckboxes_subscriptions').each(function(el){
-				if(el.get('checked')==false){
-					el.set('checked',true);
-					el.set('value','1');
-				} else {
-					el.set('value','0');
-					el.set('checked',false);
-				}
-			});
-		});
-	}
-	if($('kcbcheckall_favorites') != undefined){
-		$('kcbcheckall_favorites').addEvent('click', function(e){
-			$$('.kDelete_bulkcheckboxes_favorites').each(function(el){
-				if(el.get('checked')==false){
-					el.set('checked',true);
-					el.set('value','1');
-				} else {
-					el.set('value','0');
-					el.set('checked',false);
-				}
-			});
-		});
-	}
-	if($('kcbcheckall_post') != undefined){
-		$('kcbcheckall_post').addEvent('click', function(e){
-			$$('.kDelete_bulkcheckboxes_post').each(function(el){
-				if(el.get('checked')==false){
-					el.set('checked',true);
-					el.set('value','1');
-				} else {
-					el.set('value','0');
-					el.set('checked',false);
-				}
-			});
-		});
-	}
+
+	$$('select.kchecktask').addEvent('change', function(e){
+		ktarget = this.getSiblings('select[name=target]');
+		if(this.get('value') == 'move'){
+			ktarget.removeProperty('disabled');
+		} else {
+			ktarget.setProperty('disabled','disabled');
+		}
+	});
 	
 	if($('kmod_categories') != undefined){
 		$('kmod_categories').addEvent('change', function(e){

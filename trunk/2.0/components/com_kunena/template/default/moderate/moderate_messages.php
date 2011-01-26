@@ -28,7 +28,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 <div class="kblock kflat">
 	<div class="kheader">
 		<?php if (CKunenaTools::isModerator($this->my->id)) : ?>
-		<span class="kcheckbox select-toggle"><input id="kcbcheckall" type="checkbox" name="toggle" value="" /></span>
+		<span class="kcheckbox select-toggle"><input class="kchecktall" type="checkbox" name="toggle" value="" /></span>
 		<?php endif; ?>
 		<h2><span><?php if (!empty($this->header)) echo $this->header; ?></span></h2>
 	</div>
@@ -82,7 +82,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 				</td>
 				<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
 				<td class="kcol-mid ktopicmoderation">
-					<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo intval($mes->id)?>]" value="0" />
+					<input class ="kcheck" type="checkbox" name="cb[<?php echo intval($mes->id)?>]" value="0" />
 				</td>
 				<?php endif; ?>
 			</tr>

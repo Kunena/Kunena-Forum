@@ -21,4 +21,21 @@ kimport ( 'kunena.forum.category.helper' );
  * @since		2.0
  */
 class KunenaControllerCategories extends KunenaController {
+
+	function markread() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		$session = KunenaFactory::getSession();
+		$session->markAllCategoriesRead ();
+		if (!$session->save ()) {
+			$app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
+		} else {
+			$app->enqueueMessage ( JText::_('COM_KUNENA_GEN_ALL_MARKED') );
+		}
+		$this->redirectBack ();
+	}
 }

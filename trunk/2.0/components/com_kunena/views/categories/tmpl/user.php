@@ -9,11 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined( '_JEXEC' ) or die();
-
-// url of current page that user will be returned to after bulk operation
-$kuri = JURI::getInstance ();
-$Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
-$this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 ?>
 <div class="kblock">
 	<div class="kheader">

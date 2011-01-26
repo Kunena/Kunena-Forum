@@ -181,4 +181,10 @@ class KunenaController extends JController {
 	function getMessageType() {
 		return $this->_messageType;
 	}
+
+	protected function redirectBack() {
+		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
+		JFactory::getApplication ()->redirect ( $httpReferer );
+	}
+
 }

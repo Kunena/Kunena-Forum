@@ -303,20 +303,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// We only save session for registered users
 	$kunena_session = KunenaFactory::getSession ( true );
 	if ($kunena_my->id > 0) {
-		// new indicator handling
-		if ($markaction == "allread") {
-			if (!JRequest::checkToken()) {
-				$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-				$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat', $catid, false) );
-			}
-			$kunena_session->markAllCategoriesRead ();
-		}
-		if (!$kunena_session->save ()) $kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
-
-		if ($markaction == "allread") {
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat', $catid, false), JText::_('COM_KUNENA_GEN_ALL_MARKED') );
-		}
-
 		$userprofile = KunenaFactory::getUser($kunena_my->id);
 		if ($userprofile->posts === null) {
 			$userprofile->save();
@@ -455,77 +441,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$kunenaSearch->show ();
 			break;
 
-		case 'markthisread' :
-			if (!JRequest::checkToken('get')) {
-				$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-				$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
-			}
-			// Mark all unread topics in the category to read
-			$readTopics = $kunena_session->readtopics;
-			$kunena_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE catid='{$catid}' AND parent=0 AND thread NOT IN ({$readTopics})" );
-			$readForum = $kunena_db->loadResultArray ();
-			if (KunenaError::checkDatabaseError()) return;
-			$readTopics = implode(',', array_merge(explode(',', $readTopics), $readForum));
-			$kunena_db->setQuery ( "UPDATE #__kunena_sessions set readtopics='$readTopics' WHERE userid=$kunena_my->id" );
-			$kunena_db->query ();
-			if (KunenaError::checkDatabaseError()) return;
-
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
-			break;
-
-		case 'subscribecat' :
-			if (!JRequest::checkToken('get')) {
-				$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-				if ($userid == 0) {
-					$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ) );
-				} else {
-					$kunena_app->redirect ( CKunenaLink::GetProfileURL($userid, false) );
-				}
-			}
-
-			$success_msg = '';
-
-			if ( $catid && $kunena_my->id ) {
-				$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed) VALUES ('$kunena_my->id','$catid',1)
-					ON DUPLICATE KEY UPDATE subscribed=1;";
-				$kunena_db->setQuery ( $query );
-
-				if (@$kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
-					$success_msg = JText::_('COM_KUNENA_GEN_CATEGORY_SUBCRIBED');
-				}
-				KunenaError::checkDatabaseError();
-			}
-
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
-			break;
-
-		case 'unsubscribecat' :
-			if (!JRequest::checkToken('get')) {
-				$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-				if ($userid == 0) {
-					$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
-				} else {
-					$kunena_app->redirect ( CKunenaLink::GetProfileURL($userid, false), $success_msg );
-				}
-			}
-			$success_msg = '';
-			if ($catid && $kunena_my->id ) {
-				$query = "UPDATE #__kunena_user_categories SET subscribed=0 WHERE user_id={$kunena_my->id} AND category_id={$catid};";
-				$kunena_db->setQuery ( $query );
-
-				if ($kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
-					$success_msg = JText::_('COM_KUNENA_GEN_CATEGORY_UNSUBCRIBED');
-				}
-				KunenaError::checkDatabaseError();
-			}
-
-			if ($userid == 0) {
-				$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
-			} else {
-				$kunena_app->redirect ( CKunenaLink::GetProfileURL($userid, false), $success_msg );
-			}
-			break;
-
 		case 'karma' :
 			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.karma.php');
 
@@ -535,86 +450,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			require_once(JPATH_COMPONENT.DS.'lib'.DS.'kunena.thankyou.php');
 			$thankyou = new CKunenaThankyou ();
 			$thankyou->setThankyou();
-
-			break;
-
-		case 'bulkactions' :
-			kimport('kunena.forum.topic.helper');
-			$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
-			if (!JRequest::checkToken()) {
-				$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-				$kunena_app->redirect ( $backUrl );
-			}
-			$topics = KunenaForumTopicHelper::getTopics(JRequest::getVar('cb', array ( 0 ), 'post', 'array'));
-			$message = '';
-			switch ($do) {
-				case "bulkDel" :
-					foreach ( $topics as $topic ) {
-						if ($topic->authorise('delete') && $topic->publish(KunenaForum::TOPIC_DELETED)) {
-							$message = JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' );
-						} else {
-							$kunena_app->enqueueMessage ( $topic->getError (), 'notice' );
-						}
-					}
-					break;
-
-				case "bulkDelPerm" :
-					foreach ( $topics as $topic ) {
-						if ($topic->authorise('permdelete') && $topic->delete()) {
-							$message = JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' );
-						} else {
-							$kunena_app->enqueueMessage ( $topic->getError (), 'notice' );
-						}
-					}
-					break;
-
-				case "bulkRestore" :
-					foreach ( $topics as $topic ) {
-						if ($topic->authorise('undelete') && $topic->publish(KunenaForum::PUBLISHED)) {
-							$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE' );
-						} else {
-							$kunena_app->enqueueMessage ( $topic->getError (), 'notice' );
-						}
-					}
-					break;
-
-				case "bulkMove" :
-					kimport('kunena.forum.category.helper');
-					$target = KunenaForumCategoryHelper::get($catid);
-					if (!$target->authorise('read')) {
-						$kunena_app->enqueueMessage ( $target->getError(), 'error' );
-						$kunena_app->redirect ( $backUrl );
-					}
-					foreach ( $topics as $topic ) {
-						if ($topic->authorise('move') && $topic->move($target)) {
-							$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
-						} else {
-							$kunena_app->enqueueMessage ( $topic->getError (), 'notice' );
-						}
-					}
-					break;
-
-				case "bulkFavorite" :
-					// Unfavorite topics
-					$result = KunenaForumTopicHelper::favorite(array_keys($topics), 0);
-					if ( $result ) {
-						$message = JText::_('COM_KUNENA_USER_UNFAVORITE_YES');
-					} else {
-						$message = JText::_('COM_KUNENA_POST_UNFAVORITED_TOPIC');
-					}
-					break;
-
-				case "bulkSub" :
-					// Unsubscribe topics
-					$result = KunenaForumCategoryHelper::subscribe(array_keys($topics), 0);
-					if ( $result ) {
-						$message = JText::_('COM_KUNENA_USER_UNSUBSCRIBE_YES');
-					} else {
-						$message = JText::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC');
-					}
-					break;
-			}
-			$kunena_app->redirect($backUrl, $message);
 
 			break;
 

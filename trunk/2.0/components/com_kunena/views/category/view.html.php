@@ -30,19 +30,14 @@ class KunenaViewCategory extends KunenaView {
 		}
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
 
-		// url of current page that user will be returned to after bulk operation
-		$kuri = JURI::getInstance ();
-		$Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
-		JFactory::getApplication()->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
-
 		$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 		if ($this->category->authorise ( 'moderate' )) {
 			$this->actionMove = true;
-			$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
+			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
@@ -56,7 +51,7 @@ class KunenaViewCategory extends KunenaView {
 		// Is user allowed to mark forums as read?
 		$this->markReadHtml = '';
 		if ($this->me->exists() && $this->total) {
-			$this->markReadHtml = CKunenaLink::GetCategoryActionLink ( 'markthisread', $this->category->id, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
+			$this->markReadHtml = CKunenaLink::GetCategoryActionLink ( 'markread', $this->category->id, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
 		}
 
 		$this->subscribeCatHtml = '';
@@ -72,9 +67,9 @@ class KunenaViewCategory extends KunenaView {
 			if (KunenaError::checkDatabaseError()) return;
 
 			if (!$subscribed) {
-				$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'subscribecat', $this->category->id, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
+				$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'subscribe', $this->category->id, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
 			} else {
-				$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'unsubscribecat', $this->category->id, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
+				$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'unsubscribe', $this->category->id, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
 			}
 		}
 

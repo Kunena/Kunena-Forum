@@ -114,7 +114,7 @@ defined( '_JEXEC' ) or die();
 	</td>
 
 <?php if (!empty($this->actionDropdown)) : ?>
-	<td class="kcol-mid ktopicmoderation"><input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo $this->topic->id?>]" value="1" /></td>
+	<td class="kcol-mid ktopicmoderation"><input class ="kcheck" type="checkbox" name="topics[<?php echo $this->topic->id?>]" value="1" /></td>
 <?php endif; ?>
 </tr>
 <?php if ($this->module) : ?>

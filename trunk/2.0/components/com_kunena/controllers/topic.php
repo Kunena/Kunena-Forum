@@ -704,9 +704,4 @@ class KunenaControllerTopic extends KunenaController {
 		}
 		return true;
 	}
-
-	protected function redirectBack() {
-		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
-		JFactory::getApplication ()->redirect ( $httpReferer );
-	}
 }

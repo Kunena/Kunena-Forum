@@ -27,11 +27,11 @@ class KunenaViewTopics extends KunenaView {
 		$this->actionMove = false;
 		if (CKunenaTools::isModerator ( $this->me->userid )) {
 			$this->actionMove = true;
-			$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
+			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
 		switch ($this->state->get ( 'list.mode' )) {
@@ -88,11 +88,11 @@ class KunenaViewTopics extends KunenaView {
 		$this->actionMove = false;
 		if (CKunenaTools::isModerator ( $this->me->userid )) {
 			$this->actionMove = true;
-			$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
+			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
 		switch ($this->state->get ( 'list.mode' )) {
@@ -142,12 +142,12 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->actionMove = false;
 		if (CKunenaTools::isModerator ( $this->me->userid )) {
-			$this->actionMove = true;
-			$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+//			$this->actionMove = true;
+//			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
+//			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+//			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+//			$this->actionDropdown[] = JHTML::_('select.option', 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+//			$this->actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 
 		switch ($this->state->get ( 'list.mode' )) {

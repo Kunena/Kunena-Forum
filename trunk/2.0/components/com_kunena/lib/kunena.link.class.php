@@ -75,9 +75,9 @@ class CKunenaLink {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view={$view}&catid={$catid}", $catname, $title, $rel, $class );
 	}
 
-	function GetCategoryActionLink($view, $catid, $catname, $rel = 'follow', $class = '', $title = '', $extra = '') {
+	function GetCategoryActionLink($task, $catid, $catname, $rel = 'follow', $class = '', $title = '', $extra = '') {
 		$token = '&' . JUtility::getToken() . '=1';
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view={$view}&catid={$catid}{$extra}{$token}", $catname, $title, $rel, $class );
+		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=category&task={$task}&catid={$catid}{$extra}{$token}", $catname, $title, $rel, $class );
 	}
 
 	function GetCategoryURL($view, $catid = '', $xhtml = true) {

@@ -85,11 +85,35 @@ class KunenaViewCommon extends KunenaView {
 			$cache = JFactory::getCache('com_kunena', 'output');
 			if ($cache->start(0, "com_kunena.view.common.whosonline.{$moderator}")) return;
 			// FIXME: refactor code
-			require_once(KUNENA_PATH .DS. 'class.kunena.php');
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-			$online = CKunenaWhoIsOnline::getInstance();
-			$online->displayWhoIsOnline();
+
+			$this->my = JFactory::getUser();
+			$this->users = KunenaUserHelper::getOnlineUsers();
+			KunenaUserHelper::loadUsers(array_keys($this->users));
+			$onlineusers = KunenaUserHelper::getOnlineCount();
+			$this->totaluser = $onlineusers['user'];
+			$this->totalguests = $onlineusers['guest'];
+
+			$who_name = '<strong>'.$this->totaluser.' </strong>';
+			if($this->totaluser==1) {
+				$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER').'&nbsp;';
+			} else {
+				$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS').'&nbsp;';
+			}
+			$who_name .= JText::_('COM_KUNENA_WHO_AND');
+			$who_name .= '<strong> '. $this->totalguests.' </strong>';
+			if($this->totalguests==1) {
+				$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST').'&nbsp;';
+			} else {
+				$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS').'&nbsp;';
+			}
+			$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
+			$this->who_name = $who_name;
+			$result = $this->loadTemplate($tpl);
+			if (JError::isError($result)) {
+				return $result;
+			}
+			echo $result;
 			$cache->end();
 		} else echo " ";
 	}
@@ -99,11 +123,31 @@ class KunenaViewCommon extends KunenaView {
 			$cache = JFactory::getCache('com_kunena', 'output');
 			if ($cache->start(0, 'com_kunena.view.common.stats')) return;
 			// FIXME: refactor code
-			require_once(KUNENA_PATH .DS. 'class.kunena.php');
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
 			$kunena_stats = CKunenaStats::getInstance ( );
-			$kunena_stats->showFrontStats ();
+			$kunena_stats->loadGenStats();
+			$kunena_stats->loadLastUser();
+			$this->lastestmemberid = $kunena_stats->lastestmemberid;
+			$kunena_stats->loadLastDays();
+			$this->todayopen = $kunena_stats->todayopen;
+			$this->yesterdayopen = $kunena_stats->yesterdayopen;
+			$this->todayanswer = $kunena_stats->todayanswer;
+			$this->yesterdayanswer = $kunena_stats->yesterdayanswer;
+			$kunena_stats->loadTotalTopics();
+			$this->totaltitles = $kunena_stats->totaltitles;
+			$this->totalmessages = $kunena_stats->totalmsgs;
+			$kunena_stats->loadTotalCategories();
+			$this->totalsections = $kunena_stats->totalsections;
+			$this->totalcats = $kunena_stats->totalcats;
+			$this->totalmembers = $kunena_stats->totalmembers;
+			$this->userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
+			$this->userlist2 = CKunenaLink::GetUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
+			$result = $this->loadTemplate($tpl);
+			if (JError::isError($result)) {
+				return $result;
+			}
+			echo $result;
 			$cache->end();
 		} else echo " ";
 	}

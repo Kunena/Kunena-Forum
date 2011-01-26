@@ -272,6 +272,10 @@ class KunenaRouteLegacy {
 					}
 				}
 				break;
+			case 'stats':
+				$changed = true;
+				$uri->setVar('view', 'statistics');
+				break;
 		}
 //		print_r($uri->getQuery ());
 		return $changed;

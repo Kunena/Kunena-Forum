@@ -97,7 +97,7 @@ class KunenaUserHelper {
 	public static function getOnlineUsers() {
 		if (self::$_online === null) {
 			$db = JFactory::getDBO ();
-			$query = "SELECT s.userid, s.time
+			$query = "SELECT s.userid, s.time, k.showOnline
 				FROM #__session AS s
 				INNER JOIN #__kunena_users AS k ON k.userid=s.userid
 				WHERE s.client_id=0 AND s.userid>0

@@ -36,10 +36,14 @@ Kunena 2.0.0-DEV
 26-January-2010 Matias
 # [#22569] Modify bulk actions javascript/logic to be more flexible
 ^ [#22569] Convert bulk actions into KunenaControllerTopics tasks
+^ [#22786] Merge revisions 4259-4286 from /branches/2.0-xillibit-mvc-frontend-20-01-2011
 
 25-January-2010 Matias
 # [#22569] Neither of Mark Topics Read buttons works -- move into controllers
 # [#22569] Move Subscribe / Unsubscribe category into category controller
+
+24-January-2010 Xillibit
+^ [#24515] Put some old codes into mvc in frontend (whoisonline and frontstats only in common)
 
 24-January-2010 Matias
 # [#23443] Fix bug in KunenaForumTopicHelper::getLatestTopics(): typo in subscribed parameter
@@ -58,6 +62,9 @@ Kunena 2.0.0-DEV
 
 23-January-2010 Matias
 # [#22569] KunenaModel classes: add support for embedded mode
+
+22-January-2010 Xillibit
+^ [#24515] Move &func=stats into mvc in frontend
 
 22-January-2010 Matias
 # [#23443] Topic/Create: Topic Tags showing up for all users, not just moderators

@@ -413,13 +413,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		case 'stats' :
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
-			$kunena_stats = new CKunenaStats ( );
-			$kunena_stats->showStats ();
-
-			break;
-
 		case 'review' :
 			require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
 			$review = new CKunenaReview($catid);

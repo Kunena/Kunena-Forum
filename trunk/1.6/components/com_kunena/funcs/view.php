@@ -494,21 +494,23 @@ class CKunenaView {
 		// Load attachments
 		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance();
-		$message_attachments = $attachments->get($idstr);
+		if ( is_a($attachments, 'CKunenaAttachments') ) {
+			$message_attachments = $attachments->get($idstr);
 
-		// Now that we have all relevant messages in messages, asign any matching attachments
-		foreach ( $this->messages as $message ){
-			// Mark as new
-			if ($this->my->id && $this->prevCheck < $message->time && ! in_array ( $message->thread, $this->read_topics )) {
-				$message->new = true;
-			} else {
-				$message->new = false;
-			}
-			// Assign attachments
-			if (isset($message_attachments[$message->id]))
-				$message->attachments = $message_attachments[$message->id];
+			// Now that we have all relevant messages in messages, asign any matching attachments
+			foreach ( $this->messages as $message ){
+				// Mark as new
+				if ($this->my->id && $this->prevCheck < $message->time && ! in_array ( $message->thread, $this->read_topics )) {
+					$message->new = true;
+				} else {
+					$message->new = false;
+				}
+				// Assign attachments
+				if (isset($message_attachments[$message->id]))
+					$message->attachments = $message_attachments[$message->id];
+				}
+			// Done with attachments
 		}
-		// Done with attachments
 
 		$this->pagination = $this->getPagination ( $this->catid, $this->thread, $page, $totalpages, $maxpages );
 

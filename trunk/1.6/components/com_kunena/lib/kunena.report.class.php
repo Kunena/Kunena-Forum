@@ -39,6 +39,11 @@ class CKunenaReport {
 
 	public function reportAllowed() {
 		jimport ( 'joomla.mail.helper' );
+		
+		if ( !$this->id ) {
+			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_UNAVAILABLE') );
+			return false;
+		}
 
 		if ($this->config->reportmsg == 0) {
 			$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, NULL, NULL, $this->id, false ) );

@@ -33,15 +33,42 @@ Legend:
 
 Kunena 1.6.3
 
+26-January-2010 Matias
+^ [#15886] Merged revisions 4157-4285 from /branches/1.6-xillibit-fixes-20111205
+
+24-January-2010 Xillibit
+# [#24590] Topic/Create: Showing poll and anonymous options works only in FireFox
+
+23-January-2010 Xillibit
+^ [#24413] Add title parameter in function CKunenaLink::GetThreadPageLink for module latest (Part 2)
+
+22-January-2010 Xillibit
+# [#24559] Hide confidential information also from moderators who are not moderating current category
+
+19-January-2010 Xillibit
+# [#24277] Kunena userlist under J! 1.6 grab super admin with userid=62 instead of 42 (Part 2)
+
 19-January-2011 Matias
 # [#24480] Regression: Do not send email to author itself
 * [#24494] Security (Low/Low): User can make XSS attack to himself (thanks Ervis Tusha)
+
+17-January-2010 Xillibit
+# [#24443] BBCode help input need to be disabled to avoid to be edited
+
+16-January-2011 Xillibit
+# [#24368] Set the subject for all replies on moderate doesn't work
+# [#24374] Fix PHP notices and warnings
+# [#24412] bulk actions delete permanently and restore shows up to moderators even if they have no permission to do those tasks
+^ [#24413] Add title parameter in function CKunenaLink::GetThreadPageLink for module latest
 
 15-January-2011 Matias
 ^ [#15886] Merged revisions 4181-4182 from /branches/1.6-LDAsvens-bugs-2011-01-13
 
 14-January-2011 fxstein
 ^ [#24385] Performance optimization for high joomla guest counts by CB team (Thanks Beat!)
+
+13-January-2011 Xillibit
+# [#24367] Kunena report function shows form even if id is empty
 
 13-January-2011 svens(LDA)
 # [#24366] Joomla 1.6: Missing backend translations
@@ -54,6 +81,22 @@ Kunena 1.6.3
 # [#24358] Fix broken Moderator rank detection
 # [#24359] Router: Undefined index 'func' in ParseRoute
 # [#23920] Fix another Kunena Internal Error when posting (subscriptions)
+
+10-January-2011 Xillibit
+# [#24272] When you want edit an anouncement unpublished, the forms is empty
+# [#24277] Kunena userlist under J! 1.6 grab super admin with userid=62 instead of 42
+
+9-January-2011 Xillibit
+# [#24239] When guest posting, the field name isn't displayed and it's empty, so the form can't validate
+* [#24073] Remove Kunena version put in RSS feed header
+^ [#24073] When RSS feed is disabled show error 404 instead of a die()
+
+8-January-2011 Xillibit
+# [#24230] Mark all forum read fails under J! 1.6
+
+7-January-2011 Xillibit
+# [#23704] First item in breadcrumbs links to entrypage, not top-level index
+# [#23801] bug in aup activity integration which show subject for users which are not right to see it
 
 7-January-2011 Matias
 ^ [#15886] Merged revisions 4157-4162 from /branches/1.6-xillibit-fixes-20111205

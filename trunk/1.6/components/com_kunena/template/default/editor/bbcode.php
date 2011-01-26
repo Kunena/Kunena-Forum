@@ -120,7 +120,7 @@ $kunena_config = KunenaFactory::getConfig ();
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo KunenaParser::JSText('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
 
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-				<?php echo JHTML::_('calendar', $this->escape($this->polldatasedit[0]->polltimetolive), 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:$(\'helpbox\').set(\'value\', \''.KunenaParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN').'\')')); ?> 
+				<?php echo JHTML::_('calendar', $this->escape($this->polldatasedit[0]->polltimetolive), 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:$(\'helpbox\').set(\'value\', \''.KunenaParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN').'\')')); ?>
 
 			</div>
 			<?php
@@ -248,7 +248,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		<?php endif; ?>
 		<!-- end of extendable secondary toolbar -->
 		<tr>
-			<td class="kposthint"><input type="text" name="helpbox" id="helpbox" size="45" class="kinputbox" maxlength="100"
+			<td class="kposthint"><input type="text" name="helpbox" id="helpbox" size="45" class="kinputbox" disabled="disabled" maxlength="100"
 				value="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')); ?>" /></td>
 		</tr>
 	</table>

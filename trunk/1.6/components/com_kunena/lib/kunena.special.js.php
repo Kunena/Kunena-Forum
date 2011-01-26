@@ -19,7 +19,7 @@ window.addEvent('domready', function(){
 	function kunenaSelectUsername(obj, kuser) {
 		if (obj.get('checked')) {
 			$('kauthorname').set('value',kunena_anonymous_name).removeProperty('disabled');
-			$('kanynomous-check-name').removeProperty('style');
+			$('kanynomous-check-name').setStyle('display');
 		} else {
 			$('kanynomous-check-name').setStyle('display','none');
 			$('kauthorname').set('value',kuser).set('disabled', 'disabled');
@@ -28,9 +28,9 @@ window.addEvent('domready', function(){
 
 	function kunenaCheckPollallowed(catid) {
 		if ( pollcategoriesid[catid] != undefined ) {
-			$('kpoll-hide-not-allowed').removeProperty('style');
-			$('kbbcode-separator5').removeProperty('style');
-			$('kbbcode-poll-button').removeProperty('style');
+			$('kpoll-hide-not-allowed').setStyle('display');
+			$('kbbcode-separator5').setStyle('display');
+			$('kbbcode-poll-button').setStyle('display');
 			$('kpoll-not-allowed').set('text', ' ');
 		} else {
 			$('kbbcode-separator5').setStyle('display','none');
@@ -41,7 +41,7 @@ window.addEvent('domready', function(){
 
 	function kunenaCheckAnonymousAllowed(catid) {
 		if ( arrayanynomousbox[catid] != undefined ) {
-			$('kanynomous-check').removeProperty('style');
+			$('kanynomous-check').setStyle('display');
 		} else {
 			$('kanynomous-check').setStyle('display','none');
 			kbutton.removeProperty('checked');
@@ -50,34 +50,34 @@ window.addEvent('domready', function(){
 		if ( arrayanynomousbox[catid] ) {
 			$('kanonymous').set('checked','checked');
 		}
+		<?php if ($this->my->id != 0) { ?>
 		kunenaSelectUsername(kbutton,kuser);
+		<?php } ?>
 	}
 	//	for hide or show polls if category is allowed
 	if($('postcatid') != undefined) {
-		$('postcatid').getElements('option').each( function( catid ) {
-			catid.addEvent('click', function(e) {
-				kunenaCheckPollallowed(catid.value);
-			})
+		$('postcatid').addEvent('change', function(e) {
+			kunenaCheckPollallowed(this.value);
 		});
 	}
 
 	if($('kauthorname') != undefined) {
 		var kuser = $('kauthorname').get('value');
 		var kbutton = $('kanonymous');
+		<?php if ($this->my->id != 0) { ?>
 		kunenaSelectUsername(kbutton, kuser);
 		kbutton.addEvent('click', function(e) {
 			kunenaSelectUsername(this, kuser);
 		});
+		<?php } ?>
 	}
 	//	to select if anynomous option is allowed on new topic tab
 	if($('postcatid') != undefined) {
-		$('postcatid').getElements('option').each( function( catid ) {
-			catid.addEvent('click', function(e) {
-				kunenaCheckAnonymousAllowed(catid.value);
-			})
+		$('postcatid').addEvent('change', function(e) {
+			kunenaCheckAnonymousAllowed(catid.value);
 		});
 	}
-	
+
 	if($('postcatid') != undefined) {
 		window.onload=kunenaCheckPollallowed($('postcatid').getSelected().get("value"));
 		window.onload=kunenaCheckAnonymousAllowed($('postcatid').getSelected().get("value"));

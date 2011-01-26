@@ -337,7 +337,7 @@ class CKunenaLatestX {
 	function getLatestPosts() {
 		if (isset($this->total)) return;
 		$this->header = JText::_('COM_KUNENA_LATESTPOSTS');
-		$this->title = JText::_('COM_KUNENA_MY_DISCUSSIONS'); 
+		$this->title = JText::_('COM_KUNENA_MY_DISCUSSIONS');
 		$this->_getPosts('latest');
 	}
 
@@ -576,8 +576,10 @@ class CKunenaLatestX {
 			$this->actionMove = true;
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+			if($this->config->mod_see_deleted == '1' || CKunenaTools::isAdmin()) {
+				$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+				$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+			}
 		}
 		if ($this->myprofile->ordering != '0') {
 			$this->topic_ordering = $this->myprofile->ordering == '1' ? 'DESC' : 'ASC';

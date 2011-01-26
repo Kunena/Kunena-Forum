@@ -29,7 +29,7 @@ class CKunenaRSSView {
 
 		// Important!
 		if (!$this->config->enablerss) {
-			die();
+			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED') );
 		}
 
 		// Load global options from config
@@ -83,7 +83,7 @@ class CKunenaRSSView {
 		$this->document = $this->document->getInstance('feed');
 		$this->document->setTitle($this->app->getCfg('sitename') .' - Forum');
 		$this->document->setDescription('Kunena Site Syndication');
-		$this->document->setGenerator('Kunena ' . Kunena::version());
+		$this->document->setGenerator('Kunena 1.6');
 
 		// Image link for feed
 		$link			= JURI::root();

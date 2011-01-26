@@ -561,7 +561,7 @@ function newAttachment() {
 	
 	var __id = __kattachment.retrieve('nextid',1);
 	__kattachment.store('nextid',__id+1);
-	var __file = __kattachment.clone().inject(__kattachment,'before').set('id','kattachment'+__id).removeProperty('style');
+	var __file = __kattachment.clone().inject(__kattachment,'before').set('id','kattachment'+__id).setStyle('display');
 	__file.getElement('span.kattachment-id-container').set('text', __id+'. ');
 	var input = __file.getElement('input.kfile-input').set('name', 'kattachment'+__id).removeProperty('onchange');
 	input.addEvent('change', function() {

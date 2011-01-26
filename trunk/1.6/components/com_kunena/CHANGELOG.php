@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2008 - 2010 www.kunena.org All rights reserved
+* @Copyright (C) 2008 - 2011 www.kunena.org All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -35,12 +35,24 @@ Kunena 1.6.3
 
 26-January-2010 Matias
 ^ [#15886] Merged revisions 4157-4285 from /branches/1.6-xillibit-fixes-20111205
+^ [#15886] Merged revisions 4274-4291 from /branches/1.6.3-language-LDAsvens-2011-01-22
+
+26-January-2011 svens(LDA)
+^ [#24560] update es-ES (thanks Kunena Spanish Team)
+^ [#24560] update en-GB
 
 24-January-2010 Xillibit
 # [#24590] Topic/Create: Showing poll and anonymous options works only in FireFox
 
 23-January-2010 Xillibit
 ^ [#24413] Add title parameter in function CKunenaLink::GetThreadPageLink for module latest (Part 2)
+
+22-January-2011 svens(LDA)
+^ [#24560] update de-DE (thanks Rich)
+^ [#24560] update ar-AA (thanks baazza)
+^ [#24560] update di-FI (thanks Morrti)
+^ [#24560] update es-ES (thanks Kunena Spanish Team)
+^ [#24560] update ru-RU (thanks Zarkos)
 
 22-January-2011 Matias
 # [#24563] Search does not check all variables

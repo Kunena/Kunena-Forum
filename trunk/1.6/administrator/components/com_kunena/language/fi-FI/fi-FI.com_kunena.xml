@@ -4,13 +4,13 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Finnish (Suomi)</name>
 	<tag>fi-FI</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
+	<creationDate>2011-01-13</creationDate>
+	<version>1.6.3-DEV</version>
+	<build>4165</build>
 	<author>Sami Haaranen</author>
 	<authorEmail>mortti@joomlaportal.fi</authorEmail>
 	<authorUrl>http://www.joomlaportal.fi</authorUrl>
-	<copyright>(C) 2006 - 2010 Sami Haaranen</copyright>
+	<copyright>(C) 2006 - 2011 Sami Haaranen</copyright>
 	<license>GNU/GPL</license>
 	<description>Suomenkielinen käännös Kunena Forum lisäosaan</description>
 

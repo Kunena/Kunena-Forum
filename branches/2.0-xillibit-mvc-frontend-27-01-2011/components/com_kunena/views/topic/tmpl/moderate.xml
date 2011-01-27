@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="COM_KUNENA_MENU_TOPIC_MOVE">
+		<message>COM_KUNENA_MENU_TOPIC_MOVE_DESC</message>
+	</layout>
+	<state>
+		<name>COM_KUNENA_MENU_TOPIC_MOVE_LONG</name>
+		<description>COM_KUNENA_MENU_TOPIC_MOVE_DESC_LONG</description>
+	</state>
+</metadata>

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+27-January-2010 Xillibit
+^ [#24515] Put some old codes into mvc in frontend (search almost finished)
+
 27-January-2010 Matias
 - [#22570] Remove deprecated directory template/default/plugin/stats
 # [#23443] Fix fatal error when showing statistics on certain pages

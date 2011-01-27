@@ -1,20 +1,14 @@
 <?php
 /**
- * @version $Id$
+ * @version		$Id: topic.php 4282 2011-01-24 16:00:51Z mahagr $
  * Kunena Component
  * @package Kunena
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
- **/
-
+ */
 defined ( '_JEXEC' ) or die ();
-
-$tabclass = array ("row1", "row2" );
-if (empty ( $this->q ) && empty ( $this->quser )) {
-	return;
-}
 ?>
 <div class="kblock ksearchresult">
 	<div class="kheader">
@@ -25,7 +19,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 			</span>
 		</h2>
 		<div class="ksearchresult-desc km">
-			<span><?php echo JText::sprintf ('COM_KUNENA_FORUM_SEARCH', $this->escape($this->q) ); ?></span>
+			<span><?php echo JText::sprintf ('COM_KUNENA_FORUM_SEARCH', $this->escape($this->searchword) ); ?></span>
 		</div>
 	</div>
 	<div class="kcontainer" id="ksearchresult">
@@ -34,7 +28,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 	<tbody>
 		<tr>
 			<td>
-				<?php foreach ( $this->results as $result ) : ?>
+				<?php  foreach ( $this->results as $result ) : ?>
 					<table>
 						<thead>
 							<tr class="ksth">
@@ -47,7 +41,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 						</thead>
 						<tbody>
 							<?php $k = 0; if ($this->total == 0 && $this->int_kunena_errornr) : ?>
-							<tr class="k<?php echo $tabclass [$k] ?>" >
+							<tr class="k<?php echo $this->tabclass [$k] ?>" >
 								<td>
 									<?php echo $this->escape($this->str_kunena_errormsg) ?>
 								</td>
@@ -61,7 +55,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 									<div class="kmsgbody">
 										<div class="kmsgtitle kresult-title">
 											<span class="kmsgtitle">
-												<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($result->catid), intval($result->id), 0, NULL, $result->htmlsubject, intval($result->id) )?>
+												<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($result->catid), intval($result->id), NULL, NULL, $result->htmlsubject, intval($result->id) )?>
 											</span>
 										</div>
 										<div class="kmsgtext resultmsg">
@@ -81,8 +75,8 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 		<tr class="ksth">
 			<th colspan="3">
 			<?php
-			$resStart = $this->limitstart + 1;
-			$resStop = $this->limitstart + count ( $this->results );
+			$resStart = $this->params['limitstart'] + 1;
+			$resStop = $this->params['limitstart'] + count ( $this->results );
 			if ($resStart < $resStop)
 				$resStartStop = ( string ) ($resStart) . ' - ' . ( string ) ($resStop);
 			else
@@ -90,8 +84,8 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 			printf ( JText::_('COM_KUNENA_FORUM_SEARCHRESULTS'), $resStartStop, intval($this->total) );
 			?>
 
-			<?php if ($this->total > $this->limit) : ?>
-			<?php echo $this->pagination; ?>
+			<?php if ($this->total > $this->params['limit']) : ?>
+			<?php //echo $this->getPagination('search', 3); ?>
 			<?php endif; ?>
 			</th>
 		</tr>

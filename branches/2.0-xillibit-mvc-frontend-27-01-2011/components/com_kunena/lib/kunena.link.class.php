@@ -263,16 +263,9 @@ class CKunenaLink {
 		return self::GetHrefLink ( self::GetSearchURL($view, $searchword, $limitstart, $limit, $params), $name, '', $rel );
 	}
 
-	function GetSearchURL($view, $searchword='', $limitstart=0, $limit=0, $params = '') {
-		$config = KunenaFactory::getConfig ();
-		$limitstr = "";
-		if ($limitstart > 0)
-			$limitstr .= "&limitstart=$limitstart";
-		if ($limit > 0 && $limit != $config->messages_per_page_search)
-			$limitstr .= "&limit=$limit";
-		if ($searchword)
-			$searchword = '&q=' . urlencode ( $searchword );
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$searchword}{$params}{$limitstr}" );
+	function GetSearchURL($view, $task) {
+		$task = '&layout='.$task;
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$task}" );
 	}
 
 	function GetAnnouncementLink($do, $id = NULL, $name, $title, $rel = 'nofollow') {

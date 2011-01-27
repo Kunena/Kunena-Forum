@@ -32,6 +32,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.3
+27-January-2011 svens(LDA)
+^ [#24560] update ru-RU (thanks Zarkos)
 
 26-January-2011 svens(LDA)
 ^ [#24560] update es-ES (thanks Kunena Spanish Team)

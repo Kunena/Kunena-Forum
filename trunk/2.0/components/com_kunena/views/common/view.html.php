@@ -119,37 +119,36 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayStats($tpl = null) {
-		if (KunenaFactory::getConfig()->showstats > 0) {
-			$cache = JFactory::getCache('com_kunena', 'output');
-			if ($cache->start(0, 'com_kunena.view.common.stats')) return;
-			// FIXME: refactor code
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
-			$kunena_stats = CKunenaStats::getInstance ( );
-			$kunena_stats->loadGenStats();
-			$kunena_stats->loadLastUser();
-			$this->lastestmemberid = $kunena_stats->lastestmemberid;
-			$kunena_stats->loadLastDays();
-			$this->todayopen = $kunena_stats->todayopen;
-			$this->yesterdayopen = $kunena_stats->yesterdayopen;
-			$this->todayanswer = $kunena_stats->todayanswer;
-			$this->yesterdayanswer = $kunena_stats->yesterdayanswer;
-			$kunena_stats->loadTotalTopics();
-			$this->totaltitles = $kunena_stats->totaltitles;
-			$this->totalmessages = $kunena_stats->totalmsgs;
-			$kunena_stats->loadTotalCategories();
-			$this->totalsections = $kunena_stats->totalsections;
-			$this->totalcats = $kunena_stats->totalcats;
-			$this->totalmembers = $kunena_stats->totalmembers;
-			$this->userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
-			$this->userlist2 = CKunenaLink::GetUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
-			$result = $this->loadTemplate($tpl);
-			if (JError::isError($result)) {
-				return $result;
-			}
-			echo $result;
-			$cache->end();
-		} else echo " ";
+		$this->config = KunenaFactory::getConfig();
+		$cache = JFactory::getCache('com_kunena', 'output');
+		if ($cache->start(0, 'com_kunena.view.common.stats')) return;
+		// FIXME: refactor code
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+		$kunena_stats = CKunenaStats::getInstance ( );
+		$kunena_stats->loadGenStats();
+		$kunena_stats->loadLastUser();
+		$this->lastestmemberid = $kunena_stats->lastestmemberid;
+		$kunena_stats->loadLastDays();
+		$this->todayopen = $kunena_stats->todayopen;
+		$this->yesterdayopen = $kunena_stats->yesterdayopen;
+		$this->todayanswer = $kunena_stats->todayanswer;
+		$this->yesterdayanswer = $kunena_stats->yesterdayanswer;
+		$kunena_stats->loadTotalTopics();
+		$this->totaltitles = $kunena_stats->totaltitles;
+		$this->totalmessages = $kunena_stats->totalmsgs;
+		$kunena_stats->loadTotalCategories();
+		$this->totalsections = $kunena_stats->totalsections;
+		$this->totalcats = $kunena_stats->totalcats;
+		$this->totalmembers = $kunena_stats->totalmembers;
+		$this->userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
+		$this->userlist2 = CKunenaLink::GetUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
+		$result = $this->loadTemplate($tpl);
+		if (JError::isError($result)) {
+			return $result;
+		}
+		echo $result;
+		$cache->end();
 	}
 
 	function displayMenu($tpl = null) {

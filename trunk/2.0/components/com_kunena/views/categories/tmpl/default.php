@@ -42,5 +42,5 @@ if (count ( $this->categories )) {
 	$this->displayInfoMessage ();
 }
 $this->common->display('whosonline');
-$this->common->display('stats');
+$this->displayStats();
 ?>

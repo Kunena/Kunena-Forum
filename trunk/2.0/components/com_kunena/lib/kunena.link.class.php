@@ -239,9 +239,9 @@ class CKunenaLink {
 	}
 
 	// Get actions: favorite, subscribe, delete, approve etc
-	function GetTopicPostLink($task, $catid, $id, $name, $rel = 'nofollow', $class = '', $title = '', $attr = '') {
+	function GetTopicPostLink($do, $catid, $id, $name, $rel = 'nofollow', $class = '', $title = '', $attr = '') {
 		$token = '&'.JUtility::getToken().'=1';
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=topic&task={$task}&catid={$catid}&id={$id}{$token}", $name, $title, $rel, $class, '', $attr );
+		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=post&do={$do}&catid={$catid}&id={$id}{$token}", $name, $title, $rel, $class, '', $attr );
 	}
 
 	// Post actions: post, edit, moderate etc

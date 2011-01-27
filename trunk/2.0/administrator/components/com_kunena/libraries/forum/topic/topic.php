@@ -55,7 +55,11 @@ class KunenaForumTopic extends JObject {
 
 	function exists($exists = null) {
 		$return = $this->_exists;
-		if ($exists !== null) $this->_exists = $exists;
+		if ($exists !== null) {
+			$this->_exists = $exists;
+			$this->_hold = $this->hold;
+			$this->_posts = $this->posts;
+		}
 		return $return;
 	}
 
@@ -128,21 +132,14 @@ class KunenaForumTopic extends JObject {
 	}
 
 	public function publish($value=KunenaForum::PUBLISHED) {
-		if ($value<0) $value = 0;
-		elseif ($value>1) $value = 3;
+		if ($value<0 || $value>3) $value = 0;
+		elseif ($value>3) $value = 3;
 		$this->hold = (int)$value;
 		$query = new KunenaDatabaseQuery();
-		$query->update('#__kunena_messages')->set("hold={$this->hold}")->where("thread={$this->id}");
-		if (!$this->hold)
-			$query->where("hold>=2");
-		if ($this->hold > 1)
-			$query->where("hold<=1");
-		else
-			$query->where("hold=0");
+		$query->update('#__kunena_messages')->set("hold={$this->hold}")->where("thread={$this->id}")->where("hold={$this->_hold}");
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return false;
-
 		return $this->recount();
 	}
 
@@ -529,12 +526,14 @@ class KunenaForumTopic extends JObject {
 	public function update($message=null, $postdelta=0) {
 		// Update post count
 		$this->posts += $postdelta;
+		$exists = $message && $message->exists();
 		if (!$this->exists()) {
-			if (!$message) return false;
+			// TODO: error message
+			if (!$exists) return false;
 			$this->id = $message->id;
 		}
-		if ($message && $message->exists() && $message->hold == KunenaForum::PUBLISHED && (!$message->thread || $message->thread == $this->id)) {
-			// If message is published and belongs into this topic, we may need to update cache
+		if ($exists && $message->thread == $this->id && $message->hold == $this->hold) {
+			// If message belongs into this topic and has same state, we may need to update cache
 			if (!$this->first_post_time || $this->first_post_time >= $message->time) {
 				$this->first_post_id = $message->id;
 				$this->first_post_time = $message->time;
@@ -549,13 +548,13 @@ class KunenaForumTopic extends JObject {
 				$this->last_post_message = $message->message;
 				$this->last_post_guest_name = $message->name;
 			}
-		} else {
+		} elseif (!$this->moved_id) {
 			// If message isn't visible anymore, check if we need to update cache
-			if ($this->posts && (!$message || $this->first_post_id == $message->id)) {
+			if (!$exists || $this->first_post_id == $message->id) {
 				// If message got deleted and was cached, we need to find new first post
 				$db = JFactory::getDBO ();
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
-					WHERE m.thread={$db->quote($this->id)} AND m.hold=0 ORDER BY m.time ASC";
+					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time ASC";
 				$db->setQuery ( $query, 0, 1 );
 				$first = $db->loadObject ();
 				KunenaError::checkDatabaseError ();
@@ -566,13 +565,19 @@ class KunenaForumTopic extends JObject {
 					$this->first_post_userid = $first->userid;
 					$this->first_post_message = $first->message;
 					$this->first_post_guest_name = $first->name;
+				} else {
+					$this->first_post_id = 0;
+					$this->first_post_time = 0;
+					$this->first_post_userid = 0;
+					$this->first_post_message = '';
+					$this->first_post_guest_name = '';
 				}
 			}
-			if (!$message || $this->last_post_id == $message->id) {
+			if (!$exists || $this->last_post_id == $message->id) {
 				// If topic got deleted and was cached, we need to find new last post
 				$db = JFactory::getDBO ();
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
-					WHERE m.thread={$db->quote($this->id)} AND m.hold=0 ORDER BY m.time DESC";
+					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time DESC";
 				$db->setQuery ( $query, 0, 1 );
 				$last = $db->loadObject ();
 				KunenaError::checkDatabaseError ();
@@ -583,34 +588,26 @@ class KunenaForumTopic extends JObject {
 					$this->last_post_userid = $last->userid;
 					$this->last_post_message = $last->message;
 					$this->last_post_guest_name = $last->name;
+				} else {
+					$this->last_post_id = 0;
+					$this->last_post_time = 0;
+					$this->last_post_userid = 0;
+					$this->last_post_message = '';
+					$this->last_post_guest_name = '';
 				}
 			}
-			if (!$this->posts || (isset($first) && !$first)) {
-				// If topic has no visible posts, mark it deleted
-				if (!$this->hold) $this->hold = KunenaForum::TOPIC_DELETED;
-				$this->posts = 0;
-				$this->first_post_id = 0;
-				$this->first_post_time = 0;
-				$this->first_post_userid = 0;
-				$this->first_post_message = '';
-				$this->first_post_guest_name = '';
-				$this->last_post_id = 0;
-				$this->last_post_time = 0;
-				$this->last_post_userid = 0;
-				$this->last_post_message = '';
-				$this->last_post_guest_name = '';
+			if ($this->hold != KunenaForum::TOPIC_DELETED && (!$this->first_post_id || !$this->last_post_id)) {
+				// If topic has no visible posts, mark it deleted and recount
+				$this->hold = $exists ? $message->hold : KunenaForum::TOPIC_DELETED;
+				$this->recount();
 			}
-		}
-		if ($this->first_post_id) {
-			// If topic has visible posts, mark it published
-			$this->hold = KunenaForum::PUBLISHED;
 		}
 
 		if(!$this->save()) {
 			return false;
 		}
 
-		if ($message && $message->userid) {
+		if ($exists && $message->userid) {
 			// Update post count from user
 			$user = KunenaFactory::getUser($message->userid);
 			$user->posts += $postdelta;
@@ -628,11 +625,11 @@ class KunenaForumTopic extends JObject {
 	}
 
 	public function recount() {
-		// Recount total posts, total attachments
+		// Recount total posts and attachments
 		$query ="SELECT COUNT(DISTINCT m.id) AS posts, COUNT(a.id) AS attachments
 				FROM #__kunena_messages AS m
 				LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
-				WHERE m.hold=0 AND m.thread={$this->_db->quote($this->id)}
+				WHERE m.hold={$this->_db->quote($this->hold)} AND m.thread={$this->_db->quote($this->id)}
 				GROUP BY m.thread";
 		$this->_db->setQuery($query);
 		$result = $this->_db->loadAssoc ();

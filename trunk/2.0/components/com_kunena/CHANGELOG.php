@@ -33,6 +33,16 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+27-January-2010 Matias
+- [#22570] Remove deprecated directory template/default/plugin/stats
+# [#23443] Fix fatal error when showing statistics on certain pages
+# [#22569] KunenaControllerTopic: Add tasks for delete, undelete, permdelete and approve
+# [#22569] Convert legacy post action URLs into new ones
+# [#22569] Change topic count/first/last post logic so that deleted and unapproved topics show up in right place
+# [#22569] KunenaForumMessage::update(): If message is not in hold, publish and recount topic
+# [#22569] KunenaForumTopic::publish(): Change hold on messages which had the same hold as topic
+# [#22569] KunenaForumTopicHelper::recount(): Fix and optimize queries
+
 26-January-2010 Matias
 # [#22569] Modify bulk actions javascript/logic to be more flexible
 ^ [#22569] Convert bulk actions into KunenaControllerTopics tasks

@@ -512,7 +512,11 @@ class KunenaForumMessage extends JObject {
 		$postDelta = $this->delta(true);
 		// Update topic
 		$topic = $this->getTopic();
-		if (! $topic->update($this, $postDelta)) {
+		if (!$this->hold && $topic->hold) {
+			// We published message -> publish and recount topic
+			$topic->hold = 0;
+			$topic->recount();
+		} elseif (! $topic->update($this, $postDelta)) {
 			$this->setError ( $topic->getError () );
 		}
 

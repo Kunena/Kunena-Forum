@@ -278,14 +278,6 @@ class KunenaViewTopics extends KunenaView {
 		return $txt;
 	}
 
-	function displayStats() {
-		if ($this->config->showstats > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
-			$kunena_stats = CKunenaStats::getInstance ( );
-			$kunena_stats->showFrontStats ();
-		}
-	}
-
 	function displayWhoIsOnline() {
 		if ($this->config->showwhoisonline > 0) {
 			require_once KPATH_SITE.'/lib/kunena.who.class.php';

@@ -209,71 +209,58 @@ class KunenaForumTopicHelper {
 		}
 		$where = '';
 		if ($threads) $where = "AND {$threads}";
-		// Recount total posts, total attachments
-		$query ="UPDATE #__kunena_topics AS tt
-			INNER JOIN (SELECT m.thread, COUNT(DISTINCT m.id) AS posts, COUNT(a.id) as attachments
-				FROM #__kunena_messages AS m
-				LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
-				WHERE m.hold=0 {$where}
-				GROUP BY m.thread) AS t ON t.thread=tt.id
-			SET tt.posts=t.posts,
-				tt.attachments=t.attachments";
-		$db->setQuery($query);
-		$db->query ();
-		if (KunenaError::checkDatabaseError ())
-			return;
-
-		if ($threads) $where = "WHERE {$threads}";
-		// Update first post information (by time)
-		$query ="UPDATE #__kunena_topics AS tt
-			INNER JOIN (SELECT thread, MIN(time) AS time FROM #__kunena_messages WHERE hold=0 GROUP BY thread) AS l ON tt.id=l.thread
-			INNER JOIN #__kunena_messages AS m ON l.thread=m.thread AND m.time=l.time
-			INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
-			SET tt.first_post_id = m.id,
-				tt.first_post_time = m.time,
-				tt.first_post_userid = m.userid,
-				tt.first_post_message = t.message,
-				tt.first_post_guest_name = IF(m.userid>0,null,m.name) {$where}";
-		$db->setQuery($query);
-		$db->query ();
-		if (KunenaError::checkDatabaseError ())
-			return;
-
-		// Update last post information (by time)
-		$query ="UPDATE #__kunena_topics AS tt
-			INNER JOIN (SELECT thread, MAX(time) AS time FROM #__kunena_messages WHERE hold=0 GROUP BY thread) AS l ON tt.id=l.thread
-			INNER JOIN #__kunena_messages AS m ON l.thread=m.thread AND m.time=l.time
-			INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
-			SET tt.last_post_id = m.id,
-				tt.last_post_time = m.time,
-				tt.last_post_userid = m.userid,
-				tt.last_post_message = t.message,
-				tt.last_post_guest_name = IF(m.userid>0,null,m.name) {$where}";
-		$db->setQuery($query);
-		$db->query ();
-		if (KunenaError::checkDatabaseError ())
-			return;
 
 		// Mark all empty topics as deleted
-		$query ="UPDATE #__kunena_topics
-			SET hold = 2,
-				attachments = 0,
-				first_post_id = 0,
-				first_post_time = 0,
-				first_post_userid = 0,
-				first_post_message = '',
-				first_post_guest_name = '',
-				last_post_id = 0,
-				last_post_time = 0,
-				last_post_userid = 0,
-				last_post_message = '',
-				last_post_guest_name = ''
-				WHERE posts=0 AND hold=0 AND moved_id=0";
+		$query ="UPDATE #__kunena_topics AS tt
+			LEFT JOIN #__kunena_messages AS m ON m.thread=tt.id AND tt.hold=m.hold
+			SET tt.hold = 3,
+				tt.posts = 0,
+				tt.attachments = 0,
+				tt.first_post_id = 0,
+				tt.first_post_time = 0,
+				tt.first_post_userid = 0,
+				tt.first_post_message = '',
+				tt.first_post_guest_name = '',
+				tt.last_post_id = 0,
+				tt.last_post_time = 0,
+				tt.last_post_userid = 0,
+				tt.last_post_message = '',
+				tt.last_post_guest_name = ''
+			WHERE tt.moved_id=0 AND tt.hold!=3 AND m.id IS NULL {$where}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return;
 
+		// Recount total posts, total attachments and update first & last post information (by time)
+		$query ="UPDATE #__kunena_topics AS tt
+			INNER JOIN (
+				SELECT m.thread, m.hold, COUNT(DISTINCT m.id) AS posts, COUNT(a.id) as attachments, MIN(m.time) AS mintime, MAX(m.time) AS maxtime
+				FROM #__kunena_messages AS m
+				LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
+				GROUP BY m.thread, m.hold
+			) AS c ON tt.id=c.thread
+			INNER JOIN #__kunena_messages AS min ON c.thread=min.thread AND min.hold=tt.hold AND min.time=c.mintime
+			INNER JOIN #__kunena_messages AS max ON c.thread=max.thread AND max.hold=tt.hold AND max.time=c.maxtime
+			INNER JOIN #__kunena_messages_text AS tmin ON tmin.mesid=min.id
+			INNER JOIN #__kunena_messages_text AS tmax ON tmax.mesid=max.id
+			SET tt.posts=c.posts,
+				tt.attachments=c.attachments,
+				tt.first_post_id = min.id,
+				tt.first_post_time = min.time,
+				tt.first_post_userid = min.userid,
+				tt.first_post_message = tmin.message,
+				tt.first_post_guest_name = IF(min.userid>0,null,min.name),
+				tt.last_post_id = max.id,
+				tt.last_post_time = max.time,
+				tt.last_post_userid = max.userid,
+				tt.last_post_message = tmax.message,
+				tt.last_post_guest_name = IF(max.userid>0,null,max.name)
+			WHERE moved_id=0 {$where}";
+		$db->setQuery($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return;
 	}
 
 	static public function fetchNewStatus($topics, $user = null) {

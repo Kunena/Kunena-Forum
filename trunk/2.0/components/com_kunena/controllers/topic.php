@@ -410,13 +410,100 @@ class KunenaControllerTopic extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		$topic = KunenaForumTopicHelper::get($this->id);
-		if ($topic->authorise('delete') && $topic->publish(KunenaForum::TOPIC_DELETED)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' ) );
+		if ($this->mesid) {
+			// Delete message
+			$target = KunenaForumMessageHelper::get($this->mesid);
+			$hold = KunenaForum::DELETED;
+			$msg = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
+			$url = CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false );
 		} else {
-			$app->enqueueMessage ( $topic->getError(), 'notice' );
+			// Delete topic
+			$target = KunenaForumTopicHelper::get($this->id);
+			$hold = KunenaForum::TOPIC_DELETED;
+			$msg = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' );
+			$url = CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false );
 		}
-		$app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ) );
+		if ($target->authorise('delete') && $target->publish($hold)) {
+			$app->enqueueMessage ( $msg );
+		} else {
+			$app->enqueueMessage ( $target->getError(), 'notice' );
+		}
+		$app->redirect ( $url );
+	}
+
+	public function undelete() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		if ($this->mesid) {
+			// Undelete message
+			$target = KunenaForumMessageHelper::get($this->mesid);
+			// TODO: check if translation exists
+			$msg = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_UNDELETE' );
+		} else {
+			// Undelete topic
+			$target = KunenaForumTopicHelper::get($this->id);
+			$msg = JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE' );
+		}
+		if ($target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED)) {
+			$app->enqueueMessage ( $msg );
+		} else {
+			$app->enqueueMessage ( $target->getError(), 'notice' );
+		}
+		$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
+	}
+
+	public function permdelete() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		if ($this->mesid) {
+			// Delete message
+			$target = KunenaForumMessageHelper::get($this->mesid);
+			$msg = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
+			$url = CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false );
+		} else {
+			// Delete topic
+			$target = KunenaForumTopicHelper::get($this->id);
+			$msg = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' );
+			$url = CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false );
+		}
+		if ($target->authorise('permdelete') && $target->delete()) {
+			$app->enqueueMessage ( $msg );
+		} else {
+			$app->enqueueMessage ( $target->getError(), 'notice' );
+		}
+		$app->redirect ( $url );
+	}
+
+	public function approve() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		if ($this->mesid) {
+			// Approve message
+			$target = KunenaForumMessageHelper::get($this->mesid);
+		} else {
+			// Approve topic
+			$target = KunenaForumTopicHelper::get($this->id);
+		}
+		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED)) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' ) );
+			// FIXME: $topic->sendNotification() doesn't exist
+			$target->sendNotification();
+		} else {
+			$app->enqueueMessage ( $target->getError(), 'notice' );
+		}
+		$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
 
 	public function move() {
@@ -564,7 +651,6 @@ class KunenaControllerTopic extends KunenaController {
 				$mailmessage .= "\n\n\n\n** Powered by Kunena! - http://www.kunena.org **";
 				$mailmessage = JMailHelper::cleanBody ( strtr ( $mailmessage, array ('&#32;' => '' ) ) );
 
-				echo "<pre>";print_r($mailmessage);echo "</pre>";die();
 				foreach ( $emailToList as $emailTo ) {
 					if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
 						continue;
@@ -576,90 +662,6 @@ class KunenaControllerTopic extends KunenaController {
 				$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, 0, NULL, $this->id, false ) );
 			}
 		}
-	}
-
-	public function approve() {
-		$app = JFactory::getApplication ();
-		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
-		}
-
-		$message = KunenaForumMessageHelper::get($this->id);
-		$url = CKunenaLink::GetMessageURL ( $this->id, $message->catid, 0, false );
-		if ($message->authorise('approve') && $message->publish(KunenaForum::PUBLISHED)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' ) );
-
-			// Update category stats
-			$topic = $message->getTopic();
-			$category = $topic->getCategory();
-			if (!$message->parent) $category->numTopics++;
-			$category->numPosts++;
-			$category->last_topic_id = $topic->id;
-			$category->last_topic_subject = $topic->subject;
-			$category->last_post_id = $message->id;
-			$category->last_post_time = $message->time;
-			$category->last_post_userid = $message->userid;
-			$category->last_post_message = $message->message;
-			$category->last_post_guest_name = $message->name;
-			$category->save();
-
-			$message->sendNotification();
-		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_FAIL' ), 'notice' );
-		}
-		$app->redirect ( $url );
-	}
-
-	public function deletemessage() {
-		$app = JFactory::getApplication ();
-		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
-		}
-
-		$message = KunenaForumMessageHelper::get($this->id);
-		if ($message->authorise('delete') && $message->publish(KunenaForum::DELETED)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ) );
-		} else {
-			$app->enqueueMessage ( $message->getError(), 'notice' );
-		}
-		$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
-	}
-
-	public function undeletemessage() {
-		$app = JFactory::getApplication ();
-		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
-		}
-
-		$message = KunenaForumMessageHelper::get($this->id);
-		if ($message->authorise('undelete') && $message->publish(KunenaForum::PUBLISHED)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE' ) );
-		} else {
-			$app->enqueueMessage ( $message->getError(), 'notice' );
-		}
-		$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
-	}
-
-	public function permdeletemessage() {
-		$app = JFactory::getApplication ();
-		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
-		}
-
-		$message = KunenaForumMessageHelper::get($this->id);
-		if ($message->authorise('permdelete') && $message->delete()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ) );
-		} else {
-			$app->enqueueMessage ( $message->getError(), 'notice' );
-		}
-		if ($this->parent)
-			$this->redirectBack ();
-		else
-			$app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ));
 	}
 
 	protected function updateTags($topic, $globalTags, $userTags) {

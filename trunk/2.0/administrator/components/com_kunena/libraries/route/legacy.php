@@ -239,14 +239,20 @@ class KunenaRouteLegacy {
 					$uri->delVar ( 'action');
 				} else {
 					// Handle &do=xxx
-					switch ($uri->getVar ('layout')) {
+					$layout = $uri->getVar ('layout');
+					$uri->delVar ('layout');
+					switch ($layout) {
+
+						// Create, reply, quote and edit:
 						case 'new' :
 							$uri->setVar('layout', 'create');
 							$uri->delVar ( 'id' );
+							$uri->delVar ( 'mesid' );
 							break;
 						case 'quote' :
-							$uri->setVar ( 'quote', 1 );
-						// Continue in reply
+							$uri->setVar('layout', 'reply');
+							$uri->setVar ('quote', 1);
+							break;
 						case 'reply' :
 							$uri->setVar('layout', 'reply');
 							break;
@@ -256,17 +262,93 @@ class KunenaRouteLegacy {
 							if (! $mesid)
 								$uri->setVar ( 'mesid', $id );
 							break;
+
+						// Topic moderation:
+						case 'moderatethread' :
+							$uri->setVar('layout', 'moderate');
+							// Always remove &mesid=x
+							$uri->delVar ( 'mesid' );
+							break;
+						case 'deletethread' :
+							$uri->setVar('task', 'delete');
+							// Always remove &mesid=x
+							$uri->delVar ( 'mesid' );
+							break;
+						case 'sticky' :
+							$uri->setVar('task', 'sticky');
+							// Always remove &mesid=x
+							$uri->delVar ( 'mesid' );
+							break;
+						case 'unsticky' :
+							$uri->setVar('task', 'unsticky');
+							// Always remove &mesid=x
+							$uri->delVar ( 'mesid' );
+							break;
+						case 'lock' :
+							$uri->setVar('task', 'lock');
+							// Always remove &mesid=x
+							$uri->delVar ( 'mesid' );
+							break;
+						case 'unlock' :
+							$uri->setVar('task', 'unlock');
+							// Always remove &mesid=x
+							$uri->delVar ( 'mesid' );
+							break;
+
+						// Message moderator actions:
 						case 'moderate' :
 							$uri->setVar('layout', 'moderate');
 							// Always add &mesid=x
 							if (! $mesid)
 								$uri->setVar ( 'mesid', $id );
 							break;
-						case 'moderatethread' :
-							$uri->setVar('layout', 'moderate');
+						case 'approve' :
+							$uri->setVar('task', 'approve');
+							// Always add &mesid=x
+							if (! $mesid)
+								$uri->setVar ( 'mesid', $id );
+							break;
+						case 'delete' :
+							$uri->setVar('task', 'delete');
+							// Always add &mesid=x
+							if (! $mesid)
+								$uri->setVar ( 'mesid', $id );
+							break;
+						case 'undelete' :
+							$uri->setVar('task', 'undelete');
+							// Always add &mesid=x
+							if (! $mesid)
+								$uri->setVar ( 'mesid', $id );
+							break;
+						case 'permdelete' :
+							$uri->setVar('task', 'permdelete');
+							// Always add &mesid=x
+							if (! $mesid)
+								$uri->setVar ( 'mesid', $id );
+							break;
+
+						// Topic user actions:
+						case 'subscribe' :
+							$uri->setVar('task', 'subscribe');
 							// Always remove &mesid=x
 							$uri->delVar ( 'mesid' );
 							break;
+						case 'unsubscribe' :
+							$uri->setVar('task', 'unsubscribe');
+							// Always remove &mesid=x
+							$uri->delVar ( 'mesid' );
+							break;
+						case 'favorite' :
+							$uri->setVar('task', 'favorite');
+							// Always remove &mesid=x
+							$uri->delVar ( 'mesid' );
+							break;
+						case 'unfavorite' :
+							$uri->setVar('task', 'unfavorite');
+							// Always remove &mesid=x
+							$uri->delVar ( 'mesid' );
+							break;
+
 						default :
 							$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_DEPRECATED_ACTION' ), 'error' );
 					}

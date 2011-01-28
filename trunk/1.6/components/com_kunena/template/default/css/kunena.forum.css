@@ -3280,5 +3280,5 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	position:relative;
 }
 .kgooglemap img {
-	max-width:none;
+	max-width:none !important;
 }

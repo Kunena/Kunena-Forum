@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+28-January-2010 Severdia
+# [#24659] Fixed Google maps controls CSS
+
 28-January-2010 Matias
 ^ [#24385] Performance optimization for high joomla guest counts by CB team (Thanks Beat!)
 ^ [#15886] Merged revisions 4303-4304 from /branches/1.6-xillibit-fixes-27-01-2011

@@ -236,6 +236,7 @@ PX		EM			PCT			PT
 }
 #Kunena div.kblock div.kactions {
 	padding: 5px 10px;
+	line-height: 13px;
 }
 #Kunena div.kblock div.kactions a {
 }

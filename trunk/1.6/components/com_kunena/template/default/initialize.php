@@ -70,12 +70,13 @@ $forumHeader = $this->params->get('forumHeadercolor', $skinner ? '' : '#5388B4')
 
 if ($forumHeader) {
 	$styles .= <<<EOF
-	#Kunena div.kheader { background: {$forumHeader} }
-	#Kunena #ktop { border-color: {$forumHeader} }
-	#Kunena #ktop span.ktoggler { background: {$forumHeader} }
+	
+	#Kunena div.kblock > div.kheader { background: {$forumHeader} !important; }
+	#Kunena #ktop { border-color: {$forumHeader}; }
+	#Kunena #ktop span.ktoggler { background: {$forumHeader}; }
 	#Kunena #ktab a:hover,
-	#Kunena #ktab li.Kunena-item-active a	{ background-color: {$forumHeader} }
-	#Kunena #ktab ul.menu li.active a { background-color: {$forumHeader} }
+	#Kunena #ktab li.Kunena-item-active a	{ background-color: {$forumHeader}; }
+	#Kunena #ktab ul.menu li.active a { background-color: {$forumHeader}; }
 	#Kunena a:link,
 	#Kunena a:visited,
 	#Kunena a:active {color: {$forumHeader};}
@@ -99,7 +100,7 @@ $announcementHeader = $this->params->get('announcementHeadercolor', $skinner ? '
 
 if ($announcementHeader) {
 	$styles .= <<<EOF
-	#Kunena div.kannouncement div.kheader { background: {$announcementHeader} }
+	#Kunena div.kannouncement div.kheader { background: {$announcementHeader} !important; }
 EOF;
 }
 
@@ -107,7 +108,7 @@ $announcementBox = $this->params->get('announcementBoxbgcolor', $skinner ? '' : 
 
 if ($announcementBox) {
 	$styles .= <<<EOF
-	#Kunena div#kannouncement .kanndesc { background: {$announcementBox} }
+	#Kunena div#kannouncement .kanndesc { background: {$announcementBox}; }
 EOF;
 }
 
@@ -115,7 +116,7 @@ $frontStatsHeader = $this->params->get('frontstatsHeadercolor', $skinner ? '' : 
 
 if ($frontStatsHeader) {
 	$styles .= <<<EOF
-	#Kunena div.kfrontstats div.kheader { background: {$frontStatsHeader} }
+	#Kunena div.kfrontstats div.kheader { background: {$frontStatsHeader} !important; }
 EOF;
 }
 
@@ -123,7 +124,7 @@ $onlineHeader = $this->params->get('whoisonlineHeadercolor', $skinner ? '' : '#5
 
 if ($onlineHeader) {
 	$styles .= <<<EOF
-	#Kunena div.kwhoisonline div.kheader { background: {$onlineHeader} }
+	#Kunena div.kwhoisonline div.kheader { background: {$onlineHeader} !important; }
 EOF;
 }
 

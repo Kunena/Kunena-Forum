@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+27-January-2010 Severdia
+# [#24649] Fixed template params for header color in IE
+
 26-January-2010 Matias
 ^ [#15886] Merged revisions 4157-4285 from /branches/1.6-xillibit-fixes-20111205
 ^ [#15886] Merged revisions 4274-4291 from /branches/1.6.3-language-LDAsvens-2011-01-22

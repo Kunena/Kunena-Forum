@@ -10,8 +10,9 @@
  */
 defined ( '_JEXEC' ) or die ();
 
+jimport ( 'joomla.cache.handler.output' );
 kimport ( 'kunena.view' );
-jimport( 'joomla.cache.handler.output' );
+kimport ( 'kunena.forum.category.helper' );
 
 /**
  * Common view
@@ -68,14 +69,33 @@ class KunenaViewCommon extends KunenaView {
 	function displayPathway($tpl = null) {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$user = KunenaFactory::getUser ();
-		// TODO: just testing
-		if ($cache->start("{$this->catid}", 'com_kunena.view.common.pathway')) return;
+		$catid = JRequest::getInt ( 'catid', 0 );
+		$id = JRequest::getInt ( 'id', 0 );
+		if ($cache->start("{$catid}.{$id}", 'com_kunena.view.common.pathway')) return;
 
-		// FIXME: refactor code
-		require_once(KUNENA_PATH .DS. 'class.kunena.php');
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
-		$this->config = KunenaFactory::getConfig();
-		CKunenaTools::loadTemplate('/pathway.php');
+		$config = KunenaFactory::getConfig();
+
+		$this->path = array (CKunenaLink::GetKunenaLink ( $this->escape( $config->board_title ) ));
+		if ($catid) {
+			$parents = KunenaForumCategoryHelper::getParents($catid);
+			$parents[] = KunenaForumCategoryHelper::get($catid);
+			foreach ( $parents as $parent ) {
+				if ($catid == $parent->id && !$id) {
+					$this->path [] = $this->escape( JString::trim ( $parent->name ) );
+				} else {
+					$this->path [] = CKunenaLink::GetCategoryLink ( 'showcat', $parent->id, $this->escape( $parent->name ) );
+				}
+			}
+		}
+		if ($id) {
+			$this->path [] = $this->escape(KunenaForumTopicHelper::get($id)->subject);
+		}
+
+		$result = $this->loadTemplate($tpl);
+		if (JError::isError($result)) {
+			return $result;
+		}
+		echo $result;
 		$cache->end();
 	}
 

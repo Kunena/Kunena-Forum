@@ -111,9 +111,11 @@ defined ( '_JEXEC' ) or die ();
 	</tr>
 </table>
 
+<!-- Pathway -->
 <div class = "kforum-pathway-bottom">
-	<?php echo $this->kunena_pathway1; ?>
+	<?php $this->displayPathway () ?>
 </div>
+<!-- / Pathway -->
 
 <div class="kcontainer klist-bottom">
 	<div class="kbody">

@@ -127,6 +127,10 @@ class KunenaView extends JView {
 		$this->common->display();
 	}
 
+	function displayPathway() {
+		echo $this->common->display('pathway');
+	}
+
 	function displayForumJump() {
 		if (KunenaFactory::getConfig()->enableforumjump) {
 			$this->common->catid = !empty($this->category->id) ? $this->category->id : 0;

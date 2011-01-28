@@ -22,7 +22,7 @@ if ( $this->changevote ) {
 }
 ?>
 <div>
-<?php CKunenaTools::loadTemplate ( '/pathway.php' ); ?>
+<?php KunenaForum::display ( 'common', 'pathway' ); ?>
 </div>
 <div class="kblock kpollvote">
 	<div class="kheader">

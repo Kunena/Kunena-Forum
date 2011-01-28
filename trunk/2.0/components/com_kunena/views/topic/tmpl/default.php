@@ -42,9 +42,12 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 </div>
 <?php $this->displayTopicActions(1); ?>
 
+<!-- Pathway -->
 <div class = "kforum-pathway-bottom">
-	<?php echo $this->kunena_pathway1; ?>
+	<?php $this->displayPathway () ?>
 </div>
+<!-- / Pathway -->
+
 <!-- B: List Actions Bottom -->
 <div class="kcontainer klist-bottom">
 	<div class="kbody">

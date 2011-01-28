@@ -354,10 +354,6 @@ class KunenaViewTopic extends KunenaView {
 		}
 	}
 
-	function displayPathway() {
-		CKunenaTools::loadTemplate('/pathway.php');
-	}
-
 	function displayPoll() {
 		if ($this->config->pollenabled == "1" && $this->topic->poll_id) {
 			if ( $this->category->allow_polls ) {

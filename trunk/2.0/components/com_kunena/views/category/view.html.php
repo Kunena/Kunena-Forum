@@ -93,10 +93,6 @@ class KunenaViewCategory extends KunenaView {
 		}
 	}
 
-	function displayPathway() {
-		CKunenaTools::loadTemplate('/pathway.php');
-	}
-
 	function displayAnnouncement() {
 		if ($this->config->showannouncement > 0) {
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');

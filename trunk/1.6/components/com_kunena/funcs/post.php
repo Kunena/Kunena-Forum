@@ -260,31 +260,31 @@ class CKunenaPost {
 			$this->message_text = '';
 			$this->resubject = '';
 			$this->parent = 0;
-			
+
 			$this->_db->setQuery ( "SELECT id,post_anonymous FROM #__kunena_categories WHERE parent!=0 AND allow_anonymous='1'" );
 			$anynomouscatid = $this->_db->loadObjectList ();
 			KunenaError::checkDatabaseError();
-			
+
 			$arrayanynomousbox = array();
 			foreach( $anynomouscatid as $item ) {
 				$arrayanynomousbox[] = '"'.$item->id.'":'.$item->post_anonymous;
       		}
-			
+
 			$arrayanynomousbox = implode(',',$arrayanynomousbox);
 			$this->document->addScriptDeclaration('var arrayanynomousbox={'.$arrayanynomousbox.'}');
 
 			$this->_db->setQuery ( "SELECT id FROM #__kunena_categories WHERE parent!=0 AND allow_polls='1'" );
 			$pollcatid = $this->_db->loadResultArray ();
 			KunenaError::checkDatabaseError();
-			
+
 			$arraypollcatid = array();
 			foreach( $pollcatid as $id ) {
 				$arraypollcatid[] = '"'.$id.'":1';
 			}
-			
-			$arraypollcatid = implode(',',$arraypollcatid);	
-			$this->document->addScriptDeclaration('var pollcategoriesid = {'.$arraypollcatid.'};');	
-			
+
+			$arraypollcatid = implode(',',$arraypollcatid);
+			$this->document->addScriptDeclaration('var pollcategoriesid = {'.$arraypollcatid.'};');
+
 			$options = array ();
 			$this->selectcatlist = CKunenaTools::KSelectList ( 'catid', $options, '', false, 'postcatid', $this->catid );
 		}
@@ -649,6 +649,10 @@ class CKunenaPost {
 
 			if (@$this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' );
+
+				// Activity integration
+				$activity = KunenaFactory::getActivityIntegration();
+				$activity->onAfterSubscribe($thread, 1);
 			}
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
@@ -667,6 +671,10 @@ class CKunenaPost {
 
 			if ($this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' );
+
+				// Activity integration
+				$activity = KunenaFactory::getActivityIntegration();
+				$activity->onAfterSubscribe($thread, 0);
 			}
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
@@ -685,6 +693,10 @@ class CKunenaPost {
 
 			if (@$this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' );
+
+				// Activity integration
+				$activity = KunenaFactory::getActivityIntegration();
+				$activity->onAfterFavorite($thread, 1);
 			}
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
@@ -703,6 +715,10 @@ class CKunenaPost {
 
 			if ($this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' );
+
+				// Activity integration
+				$activity = KunenaFactory::getActivityIntegration();
+				$activity->onAfterFavorite($thread, 0);
 			}
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
@@ -724,6 +740,10 @@ class CKunenaPost {
 		$this->_db->setQuery ( "update #__kunena_messages set ordering=1 where id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_SET' );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterSticky($this->id, 1);
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
@@ -744,6 +764,10 @@ class CKunenaPost {
 		$this->_db->setQuery ( "update #__kunena_messages set ordering=0 where id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterSticky($this->id, 0);
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
@@ -764,6 +788,10 @@ class CKunenaPost {
 		$this->_db->setQuery ( "update #__kunena_messages set locked=1 where id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_SET' );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterLock($this->id, 1);
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
@@ -784,6 +812,10 @@ class CKunenaPost {
 		$this->_db->setQuery ( "update #__kunena_messages set locked=0 where id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterLock($this->id, 0);
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}

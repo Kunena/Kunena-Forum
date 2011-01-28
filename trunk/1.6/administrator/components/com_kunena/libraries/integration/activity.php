@@ -36,10 +36,21 @@ abstract class KunenaActivity
 	public function getUserMedals($userid) {}
 	public function getUserPoints($userid) {}
 
+	public function onBeforePost($message) {}
+	public function onBeforeReply($message) {}
+	public function onBeforeEdit($message) {}
+
 	public function onAfterPost($message) {}
 	public function onAfterReply($message) {}
-	public function onAfterThankyou($thankyoutargetid, $username, $message) {}
 	public function onAfterEdit($message) {}
 	public function onAfterDelete($message) {}
 	public function onAfterUndelete($message) {}
+	public function onAfterThankyou($target, $actor, $message) {}
+
+	public function onAfterSubscribe($topicid, $action) {}
+	public function onAfterFavorite($topicid, $action) {}
+	public function onAfterSticky($topicid, $action) {}
+	public function onAfterLock($topicid, $action) {}
+
+	public function onAfterKarma($target, $actor, $delta) {}
 }

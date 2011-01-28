@@ -120,11 +120,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		}
 	}
 
-	public function onAfterThankyou($thankyoutargetid, $username, $message) {
-		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_GOT' ).': ' . $username);
+	public function onAfterThankyou($target, $actor, $message) {
+		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_GOT' ).': ' . $actor);
 		$infoRootUser = ( JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . $message->parent->name );
 		if (! empty ( $message->parent ) && ($message->parent->pub_access == 0 || $message->parent->pub_access == - 1)) {
-			$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $thankyoutargetid );
+			$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $target );
 
 			if ( $this->_getAUPversion() < '1.5.12' ) {
 				$ruleName = 'plgaup_thankyou_kunena';

@@ -39,6 +39,8 @@ Kunena 1.6.3
 28-January-2010 Matias
 ^ [#24385] Performance optimization for high joomla guest counts by CB team (Thanks Beat!)
 ^ [#15886] Merged revisions 4303-4304 from /branches/1.6-xillibit-fixes-27-01-2011
++ [#24655] Add activity events for subscribe, favorite, sticky, lock, karma and onBeforePost/Reply/Edit
++ [#24656] CommunityBuilder: improve integration by adding support for all activity events (CB1.4+)
 
 27-January-2010 Xillibit
 # [#24272] When you want edit an anouncement unpublished, the forms is empty (Part 2)

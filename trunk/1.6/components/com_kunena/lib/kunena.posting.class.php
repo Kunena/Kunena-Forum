@@ -39,7 +39,7 @@ class CKunenaPosting {
 		return $this->errors;
 	}
 
-	protected function setError($field, $message) {
+	public function setError($field, $message) {
 		if (empty ( $message ))
 			return true;
 		$this->errors [$field] = $message;
@@ -386,6 +386,14 @@ class CKunenaPosting {
 		// On reviewed forum, require approval if user is not a moderator
 		$this->set ( 'hold', CKunenaTools::isModerator ( $this->_my, $this->parent->catid ) ? 0 : ( int ) $this->parent->review );
 
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		if ($this->parent->thread == 0) {
+			$activity->onBeforePost($this);
+		} else {
+			$activity->onBeforeReply($this);
+		}
+
 		if (! empty ( $this->errors ))
 			return false;
 
@@ -568,6 +576,10 @@ class CKunenaPosting {
 			$this->set ( 'ip', '' );
 			$this->set ( 'email', '' );
 		}
+
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		$activity->onBeforeEdit($this);
 
 		if (! empty ( $this->errors ))
 			return false;

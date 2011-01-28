@@ -253,6 +253,20 @@ class KunenaModelSearch extends KunenaModel {
 		return $rows;
 	}
 
+	public function getUrlParams() {
+		$app = JFactory::getApplication ();
+
+		$params = $app->getUserState('com_kunena.search');
+		$url_params = '';
+		foreach ( $params as $param => $value ) {
+			if ($param == 'catids')
+				$value = strtr ( $value, ',', KUNENA_URL_LIST_SEPARATOR );
+			if ($value != $this->defaults [$param])
+				$url_params .= "&amp;$param=" . urlencode ( $value );
+		}
+		return $url_params;
+	}
+
 	protected function get_search_forums($catids, $childforums = 1) {
 		kimport('kunena.forum.category.helper');
 		$catids = explode ( ',', $catids );

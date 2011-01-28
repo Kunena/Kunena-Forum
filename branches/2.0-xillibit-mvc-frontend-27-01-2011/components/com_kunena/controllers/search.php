@@ -54,7 +54,10 @@ class KunenaControllerSearch extends KunenaController {
 		$this->app->setUserState('com_kunena.search', $params);
 		$this->app->setUserState('com_kunena.searchword', $q);
 
-		$this->app->redirect ( CKunenaLink::GetSearchURL('search','results') );
+		$model = $this->getModel('Search');
+		$urlparams = $model->getUrlParams();
+
+		$this->app->redirect ( CKunenaLink::GetSearchURL('search','results',$urlparams) );
 	}
 
 }

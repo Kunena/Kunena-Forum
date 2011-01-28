@@ -35,8 +35,8 @@ document.addEvent('domready', function() {
 						<label class="searchlabel" for="keywords"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:</label>
 						<input id="keywords" type="text" class="ks input" name="q" size="30" />
 						<select id="keywordfilter" class="ks" name="titleonly">
-							<option value="0"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCH_POSTS'); ?></option>
-							<option value="1"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCH_TITLES'); ?></option>
+							<option value="0"<?php if (isset($this->params['titleonly']) && $this->params['titleonly']==0) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SEARCH_POSTS'); ?></option>
+							<option value="1"<?php if (isset($this->params['titleonly']) && $this->params['titleonly']==1) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SEARCH_TITLES'); ?></option>
 						</select>
 					</fieldset>
 				</td>
@@ -44,7 +44,7 @@ document.addEvent('domready', function() {
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
 						<label class="searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
-							<input id="kusername" class="ks input" type="text" name="searchuser" />
+							<input id="kusername" class="ks input" type="text" name="searchuser" value="<?php isset($this->params['searchuser']) ? $this->escape($this->params['searchuser']): ''; ?>" />
 						</label>
 						<?php /*
 						<select class="ks" name="starteronly">
@@ -55,7 +55,7 @@ document.addEvent('domready', function() {
 						*/ ?>
 						<label class="searchlabel">
 							<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>:
-							<input type="checkbox" name="exactname" value="1" />
+							<input type="checkbox" name="exactname" value="1" <?php if (isset($this->params['exactname']) && $this->params['exactname']) echo $this->checked; ?> />
 						</label>
 					</fieldset>
 				</td>
@@ -108,8 +108,8 @@ document.addEvent('domready', function() {
 
 						?>
 						<select class="ks" name="order">
-							<option value="inc"><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_INC'); ?></option>
-							<option value="dec"><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_DEC'); ?></option>
+							<option value="inc"<?php if (isset($this->params['order']) && $this->params['order']=="inc") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_INC'); ?></option>
+							<option value="dec"<?php if (isset($this->params['order']) && $this->params['order']=="dec") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_DEC'); ?></option>
 						</select>
 					</fieldset>
 
@@ -117,7 +117,7 @@ document.addEvent('domready', function() {
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_START'); ?>
 						</legend>
-						<input class="ks input" type="text" name="limitstart" size="5" />
+						<input class="ks input" type="text" name="limitstart" value="<?php if (isset($this->limitstart)) echo $this->limitstart; ?>" size="5" />
 						<?php
 
 						echo $this->limitlist;
@@ -130,18 +130,18 @@ document.addEvent('domready', function() {
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?></legend>
 						<?php echo $this->categorylist; ?>
 						<label id="childforums-lbl">
-							<input type="checkbox" name="childforums" value="1" />
+							<input type="checkbox" name="childforums" value="1" <?php if (isset($this->params['childforums']) && $this->params['childforums']) echo 'checked="checked"'; ?> />
 							<span onclick="document.adminForm.childforums.checked=(! document.adminForm.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>
 						</label>
 					</fieldset>
 					<?php if ( CKunenaTools::isModerator($this->me->userid) ) : ?>
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?></legend>
-						<input id="show0" type="radio" name="show" value="0" />
+						<input id="show0" type="radio" name="show" value="0" <?php if (isset($this->params['show']) && $this->params['show']==0) echo 'checked="checked"'; ?> />
 						<label for="show0"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?></label><br />
-						<input id="show1" type="radio" name="show" value="1" />
+						<input id="show1" type="radio" name="show" value="1" <?php if (isset($this->params['show']) && $this->params['show'] == 1) echo 'checked="checked"'; ?> />
 						<label for="show1"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?></label><br />
-						<input id="show2" type="radio" name="show" value="2" />
+						<input id="show2" type="radio" name="show" value="2" <?php if (isset($this->params['show']) && $this->params['show'] == 2) echo 'checked="checked"'; ?> />
 						<label for="show2"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?></label><br />
 					</fieldset>
 					<?php endif; ?>
@@ -163,3 +163,88 @@ document.addEvent('domready', function() {
 		</div>
 	</div>
 </div>
+
+<?php if(is_array($this->params)): ?>
+<div class="kblock ksearchresult">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="ksearchresult"></a></span>
+		<h2>
+			<span>
+				<?php echo JText::_('COM_KUNENA_SEARCH_RESULTS'); ?>
+			</span>
+		</h2>
+		<div class="ksearchresult-desc km">
+			<span><?php echo JText::sprintf ('COM_KUNENA_FORUM_SEARCH', $this->escape($this->searchword) ); ?></span>
+		</div>
+	</div>
+	<div class="kcontainer" id="ksearchresult">
+		<div class="kbody">
+    <?php if ($this->error) : ?>
+		<div>
+			<php echo $this->error; ?>
+		<div>
+	<?php endif; ?>
+
+<table>
+	<tbody>
+		<tr>
+			<td>
+				<?php  foreach ( $this->results as $result ) : ?>
+					<table>
+						<thead>
+							<tr class="ksth">
+								<th colspan="2">
+									<span class="kmsgdate">
+										<?php echo CKunenaTimeformat::showDate ( $result->time )?>
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+								<td rowspan="2" valign="top" class="kprofile-left kresultauthor">
+								<p><?php echo $this->escape($result->name) ?></p>
+								</td>
+								<td class="kmessage-left resultmsg">
+									<div class="kmsgbody">
+										<div class="kmsgtitle kresult-title">
+											<span class="kmsgtitle">
+												<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($result->catid), intval($result->id), NULL, NULL, $result->htmlsubject, intval($result->id) )?>
+											</span>
+										</div>
+										<div class="kmsgtext resultmsg">
+											<?php echo $result->htmlmessage ?>
+										</div>
+										<div class="resultcat">
+											<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', intval($result->catid), $this->escape($result->catname), $rel = 'follow', $class = '', $title = '' )?>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				<?php endforeach; ?>
+			</td>
+		</tr>
+		<tr class="ksth">
+			<th colspan="3">
+			<?php
+			$resStart = $this->params['limitstart'] + 1;
+			$resStop = $this->params['limitstart'] + count ( $this->results );
+			if ($resStart < $resStop)
+				$resStartStop = ( string ) ($resStart) . ' - ' . ( string ) ($resStop);
+			else
+				$resStartStop = '0';
+			printf ( JText::_('COM_KUNENA_FORUM_SEARCHRESULTS'), $resStartStop, intval($this->total) );
+			?>
+
+			<?php if ($this->total > $this->params['limit']) : ?>
+			<?php //echo $this->getPagination('search', 3); ?>
+			<?php endif; ?>
+			</th>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+<?php endif; ?>

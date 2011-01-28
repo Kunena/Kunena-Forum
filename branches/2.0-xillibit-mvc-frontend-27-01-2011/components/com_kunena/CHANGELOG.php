@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+28-January-2010 Xillibit
+^ [#24515] Put some old codes into mvc in frontend (search part2)
+
 27-January-2010 Xillibit
 ^ [#24515] Put some old codes into mvc in frontend (search almost finished)
 

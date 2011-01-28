@@ -18,6 +18,7 @@ kimport ( 'kunena.view' );
 class KunenaViewSearch extends KunenaView {
 	function displayDefault($tpl = null) {
 		$this->me = KunenaFactory::getUser();
+		$app = JFactory::getApplication ();
 
 		$searchdatelist	= array();
 		$searchdatelist[] 	= JHTML::_('select.option',  'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT') );
@@ -61,88 +62,37 @@ class KunenaViewSearch extends KunenaView {
 		$selected = explode ( ',', isset($this->params ['catids']) ? $this->params ['catids'] : '' );
 		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, 'class="inputbox" size="8" multiple="multiple"', 'value', 'text', $selected);
 
+		$this->searchword = $app->getUserState('com_kunena.searchword');
+		$this->params = $app->getUserState('com_kunena.search');
+
+		if(is_array($this->params)) {
+		  $this->results = $this->get('Results');
+		  $this->error=$this->get('Error');
+
+
+			$this->searchword = $app->getUserState('com_kunena.searchword');
+			$this->params = $app->getUserState('com_kunena.search');
+			$this->total = $this->get('total');
+
+			$searchlist = $this->get('searchstrings');
+			foreach ( $this->results as $i => $result ) {
+				// Clean up subject
+				$ressubject = KunenaHtmlParser::parseText ($result->subject);
+				// Strip smiles and bbcode out of search results; they look ugly
+				$resmessage = KunenaHtmlParser::parseBBCode ($result->message);
+
+				foreach ( $searchlist as $searchword ) {
+					if (empty ( $searchword ))
+					continue;
+					$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
+					// FIXME: enable highlighting, but only after we can be sure that we do not break html
+					//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
+				}
+				$this->results [$i]->htmlsubject = $ressubject;
+				$this->results [$i]->htmlmessage = $resmessage;
+			}
+		}
 
 		parent::display ();
 	}
-
-	function displayResults($tpl = null) {
-		$this->results = $this->get('Results');
-		$this->get('Error');
-		$app = JFactory::getApplication ();
-		$this->searchword = $app->getUserState('com_kunena.searchword');
-		$this->params = $app->getUserState('com_kunena.search');
-		$this->total = $this->get('total');
-
-		// FIXME: need to show error
-
-		$searchlist = $this->get('searchstrings');
-		foreach ( $this->results as $i => $result ) {
-			// Clean up subject
-			$ressubject = KunenaHtmlParser::parseText ($result->subject);
-			// Strip smiles and bbcode out of search results; they look ugly
-			$resmessage = KunenaHtmlParser::parseBBCode ($result->message);
-
-			foreach ( $searchlist as $searchword ) {
-				if (empty ( $searchword ))
-					continue;
-				$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
-				// FIXME: enable highlighting, but only after we can be sure that we do not break html
-				//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
-			}
-			$this->results [$i]->htmlsubject = $ressubject;
-			$this->results [$i]->htmlmessage = $resmessage;
-		}
-
-
-    $this->display($tpl);
-	}
-
-	function getPagination($function, $maxpages) {
-	 /*$limit = $this->state->get ( 'list.limit' );
-		$page = floor ( $this->state->get ( 'list.start' ) / $limit ) + 1;
-		$totalpages = max(1, floor ( ($this->total-1) / $limit ) + 1);
-    $q = $this->state->get('com_kunena.searchword');  */
-
-		if ($page == 0)
-			$page ++;
-		$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
-		$endpage = $startpage + $maxpages;
-		if ($endpage > $totalpages) {
-			$startpage = ($totalpages - $maxpages) < 1 ? 1 : $totalpages - $maxpages;
-			$endpage = $totalpages;
-		}
-
-		$output = '<ul class="kpagination">';
-		$output .= '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
-
-		if ($startpage > 1) {
-			if ($endpage < $totalpages)
-				$endpage --;
-			$output .= '<li>' . CKunenaLink::GetSearchLink ( $function, $q, 0, $limit, 1, '', $rel = 'nofollow' ) . '</li>';
-
-			if ($startpage > 2) {
-				$output .= '<li class="more">...</li>';
-			}
-		}
-
-		for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
-			if ($page == $i) {
-				$output .= '<li class="active">' . $i . '</li>';
-			} else {
-				$output .= '<li>' . CKunenaLink::GetSearchLink ( $function, $q, ($i - 1) * $limit, $limit, $i, '', $rel = 'nofollow' ) . '</li>';
-			}
-		}
-
-		if ($endpage < $totalpages) {
-			if ($endpage < $totalpages - 1) {
-				$output .= '<li class="more">...</li>';
-			}
-
-			$output .= '<li>' . CKunenaLink::GetSearchLink ( $function, $q, ($totalpages - 1) * $limit, $limit, $totalpages, '', $rel = 'nofollow' ) . '</li>';
-		}
-
-		$output .= '</ul>';
-		return $output;
-	}
-
 }

@@ -263,9 +263,10 @@ class CKunenaLink {
 		return self::GetHrefLink ( self::GetSearchURL($view, $searchword, $limitstart, $limit, $params), $name, '', $rel );
 	}
 
-	function GetSearchURL($view, $task) {
-		$task = '&layout='.$task;
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$task}" );
+	function GetSearchURL($view, $searchword='', $params = '') {
+		if ($searchword)
+			$searchword = '&q=' . urlencode ( $searchword );
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$searchword}{$params}" );
 	}
 
 	function GetAnnouncementLink($do, $id = NULL, $name, $title, $rel = 'nofollow') {

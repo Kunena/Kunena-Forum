@@ -109,11 +109,13 @@ class CKunenaAnnouncement {
 		$this->app->redirect ( CKunenaLink::GetAnnouncementURL ( 'show', null, false ), JText::_ ( 'COM_KUNENA_ANN_DELETED' ) );
 	}
 
-	function getAnnouncement($id = 0) {
+	function getAnnouncement($id = 0, $mode=0) {
+		if ($mode) $published = "AND published='1'";
+		else $published = "";
 		if (! $id) {
 			$query = "SELECT * FROM #__kunena_announcement WHERE published='1' ORDER BY created DESC";
 		} else {
-			$query = "SELECT * FROM #__kunena_announcement WHERE id={$this->db->Quote($id)}";
+			$query = "SELECT * FROM #__kunena_announcement WHERE id={$this->db->Quote($id)} $published";
 		}
 		$this->db->setQuery ( $query, 0, 1 );
 		$announcement = $this->db->loadObject ();
@@ -160,7 +162,7 @@ class CKunenaAnnouncement {
 
 		switch ($do) {
 			case 'read' :
-				$this->getAnnouncement ( $id );
+				$this->getAnnouncement ( $id, 1 );
 				CKunenaTools::loadTemplate ( '/announcement/read.php' );
 				break;
 			case 'show' :
@@ -172,7 +174,7 @@ class CKunenaAnnouncement {
 					$this->app->redirect ( CKunenaLink::GetKunenaURL( false ), JText::_( 'COM_KUNENA_POST_NOT_MODERATOR' ));
 					return;
 				}
-				$this->getAnnouncement ( $id );
+				$this->getAnnouncement ( $id, 0 );
 			// Continue
 			case 'add' :
 				if (!$this->canEdit) {

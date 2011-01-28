@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+28-January-2010 Matias
+^ [#24385] Performance optimization for high joomla guest counts by CB team (Thanks Beat!)
+
 27-January-2010 Severdia
 # [#24649] Fixed template params for header color in IE
 

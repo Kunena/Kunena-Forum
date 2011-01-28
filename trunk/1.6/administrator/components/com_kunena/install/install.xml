@@ -63,6 +63,7 @@
     <key name="parent" columns="parent"/>
     <key name="published_pubaccess_id" columns="published,pub_access,id"/>
     <key name="msg_id" columns="id_last_msg"/>
+    <key name="category_access" columns="accesstype,access"/>
   </table>
   <table name="kunena_config">
     <field primary_key="yes" name="id" type="int(11)" null="0" default="0"/>
@@ -433,8 +434,8 @@
     <key name="PRIMARY" unique="1" columns="id"/>
   </table>
   <table name="kunena_whoisonline">
-    <field primary_key="yes" name="id" type="int(6)" null="0" extra="auto_increment"/>
-    <field name="userid" type="int(7)" null="0" default="0"/>
+    <field primary_key="yes" name="id" type="int(11)" null="0" extra="auto_increment"/>
+    <field name="userid" type="int(11)" null="0" default="0"/>
     <field name="time" type="varchar(14)" null="0" default="0"/>
     <field name="item" type="int(6)" null="1" default="0"/>
     <field name="what" type="varchar(255)" null="1" default="0"/>
@@ -445,6 +446,8 @@
     <field name="userip" type="varchar(20)" null="0" default=""/>
     <field name="user" type="tinyint(2)" null="0" default="0"/>
     <key name="PRIMARY" unique="1" columns="id"/>
-    <key name="userid" columns="userid"/>
+    <key name="userid_userip" columns="userid,userip"/>
+    <key name="func" columns="func"/>
+    <key name="time" columns="time"/>
   </table>
 </schema>

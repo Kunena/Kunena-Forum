@@ -78,6 +78,7 @@ class KunenaModelCategories extends KunenaModel {
 
 				$last = $subcat->getLastPosted ();
 				if ($last->last_topic_id) {
+					$topiclist[$last->last_topic_id] = $last->last_topic_id;
 					// collect user ids for avatar prefetch when integrated
 					$userlist [(int)$last->last_post_userid] = (int)$last->last_post_userid;
 					$lastpostlist [(int)$subcat->id] = (int)$last->last_post_id;
@@ -94,6 +95,7 @@ class KunenaModelCategories extends KunenaModel {
 			}
 			$categories [$subcat->parent_id] [] = $subcat;
 		}
+		KunenaForumTopicHelper::getTopics($topiclist);
 
 		if ($this->me->ordering != '0') {
 			$topic_ordering = $this->me->ordering == '1' ? true : false;

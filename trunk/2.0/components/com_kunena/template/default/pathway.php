@@ -22,9 +22,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-require_once(KUNENA_PATH_LIB .DS. 'kunena.pathway.class.php');
-$pathway = new CKunenaPathway();
-
 $func = JString::strtolower ( JRequest::getCmd ( 'view', 'listcat' ) );
 $catid = JRequest::getInt ( 'catid', 0 );
 $id = JRequest::getInt ( 'id', 0 );
@@ -66,43 +63,20 @@ $id = JRequest::getInt ( 'id', 0 );
 		$jr_path_menu [] = '';
 	$jr_forum_count = count ( $jr_path_menu );
 
-	$fireinfo = '';
 	$firepath = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink ( $this->escape( $this->config->board_title ) ) . '</div>';
-	$firelast = '';
-
 	for($i = 0; $i < $jr_forum_count; $i ++) {
-		if ($i == $jr_forum_count - 1) {
-			if ( $this->config->onlineusers ) :
-			$firelast .= '<br /><div class="path-element-last">' . $jr_path_menu [$i] . $fireinfo . '</div>';
-			endif;
-		} else {
-			$firepath .= '<div class="path-element">' . $jr_path_menu [$i] . '</div>';
-		}
-	}
-
-	//get viewing
-	$fireonline = '';
-	if ( $this->config->onlineusers ) {
-		if ($func == "userprofile") {
-			$fireonline .= JText::_('COM_KUNENA_USER_PROFILE');
-			$fireonline .= $this->escape($this->kunena_username);
-		} else {
-			$fireonline .= "<div class=\"path-element-users\">(".$pathway->getTotalViewing($func). ' ' . JText::_('COM_KUNENA_PATHWAY_VIEWING') . ")&nbsp;";
-			$fireonline .= $pathway->getUsersOnlineList($func);
-		}
-		$fireonline .= '</div>';
+		$firepath .= '<div class="path-element">' . $jr_path_menu [$i] . '</div>';
 	}
 
 	//$pathway->document->setTitle ( $this->kunena_topic_title ? $this->kunena_topic_title : $fr_title_name . ' - ' . $this->config->board_title );
 
-	$this->kunena_pathway1 = $firepath . $fireinfo;
-	$this->kunena_pathway2 = $firelast . $fireonline;
+	$this->kunena_pathway1 = $firepath;
 ?>
 <div class="kblock kpathway">
 	<div class="kcontainer" id="pathway_tbody">
 		<div class="ksectionbody">
 			<div class = "kforum-pathway">
-			<?php echo $this->kunena_pathway1 . $this->kunena_pathway2; ?>
+			<?php echo $this->kunena_pathway1; ?>
 			</div>
 		</div>
 	</div>

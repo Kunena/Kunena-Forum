@@ -80,42 +80,40 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayWhosonline($tpl = null) {
-		if (KunenaFactory::getConfig()->showwhoisonline > 0) {
-			$moderator = KunenaFactory::getUser()->isModerator();
-			$cache = JFactory::getCache('com_kunena', 'output');
-			if ($cache->start(0, "com_kunena.view.common.whosonline.{$moderator}")) return;
-			// FIXME: refactor code
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
+		$moderator = KunenaFactory::getUser()->isModerator();
+		$cache = JFactory::getCache('com_kunena', 'output');
+		if ($cache->start(0, "com_kunena.view.common.whosonline.{$moderator}")) return;
+		// FIXME: refactor code
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
 
-			$this->my = JFactory::getUser();
-			$this->users = KunenaUserHelper::getOnlineUsers();
-			KunenaUserHelper::loadUsers(array_keys($this->users));
-			$onlineusers = KunenaUserHelper::getOnlineCount();
-			$this->totaluser = $onlineusers['user'];
-			$this->totalguests = $onlineusers['guest'];
+		$this->my = JFactory::getUser();
+		$this->users = KunenaUserHelper::getOnlineUsers();
+		KunenaUserHelper::loadUsers(array_keys($this->users));
+		$onlineusers = KunenaUserHelper::getOnlineCount();
+		$this->totaluser = $onlineusers['user'];
+		$this->totalguests = $onlineusers['guest'];
 
-			$who_name = '<strong>'.$this->totaluser.' </strong>';
-			if($this->totaluser==1) {
-				$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER').'&nbsp;';
-			} else {
-				$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS').'&nbsp;';
-			}
-			$who_name .= JText::_('COM_KUNENA_WHO_AND');
-			$who_name .= '<strong> '. $this->totalguests.' </strong>';
-			if($this->totalguests==1) {
-				$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST').'&nbsp;';
-			} else {
-				$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS').'&nbsp;';
-			}
-			$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
-			$this->who_name = $who_name;
-			$result = $this->loadTemplate($tpl);
-			if (JError::isError($result)) {
-				return $result;
-			}
-			echo $result;
-			$cache->end();
-		} else echo " ";
+		$who_name = '<strong>'.$this->totaluser.' </strong>';
+		if($this->totaluser==1) {
+			$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER').'&nbsp;';
+		} else {
+			$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS').'&nbsp;';
+		}
+		$who_name .= JText::_('COM_KUNENA_WHO_AND');
+		$who_name .= '<strong> '. $this->totalguests.' </strong>';
+		if($this->totalguests==1) {
+			$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST').'&nbsp;';
+		} else {
+			$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS').'&nbsp;';
+		}
+		$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
+		$this->who_name = $who_name;
+		$result = $this->loadTemplate($tpl);
+		if (JError::isError($result)) {
+			return $result;
+		}
+		echo $result;
+		$cache->end();
 	}
 
 	function displayStats($tpl = null) {

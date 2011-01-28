@@ -230,7 +230,6 @@
 		<field name="userdeletetmessage" type="int(11)" null="1" />
 		<field name="latestcategory_in" type="int(11)" null="1" />
 		<field name="topicicons" type="int(11)" null="1" />
-		<field name="onlineusers" type="int(11)" null="1" />
 		<field name="debug" type="int(11)" null="1" />
 		<field name="catsautosubscribed" type="int(11)" null="1" />
 		<field name="showbannedreason" type="int(11)" null="1" />
@@ -523,21 +522,5 @@
 		<field name="versionname" type="varchar(40)" null="1" />
 		<field name="state" type="text" null="0" />
 		<key name="PRIMARY" unique="1" columns="id" />
-	</table>
-	<table name="kunena_whoisonline">
-		<field primary_key="yes" name="id" type="int(6)" null="0"
-			extra="auto_increment" />
-		<field name="userid" type="int(7)" null="0" default="0" />
-		<field name="time" type="varchar(14)" null="0" default="0" />
-		<field name="item" type="int(6)" null="1" default="0" />
-		<field name="what" type="varchar(255)" null="1" default="0" />
-		<field name="func" type="varchar(50)" null="1" />
-		<field name="do" type="varchar(50)" null="1" />
-		<field name="task" type="varchar(50)" null="1" />
-		<field name="link" type="text" null="1" />
-		<field name="userip" type="varchar(20)" null="0" default="" />
-		<field name="user" type="tinyint(2)" null="0" default="0" />
-		<key name="PRIMARY" unique="1" columns="id" />
-		<key name="userid" columns="userid" />
 	</table>
 </schema>

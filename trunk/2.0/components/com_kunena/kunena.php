@@ -43,11 +43,6 @@ if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
 			JFactory::getApplication ()->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_SESSION_SAVE_FAILED' ), 'error' );
 	}
 
-	// Update Who's Online
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.who.class.php');
-	$who = CKunenaWhoIsOnline::getInstance ();
-	$who->insertOnlineDatas ();
-
 	// Load and execute controller
 	kimport ( 'kunena.controller' );
 	$controller = KunenaController::getInstance ();

@@ -33,6 +33,13 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+28-January-2010 Matias
+# [#23443] Categories/Default view: Fix repeation SQL queries
++ [#22569] Add function KunenaView::displayWhoIsOnline() from derived classes
+- [#22570] Do not show users in pathway (contains no real information)
+- [#22570] Remove deprecated configuration option 'onlineusers'
+- [#22570] Remove deprecated lib/kunena.pathway.class.php, lib/kunena.who.class.php and template/default/plugins/who
+
 27-January-2010 Matias
 - [#22570] Remove deprecated directory template/default/plugin/stats
 # [#23443] Fix fatal error when showing statistics on certain pages

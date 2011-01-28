@@ -205,4 +205,4 @@ function validate() {
 	</div>
 </div>
 
-<?php $this->common->display('whosonline'); ?>
+<?php $this->displayWhoIsOnline(); ?>

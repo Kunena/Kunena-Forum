@@ -134,6 +134,12 @@ class KunenaView extends JView {
 		}
 	}
 
+	function displayWhoIsOnline($tpl = null) {
+		if (KunenaFactory::getConfig()->showwhoisonline > 0) {
+			echo $this->common->display('whosonline');
+		}
+	}
+
 	function displayStats() {
 		if ($this->config->showstats > 0) {
 			echo $this->common->display('stats');

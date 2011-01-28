@@ -278,14 +278,6 @@ class KunenaViewTopics extends KunenaView {
 		return $txt;
 	}
 
-	function displayWhoIsOnline() {
-		if ($this->config->showwhoisonline > 0) {
-			require_once KPATH_SITE.'/lib/kunena.who.class.php';
-			$who = CKunenaWhoIsOnline::getInstance();
-			$who->displayWhoIsOnline();
-		}
-	}
-
 	function getPagination($func, $maxpages) {
 		$limit = $this->state->get ( 'list.limit' );
 		$page = floor ( $this->state->get ( 'list.start' ) / $limit ) + 1;

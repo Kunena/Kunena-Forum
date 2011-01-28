@@ -312,10 +312,6 @@ class CKunenaLink {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=markThisRead&catid={$catid}", $name, $title, $rel );
 	}
 
-	function GetWhoIsOnlineLink($name, $class, $rel = 'follow') {
-		return self::GetSefHrefLink ( 'index.php?option=com_kunena&view=who', $name, '', $rel, $class );
-	}
-
 	function GetStatsLink($name, $class = '', $rel = 'follow') {
 		return self::GetHrefLink ( self::GetStatsURL(), $name, '', $rel, $class );
 	}

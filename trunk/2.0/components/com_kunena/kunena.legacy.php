@@ -266,6 +266,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 } else if ($kunena_config->regonly && ! $kunena_my->id) {
 	// if we only allow registered users
 	echo '<div id="Kunena">';
+	//KunenaForum::display('common', 'default', null, array('header'=>JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 'body'=>JText::_('COM_KUNENA_LOGIN_FORUM')));
 	CKunenaTools::loadTemplate('/login.php');
 	echo '</div>';
 } else {
@@ -283,18 +284,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	//time format
 	include_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.timeformat.class.php');
 
-	// Insert WhoIsOnlineDatas
-	require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-
-	$who = CKunenaWhoIsOnline::getInstance();
-	$who->insertOnlineDatas ();
-
 	// include required libraries
 	jimport('joomla.template.template');
 
 	// Kunena Current Template Icons Pack
 	$template = KunenaFactory::getTemplate();
-	include (JPATH_ROOT.'/'.$template->getFile('icons.php'));
 
 	if(JDEBUG){
 		$__profiler->mark('Session Start');
@@ -385,13 +379,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	}
 
 	switch ($func) {
-		case 'who' :
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-			$online = CKunenaWhoIsOnline::getInstance();
-			$online->displayWho();
-
-			break;
-
 		case 'announcement' :
 			require_once (KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
 			$ann = CKunenaAnnouncement::getInstance();

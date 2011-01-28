@@ -332,7 +332,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $userdeletetmessage = 0;
 	var $latestcategory_in = 1;
 	var $topicicons = 1;
-	var $onlineusers = 1;
 	var $debug = 0;
 	var $catsautosubscribed = 0;
 	var $showbannedreason = 0;

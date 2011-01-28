@@ -41,6 +41,6 @@ if (count ( $this->categories )) {
 } else {
 	$this->displayInfoMessage ();
 }
-$this->common->display('whosonline');
+$this->displayWhoIsOnline();
 $this->displayStats();
 ?>

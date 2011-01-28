@@ -17,9 +17,4 @@ class KunenaActivityNone extends KunenaActivity {
 	public function __construct() {
 		$this->priority = 5;
 	}
-
-	public function onAfterPost($message) {}
-	public function onAfterReply($message) {}
-	public function onAfterEdit($message) {}
-	public function onAfterDelete($message) {}
 }

@@ -41,6 +41,7 @@ Kunena 1.6.3
 ^ [#15886] Merged revisions 4303-4304 from /branches/1.6-xillibit-fixes-27-01-2011
 + [#24655] Add activity events for subscribe, favorite, sticky, lock, karma and onBeforePost/Reply/Edit
 + [#24656] CommunityBuilder: improve integration by adding support for all activity events (CB1.4+)
+# [#24656] Fix wrong parameters in onAfterThankyou and onAfterKarma
 
 27-January-2010 Xillibit
 # [#24272] When you want edit an anouncement unpublished, the forms is empty (Part 2)

@@ -121,10 +121,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 	}
 
 	public function onAfterThankyou($target, $actor, $message) {
-		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_GOT' ).': ' . $actor);
-		$infoRootUser = ( JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . $message->parent->name );
+		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_GOT' ).': ' . KunenaFactory::getUser($target)->username );
+		$infoRootUser = ( JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . KunenaFactory::getUser($actor)->username );
 		if (! empty ( $message->parent ) && ($message->parent->pub_access == 0 || $message->parent->pub_access == - 1)) {
-			$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $target );
+			$auptarget = AlphaUserPointsHelper::getAnyUserReferreID( $target );
+			$aupactor = AlphaUserPointsHelper::getAnyUserReferreID( $actor );
 
 			if ( $this->_getAUPversion() < '1.5.12' ) {
 				$ruleName = 'plgaup_thankyou_kunena';
@@ -138,11 +139,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 				return;
 			}
 
-			if ( $aupid && $usertargetpoints && $ruleEnabled ) {
+			if ( $usertargetpoints && $ruleEnabled ) {
 				// for target user
-				AlphaUserPointsHelper::newpoints($ruleName , $aupid, '', $infoTargetUser, $usertargetpoints);
+				if ($auptarget) AlphaUserPointsHelper::newpoints($ruleName , $auptarget, '', $infoTargetUser, $usertargetpoints);
 				// for who has gived the thank you
-				AlphaUserPointsHelper::newpoints($ruleName , '', '', $infoRootUser );
+				if ($aupactor) AlphaUserPointsHelper::newpoints($ruleName , $aupactor, '', $infoRootUser );
 			}
 		}
 	}

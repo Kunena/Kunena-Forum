@@ -97,7 +97,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 }
 								// Activity integration
 								$activity = KunenaFactory::getActivityIntegration();
-								$activity->onAfterKarma($kunena_my->id, $userid, 1);
+								$activity->onAfterKarma($userid, $kunena_my->id, 1);
                             }
                             else if ($do == "decrease")
                             {
@@ -117,7 +117,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 }
 								// Activity integration
 								$activity = KunenaFactory::getActivityIntegration();
-								$activity->onAfterKarma($kunena_my->id, $userid, -1);
+								$activity->onAfterKarma($userid, $kunena_my->id, -1);
                             }
                             else
                             { //you got me there... don't know what to $do

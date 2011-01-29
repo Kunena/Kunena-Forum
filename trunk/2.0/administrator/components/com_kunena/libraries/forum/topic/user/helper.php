@@ -69,31 +69,44 @@ class KunenaForumTopicUserHelper {
 		return $list;
 	}
 
-	static function recount() {
+	static function recount($topicids=false) {
 		$db = JFactory::getDBO ();
 
-		// Clear posting information if last post has been deleted
-		$query ="UPDATE #__kunena_user_topics AS ut LEFT JOIN #__kunena_messages AS m ON ut.last_post_id=m.id AND m.hold=0
-					SET posts=0, last_post_id=0, owner=0
-					WHERE m.id IS NULL";
+		if (is_array($topicids)) {
+			$where = 'AND m.thread IN ('.implode(',', $topicids).')';
+			$where2 = 'AND ut.topic_id IN ('.implode(',', $topicids).')';
+		} elseif ((int)$topicids) {
+			$where = 'AND m.thread='.(int)$topicids;
+			$where2 = 'AND ut.topic_id='.(int)$topicids;
+		} else {
+			$where = '';
+			$where2 = '';
+		}
+
+		// Create missing user topics and update post count and last post if there are posts by that user
+		$query ="INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, posts, last_post_id, owner)
+					SELECT m.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, SUM(m.hold=0) AS posts, MAX(IF(m.hold=0,m.id,0)) AS last_post_id, MAX(IF(m.parent=0,1,0)) AS owner
+					FROM #__kunena_messages AS m
+					WHERE m.userid>0 AND m.moved=0 {$where}
+					GROUP BY m.userid, m.thread
+				ON DUPLICATE KEY UPDATE posts=VALUES(posts), last_post_id=VALUES(last_post_id)";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return;
 
-		// Create missing user topics and update post count and last post
-		$query ="INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, posts, last_post_id, owner)
-					SELECT userid AS user_id, thread AS topic_id, catid AS category_id, COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
-					FROM #__kunena_messages WHERE userid>0 AND moved=0 AND hold=0
-					GROUP BY user_id, topic_id
-					ON DUPLICATE KEY UPDATE posts=VALUES(posts), last_post_id=VALUES(last_post_id)";
+		// Find user topics where last post doesn't exist and reset values in it
+		$query ="UPDATE #__kunena_user_topics AS ut
+			LEFT JOIN #__kunena_messages AS m ON ut.last_post_id=m.id AND m.hold=0
+			SET posts=0, last_post_id=0
+			WHERE m.id IS NULL {$where2}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return;
 
 		// Delete entries that have default values
-		$query ="DELETE FROM #__kunena_user_topics WHERE posts=0 AND favorite=0 AND subscribed=0";
+		$query ="DELETE FROM #__kunena_user_topics WHERE posts=0 AND favorite=0 AND subscribed=0 {$where2}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())

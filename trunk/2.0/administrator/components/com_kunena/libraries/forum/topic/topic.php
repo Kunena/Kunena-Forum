@@ -607,18 +607,21 @@ class KunenaForumTopic extends JObject {
 			return false;
 		}
 
-		if ($exists && $message->userid) {
+		if ($exists && $message->userid && abs($postdelta) == 1) {
+			// Update user topic
+			$usertopic = $this->getUserTopic($message->userid);
+			if (!$usertopic->update($message, $postdelta)) {
+				$this->setError ( $usertopic->getError () );
+			}
 			// Update post count from user
 			$user = KunenaFactory::getUser($message->userid);
 			$user->posts += $postdelta;
 			if (!$user->save()) {
 				$this->setError ( $user->getError () );
 			}
-			// Update user topic
-			$usertopic = $this->getUserTopic($message->userid);
-			if (!$usertopic->update($message, $postdelta)) {
-				$this->setError ( $usertopic->getError () );
-			}
+		} else {
+			KunenaForumTopicUserHelper::recount($this->id);
+			KunenaUserHelper::recount($this->id);
 		}
 
 		return true;
@@ -640,7 +643,6 @@ class KunenaForumTopic extends JObject {
 		}
 		$this->bind($result);
 		return $this->update();
-		// TODO: update user posts
 	}
 
 	// Internal functions

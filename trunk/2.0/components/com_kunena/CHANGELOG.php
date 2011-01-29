@@ -42,6 +42,8 @@ Kunena 2.0.0-DEV
 + [#22569] Add function KunenaView::displayPathway() from derived classes
 ^ [#22569] Move pathway into MVC, simplify the code
 - [#22570] Remove deprecated template/default/pathway.php
+# [#22569] Optimize and fix recount() on topics, usertopics and user posts
+# [#22569] Installer: Recount forum statistics when upgrading to 2.0.0
 
 27-January-2010 Matias
 - [#22570] Remove deprecated directory template/default/plugin/stats

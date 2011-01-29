@@ -472,11 +472,6 @@ class KunenaModelInstall extends JModel {
 
 		$this->createMenu(false);
 
-		kimport('kunena.forum.topic.helper');
-		KunenaForumTopicHelper::recount();
-		kimport('kunena.forum.category.helper');
-		KunenaForumCategoryHelper::recount();
-
 		jimport ( 'joomla.filesystem.file' );
 		foreach ($entryfiles as $fileparts) {
 			list($path, $filename, $ext) = $fileparts;

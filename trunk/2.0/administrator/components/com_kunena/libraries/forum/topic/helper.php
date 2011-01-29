@@ -230,7 +230,8 @@ class KunenaForumTopicHelper {
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
-			return;
+			return false;
+		$rows = $db->getAffectedRows ();
 
 		// Recount total posts, total attachments and update first & last post information (by time)
 		$query ="UPDATE #__kunena_topics AS tt
@@ -260,7 +261,9 @@ class KunenaForumTopicHelper {
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
-			return;
+			return false;
+		$rows += $db->getAffectedRows ();
+		return $rows;
 	}
 
 	static public function fetchNewStatus($topics, $user = null) {

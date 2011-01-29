@@ -187,7 +187,8 @@ class KunenaUserHelper {
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
-			return;
+			return false;
+		$rows = $db->getAffectedRows ();
 
 		// Update user post count
 		$query = "INSERT INTO #__kunena_users (userid, posts)
@@ -197,6 +198,9 @@ class KunenaUserHelper {
 			ON DUPLICATE KEY UPDATE posts=VALUES(posts)";
 		$db->setQuery ($query);
 		$db->query ();
-		KunenaError::checkDatabaseError ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		$rows += $db->getAffectedRows ();
+		return $rows;
 	}
 }

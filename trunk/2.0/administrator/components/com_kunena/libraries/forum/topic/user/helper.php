@@ -93,7 +93,8 @@ class KunenaForumTopicUserHelper {
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
-			return;
+			return false;
+		$rows = $db->getAffectedRows ();
 
 		// Find user topics where last post doesn't exist and reset values in it
 		$query ="UPDATE #__kunena_user_topics AS ut
@@ -103,14 +104,17 @@ class KunenaForumTopicUserHelper {
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
-			return;
+			return false;
+		$rows += $db->getAffectedRows ();
 
 		// Delete entries that have default values
 		$query ="DELETE FROM #__kunena_user_topics WHERE posts=0 AND favorite=0 AND subscribed=0 {$where2}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
-			return;
+			return false;
+		$rows += $db->getAffectedRows ();
+		return $rows;
 	}
 
 	// Internal functions

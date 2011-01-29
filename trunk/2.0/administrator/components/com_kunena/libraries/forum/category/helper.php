@@ -246,40 +246,55 @@ class KunenaForumCategoryHelper {
 	static public function recount() {
 		$db = JFactory::getDBO ();
 
-		$db->setQuery ( "UPDATE #__kunena_categories
-			SET numTopics=0, numPosts=0, last_topic_id=0, last_topic_subject='', last_post_id=0, last_post_time=0,
-			last_post_userid=0, last_post_message='', last_post_guest_name=''");
+		// Update category post count and last post info on categories which have published topics
+		$query = "UPDATE #__kunena_categories AS c
+			INNER JOIN (
+				SELECT category_id AS id, COUNT(*) AS numTopics, SUM(posts) AS numPosts, MAX(id) AS last_topic_id
+				FROM #__kunena_topics
+				WHERE hold=0 AND moved_id=0
+				GROUP BY category_id
+			) AS r ON r.id=c.id
+			INNER JOIN #__kunena_topics AS tt ON tt.id=r.last_topic_id
+			SET c.numTopics = r.numTopics,
+				c.numPosts = r.numPosts,
+				c.last_topic_id=r.last_topic_id,
+				c.last_topic_subject = tt.subject,
+				c.last_post_id = tt.last_post_id,
+				c.last_post_time = tt.last_post_time,
+				c.last_post_userid = tt.last_post_userid,
+				c.last_post_message = tt.last_post_message,
+				c.last_post_guest_name = tt.last_post_guest_name";
+		$db->setQuery ( $query );
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
-			return;
+			return false;
+		$rows = $db->getAffectedRows ();
 
-		// Update category post count
-		$db->setQuery ( "INSERT INTO #__kunena_categories (id, numTopics, numPosts, last_topic_id)
-			SELECT c.id, COUNT(*) AS numTopics, SUM(tt.posts) AS numPosts, MAX(tt.id) AS last_topic_id
-			FROM #__kunena_topics as tt
-			INNER JOIN #__kunena_categories AS c ON c.id=tt.category_id
-			WHERE tt.hold=0 AND tt.moved_id=0
-			GROUP BY tt.category_id
-			ON DUPLICATE KEY UPDATE numTopics=VALUES(numTopics), numPosts=VALUES(numPosts), last_topic_id=VALUES(last_topic_id)" );
+		// Update categories which have no published topics
+		$query = "UPDATE #__kunena_categories AS c
+			LEFT JOIN #__kunena_topics AS tt ON c.id=tt.category_id
+			SET c.numTopics=0,
+				c.numPosts=0,
+				c.last_topic_id=0,
+				c.last_topic_subject='',
+				c.last_post_id=0,
+				c.last_post_time=0,
+				c.last_post_userid=0,
+				c.last_post_message='',
+				c.last_post_guest_name=''
+			WHERE tt.id IS NULL";
+		$db->setQuery ( $query );
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
-			return;
+			return false;
+		$rows += $db->getAffectedRows ();
 
-		// Update last post info
-		$db->setQuery ( "UPDATE #__kunena_categories AS c, #__kunena_topics AS t
-			SET c.last_topic_subject = t.subject,
-				c.last_post_id = t.last_post_id,
-				c.last_post_time = t.last_post_time,
-				c.last_post_userid = t.last_post_userid,
-				c.last_post_message = t.last_post_message,
-				c.last_post_guest_name = t.last_post_guest_name
-			WHERE c.last_topic_id = t.id");
-		$db->query ();
-		if (KunenaError::checkDatabaseError ())
-			return;
-
-		$cache = JFactory::getCache('com_kunena', 'output');
-		$cache->clean('categories');
+		if ($rows) {
+			// If something changed, clean our cache
+			$cache = JFactory::getCache('com_kunena', 'output');
+			$cache->clean('categories');
+		}
+		return $rows;
 	}
 
 	// Internal functions:

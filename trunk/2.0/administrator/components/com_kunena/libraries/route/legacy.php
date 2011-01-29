@@ -121,7 +121,7 @@ class KunenaRouteLegacy {
 						break;
 					default :
 						$uri->setVar('layout', 'default');
-						$uri->setVar('mode', 'default');
+						$uri->setVar('mode', 'replies');
 				}
 				$page = (int) $uri->getVar ( 'page', 1 );
 				if ($page > 0) {

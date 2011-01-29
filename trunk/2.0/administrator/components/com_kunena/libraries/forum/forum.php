@@ -34,13 +34,12 @@ class KunenaForum {
 	}
 
 	public static function isCompatible($version, $build=false) {
-		if (version_compare($version, '2.0.0-DEV-SVN', '<')) {
+		// If requested version is smaller than 2.0.0-DEV build 4316, it's not compatible
+		if (version_compare($version, '2.0.0-DEV', '<') || ($build && $build < 4316)) {
 			return false;
 		}
-		if (version_compare($version, self::version(), '>')) {
-			return false;
-		}
-		if ($build && $build < self::versionBuild()) {
+		// Check if future version is needed (remove SVN from the check)
+		if (version_compare($version, preg_replace('/-SVN/i', '', self::version()), '>') || $build > self::versionBuild()) {
 			return false;
 		}
 		return true;
@@ -110,6 +109,9 @@ class KunenaForum {
 		$view = "KunenaView{$viewName}";
 		$model = "KunenaModel{$viewName}";
 
+		// load Kunena main language file so we can leverage language strings from it
+		KunenaFactory::loadLanguage();
+
 		// Load classes
 		if ( !class_exists( 'KunenaViewCommon' ) ) {
 			$vpath = KPATH_SITE . '/views/common/view.html.php';
@@ -129,7 +131,11 @@ class KunenaForum {
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
 		if ($viewName != 'common') {
-			$params['layout'] = $layout;
+			if (!($params instanceof JParameter)) {
+				$params = new JParameter('');
+				$params->bind((array) $params);
+			}
+			$params->set('layout', $layout);
 			// Push the model into the view (as default).
 			$model = new $model ();
 			$model->initialize($params);
@@ -141,6 +147,7 @@ class KunenaForum {
 		$view->assignRef ( 'document', JFactory::getDocument() );
 
 		// Render the view.
+		if ($params->get('templatepath')) $view->addTemplatePath($params->get('templatepath'));
 		$view->displayLayout ($layout, $template);
 	}
 }

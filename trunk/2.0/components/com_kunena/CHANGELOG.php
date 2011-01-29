@@ -33,6 +33,12 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+29-January-2010 Matias
+# [#23443] KunenaForum::isCompatible(): Improve check to keep SVN equal to other versions
+# [#22569] KunenaForum::display(): make it to work with modules/plugins (pass parameters, load language)
+# [#22569] KunenaModel: use JParameters internally instead of array
+# [#22569] Topics view: make it to work with modules
+
 28-January-2010 Matias
 # [#23443] Categories/Default view: Fix repeation SQL queries
 + [#22569] Add function KunenaView::displayWhoIsOnline() from derived classes

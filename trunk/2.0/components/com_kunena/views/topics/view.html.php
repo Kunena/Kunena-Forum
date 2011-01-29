@@ -11,6 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.view' );
+kimport ( 'kunena.html.parser' );
+require_once KPATH_SITE . '/class.kunena.php';
 
 /**
  * Topics View
@@ -18,6 +20,7 @@ kimport ( 'kunena.view' );
 class KunenaViewTopics extends KunenaView {
 	function displayDefault($tpl = null) {
 		$this->layout = 'default';
+		$this->params = $this->state->get('params');
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
@@ -25,7 +28,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->config = KunenaFactory::getConfig();
 
 		$this->actionMove = false;
-		if (CKunenaTools::isModerator ( $this->me->userid )) {
+		if ($this->me->isModerator ()) {
 			$this->actionMove = true;
 			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
 			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
@@ -79,6 +82,7 @@ class KunenaViewTopics extends KunenaView {
 
 	function displayUser($tpl = null) {
 		$this->layout = 'user';
+		$this->params = $this->state->get('params');
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
@@ -86,7 +90,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->config = KunenaFactory::getConfig();
 
 		$this->actionMove = false;
-		if (CKunenaTools::isModerator ( $this->me->userid )) {
+		if ($this->me->isModerator ()) {
 			$this->actionMove = true;
 			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
 			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
@@ -133,6 +137,7 @@ class KunenaViewTopics extends KunenaView {
 
 	function displayPosts($tpl = null) {
 		$this->layout = 'posts';
+		$this->params = $this->state->get('params');
 		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
@@ -141,7 +146,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->config = KunenaFactory::getConfig();
 
 		$this->actionMove = false;
-		if (CKunenaTools::isModerator ( $this->me->userid )) {
+		if ($this->me->isModerator ()) {
 //			$this->actionMove = true;
 //			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
 //			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
@@ -216,6 +221,7 @@ class KunenaViewTopics extends KunenaView {
 		$lasttopic = NULL;
 		$this->position = 0;
 		foreach ( $this->topics as $this->topic ) {
+			$this->category = $this->topic->getCategory();
 			$this->position++;
 			$this->keywords = $this->topic->getKeywords(false, ', ');
 			$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
@@ -244,6 +250,7 @@ class KunenaViewTopics extends KunenaView {
 				return;
 			}
 			$this->topic = $this->topics[$this->message->thread];
+			$this->category = $this->topic->getCategory();
 			$this->position++;
 			$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
 			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);

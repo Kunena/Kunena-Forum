@@ -65,7 +65,13 @@ class KunenaModel extends JModel {
 	public function initialize($params = array()) {
 		$this->embedded = true;
 		$this->setState('embedded', true);
-		$this->params = (array) $params;
+
+		if ($params instanceof JParameter) {
+			$this->params = $params;
+		} else {
+			$this->params = new JParameter('');
+			$this->params->bind((array) $this->params);
+		}
 	}
 
 
@@ -88,9 +94,7 @@ class KunenaModel extends JModel {
 		if (!$this->embedded) {
 			return JFactory::getApplication()->getPageParameters('com_kunena');
 		}
-		$params = new JParameter('');
-		$params->bind($this->params);
-		return $params;
+		return $this->params;
 	}
 
 	protected function getUserStateFromRequest($key, $request, $default = null, $type = 'none') {
@@ -109,15 +113,7 @@ class KunenaModel extends JModel {
 			return JRequest::getVar($name, $default, $hash, $type, $mask);
 		}
 
-		// Ensure type is in uppercase
-		$type = strtoupper($type);
-
-		if (isset($this->params[$name]) && $this->params[$name] !== null) {
-			$var = self::_cleanVar($this->params[$name], $mask, $type);
-		} else {
-			$var = self::_cleanVar($default, $mask, $type);
-		}
-		return $var;
+		return self::_cleanVar($this->params->get($name, $default), $mask, strtoupper($type));
 	}
 
 	protected function getBool($name, $default = false, $hash = 'default') {

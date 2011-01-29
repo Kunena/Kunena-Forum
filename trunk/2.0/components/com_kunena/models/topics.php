@@ -30,6 +30,7 @@ class KunenaModelTopics extends KunenaModel {
 	protected function populateState() {
 		$app = JFactory::getApplication ();
 		$params = $this->getParameters();
+		$this->setState ( 'params', $params );
 		$config = KunenaFactory::getConfig ();
 
 		$active = $app->getMenu ()->getActive ();
@@ -47,7 +48,7 @@ class KunenaModelTopics extends KunenaModel {
 		}
 		$this->setState ( 'user', $userid );
 
-		$mode = $this->getWord ( 'mode', 'latest' );
+		$mode = $this->getWord ( 'mode', 'default' );
 		$this->setState ( 'list.mode', $mode );
 
 		$latestcategory = $params->get('topics_categories', $config->latestcategory );

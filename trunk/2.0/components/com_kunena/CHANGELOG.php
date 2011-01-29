@@ -33,13 +33,17 @@ Legend:
 
 Kunena 2.0.0-DEV
 
-29-January-2010 Matias
+29-January-2011 fxstein
++ [#22792] Additional index on Topics table to speed up no replies view.
+^ [#22792] Update changelog dates
+
+29-January-2011 Matias
 # [#23443] KunenaForum::isCompatible(): Improve check to keep SVN equal to other versions
 # [#22569] KunenaForum::display(): make it to work with modules/plugins (pass parameters, load language)
 # [#22569] KunenaModel: use JParameters internally instead of array
 # [#22569] Topics view: make it to work with modules
 
-28-January-2010 Matias
+28-January-2011 Matias
 # [#23443] Categories/Default view: Fix repeation SQL queries
 + [#22569] Add function KunenaView::displayWhoIsOnline() from derived classes
 - [#22570] Do not show users in pathway (contains no real information)
@@ -51,7 +55,7 @@ Kunena 2.0.0-DEV
 # [#22569] Optimize and fix recount() on categories, topics, usertopics and user posts
 # [#22569] Installer: Recount forum statistics when upgrading to 2.0.0
 
-27-January-2010 Matias
+27-January-2011 Matias
 - [#22570] Remove deprecated directory template/default/plugin/stats
 # [#23443] Fix fatal error when showing statistics on certain pages
 # [#22569] KunenaControllerTopic: Add tasks for delete, undelete, permdelete and approve
@@ -61,19 +65,19 @@ Kunena 2.0.0-DEV
 # [#22569] KunenaForumTopic::publish(): Change hold on messages which had the same hold as topic
 # [#22569] KunenaForumTopicHelper::recount(): Fix and optimize queries
 
-26-January-2010 Matias
+26-January-2011 Matias
 # [#22569] Modify bulk actions javascript/logic to be more flexible
 ^ [#22569] Convert bulk actions into KunenaControllerTopics tasks
 ^ [#22786] Merge revisions 4259-4286 from /branches/2.0-xillibit-mvc-frontend-20-01-2011
 
-25-January-2010 Matias
+25-January-2011 Matias
 # [#22569] Neither of Mark Topics Read buttons works -- move into controllers
 # [#22569] Move Subscribe / Unsubscribe category into category controller
 
-24-January-2010 Xillibit
+24-January-2011 Xillibit
 ^ [#24515] Put some old codes into mvc in frontend (whoisonline and frontstats only in common)
 
-24-January-2010 Matias
+24-January-2011 Matias
 # [#23443] Fix bug in KunenaForumTopicHelper::getLatestTopics(): typo in subscribed parameter
 # [#23443] KunenaForum::display(): model doesn't regognize layout
 # [#23443] KunenaModelTopics::populateState(): should support userid in every layout
@@ -88,16 +92,16 @@ Kunena 2.0.0-DEV
 # [#23443] User ban doesn't work
 # [#23443] Change action attribute in most forms to point into single location
 
-23-January-2010 Matias
+23-January-2011 Matias
 # [#22569] KunenaModel classes: add support for embedded mode
 
-22-January-2010 Xillibit
+22-January-2011 Xillibit
 ^ [#24515] Move &func=stats into mvc in frontend
 
-22-January-2010 Matias
+22-January-2011 Matias
 # [#23443] Topic/Create: Topic Tags showing up for all users, not just moderators
 
-21-January-2010 Matias
+21-January-2011 Matias
 ^ [#22786] Merge revisions 4259-4264 from /branches/2.0-xillibit-mvc-frontend-20-01-2011
 # [#24515] Fix undefined variables and small bugs in report and credits views
 ^ [#24515] Move report view into layout of topic view
@@ -111,11 +115,11 @@ Kunena 2.0.0-DEV
 # [#23443] Administration, Category Manager: new category cannot be seen before logout/login
 # [#23443] Fix menu creation so that recent topics, no replies and my topics works
 
-20-January-2010 Xillibit
+20-January-2011 Xillibit
 ^ [#24515] Move &func=report into mvc in frontend
 ^ [#24515] Move &func=credits into mvc in frontend
 
-20-January-2010 Matias
+20-January-2011 Matias
 ^ [#22786] Merge revisions 4245-4247 from /branches/2.0-xillibit-fixes-19-01-2011
 ^ [#22786] Merge revisions 4200-4247 from /branches/2.0-xillibit-mvc-backend-20111505
 # [#23443] Administrator/Statistics: Fix Most Popular Members
@@ -138,13 +142,13 @@ Kunena 2.0.0-DEV
 - [#22570] Convert or comment out deprecated usage of CKunenaAttachments class
 - [#22570] Remove deprecated CKunenaAttachments class and its files
 
-19-January-2010 Xillibit
+19-January-2011 Xillibit
 # [#23443] Missing language strings for COM_KUNENA_LIB_*
 # [#23443] Not possible to give thank you to users
 # [#23443] Fatal error: Call to undefined method KunenaForumMessage::emailToSubscribers() in KunenaControllerTopic
 # [#24395] Trash manager get messages on hold=2 instead of hold=3
 
-19-January-2010 Matias
+19-January-2011 Matias
 # [#23443] KunenaUserHelper::loadUsers(): Do not load online users, make sure that input is correct
 # [#23443] Editing announcement is broken if it's unpublished
 # [#23443] Do not cache our top menu as mod_mainmenu has its own cache
@@ -158,10 +162,10 @@ Kunena 2.0.0-DEV
 # [#23443] KunenaRoute: Fix menu authorization in both J1.5 and J1.6
 # [#23443] KunenaRouter: Make New Topic with catid to work
 
-18-January-2010 Xillibit
+18-January-2011 Xillibit
 ^ [#24395] Backend in MVC (trash manager) (odered items and pagination doesn't work yet)
 
-18-January-2010 Matias
+18-January-2011 Matias
 # [#23443] Fix fatal error in KunenaUserHelper::loadUsers()
 # [#23443] Fix white page in menu manager because of missing JElementKunenaCategories on legacy menuitems
 # [#23443] Fix Undefined properties in various views
@@ -173,10 +177,10 @@ Kunena 2.0.0-DEV
 # [#23443] Topic/Create: current category isn't selected and the topic ends into wrong category by default
 # [#23443] Topic/Create: cannot create new polls
 
-17-January-2010 Xillibit
+17-January-2011 Xillibit
 # [#24443] BBCode help input need to be disabled to avoid to be edited
 
-17-January-2010 Matias
+17-January-2011 Matias
 ^ [#22569] Legacy support: Make SEF mapping (&do=xxx) to work
 ^ [#22569] BuildRoute: Add support for short URIs like: /forum/12-category/123-topic/edit/124
 ^ [#22569] Make posting/moderation forms to regognise mesid vs id
@@ -190,10 +194,10 @@ Kunena 2.0.0-DEV
 # [#23443] Display/Edit topic: attachments do not show up
 # [#23443] Topic: Allow reply topic without mesid
 
-16-January-2010 Xillibit
+16-January-2011 Xillibit
 # [#23443] Forms edit and default_message has wrong urls and action go joomla root
 
-16-January-2010 Matias
+16-January-2011 Matias
 # [#23443] Fix some broken css/javascript urls
 ^ [#22569] BuildRoute: Regognise Kunena 2.0 views and layouts
 ^ [#22569] BuildRoute: Simplify and optimize menu item override logic
@@ -203,10 +207,10 @@ Kunena 2.0.0-DEV
 ^ [#22569] ParseRoute: Optimize fetching query variables from menu item
 ^ [#22569] ParseRoute: Simplify logic when getting query variables from SEF URI
 
-15-January-2010 Xillibit
+15-January-2011 Xillibit
 ^ [#24395] Backend in MVC (Stats and k report configuration)
 
-15-January-2010 Matias
+15-January-2011 Matias
 ^ [#22786] Merge revisions 4165-4187 from trunk/1.6
 # [#23443] Administrator: category manager doesn't work
 # [#23443] Don't fail to load the page if there's no matching menu item
@@ -231,7 +235,7 @@ Kunena 2.0.0-DEV
 # [#23443] Fix old URL redirection for rss, latest and showcat
 # [#23443] Fix wrong total page count in topics and category (off by one)
 
-14-January-2010 Matias
+14-January-2011 Matias
 ^ [#22569] Rewrite KunenaControllerTopic::move()
 # [#22792] Fix KunenaForumTopic::move() to move topic into another category with category updates
 # [#22792] KunenaForumTopic::move(): accept both array and string in $ids parameter
@@ -241,19 +245,19 @@ Kunena 2.0.0-DEV
 # [#23443] Fix broken file cache in KunenaRoute class
 - [#22570] Remove deprecated views (entrypage, latest, listcat, post, profile, showcat)
 
-13-January-2010 Matias
+13-January-2011 Matias
 # [#22792] KunenaForumTopic::update() fails to update usertopics information
 # [#22792] KunenaForum::display() does not work with common layouts
 + [#22569] Continue moving posting logic into MVC (adapting code, fixing bugs)
 
-12-January-2010 Matias
+12-January-2011 Matias
 ^ [#22569] Copy all tasks and helper functions from CKunenaPost class into KunenaControllerTopic
 ^ [#22569] Copy editor/topic moderation templates into views/topic/tmpl, modify them to work with view
 + [#22792] New function KunenaTemplate::getTopicIcons() for the editor
 + [#22569] Redirect old post view into &view=topic&..., enqueue error message on old forms
 - [#22570] Remove deprecated code: funcs/post.php, template/default/editor, template/default/moderate
 
-11-January-2010 Matias
+11-January-2011 Matias
 ^ [#22569] Copy logic from CKunenaProfile class into KunenaViewUser
 ^ [#22569] Copy all tasks and helper functions from CKunenaProfile class into KunenaControllerUser
 ^ [#22569] Copy profile templates into views/user/tmpl, modify them to work with view
@@ -266,13 +270,13 @@ Kunena 2.0.0-DEV
 - [#22570] Remove deprecated code: funcs/profile.php, template/default/profile
 - [#22570] Remove deprecated code: funcs/latestx.php, template/default/threads
 
-10-January-2010 Matias
+10-January-2011 Matias
 ^ [#22569] Use new KunenaForum::display('common', 'loginbox/menu') instead of calling old templates
 - [#22570] Remove deprecated code: lib/kunena.login.php
 - [#22570] Remove deprecated code: template/*/language
 - [#22570] Remove deprecated code: template/default/loginbox, emplate/default/menu.php
 
-9-January-2010 Matias
+9-January-2011 Matias
 # [#22569] KunenaController::display(): load common view and extra content only in html
 # [#22569] Update login/logout form to use the new user view in CommunityBuilder integration
 + [#22569] Implement RSS feeds in topics/view.feed.php
@@ -284,7 +288,7 @@ Kunena 2.0.0-DEV
 + [#22569] Redirect old userlist view into &view=users
 - [#22570] Remove deprecated code: funcs/userlist.php, template/default/userlist
 
-8-January-2010 Matias
+8-January-2011 Matias
 + [#22569] Add length limit into KunenaHtmlParser::parseBBCode()
 # [#23443] Fix regression after merge: white page because of activity integration
 # [#23443] Fix regression after merge: Rename rest of the JDatabaseQuery calls
@@ -292,10 +296,10 @@ Kunena 2.0.0-DEV
 + [#23444] Add Joomla 1.6 support into new views (default.xml files)
 # [#23443] Fix undefined variables in category view
 
-7-January-2010 Matias
+7-January-2011 Matias
 ^ [#22786] Merge revisions 3955-4165 from trunk/1.6 (part 2)
 
-5-January-2010 Matias
+5-January-2011 Matias
 ^ [#22786] Merge revisions 3955-4155 from trunk/1.6
 
 19-December-2010 Matias

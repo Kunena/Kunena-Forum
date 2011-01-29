@@ -291,6 +291,7 @@
 		<key name="category_id" columns="category_id" />
 		<key name="locked" columns="locked" />
 		<key name="hold" columns="hold" />
+		<key name="posts" columns="posts" />
 		<key name="hits" columns="hits" />
 		<key name="first_post_userid" columns="first_post_userid" />
 		<key name="last_post_userid" columns="last_post_userid" />

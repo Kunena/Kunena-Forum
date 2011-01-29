@@ -132,13 +132,15 @@ class KunenaForum {
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
 		if ($viewName != 'common') {
 			if (!($params instanceof JParameter)) {
-				$params = new JParameter('');
-				$params->bind((array) $params);
+				$parameters = new JParameter('');
+				$parameters->bind($params);
+			} else {
+				$parameters = $params;
 			}
-			$params->set('layout', $layout);
+			$parameters->set('layout', $layout);
 			// Push the model into the view (as default).
 			$model = new $model ();
-			$model->initialize($params);
+			$model->initialize($parameters);
 			$view->setModel ( $model, true );
 
 			$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );
@@ -147,7 +149,7 @@ class KunenaForum {
 		$view->assignRef ( 'document', JFactory::getDocument() );
 
 		// Render the view.
-		if ($params->get('templatepath')) $view->addTemplatePath($params->get('templatepath'));
+		if ($parameters->get('templatepath')) $view->addTemplatePath($parameters->get('templatepath'));
 		$view->displayLayout ($layout, $template);
 	}
 }

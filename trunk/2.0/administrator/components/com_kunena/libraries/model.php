@@ -70,7 +70,7 @@ class KunenaModel extends JModel {
 			$this->params = $params;
 		} else {
 			$this->params = new JParameter('');
-			$this->params->bind((array) $this->params);
+			$this->params->bind($params);
 		}
 	}
 

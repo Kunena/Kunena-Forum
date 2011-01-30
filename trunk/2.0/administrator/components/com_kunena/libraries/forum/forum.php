@@ -149,7 +149,7 @@ class KunenaForum {
 		$view->assignRef ( 'document', JFactory::getDocument() );
 
 		// Render the view.
-		if ($parameters->get('templatepath')) $view->addTemplatePath($parameters->get('templatepath'));
+		if (isset($parameters) && $parameters->get('templatepath')) $view->addTemplatePath($parameters->get('templatepath'));
 		$view->displayLayout ($layout, $template);
 	}
 }

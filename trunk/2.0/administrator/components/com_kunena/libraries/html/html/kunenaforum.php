@@ -42,24 +42,24 @@ abstract class JHTMLKunenaForum {
 		if (!is_array($options)) {
 			$options = array();
 		}
-		if (!is_array($selected)) {
-			if (is_numeric($selected))
-				$selected = array((int)$selected);
-			else
-				$selected = array();
+		if ($selected === false || $selected === null) {
+			$selected = array();
+		} elseif (!is_array($selected)) {
+			$selected = array((string) $selected);
 		}
-		$empty = empty($options);
-		$hide = $action == 'admin' && !$me->isAdmin();
-		if ($toplevel) $options [] = JHTML::_ ( 'select.option', '0', JText::_ ( 'COM_KUNENA_TOPLEVEL' ), 'value', 'text', $hide );
-		if ($empty && empty($selected) && !$hide) {
-			$selected[] = 0;
+		if ($toplevel) {
+			$disabled = ($action == 'admin' && !$me->isAdmin());
+			$options [] = JHTML::_ ( 'select.option', '0', JText::_ ( 'COM_KUNENA_TOPLEVEL' ), 'value', 'text', $disabled );
+			if (empty($selected) && !$disabled) {
+				$selected[] = 0;
+			}
 		}
 		foreach ( $categories as $category ) {
-			$hide = !$category->authorise ($action) || (! $sections && $category->section);
-			if ($empty && empty($selected) && !$hide) {
+			$disabled = !$category->authorise ($action) || (! $sections && $category->section);
+			if (empty($selected) && !$disabled) {
 				$selected[] = $category->id;
 			}
-			$options [] = JHTML::_ ( 'select.option', $category->id, str_repeat  ( '- ', $category->level+$toplevel  ).' '.$category->name, 'value', 'text', $hide );
+			$options [] = JHTML::_ ( 'select.option', $category->id, str_repeat  ( '- ', $category->level+$toplevel  ).' '.$category->name, 'value', 'text', $disabled );
 		}
 
 		reset ( $options );

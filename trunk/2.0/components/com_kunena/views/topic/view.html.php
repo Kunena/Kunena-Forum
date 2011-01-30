@@ -141,7 +141,8 @@ class KunenaViewTopic extends KunenaView {
 		$cat_params['direction'] = 1;
 		$cat_params['action'] = 'topic.create';
 
-		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $this->catid, 'postcatid');
+		$selected = $this->catid ? $this->catid : null;
+		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $selected, 'postcatid');
 
 		$this->category = KunenaForumCategoryHelper::get($this->catid);
 		if (!$this->selectcatlist || ($this->catid && !$this->category->authorise('topic.create'))) {

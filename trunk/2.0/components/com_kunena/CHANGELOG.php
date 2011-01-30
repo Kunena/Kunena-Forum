@@ -33,6 +33,12 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+30-January-2011 Matias
+# [#23443] KunenaForum::display(): Fix fatal error
+# [#23443] Fix toggler behavior: only one small cookie which lives through browser session
+# [#23443] JHTMLKunenaForum::categorylist(): Fix empty selection handling
+# [#23443] New topic, category selection: wrong item selected in Chrome
+
 29-January-2011 fxstein
 + [#22792] Additional index on Topics table to speed up no replies view.
 ^ [#22792] Update changelog dates

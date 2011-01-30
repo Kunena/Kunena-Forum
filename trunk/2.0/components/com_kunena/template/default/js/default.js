@@ -783,12 +783,12 @@ window.addEvent('domready', function(){
 	}
 	
 	// Get the kunena settings cookie data.
-	var KCookie = new Hash.Cookie('kunena_settings', {duration: 3600});
+	var KCookie = new Hash.Cookie('kunena_toggler', {path: '/', duration: 0});
 
 	// Setup the behavior for all kunena toggler elements.
 	$$('a.ktoggler').each(function(link){
 		// Auto-hide if the cookie is set.
-		if (KCookie.get('hide_'+link.getProperty('rel'))) {
+		if (KCookie.get(link.getProperty('rel'))) {
 			link.removeClass('close').addClass('open');
 			link.set('title',kunena_toggler_open);
 			document.id(link.getProperty('rel')).setStyle('display', 'none');
@@ -800,13 +800,13 @@ window.addEvent('domready', function(){
 				this.removeClass('close').addClass('open');
 				link.set('title',kunena_toggler_open);
 				document.id(this.getProperty('rel')).setStyle('display', 'none');
-				KCookie.set('hide_'+this.getProperty('rel'), true);
+				KCookie.set(this.getProperty('rel'), 1);
 			}
 			else {
 				this.removeClass('open').addClass('close');
 				link.set('title',kunena_toggler_close);
 				document.id(this.getProperty('rel')).setStyle('display', '');
-				KCookie.set('hide_'+this.getProperty('rel'), false);
+				KCookie.erase(this.getProperty('rel'));
 			}
 		});
 	});

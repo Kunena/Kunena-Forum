@@ -1622,7 +1622,7 @@ class KunenaModelInstall extends JModel {
 			'module' => 'mod_menu',
 			'access' => 1,
 			'showtitle' => 0,
-			'params' => '{"menutype":"kunenamenu","startLevel":"2","endLevel":"3","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid"}',
+			'params' => '{"menutype":"kunenamenu","startLevel":"1","endLevel":"2","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid"}',
 			'client_id' => 0,
 			'language' => '*' );
 		if (! $table->bind ( $data ) || ! $table->check ()) {

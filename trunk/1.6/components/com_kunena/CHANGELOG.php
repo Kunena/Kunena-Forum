@@ -35,6 +35,7 @@ Kunena 1.6.3
 
 30-January-2010 Matias
 * [#24563] Security (High/High): SQL injection vulnerability in search (thanks Adam Nichols)
+# [#24682] Joomla 1.6: Kunena Menu doesn't show up
 
 29-January-2010 Matias
 # [#24656] CommunityBuilder: fix performance issues from loading users one by one (CB1.4+)

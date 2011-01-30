@@ -24,13 +24,19 @@ class KunenaAvatarCommunityBuilder extends KunenaAvatar
 		$this->priority = 50;
 	}
 
+	public function load($userlist) {
+		if (method_exists('CBuser','advanceNoticeOfUsersNeeded')) {
+			CBuser::advanceNoticeOfUsersNeeded($userlist);
+		}
+	}
+
 	public function getEditURL()
 	{
 		return cbSef( 'index.php?option=com_comprofiler&task=userAvatar' . getCBprofileItemid() );
 	}
 
 	protected function _getURL($user, $sizex, $sizey)
-	{	
+	{
 		global $_CB_framework;
 		$app = JFactory::getApplication ();
 		$user = KunenaFactory::getUser($user);

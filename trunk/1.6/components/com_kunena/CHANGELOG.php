@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+29-January-2010 Matias
+# [#24656] CommunityBuilder: fix performance issues from loading users one by one (CB1.4+)
+
 28-January-2010 Severdia
 # [#24659] Fixed Google maps controls CSS
 

@@ -15,7 +15,7 @@ kimport ( 'kunena.view' );
 /**
  * About view for Kunena backend
  */
-class KunenaViewCategories extends KunenaView {
+class KunenaAdminViewCategories extends KunenaView {
 	function display() {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		if ($this->state->get('item.id')) $this->setLayout ('edit');

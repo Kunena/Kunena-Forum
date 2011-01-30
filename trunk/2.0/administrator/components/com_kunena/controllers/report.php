@@ -13,22 +13,22 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.controller' );
 
 /**
- * Kunena Kunenareport Controller
+ * Kunena Report Controller
  *
  * @package		Kunena
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaControllerKunenareport extends KunenaController {
+class KunenaAdminControllerReport extends KunenaController {
 	protected $baseurl = null;
 
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->baseurl = 'index.php?option=com_kunena&view=kunenareport';
+		$this->baseurl = 'index.php?option=com_kunena&view=report';
 	}
-	
+
 	function systemreport() {
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
-	
+
 }

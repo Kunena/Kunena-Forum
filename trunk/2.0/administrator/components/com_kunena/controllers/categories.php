@@ -20,7 +20,7 @@ kimport ( 'kunena.forum.category.helper' );
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaControllerCategories extends KunenaController {
+class KunenaAdminControllerCategories extends KunenaController {
 	protected $baseurl = null;
 
 	public function __construct($config = array()) {

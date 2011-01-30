@@ -15,7 +15,7 @@ kimport ( 'kunena.view' );
 /**
  * About view for Kunena stats backend
  */
-class KunenaViewStats extends KunenaView {
+class KunenaAdminViewStats extends KunenaView {
 	function display() {
 		kimport ( 'kunena.forum.message.thankyou' );
 

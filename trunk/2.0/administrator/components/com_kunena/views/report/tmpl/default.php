@@ -28,7 +28,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		<fieldset><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?><br /></fieldset>
 		<fieldset>
 			<div><a href="#" id="link_sel_all" ><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a></div>
-			<textarea id="report_final" name="report_final" cols="80" rows="15"><?php echo kescape($this->kunenareport); ?></textarea>
+			<textarea id="report_final" name="report_final" cols="80" rows="15"><?php echo kescape($this->systemreport); ?></textarea>
 		</fieldset>
 		<input type="hidden" name="option" value="com_kunena" />
 		<input type="hidden" name="task" value="" />

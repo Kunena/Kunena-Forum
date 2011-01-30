@@ -40,11 +40,6 @@ class KunenaApp {
 			KunenaError::initialize();
 		}
 
-$lang = JFactory::getLanguage();
-if (!$lang->load('com_kunena', JPATH_SITE, null, true)) {
-	$lang->load('com_kunena', KPATH_SITE);
-}
-
 // First of all take a profiling information snapshot for JFirePHP
 if(JDEBUG){
 	require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.profiler.php');

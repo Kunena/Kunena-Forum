@@ -19,5 +19,5 @@ require_once KPATH_ADMIN . '/models/categories.php';
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaModelManage extends KunenaModelCategories {
+class KunenaModelManage extends KunenaAdminModelCategories {
 }

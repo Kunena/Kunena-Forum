@@ -30,16 +30,6 @@ class KunenaViewManage extends KunenaView {
 				break;
 		}
 
-		// FIXME: remove
-		$lang = JFactory::getLanguage();
-		if (KunenaForum::isSVN()) {
-			$lang->load('com_kunena',KPATH_ADMIN);
-			$lang->load('com_kunena.install',KPATH_ADMIN);
-		} else {
-			$lang->load('com_kunena',JPATH_ADMINISTRATOR);
-			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
-		}
-
 		$this->addStyleSheet ( 'css/kunena.forum.css' );
 		$this->addStyleSheet ( 'css/kunena.skinner.css' );
 		$this->addStyleSheet ( 'css/kunena.manage.css' );

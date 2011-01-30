@@ -19,7 +19,7 @@ jimport ( 'joomla.application.component.model' );
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaModelTrash extends JModel {
+class KunenaAdminModelTrash extends JModel {
 	protected $__state_set = false;
 	protected $_items = false;
 	protected $_items_order = false;
@@ -59,7 +59,7 @@ class KunenaModelTrash extends JModel {
 		// We need to be able restore both topics (with all deleted messages) and individual messages
 		// For that we need to have views for both topics and messages
 		// Talk with Matias
-		
+
 		$where 	= ' WHERE hold=3 ';
 		$query = 'SELECT a.*, b.name AS cats_name, c.username FROM #__kunena_messages AS a
 		INNER JOIN #__kunena_categories AS b ON a.catid=b.id

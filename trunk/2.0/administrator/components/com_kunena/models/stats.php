@@ -19,7 +19,7 @@ jimport ( 'joomla.application.component.model' );
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaModelStats extends JModel {
+class KunenaAdminModelStats extends JModel {
 	protected function _getStatsClass() {
 		require_once(KUNENA_PATH_LIB.'/kunena.stats.class.php');
 		$kunena_stats = CKunenaStats::getInstance();

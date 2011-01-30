@@ -20,7 +20,7 @@ jimport ( 'joomla.filesystem.file' );
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaModelKunenareport extends JModel {
+class KunenaAdminModelReport extends JModel {
 
 	/**
 	 * Method to generate all the reportconfiguration.

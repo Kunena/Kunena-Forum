@@ -13,11 +13,11 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.view' );
 
 /**
- * Kunenareport view for Kunena backend
+ * Kunena report view for Kunena backend
  */
-class KunenaViewKunenareport extends KunenaView {
+class KunenaAdminViewReport extends KunenaView {
 	function display() {
-		$this->kunenareport = $this->get('SystemReport');
+		$this->systemreport = $this->get('SystemReport');
 
 		parent::display ();
 	}

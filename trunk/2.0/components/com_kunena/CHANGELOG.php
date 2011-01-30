@@ -38,6 +38,9 @@ Kunena 2.0.0-DEV
 # [#23443] Fix toggler behavior: only one small cookie which lives through browser session
 # [#23443] JHTMLKunenaForum::categorylist(): Fix empty selection handling
 # [#23443] New topic, category selection: wrong item selected in Chrome
+^ [#22569] Rename Administrator controllers, models and views to KunenaAdminXXX to avoid name conflicts
+^ [#22569] Rename Kunenareport view into Report
+- [#22570] Remove deprecated language loading code
 
 29-January-2011 fxstein
 + [#22792] Additional index on Topics table to speed up no replies view.

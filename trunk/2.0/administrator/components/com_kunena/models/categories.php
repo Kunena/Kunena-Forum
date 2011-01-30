@@ -21,7 +21,7 @@ kimport('kunena.model');
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaModelCategories extends KunenaModel {
+class KunenaAdminModelCategories extends KunenaModel {
 	protected $__state_set = false;
 	protected $_items = false;
 	protected $_items_order = false;

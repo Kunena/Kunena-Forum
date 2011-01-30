@@ -47,14 +47,7 @@ class KunenaController extends JController {
 		$app = JFactory::getApplication();
 		$lang = JFactory::getLanguage();
 		// FIXME: loading languages in Joomla is SLOW (30ms)!
-		if (KunenaForum::isSVN()) {
-			$lang->load('com_kunena',KPATH_SITE);
-			//if ($app->isAdmin()) {
-				$lang->load('com_kunena',KPATH_ADMIN);
-				$lang->load('com_kunena.install',KPATH_ADMIN);
-			//}
-		} elseif ($app->isAdmin()) {
-			$lang->load('com_kunena',JPATH_ADMINISTRATOR);
+		if ($app->isAdmin()) {
 			$lang->load('com_kunena',JPATH_SITE);
 			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 		}
@@ -70,7 +63,11 @@ class KunenaController extends JController {
 		}
 
 		// Set the name for the controller and instantiate it.
-		$class = 'KunenaController' . ucfirst ( $view );
+		if ($app->isAdmin()) {
+			$class = 'KunenaAdminController' . ucfirst ( $view );
+		} else {
+			$class = 'KunenaController' . ucfirst ( $view );
+		}
 		if (class_exists ( $class )) {
 			$instance = new $class ();
 			$instance->starttime = $starttime;

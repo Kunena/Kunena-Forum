@@ -19,7 +19,7 @@ require_once KPATH_ADMIN . '/controllers/categories.php';
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaControllerManage extends KunenaControllerCategories {
+class KunenaControllerManage extends KunenaAdminControllerCategories {
 	public function __construct($config = array()) {
 		parent::__construct($config);
 		$this->baseurl = 'index.php?option=com_kunena&view=manage';

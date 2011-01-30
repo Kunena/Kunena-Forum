@@ -31,6 +31,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.5.14
+
+30-January-2011 Matias
+* [#24563] Security (High/High): SQL injection vulnerability in search (thanks Adam Nichols)
+
 Kunena 1.5.13
 
 13-Sep-2010 Xillibit

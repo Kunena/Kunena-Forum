@@ -100,7 +100,7 @@ class CKunenaSearch
 	$this->params['sortby'] = JRequest::getVar('sortby', $this->defaults['sortby']);
 	$this->params['order'] = JRequest::getVar('order', $this->defaults['order']);
 	$this->params['childforums'] = JRequest::getInt('childforums', $this->defaults['childforums']);
-	$this->params['catids'] = strtr(JRequest::getVar('catids', '0', 'get'), KUNENA_URL_LIST_SEPARATOR, ',');
+	$this->params['catids'] = strtr(JRequest::getString('catids', '0', 'get'), KUNENA_URL_LIST_SEPARATOR, ',');
 	$limitstart = $this->limitstart = JRequest::getInt('limitstart', 0);
 	$limit = $this->limit = JRequest::getInt('limit', $fbConfig->messages_per_page_search);
 	extract($this->params);
@@ -108,12 +108,18 @@ class CKunenaSearch
 	if ($limit<1 || $limit>40) $limit = $this->limit = $fbConfig->messages_per_page_search;
 
 	if (isset($_POST['q']) || isset($_POST['searchword'])) {
-		$this->params['catids'] = implode(',', JRequest::getVar('catids', array(0), 'post', 'array'));
+		$catids = JRequest::getVar ( 'catids', array (0), 'post', 'array' );
+		JArrayHelper::toInteger($catids);
+		$this->params ['catids'] = implode ( ',', $catids );
 		$url = CKunenaLink::GetSearchURL($fbConfig, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
         	header("HTTP/1.1 303 See Other");
         	header("Location: " . htmlspecialchars_decode($url));
         	$app->close();
 	}
+	$catids = explode ( ',', $this->params ['catids']);
+	JArrayHelper::toInteger($catids);
+	$catids = implode ( ',', $catids);
+	$this->params ['catids'] = $catids;
 
 	if ($q == _GEN_SEARCH_BOX) $q = '';
 	$this->searchword = $q;

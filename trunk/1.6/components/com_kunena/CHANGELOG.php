@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+30-January-2010 Matias
+* [#24563] Security (High/High): SQL injection vulnerability in search (thanks Adam Nichols)
+
 29-January-2010 Matias
 # [#24656] CommunityBuilder: fix performance issues from loading users one by one (CB1.4+)
 ^ [#15886] Merged revisions 4298-4317 from /branches/1.6.3-language-LDAsvens-2011-01-22

@@ -1640,6 +1640,29 @@ class KunenaModelInstall extends JModel {
 		$this->db->query ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
+/* FIXME: Broken in J1.6.0:
+		// Finally create alias
+		$defaultmenu = JMenu::getInstance('site')->getDefault();
+		$data = array (
+			'menutype' => $defaultmenu->menutype,
+			'title' => JText::_ ( 'COM_KUNENA_MENU_FORUM' ),
+			'alias' => 'kunenaforum',
+			'link' => 'index.php?Itemid=',
+			'type' => 'alias',
+			'published' => 1,
+			'parent_id' => 1,
+			'component_id' => 0,
+			'access' => 1,
+			'params' => '{"aliasoptions":"'.(int)$parent->id.'","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
+			'home' => 0,
+			'language' => '*',
+			'client_id' => 0
+		);
+		if (! $table->setLocation ( 1, 'last-child' ) || ! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
+			throw new KunenaInstallerException ( $table->getError () );
+		}
+*/
 	}
 
 	function deleteMenu() {

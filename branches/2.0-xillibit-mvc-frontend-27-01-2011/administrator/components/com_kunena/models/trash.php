@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
+kimport('kunena.model');
 
 /**
  * Trash Model for Kunena
@@ -19,12 +20,42 @@ jimport ( 'joomla.application.component.model' );
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaModelTrash extends JModel {
+class KunenaModelTrash extends KunenaModel {
 	protected $__state_set = false;
 	protected $_items = false;
 	protected $_items_order = false;
 	protected $_object = false;
 
+	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * @return	void
+	 * @since	1.6
+	 */
+	protected function populateState() {
+		$app = JFactory::getApplication ();
+
+		// List state information
+		$value = $this->getUserStateFromRequest ( "com_kunena.trash.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$this->setState ( 'list.limit', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.trash.list.ordering', 'filter_order', 'ordering', 'cmd' );
+		$this->setState ( 'list.ordering', $value );
+
+		$value = $this->getUserStateFromRequest ( "com_kunena.trash.list.start", 'limitstart', 0, 'int' );
+		$this->setState ( 'list.start', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.trash.list.direction', 'filter_order_Dir', 'asc', 'word' );
+		if ($value != 'asc')
+			$value = 'desc';
+		$this->setState ( 'list.direction', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.trash.list.search', 'search', '', 'string' );
+		$this->setState ( 'list.search', $value );
+
+		$value = $this->getUserStateFromRequest ( "com_kunena.trash.list.levels", 'levellimit', 10, 'int' );
+		$this->setState ( 'list.levels', $value );
+	}
 
 	/**
 	 * Overridden method to get model state variables.
@@ -36,6 +67,7 @@ class KunenaModelTrash extends JModel {
 	 */
 	public function getState($property = null) {
 		if (! $this->__state_set) {
+			$this->populateState ();
 			$this->__state_set = true;
 		}
 		return parent::getState ( $property );
@@ -59,12 +91,16 @@ class KunenaModelTrash extends JModel {
 		// We need to be able restore both topics (with all deleted messages) and individual messages
 		// For that we need to have views for both topics and messages
 		// Talk with Matias
-		
+
+		$orderby = '';
+		if ( $this->getState('list.ordering') && $this->getState('list.direction') )	$orderby = ' ORDER BY '. $this->getState('list.ordering') .' '. $this->getState('list.direction');
+
 		$where 	= ' WHERE hold=3 ';
 		$query = 'SELECT a.*, b.name AS cats_name, c.username FROM #__kunena_messages AS a
 		INNER JOIN #__kunena_categories AS b ON a.catid=b.id
 		LEFT JOIN #__users AS c ON a.userid=c.id'
-		.$where;
+		.$where
+		.orderby;
 
 		$kunena_db->setQuery ( $query );
 		$trashitems = $kunena_db->loadObjectList ();

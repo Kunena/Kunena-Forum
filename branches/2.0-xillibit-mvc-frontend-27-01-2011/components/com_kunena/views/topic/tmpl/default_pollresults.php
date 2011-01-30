@@ -36,7 +36,7 @@ defined( '_JEXEC' ) or die();
 									<?php
 									if(empty($poll->nbvoters)) $this->nbvoters = "0";
 									echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL')." <strong>".$this->nbvoters."</strong> ";
-									if($this->config->pollresultsuserslist && !empty($pollusersvoted)) :
+									if($this->config->pollresultsuserslist && !empty($this->usersvoted)) :
 										echo " ( ";
 										foreach($this->usersvoted as $row) echo CKunenaLink::GetProfileLink(intval($row->userid))." ";
 										echo " ) ";

@@ -35,6 +35,7 @@ Kunena 2.0.0-DEV
 
 30-January-2010 Xillibit
 ^ [#24515] Put some old codes into mvc in frontend : polls (Part 1)
+^ [#24515] Fix some undefined variables and fix some issues in trash in backend
 
 28-January-2010 Xillibit
 ^ [#24515] Put some old codes into mvc in frontend (search part2)

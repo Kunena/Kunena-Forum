@@ -96,11 +96,11 @@ class KunenaViewSearch extends KunenaView {
 		parent::display ();
 	}
 
-	function getPagination($function, $maxpages) {
-		/*$limit = $this->state->get ( 'list.limit' );
-	 	$page = floor ( $this->state->get ( 'list.start' ) / $limit ) + 1;
+	function getPagination($function, $maxpages, $params) {
+		$limit = $params['limit'];
+	 	$page = floor ( $params['limitstart'] / $limit ) + 1;
 		$totalpages = max(1, floor ( ($this->total-1) / $limit ) + 1);
-		$q = $this->state->get('com_kunena.searchword');  */
+		$q = $this->state->get('com_kunena.searchword');
 		$urlparams=$this->get('UrlParams');
 
 		if ($page == 0)

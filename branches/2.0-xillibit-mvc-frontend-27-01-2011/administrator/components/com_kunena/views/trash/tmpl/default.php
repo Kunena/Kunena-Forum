@@ -34,28 +34,28 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					<th width="5" align="center">#</th>
 					<th width="5" align="left"><input type="checkbox" name="toggle" value=""
 						onclick="checkAll(<?php
-					echo count ( $trashitems );
+					echo count ( $this->items );
 					?>);" /></th>
 					<th width="5" align="left"><?php
-					echo  JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $lists['order_Dir'], $lists['order']);
+					echo  JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'subject', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'subject', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'cats_name', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'cats_name', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_IP', 'ip', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR_USERID', 'userid', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR_USERID', 'userid', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'username', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 				</tr>
 			</thead>

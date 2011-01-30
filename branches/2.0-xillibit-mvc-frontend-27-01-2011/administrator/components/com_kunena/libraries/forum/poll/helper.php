@@ -72,13 +72,14 @@ class KunenaForumPollHelper {
 	}
 
 	static public function getTotalVoters() {
-		$db = JFactory::getDBO ();
+		/*$db = JFactory::getDBO ();
 		$query = "SELECT SUM(votes) FROM #__kunena_polls_users WHERE pollid={$db->Quote($pollid)}";
 		$db->setQuery($query);
 		$numvotes = $db->loadResult();
 		KunenaError::checkDatabaseError();
 
-		return $numvotes;
+		return $numvotes;*/
+		return;
 	}
 
 	static public function userHasAlreadyVoted() {

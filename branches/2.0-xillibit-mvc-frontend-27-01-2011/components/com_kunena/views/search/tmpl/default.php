@@ -179,10 +179,10 @@ document.addEvent('domready', function() {
 	</div>
 	<div class="kcontainer" id="ksearchresult">
 		<div class="kbody">
-    <?php if ($this->error) : ?>
+	<?php if ($this->error) : ?>
 		<div>
-			<php echo $this->error; ?>
-		<div>
+			<?php echo $this->error; ?>
+		</div>
 	<?php endif; ?>
 
 <table>
@@ -201,6 +201,7 @@ document.addEvent('domready', function() {
 							</tr>
 						</thead>
 						<tbody>
+							<tr>
 								<td rowspan="2" valign="top" class="kprofile-left kresultauthor">
 								<p><?php echo $this->escape($result->name) ?></p>
 								</td>
@@ -238,7 +239,7 @@ document.addEvent('domready', function() {
 			?>
 
 			<?php if ($this->total > $this->params['limit']) : ?>
-			<?php //echo $this->getPagination('search', 3); ?>
+			<?php echo $this->getPagination('search', 3, $this->params); ?>
 			<?php endif; ?>
 			</th>
 		</tr>

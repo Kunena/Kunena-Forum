@@ -708,6 +708,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function pollvote() {
+		$app = JFactory::getApplication ();
 		$vote	= JRequest::getInt('kpollradio', '');
 		$id = JRequest::getInt ( 'kpoll-id', 0 );
 
@@ -715,5 +716,9 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
+		
+		// still on work on progress
+		
+		return;
   }
 }

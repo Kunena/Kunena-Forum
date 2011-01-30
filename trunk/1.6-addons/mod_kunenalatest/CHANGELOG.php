@@ -30,6 +30,11 @@ Legend:
 
 KunenaLatest 1.6.3-DEV
 
+23-January-2010 LDA(svens)
+^ [#24560] update de-DE (thanks rich)
+^ [#24560] update ru-RU (thanks Zarkos)
+^ [#24560] update fi-FI (thanks Mortti)
+
 23-January-2010 Xillibit
 # [#24416] Make tooltips visible when you choose others models than latestposts and latesttopics (Part 2)
 

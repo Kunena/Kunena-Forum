@@ -20,6 +20,7 @@
 	</files>
 	
 	<languages folder="languages">
+		<language tag="de-DE">de-DE.mod_kunenasearch.ini</language>
 		<language tag="en-GB">en-GB.mod_kunenasearch.ini</language>
 		<language tag="fr-FR">fr-FR.mod_kunenasearch.ini</language>
 	</languages>

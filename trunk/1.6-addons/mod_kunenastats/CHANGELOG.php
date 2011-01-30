@@ -30,6 +30,11 @@ Legend:
 
 KunenaStats 1.6.2
 
+23-January-2010 LDA(svens)
+^ [#24560] update de-DE (thanks rich)
+^ [#24560] update ru-RU (thanks Zarkos)
+^ [#24560] update fi-FI (thanks Mortti)
+
 25-December-2010 fxstein
 ^ [#20095] Updated version info to 1.6.2 stable
 ^ [#23293] Replace hard coded version info in language files with auto expansion

@@ -31,6 +31,10 @@ Legend:
 
 JxFinder Kunena Plugin 1.6.0b
 
+23-January-2010 LDA(svens)
++ [#24560] added ru-RU (thanks Zarkos)
+^ [#24560] moved en-GB to languages folder
+
 26-Sep-2010 fxstein
 + [#22597] Initial version
 

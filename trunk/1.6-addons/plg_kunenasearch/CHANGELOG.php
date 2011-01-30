@@ -28,6 +28,10 @@ Legend:
 
 KunenaSearch 1.6.3
 
+23-January-2010 LDA(svens)
+^ [#24560] update ru-RU (thanks Zarkos)
++ [#24560] added fi-FI (thanks Mortti)
+
 2-January-2011 fxstein
 ^ [#20138] Updated version info 1.6.3-DEV
 + [#23293] Load Kunena language files during init

@@ -24,6 +24,10 @@ class modKunenaLatest {
 			$this->document->addStyleSheet ( JURI::root (true) . '/modules/mod_kunenalatest/tmpl/css/kunenalatest.css' );
 			self::$cssadded = true;
 		}
+		$me = KunenaFactory::getUser();
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$hash = md5(serialize($this->params));
+		if ($cache->start("display.{$me->userid}.{$hash}", 'mod_kunenalatest')) return;
 
 		// Convert module parameters into topics view parameters
 		$this->params->set('limitstart', 0);
@@ -91,5 +95,6 @@ class modKunenaLatest {
 
 		// Display topics view
 		KunenaForum::display('topics', $layout, null, $this->params);
+		$cache->end();
 	}
 }

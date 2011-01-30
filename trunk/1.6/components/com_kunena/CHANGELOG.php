@@ -35,6 +35,10 @@ Kunena 1.6.3
 
 29-January-2010 Matias
 # [#24656] CommunityBuilder: fix performance issues from loading users one by one (CB1.4+)
+^ [#15886] Merged revisions 4298-4317 from /branches/1.6.3-language-LDAsvens-2011-01-22
+
+29-January-2011 svens(LDA)
+^ [#24560] update fi-FI (thanks Mortti)
 
 28-January-2010 Severdia
 # [#24659] Fixed Google maps controls CSS
@@ -45,6 +49,9 @@ Kunena 1.6.3
 + [#24655] Add activity events for subscribe, favorite, sticky, lock, karma and onBeforePost/Reply/Edit
 + [#24656] CommunityBuilder: improve integration by adding support for all activity events (CB1.4+)
 # [#24656] Fix wrong parameters in onAfterThankyou and onAfterKarma
+
+27-January-2011 svens(LDA)
+^ [#24560] update ru-RU (thanks Zarkos)
 
 27-January-2010 Xillibit
 # [#24272] When you want edit an anouncement unpublished, the forms is empty (Part 2)

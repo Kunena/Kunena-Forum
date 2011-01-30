@@ -220,23 +220,57 @@ class CKunenaStats {
 		}
 	}
 
-	function loadPollStats($override=false) {
+ 	/**
+	* Get the better votes in polls
+	* @return int
+	*/
+   protected function getTopVotes($PopPollsCount)
+   {
+		$query = "SELECT SUM(o.votes) AS total
+					FROM #__kunena_polls AS p
+					LEFT JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
+					GROUP BY p.threadid
+					ORDER BY total
+					DESC ";
+		$this->_db->setQuery($query,0,$PopPollsCount);
+		$votecount = $this->_db->loadResult();
+		KunenaError::checkDatabaseError();
+
+		return $votecount;
+	}
+	/**
+	* Get the better polls
+	* @return Array
+	*/
+	protected function getTopPolls($PopPollsCount)
+	{
+		$query = "SELECT q.catid, q.id,p.*, SUM(o.votes) AS total
+					FROM #__kunena_polls AS p
+					INNER JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
+					INNER JOIN #__kunena_messages AS q ON p.threadid = q.id
+					GROUP BY p.threadid
+					ORDER BY total DESC";
+		$this->_db->setQuery($query,0,$PopPollsCount);
+	 	$toppolls = $this->_db->loadObjectList();
+		KunenaError::checkDatabaseError();
+
+		return $toppolls;
+	}
+
+	public function loadPollStats($override=false) {
 		if (! $this->showpoppollstats && ! $override)
 			return;
 
 		if (!$override) $PopPollsCount = $this->_config->poppollscount;
 		else $PopPollsCount = $override;
 
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-  		$kunena_polls =& CKunenaPolls::getInstance();
-
 		if (count($this->toppolls) < $PopPollsCount) {
-			$this->toppolls = $kunena_polls->get_top_five_polls ( $PopPollsCount );
-			$this->toppollvotes = $kunena_polls->get_top_five_votes ( $PopPollsCount );
+			$this->toppolls = $this->getTopPolls ( $PopPollsCount );
+			$this->toppollvotes = $this->getTopVotes ( $PopPollsCount );
 		}
 	}
 
-	function loadThanksStats($override=false) {
+	public function loadThanksStats($override=false) {
 		if (! $this->showpopthankyoustats && ! $override)
 			return;
 

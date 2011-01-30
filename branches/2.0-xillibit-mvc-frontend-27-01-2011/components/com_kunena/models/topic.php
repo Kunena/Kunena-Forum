@@ -15,6 +15,7 @@ kimport('kunena.forum.category.helper');
 kimport('kunena.forum.topic.helper');
 kimport('kunena.forum.message.helper');
 kimport('kunena.user.helper');
+kimport('kunena.forum.poll.helper');
 
 /**
  * Topic Model for Kunena
@@ -140,5 +141,20 @@ class KunenaModelTopic extends KunenaModel {
 		$moderators = $this->getCategory()->getModerators(false);
 		if ( !empty($moderators) ) KunenaUserHelper::loadUsers($moderators);
 		return $moderators;
+	}
+
+	public function getPolldata() {
+		$data = KunenaForumPollHelper::getPollData($this->getState ( 'item.id'));
+		return $data;
+	}
+
+	public function getVoters() {
+		$voters = KunenaForumPollHelper::getTotalVoters();
+		return $voters;
+	}
+
+	public function getUsersvoted() {
+		$usersvoted = KunenaForumPollHelper::getUsersVotes($this->getState ( 'item.id'));
+		return $usersvoted;
 	}
 }

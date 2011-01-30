@@ -706,4 +706,14 @@ class KunenaControllerTopic extends KunenaController {
 		}
 		return true;
 	}
+
+	public function pollvote() {
+		$vote	= JRequest::getInt('kpollradio', '');
+		$id = JRequest::getInt ( 'kpoll-id', 0 );
+
+		if (!JRequest::checkToken()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+  }
 }

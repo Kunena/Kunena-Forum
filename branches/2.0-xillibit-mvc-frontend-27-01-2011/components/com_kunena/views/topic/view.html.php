@@ -359,12 +359,16 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function displayPoll() {
-		if ($this->config->pollenabled == "1" && $this->topic->poll_id) {
-			if ( $this->category->allow_polls ) {
-				require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
-				$kunena_polls = CKunenaPolls::getInstance();
-				$kunena_polls->showPollbox();
-			}
+		// need to check if poll is allowed in this category
+		if ($this->config->pollenabled == "1" && $this->topic->poll_id && $this->category->allow_polls) {
+			$this->polldata = $this->get('Polldata');
+			$this->nbvoters = $this->get('Voters');
+			$this->usersvoted = $this->get('Usersvoted');
+
+			// if user has already voted we show this view
+			//echo $this->loadTemplate("pollresults");
+			// if the user hasn't yet voted you show this view
+			echo $this->loadTemplate("poll");
 		}
 	}
 

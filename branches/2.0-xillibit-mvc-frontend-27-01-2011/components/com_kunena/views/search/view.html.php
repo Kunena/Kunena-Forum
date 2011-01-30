@@ -95,4 +95,54 @@ class KunenaViewSearch extends KunenaView {
 
 		parent::display ();
 	}
+
+	function getPagination($function, $maxpages) {
+		/*$limit = $this->state->get ( 'list.limit' );
+	 	$page = floor ( $this->state->get ( 'list.start' ) / $limit ) + 1;
+		$totalpages = max(1, floor ( ($this->total-1) / $limit ) + 1);
+		$q = $this->state->get('com_kunena.searchword');  */
+		$urlparams=$this->get('UrlParams');
+
+		if ($page == 0)
+			$page ++;
+		$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
+		$endpage = $startpage + $maxpages;
+		if ($endpage > $totalpages) {
+			$startpage = ($totalpages - $maxpages) < 1 ? 1 : $totalpages - $maxpages;
+			$endpage = $totalpages;
+		}
+
+		$output = '<ul class="kpagination">';
+		$output .= '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
+
+		if ($startpage > 1) {
+			if ($endpage < $totalpages)
+				$endpage --;
+			$output .= '<li>' . CKunenaLink::GetSearchLink ( $function, $q, 0, $limit, 1, $urlparams, $rel = 'nofollow' ) . '</li>';
+
+			if ($startpage > 2) {
+				$output .= '<li class="more">...</li>';
+			}
+		}
+
+		for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
+			if ($page == $i) {
+				$output .= '<li class="active">' . $i . '</li>';
+			} else {
+				$output .= '<li>' . CKunenaLink::GetSearchLink ( $function, $q, ($i - 1) * $limit, $limit, $i, $urlparams, $rel = 'nofollow' ) . '</li>';
+			}
+		}
+
+		if ($endpage < $totalpages) {
+			if ($endpage < $totalpages - 1) {
+				$output .= '<li class="more">...</li>';
+			}
+
+			$output .= '<li>' . CKunenaLink::GetSearchLink ( $function, $q, ($totalpages - 1) * $limit, $limit, $totalpages, $urlparams, $rel = 'nofollow' ) . '</li>';
+
+		}
+
+		$output .= '</ul>';
+		return $output;
+	}
 }

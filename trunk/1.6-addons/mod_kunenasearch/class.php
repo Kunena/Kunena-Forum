@@ -10,9 +10,11 @@
 defined('_JEXEC') or die('Restricted access');
 
 class modKunenaSearch {
-	public function __construct($params) {	
+	public function __construct($params) {
 	$this->document = JFactory::getDocument ();
-	
+
+	require_once (KUNENA_PATH_LIB . '/kunena.link.class.php');
+
 	$this->ksearch_button			= $params->get('ksearch_button', '');
 	$this->ksearch_button_pos		= $params->get('ksearch_button_pos', 'right');
 	$this->ksearch_button_txt	 	= $params->get('ksearch_button_txt', JText::_('Search'));

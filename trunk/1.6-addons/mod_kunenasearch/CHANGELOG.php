@@ -30,6 +30,9 @@ Legend:
 
 KunenaSearch 1.6.3-DEV
 
+30-January-2010 Xillibit
+# [#23929] Fatal Error in Kunena Search Module
+
 23-January-2010 LDA(svens)
 ^ [#24560] update de-DE (thanks rich)
 + [#24560] added ru-RU (thanks zarkos)

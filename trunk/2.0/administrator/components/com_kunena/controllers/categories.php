@@ -26,6 +26,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	public function __construct($config = array()) {
 		parent::__construct($config);
 		$this->baseurl = 'index.php?option=com_kunena&view=categories';
+		$this->baseurl2 = 'index.php?option=com_kunena&view=categories';
 	}
 
 	function lock() {
@@ -97,8 +98,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$id = array_shift($cid);
-		$this->setRedirect(KunenaRoute::_($this->baseurl."&catid={$id}&layout=new", false));
+		$id = (int)array_shift($cid);
+		$this->setRedirect(KunenaRoute::_($this->baseurl2."&layout=create&catid={$id}", false));
 	}
 
 	function edit() {
@@ -114,7 +115,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		} else {
-			$this->setRedirect(KunenaRoute::_($this->baseurl."&catid={$id}", false));
+			$this->setRedirect(KunenaRoute::_($this->baseurl2."&layout=edit&catid={$id}", false));
 		}
 	}
 

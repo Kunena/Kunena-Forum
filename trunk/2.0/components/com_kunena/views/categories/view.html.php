@@ -68,6 +68,26 @@ class KunenaViewCategories extends KunenaView {
 		}
 	}
 
+	function displayManage($tpl) {
+		$admin = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
+		if (empty($admin)) {
+			$this->setError(JText::_('COM_KUNENA_NO_ACCESS'));
+			$this->displayNoAccess($this->getErrors());
+			return;
+		}
+
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena',JPATH_ADMINISTRATOR);
+
+		$this->assignRef ( 'categories', $this->get ( 'AdminCategories' ) );
+		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$header = JText::_('COM_KUNENA_ADMIN');
+		$this->assign ( 'header', $header );
+		$this->setTitle ( $header );
+
+		$this->display ($tpl);
+	}
+
 	public function getCategoryIcon($category, $thumb = false) {
 		if (! $thumb) {
 			if ($this->config->shownew && $this->me->userid != 0) {

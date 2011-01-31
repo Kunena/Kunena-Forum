@@ -45,9 +45,9 @@ class KunenaController extends JController {
 		$starttime = JProfiler::getmicrotime();
 
 		$app = JFactory::getApplication();
-		$lang = JFactory::getLanguage();
 		// FIXME: loading languages in Joomla is SLOW (30ms)!
 		if ($app->isAdmin()) {
+			$lang = JFactory::getLanguage();
 			$lang->load('com_kunena',JPATH_SITE);
 			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 		}

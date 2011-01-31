@@ -13,6 +13,8 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.model' );
 kimport ( 'kunena.forum.category.helper' );
 
+require_once KPATH_ADMIN . '/models/categories.php';
+
 /**
  * Categories Model for Kunena
  *
@@ -20,17 +22,21 @@ kimport ( 'kunena.forum.category.helper' );
  * @subpackage	com_kunena
  * @since		2.0
  */
-class KunenaModelCategories extends KunenaModel {
+class KunenaModelCategories extends KunenaAdminModelCategories {
 	protected $_items = false;
 
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
-		$catid = $this->getInt ( 'catid', 0 );
-		$this->setState ( 'item.id', $catid );
-
 		$layout = $this->getCmd ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
+
+		// Administrator state
+		if ($layout == 'manage') {
+			return parent::populateState();
+		}
+
+		// User state
+		$catid = $this->getInt ( 'catid', 0 );
+		$this->setState ( 'item.id', $catid );
 	}
 
 	public function getCategory() {

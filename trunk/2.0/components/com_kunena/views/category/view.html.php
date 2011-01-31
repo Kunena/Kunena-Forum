@@ -89,8 +89,33 @@ class KunenaViewCategory extends KunenaView {
 
 			$this->setTitle( JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', $this->category->name) . " ({$page}/{$pages})" );
 
-			parent::display ();
+			$this->display ();
 		}
+	}
+
+	function displayCreate() {
+		$this->displayEdit();
+	}
+
+	function displayEdit() {
+		$this->assignRef ( 'category', $this->get ( 'AdminCategory' ) );
+		if ($this->category === false) {
+			$this->setError(JText::_('COM_KUNENA_NO_ACCESS'));
+			$this->displayNoAccess($this->getErrors());
+			return;
+		}
+
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena',JPATH_ADMINISTRATOR);
+
+		$this->assignRef ( 'me', KunenaFactory::getUser() );
+		$this->assignRef ( 'options', $this->get ( 'AdminOptions' ) );
+		$this->assignRef ( 'moderators', $this->get ( 'AdminModerators' ) );
+		$header = $this->category->exists() ? JText::sprintf('COM_KUNENA_CATEGORY_EDIT', $this->escape($this->category->name)) : JText::_('COM_KUNENA_CATEGORY_NEW');
+		$this->assign ( 'header', $header );
+		$this->setTitle ( $header );
+
+		$this->display ();
 	}
 
 	function displayAnnouncement() {

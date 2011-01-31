@@ -89,6 +89,30 @@ class KunenaModel extends JModel {
 	protected function populateState() {
 	}
 
+	/**
+	 * Escapes a value for output in a view script.
+	 *
+	 * If escaping mechanism is one of htmlspecialchars or htmlentities.
+	 *
+	 * @param  mixed $var The output to escape.
+	 * @return mixed The escaped value.
+	 */
+	function escape($var) {
+		if (in_array ( $this->_escape, array ('htmlspecialchars', 'htmlentities' ) )) {
+			return call_user_func ( $this->_escape, $var, ENT_COMPAT, 'UTF-8' );
+		}
+		return call_user_func ( $this->_escape, $var );
+	}
+
+	/**
+	 * Sets the _escape() callback.
+	 *
+	 * @param mixed $spec The callback for _escape() to use.
+	 */
+	function setEscape($spec) {
+		$this->_escape = $spec;
+	}
+
 	protected function getParameters() {
 		// If we are not in embedded mode, get variable from application
 		if (!$this->embedded) {

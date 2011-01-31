@@ -41,6 +41,7 @@ Kunena 2.0.0-DEV
 ^ [#22569] Rename Administrator controllers, models and views to KunenaAdminXXX to avoid name conflicts
 ^ [#22569] Rename Kunenareport view into Report
 - [#22570] Remove deprecated language loading code
+^ [#22569] Move frontend category manager into categories/manage and category/create or category/edit
 
 29-January-2011 fxstein
 + [#22792] Additional index on Topics table to speed up no replies view.

@@ -20,7 +20,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		if ($this->state->get('item.id')) $this->setLayout ('edit');
 		switch ($this->getLayout ()) {
-			case 'new' :
+			case 'create' :
 			case 'edit' :
 				$this->displayEdit ();
 				$this->setToolBarEdit();
@@ -35,14 +35,14 @@ class KunenaAdminViewCategories extends KunenaView {
 
 	function displayEdit() {
 		$this->me = KunenaFactory::getUser();
-		$this->assignRef ( 'category', $this->get ( 'Item' ) );
-		$this->assignRef ( 'options', $this->get ( 'Options' ) );
-		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
+		$this->assignRef ( 'category', $this->get ( 'AdminCategory' ) );
+		$this->assignRef ( 'options', $this->get ( 'AdminOptions' ) );
+		$this->assignRef ( 'moderators', $this->get ( 'AdminModerators' ) );
 	}
 
 	function displayDefault() {
-		$this->assignRef ( 'categories', $this->get ( 'Items' ) );
-		$this->assignRef ( 'navigation', $this->get ( 'Navigation' ) );
+		$this->assignRef ( 'categories', $this->get ( 'AdminCategories' ) );
+		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
 	}
 
 	protected function setToolBarEdit() {

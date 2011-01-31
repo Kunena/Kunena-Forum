@@ -13,6 +13,8 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.controller' );
 kimport ( 'kunena.forum.category.helper' );
 
+require_once KPATH_ADMIN . '/controllers/categories.php';
+
 /**
  * Kunena Categories Controller
  *
@@ -20,7 +22,14 @@ kimport ( 'kunena.forum.category.helper' );
  * @subpackage	com_kunena
  * @since		2.0
  */
-class KunenaControllerCategories extends KunenaController {
+class KunenaControllerCategories extends KunenaAdminControllerCategories {
+	protected $baseurl = null;
+
+	public function __construct($config = array()) {
+		parent::__construct($config);
+		$this->baseurl = 'index.php?option=com_kunena&view=categories&layout=manage';
+		$this->baseurl2 = 'index.php?option=com_kunena&view=category';
+	}
 
 	function markread() {
 		$app = JFactory::getApplication ();

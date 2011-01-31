@@ -16,13 +16,13 @@ kimport('kunena.model');
 kimport('kunena.user.helper');
 
 /**
- * Categories Model for Kunena
+ * Category Model for Kunena
  *
  * @package		Kunena
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaAdminModelCategories extends KunenaModel {
+class KunenaAdminModelCategory extends KunenaModel {
 	protected $__state_set = false;
 	protected $_admincategories = false;
 	protected $_admincategory = false;
@@ -34,29 +34,6 @@ class KunenaAdminModelCategories extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
-		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.categories.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
-		$this->setState ( 'list.limit', $value );
-
-		$value = $this->getUserStateFromRequest ( 'com_kunena.categories.list.ordering', 'filter_order', 'ordering', 'cmd' );
-		$this->setState ( 'list.ordering', $value );
-
-		$value = $this->getUserStateFromRequest ( "com_kunena.categories.list.start", 'limitstart', 0, 'int' );
-		$this->setState ( 'list.start', $value );
-
-		$value = $this->getUserStateFromRequest ( 'com_kunena.categories.list.direction', 'filter_order_Dir', 'asc', 'word' );
-		if ($value != 'asc')
-			$value = 'desc';
-		$this->setState ( 'list.direction', $value );
-
-		$value = $this->getUserStateFromRequest ( 'com_kunena.categories.list.search', 'search', '', 'string' );
-		$this->setState ( 'list.search', $value );
-
-		$value = $this->getUserStateFromRequest ( "com_kunena.categories.list.levels", 'levellimit', 10, 'int' );
-		$this->setState ( 'list.levels', $value );
-
 		$catid = $this->getInt ( 'catid', 0 );
 		$layout = $this->getWord ( 'layout', 'edit' );
 		if ($layout == 'edit') {
@@ -67,72 +44,6 @@ class KunenaAdminModelCategories extends KunenaModel {
 		}
 		$this->setState ( 'item.id', $catid );
 		$this->setState ( 'item.parent_id', $parent_id );
-	}
-
-	public function getAdminCategories() {
-		if ( $this->_admincategories === false ) {
-			$me = KunenaFactory::getUser();
-			$params = array (
-				'ordering'=>$this->getState ( 'list.ordering' ),
-				'direction'=>$this->getState ( 'list.direction' ) == 'asc' ? 1 : -1,
-				'search'=>$this->getState ( 'list.search' ),
-				'unpublished'=>1,
-				'action'=>'admin');
-			$categories = KunenaForumCategoryHelper::getChildren(0, $this->getState ( 'list.levels' ), $params);
-			$this->setState ( 'list.total', count($categories) );
-			$this->_admincategories = array_slice ( $categories, $this->getState ( 'list.start' ), $this->getState ( 'list.limit' ) );
-			$acl = JFactory::getACL ();
-			$admin = 0;
-			foreach ($this->_admincategories as $category) {
-				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
-				if (empty($siblings)) {
-					// FIXME: deal with orphaned categories
-					$orphans = true;
-					$category->parent_id = 0;
-					$category->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $category->name;
-				}
-				$category->up = $me->isAdmin($category->parent_id) && reset($siblings) != $category->id;
-				$category->down = $me->isAdmin($category->parent_id) && end($siblings) != $category->id;
-				$category->reorder = $me->isAdmin($category->parent_id);
-				if ($category->accesstype != 'none') {
-					$category->pub_group = JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($category->accesstype));
-				} else if ($category->pub_access == 0) {
-					$category->pub_group = JText::_ ( 'COM_KUNENA_EVERYBODY' );
-				} else if ($category->pub_access == - 1) {
-					$category->pub_group = JText::_ ( 'COM_KUNENA_ALLREGISTERED' );
-				} else if ($category->pub_access == 1) {
-					$category->pub_group = JText::_ ( 'COM_KUNENA_NOBODY' );
-				} else {
-					// FIXME: Add Joomla 1.6 support
-					$category->pub_group = JText::_ ( $acl->get_group_name($category->pub_access));
-				}
-				if ($category->accesstype != 'none') {
-					$category->admin_group = '';
-				} else {
-					$category->admin_group = JText::_ ( $acl->get_group_name($category->admin_access ));
-
-				}
-				if ($me->isAdmin($category->id) && $category->isCheckedOut(0)) {
-					$category->editor = KunenaFactory::getUser($category->checked_out)->getName();
-				} else {
-					$category->checked_out = 0;
-					$category->editor = '';
-				}
-				$admin += $me->isAdmin($category->id);
-			}
-			$this->setState ( 'list.count.admin', $admin );
-		}
-		if (isset($orphans)) {
-			$app = JFactory::getApplication ();
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN_DESC' ), 'notice' );
-		}
-		return $this->_admincategories;
-	}
-
-	public function getAdminNavigation() {
-		jimport ( 'joomla.html.pagination' );
-		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		return $navigation;
 	}
 
 	public function getAdminCategory() {

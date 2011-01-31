@@ -15,6 +15,8 @@ kimport('kunena.forum.category.helper');
 kimport('kunena.forum.topic.helper');
 kimport('kunena.user.helper');
 
+require_once KPATH_ADMIN . '/models/category.php';
+
 /**
  * Category Model for Kunena
  *
@@ -22,11 +24,19 @@ kimport('kunena.user.helper');
  * @subpackage	com_kunena
  * @since		2.0
  */
-class KunenaModelCategory extends KunenaModel {
+class KunenaModelCategory extends KunenaAdminModelCategory {
 	protected $topics = false;
 	protected $items = false;
 
 	protected function populateState() {
+		$layout = $this->getCmd ( 'layout', 'default' );
+		$this->setState ( 'layout', $layout );
+
+		// Administrator state
+		if ($layout == 'create' || $layout == 'edit') {
+			return parent::populateState();
+		}
+
 		$app = JFactory::getApplication ();
 		$config = KunenaFactory::getConfig ();
 		$me = KunenaUserHelper::get();

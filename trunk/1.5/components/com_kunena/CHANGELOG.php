@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.14
 
+31-January-2011 fxstein
+^ [#24700] Update version info to 1.5.14 (comunitˆ)
+
 30-January-2011 Matias
 * [#24563] Security (High/High): SQL injection vulnerability in search (thanks Adam Nichols)
 

@@ -3,7 +3,7 @@
  * @version		$Id: install.php 1244 2009-12-02 04:10:31Z mahagr$
  * @package		Kunena
  * @subpackage	com_kunena
- * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
+ * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved..
  * @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
  * @link		http://www.kunena.org
  */

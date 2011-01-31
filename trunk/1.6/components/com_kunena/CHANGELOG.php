@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2008 - 2011 www.kunena.org All rights reserved
+* @Copyright (C) 2008 - 2011 www.kunena.org All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -32,6 +32,11 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.3
+
+30-January-2010 Severdia
+# [#22921] Updated Template Manager icon in menu
+^ [#23898] Updated 2011 dates and .org instead of .com
+# [#24687] Fixed button text colr when skinner is activated
 
 30-January-2010 Matias
 * [#24563] Security (High/High): SQL injection vulnerability in search (thanks Adam Nichols)

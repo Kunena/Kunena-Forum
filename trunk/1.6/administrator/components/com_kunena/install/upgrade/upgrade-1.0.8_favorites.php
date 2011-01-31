@@ -3,7 +3,7 @@
  * @version $Id$
  * Kunena Component
  * @package Kunena
- * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+ * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.bestofjoomla.com
  *

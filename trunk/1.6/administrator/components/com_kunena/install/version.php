@@ -3,7 +3,7 @@
  * @version		$Id: install.php 1244 2009-12-02 04:10:31Z mahagr$
  * @package		Kunena
  * @subpackage	com_kunena
- * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
+ * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved..
  * @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
  * @link		http://www.kunena.org
  */
@@ -105,7 +105,7 @@ class KunenaVersion
 	/**
 	* Retrieve copyright information as string.
 	*
-	* @return string "© 2008-2010 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	* @return string "© 2008-2010 Copyright: Kunena Team. All rights reserved.. | License: GNU General Public License"
 	*/
 	function getCopyrightHTML()
 	{
@@ -119,7 +119,7 @@ class KunenaVersion
 	* Retrieve installed Kunena version, copyright and license as string.
 	*
 	* @return string "Installed version: Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname] |
-	*		© 2008-2010 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	*		© 2008-2010 Copyright: Kunena Team. All rights reserved.. | License: GNU General Public License"
 	*/
 	function getLongVersionHTML()
 	{

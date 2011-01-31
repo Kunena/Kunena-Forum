@@ -4,12 +4,12 @@
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+* @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 *
 * Based on FireBoard Component
-* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
 **/
@@ -18,7 +18,7 @@
 # CATEGORY: Parser.TagParser                 DEVELOPMENT DATUM: 13.11.2007 #
 # VERSION:  00.08.00                         LAST EDIT   DATUM: 12.12.2007 #
 # FILENAME: kunena.parser.base.php                                                 #
-# AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
+# AUTOR:    Miro Dietiker, MD Systems, All rights reserved.                 #
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
 # CONTACT: m.dietiker@md-systems.ch        � 2007 Miro Dietiker 13.11.2007 #
 ############################################################################

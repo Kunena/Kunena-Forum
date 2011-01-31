@@ -4,7 +4,7 @@
  * Kunena Component - KunenaRoute
  * @package Kunena
  *
- * @Copyright (C) 2010 www.kunena.org All rights reserved
+ * @Copyright (C) 2010 www.kunena.org All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/

@@ -39,6 +39,7 @@ Kunena 2.0.0-DEV
 + [#22569] Add empty controller and model to common view
 + [#22569] Common/Default: Add html/bbcode modes
 # [#22569] KunenaAdminModelCategories class: use more specific userstate to avoid conflicts
++ [#22569] Categories/Default: add links to category manager
 
 30-January-2011 Matias
 # [#23443] KunenaForum::display(): Fix fatal error

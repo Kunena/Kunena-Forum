@@ -59,9 +59,8 @@ class KunenaAdminModelCategories extends KunenaModel {
 
 		$catid = $this->getInt ( 'catid', 0 );
 		$layout = $this->getWord ( 'layout', 'edit' );
-		if ($layout == 'edit') {
-			$parent_id = 0;
-		} else {
+		$parent_id = 0;
+		if ($layout == 'create') {
 			$parent_id = $catid;
 			$catid = 0;
 		}
@@ -78,7 +77,13 @@ class KunenaAdminModelCategories extends KunenaModel {
 				'search'=>$this->getState ( 'list.search' ),
 				'unpublished'=>1,
 				'action'=>'admin');
-			$categories = KunenaForumCategoryHelper::getChildren(0, $this->getState ( 'list.levels' ), $params);
+			$catid = $this->getState ( 'item.id', 0 );
+			$categories = array();
+			if ($catid) {
+				$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'list.levels' ), array('unpublished'=>1, 'action'=>'none'));
+				$categories[] = KunenaForumCategoryHelper::get($catid);
+			}
+			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'list.levels' ), $params));
 			$this->setState ( 'list.total', count($categories) );
 			$this->_admincategories = array_slice ( $categories, $this->getState ( 'list.start' ), $this->getState ( 'list.limit' ) );
 			$acl = JFactory::getACL ();

@@ -404,6 +404,7 @@ PX		EM			PCT			PT
 	vertical-align: middle;
 }
 #Kunena td.ktopicmodule {
+	padding: 0;
 }
 #Kunena td.ktopicmoderation {
 	width: 1%;

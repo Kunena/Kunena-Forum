@@ -114,6 +114,7 @@ class KunenaController extends JController {
 			if ($app->isSite() && $vFormat=='html') {
 				$common = $this->getView ( 'common', $vFormat, '', array ('base_path' => $this->_basePath ) );
 				$common->starttime = $this->starttime;
+				$common->setModel ( $this->getModel ( 'common' ), true );
 				$view->common = $common;
 			}
 

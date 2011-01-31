@@ -20,9 +20,4 @@ kimport ( 'kunena.model' );
  * @since		2.0
  */
 class KunenaModelHome extends KunenaModel {
-	protected function populateState() {
-	}
-
-	public function getItem() {
-	}
 }

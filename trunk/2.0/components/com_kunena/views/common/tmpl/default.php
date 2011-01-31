@@ -13,11 +13,18 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kblock kdefault">
 	<div class="kheader">
-		<h2><?php echo $this->header; ?></h2>
+		<h2><?php echo $this->escape($this->header); ?></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<?php echo $this->body; ?>
+			<div class="kcontent">
+			<?php
+			if (!empty($this->html)) :
+				echo $this->body;
+			else :
+				echo KunenaHtmlParser::parseBBCode($this->body);
+			endif; ?>
+			</div>
 		</div>
 	</div>
 </div>

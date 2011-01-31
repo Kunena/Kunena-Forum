@@ -145,6 +145,7 @@ class KunenaViewCategories extends KunenaView {
 	function displayInfoMessage() {
 		$this->common->header = $this->escape($this->category->name);
 		$this->common->body = '<p>'.JText::sprintf('COM_KUNENA_VIEW_CATEGORIES_INFO_EMPTY', $this->escape($this->category->name)).'</p>';
+		$this->common->html = true;
 		echo $this->common->display('default');
 	}
 }

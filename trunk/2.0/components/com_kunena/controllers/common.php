@@ -13,13 +13,13 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.controller' );
 
 /**
- * Kunena Credits Controller
+ * Kunena Common Controller
  *
  * @package		Kunena
  * @subpackage	com_kunena
  * @since		2.0
  */
-class KunenaControllerCredits extends KunenaController {
+class KunenaControllerCommon extends KunenaController {
 	public function __construct($config = array()) {
 		parent::__construct($config);
 	}

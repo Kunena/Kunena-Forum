@@ -36,6 +36,9 @@ Kunena 2.0.0-DEV
 31-January-2011 Matias
 + [#22792] Add new KunenaHtmlPagination class
 # [#22569] Fix some bugs in frontend category manager
++ [#22569] Add empty controller and model to common view
++ [#22569] Common/Default: Add html/bbcode modes
+# [#22569] KunenaAdminModelCategories class: use more specific userstate to avoid conflicts
 
 30-January-2011 Matias
 # [#23443] KunenaForum::display(): Fix fatal error

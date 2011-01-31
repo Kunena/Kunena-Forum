@@ -21,10 +21,12 @@ class KunenaViewCommon extends KunenaView {
 	public $catid = 0;
 
 	function display($layout = null, $tpl = null) {
+		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		return $this->displayLayout($layout, $tpl);
 	}
 
 	function displayDefault($tpl = null) {
+		//$this->params = $this->state->get('params');
 		$result = $this->loadTemplate($tpl);
 		if (JError::isError($result)) {
 			return $result;

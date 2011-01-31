@@ -10,17 +10,18 @@
  */
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
+kimport ( 'kunena.model' );
 
 /**
- * Kunena Credits Controller
+ * Common Model for Kunena
  *
  * @package		Kunena
  * @subpackage	com_kunena
  * @since		2.0
  */
-class KunenaControllerCredits extends KunenaController {
-	public function __construct($config = array()) {
-		parent::__construct($config);
+class KunenaModelCommon extends KunenaModel {
+	protected function populateState() {
+		$params = $this->getParameters();
+		$this->setState ( 'params', $params );
 	}
 }

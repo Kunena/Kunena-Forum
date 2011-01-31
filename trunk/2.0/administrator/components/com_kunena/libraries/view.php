@@ -120,11 +120,13 @@ class KunenaView extends JView {
 
 	function displayNoAccess($errors = array()) {
 		$output = '';
-		foreach ($errors as $error) $output .= "<div>{$error}</div>";
+		foreach ($errors as $error) $output .= "<p>{$error}</p>";
 		$this->common->setLayout ( 'default' );
 		$this->common->assign ( 'header', JText::_('COM_KUNENA_ACCESS_DENIED'));
 		$this->common->assign ( 'body', $output);
+		$this->common->assign ( 'html', true);
 		$this->common->display();
+		$this->setTitle(JText::_('COM_KUNENA_ACCESS_DENIED'));
 	}
 
 	function displayPathway() {

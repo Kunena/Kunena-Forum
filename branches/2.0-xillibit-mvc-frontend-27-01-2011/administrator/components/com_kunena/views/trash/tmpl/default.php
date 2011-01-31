@@ -22,7 +22,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 				<tr>
 					<td class="left" width="90%">
 						<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
-						<input type="text" name="search" id="search" value="<?php echo kescape($lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" />
+						<input type="text" name="search" id="search" value="<?php echo $this->escape($this->state->get('list.search'));?>" class="text_area" onchange="document.adminForm.submit();" />
 						<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
 						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
 					</td>

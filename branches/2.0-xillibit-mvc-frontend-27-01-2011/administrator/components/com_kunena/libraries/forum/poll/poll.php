@@ -128,17 +128,17 @@ class KunenaForumPoll extends JObject {
 		$this->_exists = false;
 
 		$db = JFactory::getDBO ();
-		$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->Quote($threadid)}";
+		$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
 		$db->query();
 		if (KunenaError::checkDatabaseError()) return;
 
-		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->Quote($threadid)}";
+		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$db->Quote($this->id)}";
 		$db->setQuery($query);
 		$db->query();
 		if (KunenaError::checkDatabaseError()) return;
 
-		return $results;
+		return $result;
 	}
 
 	public function update() {

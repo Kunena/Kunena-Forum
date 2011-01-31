@@ -110,20 +110,6 @@ class KunenaModelTrash extends KunenaModel {
 	}
 
 	/**
-	 * Method to get cids from session.
-	 *
-	 * @return	Array
-	 * @since	1.6
-	 */
-	protected function _getCids() {
-		// FIXME: this should be in state
-		$app = JFactory::getApplication ();
-		$ids = $app->getUserState('com_kunena.purge');
-
-		return $ids;
-	}
-
-	/**
 	 * Method to get details on selected items.
 	 *
 	 * @return	Array
@@ -132,7 +118,7 @@ class KunenaModelTrash extends KunenaModel {
 	public function getPurgeItems() {
 		kimport('kunena.error');
 		$kunena_db = &JFactory::getDBO ();
-		$ids = $this->_getCids();
+		$ids = $this->getState ( 'com_kunena.purge' );
 
 		$ids = implode ( ',', $ids );
 		// FIXME: new logic needed
@@ -150,7 +136,7 @@ class KunenaModelTrash extends KunenaModel {
 	 * @since	1.6
 	 */
 	public function getMd5() {
-		$ids = $this->_getCids();
+		$ids = $this->getState ( 'com_kunena.purge' );
 
 		return md5(serialize($ids));
 	}

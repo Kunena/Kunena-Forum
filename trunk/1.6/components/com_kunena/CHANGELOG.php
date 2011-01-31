@@ -44,6 +44,7 @@ Kunena 1.6.3
 # [#24687] Fixed button text color when skinner is activated
 ^ [#24688] Reverted publish/unpublish images to Joomla 1.5 defaults
 # [#24022] Fixed extra table spacing on module positions
+# [#24022] Added check for module position to hide row if no module published.
 
 30-January-2010 Matias
 * [#24563] Security (High/High): SQL injection vulnerability in search (thanks Adam Nichols)

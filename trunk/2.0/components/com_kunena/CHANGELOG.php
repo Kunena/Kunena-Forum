@@ -33,6 +33,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+31-January-2011 Matias
++ [#22792] Add new KunenaHtmlPagination class
+# [#22569] Fix some bugs in frontend category manager
+
 30-January-2011 Matias
 # [#23443] KunenaForum::display(): Fix fatal error
 # [#23443] Fix toggler behavior: only one small cookie which lives through browser session

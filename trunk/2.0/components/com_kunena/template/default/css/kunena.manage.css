@@ -69,6 +69,16 @@
 	line-height:22px;
 	margin:0 10px;
 }
+#Kunena .pagination ul {
+	display: block;
+	height:22px;
+	line-height:22px;
+	float: left;
+	margin:0 10px;
+}
+#Kunena .pagination li {
+	display: inline;
+}
 #Kunena .kadmin-sort {
 	margin: 5px 0;
 }

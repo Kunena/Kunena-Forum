@@ -130,8 +130,8 @@ class KunenaAdminModelCategories extends KunenaModel {
 	}
 
 	public function getAdminNavigation() {
-		jimport ( 'joomla.html.pagination' );
-		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
+		kimport ( 'kunena.html.pagination' );
+		$navigation = new KunenaHtmlPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
 		return $navigation;
 	}
 

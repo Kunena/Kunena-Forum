@@ -27,13 +27,16 @@ class CKunenaLatestX {
 
 	function __construct($func, $page = 0) {
 		$this->func = JString::strtolower ($func );
+		$this->userid = JRequest::getInt ( 'userid' );
+		if (!$this->userid) $this->userid = null;
 		$this->catid = 0;
 		$this->hasSubCats = '';
 		$this->mode = 'threads';
 		$this->header = '';
 
 		$this->db = JFactory::getDBO ();
-		$this->user = $this->my = JFactory::getUser ();
+		$this->user = JFactory::getUser ( $this->userid );
+		$this->my = JFactory::getUser ();
 		$this->myprofile = KunenaFactory::getUser ();
 		$this->session = KunenaFactory::getSession ();
 		$this->config = KunenaFactory::getConfig ();
@@ -50,11 +53,6 @@ class CKunenaLatestX {
 		$this->document = & JFactory::getDocument ();
 
 		$this->show_list_time = JRequest::getInt ( 'sel', $this->config->show_list_time );
-
-		// My latest is only available to users
-		if (! $this->user->id && $func == "mylatest") {
-			return;
-		}
 
 		$this->allow = 1;
 		$this->highlight = 0;
@@ -168,6 +166,11 @@ class CKunenaLatestX {
 	}
 
 	protected function _getMyLatest($posts = true, $fav = true, $sub = false) {
+		// Only available to users
+		if (! $this->user->id) {
+			return;
+		}
+
 		$subquery = array();
 		if (!$posts && !$fav && !$sub) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
 			FROM #__kunena_messages
@@ -229,6 +232,11 @@ class CKunenaLatestX {
 				$hold = '2,3';
 				break;
 			case 'user':
+				// Only available to users
+				if (! $this->user->id) {
+					return;
+				}
+
 				$user = 1;
 				break;
 			default:
@@ -274,6 +282,17 @@ class CKunenaLatestX {
 	}
 
 	function _getThankYouPosts($saidgot){
+		if($saidgot == 'got') {
+			$this->header = $this->title = JText::_('COM_KUNENA_THANKYOU_GOT');
+		} else {
+			$this->header = $this->title = JText::_('COM_KUNENA_THANKYOU_SAID');
+		}
+
+		// Only available to users
+		if (! $this->user->id) {
+			return;
+		}
+
 		kimport('thankyou');
 
 		$this->total = 10;//$limit default is on 10 TODO make adjustable
@@ -288,17 +307,16 @@ class CKunenaLatestX {
 			$this->loadids[$item->id] = $item->id;
 		}
 
-		if($saidgot == 'got') {
-			$this->header = $this->title = JText::_('COM_KUNENA_THANKYOU_GOT');
-		} else {
-			$this->header = $this->title = JText::_('COM_KUNENA_THANKYOU_SAID');
-		}
-
 		$this->order = 'field(a.id,'.implode ( ",", $this->loadids ).')';
 		$this->_common();
 	}
 
 	function _getSubCategories() {
+		// Only available to users
+		if (! $this->user->id) {
+			return;
+		}
+
 		$this->categories = array();
 		if (isset($this->total)) return;
 
@@ -630,6 +648,7 @@ class CKunenaLatestX {
 
 	function getPagination($func, $sel, $page, $totalpages, $maxpages) {
 		if ( $func != 'latest' ) $func = 'latest&do='.$func;
+		if ( $this->userid ) $func .= '&userid='.$this->userid;
 		$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
 		$endpage = $startpage + $maxpages;
 		if ($endpage > $totalpages) {
@@ -706,6 +725,7 @@ class CKunenaLatestX {
 
 		$this->document->setTitle ( $this->title . ' - ' . $this->config->board_title );
 
+		if (!isset($this->total)) $this->total = 0;
 		CKunenaTools::loadTemplate('/threads/latestx.php');
 	}
 }

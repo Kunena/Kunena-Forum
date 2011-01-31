@@ -155,7 +155,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<!-- Bulk Actions -->
 		<tr class="krow1">
 			<td colspan="7" class="kcol-first krowmoderation">
-				<?php echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow'); ?>
+				<?php
+				$user = $this->userid ? '&userid='.$this->userid : '';
+				echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func.$user , 'follow');
+				?>
 			</td>
 		</tr>
 		<!-- /Bulk Actions -->

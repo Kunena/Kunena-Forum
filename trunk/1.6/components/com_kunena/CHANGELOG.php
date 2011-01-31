@@ -33,9 +33,12 @@ Legend:
 
 Kunena 1.6.3
 
+31-January-2010 Matias
+# [#24690] Profile/Recent view: Fix bug where clicking on More shows your own posts instead of users
+
 30-January-2010 fxstein
 ^ [#23898] Updated kunena_upgrade.xml to use build variables
-^ [#23898] Updated 2011 dates (additional) 
+^ [#23898] Updated 2011 dates (additional)
 ^ [#24074] Update version info to 1.6.3 (Parlare)
 
 30-January-2010 Severdia

@@ -105,11 +105,11 @@ class KunenaVersion
 	/**
 	* Retrieve copyright information as string.
 	*
-	* @return string "© 2008-2010 Copyright: Kunena Team. All rights reserved.. | License: GNU General Public License"
+	* @return string "© 2008-2011 Copyright: Kunena Team. All rights reserved.. | License: GNU General Public License"
 	*/
 	function getCopyrightHTML()
 	{
-		return ': &copy; 2008-2010 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.org" target = "_blank">'
+		return ': &copy; 2008-2011 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.org" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_TEAM').'</a>  | '.JText::_('COM_KUNENA_VERSION_LICENSE')
 			.': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_GPL').'</a>';
@@ -119,7 +119,7 @@ class KunenaVersion
 	* Retrieve installed Kunena version, copyright and license as string.
 	*
 	* @return string "Installed version: Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname] |
-	*		© 2008-2010 Copyright: Kunena Team. All rights reserved.. | License: GNU General Public License"
+	*		© 2008-2011 Copyright: Kunena Team. All rights reserved.. | License: GNU General Public License"
 	*/
 	function getLongVersionHTML()
 	{

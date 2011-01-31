@@ -35,6 +35,7 @@ Kunena 1.6.3
 
 30-January-2010 fxstein
 ^ [#23898] Updated kunena_upgrade.xml to use build variables
+^ [#23898] Updated 2011 dates (additional) 
 
 30-January-2010 Severdia
 # [#22921] Updated Template Manager icon in menu

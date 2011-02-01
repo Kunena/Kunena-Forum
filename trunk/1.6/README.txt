@@ -14,20 +14,21 @@ PLEASE READ THIS ENTIRE FILE BEFORE INSTALLING Kunena @kunenaversion@!
 Introduction
 ============
 
-The Kunena Team is excited to announce the release of Kunena 1.6.2. This is a 
-maintenance release for Kunena 1.6 and all users are recommended to upgrade to 
-Kunena 1.6.2 (backup and testing are strongly recommended!).
+The Kunena Team is excited to announce the release of Kunena 1.6.3. This is a 
+maintenance & security release for Kunena 1.6 but its main goal is to provide 
+native support for Joomla! 1.6 and all users are recommended to upgrade to 
+Kunena 1.6.3 (backup and testing are strongly recommended!).
 Since the stable release of Kunena 1.6, the Kunena team has been focused on 
 fixing over 100 bugs; including fixing issues with CSS, router, API, HTML 
-validation, and usability. Official Kunena modules and plug-ins have been 
-updated as well as language translations.
+validation, issues with Joomla! 1.6 and usability. Official Kunena modules and 
+plug-ins have been updated as well as language translations.
 Kunena 1.6 marks a major milestone for the Kunena Project. A long list of open 
-source contributors have committed over 4,000 changes helping make Kunena the 
+source contributors have committed over 3,000 changes helping make Kunena the 
 leading forum solution for both Joomla 1.5 and 1.6. A long list of new features, 
 various optimizations, and code restructuring have resulted in the most advanced 
 version of Kunena to date.
-We continue to put a big emphasis on usability and ease of installation. 
-The installer has been further enhanced to allow for multiple installation and 
+We continue to put a big emphasis on usability and ease of installation. The 
+installer has been further enhanced to allow for multiple installation and 
 upgrade options. It performs incremental steps to avoid timeouts on slower hosts. 
 It automatically performs actions such as taking the forum offline during the 
 installation or upgrade and re-enables it after completing the install.
@@ -53,9 +54,9 @@ Improved Language Support:
 
 Included languages: Arabic, Brazilian Portuguese, Catalan, Chinese, Dutch, 
 Finnish, French, German, Greek, Hungarian, Italian, Lithuanian, Macedonian, 
-Polish, Russian, Serbian, Spanish, Taiwanese, Thai, Turkish, Vietnamese, 
-Yugoslavian (more to come)
-Uses standard Joomla 1.6 language files (backwards compatible with Joomla 1.5.x)
+Polish, Russian, Serbian, Spanish, Taiwanese, Thai, Turkish, Vietnamese and 
+Yugoslavian.
+Uses standard Joomla! 1.6 language files (backwards compatible with Joomla 1.5.x)
 Added support for installable language packs (using the Joomla installer)
 
 New Kunena Template Manager:
@@ -87,7 +88,8 @@ Simplified move, merge and split
 Move current or newer posts into another category or (new) topic
 Ability to move or delete all posts of a particular user (supports better spam 
 management)
-User profile access for moderators even if integrated with JomSocial, CB or others
+User profile access for moderators even if integrated with JomSocial, CB or 
+others
 
 New User Moderation Features:
 -----------------------------
@@ -149,9 +151,12 @@ Support third party ACL components with Joomla 1.5
 Add ACL support with JXtended Access Control
 Add ACL support with NoixACL Access Control
 Add ACL support with ArtofUser
+Integration with Jomsocial Groups
+Discussions in Jomsocial groups are now saved and synched in Kunena thanks to a specific plugin
 
 Other Changes:
 --------------
+
 Converted from jQuery to MooTools 1.2 for better compatibility
 CSS and JavaScript minification using the YUI compressor for faster loading 
 (disabled when debug is turned on)
@@ -161,16 +166,14 @@ Basic API for Joomla modules and plug-ins
 Now uses #__kunena prefixed tables instead of #__fb
 Use /media/kunena instead of /images/fbfiles for avatars and new attachments
 Latest version checking
-Basic Joomla 1.6 support
-Remember that you can test Kunena 1.6.2 with Joomla 1.6, but the support is not 
-yet complete. For example, the Kunena menu will not be generated and there are 
-some features, that do not work yet in Joomla 1.6. Kunena 1.6.x will be ready 
-for Joomla 1.6 once a final version is released.
+Native Joomla! 1.6 support
 
 System Requirements
 ===================
 
 Joomla 1.5.20 Minimum Version Required (Mootools 1.2.x)
+-------------------------------------------------------
+
 Kunena 1.6.x no longer uses jQuery and requires MooTools 1.2+. Since the release 
 of Joomla 1.5.20, the Mootools 1.2.4 system plug-in is now included with Joomla 
 1.5 and this Joomla! contains various fixes on router mecanism. The MooTools 
@@ -179,66 +182,77 @@ longer needed. Going forward, Joomla 1.6 will include MooTools 1.2.4 and Kunena
 is already compatible with this version.
 
 PHP 5.2.3
-Kunena 1.6.x requires PHP 5.2.3 or higher. We have also tested it on PHP 5.3.1.
- In general we currently recommend PHP 5.2.x due to its maturity.
+---------
+
+Kunena 1.6.x requires PHP 5.2.3 or higher. We have also tested it on PHP 5.3.x. 
+In general we currently recommend PHP 5.2.x due to its maturity.
 
 MySQL 5.0.0
+-----------
+
 Kunena in general and especially version 1.6.x rely on advanced SQL features 
 introduced in MySQL 5.0.x. MySQL 4.x is no longer support even though Joomla 1.5 
 itself can be run on certain versions of MySQL 4.x. The main difference is the 
-amount of database workload generated by a forum component compared to the basic 
-CMS functionality.
+amount of database workload generated by a forum component compared to the 
+basic CMS functionality.
 
 Third party components requirements
-If you want running with Kunena 1.6.2, Jomsocial, Community Builer, UddeIm or 
+-----------------------------------
+
+If you want running with Kunena 1.6.3, Jomsocial, Community Builer, UddeIm or 
 Alpha User Points, you need to have the following versions of these components 
 to avoid any issues :
+
 Jomsocial 1.6.x
 Community Builer 1.2.3
 UddeIm 2.1
 Alpha User Points 1.5.12
+
 Third party ACL components requirements
-If you want to use third party ACL components with Kunena 1.6.1 and Joomla! 1.5, 
+---------------------------------------
+
+If you want use third party ACL components with Kunena 1.6.3 and Joomla! 1.5, 
 you need to use at least the following versions :
+
 NoixACL 2.0.6
 JXtended Control 1.0.7
 ArtofUser 1.0.5
 
 Downloading Kunena
-==================
+------------------
 
 Find the latest package files here: 
-http://joomlacode.org/gf/project/kunena/frs/
+http://joomlacode.org/gf/project/kunena/frs
 
-We use the power of JoomlaCode as our main repository for the public SVN. We 
-encourage all users and open source developers to help develop fixes, features 
-and enhancements to the existing code base. If you are interested in 
+We use the power of JoomlaCode as our main repository for the public SVN. 
+We encourage all users and open source developers to help develop fixes, 
+features and enhancements to the existing code base. If you are interested in 
 contributing, please provide a patch or enhanced branch and we will be happy to 
 consider it for inclusion in the main code branch (quality and feature 
 completeness permitting).
-
 Find the SVN source code repository here: 
 http://joomlacode.org/gf/project/kunena/scmsvn/
 
 The only official Kunena distributions are available from the links above or 
-directly at www.kunena.org. There are currently no officially supported 
-alternative download mirrors supported and users are encouraged to visit 
-www.kunena.org for the latest version of all available Kunena packages.
+directly at http://www.kunena.org. 
+There are currently no officially supported alternative download mirrors 
+supported and users are encouraged to visit http://www.kunena.org for the latest 
+version of all available Kunena packages.
 
 Compatibility with Third-party Kunena Templates
 ===============================================
 
-Templates designed for Kunena 1.5.x will not work with Kunena 1.6.x due to major 
-changes in the code and structure.
+Templates designed for Kunena 1.5.x will NOT work with Kunena 1.6.x due to major 
+architectural changes in the code and structure of the component.
 
 All the logic has been removed from the template to make it much easier for 
 template designers to create Kunena templates.
-Check out the short guide on how to quickly customize a Kunena 1.6 template in 
-just a few minutes: 
+Check out the short guide on how to quickly customize a Kunena 1.6 template 
+in just a few minutes: 
 http://www.kunena.org/forum/159-common-questions/53519-the-5-minute-quick-and-dirty-kunena-16-template
 
-More tutorials and instructions are available in the forums to make template for 
-Kunena 1.6.x.
+More tutorials and instructions are available in the forums to make templates 
+for Kunena 1.6.x.
 
 Compatibility with Third-party Kunena Modules
 =============================================
@@ -247,10 +261,11 @@ Kunena 1.6.x is not compatible with modules or plug-ins designed for previous
 versions and we recommend you uninstall all Kunena 1.5 extensions before 
 installing or upgrading.
 
-Kunena 1.6.x now provides an updated API for easily creating modules or plug-ins. 
-The Kunena team has created a few new plug-ins and modules which leverage the 
-new API and can be used with Kunena 1.6.x. These extensions can be found in the 
-Kunena Extension Directory: http://www.kunena.org/ked
+Kunena 1.6.x now provides an updated API for easy creation of modules or 
+plug-ins. The Kunena team has created several new plug-ins and modules which 
+leverage the new API and can be used with Kunena 1.6.x. These extensions can be 
+found in the Kunena Extension Directory: 
+http://www.kunena.org/ked
 
 Installing or Upgrading Kunena
 ==============================

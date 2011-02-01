@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+31-January-2010 fxstein
+^ [#24074] Update README.txt for 1.6.3 release
+
 31-January-2010 Matias
 # [#24690] Profile/Recent view: Fix bug where clicking on More shows your own posts instead of users
 

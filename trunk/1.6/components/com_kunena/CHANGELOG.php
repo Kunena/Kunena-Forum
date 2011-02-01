@@ -35,6 +35,7 @@ Kunena 1.6.4
 
 31-January-2011 fxstein
 ^ [#24703] Update version info to 1.6.4-DEV
+^ [#24706] Remove default size=100 for videos on bbcode insert to allow for custom sizes
 
 Kunena 1.6.3
 

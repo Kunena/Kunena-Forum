@@ -34,6 +34,9 @@ Legend:
 
 Kunena Site Template based on Rocket Theme Afterburner
 
+1-February-2011 severdia
+^ [#19707] Added styles for services page
+
 25-December-2010 severdia
 ^ [#19707] Download table styles 
 

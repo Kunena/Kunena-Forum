@@ -33,18 +33,19 @@ Legend:
 
 Kunena 1.6.3
 
-31-January-2010 fxstein
+31-January-2011 fxstein
 ^ [#24074] Update README.txt for 1.6.3 release
+^ [#23898] Updated changelog date one more time to 2011
 
-31-January-2010 Matias
+31-January-2011 Matias
 # [#24690] Profile/Recent view: Fix bug where clicking on More shows your own posts instead of users
 
-30-January-2010 fxstein
+30-January-2011 fxstein
 ^ [#23898] Updated kunena_upgrade.xml to use build variables
 ^ [#23898] Updated 2011 dates (additional)
 ^ [#24074] Update version info to 1.6.3 (Parlare)
 
-30-January-2010 Severdia
+30-January-2011 Severdia
 # [#22921] Updated Template Manager icon in menu
 ^ [#23898] Updated 2011 dates and .org instead of .com
 # [#24687] Fixed button text color when skinner is activated
@@ -52,21 +53,21 @@ Kunena 1.6.3
 # [#24022] Fixed extra table spacing on module positions
 # [#24022] Added check for module position to hide row if no module published.
 
-30-January-2010 Matias
+30-January-2011 Matias
 * [#24563] Security (High/High): SQL injection vulnerability in search (thanks Adam Nichols)
 # [#24682] Joomla 1.6: Kunena Menu doesn't show up
 
-29-January-2010 Matias
+29-January-2011 Matias
 # [#24656] CommunityBuilder: fix performance issues from loading users one by one (CB1.4+)
 ^ [#15886] Merged revisions 4298-4317 from /branches/1.6.3-language-LDAsvens-2011-01-22
 
 29-January-2011 svens(LDA)
 ^ [#24560] update fi-FI (thanks Mortti)
 
-28-January-2010 Severdia
+28-January-2011 Severdia
 # [#24659] Fixed Google maps controls CSS
 
-28-January-2010 Matias
+28-January-2011 Matias
 ^ [#24385] Performance optimization for high joomla guest counts by CB team (Thanks Beat!)
 ^ [#15886] Merged revisions 4303-4304 from /branches/1.6-xillibit-fixes-27-01-2011
 + [#24655] Add activity events for subscribe, favorite, sticky, lock, karma and onBeforePost/Reply/Edit
@@ -76,13 +77,13 @@ Kunena 1.6.3
 27-January-2011 svens(LDA)
 ^ [#24560] update ru-RU (thanks Zarkos)
 
-27-January-2010 Xillibit
+27-January-2011 Xillibit
 # [#24272] When you want edit an anouncement unpublished, the forms is empty (Part 2)
 
-27-January-2010 Severdia
+27-January-2011 Severdia
 # [#24649] Fixed template params for header color in IE
 
-26-January-2010 Matias
+26-January-2011 Matias
 ^ [#15886] Merged revisions 4157-4285 from /branches/1.6-xillibit-fixes-20111205
 ^ [#15886] Merged revisions 4274-4291 from /branches/1.6.3-language-LDAsvens-2011-01-22
 
@@ -90,10 +91,10 @@ Kunena 1.6.3
 ^ [#24560] update es-ES (thanks Kunena Spanish Team)
 ^ [#24560] update en-GB
 
-24-January-2010 Xillibit
+24-January-2011 Xillibit
 # [#24590] Topic/Create: Showing poll and anonymous options works only in FireFox
 
-23-January-2010 Xillibit
+23-January-2011 Xillibit
 ^ [#24413] Add title parameter in function CKunenaLink::GetThreadPageLink for module latest (Part 2)
 
 22-January-2011 svens(LDA)
@@ -106,17 +107,17 @@ Kunena 1.6.3
 22-January-2011 Matias
 # [#24563] Search does not check all variables
 
-22-January-2010 Xillibit
+22-January-2011 Xillibit
 # [#24559] Hide confidential information also from moderators who are not moderating current category
 
-19-January-2010 Xillibit
+19-January-2011 Xillibit
 # [#24277] Kunena userlist under J! 1.6 grab super admin with userid=62 instead of 42 (Part 2)
 
 19-January-2011 Matias
 # [#24480] Regression: Do not send email to author itself
 * [#24494] Security (Low/Low): User can make XSS attack to himself (thanks Ervis Tusha)
 
-17-January-2010 Xillibit
+17-January-2011 Xillibit
 # [#24443] BBCode help input need to be disabled to avoid to be edited
 
 16-January-2011 Xillibit

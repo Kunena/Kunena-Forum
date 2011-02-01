@@ -15,6 +15,7 @@ kimport ( 'kunena.error' );
 kimport ( 'kunena.forum.message.helper' );
 kimport ( 'kunena.forum.topic.helper' );
 kimport ( 'kunena.forum.category.helper' );
+kimport ( 'kunena.forum.poll.helper' );
 
 require_once KPATH_SITE . '/lib/kunena.link.class.php';
 
@@ -716,9 +717,34 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
-		
-		// still on work on progress
-		
-		return;
-  }
+
+		$success = KunenaForumPollHelper::saveVote($id, $vote);
+		if ( !$success ) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_VOTE_NOT_SAVED' ), 'error' );
+			return false;
+		}
+
+		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_VOTE_SUCCESS' ) );
+		$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, 0, NULL, $this->id, false ) );
+	}
+
+	public function changevote() {
+		$app = JFactory::getApplication ();
+		$vote	= JRequest::getInt('kpollradio', '');
+		$id = JRequest::getInt ( 'kpoll-id', 0 );
+
+		if (!JRequest::checkToken()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		$success = KunenaForumPollHelper::saveChangedVote($id, $vote);
+		if ( !$success ) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_VOTE_NOT_SAVED' ), 'error' );
+			return false;
+		}
+
+		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_VOTE_CHANGED_SUCCESS' ) );
+		$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, 0, NULL, $this->id, false ) );
+	}
 }

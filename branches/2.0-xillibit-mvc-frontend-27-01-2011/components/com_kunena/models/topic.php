@@ -149,7 +149,7 @@ class KunenaModelTopic extends KunenaModel {
 	}
 
 	public function getVoters() {
-		$voters = KunenaForumPollHelper::getTotalVoters();
+		$voters = KunenaForumPollHelper::getTotalVoters($this->getState ( 'item.id'));
 		return $voters;
 	}
 

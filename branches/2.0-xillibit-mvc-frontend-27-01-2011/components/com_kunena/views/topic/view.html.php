@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.view' );
 kimport ('kunena.forum.message.attachment.helper');
+kimport ('kunena.forum.poll.helper');
 
 /**
  * Topic View
@@ -205,7 +206,7 @@ class KunenaViewTopic extends KunenaView {
 
 		//save the options for query after and load the text options, the number options is for create the fields in the form after
 		if ($this->topic->poll_id) {
-			$this->polldatasedit = $this->poll->get_poll_data ( $this->topic->id );
+			$this->polldatasedit = KunenaForumPollHelper::getPollData ( $this->topic->id );
 			$this->polloptionstotal = count ( $this->polldatasedit );
 		}
 

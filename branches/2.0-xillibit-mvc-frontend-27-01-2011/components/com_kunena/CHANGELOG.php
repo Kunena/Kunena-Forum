@@ -33,17 +33,21 @@ Legend:
 
 Kunena 2.0.0-DEV
 
-31-January-2010 Xillibit
-^ [#24515] Fix some undefined variables and fix some issues in trash in backend (Part 2)
+01-February-2011
+# [#24515] Fix some undefined variables, make working save vote with new library
+# [#24515] Fix fatal error during edit when there is a poll
 
-30-January-2010 Xillibit
+31-January-2011 Xillibit
+# [#24515] Fix some undefined variables and fix some issues in trash in backend (Part 2)
+
+30-January-2011 Xillibit
 ^ [#24515] Put some old codes into mvc in frontend : polls (Part 1)
-^ [#24515] Fix some undefined variables and fix some issues in trash in backend
+# [#24515] Fix some undefined variables and fix some issues in trash in backend
 
-28-January-2010 Xillibit
+28-January-2011 Xillibit
 ^ [#24515] Put some old codes into mvc in frontend (search part2)
 
-27-January-2010 Xillibit
+27-January-2011 Xillibit
 ^ [#24515] Put some old codes into mvc in frontend (search almost finished)
 
 27-January-2010 Matias
@@ -65,7 +69,7 @@ Kunena 2.0.0-DEV
 # [#22569] Neither of Mark Topics Read buttons works -- move into controllers
 # [#22569] Move Subscribe / Unsubscribe category into category controller
 
-24-January-2010 Xillibit
+24-January-2011 Xillibit
 ^ [#24515] Put some old codes into mvc in frontend (whoisonline and frontstats only in common)
 
 24-January-2010 Matias

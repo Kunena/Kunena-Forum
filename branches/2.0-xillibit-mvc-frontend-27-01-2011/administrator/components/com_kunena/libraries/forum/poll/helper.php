@@ -71,29 +71,103 @@ class KunenaForumPollHelper {
 		return $uservotedata;
 	}
 
-	static public function getTotalVoters() {
-		/*$db = JFactory::getDBO ();
-		$query = "SELECT SUM(votes) FROM #__kunena_polls_users WHERE pollid={$db->Quote($pollid)}";
+	static public function getTotalVoters($id) {
+		$db = JFactory::getDBO ();
+		$query = "SELECT SUM(votes) FROM #__kunena_polls_users WHERE pollid={$db->Quote($id)}";
 		$db->setQuery($query);
 		$numvotes = $db->loadResult();
 		KunenaError::checkDatabaseError();
 
-		return $numvotes;*/
-		return;
+		return $numvotes;
 	}
 
-	static public function userHasAlreadyVoted() {
-		// return the vote number of the user specified
+	static public function getTimediffLastVote($id) {
+		$db = JFactory::getDBO ();
+		$user = KunenaUser::getInstance($user);
+		$query = "SELECT pollid,userid,lasttime,votes,
+						TIMEDIFF(CURTIME(),DATE_FORMAT(lasttime, '%H:%i:%s')) AS timediff
+					FROM #__kunena_polls_users
+					WHERE pollid={$db->Quote($id)} AND userid={$db->Quote($user->userid)}";
+		$db->setQuery($query);
+		$timediff = $db->loadObject();
+		KunenaError::checkDatabaseError();
+
+		return $timediff;
 	}
 
-	static public function canVote() {
-		// check if it's not a guest
+	static public function userHasAlreadyVoted($id) {
+		$user = KunenaUser::getInstance($user);
+		$db = JFactory::getDBO ();
 
-		// check if the votes number is below $config->pollnbvotesbyuser
+		$query = "SELECT votes FROM #__kunena_polls_users WHERE pollid={$db->Quote($id)} AND userid={$db->Quote($user->userid)};";
+		$db->setQuery($query);
+		$votes = $db->loadResult();
+		if (KunenaError::checkDatabaseError()) return;
 
-		// check if the user can vote only one time or more with the config setting $config->pollnbvotesbyuser
+		return $votes;
+	}
 
-		// check if the time between the previous vote and this one is ok, this is for prevent flood
+	static public function canVote($id) {
+		$config = KunenaFactory::getConfig();
+		$timevotedatas = self::getTimediffLastVote($id);
+		$poll = self::get($id);
+		$user = KunenaUser::getInstance($user);
+
+		if ( !$user->userid ) return false;
+
+		if ( $timevotedatas->votes > $config->pollnbvotesbyuser || $timevotedatas->votes > 1 && $config->pollallowvoteone ) return false;
+
+		if ( $timevotedatas->lasttime != '0000-00-00 00:00:00' ) {
+			if ( $timevotedatas->timediff > $config->polltimebtvotes ) return false;
+		}
+
+		return true;
+	}
+
+	static public function saveVote($id, $vote) {
+		$db = JFactory::getDBO ();
+		$user = KunenaUser::getInstance($user);
+		if ( self::canVote($id) ) {
+			if ( self::userHasAlreadyVoted($id) ) {
+				$query = "UPDATE #__kunena_polls_users SET votes=votes+1,lastvote={$db->Quote($vote)} WHERE pollid={$db->Quote($id)} AND userid={$db->Quote($userid)};";
+				$db->setQuery($query);
+				$db->query();
+				if (KunenaError::checkDatabaseError()) return;
+			} else {
+				$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote) VALUES({$db->Quote($id)},{$db->Quote($user->userid)},'1',{$db->Quote($vote)});";
+				$db->setQuery($query);
+				$db->query();
+				if (KunenaError::checkDatabaseError()) return;
+			}
+			$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id={$db->Quote($vote)};";
+			$db->setQuery($query);
+			$db->query();
+			if (KunenaError::checkDatabaseError()) return;
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	static public function saveChangedVote($id, $vote) {
+		$db 	= JFactory::getDBO ();
+		$now	= JFactory::getDate();
+		$user 	= KunenaUser::getInstance($user);
+
+		if ( !$user->userid ) return false;
+
+		if ( self::getTimediffLastVote($id) > $config->polltimebtvotes ) return false;
+
+		$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id={$db->Quote($vote)};";
+		$db->setQuery($query);
+		$db->query();
+		if (KunenaError::checkDatabaseError()) return;
+
+		$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote={$db->Quote($vote)}, lasttime={$db->Quote($now->toMySQL())} WHERE pollid={$db->Quote($id)} AND userid={$db->Quote($user->userid)};";
+		$db->setQuery($query);
+		$db->query();
+		if (KunenaError::checkDatabaseError()) return;
 
 		return true;
 	}

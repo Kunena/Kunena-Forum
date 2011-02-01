@@ -32,8 +32,8 @@ $j=0;
 				</thead>
 				<tbody>
 					<?php
-					if ( $this->bannedusers ) {
-						foreach ($this->bannedusers as $userban) {
+					if ( $this->bannedusers ) :
+						foreach ($this->bannedusers as $userban) :
 							$bantext = $userban->blocked ? JText::_('COM_KUNENA_BAN_UNBLOCK_USER') : JText::_('COM_KUNENA_BAN_UNBAN_USER');
 							$j++;
 					?>
@@ -45,22 +45,23 @@ $j=0;
 							<a href="#"><?php echo CKunenaLink::GetProfileLink ( intval($userban->userid) ); ?> </a>
 						</td>
 						<td class="kcol-mid kbanned-from">
-							<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'); } ?></span>
+							<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'); ?></span>
 						</td>
 						<td class="kcol-mid kbanned-start">
 							<span><?php echo CKunenaTimeFormat::showDate($userban->created_time, 'datetime'); ?></span>
 						</td>
-						<td class="kcol-midkbanned-expire">
+						<td class="kcol-mid kbanned-expire">
 							<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : CKunenaTimeFormat::showDate($userban->expiration, 'datetime'); ?></span>
 						</td>
 					</tr>
-					<?php } else { ?>
+					<?php endforeach; ?>
+					<?php else : ?>
 					<tr class="krow2">
 						<td colspan="5" class="kcol-first">
 							<?php echo JText::_('COM_KUNENA_BAN_NO_BANNED_USERS'); ?>
 						</td>
 					</tr>
-					<?php } ?>
+					<?php endif; ?>
 				</tbody>
 			</table>
 		</div>

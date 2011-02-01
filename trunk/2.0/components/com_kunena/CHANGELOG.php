@@ -41,6 +41,10 @@ Kunena 2.0.0-DEV
 # [#23443] KunenaForumCategory::newTopic(): remember to set topic hold based on message hold
 # [#23443] KunenaForumMessage::newReply(): If topic is in hold, use the same hold for the new message
 # [#23443] KunenaForumMessage::update(): Recount topic only if it exists
+# [#23443] User/Default: Ban manager is not showing all the information
+# [#23443] User/Default: All the tabs have topics/messages from the logged in user, which is wrong
+# [#23443] Fix JomSocial access integration so that group admins are now category admins
+# [#23443] Fix Manage categories buttons showing up only to the global admins
 
 31-January-2011 Matias
 + [#22792] Add new KunenaHtmlPagination class

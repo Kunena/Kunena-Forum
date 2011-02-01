@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: access.php 4163 2011-01-07 10:45:09Z mahagr $
  * Kunena Component
  * @package Kunena
  *
@@ -24,11 +24,7 @@ class KunenaAccessJomSocial extends KunenaAccess {
 	}
 
 	protected function loadAdmins() {
-		return parent::loadAdmins($this->joomlaAccess->loadAdmins());
-	}
-
-	protected function loadModerators() {
-		$list = $this->joomlaAccess->loadModerators();
+		$list = $this->joomlaAccess->loadAdmins();
 
 		$db = JFactory::getDBO();
 		$query	= "SELECT g.memberid AS userid, c.id AS catid
@@ -38,8 +34,11 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		$db->setQuery( $query );
 		$jslist = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
+		return parent::loadAdmins(array_merge($list, $jslist));
+	}
 
-		return parent::loadModerators(array_merge($list, $jslist));
+	protected function loadModerators() {
+		return parent::loadModerators($this->joomlaAccess->loadModerators());
 	}
 
 	protected function loadAllowedCategories($userid) {

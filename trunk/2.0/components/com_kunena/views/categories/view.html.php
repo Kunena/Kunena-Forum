@@ -30,7 +30,7 @@ class KunenaViewCategories extends KunenaView {
 		if ($errors) {
 			$this->displayNoAccess($errors);
 		} else {
-			if ($this->me->isAdmin()) {
+			if ($this->me->isAdmin(null)) {
 				$this->category_manage = CKunenaLink::GetHrefLink(KunenaRoute::_('index.php?option=com_kunena&view=categories&layout=manage&catid='.$this->category->id), $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES') ), $title = '', 'nofollow', 'kicon-button kbuttonmod btn-left', '', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES_LONG'));
 			}
 

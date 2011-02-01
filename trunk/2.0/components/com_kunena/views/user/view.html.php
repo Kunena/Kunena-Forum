@@ -132,6 +132,7 @@ class KunenaViewUser extends KunenaView {
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
+			'userid' => $this->user->id,
 			'mode' => 'unapproved',
 			'sel' => -1,
 			'limit' => 6,
@@ -146,7 +147,7 @@ class KunenaViewUser extends KunenaView {
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
-			'userid' => -1,
+			'userid' => $this->user->id,
 			'mode' => 'latest',
 			'sel' => 8760,
 			'limit' => 6,
@@ -161,7 +162,7 @@ class KunenaViewUser extends KunenaView {
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
-			'userid' => -1,
+			'userid' => $this->user->id,
 			'mode' => 'mythanks',
 			'sel' => -1,
 			'limit' => 6,
@@ -176,7 +177,7 @@ class KunenaViewUser extends KunenaView {
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
-			'userid' => -1,
+			'userid' => $this->user->id,
 			'mode' => 'thankyou',
 			'sel' => -1,
 			'limit' => 6,
@@ -191,7 +192,7 @@ class KunenaViewUser extends KunenaView {
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
-			'userid' => -1,
+			'userid' => $this->user->id,
 			'mode' => 'favorites',
 			'sel' => -1,
 			'limit' => 6,
@@ -206,7 +207,7 @@ class KunenaViewUser extends KunenaView {
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
-			'userid' => -1,
+			'userid' => $this->user->id,
 			'mode' => 'subscriptions',
 			'sel' => -1,
 			'limit' => 6,
@@ -219,7 +220,7 @@ class KunenaViewUser extends KunenaView {
 
 	function displayCategoriesSubscriptions() {
 		$params = array(
-			'userid' => -1,
+			'userid' => $this->user->id,
 			'limit' => 6,
 			'filter_order' => 'time',
 			'limitstart' => 0,

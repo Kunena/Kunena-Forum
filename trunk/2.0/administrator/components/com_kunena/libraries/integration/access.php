@@ -125,6 +125,7 @@ abstract class KunenaAccess {
 	}
 
 	public function getAllowedCategories($user = null, $rule = 'read') {
+		// TODO: It looks like this is cached into session.. We need to be able to reset it as well
 		static $read = false;
 
 		$user = KunenaFactory::getUser($user);
@@ -253,6 +254,7 @@ abstract class KunenaAccess {
 	}
 
 	protected function loadAdmins($list = array()) {
+		// TODO: add caching
 		foreach ( $list as $item ) {
 			$userid = intval ( $item->userid );
 			if (!$userid) continue;
@@ -264,6 +266,7 @@ abstract class KunenaAccess {
 	}
 
 	protected function loadModerators($list = array()) {
+		// TODO: add caching
 		foreach ( $list as $item ) {
 			$userid = intval ( $item->userid );
 			if (!$userid) continue;
@@ -290,5 +293,7 @@ abstract class KunenaAccess {
 	}
 
 	abstract protected function checkSubscribers($topic, &$userids);
+
+	// TODO: it looks like this is cached into session.. we need to be able to clear that cache
 	abstract protected function loadAllowedCategories($userid);
 }

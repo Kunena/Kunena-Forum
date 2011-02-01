@@ -99,16 +99,20 @@ class KunenaForumCategory extends JObject {
 		kimport ('kunena.forum.message');
 
 		$user = KunenaUser::getInstance($user);
-		$topic = new KunenaForumTopic();
 		$message = new KunenaForumMessage();
-		$topic->category_id = $message->catid = $this->id;
-		$topic->bind($fields, array ('subject', 'icon_id'));
-		$message->setTopic($topic);
+		$message->catid = $this->id;
 		$message->name = $user->getName('');
 		$message->userid = $user->userid;
 		$message->ip = $_SERVER ["REMOTE_ADDR"];
 		$message->hold = $this->review ? (int)!$this->authorise ('moderate', $user, true) : 0;
 		$message->bind($fields, array ('name', 'email', 'subject', 'message'));
+
+		$topic = new KunenaForumTopic();
+		$topic->category_id = $this->id;
+		$topic->hold = $message->hold;
+		$topic->bind($fields, array ('subject','icon_id'));
+
+		$message->setTopic($topic);
 		return array($topic, $message);
 	}
 

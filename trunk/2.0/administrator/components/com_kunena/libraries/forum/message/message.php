@@ -86,7 +86,13 @@ class KunenaForumMessage extends JObject {
 		$message->userid = $user->userid;
 		$message->subject = $this->subject;
 		$message->ip = $_SERVER ["REMOTE_ADDR"];
-		$message->hold = $category->review ? (int)!$category->authorise ('moderate', $user, true) : 0;
+		if ($topic->hold) {
+			// If topic was unapproved or deleted, use the same state for the new message
+			$message->hold = $topic->hold;
+		} else {
+			// Otherwise message is either unapproved or published depending if the category is moderated or not
+			$message->hold = $category->review ? (int)!$category->authorise ('moderate', $user, true) : 0;
+		}
 		if ($fields === true) {
 			$text = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->message );
 			$message->message = "[quote=\"{$this->name}\" post={$this->id}]" .  $text . "[/quote]";
@@ -510,9 +516,9 @@ class KunenaForumMessage extends JObject {
 		}
 
 		$postDelta = $this->delta(true);
-		// Update topic
 		$topic = $this->getTopic();
-		if (!$this->hold && $topic->hold) {
+		// Create / update topic
+		if (!$this->hold && $topic->hold && $topic->exists()) {
 			// We published message -> publish and recount topic
 			$topic->hold = 0;
 			$topic->recount();

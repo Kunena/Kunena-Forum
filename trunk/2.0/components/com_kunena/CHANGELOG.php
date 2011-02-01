@@ -38,6 +38,9 @@ Kunena 2.0.0-DEV
 # [#23443] Fix internal error when deleting topic
 # [#23443] Category/Default: Fix broken bulk move for moderators
 # [#23443] KunenaForum::display(): Fix fatal error from missing include
+# [#23443] KunenaForumCategory::newTopic(): remember to set topic hold based on message hold
+# [#23443] KunenaForumMessage::newReply(): If topic is in hold, use the same hold for the new message
+# [#23443] KunenaForumMessage::update(): Recount topic only if it exists
 
 31-January-2011 Matias
 + [#22792] Add new KunenaHtmlPagination class

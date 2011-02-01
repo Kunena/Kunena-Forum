@@ -37,6 +37,7 @@ Kunena 2.0.0-DEV
 # [#23443] Fix some layout issues with pathway
 # [#23443] Fix internal error when deleting topic
 # [#23443] Category/Default: Fix broken bulk move for moderators
+# [#23443] KunenaForum::display(): Fix fatal error from missing include
 
 31-January-2011 Matias
 + [#22792] Add new KunenaHtmlPagination class

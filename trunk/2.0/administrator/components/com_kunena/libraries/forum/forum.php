@@ -112,12 +112,9 @@ class KunenaForum {
 		// load Kunena main language file so we can leverage language strings from it
 		KunenaFactory::loadLanguage();
 
-		// Load classes
-		if ( !class_exists( 'KunenaViewCommon' ) ) {
-			$vpath = KPATH_SITE . '/views/common/view.html.php';
-			if (!is_file($vpath)) return;
-			require_once $vpath;
-		}
+		require_once KPATH_SITE . '/views/common/view.html.php';
+		require_once KPATH_SITE . '/models/common.php';
+
 		if ( !class_exists( $view ) ) {
 			$vpath = KPATH_SITE . '/views/'.$viewName.'/view.html.php';
 			if (!is_file($vpath)) return;

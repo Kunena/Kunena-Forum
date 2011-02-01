@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: access.php 4163 2011-01-07 10:45:09Z mahagr $
  * Kunena Component
  * @package Kunena
  *
@@ -12,7 +12,7 @@
 defined( '_JEXEC' ) or die();
 
 class KunenaAccessNoixACL extends KunenaAccess {
-	function __construct() {
+	public function __construct() {
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE != '1.5')
 			return null;
@@ -22,17 +22,17 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		$this->priority = 40;
 	}
 
-	protected function loadAdmins() {
+	public function loadAdmins() {
 		$db = JFactory::getDBO ();
 		$query = "SELECT u.id AS userid, 0 AS catid FROM #__users AS u
 			WHERE u.block='0' AND u.usertype IN ('Administrator', 'Super Administrator')";
 		$db->setQuery ( $query );
 		$list = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
-		return parent::loadAdmins($list);
+		return $this->storeAdmins($list);
 	}
 
-	protected function loadModerators() {
+	public function loadModerators() {
 		$db = JFactory::getDBO ();
 		$query = "SELECT u.id AS userid, m.catid
 				FROM #__users AS u
@@ -43,10 +43,10 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		$db->setQuery ( $query );
 		$list = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
-		return parent::loadModerators($list);
+		return $this->storeModerators($list);
 	}
 
-	protected function loadAllowedCategories($user) {
+	public function loadAllowedCategories($user) {
 		$user = JFactory::getUser($user);
 		$db = JFactory::getDBO ();
 
@@ -108,7 +108,7 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		return $catlist;
 	}
 
-	protected function checkSubscribers($topic, &$userids) {
+	public function checkSubscribers($topic, &$userids) {
 		$category = $topic->getCategory();
 		if (empty($userids))
 			return $userids;

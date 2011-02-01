@@ -359,7 +359,6 @@ class KunenaRouteLegacy {
 				$uri->setVar('view', 'statistics');
 				break;
 		}
-//		print_r($uri->getQuery ());
 		return $changed;
 	}
 }

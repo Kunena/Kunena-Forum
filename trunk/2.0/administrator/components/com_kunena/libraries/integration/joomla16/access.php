@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: access.php 4163 2011-01-07 10:45:09Z mahagr $
  * Kunena Component
  * @package Kunena
  *
@@ -14,14 +14,14 @@ defined( '_JEXEC' ) or die();
 class KunenaAccessJoomla16 extends KunenaAccess {
 	protected $viewLevels = false;
 
-	function __construct() {
+	public function __construct() {
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE != '1.6')
 			return null;
 		$this->priority = 25;
 	}
 
-	protected function loadAdmins() {
+	public function loadAdmins() {
 		jimport ( 'joomla.access.access' );
 		$rules = JAccess::getAssetRules ( 'com_kunena', true );
 		$data = $rules->getData ();
@@ -40,10 +40,10 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 			$item->catid = 0;
 			$list[] = $item;
 		}
-		return parent::loadAdmins($list);
+		return $this->storeAdmins($list);
 	}
 
-	protected function loadModerators() {
+	public function loadModerators() {
 		$db = JFactory::getDBO ();
 		$query = "SELECT u.id AS userid, m.catid
 				FROM #__users AS u
@@ -54,10 +54,10 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		$db->setQuery ( $query );
 		$list = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
-		return parent::loadModerators($list);
+		return $this->storeModerators($list);
 	}
 
-	function loadAllowedCategories($user) {
+	public function loadAllowedCategories($user) {
 		$user = JFactory::getUser($user);
 
 		$accesslevels = (array) $user->authorisedLevels();
@@ -93,7 +93,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		return $catlist;
 	}
 
-	protected function checkSubscribers($topic, &$userids) {
+	public function checkSubscribers($topic, &$userids) {
 		$category = $topic->getCategory();
 		if (empty($userids) || $category->pub_access <= 0)
 			return $userids;
@@ -150,7 +150,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 	 * @return	array	List of view levels for which the user is authorised.
 	 * @since	1.6
 	 */
-	public static function getGroupsByViewLevels($userId)
+	protected static function getGroupsByViewLevels($userId)
 	{
 		// Get all groups that the user is mapped to recursively.
 		$groups = self::getGroupsByUser($userId);
@@ -208,7 +208,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 	 * @return	array
 	 * @since	1.6
 	 */
-	public static function getUsersByGroup($groupId, $recursive = false, $inUsers = array())
+	protected static function getUsersByGroup($groupId, $recursive = false, $inUsers = array())
 	{
 		// Get a database object.
 		$db = JFactory::getDbo();

@@ -310,10 +310,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$__profiler->mark('Session End');
 	}
 
-	//Get the topics this user has already read this session from #__kunena_sessions
-	$this->read_topics = explode ( ',', $kunena_session->readtopics );
-
-
 	/*       _\|/_
              (o o)
      +----oOO-{_}-OOo--------------------------------+

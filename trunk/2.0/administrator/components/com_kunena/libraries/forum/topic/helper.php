@@ -299,7 +299,7 @@ class KunenaForumTopicHelper {
 
 	static protected function loadTopics($ids) {
 		foreach ($ids as $i=>$id) {
-			if (isset(self::$_instances [$id]))
+			if (isset(self::$_instances [$id]) || !is_numeric($id))
 				unset($ids[$i]);
 		}
 		if (empty($ids))

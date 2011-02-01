@@ -169,9 +169,9 @@ class KunenaForumTopic extends JObject {
 			return;
 
 		$db = JFactory::getDBO ();
-		$kunena_session = KunenaFactory::getSession ();
+		$session = KunenaFactory::getSession ();
 
-		$readTopics = explode ( ',', $kunena_session->readtopics );
+		$readTopics = explode ( ',', $session->readtopics );
 		if (! in_array ( $this->id, $readTopics )) {
 			$readTopics[] = $this->id;
 			$readTopics = implode ( ',', $readTopics );

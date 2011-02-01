@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: access.php 4163 2011-01-07 10:45:09Z mahagr $
  * Kunena Component
  * @package Kunena
  *
@@ -23,23 +23,23 @@ class KunenaAccessCommunityBuilder extends KunenaAccess {
 		$this->priority = 50;
 	}
 
-	protected function loadAdmins() {
+	public function loadAdmins() {
 		$list = $this->joomlaAccess->loadAdmins();
 		// TODO: add support into CB
 		$params = array ('list'=>&$list);
 		$this->integration->trigger ( 'loadAdmins', $params );
-		return parent::loadAdmins($list);
+		return $this->storeAdmins($list);
 	}
 
-	protected function loadModerators() {
+	public function loadModerators() {
 		$list = $this->joomlaAccess->loadModerators();
 		// TODO: add support into CB
 		$params = array ('list'=>&$list);
 		$this->integration->trigger ( 'loadModerators', $params );
-		return parent::loadModerators($list);
+		return $this->storeModerators($list);
 	}
 
-	protected function loadAllowedCategories($userid) {
+	public function loadAllowedCategories($userid) {
 		$allowed = $this->joomlaAccess->getAllowedCategories($userid);
 		$allowed = implode(',', $allowed);
 		$params = array ($userid, &$allowed);
@@ -47,7 +47,7 @@ class KunenaAccessCommunityBuilder extends KunenaAccess {
 		return explode(',', $allowed);
 	}
 
-	protected function checkSubscribers($topic, &$userids) {
+	public function checkSubscribers($topic, &$userids) {
 		$category = $topic->getCategory();
 		if ($category->accesstype == 'communitybuilder') {
 			// TODO: add support into CB

@@ -23,7 +23,7 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		$this->priority = 50;
 	}
 
-	protected function loadAdmins() {
+	public function loadAdmins() {
 		$list = $this->joomlaAccess->loadAdmins();
 
 		$db = JFactory::getDBO();
@@ -34,15 +34,15 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		$db->setQuery( $query );
 		$jslist = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
-		return parent::loadAdmins(array_merge($list, $jslist));
+		return $this->storeAdmins($jslist);
 	}
 
-	protected function loadModerators() {
-		return parent::loadModerators($this->joomlaAccess->loadModerators());
+	public function loadModerators() {
+		return $this->joomlaAccess->loadModerators();
 	}
 
-	protected function loadAllowedCategories($userid) {
-		$allowed = $this->joomlaAccess->getAllowedCategories($userid);
+	public function loadAllowedCategories($userid) {
+		$allowed = $this->joomlaAccess->loadAllowedCategories($userid);
 
 		$db = JFactory::getDBO();
 		$query	= "SELECT c.id FROM #__kunena_categories AS c
@@ -58,7 +58,7 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		return $allowed;
 	}
 
-	protected function checkSubscribers($topic, &$userids) {
+	public function checkSubscribers($topic, &$userids) {
 		$category = $topic->getCategory();
 		// TODO: check if user should get email or not
 		if ($category->accesstype != 'jomsocial') {

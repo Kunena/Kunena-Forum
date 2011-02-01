@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: access.php 4163 2011-01-07 10:45:09Z mahagr $
  * Kunena Component
  * @package Kunena
  *
@@ -12,14 +12,14 @@
 defined( '_JEXEC' ) or die();
 
 class KunenaAccessJoomla15 extends KunenaAccess {
-	function __construct() {
+	public function __construct() {
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE != '1.5')
 			return null;
 		$this->priority = 25;
 	}
 
-	protected function loadAdmins() {
+	public function loadAdmins() {
 		$db = JFactory::getDBO ();
 		$query = "SELECT u.id AS userid, 0 AS catid
 			FROM #__users AS u
@@ -27,10 +27,10 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		$db->setQuery ( $query );
 		$list = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
-		return parent::loadAdmins($list);
+		return $this->storeAdmins($list);
 	}
 
-	protected function loadModerators() {
+	public function loadModerators() {
 		$db = JFactory::getDBO ();
 		$query = "SELECT u.id AS userid, m.catid
 				FROM #__users AS u
@@ -41,10 +41,10 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		$db->setQuery ( $query );
 		$list = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
-		return parent::loadModerators($list);
+		return $this->storeModerators($list);
 	}
 
-	protected function loadAllowedCategories($user) {
+	public function loadAllowedCategories($user) {
 		$user = JFactory::getUser($user);
 
 		// Get all Joomla user groups for current user
@@ -77,7 +77,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		return $catlist;
 	}
 
-	protected function checkSubscribers($topic, &$userids) {
+	public function checkSubscribers($topic, &$userids) {
 		$category = $topic->getCategory();
 		if (empty($userids) || $category->pub_access <= 0)
 			return $userids;

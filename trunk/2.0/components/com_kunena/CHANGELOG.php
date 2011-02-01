@@ -45,6 +45,10 @@ Kunena 2.0.0-DEV
 # [#23443] User/Default: All the tabs have topics/messages from the logged in user, which is wrong
 # [#23443] Fix JomSocial access integration so that group admins are now category admins
 # [#23443] Fix Manage categories buttons showing up only to the global admins
+# [#23443] Fix internal error in KunenaForumTopicHelper::loadTopics()
+# [#23443] Simplify KunenaAccess class logic to fix some potential issues in it
+# [#23443] Make most functions in KunenaAccess and its derived classes to be public
+- [#22570] Remove some deprecated code
 
 31-January-2011 Matias
 + [#22792] Add new KunenaHtmlPagination class

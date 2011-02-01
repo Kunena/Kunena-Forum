@@ -30,6 +30,11 @@ Legend:
 
 Kunena Groups 2.0.0-DEV
 
+1-February-2011 Matias
+^ [#22541] Change Kunena version requirement to 2.0.0-DEV
+# [#22541] KunenaForumCategoryHelper::getCategoriesByAccess() has new parameter order
+# [#22541] Fix Warning: array_merge(): Argument #2 is not an array
+
 16-November-2010 Matias
 ^ [#22541] Update code to work with Kunena 2.0
 ^ [#22541] Update plugin version to 2.0.0-DEV

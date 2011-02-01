@@ -28,7 +28,7 @@ class plgCommunityKunenaGroups extends CApplications {
 
 	protected static function kunenaOnline() {
 		// Kunena detection and version check
-		$minKunenaVersion = '2.0.0-DEV-SVN';
+		$minKunenaVersion = '2.0.0-DEV';
 		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible ($minKunenaVersion) ) {
 			JFactory::getApplication()->enqueueMessage(JText::sprintf('PLG_COMMUNITY_KUNENAGROUPS_KUNENA_NOT_INSTALLED', $minKunenaVersion),'notice');
 			return false;
@@ -59,7 +59,6 @@ class plgCommunityKunenaGroups extends CApplications {
 		$category->set('access', $group->id);
 		$category->set('pub_access', 1);
 		$category->set('published', $group->published);
-		$category->set('accesschk', md5('jomsocial'.$group->id));
 		$success = $category->save();
 		if (!$success) {
 			$app = JFactory::getApplication ();
@@ -73,10 +72,9 @@ class plgCommunityKunenaGroups extends CApplications {
 	function onGroupDisable( $group ) {
 		if (! self::kunenaOnline ()) return;
 
-		$categories = KunenaForumCategoryHelper::getCategoriesByAccess($group->id, 'jomsocial');
+		$categories = KunenaForumCategoryHelper::getCategoriesByAccess('jomsocial', $group->id);
 		foreach ($categories as $category) {
 			$category->set('published', 0);
-			$category->set('accesschk', md5('jomsocial'.$group->id));
 			$success = $category->save();
 			if (!$success) {
 				$app = JFactory::getApplication ();
@@ -87,9 +85,8 @@ class plgCommunityKunenaGroups extends CApplications {
 	function onAfterGroupDelete( $group ) {
 		if (! self::kunenaOnline ()) return;
 
-		$categories = KunenaForumCategoryHelper::getCategoriesByAccess($group->id, 'jomsocial');
+		$categories = KunenaForumCategoryHelper::getCategoriesByAccess('jomsocial', $group->id);
 		foreach ($categories as $category) {
-			$category->set('accesschk', md5('jomsocial'.$group->id));
 			$success = $category->delete();
 			if (!$success) {
 				$app = JFactory::getApplication ();
@@ -118,8 +115,8 @@ class plgCommunityKunenaGroups extends CApplications {
 		$access->clearCache();
 	}
 	function onFormDisplay( $formName ) {
-		if (! self::kunenaOnline ()) return;
 		$fields = array();
+		if (! self::kunenaOnline ()) return $fields;
 		if( $formName == 'jsform-groups-forms' || $formName == 'jsform-groups-form' ) {
 			$groupid = JRequest::getInt('groupid', 0);
 			$forum = 0;
@@ -129,7 +126,7 @@ class plgCommunityKunenaGroups extends CApplications {
 				$group = JTable::getInstance('Group','CTable');
 				$group->load( $groupid );
 
-				$categories = KunenaForumCategoryHelper::getCategoriesByAccess( $group->id, 'jomsocial' );
+				$categories = KunenaForumCategoryHelper::getCategoriesByAccess( 'jomsocial', $group->id );
 				foreach ($categories as $category) {
 					$forum = $forum || $category->published;
 				}
@@ -162,13 +159,12 @@ class plgCommunityKunenaGroups extends CApplications {
 
 			$parent = self::getForumCategory($group->categoryid);
 			$published = (JRequest::getInt('kunenaforum', 0) == 0 && $group->published);
-			$categories = KunenaForumCategoryHelper::getCategoriesByAccess($group->id, 'jomsocial');
+			$categories = KunenaForumCategoryHelper::getCategoriesByAccess('jomsocial', $group->id);
 			foreach ($categories as $category) {
 				if ($category->parent == $parent) {
 					$category->set('name', $group->name);
 					$category->set('description', $group->description);
 					$category->set('headerdesc', $group->description);
-					$category->set('accesschk', md5('jomsocial'.$group->id));
 					$parent = -1;
 				}
 				$category->set('published', $published);

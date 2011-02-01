@@ -112,9 +112,7 @@ defined ( '_JEXEC' ) or die ();
 </table>
 
 <!-- Pathway -->
-<div class = "kforum-pathway-bottom">
-	<?php $this->displayPathway () ?>
-</div>
+<?php $this->displayPathway () ?>
 <!-- / Pathway -->
 
 <div class="kcontainer klist-bottom">

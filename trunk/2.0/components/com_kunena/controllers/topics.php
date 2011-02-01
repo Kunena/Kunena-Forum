@@ -112,7 +112,7 @@ class KunenaControllerTopics extends KunenaController {
 		if (!$topics) {
 			$message = JText::_ ( 'COM_KUNENA_NO_TOPICS_SELECTED' );
 		} else {
-			$target = KunenaForumCategoryHelper::get(JRequest::getInt('catid', 0));
+			$target = KunenaForumCategoryHelper::get(JRequest::getInt('target', 0));
 			if (!$target->authorise('read')) {
 				$app->enqueueMessage ( $target->getError(), 'error' );
 			} else {

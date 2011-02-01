@@ -108,7 +108,7 @@ class KunenaForumTopicUserHelper {
 		$rows += $db->getAffectedRows ();
 
 		// Delete entries that have default values
-		$query ="DELETE FROM #__kunena_user_topics WHERE posts=0 AND favorite=0 AND subscribed=0 {$where2}";
+		$query ="DELETE ut FROM #__kunena_user_topics AS ut WHERE ut.posts=0 AND ut.favorite=0 AND ut.subscribed=0 {$where2}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())

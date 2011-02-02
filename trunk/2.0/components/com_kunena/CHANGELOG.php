@@ -33,6 +33,15 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+2-February-2011 Matias
+# [#23443] Administration: Components >> Kunena Forum >> Category Manager points to wrong page
+# [#23443] KunenaAccess::loadSubscribers() didn't get category subscriptions
+- [#23442] KunenaUser::loadAllowedCategories(): caching should be performed in Access class
+# [#23442] KunenaAccess class: improve caching
+# [#23442] Optimize KunenaAccessJomsocial::loadAllowedCategories(): no groups for visitos
+# [#23442] Optimize KunenaAccessJoomla15::loadAllowedCategories(): no groups for visitos
+# [#23443] plgSystemKunena::onAfterStoreUser(): save Kunena user only if user was new
+
 1-February-2011 Matias
 # [#23443] Fix some layout issues with pathway
 # [#23443] Fix internal error when deleting topic

@@ -35,8 +35,10 @@ class plgSystemKunena extends JPlugin {
 		if (! $succes) {
 			return false;
 		}
-		$user = KunenaFactory::getUser(intval($user ['id']));
-		$user->save();
+		if ($isnew) {
+			$user = KunenaFactory::getUser(intval($user ['id']));
+			$user->save();
+		}
 
 		/*
 		// See: http://www.kunena.org/forum/159-k-16-common-questions/63438-category-subscriptions-default-subscribed#63554

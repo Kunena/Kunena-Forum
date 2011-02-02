@@ -26,7 +26,7 @@
 		<menu task="cpanel" img="components/com_kunena/media/icons/kunena-favicon.png">COM_KUNENA</menu>
 		<submenu>
 			<menu task="showconfig" img="components/com_kunena/media/icons/config-favicon.png">COM_KUNENA_CONFIGURATION</menu>
-			<menu task="showAdministration" img="components/com_kunena/media/icons/forums-favicon.png">COM_KUNENA_CATEGORY_MANAGER</menu>
+			<menu view="categories" img="components/com_kunena/media/icons/forums-favicon.png">COM_KUNENA_CATEGORY_MANAGER</menu>
 			<menu task="showprofiles" img="components/com_kunena/media/icons/users-favicon.png">COM_KUNENA_USER_MANAGER</menu>
 			<menu task="showTemplates" img="components/com_kunena/media/icons/templates-favicon.png">COM_KUNENA_TEMPLATE_MANAGER</menu>
 			<menu task="ranks" img="components/com_kunena/media/icons/ranks-favicon.png">COM_KUNENA_RANK_MANAGER</menu>

@@ -26,6 +26,8 @@ abstract class KunenaAccess {
 	protected static $moderatorsByCatid = array();
 	protected static $moderatorsByUserid = array();
 
+	protected static $cacheKey = 'com_kunena.access.global';
+
 	abstract public function __construct();
 
 	static public function getInstance($integration = null) {
@@ -36,8 +38,20 @@ abstract class KunenaAccess {
 			self::$instance = KunenaIntegration::initialize ( 'access', $integration );
 
 			// Load administrators and moderators
-			self::$instance->loadAdmins();
-			self::$instance->loadModerators();
+			$cache = JFactory::getCache('com_kunena', 'output');
+			$data = $cache->get(self::$cacheKey, 'com_kunena');
+			if ($data) {
+				$data = unserialize($data);
+				self::$adminsByCatid = (array)$data['ac'];
+				self::$adminsByUserid = (array)$data['au'];
+				self::$moderatorsByCatid = (array)$data['mc'];
+				self::$moderatorsByUserid = (array)$data['mu'];
+			}
+			$my = JFactory::getUser();
+			// If values were not cached or users permissions have been changed, force reload
+			if (!$data || ($my->id && $my->authorize('com_kunena', 'administrator') == empty(self::$adminsByUserid[$my->id][0]) )) {
+				self::$instance->clearCache();
+			}
 		}
 		return self::$instance;
 	}
@@ -50,10 +64,15 @@ abstract class KunenaAccess {
 		self::$instance->loadAdmins();
 		self::$instance->loadModerators();
 
-		$db = JFactory::getDBO ();
-		$db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
-		$db->query ();
-		KunenaError::checkDatabaseError();
+
+		// Store new data into cache
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$cache->store(serialize(array(
+			'ac'=>self::$adminsByCatid,
+			'au'=>self::$adminsByUserid,
+			'mc'=>self::$moderatorsByCatid,
+			'mu'=>self::$moderatorsByUserid,
+			)), self::$cacheKey, 'com_kunena');
 	}
 
 	public function getAccessLevelsList($category) {
@@ -114,7 +133,6 @@ abstract class KunenaAccess {
 	}
 
 	public function getAllowedCategories($user = null, $rule = 'read') {
-		// TODO: It looks like this is cached into session.. We need to be able to reset it as well
 		static $read = false;
 
 		$user = KunenaFactory::getUser($user);
@@ -259,7 +277,7 @@ abstract class KunenaAccess {
 		$db = JFactory::getDBO ();
 		$query ="SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topic->id}
 				UNION
-				SELECT user_id FROM #__kunena_user_topics WHERE category_id={$category->id}";
+				SELECT user_id FROM #__kunena_user_categories WHERE category_id={$category->id}";
 		$db->setQuery ($query);
 		$userids = (array) $db->loadResultArray();
 		KunenaError::checkDatabaseError();
@@ -271,6 +289,5 @@ abstract class KunenaAccess {
 
 	abstract public function checkSubscribers($topic, &$userids);
 
-	// TODO: it looks like this is cached into session.. we need to be able to clear that cache
 	abstract public function loadAllowedCategories($userid);
 }

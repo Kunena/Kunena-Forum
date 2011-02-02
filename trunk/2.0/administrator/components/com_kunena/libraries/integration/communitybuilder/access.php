@@ -19,7 +19,7 @@ class KunenaAccessCommunityBuilder extends KunenaAccess {
 		$this->integration = KunenaIntegration::getInstance ('communitybuilder');
 		if (! $this->integration || ! $this->integration->isLoaded())
 			return;
-		$this->joomlaAccess = KunenaAccess::getInstance('joomla');
+		$this->joomlaAccess = KunenaIntegration::initialize ( 'access', 'joomla');
 		$this->priority = 50;
 	}
 

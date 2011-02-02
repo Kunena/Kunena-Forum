@@ -17,6 +17,10 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		if ($jversion->RELEASE != '1.5')
 			return null;
 		$this->priority = 25;
+
+		$authorization = JFactory::getACL();
+		$authorization->addACL( 'com_kunena', 'administrator', 'users', 'super administrator' );
+		$authorization->addACL( 'com_kunena', 'administrator', 'users', 'administrator' );
 	}
 
 	public function loadAdmins() {
@@ -48,7 +52,10 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		$user = JFactory::getUser($user);
 
 		// Get all Joomla user groups for current user
-		$usergroups = $this->acl_get_groups('users', $user->id);
+		$usergroups = array();
+		if ($user->id) {
+			$usergroups = $this->acl_get_groups('users', $user->id);
+		}
 
 		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 		$catlist = array();

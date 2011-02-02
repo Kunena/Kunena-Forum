@@ -267,6 +267,7 @@ class KunenaForumCategory extends JObject {
 			}
 		}
 
+		// Clear moderator cache
 		$access = KunenaFactory::getAccessControl();
 		$access->clearCache();
 	}

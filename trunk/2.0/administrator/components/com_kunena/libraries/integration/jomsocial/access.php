@@ -19,7 +19,7 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		$this->integration = KunenaIntegration::getInstance ('jomsocial');
 		if (! $this->integration || ! $this->integration->isLoaded())
 			return;
-		$this->joomlaAccess = KunenaAccess::getInstance('joomla');
+		$this->joomlaAccess = KunenaIntegration::initialize ( 'access', 'joomla');
 		$this->priority = 50;
 	}
 
@@ -44,16 +44,18 @@ class KunenaAccessJomSocial extends KunenaAccess {
 	public function loadAllowedCategories($userid) {
 		$allowed = $this->joomlaAccess->loadAllowedCategories($userid);
 
-		$db = JFactory::getDBO();
-		$query	= "SELECT c.id FROM #__kunena_categories AS c
-			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
-			WHERE c.published=1 AND g.approved=1 AND g.memberid={$db->quote($userid)}";
-		$db->setQuery( $query );
-		$list = (array) $db->loadResultArray ();
-		KunenaError::checkDatabaseError ();
+		if (KunenaFactory::getUser($userid)->exists()) {
+			$db = JFactory::getDBO();
+			$query	= "SELECT c.id FROM #__kunena_categories AS c
+				INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
+				WHERE c.published=1 AND g.approved=1 AND g.memberid={$db->quote($userid)}";
+			$db->setQuery( $query );
+			$list = (array) $db->loadResultArray ();
+			KunenaError::checkDatabaseError ();
 
-		foreach ( $list as $catid ) {
-			$allowed [$catid] = $catid;
+			foreach ( $list as $catid ) {
+				$allowed [$catid] = $catid;
+			}
 		}
 		return $allowed;
 	}

@@ -352,8 +352,12 @@ class KunenaForumTopic extends JObject {
 				$this->setError(JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $this->id, $this->id));
 				return false;
 			}
+			if ($this->moved_id) {
+				// TODO: translate
+				$this->setError(JText::sprintf('COM_KUNENA_MODERATION_ERROR_ALREADY_SHADOW', $this->id, $this->id));
+				return false;
+			}
 			$topic = $target;
-			$this->moved_id = $target->id;
 
 		} elseif ($target instanceof KunenaForumCategory) {
 			if ( $target->parent_id == 0 ) {
@@ -362,7 +366,6 @@ class KunenaForumTopic extends JObject {
 			}
 			$oldCategory = $this->getCategory();
 			$topic = $this;
-			$this->moved_id = 0;
 			$this->category_id = $target->id;
 
 		} else {
@@ -389,7 +392,7 @@ class KunenaForumTopic extends JObject {
 			// Move the whole topic
 		} elseif ($ids instanceof JDate) {
 			// Move all newer messages (includes unapproved, deleted messages)
-			$query->where("time>{$ids->toUnix()}");
+			$query->where("time>={$ids->toUnix()}");
 		} else {
 			// Move individual messages
 			if (is_array($ids)) $ids = implode(',', $ids);
@@ -403,6 +406,21 @@ class KunenaForumTopic extends JObject {
 		}
 		if ($topic->id != $this->id) {
 			// Moving topic into another topic
+			$count = 0;
+			if ($ids !== false) {
+				// We don't know if we moved all the messages -- check it
+				$query = "SELECT COUNT(*) FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($this->id)}";
+				$this->_db->setQuery ( $query );
+				$count = (int)$this->_db->loadResult();
+				if ($this->_db->getErrorNum () ) {
+					$this->setError($this->_db->getError());
+					return false;
+				}
+			}
+			// If no messages are left, mark topic as moved
+			if (!$count) {
+				$this->moved_id = $topic->id;
+			}
 			$this->recount();
 			$topic->recount();
 		} else {
@@ -628,20 +646,22 @@ class KunenaForumTopic extends JObject {
 	}
 
 	public function recount() {
-		// Recount total posts and attachments
-		$query ="SELECT COUNT(DISTINCT m.id) AS posts, COUNT(a.id) AS attachments
-				FROM #__kunena_messages AS m
-				LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
-				WHERE m.hold={$this->_db->quote($this->hold)} AND m.thread={$this->_db->quote($this->id)}
-				GROUP BY m.thread";
-		$this->_db->setQuery($query);
-		$result = $this->_db->loadAssoc ();
-		if (KunenaError::checkDatabaseError ())
-			return false;
-		if (!$result) {
-			$result = array('posts'=>0, 'attachments'=>0);
+		if (!$this->moved_id) {
+			// Recount total posts and attachments
+			$query ="SELECT COUNT(DISTINCT m.id) AS posts, COUNT(a.id) AS attachments
+					FROM #__kunena_messages AS m
+					LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
+					WHERE m.hold={$this->_db->quote($this->hold)} AND m.thread={$this->_db->quote($this->id)}
+					GROUP BY m.thread";
+			$this->_db->setQuery($query);
+			$result = $this->_db->loadAssoc ();
+			if (KunenaError::checkDatabaseError ())
+				return false;
+			if (!$result) {
+				$result = array('posts'=>0, 'attachments'=>0);
+			}
+			$this->bind($result);
 		}
-		$this->bind($result);
 		return $this->update();
 	}
 

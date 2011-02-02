@@ -526,7 +526,7 @@ class KunenaControllerTopic extends KunenaController {
 			$topic = $object;
 		}
 		if ($targetTopic) {
-			$target = KunenaForumMessageHelper::get( $targetTopic );
+			$target = KunenaForumTopicHelper::get( $targetTopic );
 		} else {
 			$target = KunenaForumCategoryHelper::get( $targetCategory );
 		}
@@ -567,7 +567,7 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ) );
 		}
-		//$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
+		$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
 
 	function report() {

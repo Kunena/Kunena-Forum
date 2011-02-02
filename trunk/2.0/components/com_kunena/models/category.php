@@ -93,7 +93,8 @@ class KunenaModelCategory extends KunenaAdminModelCategory {
 			$hold = $access->getAllowedHold($me, $catid);
 			$params = array(
 				'orderby'=>'tt.ordering DESC, tt.last_post_time ' . strtoupper($this->getState ( 'list.direction')),
-				'hold'=>$hold);
+				'hold'=>$hold,
+				'moved'=>1);
 
 			list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 			if ($this->total > 0) {

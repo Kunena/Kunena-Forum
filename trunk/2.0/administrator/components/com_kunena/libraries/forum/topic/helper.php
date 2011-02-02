@@ -117,6 +117,7 @@ class KunenaForumTopicHelper {
 		$starttime = isset($params['starttime']) ? (int) $params['starttime'] : 0;
 		$user = isset($params['user']) ? KunenaUser::getInstance($params['user']) : KunenaUser::getInstance();
 		$hold = isset($params['hold']) ? (string) $params['hold'] : 0;
+		$moved = isset($params['moved']) ? (string) $params['moved'] : 0;
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
 		if (strstr('ut.last_', $orderby)) {
@@ -159,7 +160,8 @@ class KunenaForumTopicHelper {
 
 		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->Quote($starttime)}" : '');
 		$whereuser = ($whereuser ? " AND ut.user_id={$db->Quote($user->userid)} AND (".implode(' OR ',$whereuser).')' : '');
-		$where = "tt.moved_id='0' AND tt.hold IN ({$hold}) AND tt.category_id IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
+		$where = "tt.hold IN ({$hold}) AND tt.category_id IN ({$catlist}) {$whereuser} {$wheretime} {$where}";
+		if (!$moved) $where .= " AND tt.moved_id='0'";
 
 		// Get total count
 		if ($whereuser)

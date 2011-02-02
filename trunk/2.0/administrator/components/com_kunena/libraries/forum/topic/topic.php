@@ -342,7 +342,7 @@ class KunenaForumTopic extends JObject {
 		return $this->_exists;
 	}
 
-	public function move($target, $ids=false) {
+	public function move($target, $ids=false, $subject='', $shadow=false) {
 		if (!$target || !$target->exists()) {
 			$this->setError(JText::printf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $this->id));
 			return false;
@@ -388,6 +388,7 @@ class KunenaForumTopic extends JObject {
 		}
 		$query = new KunenaDatabaseQuery();
 		$query->update('#__kunena_messages')->set("catid={$topic->category_id}")->set("thread={$topic->id}")->where("thread={$this->id}");
+		if (!empty($subject)) $query->set("subject={$this->_db->quote($subject)}");
 		if ($ids === false) {
 			// Move the whole topic
 		} elseif ($ids instanceof JDate) {
@@ -420,6 +421,7 @@ class KunenaForumTopic extends JObject {
 			// If no messages are left, mark topic as moved
 			if (!$count) {
 				$this->moved_id = $topic->id;
+				if (!$shadow) $this->hold=2;
 			}
 			$this->recount();
 			$topic->recount();

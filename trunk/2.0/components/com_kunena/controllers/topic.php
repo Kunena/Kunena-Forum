@@ -537,9 +537,8 @@ class KunenaControllerTopic extends KunenaController {
 		} elseif (!$target->authorise ( 'read' )) {
 			$error = $target->getError();
 		} else {
-			$subject = JRequest::getString ( 'subject', '' );
-			$shadow = JRequest::getInt ( 'shadow', 0 );
-			$changesubject = JRequest::getInt ( 'changesubject', 0 );
+			$subject = JRequest::getBool ( 'changesubject', false ) ? JRequest::getString ( 'subject', '' ) : '';
+			$shadow = JRequest::getBool ( 'shadow', false );
 
 			if ($object instanceof KunenaForumMessage) {
 				$mode = JRequest::getWord ( 'mode', 'selected' );
@@ -555,12 +554,9 @@ class KunenaControllerTopic extends KunenaController {
 			} else {
 				$ids = false;
 			}
-			if ($subject) $topic->subject = $subject;
-			// TODO: change subject from every message
-			if (!$topic->move ( $target, $ids )) {
+			if (!$topic->move ( $target, $ids, $subject, $shadow )) {
 				$error = $topic->getError();
 			}
-			// TODO: make shadow post
 		}
 		if ($error) {
 			$app->enqueueMessage ( $error, 'notice' );

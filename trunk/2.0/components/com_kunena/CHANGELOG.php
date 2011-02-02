@@ -44,6 +44,7 @@ Kunena 2.0.0-DEV
 # [#23443] Fix a bug in JomSocial/CB/Joomla ACL integration: User needs to logout & login in order to see new category
 # [#23443] Topic/Default: Moved topics cannot be seen
 # [#23443] KunenaForumTopic::move() add missing logic to move topic/messages into another topic
+# [#23443] KunenaForumTopic::move() add options to change subject and create shadow topic
 
 1-February-2011 Matias
 # [#23443] Fix some layout issues with pathway

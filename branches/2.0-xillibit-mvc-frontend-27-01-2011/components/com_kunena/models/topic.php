@@ -157,4 +157,9 @@ class KunenaModelTopic extends KunenaModel {
 		$usersvoted = KunenaForumPollHelper::getUsersVotes($this->getState ( 'item.id'));
 		return $usersvoted;
 	}
+
+	public function getUsersHasVoted() {
+		$usersvoted = KunenaForumPollHelper::userHasAlreadyVoted($this->getState ( 'item.id'));
+		return $usersvoted;
+	}
 }

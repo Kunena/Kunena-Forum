@@ -80,6 +80,13 @@ class KunenaForumPoll extends JObject {
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
+	public function newPoll($fields=array()) {
+		$poll = new KunenaForumPoll();
+		$poll = bind($fields, array ('title', 'threadid', 'polltimetolive'));
+
+		return $poll;
+	}
+
 	public function bind($data, $allow = array()) {
 		if (!empty($allow)) $data = array_intersect_key($data, array_flip($allow));
 		$this->setProperties ( $data );

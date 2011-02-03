@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+03-February-2011
+# [#24515] Fix some issues with polls and make working save vote like it should
+
 01-February-2011
 # [#24515] Fix some undefined variables, make working save vote with new library
 # [#24515] Fix fatal error during edit when there is a poll

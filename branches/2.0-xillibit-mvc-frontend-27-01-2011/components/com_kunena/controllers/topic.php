@@ -115,9 +115,7 @@ class KunenaControllerTopic extends KunenaController {
 		$polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
 
 		//Insert in the database the informations for the poll and the options for the poll
-		$poll_exist = null;
 		if (! empty ( $optionsnumbers ) && ! empty ( $polltitle )) {
-			$poll_exist = "1";
 			//Begin Poll management options
 			$poll_optionsID = JRequest::getVar('polloptionsID', array (), 'post', 'array');
 			$optvalue = array();
@@ -740,7 +738,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		$success = KunenaForumPollHelper::saveChangedVote($id, $vote);
 		if ( !$success ) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_VOTE_NOT_SAVED' ), 'error' );
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_VOTE_NOT_CHANGED' ), 'error' );
 			return false;
 		}
 

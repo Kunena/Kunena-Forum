@@ -126,15 +126,16 @@ class KunenaForumPollHelper {
 
 	static public function saveVote($id, $vote) {
 		$db = JFactory::getDBO ();
+		$now	= JFactory::getDate();
 		$user = KunenaUser::getInstance($user);
 		if ( self::canVote($id) ) {
 			if ( self::userHasAlreadyVoted($id) ) {
-				$query = "UPDATE #__kunena_polls_users SET votes=votes+1,lastvote={$db->Quote($vote)} WHERE pollid={$db->Quote($id)} AND userid={$db->Quote($userid)};";
+				$query = "UPDATE #__kunena_polls_users SET votes=votes+1,lastvote={$db->Quote($vote)},lasttime={$db->Quote($now->toMySQL())} WHERE pollid={$db->Quote($id)} AND userid={$db->Quote($user->userid)};";
 				$db->setQuery($query);
 				$db->query();
 				if (KunenaError::checkDatabaseError()) return;
 			} else {
-				$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote) VALUES({$db->Quote($id)},{$db->Quote($user->userid)},'1',{$db->Quote($vote)});";
+				$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lasttime,lastvote) VALUES({$db->Quote($id)},{$db->Quote($user->userid)},'1',{$db->Quote($now->toMySQL())},{$db->Quote($vote)});";
 				$db->setQuery($query);
 				$db->query();
 				if (KunenaError::checkDatabaseError()) return;
@@ -150,6 +151,32 @@ class KunenaForumPollHelper {
 		}
 	}
 
+	static protected function reset_vote($userid,$id) {
+		$db 	= JFactory::getDBO ();
+		$query = "SELECT a.id, a.pollid,a.votes AS option_votes, b.votes AS user_votes, b.lastvote, b.userid FROM #__kunena_polls_options AS a
+				INNER JOIN #__kunena_polls_users AS b ON a.id=b.lastvote
+				WHERE a.pollid={$this->_db->Quote($id)} AND b.userid={$db->Quote($userid)}";
+		$db->setQuery($query);
+		$poll_options_user = $db->loadObject();
+		if (KunenaError::checkDatabaseError()) return;
+
+
+		if($poll_options_user->option_votes > '0' && $poll_options_user->user_votes > '0') {
+			$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id={$db->Quote($poll_options_user->lastvote)} AND pollid={$db->Quote($id)};";
+			$db->setQuery($query);
+			$db->query();
+			if (KunenaError::checkDatabaseError()) return;
+
+			$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid={$db->Quote($userid)} AND pollid={$db->Quote($id)};";
+			$db->setQuery($query);
+			$db->query();
+			if (KunenaError::checkDatabaseError()) return;
+
+			return true;
+		}
+		return false;
+	}
+
 	static public function saveChangedVote($id, $vote) {
 		$db 	= JFactory::getDBO ();
 		$now	= JFactory::getDate();
@@ -159,16 +186,30 @@ class KunenaForumPollHelper {
 
 		if ( self::getTimediffLastVote($id) > $config->polltimebtvotes ) return false;
 
-		$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id={$db->Quote($vote)};";
-		$db->setQuery($query);
-		$db->query();
-		if (KunenaError::checkDatabaseError()) return;
+		if ( self::reset_vote($user->userid,$id) ) {
+			$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id={$db->Quote($vote)};";
+			$db->setQuery($query);
+			$db->query();
+			if (KunenaError::checkDatabaseError()) return;
 
-		$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote={$db->Quote($vote)}, lasttime={$db->Quote($now->toMySQL())} WHERE pollid={$db->Quote($id)} AND userid={$db->Quote($user->userid)};";
-		$db->setQuery($query);
-		$db->query();
-		if (KunenaError::checkDatabaseError()) return;
+			$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote={$db->Quote($vote)}, lasttime={$db->Quote($now->toMySQL())} WHERE pollid={$db->Quote($id)} AND userid={$db->Quote($user->userid)};";
+			$db->setQuery($query);
+			$db->query();
+			if (KunenaError::checkDatabaseError()) return;
 
-		return true;
+			return true;
+		}
+		return false;
+	}
+
+	static public function saveUpdatedVote($id, $fields=array()) {
+		if ( !$id) {
+		// save a new poll
+
+		} else {
+		// delete the poll if the user has let blank all fields
+
+		// Update poll
+		}
 	}
 }

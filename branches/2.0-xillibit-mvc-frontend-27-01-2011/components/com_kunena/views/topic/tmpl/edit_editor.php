@@ -11,8 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 // Kunena bbcode editor
-require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
-$kunena_poll = CKunenaPolls::getInstance();
 $kunena_config = KunenaFactory::getConfig ();
 ?>
 <tr id="kpost-toolbar" class="krow<?php echo 1 + $this->k^=1;?>">
@@ -91,17 +89,11 @@ $kunena_config = KunenaFactory::getConfig ();
 			<?php
 			//Check if the poll is allowed
 			if ($kunena_config->pollenabled) {
-				if ( empty($this->category->allow_polls) ) $this->category->allow_polls = '';
-				$display_poll = $kunena_poll->get_poll_allowed($this->message->id, $this->message->parent, $this->message->exists(), $this->category->allow_polls);
-				if (!isset($this->polldatasedit[0]->polltimetolive)) {
-					$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
-				}
-				$kunena_poll->call_js_poll_edit($this->message->exists(), $this->message->id);
-				$html_poll_edit = $kunena_poll->get_input_poll($this->message->exists(), $this->message->id, $this->polldatasedit);
+				if (!isset($this->polldatasedit[0]->polltimetolive)) $this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 				JHTML::_('behavior.calendar');
 			?>
-			<span id="kpoll-not-allowed"><?php if(!$display_poll) { echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED'); } ?></span>
-			<div id="kpoll-hide-not-allowed" <?php if(!$display_poll) { ?> style="display:none;" <?php } ?> >
+			<span id="kpoll-not-allowed"><?php if(!$this->display_poll) { echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED'); } ?></span>
+			<div id="kpoll-hide-not-allowed" <?php if(!$this->display_poll) { ?> style="display:none;" <?php } ?> >
 
 				<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 				<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
@@ -122,8 +114,15 @@ $kunena_config = KunenaFactory::getConfig ();
 
 			</div>
 			<?php
-			if(!empty( $html_poll_edit )) {
-				echo $html_poll_edit;
+			if(!empty( $this->polldatasedit )) {
+				$x = 1;
+				foreach ($this->polldatasedit as $option) {
+					echo '<div id="option'.$x.'">Option '.$x.'&nbsp;<input type="text" maxlength = "25" id="field_option'.$x.'" name="polloptionsID['.$option->poll_option_id.']" value="'.$option->text.'" onmouseover="
+						javascript:$(\'helpbox\').set(\'value\', '
+				. JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'). ')" />
+				</div>';
+					$x++;
+				}
 			}
 			?>
 			<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>" />

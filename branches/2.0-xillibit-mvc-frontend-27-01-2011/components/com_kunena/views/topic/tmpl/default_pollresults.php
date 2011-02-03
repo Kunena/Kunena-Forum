@@ -34,7 +34,7 @@ defined( '_JEXEC' ) or die();
 							<tr class="krow<?php echo ($i^=1)+1;?>">
 								<td colspan="4">
 									<?php
-									if(empty($poll->nbvoters)) $this->nbvoters = "0";
+									if(empty($this->nbvoters)) $this->nbvoters = "0";
 									echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL')." <strong>".$this->nbvoters."</strong> ";
 									if($this->config->pollresultsuserslist && !empty($this->usersvoted)) :
 										echo " ( ";

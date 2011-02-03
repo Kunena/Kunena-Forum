@@ -94,9 +94,7 @@ defined( '_JEXEC' ) or die();
 
 			<span class="ktopic-latest-post">
 			<?php
-			if ($this->topic->moved_id) :
-				echo JText::_('COM_KUNENA_MOVED');
-			elseif ($this->topic_ordering == 'ASC') :
+			if ($this->topic_ordering == 'ASC') :
 				echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, $this->pages*$this->config->messages_per_page, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), $this->topic->last_post_id );
 			else :
 				echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, 0, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), $this->topic->last_post_id );

@@ -178,6 +178,13 @@ PX		EM			PCT			PT
 	border-bottom:2px solid;
 	padding:0 10px 0 10px;
 }
+#Kunena .kheader h2,
+#Kunena .kheader h2 a {
+    font-weight: bold;
+    margin-bottom: 0;
+    padding: 0;
+}
+
 #Kunena div.kblock div.ktitle {
 	text-align: left;
 	display: table-row;
@@ -204,6 +211,10 @@ PX		EM			PCT			PT
 	right: -10px;
 	height: 1px;
 	position: relative;
+}
+#Kunena .ktoggler a:hover {
+	color:#ff0000;
+	background: url("../images/expand.gif") no-repeat scroll 0 0 transparent;
 }
 #Kunena div.kblock span.select-toggle {
 	float: right;
@@ -452,6 +463,7 @@ PX		EM			PCT			PT
 	border-bottom-width: 3px;
 	border-left-width: 0;
 	vertical-align: bottom;
+	line-height: 0;
 }
 
 #Kunena #ktop span.ktoggler {
@@ -507,7 +519,7 @@ PX		EM			PCT			PT
 
 #Kunena #ktab a {
 	margin: 0;
-	padding: 0;
+	padding: 0 10px;
 	text-decoration: none;
 	border: 0;
 	display: block;
@@ -515,11 +527,14 @@ PX		EM			PCT			PT
 	border-radius: 5px 5px 0 0;
 	-moz-border-radius: 5px 5px 0 0;
 	-webkit-border-radius: 5px 5px 0 0;
+	color: #fff !important;
+	font-size: 1em;
+	line-height: 2.3em;
+	text-indent: 0;
 }
 
 #Kunena #ktab a span {
 	display: block;
-	padding: 0 10px;
 	font-size: 1em; 
 	line-height: 2.3em;
 	text-indent: 0;
@@ -1106,6 +1121,9 @@ PX		EM			PCT			PT
 	text-align:center;
 	width: 1%;
 	vertical-align: middle;
+}
+.kcol-ktopicicon img {
+	border: 0 none;
 }
 #Kunena td.kcol-kcatlastpost {
 	width: 25%;
@@ -1911,7 +1929,9 @@ PX		EM			PCT			PT
 	margin-left: 0;
 	padding: 1px 0px 1px 0;
 	background: none;
+	line-height: 1.333em;
 }
+
 #Kunena ul#kstatslistright li strong a {
 	font-weight:bold;
 }
@@ -3283,3 +3303,10 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 .kgooglemap img {
 	max-width:none !important;
 }
+
+/* Fix for Atomic Template */
+#ktab .joomla-nav {
+	background-color: transparent;
+	border: 0 none;
+}
+

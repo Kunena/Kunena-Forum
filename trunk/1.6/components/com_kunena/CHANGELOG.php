@@ -36,6 +36,7 @@ Kunena 1.6.4
 3-February-2011 Severdia
 + [#24745] Add new color options for template params (BlueEagle only)
 ^ [#24745] Changed admin config buttons
+# [#24364] CSS fixes for Joomla 1.6 (Beez and Atomic)
 
 31-January-2011 fxstein
 ^ [#24703] Update version info to 1.6.4-DEV

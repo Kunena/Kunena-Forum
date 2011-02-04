@@ -11,9 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 // Kunena bbcode editor
-require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
-$kunena_poll = CKunenaPolls::getInstance();
-$kunena_config = KunenaFactory::getConfig ();
 ?>
 <tr id="kpost-toolbar" class="krow<?php echo 1 + $this->k^=1;?>">
 	<td class="kcol-first kcol-editor-label">
@@ -90,18 +87,11 @@ $kunena_config = KunenaFactory::getConfig ();
 			<div id="kbbcode-poll-options" style="display: none;">
 			<?php
 			//Check if the poll is allowed
-			if ($kunena_config->pollenabled) {
-				if ( empty($this->category->allow_polls) ) $this->category->allow_polls = '';
-				$display_poll = $kunena_poll->get_poll_allowed($this->message->id, $this->message->parent, $this->message->exists(), $this->category->allow_polls);
-				if (!isset($this->polldatasedit[0]->polltimetolive)) {
-					$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
-				}
-				$kunena_poll->call_js_poll_edit($this->message->exists(), $this->message->id);
-				$html_poll_edit = $kunena_poll->get_input_poll($this->message->exists(), $this->message->id, $this->polldatasedit);
+			if ($this->config->pollenabled) {
 				JHTML::_('behavior.calendar');
 			?>
-			<span id="kpoll-not-allowed"><?php if(!$display_poll) { echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED'); } ?></span>
-			<div id="kpoll-hide-not-allowed" <?php if(!$display_poll) { ?> style="display:none;" <?php } ?> >
+			<span id="kpoll-not-allowed"><?php if(empty($this->display_poll)) { echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED'); } ?></span>
+			<div id="kpoll-hide-not-allowed" <?php if(empty($this->display_poll)) { ?> style="display:none;" <?php } ?> >
 
 				<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 				<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
@@ -118,23 +108,30 @@ $kunena_config = KunenaFactory::getConfig ();
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
 
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-				<?php echo JHTML::_('calendar', $this->escape($this->polldatasedit[0]->polltimetolive), 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:$(\'helpbox\').set(\'value\', \''.KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN').'\')')); ?>
+				<?php echo JHTML::_('calendar', isset($this->polldatasedit[0]->polltimetolive) ? $this->escape($this->polldatasedit[0]->polltimetolive) : '0000-00-00 00:00:00', 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:$(\'helpbox\').set(\'value\', \''.KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN').'\')')); ?>
 
 			</div>
 			<?php
-			if(!empty( $html_poll_edit )) {
-				echo $html_poll_edit;
+			if(!empty( $this->polldatasedit )) {
+				$x = 1;
+				foreach ($this->polldatasedit as $option) {
+					echo '<div id="option'.$x.'">Option '.$x.'&nbsp;<input type="text" maxlength = "25" id="field_option'.$x.'" name="polloptionsID['.$option->poll_option_id.']" value="'.$option->text.'" onmouseover="
+						javascript:$(\'helpbox\').set(\'value\', '
+				. JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'). ')" />
+				</div>';
+					$x++;
+				}
 			}
 			?>
-			<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>" />
+			<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $this->config->pollnboptions; ?>" />
 			<input type="hidden" name="number_total_options" id="numbertotal"
 				value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>" />
 			<?php } ?>
 			</div>
 
 			<?php
-			if ($kunena_config->highlightcode) {
-				$kunena_config = KunenaFactory::getConfig();
+			if ($this->config->highlightcode) {
+				$this->config = KunenaFactory::getConfig();
 				if (substr(JVERSION, 0, 3) == 1.5) {
 					$path = JPATH_ROOT.'/libraries/geshi/geshi';
 				} else {
@@ -157,7 +154,7 @@ $kunena_config = KunenaFactory::getConfig ();
 					</div>
 			<?php }
 			}
-			if ($kunena_config->showvideotag) {
+			if ($this->config->showvideotag) {
 			?>
 
 			<div id="kbbcode-video-options" style="display: none;"><?php

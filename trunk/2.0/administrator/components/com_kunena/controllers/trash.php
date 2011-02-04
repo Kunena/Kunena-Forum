@@ -13,6 +13,8 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.controller' );
 kimport('kunena.user.helper');
 kimport('kunena.forum.category.helper');
+kimport('kunena.forum.topic.helper');
+kimport ( 'kunena.error' );
 
 /**
  * Kunena Trash Controller
@@ -30,8 +32,11 @@ class KunenaAdminControllerTrash extends KunenaController {
 	}
 
 	function purge() {
-		// FIXME: check token
 		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
 
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$md5 = JRequest::getString ( 'md5', null );
@@ -61,7 +66,7 @@ class KunenaAdminControllerTrash extends KunenaController {
 				foreach ($ids as $id ) {
 					$db->setQuery ( "SELECT a.parent, a.id, b.threadid FROM #__kunena_messages AS a INNER JOIN #__kunena_polls AS b ON b.threadid=a.id WHERE threadid='{$id}'" );
 					$mes = $db->loadObjectList ();
-					//if (KunenaError::checkDatabaseError()) return;
+					if (KunenaError::checkDatabaseError()) return;
 					if( !empty($mes[0])) {
 						// FIXME : maybe create a function in poll class to check if a poll exist
 						if ($mes[0]->parent == '0' && !empty($mes[0]->threadid) ) {
@@ -88,9 +93,12 @@ class KunenaAdminControllerTrash extends KunenaController {
 	}
 
 	function restore() {
-		// FIXME: check token
-
 		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
 		$kunena_db = JFactory::getDBO ();
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
@@ -103,10 +111,10 @@ class KunenaAdminControllerTrash extends KunenaController {
 		foreach ( $cid as $id ) {
 			$kunena_db->setQuery ( "UPDATE #__kunena_messages SET hold=0 WHERE hold IN (2,3) AND id={$id} " );
 			$kunena_db->query ();
-			//if (KunenaError::checkDatabaseError()) return;
+			if (KunenaError::checkDatabaseError()) return;
 		}
 		KunenaUserHelper::recount();
-		// FIXME: recount topics as well
+		KunenaForumTopicHelper::recount();
 		KunenaForumCategoryHelper::recount ();
 
 		$app->enqueueMessage ( JText::_('COM_KUNENA_TRASH_RESTORE_DONE') );

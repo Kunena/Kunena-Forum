@@ -378,6 +378,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
         case 'poll':
+        	echo('LEGACY!');
   			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
   			$kunena_polls = CKunenaPolls::getInstance();
   			$kunena_polls->display();
@@ -385,6 +386,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
             break;
 
 		case 'polls':
+			echo('LEGACY!');
 			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
 			$kunena_polls = CKunenaPolls::getInstance();
 			$kunena_polls->polldo();
@@ -402,14 +404,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'help' :
 			CKunenaTools::loadTemplate('/'.$func.'.php');
 
-			break;
-
-		case 'search' :
-		case 'advsearch' :
-			require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.search.class.php');
-
-			$kunenaSearch = new CKunenaSearch ( );
-			$kunenaSearch->show ();
 			break;
 
 		case 'karma' :

@@ -16,6 +16,7 @@ $topic_emoticons = $template->getTopicIcons();
 require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
 $kunena_poll = CKunenaPolls::getInstance();
 $kunena_poll->call_javascript_form();
+
 include_once (KUNENA_PATH_LIB . '/kunena.bbcode.js.php');
 include_once (KUNENA_PATH_LIB . '/kunena.special.js.php');
 JHTML::_('behavior.formvalidation');

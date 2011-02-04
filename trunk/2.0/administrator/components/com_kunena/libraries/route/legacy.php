@@ -358,6 +358,23 @@ class KunenaRouteLegacy {
 				$changed = true;
 				$uri->setVar('view', 'statistics');
 				break;
+			case 'search':
+			case 'advsearch':
+				// TODO:
+				$changed = true;
+				$uri->setVar('view', 'search');
+				break;
+			case 'poll':
+				$changed = true;
+				$uri->setVar('view', 'topic');
+				// Handle &do=xxx
+				switch ($uri->getVar('layout')) {
+					case 'changevote' :
+						$uri->setVar('layout', 'vote');
+						break;
+				}
+				break;
+
 		}
 		return $changed;
 	}

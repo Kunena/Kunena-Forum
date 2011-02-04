@@ -39,6 +39,11 @@ Kunena 2.0.0-DEV
 ^ [#22792] Redo moving topic/posts into other topic to get rid of extra code
 + [#23442] Optimize move, split and merge for speed by using simpler and faster SQL updates
 + [#23442] Merging topics now updates also ownership, subscriptions and favorites
+^ [#22786] Merge revisions 4301-4370 from /branches/2.0-xillibit-mvc-frontend-27-01-2011
+# [#23443] Fix misc bugs in polls and search
+
+3-February-2011 Xillibit
+# [#24515] Fix some issues with polls and make working save vote like it should
 
 3-February-2011 Matias
 + [#22792] Add function KunenaForumMessageHelper::recount(): update catid on messages
@@ -62,6 +67,10 @@ Kunena 2.0.0-DEV
 # [#23443] KunenaForumTopic::move() add options to change subject and create shadow topic
 # [#23443] Category/Default: moved topic should look like any other topic
 
+1-February-2011 Xillibit
+# [#24515] Fix some undefined variables, make working save vote with new library
+# [#24515] Fix fatal error during edit when there is a poll
+
 1-February-2011 Matias
 # [#23443] Fix some layout issues with pathway
 # [#23443] Fix internal error when deleting topic
@@ -79,6 +88,9 @@ Kunena 2.0.0-DEV
 # [#23443] Make most functions in KunenaAccess and its derived classes to be public
 - [#22570] Remove some deprecated code
 
+31-January-2011 Xillibit
+# [#24515] Fix some undefined variables and fix some issues in trash in backend (Part 2)
+
 31-January-2011 Matias
 + [#22792] Add new KunenaHtmlPagination class
 # [#22569] Fix some bugs in frontend category manager
@@ -86,6 +98,10 @@ Kunena 2.0.0-DEV
 + [#22569] Common/Default: Add html/bbcode modes
 # [#22569] KunenaAdminModelCategories class: use more specific userstate to avoid conflicts
 + [#22569] Categories/Default: add links to category manager
+
+30-January-2011 Xillibit
+^ [#24515] Put some old codes into mvc in frontend : polls (Part 1)
+# [#24515] Fix some undefined variables and fix some issues in trash in backend
 
 30-January-2011 Matias
 # [#23443] KunenaForum::display(): Fix fatal error
@@ -108,6 +124,9 @@ Kunena 2.0.0-DEV
 # [#22569] Topics view: make it to work with modules
 # [#23443] KunenaForum::display(): Fix a bug in parameter handling
 
+28-January-2011 Xillibit
+^ [#24515] Put some old codes into mvc in frontend (search part2)
+
 28-January-2011 Matias
 # [#23443] Categories/Default view: Fix repeation SQL queries
 + [#22569] Add function KunenaView::displayWhoIsOnline() from derived classes
@@ -119,6 +138,9 @@ Kunena 2.0.0-DEV
 - [#22570] Remove deprecated template/default/pathway.php
 # [#22569] Optimize and fix recount() on categories, topics, usertopics and user posts
 # [#22569] Installer: Recount forum statistics when upgrading to 2.0.0
+
+27-January-2011 Xillibit
+^ [#24515] Put some old codes into mvc in frontend (search almost finished)
 
 27-January-2011 Matias
 - [#22570] Remove deprecated directory template/default/plugin/stats

@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.view' );
 kimport ('kunena.forum.message.attachment.helper');
+kimport ('kunena.forum.topic.poll.helper');
 
 /**
  * Topic View
@@ -155,6 +156,12 @@ class KunenaViewTopic extends KunenaView {
 		$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
 		$this->action = 'post';
 
+		$this->document->addScriptDeclaration('// <![CDATA[
+   			var number_field = 1;
+			// ]]>');
+
+		$this->polldatasedit = array();
+
 		$this->display($tpl);
 	}
 
@@ -189,6 +196,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->my = JFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 		$mesid = $this->state->get('item.mesid');
+		$document = JFactory::getDocument();
 
 		$this->message = KunenaForumMessageHelper::get($mesid);
 		if (!$this->message->authorise('edit')) {
@@ -206,9 +214,46 @@ class KunenaViewTopic extends KunenaView {
 
 		//save the options for query after and load the text options, the number options is for create the fields in the form after
 		if ($this->topic->poll_id) {
-			$this->polldatasedit = $this->poll->get_poll_data ( $this->topic->id );
-			$this->polloptionstotal = count ( $this->polldatasedit );
+			if ($this->config->pollenabled) {
+				if ($this->message->id == 0 || $this->message->parent == 0) $this->display_poll=1;
+				else $this->display_poll=0;
+
+				$this->polldatasedit = KunenaForumTopicPollHelper::getPollData ( $this->topic->id );
+
+				require_once (KPATH_SITE . '/lib/kunena.poll.class.php');
+				$kunena_poll = CKunenaPolls::getInstance();
+				$kunena_poll->call_js_poll_edit($this->message->exists(), $this->message->id);
+
+				$this->polloptionstotal = count ( $this->polldatasedit );
+
+				$document->addScriptDeclaration('// <![CDATA[
+	   		var number_field = "'.$this->polloptionstotal .'";
+			// ]]>');
+			}
+		} /* put it in reply or create to check if poll need to be displayed
+		else {
+			if ($this->config->pollenabled) {
+				//if ( empty($this->category->allow_polls) ) $this->category->allow_polls = '';
+				$this->display_poll = $kunena_poll->get_poll_allowed($this->message->id, $this->message->parent, $this->message->exists(), $this->category->allow_polls);
+			}
+		}*/
+
+		$this->display($tpl);
+	}
+
+	function displayVote($tpl = null) {
+		// need to check if poll is allowed in this category
+		$this->config = KunenaFactory::getConfig();
+		$this->assignRef ( 'category', $this->get ( 'Category' ) );
+		$this->assignRef ( 'topic', $this->get ( 'Topic' ) );
+		if (!$this->config->pollenabled || !$this->topic->poll_id || !$this->category->allow_polls) {
+			return '';
 		}
+
+		$this->polldata = $this->get('Polldata');
+		$this->nbvoters = $this->get('Voters');
+		$this->usersvoted = $this->get('Usersvoted');
+		$this->voted = false;
 
 		$this->display($tpl);
 	}
@@ -356,13 +401,21 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function displayPoll() {
-		if ($this->config->pollenabled == "1" && $this->topic->poll_id) {
-			if ( $this->category->allow_polls ) {
-				require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
-				$kunena_polls = CKunenaPolls::getInstance();
-				$kunena_polls->showPollbox();
-			}
+		// need to check if poll is allowed in this category
+		if (!$this->config->pollenabled || !$this->topic->poll_id || !$this->category->allow_polls) {
+			return '';
 		}
+		if ($this->getLayout() == 'poll') {
+			$this->assignRef ( 'category', $this->get ( 'Category' ) );
+			$this->assignRef ( 'topic', $this->get ( 'Topic' ) );
+		}
+		$this->polldata = $this->get('Polldata');
+		$this->nbvoters = $this->get('Voters');
+		$this->usersvoted = $this->get('Usersvoted');
+		$this->voted = $this->get('UsersHasVoted');
+
+		if ($this->voted) echo $this->loadTemplate("pollresults");
+		else echo $this->loadTemplate("poll");
 	}
 
 	function displayTopicActions($location=0) {

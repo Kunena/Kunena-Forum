@@ -262,42 +262,7 @@ class CKunenaPolls {
 
 		return $polluserdata;
    }
-   /**
-	* Get the five better votes in polls
-	* @return int
-	*/
-   function get_top_five_votes($PopPollsCount)
-   {
-		$query = "SELECT SUM(o.votes) AS total
-					FROM #__kunena_polls AS p
-					LEFT JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
-					GROUP BY p.threadid
-					ORDER BY total
-					DESC ";
-		$this->_db->setQuery($query,0,$PopPollsCount);
-		$votecount = $this->_db->loadResult();
-		KunenaError::checkDatabaseError();
 
-		return $votecount;
-   }
-   /**
-	* Get the five better polls
-	* @return Array
-	*/
-	function get_top_five_polls($PopPollsCount)
-	{
-    	$query = "SELECT q.catid, q.id,p.*, SUM(o.votes) AS total
-    				FROM #__kunena_polls AS p
-    				INNER JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
-    				INNER JOIN #__kunena_messages AS q ON p.threadid = q.id
-    				GROUP BY p.threadid
-    				ORDER BY total DESC";
-    	$this->_db->setQuery($query,0,$PopPollsCount);
-	    $toppolls = $this->_db->loadObjectList();
-	    KunenaError::checkDatabaseError();
-
-    	return $toppolls;
-   }
    /**
 	* Save the results of a poll
 	*/

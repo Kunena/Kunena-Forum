@@ -1405,7 +1405,6 @@ PX		EM			PCT			PT
 	padding-left: 25px;
 	line-height: 22px;
 	font-size: 1.333em;
-	/* float:left; */
 }
 
 #Kunena span.kmsgtitle-new {
@@ -2087,17 +2086,14 @@ POST PAGE
 	cursor: pointer;
 	line-height: 145%;
 	display: inline-block;
-	background-image: url("../media/iconsets/buttons/default/default.png");
+	background-image: url("../media/iconsets/buttons/default/default.png") !important;
 	background-repeat: repeat-x;
 	border: none;
 	margin:0 5px;
 }
 /*
-#Kunena .kicon-button.btn-left {
-	float: left;
-}
-#Kunena .kicon-button.btn-right {
-	float: right;
+#Kunena a.kicon-button:hover {
+	background-position: 0 -480px !important;
 }
 */
 #Kunena .kicon-button span {
@@ -2116,28 +2112,41 @@ POST PAGE
 #Kunena a.kicon-button span span:hover {
 	text-decoration: underline;
 }
-#Kunena .kbuttonuser {
+/* Need the hover states to fix Beez in Joomla 1.6 */
+#Kunena .kbuttonuser,
+#Kunena .kbuttonuser:hover {
 	background-position: 0 -360px;
 }
 #Kunena .kbuttononline-yes,
-#Kunena .kbuttonmod {
+#Kunena .kbuttonmod,
+#Kunena .kbuttononline-yes:hover,
+#Kunena .kbuttonmod:hover{
 	background-position: 0 -200px;
 }
 #Kunena .kbuttononline-no,
 #Kunena .kbuttongen,
-#Kunena .kbuttoncomm {
+#Kunena .kbuttoncomm,
+#Kunena .kbuttononline-no:hover,
+#Kunena .kbuttongen:hover,
+#Kunena .kbuttoncomm:hover {
 	background-position: 0 -480px;
 }
 #Kunena .kbuttononline-yes span span,
-#Kunena .kbuttonmod span span {
+#Kunena .kbuttonmod span span,
+#Kunena .kbuttononline-yes span span:hover,
+#Kunena .kbuttonmod span span:hover{
 	background-position: right -220px;
 }
-#Kunena .kbuttonuser span span {
+#Kunena .kbuttonuser span span,
+#Kunena .kbuttonuser span span:hover {
 	background-position: right -380px;
 }
 #Kunena .kbuttononline-no span span,
 #Kunena .kbuttongen span span,
-#Kunena .kbuttoncomm span span {
+#Kunena .kbuttoncomm span span,
+#Kunena .kbuttononline-no span span:hover,
+#Kunena .kbuttongen span span:hover,
+#Kunena .kbuttoncomm span span:hover {
 	background-position: right -500px;
 }
 #Kunena .kbuttononline-yes span span,
@@ -3309,4 +3318,6 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	background-color: transparent;
 	border: 0 none;
 }
+
+
 

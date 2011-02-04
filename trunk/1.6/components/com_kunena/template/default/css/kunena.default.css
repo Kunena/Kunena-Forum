@@ -64,6 +64,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 #Kunena a:visited,
 #Kunena a:active,
 #Kunena a:focus { color: #5388B4 !important; background-color:transparent !important;}
+
 #Kunena a:hover { color: #FF0000 !important; background-color:transparent !important; }
 
 #Kunena .knewchar {
@@ -498,7 +499,9 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 #Kunena div.kmsg-header h2 {
 	background-color: #737373;
 }
-#Kunena span.kavatar img {
+
+#Kunena .kpost-profile span.kavatar img,
+#Kunena .kprofilebox .kavatar {
 	border-color: #BFC3C6;
 }
 
@@ -587,12 +590,19 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	border-color: #F2CAB7;
 }
 
+#Kunena .kmsgtitle {
+	color: #fff ;
+}
+#Kunena div.kmsg-header-top span.kmsg-id-top a,
+#Kunena div.kmsg-header-bottom span.kmsg-id-bottom a,
+#Kunena div.kmsg-header-left span.kmsg-id-left a,
+#Kunena div.kmsg-header-right span.kmsg-id-right a {
+	color: #fff !important;
+}
+
 /* AVATAR POSITION
 ----------------------------------------------------------------------- */
 
-#Kunena div.kmsgtitle {
-	/*border-bottom-color:#DDDDDD;*/
-}
 
 /* right
 ----------------------------------------*/

@@ -128,6 +128,62 @@ if ($onlineHeader) {
 EOF;
 }
 
+$inactiveTab = $this->params->get('inactiveTabcolor', $skinner ? '' : '#737373');
+
+if ($inactiveTab) {
+	$styles .= <<<EOF
+	#Kunena #ktab a { background-color: {$inactiveTab} !important; }
+EOF;
+}
+
+$activeTab = $this->params->get('activeTabcolor', $skinner ? '' : '#5388B4');
+
+if ($activeTab) {
+	$styles .= <<<EOF
+	#Kunena #ktab ul.menu li.active a { background-color: {$activeTab} !important; }
+EOF;
+}
+
+$hoverTab = $this->params->get('hoverTabcolor', $skinner ? '' : '#5388B4');
+
+if ($hoverTab) {
+	$styles .= <<<EOF
+	#Kunena #ktab a:hover { background-color: {$hoverTab} !important; }
+EOF;
+}
+
+$topBorder = $this->params->get('topBordercolor', $skinner ? '' : '#5388B4');
+
+if ($topBorder) {
+	$styles .= <<<EOF
+	#Kunena #ktop { border-color: {$topBorder} !important; }
+EOF;
+}
+
+$inactiveFont = $this->params->get('inactiveFontcolor', $skinner ? '' : '#FFFFFF');
+
+if ($inactiveFont) {
+	$styles .= <<<EOF
+	#Kunena #ktab a span { color: {$inactiveFont} !important; }
+EOF;
+}
+$activeFont = $this->params->get('activeFontcolor', $skinner ? '' : '#FFFFFF');
+
+if ($activeFont) {
+	$styles .= <<<EOF
+	#Kunena #ktab #current a span { color: {$activeFont} !important; }
+EOF;
+}
+
+$toggleButton = $this->params->get('toggleButtoncolor', $skinner ? '' : '#5388B4');
+
+if ($toggleButton) {
+	$styles .= <<<EOF
+	#Kunena #ktop span.ktoggler { background-color: {$toggleButton} !important; }
+EOF;
+}
+
+
 $styles .= <<<EOF
 	#Kunena .kicon-profile { background-image: url("{$mediaurl}/iconsets/profile/{$this->params->get('profileIconset', 'default')}/default.png"); }
 	#Kunena .kicon-button { background-image: url("{$mediaurl}/iconsets/buttons/{$this->params->get('buttonIconset', 'default')}/default.png"); }

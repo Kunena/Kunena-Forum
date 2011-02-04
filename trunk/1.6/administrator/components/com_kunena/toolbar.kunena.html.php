@@ -73,9 +73,7 @@ class CKunenaToolbar
         JToolBarHelper::spacer();
         JToolBarHelper::save('saveconfig');
         JToolBarHelper::spacer();
-        JToolBarHelper::trash('defaultconfig', 'COM_KUNENA_RESET_CONFIG', false);
-        JToolBarHelper::spacer();
-        JToolBarHelper::customX('revertconfig','restore.png','restore_f2.png', 'COM_KUNENA_REVERT_PREVIOUS_CONFIG', false);
+        JToolBarHelper::custom('defaultconfig', 'restore.png','restore_f2.png', 'COM_KUNENA_RESET_CONFIG', false);
         JToolBarHelper::spacer();
         JToolBarHelper::back();
         JToolBarHelper::spacer();
@@ -144,7 +142,7 @@ class CKunenaToolbar
     {
 
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('douserssync', 'delete.png', 'delete_f2.png', 'COM_KUNENA_SYNC', false);
+        JToolBarHelper::custom('douserssync', 'apply.png', 'apply_f2.png', 'COM_KUNENA_SYNC', false);
         JToolBarHelper::spacer();
         JToolBarHelper::cancel();
         JToolBarHelper::spacer();

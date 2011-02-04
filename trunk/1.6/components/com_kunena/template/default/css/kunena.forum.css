@@ -1342,6 +1342,7 @@ PX		EM			PCT			PT
 #Kunena div.kmsg-header h2 {
 	font-size:.917em;
 	padding:3px 0;
+	margin-bottom: 0;
 }
 #Kunena div.kmsg-header-top span.kmsgdate-top,
 #Kunena div.kmsg-header-bottom span.kmsgdate-bottom,

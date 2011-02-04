@@ -537,7 +537,8 @@ class KunenaControllerTopic extends KunenaController {
 		} elseif (!$target->authorise ( 'read' )) {
 			$error = $target->getError();
 		} else {
-			$subject = JRequest::getBool ( 'changesubject', false ) ? JRequest::getString ( 'subject', '' ) : '';
+			$changesubject = JRequest::getBool ( 'changesubject', false );
+			$subject = JRequest::getString ( 'subject', '' );
 			$shadow = JRequest::getBool ( 'shadow', false );
 
 			if ($object instanceof KunenaForumMessage) {
@@ -554,7 +555,7 @@ class KunenaControllerTopic extends KunenaController {
 			} else {
 				$ids = false;
 			}
-			if (!$topic->move ( $target, $ids, $subject, $shadow )) {
+			if (!$topic->move ( $target, $ids, $shadow, $subject, $changesubject )) {
 				$error = $topic->getError();
 			}
 		}

@@ -82,6 +82,28 @@ class KunenaForumMessageHelper {
 		return self::loadMessagesByTopic($topic->id, $start, $limit, $ordering, $hold);
 	}
 
+	static function recount($topicids=false) {
+		$db = JFactory::getDBO ();
+
+		if (is_array($topicids)) {
+			$where = 'WHERE m.thread IN ('.implode(',', $topicids).')';
+		} elseif ((int)$topicids) {
+			$where = 'WHERE m.thread='.(int)$topicids;
+		} else {
+			$where = '';
+		}
+
+		// Update catid in all messages
+		$query ="UPDATE #__kunena_messages AS m
+			INNER JOIN #__kunena_topics AS tt ON tt.id=m.thread
+			SET m.catid=tt.category_id {$where}";
+		$db->setQuery($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		return $db->getAffectedRows ();
+		}
+
 	// Internal functions
 
 	static protected function loadMessages($ids) {

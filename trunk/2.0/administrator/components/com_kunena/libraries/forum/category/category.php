@@ -405,13 +405,13 @@ class KunenaForumCategory extends JObject {
 		// Delete user read
 		$queries[] = "DELETE FROM #__kunena_user_read WHERE category_id={$db->quote($this->id)}";
 		// Delete thank yous
-		$queries[] = "DELETE t FROM #__kunena_thankyou AS t LEFT JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.catid={$db->quote($this->id)}";
 		// Delete poll users
-		$queries[] = "DELETE p FROM #__kunena_polls_users AS p LEFT JOIN #__kunena_messages AS m ON m.id=p.pollid WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE p FROM #__kunena_polls_users AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.category_id={$db->quote($this->id)} AND tt.moved_id=0";
 		// Delete poll options
-		$queries[] = "DELETE p FROM #__kunena_polls_options AS p LEFT JOIN #__kunena_messages AS m ON m.id=p.pollid WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE p FROM #__kunena_polls_options AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.category_id={$db->quote($this->id)} AND tt.moved_id=0";
 		// Delete polls
-		$queries[] = "DELETE p FROM #__kunena_polls AS p LEFT JOIN #__kunena_messages AS m ON m.id=p.threadid WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE p FROM #__kunena_polls AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.id WHERE tt.category_id={$db->quote($this->id)} AND tt.moved_id=0";
 		// Delete messages
 		$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.catid={$db->quote($this->id)}";
 		// TODO: delete attachments

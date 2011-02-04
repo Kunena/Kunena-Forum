@@ -33,6 +33,21 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+4-February-2011 Matias
++ [#22792] Add functions to move() and merge() into KunenaForumTopicUserHelper
+^ [#22792] Redo moving topic/posts into another category for simplicity
+^ [#22792] Redo moving topic/posts into other topic to get rid of extra code
++ [#23442] Optimize move, split and merge for speed by using simpler and faster SQL updates
++ [#23442] Merging topics now updates also ownership, subscriptions and favorites
+
+3-February-2011 Matias
++ [#22792] Add function KunenaForumMessageHelper::recount(): update catid on messages
+^ [#22792] KunenaForumTopic::move(): improve parameter checks
++ [#22792] Rethink basic move logic to handle all use cases (move, split, merge, split & merge)
+# [#22792] Change category/topic deletion logic on polls
++ [#22792] KunenaForumTopic::update(): move repeating logic into updatePostInfo()
+^ [#22792] KunenaForumTopic::move(): various code simplifications, reordering
+
 2-February-2011 Matias
 # [#23443] Administration: Components >> Kunena Forum >> Category Manager points to wrong page
 # [#23443] KunenaAccess::loadSubscribers() didn't get category subscriptions

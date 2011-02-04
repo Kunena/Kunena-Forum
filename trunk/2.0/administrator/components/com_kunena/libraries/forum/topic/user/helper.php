@@ -69,6 +69,48 @@ class KunenaForumTopicUserHelper {
 		return $list;
 	}
 
+	static function move($old, $new) {
+		$db = JFactory::getDBO ();
+		$query ="UPDATE #__kunena_user_topics SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
+		$db->setQuery($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		return true;
+	}
+
+	static function merge($old, $new) {
+		$db = JFactory::getDBO ();
+
+		// Move all user topics which do not exist in new topic
+		$queries[] = "UPDATE jos_kunena_user_topics AS ut
+			INNER JOIN jos_kunena_user_topics AS o ON o.user_id = ut.user_id
+			SET ut.topic_id={$db->quote($new->id)}, ut.category_id={$db->quote($new->category_id)}
+			WHERE o.topic_id={$db->quote($old->id)} AND ut.topic_id IS NULL";
+
+		// Merge user topics information that exists in both topics
+		$queries[] = "UPDATE #__kunena_user_topics AS ut
+			INNER JOIN #__kunena_user_topics AS o ON o.user_id = ut.user_id
+			SET ut.posts = o.posts + ut.posts,
+				ut.last_post_id = GREATEST( o.last_post_id, ut.last_post_id ),
+				ut.owner = GREATEST( o.owner, ut.owner ),
+				ut.favorite = GREATEST( o.favorite, ut.favorite ),
+				ut.subscribed = GREATEST( o.subscribed, ut.subscribed )
+				WHERE ut.topic_id = {$db->quote($new->id)}
+				AND o.topic_id = {$db->quote($old->id)}";
+
+		// Delete all user topics from the shadow topic
+		$queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id={$db->quote($old->id)}";
+
+		foreach ($queries as $query) {
+			$db->setQuery($query);
+			$db->query ();
+			if (KunenaError::checkDatabaseError ())
+				return false;
+		}
+		return true;
+	}
+
 	static function recount($topicids=false) {
 		$db = JFactory::getDBO ();
 
@@ -89,7 +131,7 @@ class KunenaForumTopicUserHelper {
 					FROM #__kunena_messages AS m
 					WHERE m.userid>0 AND m.moved=0 {$where}
 					GROUP BY m.userid, m.thread
-				ON DUPLICATE KEY UPDATE posts=VALUES(posts), last_post_id=VALUES(last_post_id)";
+				ON DUPLICATE KEY UPDATE category_id=VALUES(category_id), posts=VALUES(posts), last_post_id=VALUES(last_post_id)";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())

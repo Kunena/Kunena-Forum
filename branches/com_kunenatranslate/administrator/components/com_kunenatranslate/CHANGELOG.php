@@ -28,7 +28,10 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-25-Januar-2010 svens(LDA)
+04-February-2011 svens(LDA)
++ [#24754] Adding some icons
+
+25-Januar-2011 svens(LDA)
 ^ [#23420] move options into XML
 + [#24608] create builder
 

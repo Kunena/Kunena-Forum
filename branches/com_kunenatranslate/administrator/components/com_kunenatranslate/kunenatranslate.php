@@ -13,6 +13,8 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+JHTML::stylesheet('kunenatranslate.css', 'administrator'.DS.'components'.DS.'com_kunenatranslate'.DS.'assets'.DS.'css'.DS);
+
 require_once (dirname(__FILE__).DS.'controller.php');
 
 // Require specific controller if requested

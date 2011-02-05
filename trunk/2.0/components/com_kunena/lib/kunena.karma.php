@@ -42,6 +42,7 @@ if ($pid) {
 
 //Modify this to change the minimum time between karma modifications from the same user
 $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
+$kunena_my = JFactory::getUser();
 ?>
 
 <table>
@@ -54,7 +55,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                 // - if a registered user submits the modify request
                 // - if he specifies an action related to the karma change
                 // - if he specifies the user that will have the karma modified
-                if ($kunena_config->showkarma && $kunena_my->id != "" && $kunena_my->id != 0 && $do != '' && $userid != '')
+                if ($kunena_config->showkarma && $kunena_my->id && $do && $userid)
                 {
                     $time = CKunenaTimeformat::internalTime();
 
@@ -87,7 +88,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 							    $kunena_db->setQuery("UPDATE #__kunena_users SET karma=karma+1 WHERE userid={$kunena_db->Quote( $userid )}");
 							    $kunena_db->query();
 							    if (KunenaError::checkDatabaseError()) return;
-							    echo JText::_('COM_KUNENA_KARMA_INCREASED') . '<br />';
+
+								// Activity integration
+								$activity = KunenaFactory::getActivityIntegration();
+								$activity->onAfterKarma($userid, $kunena_my->id, 1);
+
                            	 	if ($pid) {
 								    $kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_INCREASED'));
 									$kunena_app->redirect ( CKunenaLink::GetMessageURL ( $pid, $catid, 0, false ) );
@@ -104,7 +109,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 $kunena_db->setQuery("UPDATE #__kunena_users SET karma=karma-1 WHERE userid={$kunena_db->Quote($userid)}");
                                 $kunena_db->query();
                                 if (KunenaError::checkDatabaseError()) return;
-                                echo JText::_('COM_KUNENA_KARMA_DECREASED') . '<br />';
+
+                                // Activity integration
+								$activity = KunenaFactory::getActivityIntegration();
+								$activity->onAfterKarma($userid, $kunena_my->id, -1);
+
                             	if ($pid) {
 									$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_DECREASED'));
 									$kunena_app->redirect ( CKunenaLink::GetMessageURL ( $pid, $catid, 0, false ) );
@@ -135,6 +144,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             $kunena_db->setQuery("UPDATE #__kunena_users SET karma=karma-10, karma_time={$kunena_db->Quote($time)} WHERE userid='{$kunena_db->Quote($kunena_my->id)}");
                             $kunena_db->query();
                             if (KunenaError::checkDatabaseError()) return;
+
+							// Activity integration
+							$activity = KunenaFactory::getActivityIntegration();
+							$activity->onAfterKarma($userid, $kunena_my->id, -10);
+
                         	if ($pid) {
                             	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_INCREASE'));
                         		$kunena_app->redirect ( CKunenaLink::GetMessageURL ( $pid, $catid, 0, false ) );

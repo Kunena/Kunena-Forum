@@ -50,7 +50,9 @@ window.addEvent('domready', function(){
 		if ( arrayanynomousbox[catid] ) {
 			$('kanonymous').set('checked','checked');
 		}
+		<?php if ($this->my->id != 0) { ?>
 		kunenaSelectUsername(kbutton,kuser);
+		<?php } ?>
 	}
 	//	for hide or show polls if category is allowed
 	if($('postcatid') != undefined) {
@@ -62,10 +64,12 @@ window.addEvent('domready', function(){
 	if($('kauthorname') != undefined) {
 		var kuser = $('kauthorname').get('value');
 		var kbutton = $('kanonymous');
+		<?php if ($this->my->id != 0) { ?>
 		kunenaSelectUsername(kbutton, kuser);
 		kbutton.addEvent('click', function(e) {
 			kunenaSelectUsername(this, kuser);
 		});
+		<?php } ?>
 	}
 	//	to select if anynomous option is allowed on new topic tab
 	if($('postcatid') != undefined) {

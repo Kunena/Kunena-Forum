@@ -99,6 +99,14 @@ class KunenaControllerTopic extends KunenaController {
 			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key);
 		}
 
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		if (!$topic->exists()) {
+			$activity->onBeforePost($message);
+		} else {
+			$activity->onBeforeReply($message);
+		}
+
 		// Save message
 		$success = $message->save ();
 		if (! $success) {
@@ -143,6 +151,10 @@ class KunenaControllerTopic extends KunenaController {
 		if (JRequest::getInt ( 'subscribeMe', 0 )) {
 			if ($topic->subscribe(1)) {
 				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
+
+				// Activity integration
+				$activity = KunenaFactory::getActivityIntegration();
+				$activity->onAfterSubscribe($topic, 1);
 			} else {
 				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) );
 			}
@@ -211,6 +223,10 @@ class KunenaControllerTopic extends KunenaController {
 			}
 		}
 
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		$activity->onBeforeEdit($message);
+
 		// Save message
 		$success = $message->save (true);
 		if (! $success) {
@@ -276,6 +292,10 @@ class KunenaControllerTopic extends KunenaController {
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->subscribe(1)) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterSubscribe($topic, 1);
 		} else {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
@@ -292,6 +312,10 @@ class KunenaControllerTopic extends KunenaController {
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->subscribe(0)) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' ) );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterSubscribe($topic, 0);
 		} else {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
@@ -308,6 +332,10 @@ class KunenaControllerTopic extends KunenaController {
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->favorite(1)) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' ) );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterFavorite($topic, 1);
 		} else {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
@@ -324,6 +352,10 @@ class KunenaControllerTopic extends KunenaController {
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->favorite(0)) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' ) );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterFavorite($topic, 0);
 		} else {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
@@ -342,6 +374,10 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( $topic->getError(), 'notice' );
 		} elseif ($topic->sticky(1)) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_SET' ) );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterSticky($topic, 1);
 		} else {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_SET' ) );
 		}
@@ -360,6 +396,10 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( $topic->getError(), 'notice' );
 		} elseif ($topic->sticky(0)) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' ) );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterSticky($topic, 0);
 		} else {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_UNSET' ) );
 		}
@@ -378,6 +418,10 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( $topic->getError(), 'notice' );
 		} elseif ($topic->lock(1)) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_SET' ) );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterLock($topic, 1);
 		} else {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_SET' ) );
 		}
@@ -396,6 +440,10 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( $topic->getError(), 'notice' );
 		} elseif ($topic->lock(0)) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' ) );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterLock($topic, 0);
 		} else {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_UNSET' ) );
 		}

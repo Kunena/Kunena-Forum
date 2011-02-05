@@ -94,7 +94,6 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 }
 #Kunena div.kblock div.khelprulescontent,
 #Kunena div.kblock div.kfheadercontent {
-	/*border-color: #BFC3C6;*/
 	background-color: #FFFFFF;
 	color: #000000;
 }
@@ -219,7 +218,6 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 #Kunena select,
 #Kunena select:focus,
 #Kunena select:hover {
-	/* background-color: #F2F1EE; */
 	border-color: #999999;
 	color: #000000;
 }

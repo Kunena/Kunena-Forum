@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.model' );
+jimport ( 'joomla.version' );
 
 /**
  * Users Model for Kunena
@@ -45,6 +46,9 @@ class KunenaModelUsers extends KunenaModel {
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_search", 'search', '' );
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH')) $this->setState ( 'list.search', $value );
+
+		$jversion = new JVersion ();
+		$this->setState ( 'list.exclude', $jversion->RELEASE == '1.5' ? '62' : '42');
 	}
 
 	public function getTotal() {
@@ -62,10 +66,11 @@ class KunenaModelUsers extends KunenaModel {
 		static $total = false;
 		if ($total === false) {
 			$search = $this->getState ( 'list.search');
+			$exclude = $this->getState ( 'list.exclude');
 			$db = JFactory::getDBO();
 			$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE (u.block=0 AND u.activation='')";
 			if ($search) {
-				$query .= " AND (u.name LIKE '%{$db->getEscaped($search)}%' OR u.username LIKE '%{$db->getEscaped($search)}%') AND u.id NOT IN (62)";
+				$query .= " AND (u.name LIKE '%{$db->getEscaped($search)}%' OR u.username LIKE '%{$db->getEscaped($search)}%') AND u.id NOT IN ({$exclude})";
 			}
 			$db->setQuery ( $query );
 			$total = $db->loadResult ();
@@ -78,11 +83,12 @@ class KunenaModelUsers extends KunenaModel {
 		static $items = false;
 		if ($items === false) {
 			$search = $this->getState ( 'list.search');
+			$exclude = $this->getState ( 'list.exclude');
 			$db = JFactory::getDBO();
 			$query = "SELECT *
 				FROM #__users AS u
 				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
-				WHERE (u.block=0 OR u.activation!='') AND u.id NOT IN (62)";
+				WHERE (u.block=0 OR u.activation!='') AND u.id NOT IN ({$exclude})";
 			if ($search) {
 				$query .= " AND (u.name LIKE '%{$db->getEscaped($search)}%' OR u.username LIKE '%{$db->getEscaped($search)}%')";
 			}

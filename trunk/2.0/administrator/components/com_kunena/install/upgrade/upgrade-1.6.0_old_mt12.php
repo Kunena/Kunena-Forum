@@ -3,16 +3,14 @@
  * @version $Id$
  * Kunena Component
  * @package Kunena
- * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
- *
- * Kunena 1.6.0: remove old non-standard Mootools 1.2 library
- * component: com_kunena
  **/
-
 defined ( '_JEXEC' ) or die ();
 
+// Kunena 1.6.0: remove old non-standard Mootools 1.2 library
 function kunena_upgrade_160_old_mt12($parent) {
 	// Only needed for K1.6.0 ALPHA releases:
 

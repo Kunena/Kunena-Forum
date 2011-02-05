@@ -1,14 +1,15 @@
 <?php
 /**
  * @version $Id$
- * Kunena Component - KunenaKeywordHelper Class
+ * Kunena Component
  * @package Kunena
  *
- * @Copyright (C) 2010 www.kunena.org All rights reserved
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
 kimport ('kunena.keyword');
 kimport ('kunena.user.helper');
 

@@ -4,7 +4,7 @@
  * Kunena Component
  * @package Kunena
  *
- * @Copyright (C) 2010 Kunena Team All rights reserved
+ * @Copyright (C) 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -17,7 +17,7 @@ jimport('joomla.filesystem.file');
 /**
  * Class to manipulate an image.
  *
- * Derived from JXtended JImage class Copyright (C) 2008 - 2009 JXtended, LLC. All rights reserved.
+ * Derived from JXtended JImage class Copyright (C) 2008 - 2009 JXtended, LLC. All rights reserved..
  */
 class CKunenaImage
 {

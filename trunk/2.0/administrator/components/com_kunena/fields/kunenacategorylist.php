@@ -1,14 +1,14 @@
 <?php
 /**
- * @version $Id: api.php 3864 2010-11-05 16:23:40Z fxstein $
+ * @version $Id: kunenacategories.php 4220 2011-01-18 09:13:04Z mahagr $
  * Kunena Component
  * @package Kunena
  *
- * @Copyright (C) 2008 - 2011 Kunena Team All rights reserved
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-defined ( '_JEXEC' ) or die ( '' );
+defined ( '_JEXEC' ) or die ();
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');

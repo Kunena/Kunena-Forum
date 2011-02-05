@@ -3,16 +3,14 @@
  * @version $Id$
  * Kunena Component
  * @package Kunena
- * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.bestofjoomla.com
  *
- * Kunena 1.0.8: Make favorites and subscriptions unique
- * component: com_kunena
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
  **/
-
 defined ( '_JEXEC' ) or die ();
 
+// Kunena 1.0.8: Make favorites and subscriptions unique
 function kunena_upgrade_108_favorites($parent) {
 	$temporary = 1;
 

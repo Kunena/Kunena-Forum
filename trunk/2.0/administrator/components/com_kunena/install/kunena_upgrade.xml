@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE update>
 <update>
-	<version>1.6.0-RC1</version>
-	<released>2010-08-09</released>
+	<version>@kunenaversion@</version>
+	<released>@kunenaversiondate@</released>
 </update>

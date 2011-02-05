@@ -1,13 +1,15 @@
 <?php
 /**
- * @version		$Id$
- * @package		Kunena
- * @subpackage	com_kunena
- * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
- * @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
- * @link		http://www.kunena.org
- */
-defined('_JEXEC') or die;
+ * @version $Id$
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined ( '_JEXEC' ) or die ();
+
 $version = reset($this->versions);
 ?>
 <table class="kinstaller">

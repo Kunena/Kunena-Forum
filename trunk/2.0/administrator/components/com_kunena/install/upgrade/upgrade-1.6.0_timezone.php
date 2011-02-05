@@ -3,16 +3,14 @@
  * @version $Id$
  * Kunena Component
  * @package Kunena
- * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
- *
- * Kunena 1.6.0: Convert database timezone from (local+board_offset) to UTC
- * component: com_kunena
  **/
-
 defined ( '_JEXEC' ) or die ();
 
+// Kunena 1.6.0: Convert database timezone from (local+board_offset) to UTC
 function kunena_upgrade_160_timezone($parent) {
 	$result = null;
 	$config = KunenaFactory::getConfig ();

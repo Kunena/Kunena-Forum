@@ -1,13 +1,13 @@
 <?php
 /**
-* @version $Id$
-* Kunena Component
-* @package Kunena
-*
-* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.org
-**/
+ * @version $Id$
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
 
 // Never use this file in any code - it is only here to provide declarations for external functions
 die();

@@ -4,12 +4,11 @@
  * Kunena Component
  * @package Kunena
  *
- * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
- *
  **/
-defined( '_JEXEC' ) or die();
+defined ( '_JEXEC' ) or die ();
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="kuserform" class="form-validate" enctype="multipart/form-data">
 	<input type="hidden" name="view" value="user" />

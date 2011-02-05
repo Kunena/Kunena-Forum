@@ -1,16 +1,14 @@
 <?php
 /**
-* @version $Id$
-* Kunena Component
-* @package Kunena
-*
-* @Copyright (C) 2008 - 2011 www.kunena.org All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.org
-**/
-
-// no direct access
-defined( '_JEXEC' ) or die();
+ * @version $Id$
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+die ();
 
 ?>
 <!--
@@ -34,7 +32,8 @@ Legend:
 Kunena 2.0.0-DEV
 
 5-February-2011 Matias
-^ [#22786] Merge revisions 4234-4333 from trunk/1.6
+^ [#22786] Merge revisions 4234-4338 from trunk/1.6
+^ [#22786] Updated all copyright dates to 2011
 
 4-February-2011 Matias
 + [#22792] Add functions to move() and merge() into KunenaForumTopicUserHelper
@@ -912,6 +911,15 @@ Kunena 2.0.0-DEV
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
 Kunena 1.6.3
+
+30-January-2010 fxstein
+^ [#23898] Updated kunena_upgrade.xml to use build variables
+^ [#23898] Updated 2011 dates (additional)
+
+30-January-2010 Severdia
+# [#22921] Updated Template Manager icon in menu
+^ [#23898] Updated 2011 dates and .org instead of .com
+# [#24687] Fixed button text color when skinner is activated
 
 30-January-2010 Matias
 * [#24563] Security (High/High): SQL injection vulnerability in search (thanks Adam Nichols)

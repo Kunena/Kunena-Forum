@@ -1,10 +1,10 @@
 <?php
 /**
  * @version $Id$
- * Kunena Component - KunenaForumTopicUser Class
+ * Kunena Component
  * @package Kunena
  *
- * @Copyright (C) 2010 www.kunena.org All rights reserved
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,7 +28,7 @@ class KunenaForumTopicUser extends JObject {
 	 */
 	public function __construct($topic = 0, $user = null) {
 		$topic = KunenaForumTopicHelper::get($topic);
-		
+
 		// Always fill empty data
 		$this->_db = JFactory::getDBO ();
 

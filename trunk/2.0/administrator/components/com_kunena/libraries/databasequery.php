@@ -1,11 +1,18 @@
 <?php
 /**
- * @version		$Id$
+ * @version $Id$
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ *
+ * Derived from Joomla 1.6
  * @copyright	Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
-
-defined('JPATH_BASE') or die;
+defined ( '_JEXEC' ) or die ();
 
 /**
  * Query Element Class.

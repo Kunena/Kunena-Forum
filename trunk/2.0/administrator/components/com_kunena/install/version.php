@@ -1,16 +1,14 @@
 <?php
 /**
- * @version		$Id: install.php 1244 2009-12-02 04:10:31Z mahagr$
- * @package		Kunena
- * @subpackage	com_kunena
- * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
- * @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
- * @link		http://www.kunena.org
- */
-
-//
-// Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+ * @version $Id$
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined ( '_JEXEC' ) or die ();
 
 class KunenaVersion
 {
@@ -105,11 +103,11 @@ class KunenaVersion
 	/**
 	* Retrieve copyright information as string.
 	*
-	* @return string "© 2008-2010 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	* @return string "© 2008-2011 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	*/
 	static function getCopyrightHTML()
 	{
-		return ': &copy; 2008-2010 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.org" target = "_blank">'
+		return ': &copy; 2008-2011 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.org" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_TEAM').'</a>  | '.JText::_('COM_KUNENA_VERSION_LICENSE')
 			.': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_GPL').'</a>';
@@ -118,7 +116,7 @@ class KunenaVersion
 	/**
 	* Retrieve installed Kunena version, copyright and license as string.
 	*
-	* @return string "Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname] | © 2008-2010 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	* @return string "Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname] | © 2008-2011 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	*/
 	static function getLongVersionHTML()
 	{

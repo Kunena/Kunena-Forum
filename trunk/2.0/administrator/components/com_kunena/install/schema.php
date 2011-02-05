@@ -1,16 +1,14 @@
 <?php
 /**
- * @version		$Id: install.php 1244 2009-12-02 04:10:31Z mahagr$
- * @package		Kunena
- * @subpackage	com_kunena
- * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
- * @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
- * @link		http://www.kunena.org
- */
-
-//
-// Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+ * @version $Id$
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined ( '_JEXEC' ) or die ();
 
 DEFINE('KUNENA_SCHEMA_FILE', KPATH_ADMIN.'/install/install.xml');
 DEFINE('KUNENA_UPGRADE_SCHEMA_FILE', KPATH_ADMIN.'/install/upgrade/upgrade.xml');

@@ -3,16 +3,14 @@
  * @version $Id$
  * Kunena Component
  * @package Kunena
- * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
- *
- * Kunena 1.6.0: Convert attachments table to support new multi file attachments
- * component: com_kunena
  **/
-
 defined ( '_JEXEC' ) or die ();
 
+// Kunena 1.6.0: Convert attachments table to support new multi file attachments
 function kunena_upgrade_160_attachments($parent) {
 	// First check if attachments table has legacy field
 	$fields = array_pop ( $parent->db->getTableFields ( '#__kunena_attachments' ) );

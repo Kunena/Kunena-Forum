@@ -1,10 +1,10 @@
 <?php
 /**
- * @version $Id: topic.php 4299 2011-01-27 18:57:10Z mahagr $
- * Kunena Component - KunenaForumTopicPoll Class
+ * @version $Id: kunenacategories.php 4220 2011-01-18 09:13:04Z mahagr $
+ * Kunena Component
  * @package Kunena
  *
- * @Copyright (C) 2010 www.kunena.org All rights reserved
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/

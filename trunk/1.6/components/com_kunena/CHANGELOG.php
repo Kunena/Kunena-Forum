@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.6.4
 
+5-February-2011 Matias
+# [#24761] Ban manager is not showing all the information
+# [#24762] Performance optimization for getting moderators by CB team (Thanks Beat!)
+# [#24763] NoixACL integration: fatal error while checking subscriber rights
+# [#24764] Using user defined title from menu Items breaks SEO in some environments (remove feature)
+
 4-February-2011 Severdia
 # [#24364] CSS fixes for Joomla 1.6 (Beez and Atomic)
 
@@ -43,7 +49,6 @@ Kunena 1.6.4
 
 31-January-2011 fxstein
 ^ [#24703] Update version info to 1.6.4-DEV
-^ [#24706] Remove default size=100 for videos on bbcode insert to allow for custom sizes
 
 Kunena 1.6.3
 

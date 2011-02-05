@@ -818,8 +818,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 $integration = KunenaFactory::getProfile();
 $integration->close();
 
-$params = JComponentHelper::getParams( 'com_kunena' );
-if ($params->get( 'show_page_title' )) $document->setTitle ( $params->get( 'page_title' ) );
+//$params = JComponentHelper::getParams( 'com_kunena' );
+//if ($params->get( 'show_page_title' )) $document->setTitle ( $params->get( 'page_title' ) );
 
 if (empty($_POST) && $format == 'html') {
 	$default = KunenaRoute::getDefault();

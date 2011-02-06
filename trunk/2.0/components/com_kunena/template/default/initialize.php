@@ -59,7 +59,7 @@ $forumHeader = $template->params->get('forumHeadercolor', $skinner ? '' : '#5388
 
 if ($forumHeader) {
 	$styles .= <<<EOF
-	
+
 	#Kunena div.kblock > div.kheader { background: {$forumHeader} !important; }
 	#Kunena #ktop { border-color: {$forumHeader}; }
 	#Kunena #ktop span.ktoggler { background: {$forumHeader}; }
@@ -116,6 +116,62 @@ if ($onlineHeader) {
 	#Kunena div.kwhoisonline div.kheader { background: {$onlineHeader} !important; }
 EOF;
 }
+
+$inactiveTab = $template->params->get('inactiveTabcolor', $skinner ? '' : '#737373');
+
+if ($inactiveTab) {
+	$styles .= <<<EOF
+	#Kunena #ktab a { background-color: {$inactiveTab} !important; }
+EOF;
+}
+
+$activeTab = $template->params->get('activeTabcolor', $skinner ? '' : '#5388B4');
+
+if ($activeTab) {
+	$styles .= <<<EOF
+	#Kunena #ktab ul.menu li.active a { background-color: {$activeTab} !important; }
+EOF;
+}
+
+$hoverTab = $template->params->get('hoverTabcolor', $skinner ? '' : '#5388B4');
+
+if ($hoverTab) {
+	$styles .= <<<EOF
+	#Kunena #ktab a:hover { background-color: {$hoverTab} !important; }
+EOF;
+}
+
+$topBorder = $template->params->get('topBordercolor', $skinner ? '' : '#5388B4');
+
+if ($topBorder) {
+	$styles .= <<<EOF
+	#Kunena #ktop { border-color: {$topBorder} !important; }
+EOF;
+}
+
+$inactiveFont = $template->params->get('inactiveFontcolor', $skinner ? '' : '#FFFFFF');
+
+if ($inactiveFont) {
+	$styles .= <<<EOF
+	#Kunena #ktab a span { color: {$inactiveFont} !important; }
+EOF;
+}
+$activeFont = $template->params->get('activeFontcolor', $skinner ? '' : '#FFFFFF');
+
+if ($activeFont) {
+	$styles .= <<<EOF
+	#Kunena #ktab #current a span { color: {$activeFont} !important; }
+EOF;
+}
+
+$toggleButton = $template->params->get('toggleButtoncolor', $skinner ? '' : '#5388B4');
+
+if ($toggleButton) {
+	$styles .= <<<EOF
+	#Kunena #ktop span.ktoggler { background-color: {$toggleButton} !important; }
+EOF;
+}
+
 
 $styles .= <<<EOF
 	#Kunena .kicon-profile { background-image: url("{$mediaurl}/iconsets/profile/{$template->params->get('profileIconset', 'default')}/default.png"); }

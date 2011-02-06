@@ -38,6 +38,14 @@
 		<param name="frontstatsHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
 		<param name="whoisonlineHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_WHOISONLINE_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
 		
+		<param name="inactiveTabcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR_DESC" />
+		<param name="activeTabcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR_DESC" />
+		<param name="hoverTabcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR" description="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR_DESC" />
+		<param name="topBordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR_DESC" />
+		<param name="inactiveFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC" />
+		<param name="activeFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
+		<param name="toggleButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_TOGGLER_COLOR_DESC" />
+		
 		<param name="enableSkinner" type="radio" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
 			<option value="0">COM_KUNENA_A_NO</option>
 			<option value="1">COM_KUNENA_A_YES</option>

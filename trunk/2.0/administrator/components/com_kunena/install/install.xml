@@ -492,6 +492,7 @@
 		<key name="posts" columns="posts" />
 		<key name="uhits" columns="uhits" />
 		<key name="banned" columns="banned" />
+		<key name="moderator" columns="moderator"/>
 	</table>
 	<table name="kunena_users_banned">
 		<field primary_key="yes" name="id" type="int(11)" null="0"

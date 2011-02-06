@@ -141,7 +141,7 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		}
 
 		$db->setQuery ($query);
-		$userids = (array) $db->loadObjectList('id');
+		$userids = (array) $db->loadResultArray();
 		KunenaError::checkDatabaseError();
 	}
 

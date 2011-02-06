@@ -32,7 +32,7 @@ Legend:
 Kunena 2.0.0-DEV
 
 5-February-2011 Matias
-^ [#22786] Merge revisions 4234-4338 from trunk/1.6
+^ [#22786] Merge revisions 4234-4379 from trunk/1.6
 ^ [#22786] Updated all copyright dates to 2011
 
 4-February-2011 Matias
@@ -910,11 +910,38 @@ Kunena 2.0.0-DEV
 - [#22543] Remove old BBCode parser (lib/kunena.parser*.php, lib/kunena.smile.class.php)
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
+Kunena 1.6.4
+
+5-February-2011 Matias
+# [#24761] Ban manager is not showing all the information
+# [#24762] Performance optimization for getting moderators by CB team (Thanks Beat!)
+# [#24763] NoixACL integration: fatal error while checking subscriber rights
+# [#24764] Using user defined title from menu Items breaks SEO in some environments (remove feature)
+
+4-February-2011 Severdia
+# [#24364] CSS fixes for Joomla 1.6 (Beez and Atomic)
+
+3-February-2011 Severdia
++ [#24745] Add new color options for template params (BlueEagle only)
+^ [#24745] Changed admin config buttons
+# [#24364] CSS fixes for Joomla 1.6 (Beez and Atomic)
+
+31-January-2011 fxstein
+^ [#24703] Update version info to 1.6.4-DEV
+
 Kunena 1.6.3
 
-30-January-2010 fxstein
+31-January-2011 fxstein
+^ [#24074] Update README.txt for 1.6.3 release
+^ [#23898] Updated changelog date one more time to 2011
+
+31-January-2011 Matias
+# [#24690] Profile/Recent view: Fix bug where clicking on More shows your own posts instead of users
+
+30-January-2011 fxstein
 ^ [#23898] Updated kunena_upgrade.xml to use build variables
 ^ [#23898] Updated 2011 dates (additional)
+^ [#24074] Update version info to 1.6.3 (Parlare)
 
 30-January-2010 Severdia
 # [#22921] Updated Template Manager icon in menu

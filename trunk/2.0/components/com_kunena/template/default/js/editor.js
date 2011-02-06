@@ -613,9 +613,9 @@ Selectors.Pseudo.selected = function(){
 
 function kInsertVideo1() {
 	var videosize = $('kvideosize').get('value');
-	if ( videosize == '') {
-		videosize = '100';
-	}
+//	if ( videosize == '') { NO DEFAULT
+//		videosize = '100';
+//	}
 	var videowidth = $('kvideowidth').get('value');
 	if ( videowidth == '') {
 		videowidth = '425';
@@ -629,7 +629,7 @@ function kInsertVideo1() {
 		provider = '';
 	}
 	var videoid = $('kvideoid').get('value');
-	kbbcode.replaceSelection('[video size='+videosize+' width='+videowidth+' height='+videoheigth+' type='+provider+']'+videoid+'[/video]', false);
+	kbbcode.replaceSelection( '[video'+(videosize ? ' size='+videosize:'')+' width='+videowidth+' height='+videoheigth+' type='+provider+']'+videoid+'[/video]', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
 

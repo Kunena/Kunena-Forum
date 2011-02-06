@@ -166,7 +166,7 @@
 		</version>
 		<version version="1.6.2" versiondate="2010-12-29" build="3894" versionname="Team">
 		</version>
-		<version version="1.6.3" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+		<version version="1.6.3" versiondate="2011-01-31" build="4344" versionname="Parlare">
 			<query mode="silenterror">
 				ALTER TABLE `#__kunena_categories` 
 					ADD `accesstype` varchar(20) NOT NULL default 'none' AFTER `moderators`,
@@ -182,6 +182,9 @@
 					ADD INDEX ( `func` ),
 					ADD INDEX ( `time` );
 			</query>
+		</version>
+		<version version="1.6.4" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+			<query mode="silenterror">ALTER TABLE `#_kunena_users` ADD INDEX ( `moderator` );</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 			<query mode="silenterror">
@@ -261,6 +264,9 @@
 			<query>DROP TABLE IF EXISTS `#__kunena_subscriptions_categories`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `channels` TEXT NULL DEFAULT NULL AFTER `published`</query>
 			<phpfile name="upgrade-2.0.0_recount"></phpfile>
+
+			<!-- From Kunena 1.6.4 -->
+			<query mode="silenterror">ALTER TABLE `#_kunena_users` ADD INDEX ( `moderator` );</query>
 		</version>
 	</upgrade>
 </comupgrade>

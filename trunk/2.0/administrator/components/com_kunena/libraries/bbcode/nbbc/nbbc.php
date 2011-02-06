@@ -1779,6 +1779,9 @@ if ($this->lexer->text == $end_tag) {
 $end_tag_params = $this->lexer->tag;
 break;
 }
+// START FIX
+if ($this->was_limited) continue;
+// END FIX
 if ($this->output_limit > 0
 && $this->text_length + strlen($this->lexer->text) >= $this->output_limit) {
 $text = $this->Internal_LimitText($this->lexer->text,
@@ -1793,7 +1796,9 @@ BBCODE_STACK_CLASS => $this->current_class,
 );
 }
 $this->Internal_DoLimit();
-break;
+// START FIX
+continue;
+// END FIX
 }
 $this->text_length += strlen($this->lexer->text);
 $this->stack[] = Array(

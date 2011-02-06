@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.model' );
+kimport('kunena.forum.category.helper');
 
 /**
  * Search Model for Kunena
@@ -26,8 +27,11 @@ class KunenaModelSearch extends KunenaModel {
 		$this->config = KunenaFactory::getConfig ();
 		$this->me = KunenaFactory::getUser();
 
-		// Search words
+		// Get search word list
 		$value = JString::trim ( JRequest::getVar ( 'q', '' ) );
+		if ($value == JText::_('COM_KUNENA_GEN_SEARCH_BOX')) {
+			$value = '';
+		}
 		$this->setState ( 'searchwords', $value );
 
 		$value = JRequest::getInt ( 'titleonly', 0 );
@@ -71,7 +75,7 @@ class KunenaModelSearch extends KunenaModel {
 			$value = explode ( ' ', $value );
 			JArrayHelper::toInteger($value);
 		}
-		$this->setState ( 'query.catids', implode(',', $value) );
+		$this->setState ( 'query.catids', $value );
 
 		$value = JRequest::getInt ( 'show', 0 );
 		$this->setState ( 'query.show', $value );
@@ -97,17 +101,15 @@ class KunenaModelSearch extends KunenaModel {
 	protected function Buildquery() {
 		$db = JFactory::getDBO ();
 		$query = array();
-		$arr_searchwords = $this->getSearchStrings();
 
-		$search_forums = $this->get_search_forums ( $this->getState('query.catids'), $this->getState('query.childforums') );
+		$categories = $this->getCategories ();
 		/* if there are no forums to search in, set error and return */
-		if (empty ( $search_forums )) {
+		if (empty ( $categories )) {
 			$this->setError(JText::_('COM_KUNENA_SEARCH_NOFORUM'));
 			return;
 		}
 
-		for($x = 0; $x < count ( $arr_searchwords ); $x ++) {
-			$searchword = $arr_searchwords [$x];
+		foreach ( $this->getSearchWords() as $searchword ) {
 			$searchword = $db->getEscaped ( JString::trim ( $searchword ) );
 			if (empty ( $searchword ))
 				continue;
@@ -140,8 +142,7 @@ class KunenaModelSearch extends KunenaModel {
 		$time = 0;
 		switch ($this->getState('query.searchdate')) {
 			case 'lastvisit' :
-				$db->setQuery ( "SELECT lasttime FROM #__kunena_sessions WHERE userid={$db->Quote($this->me->userid)}" );
-				$time = $db->loadResult ();
+				$time = KunenaFactory::GetSession()->lasttime;
 				break;
 			case 'all' :
 				break;
@@ -170,20 +171,10 @@ class KunenaModelSearch extends KunenaModel {
 		/* build query */
 		$querystrings [] = "m.moved='0'";
 
-		//Search also unapproved, trash
-		$this->show = array();
-		if ( CKunenaTools::isModerator($this->me->userid) && $this->getState('query.show')>0 ) {
-			$search_forums_array = explode(',', $search_forums);
-			$search_forums = array();
-			foreach ($search_forums_array as $currforum) {
-				if (CKunenaTools::isModerator($this->me->userid, $currforum)) $search_forums[] = $currforum;
-			}
-			if (empty($search_forums)) return;
-			$search_forums = implode ( ',', $search_forums );
-			$querystrings [] = "m.hold='".(int)$this->getState('query.show') ."'";
-		} else {
-			$querystrings [] = "m.hold='0'";
-		}
+		// Search normal / unapproved / deleted
+		$querystrings [] = "m.hold='{$this->getState('query.show')}'";
+
+		$search_forums = implode ( ',', array_keys($categories) );
 		$querystrings [] = "m.catid IN ({$search_forums})";
 
 		$query['where'] = implode ( ' AND ', $querystrings );
@@ -243,27 +234,23 @@ class KunenaModelSearch extends KunenaModel {
 		return $total;
 	}
 
-	public function getSearchStrings() {
-		$q = $this->getState('searchword');
-		if ($q == JText::_('COM_KUNENA_GEN_SEARCH_BOX'))
-			$q = '';
-		$this->setState('searchword', $q);
-		$arr_searchwords = preg_split('/[\s,]*\'([^\']+)\'[\s,]*|[\s,]*"([^"]+)"[\s,]*|[\s,]+/u', $q, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+	public function getSearchWords() {
+		// Accept individual words and quoted strings
+		$splitPattern = '/[\s,]*\'([^\']+)\'[\s,]*|[\s,]*"([^"]+)"[\s,]*|[\s,]+/u';
+		$searchwords = preg_split($splitPattern, $this->getState('searchwords'), 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 
-		$arr_kunena_searchstrings = array ();
-		foreach ( $arr_searchwords as $q ) {
-			$q = JString::trim ( $q );
-			if (JString::strlen ( $q ) > 1) // make something setError..
-
-			$arr_kunena_searchstrings [] = $q;
+		$result = array ();
+		foreach ( $searchwords as $word ) {
+			// Do not accept one letter strings
+			if (JString::strlen ( $word ) > 1)
+				$result [] = $word;
 		}
-
-		return $arr_kunena_searchstrings;
-  }
+		return $result;
+	}
 
 	public function getResults() {
 		$db = JFactory::getDBO ();
-		$q = $this->getState('searchword');
+		$q = $this->getState('searchwords');
 
 		$do_search = TRUE;
 
@@ -301,35 +288,47 @@ class KunenaModelSearch extends KunenaModel {
 	}
 
 	public function getUrlParams() {
+		// Turn internal state into URL, but ignore default values
 		$defaults = array ('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
 			'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
 			'order' => 'dec', 'catids' => '0', 'show' => '0' );
 
-		$state = $this->getState();
 		$url_params = '';
+		$state = $this->getState();
 		foreach ( $state as $param => $value ) {
 			$paramparts = explode('.', $param);
 			if ($paramparts[0] != 'query') continue;
 			$param = $paramparts[1];
 
 			if ($param == 'catids')
-				$value = strtr ( $value, ',', ' ' );
+				$value = implode ( ' ', $value );
 			if ($value != $defaults [$param])
 				$url_params .= "&$param=" . urlencode ( $value );
 		}
 		return $url_params;
 	}
 
-	protected function get_search_forums($catids, $childforums = 1) {
-		kimport('kunena.forum.category.helper');
-		$catids = explode ( ',', $catids );
+	protected function getCategories() {
+		$catids = $this->getState('query.catids');
+		$childforums = $this->getState('query.childforums');
+		$hold = $this->getState('query.show');
+		if ($hold == 1) {
+			$authorise = 'topic.approve';
+		} elseif ($hold == 2 || $hold == 3) {
+			$authorise = 'topic.undelete';
+		} else {
+			$authorise = 'topic.read';
+		}
 		if (in_array(0, $catids)) {
-			return implode ( ",", array_keys(KunenaForumCategoryHelper::getCategories()));
+			// All categories was requested, return all
+			return KunenaForumCategoryHelper::getCategories(false, false, $authorise);
 		}
-		$categories = KunenaForumCategoryHelper::getCategories($catids);
+		// Get listed categories
+		$categories = KunenaForumCategoryHelper::getCategories($catids, false, $authorise);
 		if ($childforums) {
-			$categories += KunenaForumCategoryHelper::getChildren($categories, 100);
+			// Add child forums
+			$categories += KunenaForumCategoryHelper::getChildren($categories, 100, false, array('action'=>$authorise));
 		}
-		return implode ( ",", array_keys($categories) );
+		return $categories;
 	}
 }

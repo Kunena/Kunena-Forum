@@ -47,6 +47,7 @@ class KunenaViewSearch extends KunenaView {
 		$sortbylist[] 	= JHTML::_('select.option',  'forum', JText::_('COM_KUNENA_SEARCH_SORTBY_FORUM') );
 		$this->sortbylist= JHTML::_('select.genericlist',  $sortbylist, 'sortby', 'class="ks"', 'value', 'text',$this->state->get('query.sortby') );
 
+		// Limit value list
 		$limitlist	= array();
 		$limitlist[] 	= JHTML::_('select.option',  '5', JText::_('COM_KUNENA_SEARCH_LIMIT5') );
 		$limitlist[] 	= JHTML::_('select.option',  '10', JText::_('COM_KUNENA_SEARCH_LIMIT10') );
@@ -59,36 +60,37 @@ class KunenaViewSearch extends KunenaView {
 		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS') );
 
 		$cat_params = array ('sections'=>true);
-		$selected = explode ( ',', $this->state->get('query.catids') );
+		$selected = $this->state->get('query.catids');
 		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, 'class="inputbox" size="8" multiple="multiple"', 'value', 'text', $selected);
 
-		$this->searchwords = $this->state->get('searchwords');
-
+		$this->searchwords = $this->get('SearchWords');
+		$this->results = array ();
 		if($this->searchwords) {
-			$this->results = $this->get('Results');
-			$this->error=$this->get('Error');
-			$this->total = $this->get('total');
+			$this->total = $this->get('Total');
+			if ($this->total) {
+				$this->results = $this->get('Results');
 
-			$searchlist = $this->get('searchstrings');
-			foreach ( $this->results as $i => $result ) {
-				// Clean up subject
-				$ressubject = KunenaHtmlParser::parseText ($result->subject);
-				// Strip smiles and bbcode out of search results; they look ugly
-				$resmessage = KunenaHtmlParser::parseBBCode ($result->message, 500);
+				foreach ( $this->results as $i => $result ) {
+					// Clean up subject
+					$ressubject = KunenaHtmlParser::parseText ($result->subject);
+					// Strip smiles and bbcode out of search results; they look ugly
+					$resmessage = KunenaHtmlParser::parseBBCode ($result->message, 500);
 
-				foreach ( $searchlist as $searchword ) {
-					if (empty ( $searchword ))
-					continue;
-					$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
-					// FIXME: enable highlighting, but only after we can be sure that we do not break html
-					//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
+					foreach ( $this->searchwords as $searchword ) {
+						if (empty ( $searchword ))
+						continue;
+						$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
+						// FIXME: enable highlighting, but only after we can be sure that we do not break html
+						//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
+					}
+					$this->results [$i]->htmlsubject = $ressubject;
+					$this->results [$i]->htmlmessage = $resmessage;
 				}
-				$this->results [$i]->htmlsubject = $ressubject;
-				$this->results [$i]->htmlmessage = $resmessage;
 			}
 		}
 		$this->selected=' selected="selected"';
 		$this->checked=' checked="checked"';
+		$this->error = $this->get('Error');
 		$this->display ();
 	}
 

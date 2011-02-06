@@ -35,6 +35,8 @@ Kunena 2.0.0-DEV
 # [#23443] Fix various PHP notices
 # [#23443] Fix fatal error in KunenaViewCategories
 # [#24777] BBCode parser bug: Undefined variable: end_tag_params in [code] tag
+# [#23443] Simplify KunenaModelSearch logic
+# [#23442] Improve search performance when there are no results
 
 5-February-2011 Matias
 ^ [#22786] Merge revisions 4234-4379 from trunk/1.6

@@ -134,7 +134,7 @@ document.addEvent('domready', function() {
 							<span onclick="document.adminForm.childforums.checked=(! document.adminForm.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>
 						</label>
 					</fieldset>
-					<?php if ( CKunenaTools::isModerator($this->me->userid) ) : ?>
+					<?php if ( $this->me->isModerator() ) : ?>
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?></legend>
 						<input id="show0" type="radio" name="show" value="0" <?php if ($this->state->get('query.show') == 0) echo 'checked="checked"'; ?> />
@@ -174,7 +174,7 @@ document.addEvent('domready', function() {
 			</span>
 		</h2>
 		<div class="ksearchresult-desc km">
-			<span><?php echo JText::sprintf ('COM_KUNENA_FORUM_SEARCH', $this->escape($this->searchwords) ); ?></span>
+			<span><?php echo JText::sprintf ('COM_KUNENA_FORUM_SEARCH', $this->escape($this->state->get('searchwords')) ); ?></span>
 		</div>
 	</div>
 	<div class="kcontainer" id="ksearchresult">

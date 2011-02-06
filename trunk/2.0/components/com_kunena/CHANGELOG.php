@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+6-February-2011 Matias
+# [#23443] Fix various PHP notices
+# [#23443] Fix fatal error in KunenaViewCategories
+
 5-February-2011 Matias
 ^ [#22786] Merge revisions 4234-4379 from trunk/1.6
 ^ [#22786] Updated all copyright dates to 2011

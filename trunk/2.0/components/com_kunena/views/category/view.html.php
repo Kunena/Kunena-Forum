@@ -30,19 +30,20 @@ class KunenaViewCategory extends KunenaView {
 		}
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
 
+		$this->me = KunenaFactory::getUser();
+		$this->config = KunenaFactory::getConfig();
+
 		$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 		if ($this->category->authorise ( 'moderate' )) {
 			$this->actionMove = true;
 			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
 			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-			if($this->config->mod_see_deleted == '1' || CKunenaTools::isAdmin()) {
+			if($this->config->mod_see_deleted == '1' || $this->me->isAdmin($this->category->id)) {
 				$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 				$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 			}
 		}
-		$this->me = KunenaFactory::getUser();
-		$this->config = KunenaFactory::getConfig();
 
 		// Is user allowed to post new topic?
 		$this->newTopicHtml = '';

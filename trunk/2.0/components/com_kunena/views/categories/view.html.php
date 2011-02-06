@@ -19,7 +19,7 @@ class KunenaViewCategories extends KunenaView {
 	function displayDefault($tpl = null) {
 		$this->assignRef ( 'category', $this->get ( 'Category' ) );
 		if ($this->category->id && !$this->get ( 'Category')->authorise('read')) {
-			$this->setError($this->categories->getError());
+			$this->setError($this->category->getError());
 		}
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();

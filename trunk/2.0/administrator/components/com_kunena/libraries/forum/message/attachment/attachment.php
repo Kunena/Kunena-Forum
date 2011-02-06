@@ -20,6 +20,7 @@ kimport ('kunena.forum.message.helper');
 class KunenaForumMessageAttachment extends JObject {
 	protected $_exists = false;
 	protected $_db = null;
+	protected $_disabled = false;
 
 	protected static $_directory = 'media/kunena/attachments';
 

@@ -77,7 +77,7 @@ $k = 0;
 					<?php
 					foreach ($this->toptitles as $toptitle) :
 						$k = 1 - $k;
-						if ($this->hits == $this->toptitlehits) {
+						if ($toptitle->hits == $this->toptitlehits) {
 							$barwidth = 100;
 						} else {
 							$barwidth = round(($toptitle->hits * 100) / $this->toptitlehits);

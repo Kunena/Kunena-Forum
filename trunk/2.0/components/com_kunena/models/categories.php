@@ -78,6 +78,7 @@ class KunenaModelCategories extends KunenaAdminModelCategories {
 		$modcats = array ();
 		$lastpostlist = array ();
 		$userlist = array();
+		$topiclist = array();
 
 		foreach ( $allsubcats as $subcat ) {
 			if ($flat || isset ( $categories [0] [$subcat->parent_id] )) {

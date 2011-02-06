@@ -33,7 +33,7 @@ class KunenaViewTopics extends KunenaView {
 			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
 			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-			if($this->config->mod_see_deleted == '1' || CKunenaTools::isAdmin()) {
+			if($this->config->mod_see_deleted == '1' || $this->me->isAdmin()) {
 				$this->actionDropdown[] = JHTML::_('select.option', 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 				$this->actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 			}
@@ -97,7 +97,7 @@ class KunenaViewTopics extends KunenaView {
 			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
 			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-			if($this->config->mod_see_deleted == '1' || CKunenaTools::isAdmin()) {
+			if($this->config->mod_see_deleted == '1' || $this->me->isAdmin()) {
 				$this->actionDropdown[] = JHTML::_('select.option', 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 				$this->actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 			}
@@ -155,7 +155,7 @@ class KunenaViewTopics extends KunenaView {
 //			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
 //			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
 //			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-//			if($this->config->mod_see_deleted == '1' || CKunenaTools::isAdmin()) {
+//			if($this->config->mod_see_deleted == '1' || $this->me->isAdmin()) {
 //				$this->actionDropdown[] = JHTML::_('select.option', 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 //				$this->actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 //			}

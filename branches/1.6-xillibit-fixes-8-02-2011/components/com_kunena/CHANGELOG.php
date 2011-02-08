@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.4
 
+7-February-2011 Xillibit
+# [#23443] update french language file about edittime and gracetime
+# [#24755] Best credit to designers (thanks gonzaunit)
+
 5-February-2011 Matias
 # [#24761] Ban manager is not showing all the information
 # [#24762] Performance optimization for getting moderators by CB team (Thanks Beat!)

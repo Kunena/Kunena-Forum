@@ -750,14 +750,18 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 	}
 
 	function DoMap($bbcode, $action, $name, $default, $params, $content) {
+		static $id = false;
+		static $sensor = true;
+
 		if ($action == BBCODE_CHECK)
 			return true;
 
-		static $id = false;
-		static $sensor = true;
 		$document = JFactory::getDocument();
 
-		if ($id === false) $document->addScript('http://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
+		if ($id === false) {
+			$document->addScript('http://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
+			$id = 0;
+		}
 
 		$id ++;
 		$mapid = 'kgooglemap'.$id;
@@ -772,13 +776,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			var latlng = new google.maps.LatLng(37.333586,-121.894684);
 			var myOptions = {
 				zoom: 10,
-					center: latlng,
+				center: latlng,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 			$mapid = new google.maps.Map($('".$mapid."'), myOptions);
-			});
 
-			window.addEvent('domready', function() {
 			var address = '$content';
 			if (geocoder) {
 				geocoder.geocode( { 'address': address}, function(results, status) {

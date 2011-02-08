@@ -17,6 +17,7 @@ kimport ('kunena.user.helper');
 kimport ('kunena.forum.category.helper');
 kimport ('kunena.forum.topic.helper');
 kimport ('kunena.forum.topic.user.helper');
+kimport ('kunena.forum.message');
 kimport ('kunena.forum.message.helper');
 kimport ('kunena.forum.message.attachment.helper');
 kimport ('kunena.keyword.helper');

@@ -125,7 +125,7 @@ class KunenaControllerTopics extends KunenaController {
 				}
 			}
 		}
-		if ($message) $app->enqueueMessage ( $message );
+		if (!empty($message)) $app->enqueueMessage ( $message );
 		$this->redirectBack ();
 	}
 

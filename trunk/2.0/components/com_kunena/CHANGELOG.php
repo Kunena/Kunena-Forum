@@ -42,6 +42,7 @@ Kunena 2.0.0-DEV
 ^ [#22569] Move all old defines from class.kunena.php into lib/kunena.defines.class.php
 # [#22569] KunenaModelTopic: get ordering from user state so that it can be overridden in custom displays
 - [#22570] Convert and remove deprecated functions: CKunenaTools::showIcon(), CKunenaTools::showButton()
+# [#23443] Fix undefined variables, missing includes
 
 7-February-2011 Matias
 # [#23443] KunenaForumMessage::newReply(): Get username from user object, not from the message

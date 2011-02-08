@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<!DOCTYPE install>
+<install type="language" version="1.5" client="administrator" method="upgrade">
+  <name>Kunena Forum - Russian</name>
+  <tag>ru-RU</tag>
+  <creationDate>@kunenaversiondate@</creationDate>
+  <version>@kunenaversion@</version>
+  <build>@kunenaversionbuild@</build>
+  <author>ZARKOS</author>
+  <authorEmail>zarkos@joomlaruclub.ru</authorEmail>
+  <authorUrl>http://www.joomlaruclub.ru</authorUrl>
+  <copyright>Copyright (C) 2010-2011 ZARKOS. All rights reserved..</copyright>
+  <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+  <description>Russian language file for Kunena Forum Component</description>
+
+  <files>
+    <filename>ru-RU.com_kunena.ini</filename>
+    <filename>ru-RU.com_kunena.install.ini</filename>
+    <filename>ru-RU.com_kunena.menu.ini</filename>
+    <filename>ru-RU.com_kunena.sys.ini</filename>
+  </files>
+</install>

@@ -39,7 +39,6 @@ class KunenaViewCommon extends KunenaView {
 			$cache = JFactory::getCache('com_kunena', 'output');
 			if ($cache->start(0, 'com_kunena.view.common.announcement')) return;
 			// FIXME: refactor code
-			require_once(KUNENA_PATH .DS. 'class.kunena.php');
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
 			$ann = new CKunenaAnnouncement();
@@ -109,6 +108,8 @@ class KunenaViewCommon extends KunenaView {
 		require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
 
 		$this->my = JFactory::getUser();
+		$this->me = KunenaFactory::getUser();
+
 		$this->users = KunenaUserHelper::getOnlineUsers();
 		KunenaUserHelper::loadUsers(array_keys($this->users));
 		$onlineusers = KunenaUserHelper::getOnlineCount();

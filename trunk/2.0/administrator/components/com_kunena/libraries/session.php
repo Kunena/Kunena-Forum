@@ -10,7 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once (KPATH_SITE . "/class.kunena.php");
 require_once (KPATH_SITE. "/lib/kunena.timeformat.class.php");
 
 class KunenaSession extends JObject

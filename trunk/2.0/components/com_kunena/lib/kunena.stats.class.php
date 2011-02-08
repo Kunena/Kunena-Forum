@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+require_once KUNENA_PATH . '/class.kunena.php';
 
 class CKunenaStats {
 	protected $_db = null;

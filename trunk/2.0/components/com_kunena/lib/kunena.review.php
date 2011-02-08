@@ -13,6 +13,8 @@
 defined ( '_JEXEC' ) or die ();
 kimport('kunena.forum.message.helper');
 
+require_once KUNENA_PATH . '/class.kunena.php';
+
 class CKunenaReview {
 	public $my;
 	public $config;
@@ -100,7 +102,8 @@ class CKunenaReview {
 	}
 
 	public function display() {
-		if (! CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
+		$me = KunenaFactory::getUser();
+		if (! $me->isModerator ( $this->catid )) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ), 'notice' );
 			return false;
 		}

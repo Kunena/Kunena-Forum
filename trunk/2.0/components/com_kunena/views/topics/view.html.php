@@ -12,7 +12,6 @@ defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.view' );
 kimport ( 'kunena.html.parser' );
-require_once KPATH_SITE . '/class.kunena.php';
 
 /**
  * Topics View

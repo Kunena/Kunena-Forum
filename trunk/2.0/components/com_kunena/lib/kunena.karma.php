@@ -42,7 +42,7 @@ if ($pid) {
 
 //Modify this to change the minimum time between karma modifications from the same user
 $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
-$kunena_my = JFactory::getUser();
+$me = KunenaFactory::getUser();
 ?>
 
 <table>
@@ -55,11 +55,11 @@ $kunena_my = JFactory::getUser();
                 // - if a registered user submits the modify request
                 // - if he specifies an action related to the karma change
                 // - if he specifies the user that will have the karma modified
-                if ($kunena_config->showkarma && $kunena_my->id && $do && $userid)
+                if ($kunena_config->showkarma && $me->userid && $do && $userid)
                 {
                     $time = CKunenaTimeformat::internalTime();
 
-                    if ($kunena_my->id != $userid)
+                    if ($me->userid != $userid)
                     {
 						if (JRequest::checkToken ( 'get' ) == false) {
 							$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -71,18 +71,18 @@ $kunena_my = JFactory::getUser();
 							return;
 						}
                         // This checkes to see if it's not too soon for a new karma change
-                        if (!CKunenaTools::isModerator($kunena_my->id, $catid))
+                        if (!$me->isModerator($catid))
                         {
-                        	$userprofile = KunenaFactory::getUser($kunena_my->id);
+                        	$userprofile = KunenaFactory::getUser($me->userid);
                             $karma_time_old = $userprofile->karma_time;
                             $karma_time_diff = $time - $karma_time_old;
                         }
 
-                        if (CKunenaTools::isModerator($kunena_my->id, $catid) || $karma_time_diff >= $karma_min_seconds)
+                        if ($me->isModerator($catid) || $karma_time_diff >= $karma_min_seconds)
                         {
                             if ($do == "increase")
                             {
-                                $kunena_db->setQuery("UPDATE #__kunena_users SET karma_time={$kunena_db->Quote($time)} WHERE userid={$kunena_db->Quote( $kunena_my->id )} ");
+                                $kunena_db->setQuery("UPDATE #__kunena_users SET karma_time={$kunena_db->Quote($time)} WHERE userid={$kunena_db->Quote( $me->userid )} ");
 							    $kunena_db->query();
 							    if (KunenaError::checkDatabaseError()) return;
 							    $kunena_db->setQuery("UPDATE #__kunena_users SET karma=karma+1 WHERE userid={$kunena_db->Quote( $userid )}");
@@ -91,7 +91,7 @@ $kunena_my = JFactory::getUser();
 
 								// Activity integration
 								$activity = KunenaFactory::getActivityIntegration();
-								$activity->onAfterKarma($userid, $kunena_my->id, 1);
+								$activity->onAfterKarma($userid, $me->userid, 1);
 
                            	 	if ($pid) {
 								    $kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_INCREASED'));
@@ -103,7 +103,7 @@ $kunena_my = JFactory::getUser();
                             }
                             else if ($do == "decrease")
                             {
-                                $kunena_db->setQuery("UPDATE #__kunena_users SET karma_time={$kunena_db->Quote($time)} WHERE userid={$kunena_db->Quote($kunena_my->id)}");
+                                $kunena_db->setQuery("UPDATE #__kunena_users SET karma_time={$kunena_db->Quote($time)} WHERE userid={$kunena_db->Quote($me->userid)}");
                                 $kunena_db->query();
                                 if (KunenaError::checkDatabaseError()) return;
                                 $kunena_db->setQuery("UPDATE #__kunena_users SET karma=karma-1 WHERE userid={$kunena_db->Quote($userid)}");
@@ -112,7 +112,7 @@ $kunena_my = JFactory::getUser();
 
                                 // Activity integration
 								$activity = KunenaFactory::getActivityIntegration();
-								$activity->onAfterKarma($userid, $kunena_my->id, -1);
+								$activity->onAfterKarma($userid, $me->userid, -1);
 
                             	if ($pid) {
 									$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_DECREASED'));
@@ -137,17 +137,17 @@ $kunena_my = JFactory::getUser();
                         	}
                         }
                     }
-                    else if ($kunena_my->id == $userid) // In case the user tries modifing his own karma by changing the userid from the URL...
+                    else if ($me->userid == $userid) // In case the user tries modifing his own karma by changing the userid from the URL...
                     {
                         if ($do == "increase")   // Seriously decrease his karma if he tries to increase it
                         {
-                            $kunena_db->setQuery("UPDATE #__kunena_users SET karma=karma-10, karma_time={$kunena_db->Quote($time)} WHERE userid='{$kunena_db->Quote($kunena_my->id)}");
+                            $kunena_db->setQuery("UPDATE #__kunena_users SET karma=karma-10, karma_time={$kunena_db->Quote($time)} WHERE userid='{$kunena_db->Quote($me->userid)}");
                             $kunena_db->query();
                             if (KunenaError::checkDatabaseError()) return;
 
 							// Activity integration
 							$activity = KunenaFactory::getActivityIntegration();
-							$activity->onAfterKarma($userid, $kunena_my->id, -10);
+							$activity->onAfterKarma($userid, $me->userid, -10);
 
                         	if ($pid) {
                             	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_INCREASE'));
@@ -160,7 +160,7 @@ $kunena_my = JFactory::getUser();
 
                         if ($do == "decrease") // Stop him from decreasing his karma but still update karma_time
                         {
-                            $kunena_db->setQuery("UPDATE #__kunena_users SET karma_time={$kunena_db->Quote($time)} WHERE userid={$kunena_db->Quote($kunena_my->id)}");
+                            $kunena_db->setQuery("UPDATE #__kunena_users SET karma_time={$kunena_db->Quote($time)} WHERE userid={$kunena_db->Quote($me->userid)}");
                             $kunena_db->query();
                             if (KunenaError::checkDatabaseError()) return;
                         	if ($pid) {

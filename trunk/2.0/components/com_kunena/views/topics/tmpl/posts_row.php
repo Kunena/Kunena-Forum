@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 	<?php
 		$curMessageNo = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 		/*if ($this->message->attachments) {
-			echo CKunenaTools::showIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') );
+			echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') );
 		}*/
 	?>
 		<div class="ktopic-title-cover">
@@ -58,7 +58,7 @@ defined ( '_JEXEC' ) or die ();
 			<!--  Sticky   -->
 			<?php
 			if ($this->topic->ordering != 0) :
-				echo CKunenaTools::showIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') );
+				echo $this->getIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') );
 			endif
 			?>
 			<!--  /Sticky   -->

@@ -35,7 +35,7 @@ JHTML::_('behavior.tooltip');
 <div id="kprofile-rightcolbot">
 	<div class="kprofile-rightcol2">
 		<ul>
-			<?php if ($this->config->showemail && (!$this->profile->hideEmail || CKunenaTools::isModerator($this->my->id))): ?><li><span class="kicon-profile kicon-profile-email"></span><a href="mailto:<?php echo $this->escape($this->user->email); ?>"><?php echo $this->escape($this->user->email); ?></a></li><?php endif; ?>
+			<?php if ($this->config->showemail && (!$this->profile->hideEmail || $this->me->isModerator())): ?><li><span class="kicon-profile kicon-profile-email"></span><a href="mailto:<?php echo $this->escape($this->user->email); ?>"><?php echo $this->escape($this->user->email); ?></a></li><?php endif; ?>
 			<?php // FIXME: we need a better way to add http/https ?>
 			<li><?php if (!empty($this->profile->websiteurl)):?><span class="kicon-profile kicon-profile-website"></span><?php endif;?><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename); ?></a></li>
 		</ul>
@@ -51,7 +51,7 @@ JHTML::_('behavior.tooltip');
 
 <div id="kprofile-tabs">
 	<dl class="tabs">
-		<?php if (CKunenaTools::isModerator($this->my->id)): ?>
+		<?php if ($this->me->isModerator()): ?>
 		<dt class="open" title="<?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?>"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayUnapprovedPosts(); ?>
@@ -83,13 +83,13 @@ JHTML::_('behavior.tooltip');
 		</dd>
 		<?php endif; ?>
 		<?php endif;?>
-		<?php if (CKunenaTools::isModerator($this->my->id) && $this->my->id == $this->profile->userid ): ?>
+		<?php if ($this->me->isModerator() && $this->my->id == $this->profile->userid ): ?>
 		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?>"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayBanManager(); ?>
 		</dd>
 		<?php endif;?>
-		<?php if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id):?>
+		<?php if ($this->me->isModerator() && $this->my->id != $this->user->id):?>
 		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?>"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayBanHistory(); ?>

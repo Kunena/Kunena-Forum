@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">
 
 	<td class="kcol-first kcol-ktopicreplies">
-		<strong><?php echo CKunenaTools::formatLargeNumber ( max(0,$this->topic->posts-1) ); ?></strong> <?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
+		<strong><?php echo $this->formatLargeNumber ( max(0,$this->topic->posts-1) ); ?></strong> <?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
 	</td>
 
 	<td class="kcol-mid kcol-ktopicicon">
@@ -80,7 +80,7 @@ defined ( '_JEXEC' ) or die ();
 	</td>
 
 	<td class="kcol-mid kcol-ktopicviews">
-		<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( $this->topic->hits );?></span>
+		<span class="ktopic-views-number"><?php echo $this->formatLargeNumber ( $this->topic->hits );?></span>
 		<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_GEN_HITS');?> </span>
 	</td>
 

@@ -30,6 +30,7 @@ class CKunenaModeration {
 	// Private data and functions
 	protected $_db = null;
 	protected $_my = null;
+	protected $_me = null;
 	protected $_session = null;
 	protected $_errormsg = null;
 	protected $_config = null;
@@ -38,6 +39,7 @@ class CKunenaModeration {
 		kimport('kunena.forum.category.helper');
 		$this->_db = $db;
 		$this->_my = &JFactory::getUser ();
+		$this->_me = KunenaFactory::getUser ();
 		$this->_session = KunenaFactory::getSession ();
 		$this->_allowed = ($this->_session->allowed != '') ? explode ( ',', $this->_session->allowed ) : array();
 		$this->_ResetErrorMessage ();
@@ -84,7 +86,7 @@ class CKunenaModeration {
 
 		// Assumption: only moderators can move messages
 		// This test is made to prevent user to guess existing message ids
-		if ( !CKunenaTools::isModerator($this->_my->id) ) {
+		if ( !$this->_me->isModerator() ) {
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR');
 			return false;
 		}
@@ -117,7 +119,7 @@ class CKunenaModeration {
 		}
 
 		// Check that user has moderator permissions in source category
-		if ( !CKunenaTools::isModerator($this->_my->id, $currentMessage->catid) ) {
+		if ( !$this->_me->isModerator($currentMessage->catid) ) {
 			$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR_IN_CATEGORY', $currentMessage->id, $currentMessage->catid);
 			return false;
 		}
@@ -272,7 +274,7 @@ class CKunenaModeration {
 
 		// Always check security clearance before taking action!
 		// Only moderators can delete messages by using this function
-		if ( !CKunenaTools::isModerator($this->_my->id) ) {
+		if ( !$this->_me->isModerator() ) {
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR');
 			return false;
 		}
@@ -288,7 +290,7 @@ class CKunenaModeration {
 		}
 
 		// Check that user has moderator permissions in the category
-		if ( !CKunenaTools::isModerator($this->_my->id, $currentMessage->catid) ) {
+		if ( !$this->_me->isModerator($currentMessage->catid) ) {
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR_IN_CATEGORY', $currentMessage->id, $currentMessage->catid);
 			return false;
 		}

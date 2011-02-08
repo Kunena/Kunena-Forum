@@ -17,6 +17,8 @@ $template = KunenaFactory::getTemplate();
 // Template requires Mootools 1.2 framework
 $template->loadMootools();
 
+require_once KUNENA_PATH . '/class.kunena.php';
+
 // We load mediaxboxadvanced library
 CKunenaTools::addStyleSheet ( KPATH_COMPONENT_RELATIVE . '/js/mediaboxadvanced/css/mediaboxAdv.css');
 CKunenaTools::addScript( KPATH_COMPONENT_RELATIVE . '/js/mediaboxadvanced/js/mediaboxAdv.js' );

@@ -11,33 +11,33 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport('kunena.bbcode');
+kimport('kunena.template');
 
 abstract class KunenaHtmlParser {
 	static $emoticons = null;
 
 	function getEmoticons($grayscale, $emoticonbar = 0) {
-		$kunena_db = &JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 		$grayscale == 1 ? $column = "greylocation" : $column = "location";
-		$sql = "SELECT code, `$column` FROM #__kunena_smileys";
+		$sql = "SELECT code, `$column` as file FROM #__kunena_smileys";
 
 		if ($emoticonbar == 1)
 			$sql .= " WHERE emoticonbar='1'";
 
-		$kunena_db->setQuery ( $sql );
-		$smilies = $kunena_db->loadObjectList ();
+		$db->setQuery ( $sql );
+		$smilies = $db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 
 		$smileyArray = array ();
+		$template = KunenaFactory::getTemplate();
 		foreach ( $smilies as $smiley ) { // We load all smileys in array, so we can sort them
-			$iconurl = JURI::Root() . CKunenaTools::getTemplateImage("emoticons/{$smiley->$column}");
-			$smileyArray [$smiley->code] = '' . $iconurl; // This makes sure that for example :pinch: gets translated before :p
+			$smileyArray [$smiley->code] = JURI::root(true) . KPATH_COMPONENT_RELATIVE .'/'. $template->getSmileyPath($smiley->file);
 		}
 
 		if ($emoticonbar == 0) { // don't sort when it's only for use in the emoticonbar
 			array_multisort ( array_keys ( $smileyArray ), SORT_DESC, $smileyArray );
 			reset ( $smileyArray );
 		}
-
 		return $smileyArray;
 	}
 

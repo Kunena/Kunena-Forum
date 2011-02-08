@@ -148,7 +148,6 @@ class KunenaAdminModelCategories extends KunenaModel {
 			return false;
 		}
 		if ($this->_admincategory === false) {
-			require_once KPATH_SITE . '/class.kunena.php';
 			$app = JFactory::getApplication ();
 			$category = KunenaForumCategoryHelper::get ( $catid );
 			if ($category->exists ()) {

@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.view' );
+kimport ( 'kunena.html.parser' );
 
 /**
  * Kunena View Class
@@ -18,7 +19,6 @@ jimport ( 'joomla.application.component.view' );
 class KunenaView extends JView {
 	function displayAll() {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		require_once KPATH_SITE . '/class.kunena.php';
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		require_once KPATH_SITE . '/lib/kunena.timeformat.class.php';
 		$template = KunenaFactory::getTemplate();
@@ -96,6 +96,11 @@ class KunenaView extends JView {
 			$html .= JModuleHelper::renderModule ( $module, $options );
 		}
 		return $html;
+	}
+
+	function formatLargeNumber($number, $precision = 4) {
+		require_once KUNENA_PATH . '/class.kunena.php';
+		return CKunenaTools::formatLargeNumber($number, $precision);
 	}
 
 	function addStyleSheet($filename) {

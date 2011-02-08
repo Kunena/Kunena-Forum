@@ -64,8 +64,6 @@ $lang->load('com_kunena',JPATH_SITE);
 $kunena_config = KunenaFactory::getConfig ();
 $kunena_db = JFactory::getDBO ();
 
-// Class structure should be used after this and all the common task should be moved to this class
-require_once (KUNENA_PATH . DS . 'class.kunena.php');
 require_once (KPATH_ADMIN . '/admin.kunena.html.php');
 
 $cid = JRequest::getVar ( 'cid', array () );
@@ -254,8 +252,6 @@ switch ($task) {
 		kimport('kunena.forum.category.helper');
 		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount ();
-		// Also reset the name info stored with messages
-		//CKunenaTools::updateNameInfo();
 		$kunena_app->redirect ( JURI::base () . 'index.php?option=com_kunena', JText::_('COM_KUNENA_RECOUNTFORUMS_DONE') );
 		break;
 
@@ -431,8 +427,8 @@ html_Kunena::showFbFooter ();
 //			START TEMPLATE MANAGER
 //###########################################
 
-    function addKTemplate()
-    {
+	function addKTemplate()
+	{
 		html_Kunena::installKTemplate();
 	}
 
@@ -1047,9 +1043,9 @@ function showConfig($option) {
 	$latestCategoryIn[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW'));
 	$lists['latestcategory_in'] = JHTML::_('select.genericlist', $latestCategoryIn, 'cfg_latestcategory_in', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->latestcategory_in);
 
-	$optionsShowHide = array();
-	$optionsShowHide[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL'));
-	$lists['latestcategory'] = CKunenaTools::KSelectList('cfg_latestcategory[]', $optionsShowHide, 'class="inputbox" multiple="multiple"', false, 'latestcategory', explode(',',$kunena_config->latestcategory));
+	$optionsShowHide = array(JHTML::_('select.option', 0, JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL')));
+	$params = array ('sections' => false, 'action' => 'read');
+	$lists['latestcategory'] = JHTML::_('kunenaforum.categorylist', 'cfg_latestcategory[]', 0, $optionsShowHide, $params, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',',$kunena_config->latestcategory), 'latestcategory');
 
 	$lists['topicicons'] = JHTML::_('select.genericlist', $yesno, 'cfg_topicicons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->topicicons);
 
@@ -1437,9 +1433,11 @@ function editUserProfile($option, $uid) {
 	if (KunenaError::checkDatabaseError()) return;
 	if ($moderator && empty($modCatList)) $modCatList[] = 0;
 
-	$categoryList = array();
-	$categoryList[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
-	$modCats = CKunenaTools::KSelectList('catid[]', $categoryList, 'class="inputbox" multiple="multiple"', false, 'kforums', $modCatList);
+	$categoryList = array(JHTML::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR')));
+	$params = array (
+		'sections' => false,
+		'action' => 'read');
+	$modCats = JHTML::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple"', 'value', 'text', $modCatList, 'kforums');
 
 	//get all IPs used by this user
 	$kunena_db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid=$uid[0] GROUP BY ip" );
@@ -1764,11 +1762,27 @@ function douserssync($kunena_db, $option) {
 		$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_DEL') . ' ' . $kunena_db->getAffectedRows () );
 	}
 	if ($userrename) {
-		$cnt = CKunenaTools::updateNameInfo ();
+		$cnt = KupdateNameInfo ();
 		$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_RENAME') . " $cnt" );
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=syncusers" );
+}
+
+function kUpdateNameInfo()
+{
+	$db = JFactory::getDBO();
+	$config = KunenaFactory::getConfig ();
+
+	$fb_queryName = $config->username ? "username" : "name";
+
+	$query = "UPDATE #__kunena_messages AS m, #__users AS u
+				SET m.name = u.$fb_queryName
+				WHERE m.userid = u.id";
+	$db->setQuery($query);
+	$db->query();
+	KunenaError::checkDatabaseError();
+	return $db->getAffectedRows();
 }
 
 //===============================
@@ -1853,11 +1867,9 @@ function showsmilies($option) {
 	$smileytmp = $kunena_db->loadObjectList ();
 	if (KunenaError::checkDatabaseError()) return;
 
-	$smileypath = smileypath ();
-
 	jimport ( 'joomla.html.pagination' );
 	$pageNavSP = new JPagination ( $total, $limitstart, $limit );
-	html_Kunena::showsmilies ( $option, $smileytmp, $pageNavSP, $smileypath );
+	html_Kunena::showsmilies ( $option, $smileytmp, $pageNavSP );
 
 }
 
@@ -2068,17 +2080,6 @@ function deletesmiley($option, $cid) {
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showsmilies", JText::_('COM_KUNENA_SMILEY_DELETED') );
 }
 
-function smileypath() {
-	$kunena_config = KunenaFactory::getConfig ();
-	// FIXME: deprecated, do not exist anymore
-	$smiley_live_path = KUNENA_URLEMOTIONSPATH;
-	$smiley_abs_path = KUNENA_ABSEMOTIONSPATH;
-
-	$smileypath ['live'] = $smiley_live_path;
-	$smileypath ['abs'] = $smiley_abs_path;
-
-	return $smileypath;
-}
 //===============================
 //  FINISH smiley functions
 //===============================
@@ -2217,16 +2218,6 @@ function showRanks($option) {
 		}
 	}
 
-
-function rankpath() {
-
-	// FIXME: deprecated, do not exist anymore
-	$rankpath ['live'] = KUNENA_URLRANKSPATH;
-	$rankpath ['abs'] = KUNENA_ABSRANKSPATH;
-
-	return $rankpath;
-
-}
 
 function newRank($option) {
 	$kunena_db = &JFactory::getDBO ();

@@ -67,11 +67,13 @@ class KunenaModelTopic extends KunenaModel {
 		if ($value < 0) $value = 0;
 		$this->setState ( 'list.start', $value );
 
-		//$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_direction", 'filter_order_Dir', 'desc', 'word' );
-		if ($me->ordering != '0') {
-			$value = $me->ordering == '1' ? 'desc' : 'asc';
-		} else {
-			$value = $config->default_sort == 'asc' ? 'asc' : 'desc';
+		$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_direction", 'filter_order_Dir', '', 'word' );
+		if (!$value) {
+			if ($me->ordering != '0') {
+				$value = $me->ordering == '1' ? 'desc' : 'asc';
+			} else {
+				$value = $config->default_sort == 'asc' ? 'asc' : 'desc';
+			}
 		}
 		if ($value != 'asc')
 			$value = 'desc';
@@ -109,7 +111,7 @@ class KunenaModelTopic extends KunenaModel {
 			$this->messages = KunenaForumMessageHelper::getMessagesByTopic($this->getState ( 'item.id'),
 				$this->getState ( 'list.start'), $this->getState ( 'list.limit'), $this->getState ( 'list.direction'), $this->getState ( 'hold'));
 
-			// First collect the message ids of the first message and all replies
+			// First collect ids and users
 			$userlist = array();
 			$ids = array();
 			foreach($this->messages AS $message){

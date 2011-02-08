@@ -94,8 +94,9 @@ class KunenaForumMessage extends JObject {
 			$message->hold = $category->review ? (int)!$category->authorise ('moderate', $user, true) : 0;
 		}
 		if ($fields === true) {
+			$user = KunenaFactory::getUser($this->userid);
 			$text = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->message );
-			$message->message = "[quote=\"{$this->name}\" post={$this->id}]" .  $text . "[/quote]";
+			$message->message = "[quote=\"{$user->getName($this->name)}\" post={$this->id}]" .  $text . "[/quote]";
 		} elseif (is_array($fields)) {
 			$message->bind($fields, array ('name', 'email', 'subject', 'message' ));
 		}
@@ -103,6 +104,7 @@ class KunenaForumMessage extends JObject {
 	}
 
 	public function sendNotification($url=null) {
+		kimport ('kunena.html.parser');
 		if ($this->hold == 0) {
 			$mailsubs = 0;
 			// TODO: check configuration

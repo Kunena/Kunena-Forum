@@ -188,9 +188,6 @@ $kunena_db = JFactory::getDBO ();
 
 $document = JFactory::getDocument();
 
-// Class structure should be used after this and all the common task should be moved to this class
-require_once (JPATH_COMPONENT . DS . 'class.kunena.php');
-
 // Central Location for all internal links
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.link.class.php');
 kimport('kunena.html.parser');
@@ -233,7 +230,7 @@ if ($func == "json") {
 
 	JResponse::sendHeaders();
 
-	if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()){
+	if ($kunena_config->board_offline && ! $me->isAdmin ()){
 		// when the forum is offline, we don't entertain json requests
 		json_encode ( array(
 				'status' => '0',
@@ -255,13 +252,14 @@ if ($format == 'html') {
 		require_once (KPATH_SITE . '/template/default/initialize.php');
 	}
 }
-if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
+if ($kunena_config->board_offline && ! $me->isAdmin ()) {
 	// if the board is offline
 	echo $kunena_config->offline_message;
 } else if ($kunena_config->regonly && ! $kunena_my->id) {
 	// if we only allow registered users
 	echo '<div id="Kunena">';
 	//KunenaForum::display('common', 'default', null, array('header'=>JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 'body'=>JText::_('COM_KUNENA_LOGIN_FORUM')));
+	require_once KUNENA_PATH . '/class.kunena.php';
 	CKunenaTools::loadTemplate('/login.php');
 	echo '</div>';
 } else {
@@ -291,12 +289,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	// We only save session for registered users
 	$kunena_session = KunenaFactory::getSession ( true );
-	if ($kunena_my->id > 0) {
-		$userprofile = KunenaFactory::getUser($kunena_my->id);
-		if ($userprofile->posts === null) {
-			$userprofile->save();
-			//$userprofile = KunenaFactory::getUser($kunena_my->id, true);
-		}
+	if ($me->userid && !$me->exists()) {
+		$me->save();
 
 		// Assign previous visit without user offset to variable for templates to decide
 		$this->prevCheck = $kunena_session->lasttime;
@@ -402,6 +396,15 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 		case 'rules' :
 		case 'help' :
+			kimport('kunena.error');
+
+			require_once KUNENA_PATH . '/class.kunena.php';
+			$cfgitem = "{$func}_cid";
+			$articleid = (int)$kunena_config->$cfgitem;
+			$db = JFactory::getDBO ();
+			$db->setQuery ( "SELECT introtext, id FROM #__content WHERE id={$db->Quote($articleid)}" );
+			$this->introtext = $db->loadResult ();
+			KunenaError::checkDatabaseError();
 			CKunenaTools::loadTemplate('/'.$func.'.php');
 
 			break;
@@ -471,29 +474,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	if(JDEBUG){
 		$__profiler->mark('$func End');
-	}
-
-	// Bottom Module
-	CKunenaTools::showModulePosition( 'kunena_bottom' );
-
-	// RSS
-	if ($kunena_config->enablerss) {
-		if ($catid>0) {
-			$category = KunenaForumCategoryHelper::get($catid);
-			if ($category->pub_access == 0 && $category->parent_id) $rss_params = '&amp;catid=' . (int) $catid;
-		} else {
-			$rss_params = '';
-		}
-		if (isset($rss_params)) {
-			jimport ( 'joomla.version' );
-			$jversion = new JVersion ();
-			echo '<div class="krss-block">';
-			if ($kunena_config->enablerss && isset($rss_params)) {
-				$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
-				echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
-			}
-			echo '</div>';
-		}
 	}
 
 	$template = KunenaFactory::getTemplate();

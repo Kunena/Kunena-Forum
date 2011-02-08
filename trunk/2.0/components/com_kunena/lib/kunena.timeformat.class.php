@@ -121,7 +121,7 @@ class CKunenaTimeformat {
 				$yesterday_format = JText::_('COM_KUNENA_DT_DATE_YESTERDAY_FMT');
 				break;
 			case 'ago' :
-				return CKunenaTimeformat::showTimeSince ( $date->toUnix() );
+				return self::showTimeSince ( $date->toUnix() );
 				break;
 			case 'datetime':
 				$usertime_format = JText::_('COM_KUNENA_DT_DATETIME_FMT');

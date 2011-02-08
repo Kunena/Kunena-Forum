@@ -21,13 +21,18 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+require_once KUNENA_PATH . '/class.kunena.php';
+
 $tabclass = array ("row1", "row2" );
 $Breturn = $this->uri->toString ( array ('path', 'query', 'fragment' ) );
 $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
+$me = KunenaFactory::getUser();
+$template = KunenaFactory::getTemplate ();
+
 ?>
 <div class="kblock kflat">
 	<div class="kheader">
-		<?php if (CKunenaTools::isModerator($this->my->id)) : ?>
+		<?php if ($me->isModerator()) : ?>
 		<span class="kcheckbox select-toggle"><input class="kchecktall" type="checkbox" name="toggle" value="" /></span>
 		<?php endif; ?>
 		<h2><span><?php if (!empty($this->header)) echo $this->header; ?></span></h2>
@@ -47,7 +52,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 		foreach ( $this->MessagesToApprove as $mes ) { ?>
 			<tr class="k<?php echo $tabclass [$k^=1];?>" >
 				<td class="kcol-mid kcol-ktopicicon">
-				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($mes->catid), intval($mes->id), 0, intval($this->config->messages_per_page), CKunenaTools::topicIcon($mes), '' ) ?>
+				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($mes->catid), intval($mes->id), 0, intval($this->config->messages_per_page), $template->getTopicIcon($mes), '' ) ?>
 				</td>
 				<td class="kcol-mid kcol-ktopictitle">
 				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($mes->catid), intval($mes->id), KunenaHtmlParser::parseText ($mes->subject), KunenaHtmlParser::stripBBCode ( $mes->message, 500), 'follow', 'ktopic-title km' ); ?>
@@ -80,7 +85,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 				<td class="kcol-mid">
 					<?php echo KunenaHtmlParser::parseBBCode(); ?>
 				</td>
-				<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
+				<?php if ($me->isModerator ( $this->catid )) : ?>
 				<td class="kcol-mid ktopicmoderation">
 					<input class ="kcheck" type="checkbox" name="cb[<?php echo intval($mes->id)?>]" value="0" />
 				</td>

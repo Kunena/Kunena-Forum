@@ -255,9 +255,10 @@ class CKunenaAjaxHelper {
 		// Verify permissions, user must be author of the message this
 		// attachment is attached to or be a moderator or admin of the site
 
+		$me = KunenaFactory::getUser();
 		if ($attachment->userid != $this->_my->id &&
-			!CKunenaTools::isModerator($this->_my->id, $attachment->catid) &&
-			!CKunenaTools::isAdmin()){
+			!$me->isModerator($attachment->catid) &&
+			!$me->isAdmin($attachment->catid)){
 			// not the author, not a moderator, not an admin
 			// nothing todo here - end with permission error
 			$result = array(

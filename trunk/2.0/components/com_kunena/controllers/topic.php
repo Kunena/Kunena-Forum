@@ -16,6 +16,7 @@ kimport ( 'kunena.forum.message.helper' );
 kimport ( 'kunena.forum.topic.helper' );
 kimport ( 'kunena.forum.category.helper' );
 kimport ( 'kunena.forum.topic.poll.helper' );
+kimport ( 'kunena.captcha' );
 
 require_once KPATH_SITE . '/lib/kunena.link.class.php';
 
@@ -44,7 +45,7 @@ class KunenaControllerTopic extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		if (! $this->verifyCaptcha () ) {
+		if (! KunenaCaptcha::verify () ) {
 			$this->redirectBack ();
 		}
 
@@ -716,39 +717,6 @@ class KunenaControllerTopic extends KunenaController {
 		if ($globalTags !== null) {
 			$topic->setKeywords($globalTags, false);
 		}
-	}
-
-	public function hasCaptcha() {
-		if ($this->config->captcha == 1 && $this->my->id < 1)
-			return true;
-		return false;
-	}
-
-	public function verifyCaptcha() {
-		if (! $this->hasCaptcha ())
-			return true;
-
-		$app = JFactory::getApplication ();
-		$dispatcher = JDispatcher::getInstance ();
-		$results = $dispatcher->trigger ( 'onCaptchaRequired', array ('kunena.post' ) );
-
-		if (! JPluginHelper::isEnabled ( 'system', 'captcha' ) || ! $results [0]) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CAPTCHA_CANNOT_CHECK_CODE' ), 'error' );
-			return false;
-		}
-
-		if ($results [0]) {
-			$captchaparams = array (
-				JRequest::getVar ( 'captchacode', '', 'post' ),
-				JRequest::getVar ( 'captchasuffix', '', 'post' ),
-				JRequest::getVar ( 'captchasessionid', '', 'post' ) );
-			$results = $dispatcher->trigger ( 'onCaptchaVerify', $captchaparams );
-			if (! $results [0]) {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CAPTCHACODE_DO_NOT_MATCH' ), 'error' );
-				return false;
-			}
-		}
-		return true;
 	}
 
 	public function vote() {

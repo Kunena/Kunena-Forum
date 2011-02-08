@@ -36,8 +36,7 @@ class KunenaBBCode extends BBCode {
 		$this->defaults = new KunenaBBCodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 		$this->smileys = $this->defaults->default_smileys;
-		// TODO: Make smilie path configurable or define
-		$this->SetSmileyURL ( JURI::root () . 'components/com_kunena/template/default/images/emoticons' );
+		$this->SetSmileyURL ( JURI::root(true) . KPATH_COMPONENT_RELATIVE );
 		$this->SetDetectURLs ( true );
 	}
 
@@ -583,8 +582,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		$db->setQuery ( $query );
 		$smileys = $db->loadObjectList ();
 
+		$template = KunenaFactory::getTemplate();
 		foreach ( $smileys as $smiley ) {
-			$this->default_smileys[$smiley->code] = $smiley->location;
+			$this->default_smileys [$smiley->code] = $template->getSmileyPath($smiley->location);
 		}
 	}
 

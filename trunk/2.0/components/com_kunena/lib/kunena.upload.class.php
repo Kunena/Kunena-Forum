@@ -51,10 +51,11 @@ class CKunenaUpload {
 		$this->_config = KunenaFactory::getConfig ();
 		$this->_isimage = false;
 		$this->_isfile = false;
-		if ((CKunenaTools::isModerator($this->_my->id)) || ($this->_my->id && $this->_config->allowimageregupload) || (!$this->_my->id && $this->_config->allowimageupload)) {
+		$me = KunenaFactory::getUser ();
+		if (($me->isModerator()) || ($this->_my->id && $this->_config->allowimageregupload) || (!$this->_my->id && $this->_config->allowimageupload)) {
 			$this->validImageExts = explode ( ',', $this->_config->imagetypes );
 		}
-		if ((CKunenaTools::isModerator($this->_my->id)) || ($this->_my->id && $this->_config->allowfileregupload) || (!$this->_my->id && $this->_config->allowfileupload)) {
+		if (($me->isModerator()) || ($this->_my->id && $this->_config->allowfileregupload) || (!$this->_my->id && $this->_config->allowfileupload)) {
 			$this->validFileExts = explode ( ',', $this->_config->filetypes );
 		}
 		$this->setImageResize(intval($this->_config->imagesize)*1024, intval($this->_config->imagewidth), intval($this->_config->imageheight), intval($this->_config->imagequality));

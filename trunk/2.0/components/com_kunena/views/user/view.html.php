@@ -37,6 +37,7 @@ class KunenaViewUser extends KunenaView {
 		$this->_app = JFactory::getApplication ();
 		$this->config = KunenaFactory::getConfig ();
 		$this->my = JFactory::getUser ();
+		$this->me = KunenaFactory::getUser ();
 		$this->do = JRequest::getWord('layout');
 
 		if (!$userid) {
@@ -80,14 +81,14 @@ class KunenaViewUser extends KunenaView {
 			$this->userpoints = $activityIntegration->getUserPoints($this->profile->userid);
 			$this->usermedals = $activityIntegration->getUserMedals($this->profile->userid);
 		}
-		if ($this->config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
-		if ($this->config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
+		if ($this->config->userlist_joindate || $this->me->isModerator()) $this->registerdate = $this->user->registerDate;
+		if ($this->config->userlist_lastvisitdate || $this->me->isModerator()) $this->lastvisitdate = $this->user->lastvisitDate;
 		$this->avatarlink = $this->profile->getAvatarLink('kavatar','profile');
 		$this->personalText = $this->profile->personalText;
 		$this->signature = $this->profile->signature;
 		$this->timezone = $this->user->getParam('timezone', $this->_app->getCfg ( 'offset', 0 ));
-		$this->moderator = CKunenaTools::isModerator($this->profile->userid);
-		$this->admin = CKunenaTools::isAdmin($this->profile->userid);
+		$this->moderator = $this->profile->isModerator();
+		$this->admin = $this->profile->isAdmin();
 		switch ($this->profile->gender) {
 			case 1:
 				$this->genderclass = 'male';

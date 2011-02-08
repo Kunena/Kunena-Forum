@@ -28,6 +28,7 @@ class CKunenaModerationTools {
 	public function __construct() {
 		$this->_db		= JFactory::getDBO ();
 		$this->_my		= JFactory::getUser ();
+		$this->_me		= KunenaFactory::getUser ();
 		$this->_config	= KunenaFactory::getConfig ();
 
 		$this->_ResetErrorMessage ();
@@ -65,8 +66,9 @@ class CKunenaModerationTools {
 	protected function _deleteUser($UserID) {
 		// Sanitize parameters!
 		$UserID = intval ( $UserID );
+		$user = KunenaFactory::getUser($UserID);
 
-		if ( !CKunenaTools::isAdmin($this->_my->id) ) {
+		if ( !$this->_me->isAdmin() ) {
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN');
 			return false;
 		}
@@ -84,7 +86,7 @@ class CKunenaModerationTools {
 			return false;
 		}
 		// Nobody can delete admins
-		if ( CKunenaTools::isAdmin($UserID) ) {
+		if ( $user->isAdmin() ) {
 			$this->_errormsg = JText::_( 'COM_KUNENA_MODERATION_ERROR_USER_DELETE_ADMIN', $user->username );
 			return false;
 		}

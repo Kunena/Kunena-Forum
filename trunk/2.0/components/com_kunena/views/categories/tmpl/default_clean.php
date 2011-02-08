@@ -52,10 +52,10 @@ foreach ( $this->sections as $section ) :
 					echo '<sup class="knewchar">(' . $category->getNewCount() . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
 				}
 				if ($category->locked) {
-					echo CKunenaTools::showIcon ( 'kforumlocked', JText::_('COM_KUNENA_GEN_LOCKED_FORUM') );
+					echo $this->getIcon ( 'kforumlocked', JText::_('COM_KUNENA_GEN_LOCKED_FORUM') );
 				}
 				if ($category->review) {
-					echo CKunenaTools::showIcon ( 'kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED') );
+					echo $this->getIcon ( 'kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED') );
 				}
 				?>
 			</div>
@@ -102,14 +102,14 @@ foreach ( $this->sections as $section ) :
 
 			<td class="kcol-mid kcol-kcattopics">
 				<!-- Number of Topics -->
-				<span class="kcat-topics-number"><?php echo CKunenaTools::formatLargeNumber ( $category->getTopics() ) ?></span>
+				<span class="kcat-topics-number"><?php echo $this->formatLargeNumber ( $category->getTopics() ) ?></span>
 				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_GEN_TOPICS');?></span>
 				<!-- /Number of Topics -->
 			</td>
 
 			<td class="kcol-mid kcol-kcatreplies">
 			<!-- Number of Replies -->
-			<span class="kcat-replies-number"><?php echo CKunenaTools::formatLargeNumber ( $category->getPosts() ) ?></span>
+			<span class="kcat-replies-number"><?php echo $this->formatLargeNumber ( $category->getPosts() ) ?></span>
 			<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
 			<!-- /Number of Replies -->
 			</td>
@@ -151,6 +151,6 @@ foreach ( $this->sections as $section ) :
 </div>
 <!-- F: List Cat -->
 <!-- Begin: Category Module Position -->
-	<?php CKunenaTools::showModulePosition('kunena_section_' . $mmm) ?>
+	<?php $this->getModulePosition('kunena_section_' . $mmm) ?>
 <!-- Finish: Category Module Position -->
 <?php endforeach; ?>

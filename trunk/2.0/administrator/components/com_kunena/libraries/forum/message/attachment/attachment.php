@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 kimport ('kunena.error');
 kimport ('kunena.user.helper');
 kimport ('kunena.forum.message.helper');
+kimport ('kunena.forum.message.attachment.helper');
 
 /**
  * Kunena Forum Message Attachment Class
@@ -81,10 +82,11 @@ class KunenaForumMessageAttachment extends JObject {
 	protected function generate() {
 		if (!isset($this->_shorttype)) {
 			$this->_shorttype = $this->isImage($this->filetype) ? 'image' : $this->filetype;
-			$this->_shortname = CKunenaTools::shortenFileName($this->filename);
+			$this->_shortname = KunenaForumMessageAttachmentHelper::shortenFileName($this->filename);
 
 			$config = KunenaFactory::getConfig();
 			$this->_imagelink = null;
+			$template = KunenaFactory::getTemplate();
 			switch (strtolower ( $this->_shorttype )) {
 				case 'image' :
 					// Check for thumbnail and if available, use for display
@@ -104,7 +106,7 @@ class KunenaForumMessageAttachment extends JObject {
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
-					$img = '<img src="' . KUNENA_URLICONSPATH . 'attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+					$img = '<img src="' . $template->getImagePath('icons/attach_generic.png') . '" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
 					$this->_thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), 'nofollow' );
 					$this->_textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
 			}
@@ -119,7 +121,7 @@ class KunenaForumMessageAttachment extends JObject {
 					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' );
 				}
 				if ($this->_disabled) {
-					$this->_thumblink = '<img src="' . KUNENA_URLICONSPATH . 'attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+					$this->_thumblink = '<img src="' . $template->getImagePath('icons/attach_generic.png') . '" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
 					$this->_imagelink = null;
 					$this->size = 0;
 				}
@@ -159,7 +161,7 @@ class KunenaForumMessageAttachment extends JObject {
 	}
 
 	function upload($key='kattachment') {
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
+		require_once (KUNENA_PATH . '/lib/kunena.upload.class.php');
 		$path = KUNENA_PATH_UPLOADED . DS . $this->userid;
 		$upload = new CKunenaUpload();
 		$upload->uploadFile($path, $key, '', false);

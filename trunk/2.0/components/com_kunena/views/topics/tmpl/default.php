@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 
 <?php
 $this->displayAnnouncement ();
-CKunenaTools::showModulePosition ( 'kunena_announcement' );
+$this->getModulePosition ( 'kunena_announcement' );
 ?>
 <!-- B: List Actions -->
 <table class="klist-actions">

@@ -163,6 +163,36 @@ class KunenaForumTopic extends JObject {
 		return $this->last_post_time > $session->lasttime && !in_array($this->id, $readtopics);
 	}
 
+	public function newReply($fields=array(), $user=null) {
+		$user = KunenaUserHelper::get($user);
+		$category = $this->getCategory();
+
+		$message = new KunenaForumMessage();
+		$message->setTopic($this);
+		$message->parent = $this->first_post_id;
+		$message->thread = $this->id;
+		$message->catid = $this->category_id;
+		$message->name = $user->getName('');
+		$message->userid = $user->userid;
+		$message->subject = $this->subject;
+		$message->ip = $_SERVER ["REMOTE_ADDR"];
+		if ($this->hold) {
+			// If topic was unapproved or deleted, use the same state for the new message
+			$message->hold = $this->hold;
+		} else {
+			// Otherwise message is either unapproved or published depending if the category is moderated or not
+			$message->hold = $category->review ? (int)!$category->authorise ('moderate', $user, true) : 0;
+		}
+		if ($fields === true) {
+			$user = KunenaFactory::getUser($this->first_post_userid);
+			$text = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->first_post_message );
+			$message->message = "[quote=\"{$user->getName($this->first_post_guest_name)}\" post={$this->first_post_id}]" .  $text . "[/quote]";
+		} elseif (is_array($fields)) {
+			$message->bind($fields, array ('name', 'email', 'subject', 'message' ));
+		}
+		return $message;
+	}
+
 	function markRead($user = null) {
 		$user = KunenaUserHelper::get($user);
 		if (! $user->exists())

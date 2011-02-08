@@ -118,6 +118,23 @@ class KunenaForumMessageAttachmentHelper {
 		return KunenaError::checkDatabaseError ();
 	}
 
+	/**
+	 * This function shortens long filenames for display purposes.
+	 * The first 8 characters of the filename, followed by three dots
+	 * and the last 5 character of the filename.
+	 *
+	 * @param char $filename 	Filename to be shortened if too long
+	 */
+	public static function shortenFilename($filename, $front=10, $back=8, $filler='...') {
+		$len = strlen($filename);
+		if ($len>($front+strlen($filler)+$back)){
+			$output=substr($filename,0,$front).$filler.substr($filename,$len-$back,$back);
+		}else{
+			$output=$filename;
+		}
+		return $output;
+	}
+
 	// Internal functions
 
 	static protected function loadById($ids) {

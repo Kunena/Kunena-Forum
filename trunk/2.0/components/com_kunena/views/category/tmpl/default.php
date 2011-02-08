@@ -39,7 +39,7 @@ defined ( '_JEXEC' ) or die ();
 	<tr>
 		<td class="klist-actions-goto">
 			<a name="forumtop"> </a>
-			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', CKunenaTools::showIcon ( 'kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
+			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', $this->getIcon ( 'kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
 		</td>
 		<?php if (!empty ( $this->newTopicHtml ) || !empty ( $this->markReadHtml ) || !empty ( $this->subscribeCatHtml )) : ?>
 		<td class="klist-actions-forum">
@@ -100,7 +100,7 @@ defined ( '_JEXEC' ) or die ();
 	<tr>
 		<td class="klist-actions-goto">
 			<a name="forumbottom"> </a>
-			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', CKunenaTools::showIcon ( 'kforumtop', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
+			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', $this->getIcon ( 'kforumtop', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
 		</td>
 		<?php if (!empty ( $this->newTopicHtml ) || !empty ( $this->markReadHtml ) || !empty ( $this->subscribeCatHtml )) : ?>
 		<td class="klist-actions-forum">

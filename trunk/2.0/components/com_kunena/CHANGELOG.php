@@ -31,10 +31,30 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+8-February-2011 Matias
+# [#23443] KunenaBBCode: Use smileys from the current template instead of fixed ones
+# [#23443] KunenaHtmlParser::getEmoticons(): Path fixes
+# [#23443] KunenaForumMessageAttachment: Use icons from the current template instead of fixed ones
+- [#22570] Remove deprecated function CKunenaTools::KSelectList()
+^ [#22569] Move CKunenaTools::updateNameInfo() into administration
+- [#22570] Administration: Remove deprecated functions: smileypath() and rankpath()
+- [#22570] Convert and remove deprecated functions: CKunenaTools::isModerator(), CKunenaTools::isAdmin()
+^ [#22569] Move all old defines from class.kunena.php into lib/kunena.defines.class.php
+# [#22569] KunenaModelTopic: get ordering from user state so that it can be overridden in custom displays
+- [#22570] Convert and remove deprecated functions: CKunenaTools::showIcon(), CKunenaTools::showButton()
+
+7-February-2011 Matias
+# [#23443] KunenaForumMessage::newReply(): Get username from user object, not from the message
+# [#23443] KunenaForumMessage::sendNotification(): missing class KunenaHtmlParser
+^ [#22569] Move CKunenaTools::shortenFilename() into KunenaForumMessageAttachmentHelper
++ [#22569] Add function KunenaForumTopic::newReply()
+^ [#22569] Move all captcha code into KunenaCaptcha class
+
 6-February-2011 Matias
 # [#23443] Fix various PHP notices
 # [#23443] Fix fatal error in KunenaViewCategories
 # [#24777] BBCode parser bug: Undefined variable: end_tag_params in [code] tag
+# [#23442] Fix broken search (search words missing from the SQL query)
 # [#23443] Simplify KunenaModelSearch logic
 # [#23442] Improve search performance when there are no results
 

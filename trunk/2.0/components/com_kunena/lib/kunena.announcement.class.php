@@ -12,6 +12,8 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+require_once KUNENA_PATH . '/class.kunena.php';
+
 class CKunenaAnnouncement {
 	public $id = null;
 	public $title = null;
@@ -25,12 +27,13 @@ class CKunenaAnnouncement {
 
 	function __construct() {
 		$this->my = JFactory::getUser ();
+		$this->me = KunenaFactory::getUser ();
 		$this->db = JFactory::getDBO ();
 		$this->config = KunenaFactory::getConfig ();
 		$this->app = JFactory::getApplication ();
 
 		$annmods = @explode ( ',', $this->config->annmodid );
-		if (in_array ( $this->my->id, $annmods ) || CKunenaTools::isAdmin ()) {
+		if (in_array ( $this->my->id, $annmods ) || $this->me->isAdmin ()) {
 			$this->canEdit = true;
 		} else {
 			$this->canEdit = false;

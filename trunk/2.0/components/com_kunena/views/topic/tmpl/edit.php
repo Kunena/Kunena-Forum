@@ -131,7 +131,7 @@ $this->k=0;
 		<?php
 		if ($this->config->allowfileupload || ($this->config->allowfileregupload && $this->my->id != 0)
 			|| ($this->config->allowimageupload || ($this->config->allowimageregupload && $this->my->id != 0)
-			|| CKunenaTools::isModerator ( $this->my->id, $this->message->catid ))) :
+			|| $this->me->isModerator ( $this->message->catid ))) :
 			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
 			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );
 			?>
@@ -157,7 +157,7 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
-		<?php if (CKunenaTools::isModerator ( $this->my->id, $this->message->catid ) ) : ?>
+		<?php if ($this->me->isModerator ( $this->message->catid ) ) : ?>
 		<tr id="kpost-tags" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?></strong>

@@ -2310,6 +2310,7 @@ function textCounter(field, target) {
 			function browseUploaded($option, $attachments, $type) {
 				$kunena_db = &JFactory::getDBO ();
 				$map = JPATH_ROOT;
+				kimport ('kunena.forum.message.attachment.helper');
 				?>
 			<script language="javascript" type="text/javascript">
 					<!--
@@ -2362,7 +2363,7 @@ function textCounter(field, target) {
 					<td style="text-align: center">
 					<br />
 					<strong><?php echo JText::_('COM_KUNENA_A_IMGB_NAME') ?>: </strong>
-					<?php echo kescape(CKunenaTools::shortenFileName($filename, 10, 15)) ?>
+					<?php echo kescape(KunenaForumMessageAttachmentHelper::shortenFileName($filename, 10, 15)) ?>
 					<br />
 				<?php if (is_file($attach_path)) { ?>
 					<strong><?php echo JText::_('COM_KUNENA_A_IMGB_SIZE') ?>: </strong> <?php echo @filesize ( $attach_path ) . ' ' . JText::_('COM_KUNENA_A_IMGB_WEIGHT') ?>
@@ -2397,7 +2398,7 @@ function textCounter(field, target) {
 			//***************************************
 			// Show Smilies
 			//***************************************
-		function showsmilies($option, &$smileytmp, $pageNav, $smileypath) {
+		function showsmilies($option, &$smileytmp, $pageNav) {
 			$template = KunenaFactory::getTemplate();
 		?>
 		<div class="kadmin-functitle icon-smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></div>

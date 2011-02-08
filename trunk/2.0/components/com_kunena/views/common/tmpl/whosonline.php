@@ -52,7 +52,7 @@ defined ( '_JEXEC' ) or die ();
 						}
 					}
 					echo implode (', &nbsp;', $onlineList);
-					if (!empty($hiddenList) && CKunenaTools::isModerator($this->my->id)) : ?>
+					if (!empty($hiddenList) && $this->me->isModerator()) : ?>
 						<br />
 						<span class="khidden-ktitle ks"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>: </span>
 						<br />

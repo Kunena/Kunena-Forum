@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<install version="1.5" type="plugin" group="content" method="upgrade">
+	<name>Content - Kunena Discuss</name>
+	<version>2.0.0-DEV</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>admin@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>(c)2010-2011 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPL</license>
+	<description>PLG_KUNENADISCUSS_DESCRIPTION</description>
+	<files>
+		<filename plugin="kunenadiscuss">kunenadiscuss.php</filename>
+		<folder>kunenadiscuss</folder>
+	</files>
+	<languages folder="languages">
+		<language tag="de-DE">de-DE.plg_content_kunenadiscuss.ini</language>
+		<language tag="el-GR">el-GR.plg_content_kunenadiscuss.ini</language>
+		<language tag="en-GB">en-GB.plg_content_kunenadiscuss.ini</language>
+		<language tag="es-ES">es-ES.plg_content_kunenadiscuss.ini</language>
+		<language tag="fr-FR">fr-FR.plg_content_kunenadiscuss.ini</language>
+		<language tag="hu-HU">hu-HU.plg_content_kunenadiscuss.ini</language>
+		<language tag="ru-RU">ru-RU.plg_content_kunenadiscuss.ini</language>
+	</languages>
+	<params>
+		<param name="limit" type="text" default="25" label="PLG_KUNENADISCUSS_LIMIT" description="PLG_KUNENADISCUSS_LIMIT_DESC" />
+		<param name="ordering" type="radio" default="1" label="PLG_KUNENADISCUSS_ORDERING" description="PLG_KUNENADISCUSS_ORDERING_DESC">
+			<option value="0">PLG_KUNENADISCUSS_OPTION_FIRST</option>
+			<option value="1">PLG_KUNENADISCUSS_OPTION_LAST</option>
+		</param>
+		<param name="show_front_page" type="radio" default="2" label="PLG_KUNENADISCUSS_SHOW_FRONT_PAGE" description="PLG_KUNENADISCUSS_SHOW_FRONT_PAGE_DESC">
+			<option value="0">PLG_KUNENADISCUSS_OPTION_NOTHING</option>
+			<option value="1">PLG_KUNENADISCUSS_OPTION_LINK</option>
+			<option value="2">PLG_KUNENADISCUSS_OPTION_REPLIES</option>
+		</param>
+		<param name="show_blog_page" type="radio" default="2" label="PLG_KUNENADISCUSS_SHOW_BLOG_PAGE" description="PLG_KUNENADISCUSS_SHOW_BLOG_PAGE_DESC"> 
+			<option value="0">PLG_KUNENADISCUSS_OPTION_NOTHING</option> 
+			<option value="1">PLG_KUNENADISCUSS_OPTION_LINK</option> 
+			<option value="2">PLG_KUNENADISCUSS_OPTION_REPLIES</option> 
+		</param> 
+		<param name="show_other_pages" type="radio" default="2" label="PLG_KUNENADISCUSS_SHOW_OTHER_PAGES" description="PLG_KUNENADISCUSS_SHOW_OTHER_PAGES_DESC">
+			<option value="0">PLG_KUNENADISCUSS_OPTION_NOTHING</option>
+			<option value="1">PLG_KUNENADISCUSS_OPTION_LINK</option>
+			<option value="2">PLG_KUNENADISCUSS_OPTION_REPLIES</option>
+		</param>
+		<param name="form" type="radio" default="1" label="PLG_KUNENADISCUSS_FORM" description="PLG_KUNENADISCUSS_FORM_DESC">
+			<option value="0">PLG_KUNENADISCUSS_OPTION_NO</option>
+			<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>
+		</param>
+		<param name="form_location" type="radio" default="0" label="PLG_KUNENADISCUSS_FORM_LOCATION" description="PLG_KUNENADISCUSS_FORM_LOCATION_DESC">
+			<option value="0">PLG_KUNENADISCUSS_OPTION_BEFORE</option>
+			<option value="1">PLG_KUNENADISCUSS_OPTION_AFTER</option>
+		</param>
+		<param name="custom_topics" type="radio" default="1" label="PLG_KUNENADISCUSS_CUSTOM_TOPICS" description="PLG_KUNENADISCUSS_CUSTOM_TOPICS_DESC">
+			<option value="0">PLG_KUNENADISCUSS_OPTION_NO</option>
+			<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>
+		</param>		
+		<param name="create" type="radio" default="0" label="PLG_KUNENADISCUSS_CREATE" description="PLG_KUNENADISCUSS_CREATE_DESC">
+			<option value="1">PLG_KUNENADISCUSS_OPTION_CREATE_VISIT</option>
+			<option value="0">PLG_KUNENADISCUSS_OPTION_CREATE_REPLY</option>
+		</param>
+		<param name="create_time" type="list" default="1" label="PLG_KUNENADISCUSS_CREATE_TIME" description="PLG_KUNENADISCUSS_CREATE_TIME_DESC">
+			<option value="1">PLG_KUNENADISCUSS_OPTION_1WEEKS</option>
+			<option value="2">PLG_KUNENADISCUSS_OPTION_2WEEKS</option>
+			<option value="4">PLG_KUNENADISCUSS_OPTION_4WEEKS</option>
+			<option value="8">PLG_KUNENADISCUSS_OPTION_8WEEKS</option>
+			<option value="13">PLG_KUNENADISCUSS_OPTION_13WEEKS</option>
+			<option value="26">PLG_KUNENADISCUSS_OPTION_26WEEKS</option>
+			<option value="52">PLG_KUNENADISCUSS_OPTION_52WEEKS</option>
+			<option value="0">PLG_KUNENADISCUSS_OPTION_UNLIMITED</option>
+		</param>
+		<param name="close_time" type="list" default="0" label="PLG_KUNENADISCUSS_CLOSE_TIME" description="PLG_KUNENADISCUSS_CLOSE_TIME_DESC">
+			<option value="1">PLG_KUNENADISCUSS_OPTION_1WEEKS</option>
+			<option value="2">PLG_KUNENADISCUSS_OPTION_2WEEKS</option>
+			<option value="4">PLG_KUNENADISCUSS_OPTION_4WEEKS</option>
+			<option value="8">PLG_KUNENADISCUSS_OPTION_8WEEKS</option>
+			<option value="13">PLG_KUNENADISCUSS_OPTION_13WEEKS</option>
+			<option value="26">PLG_KUNENADISCUSS_OPTION_26WEEKS</option>
+			<option value="52">PLG_KUNENADISCUSS_OPTION_52WEEKS</option>
+			<option value="0">PLG_KUNENADISCUSS_OPTION_UNLIMITED</option>
+		</param>
+		<param name="close_reason" type="radio" default="0" label="PLG_KUNENADISCUSS_CLOSE_REASON" description="PLG_KUNENADISCUSS_CLOSE_REASON_DESC">
+			<option value="0">PLG_KUNENADISCUSS_OPTION_TOPIC_CREATION</option>
+			<option value="1">PLG_KUNENADISCUSS_OPTION_LAST_POST</option>
+		</param>
+		<param name="bbcode" type="radio" default="default" label="PLG_KUNENADISCUSS_BBCODE" description="PLG_KUNENADISCUSS_BBCODE_DESC"> 
+			<option value="default">PLG_KUNENADISCUSS_OPTION_BBCODE_DEFAULT</option>
+			<option value="full">PLG_KUNENADISCUSS_OPTION_BBCODE_FULL</option>
+			<option value="intro">PLG_KUNENADISCUSS_OPTION_BBCODE_INTRO</option>
+			<option value="link">PLG_KUNENADISCUSS_OPTION_BBCODE_LINK</option>
+		</param> 		
+		<param name="topic_owner" type="text" default="" label="PLG_KUNENADISCUSS_TOPIC_OWNER" description="PLG_KUNENADISCUSS_TOPIC_OWNER_DESC" />
+		<param name="category_mapping" type="text" default="" label="PLG_KUNENADISCUSS_CATEGORY_MAPPING" description="PLG_KUNENADISCUSS_CATEGORY_MAPPING_DESC" />
+		<param name="default_category" type="text" default="" label="PLG_KUNENADISCUSS_DEFAULT_CATEGORY" description="PLG_KUNENADISCUSS_DEFAULT_CATEGORY_DESC" />
+		<param name="allow_categories" type="text" default="" label="PLG_KUNENADISCUSS_ALLOW_CATEGORIES" description="PLG_KUNENADISCUSS_ALLOW_CATEGORIES_DESC" />
+		<param name="deny_categories" type="text" default="" label="PLG_KUNENADISCUSS_DENY_CATEGORIES" description="PLG_KUNENADISCUSS_DENY_CATEGORIES_DESC" />
+		<param name="show_debug" type="radio" default="0" label="PLG_KUNENADISCUSS_SHOW_DEBUG" description="PLG_KUNENADISCUSS_SHOW_DEBUG_DESC">
+			<option value="0">PLG_KUNENADISCUSS_OPTION_NO</option>
+			<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>
+		</param>
+		<param name="show_debug_userids" type="text" default="" label="PLG_KUNENADISCUSS_SHOW_DEBUG_USERIDS" description="PLG_KUNENADISCUSS_SHOW_DEBUG_USERIDS_DESC" />
+	</params>
+</install>

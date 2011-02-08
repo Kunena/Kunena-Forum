@@ -36,6 +36,8 @@ Kunena 1.6.4
 7-February-2011 Xillibit
 # [#23443] update french language file about edittime and gracetime
 # [#24755] Best credit to designers (thanks gonzaunit)
+# [#24784] Check if DOMDocument class exists and fail installation if it doesn't
+# [#24788] Allow permament delete on all topics, not just deleted ones
 
 5-February-2011 Matias
 # [#24761] Ban manager is not showing all the information

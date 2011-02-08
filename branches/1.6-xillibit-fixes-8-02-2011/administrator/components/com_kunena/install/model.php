@@ -1028,6 +1028,9 @@ class KunenaModelInstall extends JModel {
 			$req->fail ['php'] = true;
 		if (version_compare ( $req->joomla, KUNENA_MIN_JOOMLA, "<" ))
 			$req->fail ['joomla'] = true;
+		if(!class_exists('DOMDocument')){
+			$req->fail ['domdocument'] = true;
+		}
 
 		$this->_req = $req;
 		return $this->_req;

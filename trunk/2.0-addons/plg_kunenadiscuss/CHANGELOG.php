@@ -33,6 +33,7 @@ Kunena Discuss Plugin 2.0.0-DEV
 
 8-February-2011 Matias
 ^ [#20084] Convert code to use K2.0.0 libraries
+# [#20084] Fix some bugs
 
 Kunena Discuss Plugin 1.6.2
 

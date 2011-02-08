@@ -38,6 +38,7 @@ Kunena 1.6.4
 # [#24755] Best credit to designers (thanks gonzaunit)
 # [#24784] Check if DOMDocument class exists and fail installation if it doesn't
 # [#24788] Allow permament delete on all topics, not just deleted ones
+^ [#22933] Add dropdown for Admin view trashed items
 
 5-February-2011 Matias
 # [#24761] Ban manager is not showing all the information

@@ -1589,7 +1589,12 @@ function showConfig($option) {
 
 	$lists['showpopthankyoustats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopthankyoustats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopthankyoustats);
 
-	$lists ['mod_see_deleted'] = JHTML::_('select.genericlist', $yesno, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
+	$seerestoredeleted = array();
+	$seerestoredeleted[] =JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_NOBODY'));
+	$seerestoredeleted[] =JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_MODS'));
+	$seerestoredeleted[] =JHTML::_('select.option', 2, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINSMODS'));
+	$lists ['mod_see_deleted'] = JHTML::_('select.genericlist', $seerestoredeleted, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
+
 
 	$listBbcodeImgSecure = array();
 	$listBbcodeImgSecure[] = JHTML::_('select.option', 'text', JText::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_TEXT'));
@@ -3138,17 +3143,17 @@ function generateSystemReport () {
 	} else {
 		$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
 	}
-	
+
 	// Get Kunena default template
 	$ktemplate = KunenaFactory::getTemplate();
 	$ktempaltedetails = $ktemplate->getTemplateDetails();
 
 	// Get database collation
 	$collation = getTablesCollation();
-	
+
 	// Get Joomla! template details
 	$templatedetails = getJoomlaTemplate($JVersion);
-	
+
 	// Get Joomla! menu details
 	$joomlamenudetails = getJoomlaMenuDetails($JVersion);
 
@@ -3188,7 +3193,7 @@ function generateSystemReport () {
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$templatedetails->name.' | [u]author:[/u] '.$templatedetails->author.' | [u]version:[/u] '.$templatedetails->version.' | [u]creationdate:[/u] '.$templatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
 	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Third-party SEF components:[/b] '.$sh404sef.' | '.$joomsef.' | '.$acesef.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' | '.$plg_kjomsocialmykunena.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
-	
+
 	return $report;
 }
 
@@ -3197,7 +3202,7 @@ function getJoomlaTemplate($jversion) {
 	if ($jversion->RELEASE == '1.5') {
 		$templatedetails = new stdClass();
 		// Get Joomla! frontend assigned template for Joomla! 1.5
-		
+
 		$query = ' SELECT template '
 				.' FROM #__templates_menu '
 				.' WHERE client_id = 0 AND menuid = 0 ';
@@ -3279,7 +3284,7 @@ function getJoomlaMenuDetails($jversion) {
 
 function getTablesCollation() {
 	$kunena_db = JFactory::getDBO ();
-	
+
 	// Check each table in the database if the collation is on utf8
 	$tableslist = $kunena_db->getTableList();
 	$collation = '';
@@ -3313,7 +3318,7 @@ function getTablesCollation() {
 	if(empty($collation)) {
 		$collation = 'The collation of your table fields are correct';
 	}
-	
+
 	return $collation;
 }
 

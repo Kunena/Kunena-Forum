@@ -4,13 +4,13 @@
 * KunenaLatest Module
 * @package Kunena latest
 *
-* @Copyright (C) 2010-2011 Kunena Team All rights reserved
+* @Copyright (C) 2010-2011 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 *
 **/
 
-div.klatest ul li {
+.klatest li {
 	background: none !important;
 }
 .klatest-items {
@@ -27,7 +27,6 @@ div.klatest ul li {
 	margin: 0;
 	padding: 0;
 }
-
 .klatest-items .knewchar {
 	color: #009900;
 	font-weight: bold;
@@ -37,36 +36,36 @@ div.klatest ul li {
 	vertical-align:top;
 	white-space:nowrap;
 }
-ul.klatest-itemdetails li {
+.klatest-itemdetails li {
 	margin-bottom: 0 !important;
 	display: block;
 }
-li.klatest-subject a {
+.klatest-subject a {
 	font-weight: bold;
 	font-size: 12px;
 }
-li.klatest-avatar {
+.klatest-avatar {
 	float:left;
 	display: block;
 	margin-right: 5px;
 }
-li.klatest-avatar img {
+.klatest-avatar img {
 	margin: 2px 2px 2px 0;
 	border: 1px solid #CCCCCC;
 	padding: 1px;
 }
-li.klatest-topicicon {
+.klatest-topicicon {
 	float:left;
 	display: block;
 	margin-right: 5px;
 }
-li.klatest-topicicon img {
+.klatest-topicicon img {
 	margin: 2px 2px 2px 0;
 	padding: 1px;
 }
-li.klatest-posttime,
-li.klatest-cat,
-li.klatest-author {
+.klatest-posttime,
+.klatest-cat,
+.klatest-author {
 	font-size: 10px;
 }
 p.klatest-more {
@@ -74,14 +73,14 @@ p.klatest-more {
 	padding: 0;
 	clear: both;
 }
-ul.klatest-itemdetails li.klatest-author {
+.klatest-itemdetails li.klatest-author {
 	display:inline;
 }
-ul.klatest-itemdetails li.klatest-posttime {
+.klatest-itemdetails li.klatest-posttime {
 	display:block;
 }
 	
-ul.klatest-preview-content li {
+.klatest-preview-content li {
 	margin-bottom: 0 !important;
 	display: block;
 }

@@ -4,7 +4,7 @@
 * KunenaLatest Module
 * @package Kunena latest
 *
-* @Copyright (C)2010-2011 www.kunena.org. All rights reserved
+* @Copyright (C)2010-2011 Kunena Project. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 */
@@ -29,6 +29,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaLatest 1.6.3-DEV
+
+8-February-2011 Severdia
+^ [#24823] Optmized CSS selectors based on Page Speed
 
 23-January-2010 LDA(svens)
 ^ [#24560] update de-DE (thanks rich)

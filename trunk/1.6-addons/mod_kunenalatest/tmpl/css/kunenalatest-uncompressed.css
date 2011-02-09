@@ -27,6 +27,7 @@
 	margin: 0;
 	padding: 0;
 }
+
 .klatest-items .knewchar {
 	color: #009900;
 	font-weight: bold;
@@ -62,6 +63,8 @@
 .klatest-topicicon img {
 	margin: 2px 2px 2px 0;
 	padding: 1px;
+	width: 32px;
+	height: 32px;
 }
 .klatest-posttime,
 .klatest-cat,

@@ -30,6 +30,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 2.0.0-DEV
+10-February-2011 svens(LDA)
+^ [#24848] update de-DE (thanks rich)
 
 8-February-2011 Matias
 # [#23443] KunenaBBCode: Use smileys from the current template instead of fixed ones

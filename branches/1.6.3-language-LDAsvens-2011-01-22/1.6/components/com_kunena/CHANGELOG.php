@@ -30,6 +30,10 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Kunena 1.6.4
+10-February-2011 svens(LDA)
+^ [#24847] update ca-ES (thanks Arivor)
+^ [#24847] update de-DE (thanks rich)
 
 Kunena 1.6.3
 29-January-2011 svens(LDA)

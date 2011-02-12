@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.4
 
+12-February-2011 Xillibit
+# [#24843] Fatal error: Class 'JParameter' not found in /components/com_kunena/kunena.php on line 210
+
 7-February-2011 Xillibit
 # [#23443] update french language file about edittime and gracetime
 # [#24755] Best credit to designers (thanks gonzaunit)

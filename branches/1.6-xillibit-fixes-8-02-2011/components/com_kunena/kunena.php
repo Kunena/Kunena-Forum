@@ -207,6 +207,7 @@ require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.smile.class.php');
 if ($func == 'profile' && !$do && empty($_POST)) {
 	$redirect = 1;
 	if (!empty($active)) {
+	  jimport( 'joomla.html.parameter' );
 		$params = new JParameter($active->params);
 		$redirect = $params->get('integration');
 	}

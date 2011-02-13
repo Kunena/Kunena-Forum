@@ -45,7 +45,8 @@ class CKunenaRSSView {
 
 		// Queryoptions which will be verified by CKunenaRSSData later
 		$this->timelimit			= $this->config->rss_timelimit;
-		$this->limit				= $this->config->rss_limit;
+		if ( !$this->config->rss_limit ) $this->limit = 250;
+		else $this->limit				= $this->config->rss_limit;
 		$this->incl_cat				= $this->config->rss_included_categories;	// for global feeds
 		$this->excl_cat				= $this->config->rss_excluded_categories;
 

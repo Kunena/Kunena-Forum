@@ -36,6 +36,8 @@ Kunena 1.6.4
 13-February-2011 Xillibit
 ^ [#24841] Remove in kunena report configuration the empty settings
 # [#24781] Administration: When creating new category, access control cannot be set
+# [#24842] Warning division by zero in latestx.php
+# [#24888] Under Joomla 1.6 avatar doens't update in kunena_users
 
 12-February-2011 Xillibit
 # [#24843] Fatal error: Class 'JParameter' not found in /components/com_kunena/kunena.php on line 210

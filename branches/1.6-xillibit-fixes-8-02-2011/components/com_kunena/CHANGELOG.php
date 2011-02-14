@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.4
 
+14-February-2011 Xillibit
+# [#24818] MySQL tables are case insensitive: installation fails on JOS_ prefix
+
 13-February-2011 Xillibit
 ^ [#24841] Remove in kunena report configuration the empty settings
 # [#24781] Administration: When creating new category, access control cannot be set

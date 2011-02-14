@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.4
 
+13-February-2011 Severdia
+# [#24364] CSS fix for color coded user names (regression from Joomla 1.6 fixes)
+
 5-February-2011 Matias
 # [#24761] Ban manager is not showing all the information
 # [#24762] Performance optimization for getting moderators by CB team (Thanks Beat!)

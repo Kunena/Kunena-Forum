@@ -169,31 +169,38 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 /* COLOR ADMINISTRATOR AND MODERATOR
 ----------------------------------------------------------------------------------------------- */
 
-#Kunena .kwho-admin {
+#Kunena .kwho-admin,
+#Kunena a.kwho-admin {
 	color: #FF0000 !important;
 }
 
-#Kunena .kwho-globalmoderator {
+#Kunena .kwho-globalmoderator,
+#Kunena a.kwho-globalmoderator {
 	color: #800000 !important;
 }
 
-#Kunena .kwho-moderator {
+#Kunena .kwho-moderator,
+#Kunena a.kwho-moderator {
 	color: #0000FF !important;
 }
 
-#Kunena .kwho-user {
+#Kunena .kwho-user,
+#Kunena a.kwho-user {
 	color: #5388B4 !important;
 }
 
-#Kunena .kwho-guest {
+#Kunena .kwho-guest,
+#Kunena a.kwho-guest {
 	color: #666666 !important;
 }
 
-#Kunena .kwho-banned {
+#Kunena .kwho-banned ,
+#Kunena a.kwho-banned {
 	color: #A39D49 !important;
 }
 
-#Kunena .kwho-blocked {
+#Kunena .kwho-blocked,
+#Kunena a.kwho-blocked {
 	color: #ff0000 !important;
 }
 

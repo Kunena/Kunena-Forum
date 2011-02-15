@@ -20,6 +20,7 @@ kimport ('kunena.forum.topic.helper');
 class KunenaForumMessageHelper {
 	// Global for every instance
 	protected static $_instances = array();
+	protected static $_location = false;
 
 	private function __construct() {}
 
@@ -80,6 +81,66 @@ class KunenaForumMessageHelper {
 			$ordering = 'ASC';
 
 		return self::loadMessagesByTopic($topic->id, $start, $limit, $ordering, $hold);
+	}
+
+	public function getLocation($mesid, $direction = 'asc', $hold=null) {
+		if (!$hold) {
+			$me = KunenaFactory::getUser();
+			$access = KunenaFactory::getAccessControl();
+			$hold = $access->getAllowedHold($me->userid, $this->id, false);
+		}
+		if (!isset(self::$_location [$mesid])) {
+			self::loadLocation(array($mesid));
+		}
+		$location = self::$_location [$mesid];
+		$count = 0;
+		foreach ($location->hold as $meshold=>$values) {
+			if (isset($hold[$meshold])) {
+				$count += $values[$direction = 'asc' ? 'before' : 'after'];
+				if ($direction == 'both') $count += $values['before'];
+			}
+		}
+		return $count;
+	}
+
+	static function loadLocation($mesids) {
+		// NOTE: if you already know the location using this code just takes resources
+		if (!is_array($mesids)) $mesids = explode ( ',', $mesids );
+		$list = array();
+		$ids = array();
+		foreach ($mesids as $id) {
+			$id = (int) $id;
+			if (!isset(self::$_location [$id])) {
+				$ids[$id] = $id;
+				self::$_location [$id] = new stdClass();
+				self::$_location [$id]->hold = array();
+			}
+		}
+		if (empty($ids))
+			return;
+
+		$idlist = implode ( ',', $ids );
+		$db = JFactory::getDBO ();
+		$db->setQuery ( "SELECT m.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
+				SUM(mm.id<m.id) AS before_count,
+				SUM(mm.id>m.id) AS after_count
+			FROM #__kunena_messages AS m
+			INNER JOIN #__kunena_messages AS mm ON m.thread=mm.thread
+			WHERE m.id IN ({$idlist})
+			GROUP BY m.id, mm.hold" );
+		$results = (array) $db->loadObjectList ();
+		KunenaError::checkDatabaseError();
+
+		foreach ($results as $result) {
+			$instance = self::$_location [$result->id];
+			if (!isset($instance->id)) {
+				$instance->id = $result->id;
+				$instance->category_id = $result->category_id;
+				$instance->topic_id = $result->topic_id;
+				self::$_location [$instance->id] = $instance;
+			}
+			$instance->hold[$result->hold] = array('before'=>$result->before_count, 'after'=>$result->after_count);
+		}
 	}
 
 	static function recount($topicids=false) {

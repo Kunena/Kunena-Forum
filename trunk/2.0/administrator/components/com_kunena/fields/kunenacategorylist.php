@@ -23,8 +23,8 @@ class JFormFieldKunenaCategoryList extends JFormField {
 	protected function getInput() {
 		$none = $this->element['none'];
 
-		$options = Array ();
-		$options [] = JHTML::_ ( 'select.option', '0', $none ? JText::_ ( $none ) : '0' );
+		// Get the field options.
+		$options = (array) $this->getOptions();
 
 		$size = $this->element['size'];
 		$class = $this->element['class'];

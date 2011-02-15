@@ -38,11 +38,9 @@ $this->common->display ('pathway');
 	</div>
 </div>
 
-
-
 <?php
 if (count ( $this->categories )) {
-	echo $this->loadTemplate('clean');
+	echo $this->loadTemplate('list_clean');
 } else {
 	$this->displayInfoMessage ();
 }

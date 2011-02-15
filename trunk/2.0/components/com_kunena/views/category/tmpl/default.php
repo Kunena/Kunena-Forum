@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 <!-- / Pathway -->
 
 <!-- Subcategories -->
-<?php $this->displaySubCategories () ?>
+<?php $this->displayCategories () ?>
 <!-- / Subcategories -->
 
 <?php if ($this->category->headerdesc) : ?>

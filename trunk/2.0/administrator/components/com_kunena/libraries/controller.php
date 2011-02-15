@@ -12,6 +12,9 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.controller' );
 jimport ( 'joomla.application.component.helper' );
+jimport ( 'joomla.error.profiler' );
+
+require_once KPATH_SITE . '/router.php';
 
 /**
  * Base controller class for Kunena.
@@ -33,7 +36,7 @@ class KunenaController extends JController {
 	 * @return	object	Kunena Controller
 	 * @since	1.6
 	 */
-	public static function getInstance() {
+	public static function getInstance($reload = false) {
 		static $instance = null;
 
 		if (! empty ( $instance ) && !isset($instance->home)) {
@@ -41,8 +44,7 @@ class KunenaController extends JController {
 		}
 
 		// Display time it took to create the entire page in the footer
-		jimport( 'joomla.error.profiler' );
-		$starttime = JProfiler::getmicrotime();
+		$starttime = JProfiler::getmicrotime() - KunenaRouter::$time;
 
 		$app = JFactory::getApplication();
 		// FIXME: loading languages in Joomla is SLOW (30ms)!
@@ -52,7 +54,12 @@ class KunenaController extends JController {
 			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 		}
 
-		$view = strtolower ( JRequest::getWord ( 'view', 'none' ) );
+		$home = $app->getMenu ()->getActive ();
+		if (!$reload && !empty ( $home->query ['view'] ) && $home->query ['view'] == 'home' && !JRequest::getWord ( 'task' )) {
+			$view = 'home';
+		} else {
+			$view = strtolower ( JRequest::getWord ( 'view', 'none' ) );
+		}
 		$path = JPATH_COMPONENT . DS . 'controllers' . DS . $view . '.php';
 
 		// If the controller file path exists, include it ... else die with a 500 error.

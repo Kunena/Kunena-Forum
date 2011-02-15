@@ -20,7 +20,7 @@ $this->addStyleSheet ( 'css/kunena.manage.css' );
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=categories&layout=manage') ?>" method="post" name="adminForm">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" method="post" name="adminForm">
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo intval ( $this->state->get('list.direction') ) ?>" />

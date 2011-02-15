@@ -34,7 +34,10 @@ function submitbutton(pressbutton)
 
 	<div class="kcontainer">
 		<div class="kbody">
-		<form action="index.php?option=com_kunena" method="post" name="adminForm">
+		<form action="<? echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post" name="adminForm">
+		<input type="hidden" name="task" value="save" />
+		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
+		<?php echo JHTML::_( 'form.token' ); ?>
 		<div class="kbuttons">
 			<button onclick="javascript: submitbutton('save')"><?php echo JText::_( 'Save' ); ?></button>
 			<button onclick="javascript: submitbutton('cancel')"><?php echo JText::_( 'Cancel' ); ?></button>
@@ -210,11 +213,6 @@ function submitbutton(pressbutton)
 				<?php endif; ?>
 			</dd>
 		</dl>
-		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="categories" />
-		<input type="hidden" name="task" value="save" />
-		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</div>
 	</div>

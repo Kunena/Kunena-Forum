@@ -74,6 +74,14 @@ class KunenaModel extends JModel {
 		}
 	}
 
+	public function getItemid() {
+		$Itemid = 0;
+		if (!$this->embedded) {
+			$active = JFactory::getApplication()->getMenu ()->getActive ();
+			$Itemid = $active ? (int) $active->id : 0;
+		}
+		return $Itemid;
+	}
 
 	/**
 	 * Method to auto-populate the model state (from Joomla 1.6)

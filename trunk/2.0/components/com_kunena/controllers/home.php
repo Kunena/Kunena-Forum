@@ -24,45 +24,54 @@ class KunenaControllerHome extends KunenaController {
 	public $home = 1;
 
 	public function display() {
-		$app = JFactory::getApplication ();
-		$menu = $app->getMenu ();
+		$menu = JFactory::getApplication ()->getMenu ();
 		$home = $menu->getActive ();
 		// TODO: maybe add error
 		if (!$home) return;
-		$view = '';
 
-		// We need to highlight default menu item and show it instead of home page -- there's nothing to see in this view
-		$active = $this->_getDefaultMenuItem($menu, $home);
-		if (!$active) {
-			// There is no default menu item, use categories view instead
-			$view = 'categories';
-			$active = $menu->getItem ( KunenaRoute::getItemID("index.php?option=com_kunena&view={$view}") );
+		// Find default menu item
+		$default = $this->_getDefaultMenuItem($menu, $home);
+		if (!$default) {
+			// There is no default menu item, use category view instead
+			$default = clone $menu->getItem ( KunenaRoute::getItemID("index.php?option=com_kunena&view=category") );
+			$default->query['view'] = 'category';
 		}
-		if (!$active) {
-			// FIXME:
+		if (!$default) {
 			JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 		}
 
-		// Remove query variables set by home menu item
-		foreach ( $home->query as $var => $value ) {
-			if (isset($_REQUEST[$var]) && $_REQUEST[$var] == $value) {
-				JRequest::setVar ( $var, null );
+		// Check if menu item was correctly routed
+		$active = $menu->getItem ( KunenaRoute::getItemID() );
+		if (!$active || ($active->id != $home->id && $active->id != $default->id)) {
+			// Routing has been changed, redirect or fail
+			if ($active) {
+				JRequest::setVar ( 'defaultmenu', null );
+				$this->setRedirect (KunenaRoute::_(null, false));
+			}
+			return;
+		}
+
+		// Check if we are using default menu item
+		foreach ( $default->query as $var => $value ) {
+			$cmp = JRequest::getVar($var, null);
+			if ($var == 'defaultmenu') continue;
+			if ($var == 'view' && $cmp == 'home') continue;
+			if ($cmp !== null && $value != $cmp) {
+				$default = $home;
+				break;
 			}
 		}
 		// Add query variables from shown menu item
-		foreach ( $active->query as $var => $value ) {
-			JRequest::setVar ( $var, $value );
+		if ($default != $home) {
+			foreach ( $default->query as $var => $value ) {
+				JRequest::setVar ( $var, $value );
+			}
 		}
-		// Set view if we are using our backup view
-		if ($view) {
-			JRequest::setVar ( 'view', $view );
-		}
-
 		// Set active menu item to point the real page
-		$menu->setActive ( $active->id );
+		$menu->setActive ( $default->id );
 
 		// Run display task from our new controller
-		$controller = KunenaController::getInstance();
+		$controller = KunenaController::getInstance(true);
 		$controller->execute ('display');
 
 		// Set redirect and message

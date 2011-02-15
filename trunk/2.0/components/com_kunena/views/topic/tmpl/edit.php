@@ -39,9 +39,8 @@ $this->k=0;
 ?>
 <?php $this->common->display ( 'pathway' )?>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" class="postform form-validate" id="postform"
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" class="postform form-validate" id="postform"
 	method="post" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
-	<input type="hidden" name="view" value="topic" />
 	<?php if ($this->message->exists()) : ?>
 	<input type="hidden" name="task" value="edit" />
 	<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />

@@ -22,7 +22,7 @@
 				type="kunenacategorylist"
 				label="COM_KUNENA_MENU_ALLOWEDCAT"
 				description="COM_KUNENA_MENU_ALLOWEDCAT_DESC"
-				default="0" multiple="1" size="8" sections="1" none="All Categories" />
+				default="0" multiple="1" size="8" sections="1" toplevel="COM_KUNENA_A_ALL_CATEGORIES" />
 		</params>
 	</state>
 
@@ -45,7 +45,7 @@
 				type="kunenacategorylist"
 				label="COM_KUNENA_MENU_ALLOWEDCAT"
 				description="COM_KUNENA_MENU_ALLOWEDCAT_DESC"
-				default="0" multiple="1" size="8" sections="1" none="All Categories" />
+				default="0" multiple="1" size="8" sections="1" toplevel="COM_KUNENA_A_ALL_CATEGORIES" />
 		</fieldset>
 	</fields>
 </metadata>

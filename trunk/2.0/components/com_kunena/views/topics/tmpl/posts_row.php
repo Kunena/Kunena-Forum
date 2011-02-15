@@ -14,18 +14,17 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">
 	<td class="kcol-first kcol-ktopicicon">
-		<?php echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, $this->message_position, intval($this->config->messages_per_page), $this->topicIcon($this->topic), $this->topic->lastread ) ?>
+		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topicIcon($this->topic) ) ?>
 	</td>
 
 	<td class="kcol-mid ktopictittle">
 	<?php
-		$curMessageNo = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 		/*if ($this->message->attachments) {
 			echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') );
 		}*/
 	?>
 		<div class="ktopic-title-cover">
-			<?php echo CKunenaLink::GetThreadLink ( 'view', intval($this->topic->category_id), intval($this->message->id), KunenaHtmlParser::parseText ($this->message->subject, 30), KunenaHtmlParser::stripBBCode ($this->message->message), 'follow', 'ktopic-title km' ) ?>
+			<?php echo $this->getTopicLink ( $this->topic, $this->message, KunenaHtmlParser::parseText ($this->message->subject, 30), KunenaHtmlParser::stripBBCode ($this->message->message), 'ktopic-title km' ) ?>
 		</div>
 		<div style="display:none"><?php echo KunenaHtmlParser::parseBBCode ($this->message->message);?></div>
 	</td>
@@ -33,12 +32,12 @@ defined ( '_JEXEC' ) or die ();
 	<td class="kcol-mid ktopictittle">
 		<div class="ktopic-title-cover">
 			<?php
-			echo CKunenaLink::GetThreadLink ( 'view', $this->topic->category_id, $this->topic->id, KunenaHtmlParser::parseText ($this->topic->subject), KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'follow', 'ktopic-title km' );
+			echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
 			if ($this->topic->getUserTopic()->favorite) {
 				echo $this->getIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
 			}
 			if ($this->topic->unread) {
-				echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, $this->message_position, intval($this->config->messages_per_page), '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', $this->topic->lastread );
+				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
 			}
 			if ($this->topic->locked != 0) {
 				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
@@ -48,7 +47,7 @@ defined ( '_JEXEC' ) or die ();
 		<div class="ks">
 			<!-- Category -->
 			<span class="ktopic-category">
-				<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', intval($this->topic->category_id), $this->escape( $this->topic->getCategory()->name ) ) ?>
+				<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->topic->getCategory() ) ?>
 			</span>
 			<!-- /Category -->
 		</div>

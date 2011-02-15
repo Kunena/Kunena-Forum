@@ -324,6 +324,7 @@ class KunenaModelTopics extends KunenaModel {
 			foreach ( $this->topics as $topic ) {
 				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
 				$userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);
+				$lastpostlist[intval($topic->last_post_id)] = intval($topic->last_post_id);
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
@@ -331,8 +332,14 @@ class KunenaModelTopics extends KunenaModel {
 
 			KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
 			KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
+			$lastreadlist = array();
 			if ($config->shownew) {
-				KunenaForumTopicHelper::fetchNewStatus($this->topics);
+				$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
+			}
+			// Fetch last / new post positions when user can see unapproved or deleted posts
+			$me = KunenaUserHelper::get();
+			if (($lastpostlist || $lastreadlist) && $me->userid && $me->isModerator()) {
+				KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 			}
 		}
 	}

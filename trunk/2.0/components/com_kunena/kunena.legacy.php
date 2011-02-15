@@ -110,11 +110,11 @@ if (empty($_POST) && $format == 'html') {
 						}
 					}
 				} else {
-					$oldlocation = KunenaRoute::getCurrentMenu ();
+					$oldlocation = KunenaRoute::getHome ($active);
 					$menu->setActive ( $defaultitem );
 					$active = $menu->getActive ();
 
-					$newlocation = KunenaRoute::getCurrentMenu ();
+					$newlocation = KunenaRoute::getHome ($active);
 					if (!$oldlocation || $oldlocation->id != $newlocation->id) {
 						// Follow Default Menu Item if it's not in the same menu
 						$kunena_app->redirect (KunenaRoute::_($defaultitem, false));
@@ -132,7 +132,7 @@ if (empty($_POST) && $format == 'html') {
 		}
 	}
 	$newItemid = KunenaRoute::getItemid();
-	if ($active && $newItemid && !KunenaRoute::getCurrentMenu () && $active->id != $newItemid) {
+	if ($active && $newItemid && !KunenaRoute::getHome ($active) && $active->id != $newItemid) {
 		$kunena_app->redirect (KunenaRoute::_(null, false));
 	}
 }
@@ -501,10 +501,10 @@ $integration->close();
 //$params = JComponentHelper::getParams( 'com_kunena' );
 //if ($params->get( 'show_page_title' )) $document->setTitle ( $params->get( 'page_title' ) );
 
-if (empty($_POST) && $format == 'html') {
-	$default = KunenaRoute::getDefault();
-	if ($default) $menu->setActive($default->id);
-}
+//if (empty($_POST) && $format == 'html') {
+//	$default = KunenaRoute::getDefault();
+//	if ($default) $menu->setActive($default->id);
+//}
 
 } // end of online
 

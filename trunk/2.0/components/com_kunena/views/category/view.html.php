@@ -20,65 +20,88 @@ class KunenaViewCategory extends KunenaView {
 	protected $pagination = null;
 
 	function displayDefault($tpl = null) {
+		$this->Itemid = $this->get ( 'Itemid' );
 		$this->assignRef ( 'category', $this->get ( 'Category' ) );
-		if (! $this->category->authorise('read')) {
-			$this->setError($this->category->getError());
-		} else {
-			$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-			$this->assignRef ( 'total', $this->get ( 'Total' ) );
-			$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
+		if ($this->category->id) {
+			if ( ! $this->category->authorise('read')) {
+				$this->setError($this->category->getError());
+			} elseif ($this->category->parent_id) {
+				$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
+				$this->assignRef ( 'total', $this->get ( 'Total' ) );
+				$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
+			}
 		}
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
+		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
 
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
-		$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
-		if ($this->category->authorise ( 'moderate' )) {
-			$this->actionMove = true;
-			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
-			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-			if($this->config->mod_see_deleted == '1' || $this->me->isAdmin($this->category->id)) {
-				$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-				$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		if (!$this->category->parent_id) {
+			$tpl = 'list';
+			if ($this->me->isAdmin(null)) {
+				$this->category_manage = CKunenaLink::GetHrefLink(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage&catid='.$this->category->id), $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES') ), $title = '', 'nofollow', 'kicon-button kbuttonmod btn-left', '', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES_LONG'));
 			}
-		}
+		} else {
+			$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
+			if ($this->category->authorise ( 'moderate' )) {
+				$this->actionMove = true;
+				$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
+				$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+				$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+				if($this->config->mod_see_deleted == '1' || $this->me->isAdmin($this->category->id)) {
+					$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+					$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+				}
+			}
 
-		// Is user allowed to post new topic?
-		$this->newTopicHtml = '';
-		if ($this->category->authorise ( 'topic.create', null, true )) {
-			$this->newTopicHtml = CKunenaLink::GetPostNewTopicLink ( $this->category->id, $this->getButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
-		}
+			// Is user allowed to post new topic?
+			$this->newTopicHtml = '';
+			if ($this->category->authorise ( 'topic.create', null, true )) {
+				$this->newTopicHtml = CKunenaLink::GetPostNewTopicLink ( $this->category->id, $this->getButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
+			}
 
-		// Is user allowed to mark forums as read?
-		$this->markReadHtml = '';
-		if ($this->me->exists() && $this->total) {
-			$this->markReadHtml = CKunenaLink::GetCategoryActionLink ( 'markread', $this->category->id, $this->getButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
-		}
+			// Is user allowed to mark forums as read?
+			$this->markReadHtml = '';
+			if ($this->me->exists() && $this->total) {
+				$this->markReadHtml = CKunenaLink::GetCategoryActionLink ( 'markread', $this->category->id, $this->getButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
+			}
 
-		$this->subscribeCatHtml = '';
-		// Is user allowed to subscribe category?
-		if ($this->category->authorise ( 'subscribe', null, true )) {
-			// FIXME: add into library:
-			$db = JFactory::getDBO();
-			$query = "SELECT subscribed
-				FROM #__kunena_user_categories
-				WHERE user_id={$db->Quote($this->me->userid)} AND category_id={$db->Quote($this->category->id)}";
-			$db->setQuery ( $query );
-			$subscribed = $db->loadResult ();
-			if (KunenaError::checkDatabaseError()) return;
+			$this->subscribeCatHtml = '';
+			// Is user allowed to subscribe category?
+			if ($this->category->authorise ( 'subscribe', null, true )) {
+				// FIXME: add into library:
+				$db = JFactory::getDBO();
+				$query = "SELECT subscribed
+					FROM #__kunena_user_categories
+					WHERE user_id={$db->Quote($this->me->userid)} AND category_id={$db->Quote($this->category->id)}";
+				$db->setQuery ( $query );
+				$subscribed = $db->loadResult ();
+				if (KunenaError::checkDatabaseError()) return;
 
-			if (!$subscribed) {
-				$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'subscribe', $this->category->id, $this->getButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
-			} else {
-				$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'unsubscribe', $this->category->id, $this->getButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
+				if (!$subscribed) {
+					$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'subscribe', $this->category->id, $this->getButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
+				} else {
+					$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'unsubscribe', $this->category->id, $this->getButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
+				}
 			}
 		}
 
 		$errors = $this->getErrors();
 		if ($errors) {
 			$this->displayNoAccess($errors);
+			return;
+		} elseif (!$this->category->parent_id) {
+			// meta description and keywords
+			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
+			$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . JFactory::getApplication ()->getCfg ( 'sitename' ));
+
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setDescription ( $metaDesc );
+
+			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') );
 		} else {
 			//meta description and keywords
 			$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
@@ -91,9 +114,54 @@ class KunenaViewCategory extends KunenaView {
 			$this->document->setDescription ( $metaDesc );
 
 			$this->setTitle( JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', $this->category->name) . " ({$page}/{$pages})" );
-
-			$this->display ();
 		}
+		$this->display ($tpl);
+	}
+
+	function displayUser($tpl = null) {
+		$this->Itemid = $this->get ( 'Itemid' );
+		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
+		$this->me = KunenaFactory::getUser();
+		$this->app = JFactory::getApplication();
+		$this->config = KunenaFactory::getConfig();
+
+		$errors = $this->getErrors();
+		if ($errors) {
+			$this->displayNoAccess($errors);
+		} else {
+			$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+
+			// meta description and keywords
+			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
+			$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . JFactory::getApplication ()->getCfg ( 'sitename' ));
+
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setDescription ( $metaDesc );
+
+			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_USER') );
+			$this->display ($tpl);
+		}
+	}
+
+	function displayManage($tpl) {
+		$admin = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
+		if (empty($admin)) {
+			$this->setError(JText::_('COM_KUNENA_NO_ACCESS'));
+			$this->displayNoAccess($this->getErrors());
+			return;
+		}
+
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena',JPATH_ADMINISTRATOR);
+
+		$this->assignRef ( 'categories', $this->get ( 'AdminCategories' ) );
+		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$header = JText::_('COM_KUNENA_ADMIN');
+		$this->assign ( 'header', $header );
+		$this->setTitle ( $header );
+
+		$this->display ($tpl);
 	}
 
 	function displayCreate() {
@@ -121,21 +189,113 @@ class KunenaViewCategory extends KunenaView {
 		$this->display ();
 	}
 
-	function displayAnnouncement() {
-		if ($this->config->showannouncement > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
-			$ann = new CKunenaAnnouncement();
-			$ann->getAnnouncement();
-			$ann->displayBox();
+	function getCategoryLink($category, $content = null) {
+		if (!$content) $content = $this->escape($category->name);
+		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=category&catid={$category->id}", $content, $this->escape($category->name), '', 'follow');
+	}
+	function getTopicLink($topic, $action, $content = null, $title = null, $class = null) {
+		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&id={$topic->id}&action={$action}");
+		if ($uri->getVar('action') !== null) {
+			$uri->delVar('action');
+			$uri->setVar('catid', $this->category->id);
+			/*if ($this->Itemid) {
+				$uri->setVar('Itemid', $this->Itemid);
+			}*/
+			$limit = max(1, $this->config->messages_per_page);
+			if (is_numeric($action)) {
+				if ($action) $uri->setVar('limitstart', $action * $limit);
+			} else {
+				switch ($action) {
+					case 'first':
+						$position = $topic->getPostLocation($topic->first_post_id, $this->topic_ordering);
+						$uri->setFragment($topic->first_post_id);
+						break;
+					case 'last':
+						$position = $topic->getPostLocation($topic->last_post_id, $this->topic_ordering);
+						$uri->setFragment($topic->last_post_id);
+						break;
+					case 'unread':
+						$lastread = $topic->lastread ? $topic->lastread : $topic->last_post_id;
+						$position = $topic->getPostLocation($lastread, $this->topic_ordering);
+						$uri->setFragment($lastread);
+						break;
+				}
+			}
+			if (isset($position)) {
+				$limitstart = intval($position / $limit) * $limit;
+				if ($limitstart) $uri->setVar('limitstart', $limitstart);
+			}
 		}
+		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
+		if ($title === null) $title = $this->escape($topic->subject);
+		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
-	function displaySubCategories() {
-		$children = $this->category->getChildren();
-		if (!empty($children)) {
-			$params = array('catid'=>$this->category->id);
-			KunenaForum::display('categories', 'default', 'clean', $params);
+	public function getCategoryIcon($category, $thumb = false) {
+		if (! $thumb) {
+			if ($this->config->shownew && $this->me->userid != 0) {
+				if ($category->getNewCount()) {
+					// Check Unread    Cat Images
+					if (is_file ( KUNENA_ABSCATIMAGESPATH . $category->id . "_on.gif" )) {
+						return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $category->id . "_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					} else {
+						return $this->getIcon ( 'kunreadforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
+					}
+				} else {
+					// Check Read Cat Images
+					if (is_file ( KUNENA_ABSCATIMAGESPATH . $category->id . "_off.gif" )) {
+						return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $category->id . "_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
+					} else {
+						return $this->getIcon ( 'kreadforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+					}
+				}
+			} else {
+				if (is_file ( KUNENA_ABSCATIMAGESPATH . $category->id . "_notlogin.gif" )) {
+					return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $category->id . "_notlogin.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+				} else {
+					return $this->getIcon ( 'knotloginforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+				}
+			}
+		} elseif ($this->config->showchildcaticon) {
+			if ($this->config->shownew && $this->me->userid != 0) {
+				if ($category->getNewCount()) {
+					// Check Unread    Cat Images
+					if (is_file ( KUNENA_ABSCATIMAGESPATH . $category->id . "_on_childsmall.gif" )) {
+						return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $category->id . "_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					} else {
+						return $this->getIcon ( 'kunreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
+					}
+				} else {
+					// Check Read Cat Images
+					if (is_file ( KUNENA_ABSCATIMAGESPATH . $category->id . "_off_childsmall.gif" )) {
+						return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $category->id . "_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					} else {
+						return $this->getIcon ( 'kreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+					}
+				}
+			} else {
+				// Not Login Cat Images
+				if (is_file ( KUNENA_ABSCATIMAGESPATH . $category->id . "_notlogin_childsmall.gif" )) {
+					return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $category->id . "_notlogin_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+				} else {
+					return $this->getIcon ( 'knotloginforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+				}
+			}
+		}
+		return '';
+	}
+
+	function displayInfoMessage() {
+		$this->common->header = $this->escape($this->category->name);
+		$this->common->body = '<p>'.JText::sprintf('COM_KUNENA_VIEW_CATEGORIES_INFO_EMPTY', $this->escape($this->category->name)).'</p>';
+		$this->common->html = true;
+		echo $this->common->display('default');
+	}
+
+	function displayCategories() {
+		if ($this->sections) {
 			$this->subcategories = true;
+			echo $this->loadTemplate('list_clean');
 		}
 	}
 
@@ -146,8 +306,8 @@ class KunenaViewCategory extends KunenaView {
 			$this->position++;
 			$this->keywords = $this->topic->getKeywords(false, ', ');
 			$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
-			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
-			$this->pages = ceil ( $this->topic->posts / $this->config->messages_per_page );
+			$this->message_position = $this->topic->getTotal() - ($this->topic->unread ? $this->topic->unread - 1 : 0);
+			$this->pages = ceil ( $this->topic->getTotal() / $this->config->messages_per_page );
 			if ($this->config->avataroncat) {
 				$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarLink('klist-avatar', 'list');
 			}

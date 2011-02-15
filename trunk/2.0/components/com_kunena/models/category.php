@@ -15,7 +15,7 @@ kimport('kunena.forum.category.helper');
 kimport('kunena.forum.topic.helper');
 kimport('kunena.user.helper');
 
-require_once KPATH_ADMIN . '/models/category.php';
+require_once KPATH_ADMIN . '/models/categories.php';
 
 /**
  * Category Model for Kunena
@@ -24,7 +24,7 @@ require_once KPATH_ADMIN . '/models/category.php';
  * @subpackage	com_kunena
  * @since		2.0
  */
-class KunenaModelCategory extends KunenaAdminModelCategory {
+class KunenaModelCategory extends KunenaAdminModelCategories {
 	protected $topics = false;
 	protected $items = false;
 
@@ -33,7 +33,7 @@ class KunenaModelCategory extends KunenaAdminModelCategory {
 		$this->setState ( 'layout', $layout );
 
 		// Administrator state
-		if ($layout == 'create' || $layout == 'edit') {
+		if ($layout == 'manage' || $layout == 'create' || $layout == 'edit') {
 			return parent::populateState();
 		}
 
@@ -61,6 +61,106 @@ class KunenaModelCategory extends KunenaAdminModelCategory {
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
+	}
+
+	public function getCategories() {
+		if ( $this->items === false ) {
+			$this->items = array();
+			$this->me = KunenaFactory::getUser();
+			$this->config = KunenaFactory::getConfig();
+			$catid = $this->getState ( 'item.id' );
+			$layout = $this->getState ( 'layout' );
+			$flat = false;
+
+			if ($layout == 'user') {
+				$categories[0] = KunenaForumCategoryHelper::getSubscriptions();
+				$flat = true;
+			} elseif ($catid) {
+				$categories[0] = KunenaForumCategoryHelper::getCategories($catid);
+				if (empty($categories[0]))
+					return array();
+			} else {
+				$categories[0] = KunenaForumCategoryHelper::getChildren();
+			}
+
+		if ($flat) {
+			$allsubcats = $categories[0];
+		} else {
+			$allsubcats = KunenaForumCategoryHelper::getChildren(array_keys($categories [0]), 1);
+		}
+		if (empty ( $allsubcats ))
+			return array();
+
+		if ($this->config->shownew && $this->me->userid) {
+			KunenaForumCategoryHelper::getNewTopics(array_keys($allsubcats));
+		}
+
+		$modcats = array ();
+		$lastpostlist = array ();
+		$userlist = array();
+		$topiclist = array();
+
+		foreach ( $allsubcats as $subcat ) {
+			if ($flat || isset ( $categories [0] [$subcat->parent_id] )) {
+
+				$last = $subcat->getLastPosted ();
+				if ($last->last_topic_id) {
+					$topiclist[$last->last_topic_id] = $last->last_topic_id;
+					// collect user ids for avatar prefetch when integrated
+					$userlist [(int)$last->last_post_userid] = (int)$last->last_post_userid;
+					$lastpostlist [(int)$subcat->id] = (int)$last->last_post_id;
+					$last->_last_post_location = $last->last_topic_posts;
+				}
+
+				if ($this->config->listcat_show_moderators) {
+					$subcat->moderators = $subcat->getModerators ( false );
+					$userlist += $subcat->moderators;
+				}
+
+				if ($this->me->isModerator ( $subcat->id ))
+					$modcats [] = $subcat->id;
+			}
+			$categories [$subcat->parent_id] [] = $subcat;
+		}
+		KunenaForumTopicHelper::getTopics($topiclist);
+
+		if ($this->me->ordering != '0') {
+			$topic_ordering = $this->me->ordering == '1' ? true : false;
+		} else {
+			$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
+		}
+
+		$this->pending = array ();
+		if ($this->me->userid && count ( $modcats )) {
+			$catlist = implode ( ',', $modcats );
+			$db = JFactory::getDBO ();
+			$db->setQuery ( "SELECT catid, COUNT(*) AS count
+				FROM #__kunena_messages
+				WHERE catid IN ({$catlist}) AND hold='1'
+				GROUP BY catid" );
+			$pending = $db->loadAssocList ();
+			KunenaError::checkDatabaseError();
+			foreach ( $pending as $item ) {
+				if ($item ['count'])
+					$this->pending [$item ['catid']] = $item ['count'];
+			}
+		}
+		// Fix last post position when user can see unapproved or deleted posts
+		if ($lastpostlist && !$topic_ordering && $this->me->userid && $this->me->isModerator()) {
+			KunenaForumMessageHelper::loadLocation($lastpostlist);
+		}
+
+		// Prefetch all users/avatars to avoid user by user queries during template iterations
+		KunenaUserHelper::loadUsers($userlist);
+
+		if ($flat) {
+			$this->items = $allsubcats;
+		} else {
+			$this->items = $categories;
+		}
+		}
+
+		return $this->items;
 	}
 
 	public function getCategory() {
@@ -103,6 +203,7 @@ class KunenaModelCategory extends KunenaAdminModelCategory {
 				foreach ( $this->topics as $topic ) {
 					$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
 					$userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);
+					$lastpostlist[intval($topic->last_post_id)] = intval($topic->last_post_id);
 				}
 
 				// Prefetch all users/avatars to avoid user by user queries during template iterations
@@ -110,9 +211,16 @@ class KunenaModelCategory extends KunenaAdminModelCategory {
 
 				KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
 				KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
+				$lastreadlist = array();
 				if ($config->shownew) {
-					KunenaForumTopicHelper::fetchNewStatus($this->topics);
+					$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 				}
+
+				// Fetch last / new post positions when user can see unapproved or deleted posts
+				if (($lastpostlist || $lastreadlist) && $me->userid && $me->isModerator()) {
+					KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
+				}
+
 			}
 		}
 		return $this->topics;

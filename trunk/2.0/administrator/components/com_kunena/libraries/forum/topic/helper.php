@@ -280,12 +280,13 @@ class KunenaForumTopicHelper {
 			$prevCheck = KunenaFactory::getSession ()->lasttime;
 			$db = JFactory::getDBO ();
 			$db->setQuery ( "SELECT thread AS id, MIN(id) AS lastread, SUM(1) AS unread
-					FROM #__kunena_messages
-					WHERE moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>{$db->Quote($prevCheck)}
-					GROUP BY thread" );
-			$topiclist = $db->loadObjectList ('id');
+				FROM #__kunena_messages
+				WHERE hold=0 AND moved=0 AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>{$db->Quote($prevCheck)}
+				GROUP BY thread" );
+			$topiclist = (array) $db->loadObjectList ('id');
 			KunenaError::checkDatabaseError ();
 		}
+		$list = array();
 		foreach ( $topics as $topic ) {
 			if (!isset($topiclist[$topic->id])) {
 				$topic->lastread = 0;
@@ -293,8 +294,10 @@ class KunenaForumTopicHelper {
 			} else {
 				$topic->lastread = $topiclist[$topic->id]->lastread;
 				$topic->unread = $topiclist[$topic->id]->unread;
+				$list[$topic->id] = $topic->lastread;
 			}
 		}
+		return $list;
 	}
 
 	// Internal functions

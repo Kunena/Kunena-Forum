@@ -28,7 +28,7 @@ class KunenaModelSearch extends KunenaModel {
 		$this->me = KunenaFactory::getUser();
 
 		// Get search word list
-		$value = JString::trim ( JRequest::getVar ( 'q', '' ) );
+		$value = JString::trim ( JRequest::getString ( 'q', '' ) );
 		if ($value == JText::_('COM_KUNENA_GEN_SEARCH_BOX')) {
 			$value = '';
 		}
@@ -37,7 +37,7 @@ class KunenaModelSearch extends KunenaModel {
 		$value = JRequest::getInt ( 'titleonly', 0 );
 		$this->setState ( 'query.titleonly', $value );
 
-		$value = JRequest::getVar ( 'searchuser', '' );
+		$value = JRequest::getString ( 'searchuser', '' );
 		$this->setState ( 'query.searchuser', $value );
 
 		$value = JRequest::getInt ( 'starteronly', 0 );
@@ -52,16 +52,16 @@ class KunenaModelSearch extends KunenaModel {
 		$value = JRequest::getInt ( 'replylimit', 0 );
 		$this->setState ( 'query.replylimit', $value );
 
-		$value = JRequest::getVar ( 'searchdate', 365 );
+		$value = JRequest::getString ( 'searchdate', 365 );
 		$this->setState ( 'query.searchdate', $value );
 
-		$value = JRequest::getVar ( 'beforeafter', 'after' );
+		$value = JRequest::getWord ( 'beforeafter', 'after' );
 		$this->setState ( 'query.beforeafter', $value );
 
-		$value = JRequest::getVar ( 'sortby', 'lastpost' );
+		$value = JRequest::getWord ( 'sortby', 'lastpost' );
 		$this->setState ( 'query.sortby', $value );
 
-		$value = JRequest::getVar ( 'order', 'dec' );
+		$value = JRequest::getWord ( 'order', 'dec' );
 		$this->setState ( 'query.order', $value );
 
 		$value = JRequest::getInt ( 'childforums', 0 );

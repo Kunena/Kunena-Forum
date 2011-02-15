@@ -14,6 +14,8 @@ kimport ( 'kunena.controller' );
 kimport ( 'kunena.error' );
 kimport ( 'kunena.forum.category.helper' );
 
+require_once KPATH_ADMIN . '/controllers/categories.php';
+
 /**
  * Kunena Category Controller
  *
@@ -21,7 +23,13 @@ kimport ( 'kunena.forum.category.helper' );
  * @subpackage	com_kunena
  * @since		2.0
  */
-class KunenaControllerCategory extends KunenaController {
+class KunenaControllerCategory extends KunenaAdminControllerCategories {
+	public function __construct($config = array()) {
+		parent::__construct($config);
+		$this->baseurl = 'index.php?option=com_kunena&view=category&layout=manage';
+		$this->baseurl2 = 'index.php?option=com_kunena&view=category';
+	}
+
 	function markread() {
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
@@ -29,27 +37,40 @@ class KunenaControllerCategory extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		$category = KunenaForumCategoryHelper::get(JRequest::getInt('catid', 0));
-		if (!$category->authorise('read')) {
-			$app->enqueueMessage ( $category->getError(), 'error' );
-			$this->redirectBack ();
-		}
-
-		$db = JFactory::getDBO();
-		$session = KunenaFactory::getSession();
-		if ($session->userid) {
-			// Mark all unread topics in the category to read
-			$readTopics = $session->readtopics;
-			$db->setQuery ( "SELECT id FROM #__kunena_topics WHERE category_id={$db->quote($category->id)} AND id NOT IN ({$readTopics}) AND last_post_time>={$db->quote($session->lasttime)}" );
-			$readForum = $db->loadResultArray ();
-			if (KunenaError::checkDatabaseError()) $this->redirectBack ();
-			$readTopics = implode(',', array_merge(explode(',', $readTopics), $readForum));
-
-			$session->readtopics = $readTopics;
+		$catid = JRequest::getInt('catid', 0);
+		if (!$catid) {
+			// All categories
+			$session = KunenaFactory::getSession();
+			$session->markAllCategoriesRead ();
 			if (!$session->save ()) {
 				$app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
 			} else {
-				$app->enqueueMessage ( JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
+				$app->enqueueMessage ( JText::_('COM_KUNENA_GEN_ALL_MARKED') );
+			}
+		} else {
+			// One category
+			$category = KunenaForumCategoryHelper::get($catid);
+			if (!$category->authorise('read')) {
+				$app->enqueueMessage ( $category->getError(), 'error' );
+				$this->redirectBack ();
+			}
+
+			$db = JFactory::getDBO();
+			$session = KunenaFactory::getSession();
+			if ($session->userid) {
+				// Mark all unread topics in the category to read
+				$readTopics = $session->readtopics;
+				$db->setQuery ( "SELECT id FROM #__kunena_topics WHERE category_id={$db->quote($category->id)} AND id NOT IN ({$readTopics}) AND last_post_time>={$db->quote($session->lasttime)}" );
+				$readForum = $db->loadResultArray ();
+				if (KunenaError::checkDatabaseError()) $this->redirectBack ();
+				$readTopics = implode(',', array_merge(explode(',', $readTopics), $readForum));
+
+				$session->readtopics = $readTopics;
+				if (!$session->save ()) {
+					$app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
+				} else {
+					$app->enqueueMessage ( JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
+				}
 			}
 		}
 		$this->redirectBack ();

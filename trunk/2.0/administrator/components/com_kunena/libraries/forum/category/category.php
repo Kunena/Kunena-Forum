@@ -15,6 +15,7 @@ kimport ('kunena.user');
 kimport ('kunena.user.helper');
 kimport ('kunena.user.ban');
 kimport ('kunena.forum.category.helper');
+kimport ('kunena.forum.message.helper');
 
 /**
  * Kunena Forum Category Class
@@ -80,6 +81,12 @@ class KunenaForumCategory extends JObject {
 	public function getLastPosted() {
 		$this->buildInfo();
 		return KunenaForumCategoryHelper::get($this->_lastid);
+	}
+
+	public function getLastPostLocation($direction = 'asc', $hold = null) {
+		$me = KunenaFactory::getUser();
+		if (!$me->isModerator($this->id)) return $direction = 'asc' ? $this->last_topic_posts-1 : 0;
+		return KunenaForumMessageHelper::getLocation($this->last_post_id, $direction, $hold);
 	}
 
 	public function getChannels() {

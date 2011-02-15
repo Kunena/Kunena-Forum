@@ -21,7 +21,7 @@ abstract class JHTMLKunenaForum {
 		$direction = isset($params['direction']) && $params['direction'] == 'desc' ? -1 : 1;
 		$action = isset($params['action']) ? (string) $params['action'] : 'read';
 		$levels = isset($params['levels']) ? (int) $params['levels'] : 10;
-		$toplevel = isset($params['toplevel']) ? (bool) $params['toplevel'] : 0;
+		$toplevel = isset($params['toplevel']) ? $params['toplevel'] : false;
 		$catid = isset($params['catid']) ? (int) $params['catid'] : 0;
 
 		$me = KunenaFactory::getUser();
@@ -49,7 +49,7 @@ abstract class JHTMLKunenaForum {
 		}
 		if ($toplevel) {
 			$disabled = ($action == 'admin' && !$me->isAdmin());
-			$options [] = JHTML::_ ( 'select.option', '0', JText::_ ( 'COM_KUNENA_TOPLEVEL' ), 'value', 'text', $disabled );
+			$options [] = JHTML::_ ( 'select.option', '0', JText::_ ( $toplevel ), 'value', 'text', $disabled );
 			if (empty($selected) && !$disabled) {
 				$selected[] = 0;
 			}
@@ -59,7 +59,7 @@ abstract class JHTMLKunenaForum {
 			if (empty($selected) && !$disabled) {
 				$selected[] = $category->id;
 			}
-			$options [] = JHTML::_ ( 'select.option', $category->id, str_repeat  ( '- ', $category->level+$toplevel  ).' '.$category->name, 'value', 'text', $disabled );
+			$options [] = JHTML::_ ( 'select.option', $category->id, str_repeat  ( '- ', $category->level+intval(!empty($toplevel))  ).' '.$category->name, 'value', 'text', $disabled );
 		}
 
 		reset ( $options );
@@ -81,5 +81,38 @@ abstract class JHTMLKunenaForum {
 		}
 
 		return $html;
+	}
+
+	/**
+	 *
+	 * Creates link pointing to a Kunena page
+	 *
+	 * @param mixed $uri Kunena URI, either as string, JURI or array
+	 * @param string $content
+	 * @param string $class Link class
+	 * @param string $title Link title
+	 * @param string $rel Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
+	 * @param mixed $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
+	 */
+	function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '') {
+		$list['href'] = KunenaRoute::_($uri);
+		if ($title) $list['title'] = $title;
+		if ($class) $list['class'] = $class;
+		if ($rel) $list['rel'] = $rel;
+		if (is_array($attributes)) {
+			$list += $attributes;
+		}
+		ksort($list);
+
+		// Parse attributes
+		$attr = array();
+		foreach ($list as $key=>$value) {
+			$attr[] = "{$key}=\"{$value}\"";
+		}
+		if (!empty($attributes) && !is_array($attributes)) {
+			$attr[] = (string) $attributes;
+		}
+		$attributes = implode (' ', $attr);
+		return "<a {$attributes}>{$content}</a>";
 	}
 }

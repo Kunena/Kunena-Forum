@@ -20,6 +20,7 @@ class KunenaViewTopics extends KunenaView {
 	function displayDefault($tpl = null) {
 		$this->layout = 'default';
 		$this->params = $this->state->get('params');
+		$this->Itemid = $this->get('Itemid');
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
@@ -197,21 +198,53 @@ class KunenaViewTopics extends KunenaView {
 		$this->display($tpl);
 	}
 
-	function displayAnnouncement() {
-		if ($this->config->showannouncement > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
-			$ann = new CKunenaAnnouncement();
-			$ann->getAnnouncement();
-			$ann->displayBox();
-		}
+	function getCategoryLink($category, $content = null) {
+		if (!$content) $content = $this->escape($category->name);
+		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=category&catid={$category->id}", $content, $this->escape($category->name), '', 'follow');
 	}
-
-	function displaySubCategories() {
-		$children = $this->category->getChildren();
-		if (!empty($children)) {
-			KunenaForum::display('categories', 'default', 'list');
-			$this->subcategories = true;
+	function getTopicLink($topic, $action, $content = null, $title = null, $class = null) {
+		if ($action instanceof StdClass) {
+			$message = $action;
+			$action = 'm'.$message->id;
 		}
+		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&id={$topic->id}&action={$action}");
+		if ($uri->getVar('action') !== null) {
+			$uri->delVar('action');
+			$uri->setVar('catid', $topic->getCategory()->id);
+			/*if ($this->Itemid) {
+				$uri->setVar('Itemid', $this->Itemid);
+			}*/
+			$limit = max(1, $this->config->messages_per_page);
+			if (is_numeric($action)) {
+				if ($action) $uri->setVar('limitstart', $action * $limit);
+			} elseif (isset($message)) {
+				$position = $topic->getPostLocation($message->id, $this->topic_ordering);
+				$uri->setFragment($message->id);
+			} else {
+				switch ($action) {
+					case 'first':
+						$position = $topic->getPostLocation($topic->first_post_id, $this->topic_ordering);
+						$uri->setFragment($topic->first_post_id);
+						break;
+					case 'last':
+						$position = $topic->getPostLocation($topic->last_post_id, $this->topic_ordering);
+						$uri->setFragment($topic->last_post_id);
+						break;
+					case 'unread':
+						$lastread = $topic->lastread ? $topic->lastread : $topic->last_post_id;
+						$position = $topic->getPostLocation($lastread, $this->topic_ordering);
+						$uri->setFragment($lastread);
+						break;
+				}
+			}
+			if (isset($position)) {
+				$limitstart = intval($position / $limit) * $limit;
+				if ($limitstart) $uri->setVar('limitstart', $limitstart);
+			}
+		}
+		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
+		if ($title === null) $title = $this->escape($topic->subject);
+		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
 	function displayRows() {
@@ -231,7 +264,7 @@ class KunenaViewTopics extends KunenaView {
 			$this->keywords = $this->topic->getKeywords(false, ', ');
 			$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
 			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
-			$this->pages = ceil ( $this->topic->posts / $this->config->messages_per_page );
+			$this->pages = ceil ( $this->topic->getTotal() / $this->config->messages_per_page );
 			if ($this->config->avataroncat) {
 				$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarLink('klist-avatar', 'list');
 			}

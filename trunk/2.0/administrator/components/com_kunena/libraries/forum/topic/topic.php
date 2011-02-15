@@ -164,6 +164,32 @@ class KunenaForumTopic extends JObject {
 		return $this->last_post_time > $session->lasttime && !in_array($this->id, $readtopics);
 	}
 
+	public function getTotal($hold=null) {
+		$me = KunenaFactory::getUser();
+		if ($this->moved_id || !$me->isModerator($this->category_id)) {
+			return $this->posts;
+		}
+		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold) + 1;
+	}
+
+	public function getPostLocation($mesid, $direction = 'asc', $hold=null) {
+		if (!isset($this->lastread)) {
+			$this->lastread = $this->last_post_id;
+			$this->unread = 0;
+		}
+		if ($mesid == 'unread') $mesid = $this->lastread;
+		$me = KunenaFactory::getUser();
+		if ($this->moved_id || !$me->isModerator($this->category_id)) {
+			if ($mesid == 'first' || $mesid == $this->first_post_id) return $direction = 'asc' ? 0 : $this->posts-1;
+			if ($mesid == 'last' || $mesid == $this->last_post_id) return $direction = 'asc' ? $this->posts-1 : 0;
+			if ($mesid == $this->unread) return $direction = 'asc' ? $this->posts - max($this->unread, 1) : 0;
+		}
+		if ($mesid == 'first') $direction == 'asc' ? 0 : 'both';
+		if ($mesid == 'last') $direction == 'asc' ? 'both' : 0;
+		if (!$direction) return 0;
+		return KunenaForumMessageHelper::getLocation($mesid, $direction, $hold);
+	}
+
 	public function newReply($fields=array(), $user=null) {
 		$user = KunenaUserHelper::get($user);
 		$category = $this->getCategory();

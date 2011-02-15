@@ -152,8 +152,14 @@ class KunenaView extends JView {
 	}
 
 	function displayStats() {
-		if ($this->config->showstats > 0) {
+		if (KunenaFactory::getConfig()->showstats > 0) {
 			echo $this->common->display('stats');
+		}
+	}
+
+	function displayAnnouncement() {
+		if (KunenaFactory::getConfig()->showannouncement > 0) {
+			echo $this->common->display('announcement');
 		}
 	}
 

@@ -39,7 +39,7 @@ class KunenaRouteLegacy {
 		switch ($uri->getVar('view')) {
 			case 'listcat' :
 				$changed = true;
-				$uri->setVar('view', 'categories');
+				$uri->setVar('view', 'category');
 				break;
 			case 'showcat' :
 				$changed = true;

@@ -227,7 +227,7 @@ class KunenaViewUser extends KunenaView {
 			'limitstart' => 0,
 			'filter_order_Dir' => 'desc',
 		);
-		//KunenaForum::display('categories', 'user', 'clean', $params);
+		//KunenaForum::display('category', 'user', 'clean', $params);
 	}
 
 	function displayBanUser() {

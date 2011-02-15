@@ -131,12 +131,7 @@ class KunenaModelTopic extends KunenaModel {
 	}
 
 	public function getTotal() {
-		$hold = $this->getState ( 'hold');
-		if ($hold) {
-			// FIXME:
-			return $this->getTopic()->posts;
-		}
-		return $this->getTopic()->posts;
+		return $this->getTopic()->getTotal();
 	}
 
 	public function getModerators() {

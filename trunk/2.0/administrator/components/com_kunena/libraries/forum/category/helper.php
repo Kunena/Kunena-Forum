@@ -149,7 +149,7 @@ class KunenaForumCategoryHelper {
 		return $list;
 	}
 
-	static public function getParents($id = 0, $levels = 10, $params = array()) {
+	static public function getParents($id = 0, $levels = 100, $params = array()) {
 		if (self::$_instances === false) {
 			self::loadCategories();
 		}
@@ -162,11 +162,11 @@ class KunenaForumCategoryHelper {
 		while ($parent && $levels--) {
 			if (!isset(self::$_instances [$parent])) return array();
 			if (!$unpublished && !self::$_instances [$parent]->published) return array();
-			array_unshift($list, self::$_instances [$parent]);
+			$list[$parent] = self::$_instances [$parent];
 
 			$parent = self::$_instances [$parent]->parent_id;
 		}
-		return $list;
+		return array_reverse($list, true);
 	}
 
 	static public function getChildren($parents = 0, $levels = 0, $params = array()) {

@@ -21,11 +21,11 @@ defined ( '_JEXEC' ) or die ();
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">
 
 	<td class="kcol-first kcol-ktopicreplies">
-		<strong><?php echo $this->formatLargeNumber ( max(0,$this->topic->posts-1) ); ?></strong> <?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
+		<strong><?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ); ?></strong> <?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
 	</td>
 
 	<td class="kcol-mid kcol-ktopicicon">
-		<?php echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, $this->message_position, intval($this->config->messages_per_page), $this->topicIcon($this->topic), $this->topic->lastread ) ?>
+		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topicIcon($this->topic) ) ?>
 	</td>
 
 	<td class="kcol-mid kcol-ktopictitle">
@@ -33,12 +33,12 @@ defined ( '_JEXEC' ) or die ();
 
 		<div class="ktopic-title-cover">
 			<?php
-			echo CKunenaLink::GetThreadLink ( 'view', $this->topic->category_id, $this->topic->id, KunenaHtmlParser::parseText ($this->topic->subject), KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'follow', 'ktopic-title km' );
+			echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
 			if ($this->topic->getUserTopic()->favorite) {
 				echo $this->getIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
 			}
 			if ($this->topic->unread) {
-				echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, $this->message_position, intval($this->config->messages_per_page), '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', $this->topic->lastread );
+				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
 			}
 			if ($this->topic->locked != 0) {
 				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
@@ -47,10 +47,8 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 
 		<div class="ktopic-details">
-			<?php if (!isset($this->category) || $this->category->id != $this->topic->getCategory()->id) : ?>
-			<span class="ktopic-category"> <?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $this->topic->getCategory()->id, $this->escape( $this->topic->getCategory()->name) ) ?></span>
+			<span class="ktopic-category"> <?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->topic->getCategory() ) ?></span>
 			<span class="divider fltlft">|</span>
-			<?php endif; ?>
 			<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($this->topic->first_post_time, 'config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . CKunenaTimeformat::showDate($this->topic->first_post_time, 'config_post_dateformat'); ?>
 			</span>
@@ -62,12 +60,12 @@ defined ( '_JEXEC' ) or die ();
 		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
 		<ul class="kpagination">
 			<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
-			<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, 0, intval($this->config->messages_per_page), 1 ) ?></li>
-			<?php if ($this->pages > 3) : $startPage = $this->pages - 3; ?>
+			<li><?php echo $this->getTopicLink ( $this->topic, 0, 1 ) ?></li>
+			<?php if ($this->pages > 4) : $startPage = $this->pages - 3; ?>
 			<li class="more">...</li>
 			<?php else: $startPage = 1; endif;
 			for($hopPage = $startPage; $hopPage < $this->pages; $hopPage ++) : ?>
-			<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, $hopPage*$this->config->messages_per_page, intval($this->config->messages_per_page), $hopPage+1 ) ?></li>
+			<li><?php echo $this->getTopicLink ( $this->topic, $hopPage, $hopPage+1 ) ?></li>
 			<?php endfor; ?>
 		</ul>
 		<?php endif; ?>
@@ -93,12 +91,7 @@ defined ( '_JEXEC' ) or die ();
 
 			<span class="ktopic-latest-post">
 			<?php
-			if ($this->topic_ordering == 'ASC') :
-				echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, $this->pages*$this->config->messages_per_page, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), $this->topic->last_post_id );
-			else :
-				echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, 0, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), $this->topic->last_post_id );
-			endif;
-
+			echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST') );
 			echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->topic->last_post_userid, $this->escape($this->topic->last_post_guest_name), '', 'nofollow' );
 			?>
 			</span>

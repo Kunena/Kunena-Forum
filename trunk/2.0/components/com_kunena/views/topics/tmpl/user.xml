@@ -21,7 +21,7 @@
 				<option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
 				<option value="0">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
 			</param>
-			<param name="topics_categories" type="kunenacategorylist" default="0" none="COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL" label="COM_KUNENA_COM_A_LATESTCATEGORY" description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"  multiple="true" size="5" />
+			<param name="topics_categories" type="kunenacategorylist" default="0" none="COM_KUNENA_A_ALL_CATEGORIES" label="COM_KUNENA_COM_A_LATESTCATEGORY" description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"  multiple="true" size="5" />
 			<param name="topics_time" type="list" default="-1" label="COM_KUNENA_A_TOPICS_TIME" description="COM_KUNENA_A_TOPICS_TIME_DESC">
 				<option value="-1">COM_KUNENA_SHOW_ALL</option>
 				<option value="0">COM_KUNENA_SHOW_LASTVISIT</option>

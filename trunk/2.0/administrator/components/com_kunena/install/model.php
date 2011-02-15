@@ -1354,25 +1354,11 @@ class KunenaModelInstall extends JModel {
 	 * and if not, adds a forum link in the mainmenu.
 	 */
 	function createMenu() {
-/*
-		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=entrypage', 'access'=>0, 'params'=>'\r\ncatids=0');
-		$submenu = array(
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=listcat', 'access'=>0, 'default'=>'categories', 'params'=>'\r\ncatid=0'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RECENT' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=latest', 'access'=>0, 'default'=>'recent', 'params'=>'\r\ndo=latest'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=post&do=new', 'access'=>1, 'params'=>'\r\ncatid=0\r\ndo=new'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=latest&do=noreplies', 'access'=>1, 'params'=>'\r\ndo=noreplies'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=latest&do=mylatest', 'access'=>1, 'default'=>'my' , 'params'=>'\r\ndo=mylatest'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=profile', 'access'=>1, 'params'=>'\r\nintegration=1'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RULES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=rules', 'access'=>0, 'params'=>'\r\ndo=rules'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_HELP' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=help', 'access'=>0, 'params'=>'\r\ndo=help'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_SEARCH' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=search', 'access'=>0),
-		);
-*/
 		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' )),
 			'link'=>'index.php?option=com_kunena&view=home', 'access'=>0, 'params'=>array('catids'=>0));
 		$submenu = array(
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' )),
-			'link'=>'index.php?option=com_kunena&view=categories', 'access'=>0, 'default'=>'categories', 'params'=>array()),
+			'link'=>'index.php?option=com_kunena&view=category', 'access'=>0, 'default'=>'categories', 'params'=>array()),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RECENT' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' )),
 			'link'=>'index.php?option=com_kunena&view=topics&mode=replies', 'access'=>0, 'default'=>'recent', 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>720)),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' )),

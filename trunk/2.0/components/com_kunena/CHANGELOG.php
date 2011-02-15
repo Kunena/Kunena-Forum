@@ -31,6 +31,53 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+14-February-2011 Matias
++ [#24906] Add fragment support into KunenaRoute::_()
++ [#24906] KunenaRouter: Allow topic inside category menu item
++ [#22792] Change KunenaForumCategoryHelper::getParents() to return topicid=>topic array
++ [#22792] Change KunenaForumTopicHelper::fetchNewStatus() to return topicid=>mesid array
++ [#22792] Change KunenaForumTopicHelper::fetchNewStatus() to count only published messages as new
++ [#22792] Add functions KunenaForumMessageHelper::loadLocation(), getLocation() to find out message location inside topic
++ [#22792] Add function KunenaForumCategory::getLastPostLocation()
++ [#22792] Add function KunenaForumTopic::getPostLocation(), getTotal()
+# [#23443] Fix a few bugs in routing
+
+13-February-2011 Matias
++ [#24906] KunenaRoute: Move repeating input checks into initialize()
++ [#24906] KunenaRoute: Rename getDefault() into getHome() and turn it into rerursive (to store all values)
++ [#23442] KunenaRoute: Replace buildMenuTree() with faster and more powerful build()
++ [#23442] KunenaRoute: Replace _getItemID(), findItemID() with setItemID() which does global menu item search instead of local one
++ [#23442] KunenaRoute: Replace isMatch() with much simpler check()
++ [#24906] KunenaRoute: Add functions to checkHome() and checkCategory() to check special menu items
+- [#22570] Remove KunenaRoute::getCurrentMenu(), getKunenaMenu(), getMenuItems(), getKunenaRoot(), getSubMenus(), getActive()
++ [#24906] KunenaRouter::isCategoryConflict(): Avoid conflict when name is unique in current scope
++ [#24906] KunenaRouter: Add support for uris like: /forum/user/128-matias
++ [#24906] Include time spent in KunenaRouter::ParseRoute() into total time inside Kunena
++ [#24906] Add new function JHTMLKunenaForum::link()
++ [#22569] Add new function KunenaModel::getItemid()
++ [#22569] Add functions KunenaViewCategory::getCategoryLink(), getTopicLink()
++ [#22569] Add functions KunenaViewTopics::getCategoryLink(), getTopicLink()
++ [#22569] Add unread, lastpost support with unapproved/deleted posts inside main models/views
+
+12-February-2011 Matias
++ [#22569] Redesign KunenaRoute class
+
+11-February-2011 Matias
+^ [#22569] KunenaController: better support for home page redirection
++ [#22569] KunenaControllerHome: Check if menu item was correctly routed
++ [#22569] KunenaControllerHome: Check if we should be using default menu item
+^ [#22569] Move displayAnnouncement() into KunenaView class
++ [#23442] Redesign KunenaRoute class
+
+10-February-2011 Matias
+^ [#22569] Add possibility to add options into KunenaCategoryList element / field
+^ [#22569] JHTMLKunenaForum::categorylist(): change how toplevel works
+
+9-February-2011 Matias
+^ [#22569] Merge categories and category model, controller and view to simplify logic
+- [#22570] Remove categories model, controller, view
+# [#23443] Fix some issues from merging categories, category views
+
 8-February-2011 Matias
 # [#23443] KunenaBBCode: Use smileys from the current template instead of fixed ones
 # [#23443] KunenaHtmlParser::getEmoticons(): Path fixes

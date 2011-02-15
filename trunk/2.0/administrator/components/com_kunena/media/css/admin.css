@@ -28,7 +28,7 @@ div.header {
 	padding-left:148px !important;
 }
 div.icon-48-kunena {
-	background-image:url(../../images/kunena-logo-48.png);
+	background-image:url(../icons/kunena-logo-48.png);
 }
 
 .hideable {
@@ -78,41 +78,42 @@ table.kadmin-adminform td {
 }
 
 /* Small icons  */
-a.icon-cp-sm { background: url(../../images/icons/icon_controlpanel.png) 5px 5px no-repeat; }
-a.icon-config-sm { background: url(../../images/icons/icon_config.png) 5px 5px no-repeat; }
-a.icon-adminforum-sm { background: url(../../images/icons/icon_forumadmin.png) 5px 5px no-repeat; }
-a.icon-profiles-sm { background: url(../../images/icons/icon_useradmin.png) 5px 5px no-repeat; }
-a.icon-smilies-sm{ background: url(../../images/icons/icon_smilies.png) 5px 5px no-repeat; }
-a.icon-ranks-sm { background: url(../../images/icons/icon_ranks.png) 5px 5px no-repeat; }
-a.icon-files-sm { background: url(../../images/icons/icon_uploadedfiles.png) 5px 5px no-repeat; }
-a.icon-images-sm { background: url(../../images/icons/icon_uploadedimages.png) 5px 5px no-repeat; }
-a.icon-editcss-sm { background: url(../../images/icons/icon_editcss.png) 5px 5px no-repeat; }
-a.icon-prune-sm { background: url(../../images/icons/icon_pruneforums.png) 5px 5px no-repeat; }
-a.icon-syncusers-sm { background: url(../../images/icons/icon_syncusers.png) 5px 5px no-repeat; }
-a.icon-recount-sm { background: url(../../images/icons/icon_recountstats.png) 5px 5px no-repeat; }
-a.icon-trash-sm { background: url(../../images/icons/icon_trash.png) 5px 5px no-repeat; }
-a.icon-stats-sm { background: url(../../images/icons/icon_stats.png) 5px 5px no-repeat; }
-a.icon-systemreport-sm { background: url(../../images/icons/icon_reportconfig.png) 5px 5px no-repeat; }
-a.icon-support-sm { background: url(../../images/icons/icon_supportsite.png) 5px 5px no-repeat; }
-a.icon-template-sm { background: url(../../images/icons/icon_templatemanager.png) 5px 5px no-repeat; }
+a.icon-cp-sm { background: url(../icons/small/controlpanel.png) 5px 5px no-repeat; }
+a.icon-config-sm { background: url(../icons/small/config.png) 5px 5px no-repeat; }
+a.icon-adminforum-sm { background: url(../icons/small/categories.png) 5px 5px no-repeat; }
+a.icon-profiles-sm { background: url(../icons/small/users.png) 5px 5px no-repeat; }
+a.icon-template-sm { background: url(../icons/small/templates.png) 5px 5px no-repeat; }
+a.icon-smilies-sm{ background: url(../icons/small/smileys.png) 5px 5px no-repeat; }
+a.icon-ranks-sm { background: url(../icons/small/ranks.png) 5px 5px no-repeat; }
+a.icon-files-sm { background: url(../icons/small/files.png) 5px 5px no-repeat; }
+a.icon-images-sm { background: url(../icons/small/images.png) 5px 5px no-repeat; }
+a.icon-prune-sm { background: url(../icons/small/prune.png) 5px 5px no-repeat; }
+a.icon-syncusers-sm { background: url(../icons/small/syncusers.png) 5px 5px no-repeat; }
+a.icon-recount-sm { background: url(../icons/small/recount.png) 5px 5px no-repeat; }
+a.icon-trash-sm { background: url(../icons/small/trash.png) 5px 5px no-repeat; }
+a.icon-stats-sm { background: url(../icons/small/stats.png) 5px 5px no-repeat; }
+a.icon-systemreport-sm { background: url(../icons/small/report.png) 5px 5px no-repeat; }
+a.icon-support-sm { background: url(../icons/small/support.png) 5px 5px no-repeat; }
+a.icon-editcss-sm { background: url(../icons/small/css.png) 5px 5px no-repeat; }
 
 /* Large icons */
-div.kadmin-functitle.icon-cpanel { background: url(../../images/kcontrolpanel.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-config { background: url(../../images/kconfig.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-adminforum { background: url(../../images/kforumadm.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-profiles { background: url(../../images/kuser.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-smilies{ background: url(../../images/ksmiley.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-ranks { background: url(../../images/kranks.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-files { background: url(../../images/kfiles.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-images { background: url(../../images/kimages.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-editcss { background: url(../../images/kcss.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-prune { background: url(../../images/ktable.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-syncusers { background: url(../../images/kusers.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-trash { background: url(../../images/trash.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-stats { background: url(../../images/stats.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-systemreport { background: url(../../images/report_conf.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-support { background: url(../../images/ktechsupport.png) 5px 5px no-repeat; }
-div.kadmin-functitle.icon-template { background: url(../../images/templatemanager.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-cpanel { background: url(../icons/large/controlpanel.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-config { background: url(../icons/large/config.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-adminforum { background: url(../icons/large/categories.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-profiles { background: url(../icons/large/users.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-template { background: url(../icons/large/templates.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-smilies{ background: url(../icons/large/smileys.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-ranks { background: url(../icons/large/ranks.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-files { background: url(../icons/large/files.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-images { background: url(../icons/large/images.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-prune { background: url(../icons/large/prune.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-syncusers { background: url(../icons/large/syncusers.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-recount { background: url(../icons/large/recount.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-trash { background: url(../icons/large/trash.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-stats { background: url(../icons/large/stats.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-systemreport { background: url(../icons/large/report.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-support { background: url(../icons/large/support.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-editcss { background: url(../icons/large/css.png) 5px 5px no-repeat; }
 
 div.kadmin-functitle.no-icon { text-indent: 5px !important; }
 

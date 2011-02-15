@@ -35,6 +35,9 @@ Kunena 2.0.0-DEV
 ^ [#22569] Move elements and fields into libraries/form
 ^ [#22569] Move mediabox from main /js into /template/default/[css|js|images/mediabox] directories
 - [#22570] Remove example template
+^ [#22569] Administrator: Move control panel / menu icons into /media/icons
+^ [#22569] Administrator: Add emoticons manager into Kunena component menu
+# [#23443] Fix regression in KunenaController: fatal error in administration
 
 14-February-2011 Matias
 + [#24906] Add fragment support into KunenaRoute::_()

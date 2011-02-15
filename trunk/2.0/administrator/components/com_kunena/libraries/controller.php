@@ -45,6 +45,7 @@ class KunenaController extends JController {
 
 		// Display time it took to create the entire page in the footer
 		$starttime = JProfiler::getmicrotime() - KunenaRouter::$time;
+		$view = strtolower ( JRequest::getWord ( 'view', 'none' ) );
 
 		$app = JFactory::getApplication();
 		// FIXME: loading languages in Joomla is SLOW (30ms)!
@@ -52,13 +53,11 @@ class KunenaController extends JController {
 			$lang = JFactory::getLanguage();
 			$lang->load('com_kunena',JPATH_SITE);
 			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
-		}
-
-		$home = $app->getMenu ()->getActive ();
-		if (!$reload && !empty ( $home->query ['view'] ) && $home->query ['view'] == 'home' && !JRequest::getWord ( 'task' )) {
-			$view = 'home';
 		} else {
-			$view = strtolower ( JRequest::getWord ( 'view', 'none' ) );
+			$home = $app->getMenu ()->getActive ();
+			if (!$reload && !empty ( $home->query ['view'] ) && $home->query ['view'] == 'home' && !JRequest::getWord ( 'task' )) {
+				$view = 'home';
+			}
 		}
 		$path = JPATH_COMPONENT . DS . 'controllers' . DS . $view . '.php';
 

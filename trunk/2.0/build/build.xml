@@ -140,7 +140,6 @@
 		<move file="${tmp_dir}/README.txt" todir="${build_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/${kunena.backend}/libraries/forum/forum.php" todir="${tmp_dir}/${kunena.backend}/libraries/forum" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/${kunena.frontend}/template/default/template.xml" todir="${tmp_dir}/${kunena.frontend}/template/default" overwrite="true" filtering="true" />		
-		<copy file="${project_dir}/${kunena.frontend}/template/example/template.xml" todir="${tmp_dir}/${kunena.frontend}/template/example" overwrite="true" filtering="true" />		
 
 		<!-- Move files needed by the installer -->
 		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/api.php" todir="${build_dir}" overwrite="true" filtering="true" />

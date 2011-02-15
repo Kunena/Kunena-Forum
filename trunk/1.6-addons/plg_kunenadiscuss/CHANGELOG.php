@@ -29,6 +29,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena Discuss Plugin 1.6.4-DEV
+
+15-February-2010 Xillibit
+^ [#20084] Make manifest file working on both Joomla! 1.5 and Joomla! 1.6
+^ [#20084] Change version to 1.6.4-DEV
+
 Kunena Discuss Plugin 1.6.2
 
 23-January-2010 LDA(svens)

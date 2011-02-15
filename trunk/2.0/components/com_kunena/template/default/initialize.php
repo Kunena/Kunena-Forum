@@ -20,8 +20,8 @@ $template->loadMootools();
 require_once KUNENA_PATH . '/class.kunena.php';
 
 // We load mediaxboxadvanced library
-CKunenaTools::addStyleSheet ( KPATH_COMPONENT_RELATIVE . '/js/mediaboxadvanced/css/mediaboxAdv.css');
-CKunenaTools::addScript( KPATH_COMPONENT_RELATIVE . '/js/mediaboxadvanced/js/mediaboxAdv.js' );
+$template->addStyleSheet ( 'css/mediaboxAdv-min.css');
+$template->addScript( 'js/mediaboxAdv-min.js' );
 
 // New Kunena JS for default template
 $template->addScript ( 'js/default-min.js' );

@@ -18,7 +18,7 @@
 		/*	Legacy fix for older browsers	*/
 
 #mbOverlay.mbOverlayFF {
-	background: transparent url(/images/80.png) repeat;
+	background: transparent url(../images/mediabox/80.png) repeat;
 }
 
 #mbOverlay.mbOverlayIE {
@@ -48,7 +48,7 @@
 }
 
 #mbCenter.mbLoading {
-	background: #fff url(/images/loading.gif) no-repeat center;
+	background: #fff url(../images/mediabox/loading.gif) no-repeat center;
 		/*	This style is applied only during animation.	*/
 		/*	For example, the next lines turn off shadows	*/
 		/*	improving browser performance on slow systems.	*/

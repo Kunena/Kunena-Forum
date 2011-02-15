@@ -38,6 +38,7 @@ Kunena 2.0.0-DEV
 ^ [#22569] Administrator: Move control panel / menu icons into /media/icons
 ^ [#22569] Administrator: Add emoticons manager into Kunena component menu
 # [#23443] Fix regression in KunenaController: fatal error in administration
+# [#23443] Fix relative emoticon path in editor
 
 14-February-2011 Matias
 + [#24906] Add fragment support into KunenaRoute::_()

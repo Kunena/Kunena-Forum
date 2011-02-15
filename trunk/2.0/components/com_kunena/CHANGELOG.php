@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+15-February-2011 Matias
+^ [#22569] Move elements and fields into libraries/form
+
 14-February-2011 Matias
 + [#24906] Add fragment support into KunenaRoute::_()
 + [#24906] KunenaRouter: Allow topic inside category menu item

@@ -20,7 +20,7 @@
 				<option value="deleted">COM_KUNENA_MENU_DELETED</option>
 			</param>
 		</url>
-		<params addpath="/administrator/components/com_kunena/elements">
+		<params addpath="/administrator/components/com_kunena/libraries/form/elements">
 			<param name="topics_catselection" type="radio" default="1" label="COM_KUNENA_COM_A_LATESTCATEGORY_IN" description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
 				<option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
 				<option value="0">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
@@ -56,7 +56,7 @@
 			</field>
 		</fieldset>
 	</fields>
-	<fields name="params" addfieldpath="/administrator/components/com_kunena/fields">
+	<fields name="params" addfieldpath="/administrator/components/com_kunena/libraries/form/fields">
 		<fieldset name="basic" label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
 			<field name="topics_catselection" type="radio" default="0" label="COM_KUNENA_COM_A_LATESTCATEGORY_IN" description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
 				<option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>

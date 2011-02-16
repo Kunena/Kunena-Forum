@@ -123,7 +123,7 @@ class KunenaModelSearch extends KunenaModel {
 				$searchword = JString::substr ( $searchword, 1 );
 			}
 
-			if ($this->getState('query.titleonly') == '0') {
+			if (!$this->getState('query.titleonly')) {
 				$querystrings [] = "(t.message {$not} LIKE '%{$searchword}%' {$operator} m.subject {$not} LIKE '%{$searchword}%')";
 			} else {
 				$querystrings [] = "(m.subject {$not} LIKE '%{$searchword}%')";
@@ -131,11 +131,12 @@ class KunenaModelSearch extends KunenaModel {
 		}
 
 		//User searching
-		if (JString::strlen ( $this->getState('query.searchuser') ) > 0) {
+		$username = $this->getState('query.searchuser');
+		if ($username) {
 			if ($this->getState('query.exactname') == '1') {
-				$querystrings [] = "m.name LIKE '" . $db->getEscaped ( $this->getState('query.searchuser') ) . "'";
+				$querystrings [] = "m.name LIKE '" . $db->getEscaped ( $username ) . "'";
 			} else {
-				$querystrings [] = "m.name LIKE '%" . $db->getEscaped ( $this->getState('query.searchuser') ) . "%'";
+				$querystrings [] = "m.name LIKE '%" . $db->getEscaped ( $username ) . "%'";
 			}
 		}
 
@@ -249,17 +250,8 @@ class KunenaModelSearch extends KunenaModel {
 	}
 
 	public function getResults() {
-		$db = JFactory::getDBO ();
 		$q = $this->getState('searchwords');
-
-		$do_search = TRUE;
-
-		if (JString::strlen ( $this->getState('query.searchuser') ) > 0)
-			$do_search = TRUE;
-
-		$str_kunena_username = $this->getState('query.searchuser');
-
-		if ($do_search != TRUE) {
+		if (!$q && !$this->getState('query.searchuser')) {
 			$this->setError( JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
 			return;
 		}
@@ -273,6 +265,7 @@ class KunenaModelSearch extends KunenaModel {
 			$limitstart = ( int ) ($total / $this->getState('list.limit'));
 
 		/* get results */
+		$db = JFactory::getDBO ();
 		$sql = "SELECT m.id, m.subject, m.catid, m.thread, m.name, m.time, t.mesid, t.message,
 						c.name AS catname, c.class_sfx
 				FROM #__kunena_messages_text AS t JOIN #__kunena_messages AS m ON m.id=t.mesid

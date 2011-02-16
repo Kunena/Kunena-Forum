@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+16-February-2011 Matias
+# [#23443] Statistics: fix a bug when counting most popular topics
+# [#23443] Search: Minor bug fix
+
 15-February-2011 Matias
 ^ [#22569] Move elements and fields into libraries/form
 ^ [#22569] Move mediabox from main /js into /template/default/[css|js|images/mediabox] directories

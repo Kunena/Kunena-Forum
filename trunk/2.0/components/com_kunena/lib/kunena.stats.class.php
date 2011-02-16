@@ -210,12 +210,16 @@ class CKunenaStats {
 		if (!$override) $PopSubjectCount = $this->_config->popsubjectcount;
 		else $PopSubjectCount = $override;
 
+		$categories = KunenaForumCategoryHelper::getCategories();
+		$allowed = implode(',', array_keys($categories));
 		if (count($this->toptitles) < $PopSubjectCount) {
-			$kunena_session = & KunenaFactory::getSession ();
-			$this->_db->setQuery ( "SELECT * FROM #__kunena_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($kunena_session->allowed)
-				ORDER BY hits DESC", 0, $PopSubjectCount );
+			$query = "SELECT id, category_id AS catid, subject, posts AS hits
+				FROM #__kunena_topics
+				WHERE moved_id=0 AND hold=0 AND category_id IN ({$allowed})
+				ORDER BY hits DESC";
+			$this->_db->setQuery ( $query, 0, $PopSubjectCount );
 
-			$this->toptitles = $this->_db->loadObjectList ();
+			$this->toptitles = (array) $this->_db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 			$this->toptitlehits = ! empty ( $this->toptitles [0]->hits ) ? $this->toptitles [0]->hits : 0;
 		}
@@ -229,10 +233,9 @@ class CKunenaStats {
    {
 		$query = "SELECT SUM(o.votes) AS total
 					FROM #__kunena_polls AS p
-					LEFT JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
+					INNER JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
 					GROUP BY p.threadid
-					ORDER BY total
-					DESC ";
+					ORDER BY total DESC";
 		$this->_db->setQuery($query,0,$PopPollsCount);
 		$votecount = $this->_db->loadResult();
 		KunenaError::checkDatabaseError();
@@ -280,7 +283,7 @@ class CKunenaStats {
 
 		if (count($this->topthanks) < $thanksCount) {
 			$queryName = $this->_config->username ? "username" : "name";
-			$this->_db->setQuery ( "SELECT a.*,b.id,b.{$queryName} AS username,COUNT(a.targetuserid) AS receivedthanks FROM `#__kunena_thankyou` AS a LEFT JOIN #__users AS b ON a.targetuserid=b.id GROUP BY a.targetuserid ASC ORDER BY COUNT(a.targetuserid) DESC", 0, $thanksCount );
+			$this->_db->setQuery ( "SELECT a.*,b.id,b.{$queryName} AS username,COUNT(a.targetuserid) AS receivedthanks FROM `#__kunena_thankyou` AS a INNER JOIN #__users AS b ON a.targetuserid=b.id GROUP BY a.targetuserid ASC ORDER BY COUNT(a.targetuserid) DESC", 0, $thanksCount );
 			$this->topuserthanks = $this->_db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 			$this->topthanks = ! empty ( $this->topuserthanks [0]->receivedthanks ) ? $this->topuserthanks [0]->receivedthanks : 0;

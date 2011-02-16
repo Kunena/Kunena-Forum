@@ -77,8 +77,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 	<td width="49%" valign="top">
-	<?php $KUNENA_top_posters=$this->topposters;
-    if (is_array($KUNENA_top_posters)) : ?>
+	<?php if (is_array($this->topposters)) : ?>
 		<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 		<caption><?php echo JText::_('COM_KUNENA_STATS_TOP_POSTERS'); ?></caption>
 		<col class="col1" />
@@ -94,22 +93,22 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		<tbody>
 			<?php
 
-				foreach ($KUNENA_top_posters as $KUNENA_poster) {
-					if ($KUNENA_poster->posts == $KUNENA_top_posters[0]->posts) {
+				foreach ($this->topposters as $poster) {
+					if ($poster->posts == $this->topposters[0]->posts) {
 						$barwidth = 100;
 					}
 					else {
-						$barwidth = round(($KUNENA_poster->posts * 100) / $KUNENA_top_posters[0]->posts);
+						$barwidth = round(($poster->posts * 100) / $this->topposters[0]->posts);
 					}
 			?>
 			<tr>
-			<td><?php echo $KUNENA_poster->username;?> </td>
+			<td><?php echo $poster->username;?> </td>
 			<td ><img style="margin-bottom:1px" src="<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>" /> </td>
-			<td ><?php echo $KUNENA_poster->posts;?></td>
+			<td ><?php echo $poster->posts;?></td>
 			</tr>
 			<?php
 				}
-				if (empty($KUNENA_top_posters)) {
+				if (empty($this->topposters)) {
 					echo '<tr><td colspan="3">---</td></tr>';
 				}
 				?>
@@ -119,8 +118,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 	</td>
 	<td width="1%">&nbsp;</td>
 	<td width="49%" valign="top">
-	   <?php $top_profiles=$this->topprofiles;
-     if(is_array($top_profiles)): ?>
+	   <?php if(is_array($this->topprofiles)): ?>
 		<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 		<caption><?php echo  JText::_('COM_KUNENA_STATS_POPULAR_PROFILE'); ?></caption>
 		<col class="col1" />
@@ -135,11 +133,11 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		</thead>
 		<tbody>
 			<?php
-		  foreach ($top_profiles as $profile) {
-			if ($profile->hits == $top_profiles[0]->hits)
+		  foreach ($this->topprofiles as $profile) {
+			if ($profile->hits == $this->topprofiles[0]->hits)
 				$barwidth = 100;
 			else
-				$barwidth = round(($profile->hits * 100) / $top_profiles[0]->hits);
+				$barwidth = round(($profile->hits * 100) / $this->topprofiles[0]->hits);
 			?>
 			<tr>
 			<td><?php echo KunenaUser::getInstance($profile->id)->getName(); ?></td>
@@ -148,7 +146,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 			</tr>
 			<?php
 				}
-				if (empty($top_profiles)) {
+				if (empty($this->topprofiles)) {
 					echo '<tr><td colspan="3">---</td></tr>';
 				}
 				?>
@@ -163,9 +161,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 	<td width="49%" valign="top">
-	 <?php
-				$KUNENA_top_thankyous=$this->topuserthanks;
-        if(is_array($KUNENA_top_thankyous)): ?>
+	<?php if(is_array($this->topuserthanks)): ?>
 		<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 		<caption><?php echo JText::_('COM_KUNENA_STATS_TOP_GOT_THANKYOU'); ?></caption>
 		<col class="col1" />
@@ -180,22 +176,22 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		</thead>
 		<tbody>
 			<?php
-				foreach ($KUNENA_top_thankyous as $KUNENA_thankyou) {
-					if ($KUNENA_thankyou->countid == $KUNENA_top_thankyous[0]->countid) {
+				foreach ($this->topuserthanks as $thankyou) {
+					if ($thankyou->receivedthanks == $this->topuserthanks[0]->receivedthanks) {
 						$barwidth = 100;
 					}
 					else {
-						$barwidth = round(($KUNENA_thankyou->countid * 100) / $KUNENA_top_thankyous[0]->countid);
+						$barwidth = round(($thankyou->receivedthanks * 100) / $this->topuserthanks[0]->receivedthanks);
 					}
 			?>
 			<tr>
-			<td><?php echo $KUNENA_thankyou->username;?> </td>
+			<td><?php echo $thankyou->username;?> </td>
 			<td ><img style="margin-bottom:1px" src="<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>" /> </td>
-			<td ><?php echo $KUNENA_thankyou->countid;?></td>
+			<td ><?php echo $thankyou->receivedthanks;?></td>
 			</tr>
 			<?php
 				}
-				if (empty($KUNENA_top_thankyous)) {
+				if (empty($this->topuserthanks)) {
 					echo '<tr><td colspan="3">---</td></tr>';
 				}
 				?>
@@ -219,23 +215,22 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		</thead>
 		<tbody>
 			<?php
-		$KUNENA_top_said_thankyous=KunenaForumMessageThankYou::getMostThankYou('said');
-				foreach ($KUNENA_top_said_thankyous as $KUNENA_said_thankyou) {
-					if ($KUNENA_said_thankyou->countid == $KUNENA_top_said_thankyous[0]->countid) {
+				foreach ($this->topsaidthanks as $said_thankyou) {
+					if ($said_thankyou->countid == $this->topsaidthanks[0]->countid) {
 						$barwidth = 100;
 					}
 					else {
-						$barwidth = round(($KUNENA_said_thankyou->countid * 100) / $KUNENA_top_said_thankyous[0]->countid);
+						$barwidth = round(($said_thankyou->countid * 100) / $this->topsaidthanks[0]->countid);
 					}
 			?>
 			<tr>
-			<td><?php echo $KUNENA_said_thankyou->username;?> </td>
+			<td><?php echo $said_thankyou->username;?> </td>
 			<td ><img style="margin-bottom:1px" src="<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>" /> </td>
-			<td ><?php echo $KUNENA_said_thankyou->countid;?></td>
+			<td ><?php echo $said_thankyou->countid;?></td>
 			</tr>
 			<?php
 				}
-				if (empty($KUNENA_top_said_thankyous)) {
+				if (empty($this->topsaidthanks)) {
 					echo '<tr><td colspan="3">---</td></tr>';
 				}
 				?>
@@ -245,6 +240,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 	</tr>
 </table>
 <!-- Thank you stat -->
+<?php if(is_array($this->toptitles)): ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 	<td width="49%" valign="top">
@@ -263,23 +259,22 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 			</thead>
 			<tbody>
 			<?php
-				$KUNENA_top_posts=$this->toptitles;
-				foreach ($KUNENA_top_posts as $KUNENA_post) {
-					if ($KUNENA_post->hits == $KUNENA_top_posts[0]->hits) {
+				foreach ($this->toptitles as $post) {
+					if ($post->hits == $this->toptitles[0]->hits) {
 						$barwidth = 100;
 					}
 					else {
-						$barwidth = round(($KUNENA_post->hits * 100) / $KUNENA_top_posts[0]->hits);
+						$barwidth = round(($post->hits * 100) / $this->toptitles[0]->hits);
 					}
-					$link = KUNENA_LIVEURL.'&amp;func=view&amp;id='.$KUNENA_post->id.'&amp;catid='.$KUNENA_post->catid;
+					$link = KUNENA_LIVEURL.'&amp;func=view&amp;id='.$post->id.'&amp;catid='.$post->catid;
 				?>
 			<tr>
-				<td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
+				<td ><a href="<?php echo $link;?>"><?php echo $post->subject;?></a> </td>
 				<td ><img src="<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>" /> </td>
-				<td ><?php echo $KUNENA_post->hits;?></td>
+				<td ><?php echo $post->hits;?></td>
 			</tr>
 			<?php }
-				if (empty($KUNENA_top_posts)) {
+				if (empty($this->toptitles)) {
 					echo '<tr><td colspan="3">---</td></tr>';
 				} ?>
 			</tbody>
@@ -303,23 +298,23 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 			</thead>
 			<tbody>
 			<?php
-				$KUNENA_top_posts=KunenaForumMessageThankYou::getTopThankYouTopics();
-				foreach ($KUNENA_top_posts as $KUNENA_post) {
-					if ($KUNENA_post->countid == $KUNENA_top_posts[0]->countid) {
+				$top_posts=KunenaForumMessageThankYou::getTopThankYouTopics();
+				foreach ($top_posts as $post) {
+					if ($post->countid == $top_posts[0]->countid) {
 						$barwidth = 100;
 					}
 					else {
-						$barwidth = round(($KUNENA_post->countid * 100) / $KUNENA_top_posts[0]->countid);
+						$barwidth = round(($post->countid * 100) / $top_posts[0]->countid);
 					}
-					$link = KUNENA_LIVEURL.'&amp;func=view&amp;id='.$KUNENA_post->postid.'&amp;catid='.$KUNENA_post->catid;
+					$link = KUNENA_LIVEURL.'&amp;func=view&amp;id='.$post->postid.'&amp;catid='.$post->catid;
 				?>
 			<tr>
-				<td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
+				<td ><a href="<?php echo $link;?>"><?php echo $post->subject;?></a> </td>
 				<td ><img src="<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>" /> </td>
-				<td ><?php echo $KUNENA_post->countid;?></td>
+				<td ><?php echo $post->countid;?></td>
 			</tr>
 			<?php }
-				if (empty($KUNENA_top_posts)) {
+				if (empty($top_posts)) {
 					echo '<tr><td colspan="3">---</td></tr>';
 				}
 			?>
@@ -329,6 +324,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		</td>
 	</tr>
 </table>
+<?php endif; ?>
 </div>
 <!-- FINISH: STATS -->
 </div>

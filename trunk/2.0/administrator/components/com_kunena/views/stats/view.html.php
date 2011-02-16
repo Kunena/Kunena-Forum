@@ -48,9 +48,9 @@ class KunenaAdminViewStats extends KunenaView {
 		$this->topprofiles = $data->topprofiles;
 		$data->loadThanksStats('10');
 		$this->topuserthanks = $data->topuserthanks;
+		$this->topsaidthanks = KunenaForumMessageThankYou::getMostThankYou('said');
 		$data->loadTopicStats('10');
 		$this->toptitles = $data->toptitles;
-
 		parent::display ();
 	}
 }

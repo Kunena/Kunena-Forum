@@ -1514,13 +1514,13 @@ class KunenaModelInstall extends JModel {
 		// Finally add forum menu link to default menu
 		$jmenu = JMenu::getInstance('site');
 		$dmenu = $jmenu->getDefault();
-		$query = "SELECT id FROM `#__menu` WHERE `alias`={$this->db->quote($menu['alias'])} AND `menutype`={$this->db->quote($dmenu->menutype)};";
-		$this->db->setQuery ( $query );
+		$query = "SELECT id FROM `#__menu` WHERE `alias` IN ('forum', 'kunenaforum', {$this->db->quote(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' ))}) AND `menutype`={$this->db->quote($dmenu->menutype)}";
+		$this->db->setQuery ( $query, 0, 1 );
 		$id = ( int ) $this->db->loadResult ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							($id, {$this->db->quote($dmenu->menutype)}, {$this->db->quote($menu['name'])}, {$this->db->quote($menu['alias'])}, 'index.php?Itemid=$parentid', 'menulink', 1, 0, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_item=$parentid{$menu['params']}\r\n\r\n', 0, 0, 0);";
+							($id, {$this->db->quote($dmenu->menutype)}, {$this->db->quote($menu['name'])}, 'kunenaforum', 'index.php?Itemid=$parentid', 'menulink', 1, 0, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_item=$parentid{$menu['params']}\r\n\r\n', 0, 0, 0);";
 		$this->db->setQuery ( $query );
 		$this->db->query ();
 		if ($this->db->getErrorNum ())
@@ -1648,7 +1648,7 @@ class KunenaModelInstall extends JModel {
 			'menutype' => $defaultmenu->menutype,
 			'title' => JText::_ ( 'COM_KUNENA_MENU_FORUM' ),
 			'alias' => 'kunenaforum',
-			'link' => 'index.php?Itemid=',
+			'link' => 'index.php?Itemid='.$parent->id,
 			'type' => 'alias',
 			'published' => 1,
 			'parent_id' => 1,
@@ -1678,10 +1678,11 @@ class KunenaModelInstall extends JModel {
 	function deleteMenuJ16() {
 		$table = JTable::getInstance ( 'menutype' );
 		$table->load(array('menutype'=>'kunenamenu'));
-		if ($table->id) $success = $table->delete();
-		if (!$success) {
-			$app = JFactory::getApplication();
-			$app->enqueueMessage($table->getError(), 'error');
+		if ($table->id) {
+			$success = $table->delete();
+			if (!$success) {
+				JFactory::getApplication()->enqueueMessage($table->getError(), 'error');
+			}
 		}
 	}
 

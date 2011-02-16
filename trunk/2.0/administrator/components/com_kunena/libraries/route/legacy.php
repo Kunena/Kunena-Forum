@@ -116,8 +116,8 @@ class KunenaRouteLegacy {
 						$uri->setVar('mode', 'thankyou');
 						break;
 					case 'catsubscriptions' :
-						// FIXME: not in here!
-						$uri->setVar('layout', 'category');
+						$uri->setVar('view', 'category');
+						$uri->setVar('layout', 'user');
 						break;
 					default :
 						$uri->setVar('layout', 'default');
@@ -360,7 +360,6 @@ class KunenaRouteLegacy {
 				break;
 			case 'search':
 			case 'advsearch':
-				// TODO:
 				$changed = true;
 				$uri->setVar('view', 'search');
 				break;

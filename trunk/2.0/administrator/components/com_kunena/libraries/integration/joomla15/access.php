@@ -159,16 +159,13 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 	 * @param	integer	The value of the group to start at (optional)
 	 * @param	string	The type of group, either ARO or AXO (optional)
 	 */
-	protected function acl_get_groups($sectionValue, $value, $rootGroupValue=NULL, $type='ARO')
-	{
-		// @todo More advanced caching to span session
+	protected function acl_get_groups($sectionValue, $value, $rootGroupValue=NULL, $type='ARO') {
 		static $cache = null;
 
 		$db		= JFactory::getDbo();
 		$type	= strtolower($type);
 
 		if ($type != 'aro' && $type != 'axo') {
-			// @todo Throw an expection
 			return array();
 		}
 		if (($sectionValue === '' || $sectionValue === null) && ($value === '' || $value === null)) {

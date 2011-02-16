@@ -71,7 +71,6 @@ class KunenaViewTopic extends KunenaView {
 		$this->assignRef ( 'usertopic',$this->topic->getUserTopic());
 		$this->headerText =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
-		// FIXME:
 		$this->pagination = $this->getPagination ( 7 );
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();

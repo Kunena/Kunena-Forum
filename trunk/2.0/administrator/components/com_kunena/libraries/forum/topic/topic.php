@@ -760,8 +760,10 @@ class KunenaForumTopic extends JObject {
 		$this->posts += $postdelta;
 		$exists = $message && $message->exists();
 		if (!$this->exists()) {
-			// TODO: error message
-			if (!$exists) return false;
+			if (!$exists) {
+				$this->setError(JText::_('COM_KUNENA_LIB_TOPIC_NOT_EXISTS'));
+				return false;
+			}
 			$this->id = $message->id;
 		}
 		if ($exists && $message->thread == $this->id && $message->hold == $this->hold) {

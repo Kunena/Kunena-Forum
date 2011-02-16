@@ -148,14 +148,6 @@ class TableKunenaCategories extends KunenaTable
 
 	function store($updateNulls = false) {
 		$ret = parent::store ( $updateNulls );
-
-		if ($ret) {
-			// FIXME: used also on category information update!!
-			// we must reset session, when forum record was changed
-			$this->_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
-			$this->_db->query ();
-			KunenaError::checkDatabaseError ();
-		}
 		return $ret;
 	}
 

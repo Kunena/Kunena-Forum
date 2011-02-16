@@ -211,7 +211,6 @@ class KunenaRouter {
 					// If category name is empty (or doesn't exist), use numeric catid
 					$segments [] = $catid;
 				} elseif ($config->sefcats && isset(self::$sefviews[$view]) && !self::isCategoryConflict($menuitem, $catid, $catname)) {
-					// TODO: avoid all illegal category names
 					// If there's no naming conflict, we can use category name
 					$segments [] = $catname;
 				} else {

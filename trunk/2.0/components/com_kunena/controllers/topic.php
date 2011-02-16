@@ -489,12 +489,11 @@ class KunenaControllerTopic extends KunenaController {
 		if ($this->mesid) {
 			// Undelete message
 			$target = KunenaForumMessageHelper::get($this->mesid);
-			// TODO: check if translation exists
-			$msg = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_UNDELETE' );
+			$msg = JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE' );
 		} else {
 			// Undelete topic
 			$target = KunenaForumTopicHelper::get($this->id);
-			$msg = JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE' );
+			$msg = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_UNDELETE' );
 		}
 		if ($target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED)) {
 			$app->enqueueMessage ( $msg );

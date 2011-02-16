@@ -73,8 +73,8 @@ class KunenaVersion
 	{
 		if ($prefix)
 		{
-			// FIXME:
 			$db = JFactory::getDBO();
+			// FIXME:
 			$db->debug(0);
 			$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$prefix.'version')." ORDER BY `id` DESC", 0, 1);
 			$version = $db->loadObject();

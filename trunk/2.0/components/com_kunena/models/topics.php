@@ -60,7 +60,6 @@ class KunenaModelTopics extends KunenaModel {
 		$this->setState ( 'list.categories.in', (bool)$params->get('topics_catselection', $config->latestcategory_in) );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $config->show_list_time), 'int' );
-		// FIXME: last visit and all
 		$this->setState ( 'list.time', $value );
 
 		// List state information

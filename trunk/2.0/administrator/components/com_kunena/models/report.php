@@ -129,7 +129,6 @@ class KunenaAdminModelReport extends JModel {
 		$joomsef = $this->_checkThirdPartyVersion('joomsef', 'sef', 'ARTIO JoomSEF', 'components/com_sef', null, 1, 0, 0);
 		$acesef = $this->_checkThirdPartyVersion('acesef', 'acesef', 'AceSEF', 'components/com_acesef', null, 1, 0, 0);
 
-		// FIXME: $kconfigsettings ?!?
 		// Also model should not build html, it should just give data
 		$report = '[confidential][b]Joomla! version:[/b] '.$jversiontxt.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring

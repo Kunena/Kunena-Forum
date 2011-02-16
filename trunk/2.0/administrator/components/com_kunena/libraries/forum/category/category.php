@@ -627,8 +627,7 @@ class KunenaForumCategory extends JObject {
 	protected function authoriseSubscribe($user) {
 		// Check if user is guest and they can create or reply topics
 		if ($user->userid == 0 || !KunenaFactory::getConfig()->allowsubscriptions) {
-			// FIXME:
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS' ) );
 			return false;
 		}
 
@@ -637,8 +636,7 @@ class KunenaForumCategory extends JObject {
 	protected function authoriseFavorite($user) {
 		// Check if user is guest and they can create or reply topics
 		if ($user->userid == 0 || !KunenaFactory::getConfig()->allowfavorites) {
-			// FIXME:
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES' ) );
 			return false;
 		}
 

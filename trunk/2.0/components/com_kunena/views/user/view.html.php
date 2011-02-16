@@ -24,7 +24,13 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayEdit($tpl = null) {
-		// FIXME: Check that user is allowed to edit profile
+		$userid = JRequest::getInt('userid');
+		$this->me = KunenaFactory::getUser ();
+		if ($userid && $this->me->userid != $userid) {
+			$user = KunenaFactory::getUser( $userid );
+			$this->_app->enqueueMessage ( JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $user->getName()), 'notice' );
+			return;
+		}
 		$this->displayCommon($tpl);
 	}
 
@@ -42,8 +48,7 @@ class KunenaViewUser extends KunenaView {
 
 		if (!$userid) {
 			$this->user = $this->my;
-		}
-		else {
+		} else {
 			$this->user = JFactory::getUser( $userid );
 		}
 		if ($this->user->id == 0) {

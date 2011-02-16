@@ -1827,14 +1827,10 @@ function deleteAttachment($id, $redirect, $message) {
 		$kunena_app->redirect ( $redirect );
 		return;
 	}
-
-	// FIXME: deprecated class
-	/*
-	$attachments = CKunenaAttachments::getInstance();
-	$attachments->deleteAttachment($id);
-
+	kimport ('kunena.forum.message.attachment.helper');
+	$attachment = KunenaForumMessageAttachmentHelper::get($id);
+	$attachment->delete();
 	$kunena_app->enqueueMessage ( JText::_($message) );
-	*/
 	$kunena_app->redirect ( $redirect );
 }
 

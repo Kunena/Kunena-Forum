@@ -32,13 +32,12 @@ class KunenaModelUsers extends KunenaModel {
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_ordering", 'filter_order', 'id', 'cmd' );
-		// FIXME:
-		$value = 'id';
 		$this->setState ( 'list.ordering', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_start", 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
+		// FIXME: doesn't seem to work yet
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_direction", 'filter_order_Dir', 'asc', 'word' );
 		if ($value != 'asc')
 			$value = 'desc';

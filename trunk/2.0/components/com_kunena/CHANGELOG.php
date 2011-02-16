@@ -37,6 +37,8 @@ Kunena 2.0.0-DEV
 # [#23443] Put back Category Index view (now in Category/Index)
 # [#23443] Administrator: Workaround for Joomla 1.5 bug where translations aren't shown in Menu Manager
 # [#23443] Add a lot of missing translations, improve existing ones
+# [#23443] Administrator: Fix deleting attachments
+# [#23443] User/Edit: Add authorisation check
 
 15-February-2011 Matias
 ^ [#22569] Move elements and fields into libraries/form

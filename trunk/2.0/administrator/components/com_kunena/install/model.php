@@ -1563,7 +1563,7 @@ class KunenaModelInstall extends JModel {
 
 		$table = JTable::getInstance ( 'menu' );
 		$params = '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}';
-		// FIXME: add menu params for current item, too
+		// FIXME: Joomla 1.6: add menu params for current item, too
 		$data = array (
 			'menutype' => 'kunenamenu',
 			'title' => $menu ['name'],

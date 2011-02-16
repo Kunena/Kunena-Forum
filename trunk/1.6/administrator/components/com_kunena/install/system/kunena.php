@@ -27,6 +27,12 @@ class plgSystemKunena extends JPlugin {
 		// Load Kunena API
 		require_once ($kunena_api);
 
+		// Fix Joomla 1.5 bug
+		$version = new JVersion();
+		if (JFactory::getApplication()->isAdmin() && $version->RELEASE == '1.5') {
+			JFactory::getLanguage()->load('com_kunena.menu', JPATH_ADMINISTRATOR);
+		}
+
 		parent::__construct ( $subject, $config );
 	}
 

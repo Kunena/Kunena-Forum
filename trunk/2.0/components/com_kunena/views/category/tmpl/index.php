@@ -40,7 +40,7 @@ $this->common->display ('pathway');
 
 <?php
 if (count ( $this->categories )) {
-	echo $this->loadTemplate('list_clean');
+	echo $this->loadTemplate('clean');
 } else {
 	$this->displayInfoMessage ();
 }

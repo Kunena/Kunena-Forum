@@ -34,6 +34,7 @@ Kunena 2.0.0-DEV
 16-February-2011 Matias
 # [#23443] Statistics: fix a bug when counting most popular topics
 # [#23443] Search: Minor bug fix
+# [#23443] Put back Category Index view (now in Category/Index)
 
 15-February-2011 Matias
 ^ [#22569] Move elements and fields into libraries/form

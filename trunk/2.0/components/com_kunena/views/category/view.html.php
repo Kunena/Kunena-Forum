@@ -22,15 +22,14 @@ class KunenaViewCategory extends KunenaView {
 	function displayDefault($tpl = null) {
 		$this->Itemid = $this->get ( 'Itemid' );
 		$this->assignRef ( 'category', $this->get ( 'Category' ) );
-		if ($this->category->id) {
-			if ( ! $this->category->authorise('read')) {
+		if (! $this->category->authorise('read')) {
 				$this->setError($this->category->getError());
-			} elseif ($this->category->parent_id) {
-				$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-				$this->assignRef ( 'total', $this->get ( 'Total' ) );
-				$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
-			}
 		}
+
+		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
+		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
+
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
@@ -38,53 +37,46 @@ class KunenaViewCategory extends KunenaView {
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
-		if (!$this->category->parent_id) {
-			$tpl = 'list';
-			if ($this->me->isAdmin(null)) {
-				$this->category_manage = CKunenaLink::GetHrefLink(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage&catid='.$this->category->id), $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES') ), $title = '', 'nofollow', 'kicon-button kbuttonmod btn-left', '', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES_LONG'));
+		$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
+		if ($this->category->authorise ( 'moderate' )) {
+			$this->actionMove = true;
+			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
+			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			if($this->config->mod_see_deleted == '1' || $this->me->isAdmin($this->category->id)) {
+				$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+				$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 			}
-		} else {
-			$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
-			if ($this->category->authorise ( 'moderate' )) {
-				$this->actionMove = true;
-				$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
-				$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-				$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-				if($this->config->mod_see_deleted == '1' || $this->me->isAdmin($this->category->id)) {
-					$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-					$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
-				}
-			}
+		}
 
-			// Is user allowed to post new topic?
-			$this->newTopicHtml = '';
-			if ($this->category->authorise ( 'topic.create', null, true )) {
-				$this->newTopicHtml = CKunenaLink::GetPostNewTopicLink ( $this->category->id, $this->getButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
-			}
+		// Is user allowed to post new topic?
+		$this->newTopicHtml = '';
+		if ($this->category->authorise ( 'topic.create', null, true )) {
+			$this->newTopicHtml = CKunenaLink::GetPostNewTopicLink ( $this->category->id, $this->getButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
+		}
 
-			// Is user allowed to mark forums as read?
-			$this->markReadHtml = '';
-			if ($this->me->exists() && $this->total) {
-				$this->markReadHtml = CKunenaLink::GetCategoryActionLink ( 'markread', $this->category->id, $this->getButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
-			}
+		// Is user allowed to mark forums as read?
+		$this->markReadHtml = '';
+		if ($this->me->exists() && $this->total) {
+			$this->markReadHtml = CKunenaLink::GetCategoryActionLink ( 'markread', $this->category->id, $this->getButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
+		}
 
-			$this->subscribeCatHtml = '';
-			// Is user allowed to subscribe category?
-			if ($this->category->authorise ( 'subscribe', null, true )) {
-				// FIXME: add into library:
-				$db = JFactory::getDBO();
-				$query = "SELECT subscribed
-					FROM #__kunena_user_categories
-					WHERE user_id={$db->Quote($this->me->userid)} AND category_id={$db->Quote($this->category->id)}";
-				$db->setQuery ( $query );
-				$subscribed = $db->loadResult ();
-				if (KunenaError::checkDatabaseError()) return;
+		$this->subscribeCatHtml = '';
+		// Is user allowed to subscribe category?
+		if ($this->category->authorise ( 'subscribe', null, true )) {
+			// FIXME: add into library:
+			$db = JFactory::getDBO();
+			$query = "SELECT subscribed
+				FROM #__kunena_user_categories
+				WHERE user_id={$db->Quote($this->me->userid)} AND category_id={$db->Quote($this->category->id)}";
+			$db->setQuery ( $query );
+			$subscribed = $db->loadResult ();
+			if (KunenaError::checkDatabaseError()) return;
 
-				if (!$subscribed) {
-					$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'subscribe', $this->category->id, $this->getButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
-				} else {
-					$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'unsubscribe', $this->category->id, $this->getButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
-				}
+			if (!$subscribed) {
+				$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'subscribe', $this->category->id, $this->getButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
+			} else {
+				$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'unsubscribe', $this->category->id, $this->getButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
 			}
 		}
 
@@ -92,29 +84,58 @@ class KunenaViewCategory extends KunenaView {
 		if ($errors) {
 			$this->displayNoAccess($errors);
 			return;
-		} elseif (!$this->category->parent_id) {
-			// meta description and keywords
-			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
-			$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . JFactory::getApplication ()->getCfg ( 'sitename' ));
-
-			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-			$this->document->setMetadata ( 'keywords', $metaKeys );
-			$this->document->setDescription ( $metaDesc );
-
-			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') );
-		} else {
-			//meta description and keywords
-			$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
-			$pages = intval ( $this->category->getTopics() / $this->state->get('list.limit') ) + 1;
-
-			$parentCategory = $this->category->getParent();
-			$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . JFactory::getApplication()->getCfg ( 'sitename' ) );
-			$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$parentCategory->name} ({$page}/{$pages}) - {$this->category->name} - {$this->config->board_title}" );
-			$this->document->setMetadata ( 'keywords', $metaKeys );
-			$this->document->setDescription ( $metaDesc );
-
-			$this->setTitle( JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', $this->category->name) . " ({$page}/{$pages})" );
 		}
+
+		//meta description and keywords
+		$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
+		$pages = intval ( $this->category->getTopics() / $this->state->get('list.limit') ) + 1;
+
+		$parentCategory = $this->category->getParent();
+		$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . JFactory::getApplication()->getCfg ( 'sitename' ) );
+		$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$parentCategory->name} ({$page}/{$pages}) - {$this->category->name} - {$this->config->board_title}" );
+		$this->document->setMetadata ( 'keywords', $metaKeys );
+		$this->document->setDescription ( $metaDesc );
+
+		$this->setTitle( JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', $this->category->name) . " ({$page}/{$pages})" );
+
+		$this->display ($tpl);
+	}
+
+	function displayIndex($tpl = null) {
+		$this->Itemid = $this->get ( 'Itemid' );
+		$this->assignRef ( 'category', $this->get ( 'Category' ) );
+		if ($this->category->id && ! $this->category->authorise('read')) {
+			$this->setError($this->category->getError());
+		}
+		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
+		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
+		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
+
+		$this->me = KunenaFactory::getUser();
+		$this->config = KunenaFactory::getConfig();
+
+		if (!$this->category->parent_id) {
+			if ($this->me->isAdmin(null)) {
+				$this->category_manage = CKunenaLink::GetHrefLink(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage&catid='.$this->category->id), $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES') ), $title = '', 'nofollow', 'kicon-button kbuttonmod btn-left', '', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES_LONG'));
+			}
+		}
+
+		$errors = $this->getErrors();
+		if ($errors) {
+			$this->displayNoAccess($errors);
+			return;
+		}
+		// meta description and keywords
+		$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
+		$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . JFactory::getApplication ()->getCfg ( 'sitename' ));
+
+		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+		$this->document->setMetadata ( 'keywords', $metaKeys );
+		$this->document->setDescription ( $metaDesc );
+
+		$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') );
+
 		$this->display ($tpl);
 	}
 
@@ -295,7 +316,7 @@ class KunenaViewCategory extends KunenaView {
 	function displayCategories() {
 		if ($this->sections) {
 			$this->subcategories = true;
-			echo $this->loadTemplate('list_clean');
+			echo $this->loadTemplate('subcategories');
 		}
 	}
 

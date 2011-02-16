@@ -38,10 +38,10 @@ class TableKunenaUserTopics extends KunenaTable
 		$user = KunenaUserHelper::get($this->user_id);
 		$topic = KunenaForumTopicHelper::get($this->topic_id);
 		if (!$user->exists()) {
-			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_NO_USER', $user->userid ) );
+			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_USER_INVALID', (int) $user->userid ) );
 		}
 		if (!$topic->exists()) {
-			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_NO_TOPIC', $topic->id ) );
+			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_TOPIC_INVALID', (int) $topic->id ) );
 		} else {
 			$this->category_id = $topic->category_id;
 		}

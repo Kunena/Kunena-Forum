@@ -93,7 +93,6 @@ class KunenaControllerHome extends KunenaController {
 
 		} elseif (isset($visited[$item->id])) {
 			// Menu loop detected, abort
-			// TODO: add translation
 			KunenaError::warning ( JText::sprintf ( 'COM_KUNENA_WARNING_MENU_LOOP' ), 'menu' );
 			return null;
 

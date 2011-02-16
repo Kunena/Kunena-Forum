@@ -223,7 +223,7 @@ class KunenaForumMessage extends JObject {
 		);
 		$user = KunenaUser::getInstance($user);
 		if (!isset($actions[$action])) {
-			if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_LIB_MESSAGE_NO_ACTION' ) );
+			if (!$silent) $this->setError ( __CLASS__.'::'.__FUNCTION__.'(): '.JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
 			return false;
 		}
 		$topic = $this->getTopic();
@@ -641,34 +641,19 @@ class KunenaForumMessage extends JObject {
 		if ($this->email) {
 			// Email address must be valid
 			if (! JMailHelper::isEmailAddress ( $this->email )) {
-				// FIXME: add language string
-				$this->setError ( JText::_ ( 'COM_KUNENA_LIB_ERROR_MESSAGE_EMAIL_INVALID' ) );
+				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_INVALID' ) );
 				return false;
 			}
 		} else if (! KunenaFactory::getUser()->userid && KunenaFactory::getConfig()->askemail) {
-			// FIXME: add language string
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_ERROR_MESSAGE_EMAIL_EMPTY' ) );
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY' ) );
 			return false;
 		}
 
-		$this->subject = trim($this->subject);
-		if (!$this->subject) {
-			// FIXME: add language string
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_ERROR_MESSAGE_SUBJECT_EMPTY' ) );
-			return false;
-		}
-		$this->message = trim($this->message);
-		if (!$this->message) {
-			// FIXME: add language string
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_ERROR_MESSAGE_TEXT_EMPTY' ) );
-			return false;
-		}
 		if (!$this->time) {
 			$this->time = JFactory::getDate()->toUnix();
 		}
 		if ($this->hold < 0 || $this->hold > 3) {
-			// FIXME: add language string
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_ERROR_MESSAGE_HOLD_INVALID' ) );
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_MESSAGE_ERROR_HOLD_INVALID' ) );
 			return false;
 		}
 		if ($this->modified_by !== null) {
@@ -690,7 +675,7 @@ class KunenaForumMessage extends JObject {
 				return false;
 			}
 			if ($lastPostTime + $config->floodprotection > JFactory::getDate()->toUnix()) {
-				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_ERROR_MESSAGE_FLOOD', $config->floodprotection ) );
+				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_MESSAGE_ERROR_FLOOD', (int)$config->floodprotection ) );
 				return false;
 			}
 		}

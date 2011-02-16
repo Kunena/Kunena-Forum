@@ -90,13 +90,13 @@ class TableKunenaTopics extends KunenaTable
 	function check() {
 		$category = KunenaForumCategoryHelper::get($this->category_id);
 		if (!$category->exists()) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_CATEGORY' ) );
+			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id ) );
 		} else {
 			$this->category_id = $category->id;
 		}
 		$this->subject = trim($this->subject);
 		if (!$this->subject) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TOPICS_ERROR_NO_SUBJECT' ) );
+			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT' ) );
 		}
 		return ($this->getError () == '');
 	}

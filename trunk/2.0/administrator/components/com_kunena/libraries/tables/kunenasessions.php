@@ -39,7 +39,7 @@ class TableKunenaSessions extends KunenaTable
 	function check() {
 		$user = KunenaUserHelper::get($this->userid);
 		if (!$user->exists()) {
-			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_NO_USER', $user->userid ) );
+			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid ) );
 		}
 		return ($this->getError () == '');
 	}

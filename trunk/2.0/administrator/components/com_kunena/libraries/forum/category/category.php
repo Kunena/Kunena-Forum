@@ -176,7 +176,7 @@ class KunenaForumCategory extends JObject {
 			'topic.post.attachment.delete'=>array('Read', 'NotBanned', 'Unlocked'),
 		);
 		if (!isset($actions[$action])) {
-			$this->_authcache[$user->userid][$action] = JText::_ ( 'COM_KUNENA_LIB_CATEGORY_NO_ACTION' );
+			$this->_authcache[$user->userid][$action] = __CLASS__.'::'.__FUNCTION__.'(): '.JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action );
 			if (!$silent) $this->setError ( $this->_authcache[$user->userid][$action] );
 			return false;
 		}

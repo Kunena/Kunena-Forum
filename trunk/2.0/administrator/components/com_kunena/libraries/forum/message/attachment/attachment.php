@@ -141,7 +141,7 @@ class KunenaForumMessageAttachment extends JObject {
 		);
 		$user = KunenaUser::getInstance($user);
 		if (!isset($actions[$action])) {
-			if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_LIB_ATTACHMENT_NO_ACTION' ) );
+			if (!$silent) $this->setError ( __CLASS__.'::'.__FUNCTION__.'(): '.JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
 			return false;
 		}
 		$message = $this->getMessage();

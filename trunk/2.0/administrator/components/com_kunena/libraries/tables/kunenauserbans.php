@@ -117,7 +117,7 @@ class TableKunenaUserBans extends JTable
 		if (!$this->ip) {
 			$user = KunenaUserHelper::get($this->userid);
 			if (!$user->exists()) {
-				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERBANS_ERROR_NO_USER', $user->userid ) );
+				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERBANS_ERROR_USER_INVALID', (int) $user->userid ) );
 			}
 		}
 		return ($this->getError () == '');

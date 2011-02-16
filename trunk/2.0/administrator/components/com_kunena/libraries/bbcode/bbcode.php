@@ -883,11 +883,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 
 		$html = $link = '';
 		if (!$article || (!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
-			// FIXME: translation
-			$html = JText::_ ( "Article cannot be shown" );
+			$html = JText::_ ( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_UNPUBLISHED' );
 		} elseif (!empty($denied)) {
-			// FIXME: translation
-			$html = JText::_("This message contains an article, but you do not have permissions to see it.");
+			$html = JText::_( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS' );
 		} else {
 			// Identify the source of the event to be Kunena itself
 			// this is important to avoid recursive event behaviour with our own plugins
@@ -909,14 +907,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				case 'full':
 					if ( !empty($article->fulltext) ) {
 						$html = $article->fulltext;
-						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read article...').'</a>';
+						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ').'</a>';
 						break;
 					}
 					// continue to intro
 				case 'intro':
 					if ( !empty($article->introtext) ) {
 						$html = $article->introtext;
-						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read more...').'</a>';
+						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE').'</a>';
 						break;
 					}
 					// continue to link

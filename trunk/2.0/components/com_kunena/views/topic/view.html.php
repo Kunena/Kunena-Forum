@@ -38,7 +38,6 @@ class KunenaViewTopic extends KunenaView {
 			$this->setError($this->category->getError());
 		} elseif (! $this->topic) {
 			// Moved topic loop detected (1 -> 2 -> 3 -> 2)
-			// FIXME: translate
 			$this->setError(JText::_('COM_KUNENA_VIEW_TOPIC_ERROR_LOOP'));
 		} elseif (! $this->topic->authorise('read')) {
 			// User is not allowed to see the topic

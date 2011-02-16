@@ -79,15 +79,13 @@ class KunenaTemplate extends JObject
 					if (is_dir ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' )) {
 						JHTML::addIncludePath ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' );
 					} elseif ($me->isAdmin()) {
-						// TODO: translate
-						$app->enqueueMessage ( 'Kunena: You do not have the <em>System - MooTools Upgrade</em> plug-in.', 'notice' );
-						$app->enqueueMessage ( 'Many features, including Quick Reply and the BBCode editor, may be broken.', 'notice' );
+						$app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_NO_UPGRADE'), 'notice' );
+						$app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_WARNING'), 'notice' );
 					}
 				} elseif ($me->isAdmin()) {
-					// TODO: translate
-					$app->enqueueMessage ( 'Kunena: You have a plug-in that uses MooTools 1.1 or a custom version of JHTMLBehavior.', 'notice' );
-					$app->enqueueMessage ( 'Many features, including Quick Reply and the BBCode editor, may be broken.', 'notice' );
-					$app->enqueueMessage ( 'Please enable the <em>System - MooTools Upgrade</em> plug-in.', 'notice' );
+					$app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_LEGACY'), 'notice' );
+					$app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_WARNING'), 'notice' );
+					$app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_ENABLE'), 'notice' );
 				}
 			}
 		}

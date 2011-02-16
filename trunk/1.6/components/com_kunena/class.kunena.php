@@ -585,13 +585,11 @@ class CKunenaTools {
 			KunenaError::checkDatabaseError();
 
 			foreach ( $messagesHold as $messageHold ) {
-				if ($messageHold->hold == 2) {
-					$delete = $kunena_mod->deleteThreadPerminantly ( $id, true );
-					if (! $delete) {
-						$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
-					} else {
-						$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' ) );
-					}
+				$delete = $kunena_mod->deleteThreadPerminantly ( $id, true );
+				if (! $delete) {
+					$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
+				} else {
+					$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' ) );
 				}
 			}
 

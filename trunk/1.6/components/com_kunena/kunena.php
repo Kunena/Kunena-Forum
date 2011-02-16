@@ -23,6 +23,8 @@
 
 defined( '_JEXEC' ) or die();
 
+jimport( 'joomla.html.parameter' );
+
 // Kunena wide defines
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.defines.php');
 
@@ -799,8 +801,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	$this->params = $template->params;
 	// Credits
 	echo '<div class="kcredits kms"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
-	if ($this->params->get('templatebyText') !=''):
-	echo ' :: <a href ="'. $this->params->get('templatebyLink').'" rel="follow">' . $this->params->get('templatebyText') .' '. $this->params->get('templatebyName') ? $this->params->get('templatebyName') : '' .'</a>';
+		if ($this->params->get('templatebyText') !=''):
+	echo ' :: <a href ="'. $this->params->get('templatebyLink').'" rel="follow">' . $this->params->get('templatebyText') ;
+	if ($this->params->get('templatebyName')) {
+	echo ' '.$this->params->get('templatebyName') .'</a>';
+	} else { echo '</a>'; }
 	endif;
 	echo '</div>';
 

@@ -352,7 +352,7 @@ class KunenaModelInstall extends JModel {
 		$installed = $this->getDetectVersions();
 		if ($action == 'migrate' && $installed['fb']->component) {
 			$version = $installed['fb'];
-			$results [] = $this->migrateTable ( $version->prefix, $version->prefix . 'version', 'kunena_version' );
+			$results [] = $this->migrateTable ( strtolower($version->prefix), strtolower($version->prefix) . 'version', 'kunena_version' );
 		} else {
 			$version = $installed['kunena'];
 		}
@@ -517,14 +517,14 @@ class KunenaModelInstall extends JModel {
 
 			// First run: find tables that potentially need migration
 			if ($state === null) {
-				$state = $this->listTables ( $version->prefix );
+				$state = $this->listTables ( strtolower($version->prefix) );
 			}
 
 			// Handle only first table in the list
 			$oldtable = array_shift($state);
 			if ($oldtable) {
-				$newtable = preg_replace ( '/^' . $version->prefix . '/', 'kunena_', $oldtable );
-				$result = $this->migrateTable ( $version->prefix, $oldtable, $newtable );
+				$newtable = preg_replace ( '/^' . strtolower($version->prefix) . '/', 'kunena_', $oldtable );
+				$result = $this->migrateTable ( strtolower($version->prefix), $oldtable, $newtable );
 				if ($result) {
 					$this->addStatus ( ucfirst($result ['action']) . ' ' . $result ['name'], true );
 				}
@@ -1020,6 +1020,7 @@ class KunenaModelInstall extends JModel {
 		$req->mysql = $this->db->getVersion ();
 		$req->php = phpversion ();
 		$req->joomla = JVERSION;
+		$req->domdocument = 'DOMDocument';
 
 		$req->fail = array ();
 		if (version_compare ( $req->mysql, KUNENA_MIN_MYSQL, "<" ))
@@ -1028,6 +1029,9 @@ class KunenaModelInstall extends JModel {
 			$req->fail ['php'] = true;
 		if (version_compare ( $req->joomla, KUNENA_MIN_JOOMLA, "<" ))
 			$req->fail ['joomla'] = true;
+		if(!class_exists('DOMDocument')){
+			$req->fail ['domdocument'] = true;
+		}
 
 		$this->_req = $req;
 		return $this->_req;

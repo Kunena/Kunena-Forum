@@ -42,14 +42,14 @@ class CKunenaProfile {
 		$activityIntegration = KunenaFactory::getActivityIntegration();
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
-		
+
 		if (get_class($integration) == 'KunenaProfileNone') {
 			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_DISABLED'), 'notice' );
 			return;
 		}
-		
+
 		$this->allow = true;
-		
+
 		$this->profile = KunenaFactory::getUser ( $this->user->id );
 		if ($this->profile->posts === null) {
 			$this->profile->save();
@@ -452,11 +452,11 @@ class CKunenaProfile {
 			if (isset($post[$field]))
 				unset($post[$field]);
 		}
-		
-		if ( $jversion->RELEASE == '1.6' ) { 
+
+		if ( $jversion->RELEASE == '1.6' ) {
 			jimport('joomla.user.helper');
 			$result = JUserHelper::getUserGroups($user->id);
-			
+
 			$groups = array();
 			foreach ( $result as $key => $value ) {
 				$groups[]= $key;
@@ -555,6 +555,17 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
 		$upload = new CKunenaUpload();
 		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
+
+		// FIXME: Joomla 1.6 this code shouldn't be in here (if user doesn't exist, everything else will fail too!)
+		$this->_db->setQuery ( "SELECT userid FROM #__kunena_users WHERE userid='{$this->profile->userid}'" );
+		$table_exist = $this->_db->loadResult ();
+		if (KunenaError::checkDatabaseError()) return;
+
+    	if ( empty($table_exist) ) {
+      		$this->_db->setQuery( "INSERT INTO #__kunena_users (userid) VALUES ({$this->profile->userid})" );
+      		$this->_db->query ();
+     		 if (KunenaError::checkDatabaseError()) return;
+    	}
 
 		if ( $upload->uploaded('avatarfile') ) {
 			$filename = 'avatar'.$this->profile->userid;

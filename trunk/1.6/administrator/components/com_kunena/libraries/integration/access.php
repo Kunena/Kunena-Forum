@@ -167,8 +167,8 @@ abstract class KunenaAccess {
 		if ($this->isModerator ( $user->userid, $catid )) {
 			$hold [1] = 1;
 		}
-		if ($this->isAdmin ( $user->userid, $catid )
-			|| ($config->mod_see_deleted && $this->isModerator( $user->userid, $catid ))) {
+		if (($config->mod_see_deleted == '0' && $this->isAdmin ( $user->userid, $catid ))
+			|| ($config->mod_see_deleted == '1' && $this->isModerator( $user->userid, $catid ))) {
 			$hold [2] = 2;
 			$hold [3] = 3;
 	}

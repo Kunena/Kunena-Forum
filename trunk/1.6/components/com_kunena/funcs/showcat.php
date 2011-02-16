@@ -254,7 +254,7 @@ class CKunenaShowcat {
 			$this->actionMove = true;
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
-			if($this->config->mod_see_deleted == '1' || CKunenaTools::isAdmin()) {
+			if (($this->config->mod_see_deleted == '1' && CKunenaTools::isModerator()) || ($this->config->mod_see_deleted == '0' && CKunenaTools::isAdmin())) {
 				$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 				$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 			}

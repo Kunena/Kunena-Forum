@@ -42,6 +42,9 @@ if ($view == 'install') {
 }
 
 if (!$kn_version->checkVersion() && $task!='schema' && $task!='schemadiff') {
+	require_once(dirname(__FILE__).'/install.script.php');
+	Com_KunenaInstallerScript::preflight( null, null );
+	Com_KunenaInstallerScript::install ( null );
 	$kunena_app->redirect(JURI::root().'administrator/index.php?option=com_kunena&view=install');
 }
 
@@ -1113,6 +1116,7 @@ function editForum($id, $option) {
 		$category->admin_recurse = 1;
 		$category->pub_access = 0;
 		$category->moderated = 1;
+		$category->accesstype = 'none';
 	}
 
 	$catList = array();
@@ -1589,7 +1593,12 @@ function showConfig($option) {
 
 	$lists['showpopthankyoustats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopthankyoustats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopthankyoustats);
 
-	$lists ['mod_see_deleted'] = JHTML::_('select.genericlist', $yesno, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
+	$seerestoredeleted = array();
+	$seerestoredeleted[] =JHTML::_('select.option', 2, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_NOBODY'));
+	$seerestoredeleted[] =JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINS'));
+	$seerestoredeleted[] =JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINSMODS'));
+	$lists ['mod_see_deleted'] = JHTML::_('select.genericlist', $seerestoredeleted, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
+
 
 	$listBbcodeImgSecure = array();
 	$listBbcodeImgSecure[] = JHTML::_('select.option', 'text', JText::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_TEXT'));
@@ -1622,6 +1631,11 @@ function showConfig($option) {
 	$userlist_allowed[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_USERLIST_TYPE_ALL'));
 	$userlist_allowed[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_USERLIST_TYPE_REGISTRED'));
 	$lists ['userlist_allowed'] = JHTML::_('select.genericlist', $userlist_allowed, 'cfg_userlist_allowed', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_allowed);
+
+	$userlist_count_users[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ALL'));
+	$userlist_count_users[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVATED_ACCOUNT'));
+	$userlist_count_users[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVE'));
+	$lists ['userlist_count_users'] = JHTML::_('select.genericlist', $userlist_count_users, 'cfg_userlist_count_users', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_count_users);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
@@ -3138,17 +3152,17 @@ function generateSystemReport () {
 	} else {
 		$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
 	}
-	
+
 	// Get Kunena default template
 	$ktemplate = KunenaFactory::getTemplate();
 	$ktempaltedetails = $ktemplate->getTemplateDetails();
 
 	// Get database collation
 	$collation = getTablesCollation();
-	
+
 	// Get Joomla! template details
 	$templatedetails = getJoomlaTemplate($JVersion);
-	
+
 	// Get Joomla! menu details
 	$joomlamenudetails = getJoomlaMenuDetails($JVersion);
 
@@ -3157,28 +3171,52 @@ function generateSystemReport () {
 	jimport( 'joomla.application.module.helper' );
 	jimport( 'joomla.application.component.helper' );
 
-	if ( JPluginHelper::isEnabled('system', 'mtupgrade') ) 	$mtupgrade = '[u]System - Mootools Upgrade:[/u] Enabled';
-	else $mtupgrade = '[u]System - Mootools Upgrade:[/u] Disabled';
+	$plg = array();
 
-	if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg_mt = '[u]System - Mootools12:[/u] Enabled';
-	else $plg_mt = '[u]System - Mootools12:[/u] Disabled';
+	if ( JPluginHelper::isEnabled('system', 'mtupgrade') ) 	$plg['mtupgrade'] = '[u]System - Mootools Upgrade:[/u] Enabled';
+	else $plg['mtupgrade'] = '[u]System - Mootools Upgrade:[/u] Disabled';
 
-	$plg_jfirephp = checkThirdPartyVersion('jfirephp', 'jfirephp', 'JFirePHP', 'plugins/system', 'system', 0, 0, 1);
-	$plg_ksearch = checkThirdPartyVersion('kunenasearch', 'kunenasearch', 'Kunena Search', 'plugins/search', 'search', 0, 0, 1);
-	$plg_kdiscuss = checkThirdPartyVersion('kunenadiscuss', 'kunenadiscuss', 'Kunena Discuss', 'plugins/content', 'content', 0, 0, 1);
-	$plg_kjomsocialmenu = checkThirdPartyVersion('kunenamenu', 'kunenamenu', 'My Kunena Forum Menu', 'plugins/community', 'community', 0, 0, 1);
-	$plg_kjomsocialmykunena = checkThirdPartyVersion('mykunena', 'mykunena', 'My Kunena Forum Posts', 'plugins/community', 'community', 0, 0, 1);
-	$mod_kunenalatest = checkThirdPartyVersion('mod_kunenalatest', 'mod_kunenalatest', 'Kunena Latest', 'modules/mod_kunenalatest', null, 0, 1, 0);
-	$mod_kunenastats = checkThirdPartyVersion('mod_kunenastats', 'mod_kunenastats', 'Kunena Stats', 'modules/mod_kunenastats', null, 0, 1, 0);
-	$mod_kunenalogin = checkThirdPartyVersion('mod_kunenalogin', 'mod_kunenalogin', 'Kunena Login', 'modules/mod_kunenalogin', null, 0, 1, 0);
-	$aup = checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
-	$cb = checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
-	$jomsocial = checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
-	$uddeim = checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+	if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg['mt12'] = '[u]System - Mootools12:[/u] Enabled';
+	else $plg['mt12'] = '[u]System - Mootools12:[/u] Disabled';
 
-	$sh404sef = checkThirdPartyVersion('sh404sef', 'sh404sef', 'sh404sef', 'components/com_sh404sef', null, 1, 0, 0);
-	$joomsef = checkThirdPartyVersion('joomsef', 'sef', 'ARTIO JoomSEF', 'components/com_sef', null, 1, 0, 0);
-	$acesef = checkThirdPartyVersion('acesef', 'acesef', 'AceSEF', 'components/com_acesef', null, 1, 0, 0);
+	$plg['jfirephp'] = checkThirdPartyVersion('jfirephp', 'jfirephp', 'JFirePHP', 'plugins/system', 'system', 0, 0, 1);
+	$plg['ksearch'] = checkThirdPartyVersion('kunenasearch', 'kunenasearch', 'Kunena Search', 'plugins/search', 'search', 0, 0, 1);
+	$plg['kdiscuss'] = checkThirdPartyVersion('kunenadiscuss', 'kunenadiscuss', 'Kunena Discuss', 'plugins/content', 'content', 0, 0, 1);
+	$plg['kjomsocialmenu'] = checkThirdPartyVersion('kunenamenu', 'kunenamenu', 'My Kunena Forum Menu', 'plugins/community', 'community', 0, 0, 1);
+	$plg['kjomsocialmykunena'] = checkThirdPartyVersion('mykunena', 'mykunena', 'My Kunena Forum Posts', 'plugins/community', 'community', 0, 0, 1);
+	foreach ($plg as $id=>$item) {
+		if (empty($item)) unset ($plg[$id]);
+	}
+	$plgtext = '[quote][b]Plugins:[/b] ' . implode(' | ', $plg) . ' [/quote]';
+
+	$mod = array();
+	$mod['kunenalatest'] = checkThirdPartyVersion('mod_kunenalatest', 'mod_kunenalatest', 'Kunena Latest', 'modules/mod_kunenalatest', null, 0, 1, 0);
+	$mod['kunenastats'] = checkThirdPartyVersion('mod_kunenastats', 'mod_kunenastats', 'Kunena Stats', 'modules/mod_kunenastats', null, 0, 1, 0);
+	$mod['kunenalogin'] = checkThirdPartyVersion('mod_kunenalogin', 'mod_kunenalogin', 'Kunena Login', 'modules/mod_kunenalogin', null, 0, 1, 0);
+	$mod['kunenasearch'] = checkThirdPartyVersion('mod_kunenasearch', 'mod_kunenasearch', 'Kunena Search', 'modules/mod_kunenasearch', null, 0, 1, 0);
+	foreach ($mod as $id=>$item) {
+		if (empty($item)) unset ($mod[$id]);
+	}
+	$modtext = '[quote][b]Modules:[/b] ' . implode(' | ', $mod) . ' [/quote]';
+
+	$thirdparty = array();
+	$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+	$thirdparty['cb'] = checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
+	$thirdparty['jomsocial'] = checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
+	$thirdparty['uddeim'] = checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+	foreach ($thirdparty as $id=>$item) {
+		if (empty($item)) unset ($thirdparty[$id]);
+	}
+	$thirdpartytext = '[quote][b]Third-party components:[/b] ' . implode(' | ', $thirdparty) . ' [/quote]';
+
+	$sef = array();
+	$sef['sh404sef'] = checkThirdPartyVersion('sh404sef', 'sh404sef', 'sh404sef', 'components/com_sh404sef', null, 1, 0, 0);
+	$sef['joomsef'] = checkThirdPartyVersion('joomsef', 'sef', 'ARTIO JoomSEF', 'components/com_sef', null, 1, 0, 0);
+	$sef['acesef'] = checkThirdPartyVersion('acesef', 'acesef', 'AceSEF', 'components/com_acesef', null, 1, 0, 0);
+	foreach ($sef as $id=>$item) {
+		if (empty($item)) unset ($sef[$id]);
+	}
+	$seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
 
 	$report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
@@ -3187,8 +3225,8 @@ function generateSystemReport () {
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$templatedetails->name.' | [u]author:[/u] '.$templatedetails->author.' | [u]version:[/u] '.$templatedetails->version.' | [u]creationdate:[/u] '.$templatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
-	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Third-party SEF components:[/b] '.$sh404sef.' | '.$joomsef.' | '.$acesef.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' | '.$plg_kjomsocialmykunena.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
-	
+	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
+
 	return $report;
 }
 
@@ -3197,7 +3235,7 @@ function getJoomlaTemplate($jversion) {
 	if ($jversion->RELEASE == '1.5') {
 		$templatedetails = new stdClass();
 		// Get Joomla! frontend assigned template for Joomla! 1.5
-		
+
 		$query = ' SELECT template '
 				.' FROM #__templates_menu '
 				.' WHERE client_id = 0 AND menuid = 0 ';
@@ -3241,12 +3279,20 @@ function getJoomlaTemplate($jversion) {
 function getJoomlaMenuDetails($jversion) {
 	$kunena_db = JFactory::getDBO ();
 	if ($jversion->RELEASE == '1.5') {
-			// Get Kunena menu items
-		$query = "SELECT id, menutype, name, alias, link, parent "
-				." FROM #__menu "
-				." WHERE menutype = {$kunena_db->Quote('kunenamenu')} OR name='forum' ORDER BY id ASC";
+		// Get Kunena aliases
+		$query = "SELECT m.id, m.menutype, m.name, m.alias, m.link, m.parent
+			FROM #__menu AS m
+			INNER JOIN #__menu AS mm ON m.link LIKE CONCAT( '%Itemid=', mm.id )
+			WHERE m.published=1 AND m.type = 'menulink' AND mm.link LIKE '%com_kunena%'
+			ORDER BY m.menutype, m.parent, m.ordering ASC";
 		$kunena_db->setQuery($query);
-		$kmenustype = $kunena_db->loadObjectlist();
+		$kmenustype = (array) $kunena_db->loadObjectlist('id');
+		// Get Kunena menu items
+		$query = "SELECT id, menutype, name, alias, link, parent
+			FROM #__menu
+			WHERE published=1 AND link LIKE '%com_kunena%' ORDER BY menutype, parent, ordering ASC";
+		$kunena_db->setQuery($query);
+		$kmenustype += (array) $kunena_db->loadObjectlist('id');
 
 		$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
 		foreach($kmenustype as $item) {
@@ -3279,7 +3325,7 @@ function getJoomlaMenuDetails($jversion) {
 
 function getTablesCollation() {
 	$kunena_db = JFactory::getDBO ();
-	
+
 	// Check each table in the database if the collation is on utf8
 	$tableslist = $kunena_db->getTableList();
 	$collation = '';
@@ -3313,7 +3359,7 @@ function getTablesCollation() {
 	if(empty($collation)) {
 		$collation = 'The collation of your table fields are correct';
 	}
-	
+
 	return $collation;
 }
 
@@ -3325,12 +3371,12 @@ function checkThirdPartyVersion($namephp, $namexml, $namedetailled, $path, $plgg
 				$xml_com = JFactory::getXMLparser('Simple');
 				$xml_com->loadFile(JPATH_ADMINISTRATOR.'/'.$path.'/'.$namexml.'.xml');
 				$com_version = $xml_com->document->version[0];
-				$com_version = '[u]'.$namedetailled.':[/u] Installed (Version : '.$com_version->data().')';
+				$com_version = '[u]'.$namedetailled.'[/u] '.$com_version->data();
 			} else {
 				$com_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
 			}
 		} else {
-			$com_version = '[u]'.$namedetailled.':[/u] Disabled or not installed';
+			$com_version = '';
 		}
 		return $com_version;
 	} elseif ($module) {
@@ -3339,12 +3385,12 @@ function checkThirdPartyVersion($namephp, $namexml, $namedetailled, $path, $plgg
 				$xml_mod = JFactory::getXMLparser('Simple');
 				$xml_mod->loadFile(JPATH_SITE.'/'.$path.'/'.$namexml.'.xml');
 				$mod_version = $xml_mod->document->version[0];
-				$mod_version = '[u]'.$namedetailled.':[/u] Enabled (Version : '.$mod_version->data().')';
+				$mod_version = '[u]'.$namedetailled.'[/u] '.$mod_version->data();
 			} else {
 				$mod_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
 			}
 		} else {
-			$mod_version = '[u]'.$namedetailled.':[/u] Disabled or not installed';
+			$mod_version = '';
 		}
 		return $mod_version;
 	} elseif ($plugin) {
@@ -3353,12 +3399,12 @@ function checkThirdPartyVersion($namephp, $namexml, $namedetailled, $path, $plgg
 				$xml_plg = JFactory::getXMLparser('Simple');
 				$xml_plg->loadFile(JPATH_SITE.'/'.$path.'/'.$namexml.'.xml');
 				$plg_version = $xml_plg->document->version[0];
-				$plg_version = '[u]'.$namedetailled.':[/u] Enabled (Version : '.$plg_version->data().')';
+				$plg_version = '[u]'.$namedetailled.'[/u] '.$plg_version->data();
 			}	else {
 				$plg_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
 			}
 		} else {
-			$plg_version = '[u]'.$namedetailled.':[/u] Disabled or not installed';
+			$plg_version = '';
 		}
 		return $plg_version;
 	}

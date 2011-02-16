@@ -28,20 +28,26 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaLatest 1.6.4-DEV
+
+16-February-2011 Xillibit
+^ [#24415] Update version to 1.6.4-DEV
+^ [#24415] Update manifest file to work both on Joomla! 1.5 and Koomla! 1.6
+
 KunenaLatest 1.6.3-DEV
 
 8-February-2011 Severdia
 ^ [#24823] Optmized CSS selectors based on Page Speed
 
-23-January-2010 LDA(svens)
+23-January-2011 LDA(svens)
 ^ [#24560] update de-DE (thanks rich)
 ^ [#24560] update ru-RU (thanks Zarkos)
 ^ [#24560] update fi-FI (thanks Mortti)
 
-23-January-2010 Xillibit
+23-January-2011 Xillibit
 # [#24416] Make tooltips visible when you choose others models than latestposts and latesttopics (Part 2)
 
-16-January-2010 Xillibit
+16-January-2011 Xillibit
 ^ [#24415] Update version to 1.6.3-DEV
 + [#24415] New configuration setting to show or hide more link
 # [#24416] Make tooltips visible when you choose others models than latestposts and latesttopics

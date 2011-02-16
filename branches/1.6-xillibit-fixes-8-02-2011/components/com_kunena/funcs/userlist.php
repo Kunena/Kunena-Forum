@@ -39,8 +39,12 @@ class CKunenaUserlist {
 		$direction = ($filter_order_dir == 'asc' ? 'ASC' : 'DESC');
 		$orderby = " ORDER BY {$this->db->nameQuote($filter_order)} {$direction}";
 
+		if ($this->config->userlist_count_users == '0' ) $where = '';
+		elseif ($this->config->userlist_count_users == '1' ) $where = ' WHERE block=0 AND activation=""';
+		elseif ($this->config->userlist_count_users == '2' ) $where = ' WHERE block=0 OR activation=""';
+
 		// Total
-		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 AND activation=''" );
+		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users" . $where );
 		$this->total = $this->db->loadResult ();
 		KunenaError::checkDatabaseError();
 

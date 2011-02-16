@@ -1629,6 +1629,11 @@ function showConfig($option) {
 	$userlist_allowed[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_USERLIST_TYPE_REGISTRED'));
 	$lists ['userlist_allowed'] = JHTML::_('select.genericlist', $userlist_allowed, 'cfg_userlist_allowed', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_allowed);
 
+	$userlist_count_users[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ALL'));
+	$userlist_count_users[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVE'));
+	$userlist_count_users[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVATED_ACCOUNT'));
+	$lists ['userlist_count_users'] = JHTML::_('select.genericlist', $userlist_count_users, 'cfg_userlist_count_users', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_count_users);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

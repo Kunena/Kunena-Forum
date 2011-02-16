@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.4
 
+16-February-2011 Xillibit
++ [#24924] Add configuration setting to let users choose the way to count totalusers
+
 14-February-2011 Xillibit
 # [#24818] MySQL tables are case insensitive: installation fails on JOS_ prefix
 

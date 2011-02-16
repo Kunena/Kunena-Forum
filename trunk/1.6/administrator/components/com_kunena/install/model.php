@@ -1052,14 +1052,18 @@ class KunenaModelInstall extends JModel {
 			return $this->_versions;
 		}
 		$kunena = $this->getInstalledVersion('kunena_', $this->_kVersions);
-		$fireboard = $this->getInstalledVersion('fb_', $this->_fbVersions);
 		if (!empty($kunena->state)) {
 			$this->_versions['failed'] = $kunena;
 			$kunena = $this->getInstalledVersion('kunena_', $this->_kVersions, true);
 			if (version_compare ( $kunena->version, '1.6.0-ALPHA', "<" ) ) $kunena->ignore = true;
 		}
-		$migrate = $this->isMigration($kunena, $fireboard);
-		if ($kunena->component && empty($kunena->ignore)) $this->_versions['kunena'] = $kunena;
+		if ($kunena->component && empty($kunena->ignore)) {
+			$this->_versions['kunena'] = $kunena;
+			$migrate = false;
+		} else {
+			$fireboard = $this->getInstalledVersion('fb_', $this->_fbVersions);
+			$migrate = $this->isMigration($kunena, $fireboard);
+		}
 		if (!empty($fireboard->component)) $this->_versions['fb'] = $fireboard;
 		if (empty($kunena->component)) $this->_versions['kunena'] = $kunena;
 		else if (!empty($fireboard->component)) {

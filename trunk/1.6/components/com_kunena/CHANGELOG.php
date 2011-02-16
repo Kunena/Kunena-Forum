@@ -37,6 +37,7 @@ Kunena 1.6.4
 # [#24948] Administrator: Workaround for Joomla 1.5 bug where translations aren't shown in Menu Manager
 # [#24949] Installer: Parse error in PHP4
 # [#24824] Menu link should not have the same name as the real menu item
+# [#24783] Remove option to restore backup from K1.5 when K1.6 has already been installed
 
 13-February-2011 Severdia
 # [#24364] CSS fix for color coded user names (regression from Joomla 1.6 fixes)

@@ -15,6 +15,10 @@ class modKunenaSearch {
 
 	require_once (KUNENA_PATH_LIB . '/kunena.link.class.php');
 
+	// Initialize session
+	$session = KunenaFactory::getSession ();
+	$session->updateAllowedForums();
+
 	$this->ksearch_button			= $params->get('ksearch_button', '');
 	$this->ksearch_button_pos		= $params->get('ksearch_button_pos', 'right');
 	$this->ksearch_button_txt	 	= $params->get('ksearch_button_txt', JText::_('Search'));

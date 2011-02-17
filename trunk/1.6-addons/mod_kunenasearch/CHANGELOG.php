@@ -30,6 +30,9 @@ Legend:
 
 KunenaSearch 1.6.3-DEV
 
+17-February-2011 Matias
+# [#24959] Always initialize session if allowed=na
+
 30-January-2010 Xillibit
 # [#23929] Fatal Error in Kunena Search Module
 

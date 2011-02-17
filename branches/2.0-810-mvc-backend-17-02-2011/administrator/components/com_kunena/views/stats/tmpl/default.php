@@ -13,8 +13,11 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
 ?>
-<div class="kadmin-functitle icon-stats"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS');?></div>
-<div class="kadmin-statscover">
+<div id="kadmin">
+	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+	<div class="kadmin-right">
+	<div class="kadmin-functitle icon-stats"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS');?></div>
+	<div class="kadmin-statscover">
 
 <!-- BEGIN: STATS -->
 <div class="kadmin-statscover">
@@ -325,6 +328,12 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 	</tr>
 </table>
 <?php endif; ?>
+
 </div>
+
 <!-- FINISH: STATS -->
 </div>
+</div>
+<div class="kadmin-footer">
+		<?php echo KunenaVersion::getLongVersionHTML (); ?>
+	</div>

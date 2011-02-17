@@ -9,7 +9,7 @@
 	<build>@kunenaversionbuild@</build>
 	<copyright>(c)2009-2011 Kunena Team. All rights reserved</copyright>
 	<license>GNU/GPL</license>
-	<version>1.6.2</version>
+	<version>1.6.3-DEV</version>
 	<isapplication>true</isapplication>
 	<isbrowseable>true</isbrowseable>
 	<description>PLG_COMMUNITY_KUNENAMENU_DESC</description>

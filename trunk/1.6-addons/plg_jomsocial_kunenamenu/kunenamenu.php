@@ -28,8 +28,8 @@ class plgCommunityKunenaMenu extends CApplications {
 
 	protected static function kunenaInstalled() {
 		// Kunena detection and version check
-		$minKunenaVersion = '1.6.0-RC2';
-		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3251) {
+		$minKunenaVersion = '1.6.3';
+		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 4344) {
 			return false;
 		}
 		return true;
@@ -53,6 +53,6 @@ class plgCommunityKunenaMenu extends CApplications {
 		if ( $this->params->get('sh_myposts') ) $toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_POSTS', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_POSTS' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=latest&do=userposts' ) );
 		if ( $this->params->get('sh_mysubscriptions') ) $toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_SUBSCRIBES', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_SUBSCRIBTIONS' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=latest&do=subscriptions' ) );
 		if ( $this->params->get('sh_myfavorites') ) $toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_FAVORITES', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_FAVORITES' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=latest&do=favorites' ) );
-		
+
 	}
 }

@@ -27,6 +27,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+JomsocialKunenaMenu 1.6.3-DEV
+
+17-February-2011 Matias
+^ [#19002] Updated version to 1.6.3-DEV
+
 JomsocialKunenaMenu 1.6.2
 
 17-January-2011 fxstein

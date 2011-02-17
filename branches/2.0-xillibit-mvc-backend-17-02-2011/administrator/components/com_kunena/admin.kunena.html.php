@@ -2236,73 +2236,7 @@ function textCounter(field, target) {
 			</table>
 	<?php
 		}
-		//**************************
-		// Prune Forum
-		//**************************
-		function pruneforum($option, $forumList) {
-	?>
-	<div class="kadmin-functitle icon-prune"><?php echo JText::_('COM_KUNENA_A_PRUNE'); ?></div>
-	<form action="index.php" method="post" name="adminForm">
-		<table class="adminform" cellpadding="4" cellspacing="0" border="0" width="100%">
-			<tr>
-				<td colspan="2"><?php echo JText::_('COM_KUNENA_A_PRUNE_DESC') ?></td>
-			</tr>
-			<tr>
-				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NAME') ?></td>
-				<td><?php echo $forumList ['forum']?></td>
-			</tr>
-			<tr>
-				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
-				<td><input type="text" name="prune_days" value="30" /><?php echo "&nbsp;". JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></td>
-			</tr>
-		</table>
-		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="option" value="<?php echo $option; ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
-		</form>
-		<?php
-			}
-
-			//**************************
-			// Sync Users
-			//**************************
-			function syncusers($option) {
-		?>
-		<div id="kadmin-congifcover">
-			<div class="kadmin-functitle icon-syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></div>
-			<form action="index.php" method="post" name="adminForm" class="adminform">
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_SYNC_USERS_OPTIONS'); ?></legend>
-					<table cellpadding="4" class="kadmin-adminform" cellspacing="0" border="0" width="100%">
-						<tr>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_CACHE'); ?></td>
-							<td><input type="checkbox" name="usercache" value="1" checked="checked" /></td>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_CACHE_DESC'); ?></td>
-						</tr>
-						<tr>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_ADD'); ?></td>
-							<td><input type="checkbox" name="useradd" value="1" /></td>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_ADD_DESC'); ?></td>
-						</tr>
-						<tr>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DEL'); ?></td>
-							<td><input type="checkbox" name="userdel" value="1" /></td>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DEL_DESC'); ?></td>
-						</tr>
-						<tr>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_RENAME'); ?></td>
-							<td><input type="checkbox" name="userrename" value="1" /></td>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_RENAME_DESC'); ?></td>
-						</tr>
-					</table>
-				</fieldset>
-				<input type="hidden" name="task" value="" />
-				<input type="hidden" name="option" value="<?php echo $option; ?>" />
-				<?php echo JHTML::_( 'form.token' ); ?>
-			</form>
-		</div>
-		<?php
-			}
+	
 
 			//***************************************
 			// Uploaded Image Browser

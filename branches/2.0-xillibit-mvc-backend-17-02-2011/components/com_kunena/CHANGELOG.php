@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+17-February-2011 Xillibit
+^ [#24395] Backend in MVC (syncusers and prune)
+
 16-February-2011 Matias
 # [#23443] Statistics: fix a bug when counting most popular topics
 # [#23443] Search: Minor bug fix

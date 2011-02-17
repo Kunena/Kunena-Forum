@@ -94,29 +94,6 @@ class CKunenaToolbar
 
     }
 
-    function _PRUNEFORUM_MENU()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('doprune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
-        JToolBarHelper::spacer();
-        JToolBarHelper::cancel();
-        JToolBarHelper::spacer();
-
-    }
-
-    function _SYNCUSERS_MENU()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('douserssync', 'apply.png', 'apply_f2.png', 'COM_KUNENA_SYNC', false);
-        JToolBarHelper::spacer();
-        JToolBarHelper::cancel();
-        JToolBarHelper::spacer();
-
-    }
-
     function BACKONLY_MENU()
     {
 

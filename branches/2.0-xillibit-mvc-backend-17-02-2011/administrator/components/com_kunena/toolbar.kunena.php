@@ -64,16 +64,6 @@ switch ($task)
 
         break;
 
-    case "pruneforum":
-        CKunenaToolbar::_PRUNEFORUM_MENU();
-
-        break;
-
-    case "syncusers":
-        CKunenaToolbar::_SYNCUSERS_MENU();
-
-        break;
-
     case "showprofiles":
         CKunenaToolbar::_PROFILE_MENU();
 

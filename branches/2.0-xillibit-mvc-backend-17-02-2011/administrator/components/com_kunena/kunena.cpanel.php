@@ -109,10 +109,10 @@ $document->addStyleDeclaration($styles);
 						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=browseImages" title="<?php echo JText::_('COM_KUNENA_C_IMAGESDESC');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/images.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_IMAGES'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=pruneforum" title="<?php echo JText::_('COM_KUNENA_C_PRUNETABDESC');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/prune.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?> </span></a> </div>
+						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=prune" title="<?php echo JText::_('COM_KUNENA_C_PRUNETABDESC');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/prune.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=syncusers" title="<?php echo JText::_('COM_KUNENA_C_SYNCEUSERSDESC');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/syncusers.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?> </span></a> </div>
+						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=syncusers" title="<?php echo JText::_('COM_KUNENA_C_SYNCEUSERSDESC');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/syncusers.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
 						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=recount&amp;no_html=1" title="<?php echo JText::_('COM_KUNENA_RECOUNTFORUMS');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/recount.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?> </span></a> </div>

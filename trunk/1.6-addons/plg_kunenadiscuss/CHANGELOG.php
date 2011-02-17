@@ -29,11 +29,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena Discuss Plugin 1.6.4-DEV
+Kunena Discuss Plugin 1.6.3-DEV
+
+17-February-2011 Matias
+# [#24959] Always initialize session if allowed=na
 
 15-February-2010 Xillibit
 ^ [#20084] Make manifest file working on both Joomla! 1.5 and Joomla! 1.6
-^ [#20084] Change version to 1.6.4-DEV
+^ [#20084] Change version to 1.6.3-DEV
 
 Kunena Discuss Plugin 1.6.2
 

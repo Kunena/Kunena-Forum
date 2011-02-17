@@ -28,19 +28,20 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		// Load language files
 		$this->loadLanguage ( 'plg_content_kunenadiscuss', JPATH_ADMINISTRATOR );
-			
-		// Kunena detection and version check
-		$minKunenaVersion = '1.6.2';
-		if (!class_exists('Kunena') || Kunena::versionBuild() < 3892) {
 
+		// Kunena detection and version check
+		$minKunenaVersion = '1.6.3';
+		if (!class_exists('Kunena') || Kunena::versionBuild() < 4344) {
 			$this->_app->enqueueMessage( JText::sprintf ( 'PLG_KUNENADISCUSS_DEPENDENCY_FAIL', $minKunenaVersion ) );
-			
 			return null;
 		}
 		// Kunena online check
 		if (!Kunena::enabled()) {
 			return null;
 		}
+		// Initialize session
+		$session = KunenaFactory::getSession ();
+		$session->updateAllowedForums();
 
 		// Initialize plugin
 		parent::__construct ( $subject, $params );
@@ -70,7 +71,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			$this->_db->query ();
 			CKunenaTools::checkDatabaseError ();
 			$this->debug ( "Created #__kunenadiscuss cross reference table." );
-			
+
 			// Migrate data from old FireBoard discussbot if it exists
 			$query = "SHOW TABLES LIKE '#__fb_discussbot'";
 			$this->_db->setQuery ( $query );
@@ -104,11 +105,11 @@ class plgContentKunenaDiscuss extends JPlugin {
 		if ($params instanceof JParameter){
 			$ksource = $params->get( 'ksource', '');
 		}
-		
+
 		if ($ksource != 'kunena' ){
-			
+
 			$customTopics = $this->params->get ( 'custom_topics', 1 );
-	
+
 			$articleCategory = (isset ( $article->catid ) ? $article->catid : 0);
 			$isStaticContent = ! $articleCategory;
 			if ($isStaticContent) {
@@ -123,9 +124,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 				}
 			}
 			$kunenaTopic = false;
-	
+
 			$regex = '/{kunena_discuss:(\d+?)}/s';
-	
+
 			if (JRequest::getVar ( 'tmpl', '' ) == 'component' || JRequest::getBool ( 'print' ) || JRequest::getVar ( 'format', 'html' ) != 'html' || (isset ( $article->state ) && ! $article->state) || empty ( $article->id ) || $this->_app->scope == 'com_kunena') {
 				$this->debug ( "onPrepareContent: Not allowed - removing tags." );
 				if (isset ( $article->text ))
@@ -136,7 +137,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 					$article->fulltext = preg_replace ( $regex, '', $article->fulltext );
 				return true;
 			}
-	
+
 			$isFrontPage = JRequest::getVar ( 'view' ) == 'frontpage';
 			$isBlogPage = JRequest::getVar ( 'layout' ) == 'blog';
 			if ($isBlogPage) {
@@ -156,9 +157,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 					$article->fulltext = preg_replace ( $regex, '', $article->fulltext );
 				return true;
 			}
-	
+
 			$this->debug ( "onPrepareContent: Article {$article->id}" );
-	
+
 			if (! $customTopics) {
 				$this->debug ( "onPrepareContent: Custom Topics disabled" );
 			} else {
@@ -182,7 +183,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 						$text = implode ( "\n\n", $text );
 					}
 				}
-	
+
 				$matches = array ();
 				if (preg_match ( $regex, $text, $matches )) {
 					$kunenaTopic = intval ( $matches [1] );
@@ -199,12 +200,12 @@ class plgContentKunenaDiscuss extends JPlugin {
 				}
 				$this->debug ( "onPrepareContent: Searched for {kunena_discuss:#}: Custom Topic " . ($kunenaTopic ? "{$kunenaTopic} found." : "not found.") );
 			}
-	
+
 			if ($kunenaCategory || $kunenaTopic) {
 				self::$plgDisplay [$article->id] = $this->showPlugin ( $kunenaCategory, $kunenaTopic, $article, $show == 1 );
 			}
 		} // end of $ksource!='kunena' check
-		
+
 		return true;
 	}
 

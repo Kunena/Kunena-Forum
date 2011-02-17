@@ -26,6 +26,10 @@ class modKunenaLatest {
 		// load Kunena main language file so we can leverage langaueg strings from it
 		KunenaFactory::loadLanguage();
 
+		// Initialize session
+		$session = KunenaFactory::getSession ();
+		$session->updateAllowedForums();
+
 		$this->document = JFactory::getDocument ();
 		if ($cssadded == false) {
 			$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/css/kunenalatest.css' );
@@ -55,7 +59,6 @@ class modKunenaLatestHelper {
 	}
 
 	function getKunenaLatestList($params) {
-		KunenaFactory::getSession ( true );
 		$model = self::getModel ($params);
 		$model->threads_per_page = $params->get ( 'nbpost' );
 		$model->latestcategory = $params->get ( 'category_id' );

@@ -23,13 +23,17 @@ class ModuleKunenaStats {
 	public function __construct($params) {
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$this->params = $params;
-		$this->api = Kunena::getStatsAPI();
-
 		$this->type = $this->params->get ( 'type', 'general' );
 		$this->items = ( int ) $this->params->get ( 'items', 5 );
 
 		// load Kunena main language file so we can leverage langaueg strings from it
 		KunenaFactory::loadLanguage();
+
+		// Initialize session
+		$session = KunenaFactory::getSession ();
+		$session->updateAllowedForums();
+
+		$this->api = Kunena::getStatsAPI();
 	}
 
 	function display() {

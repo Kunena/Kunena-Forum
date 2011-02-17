@@ -3,7 +3,7 @@
 <install type="module" version="1.5.0" method="upgrade">
 	<name>Kunena Statistics</name>
 	<author>Kunena Team</author>
-	<version>1.6.2</version>
+	<version>1.6.3-DEV</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<copyright>(c)2010-2011 Kunena Team. All rights reserved</copyright>

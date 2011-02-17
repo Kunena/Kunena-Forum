@@ -26,7 +26,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaSearch 1.6.3
+KunenaSearch 1.6.3-DEV
+
+17-February-2011 Matias
+# [#24959] Always initialize session if allowed=na
 
 23-January-2010 LDA(svens)
 ^ [#24560] update ru-RU (thanks Zarkos)

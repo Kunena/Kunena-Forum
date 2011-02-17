@@ -13,8 +13,8 @@ defined ( '_JEXEC' ) or die ( '' );
 require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/api.php');
 
 // Kunena detection and version check
-$minKunenaVersion = '1.6.2';
-if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3892) {
+$minKunenaVersion = '1.6.3';
+if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 4344) {
 	return;
 }
 // Kunena online check
@@ -46,6 +46,10 @@ function plgSearchKunena($text, $phrase = '', $ordering = '', $areas = null) {
 	$db = JFactory::getDBO ();
 	$user = JFactory::getUser ();
 	$kconfig = KunenaFactory::getConfig ();
+
+	// Initialize session
+	$ksession = KunenaFactory::getSession ();
+	$ksession->updateAllowedForums();
 
 	//If the array is not correct, return it:
 	if (is_array ( $areas )) {
@@ -127,7 +131,6 @@ function plgSearchKunena($text, $phrase = '', $ordering = '', $areas = null) {
 			$order = 'm.subject ASC, created DESC';
 	}
 
-	$ksession = KunenaFactory::getSession(true);
 	$query = "SELECT m.id, m.subject AS title, m.catid, m.thread, m.name, m.time AS created, t.mesid, t.message AS text, m.ordering, mm.hits, c.name AS section, 1 AS browsernav
 		FROM #__kunena_messages_text AS t
 		INNER JOIN #__kunena_messages AS m ON m.id=t.mesid

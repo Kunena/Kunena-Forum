@@ -26,6 +26,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaLogin 1.6.3-DEV
+
+17-February-2011 Matias
+^ [#19002] Updated version to 1.6.3-DEV
+# [#24959] Always initialize session if allowed=na
+
 KunenaLogin 1.6.2
 
 23-January-2010 LDA(svens)

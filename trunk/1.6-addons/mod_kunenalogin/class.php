@@ -22,6 +22,10 @@ class ModKunenaLogin {
 
 		// load Kunena main language file so we can leverage language strings from it
 		KunenaFactory::loadLanguage();
+
+		// Initialize session
+		$session = KunenaFactory::getSession ();
+		$session->updateAllowedForums();
 	}
 
 	function display() {

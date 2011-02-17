@@ -31,7 +31,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.4
+Kunena 1.6.4-DEV
+
+17-February-2011 Matias
+# [#24959] Always initialize session if allowed=na
 
 16-February-2011 Matias
 # [#24948] Administrator: Workaround for Joomla 1.5 bug where translations aren't shown in Menu Manager

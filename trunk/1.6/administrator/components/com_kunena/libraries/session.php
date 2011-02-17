@@ -36,6 +36,7 @@ class KunenaSession extends JObject
 			$db = JFactory::getDBO();
 			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
 			if ($update) self::$_instance->updateSessionInfo();
+			self::$_instance->updateAllowedForums();
 		}
 		return self::$_instance;
 	}
@@ -192,8 +193,8 @@ class KunenaSession extends JObject
 		{
 			$this->lasttime = $this->currvisit;
 			$this->readtopics = 0;
+			$this->allowed == 'na';
 		}
-		$this->updateAllowedForums();
 		$this->currvisit = CKunenaTimeformat::internalTime();
 	}
 
@@ -201,7 +202,7 @@ class KunenaSession extends JObject
 	{
 		// check to see if we need to refresh the allowed forums cache
 		// get all accessaible forums if needed (eg on forum modification, new session)
-		if (!$this->allowed or $this->allowed == 'na' or $this->isNewSession()) {
+		if (!$this->allowed || $this->allowed == 'na') {
 			$allow_forums = implode(',', CKunenaTools::getAllowedForums($this->userid));
 
 			if (!$allow_forums)

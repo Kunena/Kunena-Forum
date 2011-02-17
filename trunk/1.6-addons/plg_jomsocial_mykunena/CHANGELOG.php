@@ -26,7 +26,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+MyKunena 1.6.3-DEV
+
+17-February-2011 Matias
+^ [#19002] Updated version to 1.6.3-DEV
+# [#24959] Always initialize session if allowed=na
+
 MyKunena 1.6.0-RC2
+
 30-October-2010 svens LDA
 ^ [#22975] update ru-RU (thanks ZARKOS)
 

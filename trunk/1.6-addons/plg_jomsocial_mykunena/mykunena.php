@@ -24,14 +24,18 @@ class plgCommunityMyKunena extends CApplications {
 
 	protected static function kunenaOnline() {
 		// Kunena detection and version check
-		$minKunenaVersion = '1.6.0-RC2';
-		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3251) {
+		$minKunenaVersion = '1.6.3';
+		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 4344) {
 			return false;
 		}
 		// Kunena online check
 		if (! Kunena::enabled ()) {
 			return false;
 		}
+		// Initialize session
+		$session = KunenaFactory::getSession ();
+		$session->updateAllowedForums();
+
 		return true;
 	}
 
@@ -47,7 +51,6 @@ class plgCommunityMyKunena extends CApplications {
 		$items = array();
 		$user = CFactory::getRequestUser ();
 		if ($user->id) {
-			KunenaFactory::getSession ( true );
 			require_once KPATH_SITE . '/funcs/latestx.php';
 			$obj = new CKunenaLatestX('userposts', 0);
 			$obj->user = JFactory::getUser($user->id);

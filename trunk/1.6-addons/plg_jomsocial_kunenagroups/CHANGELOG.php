@@ -30,6 +30,9 @@ Legend:
 
 Kunena Groups 1.6.3-DEV
 
+17-February-2011 Matias
+# [#24959] Always initialize session if allowed=na
+
 21-December-2010 Matias
 # [#22541] Fix a bug in version detection
 # [#22541] Fix Warning: array_merge(): Argument #2 is not an array

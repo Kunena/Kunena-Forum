@@ -28,8 +28,8 @@ class plgCommunityKunenaGroups extends CApplications {
 
 	protected static function kunenaOnline() {
 		// Kunena detection and version check
-		$minKunenaVersion = '1.6.3-DEV';
-		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 4050 ) {
+		$minKunenaVersion = '1.6.3';
+		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 4344 ) {
 			JFactory::getApplication()->enqueueMessage(JText::sprintf('PLG_COMMUNITY_KUNENAGROUPS_KUNENA_NOT_INSTALLED', $minKunenaVersion),'notice');
 			return false;
 		}
@@ -38,6 +38,10 @@ class plgCommunityKunenaGroups extends CApplications {
 			JFactory::getApplication()->enqueueMessage(JText::_('PLG_COMMUNITY_KUNENAGROUPS_KUNENA_OFFLINE'),'notice');
 			return false;
 		}
+		// Initialize session
+		$session = KunenaFactory::getSession ();
+		$session->updateAllowedForums();
+
 		kimport ('category');
 		return true;
 	}

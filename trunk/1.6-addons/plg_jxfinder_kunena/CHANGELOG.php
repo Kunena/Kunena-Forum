@@ -29,11 +29,18 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-JxFinder Kunena Plugin 1.6.0b
+JxFinder Kunena Plugin 1.6.3-DEV
 
-23-January-2010 LDA(svens)
+17-February-2011 Matias
+# [#24959] Always initialize session if allowed=na
+# [#24959] Better Kunena version detection
+^ [#24959] Changed version to 1.6.3-DEV
+
+23-January-2011 LDA(svens)
 + [#24560] added ru-RU (thanks Zarkos)
 ^ [#24560] moved en-GB to languages folder
+
+JxFinder Kunena Plugin 1.6.0b
 
 26-Sep-2010 fxstein
 + [#22597] Initial version

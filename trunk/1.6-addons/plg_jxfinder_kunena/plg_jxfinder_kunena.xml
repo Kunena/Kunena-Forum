@@ -2,7 +2,7 @@
 <!DOCTYPE install>
 <install version="1.5" type="plugin" group="finder" method="upgrade">
 	<name>Finder - Kunena Posts</name>
-	<version>1.6.0b</version>
+	<version>1.6.3-DEV</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>

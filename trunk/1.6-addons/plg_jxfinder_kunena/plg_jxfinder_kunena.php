@@ -142,17 +142,22 @@ class plgFinderKunena_Posts extends FinderIndexerAdapter
 	 */
 	protected function _setup()
 	{
-		// Ensure Kunena 1.6 is installed and enabled.
-		$KAPI = JPATH_ADMINISTRATOR.'/components/com_kunena/api.php';
-		if (!JComponentHelper::isEnabled('com_kunena', true) || !is_file($KAPI)){
-			return JError::raiseError (JText::_('Kunena 1.6 is not installed on your system'));
+		// Kunena detection and version check
+		$minKunenaVersion = '1.6.3';
+		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 4344) {
+			return JError::raiseError (JText::_('Kunena 1.6.3+ is not installed on your system'));
 		}
+		// Kunena online check
+		if (! Kunena::enabled ()) {
+			return JError::raiseError (JText::_('Kunena 1.6 is not online'));
+		}
+		// Initialize session
+		$session = KunenaFactory::getSession ();
+		$session->updateAllowedForums();
 
 		// Load dependencies.
-		require_once $KAPI;
 		require_once KPATH_SITE.DS.'class.kunena.php';
 		require_once KPATH_SITE.DS.'lib'.DS.'kunena.smile.class.php';
-		kimport('route');
 
 		// Load the component language file.
 		JFactory::getLanguage()->load('com_kunena', KPATH_SITE);

@@ -29,6 +29,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaSearch 1.6.3-DEV
+18-February-2011 svens(LDA)
++ [#24847] add fi-FI (thanks Mortti)
 
 23-January-2010 LDA(svens)
 ^ [#24560] update de-DE (thanks rich)

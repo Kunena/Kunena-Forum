@@ -27,6 +27,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaSearch 1.6.3
+18-February-2011 svens(LDA)
+^ [#24847] update fi-FI (thanks Mortti)
 
 23-January-2010 LDA(svens)
 ^ [#24560] update ru-RU (thanks Zarkos)

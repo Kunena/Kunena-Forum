@@ -33,8 +33,12 @@ Legend:
 
 Kunena 1.6.4-DEV
 
+18-February-2011 Matias
++ [#24985] Feature: Threaded and indented layouts for topics (disabled in configuration)
+
 17-February-2011 Matias
 # [#24959] Always initialize session if allowed=na
++ [#24985] Feature: Threaded and indented layouts for topics
 
 16-February-2011 Matias
 # [#24948] Administrator: Workaround for Joomla 1.5 bug where translations aren't shown in Menu Manager

@@ -225,7 +225,7 @@ class KunenaRouter {
 			unset ( $query ['func'] );
 		}
 
-		if (isset ( $query ['do'] )) {
+		if (!$catfound && isset ( $query ['do'] )) {
 			$segments [] = $query ['do'];
 			unset ( $query ['do'] );
 		}

@@ -62,6 +62,9 @@ class CKunenaViewMessage {
 
 	function __construct($parent, $message) {
 		kimport('html.parser');
+		$this->limitstart = $parent->limitstart;
+		$this->limit = $parent->limit;
+		$this->mesid = $parent->mesid;
 		$this->replynum = $parent->replynum;
 		$this->replycnt = $parent->total_messages;
 		$this->mmm = $parent->mmm;
@@ -138,7 +141,7 @@ class CKunenaViewMessage {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
-	function display() {
+	function display($mode='') {
 		$message = $this->msg;
 		$this->id = $message->id;
 		$this->catid = $message->catid;
@@ -245,7 +248,7 @@ class CKunenaViewMessage {
 			}
 		}
 
-		$this->class = 'class="kmsg"';
+		$this->msgclass = 'kmsg';
 
 		//Offer an moderator a few tools
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
@@ -254,10 +257,10 @@ class CKunenaViewMessage {
 			$this->message_moderate = CKunenaLink::GetTopicPostReplyLink ( 'moderate', $this->catid, $this->id, CKunenaTools::showButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE_LONG') );
 			if ($message->hold == 1) {
 				$this->message_publish = CKunenaLink::GetTopicPostLink ( 'approve', $this->catid, $this->id, CKunenaTools::showButton ( 'approve', JText::_('COM_KUNENA_BUTTON_APPROVE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_APPROVE_LONG') );
-				$this->class = 'class="kmsg kunapproved"';
+				$this->msgclass += 'kunapproved';
 			}
 			if ($message->hold == 2 || $message->hold == 3) {
-				$this->class = 'class="kmsg kunapproved"';
+				$this->msgclass += 'kunapproved kdeleted';
 				$this->message_undelete = CKunenaLink::GetTopicPostLink ( 'undelete', $this->catid, $this->id, CKunenaTools::showButton ( 'undelete', JText::_('COM_KUNENA_BUTTON_UNDELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG') );
 				$this->message_permdelete = CKunenaLink::GetTopicPostLink ( 'permdelete', $this->catid, $this->id, CKunenaTools::showButton ( 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG') );
 			} else {
@@ -276,7 +279,14 @@ class CKunenaViewMessage {
 			}
 		}
 
-		CKunenaTools::loadTemplate('/view/message.php', false, $this->templatepath);
+		$this->class = 'class="'.$this->msgclass.'"';
+
+		if (!$mode) {
+			$templatefile = '/view/message.php';
+		} else {
+			$templatefile = "/view/message.{$mode}.php";
+		}
+		CKunenaTools::loadTemplate($templatefile, false, $this->templatepath);
 	}
 
 }
@@ -299,7 +309,7 @@ class CKunenaView {
 	public $pagination = null;
 	public $goto = null;
 
-	function __construct($func, $catid, $id, $limitstart=0, $limit=0) {
+	function __construct($layout, $catid, $id, $mesid, $limitstart=0, $limit=0) {
 		require_once(KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
 		require_once(KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 
@@ -310,9 +320,10 @@ class CKunenaView {
 		$this->myprofile = KunenaFactory::getUser ();
 		$this->app = JFactory::getApplication ();
 
-		$this->func = $func;
+		$this->layout = $this->config->enable_threaded_layouts && $layout && $layout != 'flat' ? $layout : 'view';
 		$this->catid = $catid;
 		$this->id = $id;
+		$this->mesid = $mesid;
 
 		//prepare paging
 		$this->limitstart = $limitstart;
@@ -350,6 +361,54 @@ class CKunenaView {
 	function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	function getThreadedOrdering($parent = 0, $indent = array()) {
+		$list = array();
+		$last = end($this->threaded[$parent]);
+		foreach ($this->threaded[$parent] as $mesid) {
+			$message = $this->messages[$mesid];
+			$skip = $message->parent != $this->id && !isset($this->messages[$message->parent]);
+			if ($mesid != $last) {
+				// Default sibling edge
+				$indent[] = 'crossedge';
+			} else {
+				// Last sibling edge
+				$indent[] = 'lastedge';
+			}
+			end($indent);
+			$key = key($indent);
+			if ($skip) {
+				$indent[] = 'gap';
+			}
+			$list[$mesid] = $this->messages[$mesid];
+			$list[$mesid]->indent = $indent;
+			if (empty($this->threaded[$mesid])) {
+				// No children node
+				$list[$mesid]->indent[] = ($mesid == $message->thread) ? 'single' : 'leaf';
+			} else {
+				// Has children node
+				$list[$mesid]->indent[] = ($mesid == $message->thread) ? 'root' : 'node';
+			}
+
+			if (!empty($this->threaded[$mesid])) {
+				// Fix edges
+				if ($mesid != $last) {
+					$indent[$key] = 'edge';
+				} else {
+					$indent[$key] = 'empty';
+				}
+				if ($skip) {
+					$indent[$key+1] = 'empty';
+				}
+				$list += $this->getThreadedOrdering($mesid, $indent);
+			}
+			if ($skip) {
+				array_pop($indent);
+			}
+			array_pop($indent);
+		}
+		return $list;
 	}
 
 	function getView() {
@@ -473,20 +532,31 @@ class CKunenaView {
 					WHERE a.thread={$this->db->Quote($this->thread)} AND {$where}
 					ORDER BY id {$this->ordering}";
 		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
-		$posts = $this->db->loadObjectList ();
+		$this->messages = (array) $this->db->loadObjectList ('id');
 		KunenaError::checkDatabaseError();
 
 		// First collect the message ids of the first message and all replies
 		$messageids = array();
-		$this->messages = array ();
+		$this->threaded = array();
 		$userlist = array();
-		foreach($posts AS $message){
+		foreach($this->messages AS $message){
 			$messageids[] = $message->id;
-			$this->messages [] = $message;
+			// Threaded ordering
+			if (isset($this->messages[$message->parent])) {
+				$this->threaded[$message->parent][] = $message->id;
+			} else {
+				$this->threaded[0][] = $message->id;
+			}
 			$userlist[intval($message->userid)] = intval($message->userid);
 			$userlist[intval($message->modified_by)] = intval($message->modified_by);
 		}
-		unset ( $posts );
+		if (!isset($this->messages[$this->mesid])) $this->mesid = reset($messageids);
+		if ($this->layout != 'view') {
+			if (!isset($this->messages[$this->id]))
+				$this->messages = $this->getThreadedOrdering(0, array('edge'));
+			else
+				$this->messages = $this->getThreadedOrdering();
+		}
 
 		// create a list of ids we can use for our sql
 		$idstr = @join ( ",", $messageids );
@@ -510,7 +580,7 @@ class CKunenaView {
 					$message->attachments = $message_attachments[$message->id];
 				}
 			// Done with attachments
-		}
+			}
 
 		$this->pagination = $this->getPagination ( $this->catid, $this->thread, $page, $totalpages, $maxpages );
 
@@ -541,6 +611,18 @@ class CKunenaView {
 		$document->setMetadata ( 'keywords', $metaKeys );
 		$document->setDescription ( $metaDesc );
 
+		$this->layout_buttons = array();
+		if ($this->config->enable_threaded_layouts) {
+			if ($this->layout != 'view') {
+				$this->layout_buttons[] = CKunenaLink::GetThreadLayoutLink('flat', $this->catid, $this->thread, $this->mesid,  CKunenaTools::showButton ( 'layout-flat', JText::_('COM_KUNENA_BUTTON_LAYOUT_FLAT') ), $this->limitstart, $this->limit, JText::_('COM_KUNENA_BUTTON_LAYOUT_FLAT_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
+			}
+			if ($this->layout != 'threaded') {
+				$this->layout_buttons[] = CKunenaLink::GetThreadLayoutLink('threaded', $this->catid, $this->thread, $this->mesid,  CKunenaTools::showButton ( 'layout-threaded', JText::_('COM_KUNENA_BUTTON_LAYOUT_THREADED') ), $this->limitstart, $this->limit, JText::_('COM_KUNENA_BUTTON_LAYOUT_THREADED_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
+			}
+			if ($this->layout != 'indented') {
+				$this->layout_buttons[] = CKunenaLink::GetThreadLayoutLink('indented', $this->catid, $this->thread, $this->mesid,  CKunenaTools::showButton ( 'layout-indented', JText::_('COM_KUNENA_BUTTON_LAYOUT_INDENTED') ), $this->limitstart, $this->limit, JText::_('COM_KUNENA_BUTTON_LAYOUT_INDENTED_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
+		}
+		}
 		//Perform subscriptions check only once
 		$this->cansubscribe = 0;
 		if ($this->config->allowsubscriptions && $this->my->id) {
@@ -677,11 +759,11 @@ class CKunenaView {
 		}
 	}
 
-	function displayMessage($message) {
+	function displayMessage($message, $mode='') {
 		$this->replynum += $this->replydir;
 		$this->mmm ++;
 		$message = new CKunenaViewMessage($this, $message);
-		$message->display();
+		$message->display($mode);
 	}
 
 	function getPagination($catid, $threadid, $page, $totalpages, $maxpages) {
@@ -741,7 +823,7 @@ class CKunenaView {
 			echo JText::_('COM_KUNENA_MODERATION_INVALID_ID');
 			return;
 		}
-		CKunenaTools::loadTemplate('/view/view.php', false, $this->templatepath);
+		CKunenaTools::loadTemplate("/view/{$this->layout}.php", false, $this->templatepath);
 	}
 
 }

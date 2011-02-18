@@ -156,6 +156,7 @@ $favoriteMe = JRequest::getVar ( 'favoriteMe', '' );
 $fb_authorname = JRequest::getVar ( 'fb_authorname', '' );
 $fb_thread = JRequest::getInt ( 'fb_thread', 0 );
 $id = JRequest::getInt ( 'id', 0 );
+$mesid = JRequest::getInt ( 'mesid', 0 );
 $limit = JRequest::getInt ( 'limit', 0 );
 $limitstart = JRequest::getInt ( 'limitstart', 0 );
 $markaction = JRequest::getVar ( 'markaction', '' );
@@ -499,7 +500,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 		case 'view' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'view.php');
-			$page = new CKunenaView($func, $catid, $id, $limitstart, $limit);
+			$layout = $kunena_app->getUserStateFromRequest( "com_kunena.view_layout", 'layout', 'view' );
+			$page = new CKunenaView($layout, $catid, $id, $mesid, $limitstart, $limit);
 			$page->display(true);
 
 			break;

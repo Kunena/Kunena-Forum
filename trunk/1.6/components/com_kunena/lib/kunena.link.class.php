@@ -124,15 +124,26 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . '&id=' . $threadid, $threadname, $title, $rel, $class );
 	}
 
+	function GetThreadLayoutLink($layout, $catid, $threadid, $mesid, $threadname, $limitstart=0, $limit=0, $title='', $rel = 'nofollow', $class = '') {
+		$anker = '';
+		$query = array();
+		if ($mesid) {
+			if (!$layout) $l = JFactory::getApplication()->getUserState( "com_kunena.view_layout", 'view' );
+			else $l = $layout;
+			if ($l == 'thread') $query[] = "&mesid={$mesid}";
+			else $anker = $mesid;
+		}
+		if ($layout) $query[] = "&layout={$layout}";
+		if ($limitstart) {
+			$query[] = "&limitstart={$limitstart}";
+			$query[] = "&limit={$limit}";
+		}
+		$query = implode('', $query);
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=view&catid=' . $catid . '&id=' . $threadid . $query, $threadname, $title, $rel, $class, $anker );
+	}
 	function GetThreadPageLink($func, $catid, $threadid, $page, $limit, $name, $anker = '', $rel = 'follow', $class = '') {
 		$kunena_config = KunenaFactory::getConfig ();
-		if ($page == 1 || ! is_numeric ( $page ) || ! is_numeric ( $limit )) {
-			// page 1 is identical to a link to the top of the thread
-			$pagelink = CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . '&id=' . $threadid, $name, '', $rel, $class, $anker );
-		} else {
-			$pagelink = CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . '&id=' . $threadid . '&limit=' . $limit . '&limitstart=' . (($page - 1) * $limit), $name, '', $rel, $class, $anker );
-		}
-
+		$pagelink = CKunenaLink::GetHrefLink ( self::GetThreadPageURL($func, $catid, $threadid, $page, $limit, $anker), $name, '', $rel, $class );
 		return $pagelink;
 	}
 
@@ -149,11 +160,17 @@ class CKunenaLink {
 	}
 
 	function GetThreadPageURL($func, $catid, $threadid, $page, $limit = '', $anker = '', $xhtml = true) {
+		$layout = JFactory::getApplication()->getUserState( "com_kunena.view_layout", 'view' );
+		$query = '';
+		if ($layout == 'thread' && $anker>0) {
+			$query = "&mesid={$anker}";
+			$anker = '';
+		}
 		if ($page == 1 || ! is_numeric ( $page ) || ! is_numeric ( $limit )) {
 			// page 1 is identical to a link to the top of the thread
-			$pageURL = KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . '&id=' . $threadid;
+			$pageURL = KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . '&id=' . $threadid . $query;
 		} else {
-			$pageURL = KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . '&id=' . $threadid . '&limit=' . $limit . '&limitstart=' . (($page - 1) * $limit);
+			$pageURL = KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . '&id=' . $threadid . $query . '&limit=' . $limit . '&limitstart=' . (($page - 1) * $limit);
 		}
 
 		return KunenaRoute::_ ( $pageURL, $xhtml ) . ($anker ? ('#' . $anker) : '');

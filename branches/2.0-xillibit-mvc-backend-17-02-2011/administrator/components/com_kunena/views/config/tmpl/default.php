@@ -18,7 +18,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-this->config"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
+	<div class="kadmin-functitle icon-config"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
 		<div id="kadmin-this->configtabs">
 		<form action="index.php" method="post" name="adminForm">
 

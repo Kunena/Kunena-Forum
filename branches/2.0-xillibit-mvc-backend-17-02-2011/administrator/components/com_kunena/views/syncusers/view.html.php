@@ -23,6 +23,7 @@ class KunenaAdminViewSyncusers extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
+		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
         JToolBarHelper::custom('sync', 'apply.png', 'apply_f2.png', 'COM_KUNENA_SYNC', false);
         JToolBarHelper::spacer();

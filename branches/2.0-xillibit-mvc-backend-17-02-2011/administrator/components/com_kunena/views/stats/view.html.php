@@ -19,6 +19,8 @@ class KunenaAdminViewStats extends KunenaView {
 	function display() {
 		kimport ( 'kunena.forum.message.thankyou' );
 
+		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+
 		jimport ( 'joomla.utilities.date' );
 		$this->datem = new JDate(date("Y-m-d 00:00:01"));
 		$this->datee = new JDate(date("Y-m-d 23:59:59"));

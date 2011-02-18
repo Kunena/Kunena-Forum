@@ -25,7 +25,7 @@ class KunenaAdminViewPrune extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::spacer();
+		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
         JToolBarHelper::spacer();
         JToolBarHelper::custom('doprune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
         JToolBarHelper::spacer();

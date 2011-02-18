@@ -18,7 +18,7 @@ kimport ( 'kunena.view' );
 class KunenaAdminViewReport extends KunenaView {
 	function display() {
 		$this->systemreport = $this->get('SystemReport');
-
+		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		parent::display ();
 	}
 }

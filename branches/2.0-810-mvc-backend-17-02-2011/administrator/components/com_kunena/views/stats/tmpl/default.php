@@ -334,6 +334,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 <!-- FINISH: STATS -->
 </div>
 </div>
+</div>
 <div class="kadmin-footer">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>

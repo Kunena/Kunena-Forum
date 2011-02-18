@@ -28,7 +28,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 			</tr> -->
 			<tr>
 				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NAME') ?></td>
-				<td><?php echo $this->forumLis?></td>
+				<td><?php echo $this->forumList?></td>
 			</tr>
 			<tr>
 				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>

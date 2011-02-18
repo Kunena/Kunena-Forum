@@ -31,12 +31,6 @@ switch ($task)
 
         break;
 
-    case "showconfig":
-
-        CKunenaToolbar::_EDIT_CONFIG();
-
-        break;
-
     case "showCss":
         CKunenaToolbar::CSS_MENU();
 

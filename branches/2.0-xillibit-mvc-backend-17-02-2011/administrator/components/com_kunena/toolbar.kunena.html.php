@@ -35,19 +35,6 @@ class CKunenaToolbar
 
     }
 
-    function _EDIT_CONFIG()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::save('saveconfig');
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('defaultconfig', 'restore.png','restore_f2.png', 'COM_KUNENA_RESET_CONFIG', false);
-        JToolBarHelper::spacer();
-        JToolBarHelper::back();
-        JToolBarHelper::spacer();
-
-    }
-
     function _EDITUSER_MENU()
     {
         JToolBarHelper::spacer();

@@ -227,14 +227,6 @@ switch ($task) {
 
 		break;
 
-	case 'recount' :
-		kimport('kunena.user.helper');
-		kimport('kunena.forum.category.helper');
-		KunenaUserHelper::recount();
-		KunenaForumCategoryHelper::recount ();
-		$kunena_app->redirect ( JURI::base () . 'index.php?option=com_kunena', JText::_('COM_KUNENA_RECOUNTFORUMS_DONE') );
-		break;
-
 	case "showsmilies" :
 		showsmilies ( $option );
 
@@ -363,19 +355,6 @@ switch ($task) {
 //			END TEMPLATE MANAGER
 //###########################################
 
-	case "createmenu" :
-		$lang = JFactory::getLanguage();
-		// Start by loading English strings and override them by current locale
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
-
-		require_once(KPATH_ADMIN . '/install/model.php');
-		$installer = new KunenaModelInstall();
-		$installer->deleteMenu();
-		$installer->createMenu();
-
-		$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_MENU_CREATED') );
-		// No break! Need to display the control panel
 	case 'cpanel' :
 	default :
 		html_Kunena::controlPanel ();

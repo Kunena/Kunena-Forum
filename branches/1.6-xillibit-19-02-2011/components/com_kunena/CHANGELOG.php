@@ -36,6 +36,7 @@ Kunena 1.6.4-DEV
 19-February-2011 Xillibit
 # [#24924] Add configuration setting to let users choose the way to count totalusers (Part 2)
 ^ [#24841] Report configuration settings: missing plg_jomosocial_groups and plg_jxfinder
+# [#24992] JFolder::delete : path isn't a folder administrator/components/com_kunena/archive , language...
 
 19-February-2011 Matias
 # [#24985] Threaded layout was missing an image

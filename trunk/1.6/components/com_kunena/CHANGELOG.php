@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.4-DEV
 
+19-February-2011 Matias
+# [#24985] Threaded layout was missing an image
+
 18-February-2011 Matias
 + [#24985] Feature: Threaded and indented layouts for topics (disabled in configuration)
 

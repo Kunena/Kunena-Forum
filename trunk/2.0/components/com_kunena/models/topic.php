@@ -151,7 +151,11 @@ class KunenaModelTopic extends KunenaModel {
 
 	protected function getThreadedOrdering($parent = 0, $indent = array()) {
 		$list = array();
-		$last = end($this->threaded[$parent]);
+		if (count($indent) == 1 && $this->getTopic()->getTotal() > $this->getState('list.start')+$this->getState('list.limit')) {
+			$last = -1;
+		} else {
+			$last = end($this->threaded[$parent]);
+		}
 		foreach ($this->threaded[$parent] as $mesid) {
 			$message = $this->messages[$mesid];
 			$skip = $message->id != $this->topic->first_post_id && $message->parent != $this->topic->first_post_id && !isset($this->messages[$message->parent]);

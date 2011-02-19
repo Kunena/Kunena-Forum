@@ -23,7 +23,7 @@ class KunenaViewUsers extends KunenaView {
 		$this->total = $this->get ( 'Total' );
 		$this->count = $this->get ( 'Count' );
 		$this->users = $this->get ( 'Items' );
-		$this->pageNav = new JPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
+		$this->pageNav = new JPagination ( $this->count, $this->state->get('list.start'), $this->state->get('list.limit') );
 		$this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
 		parent::display($tpl);
 	}

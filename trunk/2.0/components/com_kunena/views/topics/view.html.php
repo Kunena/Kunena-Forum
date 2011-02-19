@@ -186,6 +186,7 @@ class KunenaViewTopics extends KunenaView {
 				$uri->setVar('Itemid', $this->Itemid);
 			}*/
 			$limit = max(1, $this->config->messages_per_page);
+			$mesid = 0;
 			if (is_numeric($action)) {
 				if ($action) $uri->setVar('limitstart', $action * $limit);
 			} elseif (isset($message)) {
@@ -194,18 +195,24 @@ class KunenaViewTopics extends KunenaView {
 			} else {
 				switch ($action) {
 					case 'first':
-						$position = $topic->getPostLocation($topic->first_post_id, $this->topic_ordering);
-						$uri->setFragment($topic->first_post_id);
+						$mesid = $topic->first_post_id;
+						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
 						break;
 					case 'last':
-						$position = $topic->getPostLocation($topic->last_post_id, $this->topic_ordering);
-						$uri->setFragment($topic->last_post_id);
+						$mesid = $topic->last_post_id;
+						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
 						break;
 					case 'unread':
-						$lastread = $topic->lastread ? $topic->lastread : $topic->last_post_id;
-						$position = $topic->getPostLocation($lastread, $this->topic_ordering);
-						$uri->setFragment($lastread);
+						$mesid = $topic->lastread ? $topic->lastread : $topic->last_post_id;
+						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
 						break;
+				}
+			}
+			if ($mesid) {
+				if (JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' ) != 'threaded') {
+					$uri->setFragment($mesid);
+				} else {
+					$uri->setVar('mesid', $mesid);
 				}
 			}
 			if (isset($position)) {

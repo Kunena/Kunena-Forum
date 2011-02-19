@@ -39,6 +39,9 @@ Kunena 2.0.0-DEV
 # [#23443] Routing: Fix a bug when there is no layout specified in URI and default menu item has layout != default
 # [#23443] Routing: Fix into legacy &func=view when id is not topic id
 ^ [#23443] Move code from category/topics views into KunenaModelCategory/Topics::getTopicActions()
+# [#23443] Users/Default: All users in pagination when doing a search over users
+# [#23443] Topic/Threaded: If there are more pages, use | symbol in the last item to show that
+# [#23443] Topic/Threaded: Links pointing from category/topics views are wrong
 
 16-February-2011 Matias
 # [#23443] Statistics: fix a bug when counting most popular topics

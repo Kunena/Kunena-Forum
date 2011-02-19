@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<!DOCTYPE install>
+<install type="language" version="1.5" client="administrator" method="upgrade">
+	<name>Kunena Forum - Thai</name>
+	<tag>th-TH</tag>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
+	<author>drlovecat</author>
+	<authorEmail>admin@kunenathai.com</authorEmail>
+	<authorUrl>www.kunenathai.com</authorUrl>
+	<copyright>(C) 2011 Kunenathai.com</copyright>
+	<license>GNU/GPL</license>
+	<description>ชุดติดตั้งภาษาไทยสำหรับระบบฟอรัม Kunena 1.6.1</description>
+
+	<files>
+		<filename>th-TH.com_kunena.ini</filename>
+		<filename>th-TH.com_kunena.install.ini</filename>
+		<filename>th-TH.com_kunena.menu.ini</filename>
+	</files>
+</install>

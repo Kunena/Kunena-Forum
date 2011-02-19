@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.4-DEV
 
+19-February-2011 Xillibit
+# [#24924] Add configuration setting to let users choose the way to count totalusers (Part 2)
+
 19-February-2011 Matias
 # [#24985] Threaded layout was missing an image
 # [#24985] Fix wrong kind of link in threaded view

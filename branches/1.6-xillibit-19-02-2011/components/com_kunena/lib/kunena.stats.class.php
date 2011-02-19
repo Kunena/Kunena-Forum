@@ -140,7 +140,10 @@ class CKunenaStats {
 	public function loadLastUser() {
 		if ($this->lastestmember === null) {
 			$queryName = $this->_config->username ? "username" : "name";
-			$this->_db->setQuery ( "SELECT id, {$queryName} AS username FROM #__users WHERE block='0' OR activation='' ORDER BY id DESC", 0, 1 );
+			if ($this->_config->userlist_count_users == '0' ) $where = '';
+		  	elseif ($this->_config->userlist_count_users == '1' ) $where = ' WHERE block=0 OR activation=""';
+		  	elseif ($this->_config->userlist_count_users == '2' ) $where = ' WHERE block=0 AND activation=""';
+			$this->_db->setQuery ( "SELECT id, {$queryName} AS username FROM #__users ".$where." ORDER BY id DESC", 0, 1 );
 			$_lastestmember = $this->_db->loadObject ();
 			KunenaError::checkDatabaseError();
 			$this->lastestmember = $_lastestmember->username;

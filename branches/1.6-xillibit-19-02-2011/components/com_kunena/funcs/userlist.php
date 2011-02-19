@@ -49,7 +49,7 @@ class CKunenaUserlist {
 		KunenaError::checkDatabaseError();
 
 		// Search total
-		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE (u.block=0 AND u.activation='')";
+		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid ".$where;
 		if ($this->search != "") {
 			if (!JRequest::checkToken()) {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );

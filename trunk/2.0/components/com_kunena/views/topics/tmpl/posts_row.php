@@ -89,12 +89,12 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</td>
 
-<?php if (!empty($this->actionDropdown)) : ?>
+<?php if (!empty($this->topicActions)) : ?>
 	<td class="kcol-mid ktopicmoderation"><input class ="kcheck" type="checkbox" name="posts[<?php echo $this->topic->id?>]" value="1" /></td>
 <?php endif; ?>
 </tr>
 <?php if ($this->module) : ?>
 <tr>
-	<td class="ktopicmodule" colspan="<?php echo empty($this->actionDropdown) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
+	<td class="ktopicmodule" colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
 </tr>
 <?php endif; ?>

@@ -31,6 +31,15 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-February-2011 Matias
+^ [#22786] Merge revisions 4379-4449 from trunk/1.6
+^ [#22569] Merge: Convert threaded views into MVC
+# [#23443] Users/Default: Fix a bug in userlist not containing all users
+# [#23443] Home Page: Fix a bug where &layout=default was not taken into account when choosing default menu item
+# [#23443] Routing: Fix a bug when there is no layout specified in URI and default menu item has layout != default
+# [#23443] Routing: Fix into legacy &func=view when id is not topic id
+^ [#23443] Move code from category/topics views into KunenaModelCategory/Topics::getTopicActions()
+
 16-February-2011 Matias
 # [#23443] Statistics: fix a bug when counting most popular topics
 # [#23443] Search: Minor bug fix
@@ -1005,7 +1014,53 @@ Kunena 2.0.0-DEV
 - [#22543] Remove old BBCode parser (lib/kunena.parser*.php, lib/kunena.smile.class.php)
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
-Kunena 1.6.4
+Kunena 1.6.4-DEV
+
+19-February-2011 Matias
+# [#24985] Threaded layout was missing an image
+
+18-February-2011 Matias
++ [#24985] Feature: Threaded and indented layouts for topics (disabled in configuration)
+
+17-February-2011 Matias
+# [#24959] Always initialize session if allowed=na
++ [#24985] Feature: Threaded and indented layouts for topics
+
+16-February-2011 Matias
+# [#24948] Administrator: Workaround for Joomla 1.5 bug where translations aren't shown in Menu Manager
+# [#24949] Installer: Parse error in PHP4
+# [#24824] Menu link should not have the same name as the real menu item
+# [#24783] Remove option to restore backup from K1.5 when K1.6 has already been installed
+^ [#15886] Merged revisions 4391-4419 from /branches/1.6-xillibit-fixes-8-02-2011
+# [#24841] Cleanup configuration settings report
+# [#24841] Configuration report: improve menu item list (show all published items pointing to Kunena)
+# [#24784] SVN Install: Install new language files before entering into installer
+# [#22933] Add dropdown for Admin view trashed items (part 2: don't change meaning of old settings)
+
+16-February-2011 Xillibit
++ [#24924] Add configuration setting to let users choose the way to count totalusers
+
+14-February-2011 Xillibit
+# [#24818] MySQL tables are case insensitive: installation fails on JOS_ prefix
+
+13-February-2011 Xillibit
+^ [#24841] Remove in kunena report configuration the empty settings
+# [#24781] Administration: When creating new category, access control cannot be set
+# [#24842] Warning division by zero in latestx.php
+# [#24888] Under Joomla 1.6 avatar doens't update in kunena_users
+
+13-February-2011 Severdia
+# [#24364] CSS fix for color coded user names (regression from Joomla 1.6 fixes)
+
+12-February-2011 Xillibit
+# [#24843] Fatal error: Class 'JParameter' not found in /components/com_kunena/kunena.php on line 210
+
+7-February-2011 Xillibit
+# [#23443] update french language file about edittime and gracetime
+# [#24755] Best credit to designers (thanks gonzaunit)
+# [#24784] Check if DOMDocument class exists and fail installation if it doesn't
+# [#24788] Allow permament delete on all topics, not just deleted ones
+^ [#22933] Add dropdown for Admin view trashed items
 
 5-February-2011 Matias
 # [#24761] Ban manager is not showing all the information

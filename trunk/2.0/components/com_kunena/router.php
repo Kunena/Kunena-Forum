@@ -378,6 +378,7 @@ class KunenaRouter {
 			}
 			$vars [$var] = $value;
 		}
+		if (empty($vars ['layout'])) $vars ['layout'] = 'default';
 		self::$time = JProfiler::getmicrotime() - $starttime;
 		return $vars;
 	}

@@ -67,7 +67,7 @@ class KunenaForumMessageHelper {
 		return $list;
 	}
 
-	static public function getMessagesByTopic($topic, $start=0, $limit=0, $ordering='ASC', $hold=0) {
+	static public function getMessagesByTopic($topic, $start=0, $limit=0, $ordering='ASC', $hold=0, $orderbyid = false) {
 		$topic = KunenaForumTopicHelper::get($topic);
 		if (!$topic->exists())
 			return array();
@@ -80,7 +80,7 @@ class KunenaForumMessageHelper {
 		if ($ordering != 'DESC')
 			$ordering = 'ASC';
 
-		return self::loadMessagesByTopic($topic->id, $start, $limit, $ordering, $hold);
+		return self::loadMessagesByTopic($topic->id, $start, $limit, $ordering, $hold, $orderbyid);
 	}
 
 	public function getLocation($mesid, $direction = 'asc', $hold=null) {
@@ -195,7 +195,7 @@ class KunenaForumMessageHelper {
 		unset ($results);
 	}
 
-	static protected function loadMessagesByTopic($topic_id, $start=0, $limit=0, $ordering='ASC', $hold=0) {
+	static protected function loadMessagesByTopic($topic_id, $start=0, $limit=0, $ordering='ASC', $hold=0, $orderbyid = false) {
 		$db = JFactory::getDBO ();
 		$query = "SELECT m.*, t.message
 			FROM #__kunena_messages AS m
@@ -211,7 +211,7 @@ class KunenaForumMessageHelper {
 			$instance->bind ( $result );
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;
-			$list[$start++] = $instance;
+			$list[$orderbyid ? $id : $start++] = $instance;
 		}
 		unset ($results);
 		return $list;

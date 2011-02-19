@@ -28,8 +28,11 @@ class KunenaViewTopic extends KunenaView {
 	var $topic_lock = null;
 	var $topic_delete = null;
 	var $topic_moderate = null;
+	var $mmm = 0;
 
 	function displayDefault($tpl = null) {
+		$this->layout = $this->state->get('layout');
+		$this->setLayout($this->layout);
 		$this->assignRef ( 'category', $this->get ( 'Category' ) );
 		$this->assignRef ( 'topic', $this->get ( 'Topic' ) );
 		$channels = $this->category->getChannels();
@@ -111,6 +114,24 @@ class KunenaViewTopic extends KunenaView {
 		$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_TOPICS_DEFAULT', $this->topic->subject));
 
 		$this->display($tpl);
+	}
+
+	function displayFlat($tpl = null) {
+		$this->state->set('layout', 'default');
+		JFactory::getApplication()->setUserState( 'com_kunena.topic_layout', 'default' );
+		$this->displayDefault($tpl);
+	}
+
+	function displayThreaded($tpl = null) {
+		$this->state->set('layout', 'threaded');
+		JFactory::getApplication()->setUserState( 'com_kunena.topic_layout', 'threaded' );
+		$this->displayDefault($tpl);
+	}
+
+	function displayIndented($tpl = null) {
+		$this->state->set('layout', 'indented');
+		JFactory::getApplication()->setUserState( 'com_kunena.topic_layout', 'indented' );
+		$this->displayDefault($tpl);
 	}
 
 	protected function DisplayCreate($tpl = null) {
@@ -423,6 +444,25 @@ class KunenaViewTopic extends KunenaView {
 
 	function displayTopicActions($location=0) {
 		static $locations = array('top', 'bottom');
+
+		$catid = $this->state->get('item.catid');
+		$id = $this->state->get('item.id');
+		$mesid = $this->state->get('item.mesid');
+		$limitstart = $this->state->get('list.start');
+		$limit =  $this->state->get('list.limit');
+
+		$this->layout_buttons = array();
+		if ($this->config->enable_threaded_layouts) {
+			if ($this->layout != 'default') {
+				$this->layout_buttons[] = CKunenaLink::GetThreadLayoutLink('flat', $catid, $id, $mesid,  $this->getButton ( 'layout-flat', JText::_('COM_KUNENA_BUTTON_LAYOUT_FLAT') ), $limitstart, $limit, JText::_('COM_KUNENA_BUTTON_LAYOUT_FLAT_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
+			}
+			if ($this->layout != 'threaded') {
+				$this->layout_buttons[] = CKunenaLink::GetThreadLayoutLink('threaded', $catid, $id, $mesid,  $this->getButton ( 'layout-threaded', JText::_('COM_KUNENA_BUTTON_LAYOUT_THREADED') ), $limitstart, $limit, JText::_('COM_KUNENA_BUTTON_LAYOUT_THREADED_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
+			}
+			if ($this->layout != 'indented') {
+				$this->layout_buttons[] = CKunenaLink::GetThreadLayoutLink('indented', $catid, $id, $mesid,  $this->getButton ( 'layout-indented', JText::_('COM_KUNENA_BUTTON_LAYOUT_INDENTED') ), $limitstart, $limit, JText::_('COM_KUNENA_BUTTON_LAYOUT_INDENTED_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
+			}
+		}
 		$location ^= 1;
 		$this->goto = '<a name="forum'.$locations[$location].'"></a>';
 		$this->goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$location], $this->getIcon ( 'kforum'.$locations[$location], JText::_('COM_KUNENA_GEN_GOTO'.$locations[$location] ) ), 'nofollow', 'kbuttongoto');
@@ -563,39 +603,45 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->loadTemplate("message_actions");
 	}
 
+	function displayMessage($id, $message, $template=null) {
+		$layout = $this->getLayout();
+		if (!$template) {
+			$template = $this->state->get('profile.location');
+			$this->setLayout('default');
+		}
+		$this->mmm ++;
+		$this->message = $message;
+		$this->profile = KunenaFactory::getUser($this->message->userid);
+		$this->replynum = $id;
+
+		// Link to individual message
+		if ($this->config->ordering_system == 'replyid') {
+			$this->numLink = CKunenaLink::GetSamePageAnkerLink( $message->id, '#' . $id );
+		} else {
+			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $message->id, '#' . $message->id );
+		}
+
+		if ($this->message->hold == 0) {
+			$this->class = 'kmsg';
+		} elseif ($this->message->hold == 1) {
+			$this->class = 'kmsg kunapproved';
+		} else if ($this->message->hold == 2 || $this->message->hold == 3) {
+			$this->class = 'kmsg kunapproved kdeleted';
+		}
+
+		// New post suffix for class
+		$this->msgsuffix = '';
+		if ($this->message->isNew()) {
+			$this->msgsuffix = '-new';
+		}
+
+		echo $this->loadtemplate($template);
+		$this->setLayout($layout);
+	}
+
 	function displayMessages() {
-		$location = $this->state->get('profile.location');
-		$this->mmm = 0;
-		$replydir = $this->state->get('list.direction') == 'asc' ? 1 : -1;
-		if ($replydir < 0) $this->replynum = $this->total - $this->state->get('list.start') + 1;
-		else $this->replynum = $this->state->get('list.start');
-
-		foreach ( $this->messages as $this->message ) {
-			$this->profile = KunenaFactory::getUser($this->message->userid);
-
-			$this->mmm ++;
-			$this->replynum += $replydir;
-
-			if ($this->message->hold == 0) {
-				$this->class = 'class="kmsg"';
-			} elseif ($this->message->hold == 1) {
-				$this->class = 'class="kmsg kunapproved"';
-			} else if ($this->message->hold == 2 || $this->message->hold == 3) {
-				$this->class = 'class="kmsg kunapproved"';
-			}
-			// Link to individual message
-			if ($this->config->ordering_system == 'replyid') {
-				$this->numLink = CKunenaLink::GetSamePageAnkerLink( $this->message->id, '#' . $this->replynum );
-			} else {
-				$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $this->message->id, '#' . $this->message->id );
-			}
-			// New post suffix for class
-			$this->msgsuffix = '';
-			if ($this->message->isNew()) {
-				$this->msgsuffix = '-new';
-			}
-
-			echo $this->loadtemplate($location);
+		foreach ( $this->messages as $id=>$message ) {
+			$this->displayMessage($id, $message);
 		}
 	}
 

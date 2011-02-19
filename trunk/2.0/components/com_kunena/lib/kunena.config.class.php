@@ -356,6 +356,9 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $show_session_starttime = 0;
 	// New for 1.6.2: configuration option to set all users or only registred users to see userlist
 	var $userlist_allowed = 0;
+	// New for 1.6.4
+	var $userlist_count_users = 1;
+	var $enable_threaded_layouts = 0;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

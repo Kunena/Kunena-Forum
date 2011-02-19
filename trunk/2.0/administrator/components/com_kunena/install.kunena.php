@@ -18,6 +18,11 @@ if ($jversion->RELEASE != '1.5') return;
 $this->parent->copyManifest();
 
 function com_install() {
+	if (version_compare ( phpversion (), '5.0.0', '<' )) {
+		echo "PHP 5.2 REQUIRED!";
+		return false;
+	}
+
 	$jversion = new JVersion ();
 	if ($jversion->RELEASE != '1.5') return;
 	ignore_user_abort ( true );

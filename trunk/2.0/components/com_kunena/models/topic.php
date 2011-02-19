@@ -35,7 +35,9 @@ class KunenaModelTopic extends KunenaModel {
 		$config = KunenaFactory::getConfig ();
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
-		$layout = $this->getCmd ( 'layout', 'default' );
+		$layout = $this->getWord ( 'layout', 'default' );
+		if ($layout == 'default') $layout = $app->getUserState( 'com_kunena.topic_layout', 'default' );
+		$this->setState ( 'layout', !$layout ? 'default' : $layout );
 
 		$template = KunenaFactory::getTemplate();
 		$profile_location = $template->params->get('avatarPosition', 'left');
@@ -103,21 +105,38 @@ class KunenaModelTopic extends KunenaModel {
 				$topic = KunenaForumTopicHelper::get($message->thread);
 			}
 		}
+		$this->topic = $topic;
 		return $topic;
 	}
 
 	public function getMessages() {
 		if ($this->messages === false) {
+			$layout = $this->getState ('layout');
+			$threaded = ($layout == 'indented' || $layout == 'threaded');
 			$this->messages = KunenaForumMessageHelper::getMessagesByTopic($this->getState ( 'item.id'),
-				$this->getState ( 'list.start'), $this->getState ( 'list.limit'), $this->getState ( 'list.direction'), $this->getState ( 'hold'));
+				$this->getState ( 'list.start'), $this->getState ( 'list.limit'), $this->getState ( 'list.direction'), $this->getState ( 'hold'), $threaded);
 
 			// First collect ids and users
 			$userlist = array();
-			$ids = array();
+			$this->threaded = array();
 			foreach($this->messages AS $message){
-				$ids[$message->id] = $message->id;
+				if ($threaded) {
+					// Threaded ordering
+					if (isset($this->messages[$message->parent])) {
+						$this->threaded[$message->parent][] = $message->id;
+					} else {
+						$this->threaded[0][] = $message->id;
+					}
+				}
 				$userlist[intval($message->userid)] = intval($message->userid);
 				$userlist[intval($message->modified_by)] = intval($message->modified_by);
+			}
+			if (!isset($this->messages[$this->getState ( 'item.mesid')])) $this->setState ( 'item.mesid', reset($this->messages)->id);
+			if ($threaded) {
+				if (!isset($this->messages[$this->topic->first_post_id]))
+					$this->messages = $this->getThreadedOrdering(0, array('edge'));
+				else
+					$this->messages = $this->getThreadedOrdering();
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
@@ -128,6 +147,54 @@ class KunenaModelTopic extends KunenaModel {
 		}
 
 		return $this->messages;
+	}
+
+	protected function getThreadedOrdering($parent = 0, $indent = array()) {
+		$list = array();
+		$last = end($this->threaded[$parent]);
+		foreach ($this->threaded[$parent] as $mesid) {
+			$message = $this->messages[$mesid];
+			$skip = $message->id != $this->topic->first_post_id && $message->parent != $this->topic->first_post_id && !isset($this->messages[$message->parent]);
+			if ($mesid != $last) {
+				// Default sibling edge
+				$indent[] = 'crossedge';
+			} else {
+				// Last sibling edge
+				$indent[] = 'lastedge';
+			}
+			end($indent);
+			$key = key($indent);
+			if ($skip) {
+				$indent[] = 'gap';
+			}
+			$list[$mesid] = $this->messages[$mesid];
+			$list[$mesid]->indent = $indent;
+			if (empty($this->threaded[$mesid])) {
+				// No children node
+				$list[$mesid]->indent[] = ($mesid == $message->thread) ? 'single' : 'leaf';
+			} else {
+				// Has children node
+				$list[$mesid]->indent[] = ($mesid == $message->thread) ? 'root' : 'node';
+			}
+
+			if (!empty($this->threaded[$mesid])) {
+				// Fix edges
+				if ($mesid != $last) {
+					$indent[$key] = 'edge';
+				} else {
+					$indent[$key] = 'empty';
+				}
+				if ($skip) {
+					$indent[$key+1] = 'empty';
+				}
+				$list += $this->getThreadedOrdering($mesid, $indent);
+			}
+			if ($skip) {
+				array_pop($indent);
+			}
+			array_pop($indent);
+		}
+		return $list;
 	}
 
 	public function getTotal() {

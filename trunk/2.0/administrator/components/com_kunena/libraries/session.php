@@ -33,6 +33,7 @@ class KunenaSession extends JObject
 			$db = JFactory::getDBO();
 			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
 			if ($update) self::$_instance->updateSessionInfo();
+			self::$_instance->updateAllowedForums();
 		}
 		return self::$_instance;
 	}
@@ -190,7 +191,6 @@ class KunenaSession extends JObject
 			$this->lasttime = $this->currvisit;
 			$this->readtopics = 0;
 		}
-		$this->updateAllowedForums();
 		$this->currvisit = CKunenaTimeformat::internalTime();
 	}
 

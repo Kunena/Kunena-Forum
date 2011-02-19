@@ -33,4 +33,10 @@ defined ( '_JEXEC' ) or die ();
 			color="<?php echo isset($this->requirements->fail['joomla'])?'red':'green'; ?>"><?php echo $this->requirements->joomla; ?></font></td>
 		<td>(<?php echo JText::_('COM_KUNENA_INSTALL_REQUIRED') ?> &gt;= <?php echo KUNENA_MIN_JOOMLA; ?>)</td>
 	</tr>
+	<tr>
+		<td><?php echo JText::_('COM_KUNENA_INSTALL_REQ_DOMDOCUMENT') ?>:</td>
+		<td><font
+			color="<?php echo isset($this->requirements->fail['domdocument'])?'red':'green'; ?>"><?php echo $this->requirements->domdocument; ?></font></td>
+		<td>(<?php echo JText::_('COM_KUNENA_INSTALL_REQUIRED') ?>)</td>
+	</tr>
 </table>

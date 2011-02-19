@@ -56,7 +56,7 @@ defined ( '_JEXEC' ) or die ();
 	<?php echo JHTML::_( 'form.token' ); ?>
 <div class="kblock kflat">
 	<div class="kheader">
-		<?php if (!empty($this->actionDropdown)) : ?>
+		<?php if (!empty($this->topicActions)) : ?>
 		<span class="kcheckbox select-toggle"><input class="kcheckall" type="checkbox" name="toggle" value="" /></span>
 		<?php endif; ?>
 		<h2><span><?php echo $this->escape($this->headerText); ?></span></h2>
@@ -71,13 +71,13 @@ defined ( '_JEXEC' ) or die ();
 					<?php else : ?>
 						<?php $this->displayRows (); ?>
 
-					<?php  if ( !empty($this->actionDropdown) || !empty($this->embedded) ) : ?>
+					<?php  if ( !empty($this->topicActions) || !empty($this->embedded) ) : ?>
 					<!-- Bulk Actions -->
 					<tr class="krow1">
-						<td colspan="<?php echo empty($this->actionDropdown) ? 5 : 6 ?>" class="kcol-first krowmoderation">
+						<td colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>" class="kcol-first krowmoderation">
 							<?php if (!empty($this->embedded)) echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow'); ?>
-							<?php if (!empty($this->actionDropdown)) : ?>
-							<?php echo JHTML::_('select.genericlist', $this->actionDropdown, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+							<?php if (!empty($this->topicActions)) : ?>
+							<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 							<?php if ($this->actionMove) :
 								$options = array (JHTML::_ ( 'select.option', '0', "&nbsp;" ));
 								echo JHTML::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox fbs" size="1" disabled="disabled"', 'value', 'text', 0, 'kchecktarget');

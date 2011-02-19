@@ -23,21 +23,11 @@ class KunenaViewTopics extends KunenaView {
 		$this->Itemid = $this->get('Itemid');
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
+		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
-
-		$this->actionMove = false;
-		if ($this->me->isModerator ()) {
-			$this->actionMove = true;
-			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
-			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-			if($this->config->mod_see_deleted == '1' || $this->me->isAdmin()) {
-				$this->actionDropdown[] = JHTML::_('select.option', 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-				$this->actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
-			}
-		}
 
 		switch ($this->state->get ( 'list.mode' )) {
 			case 'topics' :
@@ -87,21 +77,11 @@ class KunenaViewTopics extends KunenaView {
 		$this->params = $this->state->get('params');
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
+		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
-
-		$this->actionMove = false;
-		if ($this->me->isModerator ()) {
-			$this->actionMove = true;
-			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
-			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-			if($this->config->mod_see_deleted == '1' || $this->me->isAdmin()) {
-				$this->actionDropdown[] = JHTML::_('select.option', 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-				$this->actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
-			}
-		}
 
 		switch ($this->state->get ( 'list.mode' )) {
 			case 'posted' :
@@ -145,21 +125,12 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+//		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
+//		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
+		$this->actionMove = false;
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
-
-		$this->actionMove = false;
-		if ($this->me->isModerator ()) {
-//			$this->actionMove = true;
-//			$this->actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
-//			$this->actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-//			$this->actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-//			if($this->config->mod_see_deleted == '1' || $this->me->isAdmin()) {
-//				$this->actionDropdown[] = JHTML::_('select.option', 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-//				$this->actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
-//			}
-		}
 
 		switch ($this->state->get ( 'list.mode' )) {
 			case 'unapproved':

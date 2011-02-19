@@ -26,6 +26,8 @@ class KunenaModelTopics extends KunenaModel {
 	protected $topics = false;
 	protected $messages = false;
 	protected $total = 0;
+	protected $topicActions = false;
+	protected $actionMove = false;
 
 	protected function populateState() {
 		$app = JFactory::getApplication ();
@@ -355,5 +357,37 @@ class KunenaModelTopics extends KunenaModel {
 			$this->getTopics();
 		}
 		return $this->total;
+	}
+
+	public function getTopicActions() {
+		if ($this->topics === false) {
+			$this->getTopics();
+		}
+		$delete = $approve = $undelete = $move = $permdelete = false;
+		foreach ($this->topics as $topic) {
+			if ($topic->hold == 0) {
+				if (!$delete && $topic->authorise('delete')) $delete = true;
+			} elseif ($topic->hold == 1) {
+				if (!$approve && $topic->authorise('approve')) $approve = true;
+			} else {
+				if (!$undelete && $topic->authorise('undelete')) $undelete = true;
+			}
+			if (!$move && $topic->authorise('move')) {
+				$move = $this->actionMove = true;
+			}
+			if (!$permdelete && $topic->authorise('permdelete')) $permdelete = true;
+		}
+		$actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
+		if ($move) $actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+
+		if (count($actionDropdown) == 1) return null;
+		return $actionDropdown;
+	}
+
+	public function getActionMove() {
+		return $this->actionMove;
 	}
 }

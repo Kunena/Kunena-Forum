@@ -50,6 +50,13 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		<?php endif ?>
 		</td>
+		<?php if (!empty($this->layout_buttons)) : ?>
+		<td class="klist-actions-forum">
+			<div class="kmessage-buttons-row">
+			<?php echo implode(' ', $this->layout_buttons) ?>
+			</div>
+		</td>
+		<?php endif ?>
 
 		<td class="klist-pages-all">
 			<?php echo $this->pagination; ?>

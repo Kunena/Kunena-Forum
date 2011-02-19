@@ -133,6 +133,18 @@ class KunenaRouteLegacy {
 			case 'view' :
 				$changed = true;
 				$uri->setVar('view', 'topic');
+
+				// Convert URI to have both id and mesid
+				$id = $uri->getVar ( 'id' );
+				$message = KunenaForumMessageHelper::get ( $id );
+				$mesid = $uri->getVar ( 'mesid' );
+				if ($message->exists ()) {
+					$id = $message->thread;
+					if ($id != $message->id)
+						$mesid = $message->id;
+				}
+				if ($id) $uri->setVar ( 'id', $id );
+				if ($mesid) $uri->setVar ( 'mesid', $mesid );
 				break;
 			case 'myprofile' :
 			case 'userprofile' :

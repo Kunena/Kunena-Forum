@@ -33,8 +33,9 @@ class KunenaControllerHome extends KunenaController {
 		$default = $this->_getDefaultMenuItem($menu, $home);
 		if (!$default) {
 			// There is no default menu item, use category view instead
-			$default = clone $menu->getItem ( KunenaRoute::getItemID("index.php?option=com_kunena&view=category") );
+			$default = clone $menu->getItem ( KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=index") );
 			$default->query['view'] = 'category';
+			$default->query['layout'] = 'index';
 		}
 		if (!$default) {
 			JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
@@ -52,6 +53,7 @@ class KunenaControllerHome extends KunenaController {
 		}
 
 		// Check if we are using default menu item
+		if (!isset($default->query['layout'])) $default->query['layout'] = 'default';
 		foreach ( $default->query as $var => $value ) {
 			$cmp = JRequest::getVar($var, null);
 			if ($var == 'defaultmenu') continue;
@@ -70,12 +72,13 @@ class KunenaControllerHome extends KunenaController {
 		// Set active menu item to point the real page
 		$menu->setActive ( $default->id );
 
-		// Run display task from our new controller
-		$controller = KunenaController::getInstance(true);
-		$controller->execute ('display');
-
-		// Set redirect and message
-		$this->setRedirect ($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());
+		if (JRequest::getVar ( 'view' ) != 'home') {
+			// Run display task from our new controller
+			$controller = KunenaController::getInstance(true);
+			$controller->execute ('display');
+			// Set redirect and message
+			$this->setRedirect ($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());
+		}
 	}
 
 	protected function _getDefaultMenuItem($menu, $active, $visited=array()) {

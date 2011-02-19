@@ -50,11 +50,20 @@ class KunenaModelUsers extends KunenaModel {
 		$this->setState ( 'list.exclude', $jversion->RELEASE == '1.5' ? '62' : '42');
 	}
 
+	public function getQueryWhere() {
+		$config = KunenaFactory::getConfig();
+		if ($config->userlist_count_users == '0' ) $where = '1';
+		elseif ($config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
+		elseif ($config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
+		return $where;
+	}
+
 	public function getTotal() {
 		static $total = false;
 		if ($total === false) {
 			$db = JFactory::getDBO();
-			$db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 AND activation=''" );
+			$where = $this->getQueryWhere();
+			$db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE {$where}" );
 			$total = $db->loadResult ();
 			KunenaError::checkDatabaseError();
 		}
@@ -67,7 +76,8 @@ class KunenaModelUsers extends KunenaModel {
 			$search = $this->getState ( 'list.search');
 			$exclude = $this->getState ( 'list.exclude');
 			$db = JFactory::getDBO();
-			$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE (u.block=0 AND u.activation='')";
+			$where = $this->getQueryWhere();
+			$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE ({$where})";
 			if ($search) {
 				$query .= " AND (u.name LIKE '%{$db->getEscaped($search)}%' OR u.username LIKE '%{$db->getEscaped($search)}%') AND u.id NOT IN ({$exclude})";
 			}
@@ -84,10 +94,11 @@ class KunenaModelUsers extends KunenaModel {
 			$search = $this->getState ( 'list.search');
 			$exclude = $this->getState ( 'list.exclude');
 			$db = JFactory::getDBO();
+			$where = $this->getQueryWhere();
 			$query = "SELECT *
 				FROM #__users AS u
 				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
-				WHERE (u.block=0 OR u.activation!='') AND u.id NOT IN ({$exclude})";
+				WHERE ({$where}) AND u.id NOT IN ({$exclude})";
 			if ($search) {
 				$query .= " AND (u.name LIKE '%{$db->getEscaped($search)}%' OR u.username LIKE '%{$db->getEscaped($search)}%')";
 			}

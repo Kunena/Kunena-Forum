@@ -2160,6 +2160,12 @@ POST PAGE
 #Kunena .kbuttoncomm span.reply {background-position: 0 -460px;}
 #Kunena .kbuttoncomm span.quote {background-position: 0 -440px;}
 #Kunena .kbuttoncomm span.newtopic {background-position: 0 -420px;}
+#Kunena .kbuttonuser span.layout-flat {background-position: 0 -240px}
+#Kunena .kbuttonuser span.layout-flat span {padding: 0 7px;}
+#Kunena .kbuttonuser span.layout-threaded {background-position: 0 -240px}
+#Kunena .kbuttonuser span.layout-threaded span {padding: 0 7px;}
+#Kunena .kbuttonuser span.layout-indented {background-position: 0 -240px}
+#Kunena .kbuttonuser span.layout-indented span {padding: 0 7px;}
 #Kunena .kbuttonuser span.thankyou {background-position: 0 -340px;}
 #Kunena .kbuttonuser span.favorite {background-position: 0 -260px;}
 #Kunena .kbuttonuser span.subscribe {background-position: 0 -320px;}
@@ -3314,5 +3320,21 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	border: 0 none;
 }
 
-
-
+/* Threaded view 
+----------------------------------------------------------------------------------------------- */
+#Kunena .ktree { 
+	width: 15px;
+	height: 27px;
+	margin: -9px 0;
+	display: inline-block;
+	background: url("../images/treenodes.png") no-repeat left center;
+}
+#Kunena .ktree-crossedge { background-position: -45px 0; }
+#Kunena .ktree-lastedge { background-position: -75px 0; }
+#Kunena .ktree-root { background-position: -15px 0; }
+#Kunena .ktree-single { background-position: 0 0; }
+#Kunena .ktree-leaf { background-position: -90px 0; }
+#Kunena .ktree-node { background-position: -60px 0; }
+#Kunena .ktree-edge { background-position: -30px 0; }
+#Kunena .ktree-gap { background-position: -105px 0; }
+#Kunena .ktree-empty { background: none; }

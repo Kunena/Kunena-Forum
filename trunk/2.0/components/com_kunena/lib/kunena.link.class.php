@@ -112,8 +112,28 @@ class CKunenaLink {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}", $threadname, $title, $rel, $class );
 	}
 
+	function GetThreadLayoutLink($layout, $catid, $threadid, $mesid, $threadname, $limitstart=0, $limit=0, $title='', $rel = 'nofollow', $class = '') {
+		$anker = '';
+		$query = array();
+		if ($mesid) {
+			if (!$layout) $l = JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' );
+			else $l = $layout;
+			if ($l == 'threaded') $query[] = "&mesid={$mesid}";
+			else $anker = $mesid;
+		}
+		if ($layout) $query[] = "&layout={$layout}";
+		if ($limitstart) {
+			$query[] = "&limitstart={$limitstart}";
+			$query[] = "&limit={$limit}";
+		}
+		$query = implode('', $query);
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=view&catid=' . $catid . '&id=' . $threadid . $query, $threadname, $title, $rel, $class, $anker );
+	}
+
 	function GetThreadPageLink($view, $catid, $id, $limitstart, $limit, $name, $anker = '', $rel = 'follow', $class = '') {
-		return self::GetHrefLink ( self::GetThreadPageURL($view, $catid, $id, $limitstart, $limit), $name, '', $rel, $class, $anker );
+		$kunena_config = KunenaFactory::getConfig ();
+		$pagelink = CKunenaLink::GetHrefLink ( self::GetThreadPageURL($view, $catid, $id, $limitstart, $limit, $anker), $name, '', $rel, $class );
+		return $pagelink;
 	}
 
 	function GetThreadPageSpecialLink($func, $catid, $threadid, $page, $limit, $name, $anker = '', $rel = 'follow', $class = '', $title='') {
@@ -129,12 +149,18 @@ class CKunenaLink {
 	}
 
 	function GetThreadPageURL($view, $catid, $id, $limitstart, $limit = '', $anker = '', $xhtml = true) {
+		$layout = JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' );
+		$query = '';
+		if ($layout == 'threaded' && $anker>0) {
+			$query = "&mesid={$anker}";
+			$anker = '';
+		}
 		if ($limit < 1) $limit = KunenaFactory::getConfig()->messages_per_page;
 		if (!$limitstart) {
-			$pageURL = "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}";
+			$pageURL = "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}{$query}";
 		} else {
 			$limitstart -= $limitstart % $limit;
-			$pageURL = "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}&limitstart={$limitstart}&limit={$limit}";
+			$pageURL = "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}{$query}&limitstart={$limitstart}&limit={$limit}";
 		}
 		return KunenaRoute::_ ( $pageURL, $xhtml ) . ($anker ? ('#' . $anker) : '');
 	}

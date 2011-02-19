@@ -177,6 +177,7 @@ PX		EM			PCT			PT
 #Kunena .kblock div.kheader {
 	border-bottom:2px solid;
 	padding:0 10px 0 10px;
+	background: rgb(83, 136, 180) !important;
 }
 #Kunena .kheader h2,
 #Kunena .kheader h2 a {

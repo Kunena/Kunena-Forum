@@ -34,6 +34,7 @@ Kunena 2.0.0-DEV
 18-February-2011 810
 # [#24364] CSS fix (announcement)
 # [#24364] CSS fix (Profile)
+# [#24364] CSS fix (Search)
 
 18-February-2011 810
 ^ [#24395] Backend in MVC (stats part2)

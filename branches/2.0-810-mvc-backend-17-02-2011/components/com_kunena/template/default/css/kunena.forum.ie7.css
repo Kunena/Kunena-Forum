@@ -40,7 +40,7 @@
 #Kunena div.kmsg-header-left span.kmsgdate-left { float: left; }
 #Kunena div.kcc-subcat { float: none; display: inline; }
 #Kunena td.kcol-first { background: transparent; }
-#Kunena .kblock div.kheader { background: #000000 !important; }
+#Kunena .kblock div.kheader { background: rgb(83, 136, 180) !important; }
 #Kunena h2 a { color: #ffffff !important;}
 #Kunena span.kforummoderated,
 #Kunena span.kforumlocked { position: relative; bottom: 3px; left: 5px; }

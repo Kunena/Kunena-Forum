@@ -1187,10 +1187,13 @@ PX		EM			PCT			PT
 	margin: 0 !important;
 }
 #Kunena h2 span.kheadbtn a {
-	font-size: 12px;
+	font-size: 11px;
 	line-height: 23px;
 	border: 1px solid;
-	padding: 3px;
+	padding-top: 1px;
+	padding-bottom: 3px;
+	padding-left: 3px;
+	padding-right: 3px;
 }
 #Kunena h2 span.kheadbtn:hover a {
 	text-decoration: none;

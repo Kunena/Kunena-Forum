@@ -32,6 +32,9 @@ Legend:
 Kunena 2.0.0-DEV
 
 18-February-2011 810
+# [#24364] CSS fix (announcement)
+
+18-February-2011 810
 ^ [#24395] Backend in MVC (stats part2)
 
 17-February-2011 810

@@ -250,6 +250,8 @@ PX		EM			PCT			PT
 	line-height: 13px;
 }
 #Kunena div.kblock div.kactions a {
+	color: #FFF !important; 
+	background-color:transparent !important;
 }
 #Kunena table.kblock {
 	width: 100%;

@@ -368,7 +368,7 @@ class CKunenaView {
 		$last = end($this->threaded[$parent]);
 		foreach ($this->threaded[$parent] as $mesid) {
 			$message = $this->messages[$mesid];
-			$skip = $message->parent != $this->id && !isset($this->messages[$message->parent]);
+			$skip = $message->id != $this->id && $message->parent != $this->id && !isset($this->messages[$message->parent]);
 			if ($mesid != $last) {
 				// Default sibling edge
 				$indent[] = 'crossedge';

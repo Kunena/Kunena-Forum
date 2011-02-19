@@ -2705,6 +2705,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	text-align: center;
 }
 #Kunena tr.userlist th a {
+	color: #FFF !important;
 }
 #Kunena div#userlist_tbody td,
 #Kunena table#kuserlist_bottom th {

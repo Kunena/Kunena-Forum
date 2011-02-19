@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
+kimport('kunena.model');
 
 /**
  * Stats Model for Kunena
@@ -19,7 +20,7 @@ jimport ( 'joomla.application.component.model' );
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaAdminModelStats extends JModel {
+class KunenaAdminModelStats extends KunenaModel {
 	protected function _getStatsClass() {
 		require_once(KUNENA_PATH.'/lib/kunena.stats.class.php');
 		$kunena_stats = CKunenaStats::getInstance();

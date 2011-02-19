@@ -31,6 +31,11 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-February-2011 Xillibit
+^ [#24395] Backend in MVC (ranks manager)
+^ [#24395] Apply changes on report configuration from k1.6
+^ [#24395] Change extend on all backend model to extend KunenaModel instead of JModel
+
 18-February-2011 Xillibit
 ^ [#24395] Backend in MVC (createmenu, recount and config)
 ^ [#24395] Missing Kunena log in some views, remove old config code

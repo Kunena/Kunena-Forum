@@ -33,6 +33,11 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$config = KunenaFactory::getConfig ();
 		$db = JFactory::getDBO ();
 
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
 		foreach ( JRequest::get('post', JREQUEST_ALLOWHTML) as $postsetting => $postvalue ) {
 			if (JString::strpos ( $postsetting, 'cfg_' ) === 0) {
 				//remove cfg_ and force lower case
@@ -45,16 +50,10 @@ class KunenaAdminControllerConfig extends KunenaController {
 				// in the config class. Anything else posted gets ignored.
 				if (array_key_exists ( $postname, $config->GetClassVars () )) {
 					if (is_numeric ( $postvalue )) {
-						eval ( "\$kunena_config->" . $postname . " = " . $postvalue . ";" );
-					} else {
-						// Rest is treaded as strings
-						eval ( "\$kunena_config->" . $postname . " = '" . $postvalue . "';" );
-					}
-				} else {
-					// This really should not happen if assertions are enable
-					// fail it and display the current scope of variables for debugging.
-					trigger_error ( 'Unknown configuration variable posted.' );
-					assert ( 0 );
+      					$config->$postname = intval($postvalue);
+     				} else {
+      					$config->$postname = strval($postvalue);
+     				}
 				}
 			}
 		}
@@ -75,6 +74,12 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$db = JFactory::getDBO ();
 		$app = JFactory::getApplication ();
 		$config = KunenaFactory::getConfig ();
+
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
 		$config->backup ();
 		$config->remove ();
 		$config = new CKunenaConfig();

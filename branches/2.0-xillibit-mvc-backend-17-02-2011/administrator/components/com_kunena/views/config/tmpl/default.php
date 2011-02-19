@@ -19,7 +19,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-config"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
-		<div id="kadmin-this->configtabs">
+		<div id="kadmin-configtabs">
 		<form action="index.php" method="post" name="adminForm">
 
 		<dl class="tabs" id="pane">
@@ -1124,77 +1124,77 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					</table>
 				</fieldset>
 				</dd>
-				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_this->config_PLUGINS') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_PLUGINS') ?></dt>
+				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?></dt>
 				<dd>
 				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST') ?></legend>
+					<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>
 					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_ROWS') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS') ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_userlist_rows"
 								value="<?php echo kescape($this->config->userlist_rows); ?>" /></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_ROWS_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_USERONLINE') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_online']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_USERONLINE_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_AVATAR') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_AVATAR') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_avatar']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_USERLIST_AVATAR_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERLIST_AVATAR_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_NAME') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_NAME') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_name']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_NAME_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_NAME_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_USERNAME') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_username']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_USERNAME_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_POSTS') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_posts']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_POSTS_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_KARMA') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_KARMA') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_karma']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_KARMA_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_KARMA_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_EMAIL') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_EMAIL') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_email']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_EMAIL_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_EMAIL_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_USERTYPE') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_usertype']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_USERTYPE_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_JOINDATE') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_joindate']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_JOINDATE_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_LASTVISITDATE') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIGg_USERLIST_LASTVISITDATE') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_lastvisitdate']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_LASTVISITDATE_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_HITS') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_userhits']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_HITS_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_ALLOWED') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_allowed']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_this->config_USERLIST_ALLOWED_DESC') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED_DESC') ?></td>
 						</tr>
 					</table>
 				</fieldset>

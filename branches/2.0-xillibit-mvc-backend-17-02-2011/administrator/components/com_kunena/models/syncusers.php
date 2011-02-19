@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
+kimport('kunena.model');
 
 /**
  * Syncusers Model for Kunena
@@ -19,7 +20,7 @@ jimport ( 'joomla.application.component.model' );
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaAdminModelSyncusers extends JModel {
+class KunenaAdminModelSyncusers extends KunenaModel {
 	function kUpdateNameInfo() {
 		$db = JFactory::getDBO();
 		$config = KunenaFactory::getConfig ();

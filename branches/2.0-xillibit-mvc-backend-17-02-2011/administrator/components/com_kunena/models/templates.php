@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: report.php 4421 2011-02-16 19:51:30Z mahagr $
+ * @version $Id: stats.php 4387 2011-02-08 16:19:37Z mahagr $
  * Kunena Component
  * @package Kunena
  *
@@ -14,12 +14,12 @@ jimport ( 'joomla.application.component.model' );
 kimport('kunena.model');
 
 /**
- * Recount Model for Kunena
+ * Templates Model for Kunena
  *
  * @package		Kunena
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaAdminModelRecount extends KunenaModel {
+class KunenaAdminModelTemplates extends KunenaModel {
 
 }

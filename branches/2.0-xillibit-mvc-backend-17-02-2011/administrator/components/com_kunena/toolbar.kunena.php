@@ -78,21 +78,6 @@ switch ($task)
 
         break;
 
-	case "ranks":
-        CKunenaToolbar::_SHOWRANKS_MENU();
-
-        break;
-
-    case "editRank":
-        CKunenaToolbar::_EDITRANK_MENU();
-
-        break;
-
-    case "newRank":
-        CKunenaToolbar::_NEWRANK_MENU();
-
-        break;
-
 	case "showTemplates":
         CKunenaToolbar::_SHOWTEMPLATES_MENU();
 

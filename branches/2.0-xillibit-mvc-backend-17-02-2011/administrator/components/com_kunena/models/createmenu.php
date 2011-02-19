@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
+kimport('kunena.model');
 
 /**
  * Createmenu Model for Kunena

@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
+kimport('kunena.model');
 
 /**
  * Prune Model for Kunena
@@ -19,7 +20,7 @@ jimport ( 'joomla.application.component.model' );
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaAdminModelPrune extends JModel {
+class KunenaAdminModelPrune extends KunenaModel {
 	function getForumlist() {
 		$cat_params = array ();
 		$cat_params['ordering'] = 'ordering';

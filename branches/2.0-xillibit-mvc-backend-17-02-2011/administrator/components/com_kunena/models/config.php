@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
+kimport('kunena.model');
 
 /**
  * Config Model for Kunena
@@ -19,7 +20,7 @@ jimport ( 'joomla.application.component.model' );
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaAdminModelConfig extends JModel {
+class KunenaAdminModelConfig extends KunenaModel {
 	function getConfiglists() {
 		require_once (KUNENA_PATH_LIB.'/kunena.timeformat.class.php');
 		$config = KunenaFactory::getConfig ();

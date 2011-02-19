@@ -130,40 +130,6 @@ class CKunenaToolbar
 
     }
 
-	function _SHOWRANKS_MENU()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::addNew('newRank', 'COM_KUNENA_NEW_RANK');
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('editRank', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('deleteRank', 'delete.png', 'delete_f2.png', 'COM_KUNENA_GEN_DELETE');
-        JToolBarHelper::spacer();
-        JToolBarHelper::back();
-
-    }
-
-	function _EDITRANK_MENU()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::save('saveRank');
-        JToolBarHelper::spacer();
-        JToolBarHelper::cancel('ranks');
-
-    }
-
-    function _NEWRANK_MENU()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::save('saveRank');
-        JToolBarHelper::spacer();
-        JToolBarHelper::cancel('ranks');
-
-    }
-
 	function _SHOWTEMPLATES_MENU()
     {
 		JToolBarHelper::spacer();

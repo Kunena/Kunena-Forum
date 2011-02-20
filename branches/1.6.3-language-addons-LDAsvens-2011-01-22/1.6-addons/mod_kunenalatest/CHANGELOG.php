@@ -29,6 +29,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaLatest 1.6.3-DEV
+20-February-2011 svens(LDA)
+^ [#24847] update hu-HU (thanks pedrohsi)
+
 19-February-2011 svens(LDA)
 + [#24847] add tr-TR (thanks cumla)
 

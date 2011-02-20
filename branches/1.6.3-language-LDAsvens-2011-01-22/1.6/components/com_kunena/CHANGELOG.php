@@ -31,6 +31,9 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4
+20-February-2011 svens(LDA)
+^ [#24847] update hu-HU (thanks pedrohsi)
+
 19-February-2011 svens(LDA)
 ^ [#24847] update ru-RU (thanks Zarkos)
 ^ [#24847] update th-TH (thanks drlovecat)

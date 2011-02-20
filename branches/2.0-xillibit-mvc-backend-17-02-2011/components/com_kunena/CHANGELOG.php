@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+20-February-2011 Xillibit
+^ [#24395] Backend in MVC (smilies manager)
+
 19-February-2011 Xillibit
 ^ [#24395] Backend in MVC (ranks manager)
 ^ [#24395] Apply changes on report configuration from k1.6

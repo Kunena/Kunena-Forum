@@ -21,7 +21,7 @@ $document->addScriptDeclaration('function update_rank(newimage)
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?></div>
+	<div class="kadmin-functitle icon-ranks"><?php if ( !$this->state->get('item.id') ): ?><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?><?php else: ?><?php echo JText::_('COM_KUNENA_RANKS_EDIT'); ?><?php endif; ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 
@@ -61,6 +61,7 @@ $document->addScriptDeclaration('function update_rank(newimage)
 			<input type="hidden" name="view" value="ranks" />
 			<input type="hidden" name="task" value="save" />
 			<input type="hidden" name="boxchecked" value="0" />
+			<?php if ( $this->state->get('item.id') ): ?><input type="hidden" name="rankid" value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
 			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>

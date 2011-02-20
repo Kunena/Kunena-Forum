@@ -266,12 +266,20 @@ class KunenaAdminModelReport extends KunenaModel {
 		kimport('kunena.error');
 		$kunena_db = JFactory::getDBO ();
 		if ($jversion->RELEASE == '1.5') {
+			// Get Kunena aliases
+			 $query = "SELECT m.id, m.menutype, m.name, m.alias, m.link, m.parent
+ 	  	     	FROM #__menu AS m
+ 	  	        INNER JOIN #__menu AS mm ON m.link LIKE CONCAT( '%Itemid=', mm.id )
+ 	  	        WHERE m.published=1 AND m.type = 'menulink' AND mm.link LIKE '%com_kunena%'
+ 	  	        ORDER BY m.menutype, m.parent, m.ordering ASC";
+ 	  	    $kunena_db->setQuery($query);
+			$kmenustype = (array) $kunena_db->loadObjectlist('id');
 			// Get Kunena menu items
 			$query = "SELECT id, menutype, name, alias, link, parent "
 				." FROM #__menu "
-				." WHERE menutype = {$kunena_db->Quote('kunenamenu')} OR name='forum' ORDER BY id ASC";
+				." WHERE published=1 AND link LIKE '%com_kunena%' ORDER BY menutype, parent, ordering";
 			$kunena_db->setQuery($query);
-			$kmenustype = $kunena_db->loadObjectlist();
+			$kmenustype += (array) $kunena_db->loadObjectlist('id');
 			if (KunenaError::checkDatabaseError()) return;
 
 			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
@@ -368,7 +376,7 @@ class KunenaAdminModelReport extends KunenaModel {
 				$com_version = $xml_com->document->version[0];
 				$com_version = '[u]'.$namedetailled.':[/u] Installed (Version : '.$com_version->data().')';
 			} else {
-				$com_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
+				$com_version = '[u]'.$namedetailled.'[/u] '.$com_version->data();
 			}
 		} else {
 			$com_version = '';
@@ -382,7 +390,7 @@ class KunenaAdminModelReport extends KunenaModel {
 				$mod_version = $xml_mod->document->version[0];
 				$mod_version = '[u]'.$namedetailled.':[/u] Enabled (Version : '.$mod_version->data().')';
 			} else {
-				$mod_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
+				$mod_version = '[u]'.$namedetailled.'[/u] '.$mod_version->data();
 			}
 		} else {
 			$mod_version = '';
@@ -396,7 +404,7 @@ class KunenaAdminModelReport extends KunenaModel {
 				$plg_version = $xml_plg->document->version[0];
 				$plg_version = '[u]'.$namedetailled.':[/u] Enabled (Version : '.$plg_version->data().')';
 			}	else {
-				$plg_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
+				$plg_version = '[u]'.$namedetailled.'[/u] '.$plg_version->data();
 			}
 		} else {
 			$plg_version = '';

@@ -14,18 +14,18 @@ kimport ( 'kunena.controller' );
 kimport ( 'kunena.error' );
 
 /**
- * Kunena Ranks Controller
+ * Kunena Smileys Controller
  *
  * @package		Kunena
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaAdminControllerRanks extends KunenaController {
+class KunenaAdminControllerSmilies extends KunenaController {
 	protected $baseurl = null;
 
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->baseurl = 'index.php?option=com_kunena&view=ranks';
+		$this->baseurl = 'index.php?option=com_kunena&view=smilies';
 	}
 
 	function add() {
@@ -48,7 +48,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$id = array_shift($cid);
 		if (!$id) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_RANKS_SELECTED' ), 'notice' );
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_SMILEYS_SELECTED' ), 'notice' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		} else {
 			$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=add&id={$id}", false));
@@ -58,53 +58,44 @@ class KunenaAdminControllerRanks extends KunenaController {
 	function save() {
 		$app = JFactory::getApplication ();
 		$db = JFactory::getDBO ();
-
 		if (!JRequest::checkToken()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;
 		}
 
-		$rank_title = JRequest::getVar ( 'rank_title' );
-		$rank_image = JRequest::getVar ( 'rank_image' );
-		$rank_special = JRequest::getVar ( 'rank_special' );
-		$rank_min = JRequest::getVar ( 'rank_min' );
-		$rankid = JRequest::getInt( 'rankid', 0 );
+		$smiley_code = JRequest::getString ( 'smiley_code' );
+		$smiley_location = JRequest::getVar ( 'smiley_url' );
+		$smiley_emoticonbar = JRequest::getInt ( 'smiley_emoticonbar', 0 );
+    	$smileyid = JRequest::getInt( 'smileyid', 0 );
 
+    	if ( !$smileyid ) {
+     		$db->setQuery ( "INSERT INTO #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar'" );
+      		$db->query ();
+		  	if (KunenaError::checkDatabaseError()) return;
+    	} else {
+     		$db->setQuery ( "UPDATE #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar' WHERE id = '$smileyid'" );
+      		$db->query ();
+		  	if (KunenaError::checkDatabaseError()) return;
+    	}
 
-
-		if ( !$rankid ) {
-			$db->setQuery ( "INSERT INTO #__kunena_ranks SET rank_title = '$rank_title', rank_image = '$rank_image', rank_special = '$rank_special', rank_min = '$rank_min'" );
-			$db->query ();
-			if (KunenaError::checkDatabaseError()) return;
-		} else {
-			$db->setQuery ( "UPDATE #__kunena_ranks SET rank_title = '$rank_title', rank_image = '$rank_image', rank_special = '$rank_special', rank_min = '$rank_min' WHERE rank_id = '$rankid'" );
-			$db->query ();
-			if (KunenaError::checkDatabaseError()) return;
-		}
-
-		$app->enqueueMessage ( JText::_('COM_KUNENA_RANK_SAVED') );
+		$app->enqueueMessage ( JText::_('COM_KUNENA_SMILEY_SAVED') );
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
-	function rankupload() {
+	function smileyupload() {
 		$config = KunenaFactory::getConfig ();
 		$app = JFactory::getApplication ();
-
-		if (!JRequest::checkToken()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
-			return;
-		}
-
 		// load language fo component media
 		JPlugin::loadLanguage( 'com_media' );
 		$params = JComponentHelper::getParams('com_media');
 		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
 		define('COM_KUNENA_MEDIA_BASE', JPATH_ROOT.'/components/com_kunena/template/'.$config->template.'/images');
+		// Check for request forgeries
+		JRequest::checkToken( 'request' ) or jexit( 'Invalid Token' );
 
 		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
-		$folderranks	= JRequest::getVar( 'folderranks', 'ranks', '', 'path' );
+		$foldersmiley	= JRequest::getVar( 'foldersmiley', 'emoticons', '', 'path' );
 		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
 		$err			= null;
 
@@ -117,13 +108,13 @@ class KunenaAdminControllerRanks extends KunenaController {
 		$file['name']	= JFile::makeSafe($file['name']);
 
 		if (isset($file['name'])) {
-			$filepathranks = JPath::clean(COM_KUNENA_MEDIA_BASE.'/'.$folderranks.'/'.strtolower($file['name']));
+			$filepathsmiley = JPath::clean(COM_KUNENA_MEDIA_BASE.'/'.$foldersmiley.'/'.strtolower($file['name']));
 
 			if (!MediaHelper::canUpload( $file, $err )) {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
-					$log = JLog::getInstance('upload.error.php');
-					$log->addEntry(array('comment' => 'Invalid: '.$filepathranks.': '.$err));
+					$log = &JLog::getInstance('upload.error.php');
+					$log->addEntry(array('comment' => 'Invalid: '.$filepathsmiley.': '.$err));
 					header('HTTP/1.0 415 Unsupported Media Type');
 					jexit('Error. Unsupported Media Type!');
 				} else {
@@ -134,30 +125,30 @@ class KunenaAdminControllerRanks extends KunenaController {
 				}
 			}
 
-			if (JFile::exists($filepathranks)) {
+			if (JFile::exists($filepathsmiley)) {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
 					$log = &JLog::getInstance('upload.error.php');
-					$log->addEntry(array('comment' => 'File already exists: '.$filepathranks));
+					$log->addEntry(array('comment' => 'File already exists: '.$filepathsmiley));
 					header('HTTP/1.0 409 Conflict');
 					jexit('Error. File already exists');
 				} else {
-					JError::raiseNotice(100, JText::_('COM_KUNENA_A_RANKS_UPLOAD_ERROR_EXIST'));
+					JError::raiseNotice(100, JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_EXIST'));
 					$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 
 					return;
 				}
 			}
 
-			if (!JFile::upload($file['tmp_name'], $filepathranks)) {
+			if (!JFile::upload($file['tmp_name'], $filepathsmiley)) {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
 					$log = &JLog::getInstance('upload.error.php');
-					$log->addEntry(array('comment' => 'Cannot upload: '.$filepathranks));
+					$log->addEntry(array('comment' => 'Cannot upload: '.$filepathsmiley));
 					header('HTTP/1.0 400 Bad Request');
 					jexit('Error. Unable to upload file');
 				} else {
-					JError::raiseWarning(100, JText::_('COM_KUNENA_A_RANKS_UPLOAD_ERROR_UNABLE'));
+					JError::raiseWarning(100, JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE'));
 					$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 
 					return;
@@ -166,10 +157,10 @@ class KunenaAdminControllerRanks extends KunenaController {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
 					$log = &JLog::getInstance();
-					$log->addEntry(array('comment' => $filepathranks));
+					$log->addEntry(array('comment' => $foldersmiley));
 					jexit('Upload complete');
 				} else {
-					$app->enqueueMessage(JText::_('COM_KUNENA_A_RANKS_UPLOAD_SUCCESS'));
+					$app->enqueueMessage(JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS'));
 					$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 
 					return;
@@ -193,12 +184,12 @@ class KunenaAdminControllerRanks extends KunenaController {
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$cids = implode ( ',', $cids );
 		if ($cids) {
-			$db->setQuery ( "DELETE FROM #__kunena_ranks WHERE rank_id IN ($cids)" );
+			$db->setQuery ( "DELETE FROM #__kunena_smileys WHERE id IN ($cids)" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 		}
 
-		$app->enqueueMessage (JText::_('COM_KUNENA_RANK_DELETED') );
+		$app->enqueueMessage (JText::_('COM_KUNENA_SMILEY_DELETED') );
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 }

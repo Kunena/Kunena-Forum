@@ -96,40 +96,6 @@ class CKunenaToolbar
 
     }
 
-	function _SHOWSMILEY_MENU()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::addNew('newsmiley', 'COM_KUNENA_NEW_SMILIE');
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('editsmiley', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('deletesmiley', 'delete.png', 'delete_f2.png', 'COM_KUNENA_GEN_DELETE');
-        JToolBarHelper::spacer();
-        JToolBarHelper::back();
-
-    }
-
-    function _EDITSMILEY_MENU()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::save('savesmiley');
-        JToolBarHelper::spacer();
-        JToolBarHelper::cancel('showsmilies');
-
-    }
-
-    function _NEWSMILEY_MENU()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::save('savesmiley');
-        JToolBarHelper::spacer();
-        JToolBarHelper::cancel('showsmilies');
-
-    }
-
 	function _SHOWTEMPLATES_MENU()
     {
 		JToolBarHelper::spacer();

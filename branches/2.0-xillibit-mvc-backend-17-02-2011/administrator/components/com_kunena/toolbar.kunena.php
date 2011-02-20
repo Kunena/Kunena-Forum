@@ -63,21 +63,6 @@ switch ($task)
 
         break;
 
-	case "showsmilies":
-        CKunenaToolbar::_SHOWSMILEY_MENU();
-
-        break;
-
-    case "editsmiley":
-        CKunenaToolbar::_EDITSMILEY_MENU();
-
-        break;
-
-    case "newsmiley":
-        CKunenaToolbar::_NEWSMILEY_MENU();
-
-        break;
-
 	case "showTemplates":
         CKunenaToolbar::_SHOWTEMPLATES_MENU();
 

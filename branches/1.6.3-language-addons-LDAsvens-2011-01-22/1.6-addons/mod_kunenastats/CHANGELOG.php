@@ -29,6 +29,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaStats 1.6.2
+21-February-2011 svens(LDA)
+^ [#24847] update de-DE (thanks rich)
+
 18-February-2011 svens(LDA)
 ^ [#24847] update fi-FI (thanks Mortti)
 

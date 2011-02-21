@@ -327,9 +327,9 @@ class KunenaTranslateHelper
 	 * @param $filename string Name of the XML-File
 	 * @return object JSimpleXML Object of the XML-File 
 	 */
-	static protected function loadXML($filename='Kunena'){
+	static function loadXML($filename='kunena.xml'){
 		$xml = new JSimpleXML();
-		$xml->loadFile(JPATH_COMPONENT_ADMINISTRATOR.DS.'conf'.DS.$filename.'.xml');
+		$xml->loadFile(JPATH_COMPONENT_ADMINISTRATOR.DS.'conf'.DS.$filename);
 		
 		return $xml;
 	}

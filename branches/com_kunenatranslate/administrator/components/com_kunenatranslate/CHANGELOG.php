@@ -28,6 +28,10 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Kunena Translate 0.1.0
+21-February-2011 svens(LDA)
++ [#25009] Install & uninstall config files
+
 04-February-2011 svens(LDA)
 + [#24754] Adding some icons
 

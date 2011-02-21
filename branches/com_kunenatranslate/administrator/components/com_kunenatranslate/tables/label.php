@@ -23,10 +23,14 @@ class TableLabel extends JTable
 	 * @var label
 	 */
 	var $label = null;
-	/** client
+	/** key client
 	 * @var client
 	 */
 	var $client = null;
+	/** key extension
+	 * @var extension
+	 */
+	var $extension = null;
 	
 	function __construct(& $db){
 		parent::__construct('#__kunenatranslate_label', 'id', $db);

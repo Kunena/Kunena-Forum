@@ -4,7 +4,7 @@
  * Kunena Translate Component
  * 
  * @package	Kunena Translate
- * @Copyright (C) 2010 www.kunena.com All rights reserved
+ * @Copyright (C) 2010-2011 www.kunena.com All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  */

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.4-DEV
 
+21-February-2011 Severdia
+# [#24364] CSS fix for pagination and announcement links (regression from Joomla 1.6 fixes)
+
 19-February-2011 Matias
 # [#24985] Threaded layout was missing an image
 # [#24985] Fix wrong kind of link in threaded view

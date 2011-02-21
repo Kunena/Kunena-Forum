@@ -67,17 +67,17 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		$smiley_code = JRequest::getString ( 'smiley_code' );
 		$smiley_location = JRequest::getVar ( 'smiley_url' );
 		$smiley_emoticonbar = JRequest::getInt ( 'smiley_emoticonbar', 0 );
-    	$smileyid = JRequest::getInt( 'smileyid', 0 );
+		$smileyid = JRequest::getInt( 'smileyid', 0 );
 
-    	if ( !$smileyid ) {
-     		$db->setQuery ( "INSERT INTO #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar'" );
-      		$db->query ();
-		  	if (KunenaError::checkDatabaseError()) return;
-    	} else {
-     		$db->setQuery ( "UPDATE #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar' WHERE id = '$smileyid'" );
-      		$db->query ();
-		  	if (KunenaError::checkDatabaseError()) return;
-    	}
+		if ( !$smileyid ) {
+			$db->setQuery ( "INSERT INTO #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar'" );
+			$db->query ();
+			if (KunenaError::checkDatabaseError()) return;
+		} else {
+			$db->setQuery ( "UPDATE #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar' WHERE id = '$smileyid'" );
+			$db->query ();
+			if (KunenaError::checkDatabaseError()) return;
+		}
 
 		$app->enqueueMessage ( JText::_('COM_KUNENA_SMILEY_SAVED') );
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );

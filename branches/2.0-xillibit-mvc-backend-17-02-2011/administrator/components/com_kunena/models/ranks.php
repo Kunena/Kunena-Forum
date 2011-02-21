@@ -64,17 +64,17 @@ class KunenaAdminModelRanks extends KunenaModel {
 	}
 
 	public function getRank() {
-    	$db = JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 
-   	 	if ( $this->getState('item.id') ) {
-      		$db->setQuery ( "SELECT * FROM #__kunena_ranks WHERE rank_id = '{$this->getState('item.id')}'" );
-		 	$rankselected = $db->loadObject ();
-		  	if (KunenaError::checkDatabaseError()) return;
+		if ( $this->getState('item.id') ) {
+			$db->setQuery ( "SELECT * FROM #__kunena_ranks WHERE rank_id = '{$this->getState('item.id')}'" );
+			$rankselected = $db->loadObject ();
+			if (KunenaError::checkDatabaseError()) return;
 
-	 	   	return $rankselected;
+			return $rankselected;
 		}
 		return;
-  	}
+	}
 
 	public function getRankspaths() {
 		$template = KunenaFactory::getTemplate();

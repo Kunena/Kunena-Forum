@@ -94,7 +94,7 @@ $document->addStyleDeclaration($styles);
 						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showprofiles" title="<?php echo JText::_('COM_KUNENA_C_USERDESC');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/users.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_USER'); ?> </span> </a> </div>
 					</div>
 					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showTemplates" title="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/templates.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> </span></a> </div>
+						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=templates" title="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/templates.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
 						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=smilies" title="<?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/smileys.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER');?> </span></a> </div>

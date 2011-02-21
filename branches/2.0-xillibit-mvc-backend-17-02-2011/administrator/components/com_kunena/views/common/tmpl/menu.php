@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 	<a class="kadmin-mainmenu icon-config-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=config"><?php echo JText::_('COM_KUNENA_C_FBCONFIG'); ?></a>
 	<a class="kadmin-mainmenu icon-adminforum-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=categories"><?php echo JText::_('COM_KUNENA_C_FORUM'); ?></a>
 	<a class="kadmin-mainmenu icon-profiles-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showprofiles"><?php echo JText::_('COM_KUNENA_C_USER'); ?></a>
-	<a class="kadmin-mainmenu icon-template-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showTemplates"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></a>
+	<a class="kadmin-mainmenu icon-template-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=templates"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-smilies-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-ranks-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-files-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=browseFiles"><?php echo JText::_('COM_KUNENA_C_FILES'); ?></a>

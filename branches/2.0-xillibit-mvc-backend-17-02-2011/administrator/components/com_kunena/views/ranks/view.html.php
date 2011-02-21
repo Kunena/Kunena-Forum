@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: view.html.php 4443 2011-02-18 19:51:15Z xillibit $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -43,17 +43,17 @@ class KunenaAdminViewRanks extends KunenaView {
 	protected function setToolBarDefault() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
-        JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('delete', 'delete.png', 'delete_f2.png', 'COM_KUNENA_GEN_DELETE');
-        JToolBarHelper::spacer();
+		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('delete', 'delete.png', 'delete_f2.png', 'COM_KUNENA_GEN_DELETE');
+		JToolBarHelper::spacer();
 	}
 
 	function displayEdit() {
 		$this->state = $this->get('state');
-	  	$this->rank_selected = $this->get('rank');
+		$this->rank_selected = $this->get('rank');
 		$this->template = KunenaFactory::getTemplate();
 		$this->rankpath = $this->template->getRankPath();
 		$this->listranks = $this->get('Rankspaths');
@@ -62,8 +62,8 @@ class KunenaAdminViewRanks extends KunenaView {
 	protected function setToolBarEdit() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
-        JToolBarHelper::save('save');
-        JToolBarHelper::spacer();
-        JToolBarHelper::cancel('ranks');
+		JToolBarHelper::save('save');
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel('ranks');
 	}
 }

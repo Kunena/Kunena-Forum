@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: view.html.php 4443 2011-02-18 19:51:15Z xillibit $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -41,17 +41,17 @@ class KunenaAdminViewSmilies extends KunenaView {
 	protected function setToolBarDefault() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
-        JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('delete', 'delete.png', 'delete_f2.png', 'COM_KUNENA_GEN_DELETE');
-        JToolBarHelper::spacer();
+		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('delete', 'delete.png', 'delete_f2.png', 'COM_KUNENA_GEN_DELETE');
+		JToolBarHelper::spacer();
 	}
 
 	function displayEdit() {
 		$this->state = $this->get('state');
-	  	$this->smiley_selected = $this->get('smiley');
+		$this->smiley_selected = $this->get('smiley');
 		$this->template = KunenaFactory::getTemplate();
 		$this->smileypath = $this->template->getSmileyPath();
 		$this->listsmileys = $this->get('Smileyspaths');
@@ -60,8 +60,8 @@ class KunenaAdminViewSmilies extends KunenaView {
 	protected function setToolBarEdit() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
-        JToolBarHelper::save('save');
-        JToolBarHelper::spacer();
-        JToolBarHelper::cancel('smileys');
+		JToolBarHelper::save('save');
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel('smileys');
 	}
 }

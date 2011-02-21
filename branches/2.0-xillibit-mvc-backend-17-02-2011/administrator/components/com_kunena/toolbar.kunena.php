@@ -31,11 +31,6 @@ switch ($task)
 
         break;
 
-    case "showCss":
-        CKunenaToolbar::CSS_MENU();
-
-        break;
-
     case "profiles":
         CKunenaToolbar::_PROFILE_MENU();
 
@@ -60,26 +55,6 @@ switch ($task)
 
     case "showprofiles":
         CKunenaToolbar::_PROFILE_MENU();
-
-        break;
-
-	case "showTemplates":
-        CKunenaToolbar::_SHOWTEMPLATES_MENU();
-
-        break;
-
-	case "editKTemplate":
-        CKunenaToolbar::_EDITKTEMPLATE_MENU();
-
-        break;
-
-	case "chooseCSSTemplate":
-        CKunenaToolbar::_CHOOSECSS_MENU();
-
-        break;
-
-	case "editTemplateCSS":
-        CKunenaToolbar::_EDITCSS_MENU();
 
         break;
 

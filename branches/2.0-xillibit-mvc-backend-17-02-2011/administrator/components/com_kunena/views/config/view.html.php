@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: view.html.php 4416 2011-02-16 08:43:29Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -27,9 +27,9 @@ class KunenaAdminViewConfig extends KunenaView {
 	protected function setToolBarDefault() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
-        JToolBarHelper::save('save');
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('setdefault', 'restore.png','restore_f2.png', 'COM_KUNENA_RESET_CONFIG', false);
-        JToolBarHelper::spacer();
+		JToolBarHelper::save('save');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('setdefault', 'restore.png','restore_f2.png', 'COM_KUNENA_RESET_CONFIG', false);
+		JToolBarHelper::spacer();
 	}
 }

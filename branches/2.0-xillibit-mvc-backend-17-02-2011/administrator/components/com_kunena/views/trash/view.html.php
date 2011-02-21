@@ -13,15 +13,15 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.view' );
 
 /**
- * Trasg view for Kunena backend
+ * Trash view for Kunena backend
  */
 class KunenaAdminViewTrash extends KunenaView {
-function display() {
-	$app = JFactory::getApplication();
-	$app->enqueueMessage('Trash Manager is under construction and does not work yet!', 'error');
-	return ' ';
-	$this->assignRef ( 'state', $this->get ( 'State' ) );
-	switch ($this->getLayout ()) {
+	function display() {
+		$app = JFactory::getApplication();
+		$app->enqueueMessage('Trash Manager is under construction and does not work yet!', 'error');
+		return ' ';
+		$this->assignRef ( 'state', $this->get ( 'State' ) );
+		switch ($this->getLayout ()) {
 			case 'purge' :
 				$this->displayPurge ();
 				$this->setToolBarPurge();
@@ -30,7 +30,7 @@ function display() {
 			   $this->displayDefault ();
 				$this->setToolBarDefault();
 				break;
-	}
+		}
 		parent::display ();
 	}
 

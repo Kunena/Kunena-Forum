@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+21-February-2011 Xillibit
+^ [#24395 Remove some undesired spaces in some files
+^ [#24395] Backend in MVC (tempates manager)
+
 20-February-2011 Xillibit
 ^ [#24395] Backend in MVC (smilies manager)
 
@@ -41,7 +45,7 @@ Kunena 2.0.0-DEV
 
 18-February-2011 Xillibit
 ^ [#24395] Backend in MVC (createmenu, recount and config)
-^ [#24395] Missing Kunena log in some views, remove old config code
+^ [#24395] Missing Kunena logo in some views, remove old config code
 
 17-February-2011 Xillibit
 ^ [#24395] Backend in MVC (syncusers and prune)

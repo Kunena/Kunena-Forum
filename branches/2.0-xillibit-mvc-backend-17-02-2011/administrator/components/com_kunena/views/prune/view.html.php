@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: view.html.php 4381 2011-02-05 20:55:31Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -26,11 +26,11 @@ class KunenaAdminViewPrune extends KunenaView {
 
 	protected function setToolBarDefault() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
-        JToolBarHelper::spacer();
-        JToolBarHelper::custom('doprune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
-        JToolBarHelper::spacer();
-        JToolBarHelper::cancel();
-        JToolBarHelper::spacer();
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('doprune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+		JToolBarHelper::spacer();
 
 	}
 }

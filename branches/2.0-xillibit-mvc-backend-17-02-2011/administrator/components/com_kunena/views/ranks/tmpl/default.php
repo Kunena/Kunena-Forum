@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: default.php 4416 2011-02-16 08:43:29Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
+// FIXME : Deprecated under Joomla! 1.6
 jimport('joomla.html.pane');
 $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 ?>

@@ -221,7 +221,7 @@ class CKunenaViewMessage {
 		$this->signatureHtml = KunenaParser::parseBBCode ($this->profile->signature);
 
 		//Thankyou info and buttons
-		if ($this->config->showthankyou && $this->profile->userid) {
+		if ($this->config->showthankyou && $this->profile->userid && $mode != 'threaded') {
 			require_once(KPATH_SITE .DS. 'lib'.DS.'kunena.thankyou.php');
 			$thankyou = new CKunenaThankyou();
 			$this->thankyou = $thankyou->getThankYouUser($this->id);
@@ -257,10 +257,10 @@ class CKunenaViewMessage {
 			$this->message_moderate = CKunenaLink::GetTopicPostReplyLink ( 'moderate', $this->catid, $this->id, CKunenaTools::showButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE_LONG') );
 			if ($message->hold == 1) {
 				$this->message_publish = CKunenaLink::GetTopicPostLink ( 'approve', $this->catid, $this->id, CKunenaTools::showButton ( 'approve', JText::_('COM_KUNENA_BUTTON_APPROVE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_APPROVE_LONG') );
-				$this->msgclass += 'kunapproved';
+				$this->msgclass .= ' kunapproved';
 			}
 			if ($message->hold == 2 || $message->hold == 3) {
-				$this->msgclass += 'kunapproved kdeleted';
+				$this->msgclass .= ' kunapproved kdeleted';
 				$this->message_undelete = CKunenaLink::GetTopicPostLink ( 'undelete', $this->catid, $this->id, CKunenaTools::showButton ( 'undelete', JText::_('COM_KUNENA_BUTTON_UNDELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG') );
 				$this->message_permdelete = CKunenaLink::GetTopicPostLink ( 'permdelete', $this->catid, $this->id, CKunenaTools::showButton ( 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG') );
 			} else {

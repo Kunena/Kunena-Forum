@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.4-DEV
 
+22-February-2011 Matias
+# [#25046] Regression: deleted and unapproved messages are not gray when inside topic
+
 21-February-2011 Severdia
 # [#24364] CSS fix for pagination and announcement links (regression from Joomla 1.6 fixes)
 

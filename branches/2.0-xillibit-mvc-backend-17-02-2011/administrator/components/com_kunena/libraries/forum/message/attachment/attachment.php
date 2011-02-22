@@ -80,6 +80,7 @@ class KunenaForumMessageAttachment extends JObject {
 	}
 
 	protected function generate() {
+		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 		if (!isset($this->_shorttype)) {
 			$this->_shorttype = $this->isImage($this->filetype) ? 'image' : $this->filetype;
 			$this->_shortname = KunenaForumMessageAttachmentHelper::shortenFileName($this->filename);

@@ -79,8 +79,9 @@ class KunenaAdminModelSmilies extends KunenaModel {
 	public function getSmileyspaths() {
 		$template = KunenaFactory::getTemplate();
 
+		$smileyselected = '';
 		if ( $this->getState('item.id') ) {
-			$smiley_selected = $this->getSmiley();
+			$smileyselected = $this->getSmiley();
 		}
 
 		$smileypath = $template->getSmileyPath();

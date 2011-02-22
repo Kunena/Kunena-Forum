@@ -31,8 +31,12 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+22-February-2011 Xillibit
+# [#24395] Fix some undefined issues (thanks Matias)
+^ [#24395] Backend in MVC (attachments manager instead of browsefiles and browseimages)
+
 21-February-2011 Xillibit
-^ [#24395 Remove some undesired spaces in some files
+^ [#24395] Remove some undesired spaces in some files
 ^ [#24395] Backend in MVC (tempates manager)
 
 20-February-2011 Xillibit

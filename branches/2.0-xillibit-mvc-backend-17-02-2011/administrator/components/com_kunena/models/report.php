@@ -89,6 +89,7 @@ class KunenaAdminModelReport extends KunenaModel {
 		}
 		$maxExecTime = ini_get('max_execution_time');
 		$maxExecMem = ini_get('memory_limit');
+		$fileuploads = ini_get('upload_max_filesize');
 		$kunenaVersionInfo = KunenaVersion::getVersionHTML ();
 
 		// Get Kunena default template

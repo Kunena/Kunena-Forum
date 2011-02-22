@@ -187,26 +187,6 @@ switch ($task) {
 
 		break;
 
-	case "browseImages" :
-		browseUploaded ( $kunena_db, $option, 1 );
-
-		break;
-
-	case "browseFiles" :
-		browseUploaded ( $kunena_db, $option, 0 );
-
-		break;
-
-	case "deleteImage" :
-		deleteAttachment ( JRequest::getInt ( 'id', 0 ), JURI::base () . "index.php?option=$option&task=browseImages", 'COM_KUNENA_IMGDELETED');
-
-		break;
-
-	case "deleteFile" :
-		deleteAttachment ( JRequest::getInt ( 'id', 0 ), JURI::base () . "index.php?option=$option&task=browseFiles", 'COM_KUNENA_FILEDELETED' );
-
-		break;
-
 	case 'cpanel' :
 	default :
 		html_Kunena::controlPanel ();
@@ -727,57 +707,6 @@ function userban($option, $userid, $block = 0) {
 	}
 	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles" );
 }
-
-//===============================
-// Uploaded Images browser
-//===============================
-function browseUploaded($kunena_db, $option, $type) {
-	$kunena_db = &JFactory::getDBO ();
-	$kunena_config = KunenaFactory::getConfig ();
-
-	if ($type) {
-		$extensionsAllowed = explode(',',$kunena_config->imagetypes);
-	} else {
-		$extensionsAllowed = explode(',',$kunena_config->filetypes);
-	}
-
-	// type = 1 -> images ; type = 0 -> files
-
-	$image_types =	explode(',',$kunena_config->imagemimetypes);
-	$imageTypes = array();
-	foreach ($image_types as $images ) {
-		$imageTypes[] = "'".trim($images)."'";
-	}
-	$imageTypes= implode(',',$imageTypes);
-	if ($type) {
-		$where = ' WHERE filetype IN ('.$imageTypes.')';
-	} else {
-		$where = ' WHERE filetype NOT IN ('.$imageTypes.')';
-	}
-
-	$query = "SELECT a.*, b.catid, b.thread FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS b ON a.mesid=b.id $where";
-	$kunena_db->setQuery ( $query );
-	$uploaded = $kunena_db->loadObjectlist();
-	if (KunenaError::checkDatabaseError()) return;
-
-	html_Kunena::browseUploaded ( $option, $uploaded, $type );
-}
-
-function deleteAttachment($id, $redirect, $message) {
-	$kunena_app = & JFactory::getApplication ();
-	$kunena_db = &JFactory::getDBO ();
-	if (! $id) {
-		$kunena_app->redirect ( $redirect );
-		return;
-	}
-	kimport ('kunena.forum.message.attachment.helper');
-	$attachment = KunenaForumMessageAttachmentHelper::get($id);
-	$attachment->delete();
-	$kunena_app->enqueueMessage ( JText::_($message) );
-	$kunena_app->redirect ( $redirect );
-}
-
-
 //===============================
 //  Get latest kunena version
 //===============================

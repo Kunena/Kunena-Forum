@@ -97,6 +97,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
 		$foldersmiley	= JRequest::getVar( 'foldersmiley', 'emoticons', '', 'path' );
 		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
+		$view 			= JRequest::getVar( 'view', '' );
 		$err			= null;
 
 		// Set FTP credentials, if given

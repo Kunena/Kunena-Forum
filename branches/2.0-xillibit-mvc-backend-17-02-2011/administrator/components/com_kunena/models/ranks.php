@@ -79,8 +79,9 @@ class KunenaAdminModelRanks extends KunenaModel {
 	public function getRankspaths() {
 		$template = KunenaFactory::getTemplate();
 
+		$rankselected = '';
 		if ( $this->getState('item.id') ) {
-			$rank_selected = $this->getRank();
+			$rankselected = $this->getRank();
 		}
 
 		$rankpath = $template->getRankPath();

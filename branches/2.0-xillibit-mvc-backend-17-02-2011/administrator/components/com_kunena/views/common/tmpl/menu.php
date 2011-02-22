@@ -18,8 +18,7 @@ defined ( '_JEXEC' ) or die ();
 	<a class="kadmin-mainmenu icon-template-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=templates"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-smilies-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-ranks-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></a>
-	<a class="kadmin-mainmenu icon-files-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=browseFiles"><?php echo JText::_('COM_KUNENA_C_FILES'); ?></a>
-	<a class="kadmin-mainmenu icon-images-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=browseImages"><?php echo JText::_('COM_KUNENA_C_IMAGES'); ?></a>
+	<a class="kadmin-mainmenu icon-files-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=attachments"><?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW'); ?></a>
 	<a class="kadmin-mainmenu icon-prune-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=prune"><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></a>
 	<a class="kadmin-mainmenu icon-syncusers-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a>
 	<a class="kadmin-mainmenu icon-recount-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=recount"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>

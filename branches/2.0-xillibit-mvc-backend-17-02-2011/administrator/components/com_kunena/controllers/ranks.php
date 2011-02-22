@@ -106,6 +106,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
 		$folderranks	= JRequest::getVar( 'folderranks', 'ranks', '', 'path' );
 		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
+		$view			= JRequest::getVar( 'view', '');
 		$err			= null;
 
 		// Set FTP credentials, if given

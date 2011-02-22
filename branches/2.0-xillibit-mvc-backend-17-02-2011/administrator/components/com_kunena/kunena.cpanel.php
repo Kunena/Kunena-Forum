@@ -103,10 +103,7 @@ $document->addStyleDeclaration($styles);
 						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=ranks" title="<?php echo JText::_('COM_KUNENA_RANK_MANAGER');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/ranks.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=browseFiles" title="<?php echo JText::_('COM_KUNENA_C_FILESDESC');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/files.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_FILES'); ?> </span></a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=browseImages" title="<?php echo JText::_('COM_KUNENA_C_IMAGESDESC');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/images.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_IMAGES'); ?> </span></a> </div>
+						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=attachments" title="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/files.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
 						<div class="icon"> <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=prune" title="<?php echo JText::_('COM_KUNENA_C_PRUNETABDESC');?>"> <img src="<?php echo JURI::base(); ?>components/com_kunena/media/icons/large/prune.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?> </span></a> </div>

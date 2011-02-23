@@ -42,9 +42,9 @@ class smile {
 			foreach ( $message_emoticons as $emo_txt => $emo_src ) {
 				$emo_rtxt = strtr ( $emo_txt, $regexp_trans );
 				// Check that smileys are not part of text like:soon (:s)
-				$fb_message_txt = preg_replace ( '/(\W|\A)' . $emo_rtxt . '(\W|\Z)/u', '\1<img src="' . $emo_src . '" alt="" />\2', $fb_message_txt );
+				$fb_message_txt = preg_replace ( '/(\W|\A)' . $emo_rtxt . '(\W|\Z)/u', '\1<img class="ksmiley" src="' . $emo_src . '" alt="" />\2', $fb_message_txt );
 				// Previous check causes :) :) not to work, workaround is to run the same regexp twice
-				$fb_message_txt = preg_replace ( '/(\W|\A)' . $emo_rtxt . '(\W|\Z)/u', '\1<img src="' . $emo_src . '" alt="" />\2', $fb_message_txt );
+				$fb_message_txt = preg_replace ( '/(\W|\A)' . $emo_rtxt . '(\W|\Z)/u', '\1<img class="ksmiley" src="' . $emo_src . '" alt="" />\2', $fb_message_txt );
 			}
 		}
 		return $fb_message_txt;

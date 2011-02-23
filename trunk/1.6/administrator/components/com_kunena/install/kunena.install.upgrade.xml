@@ -184,7 +184,9 @@
 			</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
-			<query mode="silenterror">ALTER TABLE `#_kunena_users` ADD INDEX ( `moderator` );</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD INDEX ( `moderator` );</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `ordering` smallint(6) NOT NULL default '0' AFTER `admin_recurse`;</query>
+			
 		</version>
 	</upgrade>
 </comupgrade>

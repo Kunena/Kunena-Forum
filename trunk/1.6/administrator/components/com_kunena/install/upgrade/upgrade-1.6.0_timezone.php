@@ -13,6 +13,8 @@
 
 defined ( '_JEXEC' ) or die ();
 
+kimport ('kunena.factory');
+
 function kunena_upgrade_160_timezone($parent) {
 	$result = null;
 	$config = KunenaFactory::getConfig ();

@@ -36,6 +36,8 @@ Kunena 1.6.4-DEV
 ^ [#15886] Merged revisions 4401-4471 from /branches/1.6.3-language-LDAsvens-2011-01-22
 ^ [#15886] Merged revisions 4458-4462 from /branches/1.6-xillibit-19-02-2011
 ^ [#24847] update fi-FI
+# [#25051] Migration from older versions fail because of missing KunenaFactory
+# [#25048] Ordering of categories go random when >127 categories in one section
 
 22-February-2011 Matias
 # [#25046] Regression: deleted and unapproved messages are not gray when inside topic

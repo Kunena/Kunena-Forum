@@ -13,6 +13,8 @@
 
 defined ( '_JEXEC' ) or die ();
 
+kimport ('kunena.factory');
+
 function kunena_upgrade_160_configuration($parent) {
 	$config = KunenaFactory::getConfig ();
 

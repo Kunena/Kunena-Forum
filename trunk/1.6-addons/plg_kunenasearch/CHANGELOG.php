@@ -30,6 +30,8 @@ KunenaSearch 1.6.3-DEV
 
 17-February-2011 Matias
 # [#24959] Always initialize session if allowed=na
+18-February-2011 svens(LDA)
+^ [#24847] update fi-FI (thanks Mortti)
 
 23-January-2010 LDA(svens)
 ^ [#24560] update ru-RU (thanks Zarkos)

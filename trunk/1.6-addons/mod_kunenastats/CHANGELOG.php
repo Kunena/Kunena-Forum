@@ -35,6 +35,11 @@ KunenaStats 1.6.3
 # [#24959] Always initialize session if allowed=na
 
 KunenaStats 1.6.2
+21-February-2011 svens(LDA)
+^ [#24847] update de-DE (thanks rich)
+
+18-February-2011 svens(LDA)
+^ [#24847] update fi-FI (thanks Mortti)
 
 23-January-2010 LDA(svens)
 ^ [#24560] update de-DE (thanks rich)

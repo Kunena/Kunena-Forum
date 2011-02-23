@@ -39,6 +39,8 @@ Kunena Discuss Plugin 1.6.3-DEV
 ^ [#20084] Change version to 1.6.3-DEV
 
 Kunena Discuss Plugin 1.6.2
+20-February-2011 svens(LDA)
+^ [#24847] update hu-HU (thanks pedrohsi)
 
 23-January-2010 LDA(svens)
 ^ [#24560] update de-DE (thanks rich)

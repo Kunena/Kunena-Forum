@@ -30,6 +30,15 @@ Legend:
 
 KunenaLatest 1.6.3-DEV
 
+20-February-2011 svens(LDA)
+^ [#24847] update hu-HU (thanks pedrohsi)
+
+19-February-2011 svens(LDA)
++ [#24847] add tr-TR (thanks cumla)
+
+18-February-2011 svens(LDA)
+^ [#24847] update fi-FI (thanks Mortti)
+
 17-February-2011 Matias
 # [#24959] Always initialize session if allowed=na
 

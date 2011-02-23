@@ -27,6 +27,7 @@
 		<language tag="fr-FR">fr-FR.mod_kunenalatest.ini</language>
 		<language tag="hu-HU">hu-HU.mod_kunenalatest.ini</language>
 		<language tag="ru-RU">ru-RU.mod_kunenalatest.ini</language>
+		<language tag="tr-TR">tr-TR.mod_kunenalatest.ini</language>
 	</languages>
 
 	<params addpath="/administrator/components/com_kunena/elements">

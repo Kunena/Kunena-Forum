@@ -29,6 +29,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaSearch 1.6.3-DEV
+18-February-2011 svens(LDA)
++ [#24847] add fi-FI (thanks Mortti)
 
 17-February-2011 Matias
 # [#24959] Always initialize session if allowed=na

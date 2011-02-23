@@ -33,6 +33,11 @@ KunenaLogin 1.6.3-DEV
 # [#24959] Always initialize session if allowed=na
 
 KunenaLogin 1.6.2
+20-February-2011 svens(LDA)
+^ [#24847] update hu-HU (thanks pedrohsi)
+
+18-February-2011 svens(LDA)
+^ [#24847] update fi-FI (thanks Mortti)
 
 23-January-2010 LDA(svens)
 ^ [#24560] update de-DE (thanks rich)

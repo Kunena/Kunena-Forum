@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Hungarian</name>
 	<tag>hu-HU</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
+	<creationDate>2011-02-19</creationDate>
+	<version>1.6.3</version>
+	<build>3894</build>
 	<author>pedrohsi</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>

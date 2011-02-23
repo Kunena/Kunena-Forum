@@ -30,19 +30,38 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 Kunena 1.6.4-DEV
+
+23-February-2011 Matias
+^ [#15886] Merged revisions 4401-4471 from /branches/1.6.3-language-LDAsvens-2011-01-22
 
 22-February-2011 Matias
 # [#25046] Regression: deleted and unapproved messages are not gray when inside topic
 
+21-February-2011 svens(LDA)
+^ [#24847] update da-DK (thanks Lars Westermann)
+^ [#24847] update de-DE (thanks rich)
+
 21-February-2011 Severdia
 # [#24364] CSS fix for pagination and announcement links (regression from Joomla 1.6 fixes)
+
+20-February-2011 svens(LDA)
+^ [#24847] update hu-HU (thanks pedrohsi)
+
+19-February-2011 svens(LDA)
+^ [#24847] update ru-RU (thanks Zarkos)
+^ [#24847] update th-TH (thanks drlovecat)
+^ [#24847] update tr-TR (thanks cumla)
+^ [#24847] update zh-TW (thanks gewed)
 
 19-February-2011 Matias
 # [#24985] Threaded layout was missing an image
 # [#24985] Fix wrong kind of link in threaded view
 # [#24985] Threaded view: Minor fix in message tree
+
+18-February-2011 svens(LDA)
+^ [#24847] update mk-MK (thanks Baze)
+^ [#24847] update fi-FI (thanks Mortti)
 
 18-February-2011 Matias
 + [#24985] Feature: Threaded and indented layouts for topics (disabled in configuration)
@@ -79,6 +98,10 @@ Kunena 1.6.4-DEV
 
 12-February-2011 Xillibit
 # [#24843] Fatal error: Class 'JParameter' not found in /components/com_kunena/kunena.php on line 210
+
+10-February-2011 svens(LDA)
+^ [#24847] update ca-ES (thanks Arivor)
+^ [#24847] update de-DE (thanks rich)
 
 7-February-2011 Xillibit
 # [#23443] update french language file about edittime and gracetime

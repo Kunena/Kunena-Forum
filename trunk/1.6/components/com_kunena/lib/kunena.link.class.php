@@ -63,7 +63,7 @@ class CKunenaLink {
 	}
 
 	function GetRSSLink($name, $rel = 'follow', $params = '') {
-		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=rss' . $params, $name, '', $rel, '', '', 'target="_blank"' );
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=rss&format=feed' . $params, $name, '', $rel, '', '', 'target="_blank"' );
 	}
 
 	function GetRSSURL($params = '', $xhtml = true) {

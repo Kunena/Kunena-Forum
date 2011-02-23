@@ -41,6 +41,8 @@ Kunena 1.6.4-DEV
 # [#24902] Installer: Migrating Kunena fails under MySQL 5.5
 - [#24787] Make ZIP smaller than 2M by removing languages which haven't been updated since K1.6.0
 - [#24787] Remove languages: ar-AA, el-GR, it-IT, ja-JP, pl-PL, pt-PT, sr-RS, sr-YU, sv-SE, vi-VN, zh-CN, zh-TW
+# [#25000] Editor: add space before emoticon (fix broken emoticons when no space)
+# [#25001] RSS: add &format=feed into URI to prevent plugins outputing into stream
 
 22-February-2011 Matias
 # [#25046] Regression: deleted and unapproved messages are not gray when inside topic

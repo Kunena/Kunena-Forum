@@ -34,6 +34,7 @@ Kunena 1.6.4-DEV
 
 23-February-2011 Matias
 ^ [#15886] Merged revisions 4401-4471 from /branches/1.6.3-language-LDAsvens-2011-01-22
+^ [#15886] Merged revisions 4458-4462 from /branches/1.6-xillibit-19-02-2011
 
 22-February-2011 Matias
 # [#25046] Regression: deleted and unapproved messages are not gray when inside topic
@@ -47,6 +48,11 @@ Kunena 1.6.4-DEV
 
 20-February-2011 svens(LDA)
 ^ [#24847] update hu-HU (thanks pedrohsi)
+
+19-February-2011 Xillibit
+# [#24924] Add configuration setting to let users choose the way to count totalusers (Part 2)
+^ [#24841] Report configuration settings: missing plg_jomosocial_groups and plg_jxfinder
+# [#24992] JFolder::delete : path isn't a folder administrator/components/com_kunena/archive , language...
 
 19-February-2011 svens(LDA)
 ^ [#24847] update ru-RU (thanks Zarkos)

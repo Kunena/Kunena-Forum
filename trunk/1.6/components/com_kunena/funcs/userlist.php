@@ -39,9 +39,9 @@ class CKunenaUserlist {
 		$direction = ($filter_order_dir == 'asc' ? 'ASC' : 'DESC');
 		$orderby = " ORDER BY {$this->db->nameQuote($filter_order)} {$direction}";
 
-		if ($this->config->userlist_count_users == '0' ) $where = '';
-		elseif ($this->config->userlist_count_users == '1' ) $where = ' WHERE block=0 OR activation=""';
-		elseif ($this->config->userlist_count_users == '2' ) $where = ' WHERE block=0 AND activation=""';
+		if ($this->config->userlist_count_users == '0' ) $where = '1';
+		elseif ($this->config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
+		elseif ($this->config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
 
 		// Total
 		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users" . $where );
@@ -49,7 +49,7 @@ class CKunenaUserlist {
 		KunenaError::checkDatabaseError();
 
 		// Search total
-		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE (u.block=0 AND u.activation='')";
+		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE {$where}";
 		if ($this->search != "") {
 			if (!JRequest::checkToken()) {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -74,7 +74,7 @@ class CKunenaUserlist {
 		$useridAdmin = $jversion->RELEASE == '1.5' ? '62' : '42';
 
 		// Select query
-		$query = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id WHERE (block=0 OR activation!='')";
+		$query = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id WHERE {$where}";
 		$this->searchuri = "";
 		if ($this->search != "") {
 			 $query .= " AND (name LIKE '%{$this->db->getEscaped($this->search)}%' OR username LIKE '%{$this->db->getEscaped($this->search)}%') AND u.id NOT IN ($useridAdmin)";

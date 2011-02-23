@@ -38,6 +38,7 @@ Kunena 1.6.4-DEV
 ^ [#24847] update fi-FI
 # [#25051] Migration from older versions fail because of missing KunenaFactory
 # [#25048] Ordering of categories go random when >127 categories in one section
+# [#24902] Installer: Migrating Kunena fails under MySQL 5.5
 
 22-February-2011 Matias
 # [#25046] Regression: deleted and unapproved messages are not gray when inside topic

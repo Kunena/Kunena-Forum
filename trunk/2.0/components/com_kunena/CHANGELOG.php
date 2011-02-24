@@ -49,6 +49,7 @@ Kunena 2.0.0-DEV
 - [#22570] Remove lib/kunena.announcements.class.php and template/default/announcement/*
 ^ [#22569] Change remaining index.php files into index.html
 ^ [#22569] Move all installer files into install/
+# [#23443] Fix missing version strings in backend
 
 22-February-2011 Xillibit
 # [#24395] Fix some undefined issues (thanks Matias)

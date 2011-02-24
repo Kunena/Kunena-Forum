@@ -28,7 +28,7 @@ $task = JRequest::getCmd ( 'task' );
 require_once(KPATH_ADMIN.'/install/version.php');
 $kversion = new KunenaVersion();
 if ($view != 'install' && !$kversion->checkVersion()) {
-	require_once(dirname(__FILE__).'/install.script.php');
+	require_once(dirname(__FILE__).'/install/install.script.php');
 	Com_KunenaInstallerScript::preflight( null, null );
 	Com_KunenaInstallerScript::install ( null );
 	$app = JFactory::getApplication ();
@@ -63,6 +63,7 @@ $kunena_app = JFactory::getApplication ();
 require_once(KPATH_SITE.'/lib/kunena.defines.php');
 $lang = JFactory::getLanguage();
 $lang->load('com_kunena',JPATH_SITE);
+$lang->load('com_kunena.install');
 
 $kunena_config = KunenaFactory::getConfig ();
 $kunena_db = JFactory::getDBO ();

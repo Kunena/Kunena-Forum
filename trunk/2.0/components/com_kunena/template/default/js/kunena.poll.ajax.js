@@ -17,14 +17,14 @@ window.addEvent('domready', function() {
 		polltexthelp.innerHTML='';
 		var newinfo = document.createElement("p");
 		newinfo.setAttribute('id','kpoll-text-infos');
-		var image = document.createElement("img");	
-		if(nb == '1'){				
-			image.setAttribute('src',KUNENA_ICON_ERROR);		
-			texte = document.createTextNode(' '+textString); 
-		}else {		
-			image.setAttribute('src',KUNENA_ICON_INFO);		
-			texte = document.createTextNode(' '+textString); 
-		}	
+		var image = document.createElement("img");
+		if(nb == '1'){
+			image.setAttribute('src',KUNENA_ICON_ERROR);
+			texte = document.createTextNode(' '+textString);
+		}else {
+			image.setAttribute('src',KUNENA_ICON_INFO);
+			texte = document.createTextNode(' '+textString);
+		}
 		polltexthelp.appendChild(newinfo);
 		newinfo.appendChild(image);
 		newinfo.appendChild(texte);
@@ -45,7 +45,7 @@ window.addEvent('domready', function() {
 			
 			if(datano == "0") {
 				var nbimages = '1';
-  	  			insert_text(KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK,nbimages);
+				insert_text(KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK,nbimages);
 			} else { 
 				//Set the options of the form's Request handler.
 				//("this" refers to the $('myForm') element).
@@ -66,5 +66,5 @@ window.addEvent('domready', function() {
 				this.send();
 			}
 		});
-	}	
+	}
 });

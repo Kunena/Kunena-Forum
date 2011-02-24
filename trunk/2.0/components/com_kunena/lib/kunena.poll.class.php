@@ -150,7 +150,7 @@ class CKunenaPolls {
    function call_javascript_vote()
    {
     	$template = KunenaTemplate::getInstance();
-		$template->addScript('plugin/poll/js/kunena.poll.ajax-min.js');
+		$template->addScript('js/kunena.poll.ajax-min.js');
 		$this->document->addCustomTag('
       <script type="text/javascript">
 	   <!--
@@ -217,7 +217,7 @@ class CKunenaPolls {
    function call_javascript_form()
    {
     	$template = KunenaTemplate::getInstance();
-		$template->addScript('plugin/poll/js/kunena.poll-min.js');
+		$template->addScript('js/kunena.poll-min.js');
 		$this->document->addScriptDeclaration('// <![CDATA[
 	   var KUNENA_POLL_CATS_NOT_ALLOWED = "'.JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED').'";
 	   var KUNENA_EDITOR_HELPLINE_OPTION = "'.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION').'";

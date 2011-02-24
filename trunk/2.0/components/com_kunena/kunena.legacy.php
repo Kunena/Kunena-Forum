@@ -387,21 +387,6 @@ if ($kunena_config->board_offline && ! $me->isAdmin ()) {
 
 			break;
 
-		case 'rules' :
-		case 'help' :
-			kimport('kunena.error');
-
-			require_once KUNENA_PATH . '/class.kunena.php';
-			$cfgitem = "{$func}_cid";
-			$articleid = (int)$kunena_config->$cfgitem;
-			$db = JFactory::getDBO ();
-			$db->setQuery ( "SELECT introtext, id FROM #__content WHERE id={$db->Quote($articleid)}" );
-			$this->introtext = $db->loadResult ();
-			KunenaError::checkDatabaseError();
-			CKunenaTools::loadTemplate('/'.$func.'.php');
-
-			break;
-
 		case 'karma' :
 			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.karma.php');
 

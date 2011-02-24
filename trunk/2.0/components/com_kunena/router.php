@@ -37,6 +37,7 @@ class KunenaRouter {
 		'topics'=>array('layout'=>'default'),
 		'user'=>array('layout'=>'default', 'userid'=>'0'),
 		'users'=>array('layout'=>'default'),
+		'misc'=>array('layout'=>'default'),
 	);
 	// Reserved layout names for category view
 	static $layouts = array ('create'=>1, 'default'=>1, 'edit'=>1, 'manage'=>1, 'moderate'=>1, 'user'=>1);

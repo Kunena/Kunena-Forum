@@ -1366,26 +1366,36 @@ class KunenaModelInstall extends JModel {
 		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' )),
 			'link'=>'index.php?option=com_kunena&view=home', 'access'=>0, 'params'=>array('catids'=>0));
 		$submenu = array(
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' )),
-			'link'=>'index.php?option=com_kunena&view=category&layout=index', 'access'=>0, 'default'=>'categories', 'params'=>array()),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RECENT' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' )),
-			'link'=>'index.php?option=com_kunena&view=topics&mode=replies', 'access'=>0, 'default'=>'recent', 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>720)),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' )),
-			'link'=>'index.php?option=com_kunena&view=topic&layout=create', 'access'=>1, 'params'=>array()),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' )),
-			'link'=>'index.php?option=com_kunena&view=topics&mode=noreplies', 'access'=>1, 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>-1)),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' )),
-			'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>1, 'default'=>'my' , 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>-1)),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' )),
-			'link'=>'index.php?option=com_kunena&view=user', 'access'=>1, 'params'=>array('integration'=>1)),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RULES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' )),
-			'link'=>'index.php?option=com_kunena&view=rules', 'access'=>0, 'params'=>array()),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_HELP' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' )),
-			'link'=>'index.php?option=com_kunena&view=help', 'access'=>0, 'params'=>array()),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_SEARCH' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' )),
-			'link'=>'index.php?option=com_kunena&view=search', 'access'=>0, 'params'=>array()),
+			'index'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' )),
+				'link'=>'index.php?option=com_kunena&view=category&layout=index', 'access'=>0, 'default'=>'categories', 'params'=>array()),
+			'recent'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_RECENT' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' )),
+				'link'=>'index.php?option=com_kunena&view=topics&mode=replies', 'access'=>0, 'default'=>'recent', 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>720)),
+			'newtopic'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' )),
+				'link'=>'index.php?option=com_kunena&view=topic&layout=create', 'access'=>1, 'params'=>array()),
+			'noreplies'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' )),
+				'link'=>'index.php?option=com_kunena&view=topics&mode=noreplies', 'access'=>1, 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>-1)),
+			'mylatest'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' )),
+				'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>1, 'default'=>'my' , 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>-1)),
+			'profile'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' )),
+				'link'=>'index.php?option=com_kunena&view=user', 'access'=>1, 'params'=>array('integration'=>1)),
+			'rules'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_RULES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' )),
+				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>0, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_MISC_DEFAULT_BODY' ), 'body_format'=>'text')),
+			'help'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_HELP' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' )),
+				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>0, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_MISC_DEFAULT_BODY' ), 'body_format'=>'text')),
+			'search'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_SEARCH' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' )),
+				'link'=>'index.php?option=com_kunena&view=search', 'access'=>0, 'params'=>array()),
 		);
 
+		kimport ('kunena.factory');
+		$config = KunenaFactory::getConfig();
+		if (!empty($config->rules_cid)) {
+			$submenu['rules']['params']['body'] = "[article=full]{$config->rules_cid}[/article]";
+			$submenu['rules']['params']['body_format'] = 'bbcode';
+		}
+		if (!empty($config->help_cid)) {
+			$submenu['help']['params']['body'] = "[article=full]{$config->help_cid}[/article]";
+			$submenu['help']['params']['body_format'] = 'bbcode';
+		}
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == '1.5') {
@@ -1461,13 +1471,15 @@ class KunenaModelInstall extends JModel {
 
 		// Submenu (shown in Kunena)
 		$defaultmenu = 0;
-		foreach ($submenu as $ordering=>$menuitem) {
+		$ordering = 0;
+		foreach ($submenu as $menuitem) {
 			$ordering++;
-			$query = "SELECT id FROM `#__menu` WHERE `link`={$this->db->quote($menuitem['link'])} AND `menutype`='kunenamenu';";
-			$this->db->setQuery ( $query );
-			$id = ( int ) $this->db->loadResult ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+//			$query = "SELECT id FROM `#__menu` WHERE `link`={$this->db->quote($menuitem['link'])} AND `menutype`='kunenamenu';";
+//			$this->db->setQuery ( $query );
+//			$id = ( int ) $this->db->loadResult ();
+//			if ($this->db->getErrorNum ())
+//				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+			$id = 0;
 			if (! $id) {
 				$params = new JParameter('');
 				$params->bind($menuitem['params']);

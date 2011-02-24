@@ -43,6 +43,8 @@ Kunena 2.0.0-DEV
 # [#22569] Fix some bugs in topic/post actions
 # [#22569] Category/Default: Do not show topics inside section
 - [#22570] Remove kunena.review.php and template/default/moderate/*
++ [#22569] Implement &func=help and &func=rules in Misc/Default menu item type, generalize logic
+- [#22570] Remove views/help & rules and template/default/help.php & rules.php
 
 22-February-2011 Xillibit
 # [#24395] Fix some undefined issues (thanks Matias)

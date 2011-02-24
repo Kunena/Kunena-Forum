@@ -125,8 +125,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-//		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
-//		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
+		$this->assignRef ( 'postActions', $this->get ( 'PostActions' ) );
 		$this->actionMove = false;
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->me = KunenaFactory::getUser();

@@ -34,6 +34,7 @@ class KunenaViewCategory extends KunenaView {
 
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
+		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
 
 		$this->me = KunenaFactory::getUser();
@@ -101,6 +102,7 @@ class KunenaViewCategory extends KunenaView {
 		}
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
+		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
 

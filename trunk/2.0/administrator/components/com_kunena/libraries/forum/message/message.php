@@ -208,6 +208,7 @@ class KunenaForumMessage extends JObject {
 
 	public function authorise($action='read', $user=null, $silent=false) {
 		static $actions  = array(
+			'none'=>array(),
 			'read'=>array('Read'),
 			'reply'=>array('Read','NotHold'),
 			'edit'=>array('Read','Own','EditTime'),

@@ -37,6 +37,11 @@ Kunena 2.0.0-DEV
 # [#24395] Change all kescape() calls into $this->escape()
 ^ [#22569] Move poll javascript into template/default/js
 # [#22569] Load admin language file in KunenaAdminControllerCategories (missing translations in frontend)
++ [#22569] Add function KunenaForumMessageHelper::getLatestMessages()
+# [#22569] Fix a bug in KunenaForumMessageHelper::loadMessages() returning always empty array
++ [#22569] Move &func=review logic into Topics/Posts and implement missing tasks and logic
+# [#22569] Fix some bugs in topic/post actions
+# [#22569] Category/Default: Do not show topics inside section
 
 22-February-2011 Xillibit
 # [#24395] Fix some undefined issues (thanks Matias)

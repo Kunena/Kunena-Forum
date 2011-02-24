@@ -34,6 +34,7 @@ defined ( '_JEXEC' ) or die ();
 </div>
 <?php endif; ?>
 
+<?php if ($this->category->parent_id) : ?>
 <!-- B: List Actions -->
 <table class="klist-actions">
 	<tr>
@@ -131,3 +132,4 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 </div>
 <!-- F: List Actions Bottom -->
+<?php endif; ?>

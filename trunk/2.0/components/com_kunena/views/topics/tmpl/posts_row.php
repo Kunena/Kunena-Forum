@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 		}*/
 	?>
 		<div class="ktopic-title-cover">
-			<?php echo $this->getTopicLink ( $this->topic, $this->message, KunenaHtmlParser::parseText ($this->message->subject, 30), KunenaHtmlParser::stripBBCode ($this->message->message), 'ktopic-title km' ) ?>
+			<?php echo $this->getTopicLink ( $this->topic, $this->message->id, KunenaHtmlParser::parseText ($this->message->subject, 30), KunenaHtmlParser::stripBBCode ($this->message->message), 'ktopic-title km' ) ?>
 		</div>
 		<div style="display:none"><?php echo KunenaHtmlParser::parseBBCode ($this->message->message);?></div>
 	</td>
@@ -89,12 +89,12 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</td>
 
-<?php if (!empty($this->topicActions)) : ?>
-	<td class="kcol-mid ktopicmoderation"><input class ="kcheck" type="checkbox" name="posts[<?php echo $this->topic->id?>]" value="1" /></td>
+<?php if (!empty($this->postActions)) : ?>
+	<td class="kcol-mid ktopicmoderation"><input class ="kcheck" type="checkbox" name="posts[<?php echo $this->message->id?>]" value="1" /></td>
 <?php endif; ?>
 </tr>
 <?php if ($this->module) : ?>
 <tr>
-	<td class="ktopicmodule" colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
+	<td class="ktopicmodule" colspan="<?php echo empty($this->postActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>
 </tr>
 <?php endif; ?>

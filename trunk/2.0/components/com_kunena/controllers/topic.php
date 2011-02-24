@@ -546,7 +546,7 @@ class KunenaControllerTopic extends KunenaController {
 		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED)) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' ) );
 			// FIXME: $topic->sendNotification() doesn't exist
-			$target->sendNotification();
+			//$target->sendNotification();
 		} else {
 			$app->enqueueMessage ( $target->getError(), 'notice' );
 		}

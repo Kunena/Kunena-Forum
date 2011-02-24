@@ -53,13 +53,20 @@ class KunenaModelTopics extends KunenaModel {
 		$mode = $this->getWord ( 'mode', 'default' );
 		$this->setState ( 'list.mode', $mode );
 
-		$latestcategory = $params->get('topics_categories', $config->latestcategory );
-		if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
-		if (empty($latestcategory) || in_array(0, $latestcategory)) {
-			$latestcategory = false;
+		$catid = $this->getInt ( 'catid' );
+		if ($catid) {
+			$latestcategory = array($catid);
+			$latestcategory_in = true;
+		} else {
+			$latestcategory = $params->get('topics_categories', $config->latestcategory );
+			if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
+			if (empty($latestcategory) || in_array(0, $latestcategory)) {
+				$latestcategory = false;
+			}
+			$latestcategory_in = (bool)$params->get('topics_catselection', $config->latestcategory_in);
 		}
 		$this->setState ( 'list.categories', $latestcategory );
-		$this->setState ( 'list.categories.in', (bool)$params->get('topics_catselection', $config->latestcategory_in) );
+		$this->setState ( 'list.categories.in', $latestcategory_in );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $config->show_list_time), 'int' );
 		$this->setState ( 'list.time', $value );
@@ -228,89 +235,28 @@ class KunenaModelTopics extends KunenaModel {
 
 	protected function getPosts() {
 		$this->topics = array();
-		$this->count = 0;
-		kimport ('kunena.databasequery');
 
-		$userid = $this->getState ( 'user' );
 		$start = $this->getState ( 'list.start' );
 		$limit = $this->getState ( 'list.limit' );
-		$db = JFactory::getDBO();
-
-		$cquery = new KunenaDatabaseQuery();
-		$cquery->select('COUNT(*)')
-			->from('#__kunena_messages AS m')
-			->innerJoin('#__kunena_topics AS tt ON m.thread = tt.id')
-			->where('m.moved=0'); // TODO: remove column
-
-		$rquery = new KunenaDatabaseQuery();
-		$rquery->select('m.*, t.message')
-			->from('#__kunena_messages AS m')
-			->innerJoin('#__kunena_messages_text AS t ON m.id = t.mesid')
-			->innerJoin('#__kunena_topics AS tt ON m.thread = tt.id')
-			->where('m.moved=0') // TODO: remove column
-			->order('m.time DESC');
-
-		$authorise = 'read';
-		$hold = 'm.hold=0'; // AND tt.hold=0';
-		$userfield = 'm.userid';
-		switch ($this->getState ( 'list.mode' )) {
-			case 'unapproved':
-				$authorise = 'approve';
-				$hold = "m.hold=1 AND tt.hold<=1";
-				break;
-			case 'deleted':
-				$authorise = 'undelete';
-				$hold = "m.hold>=2";
-				break;
-			case 'mythanks':
-				$userfield = 'th.userid';
-				$cquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
-				$rquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
-				break;
-			case 'thankyou':
-				$userfield = 'th.targetuserid';
-				$cquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
-				$rquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
-				break;
-			case 'recent':
-			default:
-		}
-		$allowed = KunenaForumCategoryHelper::getCategories($this->getState ( 'list.categories' ), ! $this->getState ( 'list.categories.in' ), 'topic.'.$authorise);
-		if (empty($allowed)) {
-			return;
-		}
-		$allowed = implode(',', array_keys($allowed));
-		$cquery->where("tt.category_id IN ({$allowed})");
-		$rquery->where("tt.category_id IN ({$allowed})");
-		$cquery->where($hold);
-		$rquery->where($hold);
-		if ($userid) {
-			$cquery->where("{$userfield}={$db->Quote($userid)}");
-			$rquery->where("{$userfield}={$db->Quote($userid)}");
-		}
-		$time = $this->getState ( 'list.time' );
-		if ($time == 0) {
-			$time = KunenaFactory::getSession ()->lasttime;
-		} elseif ($time > 0) {
-			$time = JFactory::getDate ()->toUnix () - ($time * 3600);
-		}
-		// Negative time means no time
-		if ($time > 0) {
-			$cquery->where("m.time>{$db->Quote($time)}");
-			$rquery->where("m.time>{$db->Quote($time)}");
-		}
-
-		$db->setQuery ( $cquery );
-		$this->total = ( int ) $db->loadResult ();
-		if (KunenaError::checkDatabaseError() || !$this->total) return;
-
-		$db->setQuery ( $rquery, $start, $limit );
-		$this->messages = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+		$params = array();
+		$params['mode'] = $this->getState ( 'list.mode' );
+		$params['reverse'] = ! $this->getState ( 'list.categories.in' );
+		$params['starttime'] = $this->getState ( 'list.time' );
+		$params['user'] = $this->getState ( 'user' );
+		list ($this->total, $this->messages) = KunenaForumMessageHelper::getLatestMessages($this->getState ( 'list.categories' ), $start, $limit, $params);
 
 		$topicids = array();
 		foreach ( $this->messages as $message ) {
 			$topicids[$message->thread] = $message->thread;
+		}
+		$authorise = 'read';
+		switch ($params['mode']) {
+			case 'unapproved':
+				$authorise = 'approve';
+				break;
+			case 'deleted':
+				$authorise = 'undelete';
+				break;
 		}
 		$this->topics = KunenaForumTopicHelper::getTopics ( $topicids, $authorise );
 		$this->_common();
@@ -365,13 +311,9 @@ class KunenaModelTopics extends KunenaModel {
 		}
 		$delete = $approve = $undelete = $move = $permdelete = false;
 		foreach ($this->topics as $topic) {
-			if ($topic->hold == 0) {
-				if (!$delete && $topic->authorise('delete')) $delete = true;
-			} elseif ($topic->hold == 1) {
-				if (!$approve && $topic->authorise('approve')) $approve = true;
-			} else {
-				if (!$undelete && $topic->authorise('undelete')) $undelete = true;
-			}
+			if (!$delete && $topic->authorise('delete')) $delete = true;
+			if (!$approve && $topic->authorise('approve')) $approve = true;
+			if (!$undelete && $topic->authorise('undelete')) $undelete = true;
 			if (!$move && $topic->authorise('move')) {
 				$move = $this->actionMove = true;
 			}
@@ -379,9 +321,31 @@ class KunenaModelTopics extends KunenaModel {
 		}
 		$actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
 		if ($move) $actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		if ($approve) $actionDropdown[] = JHTML::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
 		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+
+		if (count($actionDropdown) == 1) return null;
+		return $actionDropdown;
+	}
+
+	public function getPostActions() {
+		if ($this->messages === false) {
+			$this->getPosts();
+		}
+		$delete = $approve = $undelete = $move = $permdelete = false;
+		foreach ($this->messages as $message) {
+			if (!$delete && $message->authorise('delete')) $delete = true;
+			if (!$approve && $message->authorise('approve')) $approve = true;
+			if (!$undelete && $message->authorise('undelete')) $undelete = true;
+			if (!$permdelete && $message->authorise('permdelete')) $permdelete = true;
+		}
+		$actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
+		if ($approve) $actionDropdown[] = JHTML::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		if (count($actionDropdown) == 1) return null;
 		return $actionDropdown;

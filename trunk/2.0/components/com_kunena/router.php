@@ -42,7 +42,7 @@ class KunenaRouter {
 	static $layouts = array ('create'=>1, 'default'=>1, 'edit'=>1, 'manage'=>1, 'moderate'=>1, 'user'=>1);
 	// Use category name only in these views
 	static $sefviews = array (''=>1, 'home'=>1, 'category'=>1, 'topic'=>1);
-	static $parsevars = array ('do'=>1, 'task'=>1, 'userid'=>1, 'id'=>1, 'mesid'=>1, 'page'=>1, 'sel'=>1 );
+	static $parsevars = array ('do'=>1, 'task'=>1, 'mode'=>1, 'catid'=>1, 'id'=>1, 'mesid'=>1, 'userid'=>1, 'page'=>1, 'sel'=>1 );
 	// List of legacy views from previous releases
 	static $functions = array (
 		'listcat'=>1,
@@ -196,7 +196,7 @@ class KunenaRouter {
 		$numeric = isset ( $menuitem->query ['catid'] );
 
 		// Support URIs like: /forum/12-my_category
-		if (isset ( $query ['catid'] )) {
+		if (isset ( $query ['catid'] ) && ($view == 'cetegory' || $view == 'topic')) {
 			// TODO: ensure that we have view=categories/category/topic
 			$catid = ( int ) $query ['catid'];
 			if ($catid) {

@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ('kunena.error');
+kimport ('kunena.databasequery');
 kimport ('kunena.forum.message');
 kimport ('kunena.forum.topic.helper');
 
@@ -83,11 +84,109 @@ class KunenaForumMessageHelper {
 		return self::loadMessagesByTopic($topic->id, $start, $limit, $ordering, $hold, $orderbyid);
 	}
 
+	static public function getLatestMessages($categories=false, $limitstart=0, $limit=0, $params=array()) {
+		$reverse = isset($params['reverse']) ? (int) $params['reverse'] : 0;
+		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'm.time DESC';
+		$starttime = isset($params['starttime']) ? (int) $params['starttime'] : 0;
+		$mode = isset($params['mode']) ? $params['mode'] : 'recent';
+		$user = isset($params['user']) ? KunenaUser::getInstance($params['user']) : KunenaUser::getInstance();
+		$where = isset($params['where']) ? (string) $params['where'] : '';
+
+		$db = JFactory::getDBO();
+		// FIXME: use right config setting
+		if ($limit < 1) $limit = KunenaFactory::getConfig ()->threads_per_page;
+		$cquery = new KunenaDatabaseQuery();
+		$cquery->select('COUNT(*)')
+			->from('#__kunena_messages AS m')
+			->innerJoin('#__kunena_topics AS tt ON m.thread = tt.id')
+			->where('m.moved=0'); // TODO: remove column
+
+		$rquery = new KunenaDatabaseQuery();
+		$rquery->select('m.*, t.message')
+			->from('#__kunena_messages AS m')
+			->innerJoin('#__kunena_messages_text AS t ON m.id = t.mesid')
+			->innerJoin('#__kunena_topics AS tt ON m.thread = tt.id')
+			->where('m.moved=0') // TODO: remove column
+			->order($orderby);
+
+		$authorise = 'read';
+		$hold = 'm.hold=0';
+		$userfield = 'm.userid';
+		switch ($mode) {
+			case 'unapproved':
+				$authorise = 'approve';
+				$hold = "m.hold=1 AND tt.hold<=1";
+				break;
+			case 'deleted':
+				$authorise = 'undelete';
+				$hold = "m.hold>=2";
+				break;
+			case 'mythanks':
+				$userfield = 'th.userid';
+				$cquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
+				$rquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
+				break;
+			case 'thankyou':
+				$userfield = 'th.targetuserid';
+				$cquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
+				$rquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
+				break;
+			case 'recent':
+			default:
+		}
+		$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse, 'topic.'.$authorise);
+		$catlist = array();
+		foreach ($categories as $category) {
+			$catlist += $category->getChannels();
+		}
+		if (empty($catlist)) return array(0, array());
+		$allowed = implode(',', array_keys($catlist));
+		$cquery->where("tt.category_id IN ({$allowed})");
+		$rquery->where("tt.category_id IN ({$allowed})");
+
+		$cquery->where($hold);
+		$rquery->where($hold);
+		if ($user->exists()) {
+			$cquery->where("{$userfield}={$db->Quote($user->userid)}");
+			$rquery->where("{$userfield}={$db->Quote($user->userid)}");
+		}
+
+		if ($starttime == 0) {
+			$starttime = KunenaFactory::getSession ()->lasttime;
+		} elseif ($starttime > 0) {
+			$starttime = JFactory::getDate ()->toUnix () - ($starttime * 3600);
+		}
+		// Negative time means no time
+		if ($starttime > 0) {
+			$cquery->where("m.time>{$db->Quote($starttime)}");
+			$rquery->where("m.time>{$db->Quote($starttime)}");
+		}
+
+		$db->setQuery ( $cquery );
+		$total = ( int ) $db->loadResult ();
+		if (KunenaError::checkDatabaseError() || !$total) return array(0, array());
+
+		$db->setQuery ( $rquery, $limitstart, $limit );
+		$results = $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return array(0, array());
+
+		$messages = array();
+		foreach ( $results as $id=>$result ) {
+			$instance = new KunenaForumMessage ();
+			$instance->bind ( $result );
+			$instance->exists(true);
+			self::$_instances [$id] = $instance;
+			$messages[$id] = $instance;
+		}
+		unset ($results);
+		return array($total, $messages);
+	}
+
 	public function getLocation($mesid, $direction = 'asc', $hold=null) {
 		if (!$hold) {
 			$me = KunenaFactory::getUser();
 			$access = KunenaFactory::getAccessControl();
-			$hold = $access->getAllowedHold($me->userid, $this->id, false);
+			$hold = $access->getAllowedHold($me->userid, $mesid, false);
 		}
 		if (!isset(self::$_location [$mesid])) {
 			self::loadLocation(array($mesid));
@@ -175,7 +274,7 @@ class KunenaForumMessageHelper {
 		if (empty($ids))
 			return;
 
-		$idlist = implode($ids);
+		$idlist = implode(',', $ids);
 		$db = JFactory::getDBO ();
 		$query = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id IN ({$idlist})";
 		$db->setQuery ( $query );

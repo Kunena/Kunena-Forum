@@ -26,6 +26,7 @@ require_once KPATH_ADMIN . '/models/categories.php';
  */
 class KunenaModelCategory extends KunenaAdminModelCategories {
 	protected $topics = false;
+	protected $pending = array();
 	protected $items = false;
 	protected $topicActions = false;
 	protected $actionMove = false;
@@ -126,8 +127,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		}
 		KunenaForumTopicHelper::getTopics($topiclist);
 
-		if ($this->me->ordering != '0') {
-			$topic_ordering = $this->me->ordering == '1' ? true : false;
+		if ($this->me->ordering != 0) {
+			$topic_ordering = $this->me->ordering == 1 ? true : false;
 		} else {
 			$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
 		}
@@ -138,7 +139,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			$db = JFactory::getDBO ();
 			$db->setQuery ( "SELECT catid, COUNT(*) AS count
 				FROM #__kunena_messages
-				WHERE catid IN ({$catlist}) AND hold='1'
+				WHERE catid IN ({$catlist}) AND hold=1
 				GROUP BY catid" );
 			$pending = $db->loadAssocList ();
 			KunenaError::checkDatabaseError();
@@ -163,6 +164,10 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		}
 
 		return $this->items;
+	}
+
+	public function getUnapprovedCount() {
+		return $this->pending;
 	}
 
 	public function getCategory() {
@@ -241,13 +246,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		}
 		$delete = $approve = $undelete = $move = $permdelete = false;
 		foreach ($this->topics as $topic) {
-			if ($topic->hold == 0) {
-				if (!$delete && $topic->authorise('delete')) $delete = true;
-			} elseif ($topic->hold == 1) {
-				if (!$approve && $topic->authorise('approve')) $approve = true;
-			} else {
-				if (!$undelete && $topic->authorise('undelete')) $undelete = true;
-			}
+			if (!$delete && $topic->authorise('delete')) $delete = true;
+			if (!$approve && $topic->authorise('approve')) $approve = true;
+			if (!$undelete && $topic->authorise('undelete')) $undelete = true;
 			if (!$move && $topic->authorise('move')) {
 				$move = $this->actionMove = true;
 			}
@@ -255,9 +256,10 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		}
 		$actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
 		if ($move) $actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		if ($approve) $actionDropdown[] = JHTML::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
 		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		if (count($actionDropdown) == 1) return null;
 		return $actionDropdown;

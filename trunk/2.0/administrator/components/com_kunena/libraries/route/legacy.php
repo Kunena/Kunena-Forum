@@ -385,6 +385,14 @@ class KunenaRouteLegacy {
 						break;
 				}
 				break;
+			case 'review':
+				$changed = true;
+				$uri->setVar('view', 'topics');
+				$uri->setVar('layout', 'posts');
+				$uri->setVar('mode', 'unapproved');
+				$uri->setVar('userid', 0);
+				$uri->delVar('action');
+				break;
 
 		}
 		return $changed;

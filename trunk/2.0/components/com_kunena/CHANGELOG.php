@@ -36,6 +36,7 @@ Kunena 2.0.0-DEV
 ^ [#22786] Merge revisions 4438-4474 from branches/2.0-xillibit-mvc-backend-17-02-2011
 # [#24395] Change all kescape() calls into $this->escape()
 ^ [#22569] Move poll javascript into template/default/js
+# [#22569] Load admin language file in KunenaAdminControllerCategories (missing translations in frontend)
 
 22-February-2011 Xillibit
 # [#24395] Fix some undefined issues (thanks Matias)

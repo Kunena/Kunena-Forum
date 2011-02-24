@@ -91,6 +91,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function add() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -103,6 +106,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function edit() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -120,6 +126,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function save() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -182,6 +191,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function remove() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -220,6 +232,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function cancel() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -241,6 +256,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function saveorder() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -294,6 +312,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	protected function orderUpDown($id, $direction) {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+
 		if (!$id) return;
 
 		$app = JFactory::getApplication ();
@@ -324,6 +345,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	protected function setVariable($cid, $variable, $value) {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );

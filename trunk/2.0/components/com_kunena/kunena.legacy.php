@@ -387,13 +387,6 @@ if ($kunena_config->board_offline && ! $me->isAdmin ()) {
 
 			break;
 
-		case 'review' :
-			require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
-			$review = new CKunenaReview($catid);
-			$review->display();
-
-			break;
-
 		case 'rules' :
 		case 'help' :
 			kimport('kunena.error');

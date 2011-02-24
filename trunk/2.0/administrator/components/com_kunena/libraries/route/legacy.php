@@ -393,6 +393,35 @@ class KunenaRouteLegacy {
 				$uri->setVar('userid', 0);
 				$uri->delVar('action');
 				break;
+			case 'announcement':
+				switch ($uri->getVar('layout')) {
+					case 'read':
+						$changed = true;
+						$uri->delVar('layout');
+						break;
+					case 'show':
+						$changed = true;
+						$uri->setVar('layout', 'list');
+						break;
+					case 'add':
+						$changed = true;
+						$uri->setVar('layout', 'create');
+						break;
+					case 'edit':
+						$changed = false;
+						break;
+					case 'doedit':
+						$changed = true;
+						$uri->delVar('layout');
+						$uri->setVar('task', 'edit');
+						break;
+					case 'delete':
+						$changed = true;
+						$uri->delVar('layout');
+						$uri->setVar('task', 'delete');
+						break;
+				}
+				break;
 
 		}
 		return $changed;

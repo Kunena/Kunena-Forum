@@ -354,23 +354,11 @@ if ($kunena_config->board_offline && ! $me->isAdmin ()) {
 		$__profiler->mark('Profilebox End');
 	}
 
-	// Handle help / rules menuitems
-	if ($func == 'article') {
-		$func = $do;
-	}
-
 	if(JDEBUG){
 		$__profiler->mark('$func Start');
 	}
 
 	switch ($func) {
-		case 'announcement' :
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
-			$ann = CKunenaAnnouncement::getInstance();
-			$ann->display();
-
-			break;
-
         case 'poll':
         	echo('LEGACY!');
   			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');

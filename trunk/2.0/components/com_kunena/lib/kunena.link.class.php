@@ -324,6 +324,7 @@ class CKunenaLink {
 		$idstring = '';
 		if ($id)
 			$idstring .= "&id=$id";
+		if ($do == 'delete') $idstring .= '&'.JUtility::getToken().'=1';
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view=announcement&do={$do}{$idstring}", $xhtml );
 	}
 

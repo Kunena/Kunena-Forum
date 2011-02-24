@@ -38,12 +38,31 @@ class KunenaViewCommon extends KunenaView {
 		if (KunenaFactory::getConfig()->showannouncement > 0) {
 			$cache = JFactory::getCache('com_kunena', 'output');
 			if ($cache->start(0, 'com_kunena.view.common.announcement')) return;
-			// FIXME: refactor code
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
-			$ann = new CKunenaAnnouncement();
-			$ann->getAnnouncement();
-			$ann->displayBox();
+
+			$config = KunenaFactory::getConfig();
+			$me = KunenaFactory::getUser();
+			$annmods = explode ( ',', $config->annmodid );
+			if ($me->exists() && (in_array ( $me->userid, $annmods ) || $me->isAdmin ())) {
+				$this->canEdit = true;
+			} else {
+				$this->canEdit = false;
+			}
+			// FIXME: move into model
+			$db = JFactory::getDBO();
+			$query = "SELECT * FROM #__kunena_announcement WHERE published='1' ORDER BY created DESC";
+			$db->setQuery ( $query, 0, 1 );
+			$this->announcement = $db->loadObject ();
+			if (KunenaError::checkDatabaseError()) return;
+			if (! $this->announcement) {
+				echo ' ';
+				return;
+			}
+
+			$result = $this->loadTemplate($tpl);
+			if (JError::isError($result)) {
+				return $result;
+			}
+			echo $result;
 			$cache->end();
 		} else echo ' ';
 	}

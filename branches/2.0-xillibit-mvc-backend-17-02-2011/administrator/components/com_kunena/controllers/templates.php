@@ -66,7 +66,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$db		= JFactory::getDBO();
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$id = array_shift($cid);
-		$template	= $id;
 
 		if (!$id) {
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED') );
@@ -194,13 +193,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl.'&layout=choosecss&id='.$template, false));
 		}
-		$content = JFile::read(KUNENA_PATH_TEMPLATE.'/'.$template.'/css/'.$filename);
-		if ($content === false) {
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_COULD_NOT_OPEN',$filename));
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
-		}
 
-		$app->setUserState ( 'kunena.editcss.content', $content );
 		$app->setUserState ( 'kunena.editcss.tmpl', $template );
 		$app->setUserState ( 'kunena.editcss.filename', $filename );
 

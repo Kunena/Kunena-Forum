@@ -108,9 +108,9 @@ class KunenaAdminViewTemplates extends KunenaView {
 		$app = JFactory::getApplication ();
 		$this->templatename = $app->getUserState ( 'kunena.editcss.tmpl');
 		$this->filename = $app->getUserState ( 'kunena.editcss.filename');
-		$this->content = $this->get('filecontent');
+		$this->content = $this->get ( 'FileContentParsed');
 		$this->css_path = KUNENA_PATH_TEMPLATE.'/'.$this->templatename.'/css/'.$this->filename;
-		$this->ftp = $app->getUserState ( 'editccs.ftp.credentials');
+		$this->ftp = $this->get('FTPcredentials');
 	}
 
 	protected function setToolBarEditcss() {

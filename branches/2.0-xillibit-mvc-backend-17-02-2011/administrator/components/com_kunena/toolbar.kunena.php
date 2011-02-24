@@ -31,30 +31,10 @@ switch ($task)
 
         break;
 
-    case "profiles":
-        CKunenaToolbar::_PROFILE_MENU();
-
-        break;
-
     case "instructions": break;
 
     case "newmoderator":
         CKunenaToolbar::_NEWMOD_MENU();
-
-        break;
-
-    case "userprofile":
-        CKunenaToolbar::_EDITUSER_MENU();
-
-        break;
-
-    case "moveusermessages":
-        CKunenaToolbar::_MOVEUSERMESSAGES_MENU();
-
-        break;
-
-    case "showprofiles":
-        CKunenaToolbar::_PROFILE_MENU();
 
         break;
 

@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+24-February-2011 Xillibit
+# [#24395] Fix issues in templates manager
+^ [#24395] Backend in MVC (users manager)
+
 22-February-2011 Xillibit
 # [#24395] Fix some undefined issues (thanks Matias)
 ^ [#24395] Backend in MVC (attachments manager instead of browsefiles and browseimages)

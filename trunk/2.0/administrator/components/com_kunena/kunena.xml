@@ -13,9 +13,9 @@
 	<copyright>(C) 2008 - 2011 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPL</license>
 	<description>Kunena Forum</description>
-	<installfile>install.kunena.php</installfile>
-	<uninstallfile>uninstall.kunena.php</uninstallfile>
-	<scriptfile>install.script.php</scriptfile>
+	<installfile>install/install.kunena.php</installfile>
+	<uninstallfile>install/uninstall.kunena.php</uninstallfile>
+	<scriptfile>install/install.script.php</scriptfile>
 	<files>
 		<filename>kunena.php</filename>
 		<filename>router.php</filename>
@@ -36,7 +36,6 @@
 		<files>
 			<filename>api.php</filename>
 			<filename>admin.kunena.php</filename>
-			<filename>install.script.php</filename>
 			<folder>install</folder>
 			<folder>archive</folder>
 		</files>

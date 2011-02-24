@@ -53,16 +53,15 @@ class KunenaViewCommon extends KunenaView {
 			$db->setQuery ( $query, 0, 1 );
 			$this->announcement = $db->loadObject ();
 			if (KunenaError::checkDatabaseError()) return;
-			if (! $this->announcement) {
+			if ($this->announcement) {
+				$result = $this->loadTemplate($tpl);
+				if (JError::isError($result)) {
+					return $result;
+				}
+				echo $result;
+			} else {
 				echo ' ';
-				return;
 			}
-
-			$result = $this->loadTemplate($tpl);
-			if (JError::isError($result)) {
-				return $result;
-			}
-			echo $result;
 			$cache->end();
 		} else echo ' ';
 	}

@@ -51,6 +51,7 @@ Kunena 2.0.0-DEV
 ^ [#22569] Move all installer files into install/
 # [#23443] Fix missing version strings in backend
 ^ [#22786] Merge revisions 4440-4464 from branches/2.0-810-mvc-backend-17-02-2011
+# [#23443] Fix a bug in announcement box causing menu to appear before html body
 
 22-February-2011 Xillibit
 # [#24395] Fix some undefined issues (thanks Matias)

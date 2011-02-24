@@ -177,6 +177,7 @@ PX		EM			PCT			PT
 #Kunena .kblock div.kheader {
 	border-bottom:2px solid;
 	padding:0 10px 0 10px;
+	background: #5388B4 !important;
 }
 #Kunena .kheader h2,
 #Kunena .kheader h2 a {
@@ -250,6 +251,8 @@ PX		EM			PCT			PT
 	line-height: 13px;
 }
 #Kunena div.kblock div.kactions a {
+	color: #FFF !important; 
+	background-color:transparent !important;
 }
 #Kunena table.kblock {
 	width: 100%;
@@ -1185,10 +1188,13 @@ PX		EM			PCT			PT
 	margin: 0 !important;
 }
 #Kunena h2 span.kheadbtn a {
-	font-size: 12px;
+	font-size: 11px;
 	line-height: 23px;
 	border: 1px solid;
-	padding: 3px;
+	padding-top: 1px;
+	padding-bottom: 3px;
+	padding-left: 3px;
+	padding-right: 3px;
 }
 #Kunena h2 span.kheadbtn:hover a {
 	text-decoration: none;
@@ -2705,6 +2711,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	text-align: center;
 }
 #Kunena tr.userlist th a {
+	color: #FFF !important;
 }
 #Kunena div#userlist_tbody td,
 #Kunena table#kuserlist_bottom th {

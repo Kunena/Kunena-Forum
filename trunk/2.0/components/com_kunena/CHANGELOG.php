@@ -50,6 +50,7 @@ Kunena 2.0.0-DEV
 ^ [#22569] Change remaining index.php files into index.html
 ^ [#22569] Move all installer files into install/
 # [#23443] Fix missing version strings in backend
+^ [#22786] Merge revisions 4440-4464 from branches/2.0-810-mvc-backend-17-02-2011
 
 22-February-2011 Xillibit
 # [#24395] Fix some undefined issues (thanks Matias)
@@ -79,9 +80,17 @@ Kunena 2.0.0-DEV
 # [#23443] Topic/Threaded: If there are more pages, use | symbol in the last item to show that
 # [#23443] Topic/Threaded: Links pointing from category/topics views are wrong
 
+18-February-2011 810
+# [#24364] CSS fix (Profile)
+# [#24364] CSS fix (Search)
+# [#24364] CSS fix (Userlist)
+
 18-February-2011 Xillibit
 ^ [#24395] Backend in MVC (createmenu, recount and config)
 ^ [#24395] Missing Kunena logo in some views, remove old config code
+
+17-February-2011 810
+^ [#24395] Backend in MVC (stats)
 
 17-February-2011 Xillibit
 ^ [#24395] Backend in MVC (syncusers and prune)

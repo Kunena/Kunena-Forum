@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.file' );
+kimport('kunena.model');
 
 /**
  * Reportconfiguration Model for Kunena
@@ -20,7 +21,7 @@ jimport ( 'joomla.filesystem.file' );
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaAdminModelReport extends JModel {
+class KunenaAdminModelReport extends KunenaModel {
 
 	/**
 	 * Method to generate all the reportconfiguration.
@@ -32,8 +33,8 @@ class KunenaAdminModelReport extends JModel {
 		$kunena_app = JFactory::getApplication ();
 		$kunena_db = JFactory::getDBO ();
 
-		$jversion = new JVersion();
-		$jversiontxt = $jversion->PRODUCT .' '. $jversion->RELEASE .'.'. $jversion->DEV_LEVEL .' '. $jversion->DEV_STATUS.' [ '.$jversion->CODENAME .' ] '. $jversion->RELDATE;
+		$JVersion = new JVersion();
+		$jversion = $JVersion->PRODUCT .' '. $JVersion->RELEASE .'.'. $JVersion->DEV_LEVEL .' '. $JVersion->DEV_STATUS.' [ '.$JVersion->CODENAME .' ] '. $JVersion->RELDATE;
 
 		if($kunena_app->getCfg('legacy' )) {
 			$jconfig_legacy = '[color=#FF0000]Enabled[/color]';
@@ -89,6 +90,7 @@ class KunenaAdminModelReport extends JModel {
 		$maxExecTime = ini_get('max_execution_time');
 		$maxExecMem = ini_get('memory_limit');
 		$fileuploads = ini_get('upload_max_filesize');
+		$kunenaVersionInfo = KunenaVersion::getVersionHTML ();
 
 		// Get Kunena default template
 		$ktemplate = KunenaFactory::getTemplate();
@@ -97,11 +99,13 @@ class KunenaAdminModelReport extends JModel {
 		//get all the config settings for Kunena
 		$kconfig = $this->_getKunenaConfiguration();
 
-		$jtemplate = $this->_getJoomlaTemplate($jversion);
+		$jtemplatedetails = $this->_getJoomlaTemplate($JVersion);
 
-		$menudisplaytable = $this->_getJoomlaMenuDetails($jversion);
+		$joomlamenudetails = $this->_getJoomlaMenuDetails($JVersion);
 
 		$collation = $this->_getTablesCollation();
+
+		$kconfigsettings = $this->_getKunenaConfiguration();
 
 		// Check if Mootools plugins and others kunena plugins are enabled, and get the version of this modules
 		jimport( 'joomla.plugin.helper' );
@@ -112,32 +116,55 @@ class KunenaAdminModelReport extends JModel {
 		if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg_mt = '[u]System - Mootools12:[/u] Enabled';
 		else $plg_mt = '[u]System - Mootools12:[/u] Disabled';
 
-		$plg_jfirephp = $this->_checkThirdPartyVersion('jfirephp', 'jfirephp', 'JFirePHP', 'plugins/system', 'system', 0, 0, 1);
-		$plg_ksearch = $this->_checkThirdPartyVersion('kunenasearch', 'kunenasearch', 'Kunena Search', 'plugins/search', 'search', 0, 0, 1);
-		$plg_kdiscuss = $this->_checkThirdPartyVersion('kunenadiscuss', 'kunenadiscuss', 'Kunena Discuss', 'plugins/content', 'content', 0, 0, 1);
-		$plg_kjomsocialmenu = $this->_checkThirdPartyVersion('kunenamenu', 'kunenamenu', 'My Kunena Forum Menu', 'plugins/community', 'community', 0, 0, 1);
-		$plg_kjomsocialmykunena = $this->_checkThirdPartyVersion('mykunena', 'mykunena', 'My Kunena Forum Posts', 'plugins/community', 'community', 0, 0, 1);
-		$mod_kunenalatest = $this->_checkThirdPartyVersion('mod_kunenalatest', 'mod_kunenalatest', 'Kunena Latest', 'modules/mod_kunenalatest', null, 0, 1, 0);
-		$mod_kunenastats = $this->_checkThirdPartyVersion('mod_kunenastats', 'mod_kunenastats', 'Kunena Stats', 'modules/mod_kunenastats', null, 0, 1, 0);
-		$mod_kunenalogin = $this->_checkThirdPartyVersion('mod_kunenalogin', 'mod_kunenalogin', 'Kunena Login', 'modules/mod_kunenalogin', null, 0, 1, 0);
-		$aup = $this->_checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
-		$cb = $this->_checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
-		$jomsocial = $this->_checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
-		$uddeim = $this->_checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+		$plg['jfirephp'] = $this->_checkThirdPartyVersion('jfirephp', 'jfirephp', 'JFirePHP', 'plugins/system', 'system', 0, 0, 1);
+		$plg['ksearch'] = $this->_checkThirdPartyVersion('kunenasearch', 'kunenasearch', 'Kunena Search', 'plugins/search', 'search', 0, 0, 1);
+		$plg['kdiscuss'] = $this->_checkThirdPartyVersion('kunenadiscuss', 'kunenadiscuss', 'Kunena Discuss', 'plugins/content', 'content', 0, 0, 1);
+		$plg['jxfinderkunena'] = $this->_checkThirdPartyVersion('plg_jxfinder_kunena', 'plg_jxfinder_kunena', 'Finder Kunena Posts', 'plugins/finder', 'finder', 0, 0, 1);
+		$plg['kjomsocialmenu'] = $this->_checkThirdPartyVersion('kunenamenu', 'kunenamenu', 'My Kunena Forum Menu', 'plugins/community', 'community', 0, 0, 1);
+		$plg['kjomsocialmykunena'] = $this->_checkThirdPartyVersion('mykunena', 'mykunena', 'My Kunena Forum Posts', 'plugins/community', 'community', 0, 0, 1);
+		$plg['kjomsocialgroups'] = $this->_checkThirdPartyVersion('kunenagroups', 'kunenagroups', 'Kunena Groups', 'plugins/community', 'community', 0, 0, 1);
+		foreach ($plg as $id=>$item) {
+			if (empty($item)) unset ($plg[$id]);
+		}
+		$plgtext = '[quote][b]Plugins:[/b] ' . implode(' | ', $plg) . ' [/quote]';
 
-		$sh404sef = $this->_checkThirdPartyVersion('sh404sef', 'sh404sef', 'sh404sef', 'components/com_sh404sef', null, 1, 0, 0);
-		$joomsef = $this->_checkThirdPartyVersion('joomsef', 'sef', 'ARTIO JoomSEF', 'components/com_sef', null, 1, 0, 0);
-		$acesef = $this->_checkThirdPartyVersion('acesef', 'acesef', 'AceSEF', 'components/com_acesef', null, 1, 0, 0);
+		$mod = array();
+		$mod['kunenalatest'] = $this->_checkThirdPartyVersion('mod_kunenalatest', 'mod_kunenalatest', 'Kunena Latest', 'modules/mod_kunenalatest', null, 0, 1, 0);
+		$mod['kunenastats'] = $this->_checkThirdPartyVersion('mod_kunenastats', 'mod_kunenastats', 'Kunena Stats', 'modules/mod_kunenastats', null, 0, 1, 0);
+		$mod['kunenalogin'] = $this->_checkThirdPartyVersion('mod_kunenalogin', 'mod_kunenalogin', 'Kunena Login', 'modules/mod_kunenalogin', null, 0, 1, 0);
+		$mod['kunenasearch'] = $this->_checkThirdPartyVersion('mod_kunenasearch', 'mod_kunenasearch', 'Kunena Search', 'modules/mod_kunenasearch', null, 0, 1, 0);
+		foreach ($mod as $id=>$item) {
+			if (empty($item)) unset ($mod[$id]);
+		}
+		$modtext = '[quote][b]Modules:[/b] ' . implode(' | ', $mod) . ' [/quote]';
 
-		// Also model should not build html, it should just give data
-		$report = '[confidential][b]Joomla! version:[/b] '.$jversiontxt.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
+		$thirdparty = array();
+		$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+		$thirdparty['cb'] = $this->_checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
+		$thirdparty['jomsocial'] =$this->_checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
+		$thirdparty['uddeim'] = $this->_checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+		foreach ($thirdparty as $id=>$item) {
+			if (empty($item)) unset ($thirdparty[$id]);
+		}
+		$thirdpartytext = '[quote][b]Third-party components:[/b] ' . implode(' | ', $thirdparty) . ' [/quote]';
+
+		$sef = array();
+		$sef['sh404sef'] = $this->_checkThirdPartyVersion('sh404sef', 'sh404sef', 'sh404sef', 'components/com_sh404sef', null, 1, 0, 0);
+		$sef['joomsef'] = $this->_checkThirdPartyVersion('joomsef', 'sef', 'ARTIO JoomSEF', 'components/com_sef', null, 1, 0, 0);
+		$sef['acesef'] = $this->_checkThirdPartyVersion('acesef', 'acesef', 'AceSEF', 'components/com_acesef', null, 1, 0, 0);
+		foreach ($sef as $id=>$item) {
+			if (empty($item)) unset ($sef[$id]);
+		}
+		$seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
+
+		$report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
 	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().'[/confidential][quote][b]Database collation check:[/b] '.$collation.'
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
-	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$menudisplaytable.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$jtemplate->name.' | [u]author:[/u] '.$jtemplate->author.' | [u]version:[/u] '.$jtemplate->version.' | [u]creationdate:[/u] '.$jtemplate->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.KunenaForum::version().' | [u]Build:[/u] '
-	    .KunenaForum::versionBuild().' | [u]Version name:[/u] '.KunenaForum::versionName().' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfig.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Third-party SEF components:[/b] '.$sh404sef.' | '.$joomsef.' | '.$acesef.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' | '.$plg_kjomsocialmykunena.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] '.$kunenaVersionInfo.'
+	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
 
 		return $report;
 	}
@@ -240,12 +267,20 @@ class KunenaAdminModelReport extends JModel {
 		kimport('kunena.error');
 		$kunena_db = JFactory::getDBO ();
 		if ($jversion->RELEASE == '1.5') {
+			// Get Kunena aliases
+			 $query = "SELECT m.id, m.menutype, m.name, m.alias, m.link, m.parent
+ 	  	     	FROM #__menu AS m
+ 	  	        INNER JOIN #__menu AS mm ON m.link LIKE CONCAT( '%Itemid=', mm.id )
+ 	  	        WHERE m.published=1 AND m.type = 'menulink' AND mm.link LIKE '%com_kunena%'
+ 	  	        ORDER BY m.menutype, m.parent, m.ordering ASC";
+ 	  	    $kunena_db->setQuery($query);
+			$kmenustype = (array) $kunena_db->loadObjectlist('id');
 			// Get Kunena menu items
 			$query = "SELECT id, menutype, name, alias, link, parent "
 				." FROM #__menu "
-				." WHERE menutype = {$kunena_db->Quote('kunenamenu')} OR name='forum' ORDER BY id ASC";
+				." WHERE published=1 AND link LIKE '%com_kunena%' ORDER BY menutype, parent, ordering";
 			$kunena_db->setQuery($query);
-			$kmenustype = $kunena_db->loadObjectlist();
+			$kmenustype += (array) $kunena_db->loadObjectlist('id');
 			if (KunenaError::checkDatabaseError()) return;
 
 			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
@@ -342,10 +377,10 @@ class KunenaAdminModelReport extends JModel {
 				$com_version = $xml_com->document->version[0];
 				$com_version = '[u]'.$namedetailled.':[/u] Installed (Version : '.$com_version->data().')';
 			} else {
-				$com_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
+				$com_version = '[u]'.$namedetailled.'[/u] '.$com_version->data();
 			}
 		} else {
-			$com_version = '[u]'.$namedetailled.':[/u] Disabled or not installed';
+			$com_version = '';
 		}
 		return $com_version;
 	} elseif ($module) {
@@ -356,10 +391,10 @@ class KunenaAdminModelReport extends JModel {
 				$mod_version = $xml_mod->document->version[0];
 				$mod_version = '[u]'.$namedetailled.':[/u] Enabled (Version : '.$mod_version->data().')';
 			} else {
-				$mod_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
+				$mod_version = '[u]'.$namedetailled.'[/u] '.$mod_version->data();
 			}
 		} else {
-			$mod_version = '[u]'.$namedetailled.':[/u] Disabled or not installed';
+			$mod_version = '';
 		}
 		return $mod_version;
 	} elseif ($plugin) {
@@ -370,10 +405,10 @@ class KunenaAdminModelReport extends JModel {
 				$plg_version = $xml_plg->document->version[0];
 				$plg_version = '[u]'.$namedetailled.':[/u] Enabled (Version : '.$plg_version->data().')';
 			}	else {
-				$plg_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
+				$plg_version = '[u]'.$namedetailled.'[/u] '.$plg_version->data();
 			}
 		} else {
-			$plg_version = '[u]'.$namedetailled.':[/u] Disabled or not installed';
+			$plg_version = '';
 		}
 		return $plg_version;
 	}

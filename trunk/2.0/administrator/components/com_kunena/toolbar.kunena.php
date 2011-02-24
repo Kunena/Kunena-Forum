@@ -31,17 +31,6 @@ switch ($task)
 
         break;
 
-    case "showconfig":
-
-        CKunenaToolbar::_EDIT_CONFIG();
-
-        break;
-
-    case "showCss":
-        CKunenaToolbar::CSS_MENU();
-
-        break;
-
     case "profiles":
         CKunenaToolbar::_PROFILE_MENU();
 
@@ -64,68 +53,8 @@ switch ($task)
 
         break;
 
-    case "pruneforum":
-        CKunenaToolbar::_PRUNEFORUM_MENU();
-
-        break;
-
-    case "syncusers":
-        CKunenaToolbar::_SYNCUSERS_MENU();
-
-        break;
-
     case "showprofiles":
         CKunenaToolbar::_PROFILE_MENU();
-
-        break;
-
-	case "showsmilies":
-        CKunenaToolbar::_SHOWSMILEY_MENU();
-
-        break;
-
-    case "editsmiley":
-        CKunenaToolbar::_EDITSMILEY_MENU();
-
-        break;
-
-    case "newsmiley":
-        CKunenaToolbar::_NEWSMILEY_MENU();
-
-        break;
-
-	case "ranks":
-        CKunenaToolbar::_SHOWRANKS_MENU();
-
-        break;
-
-    case "editRank":
-        CKunenaToolbar::_EDITRANK_MENU();
-
-        break;
-
-    case "newRank":
-        CKunenaToolbar::_NEWRANK_MENU();
-
-        break;
-
-	case "showTemplates":
-        CKunenaToolbar::_SHOWTEMPLATES_MENU();
-
-        break;
-
-	case "editKTemplate":
-        CKunenaToolbar::_EDITKTEMPLATE_MENU();
-
-        break;
-
-	case "chooseCSSTemplate":
-        CKunenaToolbar::_CHOOSECSS_MENU();
-
-        break;
-
-	case "editTemplateCSS":
-        CKunenaToolbar::_EDITCSS_MENU();
 
         break;
 

@@ -33,6 +33,24 @@ Kunena 2.0.0-DEV
 
 24-February-2011 Matias
 ^ [#22786] Merge revisions 4449-4485 from trunk/1.6
+^ [#22786] Merge revisions 4438-4474 from branches/2.0-xillibit-mvc-backend-17-02-2011
+# [#24395] Change all kescape() calls into $this->escape()
+
+22-February-2011 Xillibit
+# [#24395] Fix some undefined issues (thanks Matias)
+^ [#24395] Backend in MVC (attachments manager instead of browsefiles and browseimages)
+
+21-February-2011 Xillibit
+^ [#24395] Remove some undesired spaces in some files
+^ [#24395] Backend in MVC (tempates manager)
+
+20-February-2011 Xillibit
+^ [#24395] Backend in MVC (smilies manager)
+
+19-February-2011 Xillibit
+^ [#24395] Backend in MVC (ranks manager)
+^ [#24395] Apply changes on report configuration from k1.6
+^ [#24395] Change extend on all backend model to extend KunenaModel instead of JModel
 
 19-February-2011 Matias
 ^ [#22786] Merge revisions 4379-4449 from trunk/1.6
@@ -45,6 +63,13 @@ Kunena 2.0.0-DEV
 # [#23443] Users/Default: All users in pagination when doing a search over users
 # [#23443] Topic/Threaded: If there are more pages, use | symbol in the last item to show that
 # [#23443] Topic/Threaded: Links pointing from category/topics views are wrong
+
+18-February-2011 Xillibit
+^ [#24395] Backend in MVC (createmenu, recount and config)
+^ [#24395] Missing Kunena logo in some views, remove old config code
+
+17-February-2011 Xillibit
+^ [#24395] Backend in MVC (syncusers and prune)
 
 16-February-2011 Matias
 # [#23443] Statistics: fix a bug when counting most popular topics

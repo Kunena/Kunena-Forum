@@ -68,7 +68,7 @@ class CKunenaLink {
 	}
 
 	function GetRSSURL($params = '', $xhtml = true) {
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss{$params}", $xhtml );
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
 	}
 
 	function GetCategoryLink($view, $catid, $catname, $rel = 'follow', $class = '', $title = '') {

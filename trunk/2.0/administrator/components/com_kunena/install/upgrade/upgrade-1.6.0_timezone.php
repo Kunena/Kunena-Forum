@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+kimport ('kunena.factory');
+
 // Kunena 1.6.0: Convert database timezone from (local+board_offset) to UTC
 function kunena_upgrade_160_timezone($parent) {
 	$result = null;

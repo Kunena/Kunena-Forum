@@ -486,9 +486,9 @@ class KunenaModelInstall extends JModel {
 
 		// Cleanup directory structure
 		if (!KunenaForum::isSVN()) {
-			JFolder::delete(KPATH_ADMIN . '/archive');
-			JFolder::delete(KPATH_ADMIN . '/language');
-			JFolder::delete(KPATH_SITE . '/language');
+			if( JFolder::exists(KPATH_ADMIN . '/archive') ) JFolder::delete(KPATH_ADMIN . '/archive');
+			if( JFolder::exists(KPATH_ADMIN . '/language') ) JFolder::delete(KPATH_ADMIN . '/language');
+			if( JFolder::exists(KPATH_SITE . '/language') ) JFolder::delete(KPATH_SITE . '/language');
 		}
 
 		if (! $this->getError ()) {
@@ -1266,6 +1266,7 @@ class KunenaModelInstall extends JModel {
 		$create = preg_replace('/(DEFAULT )?CHARACTER SET [\w\d]+/', '', $create);
 		$create = preg_replace('/(DEFAULT )?CHARSET=[\w\d]+/', '', $create);
 		$create = preg_replace('/COLLATE [\w\d_]+/', '', $create);
+		$create = preg_replace('/TYPE\s*=?/', 'ENGINE=', $create);
 		$create .= " DEFAULT CHARACTER SET utf8 COLLATE {$collation}";
 		$query = preg_replace('/'.$this->db->getPrefix () . $oldtable.'/', $this->db->getPrefix () . $newtable, $create);
 		$this->db->setQuery ( $query );
@@ -1524,17 +1525,21 @@ class KunenaModelInstall extends JModel {
 		// Finally add forum menu link to default menu
 		$jmenu = JMenu::getInstance('site');
 		$dmenu = $jmenu->getDefault();
-		$query = "SELECT id FROM `#__menu` WHERE `alias` IN ('forum', 'kunenaforum', {$this->db->quote(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' ))}) AND `menutype`={$this->db->quote($dmenu->menutype)}";
+		$query = "SELECT id, type, link FROM `#__menu` WHERE `alias` IN ('forum', 'kunenaforum', {$this->db->quote(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' ))}) AND `menutype`={$this->db->quote($dmenu->menutype)}";
 		$this->db->setQuery ( $query, 0, 1 );
-		$id = ( int ) $this->db->loadResult ();
+		$menualias = $this->db->loadObject ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							($id, {$this->db->quote($dmenu->menutype)}, {$this->db->quote($menu['name'])}, 'kunenaforum', 'index.php?Itemid=$parentid', 'menulink', 1, 0, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_item=$parentid{$menu['params']}\r\n\r\n', 0, 0, 0);";
-		$this->db->setQuery ( $query );
-		$this->db->query ();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+		// We do not want to replace users own menu items (just alias or deprecated link to Kunena)
+		if (!$menualias || $menualias->type == 'alias' || $menualias->link == 'index.php?option=com_kunena') {
+			$id = $menualias ? intval($menualias->id) : 0;
+			$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+								($id, {$this->db->quote($dmenu->menutype)}, {$this->db->quote($menu['name'])}, 'kunenaforum', 'index.php?Itemid=$parentid', 'menulink', 1, 0, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_item=$parentid{$menu['params']}\r\n\r\n', 0, 0, 0);";
+			$this->db->setQuery ( $query );
+			$this->db->query ();
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+		}
 		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/helpers/helper.php');
 		MenusHelper::cleanCache ();
 	}

@@ -4,12 +4,12 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Chinese</name>
 	<tag>zh-TW</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
-	<author>baijianpeng</author>
-	<authorEmail>unknown</authorEmail>
-	<authorUrl>http://www.joomlagate.com</authorUrl>
+	<creationDate>2011-01-16</creationDate>
+	<version>1.6.2</version>
+	<build>3894</build>
+	<author>gewed</author>
+	<authorEmail>windofbeach@hotmail.com</authorEmail>
+	<authorUrl>http://gewed.com</authorUrl>
 	<copyright>(C) 2010 unknown</copyright>
 	<license>GNU/GPL</license>
 	<description>Chinese language file for Kunena Forum Component</description>

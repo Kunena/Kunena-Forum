@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+24-February-2011 Matias
+^ [#22786] Merge revisions 4449-4485 from trunk/1.6
+
 19-February-2011 Matias
 ^ [#22786] Merge revisions 4379-4449 from trunk/1.6
 ^ [#22569] Merge: Convert threaded views into MVC
@@ -1019,8 +1022,52 @@ Kunena 2.0.0-DEV
 
 Kunena 1.6.4-DEV
 
+23-February-2011 Matias
+^ [#15886] Merged revisions 4401-4471 from /branches/1.6.3-language-LDAsvens-2011-01-22
+^ [#15886] Merged revisions 4458-4462 from /branches/1.6-xillibit-19-02-2011
+^ [#24847] update fi-FI
+# [#25051] Migration from older versions fail because of missing KunenaFactory
+# [#25048] Ordering of categories go random when >127 categories in one section
+# [#24902] Installer: Migrating Kunena fails under MySQL 5.5
+# [#24787] Make ZIP smaller than 2M by removing languages which haven't been updated since K1.6.0
+- [#24787] Remove languages: ar-AA, el-GR, it-IT, ja-JP, pl-PL, pt-PT, sr-RS, sr-YU, sv-SE, vi-VN, zh-CN, zh-TW
+# [#25000] Editor: add space before emoticon (fix broken emoticons when no space)
+# [#25001] RSS: add &format=feed into URI to prevent plugins outputing into stream
+# [#24379] Many repeated use of smileys causes white page
+# [#24824] Menu link should not have the same name.. (part 2: do not replace users own menu item)
+
+22-February-2011 Matias
+# [#25046] Regression: deleted and unapproved messages are not gray when inside topic
+
+21-February-2011 svens(LDA)
+^ [#24847] update da-DK (thanks Lars Westermann)
+^ [#24847] update de-DE (thanks rich)
+
+21-February-2011 Severdia
+# [#24364] CSS fix for pagination and announcement links (regression from Joomla 1.6 fixes)
+
+20-February-2011 svens(LDA)
+^ [#24847] update hu-HU (thanks pedrohsi)
+
+19-February-2011 Xillibit
+# [#24924] Add configuration setting to let users choose the way to count totalusers (Part 2)
+^ [#24841] Report configuration settings: missing plg_jomosocial_groups and plg_jxfinder
+# [#24992] JFolder::delete : path isn't a folder administrator/components/com_kunena/archive , language...
+
+19-February-2011 svens(LDA)
+^ [#24847] update ru-RU (thanks Zarkos)
+^ [#24847] update th-TH (thanks drlovecat)
+^ [#24847] update tr-TR (thanks cumla)
+^ [#24847] update zh-TW (thanks gewed)
+
 19-February-2011 Matias
 # [#24985] Threaded layout was missing an image
+# [#24985] Fix wrong kind of link in threaded view
+# [#24985] Threaded view: Minor fix in message tree
+
+18-February-2011 svens(LDA)
+^ [#24847] update mk-MK (thanks Baze)
+^ [#24847] update fi-FI (thanks Mortti)
 
 18-February-2011 Matias
 + [#24985] Feature: Threaded and indented layouts for topics (disabled in configuration)
@@ -1057,6 +1104,10 @@ Kunena 1.6.4-DEV
 
 12-February-2011 Xillibit
 # [#24843] Fatal error: Class 'JParameter' not found in /components/com_kunena/kunena.php on line 210
+
+10-February-2011 svens(LDA)
+^ [#24847] update ca-ES (thanks Arivor)
+^ [#24847] update de-DE (thanks rich)
 
 7-February-2011 Xillibit
 # [#23443] update french language file about edittime and gracetime

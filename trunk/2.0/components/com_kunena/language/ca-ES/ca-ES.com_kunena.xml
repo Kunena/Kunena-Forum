@@ -4,13 +4,13 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Catalan</name>
 	<tag>ca-ES</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
-	<author>Neon26</author>
-	<authorEmail>admin@josportal.com</authorEmail>
-	<authorUrl>www.josportal.com</authorUrl>
-	<copyright>(C) 2010 Neon26</copyright>
+	<creationDate>2011-01-31</creationDate>
+	<version>1.6.3</version>
+	<build>4344</build>
+	<author>Arivor</author>
+	<authorEmail>projectenucat@gmail.com</authorEmail>
+	<authorUrl>http://www.nucat.cat</authorUrl>
+	<copyright>(C) 2011 Arivor. Llicència Creative Commons</copyright>
 	<license>GNU/GPL</license>
 	<description>Catalan language file for Kunena Forum Component</description>
 

@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Finnish (Suomi)</name>
 	<tag>fi-FI</tag>
-	<creationDate>2011-01-28</creationDate>
-	<version>1.6.3-DEV</version>
-	<build>4306</build>
+	<creationDate>2011-02-17</creationDate>
+	<version>1.6.4-DEV</version>
+	<build>4355</build>
 	<author>Sami Haaranen</author>
 	<authorEmail>mortti@joomlaportal.fi</authorEmail>
 	<authorUrl>http://www.joomlaportal.fi</authorUrl>

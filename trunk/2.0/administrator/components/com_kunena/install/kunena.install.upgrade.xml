@@ -266,7 +266,8 @@
 			<phpfile name="upgrade-2.0.0_recount"></phpfile>
 
 			<!-- From Kunena 1.6.4 -->
-			<query mode="silenterror">ALTER TABLE `#_kunena_users` ADD INDEX ( `moderator` );</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD INDEX ( `moderator` );</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `ordering` smallint(6) NOT NULL default '0' AFTER `admin_recurse`;</query>
 		</version>
 	</upgrade>
 </comupgrade>

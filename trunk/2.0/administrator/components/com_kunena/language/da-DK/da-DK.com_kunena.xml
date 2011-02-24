@@ -7,15 +7,16 @@
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
 	<build>@kunenaversionbuild@</build>
-	<author>Martiinkolle</author>
-	<authorEmail>martin@kollerups.dk</authorEmail>
-	<authorUrl>www.joomla.dk</authorUrl>
+	<author>Lars Westermann</author>
+	<authoremail>Lars.Westermann@privat.dk</authoremail>
+	<authorUrl></authorUrl>
 	<copyright></copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<description>Dansk sprogfil til Kunena  1.6</description>
-
+	<description>Danish language files for Kunena 1.6.3</description>
 	<files>
 		<filename>da-DK.com_kunena.ini</filename>
 		<filename>da-DK.com_kunena.install.ini</filename>
+		<filename>da-DK.com_kunena.menu.ini</filename>
+		<filename>da-DK.com_kunena.sys.ini</filename>
 	</files>
 </install>

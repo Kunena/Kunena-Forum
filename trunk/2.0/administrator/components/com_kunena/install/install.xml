@@ -43,7 +43,7 @@
 		<field name="pub_recurse" type="tinyint(4)" null="1" default="1" />
 		<field name="admin_access" type="tinyint(4)" null="1" default="0" />
 		<field name="admin_recurse" type="tinyint(4)" null="1" default="1" />
-		<field name="ordering" type="tinyint(4)" null="0" default="0" />
+		<field name="ordering" type="smallint(6)" null="0" default="0" />
 		<field name="published" type="tinyint(4)" null="0" default="0" />
 		<field name="channels" type="text" null="1"/>
 		<field name="checked_out" type="tinyint(4)" null="0" default="0" />
@@ -242,6 +242,12 @@
 		<field name="listcat_show_moderators" type="int(11)" null="1" />
 		<field name="lightbox" type="int(11)" null="1" />
 		<field name="activity_limit" type="int(11)" null="1" />
+		<field name="show_list_time" type="int(11)" null="1"/>
+		<field name="show_session_type" type="int(11)" null="1"/>
+		<field name="show_session_starttime" type="int(11)" null="1"/>
+		<field name="userlist_allowed" type="int(11)" null="1"/>
+		<field name="userlist_count_users" type="int(11)" null="1"/>
+		<field name="enable_threaded_layouts" type="int(11)" null="1"/>
 		<key name="PRIMARY" unique="1" columns="id" />
 	</table>
 	<table name="kunena_keywords">

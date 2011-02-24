@@ -111,10 +111,10 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 }
 #Kunena div.kblock div.kactions {
 	background-color: #737373;
-	color:#FFFFFF;
+	color:#FFFFFF ;
 }
 #Kunena div.kblock div.kactions a {
-	color:#FFFFFF;
+	color:#FFFFFF !important;
 }
 #Kunena tr.krow1 td {
 	background-color: #F2F1EE;
@@ -332,7 +332,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 
 #Kunena .kpagination a {
 	border-color:#5388B4;
-	background-color: #ffffff;
+	background-color: #ffffff !important;
 }
 #Kunena .kpagination .active {
 	border-color:#5388B4;

@@ -33,6 +33,9 @@ Kunena 2.0.0-DEV
 
 25-February-2011 Matias
 ^ [#22786] Merge revision 4499 from branches/2.0-xillibit-mvc-backend-17-02-2011
+# [#23443] Update credits date to 2008-2011
+# [#23443] Hide Advanced Search when there are search results
+# [#23443] Fix user search without search words
 
 24-February-2011 Xillibit
 # [#24395] Fix issues in templates manager

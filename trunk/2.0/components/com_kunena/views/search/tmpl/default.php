@@ -20,14 +20,14 @@ document.addEvent('domready', function() {
 ?>
 <div class="kblock kadvsearch">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler <?php //echo $advsearch_class; ?>" title="<?php //echo $advsearch_title ?>" rel="advsearch"></a></span>
+		<span class="ktoggler"><a class="ktoggler <?php echo $this->search_class; ?>" title="<?php echo $this->search_title ?>" rel="advsearch"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="searchform" name="adminForm">
 	<table id="kforumsearch">
-		<tbody id="advsearch"<?php //echo $advsearch_style; ?>>
+		<tbody id="advsearch"<?php echo $this->search_style; ?>>
 			<tr class="krow1">
 				<td class="kcol-first">
 					<fieldset class="fieldset">
@@ -164,7 +164,7 @@ document.addEvent('domready', function() {
 	</div>
 </div>
 
-<?php if($this->searchwords): ?>
+<?php if($this->results): ?>
 <div class="kblock ksearchresult">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="ksearchresult"></a></span>

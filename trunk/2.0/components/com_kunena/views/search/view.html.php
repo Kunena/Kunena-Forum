@@ -64,30 +64,37 @@ class KunenaViewSearch extends KunenaView {
 		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, 'class="inputbox" size="8" multiple="multiple"', 'value', 'text', $selected);
 
 		$this->searchwords = $this->get('SearchWords');
+
 		$this->results = array ();
-		if($this->searchwords) {
-			$this->total = $this->get('Total');
-			if ($this->total) {
-				$this->results = $this->get('Results');
+		$this->total = $this->get('Total');
+		if ($this->total) {
+			$this->results = $this->get('Results');
 
-				foreach ( $this->results as $i => $result ) {
-					// Clean up subject
-					$ressubject = KunenaHtmlParser::parseText ($result->subject);
-					// Strip smiles and bbcode out of search results; they look ugly
-					$resmessage = KunenaHtmlParser::parseBBCode ($result->message, 500);
+			foreach ( $this->results as $i => $result ) {
+				// Clean up subject
+				$ressubject = KunenaHtmlParser::parseText ($result->subject);
+				// Strip smiles and bbcode out of search results; they look ugly
+				$resmessage = KunenaHtmlParser::parseBBCode ($result->message, 500);
 
-					foreach ( $this->searchwords as $searchword ) {
-						if (empty ( $searchword ))
-						continue;
-						$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
-						// FIXME: enable highlighting, but only after we can be sure that we do not break html
-						//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
-					}
-					$this->results [$i]->htmlsubject = $ressubject;
-					$this->results [$i]->htmlmessage = $resmessage;
+				foreach ( $this->searchwords as $searchword ) {
+					if (empty ( $searchword ))
+					continue;
+					$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
+					// FIXME: enable highlighting, but only after we can be sure that we do not break html
+					//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 				}
+				$this->results [$i]->htmlsubject = $ressubject;
+				$this->results [$i]->htmlmessage = $resmessage;
 			}
+			$this->search_class = ' open';
+			$this->search_style = ' style="display: none;"';
+			$this->search_title = JText::_('COM_KUNENA_TOGGLER_EXPAND');
+		} else {
+			$this->search_class = ' close';
+			$this->search_style = '';
+			$this->search_title = JText::_('COM_KUNENA_TOGGLER_COLLAPSE');
 		}
+
 		$this->selected=' selected="selected"';
 		$this->checked=' checked="checked"';
 		$this->error = $this->get('Error');

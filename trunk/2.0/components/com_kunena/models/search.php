@@ -218,6 +218,12 @@ class KunenaModelSearch extends KunenaModel {
   }
 
 	public function getTotal() {
+		$q = $this->getState('searchwords');
+		if (!$q && !$this->getState('query.searchuser')) {
+			$this->setError( JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
+			return 0;
+		}
+
 		$db = JFactory::getDBO ();
 
 		$querystings = $this->Buildquery();
@@ -253,13 +259,14 @@ class KunenaModelSearch extends KunenaModel {
 		$q = $this->getState('searchwords');
 		if (!$q && !$this->getState('query.searchuser')) {
 			$this->setError( JText::_('COM_KUNENA_SEARCH_ERR_SHORTKEYWORD'));
-			return;
+			return array();
 		}
 
 		$querystings = $this->Buildquery();
 
 		/* get total */
 		$total = $this->getTotal();
+		if (!$total) return array();
 
 		if ($total < $this->getState('list.limitstart'))
 			$limitstart = ( int ) ($total / $this->getState('list.limit'));
@@ -272,7 +279,7 @@ class KunenaModelSearch extends KunenaModel {
 				JOIN #__kunena_categories AS c ON m.catid = c.id
 				WHERE {$querystings['where']} {$querystings['groupby']} ORDER BY {$querystings['orderby']}";
 		$db->setQuery ( $sql, 0, $this->config->messages_per_page_search );
-		$rows = $db->loadObjectList ();
+		$rows = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 
 		$this->str_kunena_errormsg = $sql . '<br />' . $db->getErrorMsg ();

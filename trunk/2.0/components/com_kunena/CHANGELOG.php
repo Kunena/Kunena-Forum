@@ -31,6 +31,13 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+25-February-2011 Matias
+^ [#22786] Merge revision 4499 from branches/2.0-xillibit-mvc-backend-17-02-2011
+
+24-February-2011 Xillibit
+# [#24395] Fix issues in templates manager
+^ [#24395] Backend in MVC (users manager)
+
 24-February-2011 Matias
 ^ [#22786] Merge revisions 4449-4485 from trunk/1.6
 ^ [#22786] Merge revisions 4438-4474 from branches/2.0-xillibit-mvc-backend-17-02-2011

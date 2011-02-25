@@ -66,6 +66,15 @@ class KunenaAdminViewTemplates extends KunenaView {
 		$this->params = $this->get('editparams');
 		$this->details = $this->get('templatedetails');
 		$this->templatename = $app->getUserState ( 'kunena.edit.template');
+
+		// Loading language strings for default template and override with current template
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena.tpl_default', JPATH_SITE);
+		if ($this->templatename != 'default') {
+			if (!$lang->load('com_kunena.tpl_'.$this->templatename, JPATH_SITE)) {
+				$lang->load('com_kunena.tpl_'.$this->templatename, KUNENA_PATH_TEMPLATE.'/'.$this->templatename);
+			}
+		}
 	}
 
 	protected function setToolBarEdit() {
@@ -108,9 +117,9 @@ class KunenaAdminViewTemplates extends KunenaView {
 		$app = JFactory::getApplication ();
 		$this->templatename = $app->getUserState ( 'kunena.editcss.tmpl');
 		$this->filename = $app->getUserState ( 'kunena.editcss.filename');
-		$this->content = $this->get('filecontent');
+		$this->content = $this->get ( 'FileContentParsed');
 		$this->css_path = KUNENA_PATH_TEMPLATE.'/'.$this->templatename.'/css/'.$this->filename;
-		$this->ftp = $app->getUserState ( 'editccs.ftp.credentials');
+		$this->ftp = $this->get('FTPcredentials');
 	}
 
 	protected function setToolBarEditcss() {

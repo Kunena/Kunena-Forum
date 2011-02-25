@@ -59,10 +59,11 @@ class KunenaAdminModelTemplates extends KunenaModel {
 	}
 
 	function getEditparams() {
+		$app = JFactory::getApplication ();
 		jimport('joomla.filesystem.file');
 
 		$tBaseDir	= JPath::clean(KUNENA_PATH_TEMPLATE);
-		$template = $this->getState ( 'edit.template');
+		$template = $app->getUserState ( 'kunena.edit.template');
 		$ini	= KUNENA_PATH_TEMPLATE.'/'.$template.'/params.ini';
 		$xml	= KUNENA_PATH_TEMPLATE.'/'.$template.'/template.xml';
 
@@ -72,7 +73,7 @@ class KunenaAdminModelTemplates extends KunenaModel {
 		} else {
 			$content = null;
 		}
-		// FIXME:: JParameter doesn't exit anymore under Joomla! 1.6
+		// FIXME:: JParameter doesn't exist anymore under Joomla! 1.6
 		$params = new JParameter($content, $xml, 'template');
 		return $params;
 	}
@@ -86,15 +87,25 @@ class KunenaAdminModelTemplates extends KunenaModel {
 		return $details;
 	}
 
-	function getFilecontent() {
+	function getFileContentParsed() {
 		$app = JFactory::getApplication ();
-		$content = $app->getUserState ( 'kunena.editcss.content');
+		jimport('joomla.filesystem.file');
+		$template = $app->getUserState ( 'kunena.edit.template');
+		$filename = $app->getUserState ( 'kunena.editcss.filename');
+		$content = JFile::read(KUNENA_PATH_TEMPLATE.'/'.$template.'/css/'.$filename);
+		if ($content === false) {
+			 return;
+		}
+		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
 
+		return $content;
+	}
+
+	function getFTPcredentials() {
 		// Set FTP credentials, if given
 		jimport('joomla.client.helper');
 		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
-		$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
-		$this->setState ( 'editccs.content.parsed', $content );
+
 		return $ftp;
 	}
 

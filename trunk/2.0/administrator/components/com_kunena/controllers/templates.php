@@ -65,10 +65,9 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$app = JFactory::getApplication ();
 		$db		= JFactory::getDBO();
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
-		$id = array_shift($cid);
-		$template	= $id;
+		$template = array_shift($cid);
 
-		if (!$id) {
+		if (!$template) {
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED') );
 		}
 		$tBaseDir	= JPath::clean(KUNENA_PATH_TEMPLATE);
@@ -76,18 +75,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
 		}
 
-		$lang = JFactory::getLanguage();
-		// Start by loading strings for default template and override with current template
-		if (!$lang->load('com_kunena.tpl_default', JPATH_SITE)) {
-			$lang->load('com_kunena.tpl_default', KUNENA_PATH_TEMPLATE.'/default');
-		}
-		if ($template != 'default') {
-			if (!$lang->load('com_kunena.tpl_'.$template, JPATH_SITE)) {
-				$lang->load('com_kunena.tpl_'.$template, KUNENA_PATH_TEMPLATE.'/'.$template);
-			}
-		}
-
-		$app->setUserState ( 'kunena.edit.template', $id );
+		$app->setUserState ( 'kunena.edit.template', $template );
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=edit", false));
 	}
@@ -194,13 +182,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS'));
 			$this->setRedirect(KunenaRoute::_($this->baseurl.'&layout=choosecss&id='.$template, false));
 		}
-		$content = JFile::read(KUNENA_PATH_TEMPLATE.'/'.$template.'/css/'.$filename);
-		if ($content === false) {
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_COULD_NOT_OPEN',$filename));
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
-		}
 
-		$app->setUserState ( 'kunena.editcss.content', $content );
 		$app->setUserState ( 'kunena.editcss.tmpl', $template );
 		$app->setUserState ( 'kunena.editcss.filename', $filename );
 

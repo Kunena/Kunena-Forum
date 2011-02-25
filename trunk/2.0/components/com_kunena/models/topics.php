@@ -268,6 +268,7 @@ class KunenaModelTopics extends KunenaModel {
 
 			// collect user ids for avatar prefetch when integrated
 			$userlist = array();
+			$lastpostlist = array();
 			foreach ( $this->topics as $topic ) {
 				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
 				$userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);

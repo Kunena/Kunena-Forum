@@ -1448,10 +1448,10 @@ PX		EM			PCT			PT
 	overflow: auto;
 	word-wrap:break-word;
 }
-#Kunena td.kmessage-right div,
-#Kunena td.kmessage-left div,
-#Kunena td.kmessage-top div,
-#Kunena td.kmessage-bottom div {
+#Kunena td.kmessage-right div.kmsgbody,
+#Kunena td.kmessage-left div.kmsgbody,
+#Kunena td.kmessage-top div.kmsgbody,
+#Kunena td.kmessage-bottom div.kmsgbody {
 	width: 97%;
 }
 #Kunena div.kmsgbody div.kmsgtext {

@@ -37,6 +37,7 @@ Kunena 2.0.0-DEV
 # [#23443] Hide Advanced Search when there are search results
 # [#23443] Fix user search without search words
 # [#23443] Fix broken smileys in IE (width and height were 0)
+# [#23443] Topic/Reply: Do not show poll icon
 
 24-February-2011 Xillibit
 # [#24395] Fix issues in templates manager

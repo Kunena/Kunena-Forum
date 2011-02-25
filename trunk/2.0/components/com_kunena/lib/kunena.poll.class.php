@@ -128,7 +128,7 @@ class CKunenaPolls {
 	*/
 	function get_poll_allowed($id, $parent=0, $kunena_editmode, $allow_cat=0) {
 		$config = KunenaFactory::getConfig ();
-		if ( $config->pollenabled ) {
+		if ( !$parent && $config->pollenabled ) {
 			$poll_allowed = '';
 			if ( $allow_cat ) {
 				if ( $kunena_editmode ) {

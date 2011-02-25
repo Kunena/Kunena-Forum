@@ -84,6 +84,7 @@ defined ( '_JEXEC' ) or die ();
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY'); ?>')" />
 			</div>
 
+			<?php if (!$this->message->parent) : ?>
 			<div id="kbbcode-poll-options" style="display: none;">
 			<?php
 			//Check if the poll is allowed
@@ -128,6 +129,7 @@ defined ( '_JEXEC' ) or die ();
 				value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>" />
 			<?php } ?>
 			</div>
+			<?php endif; ?>
 
 			<?php
 			if ($this->config->highlightcode) {

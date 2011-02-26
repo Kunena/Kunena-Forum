@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+26-February-2011 Xillibit
+# [#24395] Fix undefined variables in view=config and replace in kunena component menu the task by view
+^ [#24395] Backend in MVC (Control panel)
+
 26-February-2011 Matias
 # [#23443] Administrator: User/Edit: Fix PHP Notice: Undefined property: KunenaUser::$id
 # [#23443] Topic/Display: Do not show Thank You button if you have already said thank you

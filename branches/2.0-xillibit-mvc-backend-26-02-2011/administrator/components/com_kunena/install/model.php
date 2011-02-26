@@ -482,6 +482,10 @@ class KunenaModelInstall extends JModel {
 				$success = JFile::move("{$path}/{$filename}.new.{$ext}", "{$path}/{$filename}.{$ext}");
 				if (!$success) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_RENAMING_FAIL')." {$filename}.new.{$ext}", false, '' );
 			}
+			if ( JFile::exists(KPATH_ADMIN."/admin.kunena.php") ) {
+				$success = JFile::delete(KPATH_ADMIN."/admin.kunena.php");
+				if (!$success) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_DELETE_STATUS_FAIL')." admin.kunena.php", false, '' );
+			}
 		}
 
 		// Cleanup directory structure

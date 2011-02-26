@@ -36,7 +36,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top" width="25%"><input type="text"
 							name="cfg_board_title"
-							value="<?php echo kescape ( $this->config->board_title );
+							value="<?php echo $this->escape ( $this->config->board_title );
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE_DESC') ?>
 						</td>
@@ -44,7 +44,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_email"
-							value="<?php echo kescape($this->config->email);
+							value="<?php echo $this->escape($this->config->email);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL_DESC') ?></td>
 					</tr>
@@ -62,7 +62,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_fbsessiontimeout"
-							value="<?php echo kescape($this->config->fbsessiontimeout);
+							value="<?php echo $this->escape($this->config->fbsessiontimeout);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC') ?>
 						</td>
@@ -70,7 +70,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES') ?></td>
 						<td align="left" valign="top" colspan="2">
-							<textarea name="cfg_offline_message" rows="3" cols="50"><?php echo kescape ( $this->config->offline_message ); ?></textarea>
+							<textarea name="cfg_offline_message" rows="3" cols="50"><?php echo $this->escape ( $this->config->offline_message ); ?></textarea>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -135,7 +135,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top" width="25%"><input type="text"
 							name="cfg_threads_per_page"
-							value="<?php echo kescape($this->config->threads_per_page);
+							value="<?php echo $this->escape($this->config->threads_per_page);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_THREADS_DESC') ?></td>
 					</tr>
@@ -143,7 +143,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MESSAGES') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_messages_per_page"
-							value="<?php echo kescape($this->config->messages_per_page);
+							value="<?php echo $this->escape($this->config->messages_per_page);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC') ?>
 						</td>
@@ -153,7 +153,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_messages_per_page_search"
-							value="<?php echo kescape($this->config->messages_per_page_search);
+							value="<?php echo $this->escape($this->config->messages_per_page_search);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC_SEARCH') ?>
 						</td>
@@ -169,7 +169,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HISTLIM') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_historylimit"
-							value="<?php echo kescape($this->config->historylimit);
+							value="<?php echo $this->escape($this->config->historylimit);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HISTLIM_DESC') ?></td>
 					</tr>
@@ -235,7 +235,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_catimagepath"
-							value="<?php echo kescape($this->config->catimagepath);
+							value="<?php echo $this->escape($this->config->catimagepath);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CATIMAGEPATH_DESC') ?>
 						</td>
@@ -252,7 +252,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ANN_MODID') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_annmodid"
-							value="<?php echo kescape($this->config->annmodid);
+							value="<?php echo $this->escape($this->config->annmodid);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ANN_MODID_DESC') ?>
 						</td>
@@ -260,14 +260,14 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TAWIDTH') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_rtewidth"
-							value="<?php echo kescape($this->config->rtewidth);
+							value="<?php echo $this->escape($this->config->rtewidth);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TAWIDTH_DESC') ?></td>
 					</tr>
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TAHEIGHT') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_rteheight"
-							value="<?php echo kescape($this->config->rteheight);
+							value="<?php echo $this->escape($this->config->rteheight);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TAHEIGHT_DESC') ?>
 						</td>
@@ -276,7 +276,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_CID') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_rules_cid"
-							value="<?php echo kescape($this->config->rules_cid);
+							value="<?php echo $this->escape($this->config->rules_cid);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_CID_DESC') ?>
 						</td>
@@ -285,7 +285,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_CID') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_help_cid"
-							value="<?php echo kescape($this->config->help_cid);
+							value="<?php echo $this->escape($this->config->help_cid);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_CID_DESC') ?>
 						</td>
@@ -384,7 +384,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_show_session_starttime"
-							value="<?php echo kescape($this->config->show_session_starttime);
+							value="<?php echo $this->escape($this->config->show_session_starttime);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC') ?>
 						</td>
@@ -404,7 +404,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" width="25%" valign="top"><input type="text"
 							name="cfg_maxsubject"
-							value="<?php echo kescape($this->config->maxsubject);
+							value="<?php echo $this->escape($this->config->maxsubject);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH_DESC') ?>
 						</td>
@@ -412,7 +412,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_maxsig"
-							value="<?php echo kescape($this->config->maxsig);
+							value="<?php echo $this->escape($this->config->maxsig);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE_DESC') ?>
 						</td>
@@ -421,7 +421,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_maxpersotext"
-							value="<?php echo kescape($this->config->maxpersotext);
+							value="<?php echo $this->escape($this->config->maxpersotext);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT_DESC') ?>
 						</td>
@@ -493,7 +493,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_useredittime"
-							value="<?php echo kescape($this->config->useredittime);
+							value="<?php echo $this->escape($this->config->useredittime);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIME_DESC') ?>
 						</td>
@@ -503,7 +503,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_useredittimegrace"
-							value="<?php echo kescape($this->config->useredittimegrace);
+							value="<?php echo $this->escape($this->config->useredittimegrace);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC') ?>
 						</td>
@@ -617,7 +617,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FLOOD') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_floodprotection"
-							value="<?php echo kescape($this->config->floodprotection);
+							value="<?php echo $this->escape($this->config->floodprotection);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FLOOD_DESC') ?></td>
 					</tr>
@@ -681,7 +681,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVSIZE') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_avatarsize" class="ksm-field"
-							value="<?php echo kescape($this->config->avatarsize);
+							value="<?php echo $this->escape($this->config->avatarsize);
 						?>" /> kB</td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -689,7 +689,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 						<td class="nowrap" align="left" valign="top"><input type="text"
 							name="cfg_avatarquality" class="ksm-field"
-							value="<?php echo kescape($this->config->avatarquality);
+							value="<?php echo $this->escape($this->config->avatarquality);
 						?>" /> %</td>
 					</tr>
 				</table>
@@ -731,7 +731,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDTYPES') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagetypes"
-							value="<?php echo kescape($this->config->imagetypes);
+							value="<?php echo $this->escape($this->config->imagetypes);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDTYPES_DESC') ?>
 						</td>
@@ -749,7 +749,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagemimetypes"
-							value="<?php echo kescape($this->config->imagemimetypes);
+							value="<?php echo $this->escape($this->config->imagemimetypes);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC') ?>
 						</td>
@@ -757,7 +757,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGSIZE') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagesize" class="ksm-field"
-							value="<?php echo kescape($this->config->imagesize);
+							value="<?php echo $this->escape($this->config->imagesize);
 						?>" /> kB</td>
 						<td align="left" valign="top">
 							<?php echo JText::sprintf('COM_KUNENA_A_IMGSIZE_DESC',
@@ -768,7 +768,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGWIDTH') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagewidth" class="ksm-field"
-							value="<?php echo kescape($this->config->imagewidth);
+							value="<?php echo $this->escape($this->config->imagewidth);
 						?>" /> px</td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGWIDTH_DESC') ?></td>
 					</tr>
@@ -776,14 +776,14 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_imageheight" class="ksm-field"
-							value="<?php echo kescape($this->config->imageheight);
+							value="<?php echo $this->escape($this->config->imageheight);
 						?>" /> px</td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBWIDTH') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_thumbwidth" class="ksm-field"
-							value="<?php echo kescape($this->config->thumbwidth);
+							value="<?php echo $this->escape($this->config->thumbwidth);
 						?>" /> px</td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBWIDTH_DESC') ?></td>
 					</tr>
@@ -791,14 +791,14 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBHEIGHT') ?></td>
 								<td align="left" valign="top"><input type="text" class="ksm-field"
 							name="cfg_thumbheight"
-							value="<?php echo kescape($this->config->thumbheight);
+							value="<?php echo $this->escape($this->config->thumbheight);
 						?>" /> px</td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBHEIGHT_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGQUALITY') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagequality" class="ksm-field"
-							value="<?php echo kescape($this->config->imagequality);
+							value="<?php echo $this->escape($this->config->imagequality);
 						?>" /> %</td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGQUALITY_DESC') ?></td>
 					</tr>
@@ -838,7 +838,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILEALLOWEDTYPES') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_filetypes"
-							value="<?php echo kescape($this->config->filetypes);
+							value="<?php echo $this->escape($this->config->filetypes);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILEALLOWEDTYPES_DESC') ?>
 						</td>
@@ -846,7 +846,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILESIZE') ?></td>
 						<td align="left" valign="top"><input type="text" name="cfg_filesize" class="ksm-field "
-							value="<?php echo kescape($this->config->filesize);
+							value="<?php echo $this->escape($this->config->filesize);
 						?>" /> <?php echo JText::_('COM_KUNENA_A_FILESIZE_KB') ?></td>
 						<td align="left" valign="top">
 							<?php echo JText::sprintf('COM_KUNENA_A_FILESIZE_DESC',
@@ -927,7 +927,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_ebaylanguagecode"
-							value="<?php echo kescape($this->config->ebaylanguagecode);
+							value="<?php echo $this->escape($this->config->ebaylanguagecode);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE_DESC') ?>
 						</td>
@@ -946,7 +946,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_trimlongurlsfront"
-							value="<?php echo kescape($this->config->trimlongurlsfront);
+							value="<?php echo $this->escape($this->config->trimlongurlsfront);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSFRONT_DESC') ?>
 						</td>
@@ -956,7 +956,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_trimlongurlsback"
-							value="<?php echo kescape($this->config->trimlongurlsback);
+							value="<?php echo $this->escape($this->config->trimlongurlsback);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSBACK_DESC') ?>
 						</td>
@@ -1033,7 +1033,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<tr align="center" valign="middle">
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT') ?></td>
 							<td align="left" valign="top"><input type="text" name="cfg_activity_limit" class="ksm-field"
-								value="<?php echo kescape($this->config->activity_limit);?>" /></td>
+								value="<?php echo $this->escape($this->config->activity_limit);?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
@@ -1050,7 +1050,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY'); ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_alphauserpointsnumchars"
-								value="<?php echo kescape($this->config->alphauserpointsnumchars); ?>" /></td>
+								value="<?php echo $this->escape($this->config->alphauserpointsnumchars); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY_DESC'); ?></td>
 						</tr>
 					</table>
@@ -1080,21 +1080,21 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_LIMIT') ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_rss_limit"
-								value="<?php echo kescape($this->config->rss_limit); ?>" /></td>
+								value="<?php echo $this->escape($this->config->rss_limit); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_LIMIT_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES') ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_rss_included_categories"
-								value="<?php echo kescape($this->config->rss_included_categories); ?>" /></td>
+								value="<?php echo $this->escape($this->config->rss_included_categories); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES') ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_rss_excluded_categories"
-								value="<?php echo kescape($this->config->rss_excluded_categories); ?>" /></td>
+								value="<?php echo $this->escape($this->config->rss_excluded_categories); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
@@ -1139,7 +1139,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS') ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_userlist_rows"
-								value="<?php echo kescape($this->config->userlist_rows); ?>" /></td>
+								value="<?php echo $this->escape($this->config->userlist_rows); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
@@ -1254,7 +1254,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							?></td>
 							<td align="left" valign="top"><input type="text"
 								name="cfg_popusercount"
-								value="<?php echo kescape($this->config->popusercount);
+								value="<?php echo $this->escape($this->config->popusercount);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_USERNUM');
 							?></td>
@@ -1275,7 +1275,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							?></td>
 							<td align="left" valign="top"><input type="text"
 								name="cfg_popsubjectcount"
-								value="<?php echo kescape($this->config->popsubjectcount);
+								value="<?php echo $this->escape($this->config->popsubjectcount);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_NUMPOP');
 							?></td>
@@ -1295,7 +1295,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							?></td>
 							<td align="left" valign="top"><input type="text"
 								name="cfg_poppollscount"
-								value="<?php echo kescape($this->config->poppollscount);
+								value="<?php echo $this->escape($this->config->poppollscount);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_POLLSPOP');
 							?></td>
@@ -1315,7 +1315,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							?></td>
 							<td align="left" valign="top"><input type="text"
 								name="cfg_popthankscount"
-								value="<?php echo kescape($this->config->popthankscount);
+								value="<?php echo $this->escape($this->config->popthankscount);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_THANKSPOP');
 							?></td>
@@ -1341,7 +1341,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							</td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_pollnboptions"
-								value="<?php echo kescape($this->config->pollnboptions);
+								value="<?php echo $this->escape($this->config->pollnboptions);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC');
 							?>
@@ -1353,7 +1353,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							</td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_polltimebtvotes"
-								value="<?php echo kescape($this->config->polltimebtvotes);
+								value="<?php echo $this->escape($this->config->polltimebtvotes);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_TIME_VOTES_DESC');
 							?>
@@ -1365,7 +1365,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							</td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_pollnbvotesbyuser"
-								value="<?php echo kescape($this->config->pollnbvotesbyuser);
+								value="<?php echo $this->escape($this->config->pollnbvotesbyuser);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC');
 							?>

@@ -1,25 +1,14 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: default.php 4381 2011-02-05 20:55:31Z mahagr $
  * Kunena Component
  * @package Kunena
  *
  * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
- *
- * Based on FireBoard Component
- * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.bestofjoomla.com
- *
- * Based on Joomlaboard Component
- * @copyright (C) 2000 - 2004 TSMF / Jan de Graaff / All rights reserved.
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @author TSMF & Jan de Graaff
-**/
-defined( '_JEXEC' ) or die();
-
+ **/
+defined ( '_JEXEC' ) or die ();
 $styles = <<<EOF
 .kadmin-welcome {
 	clear:both;
@@ -71,10 +60,14 @@ div.icon-container {
 	float:left;
 }
 EOF;
+
 $document = JFactory::getDocument();
 $document->addStyleDeclaration($styles);
+$document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
 ?>
-
+<div id="kadmin">
+	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+	<div class="kadmin-right">
 <div class="kadmin-welcome">
 	<h3><?php echo JText::_('COM_KUNENA_WELCOME');?></h3>
 	<p><?php echo JText::_('COM_KUNENA_WELCOME_DESC');?></p>
@@ -139,8 +132,8 @@ $document->addStyleDeclaration($styles);
 		</tr>
 	</table>
 </div>
-<?php if ($kunena_config->version_check) : ?>
-<div class="kadmin-welcome">
-	<?php echo checkLatestVersion(); ?>
 </div>
-<?php endif; ?>
+</div>
+
+
+

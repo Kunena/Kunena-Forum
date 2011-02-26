@@ -156,7 +156,6 @@
 		</move>
 		<!-- Rename component entry files so that they replace the old ones just before the end of the installation process, thus keeping forum offline while installing. -->
 		<move file="${tmp_dir}/${kunena.backend}/api.php" tofile="${tmp_dir}/${kunena.backend}/api.new.php" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/admin.kunena.php" tofile="${tmp_dir}/${kunena.backend}/admin.kunena.new.php" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/${kunena.frontend}/kunena.php" tofile="${tmp_dir}/${kunena.frontend}/kunena.new.php" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/${kunena.frontend}/router.php" tofile="${tmp_dir}/${kunena.frontend}/router.new.php" overwrite="true" filtering="false" />
 		<move todir="${build_dir}/archive" includeEmptyDirs="no">

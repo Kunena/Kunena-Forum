@@ -37,7 +37,7 @@ class KunenaBBCode extends BBCode {
 		$this->tag_rules = $this->defaults->default_tag_rules;
 		$this->smileys = $this->defaults->default_smileys;
 		$this->SetSmileyDir ( JPATH_ROOT .'/'. KPATH_COMPONENT_RELATIVE );
-		$this->SetSmileyURL ( JURI::root(true) . KPATH_COMPONENT_RELATIVE );
+		$this->SetSmileyURL ( JURI::root(true) .'/' . KPATH_COMPONENT_RELATIVE );
 		$this->SetDetectURLs ( true );
 	}
 

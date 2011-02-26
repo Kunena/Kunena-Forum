@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+26-February-2011 810
+# [#25081] Missing "/" emoticons
+
 25-February-2011 Matias
 ^ [#22786] Merge revision 4499 from branches/2.0-xillibit-mvc-backend-17-02-2011
 # [#23443] Update credits date to 2008-2011

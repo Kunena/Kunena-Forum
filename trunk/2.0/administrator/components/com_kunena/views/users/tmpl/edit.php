@@ -223,7 +223,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						$userlist = array();
 						$mescnt = 0;
 						foreach ($list as $curuser) {
-							if ($curuser->userid == $this->user->id) {
+							if ($curuser->userid == $this->user->userid) {
 								$mescnt += intval($curuser->mescnt);
 								continue;
 							}

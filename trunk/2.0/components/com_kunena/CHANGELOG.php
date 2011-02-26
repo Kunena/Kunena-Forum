@@ -31,6 +31,11 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+26-February-2011 Matias
+# [#23443] Administrator: User/Edit: Fix PHP Notice: Undefined property: KunenaUser::$id
+# [#23443] Topic/Display: Do not show Thank You button if you have already said thank you
+# [#23443] Fix missing/broken translations
+
 25-February-2011 Matias
 ^ [#22786] Merge revision 4499 from branches/2.0-xillibit-mvc-backend-17-02-2011
 # [#23443] Update credits date to 2008-2011

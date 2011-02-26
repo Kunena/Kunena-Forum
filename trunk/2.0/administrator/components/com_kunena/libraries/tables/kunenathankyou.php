@@ -181,7 +181,7 @@ class TableKunenaThankYou extends JTable {
 	 			ON u.id = s.userid
 	 			WHERE s.postid={$this->_db->quote($pid)}";
 		$this->_db->setQuery ( $query, 0, $limit );
-		$res = $this->_db->loadObjectList ();
+		$res = (array) $this->_db->loadObjectList ('id');
 
 		// Check for an error message.
 		if ($this->_db->getErrorNum ()) {

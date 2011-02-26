@@ -61,9 +61,9 @@ class plgSystemKunena extends JPlugin {
 			$subscribedCategories = '1,2,3,4,5,6,7,8,9,10';
 			$db = Jfactory::getDBO();
 			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id)
-				SELECT {$user->id} AS user_id, c.id as category_id
+				SELECT {$user->userid} AS user_id, c.id as category_id
 				FROM #__kunena_categories AS c
-				LEFT JOIN #__kunena_user_categories AS s ON c.id=s.category_id AND s.user_id={$user->id}
+				LEFT JOIN #__kunena_user_categories AS s ON c.id=s.category_id AND s.user_id={$user->userid}
 				WHERE c.parent>0 AND c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
 			$db->setQuery ( $query );
 			$db->query ();

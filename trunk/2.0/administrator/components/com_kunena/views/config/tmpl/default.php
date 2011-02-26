@@ -1188,7 +1188,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIGg_USERLIST_LASTVISITDATE') ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_lastvisitdate']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE_DESC') ?></td>
 						</tr>

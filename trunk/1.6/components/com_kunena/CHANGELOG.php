@@ -32,6 +32,11 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+26-February-2011 Matias
+# [#25087] Administrator: Fatal error in Report Configuration Settings
+# [#24924] Userlist: MySQL error when getting usercount
+# [#24364] Fix broken layout in Google maps
+
 23-February-2011 Matias
 ^ [#15886] Merged revisions 4401-4471 from /branches/1.6.3-language-LDAsvens-2011-01-22
 ^ [#15886] Merged revisions 4458-4462 from /branches/1.6-xillibit-19-02-2011

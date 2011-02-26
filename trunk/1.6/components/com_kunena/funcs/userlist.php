@@ -44,7 +44,7 @@ class CKunenaUserlist {
 		elseif ($this->config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
 
 		// Total
-		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users" . $where );
+		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE {$where}" );
 		$this->total = $this->db->loadResult ();
 		KunenaError::checkDatabaseError();
 

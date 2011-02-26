@@ -3182,10 +3182,10 @@ function generateSystemReport () {
 	$plg['jfirephp'] = checkThirdPartyVersion('jfirephp', 'jfirephp', 'JFirePHP', 'plugins/system', 'system', 0, 0, 1);
 	$plg['ksearch'] = checkThirdPartyVersion('kunenasearch', 'kunenasearch', 'Kunena Search', 'plugins/search', 'search', 0, 0, 1);
 	$plg['kdiscuss'] = checkThirdPartyVersion('kunenadiscuss', 'kunenadiscuss', 'Kunena Discuss', 'plugins/content', 'content', 0, 0, 1);
-	$plg['jxfinderkunena'] = $this->_checkThirdPartyVersion('plg_jxfinder_kunena', 'plg_jxfinder_kunena', 'Finder Kunena Posts', 'plugins/finder', 'finder', 0, 0, 1);
-	$plg['kjomsocialmenu'] = $this->_checkThirdPartyVersion('kunenamenu', 'kunenamenu', 'My Kunena Forum Menu', 'plugins/community', 'community', 0, 0, 1);
-	$plg['kjomsocialmykunena'] = $this->_checkThirdPartyVersion('mykunena', 'mykunena', 'My Kunena Forum Posts', 'plugins/community', 'community', 0, 0, 1);
-	$plg['kjomsocialgroups'] = $this->_checkThirdPartyVersion('kunenagroups', 'kunenagroups', 'Kunena Groups', 'plugins/community', 'community', 0, 0, 1);
+	$plg['jxfinderkunena'] = checkThirdPartyVersion('plg_jxfinder_kunena', 'plg_jxfinder_kunena', 'Finder Kunena Posts', 'plugins/finder', 'finder', 0, 0, 1);
+	$plg['kjomsocialmenu'] = checkThirdPartyVersion('kunenamenu', 'kunenamenu', 'My Kunena Forum Menu', 'plugins/community', 'community', 0, 0, 1);
+	$plg['kjomsocialmykunena'] = checkThirdPartyVersion('mykunena', 'mykunena', 'My Kunena Forum Posts', 'plugins/community', 'community', 0, 0, 1);
+	$plg['kjomsocialgroups'] = checkThirdPartyVersion('kunenagroups', 'kunenagroups', 'Kunena Groups', 'plugins/community', 'community', 0, 0, 1);
 	foreach ($plg as $id=>$item) {
 		if (empty($item)) unset ($plg[$id]);
 	}

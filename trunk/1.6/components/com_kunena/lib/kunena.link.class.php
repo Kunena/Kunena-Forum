@@ -67,7 +67,7 @@ class CKunenaLink {
 	}
 
 	function GetRSSURL($params = '', $xhtml = true) {
-		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=rss' . $params, $xhtml );
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=rss&format=feed' . $params, $xhtml );
 	}
 
 	function GetPDFLink($catid, $limit, $limitstart, $id, $name, $rel = 'nofollow', $class = '', $title = '') {

@@ -34,6 +34,8 @@ Kunena 2.0.0-DEV
 27-February-2011 Matias
 ^ [#22786] Merge revisions 4512-4513 from branches/2.0-xillibit-mvc-backend-26-02-2011
 # [#24395] Change all remaining kescape() calls into $this->escape()
++ [#22569] Converted &func=karma into two tasks inside user view (with legacy support)
+- [#22570] Remove deprecated lib/kunena.karma.class.php
 
 26-February-2011 Xillibit
 # [#24395] Fix undefined variables in view=config and replace in kunena component menu the task by view

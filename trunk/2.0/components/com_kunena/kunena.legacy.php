@@ -357,11 +357,6 @@ if ($kunena_config->board_offline && ! $me->isAdmin ()) {
 
 			break;
 
-		case 'karma' :
-			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.karma.php');
-
-			break;
-
 		case 'templatechooser' :
 			$fb_user_template = strval ( JRequest::getVar ( 'kunena_user_template', '', 'COOKIE' ) );
 

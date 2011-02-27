@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.controller' );
 kimport ( 'kunena.forum.category.helper' );
+kimport ( 'kunena.user.helper' );
 
 require_once KPATH_SITE . '/lib/kunena.link.class.php';
 
@@ -23,10 +24,19 @@ require_once KPATH_SITE . '/lib/kunena.link.class.php';
  * @since		2.0
  */
 class KunenaControllerUser extends KunenaController {
-	function save() {
-		if (!JRequest::checkToken()) {
-			$this->setRedirect ( CKunenaLink::GetMyProfileURL(null, 'edit', false), COM_KUNENA_ERROR_TOKEN, 'error' );
-			return;
+	public function karmaup() {
+		$this->karma(1);
+	}
+
+	public function karmadown() {
+		$this->karma(-1);
+	}
+
+	public function save() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
 		}
 
 		// perform security checks
@@ -201,6 +211,64 @@ class KunenaControllerUser extends KunenaController {
 		$result = $login->logoutUser($return);
 		if ($result) $app->enqueueMessage ( $result, 'notice' );
 		$app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ) );
+	}
+
+	// Internal functions:
+
+	protected function karma($karmaDelta) {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+		$karma_delay = '14400'; // 14400 seconds = 6 hours
+		$userid = JRequest::getInt ( 'userid', 0 );
+		$catid = JRequest::getInt ( 'catid', 0 );
+
+		$config = KunenaFactory::getConfig();
+		$me = KunenaFactory::getUser();
+		$target = KunenaFactory::getUser($userid);
+
+		if (!$config->showkarma || !$me->exists() || !$target->exists() || $karmaDelta == 0) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_ERROR_KARMA' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		$now = JFactory::getDate()->toUnix();
+		if (!$me->isModerator($catid) && $now - $me->karma_time < $karma_delay) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_WAIT' ), 'notice' );
+			$this->redirectBack ();
+		}
+
+		if ($karmaDelta > 0) {
+			if ($me->userid == $target->userid) {
+				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_SELF_INCREASE' ), 'notice' );
+				$karmaDelta = -10;
+			} else {
+				$app->enqueueMessage ( JText::_('COM_KUNENA_KARMA_INCREASED' ) );
+			}
+		} else {
+			if ($me->userid == $target->userid) {
+				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_SELF_DECREASE' ), 'notice' );
+			} else {
+				$app->enqueueMessage ( JText::_('COM_KUNENA_KARMA_DECREASED' ) );
+			}
+		}
+
+		$me->karma_time = $now;
+		if ($me->userid != $target->userid && !$me->save()) {
+			$app->enqueueMessage($me->getError(), 'notice');
+			$this->redirectBack ();
+		}
+		$target->karma += $karmaDelta;
+		if (!$target->save()) {
+			$app->enqueueMessage($target->getError(), 'notice');
+			$this->redirectBack ();
+		}
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		$activity->onAfterKarma($target->userid, $me->userid, $karmaDelta);
+		$this->redirectBack ();
 	}
 
 	// Mostly copied from Joomla 1.5

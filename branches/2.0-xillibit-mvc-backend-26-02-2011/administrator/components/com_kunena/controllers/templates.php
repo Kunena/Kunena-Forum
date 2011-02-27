@@ -36,6 +36,11 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$id = array_shift($cid);
 
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
 		if ($id) {
 			$config->template = $id;
 			$config->remove ();
@@ -90,6 +95,11 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$dest = KPATH_SITE . '/template/';
 		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
 
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
 		if (!$file || !is_uploaded_file ( $file ['tmp_name'])) {
 			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
 		}
@@ -140,6 +150,11 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$id = array_shift($cid);
 		$template	= $id;
+
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
 
 		// Initialize variables
 		$retval	= true;
@@ -195,6 +210,12 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$template		= JRequest::getVar('id', '', 'post', 'cmd');
 		$filename		= JRequest::getVar('filename', '', 'post', 'cmd');
 		$filecontent	= JRequest::getVar('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
 		if (!$template) {
 			$app->enqueueMessage (JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -224,4 +245,83 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$this->setRedirect(KunenaRoute::_($this->baseurl.'&layout=choosecss&id='.$template, false));
 		}
 	}
+
+	function apply() {
+		$app = JFactory::getApplication ();
+		$task = JRequest::getCmd('task');
+		$template= JRequest::getVar('templatename', '', 'method', 'cmd');
+		$menus= JRequest::getVar('selections', array(), 'post', 'array');
+		$params= JRequest::getVar('params', array(), 'post', 'array');
+		$default= JRequest::getBool('default');
+		JArrayHelper::toInteger($menus);
+
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		if (!$template) {
+			$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+		// Set FTP credentials, if given
+		jimport('joomla.client.helper');
+		JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp = JClientHelper::getCredentials('ftp');
+		$file = KUNENA_PATH_TEMPLATE.'/'.$template.'/params.ini';
+		jimport('joomla.filesystem.file');
+		if ( count($params) ) {
+			$registry = new JRegistry();
+			$registry->loadArray($params);
+			$txt = $registry->toString();
+			$return = JFile::write($file, $txt);
+			if (!$return) {
+				$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE.', $file));
+				$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			}
+		}
+
+		$app->enqueueMessage (JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
+		$app->redirect ( KunenaRoute::_($this->baseurl.'&layout=edit&cid[]='.$template, false) );
+	}
+
+	function save() {
+		$app = JFactory::getApplication ();
+		$task = JRequest::getCmd('task');
+		$template= JRequest::getVar('templatename', '', 'method', 'cmd');
+		$menus= JRequest::getVar('selections', array(), 'post', 'array');
+		$params= JRequest::getVar('params', array(), 'post', 'array');
+		$default= JRequest::getBool('default');
+		JArrayHelper::toInteger($menus);
+
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		if (!$template) {
+			$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+		// Set FTP credentials, if given
+		jimport('joomla.client.helper');
+		JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp = JClientHelper::getCredentials('ftp');
+		$file = KUNENA_PATH_TEMPLATE.'/'.$template.'/params.ini';
+		jimport('joomla.filesystem.file');
+		if ( count($params) ) {
+			$registry = new JRegistry();
+			$registry->loadArray($params);
+			$txt = $registry->toString();
+			$return = JFile::write($file, $txt);
+			if (!$return) {
+				$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE.', $file));
+				$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			}
+		}
+
+		$app->enqueueMessage (JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
+		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+  }
+
 }

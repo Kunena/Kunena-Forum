@@ -112,7 +112,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					}
 					?>
 				</td>
-				<td width="*"><?php echo kescape ( $kunena_user->signature ); ?></td>
+				<td width="*"><?php echo $this->escape ( $kunena_user->signature ); ?></td>
 			</tr>
 		<?php $i++; }
 		} else { ?>

@@ -126,7 +126,8 @@ class KunenaAdminModelReport extends KunenaModel {
 		foreach ($plg as $id=>$item) {
 			if (empty($item)) unset ($plg[$id]);
 		}
-		$plgtext = '[quote][b]Plugins:[/b] ' . implode(' | ', $plg) . ' [/quote]';
+		if (!empty($plg)) $plgtext = '[quote][b]Plugins:[/b] ' . implode(' | ', $plg) . ' [/quote]';
+		else $plgtext = '[quote][b]Plugins:[/b] None [/quote]';
 
 		$mod = array();
 		$mod['kunenalatest'] = $this->_checkThirdPartyVersion('mod_kunenalatest', 'mod_kunenalatest', 'Kunena Latest', 'modules/mod_kunenalatest', null, 0, 1, 0);
@@ -136,7 +137,8 @@ class KunenaAdminModelReport extends KunenaModel {
 		foreach ($mod as $id=>$item) {
 			if (empty($item)) unset ($mod[$id]);
 		}
-		$modtext = '[quote][b]Modules:[/b] ' . implode(' | ', $mod) . ' [/quote]';
+		if (!empty($mod)) $modtext = '[quote][b]Modules:[/b] ' . implode(' | ', $mod) . ' [/quote]';
+		else $modtext = '[quote][b]Modules:[/b] None [/quote]';
 
 		$thirdparty = array();
 		$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
@@ -146,7 +148,8 @@ class KunenaAdminModelReport extends KunenaModel {
 		foreach ($thirdparty as $id=>$item) {
 			if (empty($item)) unset ($thirdparty[$id]);
 		}
-		$thirdpartytext = '[quote][b]Third-party components:[/b] ' . implode(' | ', $thirdparty) . ' [/quote]';
+		if (!empty($thirdparty)) $thirdpartytext = '[quote][b]Third-party components:[/b] ' . implode(' | ', $thirdparty) . ' [/quote]';
+		else $thirdpartytext = '[quote][b]Third-party components:[/b] None [/quote]';
 
 		$sef = array();
 		$sef['sh404sef'] = $this->_checkThirdPartyVersion('sh404sef', 'sh404sef', 'sh404sef', 'components/com_sh404sef', null, 1, 0, 0);
@@ -155,7 +158,8 @@ class KunenaAdminModelReport extends KunenaModel {
 		foreach ($sef as $id=>$item) {
 			if (empty($item)) unset ($sef[$id]);
 		}
-		$seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
+		if (!empty($sef)) $seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
+		else $seftext = '[quote][b]Third-party SEF components:[/b] None [/quote]';
 
 		$report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring

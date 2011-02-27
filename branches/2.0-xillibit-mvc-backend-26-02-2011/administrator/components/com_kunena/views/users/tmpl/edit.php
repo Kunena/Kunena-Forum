@@ -132,7 +132,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					<tr>
 						<th colspan="2" class="title"><?php
 						echo JText::_('COM_KUNENA_SUBFOR');
-						echo kescape($this->user->username);
+						echo $this->escape($this->user->username);
 						?>
 						</th>
 					</tr>

@@ -71,6 +71,7 @@ JHTML::_('behavior.tooltip');
 		<input type="hidden" name="option" value="com_kunena" />
 		<input type="hidden" name="view" value="templates" />
 		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
 		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</div>

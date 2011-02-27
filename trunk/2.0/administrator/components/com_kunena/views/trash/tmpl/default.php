@@ -87,31 +87,31 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 						echo $id;
 						?>" name="cid[]"
 						value="<?php
-						echo kescape($row->id);
+						echo $this->escape($row->id);
 						?>"
 						onclick="isChecked(this.checked);" /></td>
 					<td >
 						<?php
-						echo kescape($row->id);
+						echo $this->escape($row->id);
 						?>
 						</td>
 					<td ><?php
-						echo kescape($row->subject);
+						echo $this->escape($row->subject);
 						?></td>
 					<td ><?php
-						echo kescape($row->cats_name);
+						echo $this->escape($row->cats_name);
 						?></td>
 					<td ><?php
-						echo kescape($row->ip);
+						echo $this->escape($row->ip);
 						?></td>
 					<td ><?php
-						echo kescape($row->userid);
+						echo $this->escape($row->userid);
 						?></td>
 					<td ><?php
 						if(empty($row->username)){
 							echo JText::_('COM_KUNENA_VIEW_VISITOR');
 						} else {
-							echo kescape($row->username);
+							echo $this->escape($row->username);
 						}
 						?></td>
 					<td ><?php

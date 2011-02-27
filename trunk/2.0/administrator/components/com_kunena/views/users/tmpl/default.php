@@ -98,9 +98,9 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					</a>
 				</td>
 <?php /*
-				<td width="100"><?php echo kescape($kunena_user->email);
+				<td width="100"><?php echo $this->escape($kunena_user->email);
 						?>&nbsp;</td>
-				<td width="100"><?php echo kescape($kunena_user->usertype);
+				<td width="100"><?php echo $this->escape($kunena_user->usertype);
 						?>&nbsp;</td>
 */ ?>
 				<td align="center">
@@ -112,7 +112,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					}
 					?>
 				</td>
-				<td width="*"><?php echo kescape ( $kunena_user->signature ); ?></td>
+				<td width="*"><?php echo $this->escape ( $kunena_user->signature ); ?></td>
 			</tr>
 		<?php $i++; }
 		} else { ?>

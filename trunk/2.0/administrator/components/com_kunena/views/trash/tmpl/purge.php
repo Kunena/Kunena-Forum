@@ -30,7 +30,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 						<br />
 						<?php echo "<ol>";
 							foreach ( $this->purgeitems as $item ) {
-								echo "<li>". kescape($item->subject) ."</li>";
+								echo "<li>". $this->escape($item->subject) ."</li>";
 							}
 							echo "</ol>";
 						?>

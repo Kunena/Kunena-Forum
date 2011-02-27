@@ -132,7 +132,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					<tr>
 						<th colspan="2" class="title"><?php
 						echo JText::_('COM_KUNENA_SUBFOR');
-						echo kescape($this->user->username);
+						echo $this->escape($this->user->username);
 						?>
 						</th>
 					</tr>
@@ -150,7 +150,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 								$k = 1 - $k;
 								echo "<tr class=\"row$k\">";
 								echo "  <td width=\"30\">$enum</td>";
-								echo " <td><strong>" . $this->escape ( $cat->catname ) ."</strong>" ." &nbsp;". JText::_('COM_KUNENA_LAST_MESSAGE'). "<em>".$this->escape ( $cat->subject )."</em>" ." &nbsp;". JText::_('COM_KUNENA_BY') ." &nbsp;". "<em>".kescape ( $cat->username )."</em></td>";
+								echo " <td><strong>" . $this->escape ( $cat->catname ) ."</strong>" ." &nbsp;". JText::_('COM_KUNENA_LAST_MESSAGE'). "<em>".$this->escape ( $cat->subject )."</em>" ." &nbsp;". JText::_('COM_KUNENA_BY') ." &nbsp;". "<em>".$this->escape ( $cat->username )."</em></td>";
 								echo "</tr>";
 								$enum ++;
 							}

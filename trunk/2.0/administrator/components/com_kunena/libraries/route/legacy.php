@@ -422,6 +422,22 @@ class KunenaRouteLegacy {
 						break;
 				}
 				break;
+			case 'thankyou':
+				// Convert URI to have both id and mesid
+				$id = $uri->getVar ( 'pid' );
+				if ($id) {
+					$changed = true;
+					$uri->setVar('view', 'topic');
+					$uri->setVar('task', 'thankyou');
+					$uri->delVar('pid');
+
+					$message = KunenaForumMessageHelper::get ( $id );
+					if ($message->exists ()) {
+						$id = $message->thread;
+						$uri->setVar ( 'mesid', $message->id );
+					}
+					$uri->setVar ( 'id', $id );
+				}
 
 		}
 		return $changed;

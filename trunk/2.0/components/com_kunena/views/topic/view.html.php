@@ -548,12 +548,13 @@ class KunenaViewTopic extends KunenaView {
 		//Thankyou info and buttons
 		$this->message_thankyou = '';
 		if ($this->config->showthankyou && $this->profile->userid) {
-			require_once(KPATH_SITE .DS. 'lib'.DS.'kunena.thankyou.php');
-			$thankyou = new CKunenaThankyou();
-			$this->thankyou = $thankyou->getThankYouUser($this->message->id);
-
-			if($me->userid && !isset($this->thankyou[$me->userid]) && $me->userid != $this->profile->userid) {
-				$this->message_thankyou = CKunenaLink::GetThankYouLink ( $this->topic->category_id, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');
+			$thankyou = $this->message->getThankyou();
+			$this->thankyou = array();
+			foreach( $thankyou->getList() as $userid=>$time){
+				$this->thankyou[] = CKunenaLink::GetProfileLink($userid);
+			}
+			if($me->userid && !$thankyou->exists($me->userid) && $me->userid != $this->profile->userid) {
+				$this->message_thankyou = CKunenaLink::GetThankyouLink ( $this->topic->category_id, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');
 			}
 		}
 

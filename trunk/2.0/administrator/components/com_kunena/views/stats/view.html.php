@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.view' );
+kimport ( 'kunena.forum.message.thankyou.helper' );
 
 /**
  * About view for Kunena stats backend
@@ -50,7 +51,8 @@ class KunenaAdminViewStats extends KunenaView {
 		$this->topprofiles = $data->topprofiles;
 		$data->loadThanksStats('10');
 		$this->topuserthanks = $data->topuserthanks;
-		$this->topsaidthanks = KunenaForumMessageThankYou::getMostThankYou('said');
+		$this->topsaidthanks = KunenaForumMessageThankyouHelper::getTopUsers(false);
+		$this->maxsaidthanks = reset($this->topsaidthanks);
 		$data->loadTopicStats('10');
 		$this->toptitles = $data->toptitles;
 		parent::display ();

@@ -155,26 +155,10 @@ if (KunenaRouteLegacy::convert($uri)) {
 JRequest::setVar ( 'do', $layout );
 JRequest::setVar ( 'layout' );
 
-global $message;
-global $kunena_this_cat;
-
 // Get all the variables
 $action = JRequest::getCmd ( 'action', '' );
 $catid = JRequest::getInt ( 'catid', 0 );
 $do = JRequest::getCmd ( 'do', '' );
-$task = JRequest::getCmd ( 'task', '' );
-$id = JRequest::getInt ( 'id', 0 );
-$userid = JRequest::getInt ( 'userid', 0 );
-$limit = JRequest::getInt ( 'limit', 0 );
-$limitstart = JRequest::getInt ( 'limitstart', 0 );
-$markaction = JRequest::getVar ( 'markaction', '' );
-$message = JRequest::getVar ( 'message', '' );
-$page = JRequest::getInt ( 'page', 0 );
-
-// If JFirePHP is installed and enabled, leave a trace of the Kunena startup
-if(JDEBUG == 1 && defined('JFIREPHP')){
-	// FB::trace("Kunena Startup");
-}
 
 // Redirect Forum Jump
 if (isset ( $_POST ['func'] ) && $func == "showcat") {
@@ -184,8 +168,6 @@ if (isset ( $_POST ['func'] ) && $func == "showcat") {
 }
 
 $kunena_my = JFactory::getUser ();
-$kunena_db = JFactory::getDBO ();
-
 $document = JFactory::getDocument();
 
 // Central Location for all internal links
@@ -377,13 +359,6 @@ if ($kunena_config->board_offline && ! $me->isAdmin ()) {
 
 		case 'karma' :
 			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.karma.php');
-
-			break;
-
-		case 'thankyou':
-			require_once(JPATH_COMPONENT.DS.'lib'.DS.'kunena.thankyou.php');
-			$thankyou = new CKunenaThankyou ();
-			$thankyou->setThankyou();
 
 			break;
 

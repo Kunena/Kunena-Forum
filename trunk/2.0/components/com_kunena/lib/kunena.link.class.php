@@ -292,7 +292,7 @@ class CKunenaLink {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=karma&do={$do}&userid={$userid}&catid={$catid}&pid={$pid}{$token}", $name, '', $rel );
 	}
 
-	function GetThankYouLink( $catid, $pid, $targetuserid, $name, $title, $class) {
+	function GetThankyouLink( $catid, $pid, $targetuserid, $name, $title, $class) {
 		$token = '&'.JUtility::getToken().'=1';
 		return self::GetSefHrefLink ("index.php?option=com_kunena&view=thankyou&catid={$catid}&pid={$pid}{$token}", $name, $title, 'nofollow', $class);
 	}

@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+kimport('kunena.forum.message.thankyou.helper');
+
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
 ?>
@@ -60,7 +62,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		<td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_THANKYOU'); ?></td>
 		<td><strong><?php echo $this->topthanks;?></strong></td>
 		<td><?php echo JText::_('COM_KUNENA_STATS_TODAY_THANKYOU'); ?> </td>
-		<td><strong><?php echo KunenaForumMessageThankYou::getTotalThankYou($this->datem->toMySQL(),$this->datee->toMySQL()) ;?></strong></td>
+		<td><strong><?php echo KunenaForumMessageThankyouHelper::getTotal($this->datem->toMySQL(),$this->datee->toMySQL()) ;?></strong></td>
 	</tr>
 	<tr>
 		<td><?php echo JText::_('COM_KUNENA_STATS_TODAY_TOPICS'); ?></td>
@@ -219,11 +221,11 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		<tbody>
 			<?php
 				foreach ($this->topsaidthanks as $said_thankyou) {
-					if ($said_thankyou->countid == $this->topsaidthanks[0]->countid) {
+					if ($said_thankyou->countid == $this->maxsaidthanks->countid) {
 						$barwidth = 100;
 					}
 					else {
-						$barwidth = round(($said_thankyou->countid * 100) / $this->topsaidthanks[0]->countid);
+						$barwidth = round(($said_thankyou->countid * 100) / $this->maxsaidthanks->countid);
 					}
 			?>
 			<tr>
@@ -301,7 +303,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 			</thead>
 			<tbody>
 			<?php
-				$top_posts=KunenaForumMessageThankYou::getTopThankYouTopics();
+				$top_posts=KunenaForumMessageThankyouHelper::getTopMessages();
 				foreach ($top_posts as $post) {
 					if ($post->countid == $top_posts[0]->countid) {
 						$barwidth = 100;

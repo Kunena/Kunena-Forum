@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.controller' );
 kimport ( 'kunena.error' );
 kimport ( 'kunena.forum.message.helper' );
+kimport ( 'kunena.forum.message.thankyou.helper' );
 kimport ( 'kunena.forum.topic.helper' );
 kimport ( 'kunena.forum.category.helper' );
 kimport ( 'kunena.forum.topic.poll.helper' );
@@ -281,6 +282,37 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
 		}
 		$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
+	}
+
+	function thankyou(){
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		$message = KunenaForumMessageHelper::get($this->mesid);
+		if (!$message->authorise('thankyou')) {
+			$app->enqueueMessage ( $message->getError() );
+			$this->redirectBack ();
+		}
+
+		if(!KunenaFactory::getConfig()->showthankyou) {
+			$app->enqueueMessage (  JText::_('COM_KUNENA_THANKYOU_DISABLED') );
+			$this->redirectBack ();
+		}
+
+		$thankyou = KunenaForumMessageThankyouHelper::get($this->mesid);
+		if (!$thankyou->save ( KunenaFactory::getUser() )) {
+			$app->enqueueMessage ( $thankyou->getError() );
+			$this->redirectBack ();
+		}
+
+		$activityIntegration = KunenaFactory::getActivityIntegration();
+		$activityIntegration->onAfterThankyou($message->userid, $this->my->id, $message);
+
+		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_SUCCESS' ) );
+		$this->redirectBack ();
 	}
 
 	public function subscribe() {

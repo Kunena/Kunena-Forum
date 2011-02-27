@@ -19,6 +19,7 @@ kimport ('kunena.forum.topic.helper');
 kimport ('kunena.forum.message.helper');
 kimport ('kunena.forum.message.attachment');
 kimport ('kunena.forum.message.attachment.helper');
+kimport ('kunena.forum.message.thankyou.helper');
 
 /**
  * Kunena Forum Message Class
@@ -200,6 +201,10 @@ class KunenaForumMessage extends JObject {
 
 	public function getUserTopic($user=null) {
 		return $this->getTopic()->getUserTopic($user);
+	}
+
+	public function getThankyou() {
+		return KunenaForumMessageThankyouHelper::get($this->id);
 	}
 
 	public function getCategory() {

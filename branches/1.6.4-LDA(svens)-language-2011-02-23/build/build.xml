@@ -232,9 +232,10 @@
 		<mkdir dir="${build_dir}/archive" />
 		<!--language tag="ar-AA" /-->
 		<language tag="ca-ES" />
+		<language tag="cs-CZ" />
 		<language tag="da-DK" />
 		<language tag="de-DE" />
-		<!--language tag="el-GR" /-->
+		<language tag="el-GR" />
 		<language tag="en-GB" />
 		<language tag="es-ES" />
 		<language tag="fi-FI" />

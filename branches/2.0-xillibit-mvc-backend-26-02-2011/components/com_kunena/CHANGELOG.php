@@ -32,6 +32,9 @@ Legend:
 Kunena 2.0.0-DEV
 
 27-February-2011 Xillibit
+^ [#24395] Keep admin.kunena.php in backend to avoid issues
+
+27-February-2011 Xillibit
 ^ [#24395] Change language strings on installation to reflect that we are now on k2.0
 # [#24395] Fix issue in templates manager which prevents to save template paramters
 # [#24395] On report configuration settings, displays non when no modules, plugins is installed

@@ -82,6 +82,7 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		$smileyselected = '';
 		if ( $this->getState('item.id') ) {
 			$smileyselected = $this->getSmiley();
+			$smileyselected = $smileyselected->smiley_id;
 		}
 
 		$smileypath = $template->getSmileyPath();
@@ -92,7 +93,7 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		foreach ( $smiley_images as $id => $row ) {
 			$smiley_list[] = JHTML::_ ( 'select.option', $smiley_images [$id], $smiley_images [$id] );
 		}
-		$list = JHTML::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', isset($smileyselected) ? $smileyselected->smiley_id : '' );
+		$list = JHTML::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', isset($smileyselected) ? $smileyselected : '' );
 
 		return $list;
 	}

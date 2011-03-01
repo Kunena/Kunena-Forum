@@ -37,6 +37,7 @@ Kunena 1.6.4-DEV
 # [#25083] "There are no forums in the category"
 # [#25093] Change "forum" to "category" in subscription emails
 # [#25100] Change translation of COM_KUNENA_BBCODE_HIDE
+# [#25123] Moveusermessages in users manager doesn't work like excepted
 
 26-February-2011 Matias
 # [#25087] Administrator: Fatal error in Report Configuration Settings

@@ -2124,12 +2124,13 @@ function moveUserMessagesNow ( $option, $cid ) {
 
 	$uid = JRequest::getVar( 'uid', '', 'post' );
 	if ($uid) {
-		$kunena_db->setQuery ( "SELECT id,thread FROM #__kunena_messages WHERE hold=0 AND userid IN ('$uid')" );
+		$query = "SELECT id,thread FROM #__kunena_messages WHERE hold=0 AND userid IN ({$uid[0]})";
+		$kunena_db->setQuery ( $query );
 		$idusermessages = $kunena_db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 		if ( !empty($idusermessages) ) {
 			foreach ($idusermessages as $id) {
-				$kunena_mod->moveMessage($id->id, $cid[0], $TargetSubject = '', $TargetMessageID = 0);
+				$kunena_mod->moveMessage($id->id, $cid[0], '', 0);
 			}
 		}
 	}

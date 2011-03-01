@@ -842,7 +842,7 @@ function JJ_categoryArray($admin=0) {
 	if($app->isSite()) {
 		$kunena_session =& KunenaFactory::getSession();
 		if ($kunena_session && $kunena_session->allowed != 'na') {
-			$query .= " WHERE id IN ($kunena_session->allowed)";
+			$query .= " WHERE id IN ($kunena_session->allowed) AND published='1'";
 		} else {
 			$query .= " WHERE pub_access='0' AND published='1'";
 		}

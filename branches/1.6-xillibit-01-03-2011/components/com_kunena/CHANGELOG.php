@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+01-March-2011 Xillibit
+# [#25084] Moving topics shows unpulished categories in the pull-down
+# [#25083] "There are no forums in the category"
+
 26-February-2011 Matias
 # [#25087] Administrator: Fatal error in Report Configuration Settings
 # [#24924] Userlist: MySQL error when getting usercount

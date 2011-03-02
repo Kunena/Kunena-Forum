@@ -2075,11 +2075,11 @@ function trashUserMessages ( $option, $uid ) {
 	$uids = implode ( ',', $uid );
 	if ($uids) {
 		//select only the messages which aren't already in the trash
-		$kunena_db->setQuery ( "SELECT id FROM #__kunena_messages WHERE hold!=2 AND userid IN ('$uids')" );
+		$kunena_db->setQuery ( "SELECT id FROM #__kunena_messages WHERE hold!=2 AND userid IN ({$uids})" );
 		$idusermessages = $kunena_db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 		foreach ($idusermessages as $messageID) {
-			$kunena_mod->deleteMessage($messageID->id, $DeleteAttachments = false);
+			$kunena_mod->deleteMessage($messageID->id, false);
 		}
 	}
 	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles" , JText::_('COM_KUNENA_A_USERMES_TRASHED_DONE'));
@@ -2124,12 +2124,13 @@ function moveUserMessagesNow ( $option, $cid ) {
 
 	$uid = JRequest::getVar( 'uid', '', 'post' );
 	if ($uid) {
-		$kunena_db->setQuery ( "SELECT id,thread FROM #__kunena_messages WHERE hold=0 AND userid IN ('$uid')" );
+		$query = "SELECT id,thread FROM #__kunena_messages WHERE hold=0 AND userid IN ({$uid[0]})";
+		$kunena_db->setQuery ( $query );
 		$idusermessages = $kunena_db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 		if ( !empty($idusermessages) ) {
 			foreach ($idusermessages as $id) {
-				$kunena_mod->moveMessage($id->id, $cid[0], $TargetSubject = '', $TargetMessageID = 0);
+				$kunena_mod->moveMessage($id->id, $cid[0], '', 0);
 			}
 		}
 	}
@@ -3189,7 +3190,8 @@ function generateSystemReport () {
 	foreach ($plg as $id=>$item) {
 		if (empty($item)) unset ($plg[$id]);
 	}
-	$plgtext = '[quote][b]Plugins:[/b] ' . implode(' | ', $plg) . ' [/quote]';
+	if (!empty($plg)) $plgtext = '[quote][b]Plugins:[/b] ' . implode(' | ', $plg) . ' [/quote]';
+	else $plgtext = '[quote][b]Plugins:[/b] None [/quote]';
 
 	$mod = array();
 	$mod['kunenalatest'] = checkThirdPartyVersion('mod_kunenalatest', 'mod_kunenalatest', 'Kunena Latest', 'modules/mod_kunenalatest', null, 0, 1, 0);
@@ -3199,7 +3201,8 @@ function generateSystemReport () {
 	foreach ($mod as $id=>$item) {
 		if (empty($item)) unset ($mod[$id]);
 	}
-	$modtext = '[quote][b]Modules:[/b] ' . implode(' | ', $mod) . ' [/quote]';
+	if (!empty($mod)) $modtext = '[quote][b]Modules:[/b] ' . implode(' | ', $mod) . ' [/quote]';
+	else $modtext = '[quote][b]Modules:[/b] None [/quote]';
 
 	$thirdparty = array();
 	$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
@@ -3209,7 +3212,8 @@ function generateSystemReport () {
 	foreach ($thirdparty as $id=>$item) {
 		if (empty($item)) unset ($thirdparty[$id]);
 	}
-	$thirdpartytext = '[quote][b]Third-party components:[/b] ' . implode(' | ', $thirdparty) . ' [/quote]';
+	if (!empty($thirdparty)) $thirdpartytext = '[quote][b]Third-party components:[/b] ' . implode(' | ', $thirdparty) . ' [/quote]';
+	else $thirdpartytext = '[quote][b]Third-party components:[/b] None [/quote]';
 
 	$sef = array();
 	$sef['sh404sef'] = checkThirdPartyVersion('sh404sef', 'sh404sef', 'sh404sef', 'components/com_sh404sef', null, 1, 0, 0);
@@ -3218,7 +3222,8 @@ function generateSystemReport () {
 	foreach ($sef as $id=>$item) {
 		if (empty($item)) unset ($sef[$id]);
 	}
-	$seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
+	if (!empty($sef)) $seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
+	else $seftext = '[quote][b]Third-party SEF components:[/b] None [/quote]';
 
 	$report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring

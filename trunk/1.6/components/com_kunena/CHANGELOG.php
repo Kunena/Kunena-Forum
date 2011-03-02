@@ -34,6 +34,19 @@ Kunena 1.6.4-DEV
 
 2-March-2011 Matias
 # [#25130] Avoid JavaScript $() conflicts with JQuery and other frameworks
+^ [#15886] Merged revisions 4522-4531 from /branches/1.6-xillibit-01-03-2011
+
+2-March-2011 Xillibit
+# [#25123] trashUserMessages() in users manager doesn't work like excepted (Part 2)
+# [#25133] Mark all forum read fails under J! 1.6
+# [#25087] Show none in report configuration settings when there are no plugins, modules...
+
+1-March-2011 Xillibit
+# [#25084] Moving topics shows unpulished categories in the pull-down
+# [#25083] "There are no forums in the category"
+# [#25093] Change "forum" to "category" in subscription emails
+# [#25100] Change translation of COM_KUNENA_BBCODE_HIDE
+# [#25123] trashUserMessages() in users manager doesn't work like excepted
 
 26-February-2011 Matias
 # [#25087] Administrator: Fatal error in Report Configuration Settings

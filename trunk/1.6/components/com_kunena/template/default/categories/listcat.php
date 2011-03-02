@@ -31,6 +31,8 @@ $this->displayPathway ();
 		<div class="fltlft">
 			<?php if ($this->my->id != 0) : ?>
 			<form action="<?php echo KUNENA_LIVEURLREL; ?>" name="markAllForumsRead" method="post">
+				<input type="hidden" name="option" value="com_kunena" />
+				<input type="hidden" name="func" value="markallcatsread" />
 				<input type="hidden" name="markaction" value="allread" />
 				<input type="submit" class="kbutton button ks" value="<?php echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ'); ?>" />
 				<?php echo JHTML::_( 'form.token' ); ?>

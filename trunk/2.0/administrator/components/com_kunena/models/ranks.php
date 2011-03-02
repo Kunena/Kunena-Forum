@@ -82,6 +82,7 @@ class KunenaAdminModelRanks extends KunenaModel {
 		$rankselected = '';
 		if ( $this->getState('item.id') ) {
 			$rankselected = $this->getRank();
+			$rankselected = $rankselected->rank_id;
 		}
 
 		$rankpath = $template->getRankPath();
@@ -92,7 +93,7 @@ class KunenaAdminModelRanks extends KunenaModel {
 		foreach ( $rank_images as $id => $row ) {
 			$rank_list[] = JHTML::_ ( 'select.option', $rank_images [$id], $rank_images [$id] );
 		}
-		$list = JHTML::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($rankselected) ? $rankselected->rank_id : '' );
+		$list = JHTML::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($rankselected) ? $rankselected : '' );
 
 		return $list;
 	}

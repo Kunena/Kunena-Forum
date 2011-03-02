@@ -162,6 +162,11 @@ class KunenaForumCategory extends JObject {
 			'topic.subscribe'=>array('Read','NotBanned', 'Subscribe'),
 			'topic.sticky'=>array('Read','NotBanned', 'Moderate'),
 			'topic.lock'=>array('Read','NotBanned', 'Moderate'),
+			'topic.poll.read'=>array('Read', 'Poll'),
+			'topic.poll.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Poll'),
+			'topic.poll.edit'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
+			'topic.poll.delete'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
+			'topic.poll.vote'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
 			'topic.post.read'=>array('Read'),
 			'topic.post.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
 			'topic.post.thankyou' =>array('Read', 'NotBanned'),
@@ -183,7 +188,7 @@ class KunenaForumCategory extends JObject {
 		foreach ($actions[$action] as $function) {
 			$authFunction = 'authorise'.$function;
 			if (! method_exists($this, $authFunction) || ! $this->$authFunction($user)) {
-				$this->_authcache[$user->userid][$action] = JText::_ ( 'COM_KUNENA_NO_ACCESS' );
+				$this->_authcache[$user->userid][$action] = $this->getError() ? $this->getError() : JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 				if (!$silent) $this->setError ( $this->_authcache[$user->userid][$action] );
 				return false;
 			}
@@ -670,6 +675,20 @@ class KunenaForumCategory extends JObject {
 		// Check that user is admin
 		if (!$user->userid || !$user->isAdmin($this->id)) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_MODERATION_ERROR_NOT_ADMIN' ) );
+			return false;
+		}
+		return true;
+	}
+
+	protected function authorisePoll($user) {
+		// Check if polls are enabled at all
+		if (!KunenaFactory::getConfig()->pollenabled) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_DISABLED' ) );
+			return false;
+		}
+		// Check if polls are not enabled in this category
+		if (!$this->allow_polls) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED' ) );
 			return false;
 		}
 		return true;

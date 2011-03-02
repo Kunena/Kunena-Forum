@@ -9,11 +9,12 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+$row = 0;
 ?>
 <div class="kblock kpollbox">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpolls_tbody"></a></span>
-		<h2><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText ($this->polldata[0]->title); ?></span></h2>
+		<h2><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText ($this->poll->title); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpolls_tbody">
 		<div class="kbody">
@@ -22,47 +23,40 @@ defined ( '_JEXEC' ) or die ();
 					<td>
 						<div class="kpolldesc">
 							<table>
-							<?php foreach ( $this->polldata as $poll ) : ?>
-							<tr class="krow<?php echo ($i^=1)+1;?>">
-								<td class="kcol-option"><?php echo KunenaHtmlParser::parseText ($poll->text); ?></td>
-								<td class="kcol-bar"><img class="jr-forum-stat-bar" src="<?php echo JURI::root()."components/com_kunena/template/default/images/bar.png"; ?>" height="10" width="<?php echo isset($row->votes) ? ($row->votes*25)/5 : "0"; ?>" /></td>
-								<td class="kcol-number"><?php if(isset($poll->votes) && ($poll->votes > 0)) { echo $poll->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
-								<td class="kcol-percent"><?php if($poll->votes != "0" && $this->nbvoters != '0') { echo round(($poll->votes*100)/$this->nbvoters,1)."%"; } else { echo "0%"; } ?></td>
+							<?php foreach ( $this->poll->getOptions() as $option ) : ?>
+							<tr class="krow<?php echo (++$row)%2+1;?>">
+								<td class="kcol-option"><?php echo KunenaHtmlParser::parseText ($option->text); ?></td>
+								<td class="kcol-bar"><img class="jr-forum-stat-bar" src="<?php echo JURI::root()."components/com_kunena/template/default/images/bar.png"; ?>" height="10" width="<?php echo intval(($option->votes*300)/max($this->poll->getTotal(),1))+3; ?>" /></td>
+								<td class="kcol-number"><?php if(isset($option->votes) && ($option->votes > 0)) { echo $option->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
+								<td class="kcol-percent"><?php echo round(($option->votes*100)/max($this->poll->getTotal(),1),1)."%"; ?></td>
 							</tr>
 							<?php endforeach; ?>
-							<tr class="krow<?php echo ($i^=1)+1;?>">
+							<tr class="krow<?php echo (++$row)%2+1;?>">
 								<td colspan="4">
 									<?php
-									if(empty($this->nbvoters)) $this->nbvoters = "0";
-									echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL')." <strong>".$this->nbvoters."</strong> ";
+									echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL')." <strong>".$this->usercount."</strong> ";
 									if($this->config->pollresultsuserslist && !empty($this->usersvoted)) :
 										echo " ( ";
-										foreach($this->usersvoted as $row) echo CKunenaLink::GetProfileLink(intval($row->userid))." ";
+										foreach($this->usersvoted as $userid=>$vote) echo CKunenaLink::GetProfileLink($userid)." ";
 										echo " ) ";
 									endif; ?>
 								</td>
 							</tr>
-							<?php if (!$this->me->exists()) : ?>
-							<tr class="krow2">
-								<td colspan="4" class="kpoll-info"><?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?></td>
-							</tr>
-							<?php elseif (!$this->config->pollallowvoteone) : ?>
-							<tr class="krow2">
-								<td colspan="4">
+							<tr class="krow<?php echo $row%2+1;?>">
+								<td colspan="4" class="kpoll-info">
+									<?php if (!$this->me->exists()) : ?>
+										<?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
+									<?php elseif ($this->voted && !$this->config->pollallowvoteone) : ?>
 									<a href="<?php echo CKunenaLink::GetPollURL('vote', $this->topic->id, $this->category->id);?>">
 										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
 									</a>
+									<?php else : ?>
+									<a href="<?php echo CKunenaLink::GetPollURL('changevote', $this->topic->id, $this->category->id); ?>">
+										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>
+									</a>
+									<?php endif; ?>
 								</td>
 							</tr>
-							<?php else : ?>
-							<tr class="krow2">
-								<td colspan="4">
-										<a href=<?php echo CKunenaLink::GetPollURL('changevote', $this->topic->id, $this->category->id); ?>>
-											<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>
-										</a>
-								</td>
-							</tr>
-							<?php endif; ?>
 							</table>
 						</div>
 					</td>
@@ -70,5 +64,4 @@ defined ( '_JEXEC' ) or die ();
 			</table>
 		</div>
 	</div>
-
 </div>

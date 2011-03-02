@@ -17,6 +17,7 @@ kimport ('kunena.user.helper');
 kimport ('kunena.forum.category.helper');
 kimport ('kunena.forum.topic.helper');
 kimport ('kunena.forum.topic.user.helper');
+kimport ('kunena.forum.topic.poll.helper');
 kimport ('kunena.forum.message');
 kimport ('kunena.forum.message.helper');
 kimport ('kunena.forum.message.attachment.helper');
@@ -151,6 +152,15 @@ class KunenaForumTopic extends JObject {
 
 	public function getCategory() {
 		return KunenaForumCategoryHelper::get($this->category_id);
+	}
+
+	public function getPoll() {
+		static $poll = null;
+		if (!$poll) {
+			$poll = KunenaForumTopicPollHelper::get($this->poll_id);
+			$poll->threadid = $this->id;
+		}
+		return $poll;
 	}
 
 	public function newPosts() {
@@ -312,6 +322,11 @@ class KunenaForumTopic extends JObject {
 			'subscribe'=>array('Read'),
 			'sticky'=>array('Read'),
 			'lock'=>array('Read'),
+			'poll.read'=>array('Read'),
+			'poll.create'=>array('Own'),
+			'poll.edit'=>array('Read','Own'),
+			'poll.delete'=>array('Read','Own'),
+			'poll.vote'=>array('Read', 'Vote'),
 			'post.read'=>array('Read'),
 			'post.thankyou'=>array('Read','NotMoved'),
 			'post.reply'=>array('Read','NotHold','NotMoved','Unlocked'),
@@ -339,7 +354,7 @@ class KunenaForumTopic extends JObject {
 		foreach ($actions[$action] as $function) {
 			$authFunction = 'authorise'.$function;
 			if (! method_exists($this, $authFunction) || ! $this->$authFunction($user)) {
-				if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+				if (!$silent && !$this->getError()) $this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 				return false;
 			}
 		}
@@ -911,7 +926,26 @@ class KunenaForumTopic extends JObject {
 		}
 		return true;
 	}
-
+	protected function authoriseVote($user) {
+		// Check that user can vote
+		$config = KunenaFactory::getConfig();
+		$poll = $this->getPoll();
+		$voted = $poll->getMyVotes($user);
+// TODO: allow support for only one vote without possibility to change it
+//		if ($voted && $config->pollallowvoteone) {
+//			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE' ) );
+//			return false;
+//		}
+		if ($voted->votes >= $config->pollnbvotesbyuser) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES' ) );
+			return false;
+		}
+		if ($config->polltimebtvotes && $voted->time + $config->polltimebtvotes > JFactory::getDate()->toUnix()) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY' ) );
+			return false;
+		}
+		return true;
+	}
 	protected function delta() {
 		if (!$this->hold && $this->_hold) {
 			// Create or publish topic

@@ -120,25 +120,25 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( $warning, 'notice' );
 		}
 
-		$polltitle = JRequest::getString ( 'poll_title', 0 );
-		$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
-		$polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
-
-		//Insert in the database the informations for the poll and the options for the poll
-		if (! empty ( $optionsnumbers ) && ! empty ( $polltitle )) {
-			//Begin Poll management options
-			$poll_optionsID = JRequest::getVar('polloptionsID', array (), 'post', 'array');
-			$optvalue = array();
-			foreach($poll_optionsID as $opt) {
-				if ( !empty($opt) ) $optvalue[] = $opt;
-			}
-
-			if ( !empty($optvalue) ) {
-				require_once KPATH_SITE . '/lib/kunena.poll.class.php';
-				$poll = CKunenaPolls::getInstance();
-				$poll->save_new_poll ( $polltimetolive, $polltitle, $topic->id, $optvalue );
-				$topic->poll_id = $topic->id;
-				$topic->save();
+		// Create Poll
+		$polltitle = JRequest::getString ( 'poll_title', '' );
+		$polloptions = JRequest::getVar('polloptionsID', array (), 'post', 'array');
+		//$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
+		if (! empty ( $polloptions ) && ! empty ( $polltitle )) {
+			if ($topic->authorise('poll.create', null, false)) {
+				$poll = $topic->getPoll();
+				$poll->title = $polltitle;
+				$poll->polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
+				$poll->setOptions($polloptions);
+				if (!$poll->save()) {
+					$app->enqueueMessage ( $poll->getError(), 'notice' );
+				} else {
+					$topic->poll_id = $poll->id;
+					$topic->save();
+					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_CREATED' ) );
+				}
+			} else {
+				$app->enqueueMessage ( $topic->getError(), 'notice' );
 			}
 		}
 
@@ -240,34 +240,47 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( $warning, 'notice' );
 		}
 
-		// Polls
-		if ($this->config->pollenabled) {
-			$polltitle = JRequest::getString ( 'poll_title', 0 );
-			$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
-			$polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
-			$poll_optionsID = JRequest::getVar('polloptionsID', array (), 'post', 'array');
-			$optvalue = array();
-			foreach($poll_optionsID as $opt) {
-				if ( !empty($opt) ) $optvalue[] = $opt;
-			}
+		// Poll
+		$polltitle = JRequest::getString ( 'poll_title', '' );
+		$polloptions = JRequest::getVar('polloptionsID', array (), 'post', 'array');
+		//$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
 
-			//need to check if the poll exist, if it's not the case the poll is insered like new poll
-			require_once KPATH_SITE . '/lib/kunena.poll.class.php';
-			if (! $message->getTopic()->poll_id) {
-				$poll = CKunenaPolls::getInstance();
-				if ( !empty($optvalue) ) {
-					$poll->save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
-					$topic->poll_id = $this->id;
+		// Save changes into poll
+		$poll = $topic->getPoll();
+		if (! empty ( $polloptions ) && ! empty ( $polltitle )) {
+			$poll->title = $polltitle;
+			$poll->polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
+			$poll->setOptions($polloptions);
+			if (!$topic->poll_id) {
+				// Create a new poll
+				if (!$topic->authorise('poll.create')) {
+					$app->enqueueMessage ( $topic->getError(), 'notice' );
+				} elseif (!$poll->save()) {
+					$app->enqueueMessage ( $poll->getError(), 'notice' );
+				} else {
+					$topic->poll_id = $poll->id;
 					$topic->save();
+					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_CREATED' ) );
 				}
 			} else {
-				$poll = CKunenaPolls::getInstance();
-				if (empty ( $polltitle ) && empty($poll_optionsID)) {
-					//The poll is deleted because the polltitle and the options are empty
-					$poll->delete_poll ( $this->id );
+				// Edit existing poll
+				if (!$topic->authorise('poll.edit')) {
+					$app->enqueueMessage ( $topic->getError(), 'notice' );
+				} elseif (!$poll->save()) {
+					$app->enqueueMessage ( $poll->getError(), 'notice' );
 				} else {
-					$poll->update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optionsnumbers, $poll_optionsID );
+					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_EDITED' ) );
 				}
+			}
+		} elseif ($poll->exists()) {
+			// Delete poll
+			if (!$topic->authorise('poll.delete')) {
+				// Error: No permissions to delete poll
+				$app->enqueueMessage ( $topic->getError(), 'notice' );
+			} elseif (!$poll->delete()) {
+				$app->enqueueMessage ( $poll->getError(), 'notice' );
+			} else {
+				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_DELETED' ) );
 			}
 		}
 
@@ -752,29 +765,35 @@ class KunenaControllerTopic extends KunenaController {
 
 	public function vote() {
 		$app = JFactory::getApplication ();
-		$vote	= JRequest::getInt('kpollradio', '');
-		$id = JRequest::getInt ( 'kpoll-id', 0 );
-
 		if (!JRequest::checkToken()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
-		$voted = KunenaForumTopicPollHelper::userHasAlreadyVoted($id);
-		if (!$voted) {
-			$success = KunenaForumTopicPollHelper::saveVote($id, $vote);
+		$config = KunenaFactory::getConfig();
+		$vote = JRequest::getInt('kpollradio', '');
+		$id = JRequest::getInt ( 'id', 0 );
+
+		$topic = KunenaForumTopicHelper::get($id);
+		$poll = $topic->getPoll();
+		if (!$topic->authorise('poll.vote')) {
+			$app->enqueueMessage ( $topic->getError(), 'error' );
+		} elseif (!$config->pollallowvoteone || !$poll->getMyVotes()) {
+			// Give a new vote
+			$success = $poll->vote($vote);
 			if ( !$success ) {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_VOTE_NOT_SAVED' ), 'error' );
-				return false;
+				$app->enqueueMessage ( $topic->getError(), 'error' );
+			} else {
+				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_SUCCESS' ) );
 			}
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_VOTE_SUCCESS' ) );
 		} else {
-			$success = KunenaForumTopicPollHelper::saveChangedVote($id, $vote);
+			// Change existing vote
+			$success = $poll->vote($vote, true);
 			if ( !$success ) {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_VOTE_NOT_CHANGED' ), 'error' );
-				return false;
+				$app->enqueueMessage ( $topic->getError(), 'error' );
+			} else {
+				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS' ) );
 			}
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_VOTE_CHANGED_SUCCESS' ) );
 		}
 		$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, 0, NULL, $this->id, false ) );
 	}

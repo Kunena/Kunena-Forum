@@ -13,9 +13,18 @@ defined ( '_JEXEC' ) or die ();
 $template = KunenaFactory::getTemplate();
 $topic_emoticons = $template->getTopicIcons();
 
-require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
-$kunena_poll = CKunenaPolls::getInstance();
-$kunena_poll->call_javascript_form();
+$polloptionsstart = end($this->poll->getOptions());
+$polloptionsstart = $polloptionsstart ? $polloptionsstart->id+1 : 1;
+$template = KunenaTemplate::getInstance();
+$template->addScript('js/kunena.poll-min.js');
+$this->document->addScriptDeclaration('// <![CDATA[
+	var KUNENA_POLL_CATS_NOT_ALLOWED = "'.JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED').'";
+	var KUNENA_EDITOR_HELPLINE_OPTION = "'.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION').'";
+	var KUNENA_POLL_OPTION_NAME = "'.JText::_('COM_KUNENA_POLL_OPTION_NAME').'";
+	var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'.JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW').'";
+	var KUNENA_ICON_ERROR = "'.JURI::root(true).'/administrator/images/publish_x.png";
+	var number_field = "'.$polloptionsstart.'";
+// ]]>');
 
 include_once (KUNENA_PATH_LIB . '/kunena.bbcode.js.php');
 include_once (KUNENA_PATH_LIB . '/kunena.special.js.php');

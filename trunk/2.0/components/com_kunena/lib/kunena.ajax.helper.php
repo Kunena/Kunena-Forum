@@ -71,28 +71,6 @@ class CKunenaAjaxHelper {
 					$response = $this->_getPreview ( $body );
 
 					break;
-				case 'pollvote' :
-					$vote	= JRequest::getInt('kpollradio', '');
-					$id = JRequest::getInt ( 'kpoll-id', 0 );
-
-					if (!JRequest::checkToken()) {
-						return false;
-					}
-
-					$response = $this->_addPollVote ($vote, $id, $this->_my->id);
-
-					break;
-				case 'pollchangevote' :
-					$vote	= JRequest::getInt('kpollradio', '');
-					$id = JRequest::getInt ( 'kpoll-id', 0 );
-
-					if (!JRequest::checkToken()) {
-						return false;
-					}
-
-					$response = $this->_changePollVote ($vote, $id, $this->_my->id);
-
-					break;
 				case 'uploadfile' :
 
 					$response = $this->_uploadFile ($do);
@@ -198,26 +176,6 @@ class CKunenaAjaxHelper {
 
 		$msgbody = KunenaHtmlParser::parseBBCode( $data );
 		$result ['preview'] = $msgbody;
-
-		return $result;
-	}
-
-	protected function _addPollVote ($value_choosed, $id, $userid) {
-		$result = array ();
-
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-		$kunena_polls =& CKunenaPolls::getInstance();
-		$result = $kunena_polls->save_results($id,$userid,$value_choosed);
-
-		return $result;
-	}
-
-	protected function _changePollVote ($value_choosed, $id, $userid) {
-		$result = array ();
-
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-		$kunena_polls =& CKunenaPolls::getInstance();
-		$result = $kunena_polls->save_changevote($id,$userid,$value_choosed);
 
 		return $result;
 	}

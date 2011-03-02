@@ -14,6 +14,7 @@ kimport ( 'kunena.controller' );
 kimport('kunena.user.helper');
 kimport('kunena.forum.category.helper');
 kimport('kunena.forum.topic.helper');
+kimport('kunena.forum.message.helper');
 kimport ( 'kunena.error' );
 
 /**
@@ -54,32 +55,13 @@ class KunenaAdminControllerTrash extends KunenaController {
 			$md5calculated = md5(serialize($ids));
 			// FIXME : unset the userstate
 			if ( $md5 == $md5calculated ) {
-				// FIXME: we do have delete() for topics and messages and they are doing also cleanup (removing thanks, polls etc)
-				// first load topics/messages by KunenaForumTopic/MessageHelper
-				// then foreach (...) { $message->authorise(); $message->delete() }
-
-				require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-				$poll = CKunenaPolls::getInstance();
-				require_once (KUNENA_PATH_LIB  .'/kunena.moderation.class.php');
-				$kunena_mod = CKunenaModeration::getInstance();
-				$db = JFactory::getDBO();
-				foreach ($ids as $id ) {
-					$db->setQuery ( "SELECT a.parent, a.id, b.threadid FROM #__kunena_messages AS a INNER JOIN #__kunena_polls AS b ON b.threadid=a.id WHERE threadid='{$id}'" );
-					$mes = $db->loadObjectList ();
-					if (KunenaError::checkDatabaseError()) return;
-					if( !empty($mes[0])) {
-						// FIXME : maybe create a function in poll class to check if a poll exist
-						if ($mes[0]->parent == '0' && !empty($mes[0]->threadid) ) {
-							//remove of poll
-							$poll->delete_poll($mes[0]->threadid);
-						}
+				$messages = KunenaForumMessageHelper::getMessages($ids);
+				foreach ($messages as $message) {
+					if ($message->authorise('permdelete') && $message->delete()) {
+						$app->enqueueMessage (JText::_('COM_KUNENA_TRASH_DELETE_DONE'));
+					} else {
+						$app->enqueueMessage (  $message->getError(), 'notice' );
 					}
-				}
-				$sucess = $kunena_mod->deleteMessagePerminantly($id, 1);
-				if ( $sucess ) {
-					$app->enqueueMessage (JText::_('COM_KUNENA_TRASH_DELETE_DONE'));
-				} else {
-					$app->enqueueMessage (  $kunena_mod->getErrorMessage() );
 				}
 			} else {
 				// $app->enqueueMessage (JText::_('error'));

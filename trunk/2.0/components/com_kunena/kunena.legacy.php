@@ -23,18 +23,14 @@ defined( '_JEXEC' ) or die();
 // Kunena wide defines
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.defines.php');
 
+kimport('kunena.error');
+kimport('kunena.forum.category.helper');
+
 class KunenaApp {
 
 	function __construct() {
-		KunenaRoute::cacheLoad();
 		ob_start();
 
-		// Display time it took to create the entire page in the footer
-		jimport( 'joomla.error.profiler' );
-		$__kstarttime = JProfiler::getmicrotime();
-
-		kimport('kunena.error');
-		kimport('kunena.forum.category.helper');
 		$kunena_config = KunenaFactory::getConfig ();
 		if ($kunena_config->debug) {
 			KunenaError::initialize();
@@ -48,9 +44,14 @@ if(JDEBUG){
 }
 
 $func = strtolower (JRequest::getWord ( 'func', JRequest::getWord ( 'view' ) ) );
-JRequest::setVar ( 'view', $func );
 JRequest::setVar ( 'func', $func );
+JRequest::setVar ( 'view' );
 $format = JRequest::getCmd ( 'format', 'html' );
+
+// SEF turns &do=xxx into &layout=xxx, so we need to get both variables
+$layout = JRequest::getWord ( 'do', JRequest::getWord ( 'layout', null ) );
+JRequest::setVar ( 'do', $layout );
+JRequest::setVar ( 'layout' );
 
 require_once(KUNENA_PATH . DS . 'router.php');
 if ($func && !isset(KunenaRouter::$functions[$func])) {
@@ -59,91 +60,6 @@ if ($func && !isset(KunenaRouter::$functions[$func])) {
 }
 
 $kunena_app = JFactory::getApplication ();
-
-if (empty($_POST) && $format == 'html') {
-	$me = KunenaFactory::getUser();
-	$menu = $kunena_app->getMenu ();
-	$active = $menu->getActive ();
-
-	// Legacy menu item and Itemid=0 support with redirect and notice
-	if (empty($active->query ['view'])) {
-		$new = $menu->getItem (KunenaRoute::getItemID ());
-		if ($new) {
-			if ($active) {
-				if ($active->route == $new->route) {
-					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_CONFLICT', $active->route, $active->id, $new->id), 'menu');
-					$menu->setActive ( $new->id );
-					$active = $new;
-				} else {
-					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_LEGACY', $active->route, $active->id, $new->route, $new->id), 'menu');
-					$kunena_app->redirect (KunenaRoute::_(null, false));
-				}
-			} else {
-				KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NO_ITEM_REDIRECT', $new->route, $new->id));
-				$kunena_app->redirect (KunenaRoute::_(null, false));
-			}
-		} elseif (!$active) {
-			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NO_ITEM'));
-		}
-	}
-	if (!$func || $func == 'entrypage') {
-		// If we are currently in entry page, we need to show and highlight default menu item
-		if (!empty ( $active->query ['defaultmenu'] )) {
-			$defaultitem = $active->query ['defaultmenu'];
-			if ($defaultitem > 0) {
-				$newitem = $menu->getItem ($defaultitem);
-				if (!$newitem) {
-					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_EXISTS'), 'menu');
-				} elseif (empty($newitem->component) || $newitem->component != 'com_kunena') {
-					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
-				} elseif ($active->route == $newitem->route) {
-					// Special case: we are using Entry Page instead of menu alias and we have identical menu alias
-					if ($active->id != $newitem->id) {
-						$defaultitem = !empty ( $newitem->query ['defaultmenu'] ) ? $newitem->query ['defaultmenu'] : $newitem->id;
-						$newitem2 = $menu->getItem ($defaultitem);
-						if (empty($newitem2->component) || $newitem2->component != 'com_kunena') {
-							$defaultitem = $newitem->id;
-						}
-						if ($defaultitem) {
-							$menu->setActive ( $defaultitem );
-							$active = $menu->getActive ();
-						}
-					}
-				} else {
-					$oldlocation = KunenaRoute::getHome ($active);
-					$menu->setActive ( $defaultitem );
-					$active = $menu->getActive ();
-
-					$newlocation = KunenaRoute::getHome ($active);
-					if (!$oldlocation || $oldlocation->id != $newlocation->id) {
-						// Follow Default Menu Item if it's not in the same menu
-						$kunena_app->redirect (KunenaRoute::_($defaultitem, false));
-					}
-				}
-				if (is_object ( $active )) {
-					foreach ( $active->query as $var => $value ) {
-						if ($var == 'view' && $value == 'entrypage')
-							$value = $func;
-						JRequest::setVar ( $var, $value );
-					}
-					$func = JRequest::getCmd ( 'view' );
-				}
-			}
-		}
-	}
-	$newItemid = KunenaRoute::getItemid();
-	if ($active && $newItemid && !KunenaRoute::getHome ($active) && $active->id != $newItemid) {
-		$kunena_app->redirect (KunenaRoute::_(null, false));
-	}
-}
-
-// Convert legacy urls into new ones
-$view = JRequest::getWord ( 'view' );
-
-// SEF turns &do=xxx into &layout=xxx, so we need to get both variables
-$layout = JRequest::getWord ( 'do', JRequest::getWord ( 'layout', null ) );
-JRequest::setVar ( 'do' );
-
 $uri = KunenaRoute::current(true);
 kimport ('kunena.route.legacy');
 if (KunenaRouteLegacy::convert($uri)) {
@@ -151,31 +67,16 @@ if (KunenaRouteLegacy::convert($uri)) {
 	$kunena_app->redirect (KunenaRoute::_($uri, false));
 }
 
-// Convert layout back to do to make old code to work
-JRequest::setVar ( 'do', $layout );
-JRequest::setVar ( 'layout' );
-
-// Get all the variables
-$action = JRequest::getCmd ( 'action', '' );
-$catid = JRequest::getInt ( 'catid', 0 );
-$do = JRequest::getCmd ( 'do', '' );
-
-// Redirect Forum Jump
-if (isset ( $_POST ['func'] ) && $func == "showcat") {
-	header ( "HTTP/1.1 303 See Other" );
-	header ( "Location: " . KunenaRoute::_ ( 'index.php?option=com_kunena&func=showcat&catid=' . $catid, false ) );
-	$kunena_app->close ();
-}
-
-$kunena_my = JFactory::getUser ();
-$document = JFactory::getDocument();
+$me = KunenaFactory::getUser();
+$menu = $kunena_app->getMenu ();
+$active = $menu->getActive ();
 
 // Central Location for all internal links
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.link.class.php');
 kimport('kunena.html.parser');
 
 // Redirect profile (menu item) to the right component
-if ($func == 'profile' && !$do && empty($_POST)) {
+if ($func == 'profile' && empty($_POST)) {
 	$redirect = 1;
 	if (!empty($active)) {
 		$params = new JParameter($active->params);
@@ -184,13 +85,14 @@ if ($func == 'profile' && !$do && empty($_POST)) {
 	if ($redirect) {
 		$profileIntegration = KunenaFactory::getProfile();
 		if (!($profileIntegration instanceof KunenaProfileKunena)) {
-			$url = CKunenaLink::GetProfileURL($kunena_my->id, false);
+			$url = CKunenaLink::GetProfileURL($me->userid, false);
 			if ($url) $kunena_app->redirect($url);
 		}
 	}
 }
 
 // Check for JSON request
+$document = JFactory::getDocument();
 if ($func == "json") {
 
 	if(JDEBUG == 1 && defined('JFIREPHP')){
@@ -206,6 +108,7 @@ if ($func == "json") {
 	$document->setMimeEncoding( 'application/json' );
 
 	// Change the suggested filename.
+	$action = JRequest::getCmd ( 'action', '' );
 	if ($action!='uploadfile') JResponse::setHeader( 'Content-Disposition', 'attachment; filename="kunena.json"' );
 
 	$value = JRequest::getVar ( 'value', '' );
@@ -220,6 +123,7 @@ if ($func == "json") {
 	}
 	else {
 		// Generate reponse
+		$do = JRequest::getCmd ( 'do', '' );
 		echo $ajaxHelper->generateJsonResponse($action, $do, $value);
 	}
 
@@ -237,7 +141,7 @@ if ($format == 'html') {
 if ($kunena_config->board_offline && ! $me->isAdmin ()) {
 	// if the board is offline
 	echo $kunena_config->offline_message;
-} else if ($kunena_config->regonly && ! $kunena_my->id) {
+} else if ($kunena_config->regonly && ! $me->userid) {
 	// if we only allow registered users
 	echo '<div id="Kunena">';
 	//KunenaForum::display('common', 'default', null, array('header'=>JText::_('COM_KUNENA_LOGIN_NOTIFICATION'), 'body'=>JText::_('COM_KUNENA_LOGIN_FORUM')));
@@ -248,19 +152,11 @@ if ($kunena_config->board_offline && ! $me->isAdmin ()) {
 	// =======================================================================================
 	// Forum is online:
 
-	if ($format != 'html') {
-		echo "Kunena: Unsupported output format {$format}, please use only format=html or .html";
-		$kunena_app->close ();
-	}
-
 	$integration = KunenaFactory::getProfile();
 	$integration->open();
 
 	//time format
 	include_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.timeformat.class.php');
-
-	// include required libraries
-	jimport('joomla.template.template');
 
 	// Kunena Current Template Icons Pack
 	$template = KunenaFactory::getTemplate();
@@ -295,45 +191,8 @@ if ($kunena_config->board_offline && ! $me->isAdmin ()) {
      |                     them                      |
      +----------------------------------------------*/
 
-	if ($kunena_config->highlightcode) {
-		$document->addStyleDeclaration('
-			div.highlight pre {
-				width: '.(($kunena_config->rtewidth * 9) / 10).'px;
-			}
-		');
-	}
-
-	//Check if the catid requested is a parent category, because if it is
-	//the only thing we can do with it is 'listcat' and nothing else
-	if ($func == "showcat") {
-		if ($catid != 0) {
-			$category = KunenaForumCategoryHelper::get($catid);
-			$catParent = $category->getParent()->id;
-		}
-		if ($catid == 0 || $catParent == 0) {
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, false) );
-		}
-	}
-	?>
-
-<div id="Kunena"><?php
 	if ($kunena_config->board_offline) {
-		?>
-<span id="fbOffline"><?php
-		echo JText::_('COM_KUNENA_FORUM_IS_OFFLINE')?></span> <?php
-	}
-	?>
- <?php
-	if(JDEBUG){
-		$__profiler->mark('Profilebox Start');
-	}
-
-	// Display login box
-	KunenaForum::display('common', 'menu');
-	KunenaForum::display('common', 'loginbox');
-
- 	if(JDEBUG){
-		$__profiler->mark('Profilebox End');
+		?><span id="fbOffline"><?php echo JText::_('COM_KUNENA_FORUM_IS_OFFLINE')?></span> <?php
 	}
 
 	if(JDEBUG){
@@ -341,22 +200,6 @@ if ($kunena_config->board_offline && ! $me->isAdmin ()) {
 	}
 
 	switch ($func) {
-        case 'poll':
-        	echo('LEGACY!');
-  			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-  			$kunena_polls = CKunenaPolls::getInstance();
-  			$kunena_polls->display();
-
-            break;
-
-		case 'polls':
-			echo('LEGACY!');
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-			$kunena_polls = CKunenaPolls::getInstance();
-			$kunena_polls->polldo();
-
-			break;
-
 		case 'templatechooser' :
 			$fb_user_template = strval ( JRequest::getVar ( 'kunena_user_template', '', 'COOKIE' ) );
 
@@ -412,28 +255,6 @@ if ($kunena_config->board_offline && ! $me->isAdmin ()) {
 		$__profiler->mark('$func End');
 	}
 
-	$template = KunenaFactory::getTemplate();
-	$this->params = $template->params;
-	// Credits
-	echo '<div class="kcredits kms"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
-		if ($this->params->get('templatebyText') !=''):
-	echo ' :: <a href ="'. $this->params->get('templatebyLink').'" rel="follow">' . $this->params->get('templatebyText') ;
-	if ($this->params->get('templatebyName')) {
-	echo ' '.$this->params->get('templatebyName') .'</a>';
-	} else { echo '</a>'; }
-	endif;
-	echo '</div>';
-
-	// display footer
-
-	// Show total time it took to create the page
-	$__ktime = JProfiler::getmicrotime() - $__kstarttime;
-?>
-	<div class="kfooter"><span class="kfooter-time"><?php echo JText::_('COM_KUNENA_FOOTER_TIME_TO_CREATE').'&nbsp;'.sprintf('%0.3f', $__ktime).'&nbsp;'.JText::_('COM_KUNENA_FOOTER_TIME_SECONDS');?></span>
-</div>
-</div>
-<!-- closes Kunena div -->
-<?php
 $integration = KunenaFactory::getProfile();
 $integration->close();
 
@@ -447,7 +268,6 @@ $integration->close();
 
 } // end of online
 
-	KunenaRoute::cacheStore();
 if(JDEBUG == 1){
 	$__profiler->mark('Done');
 	$__queries = $__profiler->getQueryCount();
@@ -463,19 +283,6 @@ if(JDEBUG == 1){
 	}
 }
 	ob_end_flush();
-	}
-	/**
-	* Escapes a value for output in a view script.
-	*
-	* If escaping mechanism is one of htmlspecialchars or htmlentities, uses
-	* {@link $_encoding} setting.
-	*
-	* @param  mixed $var The output to escape.
-	* @return mixed The escaped value.
-	*/
-	function escape($var)
-	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 }
 

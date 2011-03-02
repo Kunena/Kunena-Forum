@@ -77,7 +77,7 @@ var _previewActive=false;
 //
 function kToggleOrSwap(id)
 {
-	e = $(id);
+	e = document.id(id);
 	if (e) {
 		if (e.getStyle('display') == "none"){
 			if (_currentElement != "") {_currentElement.setStyle('display', 'none');}
@@ -106,8 +106,8 @@ function kToggleOrSwap(id)
 
 function kToggleOrSwapPreview(kunenaclass)
 {
-	e = $("kbbcode-preview");
-	f = $("kbbcode-message");
+	e = document.id("kbbcode-preview");
+	f = document.id("kbbcode-message");
 	if (e) {
 		if (e.getStyle('display') == "none" || e.getProperty('class') != kunenaclass){
 			e.setStyle('display', 'block');
@@ -261,7 +261,7 @@ var kbbcode = new Class({
 	*/
 	initialize: function(element, list, options) {
 
-		this.el = $(element);
+		this.el = document.id(element);
 
 		this.setOptions(options);
 
@@ -294,7 +294,7 @@ var kbbcode = new Class({
 			this.list = list;
 		}
 		else {
-			this.list = $(list);
+			this.list = document.id(list);
 		}
 		this.oldContent = this.el.get('value');
 	},
@@ -505,7 +505,7 @@ var kbbcode = new Class({
 });
 
 function kInsertCode() {
-	var kcodetype = $('kcodetype').get('value');
+	var kcodetype = document.id('kcodetype').get('value');
 	if (kcodetype != '') kcodetype = ' type='+kcodetype;
 	kbbcode.wrapSelection('[code'+kcodetype+']', '[/code]', false); 
 	kToggleOrSwap("kbbcode-code-options");
@@ -517,18 +517,18 @@ function kInsertCode() {
 // Helper function to insert the img tag (image link) bbcode into the message
 //
 function kInsertImageLink() {
-	var size = $("kbbcode-image_size").get("value");
+	var size = document.id("kbbcode-image_size").get("value");
 	if (size == "") {
-		kbbcode.replaceSelection('[img]'+ $("kbbcode-image_url").get("value") +'[/img]');
+		kbbcode.replaceSelection('[img]'+ document.id("kbbcode-image_url").get("value") +'[/img]');
 	} else {
-		kbbcode.replaceSelection('[img size='+size+']'+ $("kbbcode-image_url").get("value") +'[/img]');
+		kbbcode.replaceSelection('[img size='+size+']'+ document.id("kbbcode-image_url").get("value") +'[/img]');
 	}
 	kToggleOrSwap("kbbcode-image-options");
 }
 
 function kGrowShrinkMessage(change){
-	var m = $('kbbcode-message');
-	var p = $('kbbcode-preview');
+	var m = document.id('kbbcode-message');
+	var p = document.id('kbbcode-preview');
 	var currentheight = parseInt(m.getStyle('height'));
 	var newheight = currentheight + change;
 
@@ -554,7 +554,7 @@ function cancelForm() {
 }
 
 function newAttachment() {
-	var __kattachment = $('kattachment-id');
+	var __kattachment = document.id('kattachment-id');
 	if (!__kattachment) return;
 	__kattachment.setStyle('display', 'none');
 	__kattachment.getElement('input').setProperty('value', '');
@@ -612,29 +612,29 @@ Selectors.Pseudo.selected = function(){
 };
 
 function kInsertVideo1() {
-	var videosize = $('kvideosize').get('value');
+	var videosize = document.id('kvideosize').get('value');
 //	if ( videosize == '') { NO DEFAULT
 //		videosize = '100';
 //	}
-	var videowidth = $('kvideowidth').get('value');
+	var videowidth = document.id('kvideowidth').get('value');
 	if ( videowidth == '') {
 		videowidth = '425';
 	}
-	var videoheigth = $('kvideoheight').get('value');
+	var videoheigth = document.id('kvideoheight').get('value');
 	if ( videoheigth == '') {
 		videoheigth = '344';
 	}
-	var provider = $('kvideoprovider').get('value');
+	var provider = document.id('kvideoprovider').get('value');
 	if ( provider == '') {
 		provider = '';
 	}
-	var videoid = $('kvideoid').get('value');
+	var videoid = document.id('kvideoid').get('value');
 	kbbcode.replaceSelection( '[video'+(videosize ? ' size='+videosize:'')+' width='+videowidth+' height='+videoheigth+' type='+provider+']'+videoid+'[/video]', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
 
 function kInsertVideo2() {
-	var videourl = $("kvideourl").get("value");
+	var videourl = document.id("kvideourl").get("value");
 	kbbcode.replaceSelection('[video]'+ videourl +'[/video]', false);
 	kToggleOrSwap("kbbcode-video-options");
 }

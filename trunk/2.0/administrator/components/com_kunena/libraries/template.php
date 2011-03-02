@@ -70,7 +70,7 @@ class KunenaTemplate extends JObject
 	public function loadMootools() {
 		$me = KunenaFactory::getUser();
 		$jversion = new JVersion ();
-		if ($jversion->RELEASE == 1.5) {
+		if ($jversion->RELEASE == '1.5') {
 			jimport ( 'joomla.plugin.helper' );
 			$mootools12 = JPluginHelper::isEnabled ( 'system', 'mtupgrade' ) || JPluginHelper::isEnabled ( 'system', 'mootools12' );
 			if (! $mootools12) {

@@ -211,23 +211,19 @@ class KunenaModelTopic extends KunenaModel {
 		return $moderators;
 	}
 
-	public function getPolldata() {
-		$data = KunenaForumTopicPollHelper::getPollData($this->getState ( 'item.id'));
-		return $data;
+	public function getPoll() {
+		return $this->getTopic()->getPoll();
 	}
 
-	public function getVoters() {
-		$voters = KunenaForumTopicPollHelper::getTotalVoters($this->getState ( 'item.id'));
-		return $voters;
+	public function getPollUserCount() {
+		return $this->getPoll()->getUserCount();
 	}
 
-	public function getUsersvoted() {
-		$usersvoted = KunenaForumTopicPollHelper::getUsersVotes($this->getState ( 'item.id'));
-		return $usersvoted;
+	public function getPollUsers() {
+		return $this->getPoll()->getUsers();
 	}
 
-	public function getUsersHasVoted() {
-		$usersvoted = KunenaForumTopicPollHelper::userHasAlreadyVoted($this->getState ( 'item.id'));
-		return $usersvoted;
+	public function getMyVotes() {
+		return $this->getPoll()->getMyVotes();
 	}
 }

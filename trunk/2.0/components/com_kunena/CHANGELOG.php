@@ -31,11 +31,31 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+2-March-2011 Matias
+^ [#22569] Greatly simplify poll JavaScript
+# [#22569] Fix a bug where poll options were added twice
+- [#22570] Cleanup KunenaForumTopicPoll+Helper classes
+- [#22570] Remove deprecated lib/kunena.poll.class.php
+- [#22570] Remove polls AJAX (was not used)
+
+1-March-2011 Matias
++ [#22569] Continue on converting polls into MVC and our libraries
++ [#22569] Make some changes into poll logic greatly simplifying the implementation
++ [#22569] Use new poll class in Topic controller
++ [#22569] Add authorisation for polls
+
+28-February-2011 Matias
+# [#25130] Avoid JavaScript $() conflicts with JQuery and other frameworks
+# [#25130] Add some checks to detect javascript conflicts
+- [#22570] Remove a lot of unused code from kunena.legacy.php
+
 27-February-2011 Matias
 ^ [#22786] Merge revisions 4512-4513 from branches/2.0-xillibit-mvc-backend-26-02-2011
 # [#24395] Change all remaining kescape() calls into $this->escape()
 + [#22569] Converted &func=karma into two tasks inside user view (with legacy support)
 - [#22570] Remove deprecated lib/kunena.karma.class.php
+^ [#22569] Administration: Converted trash manager &task=purge to use new classes
++ [#22569] Continue on converting polls into MVC and our libraries
 
 26-February-2011 Xillibit
 # [#24395] Fix undefined variables in view=config and replace in kunena component menu the task by view

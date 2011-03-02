@@ -1,6 +1,21 @@
 
 /* Javascript file for default Kunena BlueEagle template */
 
+// Mootools detection:
+window.onload=function(){
+	// Issue 1: MooTools is not loaded
+	if (typeof MooTools == 'undefined') {
+		alert('Kunena: MooTools JavaScript library not loaded!');
+		return;
+	}
+	// Issue 2: Using deprecated MooTools version
+	var kmt_version = MooTools.version.split('.');
+	if (kmt_version[0] == 1 && kmt_version[1] >= 10) {
+		alert('Kunena: Deprecated MooTools ' + MooTools.version+ ' JavaScript library loaded!');
+		return;
+	}
+};
+
 /* Tabs class */
 var KunenaTabs = new Class({
 	Implements: [Options, Events],
@@ -19,36 +34,36 @@ var KunenaTabs = new Class({
 		descriptionSelector: 'dd'
 	},
 
-    initialize: function(dlist, options){
+	initialize: function(dlist, options){
 		this.setOptions(options);
-        this.dlist = document.id(dlist);
-        this.titles = this.dlist.getElements(this.options.titleSelector);
-        this.descriptions = this.dlist.getElements(this.options.descriptionSelector);
-        this.content = new Element('div').inject(this.dlist, 'after').addClass('current');
+		this.dlist = document.id(dlist);
+		this.titles = this.dlist.getElements(this.options.titleSelector);
+		this.descriptions = this.dlist.getElements(this.options.descriptionSelector);
+		this.content = new Element('div').inject(this.dlist, 'after').addClass('current');
 
-        for (var i = 0, l = this.titles.length; i < l; i++){
-            var title = this.titles[i];
-            var description = this.descriptions[i];
-            title.setStyle('cursor', 'pointer');
-            title.addEvent('click', this.display.bind(this, i));
-            description.inject(this.content);
-        }
+		for (var i = 0, l = this.titles.length; i < l; i++){
+			var title = this.titles[i];
+			var description = this.descriptions[i];
+			title.setStyle('cursor', 'pointer');
+			title.addEvent('click', this.display.bind(this, i));
+			description.inject(this.content);
+		}
 
-        if ($chk(this.options.display)) this.display(this.options.display);
+		if ($chk(this.options.display)) this.display(this.options.display);
 
-        if (this.options.initialize) this.options.initialize.call(this);
-    },
+		if (this.options.initialize) this.options.initialize.call(this);
+	},
 
-    hideAllBut: function(but) {
-        for (var i = 0, l = this.titles.length; i < l; i++){
-            if (i != but) this.fireEvent('onBackground', [this.titles[i], this.descriptions[i]]);
-        }
-    },
+	hideAllBut: function(but) {
+		for (var i = 0, l = this.titles.length; i < l; i++){
+			if (i != but) this.fireEvent('onBackground', [this.titles[i], this.descriptions[i]]);
+		}
+	},
 
-    display: function(i) {
-        this.hideAllBut(i);
-        this.fireEvent('onActive', [this.titles[i], this.descriptions[i]]);
-    }
+	display: function(i) {
+		this.hideAllBut(i);
+		this.fireEvent('onActive', [this.titles[i], this.descriptions[i]]);
+	}
 });
 
 //----------------- New Mootools extensions ---------------------------
@@ -113,7 +128,7 @@ var Autocompleter = new Class({
 	},
 
 	initialize: function(element, options) {
-		this.element = $(element);
+		this.element = document.id(element);
 		this.setOptions(options);
 		this.build();
 		this.observer = new Observer(this.element, this.prefetch.bind(this), $merge({
@@ -134,7 +149,7 @@ var Autocompleter = new Class({
 	 * Override this function to modify the html generation.
 	 */
 	build: function() {
-		if ($(this.options.customChoices)) {
+		if (document.id(this.options.customChoices)) {
 			this.choices = this.options.customChoices;
 		} else {
 			this.choices = new Element('ul', {
@@ -411,7 +426,7 @@ var OverlayFix = new Class({
 
 	initialize: function(el) {
 		if (Browser.Engine.trident) {
-			this.element = $(el);
+			this.element = document.id(el);
 			this.relative = this.element.getOffsetParent();
 			this.fix = new Element('iframe', {
 				'frameborder': '0',
@@ -558,7 +573,7 @@ Autocompleter.Request = new Class({
 	query: function(){
 		var data = $unlink(this.options.postData) || {};
 		data[this.options.postVar] = this.queryValue;
-		var indicator = $(this.options.indicator);
+		var indicator = document.id(this.options.indicator);
 		if (indicator) indicator.setStyle('display', '');
 		var cls = this.options.indicatorClass;
 		if (cls) this.element.addClass(cls);
@@ -572,7 +587,7 @@ Autocompleter.Request = new Class({
 	 * Inherated classes have to extend this function and use this.parent()
 	 */
 	queryResponse: function() {
-		var indicator = $(this.options.indicator);
+		var indicator = document.id(this.options.indicator);
 		if (indicator) indicator.setStyle('display', 'none');
 		var cls = this.options.indicatorClass;
 		if (cls) this.element.removeClass(cls);
@@ -629,7 +644,7 @@ var Observer = new Class({
 	},
 
 	initialize: function(el, onFired, options){
-		this.element = $(el) || $$(el);
+		this.element = document.id(el) || $$(el);
 		this.addEvent('onFired', onFired);
 		this.setOptions(options);
 		this.bound = this.changed.bind(this);
@@ -692,7 +707,7 @@ function kRequestShowTopics(catid, select, list)
 function kRequestGetTopics(el)
 {
 	var catid = el.get("value");
-	var select = $('kmod_targettopic');
+	var select = document.id('kmod_targettopic');
 	request = new Request.JSON({url: kunena_url_ajax,
 	onSuccess: function(response){
 		kRequestShowTopics(catid, select, response.topiclist);
@@ -718,13 +733,13 @@ window.addEvent('domready', function(){
 			//prevent to load the page when click is detected on a button
 			e.stop();
 			var kreply = this.get('id');
-			var kstate = $(kreply+'_form').getStyle('display');
+			var kstate = document.id(kreply+'_form').getStyle('display');
 			$$('.kreply-form').setStyle('display', 'none');
-			$(kreply+'_form').setStyle('display', 'block');
-			if ($(kreply+'_form').getElement('input[name=anonymous]')) {
-				var kuser = $(kreply+'_form').getElement('input[name=authorname]').get('value');
-				kunenaSelectUsernameView($(kreply+'_form').getElement('input[name=anonymous]'), kuser);
-				$(kreply+'_form').getElement('input[name=anonymous]').addEvent('click', function(e) {
+			document.id(kreply+'_form').setStyle('display', 'block');
+			if (document.id(kreply+'_form').getElement('input[name=anonymous]')) {
+				var kuser = document.id(kreply+'_form').getElement('input[name=authorname]').get('value');
+				kunenaSelectUsernameView(document.id(kreply+'_form').getElement('input[name=anonymous]'), kuser);
+				document.id(kreply+'_form').getElement('input[name=anonymous]').addEvent('click', function(e) {
 					kunenaSelectUsernameView(this, kuser);
 				});
 			}
@@ -757,28 +772,28 @@ window.addEvent('domready', function(){
 		}
 	});
 	
-	if($('kmod_categories') != undefined){
-		$('kmod_categories').addEvent('change', function(e){
+	if(document.id('kmod_categories') != undefined){
+		document.id('kmod_categories').addEvent('change', function(e){
 			kRequestGetTopics(this);
 		});
 	}
-	if($('kmod_targettopic') != undefined){
-		$('kmod_targettopic').addEvent('change', function(e){
+	if(document.id('kmod_targettopic') != undefined){
+		document.id('kmod_targettopic').addEvent('change', function(e){
 			id = this.get('value');
 			if (id != 0) {
 				targetid = this.get('value');
-				$('kmod_subject').setStyle('display', 'none');
+				document.id('kmod_subject').setStyle('display', 'none');
 			} else {
 				targetid = '';
-				$('kmod_subject').setStyle('display', 'block');
+				document.id('kmod_subject').setStyle('display', 'block');
 			}
 			if (id == -1) {
 				targetid = '';
-				$('kmod_targetid').setStyle('display', 'inline');
+				document.id('kmod_targetid').setStyle('display', 'inline');
 			} else {
-				$('kmod_targetid').setStyle('display', 'none');
+				document.id('kmod_targetid').setStyle('display', 'none');
 			}
-			$('kmod_targetid').set('value', targetid);
+			document.id('kmod_targetid').set('value', targetid);
 		});
 	}
 	
@@ -812,9 +827,9 @@ window.addEvent('domready', function(){
 	});
 	
 	// Set autocompleter to off
-	if($('kpassword') != undefined && $('kpassword2') != undefined){
-		$('kpassword').setProperty('autocompleter', 'off');
-		$('kpassword2').setProperty('autocompleter', 'off');
+	if(document.id('kpassword') != undefined && document.id('kpassword2') != undefined){
+		document.id('kpassword').setProperty('autocompleter', 'off');
+		document.id('kpassword2').setProperty('autocompleter', 'off');
 	}
 	
 });

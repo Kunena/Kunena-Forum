@@ -498,10 +498,10 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					$fileurl = kunena_htmlspecialchars ( $fileurl, ENT_QUOTES );
 					if ($task->autolink_disable == 0 && $kunena_config->lightbox) {
 						// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-						$tag_new = '<a title="" rel="lightbox" href="'.$fileurl.'"><img src="'.$fileurl.'"'.($imgtagsize ? ' width="'.$imgtagsize.'"' : '')."' style='max-width:".$kunena_config->imagewidth."px; ' alt='' /></a>";
+						$tag_new = '<a title="" rel="lightbox" href="'.$fileurl.'"><img src="'.$fileurl.'"'.($imgtagsize ? ' width="'.$imgtagsize.'"' : '')."' style='max-width:".$kunena_config->imagewidth."px; max-height:".$kunena_config->imageheight."px; ' alt='' /></a>";
 					} else {
 						// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-						$tag_new = "<img src='" . $fileurl . ($imgtagsize ? "' width='" . $imgtagsize : '') ."' style='max-width:".$kunena_config->imagewidth."px; ' alt='' />";
+						$tag_new = "<img src='" . $fileurl . ($imgtagsize ? "' width='" . $imgtagsize : '') ."' style='max-width:".$kunena_config->imagewidth."px; max-height:".$kunena_config->imageheight."px; ' alt='' />";
 					}
 
 					return TAGPARSER_RET_REPLACED;

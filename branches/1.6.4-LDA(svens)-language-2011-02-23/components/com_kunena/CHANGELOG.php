@@ -31,6 +31,8 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
+02-March-2011 svens(LDA)
+^ [#24847] updated hu-HU (thanks pedrohsi)
 
 27-February-2011 svens(LDA)
 + [#24847] add cs-CZ (thanks David Mara)

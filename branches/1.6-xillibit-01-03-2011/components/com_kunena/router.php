@@ -54,6 +54,7 @@ class KunenaRouter {
 		'pdf'=>array(),
 		'entrypage'=>array(),
 		'thankyou'=>array(),
+		'markallcatsread'=>array(),
 		// Deprecated functions:
 		'fbprofile'=>array(),
 		'mylatest'=>array(),

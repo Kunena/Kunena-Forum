@@ -2075,11 +2075,11 @@ function trashUserMessages ( $option, $uid ) {
 	$uids = implode ( ',', $uid );
 	if ($uids) {
 		//select only the messages which aren't already in the trash
-		$kunena_db->setQuery ( "SELECT id FROM #__kunena_messages WHERE hold!=2 AND userid IN ('$uids')" );
+		$kunena_db->setQuery ( "SELECT id FROM #__kunena_messages WHERE hold!=2 AND userid IN ({$uids})" );
 		$idusermessages = $kunena_db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 		foreach ($idusermessages as $messageID) {
-			$kunena_mod->deleteMessage($messageID->id, $DeleteAttachments = false);
+			$kunena_mod->deleteMessage($messageID->id, false);
 		}
 	}
 	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles" , JText::_('COM_KUNENA_A_USERMES_TRASHED_DONE'));

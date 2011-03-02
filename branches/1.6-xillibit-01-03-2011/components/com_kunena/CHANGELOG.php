@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+02-March-2011 Xillibit
+# [#25123] Moveusermessages in users manager doesn't work like excepted (Part 2)
+# [#25133] Mark all forum read fails under J! 1.6
+
 01-March-2011 Xillibit
 # [#25084] Moving topics shows unpulished categories in the pull-down
 # [#25083] "There are no forums in the category"

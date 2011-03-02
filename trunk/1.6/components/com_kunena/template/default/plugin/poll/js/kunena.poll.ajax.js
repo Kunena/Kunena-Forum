@@ -11,7 +11,7 @@
 window.addEvent('domready', function() {
 	function insert_text(textString,nb)
 	{	
-		var polltexthelp = $('kpoll-text-help');
+		var polltexthelp = document.id('kpoll-text-help');
 		//Remove the content of the html tag <p></p> before to add something else
 		//i don't know if it's possible to use something else than innerHTML() function for do this purpose
 		polltexthelp.innerHTML='';
@@ -30,10 +30,10 @@ window.addEvent('domready', function() {
 		newinfo.appendChild(texte);
 	}
 	
-	if($('kpoll-form-vote') != undefined) {
-		$('kpoll-form-vote').addEvent('submit', function(e) {
-			var jsonurl = $('kpollvotejsonurl').getProperty('value');
-			$('kpoll-form-vote').setProperty('action',jsonurl)
+	if(document.id('kpoll-form-vote') != undefined) {
+		document.id('kpoll-form-vote').addEvent('submit', function(e) {
+			var jsonurl = document.id('kpollvotejsonurl').getProperty('value');
+			document.id('kpoll-form-vote').setProperty('action',jsonurl);
 			//Prevents the default submit event from loading a new page.
 			e.stop();
 			var datano = '0';
@@ -48,7 +48,7 @@ window.addEvent('domready', function() {
   	  			insert_text(KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK,nbimages);
 			} else { 
 				//Set the options of the form's Request handler.
-				//("this" refers to the $('myForm') element).
+				//("this" refers to the document.id('myForm') element).
 				this.set('send', {onComplete: function(response) {
 					var json = JSON.decode(response);
 					var nb = '0';

@@ -63,7 +63,7 @@ class KunenaGoogleMaps {
       				center: latlng,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				};
-				$mapid = new google.maps.Map($('".$mapid."'), myOptions);
+				$mapid = new google.maps.Map(document.id('".$mapid."'), myOptions);
    			});
 
    			window.addEvent('domready', function() {

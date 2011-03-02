@@ -29,11 +29,11 @@ function kPreviewHelper()
 	if (_previewActive == true){
 		previewRequest = new Request.JSON({url: "<?php echo CKunenaLink::GetJsonURL('preview');?>",
 				  							onSuccess: function(response){
-			var __message = $("kbbcode-preview");
+			var __message = document.id("kbbcode-preview");
 			if (__message) {
 				__message.set("html", response.preview);
 			}
-			}}).post({body: $("kbbcode-message").get("value")
+			}}).post({body: document.id("kbbcode-message").get("value")
 		});
 	}
 }
@@ -56,56 +56,56 @@ kbbcode.addFunction('Bold', function() {
 }, {'id': 'kbbcode-bold-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_BOLD');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_BOLD');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_BOLD');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_BOLD');?>")'});
 
 kbbcode.addFunction('Italic', function() {
 	this.wrapSelection('[i]', '[/i]', false);
 }, {'id': 'kbbcode-italic-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_ITALIC');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ITALIC');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ITALIC');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ITALIC');?>")'});
 
 kbbcode.addFunction('Underline', function() {
 	this.wrapSelection('[u]', '[/u]', false);
 }, {'id': 'kbbcode-underline-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_UNDERL');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_UNDERL');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_UNDERL');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_UNDERL');?>")'});
 
 kbbcode.addFunction('Strike', function() {
 	this.wrapSelection('[strike]', '[/strike]', false);
 }, {'id': 'kbbcode-strike-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_STRIKE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_STRIKE');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_STRIKE');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_STRIKE');?>")'});
 
 kbbcode.addFunction('Sub', function() {
 	this.wrapSelection('[sub]', '[/sub]', false);
 }, {'id': 'kbbcode-sub-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_SUB');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUB');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUB');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUB');?>")'});
 
 kbbcode.addFunction('Sup', function() {
 	this.wrapSelection('[sup]', '[/sup]', false);
 }, {'id': 'kbbcode-sup-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_SUP');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUP');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUP');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUP');?>")'});
 
 kbbcode.addFunction('Size', function() {
 	kToggleOrSwap("kbbcode-size-options");
 }, {'id': 'kbbcode-size-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_FONTSIZE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE');?>")'});
 
 kbbcode.addFunction('Color', function() {
 	kToggleOrSwap("kbbcode-colorpalette");
 }, {'id': 'kbbcode-color-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_COLOR');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_COLOR');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_COLOR');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_COLOR');?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator1'});
@@ -130,7 +130,7 @@ kbbcode.addFunction("uList", function() {
 }, {'id': 'kbbcode-ulist-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_ULIST');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ULIST');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ULIST');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ULIST');?>")'});
 
 kbbcode.addFunction("oList", function() {
 	selection = this.getSelection();
@@ -148,35 +148,35 @@ kbbcode.addFunction("oList", function() {
 }, {'id': 'kbbcode-olist-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_OLIST');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_OLIST');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_OLIST');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_OLIST');?>")'});
 
 kbbcode.addFunction('List', function() {
 	this.wrapSelection('  [li]', '[/li]', false);
 }, {'id': 'kbbcode-list-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_LIST');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LIST');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LIST');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LIST');?>")'});
 
 kbbcode.addFunction('Left', function() {
 	this.wrapSelection('[left]', '[/left]', false);
 }, {'id': 'kbbcode-left-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_LEFT');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LEFT');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LEFT');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LEFT');?>")'});
 
 kbbcode.addFunction('Center', function() {
 	this.wrapSelection('[center]', '[/center]', false);
 }, {'id': 'kbbcode-center-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_CENTER');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CENTER');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CENTER');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CENTER');?>")'});
 
 kbbcode.addFunction('Right', function() {
 	this.wrapSelection('[right]', '[/right]', false);
 }, {'id': 'kbbcode-right-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_RIGHT');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_RIGHT');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_RIGHT');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_RIGHT');?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator2'});
@@ -186,7 +186,7 @@ kbbcode.addFunction('Quote', function() {
 }, {'id': 'kbbcode-quote-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_QUOTE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_QUOTE');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_QUOTE');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_QUOTE');?>")'});
 
 <?php
 if ($kunena_config->highlightcode) { ?>
@@ -195,7 +195,7 @@ kbbcode.addFunction('Code', function() {
 }, {'id': 'kbbcode-code-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_CODE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODE');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODE');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODE');?>")'});
 <?php
 } else {
 ?>
@@ -204,7 +204,7 @@ kbbcode.addFunction('Code', function() {
 }, {'id': 'kbbcode-code-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_CODE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODE');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODE');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODE');?>")'});
 <?php
 }
 ?>
@@ -225,7 +225,7 @@ kbbcode.addFunction("Table", function() {
 }, {'id': 'kbbcode-table-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_TABLE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_TABLE');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_TABLE');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_TABLE');?>")'});
 
 <?php
 if ($kunena_config->showspoilertag) {
@@ -235,7 +235,7 @@ kbbcode.addFunction('Spoiler', function() {
 }, {'id': 'kbbcode-spoiler-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_SPOILER');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SPOILER');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SPOILER');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SPOILER');?>")'});
 <?php
 }
 ?>
@@ -245,7 +245,7 @@ kbbcode.addFunction('Hide', function() {
 }, {'id': 'kbbcode-hide-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_HIDE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HIDE');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HIDE');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HIDE');?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator3'});
@@ -255,18 +255,18 @@ kbbcode.addFunction('Image', function() {
 }, {'id': 'kbbcode-image-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_IMAGELINK');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINK');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINK');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINK');?>")'});
 
 kbbcode.addFunction('Link', function() {
 	sel = this.getSelection();
 	if (sel != "") {
-		$('kbbcode-link_text').set('value', sel);
+		document.id('kbbcode-link_text').set('value', sel);
 	}
 	kToggleOrSwap("kbbcode-link-options");
 }, {'id': 'kbbcode-link-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_LINK');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINK');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINK');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINK');?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator4'});
@@ -277,7 +277,7 @@ kbbcode.addFunction('Gallery', function() {
 }, {'id': 'kbbcode-gallery-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_GALLERY');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_GALLERY');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_GALLERY');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_GALLERY');?>")'});
 */
 ?>
 <?php if (!isset($this->msg_cat->allow_polls)) $this->msg_cat->allow_polls = ''; //display only the poll icon in the first message of the thread
@@ -295,7 +295,7 @@ if ($this->msg_cat->allow_polls == '0' && $this->catid ) {
 } ?>
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_POLL');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator5'
@@ -315,7 +315,7 @@ kbbcode.addFunction('eBay', function() {
 }, {'id': 'kbbcode-ebay-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_EBAY');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_EBAY');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_EBAY');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_EBAY');?>")'});
 <?php
 }
 ?>
@@ -328,7 +328,7 @@ kbbcode.addFunction('Video', function() {
 }, {'id': 'kbbcode-video-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_VIDEO');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEO');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEO');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEO');?>")'});
 <?php
 }
 ?>
@@ -338,7 +338,7 @@ kbbcode.addFunction('Map', function() {
 }, {'id': 'kbbcode-map-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_MAP');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAP');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAP');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAP');?>")'});
 
 <?php if (1==0) { // disable for now TODO: make safe - dont allow public to access modules?>
 kbbcode.addFunction('Module', function() {
@@ -346,7 +346,7 @@ kbbcode.addFunction('Module', function() {
 }, {'id': 'kbbcode-module-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_MODULE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MODULE');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MODULE');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MODULE');?>")'});
 <?php } // end disable ?>
 
 kbbcode.addFunction('#', function() {
@@ -358,14 +358,14 @@ kbbcode.addFunction('PreviewBottom', function() {
 }, {'id': 'kbbcode-previewbottom-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_PREVIEWBOTTOM');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM');?>")'});
 
 kbbcode.addFunction('PreviewRight', function() {
 	kToggleOrSwapPreview("kbbcode-preview-right");
 }, {'id': 'kbbcode-previewright-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_PREVIEWRIGHT');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT');?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator7'});
@@ -377,9 +377,9 @@ kbbcode.addFunction('Help', function() {
 }, {'id': 'kbbcode-help-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_HELP');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HELP');?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HELP');?>")'});
+	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HELP');?>")'});
 
-$('kbbcode-message').addEvent('change', function(){
+document.id('kbbcode-message').addEvent('change', function(){
 	kPreviewHelper();
 });
 
@@ -406,11 +406,11 @@ $('kbbcode-message').addEvent('change', function(){
 	bindAttachments();
 	newAttachment();
 	//This is need to retrieve the video provider selected by the user in the dropdownlist
-	if ($('kvideoprovider') != undefined) {
-		$('kvideoprovider').addEvent('change', function() {
+	if (document.id('kvideoprovider') != undefined) {
+		document.id('kvideoprovider').addEvent('change', function() {
 			var sel = $$('#kvideoprovider option:selected');
 			sel.each(function(el) {
-				$('kvideoprovider').store('videoprov',el.value);
+				document.id('kvideoprovider').store('videoprov',el.value);
 			});
 		});
 	}
@@ -423,7 +423,7 @@ $('kbbcode-message').addEvent('change', function(){
 /* Plupload hooks: promising piece of software, but not ready for production use */
 /*
 window.addEvent('domready', function() {
-	kupload = $('kupload');
+	kupload = document.id('kupload');
 	if (typeof(plupload) == 'object' && kupload) {
 		var uploader = new plupload.Uploader({
 			//runtimes : 'gears,silverlight,flash,html5,html4',
@@ -444,16 +444,16 @@ window.addEvent('domready', function() {
 		});
 
 		uploader.bind('Init', function(up, params) {
-			$('kattachmentsnote').set('html', "<div>Multi-File Upload enabled: " + params.runtime + "</div>");
+			document.id('kattachmentsnote').set('html', "<div>Multi-File Upload enabled: " + params.runtime + "</div>");
 		});
 
 		uploader.bind('FilesAdded', function(up, files) {
 			$each(files, function(file, i) {
 				fileDiv = new Element('div', {id: file.id, html: file.name + ' (' + plupload.formatSize(file.size) + ') <a></a> <b></b>'});
-				fileDiv.inject($('kattachment'), 'before');
-				$$('#'+file.id+' a').addEvent('click', function(e) { $(file.id).dispose(); uploader.removeFile(file); return false;});
+				fileDiv.inject(document.id('kattachment'), 'before');
+				$$('#'+file.id+' a').addEvent('click', function(e) { document.id(file.id).dispose(); uploader.removeFile(file); return false;});
 			});
-			$('kupload').fireEvent('upload', null, 500);
+			document.id('kupload').fireEvent('upload', null, 500);
 		});
 
 		uploader.bind('UploadProgress', function(up, file) {

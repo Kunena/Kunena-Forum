@@ -10,33 +10,33 @@
 
 window.addEvent('domready', function() {	
 	function valuetotaloptions(number){		
-		var optiontotal = $('numbertotal');
+		var optiontotal = document.id('numbertotal');
 		if(optiontotal != null) {
 			optiontotal.set('value',number);
 		}				
 	}
 	function regleCSS(number_field) {
-		$('opt'+number_field).set('style', {
+		document.id('opt'+number_field).set('style', {
 		    'fontWeight': 'bold'		    
 		});
 	}	
 	
 	function create_new_field_now(){		
 		  var numfield = number_field-1;		  
-		  var polldiv = $('kbbcode-poll-options');
-		  var hide_input = $('nb_options_allowed');
+		  var polldiv = document.id('kbbcode-poll-options');
+		  var hide_input = document.id('nb_options_allowed');
 		  valuetotaloptions(number_field);		  
 		  var mydiv = new Element('div', {
 			  id:'option'+number_field,
 			  text:KUNENA_POLL_OPTION_NAME+" "+number_field
 		  });		  
-		  $('helpbox').set('value',KUNENA_EDITOR_HELPLINE_OPTION );
+		  document.id('helpbox').set('value',KUNENA_EDITOR_HELPLINE_OPTION );
 		  var input = new Element('input', {
 			  name:'polloptionsID[newoption'+numfield+']',
 			  id:'field_option'+numfield,
 			  maxlength:'50',
 			  size:'30',
-			  onmouseover: '$("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
+			  onmouseover: 'document.id("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
 		  });		  
 		  mydiv.injectInside(polldiv).injectBefore(hide_input);
 		  input.inject(mydiv);
@@ -47,8 +47,8 @@ window.addEvent('domready', function() {
 		//this function insert a text by modifing the DOM, for show infos given by ajax result
 		function insert_text_write(textString)
 		{				
-			var polldiv = $('kbbcode-poll-options');
-			var hide_input = $('nb_options_allowed');
+			var polldiv = document.id('kbbcode-poll-options');
+			var hide_input = document.id('nb_options_allowed');
 			var mydiv = new Element('div');
 			
 			var span = new Element('span');
@@ -64,9 +64,9 @@ window.addEvent('domready', function() {
 			span.set('text', textString);
 		}		
 			
-	if($('kbutton-poll-add') != undefined) {
-		$('kbutton-poll-add').onclick = function () {
-			var nboptionsmax = $('nb_options_allowed').get('value');			
+	if(document.id('kbutton-poll-add') != undefined) {
+		document.id('kbutton-poll-add').onclick = function () {
+			var nboptionsmax = document.id('nb_options_allowed').get('value');			
 			if(nboptionsmax == "0") {				
 				if(number_field == '1') {
 					create_new_field_now();
@@ -83,22 +83,22 @@ window.addEvent('domready', function() {
 						create_new_field_now();
 					}
 				} else {
-					if($('option_error')== undefined){
+					if(document.id('option_error')== undefined){
 						insert_text_write(KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW);
 					}	
 				}
 			}
 		};
 	}
-	if($('kbutton-poll-rem') != undefined) {
-		$('kbutton-poll-rem').onclick = function () {
-			if($('option_error')){
-				$('option_error').dispose();
+	if(document.id('kbutton-poll-rem') != undefined) {
+		document.id('kbutton-poll-rem').onclick = function () {
+			if(document.id('option_error')){
+				document.id('option_error').dispose();
 			}
-			var matable = $('kbbcode-poll-options');		
+			var matable = document.id('kbbcode-poll-options');		
 			if(number_field > 1) {
 				number_field = number_field - 1 ;
-				var row = $('option'+number_field);
+				var row = document.id('option'+number_field);
 				matable.removeChild(row);
 				var value = number_field - 1;
 				valuetotaloptions(value);

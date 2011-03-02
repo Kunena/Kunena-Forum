@@ -77,7 +77,7 @@ var _previewActive=false;
 //
 function kToggleOrSwap(id)
 {
-	e = $(id);
+	e = document.id(id);
 	if (e) {
 		if (e.getStyle('display') == "none"){
 			if (_currentElement != "") {_currentElement.setStyle('display', 'none');}
@@ -106,8 +106,8 @@ function kToggleOrSwap(id)
 
 function kToggleOrSwapPreview(kunenaclass)
 {
-	e = $("kbbcode-preview");
-	f = $("kbbcode-message");
+	e = document.id("kbbcode-preview");
+	f = document.id("kbbcode-message");
 	if (e) {
 		if (e.getStyle('display') == "none" || e.getProperty('class') != kunenaclass){
 			e.setStyle('display', 'block');
@@ -261,7 +261,7 @@ var kbbcode = new Class({
 	*/
 	initialize: function(element, list, options) {
 
-		this.el = $(element);
+		this.el = document.id(element);
 
 		this.setOptions(options);
 
@@ -294,7 +294,7 @@ var kbbcode = new Class({
 			this.list = list;
 		}
 		else {
-			this.list = $(list);
+			this.list = document.id(list);
 		}
 		this.oldContent = this.el.get('value');
 	},
@@ -316,7 +316,7 @@ var kbbcode = new Class({
 		Example:
 			I want to watch the change event of my textarea (who's id is "myText")
 			(start code)
-			$('myText').addEvent('change', function(){
+			document.id('myText').addEvent('change', function(){
 				console.log("My content was changed!");
 			});
 			(end)
@@ -505,7 +505,7 @@ var kbbcode = new Class({
 });
 
 function kInsertCode() {
-	var kcodetype = $('kcodetype').get('value');
+	var kcodetype = document.id('kcodetype').get('value');
 	if (kcodetype != '') kcodetype = ' type='+kcodetype;
 	kbbcode.wrapSelection('[code'+kcodetype+']', '[/code]', false); 
 	kToggleOrSwap("kbbcode-code-options");
@@ -517,18 +517,18 @@ function kInsertCode() {
 // Helper function to insert the img tag (image link) bbcode into the message
 //
 function kInsertImageLink() {
-	var size = $("kbbcode-image_size").get("value");
+	var size = document.id("kbbcode-image_size").get("value");
 	if (size == "") {
-		kbbcode.replaceSelection('[img]'+ $("kbbcode-image_url").get("value") +'[/img]');
+		kbbcode.replaceSelection('[img]'+ document.id("kbbcode-image_url").get("value") +'[/img]');
 	} else {
-		kbbcode.replaceSelection('[img size='+size+']'+ $("kbbcode-image_url").get("value") +'[/img]');
+		kbbcode.replaceSelection('[img size='+size+']'+ document.id("kbbcode-image_url").get("value") +'[/img]');
 	}
 	kToggleOrSwap("kbbcode-image-options");
 }
 
 function kGrowShrinkMessage(change){
-	var m = $('kbbcode-message');
-	var p = $('kbbcode-preview');
+	var m = document.id('kbbcode-message');
+	var p = document.id('kbbcode-preview');
 	var currentheight = parseInt(m.getStyle('height'));
 	var newheight = currentheight + change;
 
@@ -554,7 +554,7 @@ function cancelForm() {
 }
 
 function newAttachment() {
-	var __kattachment = $('kattachment-id');
+	var __kattachment = document.id('kattachment-id');
 	if (!__kattachment) return;
 	__kattachment.setStyle('display', 'none');
 	__kattachment.getElement('input').setProperty('value', '');
@@ -612,29 +612,29 @@ Selectors.Pseudo.selected = function(){
 };
 
 function kInsertVideo1() {
-	var videosize = $('kvideosize').get('value');
+	var videosize = document.id('kvideosize').get('value');
 //	if ( videosize == '') { NO DEFAULT
 //		videosize = '100';
 //	}
-	var videowidth = $('kvideowidth').get('value');
+	var videowidth = document.id('kvideowidth').get('value');
 	if ( videowidth == '') {
 		videowidth = '425';
 	}
-	var videoheigth = $('kvideoheight').get('value');
+	var videoheigth = document.id('kvideoheight').get('value');
 	if ( videoheigth == '') {
 		videoheigth = '344';
 	}
-	var provider = $('kvideoprovider').get('value');
+	var provider = document.id('kvideoprovider').get('value');
 	if ( provider == '') {
 		provider = '';
 	}
-	var videoid = $('kvideoid').get('value');
+	var videoid = document.id('kvideoid').get('value');
 	kbbcode.replaceSelection( '[video'+(videosize ? ' size='+videosize:'')+' width='+videowidth+' height='+videoheigth+' type='+provider+']'+videoid+'[/video]', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
 
 function kInsertVideo2() {
-	var videourl = $("kvideourl").get("value");
+	var videourl = document.id("kvideourl").get("value");
 	kbbcode.replaceSelection('[video]'+ videourl +'[/video]', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
@@ -642,11 +642,11 @@ function kInsertVideo2() {
 // TODO: deprecated (used in old templates)
 function kunenaSelectUsername(obj, kuser) {
 	if (obj.get('checked')) {
-		$('kauthorname').set('value',kunena_anonymous_name).removeProperty('disabled');
-		$('kanynomous-check-name').removeProperty('style');
+		document.id('kauthorname').set('value',kunena_anonymous_name).removeProperty('disabled');
+		document.id('kanynomous-check-name').removeProperty('style');
 	} else {
-		$('kanynomous-check-name').setStyle('display','none');
-		$('kauthorname').set('value',kuser).set('disabled', 'disabled');
+		document.id('kanynomous-check-name').setStyle('display','none');
+		document.id('kauthorname').set('value',kuser).set('disabled', 'disabled');
 	}
 }
 
@@ -659,8 +659,8 @@ window.addEvent('domready', function(){
 	}
 
 	//	for hide or show polls if category is allowed
-	if($('postcatid') != undefined) {
-		$('postcatid').getElements('option').each( function( catid ) {
+	if(document.id('postcatid') != undefined) {
+		document.id('postcatid').getElements('option').each( function( catid ) {
 			catid.addEvent('click', function(e) {
 				//call a json query to check if the catid selected is allowed for polls
 				var url = kunena_ajax_url_poll;
@@ -668,48 +668,48 @@ window.addEvent('domready', function(){
 					url: url,
 					onComplete: function(jsonObj) {
 					if (jsonObj.allowed_polls != null && jsonObj.allowed_polls.indexOf(catid.value) >= 0) {
-						$('kpoll-hide-not-allowed').removeProperty('style');
-						$('kbbcode-separator5').removeProperty('style');
-						$('kbbcode-poll-button').removeProperty('style');
-						$('kpoll-not-allowed').set('text', ' ');
+						document.id('kpoll-hide-not-allowed').removeProperty('style');
+						document.id('kbbcode-separator5').removeProperty('style');
+						document.id('kbbcode-poll-button').removeProperty('style');
+						document.id('kpoll-not-allowed').set('text', ' ');
 					} else {
-						$('kbbcode-separator5').setStyle('display','none');
-						$('kbbcode-poll-button').setStyle('display','none');
-						$('kpoll-hide-not-allowed').setStyle('display','none');
-						if (jsonObj.allowed_polls != null) $('kpoll-not-allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
-						else if (jsonObj.error) $('kpoll-not-allowed').set('text', jsonObj.error);
-						else $('kpoll-not-allowed').set('text', 'Unknown error!');
+						document.id('kbbcode-separator5').setStyle('display','none');
+						document.id('kbbcode-poll-button').setStyle('display','none');
+						document.id('kpoll-hide-not-allowed').setStyle('display','none');
+						if (jsonObj.allowed_polls != null) document.id('kpoll-not-allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
+						else if (jsonObj.error) document.id('kpoll-not-allowed').set('text', jsonObj.error);
+						else document.id('kpoll-not-allowed').set('text', 'Unknown error!');
 					}
 				},
 				onFailure: function(){
-					$('kpoll-hide-not-allowed').setStyle('display','none');
-					$('kpoll-not-allowed').set('text', 'Cannot contact server!');
+					document.id('kpoll-hide-not-allowed').setStyle('display','none');
+					document.id('kpoll-not-allowed').set('text', 'Cannot contact server!');
 				}
 				}).send();
 			})
 		});
 	}
 
-	if(typeof (kunena_anonymous_check_url) != 'undefined' && $('kauthorname') != undefined) {
-		var kuser = $('kauthorname').get('value');
-		var kbutton = $('kanonymous');
+	if(typeof (kunena_anonymous_check_url) != 'undefined' && document.id('kauthorname') != undefined) {
+		var kuser = document.id('kauthorname').get('value');
+		var kbutton = document.id('kanonymous');
 		kunenaSelectUsername(kbutton, kuser);
 		kbutton.addEvent('click', function(e) {
 			kunenaSelectUsername(this, kuser);
 		});
 	}
 	//	to select if anynomous option is allowed on new topic tab
-	if(typeof (kunena_anonymous_check_url) != 'undefined' && $('postcatid') != undefined) {
-		$('postcatid').getElements('option').each( function( catid ) {
+	if(typeof (kunena_anonymous_check_url) != 'undefined' && document.id('postcatid') != undefined) {
+		document.id('postcatid').getElements('option').each( function( catid ) {
 			catid.addEvent('click', function(e) {
 				var url = kunena_anonymous_check_url;
 				var request = new Request.JSON({
 					url: url,
 					onComplete: function(jsonObj) {
 					if (jsonObj.allowed_anonymous != null && jsonObj.allowed_anonymous.indexOf(catid.value) >= 0) {
-						$('kanynomous-check').removeProperty('style');	
+						document.id('kanynomous-check').removeProperty('style');	
 					} else {
-						$('kanynomous-check').setStyle('display','none');
+						document.id('kanynomous-check').setStyle('display','none');
 						kbutton.removeProperty('checked');
 					}
 					kunenaSelectUsername(kbutton,kuser);

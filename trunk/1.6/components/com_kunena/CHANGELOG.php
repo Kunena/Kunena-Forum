@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+2-March-2011 Matias
+# [#25130] Avoid JavaScript $() conflicts with JQuery and other frameworks
+
 26-February-2011 Matias
 # [#25087] Administrator: Fatal error in Report Configuration Settings
 # [#24924] Userlist: MySQL error when getting usercount

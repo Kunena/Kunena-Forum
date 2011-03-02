@@ -176,12 +176,12 @@ class CKunenaPolls {
 			for ($i=0;$i < $polloptions;$i++) {
         			if(empty($html_poll_edit)) {
 						$html_poll_edit = "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"polloptionsID[".$polldatasedit[$i]->poll_option_id."]\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
-						javascript:$('helpbox').set('value', '"
+						javascript:document.id('helpbox').set('value', '"
 				. JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'). "')\" />
 				</div>";
         			} else {
 						$html_poll_edit .= "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"polloptionsID[".$polldatasedit[$i]->poll_option_id."]\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
-						javascript:$('helpbox').set('value', '"
+						javascript:document.id('helpbox').set('value', '"
 				. JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'). "')\" />
 				</div>";
         			}

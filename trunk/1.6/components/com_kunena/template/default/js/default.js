@@ -113,7 +113,7 @@ var Autocompleter = new Class({
 	},
 
 	initialize: function(element, options) {
-		this.element = $(element);
+		this.element = document.id(element);
 		this.setOptions(options);
 		this.build();
 		this.observer = new Observer(this.element, this.prefetch.bind(this), $merge({
@@ -134,7 +134,7 @@ var Autocompleter = new Class({
 	 * Override this function to modify the html generation.
 	 */
 	build: function() {
-		if ($(this.options.customChoices)) {
+		if (document.id(this.options.customChoices)) {
 			this.choices = this.options.customChoices;
 		} else {
 			this.choices = new Element('ul', {
@@ -411,7 +411,7 @@ var OverlayFix = new Class({
 
 	initialize: function(el) {
 		if (Browser.Engine.trident) {
-			this.element = $(el);
+			this.element = document.id(el);
 			this.relative = this.element.getOffsetParent();
 			this.fix = new Element('iframe', {
 				'frameborder': '0',
@@ -558,7 +558,7 @@ Autocompleter.Request = new Class({
 	query: function(){
 		var data = $unlink(this.options.postData) || {};
 		data[this.options.postVar] = this.queryValue;
-		var indicator = $(this.options.indicator);
+		var indicator = document.id(this.options.indicator);
 		if (indicator) indicator.setStyle('display', '');
 		var cls = this.options.indicatorClass;
 		if (cls) this.element.addClass(cls);
@@ -572,7 +572,7 @@ Autocompleter.Request = new Class({
 	 * Inherated classes have to extend this function and use this.parent()
 	 */
 	queryResponse: function() {
-		var indicator = $(this.options.indicator);
+		var indicator = document.id(this.options.indicator);
 		if (indicator) indicator.setStyle('display', 'none');
 		var cls = this.options.indicatorClass;
 		if (cls) this.element.removeClass(cls);
@@ -629,7 +629,7 @@ var Observer = new Class({
 	},
 
 	initialize: function(el, onFired, options){
-		this.element = $(el) || $$(el);
+		this.element = document.id(el) || $$(el);
 		this.addEvent('onFired', onFired);
 		this.setOptions(options);
 		this.bound = this.changed.bind(this);
@@ -692,7 +692,7 @@ function kRequestShowTopics(catid, select, list)
 function kRequestGetTopics(el)
 {
 	var catid = el.get("value");
-	var select = $('kmod_targettopic');
+	var select = document.id('kmod_targettopic');
 	request = new Request.JSON({url: kunena_url_ajax,
 	onSuccess: function(response){
 		kRequestShowTopics(catid, select, response.topiclist);
@@ -718,13 +718,13 @@ window.addEvent('domready', function(){
 			//prevent to load the page when click is detected on a button
 			e.stop();
 			var kreply = this.get('id');
-			var kstate = $(kreply+'_form').getStyle('display');
+			var kstate = document.id(kreply+'_form').getStyle('display');
 			$$('.kreply-form').setStyle('display', 'none');
-			$(kreply+'_form').setStyle('display', 'block');
-			if ($(kreply+'_form').getElement('input[name=anonymous]')) {
-				var kuser = $(kreply+'_form').getElement('input[name=authorname]').get('value');
-				kunenaSelectUsernameView($(kreply+'_form').getElement('input[name=anonymous]'), kuser);
-				$(kreply+'_form').getElement('input[name=anonymous]').addEvent('click', function(e) {
+			document.id(kreply+'_form').setStyle('display', 'block');
+			if (document.id(kreply+'_form').getElement('input[name=anonymous]')) {
+				var kuser = document.id(kreply+'_form').getElement('input[name=authorname]').get('value');
+				kunenaSelectUsernameView(document.id(kreply+'_form').getElement('input[name=anonymous]'), kuser);
+				document.id(kreply+'_form').getElement('input[name=anonymous]').addEvent('click', function(e) {
 					kunenaSelectUsernameView(this, kuser);
 				});
 			}
@@ -754,17 +754,17 @@ window.addEvent('domready', function(){
 	 * 
 	 * 
 	 */
-	if($('kBulkChooseActions') != undefined){
-		$('kBulkChooseActions').addEvent('change', function(e){
+	if(document.id('kBulkChooseActions') != undefined){
+		document.id('kBulkChooseActions').addEvent('change', function(e){
 			if(this.get('value') == 'bulkMove'){
-				$('bulkactions').removeProperty('disabled');
+				document.id('bulkactions').removeProperty('disabled');
 			} else {
-				$('bulkactions').setProperty('disabled','disabled');
+				document.id('bulkactions').setProperty('disabled','disabled');
 			}	
 		});
 	}
-	if($('kcbcheckall_userposts') != undefined){
-		$('kcbcheckall_userposts').addEvent('click', function(e){
+	if(document.id('kcbcheckall_userposts') != undefined){
+		document.id('kcbcheckall_userposts').addEvent('click', function(e){
 			$$('.kDelete_bulkcheckboxes_userposts').each(function(el){
 				if(el.get('checked')==false){
 					el.set('checked',true);
@@ -776,8 +776,8 @@ window.addEvent('domready', function(){
 			});
 		});
 	}
-	if($('kcbcheckall_gotthankyouposts') != undefined){
-		$('kcbcheckall_gotthankyouposts').addEvent('click', function(e){
+	if(document.id('kcbcheckall_gotthankyouposts') != undefined){
+		document.id('kcbcheckall_gotthankyouposts').addEvent('click', function(e){
 			$$('.kDelete_bulkcheckboxes_gotthankyouposts').each(function(el){
 				if(el.get('checked')==false){
 					el.set('checked',true);
@@ -789,8 +789,8 @@ window.addEvent('domready', function(){
 			});
 		});
 	}
-	if($('kcbcheckall_saidthankyouposts') != undefined){
-		$('kcbcheckall_saidthankyouposts').addEvent('click', function(e){
+	if(document.id('kcbcheckall_saidthankyouposts') != undefined){
+		document.id('kcbcheckall_saidthankyouposts').addEvent('click', function(e){
 			$$('.kDelete_bulkcheckboxes_saidthankyouposts').each(function(el){
 				if(el.get('checked')==false){
 					el.set('checked',true);
@@ -802,8 +802,8 @@ window.addEvent('domready', function(){
 			});
 		});
 	}
-	if($('kcbcheckall') != undefined){
-		$('kcbcheckall').addEvent('click', function(e){
+	if(document.id('kcbcheckall') != undefined){
+		document.id('kcbcheckall').addEvent('click', function(e){
 			$$('.kDelete_bulkcheckboxes').each(function(el){
 				if(el.get('checked')==false){
 					el.set('checked',true);
@@ -815,8 +815,8 @@ window.addEvent('domready', function(){
 			});
 		});
 	}
-	if($('kcbcheckall_subscriptions') != undefined){
-		$('kcbcheckall_subscriptions').addEvent('click', function(e){
+	if(document.id('kcbcheckall_subscriptions') != undefined){
+		document.id('kcbcheckall_subscriptions').addEvent('click', function(e){
 			$$('.kDelete_bulkcheckboxes_subscriptions').each(function(el){
 				if(el.get('checked')==false){
 					el.set('checked',true);
@@ -828,8 +828,8 @@ window.addEvent('domready', function(){
 			});
 		});
 	}
-	if($('kcbcheckall_favorites') != undefined){
-		$('kcbcheckall_favorites').addEvent('click', function(e){
+	if(document.id('kcbcheckall_favorites') != undefined){
+		document.id('kcbcheckall_favorites').addEvent('click', function(e){
 			$$('.kDelete_bulkcheckboxes_favorites').each(function(el){
 				if(el.get('checked')==false){
 					el.set('checked',true);
@@ -841,8 +841,8 @@ window.addEvent('domready', function(){
 			});
 		});
 	}
-	if($('kcbcheckall_post') != undefined){
-		$('kcbcheckall_post').addEvent('click', function(e){
+	if(document.id('kcbcheckall_post') != undefined){
+		document.id('kcbcheckall_post').addEvent('click', function(e){
 			$$('.kDelete_bulkcheckboxes_post').each(function(el){
 				if(el.get('checked')==false){
 					el.set('checked',true);
@@ -855,28 +855,28 @@ window.addEvent('domready', function(){
 		});
 	}
 	
-	if($('kmod_categories') != undefined){
-		$('kmod_categories').addEvent('change', function(e){
+	if(document.id('kmod_categories') != undefined){
+		document.id('kmod_categories').addEvent('change', function(e){
 			kRequestGetTopics(this);
 		});
 	}
-	if($('kmod_targettopic') != undefined){
-		$('kmod_targettopic').addEvent('change', function(e){
+	if(document.id('kmod_targettopic') != undefined){
+		document.id('kmod_targettopic').addEvent('change', function(e){
 			id = this.get('value');
 			if (id != 0) {
 				targetid = this.get('value');
-				$('kmod_subject').setStyle('display', 'none');
+				document.id('kmod_subject').setStyle('display', 'none');
 			} else {
 				targetid = '';
-				$('kmod_subject').setStyle('display', 'block');
+				document.id('kmod_subject').setStyle('display', 'block');
 			}
 			if (id == -1) {
 				targetid = '';
-				$('kmod_targetid').setStyle('display', 'inline');
+				document.id('kmod_targetid').setStyle('display', 'inline');
 			} else {
-				$('kmod_targetid').setStyle('display', 'none');
+				document.id('kmod_targetid').setStyle('display', 'none');
 			}
-			$('kmod_targetid').set('value', targetid);
+			document.id('kmod_targetid').set('value', targetid);
 		});
 	}
 	
@@ -910,9 +910,9 @@ window.addEvent('domready', function(){
 	});
 	
 	// Set autocompleter to off
-	if($('kpassword') != undefined && $('kpassword2') != undefined){
-		$('kpassword').setProperty('autocompleter', 'off');
-		$('kpassword2').setProperty('autocompleter', 'off');
+	if(document.id('kpassword') != undefined && document.id('kpassword2') != undefined){
+		document.id('kpassword').setProperty('autocompleter', 'off');
+		document.id('kpassword2').setProperty('autocompleter', 'off');
 	}
 	
 });

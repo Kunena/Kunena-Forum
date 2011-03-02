@@ -38,6 +38,7 @@ Kunena 2.0.0-DEV
 - [#22570] Remove deprecated lib/kunena.poll.class.php
 - [#22570] Remove polls AJAX (was not used)
 ^ [#22786] Merge revisions 4513-4521 from branches/2.0-xillibit-mvc-backend-26-02-2011
+^ [#22786] Merge revision 4509 from branches/2.0-810-fixes-26-02-2011
 
 1-March-2011 Matias
 + [#22569] Continue on converting polls into MVC and our libraries
@@ -62,6 +63,9 @@ Kunena 2.0.0-DEV
 - [#22570] Remove deprecated lib/kunena.karma.class.php
 ^ [#22569] Administration: Converted trash manager &task=purge to use new classes
 + [#22569] Continue on converting polls into MVC and our libraries
+
+26-February-2011 810
+# [#25081] Missing "/" emoticons
 
 26-February-2011 Xillibit
 # [#24395] Fix undefined variables in view=config and replace in kunena component menu the task by view

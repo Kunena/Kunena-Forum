@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+03-March-2011 Xillibit
+# [#25123] Cast all values to be int for security purpose
+
 02-March-2011 Xillibit
 # [#25123] Moveusermessages in users manager doesn't work like excepted (Part 2)
 # [#25133] Mark all forum read fails under J! 1.6

@@ -2455,8 +2455,7 @@ function textCounter(field, target) {
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr>
 						<th colspan="2" class="title"><?php
-						echo JText::_('COM_KUNENA_SUBFOR');
-						echo kescape($username);
+						echo JText::_('COM_KUNENA_SUBFOR').' '.kescape($username);
 						?>
 						</th>
 					</tr>
@@ -2493,8 +2492,7 @@ function textCounter(field, target) {
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr>
 						<th colspan="2" class="title"><?php
-						echo JText::_('COM_KUNENA_SUBFOR');
-						echo kescape($username);
+						echo JText::_('COM_KUNENA_SUBFOR').' '.kescape($username);
 						?>
 						</th>
 					</tr>
@@ -2571,6 +2569,7 @@ function textCounter(field, target) {
 	<?php
 		}
 		function moveUserMessages ( $option, $return, $uid, $lists, $userids ) {
+			$uid = JArrayHelper::toInteger($uid);
 	?>
 			<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_A_MOVE_USERMESSAGES'); ?></div>
 			<table class="adminform">

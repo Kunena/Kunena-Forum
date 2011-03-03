@@ -52,6 +52,8 @@ require_once(KPATH_SITE.'/lib/kunena.defines.php');
 $lang = JFactory::getLanguage();
 $lang->load('com_kunena',JPATH_SITE);
 
+jimport( 'joomla.utilities.arrayhelper' );
+
 // Now that we have the global defines we can use shortcut defines
 require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
 require_once (KUNENA_PATH_LIB . DS . 'kunena.version.php');
@@ -1819,6 +1821,9 @@ function addModerator($option, $id, $cid = null, $publish = 1) {
 		$action = 'remove';
 	}
 
+	$id = (int)$id;
+	$cid = JArrayHelper::toInteger($cid);
+
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
 		echo "<script> alert('" . JText::_('COM_KUNENA_SELECTMODTO') . " $action'); window.history.go(-1);</script>\n";
 		exit ();
@@ -1826,7 +1831,7 @@ function addModerator($option, $id, $cid = null, $publish = 1) {
 
 	if ($action == 'add') {
 		for($i = 0, $n = count ( $cid ); $i < $n; $i ++) {
-			$kunena_db->setQuery ( "INSERT INTO #__kunena_moderation SET catid='$id', userid='$cid[$i]'" );
+			$kunena_db->setQuery ( "INSERT INTO #__kunena_moderation SET catid='$id', userid='int(int)$cid[$i]'" );
 			$kunena_db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 		}
@@ -2017,12 +2022,14 @@ function saveUserProfile($option) {
 	$newrank = JRequest::getVar ( 'newrank' );
 	$signature = JRequest::getVar ( 'message' );
 	$deleteSig = JRequest::getVar ( 'deleteSig' );
-	$moderator = JRequest::getVar ( 'moderator' );
-	$uid = JRequest::getVar ( 'uid' );
+	$moderator = JRequest::getInt ( 'moderator' );
+	$uid = JRequest::getInt ( 'uid' );
 	$avatar = JRequest::getVar ( 'avatar' );
 	$deleteAvatar = JRequest::getVar ( 'deleteAvatar' );
-	$neworder = JRequest::getVar ( 'neworder' );
+	$neworder = JRequest::getInt ( 'neworder' );
 	$modCatids = JRequest::getVar ( 'catid', array () );
+
+	$uid = (int)$uid;
 
 	if ($deleteSig == 1) {
 		$signature = "";
@@ -2032,12 +2039,12 @@ function saveUserProfile($option) {
 		$avatar = ",avatar=''";
 	}
 
-	$kunena_db->setQuery ( "UPDATE #__kunena_users SET signature={$kunena_db->quote($signature)}, view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' $avatar where userid=$uid" );
+	$kunena_db->setQuery ( "UPDATE #__kunena_users SET signature={$kunena_db->quote($signature)}, view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' $avatar where userid='$uid'" );
 	$kunena_db->query ();
 	if (KunenaError::checkDatabaseError()) return;
 
 	//delete all moderator traces before anyway
-	$kunena_db->setQuery ( "DELETE FROM #__kunena_moderation WHERE userid=$uid" );
+	$kunena_db->setQuery ( "DELETE FROM #__kunena_moderation WHERE userid='$uid'" );
 	$kunena_db->query ();
 	if (KunenaError::checkDatabaseError()) return;
 
@@ -2072,6 +2079,7 @@ function trashUserMessages ( $option, $uid ) {
 	require_once ($path);
 	$kunena_mod = CKunenaModeration::getInstance();
 
+	$uid = JArrayHelper::toInteger($uid);
 	$uids = implode ( ',', $uid );
 	if ($uids) {
 		//select only the messages which aren't already in the trash
@@ -2089,6 +2097,7 @@ function moveUserMessages ( $option, $uid ){
 	$kunena_db = &JFactory::getDBO ();
 	$return = JRequest::getCmd( 'return', 'edituserprofile', 'post' );
 
+	$userid = JArrayHelper::toInteger($userid);
 	$userid = implode(',', $uid);
 	$kunena_db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userid.")" );
 	$userids = $kunena_db->loadObjectList ();
@@ -2160,6 +2169,8 @@ function deleteUser ( $option, $uid ) {
 	require_once ($path);
 	$user_mod = new CKunenaModerationTools();
 
+	$uid = JArrayHelper::toInteger($uid);
+
 	foreach ($uid as $id) {
 		$deleteuser = $user_mod->deleteUser($id);
 		if (!$deleteuser) {
@@ -2181,6 +2192,7 @@ function userban($option, $userid, $block = 0) {
 
 	kimport ( 'userban' );
 	$userid = array_shift($userid);
+	$userid = (int)$userid;
 	$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
 	if (! $ban->id) {
 		$ban->ban ( $userid, null, $block );
@@ -2591,6 +2603,8 @@ function savesmiley($option, $id = NULL) {
 		$kunena_app->close ();
 	}
 
+	$id = (int)$id;
+
 	$kunena_db->setQuery ( "SELECT * FROM #__kunena_smileys" );
 
 	$smilies = $kunena_db->loadAssocList ();
@@ -2607,7 +2621,7 @@ function savesmiley($option, $id = NULL) {
 	if ($id == NULL) {
 		$kunena_db->setQuery ( "INSERT INTO #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar'" );
 	} else {
-		$kunena_db->setQuery ( "UPDATE #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar' WHERE id = $id" );
+		$kunena_db->setQuery ( "UPDATE #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar' WHERE id = '$id'" );
 	}
 
 	$kunena_db->query ();
@@ -2625,6 +2639,7 @@ function deletesmiley($option, $cid) {
 		return;
 	}
 
+	$cids = JArrayHelper::toInteger($cids);
 	$cids = implode ( ',', $cid );
 
 	if ($cids) {
@@ -2821,6 +2836,7 @@ function deleteRank($option, $cid = null) {
 		return;
 	}
 
+	$cids = JArrayHelper::toInteger($cids);
 	$cids = implode ( ',', $cid );
 	if ($cids) {
 		$kunena_db->setQuery ( "DELETE FROM #__kunena_ranks WHERE rank_id IN ($cids)" );
@@ -2840,6 +2856,8 @@ function saveRank($option, $id = NULL) {
 		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=ranks" );
 		return;
 	}
+
+	$id = (int)$id;
 
 	$rank_title = JRequest::getVar ( 'rank_title' );
 	$rank_image = JRequest::getVar ( 'rank_image' );
@@ -2876,7 +2894,7 @@ function saveRank($option, $id = NULL) {
 
 function editRank($option, $id) {
 	$kunena_db = &JFactory::getDBO ();
-
+	$id = (int)$id;
 	$kunena_db->setQuery ( "SELECT * FROM #__kunena_ranks WHERE rank_id = '$id'" );
 	$ranks = $kunena_db->loadObjectList ();
 
@@ -2968,6 +2986,7 @@ function trashpurge($option, $cid) {
 	$kunena_db = &JFactory::getDBO ();
 	$return = JRequest::getCmd( 'return', 'showtrashview', 'post' );
 
+	$cids = JArrayHelper::toInteger($cids);
 	$cids = implode ( ',', $cid );
 	if ($cids) {
 		$kunena_db->setQuery ( "SELECT * FROM #__kunena_messages WHERE hold=2 AND id IN ($cids)");
@@ -2985,6 +3004,7 @@ function deleteitemsnow ( $option, $cid ) {
 	require_once ($path);
 	$kunena_mod = CKunenaModeration::getInstance();
 
+	$cids = JArrayHelper::toInteger($cids);
 	$cids = implode ( ',', $cid );
 	if ($cids) {
 		foreach ($cid as $id ) {
@@ -3018,6 +3038,7 @@ function deleteitemsnow ( $option, $cid ) {
 			}
 		}
 
+		$userid_array  = JArrayHelper::toInteger($userid_array);
 		$userids = implode ( ',', $userid_array );
 
 		if (count ( $userid_array ) > 0) {
@@ -3038,6 +3059,7 @@ function trashrestore($option, $cid) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
 
+	$cid = JArrayHelper::toInteger($cid);
 	if ($cid) {
 		foreach ( $cid as $id ) {
 			$kunena_db->setQuery ( "SELECT * FROM #__kunena_messages WHERE id=$id AND hold=2" );

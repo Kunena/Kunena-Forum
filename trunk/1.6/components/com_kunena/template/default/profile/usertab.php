@@ -82,8 +82,12 @@ JHTML::_('behavior.tooltip');
 		<?php if ($this->config->allowsubscriptions) :?>
 		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?>"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
 		<dd style="display: none;">
+			<?php if ($this->config->allowsubscriptions != 2) :?>
 			<?php $this->displayCategoriesSubscriptions(); ?>
+			<?php endif; ?>
+			<?php if ($this->config->allowsubscriptions != 3) :?>
 			<?php $this->displaySubscriptions(); ?>
+			<?php endif; ?>
 		</dd>
 		<?php endif; ?>
 		<?php if ($this->config->allowfavorites) : ?>

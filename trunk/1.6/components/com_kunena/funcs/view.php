@@ -626,12 +626,17 @@ class CKunenaView {
 		//Perform subscriptions check only once
 		$this->cansubscribe = 0;
 		if ($this->config->allowsubscriptions && $this->my->id) {
-			$this->db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid={$this->db->Quote($this->my->id)} AND thread={$this->db->Quote($this->thread)}" );
-			$fb_subscribed = $this->db->loadResult ();
+			$this->db->setQuery ( "SELECT thread, future1 FROM #__kunena_subscriptions WHERE userid={$this->db->Quote($this->my->id)} AND thread={$this->db->Quote($this->thread)}" );
+			$fb_subscribed = $this->db->loadObject ();
 			KunenaError::checkDatabaseError();
 
-			if ($fb_subscribed == "") {
+			if (!$fb_subscribed) {
 				$this->cansubscribe = 1;
+			} elseif ($fb_subscribed->future1 == 1) {
+				$query_thread = "UPDATE #__kunena_subscriptions
+					SET future1=0 WHERE thread={$this->db->Quote($this->thread)} AND userid={$this->db->Quote($this->my->id)}";
+				$this->db->setQuery ($query_thread);
+				$this->db->query ();
 			}
 		}
 
@@ -673,7 +678,7 @@ class CKunenaView {
 			$this->thread_subscribe = CKunenaLink::GetTopicPostLink ( 'subscribe', $this->catid, $this->id, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_TOPIC') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_TOPIC_LONG') );
 		}
 
-		if ($this->my->id != 0 && $this->config->allowsubscriptions && $this->cansubscribe == 0) {
+		if ($this->my->id != 0 && ($this->config->allowsubscriptions && $this->config->allowsubscriptions < 3) && $this->cansubscribe == 0) {
 			// this user is allowed to unsubscribe
 			$this->thread_subscribe = CKunenaLink::GetTopicPostLink ( 'unsubscribe', $this->catid, $this->id, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_TOPIC') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_TOPIC_LONG') );
 		}

@@ -178,7 +178,7 @@ abstract class KunenaAccess {
 
 	function getSubscribers($catid, $topicid, $subscriptions = false, $moderators = false, $admins = false, $excludeList = null) {
 		if ($subscriptions) {
-			$subslist = $this->loadSubscribers($catid, $topicid);
+			$subslist = $this->loadSubscribers($catid, $topicid, (int)$subscriptions);
 		}
 		if ($moderators) {
 			if ($this->moderatorsByCatid === false) {
@@ -266,12 +266,20 @@ abstract class KunenaAccess {
 		return $list;
 	}
 
-	protected function &loadSubscribers($catid, $topicid) {
+	protected function &loadSubscribers($catid, $topicid, $subsriptions) {
 		$category = KunenaCategory::getInstance($catid);
 		$db = JFactory::getDBO ();
-		$query ="SELECT userid AS user_id FROM #__kunena_subscriptions WHERE thread={$topicid}
-				UNION
-				SELECT userid AS user_id FROM #__kunena_subscriptions_categories WHERE catid={$catid}";
+		$query = array();
+		if ($subsriptions == 1 || $subsriptions == 2) {
+			// Get topic subscriptions
+			$once = KunenaFactory::getConfig()->email_once ? 'AND future1=0' : '';
+			$query[] = "SELECT userid AS user_id FROM #__kunena_subscriptions WHERE thread={$topicid} {$once}";
+		}
+		if ($subsriptions == 1 || $subsriptions == 3) {
+			// Get category subscriptions
+			$query[] = "SELECT userid AS user_id FROM #__kunena_subscriptions_categories WHERE catid={$catid}";
+		}
+		$query = implode(' UNION ', $query);
 		$db->setQuery ($query);
 		$userids = (array) $db->loadResultArray();
 		KunenaError::checkDatabaseError();

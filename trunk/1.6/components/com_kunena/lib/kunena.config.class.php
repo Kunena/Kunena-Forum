@@ -362,6 +362,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	// New for 1.6.4
 	var $userlist_count_users = 1;
 	var $enable_threaded_layouts = 0;
+	var $email_once = 0;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

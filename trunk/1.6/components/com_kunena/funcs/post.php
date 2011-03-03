@@ -301,7 +301,7 @@ class CKunenaPost {
 
 		// check if this user is already subscribed to this topic but only if subscriptions are allowed
 		$this->cansubscribe = 0;
-		if ($this->my->id && $this->config->allowsubscriptions == 1) {
+		if ($this->my->id && ($this->config->allowsubscriptions && $this->config->allowsubscriptions < 3)) {
 			$this->cansubscribe = 1;
 			if ($this->msg_cat && $this->msg_cat->thread) {
 				$this->_db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid={$this->_db->Quote($this->my->id)} AND thread={$this->_db->Quote($this->msg_cat->thread)}" );

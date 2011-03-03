@@ -35,7 +35,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php endif; ?>
 		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo  $this->escape($this->resubject) ?>" /><br />
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
-		<?php if ($this->my->id && $this->config->allowsubscriptions == 1 && $this->cansubscribe) : ?>
+		<?php if ($this->my->id && $this->config->allowsubscriptions && $this->cansubscribe) : ?>
 			<?php if ($this->config->subscriptionschecked == 1) : ?>
 				<input type="checkbox" name="subscribeMe" value="1" checked="checked" />
 				<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>

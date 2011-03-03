@@ -32,6 +32,14 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+3-March-2011 Matias
++ [#25026] Administration: Add more subscription options (thanks Frank Gore)
++ [#25023] Limit notification emails until user visits the topic again (thanks Frank Gore)
++ [#25023] Limit notification emails on category subscriptions for new topics only
++ [#25023] Add configuration option for limiting emails
+# [#25023] Do not show error message on sending emails if Kunena email address is empty
+^ [#25023] Improve subscription emails to contain more relevant information
+
 2-March-2011 Matias
 # [#25130] Avoid JavaScript $() conflicts with JQuery and other frameworks
 ^ [#15886] Merged revisions 4522-4531 from /branches/1.6-xillibit-01-03-2011

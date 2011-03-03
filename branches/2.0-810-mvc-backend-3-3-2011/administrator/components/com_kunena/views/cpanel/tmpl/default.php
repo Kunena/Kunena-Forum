@@ -132,5 +132,25 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		</tr>
 	</table>
 </div>
+<?php if ($kunena_config->version_check) : ?>
+<div class="kadmin-welcome">
+<?php
+jimport('joomla.html.pane');
+$pane =& JPane::getInstance('sliders', array('startOffset'=>2));
+echo $pane->startPane( 'pane' );
+echo $pane->startPanel( 'Version Check', 'panel1' );
+echo checkLatestVersion ();
+echo $pane->endPanel();
+echo $pane->startPanel( 'Example Panel 2', 'panel2' );
+echo "This is panel2";
+echo $pane->endPanel();
+echo $pane->startPanel( 'Example Panel 3', 'panel3' );
+echo "This is panel3";
+echo $pane->endPanel();
+
+echo $pane->endPane();
+?>
+</div>
+<?php endif; ?>
 </div>
 </div>

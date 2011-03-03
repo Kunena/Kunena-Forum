@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+3-march-2011 810
+^ [#24395] Backend in MVC (cpanel)
+
 2-March-2011 Matias
 ^ [#22569] Greatly simplify poll JavaScript
 # [#22569] Fix a bug where poll options were added twice

@@ -1822,7 +1822,7 @@ function addModerator($option, $id, $cid = null, $publish = 1) {
 	}
 
 	$id = (int)$id;
-	$cid = JArrayHelper::toInteger($cid);
+	JArrayHelper::toInteger($cid);
 
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
 		echo "<script> alert('" . JText::_('COM_KUNENA_SELECTMODTO') . " $action'); window.history.go(-1);</script>\n";
@@ -2079,7 +2079,7 @@ function trashUserMessages ( $option, $uid ) {
 	require_once ($path);
 	$kunena_mod = CKunenaModeration::getInstance();
 
-	$uid = JArrayHelper::toInteger($uid);
+	JArrayHelper::toInteger($uid);
 	$uids = implode ( ',', $uid );
 	if ($uids) {
 		//select only the messages which aren't already in the trash
@@ -2097,7 +2097,7 @@ function moveUserMessages ( $option, $uid ){
 	$kunena_db = &JFactory::getDBO ();
 	$return = JRequest::getCmd( 'return', 'edituserprofile', 'post' );
 
-	$userid = JArrayHelper::toInteger($userid);
+	JArrayHelper::toInteger($userid);
 	$userid = implode(',', $uid);
 	$kunena_db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userid.")" );
 	$userids = $kunena_db->loadObjectList ();
@@ -2169,7 +2169,7 @@ function deleteUser ( $option, $uid ) {
 	require_once ($path);
 	$user_mod = new CKunenaModerationTools();
 
-	$uid = JArrayHelper::toInteger($uid);
+	JArrayHelper::toInteger($uid);
 
 	foreach ($uid as $id) {
 		$deleteuser = $user_mod->deleteUser($id);
@@ -2639,7 +2639,7 @@ function deletesmiley($option, $cid) {
 		return;
 	}
 
-	$cids = JArrayHelper::toInteger($cids);
+	JArrayHelper::toInteger($cids);
 	$cids = implode ( ',', $cid );
 
 	if ($cids) {
@@ -2836,7 +2836,7 @@ function deleteRank($option, $cid = null) {
 		return;
 	}
 
-	$cids = JArrayHelper::toInteger($cids);
+	JArrayHelper::toInteger($cids);
 	$cids = implode ( ',', $cid );
 	if ($cids) {
 		$kunena_db->setQuery ( "DELETE FROM #__kunena_ranks WHERE rank_id IN ($cids)" );
@@ -2986,7 +2986,7 @@ function trashpurge($option, $cid) {
 	$kunena_db = &JFactory::getDBO ();
 	$return = JRequest::getCmd( 'return', 'showtrashview', 'post' );
 
-	$cids = JArrayHelper::toInteger($cids);
+	JArrayHelper::toInteger($cids);
 	$cids = implode ( ',', $cid );
 	if ($cids) {
 		$kunena_db->setQuery ( "SELECT * FROM #__kunena_messages WHERE hold=2 AND id IN ($cids)");
@@ -3004,7 +3004,7 @@ function deleteitemsnow ( $option, $cid ) {
 	require_once ($path);
 	$kunena_mod = CKunenaModeration::getInstance();
 
-	$cids = JArrayHelper::toInteger($cids);
+	JArrayHelper::toInteger($cids);
 	$cids = implode ( ',', $cid );
 	if ($cids) {
 		foreach ($cid as $id ) {
@@ -3038,7 +3038,7 @@ function deleteitemsnow ( $option, $cid ) {
 			}
 		}
 
-		$userid_array  = JArrayHelper::toInteger($userid_array);
+		JArrayHelper::toInteger($userid_array);
 		$userids = implode ( ',', $userid_array );
 
 		if (count ( $userid_array ) > 0) {
@@ -3059,7 +3059,7 @@ function trashrestore($option, $cid) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
 
-	$cid = JArrayHelper::toInteger($cid);
+	JArrayHelper::toInteger($cid);
 	if ($cid) {
 		foreach ( $cid as $id ) {
 			$kunena_db->setQuery ( "SELECT * FROM #__kunena_messages WHERE id=$id AND hold=2" );

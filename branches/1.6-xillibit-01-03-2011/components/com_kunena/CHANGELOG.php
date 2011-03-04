@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+04-March-2011 Xillibit
+# [#25123] Cast all values to be int for security purpose (Part 2)
+^ [#24847] Update fr-FR language
+
 03-March-2011 Xillibit
 # [#25123] Cast all values to be int for security purpose
 

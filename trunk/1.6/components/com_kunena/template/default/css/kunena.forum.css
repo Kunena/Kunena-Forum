@@ -538,6 +538,7 @@ PX		EM			PCT			PT
 	font-size: 1em; 
 	line-height: 2.3em;
 	text-indent: 0;
+	padding: 0;
 }
 
 #Kunena #ktab a:hover,

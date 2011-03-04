@@ -33,7 +33,8 @@ class CKunenaProfile {
 		else {
 			$this->user = JFactory::getUser( $userid );
 		}
-		if ($this->user->id == 0) {
+
+		if ($this->user->id == 0 || ($this->my->id == 0 && !$this->config->pubprofile)) {
 			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice' );
 			return;
 		}
@@ -411,7 +412,10 @@ class CKunenaProfile {
 			$this->login();
 			return;
 		}
-		if (!$this->allow) return;
+		if (!$this->allow) {
+			echo JText::_('COM_KUNENA_NO_ACCESS');
+			return;
+		}
 		switch ($this->do) {
 			case 'save':
 				$this->save();

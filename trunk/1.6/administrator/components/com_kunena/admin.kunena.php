@@ -1627,9 +1627,11 @@ function showConfig($option) {
 
 	$lists ['show_session_type'] = JHTML::_('select.genericlist', $sessiontimetype, 'cfg_show_session_type', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->show_session_type);
 
-	$userlist_allowed[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_USERLIST_TYPE_ALL'));
-	$userlist_allowed[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_USERLIST_TYPE_REGISTRED'));
+	$userlist_allowed = array ();
+	$userlist_allowed [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_A_NO') );
+	$userlist_allowed [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_A_YES') );
 	$lists ['userlist_allowed'] = JHTML::_('select.genericlist', $userlist_allowed, 'cfg_userlist_allowed', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_allowed);
+	$lists ['pubprofile'] = JHTML::_('select.genericlist', $yesno, 'cfg_pubprofile', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pubprofile);
 
 	$userlist_count_users[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ALL'));
 	$userlist_count_users[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVATED_ACCOUNT'));

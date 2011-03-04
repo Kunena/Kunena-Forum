@@ -1269,6 +1269,16 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED') ?></td>
+						<td align="left" valign="top"><?php echo $lists ['userlist_allowed']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PUBPROFILE') ?></td>
+						<td align="left" valign="top"><?php echo $lists ['pubprofile']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PUBPROFILE_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_REGISTERED_ONLY') ?>
 						</td>
 								<td align="left" valign="top" width="25%"><?php echo $lists ['regonly'];
@@ -1899,11 +1909,6 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS') ?></td>
 							<td align="left" valign="top"><?php echo $lists ['userlist_userhits']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED') ?></td>
-							<td align="left" valign="top"><?php echo $lists ['userlist_allowed']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED_DESC') ?></td>
 						</tr>
 					</table>
 				</fieldset>

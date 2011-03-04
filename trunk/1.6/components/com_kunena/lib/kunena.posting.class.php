@@ -959,9 +959,10 @@ class CKunenaPosting {
 			$authorname = $this->get ( 'name' );
 			$message = KunenaParser::stripBBCode ( $this->get ( 'message' ) );
 			$subject = $this->get ( 'subject' );
+			$topicsubject = $this->parent->subject ? $this->parent->subject : $subject;
 
 			$mailsender = JMailHelper::cleanAddress ( $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
-			$mailsubject = JMailHelper::cleanSubject ( "[" . $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . $subject . " (" . $this->parent->catname . ")" );
+			$mailsubject = JMailHelper::cleanSubject ( "[" . $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . $topicsubject . " (" . $this->parent->catname . ")" );
 
 			$sentusers = array();
 			foreach ( $emailToList as $emailTo ) {
@@ -979,12 +980,13 @@ class CKunenaPosting {
 
 				$msg = "$emailTo->name,\n\n";
 				$msg .= $msg1 . " " . $this->_config->board_title . "\n\n";
-				$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . ": " . $subject . "\n";
-				$msg .= JText::_ ( 'COM_KUNENA_CATEGORY' ) . " " . $this->parent->catname . "\n";
-				$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . ": " . $authorname . "\n\n";
-				$msg .= "URL: $LastPostUrl\n\n";
+				// DO NOT REMOVE EXTRA SPACE, JMailHelper::cleanBody() removes "Subject:" from the message body
+				$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . " : " . $subject . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_GEN_CATEGORY' ) . " : " . $this->parent->catname . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . " : " . $authorname . "\n\n";
+				$msg .= "URL : $LastPostUrl\n\n";
 				if ($this->_config->mailfull == 1) {
-					$msg .= JText::_ ( 'COM_KUNENA_GEN_MESSAGE' ) . ":\n-----\n";
+					$msg .= JText::_ ( 'COM_KUNENA_GEN_MESSAGE' ) . " :\n-----\n";
 					$msg .= $message;
 					$msg .= "\n-----\n\n";
 				}

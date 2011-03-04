@@ -38,6 +38,8 @@ Kunena 1.6.4-DEV
 # [#25142] Menu creation: New menu link into Kunena Menu should be unpublished by default
 # [#25142] Regression in Administration: Create Menu: menu link doesn't get updated
 # [#25140] Regression in CSS: Kunena menu tabs have too much left padding in some templates
+# [#25095] Subscription email: "Subject: xxx" gets filtered from the message
+# [#25095] Subscription email subject should be topic subject, not message subject
 
 3-March-2011 Matias
 + [#25026] Administration: Add more subscription options (thanks Frank Gore)

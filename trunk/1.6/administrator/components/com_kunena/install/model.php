@@ -1523,16 +1523,19 @@ class KunenaModelInstall extends JModel {
 		// Finally add forum menu link to default menu
 		$jmenu = JMenu::getInstance('site');
 		$dmenu = $jmenu->getDefault();
-		$query = "SELECT id, type, link FROM `#__menu` WHERE `alias` IN ('forum', 'kunenaforum', {$this->db->quote(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' ))}) AND `menutype`={$this->db->quote($dmenu->menutype)}";
+		$query = "SELECT id, name, type, link, published FROM `#__menu` WHERE `alias` IN ('forum', 'kunenaforum', {$this->db->quote(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' ))}) AND `menutype`={$this->db->quote($dmenu->menutype)}";
 		$this->db->setQuery ( $query, 0, 1 );
 		$menualias = $this->db->loadObject ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		// We do not want to replace users own menu items (just alias or deprecated link to Kunena)
-		if (!$menualias || $menualias->type == 'alias' || $menualias->link == 'index.php?option=com_kunena') {
+		if (!$menualias || $menualias->type == 'menulink' || $menualias->link == 'index.php?option=com_kunena') {
 			$id = $menualias ? intval($menualias->id) : 0;
+			// Keep state (default=unpublished) and name (default=Forum)
+			$published = $menualias ? intval($menualias->published) : 0;
+			$name = $menualias ? $menualias->name : $menu['name'];
 			$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-								($id, {$this->db->quote($dmenu->menutype)}, {$this->db->quote($menu['name'])}, 'kunenaforum', 'index.php?Itemid=$parentid', 'menulink', 1, 0, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_item=$parentid{$menu['params']}\r\n\r\n', 0, 0, 0);";
+						($id, {$this->db->quote($dmenu->menutype)}, {$this->db->quote($name)}, 'kunenaforum', 'index.php?Itemid={$parentid}', 'menulink', {$published}, 0, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_item=$parentid{$menu['params']}\r\n\r\n', 0, 0, 0);";
 			$this->db->setQuery ( $query );
 			$this->db->query ();
 			if ($this->db->getErrorNum ())

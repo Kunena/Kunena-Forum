@@ -33,7 +33,10 @@ Legend:
 Kunena 1.6.4-DEV
 
 4-March-2011 Matias
-^ [#25026] Make subcription options more powerful
+^ [#25026] Make new subcription options more powerful
+^ [#25026] Make new subcription options to work with custom templates (without changing them)
+# [#25142] Menu creation: New menu link into Kunena Menu should be unpublished by default
+# [#25142] Regression in Administration: Create Menu: menu link doesn't get updated
 
 3-March-2011 Matias
 + [#25026] Administration: Add more subscription options (thanks Frank Gore)

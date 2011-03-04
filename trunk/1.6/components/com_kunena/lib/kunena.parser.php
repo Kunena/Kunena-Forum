@@ -68,7 +68,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 		$text = preg_replace ( '/(?<!S)((http(s?):\/\/)|(www\.[a-zA-Z0-9-_]+\.))+([a-zA-Z0-9\/*+-_?&;:%=.,#]+)/u', '<a href="http$3://$4$5" target="_blank" rel="nofollow">$4$5</a>', $text );
 
 		// match name@address
-		$text = preg_replace ( '/(?<!S)([a-zA-Z0-9_.\-]+\@{1}[a-zA-Z0-9\.|-|_]*[.]{1}[a-z]{2,5})/u', '<a href="mailto:$1">$1</a>', $text );
+		$text = preg_replace_callback ( '/(?<!S)([a-zA-Z0-9_.\-]+\@{1}[a-zA-Z0-9\.|-|_]*[.]{1}[a-z]{2,5})/u', 'kunenaBBCodeEmailCloak', $text );
 
 		return substr ( $text, 1, - 1 );
 	}
@@ -292,11 +292,11 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$task->autolink_disable --;
 				if (isset ( $tag->options ['default'] )) {
 					$tempstr = $tag->options ['default'];
-					if (substr ( $tempstr, 0, 7 ) !== 'mailto:') {
-						$tempstr = 'mailto:' . $tempstr;
+					if (substr ( $tempstr, 0, 7 ) == 'mailto:') {
+						$tempstr = substr ( $tempstr, 7 );
 					}
-					$tns = '<a href="' . kunena_htmlspecialchars ( $tempstr, ENT_QUOTES ) . '">';
-					$tne = '</a>';
+					$tns = '';
+					$tne = ' ('.kunenaBBCodeEmailCloak(array(1=>$tempstr)).' )';
 					return TAGPARSER_RET_REPLACED;
 				}
 				break;
@@ -416,13 +416,10 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				break;
 
 			case 'email' :
-				$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
-				if (substr ( $tempstr, 0, 7 ) == 'mailto:') {
-					$between = substr ( $tempstr, 7 );
-				} else {
-					$tempstr = 'mailto:' . $tempstr;
+				if (substr ( $between, 0, 7 ) == 'mailto:') {
+					$tempstr = substr ( $between, 7 );
 				}
-				$tag_new = '<a href="' . $tempstr . '">' . $between . '</a>';
+				$tag_new = kunenaBBCodeEmailCloak(array(1=>$between));
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'url' :
@@ -1309,4 +1306,8 @@ class KunenaBBCodeInterpreterPlain extends BBCodeInterpreter {
 		$tag_new = '';
 		return TAGPARSER_RET_NOTHING;
 	}
+}
+
+function kunenaBBCodeEmailCloak($input) {
+	return preg_replace('/\n/', '__KRN__', JHTML::_('email.cloak', $input[1]));
 }

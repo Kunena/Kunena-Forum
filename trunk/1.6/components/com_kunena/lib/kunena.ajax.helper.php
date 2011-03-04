@@ -73,7 +73,7 @@ class CKunenaAjaxHelper {
 					break;
 				case 'pollcatsallowed' :
 					// TODO: deprecated
-					
+
 					$response = $this->_getPollsCatsAllowed ();
 
 					break;
@@ -101,7 +101,7 @@ class CKunenaAjaxHelper {
 					break;
 				case 'anynomousallowed' :
 					// TODO: deprecated
-				
+
 					$response = $this->_anynomousAllowed ();
 
 					break;
@@ -206,9 +206,8 @@ class CKunenaAjaxHelper {
 
 		$config = KunenaFactory::getConfig ();
 
-		require_once(JPATH_ROOT  .DS . '/libraries/joomla/document/html/html.php');
-
-		$msgbody = KunenaParser::parseBBCode( $data );
+		$this->msg->userid = JFactory::getUser()->id;
+		$msgbody = KunenaParser::parseBBCode( $data, $this );
 		$result ['preview'] = $msgbody;
 
 		return $result;

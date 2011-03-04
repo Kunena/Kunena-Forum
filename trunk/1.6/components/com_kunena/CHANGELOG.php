@@ -42,6 +42,8 @@ Kunena 1.6.4-DEV
 # [#25095] Subscription email subject should be topic subject, not message subject
 + [#24023] Add instruction to moderator dropdowns
 # [#24469] Add configuration option to prevent Guests from viewing members' user profiles
+# [#25171] Cloak all Email addresses (in BBCode, profile, userlist)
+# [#24758] Confidential tags hide text from admins/mods in topic history and message preview
 
 3-March-2011 Matias
 + [#25026] Administration: Add more subscription options (thanks Frank Gore)

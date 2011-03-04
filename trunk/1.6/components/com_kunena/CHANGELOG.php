@@ -40,6 +40,7 @@ Kunena 1.6.4-DEV
 # [#25140] Regression in CSS: Kunena menu tabs have too much left padding in some templates
 # [#25095] Subscription email: "Subject: xxx" gets filtered from the message
 # [#25095] Subscription email subject should be topic subject, not message subject
++ [#24023] Add instruction to moderator dropdowns
 
 3-March-2011 Matias
 + [#25026] Administration: Add more subscription options (thanks Frank Gore)

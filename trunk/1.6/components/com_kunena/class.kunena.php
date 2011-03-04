@@ -464,7 +464,7 @@ class CKunenaTools {
         $kunena_db = &JFactory::getDBO();
 
         $options = array ();
-        $options[] = JHTML::_('select.option', '0', "&nbsp;");
+        $options[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION'));
         $attr = 'class="inputbox fbs" size="1"' . ($disabled ? ' disabled="disabled" ' : "");
         $lists['parent'] = CKunenaTools::forumSelectList('bulkactions', 0, $options, $attr);
 

@@ -72,7 +72,7 @@ class CKunenaLatestX {
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
 
-		$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
+		$this->actionDropdown[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 	}
 
 	/**

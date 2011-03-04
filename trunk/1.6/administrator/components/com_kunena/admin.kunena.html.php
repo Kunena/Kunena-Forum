@@ -1204,21 +1204,28 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS') ?>
+						</td>
+							<td align="left" valign="top"><?php echo $lists ['category_subscriptions']; ?>
+						</td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TOPIC_SUBSCRIPTIONS') ?>
+						</td>
+							<td align="left" valign="top"><?php echo $lists ['topic_subscriptions']; ?>
+						</td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TOPIC_SUBSCRIPTIONS_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONSCHECKED') ?>
 						</td>
 								<td align="left" valign="top"><?php echo $lists ['subscriptionschecked'];
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONSCHECKED_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL_ONCE') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $lists ['email_once'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL_ONCE_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">

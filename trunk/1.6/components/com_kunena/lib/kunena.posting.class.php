@@ -925,17 +925,21 @@ class CKunenaPosting {
 			$uri = JURI::getInstance ( JURI::base () );
 			$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . CKunenaLink::GetMessageURL($this->get ( 'id' ), $this->get ( 'catid' ), 0, false);
 		}
-		$once = $this->_config->email_once;
+		$once = false;
 		if ($mailsubs) {
-			if (!$once) {
-				// Send subscription for all subscribers
-				$mailsubs = $this->_config->allowsubscriptions;
-			} elseif ($this->get ( 'parent' )) {
-				// Existing topic: Only topic subscribers will get the email
-				$mailsubs = $this->_config->allowsubscriptions == 1 || $this->_config->allowsubscriptions == 2 ? 2 : 0;
+			if (!$this->get ( 'parent' )) {
+				// New topic: Send email only to category subscribers
+				$mailsubs = $this->_config->category_subscriptions != 'disabled' ? 3 : 0;
+				$once = $this->_config->category_subscriptions == 'topic';
+			} elseif ($this->_config->category_subscriptions != 'post') {
+				// Existing topic: Send email only to topic subscribers
+				$mailsubs = $this->_config->topic_subscriptions != 'disabled' ? 2 : 0;
+				$once = $this->_config->topic_subscriptions == 'first';
 			} else {
-				// New topic: Only category subscribers will get the email
-				$mailsubs = $this->_config->allowsubscriptions == 1 || $this->_config->allowsubscriptions == 3 ? 3 : 0;
+				// Existing topic: Send email to both category and topic subscribers
+				$mailsubs = $this->_config->topic_subscriptions == 'disabled' ? 3 : 1;
+				// FIXME: category subcription can override topic
+				$once = $this->_config->topic_subscriptions == 'first';
 			}
 		}
 		// Fetch all subscribers, moderators and admins who will get the email
@@ -985,7 +989,7 @@ class CKunenaPosting {
 					$msg .= "\n-----\n\n";
 				}
 				$msg .= $msg2 . "\n";
-				if ($once) {
+				if ($emailTo->subscription && $once) {
 					if ($this->get ( 'parent' )) {
 						$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' ) . "\n";
 					} else {
@@ -995,7 +999,6 @@ class CKunenaPosting {
 				$msg .= "\n";
 				$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
 				$msg = JMailHelper::cleanBody ( $msg );
-
 				JUtility::sendMail ( $this->_config->email, $mailsender, $emailTo->email, $mailsubject, $msg );
 				$sentusers[] = $emailTo->id;
 			}

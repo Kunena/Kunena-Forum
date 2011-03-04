@@ -272,7 +272,7 @@ abstract class KunenaAccess {
 		$query = array();
 		if ($subsriptions == 1 || $subsriptions == 2) {
 			// Get topic subscriptions
-			$once = KunenaFactory::getConfig()->email_once ? 'AND future1=0' : '';
+			$once = KunenaFactory::getConfig()->topic_subscriptions == 'first' ? 'AND future1=0' : '';
 			$query[] = "SELECT userid AS user_id FROM #__kunena_subscriptions WHERE thread={$topicid} {$once}";
 		}
 		if ($subsriptions == 1 || $subsriptions == 3) {

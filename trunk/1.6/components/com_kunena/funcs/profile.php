@@ -311,6 +311,7 @@ class CKunenaProfile {
 
 	function displaySubscriptions()
 	{
+		if ($this->config->topic_subscriptions == 'disabled') return;
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('subscriptions', 0);
 		$obj->user = $this->user;
@@ -322,6 +323,7 @@ class CKunenaProfile {
 
 	function displayCategoriesSubscriptions()
 	{
+		if ($this->config->category_subscriptions == 'disabled') return;
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('catsSubscriptions', 0);
 		$obj->user = $this->user;

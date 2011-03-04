@@ -150,7 +150,7 @@ class CKunenaShowcat {
 
 		//Perform subscriptions check
 		$kunena_cansubscribecat = 0;
-		if (($this->config->allowsubscriptions && $this->config->allowsubscriptions != 2) && ("" != $this->my->id || 0 != $this->my->id)) {
+		if ($this->config->allowsubscriptions && $this->config->category_subscriptions != 'disabled' && ("" != $this->my->id || 0 != $this->my->id)) {
 			if ($this->objCatInfo->subscribeid == '') {
 				$kunena_cansubscribecat = 1;
 			}
@@ -184,7 +184,7 @@ class CKunenaShowcat {
 			$this->thread_subscribecat = CKunenaLink::GetCategoryActionLink ( 'subscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
 		}
 
-		if ($this->my->id != 0 && ($this->config->allowsubscriptions && $this->config->allowsubscriptions != 2) && $kunena_cansubscribecat == 0) {
+		if ($this->my->id != 0 && $this->config->allowsubscriptions && $this->config->category_subscriptions != 'disabled' && $kunena_cansubscribecat == 0) {
 			// this user is allowed to unsubscribe
 			$this->thread_subscribecat = CKunenaLink::GetCategoryActionLink ( 'unsubscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
 		}

@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+4-March-2011 Matias
+^ [#25026] Make subcription options more powerful
+
 3-March-2011 Matias
 + [#25026] Administration: Add more subscription options (thanks Frank Gore)
 + [#25023] Limit notification emails until user visits the topic again (thanks Frank Gore)

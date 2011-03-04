@@ -20,6 +20,7 @@
 	</files>
 
 	<languages folder="languages">
+		<language tag="da-DK">da-DK.mod_kunenalatest.ini</language>
 		<language tag="de-DE">de-DE.mod_kunenalatest.ini</language>
 		<language tag="en-GB">en-GB.mod_kunenalatest.ini</language>
 		<language tag="es-ES">es-ES.mod_kunenalatest.ini</language>

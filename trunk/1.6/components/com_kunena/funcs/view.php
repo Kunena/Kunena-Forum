@@ -517,7 +517,7 @@ class CKunenaView {
 			$this->redirect = CKunenaLink::GetThreadPageURL('view', $this->catid, $this->id, $page, $this->limit, '', false);
 		}
 
-		$maxpages = 9 - 2; // odd number here (show - 2)
+		$maxpages = 7 - 2; // odd number here (show - 2)
 		$totalpages = ceil ( $this->total_messages / $this->limit );
 		$page = floor ( $this->limitstart / $this->limit ) + 1;
 		$firstpage = 1;

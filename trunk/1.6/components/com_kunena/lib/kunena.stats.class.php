@@ -238,7 +238,7 @@ class CKunenaStats {
 
 		if (count($this->topthanks) < $thanksCount) {
 			$queryName = $this->_config->username ? "username" : "name";
-			$this->_db->setQuery ( "SELECT a.*,b.id,b.{$queryName} AS username,COUNT(a.targetuserid) AS receivedthanks FROM `#__kunena_thankyou` AS a LEFT JOIN #__users AS b ON a.targetuserid=b.id GROUP BY a.targetuserid ASC ORDER BY COUNT(a.targetuserid) DESC", 0, $thanksCount );
+			$this->_db->setQuery ( "SELECT a.*,b.id,b.{$queryName} AS username,COUNT(a.targetuserid) AS receivedthanks FROM `#__kunena_thankyou` AS a LEFT JOIN #__users AS b ON a.targetuserid=b.id GROUP BY a.targetuserid ORDER BY COUNT(a.targetuserid) DESC", 0, $thanksCount );
 			$this->topuserthanks = $this->_db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 			$this->topthanks = ! empty ( $this->topuserthanks [0]->receivedthanks ) ? $this->topuserthanks [0]->receivedthanks : 0;

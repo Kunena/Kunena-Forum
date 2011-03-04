@@ -2515,7 +2515,7 @@ function textCounter(field, target) {
 					<tr>
 						<th colspan="2" class="title"><?php
 						echo JText::_('COM_KUNENA_SUBFOR');
-						echo kescape($username);
+						echo ' '.kescape($username);
 						?>
 						</th>
 					</tr>

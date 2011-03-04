@@ -44,6 +44,8 @@ Kunena 1.6.4-DEV
 # [#24469] Add configuration option to prevent Guests from viewing members' user profiles
 # [#25171] Cloak all Email addresses (in BBCode, profile, userlist)
 # [#24758] Confidential tags hide text from admins/mods in topic history and message preview
+# [#25178] Statistics page: database error
+# [#25168] Fix misc CSS layout and color issues
 
 3-March-2011 Matias
 + [#25026] Administration: Add more subscription options (thanks Frank Gore)

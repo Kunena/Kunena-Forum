@@ -25,22 +25,13 @@ defined( '_JEXEC' ) or die();
 if ($this->config->showwhoisonline) {
 	$users=$this->getUsersList();
 ?>
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k_bt_cvr5">
-	<table class = "kblocktable " id="kwhoispage">
-		<thead>
-			<tr>
-				<th colspan = "4">
-					<div class = "ktitle-cover">
-						<span class="ktitle"><?php echo $this->app->getCfg('sitename'); ?> - <?php echo JText::_('COM_KUNENA_WHO_WHOIS_ONLINE'); ?></span>
-					</div>
-				</th>
-			</tr>
-		</thead>
-
+<div class="kblock">
+	<div class="kheader">
+    <span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kwhois_tbody"></a></span>
+		<h2><span><?php echo $this->app->getCfg('sitename'); ?> - <?php echo JText::_('COM_KUNENA_WHO_WHOIS_ONLINE'); ?></span></h2>
+	</div>
+    <div class="kcontainer" id="kwhois_tbody">
+	<table>
 		<tbody>
 			<tr class = "ksth">
 				<th class = "th-1 ksectiontableheader"><?php echo JText::_('COM_KUNENA_WHO_ONLINE_USER'); ?></th>
@@ -93,9 +84,6 @@ if ($this->config->showwhoisonline) {
 				</tr>
 		<?php endforeach; ?>
 	</table>
-</div>
-</div>
-</div>
 </div>
 </div>
 <?php } else { ?>

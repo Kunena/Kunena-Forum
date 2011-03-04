@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+4-March-2011 810
+^ [#25168] Fix CSS layout and color issues (Whoisonline)
+^ [#25168] Fix CSS layout and color issues (few little fixes)
+
 4-March-2011 Matias
 ^ [#25026] Make new subcription options more powerful
 ^ [#25026] Make new subcription options to work with custom templates (without changing them)

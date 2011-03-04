@@ -805,8 +805,7 @@ PX		EM			PCT			PT
 	border: 1px solid;
 }
 #Kunena .klist-markallcatsread input.kbutton {
-	padding:0;
-	margin: 4px;
+	margin: 8px;
 }
 
 #Kunena .klist-categories {

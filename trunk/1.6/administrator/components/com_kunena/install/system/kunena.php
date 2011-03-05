@@ -13,16 +13,16 @@ defined ( '_JEXEC' ) or die ();
 class plgSystemKunena extends JPlugin {
 
 	function __construct(& $subject, $config) {
+		// Check if Kunena API exists
+		$kunena_api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		if (! is_file ( $kunena_api ))
+			return false;
+
 		jimport ( 'joomla.application.component.helper' );
 		// Check if Kunena component is installed/enabled
 		if (! JComponentHelper::isEnabled ( 'com_kunena', true )) {
 			return false;
 		}
-
-		// Check if Kunena API exists
-		$kunena_api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-		if (! is_file ( $kunena_api ))
-			return false;
 
 		// Load Kunena API
 		require_once ($kunena_api);

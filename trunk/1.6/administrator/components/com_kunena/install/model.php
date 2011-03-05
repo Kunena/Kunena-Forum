@@ -316,7 +316,7 @@ class KunenaModelInstall extends JModel {
 		if ($jversion->RELEASE == '1.5') {
 			$query = "SELECT id FROM #__plugins WHERE folder='{$folder}' AND element='{$name}'";
 		} else {
-			$query = "SELECT id FROM #__extensions WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
+			$query = "SELECT extension_id FROM #__extensions WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
 		}
 		$this->db->setQuery ( $query );
 		$pluginid = $this->db->loadResult ();

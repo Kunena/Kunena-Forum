@@ -494,7 +494,6 @@ class KunenaModelInstall extends JModel {
 
 		// Cleanup directory structure
 		if (!Kunena::isSVN()) {
-			if( JFolder::exists(KPATH_ADMIN . '/archive') ) JFolder::delete(KPATH_ADMIN . '/archive');
 			if( JFolder::exists(KPATH_ADMIN . '/language') ) JFolder::delete(KPATH_ADMIN . '/language');
 			if( JFolder::exists(KPATH_SITE . '/language') ) JFolder::delete(KPATH_SITE . '/language');
 		}

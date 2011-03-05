@@ -135,6 +135,7 @@
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
 		<move file="${tmp_dir}/${kunena.backend}/${cfg.name}.xml" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/${cfg.name}.j16.xml" todir="${build_dir}" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/${kunena.frontend}/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/${kunena.frontend}/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/README.txt" todir="${build_dir}" overwrite="true" filtering="true" />
@@ -149,6 +150,7 @@
 		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/kunena.php" todir="${build_dir}" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/router.php" todir="${build_dir}" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/${kunena.backend}/install/system/kunena.xml" todir="${build_dir}/install/system" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/install/system/kunena.j16.xml" todir="${build_dir}/install/system" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/${kunena.backend}/install/kunena.install.upgrade.xml" todir="${build_dir}/install" overwrite="true" filtering="true" />
 		<move todir="${build_dir}">
 			<fileset dir="${tmp_dir}/${kunena.backend}">

@@ -58,7 +58,6 @@ class KunenaControllerInstall extends JController {
 				$view->setToolBar();
 			}
 		}
-			$app = JFactory::getApplication ();
 	}
 
 	public function run() {
@@ -66,6 +65,8 @@ class KunenaControllerInstall extends JController {
 
 		set_exception_handler('kunenaInstallerExceptionHandler');
 		//set_error_handler('kunenaInstallerErrorHandler');
+
+		$session = JFactory::getSession();
 
 		// Check requirements
 		$this->model->checkTimeout ();
@@ -87,6 +88,9 @@ class KunenaControllerInstall extends JController {
 		}
 
 		if ($this->step == 0) {
+			// Reset enqueued messages before starting
+			$session->set('kunena.queue', null);
+			$session->set('kunena.newqueue', null);
 			$this->model->setStep ( ++ $this->step );
 		}
 		do {
@@ -95,6 +99,16 @@ class KunenaControllerInstall extends JController {
 			$this->step = $this->model->getStep ();
 			$stop = ($this->model->checkTimeout () || !isset($this->steps[$this->step+1]));
 		} while ( ! $stop && ! $error );
+
+		// Store queued messages so that they won't get lost
+		$session->set('kunena.queue', array_merge( (array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue') ));
+		$newqueue = array();
+		$app = JFactory::getApplication ();
+		foreach ($app->getMessageQueue() as $item) {
+			if (!empty($item['message'])) $newqueue[] = $item;
+		}
+		$session->set('kunena.newqueue', $newqueue);
+
 		if ( isset($this->steps[$this->step+1]) && ! $error ) {
 			$this->setRedirect ( 'index.php?option=com_kunena&view=install&go=next' );
 		} else {

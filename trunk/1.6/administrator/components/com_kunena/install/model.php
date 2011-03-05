@@ -1575,6 +1575,7 @@ class KunenaModelInstall extends JModel {
 		}
 
 		$table = JTable::getInstance ( 'menu' );
+		$table->load(array('menutype'=>'kunenamenu', 'link'=>$menu ['link']));
 		$params = '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}';
 		$data = array (
 			'menutype' => 'kunenamenu',
@@ -1598,6 +1599,7 @@ class KunenaModelInstall extends JModel {
 		$defaultmenu = 0;
 		foreach ( $submenu as $menuitem ) {
 			$table = JTable::getInstance ( 'menu' );
+			$table->load(array('menutype'=>'kunenamenu', 'link'=>$menuitem ['link']));
 			$data = array (
 				'menutype' => 'kunenamenu',
 				'title' => $menuitem ['name'],
@@ -1628,7 +1630,7 @@ class KunenaModelInstall extends JModel {
 			throw new KunenaInstallerException ( $table->getError () );
 		}
 
-		$table = JTable::getInstance ( 'module' );
+		$module = JTable::getInstance ( 'module' );
 		$data = array (
 			'title' => JText::_ ( 'COM_KUNENA_MENU_TITLE' ),
 			'ordering' => 1,
@@ -1640,14 +1642,14 @@ class KunenaModelInstall extends JModel {
 			'params' => '{"menutype":"kunenamenu","startLevel":"2","endLevel":"3","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid"}',
 			'client_id' => 0,
 			'language' => '*' );
-		if (! $table->bind ( $data ) || ! $table->check ()) {
+		if (! $module->bind ( $data ) || ! $module->check ()) {
 			// Menu already exists, do nothing
 			return true;
 		}
-		if (! $table->store ()) {
-			throw new KunenaInstallerException ( $table->getError () );
+		if (! $module->store ()) {
+			throw new KunenaInstallerException ( $module->getError () );
 		}
-		$moduleid = $table->id;
+		$moduleid = $module->id;
 
 		// Now publish the module
 		$query = "REPLACE INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES ($moduleid, 0);";
@@ -1656,28 +1658,39 @@ class KunenaModelInstall extends JModel {
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
-/* FIXME: Broken in J1.6.0:
 		// Finally create alias
-		$defaultmenu = JMenu::getInstance('site')->getDefault();
-		$data = array (
-			'menutype' => $defaultmenu->menutype,
-			'title' => JText::_ ( 'COM_KUNENA_MENU_FORUM' ),
-			'alias' => 'kunenaforum',
-			'link' => 'index.php?Itemid='.$parent->id,
-			'type' => 'alias',
-			'published' => 1,
-			'parent_id' => 1,
-			'component_id' => 0,
-			'access' => 1,
-			'params' => '{"aliasoptions":"'.(int)$parent->id.'","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
-			'home' => 0,
-			'language' => '*',
-			'client_id' => 0
-		);
-		if (! $table->setLocation ( 1, 'last-child' ) || ! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
+		// TODO: contains workaround for J1.6.1 bug:
+		$defaultmenu = JMenu::getInstance('site')->getDefault('workaround');
+		if (!$defaultmenu) return true;
+		$table = JTable::getInstance ( 'menu' );
+		$table->load(array('menutype'=>$defaultmenu->menutype, 'type'=>'alias', 'title'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' )));
+		if (!$table->id) {
+			$data = array (
+				'menutype' => $defaultmenu->menutype,
+				'title' => JText::_ ( 'COM_KUNENA_MENU_FORUM' ),
+				'link' => 'index.php?Itemid='.$parent->id,
+				'type' => 'alias',
+				'published' => 0,
+				'parent_id' => 1,
+				'component_id' => 0,
+				'access' => 1,
+				'params' => '{"aliasoptions":"'.(int)$parent->id.'","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
+				'home' => 0,
+				'language' => '*',
+				'client_id' => 0
+			);
+			if (! $table->setLocation ( 1, 'last-child' )) {
+				throw new KunenaInstallerException ( $table->getError () );
+			}
+		} else {
+			$data = array (
+				'link' => 'index.php?Itemid='.$parent->id,
+				'params' => '{"aliasoptions":"'.(int)$parent->id.'","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
+			);
+		}
+		if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
 			throw new KunenaInstallerException ( $table->getError () );
 		}
-*/
 	}
 
 	function deleteMenu() {

@@ -38,6 +38,8 @@ Kunena 1.6.4-DEV
 # [#25187] Joomla 1.6 workaround: Use two separate manifest files and hope that right one gets picked up
 # [#25188] Installer: Improve error reporting by showing all enqueued messages
 # [#25189] Joomla 1.6: Kunena System plugin isn't removed on uninstall
+# [#24184] Joomla 1.6: Menu creation fails on error if same alias is already defined
+# [#24184] Joomla 1.6: Menu item wasn't created into main menu
 
 4-March-2011 Matias
 ^ [#25026] Make new subcription options more powerful

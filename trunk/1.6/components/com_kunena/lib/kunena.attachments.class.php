@@ -185,7 +185,7 @@ class CKunenaAttachments {
 		if ($mesids == 0) return;
 
 		// Do not delete files which are used in other attachments or are not really Kunena attachments
-		$this->_db->setQuery ( "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_attachments AS b ON a.folder=b.folder AND a.filename=b.filename
+		$this->_db->setQuery ( "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_attachments AS b ON a.id!=b.id AND a.folder=b.folder AND a.filename=b.filename
 			WHERE a.mesid IN ({$mesids}) AND (a.folder LIKE '%media/kunena/attachments%' OR a.folder LIKE '%images/fbfiles%') AND b.filename IS NULL" );
 		$fileList = $this->_db->loadObjectlist ();
 		if (KunenaError::checkDatabaseError()) return;
@@ -208,7 +208,7 @@ class CKunenaAttachments {
 		if ($attachids == 0) return;
 
 		// Do not delete files which are used in other attachments or are not really Kunena attachments
-		$this->_db->setQuery ( "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_attachments AS b ON a.folder=b.folder AND a.filename=b.filename
+		$this->_db->setQuery ( "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_attachments AS b ON a.id!=b.id AND a.folder=b.folder AND a.filename=b.filename
 			WHERE a.id IN ({$attachids}) AND (a.folder LIKE '%media/kunena/attachments%' OR a.folder LIKE '%images/fbfiles%') AND b.filename IS NULL" );
 		$fileList = $this->_db->loadObjectlist ();
 		if (KunenaError::checkDatabaseError()) return;

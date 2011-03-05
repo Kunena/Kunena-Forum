@@ -34,6 +34,7 @@ Kunena 1.6.4-DEV
 
 5-March-2011 Matias
 # [#25166] Can't ban users in backend
+# [#23815] Deleted attachments are not removed from disk
 
 4-March-2011 Matias
 ^ [#25026] Make new subcription options more powerful

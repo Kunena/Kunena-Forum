@@ -59,11 +59,11 @@ class KunenaAdminControllerUsers extends KunenaController {
 		$newrank = JRequest::getVar ( 'newrank' );
 		$signature = JRequest::getVar ( 'message' );
 		$deleteSig = JRequest::getVar ( 'deleteSig' );
-		$moderator = JRequest::getVar ( 'moderator' );
-		$uid = JRequest::getVar ( 'uid' );
+		$moderator = JRequest::getInt ( 'moderator' );
+		$uid = JRequest::getInt ( 'uid' );
 		$avatar = JRequest::getVar ( 'avatar' );
 		$deleteAvatar = JRequest::getVar ( 'deleteAvatar' );
-		$neworder = JRequest::getVar ( 'neworder' );
+		$neworder = JRequest::getInt ( 'neworder' );
 		$modCatids = JRequest::getVar ( 'catid', array () );
 
 		if ($deleteSig == 1) {
@@ -81,7 +81,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 		//delete all moderator traces before anyway
 		$db->setQuery ( "DELETE FROM #__kunena_moderation WHERE userid='$uid'" );
 		$db->query ();
-		if (KunenaError::checkDatabaseError()) return;
+		if (KunenaError::checkDatabaseError()) return;		
 
 		//if there are moderatored forums, add them all
 		if ($moderator == 1) {

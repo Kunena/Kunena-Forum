@@ -18,6 +18,8 @@ kimport ( 'kunena.view' );
 class KunenaAdminViewCpanel extends KunenaView {
 	function display() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		$this->config = KunenaFactory::getConfig ();
+		$this->versioncheck = $this->get('latestversion');
 
 		parent::display ();
 	}

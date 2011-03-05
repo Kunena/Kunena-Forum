@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+05-March-2011 Xillibit
+^ [#24395] Show version check in cpanel and prune has now an option to trash or delete topics
+
 27-February-2011 Xillibit
 ^ [#24395] Keep admin.kunena.php in backend to avoid issues
 

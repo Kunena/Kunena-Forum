@@ -671,6 +671,31 @@ class KunenaForumTopic extends JObject {
 	}
 
 	/**
+	 * Method to put the KunenaForumTopic object on trash this is still present in database
+	 *
+	 * @access	public
+	 * @return	boolean	True on success
+	 * @since 1.6
+	 */
+	public function trash() {
+		if (!$this->exists()) {
+			return true;
+		}
+
+		$db = JFactory::getDBO ();
+		$queries[] = "UPDATE #__kunena_messages SET hold='3' WHERE thread={$db->quote($this->id)}";
+		$queries[] = "UPDATE #__kunena_topics SET hold='3' WHERE id={$db->quote($this->id)}";
+
+		foreach ($queries as $query) {
+			$db->setQuery($query);
+			$db->query();
+			KunenaError::checkDatabaseError ();
+		}
+
+		return true;
+	}
+
+	/**
 	 * Method to delete the KunenaForumTopic object from the database
 	 *
 	 * @access	public

@@ -130,7 +130,7 @@ class modKunenaLatestHelper {
 		}
 
 		if (empty ( $result )){
-			echo JText::_ ( 'MOD_KUNENALATEST_NO_MESSAGE' );
+			echo '<p class="klatest-none">'.JText::_ ( 'MOD_KUNENALATEST_NO_MESSAGE' ).'</p>';
 		}
 
 		return $result;

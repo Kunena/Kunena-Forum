@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.3-DEV
 
+05-March-2011 Xillibit
+^ [#25137] mod_kunenalatest lacks paragraph
+
 20-February-2011 svens(LDA)
 ^ [#24847] update hu-HU (thanks pedrohsi)
 

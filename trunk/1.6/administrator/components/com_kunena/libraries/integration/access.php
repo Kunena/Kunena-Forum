@@ -79,7 +79,7 @@ abstract class KunenaAccess {
 		if (!$user->exists()) return false;
 
 		// In backend every logged in user has global admin rights (for now)
-		if (JFactory::getApplication()->isAdmin())
+		if (JFactory::getApplication()->isAdmin() && $user->userid == KunenaFactory::getUser()->userid)
 			return true;
 
 		// Load administrators list

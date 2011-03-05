@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+5-March-2011 Matias
+# [#25166] Can't ban users in backend
+
 4-March-2011 Matias
 ^ [#25026] Make new subcription options more powerful
 ^ [#25026] Make new subcription options to work with custom templates (without changing them)
@@ -45,7 +48,7 @@ Kunena 1.6.4-DEV
 # [#25171] Cloak all Email addresses (in BBCode, profile, userlist)
 # [#24758] Confidential tags hide text from admins/mods in topic history and message preview
 # [#25178] Statistics page: database error
-# [#25168] Fix misc CSS layout and color issues
+# [#25168] Fix misc CSS layout and color issues (thanks 810)
 
 3-March-2011 Matias
 + [#25026] Administration: Add more subscription options (thanks Frank Gore)

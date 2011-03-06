@@ -74,7 +74,7 @@ $kunena_config = KunenaFactory::getConfig ();
 				<input name="text2" id="kbbcode-link_text" type="text" size="30" maxlength="150"
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaParser::JSText('COM_KUNENA_EDITOR_HELPLINE_LINKTEXT'); ?>')" />
 				<input type="button" name="insterLink" value="<?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?>"
-					onclick="kbbcode.replaceSelection('[url=' + document.id('kbbcode-link_url').get('value') + ']' + document.id('kbbcode-link_textdocument.id(.get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
+					onclick="kbbcode.replaceSelection('[url=' + document.id('kbbcode-link_url').get('value') + ']' + document.id('kbbcode-link_text').get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaParser::JSText('COM_KUNENA_EDITOR_HELPLINE_LINKAPPLY'); ?>')" />
 			</div>
 

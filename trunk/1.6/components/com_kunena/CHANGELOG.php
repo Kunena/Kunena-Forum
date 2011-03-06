@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+6-March-2011 Matias
+# [#25192] Regression: the "insert" button for adding a url to a post does not work
+
 5-March-2011 Matias
 # [#25166] Can't ban users in backend
 # [#23815] Deleted attachments are not removed from disk

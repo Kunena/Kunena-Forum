@@ -39,6 +39,7 @@ Kunena 1.6.4-DEV
 # [#25190] Joomla 1.6: User profiles are not created automatically into database
 # [#25190] Joomla 1.6: Administrators do not have administrative permissions
 # [#24960] Update example template to have all the new features
++ [#25197] Debug mode: Add JavaScript to detect some of the most common MooTools issues
 
 5-March-2011 Matias
 # [#25166] Can't ban users in backend

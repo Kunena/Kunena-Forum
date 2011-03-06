@@ -93,6 +93,11 @@ class KunenaTemplate extends JObject
 			}
 		}
 		JHTML::_ ( 'behavior.mootools' );
+
+		if (KunenaFactory::getConfig()->debug) {
+			// Debugging Mootools issues
+			CKunenaTools::addScript ( KUNENA_DIRECTURL . 'template/default/js/debug-min.js' );
+		}
 	}
 
 	public function getPath($default = false) {
@@ -192,17 +197,17 @@ class KunenaTemplate extends JObject
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;
 	}
-	
+
 	public function getTemplateDetails() {
 		$templatedetails = new stdClass();
 		$xml_tmpl = JFactory::getXMLparser('Simple');
 		$xml_tmpl->loadFile($this->xml_path);
-	
+
 		$templatedetails->creationDate = $xml_tmpl->document->creationDate[0]->data();
 		$templatedetails->author = $xml_tmpl->document->author[0]->data();
 		$templatedetails->version = $xml_tmpl->document->version[0]->data();
 		$templatedetails->name = $xml_tmpl->document->name[0]->data();
-		
+
 		return $templatedetails;
 	}
 

@@ -356,9 +356,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		}
 
 		$userprofile = KunenaFactory::getUser($kunena_my->id);
-		if ($userprofile->posts === null) {
+		if (!$userprofile->exists()) {
 			$userprofile->save();
-			//$userprofile = KunenaFactory::getUser($kunena_my->id, true);
 		}
 
 		// Assign previous visit without user offset to variable for templates to decide

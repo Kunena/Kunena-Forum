@@ -52,7 +52,7 @@ class CKunenaProfile {
 		$this->allow = true;
 
 		$this->profile = KunenaFactory::getUser ( $this->user->id );
-		if ($this->profile->posts === null) {
+		if (!$this->profile->exists()) {
 			$this->profile->save();
 		}
 		if ($this->profile->userid == $this->my->id) {

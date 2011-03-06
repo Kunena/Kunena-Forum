@@ -38,6 +38,7 @@ Kunena 1.6.4-DEV
 # [#25191] Joomla 1.6: Untranslated string in menu manager: plg_system_kunena
 # [#25190] Joomla 1.6: User profiles are not created automatically into database
 # [#25190] Joomla 1.6: Administrators do not have administrative permissions
+# [#24960] Update example template to have all the new features
 
 5-March-2011 Matias
 # [#25166] Can't ban users in backend

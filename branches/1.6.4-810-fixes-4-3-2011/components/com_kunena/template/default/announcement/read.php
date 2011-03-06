@@ -14,9 +14,11 @@ defined( '_JEXEC' ) or die();
 $document = JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 ?>
-<div class="kblock kannouncement">
+<div class="kblock">
 	<div class="kheader">
-		<h1><?php echo KunenaParser::parseText($this->announcement->title); ?></h1>
+		<h2>
+			<span><?php echo KunenaParser::parseText($this->announcement->title); ?></span>
+            </h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
 		<?php if ($this->canEdit) : ?>

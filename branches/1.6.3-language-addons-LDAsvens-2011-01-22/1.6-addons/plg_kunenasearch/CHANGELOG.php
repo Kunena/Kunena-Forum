@@ -27,6 +27,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaSearch 1.6.3
+06-March-2011 svens(LDA)
+^ [#24847] update nb-NO (thanks Joomla! i Norge)
+
 18-February-2011 svens(LDA)
 ^ [#24847] update fi-FI (thanks Mortti)
 

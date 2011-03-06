@@ -29,6 +29,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaLatest 1.6.3-DEV
+06-March-2011 svens(LDA)
+^ [#24847] update nb-NO (thanks Joomla! i Norge)
+
 04-March-2011 svens(LDA)
 ^ [#24847] add da-DK (thanks Lars Westermann)
 

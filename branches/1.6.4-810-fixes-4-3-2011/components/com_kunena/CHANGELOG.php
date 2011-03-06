@@ -34,6 +34,7 @@ Kunena 1.6.4-DEV
 
 6-March-2011 810
 ^ [#25168] Fix CSS layout and color issues (double div.kmsgtext in css)
+^ [#24847] updated nl-NL
 
 4-March-2011 810
 ^ [#25168] Fix CSS layout and color issues (Whoisonline)

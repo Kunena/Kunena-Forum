@@ -31,6 +31,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
+06-March-2011 svens(LDA)
+^ [#24847] updated ru-RU (thanks Zarkos)
+^ [#24847] updated de-DE (thanks rich)
+^ [#24847] updated id-ID (thanks Daniel)
+^ [#24847] disabled nb-NO version 1.6.1
+^ [#24847] disabled pt-BR version 1.6.1
+
 02-March-2011 svens(LDA)
 ^ [#24847] updated hu-HU (thanks pedrohsi)
 

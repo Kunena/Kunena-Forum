@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 06-March-2011 svens(LDA)
+^ [#24847] update nb-NO (thanks Joomla! i Norge)
+^ [#24847] updated de-DE (thanks rich)
+
+06-March-2011 svens(LDA)
 ^ [#24847] updated ru-RU (thanks Zarkos)
 ^ [#24847] updated de-DE (thanks rich)
 ^ [#24847] updated id-ID (thanks Daniel)

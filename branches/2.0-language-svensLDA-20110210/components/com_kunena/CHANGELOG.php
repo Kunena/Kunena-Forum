@@ -30,6 +30,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 2.0.0-DEV
+06-March-2011 svens(LDA)
+^ [#24848] update ru-RU (thanks Zarkos)
 
 28.February-2011 svens(LDA)
 ^ [#24848] update ru-RU (thanks Zarkos)

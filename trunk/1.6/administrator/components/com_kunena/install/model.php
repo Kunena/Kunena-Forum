@@ -17,7 +17,14 @@ DEFINE('KUNENA_MIN_PHP', '5.2.3');
 DEFINE('KUNENA_MIN_MYSQL', '4.1.19');
 DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.20' );
 
+jimport ( 'joomla.version' );
 jimport ( 'joomla.application.component.model' );
+jimport ( 'joomla.filesystem.folder' );
+jimport ( 'joomla.filesystem.file' );
+jimport ( 'joomla.filesystem.path' );
+jimport ( 'joomla.filesystem.archive' );
+jimport ( 'joomla.installer.installer' );
+
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 /**
@@ -210,10 +217,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function extract($path, $filename, $dest = null, $silent = false) {
-		jimport ( 'joomla.filesystem.folder' );
-		jimport ( 'joomla.filesystem.file' );
-		jimport ( 'joomla.filesystem.archive' );
-
 		if (! $dest)
 			$dest = $path;
 		$file = $path . DS . $filename;
@@ -238,7 +241,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function installLanguage($tag, $name = '') {
-		jimport('joomla.installer.installer');
 		$exists = false;
 		$success = true;
 		$destinations = array(
@@ -274,7 +276,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function publishPlugin($folder, $name, $enable = 1) {
-		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == '1.5') {
 			$query = "UPDATE #__plugins SET published='{$enable}' WHERE folder='{$folder}' AND element='{$name}'";
@@ -289,7 +290,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function installPlugin($path, $file, $name) {
-		jimport('joomla.installer.installer');
 		$success = false;
 		$dest = JPATH_ROOT.'/tmp/kinstall_plugin';
 
@@ -311,7 +311,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function uninstallPlugin($folder, $name) {
-		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == '1.5') {
 			$query = "SELECT id FROM #__plugins WHERE folder='{$folder}' AND element='{$name}'";
@@ -321,18 +320,28 @@ class KunenaModelInstall extends JModel {
 		$this->db->setQuery ( $query );
 		$pluginid = $this->db->loadResult ();
 		if ($pluginid) {
-			jimport('joomla.installer.installer');
 			$installer = new JInstaller ( );
 			$installer->uninstall ( 'plugin', $pluginid );
 		}
 	}
 
 	function installSystemPlugin() {
-		jimport('joomla.installer.installer');
+		$src = KPATH_ADMIN . '/install/system';
+		$dest = JPATH_ROOT.'/tmp/kinstall_plugin';
+		JFolder::copy($src, $dest);
+		$jversion = new JVersion ();
+		// We need to have only one manifest which is named as kunena.xml
+		if ($jversion->RELEASE == '1.5') {
+			JFile::delete($dest.'/kunena.j16.xml');
+		} else {
+			JFile::delete($dest.'/kunena.xml');
+			JFile::move($dest.'/kunena.j16.xml', $dest.'/kunena.xml');
+		}
 		$installer = new JInstaller ( );
-		if ($installer->install ( KPATH_ADMIN . '/install/system' )) {
+		if ($installer->install ( $dest )) {
 			$success = $this->publishPlugin('system', 'kunena');
 		}
+		JFolder::delete($dest);
 		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', 'System - Kunena'), $success);
 	}
 
@@ -412,7 +421,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepPlugins() {
-		jimport('joomla.filesystem.folder');
 		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
 
 		$this->installSystemPlugin();
@@ -481,7 +489,6 @@ class KunenaModelInstall extends JModel {
 		$this->createMenu(false);
 		CKunenaTools::reCountBoards();
 
-		jimport ( 'joomla.filesystem.file' );
 		foreach ($entryfiles as $fileparts) {
 			list($path, $filename, $ext) = $fileparts;
 			if (is_file("{$path}/{$filename}.new.{$ext}")) {
@@ -756,9 +763,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function migrateAvatars() {
-		jimport ( 'joomla.filesystem.file' );
-		jimport ( 'joomla.filesystem.folder' );
-		jimport ( 'joomla.filesystem.path' );
 		$app = JFactory::getApplication ();
 		$stats = $this->getAvatarStatus();
 
@@ -847,7 +851,6 @@ class KunenaModelInstall extends JModel {
 		$action = $this->getAction();
 		if ($action != 'migrate') return true;
 
-		jimport ( 'joomla.filesystem.folder' );
 		$srcpath = JPATH_ROOT.'/images/fbfiles/avatars/gallery';
 		$dstpath = KPATH_MEDIA.'/avatars/gallery';
 		if (JFolder::exists($srcpath)) {
@@ -864,7 +867,6 @@ class KunenaModelInstall extends JModel {
 		$action = $this->getAction();
 		if ($action != 'migrate') return true;
 
-		jimport ( 'joomla.filesystem.folder' );
 		$srcpath = JPATH_ROOT.'/images/fbfiles/category_images';
 		$dstpath = KPATH_MEDIA.'/category_images';
 		if (JFolder::exists($srcpath)) {
@@ -895,9 +897,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function migrateAttachments() {
-		jimport ( 'joomla.filesystem.file' );
-		jimport ( 'joomla.filesystem.folder' );
-		jimport ( 'joomla.filesystem.path' );
 		$app = JFactory::getApplication ();
 		$stats = $this->getAttachmentStatus();
 
@@ -1385,7 +1384,6 @@ class KunenaModelInstall extends JModel {
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_SEARCH' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=search', 'access'=>0),
 		);
 
-		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == '1.5') {
 			$this->createMenuJ15($menu, $submenu);
@@ -1694,7 +1692,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function deleteMenu() {
-		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == '1.5') {
 			$this->DeleteMenuJ15();
@@ -1743,7 +1740,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	protected function _getJoomlaArchiveError($archive) {
-		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		$error = '';
 		if ($jversion->RELEASE == '1.5') {

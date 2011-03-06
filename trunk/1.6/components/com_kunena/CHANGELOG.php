@@ -34,6 +34,8 @@ Kunena 1.6.4-DEV
 
 6-March-2011 Matias
 # [#25192] Regression: the "insert" button for adding a url to a post does not work
+# [#25191] Joomla 1.6: Kunena system plugin not installed
+# [#25191] Joomla 1.6: Untranslated string in menu manager: plg_system_kunena
 
 5-March-2011 Matias
 # [#25166] Can't ban users in backend

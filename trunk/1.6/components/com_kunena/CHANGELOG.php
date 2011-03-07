@@ -35,7 +35,8 @@ Kunena 1.6.4-DEV
 7-March-2011 Matias
 # [#25198] Fix infinite redirect loops, show warning instead
 # [#25198] Warning: Invalid argument supplied for foreach() in KunenaRouter
-# [#25130] Improve Mootools version detection and warnings
+# [#25130] Improve Mootools version detection and warnings (under debug mode)
+^ [#15886] Merged revisions 4531-4549 from /branches/1.6-xillibit-01-03-2011
 
 6-March-2011 Matias
 # [#25192] Regression: the "insert" button for adding a url to a post does not work
@@ -55,6 +56,10 @@ Kunena 1.6.4-DEV
 # [#24184] Joomla 1.6: Menu creation fails on error if same alias is already defined
 # [#24184] Joomla 1.6: Menu item wasn't created into main menu
 
+4-March-2011 Xillibit
+# [#25123] Cast all values to be int for security purpose (Part 2)
+^ [#24847] Update fr-FR language
+
 4-March-2011 Matias
 ^ [#25026] Make new subcription options more powerful
 ^ [#25026] Make new subcription options to work with custom templates (without changing them)
@@ -69,6 +74,9 @@ Kunena 1.6.4-DEV
 # [#24758] Confidential tags hide text from admins/mods in topic history and message preview
 # [#25178] Statistics page: database error
 # [#25168] Fix misc CSS layout and color issues (thanks 810)
+
+3-March-2011 Xillibit
+# [#25123] Cast all values to be int for security purpose
 
 3-March-2011 Matias
 + [#25026] Administration: Add more subscription options (thanks Frank Gore)

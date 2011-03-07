@@ -2476,8 +2476,7 @@ function textCounter(field, target) {
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr>
 						<th colspan="2" class="title"><?php
-						echo JText::_('COM_KUNENA_SUBFOR');
-						echo kescape($username);
+						echo JText::_('COM_KUNENA_SUBFOR').' '.kescape($username);
 						?>
 						</th>
 					</tr>
@@ -2514,8 +2513,7 @@ function textCounter(field, target) {
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr>
 						<th colspan="2" class="title"><?php
-						echo JText::_('COM_KUNENA_SUBFOR');
-						echo ' '.kescape($username);
+						echo JText::_('COM_KUNENA_SUBFOR').' '.kescape($username);
 						?>
 						</th>
 					</tr>

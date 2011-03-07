@@ -35,6 +35,7 @@ Kunena 1.6.4-DEV
 7-March-2011 Matias
 # [#25198] Fix infinite redirect loops, show warning instead
 # [#25198] Warning: Invalid argument supplied for foreach() in KunenaRouter
+# [#25130] Improve Mootools version detection and warnings
 
 6-March-2011 Matias
 # [#25192] Regression: the "insert" button for adding a url to a post does not work

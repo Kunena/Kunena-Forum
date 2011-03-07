@@ -69,30 +69,32 @@ class KunenaTemplate extends JObject
 	}
 
 	public function loadMootools() {
-		$me = KunenaFactory::getUser();
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == 1.5) {
 			jimport ( 'joomla.plugin.helper' );
-			$mootools12 = JPluginHelper::isEnabled ( 'system', 'mtupgrade' ) || JPluginHelper::isEnabled ( 'system', 'mootools12' );
-			if (! $mootools12) {
+			$mtupgrade = JPluginHelper::isEnabled ( 'system', 'mtupgrade' );
+			if (! $mtupgrade) {
 				$app = JFactory::getApplication ();
 				if (!class_exists ( 'JHTMLBehavior' )) {
 					if (is_dir ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' )) {
 						JHTML::addIncludePath ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' );
-					} elseif ($me->isAdmin()) {
+					} else {
 						// TODO: translate
-						$app->enqueueMessage ( 'Kunena: You do not have the <em>System - MooTools Upgrade</em> plug-in.', 'notice' );
-						$app->enqueueMessage ( 'Many features, including Quick Reply and the BBCode editor, may be broken.', 'notice' );
+						KunenaError::warning ( '<em>System - MooTools Upgrade</em> plug-in is not installed into your system. Many features, including the BBCode editor, may be broken.', 'notice' );
 					}
-				} elseif ($me->isAdmin()) {
-					// TODO: translate
-					$app->enqueueMessage ( 'Kunena: You have a plug-in that uses MooTools 1.1 or a custom version of JHTMLBehavior.', 'notice' );
-					$app->enqueueMessage ( 'Many features, including Quick Reply and the BBCode editor, may be broken.', 'notice' );
-					$app->enqueueMessage ( 'Please enable the <em>System - MooTools Upgrade</em> plug-in.', 'notice' );
 				}
 			}
+			JHTML::_ ( 'behavior.mootools' );
+			// Get the MooTools version string
+			$mtversion = preg_replace('/[^\d\.]/','', JFactory::getApplication()->get('MooToolsVersion'));
+			if (version_compare($mtversion, '1.2.4', '<')) {
+				// TODO: translate
+				KunenaError::warning ( 'Your site is not using <em>System - MooTools Upgrade</em> (or compatible) plug-in. Many features, including the BBCode editor, may be broken.' );
+			}
+		} else {
+			// Joomla 1.6+
+			JHTML::_ ( 'behavior.framework' );
 		}
-		JHTML::_ ( 'behavior.mootools' );
 
 		if (KunenaFactory::getConfig()->debug) {
 			// Debugging Mootools issues

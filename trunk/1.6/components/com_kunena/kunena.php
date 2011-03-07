@@ -406,7 +406,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$this->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, false) );
 		}
 	}
-	$kunena_app->setUserState( 'com_kunena.redirect');
+	$kunena_app->setUserState( 'com_kunena.redirect', null);
 	?>
 
 <div id="Kunena"><?php

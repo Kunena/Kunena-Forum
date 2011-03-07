@@ -30,8 +30,14 @@ Legend:
 
 KunenaLatest 1.6.3-DEV
 
-05-March-2011 Xillibit
+6-March-2011 svens(LDA)
+^ [#24847] update nb-NO (thanks Joomla! i Norge)
+
+5-March-2011 Xillibit
 ^ [#25137] mod_kunenalatest lacks paragraph
+
+4-March-2011 svens(LDA)
+^ [#24847] add da-DK (thanks Lars Westermann)
 
 20-February-2011 svens(LDA)
 ^ [#24847] update hu-HU (thanks pedrohsi)

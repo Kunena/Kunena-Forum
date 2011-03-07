@@ -30,6 +30,9 @@ KunenaSearch 1.6.3-DEV
 
 17-February-2011 Matias
 # [#24959] Always initialize session if allowed=na
+06-March-2011 svens(LDA)
+^ [#24847] update nb-NO (thanks Joomla! i Norge)
+
 18-February-2011 svens(LDA)
 ^ [#24847] update fi-FI (thanks Mortti)
 

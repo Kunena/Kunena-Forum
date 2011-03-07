@@ -39,13 +39,18 @@ Kunena 1.6.4-DEV
 ^ [#15886] Merged revisions 4531-4549 from /branches/1.6-xillibit-01-03-2011
 ^ [#15886] Merged revisions 4486-4567 from /branches/1.6.4-LDA(svens)-language-2011-02-23
 ^ [#24847] updated fi-FI (thanks Mortti)
+^ [#15886] Merged revisions 4548-4569 from /branches/1.6.4-810-fixes-4-3-2011
+
+6-March-2011 810
+^ [#25168] Fix CSS layout and color issues (double div.kmsgtext in css)
+^ [#24847] updated nl-NL
+^ [#25168] Fix CSS layout and color issues (read announcement)
 
 6-March-2011 svens(LDA)
 ^ [#24847] updated nb-NO (thanks Joomla! i Norge)
 ^ [#24847] updated ru-RU (thanks Zarkos)
 ^ [#24847] updated de-DE (thanks rich)
 ^ [#24847] updated id-ID (thanks Daniel)
-- [#24847] disabled nb-NO version 1.6.1
 - [#24847] disabled pt-BR version 1.6.1
 
 6-March-2011 Matias
@@ -65,6 +70,10 @@ Kunena 1.6.4-DEV
 # [#25189] Joomla 1.6: Kunena System plugin isn't removed on uninstall
 # [#24184] Joomla 1.6: Menu creation fails on error if same alias is already defined
 # [#24184] Joomla 1.6: Menu item wasn't created into main menu
+
+4-March-2011 810
+^ [#25168] Fix CSS layout and color issues (Whoisonline)
+^ [#25168] Fix CSS layout and color issues (few little fixes)
 
 4-March-2011 Xillibit
 # [#25123] Cast all values to be int for security purpose (Part 2)

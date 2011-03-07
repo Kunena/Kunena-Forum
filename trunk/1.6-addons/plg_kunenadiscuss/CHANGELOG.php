@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.3-DEV
 
+7-March-2011 Matias
+# [#25215] Incompatibility: Broken link in Kunena discuss after upgrading to K1.6.4
+
 17-February-2011 Matias
 # [#24959] Always initialize session if allowed=na
 

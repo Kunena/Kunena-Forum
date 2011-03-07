@@ -10,7 +10,7 @@
  **/
 defined( '_JEXEC' ) or die ( '' );
 
-$msg = $this->messages[0];
+$msg = reset($this->messages);
 ?>
 <div class="kdiscuss-title"><?php echo CKunenaLink::GetThreadLink ( 'view', $msg->catid, $msg->thread, JText::_('PLG_KUNENADISCUSS_POSTS'), 'follow') ?></div>
 

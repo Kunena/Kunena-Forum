@@ -38,6 +38,7 @@ Kunena 1.6.4-DEV
 # [#25130] Improve Mootools version detection and warnings (under debug mode)
 ^ [#15886] Merged revisions 4531-4549 from /branches/1.6-xillibit-01-03-2011
 ^ [#15886] Merged revisions 4486-4567 from /branches/1.6.4-LDA(svens)-language-2011-02-23
+^ [#24847] updated fi-FI (thanks Mortti)
 
 6-March-2011 svens(LDA)
 ^ [#24847] updated nb-NO (thanks Joomla! i Norge)

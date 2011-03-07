@@ -37,6 +37,15 @@ Kunena 1.6.4-DEV
 # [#25198] Warning: Invalid argument supplied for foreach() in KunenaRouter
 # [#25130] Improve Mootools version detection and warnings (under debug mode)
 ^ [#15886] Merged revisions 4531-4549 from /branches/1.6-xillibit-01-03-2011
+^ [#15886] Merged revisions 4486-4567 from /branches/1.6.4-LDA(svens)-language-2011-02-23
+
+6-March-2011 svens(LDA)
+^ [#24847] updated nb-NO (thanks Joomla! i Norge)
+^ [#24847] updated ru-RU (thanks Zarkos)
+^ [#24847] updated de-DE (thanks rich)
+^ [#24847] updated id-ID (thanks Daniel)
+- [#24847] disabled nb-NO version 1.6.1
+- [#24847] disabled pt-BR version 1.6.1
 
 6-March-2011 Matias
 # [#25192] Regression: the "insert" button for adding a url to a post does not work
@@ -86,6 +95,9 @@ Kunena 1.6.4-DEV
 # [#25023] Do not show error message on sending emails if Kunena email address is empty
 ^ [#25023] Improve subscription emails to contain more relevant information
 
+2-March-2011 svens(LDA)
+^ [#24847] updated hu-HU (thanks pedrohsi)
+
 2-March-2011 Matias
 # [#25130] Avoid JavaScript $() conflicts with JQuery and other frameworks
 ^ [#15886] Merged revisions 4522-4531 from /branches/1.6-xillibit-01-03-2011
@@ -101,6 +113,14 @@ Kunena 1.6.4-DEV
 # [#25093] Change "forum" to "category" in subscription emails
 # [#25100] Change translation of COM_KUNENA_BBCODE_HIDE
 # [#25123] trashUserMessages() in users manager doesn't work like excepted
+
+27-February-2011 svens(LDA)
++ [#24847] added cs-CZ (thanks David Mara)
+^ [#24847] updated el-GR (thanks Chrysovalantis Mochlas)
+^ [#24847] updated da-DK (thanks Lars Westermann)
+^ [#24847] updated ru-RU (thanks Zarkos)
+^ [#24847] updated nl-NL (thanks weenkbuul)
+^ [#24847] updated es-ES (thanks Kunena Spanish Team)
 
 26-February-2011 Matias
 # [#25087] Administrator: Fatal error in Report Configuration Settings

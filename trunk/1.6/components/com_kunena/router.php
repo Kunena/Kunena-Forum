@@ -146,7 +146,7 @@ class KunenaRouter {
 			$menuitem = $menu->getItem ( $query ['Itemid'] );
 			if ($menuitem) {
 				// Remove variables with default values from URI
-				if (!isset($query ['view'])) $defaults = array();
+				if (empty($query ['view'])) $defaults = array();
 				else $defaults = self::$functions[$query ['view']];
 				foreach ( $defaults as $var => $value ) {
 					if (!isset ( $menuitem->query [$var] ) && isset ( $query [$var] ) && $value == $query [$var] ) {

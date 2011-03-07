@@ -78,11 +78,11 @@ if (empty($_POST) && $format == 'html') {
 					$active = $new;
 				} else {
 					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_LEGACY', $active->route, $active->id, $new->route, $new->id), 'menu');
-					$kunena_app->redirect (KunenaRoute::_(null, false));
+					$this->redirect (KunenaRoute::_(null, false));
 				}
 			} else {
 				KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NO_ITEM_REDIRECT', $new->route, $new->id));
-				$kunena_app->redirect (KunenaRoute::_(null, false));
+				$this->redirect (KunenaRoute::_(null, false));
 			}
 		} elseif (!$active) {
 			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NO_ITEM'));
@@ -119,7 +119,7 @@ if (empty($_POST) && $format == 'html') {
 					$newlocation = KunenaRoute::getCurrentMenu ();
 					if (!$oldlocation || $oldlocation->id != $newlocation->id) {
 						// Follow Default Menu Item if it's not in the same menu
-						$kunena_app->redirect (KunenaRoute::_($defaultitem, false));
+						$this->redirect (KunenaRoute::_($defaultitem, false));
 					}
 				}
 				if (is_object ( $active )) {
@@ -137,7 +137,7 @@ if (empty($_POST) && $format == 'html') {
 	}
 	$newItemid = KunenaRoute::getItemid();
 	if ($active && $newItemid && !KunenaRoute::getCurrentMenu () && $active->id != $newItemid) {
-		$kunena_app->redirect (KunenaRoute::_(null, false));
+		$this->redirect (KunenaRoute::_(null, false));
 	}
 }
 
@@ -217,7 +217,7 @@ if ($func == 'profile' && !$do && empty($_POST)) {
 		$profileIntegration = KunenaFactory::getProfile();
 		if (!($profileIntegration instanceof KunenaProfileKunena)) {
 			$url = CKunenaLink::GetProfileURL($kunena_my->id, false);
-			if ($url) $kunena_app->redirect($url);
+			if ($url) $this->redirect($url);
 		}
 	}
 }
@@ -403,9 +403,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			if (KunenaError::checkDatabaseError()) return;
 		}
 		if ($catid == 0 || $catParent == 0) {
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, false) );
+			$this->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, false) );
 		}
 	}
+	$kunena_app->setUserState( 'com_kunena.redirect');
 	?>
 
 <div id="Kunena"><?php
@@ -862,6 +863,19 @@ if(JDEBUG == 1){
 	function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	function redirect($url) {
+		$app = JFactory::getApplication();
+		$redirect = (array) $app->getUserState( 'com_kunena.redirect');
+		if (isset($redirect[$url])) {
+			// TODO: translate COM_KUNENA_WARNING_MENU_REDIRECT_LOOP
+			KunenaError::warning(JText::sprintf('Infinite redirect loop detected in %s', $url), 'menu');
+			return;
+		}
+		$redirect[$url] = 1;
+		$app->setUserState( 'com_kunena.redirect', $redirect);
+		$app->redirect ($url);
 	}
 }
 

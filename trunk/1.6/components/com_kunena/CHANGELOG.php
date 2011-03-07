@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+7-March-2011 Matias
+# [#25198] Fix infinite redirect loops, show warning instead
+# [#25198] Warning: Invalid argument supplied for foreach() in KunenaRouter
+
 6-March-2011 Matias
 # [#25192] Regression: the "insert" button for adding a url to a post does not work
 # [#25191] Joomla 1.6: Kunena system plugin not installed

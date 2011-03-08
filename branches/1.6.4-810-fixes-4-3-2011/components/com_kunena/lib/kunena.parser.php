@@ -4,12 +4,12 @@
  * Kunena Component
  * @package Kunena
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
  * Based on FireBoard Component
- * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
+ * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.bestofjoomla.com
  **/
@@ -19,7 +19,7 @@
 # CATEGORY: Parser.TagParser                 DEVELOPMENT DATUM: 13.11.2007 #
 # VERSION:  00.08.00                         LAST EDIT   DATUM: 12.12.2007 #
 # FILENAME: interpreter.Kunena.inc.php                                  #
-# AUTOR:    Miro Dietiker, MD Systems, All rights reserved.                 #
+# AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
 # CONTACT: m.dietiker@md-systems.ch        (c) 2007 Miro Dietiker 13.11.2007 #
 ############################################################################
@@ -68,7 +68,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 		$text = preg_replace ( '/(?<!S)((http(s?):\/\/)|(www\.[a-zA-Z0-9-_]+\.))+([a-zA-Z0-9\/*+-_?&;:%=.,#]+)/u', '<a href="http$3://$4$5" target="_blank" rel="nofollow">$4$5</a>', $text );
 
 		// match name@address
-		$text = preg_replace_callback ( '/(?<!S)([a-zA-Z0-9_.\-]+\@{1}[a-zA-Z0-9\.|-|_]*[.]{1}[a-z]{2,5})/u', 'kunenaBBCodeEmailCloak', $text );
+		$text = preg_replace ( '/(?<!S)([a-zA-Z0-9_.\-]+\@{1}[a-zA-Z0-9\.|-|_]*[.]{1}[a-z]{2,5})/u', '<a href="mailto:$1">$1</a>', $text );
 
 		return substr ( $text, 1, - 1 );
 	}
@@ -292,11 +292,11 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$task->autolink_disable --;
 				if (isset ( $tag->options ['default'] )) {
 					$tempstr = $tag->options ['default'];
-					if (substr ( $tempstr, 0, 7 ) == 'mailto:') {
-						$tempstr = substr ( $tempstr, 7 );
+					if (substr ( $tempstr, 0, 7 ) !== 'mailto:') {
+						$tempstr = 'mailto:' . $tempstr;
 					}
-					$tns = '';
-					$tne = ' ('.kunenaBBCodeEmailCloak(array(1=>$tempstr)).' )';
+					$tns = '<a href="' . kunena_htmlspecialchars ( $tempstr, ENT_QUOTES ) . '">';
+					$tne = '</a>';
 					return TAGPARSER_RET_REPLACED;
 				}
 				break;
@@ -416,10 +416,13 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				break;
 
 			case 'email' :
-				if (substr ( $between, 0, 7 ) == 'mailto:') {
-					$tempstr = substr ( $between, 7 );
+				$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
+				if (substr ( $tempstr, 0, 7 ) == 'mailto:') {
+					$between = substr ( $tempstr, 7 );
+				} else {
+					$tempstr = 'mailto:' . $tempstr;
 				}
-				$tag_new = kunenaBBCodeEmailCloak(array(1=>$between));
+				$tag_new = '<a href="' . $tempstr . '">' . $between . '</a>';
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'url' :
@@ -495,10 +498,10 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					$fileurl = kunena_htmlspecialchars ( $fileurl, ENT_QUOTES );
 					if ($task->autolink_disable == 0 && $kunena_config->lightbox) {
 						// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-						$tag_new = '<a title="" rel="lightbox[gallery]" href="'.$fileurl.'"><img src="'.$fileurl.'"'.($imgtagsize ? ' width="'.$imgtagsize.'"' : '').' alt="" /></a>';
+						$tag_new = '<a title="" rel="lightbox" href="'.$fileurl.'"><img src="'.$fileurl.'"'.($imgtagsize ? ' width="'.$imgtagsize.'"' : '')."' style='max-width:".$kunena_config->imagewidth."px; max-height:".$kunena_config->imageheight."px; ' alt='' /></a>";
 					} else {
 						// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-						$tag_new = '<img src="' . $fileurl . ($imgtagsize ? '" width="' . $imgtagsize : '') . '" alt="" />';
+						$tag_new = "<img src='" . $fileurl . ($imgtagsize ? "' width='" . $imgtagsize : '') ."' style='max-width:".$kunena_config->imagewidth."px; max-height:".$kunena_config->imageheight."px; ' alt='' />";
 					}
 
 					return TAGPARSER_RET_REPLACED;
@@ -641,146 +644,94 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					if ( !empty($tag->options ['default']) ) $param = $tag->options ['default'];
 					$articleid = (int)$between;
 
-					jimport ( 'joomla.version' );
-					$jversion		= new JVersion ();
-					$kunena_app		= JFactory::getApplication();
-					$dispatcher		= JDispatcher::getInstance();
-					$kunena_db		= JFactory::getDBO();
-					$user			= JFactory::getUser();
+					// FIXME: works only in J1.5
+					$kunena_db = JFactory::getDBO();
+					$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, s.title AS section,
+						s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access
+						FROM #__content AS a
+						LEFT JOIN #__categories AS cc ON cc.id = a.catid
+						LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = "content"
+						LEFT JOIN #__users AS u ON u.id = a.created_by
+						WHERE a.id='.$kunena_db->quote($articleid);
 
-					$articlecandisplayed = 0;
+					$kunena_db->setQuery($query);
+					$article = $kunena_db->loadObject();
+
 					$tag_start = '<div class="kmsgtext-article">';
 
-					if ($jversion->RELEASE == '1.5') {
-						$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, s.title AS section,
-							s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access
-							FROM #__content AS a
-							LEFT JOIN #__categories AS cc ON cc.id = a.catid
-							LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = "content"
-							LEFT JOIN #__users AS u ON u.id = a.created_by
-							WHERE a.id='.$kunena_db->quote($articleid);
+					if($article){
+						$user	= & JFactory::getUser();
 
-						$kunena_db->setQuery($query);
-						$article = $kunena_db->loadObject();
-						if ( $article ) {
-							if ((!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
-								$tag_new = $tag_start;
-								$tag_new .= JText::_("Article cannot be shown");
-								$tag_new .= '</div>';
-							} else if ((($article->cat_access > $user->get('aid', 0)) && $article->catid)
+						// Are the section and category published?
+						if ((!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
+							$tag_new = $tag_start;
+							$tag_new .= JText::_("Article cannot be shown");
+							$tag_new .= '</div>';
+						} else if ((($article->cat_access > $user->get('aid', 0)) && $article->catid)
 							|| (($article->sec_access > $user->get('aid', 0)) && $article->sectionid)
 							|| ($article->access > $user->get('aid', 0))) {
-								$tag_new = $tag_start;
-								$tag_new .= JText::_("This message contains an article, but you do not have permissions to see it.");
-								$tag_new .= '</div>';
-							} else {
-								$articlecandisplayed = 1;
-							}
-						} else {
 							$tag_new = $tag_start;
-							$tag_new .= JText::_("Article cannot be shown");
-							// End of div wrapper for article
+							$tag_new .= JText::_("This message contains an article, but you do not have permissions to see it.");
 							$tag_new .= '</div>';
-						}
-					} elseif ($jversion->RELEASE == '1.6') {
-						$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, cc.published AS cat_pub, cc.access AS cat_access
-							FROM #__content AS a
-							LEFT JOIN #__categories AS cc ON cc.id = a.catid
-							LEFT JOIN #__users AS u ON u.id = a.created_by
-							WHERE a.id='.$kunena_db->quote($articleid);
-						$kunena_db->setQuery($query);
-						$article = $kunena_db->loadObject();
-
-						if ( $article ) {
-							// Get credentials to check if the user has right to see the article
-							$app = JFactory::getApplication('site');
-							$params = $app->getParams();
-							$registry = new JRegistry;
-							$registry->loadJSON($article->attribs);
-							$article->params = clone $params;
-							$article->params->merge($registry);
-
-							$groups = $user->getAuthorisedViewLevels();
-
-							if (!$article->cat_pub && $article->catid) {
-								$tag_new = $tag_start;
-								$tag_new .= JText::_("Article cannot be shown");
-								$tag_new .= '</div>';
-
-							} else if ( !in_array($article->access, $groups) ) {
-								$tag_new = $tag_start;
-								$tag_new .= JText::_("This message contains an article, but you do not have permissions to see it.");
-								$tag_new .= '</div>';
-							} else {
-								$articlecandisplayed = 1;
-							}
 						} else {
-							$tag_new = $tag_start;
-							$tag_new .= JText::_("Article cannot be shown");
-							// End of div wrapper for article
-							$tag_new .= '</div>';
-						}
-					}
+							$kunena_app = JFactory::getApplication();
+							$dispatcher	= JDispatcher::getInstance();
+							$params = clone($kunena_app->getParams('com_content'));
+							$aparams = new JParameter($article->attribs);
+							$params->merge($aparams);
+							// Identify the source of the event to be Kunena itself
+							// this is important to avoid recursive event behaviour with our own plugins
+							$params->set('ksource', 'kunena');
+							JPluginHelper::importPlugin('content');
+							$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
 
-					if ( $articlecandisplayed ) {
-						$params = clone($kunena_app->getParams('com_content'));
-						$aparams = new JParameter($article->attribs);
-						$params->merge($aparams);
-						// Identify the source of the event to be Kunena itself
-						// this is important to avoid recursive event behaviour with our own plugins
-						$params->set('ksource', 'kunena');
-						JPluginHelper::importPlugin('content');
-						$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
-						require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
-
-						if ($jversion->RELEASE == '1.5') {
+							require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
 							$link_readmore = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
-												'" class="readon">'.JText::sprintf('Read more...').'</a>';
+													'" class="readon">'.JText::sprintf('Read more...').'</a>';
 							$link_title = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
-												'" class="readon">'.$article->title.'</a>';
-						} elseif ($jversion->RELEASE == '1.6') {
-							$link_readmore = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid)).
-												'" class="readon">'.JText::sprintf('Read more...').'</a>';
-							$link_title = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid)).
-												'" class="readon">'.$article->title.'</a>';
-						}
+													'" class="readon">'.$article->title.'</a>';
 
-						if ($param == 'intro') {
-							if ( !empty($article->introtext) ) {
-								$tag_new = $tag_start;
-								$tag_new .= $article->introtext;
-								$tag_new .= '</div>';
-							} else {
-								$tag_new = $link_title;
-							}
-						} elseif ($param == 'full') {
-							if ( !empty($article->fulltext) ) {
-								$tag_new = $tag_start;
-								$tag_new .= $article->fulltext;
-								$tag_new .= '</div>';
-							} else {
-								$tag_new = $link_title;
-							}
-						} elseif ($param == 'link' || empty($param)) {
-							if ( empty($param) ) {
-								if(!empty($article->introtext))	{
-									$article->text = $article->introtext;
+							if ($param == 'intro') {
+								if ( !empty($article->introtext) ) {
+									$tag_new = $tag_start;
+									$tag_new .= $article->introtext;
+									$tag_new .= '</div>';
 								} else {
-									$article->text = $article->fulltext;
+									$tag_new = $link_title;
+								}
+							} elseif ($param == 'full') {
+								if ( !empty($article->fulltext) ) {
+									$tag_new = $tag_start;
+									$tag_new .= $article->fulltext;
+									$tag_new .= '</div>';
+								} else {
+									$tag_new = $link_title;
+								}
+							} elseif ($param == 'link' || empty($param)) {
+								if ( empty($param) ) {
+									if(!empty($article->introtext))	{
+										$article->text = $article->introtext;
+									} else {
+										$article->text = $article->fulltext;
+									}
+								}
+
+								$tag_new = $tag_start;
+
+								if ( $param != 'link' ) {
+									$tag_new .= $article->text;
+									$tag_new .= '</div>';
+									$tag_new .= $link_readmore;
+								} else {
+									$tag_new = $link_title;
 								}
 							}
-
-							$tag_new = $tag_start;
-
-							if ( $param != 'link' ) {
-								$tag_new .= $article->text;
-								$tag_new .= '</div>';
-								$tag_new .= $link_readmore;
-							} else {
-								$tag_new = $link_title;
-							}
 						}
-
+					} else {
+						$tag_new = $tag_start;
+						$tag_new .= JText::_("Article cannot be shown");
+						// End of div wrapper for article
+						$tag_new .= '</div>';
 					}
 					return TAGPARSER_RET_REPLACED;
 				}
@@ -1096,7 +1047,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$tag_new = JText::_('COM_KUNENA_BBCODE_HIDDENTEXT');
 					} else {
 						// Display but highlight the fact that it is hidden from guests
-						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE_IN_MESSAGE') . '</b>' . '<div class="kmsgtext-hide">' . $between . '</div>';
+						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE') . '</b>' . '<div class="kmsgtext-hide">' . $between . '</div>';
 					}
 					return TAGPARSER_RET_REPLACED;
 				}
@@ -1105,7 +1056,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				break;
 			case 'confidential' :
 				if ($between) {
-					if ((!empty($this->parent->msg->userid) && $this->parent->msg->userid == $kunena_my->id) || (!empty($this->parent->catid) && CKunenaTools::isModerator($kunena_my->id, $this->parent->catid))) {
+					if (($kunena_my->id && $this->parent && $this->parent->msg->userid == $kunena_my->id) || CKunenaTools::isModerator($kunena_my->id)) {
 						// Display but highlight the fact that it is hidden from everyone except admins and mods
 						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . '</b><div class="kmsgtext-confidential">' . $between . '</div>';
 					}
@@ -1119,8 +1070,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 					if ($this->spoilerid == 0) {
 						// Only need the script for the first spoiler we find
-						$kunena_document = JFactory::getDocument();
-						$kunena_document->addCustomTag ( '<script language = "JavaScript" type = "text/javascript">' . 'function kShowDetail(srcElement) {' . 'var targetID, srcElement, targetElement, imgElementID, imgElement;' . 'targetID = srcElement.id + "_details";' . 'imgElementID = srcElement.id + "_img";' . 'targetElement = document.getElementById(targetID);' . 'imgElement = document.getElementById(imgElementID);' . 'if (targetElement.style.display == "none") {' . 'targetElement.style.display = "";' . 'imgElement.src = "' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/w00t.png";' . '} else {' . 'targetElement.style.display = "none";' . 'imgElement.src = "' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png";' . '}}	</script>' );
+						$kunena_app = & JFactory::getApplication ();
+						$kunena_app->addCustomHeadTag ( '<script language = "JavaScript" type = "text/javascript">' . 'function kShowDetail(srcElement) {' . 'var targetID, srcElement, targetElement, imgElementID, imgElement;' . 'targetID = srcElement.id + "_details";' . 'imgElementID = srcElement.id + "_img";' . 'targetElement = document.getElementById(targetID);' . 'imgElement = document.getElementById(imgElementID);' . 'if (targetElement.style.display == "none") {' . 'targetElement.style.display = "";' . 'imgElement.src = "' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/w00t.png";' . '} else {' . 'targetElement.style.display = "none";' . 'imgElement.src = "' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png";' . '}}	</script>' );
 					}
 
 					$this->spoilerid ++;
@@ -1306,8 +1257,4 @@ class KunenaBBCodeInterpreterPlain extends BBCodeInterpreter {
 		$tag_new = '';
 		return TAGPARSER_RET_NOTHING;
 	}
-}
-
-function kunenaBBCodeEmailCloak($input) {
-	return preg_replace('/\n/', '__KRN__', JHTML::_('email.cloak', $input[1]));
 }

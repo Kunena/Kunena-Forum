@@ -17,7 +17,7 @@ defined( '_JEXEC' ) or die();
 
 $kunena_config = KunenaFactory::getConfig ();
 ?>
-<div class="kblock kcredits">
+<div class="kblock">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></span></h2>
 	</div>

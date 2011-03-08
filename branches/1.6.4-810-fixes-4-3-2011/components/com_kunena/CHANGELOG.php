@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+8-March-2011 810
+# [#24306] Max width bug image link
+^ [#25168] Fix CSS layout and color issues (IE7 fixes, j16 fixes frontend)
+
 6-March-2011 810
 ^ [#25168] Fix CSS layout and color issues (double div.kmsgtext in css)
 ^ [#24847] updated nl-NL

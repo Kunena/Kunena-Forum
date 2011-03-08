@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+08-March-2011 Xillibit
+# [#25227] Joomla! 1.6 : changes for plugins directories and report configuration settings
+
 04-March-2011 Xillibit
 # [#25123] Cast all values to be int for security purpose (Part 2)
 ^ [#24847] Update fr-FR language

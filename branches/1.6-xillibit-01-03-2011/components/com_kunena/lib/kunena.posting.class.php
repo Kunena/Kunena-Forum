@@ -388,10 +388,12 @@ class CKunenaPosting {
 
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
-		if ($this->parent->thread == 0) {
-			$activity->onBeforePost($this);
-		} else {
-			$activity->onBeforeReply($this);
+		if ( $this->parent->hold == 0 ) {
+			if ($this->parent->thread == 0) {
+				$activity->onBeforePost($this);
+			} else {
+				$activity->onBeforeReply($this);
+			}
 		}
 
 		if (! empty ( $this->errors ))

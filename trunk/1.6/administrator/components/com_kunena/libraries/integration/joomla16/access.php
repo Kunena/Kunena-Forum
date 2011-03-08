@@ -13,6 +13,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
+jimport ( 'joomla.access.access' );
+
 class KunenaAccessJoomla16 extends KunenaAccess {
 	protected $viewLevels = false;
 
@@ -24,19 +26,9 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 	}
 
 	protected function loadAdmins() {
-		jimport ( 'joomla.access.access' );
-		$rules = JAccess::getAssetRules ( 'com_kunena', true );
-		$data = $rules->getData ();
-		$data = $data ['core.admin']->getData ();
-		$rlist = array ();
-		foreach ( $data as $groupid => $access ) {
-			if ($access) {
-				$rlist = array_merge ( $rlist, JAccess::getUsersByGroup ( $groupid, true ) );
-			}
-		}
-		$rlist = array_unique ( $rlist );
+		$admins = array_merge($this->getAuthorisedUsers('core.admin', 'com_kunena'), $this->getAuthorisedUsers('core.manage', 'com_kunena'));
 		$list = array();
-		foreach ( $rlist as $userid ) {
+		foreach ( $admins as $userid ) {
 			$item = new StdClass();
 			$item->userid = (int) $userid;
 			$item->catid = 0;
@@ -207,7 +199,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 	 * @param	boolean	$recursive	Recursively include all child groups (optional)
 	 *
 	 * @return	array
-	 * @since	1.6
+	 * @since	Joomla 1.6
 	 */
 	public static function getUsersByGroup($groupId, $recursive = false, $inUsers = array())
 	{
@@ -216,6 +208,12 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 
 		$test = $recursive ? '>=' : '=';
 
+		if (empty($groupId)) {
+			return array();
+		}
+		if (is_array($groupId)) {
+			$groupId = implode(',', $groupId);
+		}
 		$inUsers = implode(',', $inUsers);
 
 		// First find the users contained in the group
@@ -224,16 +222,60 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		$query->from('#__usergroups as ug1');
 		$query->join('INNER','#__usergroups AS ug2 ON ug2.lft'.$test.'ug1.lft AND ug1.rgt'.$test.'ug2.rgt');
 		$query->join('INNER','#__user_usergroup_map AS m ON ug2.id=m.group_id');
-		$query->where('ug1.id ='.$db->Quote($groupId));
-		$query->where("user_id IN ({$inUsers})");
+		$query->where("ug1.id IN ({$groupId})");
+		if ($inUsers) $query->where("user_id IN ({$inUsers})");
 
 		$db->setQuery($query);
 
-		$result = $db->loadResultArray();
+		$result = (array) $db->loadResultArray();
 
 		// Clean up any NULL values, just in case
 		JArrayHelper::toInteger($result);
 
 		return $result;
+	}
+
+	protected function getAuthorisedUsers($action, $asset = null) {
+		$action = strtolower(preg_replace('#[\s\-]+#', '.', trim($action)));
+		$asset  = strtolower(preg_replace('#[\s\-]+#', '.', trim($asset)));
+
+		// Default to the root asset node.
+		if (empty($asset)) {
+			$asset = 1;
+		}
+
+		// Get all asset rules
+		$rules = JAccess::getAssetRules ( $asset, true );
+		$data = $rules->getData ();
+
+		// Get all action rules for the asset
+		$groups = array ();
+		if (!empty($data [$action])) {
+			$groups = $data [$action]->getData ();
+		}
+
+		// Split groups into allow and deny list
+		$allow = array ();
+		$deny = array ();
+		foreach ( $groups as $groupid => $access ) {
+			if ($access) {
+				$allow[] = $groupid;
+			} else {
+				$deny[] = $groupid;
+			}
+		}
+
+		// Get userids
+		if ($allow) {
+			// These users can do the action
+			$allow = $this->getUsersByGroup ( $allow, true );
+		}
+		if ($deny) {
+			// But these users have explicit deny for the action
+			$deny = $this->getUsersByGroup ( $deny, true );
+		}
+
+		// Remove denied users from allowed users list
+		return array_diff ( $allow, $deny );
 	}
 }

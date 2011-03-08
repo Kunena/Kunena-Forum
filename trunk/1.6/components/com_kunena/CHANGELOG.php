@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+8-March-2011 Matias
+# [#25205] Joomla 1.6: admin isn't by default a global moderator
+
 7-March-2011 Matias
 # [#25198] Fix infinite redirect loops, show warning instead
 # [#25198] Warning: Invalid argument supplied for foreach() in KunenaRouter

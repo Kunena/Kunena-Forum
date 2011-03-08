@@ -89,50 +89,20 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 
 	protected function checkSubscribers($category, &$userids) {
 		if (empty($userids) || $category->pub_access <= 0)
-			return $userids;
+			return;
 
-		// FIXME: finish this
-		return;
 		$userlist = implode(',', $userids);
 
-		$db = JFactory::getDBO ();
-		$query = new KDatabaseQuery();
-		$query->select('u.id');
-		$query->from('#__users AS u');
-		$query->where("u.block=0");
-		$query->where("u.id IN ({$userlist})");
-
 		if ($category->accesstype == 'joomla') {
-			// Check against Joomla access level
-			if ( $category->access > 1 ) {
-				// Special users = not in registered group
-				$query->where("u.gid!=18");
-			}
+			// TODO: Check against Joomla access level
 		} elseif ($category->accesstype == 'none') {
 			// Check against Joomla user groups
-			$public = $this->_get_groups($category->pub_access, $category->pub_recurse);
-			$admin = $category->pub_access > 0 ? $this->_get_groups($category->admin_access, $category->admin_recurse) : array();
-			$groups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
-			if ($groups) {
-				$query->join('INNER', "#__core_acl_aro AS a ON u.id=a.value AND a.section_value='users'");
-				$query->join('INNER', "#__core_acl_groups_aro_map AS g ON g.aro_id=a.id");
-				$query->where("g.group_id IN ({$groups})");
-			}
+			$public = $this->getUsersByGroup($category->pub_access, $category->pub_recurse, $userids);
+			$admin = $category->pub_access > 0 && $category->admin_access ? $this->getUsersByGroup($category->admin_access, $category->admin_recurse, $userids) : array();
+			$userids = array_unique ( array_merge ( $public, $admin ) );
 		} else {
 			return;
 		}
-
-		// Get all allowed Joomla groups to make sure that subscription is valid
-		$db = JFactory::getDBO ();
-		$public = array ();
-		$admin = array ();
-		if ($category->pub_access > 0) {
-			$public = $this->getUsersByGroup($category->pub_access, $category->pub_recurse, $userids);
-		}
-		if ($access->pub_access > 0 && $access->admin_access > 0) {
-			$admin = $this->getUsersByGroup($category->admin_access, $category->admin_recurse, $userids);
-		}
-		$userids = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
 	}
 
 	/**

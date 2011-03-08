@@ -81,7 +81,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 
 	protected function checkSubscribers($category, &$userids) {
 		if (empty($userids) || $category->pub_access <= 0)
-			return $userids;
+			return;
 
 		$userlist = implode(',', $userids);
 

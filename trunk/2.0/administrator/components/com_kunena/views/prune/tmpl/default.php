@@ -22,10 +22,10 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 			<tr>
 				<td colspan="2"><?php echo JText::_('COM_KUNENA_A_PRUNE_DESC') ?></td>
 			</tr>
-			<!-- <tr>
+			<tr>
 				<td width="20%"><?php echo JText::_('COM_KUNENA_PRUNE_DELETEORTRASH') ?></td>
 				<td colspan="2"><?php echo $this->listtrashdelete ?></td>
-			</tr> -->
+			</tr>
 			<tr>
 				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NAME') ?></td>
 				<td><?php echo $this->forumList?></td>

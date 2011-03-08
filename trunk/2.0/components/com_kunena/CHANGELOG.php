@@ -31,6 +31,12 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+8-March-2011 Matias
+^ [#22786] Merge revision 4554 from branches/2.0-xillibit-mvc-backend-26-02-2011
+
+5-March-2011 Xillibit
+^ [#24395] Show version check in cpanel and prune has now an option to trash or delete topics
+
 2-March-2011 Matias
 ^ [#22569] Greatly simplify poll JavaScript
 # [#22569] Fix a bug where poll options were added twice

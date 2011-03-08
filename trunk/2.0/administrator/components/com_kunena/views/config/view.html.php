@@ -31,5 +31,6 @@ class KunenaAdminViewConfig extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('setdefault', 'restore.png','restore_f2.png', 'COM_KUNENA_RESET_CONFIG', false);
 		JToolBarHelper::spacer();
+		JToolBarHelper::cancel('config');
 	}
 }

@@ -21,7 +21,7 @@ $document->addScriptDeclaration('function update_smiley(newimage)
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-ranks"><?php if ( !$this->state->get('item.id') ): ?><?php echo JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY'); ?><?php else: ?><?php echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILEY'); ?><?php endif; ?></div>
+	<div class="kadmin-functitle icon-smilies"><?php if ( !$this->state->get('item.id') ): ?><?php echo JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY'); ?><?php else: ?><?php echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILEY'); ?><?php endif; ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr align="center">

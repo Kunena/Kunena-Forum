@@ -57,12 +57,14 @@ class KunenaAdminControllerPrune extends KunenaController {
 		$deleted = 0;
 		foreach ( $topics as $topic ) {
 			$deleted++;
-			$topic->delete(false);
+			if ( $trashdelete ) $topic->delete(false);
+			else $topic->trash();
 		}
 		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount();
 		KunenaForumMessageAttachmentHelper::cleanup();
-		$app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$deleted}/{$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
+		if ( $trashdelete ) $app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$deleted}/{$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
+		else $app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$deleted}/{$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

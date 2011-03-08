@@ -59,11 +59,11 @@ class KunenaAdminControllerUsers extends KunenaController {
 		$newrank = JRequest::getVar ( 'newrank' );
 		$signature = JRequest::getVar ( 'message' );
 		$deleteSig = JRequest::getVar ( 'deleteSig' );
-		$moderator = JRequest::getVar ( 'moderator' );
-		$uid = JRequest::getVar ( 'uid' );
+		$moderator = JRequest::getInt ( 'moderator' );
+		$uid = JRequest::getInt ( 'uid' );
 		$avatar = JRequest::getVar ( 'avatar' );
 		$deleteAvatar = JRequest::getVar ( 'deleteAvatar' );
-		$neworder = JRequest::getVar ( 'neworder' );
+		$neworder = JRequest::getInt ( 'neworder' );
 		$modCatids = JRequest::getVar ( 'catid', array () );
 
 		if ($deleteSig == 1) {

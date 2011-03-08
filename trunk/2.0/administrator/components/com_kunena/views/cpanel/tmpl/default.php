@@ -9,60 +9,9 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-$styles = <<<EOF
-.kadmin-welcome {
-	clear:both;
-	margin:10px 0;
-	padding:10px;
-	font-size:12px;
-	color:#536482;
-	line-height:140%;
-	border:1px solid #ddd;
-	margin-bottom: 25px;
-}
-.kadmin-welcome h3 {
-	margin:0;
-	padding:0;
-}
-table.thisform {
-	width: 100%;
-	padding: 10px;
-	border-collapse: collapse;
-}
-table.thisform tr.row0 {
-	background-color: #F7F8F9;
-}
-table.thisform tr.row1 {
-	background-color: #eeeeee;
-}
-table.thisform th {
-	font-size: 15px;
-	font-weight: normal;
-	font-variant: small-caps;
-	padding-top: 6px;
-	padding-bottom: 2px;
-	padding-left: 4px;
-	padding-right: 4px;
-	text-align: left;
-	height: 25px;
-	color: #666666;
-	background: url(../images/background.gif);
-	background-repeat: repeat;
-}
-table.thisform td {
-	padding: 3px;
-	text-align: left;
-}
-div.icon a {
-	text-decoration:none;
-}
-div.icon-container {
-	float:left;
-}
-EOF;
 
 $document = JFactory::getDocument();
-$document->addStyleDeclaration($styles);
+$document->addStyleSheet( JURI::base().'components/com_kunena/media/css/cpanel.css' );
 $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
 ?>
 <div id="kadmin">
@@ -132,5 +81,10 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		</tr>
 	</table>
 </div>
+	<?php if ( $this->config->version_check ) : ?>
+	<div class="kadmin-welcome">
+		<?php echo $this->versioncheck; ?>
+	</div>
+	<?php endif; ?>
 </div>
 </div>

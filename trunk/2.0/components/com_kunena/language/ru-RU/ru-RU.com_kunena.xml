@@ -10,9 +10,9 @@
   <author>ZARKOS</author>
   <authorEmail>zarkos@joomlaruclub.ru</authorEmail>
   <authorUrl>http://www.joomlaruclub.ru</authorUrl>
-  <copyright>Copyright (C) 2010-2011 ZARKOS. All rights reserved..</copyright>
+  <copyright>Copyright (C) 2010-2011 ZARKOS. All rights reserved.</copyright>
   <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-  <description>Пакет русскоязычных файлов для компонента Kunena форума</description>
+  <description>Пакет русскоязычных файлов пользовательской части компонента Kunena форума</description>
 
   <files>
     <filename>ru-RU.com_kunena.ini</filename>

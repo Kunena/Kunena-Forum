@@ -324,13 +324,12 @@ class KunenaUserBan extends JObject
 			$this->setError( JText::_( 'COM_KUNENA_BAN_ERROR_YOURSELF' ));
 			return false;
 		}
-		if ($userprofile->isModerator() && !$myprofile->isAdmin()) {
-			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_MODERATOR', $userprofile->username ));
-			return false;
-		}
 		if ($userprofile->isAdmin()) {
 			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_ADMIN', $userprofile->username ));
 			return false;
+		}
+		if ($userprofile->isModerator()) {
+			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_MODERATOR', $userprofile->username ));
 		}
 		return true;
 	}

@@ -254,7 +254,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			}
 			if (!$permdelete && $topic->authorise('permdelete')) $permdelete = true;
 		}
-		$actionDropdown[] = JHTML::_('select.option', 'none', '&nbsp;');
+		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		if ($move) $actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
 		if ($approve) $actionDropdown[] = JHTML::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
 		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));

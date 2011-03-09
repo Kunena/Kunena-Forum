@@ -541,6 +541,7 @@ PX		EM			PCT			PT
 	font-size: 1em; 
 	line-height: 2.3em;
 	text-indent: 0;
+	padding: 0;
 }
 
 #Kunena #ktab a:hover,
@@ -804,8 +805,7 @@ PX		EM			PCT			PT
 	border: 1px solid;
 }
 #Kunena .klist-markallcatsread input.kbutton {
-	padding:0;
-	margin: 4px;
+	margin: 8px;
 }
 
 #Kunena .klist-categories {
@@ -1453,10 +1453,6 @@ PX		EM			PCT			PT
 #Kunena td.kmessage-top div.kmsgbody,
 #Kunena td.kmessage-bottom div.kmsgbody {
 	width: 97%;
-}
-#Kunena div.kmsgbody div.kmsgtext {
-	overflow: auto;
-	word-wrap:break-word;
 }
 #Kunena div.kmsgbody div.kmsgtext img {
 	max-width:100%;

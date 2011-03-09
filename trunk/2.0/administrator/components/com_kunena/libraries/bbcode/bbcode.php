@@ -589,6 +589,17 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		}
 	}
 
+	function DoEmail($bbcode, $action, $name, $default, $params, $content) {
+		if ($action == BBCODE_CHECK) {
+			$bbcode->autolink_disable = 1;
+			return true;
+		}
+		$bbcode->autolink_disable = 0;
+		$email = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode ( strip_tags ( $content ) );
+		$text = is_string ( $default ) ? $content : $default;
+		return JHTML::_('email.cloak', $email, $bbcode->IsValidEmail ( $email ), $text, $bbcode->IsValidEmail ( $text ));
+	}
+
 	// Format a [url] tag by producing an <a>...</a> element.
 	// The URL only allows http, https, mailto, and ftp protocols for safety.
 	function DoURL($bbcode, $action, $name, $default, $params, $content) {
@@ -735,7 +746,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			return JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
 		} else {
 			// Display but highlight the fact that it is hidden from guests
-			return '<b>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDE' ) . '</b>' . '<div class="kmsgtext-hide">' . $content . '</div>';
+			return '<b>' . JText::_ ( 'COM_KUNENA_BBCODE_HIDE_IN_MESSAGE' ) . '</b>' . '<div class="kmsgtext-hide">' . $content . '</div>';
 		}
 	}
 

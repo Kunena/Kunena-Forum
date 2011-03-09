@@ -44,7 +44,7 @@
 		<param name="topBordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR_DESC" />
 		<param name="inactiveFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC" />
 		<param name="activeFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
-		<param name="toggleButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_TOGGLER_COLOR_DESC" />
+		<param name="toggleButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" description="COM_KUNENA_TEMPLATE_TOGGLER_COLOR_DESC" />
 		
 		<param name="enableSkinner" type="radio" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
 			<option value="0">COM_KUNENA_A_NO</option>

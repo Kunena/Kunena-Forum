@@ -118,6 +118,24 @@ class KunenaForumMessage extends JObject {
 			$mailadmins = 0;
 		}
 
+		$once = false;
+		if ($mailsubs) {
+			if (!$this->parent) {
+				// New topic: Send email only to category subscribers
+				$mailsubs = $config->category_subscriptions != 'disabled' ? 3 : 0;
+				$once = $config->category_subscriptions == 'topic';
+			} elseif ($config->category_subscriptions != 'post') {
+				// Existing topic: Send email only to topic subscribers
+				$mailsubs = $config->topic_subscriptions != 'disabled' ? 2 : 0;
+				$once = $config->topic_subscriptions == 'first';
+			} else {
+				// Existing topic: Send email to both category and topic subscribers
+				$mailsubs = $config->topic_subscriptions == 'disabled' ? 3 : 1;
+				// FIXME: category subcription can override topic
+				$once = $config->topic_subscriptions == 'first';
+			}
+		}
+
 		if ($url === false) {
 			$url = CKunenaLink::GetMessageURL($this->id, $this->catid, 0, false);
 		}
@@ -128,52 +146,69 @@ class KunenaForumMessage extends JObject {
 
 		$config = KunenaFactory::getConfig();
 		$category = $this->getCategory();
+		$topic = $this->getTopic();
 		if (count ( $emailToList )) {
 			jimport('joomla.mail.helper');
-			if (! $config->email || ! JMailHelper::isEmailAddress ( $config->email )) {
-				$this->setError ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ) );
+			if (! $config->email ) {
+				KunenaError::warning ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ) );
 				return false;
-			} else if ($_SERVER ["REMOTE_ADDR"] == '127.0.0.1') {
-				$this->setError ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ) );
+			} elseif ( ! JMailHelper::isEmailAddress ( $config->email ) ) {
+				KunenaError::warning ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ) );
 				return false;
 			}
 			// clean up the message for review
 			$message = KunenaHtmlParser::plainBBCode ( $this->message );
 
 			$mailsender = JMailHelper::cleanAddress ( $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
-			$mailsubject = JMailHelper::cleanSubject ( "[" . $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . $this->subject . " (" . $category->name . ")" );
+			$mailsubject = JMailHelper::cleanSubject ( "[" . $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . $topic->subject . " (" . $category->name . ")" );
+			$subject = $this->subject ? $this->subject : $topic->subject;
 
+			$sentusers = array();
 			foreach ( $emailToList as $emailTo ) {
 				if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
 					continue;
 
 				if ($emailTo->subscription) {
-					$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' );
-					$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' );
+					$msg1 = $this->parent ? JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' ) : JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1_CAT' );
+					$msg2 = $this->parent ? JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' ) : JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2_CAT' );
 				} else {
 					$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD1' );
 					$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD2' );
 				}
 
 				$msg = "$emailTo->name,\n\n";
-				$msg .= $msg1 . " " . $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "\n\n";
-				$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . ": " . $this->subject . "\n";
-				$msg .= JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ": " . $category->name . "\n";
-				$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . ": " . $this->name . "\n\n";
-				$msg .= $msg2 . "\n";
-				$msg .= "URL: $url\n\n";
+				$msg .= $msg1 . " " . $config->board_title . "\n\n";
+				// DO NOT REMOVE EXTRA SPACE, JMailHelper::cleanBody() removes "Subject:" from the message body
+				$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . " : " . $subject . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_GEN_CATEGORY' ) . " : " . $category->name . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . " : " . $this->name . "\n\n";
+				$msg .= "URL : {$url}\n\n";
 				if ($config->mailfull) {
-					$msg .= JText::_ ( 'COM_KUNENA_GEN_MESSAGE' ) . ":\n-----\n";
+					$msg .= JText::_ ( 'COM_KUNENA_GEN_MESSAGE' ) . " :\n-----\n";
 					$msg .= $message;
-					$msg .= "\n-----";
+					$msg .= "\n-----\n\n";
 				}
-				$msg .= "\n\n";
+				$msg .= $msg2 . "\n";
+				if ($emailTo->subscription && $once) {
+					if ($this->parent) {
+						$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_READ' ) . "\n";
+					} else {
+						$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION_MORE_SUBSCRIBE' ) . "\n";
+					}
+				}
+				$msg .= "\n";
 				$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
-				$msg .= "\n\n\n\n";
-				$msg .= "** Powered by Kunena! - http://www.kunena.org **";
 				$msg = JMailHelper::cleanBody ( $msg );
-
 				JUtility::sendMail ( $config->email, $mailsender, $emailTo->email, $mailsubject, $msg );
+				$sentusers[] = $emailTo->id;
+			}
+			if ($once && $sentusers) {
+				$sentusers = implode (',', $sentusers);
+				$db = JFactory::getDBO();
+				$query = "UPDATE #__kunena_user_topics SET subscribed=2 WHERE topic_id={$this->thread} AND user_id IN ({$sentusers}) AND subscribed=1";
+				$db->setQuery ($query);
+				$db->query ();
+				KunenaError::checkDatabaseError();
 			}
 		}
 	}

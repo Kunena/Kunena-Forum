@@ -146,7 +146,7 @@ class KunenaForumCategory extends JObject {
 		static $actions  = array(
 			'none'=>array(),
 			'read'=>array('Read'),
-			'subscribe'=>array('Read', 'Subscribe', 'NotBanned', 'NotSection'),
+			'subscribe'=>array('Read', 'CatSubscribe', 'NotBanned', 'NotSection'),
 			'moderate'=>array('Read', 'NotBanned', 'Moderate'),
 			'admin'=>array('Read', 'NotBanned', 'Admin'),
 			'topic.read'=>array('Read'),
@@ -631,7 +631,18 @@ class KunenaForumCategory extends JObject {
 	}
 	protected function authoriseSubscribe($user) {
 		// Check if user is guest and they can create or reply topics
-		if ($user->userid == 0 || !KunenaFactory::getConfig()->allowsubscriptions) {
+		$config = KunenaFactory::getConfig();
+		if ($user->userid == 0 || !$config->allowsubscriptions || $config->topic_subscriptions == 'disabled') {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS' ) );
+			return false;
+		}
+
+		return true;
+	}
+	protected function authoriseCatSubscribe($user) {
+		// Check if user is guest and they can create or reply topics
+		$config = KunenaFactory::getConfig();
+		if ($user->userid == 0 || !$config->allowsubscriptions || $config->category_subscriptions == 'disabled') {
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS' ) );
 			return false;
 		}

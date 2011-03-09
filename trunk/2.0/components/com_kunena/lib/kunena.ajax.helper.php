@@ -172,9 +172,8 @@ class CKunenaAjaxHelper {
 
 		$config = KunenaFactory::getConfig ();
 
-		require_once(JPATH_ROOT  .DS . '/libraries/joomla/document/html/html.php');
-
-		$msgbody = KunenaHtmlParser::parseBBCode( $data );
+		$this->msg->userid = JFactory::getUser()->id;
+		$msgbody = KunenaHtmlParser::parseBBCode( $data, $this );
 		$result ['preview'] = $msgbody;
 
 		return $result;

@@ -162,7 +162,7 @@ function validate() {
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_email) : ?>
-						<td class="kcol-mid"><a href=mailto:"<?php echo $this->escape($user->email) ?>"><?php echo $this->escape($user->email) ?></a></td>
+						<td class="kcol-mid"><?php echo JHTML::_('email.cloak', $user->email) ?></td>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_usertype) : ?>

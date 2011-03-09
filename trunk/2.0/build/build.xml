@@ -135,6 +135,7 @@
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
 		<move file="${tmp_dir}/${kunena.backend}/${cfg.name}.xml" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/${cfg.name}.j16.xml" todir="${build_dir}" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/${kunena.frontend}/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/${kunena.frontend}/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/README.txt" todir="${build_dir}" overwrite="true" filtering="true" />
@@ -147,6 +148,7 @@
 		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/kunena.php" todir="${build_dir}" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/router.php" todir="${build_dir}" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/${kunena.backend}/install/system/kunena.xml" todir="${build_dir}/install/system" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/install/system/kunena.j16.xml" todir="${build_dir}/install/system" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/${kunena.backend}/install/kunena.install.upgrade.xml" todir="${build_dir}/install" overwrite="true" filtering="true" />
 		<move todir="${build_dir}">
 			<fileset dir="${tmp_dir}/${kunena.backend}">
@@ -230,9 +232,10 @@
 		<mkdir dir="${build_dir}/archive" />
 		<!--language tag="ar-AA" /-->
 		<language tag="ca-ES" />
+		<language tag="cs-CZ" />
 		<language tag="da-DK" />
 		<language tag="de-DE" />
-		<!--language tag="el-GR" /-->
+		<language tag="el-GR" />
 		<language tag="en-GB" />
 		<language tag="es-ES" />
 		<language tag="fi-FI" />
@@ -246,7 +249,7 @@
 		<language tag="nb-NO" />
 		<language tag="nl-NL" />
 		<!--language tag="pl-PL" /-->
-		<language tag="pt-BR" />
+		<!--language tag="pt-BR" /-->
 		<!--language tag="pt-PT" /-->
 		<language tag="ru-RU" />
 		<!--language tag="sr-RS" /-->

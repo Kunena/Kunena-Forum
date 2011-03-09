@@ -359,6 +359,9 @@ class CKunenaConfig extends CKunenaConfigBase {
 	// New for 1.6.4
 	var $userlist_count_users = 1;
 	var $enable_threaded_layouts = 0;
+	var $category_subscriptions = 'post';
+	var $topic_subscriptions = 'every';
+	var $pubprofile = 1;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

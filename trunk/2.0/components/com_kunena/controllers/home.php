@@ -47,6 +47,7 @@ class KunenaControllerHome extends KunenaController {
 			// Routing has been changed, redirect or fail
 			if ($active) {
 				JRequest::setVar ( 'defaultmenu', null );
+				// FIXME: chack possible redirect loops!
 				$this->setRedirect (KunenaRoute::_(null, false));
 			}
 			return;

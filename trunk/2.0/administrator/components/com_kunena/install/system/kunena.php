@@ -15,16 +15,16 @@ jimport('joomla.version');
 class plgSystemKunena extends JPlugin {
 
 	function __construct(& $subject, $config) {
+		// Check if Kunena API exists
+		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		if (! is_file ( $api ))
+			return false;
+
 		jimport ( 'joomla.application.component.helper' );
 		// Check if Kunena component is installed/enabled
 		if (! JComponentHelper::isEnabled ( 'com_kunena', true )) {
 			return false;
 		}
-
-		// Check if Kunena API exists
-		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-		if (! is_file ( $api ))
-			return false;
 
 		// Load Kunena API
 		require_once $api;

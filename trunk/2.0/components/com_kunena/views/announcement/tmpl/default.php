@@ -15,7 +15,9 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 ?>
 <div class="kblock kannouncement">
 	<div class="kheader">
-		<h1><?php echo KunenaHtmlParser::parseText($this->announcement->title); ?></h1>
+		<h2>
+			<span><?php echo KunenaHtmlParser::parseText($this->announcement->title); ?></span>
+		</h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
 		<?php if ($this->canEdit) : ?>

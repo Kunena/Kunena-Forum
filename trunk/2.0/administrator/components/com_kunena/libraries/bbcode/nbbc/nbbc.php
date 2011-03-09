@@ -1267,6 +1267,11 @@ $regex[] = ")(?![\\w])/";
 $this->smiley_regex = implode("", $regex);
 }
 function Internal_AutoDetectURLs($string) {
+/*HACK >*/
+if ($this->autolink_disable) {
+	return array($string);
+}
+/*< HACK*/
 $output = preg_split("/( (?:
 (?:https?|ftp) : \\/*
 (?:
@@ -1321,6 +1326,9 @@ foreach ($output as $index => $token) {
 if ($is_a_url) {
 if (preg_match("/^[a-zA-Z0-9._-]{2,}@/", $token)) {
 $url = "mailto:" . $token;
+/*HACK >*/
+$email = $token;
+/*< HACK*/
 }
 else if (preg_match("/^(https?:|ftp:)\\/*([^\\/&?#]+)\\/*(.*)\$/", $token, $matches)) {
 $url = $matches[1] . '/' . '/' . $matches[2] . "/" . $matches[3];
@@ -1334,7 +1342,12 @@ if (!is_array($params)) $params = Array();
 $params['url'] = $url;
 $params['link'] = $url;
 $params['text'] = $token;
+/*HACK >*/
+if (!isset($email))
 $output[$index] = $this->FillTemplate($this->url_pattern, $params);
+else
+$output[$index] = JHTML::_('email.cloak', $email, $this->IsValidEmail ( $email ));
+/*< HACK*/
 }
 $is_a_url = !$is_a_url;
 }

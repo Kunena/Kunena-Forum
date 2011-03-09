@@ -50,7 +50,7 @@ $k = 0;
 						<td class="kmessage-left khistorymsg">
 							<div class="kmsgbody">
 								<div class="kmsgtext">
-									<?php echo KunenaHtmlParser::parseBBCode( $message->message ) ?>
+									<?php echo KunenaHtmlParser::parseBBCode( $message->message, $this ) ?>
 								</div>
 							</div>
 							<?php

@@ -440,8 +440,6 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 }
 #Kunena h2 span.kheadbtn:hover a {
 	border-color: #FFF;
-	background-color: #609FBF;
-	color: #FFF !important;
 }
 #Kunena .ktitle,
 #Kunena a.ktitle {

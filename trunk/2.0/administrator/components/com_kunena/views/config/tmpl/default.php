@@ -526,6 +526,22 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS') ?>
+						</td>
+							<td align="left" valign="top"><?php echo $this->lists ['category_subscriptions']; ?>
+						</td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TOPIC_SUBSCRIPTIONS') ?>
+						</td>
+							<td align="left" valign="top"><?php echo $this->lists ['topic_subscriptions']; ?>
+						</td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TOPIC_SUBSCRIPTIONS_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONSCHECKED') ?>
 						</td>
 								<td align="left" valign="top"><?php echo $this->lists ['subscriptionschecked'];
@@ -573,6 +589,16 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						?></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE_DESC') ?>
 						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['userlist_allowed']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PUBPROFILE') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['pubprofile']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PUBPROFILE_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_REGISTERED_ONLY') ?>
@@ -1196,11 +1222,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_userhits']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED') ?></td>
-							<td align="left" valign="top"><?php echo $this->lists ['userlist_allowed']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED_DESC') ?></td>
 						</tr>
 					</table>
 				</fieldset>

@@ -95,7 +95,7 @@ abstract class KunenaAccess {
 		if (!$user->exists()) return false;
 
 		// In backend every logged in user has global admin rights (for now)
-		if (JFactory::getApplication()->isAdmin())
+		if (JFactory::getApplication()->isAdmin() && $user->userid == KunenaFactory::getUser()->userid)
 			return true;
 
 		// If $catid is not numeric: Is user administrator in ANY category?
@@ -182,7 +182,7 @@ abstract class KunenaAccess {
 			return array();
 
 		if ($subscriptions) {
-			$subslist = $this->loadSubscribers($topic);
+			$subslist = $this->loadSubscribers($topic, (int)$subscriptions);
 		}
 		if ($moderators) {
 			$modlist = array();
@@ -271,12 +271,21 @@ abstract class KunenaAccess {
 		return $list;
 	}
 
-	public function &loadSubscribers($topic) {
+	public function &loadSubscribers($topic, $subsriptions) {
 		$category = $topic->getCategory();
 		$db = JFactory::getDBO ();
-		$query ="SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topic->id}
-				UNION
-				SELECT user_id FROM #__kunena_user_categories WHERE category_id={$category->id}";
+		$query = array();
+		if ($subsriptions == 1 || $subsriptions == 2) {
+			// Get topic subscriptions
+			//FIXME: user topics is missing a column
+			$once = false; //KunenaFactory::getConfig()->topic_subscriptions == 'first' ? 'AND future1=0' : '';
+			$query[] = "SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topic->id} {$once}";
+		}
+		if ($subsriptions == 1 || $subsriptions == 3) {
+			// Get category subscriptions
+			$query[] = "SELECT user_id FROM #__kunena_user_categories WHERE category_id={$category->id}";
+		}
+		$query = implode(' UNION ', $query);
 		$db->setQuery ($query);
 		$userids = (array) $db->loadResultArray();
 		KunenaError::checkDatabaseError();

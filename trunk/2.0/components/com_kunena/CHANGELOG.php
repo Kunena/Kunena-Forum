@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+9-March-2011 Matias
+^ [#22786] Merge revisions 4485-4583 from trunk/1.6
+
 8-March-2011 Matias
 ^ [#22786] Merge revision 4554 from branches/2.0-xillibit-mvc-backend-26-02-2011
 
@@ -1138,6 +1141,115 @@ Kunena 2.0.0-DEV
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
 Kunena 1.6.4-DEV
+
+8-March-2011 Matias
+# [#25205] Joomla 1.6: admin isn't by default a global moderator
+# [#24130] Joomla 1.6: Sending subscriptions doesn't work
+
+7-March-2011 Matias
+# [#25198] Fix infinite redirect loops, show warning instead
+# [#25198] Warning: Invalid argument supplied for foreach() in KunenaRouter
+# [#25130] Improve Mootools version detection and warnings (under debug mode)
+^ [#15886] Merged revisions 4531-4549 from /branches/1.6-xillibit-01-03-2011
+^ [#15886] Merged revisions 4486-4567 from /branches/1.6.4-LDA(svens)-language-2011-02-23
+^ [#24847] updated fi-FI (thanks Mortti)
+^ [#15886] Merged revisions 4548-4569 from /branches/1.6.4-810-fixes-4-3-2011
+
+6-March-2011 810
+^ [#25168] Fix CSS layout and color issues (double div.kmsgtext in css)
+^ [#24847] updated nl-NL
+^ [#25168] Fix CSS layout and color issues (read announcement)
+
+6-March-2011 svens(LDA)
+^ [#24847] updated nb-NO (thanks Joomla! i Norge)
+^ [#24847] updated ru-RU (thanks Zarkos)
+^ [#24847] updated de-DE (thanks rich)
+^ [#24847] updated id-ID (thanks Daniel)
+- [#24847] disabled pt-BR version 1.6.1
+
+6-March-2011 Matias
+# [#25192] Regression: the "insert" button for adding a url to a post does not work
+# [#25191] Joomla 1.6: Kunena system plugin not installed
+# [#25191] Joomla 1.6: Untranslated string in menu manager: plg_system_kunena
+# [#25190] Joomla 1.6: User profiles are not created automatically into database
+# [#25190] Joomla 1.6: Administrators do not have administrative permissions
+# [#24960] Update example template to have all the new features
++ [#25197] Debug mode: Add JavaScript to detect some of the most common MooTools issues
+
+5-March-2011 Matias
+# [#25166] Can't ban users in backend
+# [#23815] Deleted attachments are not removed from disk
+# [#25187] Joomla 1.6 workaround: Use two separate manifest files and hope that right one gets picked up
+# [#25188] Installer: Improve error reporting by showing all enqueued messages
+# [#25189] Joomla 1.6: Kunena System plugin isn't removed on uninstall
+# [#24184] Joomla 1.6: Menu creation fails on error if same alias is already defined
+# [#24184] Joomla 1.6: Menu item wasn't created into main menu
+
+4-March-2011 810
+^ [#25168] Fix CSS layout and color issues (Whoisonline)
+^ [#25168] Fix CSS layout and color issues (few little fixes)
+
+4-March-2011 Xillibit
+# [#25123] Cast all values to be int for security purpose (Part 2)
+^ [#24847] Update fr-FR language
+
+4-March-2011 Matias
+^ [#25026] Make new subcription options more powerful
+^ [#25026] Make new subcription options to work with custom templates (without changing them)
+# [#25142] Menu creation: New menu link into Kunena Menu should be unpublished by default
+# [#25142] Regression in Administration: Create Menu: menu link doesn't get updated
+# [#25140] Regression in CSS: Kunena menu tabs have too much left padding in some templates
+# [#25095] Subscription email: "Subject: xxx" gets filtered from the message
+# [#25095] Subscription email subject should be topic subject, not message subject
++ [#24023] Add instruction to moderator dropdowns
+# [#24469] Add configuration option to prevent Guests from viewing members' user profiles
+# [#25171] Cloak all Email addresses (in BBCode, profile, userlist)
+# [#24758] Confidential tags hide text from admins/mods in topic history and message preview
+# [#25178] Statistics page: database error
+# [#25168] Fix misc CSS layout and color issues (thanks 810)
+
+3-March-2011 Xillibit
+# [#25123] Cast all values to be int for security purpose
+
+3-March-2011 Matias
++ [#25026] Administration: Add more subscription options (thanks Frank Gore)
++ [#25023] Limit notification emails until user visits the topic again (thanks Frank Gore)
++ [#25023] Limit notification emails on category subscriptions for new topics only
++ [#25023] Add configuration option for limiting emails
+# [#25023] Do not show error message on sending emails if Kunena email address is empty
+^ [#25023] Improve subscription emails to contain more relevant information
+
+2-March-2011 svens(LDA)
+^ [#24847] updated hu-HU (thanks pedrohsi)
+
+2-March-2011 Matias
+# [#25130] Avoid JavaScript $() conflicts with JQuery and other frameworks
+^ [#15886] Merged revisions 4522-4531 from /branches/1.6-xillibit-01-03-2011
+
+2-March-2011 Xillibit
+# [#25123] trashUserMessages() in users manager doesn't work like excepted (Part 2)
+# [#25133] Mark all forum read fails under J! 1.6
+# [#25087] Show none in report configuration settings when there are no plugins, modules...
+
+1-March-2011 Xillibit
+# [#25084] Moving topics shows unpulished categories in the pull-down
+# [#25083] "There are no forums in the category"
+# [#25093] Change "forum" to "category" in subscription emails
+# [#25100] Change translation of COM_KUNENA_BBCODE_HIDE
+# [#25123] trashUserMessages() in users manager doesn't work like excepted
+
+27-February-2011 svens(LDA)
++ [#24847] added cs-CZ (thanks David Mara)
+^ [#24847] updated el-GR (thanks Chrysovalantis Mochlas)
+^ [#24847] updated da-DK (thanks Lars Westermann)
+^ [#24847] updated ru-RU (thanks Zarkos)
+^ [#24847] updated nl-NL (thanks weenkbuul)
+^ [#24847] updated es-ES (thanks Kunena Spanish Team)
+
+26-February-2011 Matias
+# [#25087] Administrator: Fatal error in Report Configuration Settings
+# [#24924] Userlist: MySQL error when getting usercount
+# [#24364] Fix broken layout in Google maps
 
 23-February-2011 Matias
 ^ [#15886] Merged revisions 4401-4471 from /branches/1.6.3-language-LDAsvens-2011-01-22

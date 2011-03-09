@@ -28,6 +28,7 @@ class KunenaViewTopic extends KunenaView {
 	var $topic_lock = null;
 	var $topic_delete = null;
 	var $topic_moderate = null;
+	var $poll = null;
 	var $mmm = 0;
 
 	function displayDefault($tpl = null) {
@@ -74,7 +75,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->assignRef ( 'usertopic',$this->topic->getUserTopic());
 		$this->headerText =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$this->pagination = $this->getPagination ( 7 );
+		$this->pagination = $this->getPagination ( 5 );
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
@@ -82,6 +83,15 @@ class KunenaViewTopic extends KunenaView {
 		$this->topic->markRead ();
 		$this->topic->hits++;
 		$this->topic->save();
+
+		// Check is subscriptions were sent and reset the value
+		if ($this->topic->authorise('subscribe')) {
+			$usertopic = $this->topic->getUserTopic();
+			if ($usertopic->subscribed == 2) {
+				$usertopic->subscribed = 1;
+				$usertopic->save();
+			}
+		}
 
 		$this->keywords = $this->topic->getKeywords(false, ', ');
 
@@ -725,7 +735,7 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function canSubscribe() {
-		if (! $this->my->id || ! $this->config->allowsubscriptions)
+		if (! $this->my->id || ! $this->config->allowsubscriptions || $this->config->topic_subscriptions == 'disabled')
 			return false;
 		$usertopic = $this->topic->getUserTopic ();
 		return ! $usertopic->subscribed;

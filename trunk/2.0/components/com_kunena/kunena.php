@@ -37,7 +37,7 @@ if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
 	$ksession = KunenaFactory::getSession ( true );
 	if ($ksession->userid > 0) {
 		$user = KunenaFactory::getUser ();
-		if ($user->posts === null)
+		if (! $user->exists ())
 			$user->save ();
 		if (! $ksession->save ())
 			JFactory::getApplication ()->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_SESSION_SAVE_FAILED' ), 'error' );

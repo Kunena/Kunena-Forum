@@ -68,28 +68,35 @@ class KunenaTemplate extends JObject
 	}
 
 	public function loadMootools() {
-		$me = KunenaFactory::getUser();
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == '1.5') {
 			jimport ( 'joomla.plugin.helper' );
-			$mootools12 = JPluginHelper::isEnabled ( 'system', 'mtupgrade' ) || JPluginHelper::isEnabled ( 'system', 'mootools12' );
-			if (! $mootools12) {
+			$mtupgrade = JPluginHelper::isEnabled ( 'system', 'mtupgrade' );
+			if (! $mtupgrade) {
 				$app = JFactory::getApplication ();
 				if (!class_exists ( 'JHTMLBehavior' )) {
 					if (is_dir ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' )) {
 						JHTML::addIncludePath ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' );
-					} elseif ($me->isAdmin()) {
-						$app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_NO_UPGRADE'), 'notice' );
-						$app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_WARNING'), 'notice' );
+					} else {
+						KunenaError::warning ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_NO_UPGRADE').' '.JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_WARNING') );
 					}
-				} elseif ($me->isAdmin()) {
-					$app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_LEGACY'), 'notice' );
-					$app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_WARNING'), 'notice' );
-					$app->enqueueMessage ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_ENABLE'), 'notice' );
 				}
 			}
+			JHTML::_ ( 'behavior.mootools' );
+			// Get the MooTools version string
+			$mtversion = preg_replace('/[^\d\.]/','', JFactory::getApplication()->get('MooToolsVersion'));
+			if (version_compare($mtversion, '1.2.4', '<')) {
+				KunenaError::warning ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_LEGACY').' '.JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_WARNING') );
+			}
+		} else {
+			// Joomla 1.6+
+			JHTML::_ ( 'behavior.framework' );
 		}
-		JHTML::_ ( 'behavior.mootools' );
+
+		if (KunenaFactory::getConfig()->debug) {
+			// Debugging Mootools issues
+			CKunenaTools::addScript ( KUNENA_DIRECTURL . 'template/default/js/debug-min.js' );
+		}
 	}
 
 	/**

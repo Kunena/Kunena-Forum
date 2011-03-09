@@ -130,11 +130,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 				<legend><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></legend>
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr>
-						<th colspan="2" class="title"><?php
-						echo JText::_('COM_KUNENA_SUBFOR');
-						echo $this->escape($this->user->username);
-						?>
-						</th>
+						<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></th>
 					</tr>
 					<?php
 					$enum = 1; //reset value
@@ -168,11 +164,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 				<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr>
-						<th colspan="2" class="title"><?php
-						echo JText::_('COM_KUNENA_SUBFOR');
-						echo $this->escape($this->user->username);
-						?>
-						</th>
+						<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></th>
 					</tr>
 					<?php
 						$enum = 1; //reset value

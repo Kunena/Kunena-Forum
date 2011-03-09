@@ -78,6 +78,7 @@ class KunenaRouter {
 		'rules'=>1,
 		'search'=>1,
 		'advsearch'=>1,
+		'markallcatsread'=>1,
 		'markthisread'=>1,
 		'subscribecat'=>1,
 		'unsubscribecat'=>1,
@@ -171,7 +172,7 @@ class KunenaRouter {
 		}
 
 		// Safety check: we need view in order to create SEF URLs
-		if (!isset ( $menuitem->query ['view'] ) && !isset ( $query ['view'] )) {
+		if (!isset ( $menuitem->query ['view'] ) && empty ( $query ['view'] )) {
 			return $segments;
 		}
 

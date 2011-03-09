@@ -292,14 +292,31 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$lists ['show_session_type'] = JHTML::_('select.genericlist', $sessiontimetype, 'cfg_show_session_type', 'class="inputbox" size="1"', 'value', 'text', $config->show_session_type);
 
-		$userlist_allowed[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_USERLIST_TYPE_ALL'));
-		$userlist_allowed[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_USERLIST_TYPE_REGISTRED'));
+		$userlist_allowed = array ();
+		$userlist_allowed [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_A_NO') );
+		$userlist_allowed [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_A_YES') );
 		$lists ['userlist_allowed'] = JHTML::_('select.genericlist', $userlist_allowed, 'cfg_userlist_allowed', 'class="inputbox" size="1"', 'value', 'text', $config->userlist_allowed);
+		$lists ['pubprofile'] = JHTML::_('select.genericlist', $yesno, 'cfg_pubprofile', 'class="inputbox" size="1"', 'value', 'text', $config->pubprofile);
 
 		$userlist_count_users[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ALL'));
 		$userlist_count_users[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVATED_ACCOUNT'));
 		$userlist_count_users[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVE'));
 		$lists ['userlist_count_users'] = JHTML::_('select.genericlist', $userlist_count_users, 'cfg_userlist_count_users', 'class="inputbox" size="1"', 'value', 'text', $config->userlist_count_users);
+
+		// Added new options into K1.6.4
+		$lists ['allowsubscriptions'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowsubscriptions', 'class="inputbox" size="1"', 'value', 'text', $config->allowsubscriptions );
+
+		$category_subscriptions = array();
+		$category_subscriptions[] = JHTML::_('select.option', 'disabled', JText::_('COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_DISABLED'));
+		$category_subscriptions[] = JHTML::_('select.option', 'topic', JText::_('COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_TOPIC'));
+		$category_subscriptions[] = JHTML::_('select.option', 'post', JText::_('COM_KUNENA_OPTION_CATEGORY_SUBSCRIPTIONS_POST'));
+		$lists ['category_subscriptions'] = JHTML::_ ( 'select.genericlist', $category_subscriptions, 'cfg_category_subscriptions', 'class="inputbox" size="1"', 'value', 'text', $config->category_subscriptions );
+
+		$topic_subscriptions = array();
+		$topic_subscriptions[] = JHTML::_('select.option', 'disabled', JText::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_DISABLED'));
+		$topic_subscriptions[] = JHTML::_('select.option', 'first', JText::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_FIRST'));
+		$topic_subscriptions[] = JHTML::_('select.option', 'every', JText::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_EVERY'));
+		$lists ['topic_subscriptions'] = JHTML::_ ( 'select.genericlist', $topic_subscriptions, 'cfg_topic_subscriptions', 'class="inputbox" size="1"', 'value', 'text', $config->topic_subscriptions );
 
 		return $lists;
 	}

@@ -54,7 +54,7 @@ class KunenaViewInstall extends JView
 		$this->assignRef('versionWarning', $version->getVersionWarning('COM_KUNENA_INSTALL_WARNING'));
 
 		// Render the layout.
-		$app =& JFactory::getApplication();
+		$app = JFactory::getApplication();
 		if (!empty($this->requirements->fail) || !empty($this->error)) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_FAILED'), 'error');
 		else if ($this->step && isset($this->steps[$this->step+1])) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_DO_NOT_INTERRUPT'), 'notice');
 		else if (!isset($this->steps[$this->step+1])) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_SUCCESS'));
@@ -62,6 +62,17 @@ class KunenaViewInstall extends JView
 		JRequest::setVar('hidemainmenu', 1);
 
 		$this->assign('go', JRequest::getCmd('go', ''));
+
+		if ($this->step) {
+			// Output enqueued messages from previous reloads (to show Joomla warnings)
+			$session = JFactory::getSession();
+			$queue = (array) $session->get('kunena.queue');
+			foreach ($queue as $item) {
+				if (is_array($item)) {
+					$app->enqueueMessage($item['message'], $item['type']);
+				}
+			}
+		}
 
 		parent::display($tpl);
 	}

@@ -51,7 +51,7 @@ class KunenaViewUser extends KunenaView {
 		} else {
 			$this->user = JFactory::getUser( $userid );
 		}
-		if ($this->user->id == 0) {
+		if ($this->user->id == 0|| ($this->my->id == 0 && !$this->config->pubprofile)) {
 			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice' );
 			return;
 		}
@@ -69,7 +69,7 @@ class KunenaViewUser extends KunenaView {
 		$this->allow = true;
 
 		$this->profile = KunenaFactory::getUser ( $this->user->id );
-		if ($this->profile->posts === null) {
+		if (!$this->profile->exists()) {
 			$this->profile->save();
 		}
 		if ($this->profile->userid == $this->my->id) {
@@ -210,6 +210,7 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displaySubscriptions() {
+		if ($this->config->topic_subscriptions == 'disabled') return;
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
@@ -225,6 +226,7 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayCategoriesSubscriptions() {
+		if ($this->config->category_subscriptions == 'disabled') return;
 		$params = array(
 			'userid' => $this->user->id,
 			'limit' => 6,

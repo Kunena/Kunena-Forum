@@ -1,20 +1,14 @@
+/**
+ * @version $Id$
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
 
 /* Javascript file for default Kunena BlueEagle template */
-
-// Mootools detection:
-window.onload=function(){
-	// Issue 1: MooTools is not loaded
-	if (typeof MooTools == 'undefined') {
-		alert('Kunena: MooTools JavaScript library not loaded!');
-		return;
-	}
-	// Issue 2: Using deprecated MooTools version
-	var kmt_version = MooTools.version.split('.');
-	if (kmt_version[0] == 1 && kmt_version[1] >= 10) {
-		alert('Kunena: Deprecated MooTools ' + MooTools.version+ ' JavaScript library loaded!');
-		return;
-	}
-};
 
 /* Tabs class */
 var KunenaTabs = new Class({

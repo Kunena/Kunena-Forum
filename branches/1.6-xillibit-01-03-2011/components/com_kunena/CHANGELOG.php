@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+09-March-2011 Xillibit
+# [#25242] Load default icons backend J15 & J16 and fix calendar in new ban
+
 08-March-2011 Xillibit
 # [#25227] Joomla! 1.6 : changes for plugins directories and report configuration settings
 # [#25216] JomSocial activity stream integration shows unapproved posts

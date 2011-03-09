@@ -2187,11 +2187,11 @@ function showProfiles($option, &$users, $pageNav, $order, $lists) {
 				<td align="center"><?php echo $userLogged; ?></td>
 				<td align="center">
 					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
-						<img src="images/<?php echo $userEnabled;?>" width="16" height="16" border="0" alt="<?php echo $altUserEnabled; ?>" />
+						<img src="components/com_kunena/images/<?php echo $userEnabled;?>" width="16" height="16" border="0" alt="<?php echo $altUserEnabled; ?>" />
 					</a></td>
 				<td align="center">
 					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBannedTask; ?>')">
-						<img src="images/<?php echo $userbanned;?>" width="16" height="16" border="0" alt="<?php echo $altUserBanned; ?>" />
+						<img src="components/com_kunena/images/<?php echo $userbanned;?>" width="16" height="16" border="0" alt="<?php echo $altUserBanned; ?>" />
 					</a>
 				</td>
 <?php /*

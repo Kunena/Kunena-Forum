@@ -30,6 +30,9 @@ Legend:
 
 KunenaStats 1.6.3
 
+09-March-2011 Xillibit
+^ [#24847] Missing strings for french translation
+
 17-February-2011 Matias
 ^ [#19002] Updated version to 1.6.3-DEV
 # [#24959] Always initialize session if allowed=na

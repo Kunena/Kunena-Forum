@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+9-March-2011 Matias
+# [#24783] Regression in installer: fix wrong message when uninstalling K1.6 and backup exists
+
 8-March-2011 Matias
 # [#25205] Joomla 1.6: admin isn't by default a global moderator
 # [#24130] Joomla 1.6: Sending subscriptions doesn't work

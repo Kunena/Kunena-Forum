@@ -23,10 +23,16 @@ class KunenaSession extends JObject
 
 	function __construct($identifier)
 	{
-		// New user gets a month of unread messages
-		$this->lasttime = CKunenaTimeformat::internalTime() - 3600*24*30;
-		$this->currvisit = CKunenaTimeformat::internalTime();
 		$this->load($identifier);
+		if (!$this->currvisit) {
+			$this->lasttime = $this->currvisit = CKunenaTimeformat::internalTime();
+			$this->readtopics = 0;
+			// New user gets 14 days of unread messages
+			if ($identifier) {
+				$this->lasttime -= 14*24*60*60; // 14 days
+			}
+		}
+		$this->updateAllowedForums();
 	}
 
 	static public function getInstance( $update=false, $userid = null )
@@ -36,7 +42,6 @@ class KunenaSession extends JObject
 			$db = JFactory::getDBO();
 			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
 			if ($update) self::$_instance->updateSessionInfo();
-			self::$_instance->updateAllowedForums();
 		}
 		return self::$_instance;
 	}

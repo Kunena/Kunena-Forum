@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.3-DEV
 
+8-March-2011 Matias
+# [#25215] Fix a few PHP Notices
+
 7-March-2011 Matias
 # [#25215] Incompatibility: Broken link in Kunena discuss after upgrading to K1.6.4
 

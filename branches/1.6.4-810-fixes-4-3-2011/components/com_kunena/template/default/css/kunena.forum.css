@@ -1111,6 +1111,7 @@ PX		EM			PCT			PT
 	padding-top: 5px;
 }
 #Kunena div.kpbox {
+
 	border-bottom: 1px solid;
 }
 
@@ -1447,6 +1448,7 @@ PX		EM			PCT			PT
 	min-height: 180px;
 }
 #Kunena div.kmsgbody div.kmsgtext {
+	overflow: auto;
 	word-wrap:break-word;
 }
 #Kunena td.kmessage-right div.kmsgbody,
@@ -2652,7 +2654,6 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 #Kunena .kcredits-intro {
 	margin:5px;
 	padding:15px 30px;
-	padding-bottom:30px;
 	text-align:left;
 	border: 1px solid;
 	border-radius: 15px;
@@ -3349,3 +3350,12 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 #Kunena .ktree-edge { background-position: -30px 0; }
 #Kunena .ktree-gap { background-position: -105px 0; }
 #Kunena .ktree-empty { background: none; }
+
+/* Fix Atomic Joomla 1.6 template*/
+.span-16 {
+	width: 100% !important;	
+}
+tbody tr:nth-child(2n) td, tbody tr.even td {
+	background-color: #FFF !important;
+}
+/* --------------------------------------------------------------- */	

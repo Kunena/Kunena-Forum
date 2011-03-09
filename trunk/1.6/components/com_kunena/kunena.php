@@ -501,7 +501,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'view' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'view.php');
 			$layout = $kunena_app->getUserStateFromRequest( "com_kunena.view_layout", 'layout', 'view' );
-			$page = new CKunenaView($layout, $catid, $id, $mesid, $limitstart, $limit);
+			$page = new CKunenaView($layout, $catid, $id, $limitstart, $limit, $mesid);
 			$page->display(true);
 
 			break;

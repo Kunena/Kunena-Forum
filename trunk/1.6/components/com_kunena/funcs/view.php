@@ -309,7 +309,7 @@ class CKunenaView {
 	public $pagination = null;
 	public $goto = null;
 
-	function __construct($layout, $catid, $id, $mesid, $limitstart=0, $limit=0) {
+	function __construct($layout, $catid, $id, $limitstart=0, $limit=0, $mesid=0) {
 		require_once(KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
 		require_once(KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 

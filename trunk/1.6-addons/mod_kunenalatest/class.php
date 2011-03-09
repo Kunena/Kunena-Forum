@@ -76,10 +76,6 @@ class modKunenaLatestHelper {
 			case 'noreplies' :
 				$model->getNoReplies();
 				break;
-			case 'catsubscriptions' :
-				$model->getCategoriesSubscriptions();
-				$threadmode = false;
-				break;
 			case 'subscriptions' :
 				$model->getSubscriptions();
 				break;

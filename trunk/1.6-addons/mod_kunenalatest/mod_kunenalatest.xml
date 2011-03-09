@@ -2,7 +2,7 @@
 <!DOCTYPE install>
 <install type="module" version="1.5.0" method="upgrade">
 	<name>Kunena Latest</name>
-	<version>1.6.3-DEV</version>
+	<version>1.6.4-DEV</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>www.kunena.org</author>
@@ -41,8 +41,7 @@
 			<option value="latesttopics">MOD_KUNENALATEST_SHOW_LATEST_TOPICS</option>
 			<option value="latestposts">MOD_KUNENALATEST_SHOW_LATEST_MESSAGES</option>
 			<option value="noreplies">MOD_KUNENALATEST_SHOW_NO_REPLIES</option>
-			<option value="catsubscriptions">MOD_KUNENALATEST_SHOW_CATSUBSCRIPTIONS</option>
- 			<option value="subscriptions">MOD_KUNENALATEST_SHOW_SUBSCRIPTIONS</option>
+			<option value="subscriptions">MOD_KUNENALATEST_SHOW_SUBSCRIPTIONS</option>
 			<option value="favorites">MOD_KUNENALATEST_SHOW_FAVORITES</option>
 			<option value="owntopics">MOD_KUNENALATEST_SHOW_OWN_TOPICS</option>
 			<option value="deleted">MOD_KUNENALATEST_SHOW_DELETE_POSTS</option>
@@ -60,7 +59,7 @@
 			<option value="4">MOD_KUNENALATEST_SHOW_4_HOURS</option>
 			<option value="8">MOD_KUNENALATEST_SHOW_8_HOURS</option>
 			<option value="12">MOD_KUNENALATEST_SHOW_12_HOURS</option>
- 			<option value="24">MOD_KUNENALATEST_SHOW_24_HOURS</option>
+			<option value="24">MOD_KUNENALATEST_SHOW_24_HOURS</option>
 			<option value="48">MOD_KUNENALATEST_SHOW_48_HOURS</option>
 			<option value="168">MOD_KUNENALATEST_SHOW_WEEK</option>
 			<option value="720">MOD_KUNENALATEST_SHOW_MONTH</option>
@@ -71,7 +70,7 @@
 		<param name="messagelength" type="text" default="150" label="MOD_KUNENALATEST_PARAM_MESSAGELENGTH" description="MOD_KUNENALATEST_PARAM_MESSAGELENGTH_DESC" />
 		<param name="lengthcontentcharacters" type="text" default="" label="MOD_KUNENALATEST_PARAM_CONTENT_CHARACTER_LENGHT" description="MOD_KUNENALATEST_PARAM_CONTENT_CHARACTER_LENGHT_DESC" />
 		<param name="unreadindicator" type="text" default="!" label="MOD_KUNENALATEST_PARAM_UNREADINDICATOR" description="MOD_KUNENALATEST_PARAM_UNREADINDICATOR_DESC" />
-		
+
 		<param name="dateformat" type="text" default="at %H:%M on %b %d, %Y (%Z)" label="MOD_KUNENALATEST_PARAM_DATEFORMAT" description="MOD_KUNENALATEST_PARAM_DATEFORMAT_DESC"/>
 
 		<param name="@spacer" type="spacer" default="" label="" description="" />
@@ -82,7 +81,7 @@
 		</param>
 		<param name="avatarwidth" type="text" default="36px" label="MOD_KUNENALATEST_PARAM_AVATAR_WIDTH" description="MOD_KUNENALATEST_PARAM_AVATAR_WIDTH_DESC" />
 		<param name="avatarheight" type="text" default="36px" label="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT" description="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT_DESC" />		
-		
+
 		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="sh_category" type="radio" default="1" label="MOD_KUNENALATEST_PARAM_SHOW_CATEGORY" description="MOD_KUNENALATEST_PARAM_SHOW_CATEGORY_DESC">
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
@@ -126,23 +125,20 @@
 				<field name="category_id" type="text"
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_CATEGORYLIST_NONE_DESC"
-					label="MOD_KUNENALATEST_PARAM_CATEGORYLIST_NONE"	/>				
+					label="MOD_KUNENALATEST_PARAM_CATEGORYLIST_NONE" />
 				<field name="sh_category_id_in" type="radio"
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_CAT_IDS_IN_DESC"
-					label="MOD_KUNENALATEST_PARAM_CAT_IDS_IN"
-				>
+					label="MOD_KUNENALATEST_PARAM_CAT_IDS_IN">
 					<option value="1">MOD_KUNENALATEST_PARAM_SHOW_CATS</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_HIDE_CATS</option>
 				</field>
 				<field name="choosemodel"  type="list" default="latest"
 					label="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL"
-					description="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL_DESC" 
-				>
+					description="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL_DESC">
 					<option value="latesttopics">MOD_KUNENALATEST_SHOW_LATEST_TOPICS</option>
 					<option value="latestposts">MOD_KUNENALATEST_SHOW_LATEST_MESSAGES</option>
 					<option value="noreplies">MOD_KUNENALATEST_SHOW_NO_REPLIES</option>
-					<option value="catsubscriptions">MOD_KUNENALATEST_SHOW_CATSUBSCRIPTIONS</option>
 					<option value="subscriptions">MOD_KUNENALATEST_SHOW_SUBSCRIPTIONS</option>
 					<option value="favorites">MOD_KUNENALATEST_SHOW_FAVORITES</option>
 					<option value="owntopics">MOD_KUNENALATEST_SHOW_OWN_TOPICS</option>
@@ -154,16 +150,14 @@
 				<field name="sh_moduleshowtype" type="radio"
 					default="kmodvertical"
 					description="MOD_KUNENALATEST_PARAM_DISPLAYTYPE_DESC"
-					label="MOD_KUNENALATEST_PARAM_DISPLAYTYPE"
-				>
+					label="MOD_KUNENALATEST_PARAM_DISPLAYTYPE">
 					<option value="kmodhorizontal">MOD_KUNENALATEST_PARAM_DISPLAYTYPE_HORIZONTAL</option>
 					<option value="kmodvertical">MOD_KUNENALATEST_PARAM_DISPLAYTYPE_VERTICAL</option> 
-				</field>				
+				</field>
 				<field name="show_list_time" type="list"
 					default="2"
 					description="MOD_KUNENALATEST_PARAM_SHOW_TOPICS_FROM_DESC"
-					label="MOD_KUNENALATEST_PARAM_SHOW_TOPICS_FROM"
-				>
+					label="MOD_KUNENALATEST_PARAM_SHOW_TOPICS_FROM">
 					<option value="0">MOD_KUNENALATEST_SHOW_LASTVISIT</option>
 					<option value="4">MOD_KUNENALATEST_SHOW_4_HOURS</option>
 					<option value="8">MOD_KUNENALATEST_SHOW_8_HOURS</option>
@@ -173,21 +167,21 @@
 					<option value="168">MOD_KUNENALATEST_SHOW_WEEK</option>
 					<option value="720">MOD_KUNENALATEST_SHOW_MONTH</option>
 					<option value="8760">MOD_KUNENALATEST_SHOW_YEAR</option>
-				</field>				
+				</field>
 				<field name="nbpost" type="text"
 					default="5"
 					description="MOD_KUNENALATEST_PARAM_NUMBERPOSTS_DESC"
-					label="MOD_KUNENALATEST_PARAM_NUMBERPOSTS" />					
+					label="MOD_KUNENALATEST_PARAM_NUMBERPOSTS" />
 				<field name="titlelength" type="text"
 					default="50"
 					description="MOD_KUNENALATEST_PARAM_TITLELENGTH_DESC"
-					label="MOD_KUNENALATEST_PARAM_TITLELENGTH"	/>	
-					
+					label="MOD_KUNENALATEST_PARAM_TITLELENGTH" />
+
 				<field name="messagelength" type="text"
 					default="150"
 					description="MOD_KUNENALATEST_PARAM_MESSAGELENGTH_DESC"
-					label="MOD_KUNENALATEST_PARAM_MESSAGELENGTH" />			
-					
+					label="MOD_KUNENALATEST_PARAM_MESSAGELENGTH" />
+
 				<field name="lengthcontentcharacters" type="text"
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_CONTENT_CHARACTER_LENGHT_DESC"
@@ -199,13 +193,12 @@
 				<field name="dateformat" type="text"
 					default="at %H:%M on %b %d, %Y (%Z)"
 					description="MOD_KUNENALATEST_PARAM_DATEFORMAT_DESC"
-					label="MOD_KUNENALATEST_PARAM_DATEFORMAT" />				
-				
+					label="MOD_KUNENALATEST_PARAM_DATEFORMAT" />
+
 				<field name="sh_topiciconoravatar" type="radio"
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR_DESC"
-					label="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR"
-				>				
+					label="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR">
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_AVATAR</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_TOPICICON</option>
 					<option value="2">MOD_KUNENALATEST_PARAM_VALUE_NO_AVATAR_NO_TOPICICONS</option>
@@ -217,76 +210,68 @@
 				<field name="avatarheight" type="text"
 					default="36px"
 					description="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT_DESC"
-					label="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT" />	
-							
+					label="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT" />
+
 				<field name="sh_category" type="radio"
 					default="1"
 					description="MOD_KUNENALATEST_PARAM_SHOW_CATEGORY_DESC"
-					label="MOD_KUNENALATEST_PARAM_SHOW_CATEGORY"
-				>				
+					label="MOD_KUNENALATEST_PARAM_SHOW_CATEGORY">
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
 				</field>
 				<field name="sh_author" type="radio"
 					default="1"
 					description="MOD_KUNENALATEST_PARAM_SHOW_AUTHOR_DESC"
-					label="MOD_KUNENALATEST_PARAM_SHOW_AUTHOR"
-				>				
+					label="MOD_KUNENALATEST_PARAM_SHOW_AUTHOR">
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
-				</field>				
+				</field>
 				<field name="sh_time" type="radio"
 					default="1"
 					description="MOD_KUNENALATEST_PARAM_SHOW_TIME_DESC"
-					label="MOD_KUNENALATEST_PARAM_SHOW_TIME"
-				>				
+					label="MOD_KUNENALATEST_PARAM_SHOW_TIME">
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
 				</field>
 				<field name="sh_firstcontentcharacter" type="radio"
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_SHOW_CONTENT_DESC"
-					label="MOD_KUNENALATEST_PARAM_SHOW_CONTENT"
-				>				
+					label="MOD_KUNENALATEST_PARAM_SHOW_CONTENT">
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
 				</field>
 				<field name="sh_favorite" type="radio"
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_SHOW_AUTHOR_DESC"
-					label="MOD_KUNENALATEST_PARAM_SHOW_AUTHOR"
-				>				
+					label="MOD_KUNENALATEST_PARAM_SHOW_AUTHOR">
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
 				</field>
 				<field name="sh_locked" type="radio"
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_SHOWLOCKED_DESC"
-					label="MOD_KUNENALATEST_PARAM_SHOWLOCKED"
-				>				
+					label="MOD_KUNENALATEST_PARAM_SHOWLOCKED">
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
 				</field>
 				<field name="sh_sticky" type="radio"
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_SHOWSTICKY_DESC"
-					label="MOD_KUNENALATEST_PARAM_SHOWSTICKY"
-				>				
+					label="MOD_KUNENALATEST_PARAM_SHOWSTICKY">
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
 				</field>
 				<field name="sh_morelink" type="radio"
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_MORELINK_DESC"
-					label="MOD_KUNENALATEST_PARAM_MORELINK"
-				>				
+					label="MOD_KUNENALATEST_PARAM_MORELINK">
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
-				</field>								
+				</field>
 				<field name="moduleclass_sfx" type="text"
 					default=""
 					description="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX_DESC"
-					label="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX" />		
+					label="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX" />
 			</fieldset>
 		</fields>
 	</config>

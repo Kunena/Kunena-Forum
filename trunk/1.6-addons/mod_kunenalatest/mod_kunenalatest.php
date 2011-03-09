@@ -28,5 +28,15 @@ if (!Kunena::enabled()) {
 require_once (dirname ( __FILE__ ) . '/class.php');
 
 $params = ( object ) $params;
-$klatest = new modKunenaLatest ( $params );
 
+// Add basic caching for visitors (3 minutes)
+$user = JFactory::getUser();
+if (!$user->id) {
+	$cache = JFactory::getCache('mod_kunenalatest', 'output');
+	$cache->setLifeTime(180);
+	if ($cache->start(md5(serialize($params)), 'mod_kunenalatest')) return;
+}
+$klatest = new modKunenaLatest ( $params );
+if (!$user->id) {
+	$cache->end();
+}

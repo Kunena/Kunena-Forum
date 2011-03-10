@@ -438,6 +438,7 @@ class KunenaRouteLegacy {
 					}
 					$uri->setVar ( 'id', $id );
 				}
+				break;
 			case 'karma':
 				$changed = true;
 				$uri->setVar('view', 'user');
@@ -451,6 +452,7 @@ class KunenaRouteLegacy {
 				}
 				$uri->delVar('layout');
 				$uri->delVar('pid');
+				break;
 
 		}
 		return $changed;

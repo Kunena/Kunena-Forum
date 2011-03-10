@@ -34,6 +34,9 @@ Kunena 2.0.0-DEV
 10-March-2011 Matias
 ^ [#22786] Merge revisions 4583-4599 from trunk/1.6
 # [#23443] Fixed some bugs from the installer breaking upgrade in J1.5 and installation in J1.6
+# [#23443] Fix pagination issues in userlist
+# [#23443] Thankyou: Task does not work
+# [#23443] Thankyou: Do not allow user to Thankyou himself
 
 9-March-2011 Matias
 ^ [#22786] Merge revisions 4485-4583 from trunk/1.6

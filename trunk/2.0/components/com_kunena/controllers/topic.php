@@ -312,11 +312,6 @@ class KunenaControllerTopic extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		if(!KunenaFactory::getConfig()->showthankyou) {
-			$app->enqueueMessage (  JText::_('COM_KUNENA_THANKYOU_DISABLED') );
-			$this->redirectBack ();
-		}
-
 		$thankyou = KunenaForumMessageThankyouHelper::get($this->mesid);
 		if (!$thankyou->save ( KunenaFactory::getUser() )) {
 			$app->enqueueMessage ( $thankyou->getError() );

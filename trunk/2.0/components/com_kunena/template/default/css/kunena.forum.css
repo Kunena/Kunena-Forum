@@ -3347,4 +3347,12 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 .span-16 {
 	width: 100% !important;	
 }
-/* --------------------------------------------------------------- */	
+/* --------------------------------------------------------------- */
+/* Kunena 2.0 */
+
+#Kunena .pagination {
+	display: inline;
+}
+#Kunena .pagination li {
+	display: inline;
+}

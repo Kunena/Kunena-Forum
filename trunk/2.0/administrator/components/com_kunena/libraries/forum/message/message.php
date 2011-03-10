@@ -255,7 +255,7 @@ class KunenaForumMessage extends JObject {
 			'move'=>array('Read'),
 			'approve'=>array('Read'),
 			'delete'=>array('Read','Own','EditTime', 'Delete'),
-			'thankyou'=>array('Read'),
+			'thankyou'=>array('Read', 'Thankyou'),
 			'undelete'=>array('Read'),
 			'permdelete'=>array('Read'),
 			'attachment.read'=>array('Read'),
@@ -613,6 +613,20 @@ class KunenaForumMessage extends JObject {
 		// TODO: check #__kunena_user_topics
 		if ((!$this->userid || $this->userid != $user->userid) && !$user->isModerator($this->catid)) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
+			return false;
+		}
+		return true;
+	}
+	protected function authoriseThankyou($user) {
+		// Check that message is not your own
+		if(!KunenaFactory::getConfig()->showthankyou) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_THANKYOU_DISABLED' ) );
+			return false;
+		}
+
+		if (!$user->userid || !$this->userid || $this->userid == $user->userid) {
+			// TODO: better error message
+			$this->setError ( JText::_ ( 'COM_KUNENA_THANKYOU_DISABLED' ) );
 			return false;
 		}
 		return true;

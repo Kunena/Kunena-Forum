@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.view' );
 kimport ( 'kunena.html.parser' );
+kimport ( 'kunena.html.pagination' );
 
 /**
  * Topics View
@@ -296,49 +297,9 @@ class KunenaViewTopics extends KunenaView {
 		return $txt;
 	}
 
-	function getPagination($func, $maxpages) {
-		$limit = $this->state->get ( 'list.limit' );
-		$page = floor ( $this->state->get ( 'list.start' ) / $limit ) + 1;
-		$totalpages = max(1, floor ( ($this->total-1) / $limit ) + 1);
-
-		if ( $func != 'latest' ) $func = 'latest&do='.$func;
-
-		$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
-		$endpage = $startpage + $maxpages;
-		if ($endpage > $totalpages) {
-			$startpage = ($totalpages - $maxpages) < 1 ? 1 : $totalpages - $maxpages;
-			$endpage = $totalpages;
-		}
-
-		$output = '<ul class="kpagination">';
-		$output .= '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
-
-		if (($startpage) > 1) {
-			if ($endpage < $totalpages)
-				$endpage --;
-			$output .= '<li>' . CKunenaLink::GetLatestPageLink ( $func, 1, 'follow', '' ) . '</li>';
-			if (($startpage) > 2) {
-				$output .= '<li class="more">...</li>';
-			}
-		}
-
-		for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
-			if ($page == $i) {
-				$output .= '<li class="active">' . $i . '</li>';
-			} else {
-				$output .= '<li>' . CKunenaLink::GetLatestPageLink ( $func, $i, 'follow', '' ) . '</li>';
-			}
-		}
-
-		if ($endpage < $totalpages) {
-			if ($endpage < $totalpages - 1) {
-				$output .= '<li class="more">...</li>';
-			}
-
-			$output .= '<li>' . CKunenaLink::GetLatestPageLink ( $func, $totalpages, 'follow', '' ) . '</li>';
-		}
-
-		$output .= '</ul>';
-		return $output;
+	function getPagination($maxpages) {
+		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
+		$pagination->setDisplay($maxpages);
+		return $pagination->getPagesLinks();
 	}
 }

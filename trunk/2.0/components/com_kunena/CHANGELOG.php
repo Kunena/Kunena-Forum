@@ -37,6 +37,7 @@ Kunena 2.0.0-DEV
 # [#23443] Fix pagination issues in userlist
 # [#23443] Thankyou: Task does not work
 # [#23443] Thankyou: Do not allow user to Thankyou himself
++ [#22569] Implement and start using KunenaHtmlPagination class
 
 9-March-2011 Matias
 ^ [#22786] Merge revisions 4485-4583 from trunk/1.6

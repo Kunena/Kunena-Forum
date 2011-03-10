@@ -1073,3 +1073,10 @@ tbody tr:nth-child(2n) td, tbody tr.even td {
 }
 
 /* --------------------------------------------------------------- */
+
+/* Kunena 2.0 */
+#Kunena .kpagination span {
+	border-color:#5388B4;
+	background-color:#5388B4;
+	color:#FFFFFF;
+}

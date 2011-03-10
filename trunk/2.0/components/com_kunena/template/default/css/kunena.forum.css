@@ -3350,9 +3350,9 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 /* --------------------------------------------------------------- */
 /* Kunena 2.0 */
 
-#Kunena .pagination {
-	display: inline;
-}
-#Kunena .pagination li {
-	display: inline;
+#Kunena .kpagination span {
+	border:solid 1px;
+	font-weight:bold;
+	padding:1px 5px;
+	margin: 2px;
 }

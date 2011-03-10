@@ -38,7 +38,31 @@ class KunenaHtmlPagination extends JPagination
 	 */
 	protected $_additionalUrlParams = array();
 
-	/**
+	function __construct($total, $limitstart, $limit, $prefix = '') {
+		parent::__construct($total, $limitstart, $limit, $prefix);
+		$this->setDisplay();
+	}
+
+	function setDisplay($displayedPages = 7) {
+		// From Joomla 1.6:
+		// Set the pagination iteration loop values.
+		$this->set('pages.start', $this->get('pages.current') - intval($displayedPages / 2));
+		if ($this->get('pages.start') < 1) {
+			$this->set('pages.start', 1);
+		}
+		if (($this->get('pages.start') + $displayedPages) > $this->get('pages.total')) {
+			$this->set('pages.stop', $this->get('pages.total'));
+			if ($this->get('pages.total') < $displayedPages) {
+				$this->set('pages.start', 1);
+			} else {
+				$this->set('pages.start', $this->get('pages.total') - $displayedPages + 1);
+			}
+		} else {
+			$this->set('pages.stop', ($this->get('pages.start') + $displayedPages - 1));
+		}
+	}
+
+		/**
 	 * Create and return the pagination page list string, ie. Previous, Next, 1 2 3 ... x.
 	 *
 	 * @return	string	Pagination page list string.
@@ -57,42 +81,6 @@ class KunenaHtmlPagination extends JPagination
 		$itemOverride = false;
 		$listOverride = false;
 
-		$chromePath = JPATH_THEMES.DS.$app->getTemplate().DS.'html'.DS.'pagination.php';
-		if (file_exists($chromePath))
-		{
-			require_once $chromePath;
-			if (function_exists('pagination_item_active') && function_exists('pagination_item_inactive')) {
-				$itemOverride = true;
-			}
-			if (function_exists('pagination_list_render')) {
-				$listOverride = true;
-			}
-		}
-
-		// Build the select list
-		if ($data->all->base !== null) {
-			$list['all']['active'] = true;
-			$list['all']['data'] = ($itemOverride) ? pagination_item_active($data->all) : $this->_item_active($data->all);
-		} else {
-			$list['all']['active'] = false;
-			$list['all']['data'] = ($itemOverride) ? pagination_item_inactive($data->all) : $this->_item_inactive($data->all);
-		}
-
-		if ($data->start->base !== null) {
-			$list['start']['active'] = true;
-			$list['start']['data'] = ($itemOverride) ? pagination_item_active($data->start) : $this->_item_active($data->start);
-		} else {
-			$list['start']['active'] = false;
-			$list['start']['data'] = ($itemOverride) ? pagination_item_inactive($data->start) : $this->_item_inactive($data->start);
-		}
-		if ($data->previous->base !== null) {
-			$list['previous']['active'] = true;
-			$list['previous']['data'] = ($itemOverride) ? pagination_item_active($data->previous) : $this->_item_active($data->previous);
-		} else {
-			$list['previous']['active'] = false;
-			$list['previous']['data'] = ($itemOverride) ? pagination_item_inactive($data->previous) : $this->_item_inactive($data->previous);
-		}
-
 		$list['pages'] = array(); //make sure it exists
 		foreach ($data->pages as $i => $page)
 		{
@@ -103,25 +91,6 @@ class KunenaHtmlPagination extends JPagination
 				$list['pages'][$i]['active'] = false;
 				$list['pages'][$i]['data'] = ($itemOverride) ? pagination_item_inactive($page) : $this->_item_inactive($page);
 			}
-		}
-
-		if ($data->next->base !== null) {
-			$list['next']['active'] = true;
-			$list['next']['data'] = ($itemOverride) ? pagination_item_active($data->next) : $this->_item_active($data->next);
-		}
-		else {
-			$list['next']['active'] = false;
-			$list['next']['data'] = ($itemOverride) ? pagination_item_inactive($data->next) : $this->_item_inactive($data->next);
-		}
-
-		if ($data->end->base !== null) {
-			$list['end']['active'] = true;
-			$list['end']['data'] = ($itemOverride) ? pagination_item_active($data->end) : $this->_item_active($data->end);
-		}
-
-		else {
-			$list['end']['active'] = false;
-			$list['end']['data'] = ($itemOverride) ? pagination_item_inactive($data->end) : $this->_item_inactive($data->end);
 		}
 
 		if ($this->total > $this->limit){
@@ -216,14 +185,14 @@ class KunenaHtmlPagination extends JPagination
 	public function _list_render($list)
 	{
 		// Reverse output rendering for right-to-left display.
-		$html = '<ul class="pagination">';
-		$html .= '<li class="pagination-start">'.$list['start']['data'].'</li>';
-		$html .= '<li class="pagination-prev">'.$list['previous']['data'].'</li>';
-		foreach($list['pages'] as $page) {
+		$html = '<ul class="kpagination">';
+		$html .= '<li class="page">'.JText::_('COM_KUNENA_PAGE').'</li>';
+		$last = 0;
+		foreach($list['pages'] as $i=>$page) {
+			if ($last+1 != $i) $html .= '<li>...</li>';
 			$html .= '<li>'.$page['data'].'</li>';
+			$last = $i;
 		}
-		$html .= '<li class="pagination-next">'. $list['next']['data'].'</li>';
-		$html .= '<li class="pagination-end">'. $list['end']['data'].'</li>';
 		$html .= '</ul>';
 
 		return $html;
@@ -283,50 +252,16 @@ class KunenaHtmlPagination extends JPagination
 			}
 		}
 
-		$data->all = new JPaginationObject(JText::_('COM_KUNENA_LIB_HTML_VIEW_ALL'), $this->prefix);
-		if (!$this->_viewall) {
-			$data->all->base	= '0';
-			$data->all->link	= JRoute::_($params.'&'.$this->prefix.'limitstart=');
-		}
-
-		// Set the start and previous data objects.
-		$data->start	= new JPaginationObject(JText::_('COM_KUNENA_LIB_HTML_START'), $this->prefix);
-		$data->previous	= new JPaginationObject(JText::_('COM_KUNENA_LIB_HTML_PREV'), $this->prefix);
-
-		if ($this->get('pages.current') > 1)
-		{
-			$page = ($this->get('pages.current') -2) * $this->limit;
-
-			$data->start->base	= '0';
-			$data->start->link	= JRoute::_($params.'&'.$this->prefix.'limitstart=0');
-			$data->previous->base	= $page;
-			$data->previous->link	= JRoute::_($params.'&'.$this->prefix.'limitstart='.$page);
-		}
-
-		// Set the next and end data objects.
-		$data->next	= new JPaginationObject(JText::_('COM_KUNENA_LIB_HTML_NEXT'), $this->prefix);
-		$data->end	= new JPaginationObject(JText::_('COM_KUNENA_LIB_HTML_END'), $this->prefix);
-
-		if ($this->get('pages.current') < $this->get('pages.total'))
-		{
-			$next = $this->get('pages.current') * $this->limit;
-			$end  = ($this->get('pages.total') -1) * $this->limit;
-
-			$data->next->base	= $next;
-			$data->next->link	= JRoute::_($params.'&'.$this->prefix.'limitstart='.$next);
-			$data->end->base	= $end;
-			$data->end->link	= JRoute::_($params.'&'.$this->prefix.'limitstart='.$end);
-		}
-
 		$data->pages = array();
-		$stop = $this->get('pages.stop');
-		for ($i = $this->get('pages.start'); $i <= $stop; $i ++)
-		{
+		$range = range($this->get('pages.start'), $this->get('pages.stop'));
+		$range[] = 1;
+		$range[] = $this->get('pages.total');
+		sort($range);
+		foreach ($range as $i) {
 			$offset = ($i -1) * $this->limit;
 
 			$data->pages[$i] = new JPaginationObject($i, $this->prefix);
-			if ($i != $this->get('pages.current') || $this->_viewall)
-			{
+			if ($i != $this->get('pages.current') || $this->_viewall) {
 				$data->pages[$i]->base	= $offset;
 				$data->pages[$i]->link	= JRoute::_($params.'&'.$this->prefix.'limitstart='.$offset);
 			}

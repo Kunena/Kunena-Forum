@@ -44,7 +44,7 @@ $this->getModulePosition ( 'kunena_announcement' );
 
 		<td class="klist-jump-all"><?php $this->displayForumJump () ?></td>
 
-		<td class="klist-pages-all"><?php echo $this->getPagination ( 'latest', 3 ); ?></td>
+		<td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
 	</tr>
 </table>
 <!-- F: List Actions -->
@@ -58,7 +58,7 @@ $this->getModulePosition ( 'kunena_announcement' );
 			<strong><?php echo intval($this->total) ?></strong>
 			<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>
 		</td>
-		<td class="klist-pages-all"><?php echo $this->getPagination ( 'latest', 3 ); ?></td>
+		<td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
 	</tr>
 </table>
 <!-- F: List Actions -->

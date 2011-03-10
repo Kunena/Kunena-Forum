@@ -191,7 +191,7 @@ function validate() {
 							<div>
 								<?php
 								// TODO: fxstein - Need to perform SEO cleanup
-								echo $this->pageNav->getPagesLinks(CKunenaLink::GetUserlistURL());
+								echo $this->pageNav->getPagesLinks();
 								?>
 							<span style="float:right">
 								<?php echo $this->pageNav->getPagesCounter(); ?> | <?php echo JText::_('COM_KUNENA_USRL_DISPLAY_NR'); ?> <?php echo $this->pageNav->getLimitBox(CKunenaLink::GetUserlistURL()); ?>

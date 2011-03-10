@@ -239,7 +239,7 @@ document.addEvent('domready', function() {
 			?>
 
 			<?php if ($this->total > $this->state->get('list.limit')) : ?>
-			<?php echo $this->getPagination('search', 3); ?>
+			<?php echo $this->getPagination(5); ?>
 			<?php endif; ?>
 			</th>
 		</tr>

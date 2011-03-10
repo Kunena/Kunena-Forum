@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.view' );
 kimport ( 'kunena.html.parser' );
+kimport ( 'kunena.html.pagination' );
 
 /**
  * Category View
@@ -363,47 +364,8 @@ class KunenaViewCategory extends KunenaView {
 	}
 
 	function getPagination($maxpages) {
-		if (empty ( $this->pagination )) {
-			$limit = $this->state->get ( 'list.limit' );
-			$page = floor ( $this->state->get ( 'list.start' ) / $limit ) + 1;
-			$totalpages = max(1, floor ( ($this->total-1) / $limit ) + 1);
-			$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
-			$endpage = $startpage + $maxpages;
-			if ($endpage > $totalpages) {
-				$startpage = ($totalpages - $maxpages) < 1 ? 1 : $totalpages - $maxpages;
-				$endpage = $totalpages;
-			}
-
-			$this->pagination = '<ul class="kpagination">';
-			$this->pagination .= '<li class="page">' . JText::_ ( 'COM_KUNENA_PAGE' ) . '</li>';
-
-			if (($startpage) > 1) {
-				if ($endpage < $totalpages)
-					$endpage --;
-				$this->pagination .= '<li>' . CKunenaLink::GetCategoryPageLink ( 'showcat', $this->category->id, 1, 1, $rel = 'follow' ) . '</li>';
-				if (($startpage) > 2) {
-					$this->pagination .= '<li class="more">...</li>';
-				}
-			}
-
-			for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
-				if ($page == $i) {
-					$this->pagination .= '<li class="active">' . $i . '</li>';
-				} else {
-					$this->pagination .= '<li>' . CKunenaLink::GetCategoryPageLink ( 'showcat', $this->category->id, $i, $i, $rel = 'follow' ) . '</li>';
-				}
-			}
-
-			if ($endpage < $totalpages) {
-				if ($endpage < $totalpages - 1) {
-					$this->pagination .= '<li class="more">...</li>';
-				}
-
-				$this->pagination .= '<li>' . CKunenaLink::GetCategoryPageLink ( 'showcat', $this->category->id, $totalpages, $totalpages, $rel = 'follow' ) . '</li>';
-			}
-
-			$this->pagination .= '</ul>';
-		}
-		return $this->pagination;
+		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
+		$pagination->setDisplay($maxpages);
+		return $pagination->getPagesLinks();
 	}
 }

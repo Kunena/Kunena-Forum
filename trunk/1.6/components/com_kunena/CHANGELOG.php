@@ -38,6 +38,13 @@ Kunena 1.6.4-DEV
 # [#25254] Fix a bug where recent topics was very slow for visitors
 ^ [#25254] New users get unread messages from last 14 days, not 30 days as before
 
+9-March-2011 810
+^ [#25168] Fix CSS layout and color issues (j16 fixes)
+
+8-March-2011 810
+# [#24306] Max width bug image link
+^ [#25168] Fix CSS layout and color issues (IE7 fixes, j16 fixes frontend)
+
 8-March-2011 Matias
 # [#25205] Joomla 1.6: admin isn't by default a global moderator
 # [#24130] Joomla 1.6: Sending subscriptions doesn't work

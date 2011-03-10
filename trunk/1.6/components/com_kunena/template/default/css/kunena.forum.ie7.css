@@ -57,6 +57,7 @@
 #Kunena td.kprofile-left { width: 19%; }
 #Kunena td.kmessage-left { width: 81%; }
 #Kunena td.kbuttonbar-right { width: 81%; }
+#Kunena div.kmsg-header-right span.kmsg-id-right { padding-top:-20px;}
 #Kunena td.kbuttonbar-left { width: 81%; }
 #Kunena div.keditavatar tr td.kcol-first label { white-space: nowrap; }
 #Kunena div.keditavatar tr td.kcol-mid td.kuadesc span { float:left; }
@@ -70,3 +71,4 @@
 #Kunena div.kmsgbody div.kmsgtext { overflow:hidden; }
 #Kunena #ktop { overflow:hidden; }
 #Kunena .kfile-input {top: 7px;}
+#Kunena spn.kmsgtitle { float: left; }

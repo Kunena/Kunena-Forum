@@ -792,6 +792,7 @@ PX		EM			PCT			PT
 	margin:0 0 5px;
 	min-height:2.33em;
 	padding:1px 5px;
+	padding-bottom:10px !important; 
 }
 
 #Kunena .klist-moderators {
@@ -3348,3 +3349,9 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 #Kunena .ktree-edge { background-position: -30px 0; }
 #Kunena .ktree-gap { background-position: -105px 0; }
 #Kunena .ktree-empty { background: none; }
+
+/* Fix Atomic Joomla 1.6 template*/
+.span-16 {
+	width: 100% !important;	
+}
+/* --------------------------------------------------------------- */	

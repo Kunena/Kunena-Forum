@@ -12,22 +12,9 @@ defined ( '_JEXEC' ) or die ();
 
 class Com_KunenaInstallerScript {
 
-	function install($parent) {
-		$app = JFactory::getApplication();
-		$app->setUserState('com_kunena.install.step', 0);
+	function install($parent) {}
 
-		// Install English and default language
-		require_once(JPATH_ADMINISTRATOR . '/components/com_kunena/install/model.php');
-		$installer = new KunenaModelInstall();
-		$installer->installLanguage('en-GB');
-		$lang = JFactory::getLanguage();
-		$tag = $lang->getTag();
-		if ($tag != 'en-GB') $installer->installLanguage($tag);
-	}
-
-	function update($parent) {
-		self::install($parent);
-	}
+	function update($parent) {}
 
 	function uninstall($parent) {
 		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
@@ -51,6 +38,6 @@ class Com_KunenaInstallerScript {
 
 	function postflight($type, $parent) {
 		$installer = $parent->getParent();
-		$installer->set('redirect_url', JURI::base () . 'index.php?option=com_kunena&view=install');
+		$installer->set('redirect_url', JURI::base () . 'index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
 	}
 }

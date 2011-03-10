@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+
 jimport('joomla.application.component.controller');
 
 /**
@@ -35,6 +37,18 @@ class KunenaControllerInstall extends JController {
 		$this->model = $this->getModel ( 'Install' );
 		$this->step = $this->model->getStep ();
 		$this->steps = $this->model->getSteps ();
+	}
+
+	function prepare() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->model->setStep ( 0 );
+
+		// Install English and default language
+		$tag = JFactory::getLanguage()->getTag();
+		$this->model->installLanguage('en-GB');
+		if ($tag != 'en-GB') $this->model->installLanguage($tag);
+
+		$this->setRedirect('index.php?option=com_kunena&view=install');
 	}
 
 	public function display()

@@ -21,11 +21,8 @@ JRequest::setVar( 'view', $view );
 require_once(KPATH_ADMIN.'/install/version.php');
 $kversion = new KunenaVersion();
 if ($view != 'install' && !$kversion->checkVersion()) {
-	require_once(dirname(__FILE__).'/install/install.script.php');
-	Com_KunenaInstallerScript::preflight( null, null );
-	Com_KunenaInstallerScript::install ( null );
 	$app = JFactory::getApplication ();
-	$app->redirect(JURI::root().'administrator/index.php?option=com_kunena&view=install');
+	$app->redirect(JURI::root().'administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
 
 } elseif ($view == 'install') {
 	// Load our installer (special case)

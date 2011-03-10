@@ -32,6 +32,12 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+10-March-2011 Matias
+^ [#15886] Merged revisions 4549-4590 from /branches/1.6-xillibit-01-03-2011
+
+9-March-2011 Xillibit
+# [#25242] Load default icons backend J15 & J16 and fix calendar in new ban
+
 9-March-2011 Matias
 # [#24783] Regression in installer: fix wrong message when uninstalling K1.6 and backup exists
 # [#24985] Threaded view broke Kunena Discuss
@@ -40,6 +46,10 @@ Kunena 1.6.4-DEV
 
 9-March-2011 810
 ^ [#25168] Fix CSS layout and color issues (j16 fixes)
+
+8-March-2011 Xillibit
+# [#25227] Joomla! 1.6: changes for plugins directories and report configuration settings
+# [#25216] JomSocial activity stream integration shows unapproved posts
 
 8-March-2011 810
 # [#24306] Max width bug image link

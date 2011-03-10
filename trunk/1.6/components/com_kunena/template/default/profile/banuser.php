@@ -46,9 +46,7 @@ JHTML::_('behavior.calendar');
 						<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></span>
 					</td>
 					<td class="kcol-mid">
-						<input class="inputbox" type="text" maxlength="21" name="expiration" id="expiration" value="<?php echo $this->escape($this->baninfo->expiration) ?>" />
-						<?php // FIXME: use our own image ?>
-						<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('expiration','%Y-%m-%d');document.id('expiration').setStyle('display');" />
+						<?php echo JHTML::_('calendar', $this->escape($this->baninfo->expiration), 'expiration', 'expiration', '%Y-%m-%d',array('onclick'=>'$(\'expiration\').setStyle(\'display\')')); ?>
 					</td>
 				</tr>
 				<tr class="krow<?php echo ($i^=1)+1;?>">

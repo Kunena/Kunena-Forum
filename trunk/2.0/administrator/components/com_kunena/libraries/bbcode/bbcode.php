@@ -1439,8 +1439,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 
 		// Need to check if we are nested inside a URL code
 		if ($bbcode->autolink_disable == 0 && $config->lightbox) {
-			return '<a title="" rel="lightbox[gallery]" href="' . $fileurl . '"><img src="' . $fileurl . '"' . $width . ' alt="" /></a>';
+			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.($width ? ' width="'.$width.'"' : '').'" style="max-height:'.$config->imageheight.'px; " alt="" /></a></div>';
 		}
-		return "<img src=\"{$fileurl}\" {$width} alt=\"\" />";
+		return '<div class="kmsgimage"><img src="' . $fileurl . ($width ? '" width="' . $width : '') .'" style="max-height:'.$config->imageheight.'px; " alt="" /></div>';
 	}
 }

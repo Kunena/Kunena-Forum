@@ -21,7 +21,7 @@ if (!empty($this->poll)) {
 		var KUNENA_EDITOR_HELPLINE_OPTION = "'.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION').'";
 		var KUNENA_POLL_OPTION_NAME = "'.JText::_('COM_KUNENA_POLL_OPTION_NAME').'";
 		var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'.JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW').'";
-		var KUNENA_ICON_ERROR = "'.JURI::root(true).'/administrator/images/publish_x.png";
+		var KUNENA_ICON_ERROR = "'.JURI::root(true).'/components/com_kunena/template/default/images/publish_x.png";
 	// ]]>');
 }
 

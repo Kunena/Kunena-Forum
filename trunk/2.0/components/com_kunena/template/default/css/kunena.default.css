@@ -1065,3 +1065,11 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 .kgooglemap {
 	background-color:#E5E3DF;
 }
+
+/* Fix Atomic Joomla 1.6 template*/
+
+tbody tr:nth-child(2n) td, tbody tr.even td {
+	background-color: #FFF !important;
+}
+
+/* --------------------------------------------------------------- */

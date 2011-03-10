@@ -402,14 +402,22 @@ class KunenaAdminModelReport extends KunenaModel {
 		}
 		return $mod_version;
 	} elseif ($plugin) {
-		if ( JPluginHelper::isEnabled($plggroup, $namephp) && JFile::exists(JPATH_SITE.'/'.$path.'/'.$namephp.'.php') ) {
-			if ( JFile::exists(JPATH_SITE.'/'.$path.'/'.$namexml.'.xml') ) {
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE == '1.5') {
+			$pathphp = JPATH_SITE.'/'.$path.'/'.$namephp;
+			$pathxml = JPATH_SITE.'/'.$path.'/'.$namexml;
+		} else {
+			$pathphp = JPATH_SITE.'/'.$path.'/'.$namephp.'/'.$namephp;
+			$pathxml =JPATH_SITE.'/'.$path.'/'.$namephp.'/'.$namexml;
+		}
+		if ( JPluginHelper::isEnabled($plggroup, $namephp) && JFile::exists($pathphp.'.php') ) {
+			if ( JFile::exists($pathxml.'.xml') ) {
 				$xml_plg = JFactory::getXMLparser('Simple');
-				$xml_plg->loadFile(JPATH_SITE.'/'.$path.'/'.$namexml.'.xml');
+				$xml_plg->loadFile($pathxml.'.xml');
 				$plg_version = $xml_plg->document->version[0];
-				$plg_version = '[u]'.$namedetailled.':[/u] Enabled (Version : '.$plg_version->data().')';
-			}	else {
 				$plg_version = '[u]'.$namedetailled.'[/u] '.$plg_version->data();
+			}	else {
+				$plg_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
 			}
 		} else {
 			$plg_version = '';

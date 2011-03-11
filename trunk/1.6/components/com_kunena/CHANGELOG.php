@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+11-March-2011 Severdia
+^ [#25296] Optimized images showing up as not fully optimized in Page Speed
+
 10-March-2011 Matias
 ^ [#15886] Merged revisions 4549-4590 from /branches/1.6-xillibit-01-03-2011
 

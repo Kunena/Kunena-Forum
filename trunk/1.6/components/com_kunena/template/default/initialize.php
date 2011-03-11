@@ -140,7 +140,7 @@ $activeTab = $this->params->get('activeTabcolor', $skinner ? '' : '#5388B4');
 
 if ($activeTab) {
 	$styles .= <<<EOF
-	#Kunena #ktab ul.menu li.active a { background-color: {$activeTab} !important; }
+	#Kunena #ktab ul.menu li.active a,#Kunena #ktab li#current.selected a { background-color: {$activeTab} !important; }
 EOF;
 }
 

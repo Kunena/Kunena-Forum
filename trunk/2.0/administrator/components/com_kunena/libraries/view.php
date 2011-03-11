@@ -18,6 +18,13 @@ kimport ( 'kunena.html.parser' );
  */
 class KunenaView extends JView {
 	function displayAll() {
+		$this->app = JFactory::getApplication ();
+		$this->config = KunenaFactory::getConfig();
+		$this->me = KunenaFactory::getUser();
+		if ($this->config->board_offline) {
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), $this->me->isAdmin () ? 'notice' : 'error');
+		}
+
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		require_once KPATH_SITE . '/lib/kunena.timeformat.class.php';
@@ -32,6 +39,24 @@ class KunenaView extends JView {
 	}
 
 	function displayLayout($layout=null, $tpl = null) {
+		$this->config = KunenaFactory::getConfig();
+		$this->me = KunenaFactory::getUser();
+		if (isset($this->common)) {
+			if ($this->config->board_offline && ! $this->me->isAdmin ()) {
+				// Forum is offline
+				$this->common->header = JText::_('COM_KUNENA_FORUM_IS_OFFLINE');
+				$this->common->body = $this->config->offline_message;
+				$this->common->display('default');
+				return;
+			} elseif ($this->config->regonly && ! $this->me->exists()) {
+				// Forum is for registered users only
+				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
+				$this->common->body = JText::_('COM_KUNENA_LOGIN_FORUM');
+				$this->common->display('default');
+				return;
+			}
+		}
+
 		if ($layout) $this->setLayout ($layout);
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		$layoutFunction = 'display'.ucfirst($this->getLayout ());

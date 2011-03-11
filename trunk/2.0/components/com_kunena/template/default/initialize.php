@@ -19,6 +19,12 @@ $template->loadMootools();
 
 require_once KUNENA_PATH . '/class.kunena.php';
 
+// Toggler language strings
+$document->addScriptDeclaration('// <![CDATA[
+var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
+var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
+// ]]>');
+
 // We load mediaxboxadvanced library
 $template->addStyleSheet ( 'css/mediaboxAdv-min.css');
 $template->addScript( 'js/mediaboxAdv-min.js' );

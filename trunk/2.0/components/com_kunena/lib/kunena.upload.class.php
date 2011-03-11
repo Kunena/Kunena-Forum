@@ -62,11 +62,6 @@ class CKunenaUpload {
 	}
 
 	function __destruct() {
-		if (!$this->status) {
-			if(JDEBUG == 1 && defined('JFIREPHP')){
-				FB::log('Kunena upload failed: '.$this->error);
-			}
-		}
 		// Delete any left over files in temp
 		if (is_file($this->fileTemp)) unlink ( $this->fileTemp );
 	}

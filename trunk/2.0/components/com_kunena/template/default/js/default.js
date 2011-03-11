@@ -701,12 +701,11 @@ function kRequestShowTopics(catid, select, list)
 function kRequestGetTopics(el)
 {
 	var catid = el.get("value");
-	var select = document.id('kmod_targettopic');
+	var select = document.id('kmod_topics');
 	request = new Request.JSON({url: kunena_url_ajax,
 	onSuccess: function(response){
 		kRequestShowTopics(catid, select, response.topiclist);
-		}}).post({action: 'modtopiclist', value: catid
-	});
+		}}).post({'catid': catid});
 }
 
 function kunenaSelectUsernameView(kobj, kuser) {

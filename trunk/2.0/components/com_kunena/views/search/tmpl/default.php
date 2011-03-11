@@ -10,13 +10,14 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$document = JFactory::getDocument ();
-$document->addScriptDeclaration( "// <![CDATA[
+if ($this->me->exists()) {
+	$this->document->addScriptDeclaration( "// <![CDATA[
 document.addEvent('domready', function() {
 	// Attach auto completer to the following ids:
-	new Autocompleter.Request.JSON('kusername', '" . CKunenaLink::GetJsonURL('autocomplete', 'getuser', false) . "', { 'postVar': 'value' });
+	new Autocompleter.Request.JSON('kusername', '" . KunenaRoute::_('index.php?option=com_kunena&view=users&format=raw') . "', { 'postVar': 'search' });
 });
 // ]]>");
+}
 ?>
 <div class="kblock kadvsearch">
 	<div class="kheader">

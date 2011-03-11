@@ -25,7 +25,7 @@ ob_start();
 function kPreviewHelper()
 {
 	if (_previewActive == true){
-		previewRequest = new Request.JSON({url: "<?php echo CKunenaLink::GetJsonURL('preview');?>",
+		previewRequest = new Request.JSON({url: "<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw');?>",
 				  							onSuccess: function(response){
 			var __message = document.id("kbbcode-preview");
 			if (__message) {
@@ -404,62 +404,6 @@ document.id('kbbcode-message').addEvent('change', function(){
 	// Fianlly apply some screwy IE7 and IE8 fixes to the html...
 	IEcompatibility();
 });
-
-<?php
-/* Plupload hooks: promising piece of software, but not ready for production use */
-/*
-window.addEvent('domready', function() {
-	kupload = document.id('kupload');
-	if (typeof(plupload) == 'object' && kupload) {
-		var uploader = new plupload.Uploader({
-			//runtimes : 'gears,silverlight,flash,html5,html4',
-			runtimes : 'flash,html4',
-			browse-button : 'kupload',
-			max_file_size : '4mb',
-			url : '<?php echo CKunenaLink::GetJsonURL('uploadfile','upload');?>',
-			//resize : {width : 320, height : 240, quality : 90},
-			flash_swf_url : '<?php echo KUNENA_DIRECTURL;?>/js/plupload/plupload.flash.swf',
-			silverlight_xap_url : '<?php echo KUNENA_DIRECTURL;?>/js/plupload/plupload.silverlight.xap',
-			filters : [
-				{title : "Image files", extensions : "jpg,gif,png"},
-				{title : "Zip files", extensions : "zip,gz"}
-			],
-			multipart_params : [
-				{type: 'hidden', name: 'mesid', value: '0'}
-			]
-		});
-
-		uploader.bind('Init', function(up, params) {
-			document.id('kattachmentsnote').set('html', "<div>Multi-File Upload enabled: " + params.runtime + "</div>");
-		});
-
-		uploader.bind('FilesAdded', function(up, files) {
-			$each(files, function(file, i) {
-				fileDiv = new Element('div', {id: file.id, html: file.name + ' (' + plupload.formatSize(file.size) + ') <a></a> <b></b>'});
-				fileDiv.inject(document.id('kattachment'), 'before');
-				$$('#'+file.id+' a').addEvent('click', function(e) { document.id(file.id).dispose(); uploader.removeFile(file); return false;});
-			});
-			document.id('kupload').fireEvent('upload', null, 500);
-		});
-
-		uploader.bind('UploadProgress', function(up, file) {
-			$$("#" + file.id + " b").set('html', file.percent + "%");
-		});
-
-		uploader.bind('FileUploaded', function(up, file) {
-			$$("#" + file.id + " b").set('html', file.response);
-		});
-
-		kupload.addEvent('upload', function() {
-			uploader.start();
-		});
-
-		kupload.setProperty('value', '');
-		uploader.init();
-	}
-});
-*/
-?>
 
 <?php
 $script = ob_get_contents();

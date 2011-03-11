@@ -29,9 +29,6 @@ function kunena_upgrade_160_polls($parent) {
 				if ($parent->db->getErrorNum ())
 					throw new KunenaInstallerException ( $parent->db->getErrorMsg (), $parent->db->getErrorNum () );
 
-				if (JDEBUG == 1 && defined ( 'JFIREPHP' )) {
-					FB::log ( $query, 'kunena_polls Upgrade, removing catid field' );
-				}
 				$upgraded = true;
 			}
 			if (isset ( $fields ['catid'] ) && ! isset ( $fields ['polltimetolive'] )) {
@@ -49,9 +46,6 @@ function kunena_upgrade_160_polls($parent) {
 				if ($parent->db->getErrorNum ())
 					throw new KunenaInstallerException ( $parent->db->getErrorMsg (), $parent->db->getErrorNum () );
 
-				if (JDEBUG == 1 && defined ( 'JFIREPHP' )) {
-					FB::log ( $query, 'kunena_polls Upgrade, renaming topicid field' );
-				}
 				$upgraded = true;
 			}
 		}
@@ -102,9 +96,6 @@ function kunena_upgrade_160_polls($parent) {
 				if ($parent->db->getErrorNum ())
 					throw new KunenaInstallerException ( $parent->db->getErrorMsg (), $parent->db->getErrorNum () );
 
-				if (JDEBUG == 1 && defined ( 'JFIREPHP' )) {
-					FB::log ( $query, 'kunena_polls_users Upgrade without field id' );
-				}
 				$upgraded = true;
 			}
 		}

@@ -17,20 +17,15 @@ function tableOrdering( order, dir, task ) {
 	form.filter_order_Dir.value=dir;
 	document.adminForm.submit( task );
 }
+// ]]>");
+if ($this->me->exists()) {
+	$this->document->addScriptDeclaration( "// <![CDATA[
 document.addEvent('domready', function() {
 	// Attach auto completer to the following ids:
-	new Autocompleter.Request.JSON('kusersearch', '" . CKunenaLink::GetJsonURL('autocomplete', 'getuser') . "', { 'postVar': 'value' });
+	new Autocompleter.Request.JSON('kusersearch', '".KunenaRoute::_('index.php?option=com_kunena&view=users&format=raw')."', { 'postVar': 'search' });
 });
-// FIXME: do not use alert:
-function validate() {
-	if ((document.usrlform.search == '') || (document.usrlform.search.value == '')) {
-		alert('" . JText::_('COM_KUNENA_USRL_SEARCH_ALERT') . "');
-		return false;
-	} else {
-		return true;
-	}
-}
 // ]]>");
+}
 ?>
 <div class="kblock">
 	<div class="kheader">
@@ -40,7 +35,7 @@ function validate() {
 	<div class="kcontainer" id="searchuser_tbody">
 		<div class="kbody">
 			<div class="search-user">
-				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>" onsubmit="return validate()">
+				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>">
 					<input id="kusersearch" type="text" name="search" class="inputbox"
 						value="<?php echo $this->escape($this->state->get('list.search', JText::_('COM_KUNENA_USRL_SEARCH'))); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';" onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';" />
 					<input type="image" src="<?php echo KUNENA_TMPLTMAINIMGURL .'/images/usl_search_icon.png' ;?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;" />

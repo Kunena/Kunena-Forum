@@ -95,7 +95,7 @@ class KunenaTemplate extends JObject
 
 		if (KunenaFactory::getConfig()->debug) {
 			// Debugging Mootools issues
-			CKunenaTools::addScript ( KUNENA_DIRECTURL . 'template/default/js/debug-min.js' );
+			$this->addScript ( 'js/debug-min.js' );
 		}
 	}
 

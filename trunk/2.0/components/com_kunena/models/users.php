@@ -53,9 +53,27 @@ class KunenaModelUsers extends KunenaModel {
 	public function getQueryWhere() {
 		$config = KunenaFactory::getConfig();
 		if ($config->userlist_count_users == '0' ) $where = '1';
-		elseif ($config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
-		elseif ($config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
+		elseif ($config->userlist_count_users == '1' ) $where = '(block=0 OR activation="")';
+		elseif ($config->userlist_count_users == '2' ) $where = '(block=0 AND activation="")';
 		return $where;
+	}
+
+	public function getQuerySearch() {
+		// TODO: add strict search from the beginning of the name
+		$config = KunenaFactory::getConfig();
+		$search = $this->getState ( 'list.search');
+		$exclude = $this->getState ( 'list.exclude');
+		$where = array();
+		if ($search) {
+			$db = JFactory::getDBO();
+			if ($config->userlist_name) $where[] = "u.name LIKE '%{$db->getEscaped($search)}%'";
+			if ($config->userlist_username || !$where) $where[] = "u.username LIKE '%{$db->getEscaped($search)}%'";
+			$where = 'AND ('.implode(' OR ', $where).')';
+		} else {
+			$where = '';
+		}
+
+		return "{$where} AND u.id NOT IN ({$exclude})";
 	}
 
 	public function getTotal() {
@@ -73,14 +91,10 @@ class KunenaModelUsers extends KunenaModel {
 	public function getCount() {
 		static $total = false;
 		if ($total === false) {
-			$search = $this->getState ( 'list.search');
-			$exclude = $this->getState ( 'list.exclude');
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
-			$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE ({$where})";
-			if ($search) {
-				$query .= " AND (u.name LIKE '%{$db->getEscaped($search)}%' OR u.username LIKE '%{$db->getEscaped($search)}%') AND u.id NOT IN ({$exclude})";
-			}
+			$search = $this->getQuerySearch();
+			$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE {$where} {$search}";
 			$db->setQuery ( $query );
 			$total = $db->loadResult ();
 			KunenaError::checkDatabaseError();
@@ -91,17 +105,13 @@ class KunenaModelUsers extends KunenaModel {
 	public function getItems() {
 		static $items = false;
 		if ($items === false) {
-			$search = $this->getState ( 'list.search');
-			$exclude = $this->getState ( 'list.exclude');
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
+			$search = $this->getQuerySearch();
 			$query = "SELECT *
 				FROM #__users AS u
 				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
-				WHERE ({$where}) AND u.id NOT IN ({$exclude})";
-			if ($search) {
-				$query .= " AND (u.name LIKE '%{$db->getEscaped($search)}%' OR u.username LIKE '%{$db->getEscaped($search)}%')";
-			}
+				WHERE {$where} {$search}";
 			$query .= " ORDER BY {$db->nameQuote($this->getState ( 'list.ordering'))} {$this->getState ( 'list.direction')}";
 
 			$db->setQuery ( $query, $this->getState ( 'list.start'), $this->getState ( 'list.limit') );

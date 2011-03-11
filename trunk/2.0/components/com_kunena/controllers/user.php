@@ -24,6 +24,26 @@ require_once KPATH_SITE . '/lib/kunena.link.class.php';
  * @since		2.0
  */
 class KunenaControllerUser extends KunenaController {
+	public function display() {
+		// Redirect profile to integrated component if profile integration is turned on
+		$redirect = 1;
+		$active = JFactory::getApplication ()->getMenu ()->getActive ();
+		if (!empty($active)) {
+			$params = new JParameter($active->params);
+			$redirect = $params->get('integration');
+		}
+		if ($redirect) {
+			$profileIntegration = KunenaFactory::getProfile();
+			if (!($profileIntegration instanceof KunenaProfileKunena)) {
+				$url = CKunenaLink::GetProfileURL(KunenaFactory::getUser()->userid, false);
+				if ($url) {
+					$this->setRedirect($url);
+					return;
+				}
+			}
+		}
+		parent::display();
+	}
 	public function karmaup() {
 		$this->karma(1);
 	}
@@ -408,9 +428,6 @@ class KunenaControllerUser extends KunenaController {
 			$fileinfo = $upload->getFileInfo();
 
 			if ($fileinfo['ready'] === true) {
-				if(JDEBUG == 1 && defined('JFIREPHP')){
-					FB::log('Kunena save avatar: ' . $fileinfo['name']);
-				}
 				$this->me->avatar = 'users/'.$fileinfo['name'];
 			}
 			if (!$fileinfo['status']) $app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );

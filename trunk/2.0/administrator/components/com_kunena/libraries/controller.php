@@ -101,6 +101,10 @@ class KunenaController extends JController {
 				$app->enqueueMessage ( $version_warning, 'notice' );
 			}
 		} else {
+			// Initialize profile integration
+			$integration = KunenaFactory::getProfile();
+			$integration->open();
+
 			/*if (!$app->getMenu ()->getActive ()) {
 				// FIXME:
 				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
@@ -149,6 +153,12 @@ class KunenaController extends JController {
 			} else {
 				$view->displayLayout ();
 			}
+		}
+
+		if ($app->isSite()) {
+			// Close profile integration
+			$integration = KunenaFactory::getProfile();
+			$integration->close();
 		}
 	}
 

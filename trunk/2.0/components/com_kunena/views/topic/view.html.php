@@ -15,6 +15,7 @@ kimport ( 'kunena.forum.message.attachment.helper' );
 kimport ( 'kunena.forum.topic.poll.helper' );
 kimport ( 'kunena.captcha' );
 kimport ( 'kunena.html.parser' );
+kimport ( 'kunena.html.pagination' );
 
 /**
  * Topic View
@@ -340,7 +341,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$options = array ();
 		$cat_params = array ('sections'=>0, 'catid'=>0);
-		$this->assignRef ( 'categorylist', JHTML::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid));
+		$this->assignRef ( 'categorylist', JHTML::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories'));
 		if (isset($this->message)) $this->user = KunenaFactory::getUser($this->message->userid);
 
 		if ($this->mesid) {

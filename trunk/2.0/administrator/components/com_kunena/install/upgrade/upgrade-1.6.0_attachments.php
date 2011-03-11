@@ -69,10 +69,6 @@ function kunena_upgrade_160_attachments($parent) {
 	if ($parent->db->getErrorNum ())
 		throw new KunenaInstallerException ( $parent->db->getErrorMsg (), $parent->db->getErrorNum () );
 
-	if (JDEBUG == 1 && defined ( 'JFIREPHP' )) {
-		FB::log ( $query, 'Attachment Upgrade' );
-	}
-
 	// By now the old attachmets table has been converted to the new Kunena 1.6 format
 	// with the exception of file size and file hash that cannot be calculated inside
 	// the database. Both of these columns are set to null. As we could be dealing with

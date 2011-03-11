@@ -31,6 +31,20 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+11-March-2011 Matias
+# [#23443] Regression from merge: Fatal error in KunenaTemplate::loadMootools() if debug=1
++ [#22569] Add offline/registered only checks and screens into KunenaView class
++ [#22569] Add profile redirect into integrated components
++ [#22569] Add AJAX for getting user list
++ [#22569] Add AJAX for getting topics in category
+# [#22569] Prevent AJAX calls from guests
+^ [#22569] Move profile integration trigger into KunenaController
+^ [#22569] Simplify and improve kunena.php file
+- [#22570] Remove deprecated JFirePHP support
+- [#22570] Remove deprecated KProfiler class
+- [#22570] Remove deprecated kunena.ajax.helper.php
+- [#22570] Remove unused Plupload code
+
 11-March-2011 Severdia
 ^ [#25296] Optimized images showing up as not fully optimized in Page Speed
 

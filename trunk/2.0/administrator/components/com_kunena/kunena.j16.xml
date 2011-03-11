@@ -4,7 +4,7 @@
 <extension type="component" version="1.6" method="upgrade">
 	<name>com_kunena</name>
 	<version>2.0.0-DEV</version>
-	<versionname>Rename Me for Release!</versionname>
+	<versionname>Spika</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>

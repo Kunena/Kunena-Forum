@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 jimport ( 'joomla.application.component.model' );
 kimport('kunena.model');
 kimport ( 'kunena.error' );
+kimport ( 'kunena.html.pagination' );
 
 /**
  * Attachments Model for Kunena
@@ -73,7 +74,6 @@ class KunenaAdminModelAttachments extends KunenaModel {
 	}
 
 	public function getAdminNavigation() {
-		kimport ( 'kunena.html.pagination' );
 		$navigation = new KunenaHtmlPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
 		return $navigation;
 	}

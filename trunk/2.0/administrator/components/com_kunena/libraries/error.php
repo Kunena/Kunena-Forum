@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaError {
 	function initialize() {
+		if (!KunenaFactory::getConfig ()->debug) return;
 		@ini_set('display_errors', 0);
 		@error_reporting(E_ALL);
 		$db = JFactory::getDBO();

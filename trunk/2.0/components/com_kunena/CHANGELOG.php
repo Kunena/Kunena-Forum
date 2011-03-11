@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+11-March-2011 Severdia
+^ [#25296] Optimized images showing up as not fully optimized in Page Speed
+
 10-March-2011 Matias
 ^ [#22786] Merge revisions 4583-4599 from trunk/1.6
 # [#23443] Fixed some bugs from the installer breaking upgrade in J1.5 and installation in J1.6

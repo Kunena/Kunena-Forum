@@ -64,7 +64,7 @@
 	</target>
 
 	<target name="init" depends="copy">
-		<xmlproperty file="${kunena.directory}/plg_jxfinder_kunena.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<xmlproperty file="${kunena.directory}/jxfinder_kunena.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<buildnumber />
 		<tstamp>
 			<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
@@ -104,7 +104,7 @@
 		<filter token="kunenaversiondate" value="${version.date}" />
 		<filter token="kunenaversionbuild" value="${build.number}" />
 		<filter token="kunenaversionname" value="${xml.versionname}" />
-		<copy file="${project_dir}/plg_jxfinder_kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/jxfinder_kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>
 

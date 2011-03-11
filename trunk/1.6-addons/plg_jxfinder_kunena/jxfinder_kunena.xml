@@ -12,10 +12,11 @@
 	<license>GNU/GPL</license>
 	<description>PLG_JXFINDER_KUNENA_DESC</description>
 	<files>
-		<filename plugin="plg_jxfinder_kunena">plg_jxfinder_kunena.php</filename>
+		<filename plugin="jxfinder_kunena">jxfinder_kunena.php</filename>
 	</files>
 	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_finder_jxfinder_kunena.ini</language>
 		<language tag="ru-RU">ru-RU.plg_finder_jxfinder_kunena.ini</language>
+		<language tag="fr-FR">fr-FR.plg_finder_jxfinder_kunena.ini</language>
 	</languages>
 </install>

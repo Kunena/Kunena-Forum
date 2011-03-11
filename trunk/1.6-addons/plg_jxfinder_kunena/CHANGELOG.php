@@ -31,6 +31,10 @@ Legend:
 
 JxFinder Kunena Plugin 1.6.3-DEV
 
+11-March-2011 Xillibit
+# [#24959] Add fr-FR translation for the plugin
+^ [#24959] Fix wrong namming for plugin files
+
 17-February-2011 Matias
 # [#24959] Always initialize session if allowed=na
 # [#24959] Better Kunena version detection

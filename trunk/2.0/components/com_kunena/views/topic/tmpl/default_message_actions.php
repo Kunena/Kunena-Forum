@@ -12,8 +12,8 @@ defined ( '_JEXEC' ) or die ();
 
 $dateshown = $datehover = '';
 if ($this->message->modified_time) {
-	$datehover = 'title="'.CKunenaTimeformat::showDate($this->message->modified_time, 'config_post_dateformat_hover').'"';
-	$dateshown =  CKunenaTimeformat::showDate($this->message->modified_time, 'config_post_dateformat' ).' ';
+	$datehover = 'title="'.KunenaDate::getInstance($this->message->modified_time)->toKunena('config_post_dateformat_hover').'"';
+	$dateshown = KunenaDate::getInstance($this->message->modified_time)->toKunena('config_post_dateformat' ).' ';
 }
 ?>
 <div>

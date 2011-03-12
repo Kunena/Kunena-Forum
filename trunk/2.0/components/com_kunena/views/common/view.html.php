@@ -123,7 +123,7 @@ class KunenaViewCommon extends KunenaView {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		if ($cache->start(0, "com_kunena.view.common.whosonline.{$moderator}")) return;
 		// FIXME: refactor code
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
+		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
 
 		$this->my = JFactory::getUser();
 		$this->me = KunenaFactory::getUser();
@@ -162,8 +162,8 @@ class KunenaViewCommon extends KunenaView {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		if ($cache->start(0, 'com_kunena.view.common.stats')) return;
 		// FIXME: refactor code
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
+		require_once(KPATH_SITE.'/lib/kunena.stats.class.php');
 		$kunena_stats = CKunenaStats::getInstance ( );
 		$kunena_stats->loadGenStats();
 		$kunena_stats->loadLastUser();
@@ -210,7 +210,6 @@ class KunenaViewCommon extends KunenaView {
 		$this->assign ( 'me', KunenaFactory::getUser ());
 
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
-		require_once KPATH_SITE . '/lib/kunena.timeformat.class.php';
 
 		$uri = JFactory::getURI ();
 		$this->assign ( 'return',  base64_encode ( $uri->toString ( array ('path', 'query', 'fragment' ) ) ) );

@@ -15,8 +15,8 @@ defined ( '_JEXEC' ) or die ();
 		<span class="kmsgtitle<?php echo $this->escape($this->messagesuffix) ?> kmsg-title-right">
 			<?php $this->escape($this->message->subject) ?>
 		</span>
-		<span class="kmsgdate kmsgdate-right" title="<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat_hover') ?>">
-			<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat') ?>
+		<span class="kmsgdate kmsgdate-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
+			<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 		</span>
 		<span class="kmsg-id-right">
 			<a name="<?php echo intval($this->id) ?>"></a>

@@ -10,6 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+$template = KunenaTemplate::getInstance();
 ?>
 <!-- BEGIN: GENERAL STATS -->
 <?php if($this->config->showgenstats): ?>
@@ -88,7 +89,7 @@ $k = 0;
 							<?php echo CKunenaLink::GetThreadLink( 'view', intval($toptitle->catid), intval($toptitle->id), KunenaHtmlParser::parseText ($toptitle->subject), '' ); ?>
 						</td>
 						<td class="kcol-mid">
-							<img class = "kstats-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%" />
+							<img class = "kstats-bar" src = "<?php echo $template->getImagePath('bar.png') ?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%" />
 						</td>
 						<td class="kcol-last">
 							<?php echo intval($toptitle->hits); ?>
@@ -133,7 +134,7 @@ $k = 0;
 							<?php echo CKunenaLink::GetThreadLink( 'view', intval($toppoll->catid), intval($toppoll->threadid), $this->escape($toppoll->title), '' ); ?>
 						</td>
 						<td class="kcol-mid">
-							<img class = "kstats-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
+							<img class = "kstats-bar" src = "<?php echo $template->getImagePath('bar.png') ?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
 						</td>
 						<td class="kcol-last">
 							<?php echo intval($toppoll->total); ?>
@@ -178,7 +179,7 @@ $k = 0;
 							<?php echo CKunenaLink::GetProfileLink(intval($poster->userid)); ?>
 						</td>
 						<td class="kcol-mid">
-							<img class = "kstats-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%" />
+							<img class = "kstats-bar" src = "<?php echo $template->getImagePath('bar.png') ?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%" />
 						</td>
 						<td class="kcol-last">
 							<?php echo intval($poster->posts); ?>
@@ -223,7 +224,7 @@ $k = 0;
 							<?php echo CKunenaLink::GetProfileLink(intval($topprofile->user_id)); ?>
 						</td>
 						<td class="kcol-mid">
-							<img class = "kstats-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
+							<img class = "kstats-bar" src = "<?php echo $template->getImagePath('bar.png') ?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
 						</td>
 						<td class="kcol-last">
 							<?php echo intval($topprofile->hits); ?>
@@ -268,7 +269,7 @@ $k = 0;
 							<?php echo CKunenaLink::GetProfileLink(intval($topthanks->id)); ?>
 						</td>
 						<td class="kcol-mid">
-							<img class = "kstats-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
+							<img class = "kstats-bar" src = "<?php echo $template->getImagePath('bar.png') ?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
 						</td>
 						<td class="kcol-last">
 							<?php echo intval($topthanks->receivedthanks); ?>

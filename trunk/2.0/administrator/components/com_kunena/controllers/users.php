@@ -110,7 +110,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
+		$path = KPATH_SITE.'/lib/kunena.moderation.class.php';
 		require_once ($path);
 		$kunena_mod = CKunenaModeration::getInstance();
 
@@ -159,13 +159,13 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
+		$path = KPATH_SITE.'/lib/kunena.moderation.class.php';
 		require_once ($path);
 		$kunena_mod = CKunenaModeration::getInstance();
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
-		$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+		$path = KPATH_SITE.'/lib/kunena.moderation.class.php';
 		require_once ($path);
 		$kunena_mod = CKunenaModeration::getInstance();
 

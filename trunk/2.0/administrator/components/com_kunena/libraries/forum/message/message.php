@@ -659,7 +659,7 @@ class KunenaForumMessage extends JObject {
 			if (! $modtime) {
 				$modtime = $this->time;
 			}
-			if ($modtime + intval($config->useredittime)< CKunenaTimeformat::internalTime ()) {
+			if ($modtime + intval($config->useredittime)< JFactory::getDate ()->toUnix()) {
 				$this->setError ( JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
 				return false;
 			}

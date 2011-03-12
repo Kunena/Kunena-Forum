@@ -72,7 +72,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 		$lang->load('com_kunena.tpl_default', JPATH_SITE);
 		if ($this->templatename != 'default') {
 			if (!$lang->load('com_kunena.tpl_'.$this->templatename, JPATH_SITE)) {
-				$lang->load('com_kunena.tpl_'.$this->templatename, KUNENA_PATH_TEMPLATE.'/'.$this->templatename);
+				$lang->load('com_kunena.tpl_'.$this->templatename, KPATH_SITE.'/template/'.$this->templatename);
 			}
 		}
 	}
@@ -98,7 +98,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	function displayChoosecss() {
 		$app = JFactory::getApplication ();
 		$this->templatename = $app->getUserState ( 'kunena.edit.template');
-		$this->dir = KUNENA_PATH_TEMPLATE.'/'.$this->templatename.'/css';
+		$this->dir = KPATH_SITE.'/template/'.$this->templatename.'/css';
 		jimport('joomla.filesystem.folder');
 		$this->files = JFolder::files($this->dir, '\.css$', false, false);		;
 	}
@@ -118,7 +118,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 		$this->templatename = $app->getUserState ( 'kunena.editcss.tmpl');
 		$this->filename = $app->getUserState ( 'kunena.editcss.filename');
 		$this->content = $this->get ( 'FileContentParsed');
-		$this->css_path = KUNENA_PATH_TEMPLATE.'/'.$this->templatename.'/css/'.$this->filename;
+		$this->css_path = KPATH_SITE.'/template/'.$this->templatename.'/css/'.$this->filename;
 		$this->ftp = $this->get('FTPcredentials');
 	}
 

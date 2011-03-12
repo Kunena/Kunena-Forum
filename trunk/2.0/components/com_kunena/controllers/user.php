@@ -54,7 +54,7 @@ class KunenaControllerUser extends KunenaController {
 
 	public function save() {
 		$app = JFactory::getApplication ();
-		if (! JRequest::checkToken ('get')) {
+		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -145,8 +145,8 @@ class KunenaControllerUser extends KunenaController {
 			jimport ( 'joomla.filesystem.file' );
 			$avatar_deleted = '';
 			// Delete avatar from file system
-			if (JFile::exists ( KUNENA_PATH_AVATAR_UPLOADED . DS . $userprofile->avatar ) && !stristr($userprofile->avatar,'gallery/')) {
-				JFile::delete ( KUNENA_PATH_AVATAR_UPLOADED . DS . $userprofile->avatar );
+			if (JFile::exists ( JPATH_ROOT . '/media/kunena/avatars/' . $userprofile->avatar ) && !stristr($userprofile->avatar,'gallery/')) {
+				JFile::delete ( JPATH_ROOT . '/media/kunena/avatars/' . $userprofile->avatar );
 				$avatar_deleted = $app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM') );
 			}
 			$user->avatar = '';
@@ -401,7 +401,7 @@ class KunenaControllerUser extends KunenaController {
 		$app = JFactory::getApplication();
 		$action = JRequest::getString('avatar', 'keep');
 
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
+		require_once (KPATH_SITE.'/lib/kunena.upload.class.php');
 		$upload = new CKunenaUpload();
 		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
 

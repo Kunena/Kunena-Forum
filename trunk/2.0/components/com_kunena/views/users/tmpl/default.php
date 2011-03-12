@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+$template = KunenaTemplate::getInstance();
+
 $this->document->addScriptDeclaration( "// <![CDATA[
 function tableOrdering( order, dir, task ) {
 	var form=document.adminForm;
@@ -38,7 +40,7 @@ document.addEvent('domready', function() {
 				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>">
 					<input id="kusersearch" type="text" name="search" class="inputbox"
 						value="<?php echo $this->escape($this->state->get('list.search', JText::_('COM_KUNENA_USRL_SEARCH'))); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';" onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';" />
-					<input type="image" src="<?php echo KUNENA_TMPLTMAINIMGURL .'/images/usl_search_icon.png' ;?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;" />
+					<input type="image" src="<?php echo $template->getImagePath('usl_search_icon.png') ?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;" />
 					<?php echo JHTML::_( 'form.token' ); ?>
 				</form>
 			</div>
@@ -165,11 +167,11 @@ document.addEvent('domready', function() {
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_joindate) : ?>
-						<td class="kcol-mid" title="<?php echo CKunenaTimeformat::showDate($user->registerDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->registerDate, 'datetime_today', 'utc') ?></td>
+						<td class="kcol-mid" title="<?php echo KunenaDate::getInstance($user->registerDate)->toKunena('ago') ?>"><?php echo KunenaDate::getInstance($user->registerDate)->toKunena('datetime_today') ?></td>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_lastvisitdate) : ?>
-						<td class="kcol-mid" title="<?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'datetime_today', 'utc') ?></td>
+						<td class="kcol-mid" title="<?php echo KunenaDate::getInstance($user->lastvisitDate)->toKunena('ago') ?>"><?php echo KunenaDate::getInstance($user->lastvisitDate)->toKunena('datetime_today') ?></td>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_userhits) : ?>

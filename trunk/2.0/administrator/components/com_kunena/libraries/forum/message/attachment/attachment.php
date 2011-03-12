@@ -162,8 +162,8 @@ class KunenaForumMessageAttachment extends JObject {
 	}
 
 	function upload($key='kattachment') {
-		require_once (KUNENA_PATH . '/lib/kunena.upload.class.php');
-		$path = KUNENA_PATH_UPLOADED . DS . $this->userid;
+		require_once (KPATH_SITE . '/lib/kunena.upload.class.php');
+		$path = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid;
 		$upload = new CKunenaUpload();
 		$upload->uploadFile($path, $key, '', false);
 		$fileinfo = $upload->getFileInfo();
@@ -171,7 +171,7 @@ class KunenaForumMessageAttachment extends JObject {
 		if ($fileinfo ['status'] && $fileinfo['ready'] === true) {
 			$this->hash =$fileinfo ['hash'];
 			$this->size = $fileinfo ['size'];
-			$this->folder = KUNENA_RELPATH_UPLOADED . '/' . $this->userid;
+			$this->folder = '/media/kunena/attachments/' . $this->userid;
 			$this->filetype = $fileinfo ['mime'];
 			$this->filename = $fileinfo ['name'];
 			return true;

@@ -21,8 +21,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-require_once KUNENA_PATH . '/class.kunena.php';
-
 class CKunenaStats {
 	protected $_db = null;
 	protected $_config = null;
@@ -291,13 +289,5 @@ class CKunenaStats {
 			KunenaError::checkDatabaseError();
 			$this->topthanks = ! empty ( $this->topuserthanks [0]->receivedthanks ) ? $this->topuserthanks [0]->receivedthanks : 0;
 		}
-	}
-
-	public function showStats() {
-		CKunenaTools::loadTemplate('/plugin/stats/stats.php');
-	}
-
-	public function showFrontStats() {
-		CKunenaTools::loadTemplate('/plugin/stats/frontstats.php');
 	}
 }

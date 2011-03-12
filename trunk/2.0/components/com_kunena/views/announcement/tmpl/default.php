@@ -31,8 +31,8 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 		<div class="kbody">
 			<div class="kanndesc">
 				<?php if ($this->announcement->showdate > 0) : ?>
-				<div class="anncreated" title="<?php echo CKunenaTimeformat::showDate($this->announcement->created, 'ago'); ?>">
-					<?php echo CKunenaTimeformat::showDate($this->announcement->created, 'date_today'); ?>
+				<div class="anncreated" title="<?php echo KunenaDate::getInstance($this->announcement->created)->toKunena('ago'); ?>">
+					<?php echo KunenaDate::getInstance($this->announcement->created)->toKunena('date_today'); ?>
 				</div>
 				<?php endif; ?>
 				<div class="anndesc"><?php echo !empty($this->announcement->description) ? KunenaHtmlParser::parseBBCode($this->announcement->description) : KunenaHtmlParser::parseBBCode($this->announcement->sdescription); ?></div>

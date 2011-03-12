@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
 kimport('kunena.model');
+kimport ('kunena.date');
 
 /**
  * Config Model for Kunena
@@ -22,7 +23,6 @@ kimport('kunena.model');
  */
 class KunenaAdminModelConfig extends KunenaModel {
 	function getConfiglists() {
-		require_once (KUNENA_PATH_LIB.'/kunena.timeformat.class.php');
 		$config = KunenaFactory::getConfig ();
 
 		$lists = array ();
@@ -211,11 +211,11 @@ class KunenaAdminModelConfig extends KunenaModel {
   		$lists['ordering_system'] = JHTML::_('select.genericlist', $ordering_system_list, 'cfg_ordering_system', 'class="inputbox" size="1"', 'value', 'text', $config->ordering_system);
 		// New for 1.6: datetime
 		$dateformatlist = array ();
-		$time = CKunenaTimeformat::internalTime() - 80000;
+		$time = KunenaDate::getInstance(time()-80000);
 		$dateformatlist[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_OPTION_DATEFORMAT_NONE'));
-		$dateformatlist[] = JHTML::_('select.option', 'ago', CKunenaTimeformat::showDate($time, 'ago'));
-		$dateformatlist[] = JHTML::_('select.option', 'datetime_today', CKunenaTimeformat::showDate($time, 'datetime_today'));
-		$dateformatlist[] = JHTML::_('select.option', 'datetime', CKunenaTimeformat::showDate($time, 'datetime'));
+		$dateformatlist[] = JHTML::_('select.option', 'ago', $time->toKunena('ago'));
+		$dateformatlist[] = JHTML::_('select.option', 'datetime_today', $time->toKunena('datetime_today'));
+		$dateformatlist[] = JHTML::_('select.option', 'datetime', $time->toKunena('datetime'));
 		$lists['post_dateformat'] = JHTML::_('select.genericlist', $dateformatlist, 'cfg_post_dateformat', 'class="inputbox" size="1"', 'value', 'text', $config->post_dateformat);
 		$lists['post_dateformat_hover'] = JHTML::_('select.genericlist', $dateformatlist, 'cfg_post_dateformat_hover', 'class="inputbox" size="1"', 'value', 'text', $config->post_dateformat_hover);
 		// New for 1.6: hide ip

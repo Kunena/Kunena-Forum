@@ -127,7 +127,7 @@ class CKunenaLink {
 			$query[] = "&limit={$limit}";
 		}
 		$query = implode('', $query);
-		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=view&catid=' . $catid . '&id=' . $threadid . $query, $threadname, $title, $rel, $class, $anker );
+		return CKunenaLink::GetSefHrefLink ( 'index.php?option=com_kunena&func=view&catid=' . $catid . '&id=' . $threadid . $query, $threadname, $title, $rel, $class, $anker );
 	}
 
 	function GetThreadPageLink($view, $catid, $id, $limitstart, $limit, $name, $anker = '', $rel = 'follow', $class = '') {
@@ -140,9 +140,9 @@ class CKunenaLink {
 		$kunena_config = KunenaFactory::getConfig ();
 		if ($page == 1 || ! is_numeric ( $page ) || ! is_numeric ( $limit )) {
 			// page 1 is identical to a link to the top of the thread
-			$pagelink = CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . '&id=' . $threadid, $name, $title, $rel, $class, $anker );
+			$pagelink = CKunenaLink::GetSefHrefLink ( 'index.php?option=com_kunena&func=' . $func . '&catid=' . $catid . '&id=' . $threadid, $name, $title, $rel, $class, $anker );
 		} else {
-			$pagelink = CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . '&id=' . $threadid . '&limit=' . $limit . '&limitstart=' . (($page - 1) * $limit), $name, $title, $rel, $class, $anker );
+			$pagelink = CKunenaLink::GetSefHrefLink ( 'index.php?option=com_kunena&func=' . $func . '&catid=' . $catid . '&id=' . $threadid . '&limit=' . $limit . '&limitstart=' . (($page - 1) * $limit), $name, $title, $rel, $class, $anker );
 		}
 
 		return $pagelink;

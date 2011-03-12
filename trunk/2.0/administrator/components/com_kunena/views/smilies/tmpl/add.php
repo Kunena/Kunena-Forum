@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
+$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 $document->addScriptDeclaration('function update_smiley(newimage)
 			{
 				document.smiley_image.src = "'.

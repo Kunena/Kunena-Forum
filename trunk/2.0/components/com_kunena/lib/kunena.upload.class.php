@@ -12,8 +12,8 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
-require_once (KUNENA_PATH_LIB .DS. 'kunena.image.class.php');
+require_once(KPATH_SITE.'/lib/kunena.file.class.php');
+require_once (KPATH_SITE.'/lib/kunena.image.class.php');
 
 /**
  * Class to handle file uploads and process the uploaded files.

@@ -46,7 +46,7 @@ class KunenaAdminModelTemplates extends KunenaModel {
 	}
 
 	function getTemplates() {
-		$tBaseDir = KUNENA_PATH_TEMPLATE;
+		$tBaseDir = KPATH_SITE.'/template';
 		//get template xml file info
 		$rows = array();
 		$rows = KunenaTemplatesHelper::parseXMLTemplateFiles($tBaseDir);
@@ -63,10 +63,10 @@ class KunenaAdminModelTemplates extends KunenaModel {
 		$app = JFactory::getApplication ();
 		jimport('joomla.filesystem.file');
 
-		$tBaseDir	= JPath::clean(KUNENA_PATH_TEMPLATE);
+		$tBaseDir	= JPath::clean(KPATH_SITE.'/template');
 		$template = $app->getUserState ( 'kunena.edit.template');
-		$ini	= KUNENA_PATH_TEMPLATE.'/'.$template.'/params.ini';
-		$xml	= KUNENA_PATH_TEMPLATE.'/'.$template.'/template.xml';
+		$ini	= KPATH_SITE.'/template/'.$template.'/params.ini';
+		$xml	= KPATH_SITE.'/template/'.$template.'/template.xml';
 
 		// Read the ini file
 		if (JFile::exists($ini)) {
@@ -81,7 +81,7 @@ class KunenaAdminModelTemplates extends KunenaModel {
 
 	function getTemplatedetails() {
 		$app = JFactory::getApplication ();
-		$tBaseDir	= JPath::clean(KUNENA_PATH_TEMPLATE);
+		$tBaseDir	= JPath::clean(KPATH_SITE.'/template');
 		$template = $app->getUserState ( 'kunena.edit.template');
 		$details	= KunenaTemplatesHelper::parseXMLTemplateFile($tBaseDir, $template);
 
@@ -93,7 +93,7 @@ class KunenaAdminModelTemplates extends KunenaModel {
 		jimport('joomla.filesystem.file');
 		$template = $app->getUserState ( 'kunena.edit.template');
 		$filename = $app->getUserState ( 'kunena.editcss.filename');
-		$content = JFile::read(KUNENA_PATH_TEMPLATE.'/'.$template.'/css/'.$filename);
+		$content = JFile::read(KPATH_SITE.'/template/'.$template.'/css/'.$filename);
 		if ($content === false) {
 			 return;
 		}

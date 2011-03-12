@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.view' );
 kimport ( 'kunena.html.parser' );
+kimport ('kunena.date');
 
 /**
  * Kunena View Class
@@ -27,7 +28,6 @@ class KunenaView extends JView {
 
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
-		require_once KPATH_SITE . '/lib/kunena.timeformat.class.php';
 		$template = KunenaFactory::getTemplate();
 		$template->loadTemplate('initialize.php');
 		echo '<div id="Kunena">';
@@ -123,9 +123,33 @@ class KunenaView extends JView {
 		return $html;
 	}
 
+	/**
+	 * This function formats a number to n significant digits when above
+	 * 10,000. Starting at 10,0000 the out put changes to 10k, starting
+	 * at 1,000,000 the output switches to 1m. Both k and m are defined
+	 * in the language file. The significant digits are used to limit the
+	 * number of digits displayed when in 10k or 1m mode.
+	 *
+	 * @param int $number 		Number to be formated
+	 * @param int $precision	Significant digits for output
+	 */
 	function formatLargeNumber($number, $precision = 4) {
-		require_once KUNENA_PATH . '/class.kunena.php';
-		return CKunenaTools::formatLargeNumber($number, $precision);
+		$output = '';
+		// Do we need to reduce the number of significant digits?
+		if ($number >= 10000){
+			// Round the number to n significant digits
+			$number = round ($number, -1*(log10($number)+1) + $precision);
+		}
+
+		if ($number < 10000) {
+			$output = $number;
+		} elseif ($number >= 1000000) {
+			$output = $number / 1000000 . JText::_('COM_KUNENA_MILLION');
+		} else {
+			$output = $number / 1000 . JText::_('COM_KUNENA_THOUSAND');
+		}
+
+		return $output;
 	}
 
 	function addStyleSheet($filename) {

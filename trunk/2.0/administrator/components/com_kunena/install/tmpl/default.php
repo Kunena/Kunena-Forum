@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->document->addStyleSheet ( JURI::base().'components/com_kunena/install/media/install.css' );
+$this->document->addStyleSheet ( JURI::base(true).'/components/com_kunena/install/media/install.css' );
 if ($this->go == 'next') {
 	$this->document = JFactory::getDocument();
 	$this->document->addScriptDeclaration(" // <![CDATA[

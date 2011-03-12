@@ -51,8 +51,8 @@ defined ( '_JEXEC' ) or die ();
 			<span class="ktopic-category"> <?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->topic->getCategory() ) ?></span>
 			<span class="divider fltlft">|</span>
 			<?php endif; ?>
-			<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($this->topic->first_post_time, 'config_post_dateformat_hover'); ?>">
-				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . CKunenaTimeformat::showDate($this->topic->first_post_time, 'config_post_dateformat');?>
+			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
+				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat');?>
 			</span>
 			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->topic->first_post_userid, $this->escape($this->topic->first_post_guest_name) ); ?></span>
 		</div>
@@ -98,8 +98,8 @@ defined ( '_JEXEC' ) or die ();
 			</span>
 
 			<br />
-			<span class="ktopic-date" title="<?php echo CKunenaTimeformat::showDate($this->topic->last_post_time, 'config_post_dateformat_hover'); ?>">
-				<?php echo CKunenaTimeformat::showDate($this->topic->last_post_time, 'config_post_dateformat'); ?>
+			<span class="ktopic-date" title="<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?>">
+				<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat'); ?>
 			</span>
 		</div>
 	</td>

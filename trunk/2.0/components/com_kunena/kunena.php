@@ -43,7 +43,6 @@ if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
 	$controller->execute ( $task );
 	KunenaRoute::cacheStore ();
 	$controller->redirect ();
-	return;
 } else {
 	// Legacy support
 	kimport ('kunena.route.legacy');
@@ -55,3 +54,5 @@ if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
 		return JError::raiseError( 404, "Kunena legacy function '{$view}' not found" );
 	}
 }
+
+KunenaError::cleanup ();

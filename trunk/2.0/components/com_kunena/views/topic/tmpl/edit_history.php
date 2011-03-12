@@ -27,8 +27,8 @@ $k = 0;
 				<thead>
 					<tr class="ksth">
 						<th colspan="2">
-							<span class="kmsgdate khistory-msgdate" title="<?php echo CKunenaTimeformat::showDate($message->time, 'config_post_dateformat_hover') ?>">
-								<?php echo CKunenaTimeformat::showDate($message->time, 'config_post_dateformat') ?>
+							<span class="kmsgdate khistory-msgdate" title="<?php echo KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat_hover') ?>">
+								<?php echo KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat') ?>
 							</span>
 							<a name="<?php echo intval($message->id) ?>"></a>
 							<?php echo $this->getNumLink($message->id,$this->replycount--) ?>

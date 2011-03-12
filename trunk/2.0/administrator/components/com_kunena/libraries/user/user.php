@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport('kunena.error');
+kimport ('kunena.date');
 kimport('kunena.user.helper');
 jimport ( 'joomla.utilities.date' );
 jimport ( 'joomla.filesystem.file' );
@@ -337,13 +338,10 @@ class KunenaUser extends JObject {
 			return $rank->rank_title;
 		}
 		if ($type == 'image') {
+			$template = KunenaTemplate::getInstance();
 			if (! $config->rankimages)
 				return;
-			if (is_file(KUNENA_ABSTMPLTPATH . '/images/ranks/'.$rank->rank_image)) {
-				$iconurl = KUNENA_TMPLTMAINIMGURL . 'images/ranks/'.$rank->rank_image;
-			} else {
-				$iconurl = KUNENA_DIRECTURL . 'template/default/images/ranks/'.$rank->rank_image;
-			}
+			$iconurl = $template->getRankPath($rank->rank_image, true);
 			return '<img src="' . $iconurl . '" alt="" />';
 		}
 		if (! $config->rankimages) {
@@ -372,7 +370,7 @@ class KunenaUser extends JObject {
 				if ($this->birthdate) {
 					$date = new JDate ( $this->birthdate, 0 );
 					if ($date->toFormat('%Y')<1902) break;
-					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . CKunenaTimeformat::showDate ( $this->birthdate, 'date', 'utc', 0 ) . '"></span>';
+					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . KunenaDate::getInstance($this->birthdate)->toKunena( 'date', 0 ) . '"></span>';
 				}
 				break;
 			case 'location' :

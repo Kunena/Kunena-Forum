@@ -22,7 +22,7 @@ kimport('kunena.model');
  */
 class KunenaAdminModelStats extends KunenaModel {
 	protected function _getStatsClass() {
-		require_once(KUNENA_PATH.'/lib/kunena.stats.class.php');
+		require_once(KPATH_SITE.'/lib/kunena.stats.class.php');
 		$kunena_stats = CKunenaStats::getInstance();
 
 		return $kunena_stats;

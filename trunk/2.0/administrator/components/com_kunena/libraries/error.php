@@ -11,16 +11,28 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaError {
-	function initialize() {
-		if (!KunenaFactory::getConfig ()->debug) return;
-		@ini_set('display_errors', 0);
-		@error_reporting(E_ALL);
-		$db = JFactory::getDBO();
-		$db->debug(1);
+	static $enabled = 0;
 
-		set_exception_handler('kunenaExceptionHandler');
-		set_error_handler('kunenaErrorHandler');
-		register_shutdown_function('kunenaShutdownHandler');
+	function initialize() {
+
+		if (!self::$enabled) {
+			$debug = KunenaFactory::getConfig ()->debug;
+			set_error_handler('kunenaErrorHandler');
+			register_shutdown_function('kunenaShutdownHandler', $debug);
+			if (!$debug) return;
+
+			@ini_set('display_errors', 1);
+			@error_reporting(E_ALL);
+			JFactory::getDBO()->debug(1);
+
+			self::$enabled++;
+		}
+	}
+
+	function cleanup() {
+		if (self::$enabled && (--self::$enabled) == 0) {
+			restore_error_handler ();
+		}
 	}
 
 	function error($msg, $where='default') {
@@ -73,12 +85,8 @@ class KunenaError {
 	}
 }
 
-function kunenaExceptionHandler($exception) {
-	echo "Uncaught Exception: {$exception->getMessage()}";
-	return false;
-}
-
 function kunenaErrorHandler($errno, $errstr, $errfile, $errline) {
+	$debug = class_exists('KunenaFactory') ? KunenaFactory::getConfig ()->debug : true;
 	if (error_reporting () == 0 || !strstr($errfile, 'com_kunena')) {
 		return false;
 	}
@@ -109,16 +117,24 @@ function kunenaErrorHandler($errno, $errstr, $errfile, $errline) {
 	}
 
 	$errfile_short = preg_replace('%^.*?/((administrator/)?components/)%', '\\1', $errfile);
-	printf ( "<br />\n<b>%s</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error, $errstr, $errfile_short, $errline );
-	if (ini_get ( 'log_errors' ))
+	if ($debug) {
+		printf ( "<br />\n<b>%s</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error, $errstr, $errfile_short, $errline );
+	}
+	if (ini_get ( 'log_errors' )) {
 		error_log ( sprintf ( "PHP %s:  %s in %s on line %d", $error, $errstr, $errfile, $errline ) );
+	}
 	return true;
 }
 
-function kunenaShutdownHandler() {
+function kunenaShutdownHandler($debug) {
 	static $types = array (E_ERROR, E_USER_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_RECOVERABLE_ERROR);
 	$error = error_get_last ();
 	if ($error && in_array ( $error ['type'], $types )) {
-		kunenaErrorHandler ( $error ['type'], $error ['message'], $error ['file'], $error ['line'] );
+		while(@ob_end_clean());
+		if ($debug) {
+			kunenaErrorHandler ( $error ['type'], $error ['message'], $error ['file'], $error ['line'] );
+		} else {
+			echo "Fatal Error";
+		}
 	}
 }

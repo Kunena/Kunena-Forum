@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 kimport('kunena.forum.message.thankyou.helper');
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
+$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
@@ -248,7 +248,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 <?php if(is_array($this->toptitles)): ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<td width="49%" valign="top">
+		<td width="49%" valign="top">
 		<!-- Begin : Top popular topics -->
 		<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 			<caption><?php echo JText::_('COM_KUNENA_STATS_POPULAR_TOPICS'); ?></caption>
@@ -271,7 +271,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					else {
 						$barwidth = round(($post->hits * 100) / $this->toptitles[0]->hits);
 					}
-					$link = KUNENA_LIVEURL.'&amp;func=view&amp;id='.$post->id.'&amp;catid='.$post->catid;
+					$link = '../'.KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$post->catid}&id={$post->id}");
 				?>
 			<tr>
 				<td ><a href="<?php echo $link;?>"><?php echo $post->subject;?></a> </td>
@@ -311,7 +311,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					else {
 						$barwidth = round(($post->countid * 100) / $top_posts[0]->countid);
 					}
-					$link = KUNENA_LIVEURL.'&amp;func=view&amp;id='.$post->postid.'&amp;catid='.$post->catid;
+					$link = '../'.KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$post->catid}&id={$post->postid}");
 				?>
 			<tr>
 				<td ><a href="<?php echo $link;?>"><?php echo $post->subject;?></a> </td>
@@ -324,7 +324,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 				}
 			?>
 			</tbody>
-		</table>
+			</table>
 		<!-- Fnish : Top Thank you topics  -->
 		</td>
 	</tr>

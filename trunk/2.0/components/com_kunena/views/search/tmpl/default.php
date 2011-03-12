@@ -196,7 +196,7 @@ document.addEvent('domready', function() {
 							<tr class="ksth">
 								<th colspan="2">
 									<span class="kmsgdate">
-										<?php echo CKunenaTimeformat::showDate ( $result->time )?>
+										<?php echo KunenaDate::getInstance($result->time)->toKunena() ?>
 									</span>
 								</th>
 							</tr>

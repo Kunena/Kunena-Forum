@@ -75,7 +75,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		if (!$template) {
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED') );
 		}
-		$tBaseDir	= JPath::clean(KUNENA_PATH_TEMPLATE);
+		$tBaseDir	= JPath::clean(KPATH_SITE.'/template');
 		if (!is_dir( $tBaseDir . '/' . $template )) {
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
 		}
@@ -228,7 +228,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$ftp = JClientHelper::getCredentials('ftp');
-		$file = KUNENA_PATH_TEMPLATE.'/'.$template.'/css/'.$filename;
+		$file = KPATH_SITE.'/template/'.$template.'/css/'.$filename;
 		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0755')) {
 			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_WRITABLE'));
 		}
@@ -268,7 +268,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$ftp = JClientHelper::getCredentials('ftp');
-		$file = KUNENA_PATH_TEMPLATE.'/'.$template.'/params.ini';
+		$file = KPATH_SITE.'/template/'.$template.'/params.ini';
 		jimport('joomla.filesystem.file');
 		if ( count($params) ) {
 			$registry = new JRegistry();
@@ -307,7 +307,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$ftp = JClientHelper::getCredentials('ftp');
-		$file = KUNENA_PATH_TEMPLATE.'/'.$template.'/params.ini';
+		$file = KPATH_SITE.'/template/'.$template.'/params.ini';
 		jimport('joomla.filesystem.file');
 		if ( count($params) ) {
 			$registry = new JRegistry();

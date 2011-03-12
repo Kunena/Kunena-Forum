@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
+$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 JHTML::_('behavior.tooltip');
 ?>
 <div id="kadmin">
@@ -33,7 +33,7 @@ JHTML::_('behavior.tooltip');
 				</tr>
 				<tr>
 					<td valign="top" class="key"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION' ); ?>:</td>
-					<td><?php $path = KUNENA_PATH_TEMPLATE.'/'.$this->templatename. '/images/template_thumbnail.png';
+					<td><?php $path = KPATH_SITE.'/template/'.$this->templatename. '/images/template_thumbnail.png';
 						if (file_exists ( $path )) : ?>
 						<div class="tpl-thumbnail"><img src ="<?php echo JURI::root (); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/images/template_thumbnail.png" alt="" /></div>
 						<?php endif; ?>
@@ -49,7 +49,7 @@ JHTML::_('behavior.tooltip');
 				<table class="admintable">
 				<tr>
 					<td colspan="2" class="key" style="text-align:left; padding: 10px">
-						<?php $templatefile = KUNENA_PATH_TEMPLATE.'/'.$this->templatename.'/params.ini';
+						<?php $templatefile = KPATH_SITE.'/template/'.$this->templatename.'/params.ini';
 							echo is_writable($templatefile) ? JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($templatefile)):JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($templatefile));
 						?>
 					</td>

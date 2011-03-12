@@ -72,10 +72,5 @@ kimport('kunena.forum');
 kimport('kunena.factory');
 kimport('kunena.route');
 
-// Legacy support
-$file = JPATH_ROOT . '/components/com_kunena/lib/kunena.defines.php';
-if (is_file($file))
-	require_once ($file);
-
 // Kunena has been initialized
 define ( 'KUNENA_LOADED', 1 );

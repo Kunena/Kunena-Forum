@@ -725,16 +725,16 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				imgElement = document.getElementById(imgElementID);
 				if (targetElement.style.display == "none") {
 					targetElement.style.display = "";
-					imgElement.src = "' . JURI::root() . 'components/com_kunena/template/default/images/emoticons/w00t.png";
+					imgElement.src = "' . JURI::root(true) . '/components/com_kunena/template/default/images/emoticons/w00t.png";
 				} else {
 					targetElement.style.display = "none";
-					imgElement.src = "' . JURI::root() . 'components/com_kunena/template/default/images/emoticons/pinch.png";
+					imgElement.src = "' . JURI::root(true) . '/components/com_kunena/template/default/images/emoticons/pinch.png";
 				}
 			} </script>' );
 		}
 		$spoilerid ++;
 		$randomid = 'spoiler_' . rand ();
-		return '<div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" class = "kspoiler" ><img id="' . $randomid . '_img"' . ' src="' . JURI::root() . 'components/com_kunena/template/default/images/emoticons/pinch.png" border="0" alt=":pinch:" /> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $content . '</span></div>';
+		return '<div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" class = "kspoiler" ><img id="' . $randomid . '_img"' . ' src="' . JURI::root(true) . '/components/com_kunena/template/default/images/emoticons/pinch.png" border="0" alt=":pinch:" /> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $content . '</span></div>';
 	}
 
 	function DoHide($bbcode, $action, $name, $default, $params, $content) {

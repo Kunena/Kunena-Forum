@@ -31,6 +31,18 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+12-March-2011 Matias
+- [#22570] Get rid of all deprecated defines and remove lib/kunena.defines.php
++ [#22569] Add new class KunenaDate and convert code to use it
+- [#22570] Remove deprecated CKunenaTimeFormat class
+- [#22570] Remove deprecated CKunenaTools class and class.kunena.php
++ [#22569] Add url parameter into KunenaTemplate::getSmileyPath() and getRankPath()
+# [#23443] Fix token error when saving user profile
++ [#22569] KunenaError: Improve initialization() and add cleanup()
+# [#22569] KunenaError: Output errors only if debug mode is turned on in Kunena
+# [#22569] KunenaError: On fatal errors clean all output buffers and show only error
+^ [#22569] KunenaError: Always register our own error and shutdown handlers
+
 11-March-2011 Matias
 # [#23443] Regression from merge: Fatal error in KunenaTemplate::loadMootools() if debug=1
 + [#22569] Add offline/registered only checks and screens into KunenaView class

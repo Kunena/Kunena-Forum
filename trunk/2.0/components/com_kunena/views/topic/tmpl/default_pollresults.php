@@ -26,7 +26,7 @@ $row = 0;
 							<?php foreach ( $this->poll->getOptions() as $option ) : ?>
 							<tr class="krow<?php echo (++$row)%2+1;?>">
 								<td class="kcol-option"><?php echo KunenaHtmlParser::parseText ($option->text); ?></td>
-								<td class="kcol-bar"><img class="jr-forum-stat-bar" src="<?php echo JURI::root()."components/com_kunena/template/default/images/bar.png"; ?>" height="10" width="<?php echo intval(($option->votes*300)/max($this->poll->getTotal(),1))+3; ?>" /></td>
+								<td class="kcol-bar"><img class="jr-forum-stat-bar" src="<?php echo JURI::root(true)."/components/com_kunena/template/default/images/bar.png"; ?>" height="10" width="<?php echo intval(($option->votes*300)/max($this->poll->getTotal(),1))+3; ?>" /></td>
 								<td class="kcol-number"><?php if(isset($option->votes) && ($option->votes > 0)) { echo $option->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
 								<td class="kcol-percent"><?php echo round(($option->votes*100)/max($this->poll->getTotal(),1),1)."%"; ?></td>
 							</tr>

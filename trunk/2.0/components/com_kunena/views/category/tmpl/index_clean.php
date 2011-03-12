@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
+require_once(KPATH_SITE.'/lib/kunena.link.class.php');
 $tabclass = array ("row1", "row2" );
 $mmm=0;
 foreach ( $this->sections as $section ) :
@@ -135,7 +135,7 @@ foreach ( $this->sections as $section ) :
 			<?php
 					echo JText::_('COM_KUNENA_BY') . ' ';
 					echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $this->escape($last->last_post_guest_name) );
-					echo '<br /><span class="nowrap" title="' . CKunenaTimeformat::showDate ( $last->last_post_time, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $last->last_post_time, 'config_post_dateformat' ) . '</span>';
+					echo '<br /><span class="nowrap" title="' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat_hover') . '">' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat') . '</span>';
 					?>
 			</div>
 			</td>

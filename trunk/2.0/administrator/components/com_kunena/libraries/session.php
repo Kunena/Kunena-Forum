@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once (KPATH_SITE. "/lib/kunena.timeformat.class.php");
+kimport ('kunena.date');
 
 class KunenaSession extends JObject
 {
@@ -22,7 +22,7 @@ class KunenaSession extends JObject
 	{
 		$this->load($identifier);
 		if (!$this->currvisit) {
-			$this->lasttime = $this->currvisit = CKunenaTimeformat::internalTime();
+			$this->lasttime = $this->currvisit = JFactory::getDate()->toUnix();
 			$this->readtopics = 0;
 			// New user gets 14 days of unread messages
 			if ($identifier) {
@@ -177,13 +177,13 @@ class KunenaSession extends JObject
 	{
 		// perform session timeout check
 		$lifetime = max(intval(JFactory::getConfig()->getValue( 'config.lifetime' ))*60, intval(KunenaFactory::getConfig ()->fbsessiontimeout));
-		$this->_sessiontimeout = ($this->currvisit + $lifetime < CKunenaTimeformat::internalTime());
+		$this->_sessiontimeout = ($this->currvisit + $lifetime < JFactory::getDate()->toUnix());
 		return $this->_sessiontimeout;
 	}
 
 	function markAllCategoriesRead()
 	{
-		$this->lasttime = CKunenaTimeformat::internalTime();
+		$this->lasttime = JFactory::getDate()->toUnix();
 		$this->readtopics = 0;
 	}
 
@@ -196,7 +196,7 @@ class KunenaSession extends JObject
 			$this->lasttime = $this->currvisit;
 			$this->readtopics = 0;
 		}
-		$this->currvisit = CKunenaTimeformat::internalTime();
+		$this->currvisit = JFactory::getDate()->toUnix();
 	}
 
 	function updateAllowedForums()

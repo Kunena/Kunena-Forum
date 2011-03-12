@@ -43,10 +43,10 @@ $j=count($this->banhistory);
 						<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?></span>
 					</td>
 					<td class="kcol-mid kbanstart">
-						<span><?php  if( $userban->created_time ) echo CKunenaTimeFormat::showDate($userban->created_time, 'datetime'); ?></span>
+						<span><?php  if( $userban->created_time ) echo KunenaDate::getInstance($userban->created_time)->toKunena('datetime'); ?></span>
 					</td>
 					<td class="kcol-mid kbanexpire">
-						<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : CKunenaTimeFormat::showDate($userban->expiration, 'datetime'); ?></span>
+						<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : KunenaDate::getInstance($userban->expiration)->toKunena('datetime'); ?></span>
 					</td>
 					<td class="kcol-mid kbancreate">
 						<span><?php echo CKunenaLink::GetProfileLink ( intval($userban->created_by) ); ?></span>
@@ -55,7 +55,7 @@ $j=count($this->banhistory);
 						<?php if ( $userban->modified_by && $userban->modified_time) { ?>
 						<span>
 							<?php echo CKunenaLink::GetProfileLink ( intval($userban->modified_by) ); ?>
-							<?php echo CKunenaTimeFormat::showDate($userban->modified_time, 'datetime'); } ?>
+							<?php echo KunenaDate::getInstance($userban->modified_time)->toKunena('datetime'); } ?>
 						</span>
 					</td>
 				</tr>
@@ -74,7 +74,7 @@ $j=count($this->banhistory);
 				<?php if (is_array($userban->comments)) foreach ($userban->comments as $comment) : ?>
 				<tr class="krow2">
 					<td colspan="2" class="kcol-first kcommentby-label"><b><?php echo JText::sprintf('COM_KUNENA_BAN_COMMENT_BY', CKunenaLink::GetProfileLink ( intval($comment->userid) )); ?></b> :</td>
-					<td colspan="1" class="kcol-mid kcommenttime-field"><?php echo CKunenaTimeFormat::showDate($comment->time); ?></td>
+					<td colspan="1" class="kcol-mid kcommenttime-field"><?php echo KunenaDate::getInstance($comment->time)->toKunena(); ?></td>
 					<td colspan="3" class="kcol-mid kcomment-field"><?php echo KunenaHtmlParser::parseText ($comment->comment); ?></td>
 				</tr>
 				<?php endforeach; ?>

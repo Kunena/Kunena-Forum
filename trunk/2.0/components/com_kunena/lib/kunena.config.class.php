@@ -305,8 +305,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	// New for 1.6 -> Choose ordering system
 	var $ordering_system = 'mesid';
 	// New for 1.6 -> dateformat
-	var $post_dateformat = 'ago'; // See CKunenaTimeformat::showDate()
-	var $post_dateformat_hover = 'datetime'; // See CKunenaTimeformat::showDate()
+	var $post_dateformat = 'ago'; // See KunenaDate
+	var $post_dateformat_hover = 'datetime'; // See KunenaDate
 	// New for 1.6 -> hide IP
 	var $hide_ip = 1;
 	// New for 1.6 -> disable/enable activity stream

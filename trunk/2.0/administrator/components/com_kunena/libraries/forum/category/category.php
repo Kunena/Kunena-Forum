@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ('kunena.error');
+kimport ('kunena.date');
 kimport ('kunena.user');
 kimport ('kunena.user.helper');
 kimport ('kunena.user.ban');
@@ -610,8 +611,7 @@ class KunenaForumCategory extends JObject {
 		if ($banned) {
 			$banned = KunenaUserBan::getInstanceByUserid($user->userid, true);
 			if (!$banned->isLifetime()) {
-				require_once(KPATH_SITE.'/lib/kunena.timeformat.class.php');
-				$this->setError ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', CKunenaTimeformat::showDate($banned->expiration)) );
+				$this->setError ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()) );
 				return false;
 			} else {
 				$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' ) );

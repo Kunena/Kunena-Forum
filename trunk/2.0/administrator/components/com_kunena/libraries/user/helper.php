@@ -125,7 +125,7 @@ class KunenaUserHelper {
 			// need to calcute the time less the time selected by user, user
 			$querytime = '';
 			if ( $kunena_config->show_session_starttime != 0 ) {
-				$time = CKunenaTimeformat::internalTime() - $kunena_config->show_session_starttime;
+				$time = JFactory::getDate()->toUnix() - $kunena_config->show_session_starttime;
 				$querytime = 'AND time > '.$time;
 			}
 
@@ -137,7 +137,7 @@ class KunenaUserHelper {
 			KunenaError::checkDatabaseError ();
 
 			// need to calculate the joomla session lifetime in timestamp, to check if the sessions haven't expired
-			$j_session_lifetime = CKunenaTimeformat::internalTime() - ( $kunena_app->getCfg('lifetime') * 60 );
+			$j_session_lifetime = JFactory::getDate()->toUnix() - ( $kunena_app->getCfg('lifetime') * 60 );
 
 			if (count($sessions)) {
 				foreach ($sessions as $session) {

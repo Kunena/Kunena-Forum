@@ -56,7 +56,7 @@ $tabclass = array ("row1", "row2" );
 	<?php
 			echo JText::_('COM_KUNENA_BY') . ' ';
 			echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $this->escape($last->last_post_guest_name) );
-			echo '<br /><span class="nowrap" title="' . CKunenaTimeformat::showDate ( $last->last_post_time, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $last->last_post_time, 'config_post_dateformat' ) . '</span>';
+			echo '<br /><span class="nowrap" title="' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat_hover') . '">' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat') . '</span>';
 			?>
 	</div>
 	</td>

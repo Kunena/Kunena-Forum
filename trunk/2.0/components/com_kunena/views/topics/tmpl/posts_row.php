@@ -77,8 +77,8 @@ defined ( '_JEXEC' ) or die ();
 			?>
 			<!-- /Avatar -->
 			<!-- By -->
-			<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat_hover'); ?>">
-				<?php echo JText::_('COM_KUNENA_POSTED_AT') . ' ' . CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat'); ?>&nbsp;
+			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover'); ?>">
+				<?php echo JText::_('COM_KUNENA_POSTED_AT') . ' ' . KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>&nbsp;
 			</span>
 
 			<?php if ($this->message->userid) : ?>

@@ -28,7 +28,7 @@ defined ( '_JEXEC' ) or die ();
 		<div class="kbody">
 			<div class="kanndesc">
 				<?php if ($this->announcement->showdate) : ?>
-				<div class="anncreated"><?php echo CKunenaTimeformat::showDate($this->announcement->created, 'date_today'); ?></div>
+				<div class="anncreated"><?php echo KunenaDate::getInstance($this->announcement->created)->toKunena('date_today'); ?></div>
 				<?php endif; ?>
 				<?php if (!empty($this->announcement->sdescription)) : ?>
 					<div class="anndesc">

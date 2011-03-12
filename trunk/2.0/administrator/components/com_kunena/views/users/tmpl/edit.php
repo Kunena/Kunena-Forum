@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 $db = JFactory::getDBO();
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
+$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 $document->addScriptDeclaration(' var current_count = '.JString::strlen($this->user->signature).'
 var max_count = '.$this->config->maxsig.'
 

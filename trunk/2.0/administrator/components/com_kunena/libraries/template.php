@@ -134,7 +134,7 @@ class KunenaTemplate extends JObject
 		return KPATH_COMPONENT_RELATIVE."/{$path}/{$file}";
 	}
 
-	public function getSmileyPath($filename='') {
+	public function getSmileyPath($filename='', $url = false) {
 		if (!isset($this->smileyPath[$filename])) {
 			$path = "{$this->getPath()}/images/emoticons/{$filename}";
 			if (($filename && !is_file(KPATH_SITE .DS. $path)) || !is_dir(KPATH_SITE .DS. $path)) {
@@ -142,10 +142,12 @@ class KunenaTemplate extends JObject
 			}
 			$this->smileyPath[$filename] = $path;
 		}
-		return $this->smileyPath[$filename];
+		$base = '';
+		if ($url) $base = KURL_SITE;
+		return $base.$this->smileyPath[$filename];
 	}
 
-	public function getRankPath($filename='') {
+	public function getRankPath($filename='', $url = false) {
 		if (!isset($this->rankPath[$filename])) {
 			$path = "{$this->getPath()}/images/ranks/{$filename}";
 			if (($filename && !is_file(KPATH_SITE .DS. $path)) || !is_dir(KPATH_SITE .DS. $path)) {
@@ -153,7 +155,9 @@ class KunenaTemplate extends JObject
 			}
 			$this->rankPath[$filename] = $path;
 		}
-		return $this->rankPath[$filename];
+		$base = '';
+		if ($url) $base = KURL_SITE;
+		return $base.$this->rankPath[$filename];
 	}
 
 	public function getImagePath($image, $url = true) {

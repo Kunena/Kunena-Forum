@@ -20,10 +20,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php endif; ?>
 	</td>
 	<td class="kcol-mid kprofile kprofile-list"><?php echo CKunenaLink::GetProfileLink($this->profile->userid, $this->message->name) ?></td>
-	<td class="kcol-last kmsgdate kmsgdate-list" title="<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat_hover') ?>">
-		<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat') ?>
+	<td class="kcol-last kmsgdate kmsgdate-list" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
+		<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 	</td>
 </tr>
-<!-- Begin: Message Module Position -->
-<?php //CKunenaTools::showModulePosition('kunena_tmsg_' . $this->mmm) ?>
-<!-- Finish: Message Module Position -->

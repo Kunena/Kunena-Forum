@@ -38,7 +38,6 @@ class KunenaViewUser extends KunenaView {
 		$userid = JRequest::getInt('userid');
 
 		kimport('kunena.html.parser');
-		require_once(KPATH_SITE.'/lib/kunena.timeformat.class.php');
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->config = KunenaFactory::getConfig ();
@@ -91,7 +90,8 @@ class KunenaViewUser extends KunenaView {
 		$this->avatarlink = $this->profile->getAvatarLink('kavatar','profile');
 		$this->personalText = $this->profile->personalText;
 		$this->signature = $this->profile->signature;
-		$this->timezone = $this->user->getParam('timezone', $this->_app->getCfg ( 'offset', 0 ));
+		$this->localtime = KunenaDate::getInstance();
+		$this->localtime->setOffset($this->user->getParam('timezone', $this->_app->getCfg ( 'offset', 0 )));
 		$this->moderator = $this->profile->isModerator();
 		$this->admin = $this->profile->isAdmin();
 		switch ($this->profile->gender) {
@@ -386,8 +386,8 @@ class KunenaViewUser extends KunenaView {
 		if ($this->gallery == 'default') {
 			$this->gallery = '';
 		}
-		$path = KUNENA_PATH_AVATAR_UPLOADED .'/gallery';
-		$this->galleryurl = KUNENA_LIVEUPLOADEDPATH . '/avatars/gallery';
+		$path = JPATH_ROOT . '/media/kunena/avatars/gallery';
+		$this->galleryurl = JURI::root(true) . '/media/kunena/avatars/gallery';
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 		echo $this->loadTemplate('avatar');

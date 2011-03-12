@@ -17,8 +17,6 @@ $template = KunenaFactory::getTemplate();
 // Template requires Mootools 1.2 framework
 $template->loadMootools();
 
-require_once KUNENA_PATH . '/class.kunena.php';
-
 // Toggler language strings
 $document->addScriptDeclaration('// <![CDATA[
 var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
@@ -36,11 +34,11 @@ $skinner = $template->params->get('enableSkinner', 0);
 
 if (file_exists ( JPATH_ROOT .DS. "templates" .DS. $app->getTemplate() .DS. 'css' .DS. 'kunena.forum.css' )) {
 	// Load css from Joomla template
-	CKunenaTools::addStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.forum-min.css' );
+	KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.forum-min.css' );
 	if ($skinner && file_exists ( JPATH_ROOT. "templates/".$app->getTemplate().'css/kunena.skinner.css' )){
-		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.skinner-min.css' );
+		KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.skinner-min.css' );
 	} elseif (!$skinner && file_exists ( JPATH_ROOT. "templates/".$app->getTemplate().'css/kunena.default.css' )) {
-		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.default-min.css' );
+		KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.default-min.css' );
 	}
 } else {
 	// Load css from default template
@@ -189,3 +187,20 @@ $styles .= <<<EOF
 EOF;
 
 $document->addStyleDeclaration($styles);
+
+/**
+ * Wrapper to addStyleSheet
+ *
+ */
+function KunenaAddStyleSheet($filename) {
+
+	$document = JFactory::getDocument ();
+	$config = KunenaFactory::getConfig ();
+
+	if ($config->debug || KunenaForum::isSvn()) {
+		// If we are in debug more, make sure we load the unpacked css
+		$filename = preg_replace ( '/\-min\./u', '.', $filename );
+	}
+
+	return $document->addStyleSheet ( $filename );
+}

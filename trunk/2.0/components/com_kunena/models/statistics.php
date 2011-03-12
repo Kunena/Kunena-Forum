@@ -21,7 +21,7 @@ kimport ( 'kunena.model' );
  */
 class KunenaModelStatistics extends KunenaModel {
 	protected function _getStatsClass() {
-		require_once (KUNENA_PATH_LIB . '/kunena.stats.class.php');
+		require_once (KPATH_SITE.'/lib/kunena.stats.class.php');
 		$kunena_stats = CKunenaStats::getInstance ();
 
 		return $kunena_stats;

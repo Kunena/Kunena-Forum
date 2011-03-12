@@ -10,7 +10,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+// Initialize Kunena (if Kunena System Plugin isn't enabled)
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+
+// Initialize error handlers
+kimport ( 'kunena.error' );
+KunenaError::initialize ();
 
 // Get view and task
 $view = JRequest::getCmd ( 'view', 'cpanel' );
@@ -22,7 +27,7 @@ require_once(KPATH_ADMIN.'/install/version.php');
 $kversion = new KunenaVersion();
 if ($view != 'install' && !$kversion->checkVersion()) {
 	$app = JFactory::getApplication ();
-	$app->redirect(JURI::root().'administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
+	$app->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
 
 } elseif ($view == 'install') {
 	// Load our installer (special case)
@@ -36,3 +41,5 @@ if ($view != 'install' && !$kversion->checkVersion()) {
 }
 $controller->execute( $task );
 $controller->redirect();
+
+KunenaError::cleanup ();

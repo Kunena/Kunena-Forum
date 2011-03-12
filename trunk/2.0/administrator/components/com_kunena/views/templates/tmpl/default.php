@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
+$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 JHTML::_('behavior.tooltip');
 ?>
 <div id="kadmin">
@@ -54,7 +54,7 @@ JHTML::_('behavior.tooltip');
 					<td width="5">
 						<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="isChecked(this.checked);" />
 					</td>
-					<td><?php $img_path = JURI::root().'components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>
+					<td><?php $img_path = JURI::root(true).'/components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>
 						<span class="editlinktip hasTip" title="<?php
 							echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW' ) . '" width="200" height="145" />'); ?> ">
 							<a href="#edit"
@@ -65,10 +65,10 @@ JHTML::_('behavior.tooltip');
 					</td>
 					<td align="center">
 						<?php if ($row->published == 1) { ?>
-							<img src="<?php echo JURI::base(); ?>components/com_kunena/images/icons/default.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>" />
+							<img src="<?php echo JURI::base(true); ?>/components/com_kunena/images/icons/default.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>" />
 						<?php } else { ?>
-							<a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=publish&amp;cid[]=<?php echo urlencode($row->directory);?>">
-								<img src="<?php echo JURI::base(); ?>components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" /></a>
+							<a href="<?php echo JURI::base(true); ?>/index.php?option=com_kunena&amp;task=publish&amp;cid[]=<?php echo urlencode($row->directory);?>">
+								<img src="<?php echo JURI::base(true); ?>/components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" /></a>
 						<?php } ?>
 					</td>
 					<td align="center">

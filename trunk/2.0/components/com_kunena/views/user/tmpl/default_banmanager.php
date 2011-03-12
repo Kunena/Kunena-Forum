@@ -48,10 +48,10 @@ $j=0;
 							<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'); ?></span>
 						</td>
 						<td class="kcol-mid kbanned-start">
-							<span><?php echo CKunenaTimeFormat::showDate($userban->created_time, 'datetime'); ?></span>
+							<span><?php echo KunenaDate::getInstance($userban->created_time)->toKunena('datetime'); ?></span>
 						</td>
 						<td class="kcol-mid kbanned-expire">
-							<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : CKunenaTimeFormat::showDate($userban->expiration, 'datetime'); ?></span>
+							<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : KunenaDate::getInstance($userban->expiration)->toKunena('datetime'); ?></span>
 						</td>
 					</tr>
 					<?php endforeach; ?>

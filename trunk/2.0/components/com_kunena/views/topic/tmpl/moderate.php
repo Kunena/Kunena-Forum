@@ -45,8 +45,8 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 				<div class="kmoderate-message">
 					<h4><?php echo $this->escape( $this->message->subject ); ?></h4>
 					<div class="kmessage-timeby">
-						<span class="kmessage-time" title="<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat_hover'); ?>">
-							<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat'); ?>
+						<span class="kmessage-time" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover'); ?>">
+							<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>
 						</span>
 						<span class="kmessage-by">
 							<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($this->message->userid), $this->escape($this->message->name) ); ?>

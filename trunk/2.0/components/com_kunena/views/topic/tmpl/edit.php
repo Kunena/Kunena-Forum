@@ -25,8 +25,8 @@ if (!empty($this->poll)) {
 	// ]]>');
 }
 
-include_once (KUNENA_PATH_LIB . '/kunena.bbcode.js.php');
-include_once (KUNENA_PATH_LIB . '/kunena.special.js.php');
+include_once (KPATH_SITE.'/lib/kunena.bbcode.js.php');
+include_once (KPATH_SITE.'/lib/kunena.special.js.php');
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 //keep session alive while editing
@@ -39,7 +39,7 @@ if ($this->my->id) {
 	// ]]>');
  }
  $document->addScriptDeclaration('// <![CDATA[
- function kShowDetail(srcElement) {' . 'var targetID, srcElement, targetElement, imgElementID, imgElement;' . 'targetID = srcElement.id + "_details";' . 'imgElementID = srcElement.id + "_img";' . 'targetElement = document.getElementById(targetID);' . 'imgElement = document.getElementById(imgElementID);' . 'if (targetElement.style.display == "none") {' . 'targetElement.style.display = "";' . 'imgElement.src = "' . JURI::root() . '/components/com_kunena/template/default/images/emoticons/w00t.png";' . '} else {' . 'targetElement.style.display = "none";' . 'imgElement.src = "' . JURI::root() . '/components/com_kunena/template/default/images/emoticons/pinch.png";' . '}}
+ function kShowDetail(srcElement) {' . 'var targetID, srcElement, targetElement, imgElementID, imgElement;' . 'targetID = srcElement.id + "_details";' . 'imgElementID = srcElement.id + "_img";' . 'targetElement = document.getElementById(targetID);' . 'imgElement = document.getElementById(imgElementID);' . 'if (targetElement.style.display == "none") {' . 'targetElement.style.display = "";' . 'imgElement.src = "' . JURI::root(true) . '/components/com_kunena/template/default/images/emoticons/w00t.png";' . '} else {' . 'targetElement.style.display = "none";' . 'imgElement.src = "' . JURI::root() . '/components/com_kunena/template/default/images/emoticons/pinch.png";' . '}}
  // ]]>');
 $this->setTitle ( $this->title );
 
@@ -139,8 +139,6 @@ $this->k=0;
 		if ($this->config->allowfileupload || ($this->config->allowfileregupload && $this->my->id != 0)
 			|| ($this->config->allowimageupload || ($this->config->allowimageregupload && $this->my->id != 0)
 			|| $this->me->isModerator ( $this->message->catid ))) :
-			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
-			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );
 			?>
 		<tr id="kpost-attachments" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">

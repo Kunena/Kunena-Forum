@@ -87,7 +87,7 @@ class KunenaError {
 
 function kunenaErrorHandler($errno, $errstr, $errfile, $errline) {
 	$debug = class_exists('KunenaFactory') ? KunenaFactory::getConfig ()->debug : true;
-	if (error_reporting () == 0 || !strstr($errfile, 'com_kunena')) {
+	if (error_reporting () == 0 || !strstr($errfile, 'kunena')) {
 		return false;
 	}
 	switch ($errno) {
@@ -130,9 +130,10 @@ function kunenaShutdownHandler($debug) {
 	static $types = array (E_ERROR, E_USER_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_RECOVERABLE_ERROR);
 	$error = error_get_last ();
 	if ($error && in_array ( $error ['type'], $types )) {
+		header('HTTP/1.1 500 Internal Server Error');
 		while(@ob_end_clean());
 		if ($debug) {
-			kunenaErrorHandler ( $error ['type'], $error ['message'], $error ['file'], $error ['line'] );
+			printf ( "<b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error ['message'], $error ['file'], $error ['line'] );
 		} else {
 			echo "Fatal Error";
 		}

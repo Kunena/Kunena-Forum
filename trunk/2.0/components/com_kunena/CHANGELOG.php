@@ -42,6 +42,7 @@ Kunena 2.0.0-DEV
 # [#22569] KunenaError: Output errors only if debug mode is turned on in Kunena
 # [#22569] KunenaError: On fatal errors clean all output buffers and show only error
 ^ [#22569] KunenaError: Always register our own error and shutdown handlers
+^ [#22569] KunenaError: Make fatal errors into 500 Internal Server Error
 
 11-March-2011 Matias
 # [#23443] Regression from merge: Fatal error in KunenaTemplate::loadMootools() if debug=1

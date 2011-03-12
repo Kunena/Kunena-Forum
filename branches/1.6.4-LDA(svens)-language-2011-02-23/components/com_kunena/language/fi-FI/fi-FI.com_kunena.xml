@@ -5,7 +5,7 @@
 	<name>Kunena Forum - Finnish (Suomi)</name>
 	<tag>fi-FI</tag>
 	<creationDate>2011-02-17</creationDate>
-	<version>1.6.4-DEV</version>
+	<version>@kunenaversion@</version>
 	<build>4355</build>
 	<author>Sami Haaranen</author>
 	<authorEmail>mortti@joomlaportal.fi</authorEmail>

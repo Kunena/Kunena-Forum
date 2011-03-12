@@ -37,6 +37,7 @@ Kunena 1.6.4-DEV
 ^ [#24847] updated nb-NO (thanks Joomla! i Norge)
 ^ [#24847] updated lt-LT (thanks Joomla123.lt)
 ^ [#24847] updated pl-PL (thanks JoomlAdmin.pl)
+^ [#24847] updated fi-FI (thanks Mortti)
 
 06-March-2011 svens(LDA)
 ^ [#24847] update nb-NO (thanks Joomla! i Norge)

@@ -135,7 +135,7 @@ function kunenaShutdownHandler($debug) {
 		if ($debug) {
 			printf ( "<b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error ['message'], $error ['file'], $error ['line'] );
 		} else {
-			echo "Fatal Error";
+			echo "<b>Fatal Error</b>";
 		}
 	}
 }

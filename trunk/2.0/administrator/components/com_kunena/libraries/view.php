@@ -25,6 +25,9 @@ class KunenaView extends JView {
 		if ($this->config->board_offline) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), $this->me->isAdmin () ? 'notice' : 'error');
 		}
+		if ($this->config->debug && $this->me->isAdmin ()) {
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
+		}
 
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';

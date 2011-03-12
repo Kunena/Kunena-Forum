@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
+<!DOCTYPE install>
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Norwegian</name>
 	<tag>nb-NO</tag>
-	<creationDate>31-01-2011</creationDate>
-	<version>1.6.3</version>
-	<build>4344</build>
+	<creationDate>06-03-2011</creationDate>
+	<version>1.6.4</version>
+	<build>4566</build>
 	<author>Joomla! i Norge</author>
 	<authorEmail>oversettelser@joomlainorge.no</authorEmail>
 	<authorUrl>http://www.joomlainorge.no</authorUrl>

@@ -24,7 +24,7 @@ W oparciu o tłumaczenie wersji 1.5 wykonanej przez 'Sogo' i Stefana 'zwiastuna'
 
 	<files>
 		<filename>pl-PL.com_kunena.ini</filename>
-		<!-- filename>pl-pL.com_kunena.tpl_default.ini</filename -->
-		<!-- filename>pl-pL.com_kunena.tpl_example.ini</filename -->
+		<filename>pl-pL.com_kunena.tpl_default.ini</filename>
+		<filename>pl-pL.com_kunena.tpl_example.ini</filename>
 	</files>
 </install>

@@ -44,6 +44,7 @@ Kunena 2.0.0-DEV
 ^ [#22569] KunenaError: Always register our own error and shutdown handlers
 ^ [#22569] KunenaError: Make fatal errors into 500 Internal Server Error
 ^ [#22569] Enqueue warning if Kunena debug has been turned on
+# [#22569] KunenaError: Hide full path also for fatal errors
 
 11-March-2011 Matias
 # [#23443] Regression from merge: Fatal error in KunenaTemplate::loadMootools() if debug=1

@@ -133,7 +133,8 @@ function kunenaShutdownHandler($debug) {
 		header('HTTP/1.1 500 Internal Server Error');
 		while(@ob_end_clean());
 		if ($debug) {
-			printf ( "<b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error ['message'], $error ['file'], $error ['line'] );
+			$error_file_short = preg_replace('%^.*?/((administrator/)?components/)%', '\\1', $error ['file']);
+			printf ( "<b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error ['message'], $error_file_short, $error ['line'] );
 		} else {
 			echo "<b>Fatal Error</b>";
 		}

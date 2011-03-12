@@ -29,6 +29,11 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaStats 1.6.2
+12-March-2011 svens(LDA)
++ [#24847] update nb-NO (thanks Joomla i Norge)
+^ [#24847] added missing xml lines
+^ [#24847] update ru-RU (thanks Zarkos)
+
 21-February-2011 svens(LDA)
 ^ [#24847] update de-DE (thanks rich)
 

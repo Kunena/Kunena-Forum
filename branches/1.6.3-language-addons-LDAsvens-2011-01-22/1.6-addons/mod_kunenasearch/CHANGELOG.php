@@ -29,6 +29,11 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaSearch 1.6.3-DEV
+12-March-2011 svens(LDA)
++ [#24847] add nb-NO (thanks Joomla i Norge)
+^ [#24847] added missing xml lines
+^ [#24847] update ru-RU (thanks Zarkos)
+
 18-February-2011 svens(LDA)
 + [#24847] add fi-FI (thanks Mortti)
 

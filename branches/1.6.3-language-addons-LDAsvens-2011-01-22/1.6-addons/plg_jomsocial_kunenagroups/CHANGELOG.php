@@ -30,6 +30,10 @@ Legend:
 
 Kunena Groups 1.6.3-DEV
 
+12-March-2011 svens(LDA)
++ [#24847] languages folder
++ [#24847] add nb-NO (thanks Joomla i Norge)
+
 21-December-2010 Matias
 # [#22541] Fix a bug in version detection
 # [#22541] Fix Warning: array_merge(): Argument #2 is not an array

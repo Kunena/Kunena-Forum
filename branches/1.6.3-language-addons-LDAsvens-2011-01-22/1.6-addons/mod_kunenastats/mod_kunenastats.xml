@@ -3,7 +3,7 @@
 <install type="module" version="1.5.0" method="upgrade">
 	<name>Kunena Statistics</name>
 	<author>Kunena Team</author>
-	<version>1.6.2</version>
+	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<copyright>(c)2010-2011 Kunena Team. All rights reserved</copyright>
@@ -23,7 +23,9 @@
 		<language tag="de-DE">de-DE.mod_kunenastats.ini</language>
 		<language tag="en-GB">en-GB.mod_kunenastats.ini</language>
 		<language tag="es-ES">es-ES.mod_kunenastats.ini</language>
+		<language tag="fi-FI">fi-FI.mod_kunenastats.ini</language>
 		<language tag="fr-FR">fr-FR.mod_kunenastats.ini</language>
+		<language tag="nb-NO">nb-NO.mod_kunenastats.ini</language>
 		<language tag="ru-RU">ru-RU.mod_kunenastats.ini</language>
 	</languages>
 

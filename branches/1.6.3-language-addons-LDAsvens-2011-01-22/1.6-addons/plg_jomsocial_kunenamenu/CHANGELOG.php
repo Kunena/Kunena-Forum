@@ -28,6 +28,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 JomsocialKunenaMenu 1.6.2
+12-March-2011 svens(LDA)
++ [#24847] add nb-NO (thanks Joomla i Norge)
+^ [#24847] update ru-RU (thanks Zarkos)
 
 17-January-2011 fxstein
 ^ [#19002] Revert version info to 1.6.2 - has never been released for that plugin.

@@ -30,6 +30,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena Discuss Plugin 1.6.2
+12-March-2011 svens(LDA)
++ [#24847] add nb-NO (thanks Joomla i Norge)
++ [#24847] add fi-FI (thanks Mortti)
+
 20-February-2011 svens(LDA)
 ^ [#24847] update hu-HU (thanks pedrohsi)
 

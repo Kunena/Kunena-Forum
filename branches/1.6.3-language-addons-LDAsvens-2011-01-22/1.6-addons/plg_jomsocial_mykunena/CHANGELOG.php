@@ -27,6 +27,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 MyKunena 1.6.0-RC2
+12-March-2011 svens(LDA)
++ [#24847] add nb-NO (thanks Joomla i Norge)
+
 30-October-2010 svens LDA
 ^ [#22975] update ru-RU (thanks ZARKOS)
 

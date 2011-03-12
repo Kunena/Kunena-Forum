@@ -29,6 +29,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaLatest 1.6.3-DEV
+12-March-2011 svens(LDA)
+^ [#24847] update ru-RU (thanks Zarkos)
+
 06-March-2011 svens(LDA)
 ^ [#24847] update nb-NO (thanks Joomla! i Norge)
 

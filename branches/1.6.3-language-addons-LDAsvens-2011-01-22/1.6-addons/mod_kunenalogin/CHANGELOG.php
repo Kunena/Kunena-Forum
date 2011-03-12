@@ -27,6 +27,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaLogin 1.6.2
+12-March-2011 svens(LDA)
++ [#24847] update nb-NO (thanks Joomla i Norge)
+^ [#24847] update ru-RU (thanks Zarkos)
+
 20-February-2011 svens(LDA)
 ^ [#24847] update hu-HU (thanks pedrohsi)
 

@@ -106,6 +106,9 @@
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 		<copy file="${project_dir}/plg_jxfinder_kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy todir="${tmp_dir}/languages" overwrite="true" filtering="true" >
+			<fileset dir="${project_dir}/languages" />
+		</copy>
 	</target>
 
 	<target name="tar" depends="package" if="do.tar">

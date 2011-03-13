@@ -13,21 +13,21 @@
 defined( '_JEXEC' ) or die();
 
 jimport ( 'joomla.version' );
-$jversion = new JVersion ();
-if ($jversion->RELEASE != '1.5') return;
 
 // This isn't called because of redirect
 $this->parent->copyManifest();
 
 function com_install() {
 	if (version_compare ( phpversion (), '5.0.0', '<' )) {
-		echo "PHP 5.2 REQUIRED!";
+		echo "ERROR: PHP 5.2 REQUIRED!";
 		return false;
 	}
 
 	$jversion = new JVersion ();
-	if ($jversion->RELEASE != '1.5') return;
-	ignore_user_abort ( true );
+	if ($jversion->RELEASE != '1.5') {
+		echo "ERROR: WRONG MANIFEST FILE LOADED, PLEASE TRY AGAIN WITH THE LATEST VERSION OF JOOMLA!";
+		return false;
+	}
 
 	// Emulate J1.6 installer
 	include_once(dirname(__FILE__).'/install.script.php');

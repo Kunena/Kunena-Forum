@@ -37,11 +37,10 @@ class KunenaApp {
 		jimport( 'joomla.error.profiler' );
 		$__kstarttime = JProfiler::getmicrotime();
 
-		kimport('error');
 		$kunena_config = KunenaFactory::getConfig ();
-		if ($kunena_config->debug) {
-			KunenaError::initialize();
-		}
+		
+		kimport('error');
+		KunenaError::initialize();
 
 // First of all take a profiling information snapshot for JFirePHP
 if(JDEBUG){
@@ -57,7 +56,7 @@ $format = JRequest::getCmd ( 'format', 'html' );
 require_once(KUNENA_PATH . DS . 'router.php');
 if ($func && !isset(KunenaRouter::$functions[$func])) {
 	// If func is not legal, raise joomla error
-	return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
+	return JError::raiseError( 404, 'Kunena function "' . $func . '" not found' );
 }
 
 $kunena_app = JFactory::getApplication ();

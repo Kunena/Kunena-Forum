@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+13-March-2011 Matias
++ [#25326] Implement improved PHP error handlers (backport from K2.0)
+
 11-March-2011 Severdia
 ^ [#25296] Optimized images showing up as not fully optimized in Page Speed
 # [#25299] Fixed missing active menu for Atomic under Joomla 1.6

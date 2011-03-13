@@ -31,6 +31,14 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+13-March-2011 Matias
+^ [#22569] KunenaError: Make Internal Server Error page to validate
+# [#22569] KunenaError: Fix broken file path in Windows
++ [#22569] KunenaError: Add fatal error extension detection (where it happened)
+
+12-March-2011 810
+^ [#22569] KunenaError: Add template
+
 12-March-2011 Matias
 - [#22570] Get rid of all deprecated defines and remove lib/kunena.defines.php
 + [#22569] Add new class KunenaDate and convert code to use it

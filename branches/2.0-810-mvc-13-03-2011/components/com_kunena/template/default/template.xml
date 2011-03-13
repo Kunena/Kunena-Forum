@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<kinstall type="kunena-template" version="1.6">
+	<name>Blue Eagle (default)</name>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>team@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>Kunena Team</copyright>
+	<license>GNU/GPL</license>
+	<description>COM_KUNENA_TEMPLATE_DEFAULT_TEMPLATE_DESC</description>
+	<thumbnail>template_thumbnail.png</thumbnail>
+	<params>
+		<param name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
+			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
+			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
+			<option value="right">COM_KUNENA_TEMPLATE_RIGHT</option>
+			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
+		</param>
+		<param name="buttonIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_BUTTON_SET" description="COM_KUNENA_TEMPLATE_BUTTON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+			<option value="bluebird">COM_KUNENA_TEMPLATE_BUTTON_SET_BLUEBIRD</option>
+			<option value="graybird">COM_KUNENA_TEMPLATE_BUTTON_SET_GRAYBIRD</option>
+			<option value="blackbird">COM_KUNENA_TEMPLATE_BUTTON_SET_BLACKBIRD</option>
+			<option value="whitebird">COM_KUNENA_TEMPLATE_BUTTON_SET_WHITEBIRD</option>
+		</param>
+		<param name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET" description="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+		</param>
+		<param name="editorIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET" description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+		</param>
+		<param name="forumHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_FORUM_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="announcementHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="announcementBoxbgcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_BOX_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="frontstatsHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="whoisonlineHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_WHOISONLINE_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		
+		<param name="inactiveTabcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR_DESC" />
+		<param name="activeTabcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR_DESC" />
+		<param name="hoverTabcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR" description="COM_KUNENA_TEMPLATE_HOVER_TAB_COLOR_DESC" />
+		<param name="topBordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR_DESC" />
+		<param name="inactiveFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC" />
+		<param name="activeFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
+		<param name="toggleButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" description="COM_KUNENA_TEMPLATE_TOGGLER_COLOR_DESC" />
+		
+		<param name="enableSkinner" type="radio" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
+			<option value="0">COM_KUNENA_A_NO</option>
+			<option value="1">COM_KUNENA_A_YES</option>
+		</param>
+
+		<param name="templatebyText" type="hidden" default="" />
+		<param name="templatebyName" type="hidden" default="" />
+		<param name="templatebyLink" type="hidden" default="" />
+		
+		<!-- Required avatar sizes -->
+		<param name="avatarSizeXThumb" type="hidden" default="36" />
+		<param name="avatarSizeYThumb" type="hidden" default="36" />
+		<param name="avatarSizeXWelcome" type="hidden" default="72" />
+		<param name="avatarSizeYWelcome" type="hidden" default="72" />
+		<param name="avatarSizeXList" type="hidden" default="36" />
+		<param name="avatarSizeYList" type="hidden" default="36" />
+		<param name="avatarSizeXPost" type="hidden" default="144" />
+		<param name="avatarSizeYPost" type="hidden" default="144" />
+		<param name="avatarSizeXProfile" type="hidden" default="200" />
+		<param name="avatarSizeYProfile" type="hidden" default="200" />
+	</params>
+</kinstall>

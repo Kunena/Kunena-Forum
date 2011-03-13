@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id$ -->
+<!DOCTYPE install>
+<install type="component" version="1.5.0" method="upgrade">
+	<name>Kunena</name>
+	<version>2.0.0-DEV</version>
+	<versionname>Spika</versionname>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>(C) 2008 - 2011 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPL</license>
+	<description>Kunena Forum</description>
+	<installfile>install/install.kunena.php</installfile>
+	<uninstallfile>install/uninstall.kunena.php</uninstallfile>
+	<files>
+		<filename>kunena.php</filename>
+		<filename>router.php</filename>
+		<filename>CHANGELOG.php</filename>
+		<filename>COPYRIGHT.php</filename>
+	</files>
+	<administration>
+		<menu task="cpanel" img="components/com_kunena/media/icons/favicons/kunena.png">COM_KUNENA</menu>
+		<submenu>
+			<menu view="config" img="components/com_kunena/media/icons/favicons/config.png">COM_KUNENA_CONFIGURATION</menu>
+			<menu view="categories" img="components/com_kunena/media/icons/favicons/categories.png">COM_KUNENA_CATEGORY_MANAGER</menu>
+			<menu view="users" img="components/com_kunena/media/icons/favicons/users.png">COM_KUNENA_USER_MANAGER</menu>
+			<menu view="templates" img="components/com_kunena/media/icons/favicons/templates.png">COM_KUNENA_TEMPLATE_MANAGER</menu>
+			<menu view="smilies" img="components/com_kunena/media/icons/favicons/smileys.png">COM_KUNENA_EMOTICON_MANAGER</menu>
+			<menu view="ranks" img="components/com_kunena/media/icons/favicons/ranks.png">COM_KUNENA_RANK_MANAGER</menu>
+			<menu view="tras" img="components/com_kunena/media/icons/favicons/trash.png">COM_KUNENA_TRASH_MANAGER</menu>
+		</submenu>
+		<files>
+			<filename>api.php</filename>
+			<filename>admin.kunena.php</filename>
+			<folder>install</folder>
+			<folder>archive</folder>
+		</files>
+	</administration>
+</install>

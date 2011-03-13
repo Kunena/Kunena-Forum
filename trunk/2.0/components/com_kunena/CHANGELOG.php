@@ -35,6 +35,7 @@ Kunena 2.0.0-DEV
 ^ [#22569] KunenaError: Make Internal Server Error page to validate
 # [#22569] KunenaError: Fix broken file path in Windows
 + [#22569] KunenaError: Add fatal error extension detection (where it happened)
+# [#22569] KunenaError: Do not show support link when file path doesn't contain 'kunena'
 
 12-March-2011 810
 ^ [#22569] KunenaError: Add template

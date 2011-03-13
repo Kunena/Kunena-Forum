@@ -137,10 +137,10 @@ function installSampleData()
 	foreach ($queries as $query)
 	{
 		// Only insert sample/default data if table is empty
-		$db->setQuery("SELECT COUNT(*) FROM ".$db->nameQuote($db->getPrefix().$query[0]));
-		$count = $db->loadResult();
+		$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$query[0]));
+		$filled = $db->loadObject(0,1);
 
-		if (!$count) {
+		if (!$filled) {
 			$db->setQuery($query[1]);
 			$db->query();
 			if ($db->getErrorNum ())

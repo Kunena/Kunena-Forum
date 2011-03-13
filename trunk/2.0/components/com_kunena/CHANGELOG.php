@@ -38,6 +38,7 @@ Kunena 2.0.0-DEV
 # [#22569] KunenaError: Do not show support link when file path doesn't contain 'kunena'
 ^ [#22569] Joomla debug should enable also Kunena debug mode
 # [#23443] Installer: make installation more robust against MySQL timeouts
++ [#23442] Installer: Optimize away COUNT(*) in sampledata (too slow on 2M posts)
 
 12-March-2011 810
 ^ [#22569] KunenaError: Add template

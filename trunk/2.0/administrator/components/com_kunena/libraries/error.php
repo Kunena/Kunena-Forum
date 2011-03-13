@@ -83,7 +83,7 @@ class KunenaError {
 }
 
 function kunenaErrorHandler($errno, $errstr, $errfile, $errline) {
-	$debug = JDEBUG || (class_exists('KunenaFactory') ? (bool) KunenaFactory::getConfig ()->debug : true);
+	$debug = JDEBUG || (class_exists('KunenaFactory') ? (bool) KunenaFactory::getConfig ()->debug : false);
 	if (error_reporting () == 0 || !strstr($errfile, 'kunena')) {
 		return false;
 	}

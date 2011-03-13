@@ -33,6 +33,7 @@ Kunena 2.0.0-DEV
 
 12-March-2011 810
 ^ [#22569] KunenaError: Add template
+^ [#22569] KunenaError: Add template (part 2)
 
 12-March-2011 Matias
 - [#22570] Get rid of all deprecated defines and remove lib/kunena.defines.php

@@ -116,7 +116,10 @@ function kunenaErrorHandler($errno, $errstr, $errfile, $errline) {
 			break;
 	}
 
-	$errfile_short = preg_replace('%^.*?/((administrator/)?components/)%', '\\1', $errfile);
+	// Clean up file path (take also care of some symbolic links)
+	$errfile_short = strtr($errfile, '\\', '/');
+	$errfile_short = preg_replace('%'.strtr(JPATH_ROOT, '\\', '/').'/%', '\\1', $errfile_short);
+	$errfile_short = preg_replace('%^.*?/((administrator/)?(components|modules|plugins|templates)/)%', '\\1', $errfile_short);
 	if ($debug) {
 		printf ( "<br />\n<b>%s</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error, $errstr, $errfile_short, $errline );
 	}
@@ -132,38 +135,54 @@ function kunenaShutdownHandler($debug) {
 	if ($error && in_array ( $error ['type'], $types )) {
 		header('HTTP/1.1 500 Internal Server Error');
 		while(@ob_end_clean());
+		echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>500 Internal Server Error</title>
+</head>
+<body>
+';
+		echo '<div style="width:760px;margin:0 auto;text-align:center;background:#d9e2ea top left repeat-x;-webkit-border-radius:20px; -moz-border-radius:20px;border-radius:20px;">';
+		echo '<h1 style="background-color:#5388b4;color:white;padding-left:20px;-webkit-border-top-left-radius: 20px;-webkit-border-top-right-radius: 20px;
+ -moz-border-radius-topleft:20px;-moz-border-radius-topright:20px;border-top-left-radius:20px;border-top-right-radius:20px">500 Internal Server Error</h1>';
+		echo '<h2>Fatal Error was detected!</h2>';
 		if ($debug) {
-		$mask = '<div class="wrapper" style="width:760px;margin:0 auto;text-align:center;background:#d9e2ea top left repeat-x;-webkit-border-top-left-radius:20px;-webkit-border-top-right-radius:20px;
- -moz-border-radius-topleft:20px;-moz-border-radius-topright:20px;border-radius:20px;">
- 		<h1  style="background-color:#5388b4;color:white;padding-left:20px;-webkit-border-top-left-radius: 20px;-webkit-border-top-right-radius: 20px;
- -moz-border-radius-topleft:20px;-moz-border-radius-topright:20px;border-top-left-radius:20px;border-top-right-radius:20px;
- "><span>Error: 500</span></a></h1>';
-				printf ($mask ."<b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error ['message'], $error ['file'], $error ['line'] );
-				$maskend ='<div class="header" style="background: url(administrator/components/com_kunena/images/error.png) center no-repeat; margin-top:-80px;">
-					<h2 style="padding-top:260px;">For support click here: <p><a href="http://www.kunena.org/forum">Kunena Support</a></p> </h2>
-				</div>
-				<div class="content">
-					<hr />
-					<p ><a href="javascript:history.go(-1)">Go back</a> </a></p>
-					<p> Copyright 2008-2011 Kunena, License: GNU GPL</p>
-				</div>';
-			printf ($maskend);
+			// Clean up file path (take also care of some symbolic links)
+			$errfile_short = strtr($error ['file'], '\\', '/');
+			$errfile_short = preg_replace('%'.strtr(JPATH_ROOT, '\\', '/').'/%', '\\1', $errfile_short);
+			$errfile_short = preg_replace('%^.*?/((administrator/)?(components|modules|plugins|templates)/)%', '\\1', $errfile_short);
+			printf ("<p><b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b></p>", $error ['message'], $errfile_short, $error ['line'] );
+			$parts = explode('/', $errfile_short);
+			$dir = (string) array_shift($parts);
+			if ($dir == 'administrator') $dir = (string) array_shift($parts);
+			$extension = strtr((string) array_shift($parts), '_', ' ');
+			switch ($dir) {
+				case 'components';
+					$extension = ucwords(substr($extension,4)).' Component';
+					break;
+				case 'modules';
+					$extension = ucwords(substr($extension,4)).' Module';
+					break;
+				case 'plugins';
+					$plugin = preg_replace('/\.php/', '', strtr((string) array_shift($parts), '_', ' '));
+					$extension = ucwords($extension).' - '.ucwords($plugin).' Plugin';
+					break;
+				case 'templates';
+					$extension = ucwords($extension).' Template';
+					break;
+				default:
+					$extension = ucwords($dir);
+			}
+			echo "<p>The error was detected in the <b>{$extension}</b>.</p>";
+			echo '<p>For support click here: <a href="http://www.kunena.org/forum">Kunena Support</a></p>';
 		} else {
-			$mask = '<div class="wrapper" style="width:760px;margin:0 auto;text-align:center;background:#d9e2ea top left repeat-x;-webkit-border-top-left-radius:20px;-webkit-border-top-right-radius:20px;
- -moz-border-radius-topleft:20px;-moz-border-radius-topright:20px;border-radius:20px;">
-			<h1  style="background-color:#5388b4;color:white;padding-left:20px;-webkit-border-top-left-radius: 20px;-webkit-border-top-right-radius: 20px;
- -moz-border-radius-topleft: 20px;-moz-border-radius-topright:20px;border-top-left-radius:20px;border-top-right-radius:20px;
- "><span>Error: 500</span></a></h1>
-				<div class="header" style="background: url(administrator/components/com_kunena/images/error.png) center no-repeat; margin-top:-60px;">
-					<h2 style="padding-top:260px;">Oops, there is an error on the forum</h2>
-					<h3>Please contact the site owner.</h3>
-				</div>
-				<div class="content">
-					<hr />
-					<p ><a href="javascript:history.go(-1)">Go back</a> </a></p>
-					<p> Copyright 2008-2011 Kunena, License: GNU GPL</p>
-				</div>';
-			printf ($mask);
- 		}
+				echo '<p>Please contact the site owner.</p>';
+		}
+		echo '<hr /><p><a href="javascript:history.go(-1)">Go back</a></p><br />';
+		echo '</div>';
+		echo '
+</body>
+</html>';
 	}
 }

@@ -413,6 +413,8 @@ class KunenaModelInstall extends JModel {
 			}
 			$this->setTask($task+1);
 		} else {
+			// Force page reload to avoid MySQL timeouts after extracting
+			$this->checkTimeout(true);
 			if (! $this->getError ())
 				$this->setStep($this->getStep()+1);
 		}
@@ -428,6 +430,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepDatabase() {
+		kimport ('kunena.factory');
 		$task = $this->getTask();
 		switch ($task) {
 			case 0:
@@ -469,6 +472,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepFinish() {
+		kimport ('kunena.factory');
 		$entryfiles = array(
 			array(KPATH_ADMIN, 'api', 'php'),
 			array(KPATH_ADMIN, 'admin.kunena', 'php'),

@@ -36,6 +36,8 @@ Kunena 2.0.0-DEV
 # [#22569] KunenaError: Fix broken file path in Windows
 + [#22569] KunenaError: Add fatal error extension detection (where it happened)
 # [#22569] KunenaError: Do not show support link when file path doesn't contain 'kunena'
+^ [#22569] Joomla debug should enable also Kunena debug mode
+# [#23443] Installer: make installation more robust against MySQL timeouts
 
 12-March-2011 810
 ^ [#22569] KunenaError: Add template

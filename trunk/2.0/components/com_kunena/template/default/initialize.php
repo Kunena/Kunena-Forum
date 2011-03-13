@@ -197,7 +197,7 @@ function KunenaAddStyleSheet($filename) {
 	$document = JFactory::getDocument ();
 	$config = KunenaFactory::getConfig ();
 
-	if ($config->debug || KunenaForum::isSvn()) {
+	if (JDEBUG || $config->debug || KunenaForum::isSvn()) {
 		// If we are in debug more, make sure we load the unpacked css
 		$filename = preg_replace ( '/\-min\./u', '.', $filename );
 	}

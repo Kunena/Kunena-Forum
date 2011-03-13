@@ -14,9 +14,8 @@ class KunenaError {
 	static $enabled = 0;
 
 	function initialize() {
-
 		if (!self::$enabled) {
-			$debug = KunenaFactory::getConfig ()->debug;
+			$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
 			set_error_handler('kunenaErrorHandler');
 			register_shutdown_function('kunenaShutdownHandler', $debug);
 			if (!$debug) return;
@@ -36,16 +35,14 @@ class KunenaError {
 	}
 
 	function error($msg, $where='default') {
-		$config = KunenaFactory::getConfig();
-		if ($config->debug) {
+		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_ERROR_'.strtoupper($where), $msg), 'error');
 		}
 	}
 
 	function warning($msg, $where='default') {
-		$config = KunenaFactory::getConfig();
-		if ($config->debug) {
+		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_'.strtoupper($where), $msg), 'notice');
 		}
@@ -86,7 +83,7 @@ class KunenaError {
 }
 
 function kunenaErrorHandler($errno, $errstr, $errfile, $errline) {
-	$debug = class_exists('KunenaFactory') ? KunenaFactory::getConfig ()->debug : true;
+	$debug = JDEBUG || (class_exists('KunenaFactory') ? (bool) KunenaFactory::getConfig ()->debug : true);
 	if (error_reporting () == 0 || !strstr($errfile, 'kunena')) {
 		return false;
 	}

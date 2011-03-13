@@ -133,9 +133,37 @@ function kunenaShutdownHandler($debug) {
 		header('HTTP/1.1 500 Internal Server Error');
 		while(@ob_end_clean());
 		if ($debug) {
-			printf ( "<b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error ['message'], $error ['file'], $error ['line'] );
+		$mask = '<div class="wrapper" style="width:760px;margin:0 auto;text-align:center;background:#d9e2ea top left repeat-x;-webkit-border-top-left-radius:20px;-webkit-border-top-right-radius:20px;
+ -moz-border-radius-topleft:20px;-moz-border-radius-topright:20px;border-radius:20px;">
+ 		<h1  style="background-color:#5388b4;color:white;padding-left:20px;-webkit-border-top-left-radius: 20px;-webkit-border-top-right-radius: 20px;
+ -moz-border-radius-topleft:20px;-moz-border-radius-topright:20px;border-top-left-radius:20px;border-top-right-radius:20px;
+ "><span>Error: 500</span></a></h1>';
+				printf ($mask ."<b>Fatal Error</b>: %s in <b>%s</b> on line <b>%d</b><br /><br />\n", $error ['message'], $error ['file'], $error ['line'] );
+				$maskend ='<div class="header" style="background: url(administrator/components/com_kunena/images/error.png) center no-repeat; margin-top:-80px;">
+					<h2 style="padding-top:260px;">For support click here: <p><a href="http://www.kunena.org/forum">Kunena Support</a></p> </h2>
+				</div>
+				<div class="content">
+					<hr />
+					<p ><a href="javascript:history.go(-1)">Go back</a> </a></p>
+					<p> Copyright 2008-2011 Kunena, License: GNU GPL</p>
+				</div>';
+			printf ($maskend);
 		} else {
-			echo "Fatal Error";
-		}
+			$mask = '<div class="wrapper" style="width:760px;margin:0 auto;text-align:center;background:#d9e2ea top left repeat-x;-webkit-border-top-left-radius:20px;-webkit-border-top-right-radius:20px;
+ -moz-border-radius-topleft:20px;-moz-border-radius-topright:20px;border-radius:20px;">
+			<h1  style="background-color:#5388b4;color:white;padding-left:20px;-webkit-border-top-left-radius: 20px;-webkit-border-top-right-radius: 20px;
+ -moz-border-radius-topleft: 20px;-moz-border-radius-topright:20px;border-top-left-radius:20px;border-top-right-radius:20px;
+ "><span>Error: 500</span></a></h1>
+				<div class="header" style="background: url(administrator/components/com_kunena/images/error.png) center no-repeat; margin-top:-60px;">
+					<h2 style="padding-top:260px;">Oops, there is an error on the forum</h2>
+					<h3>Please contact the site owner.</h3>
+				</div>
+				<div class="content">
+					<hr />
+					<p ><a href="javascript:history.go(-1)">Go back</a> </a></p>
+					<p> Copyright 2008-2011 Kunena, License: GNU GPL</p>
+				</div>';
+			printf ($mask);
+ 		}
 	}
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Id$ -->
+<!DOCTYPE install>
+<install type="language" version="1.5" client="administrator" method="upgrade">
+	<name>Kunena Forum - Norwegian</name>
+	<tag>nb-NO</tag>
+	<creationDate>31-01-2011</creationDate>
+	<version>1.6.3</version>
+	<build>4344</build>
+	<author>Joomla! i Norge</author>
+	<authorEmail>oversettelser@joomlainorge.no</authorEmail>
+	<authorUrl>http://www.joomlainorge.no</authorUrl>
+	<copyright>(C) 2008 - 2011 Kunena Team All rights reserved</copyright>
+	<license>GNU/GPL</license>
+	<description>Norwegian language file for Kunena Forum Component</description>
+	<files>
+		<filename>nb-NO.com_kunena.ini</filename>
+		<filename>nb-NO.com_kunena.install.ini</filename>
+		<filename>nb-NO.com_kunena.menu.ini</filename>
+		<filename>nb-NO.com_kunena.sys.ini</filename>
+	</files>
+</install>

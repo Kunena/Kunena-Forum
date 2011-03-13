@@ -80,8 +80,8 @@ $this->addStyleSheet ( 'css/kunena.manage.css' );
 		$i = -1;
 		$j = 0;
 		$n = count($this->categories);
-		$img_yes = '<img src="images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
-		$img_no = '<img src="images/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
+		$img_yes = '<img src="'.JURI::root().'components/com_kunena/template/default/images/icons/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
+		$img_no = '<img src="'.JURI::root().'components/com_kunena/template/default/images/icons/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
 		foreach($this->categories as $category) {
 	?>
 		<tr <?php echo 'class = "row' . $k . '"';?>>
@@ -156,7 +156,11 @@ $this->addStyleSheet ( 'css/kunena.manage.css' );
 			<td></td>
 			<td></td>
 			<?php else: ?>
-			<td class="kcenter"><?php echo JHTML::_('grid.published', $category, $i) ?></td>
+			<td class="kcenter">
+				<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->published ? 'unpublish':'publish') ?>')">
+					<?php echo ($category->published == 1 ? $img_yes : $img_no); ?>
+				</a>
+			</td>
 			<td width="" class="kcenter"><?php echo $this->escape ( $category->pub_group ); ?></td>
 			<td width="" class="kcenter"><?php echo $this->escape ( $category->admin_group ); ?></td>
 			<td width="15%" class="kcenter"><?php echo $this->escape ( $category->editor ); ?></td>

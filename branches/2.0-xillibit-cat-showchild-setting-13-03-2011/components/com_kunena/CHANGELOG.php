@@ -33,6 +33,7 @@ Kunena 2.0.0-DEV
 
 13-March-2011 Xillibit
 + [#25323] Configuration setting in categories to show childs categories or not
+# [#25323] Icons tick and unpublished not displayed in categories manager
 
 13-March-2011 Matias
 ^ [#22569] KunenaError: Make Internal Server Error page to validate

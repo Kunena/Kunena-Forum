@@ -168,6 +168,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 				$category->admin_recurse = 1;
 				$category->pub_access = 0;
 				$category->moderated = 1;
+				$category->showchild = 1;
 			}
 			$this->_admincategory = $category;
 		}
@@ -246,6 +247,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$lists ['allow_polls'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $category->allow_polls );
 		$lists ['allow_anonymous'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->allow_anonymous );
 		$lists ['post_anonymous'] = JHTML::_ ( 'select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->post_anonymous );
+		$lists ['showchild'] = JHTML::_ ( 'select.genericlist', $yesno, 'showchild', 'class="inputbox" size="1"', 'value', 'text', $category->showchild );
 		return $lists;
 	}
 

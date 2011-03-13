@@ -135,6 +135,11 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 						</tr>
 						<?php endif; ?>
+						<tr>
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_CHILD_DISPLAYED'); ?>:</td>
+							<td valign="top"><?php echo $this->options ['showchild']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_CHILD_DISPLAYED_DESC'); ?></td>
+						</tr>
 					</table>
 				</fieldset>
 

@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+13-March-2011 Xillibit
++ [#25323] Configuration setting in categories to show childs categories or not
+
 13-March-2011 Matias
 ^ [#22569] KunenaError: Make Internal Server Error page to validate
 # [#22569] KunenaError: Fix broken file path in Windows

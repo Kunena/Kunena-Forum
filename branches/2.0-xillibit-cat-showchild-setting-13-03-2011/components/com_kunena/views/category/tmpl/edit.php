@@ -34,7 +34,7 @@ function submitbutton(pressbutton)
 
 	<div class="kcontainer">
 		<div class="kbody">
-		<form action="<? echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" method="post" name="adminForm">
 		<input type="hidden" name="task" value="save" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
 		<?php echo JHTML::_( 'form.token' ); ?>
@@ -141,6 +141,11 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 						</tr>
 						<?php endif; ?>
+						<tr>
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_CHILD_DISPLAYED'); ?>:</td>
+							<td valign="top"><?php echo $this->options ['showchild']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_CHILD_DISPLAYED_DESC'); ?></td>
+						</tr>
 					</table>
 				</fieldset>
 

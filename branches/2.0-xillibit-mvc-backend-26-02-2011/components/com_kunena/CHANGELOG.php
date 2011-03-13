@@ -33,6 +33,7 @@ Kunena 2.0.0-DEV
 
 11-March-2011 Xillibit
 ^ [#24395] Backend in MVC (improve trash manager)
+^ [#24395] Backend in MVC (improve trash manager) (Part 2)
 
 05-March-2011 Xillibit
 ^ [#24395] Show version check in cpanel and prune has now an option to trash or delete topics

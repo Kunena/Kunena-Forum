@@ -41,7 +41,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.trash.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.trash.list.ordering', 'filter_order', 'ordering', 'cmd' );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.trash.list.ordering', 'filter_order', 'id', 'cmd' );
 		$this->setState ( 'list.ordering', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.trash.list.start", 'limitstart', 0, 'int' );
@@ -66,23 +66,13 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * @since	1.6
 	 */
 	 public function getMessagesItems() {
-	 	kimport('kunena.error');
-		$kunena_db = JFactory::getDBO ();
-
-		$orderby = '';
-		if ( $this->getState('list.ordering') && $this->getState('list.direction') )	$orderby = ' ORDER BY '. $this->getState('list.ordering') .' '. $this->getState('list.direction');
-
-		$where 	= ' WHERE hold=2 ';
-		$query = 'SELECT a.*, b.name AS cats_name, c.username FROM #__kunena_messages AS a
-		INNER JOIN #__kunena_categories AS b ON a.catid=b.id
-		LEFT JOIN #__users AS c ON a.userid=c.id'
-		.$where
-		.$orderby;
-
-		$kunena_db->setQuery ( $query );
-		$messages = $kunena_db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
+		$cats = KunenaForumCategoryHelper::getCategories();
+		$cats_array =array();
+		foreach ($cats as $cat) {
+			if ( $cat->id ) $cats_array[] = $cat->id;
+		}
+		list($total,$messages) = KunenaForumMessageHelper::getLatestMessages($cats_array, $this->getState('list.start'), $this->getState('list.limit'), array ('hold' => '2,3'));
+		$this->setState ( 'list.total', $total );
 		return $messages;
 	}
 
@@ -92,9 +82,23 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * @return	Array
 	 * @since	1.6
 	 */
-	 public function getTopicsItems() {
-		return array();
-	 }
+	public function getTopicsItems() {
+		/*$db = JFactory::getDBO ();
+		$where = '';
+		if ($this->getState ( 'list.search')) {
+			$where = ' AND LOWER( subject ) LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR LOWER( username )LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false );
+		}*/
+
+		$cats = KunenaForumCategoryHelper::getCategories();
+		$cats_array =array();
+		foreach ($cats as $cat) {
+			if ( $cat->id ) $cats_array[] = $cat->id;
+		}
+		list($total,$topics) = KunenaForumTopicHelper::getLatestTopics ( $cats_array, $this->getState('list.start'), $this->getState('list.limit'), array ('hold' => '2,3') );
+		$this->setState ( 'list.total', $total );
+
+		return $topics;
+	}
 
 	/**
 	 * Method to get details on selected items.

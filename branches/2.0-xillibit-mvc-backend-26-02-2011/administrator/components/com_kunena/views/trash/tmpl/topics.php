@@ -43,10 +43,13 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'subject', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'cats_name', $this->state->get('list.direction'), $this->state->get('list.ordering'));
+					echo JText::_('COM_KUNENA_TRASH_CATEGORY');
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering'));
+					echo JText::_('COM_KUNENA_TRASH_LAST_MESSAGE');
+					?></th>
+					<th align="left" ><?php
+					echo JText::_('COM_KUNENA_TRASH_IP');
 					?></th>
 					<th align="left" ><?php
 					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR_USERID', 'userid', $this->state->get('list.direction'), $this->state->get('list.ordering'));
@@ -61,7 +64,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 			</thead>
 			<tfoot>
 				<tr>
-					<td colspan="9">
+					<td colspan="10">
 						<div class="pagination">
 							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $this->navigation->getLimitBox (); ?></div>
 							<?php echo $this->navigation->getPagesLinks (); ?>
@@ -92,30 +95,32 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 						onclick="isChecked(this.checked);" /></td>
 					<td >
 						<?php
-						echo kescape($row->id);
+						echo $this->escape($row->id);
 						?>
 						</td>
 					<td ><?php
-						echo kescape($row->subject);
+						echo $this->escape($row->subject);
+						?></td>
+					<td ><?php $cat = KunenaForumCategoryHelper::get($row->category_id);
+						echo $this->escape($cat->name);
 						?></td>
 					<td ><?php
-						echo kescape($row->cats_name);
+						echo $this->escape($row->last_post_message);
+						?></td>
+					<td><?php $message = KunenaForumMessageHelper::get($row->id);
+						echo $message->ip; ?></td>
+					<td ><?php
+						echo $this->escape($row->last_post_userid);
 						?></td>
 					<td ><?php
-						echo kescape($row->ip);
-						?></td>
-					<td ><?php
-						echo kescape($row->userid);
-						?></td>
-					<td ><?php
-						if(empty($row->username)){
+						if(empty($row->last_post_userid)){
 							echo JText::_('COM_KUNENA_VIEW_VISITOR');
 						} else {
-							echo kescape($row->username);
+							echo $this->escape($row->last_post_guest_name);
 						}
 						?></td>
 					<td ><?php
-						echo strftime('%Y-%m-%d %H:%M:%S',$row->time);
+						echo strftime('%Y-%m-%d %H:%M:%S',$row->last_post_time);
 						?></td>
 				</tr>
 				<?php

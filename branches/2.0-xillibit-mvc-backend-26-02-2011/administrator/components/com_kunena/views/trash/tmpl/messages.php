@@ -16,7 +16,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-trash"><?php echo JText::_('COM_KUNENA_TRASH_VIEW').' '.JText::_( 'COM_KUNENA_TRASH_MESSAGES'  ?></div>
+	<div class="kadmin-functitle icon-trash"><?php echo JText::_('COM_KUNENA_TRASH_VIEW').' '.JText::_( 'COM_KUNENA_TRASH_MESSAGES') ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" class="adminform">
 			<table class="kadmin-sort">
 				<tr>
@@ -43,7 +43,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'subject', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'cats_name', $this->state->get('list.direction'), $this->state->get('list.ordering'));
+					echo JText::_('COM_KUNENA_TRASH_CATEGORY');
 					?></th>
 					<th align="left" ><?php
 					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_IP', 'ip', $this->state->get('list.direction'), $this->state->get('list.ordering'));
@@ -98,8 +98,8 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					<td ><?php
 						echo $this->escape($row->subject);
 						?></td>
-					<td ><?php
-						echo $this->escape($row->cats_name);
+					<td ><?php $cat = KunenaForumCategoryHelper::get($row->catid);
+						echo $this->escape($cat->name);
 						?></td>
 					<td ><?php
 						echo $this->escape($row->ip);

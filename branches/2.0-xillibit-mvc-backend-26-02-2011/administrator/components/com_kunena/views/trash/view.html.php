@@ -17,9 +17,6 @@ kimport ( 'kunena.view' );
  */
 class KunenaAdminViewTrash extends KunenaView {
 	function display() {
-		$app = JFactory::getApplication();
-		$app->enqueueMessage('Trash Manager is under construction and does not work yet!', 'error');
-		return ' ';
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		switch ($this->getLayout ()) {
 			case 'purge' :
@@ -27,8 +24,15 @@ class KunenaAdminViewTrash extends KunenaView {
 				$this->setToolBarPurge();
 				break;
 			case 'default' :
-			   $this->displayDefault ();
 				$this->setToolBarDefault();
+				break;
+			case 'messages' :
+				$this->displayMessages ();
+				$this->setToolBarMessages();
+				break;
+			case 'topics' :
+				$this->displayTopics ();
+				$this->setToolBarTopics();
 				break;
 		}
 		parent::display ();
@@ -38,11 +42,6 @@ class KunenaAdminViewTrash extends KunenaView {
 		$this->purgeitems = $this->get('PurgeItems');
 		$this->md5Calculated = $this->get('Md5');
 	}
-
-	function displayDefault() {
-		$this->items = $this->get('Items');
-		$this->navigation = $this->get ( 'Navigation' );
-  }
 
 	protected function setToolBarPurge() {
 		// Set the titlebar text
@@ -56,9 +55,37 @@ class KunenaAdminViewTrash extends KunenaView {
 		// Set the titlebar text
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
+	}
+
+	function displayTopics () {
+		$this->topics = $this->get('TopicsItems');
+		$this->navigation = $this->get ( 'Navigation' );
+	}
+
+	protected function setToolBarTopics() {
+		// Set the titlebar text
+		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::spacer();
 		JToolBarHelper::custom('restore','restore.png','restore_f2.png', 'COM_KUNENA_TRASH_RESTORE');
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('purge','trash.png','trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
 		JToolBarHelper::spacer();
+		JToolBarHelper::cancel('trash');
+	}
+
+	function displayMessages () {
+		$this->messages = $this->get('MessagesItems');
+		$this->navigation = $this->get ( 'Navigation' );
+	}
+
+	protected function setToolBarMessages() {
+		// Set the titlebar text
+		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('restore','restore.png','restore_f2.png', 'COM_KUNENA_TRASH_RESTORE');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('purge','trash.png','trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel('trash');
 	}
 }

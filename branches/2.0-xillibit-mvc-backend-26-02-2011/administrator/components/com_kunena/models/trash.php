@@ -12,6 +12,8 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
 kimport('kunena.model');
+kimport('kunena.forum.topic.helper');
+kimport('kunena.forum.message.helper');
 
 /**
  * Trash Model for Kunena
@@ -58,40 +60,41 @@ class KunenaAdminModelTrash extends KunenaModel {
 	}
 
 	/**
-	 * Method to get all deleted items.
+	 * Method to get all deleted messages.
 	 *
 	 * @return	Array
 	 * @since	1.6
 	 */
-	 public function getItems() {
+	 public function getMessagesItems() {
 	 	kimport('kunena.error');
-		$kunena_db = &JFactory::getDBO ();
-		// FIXME: use library
-		// FYI: we have now topics and messages
-		// Both topics and messages can be either deleted or unapproved
-		// Visible topics can have deleted messages in them
-		// In deleted topics there can be messages that have been deleted individually (which should remain deleted when topic gets restored)
-		// So having just one trash manager isn't enough
-		// We need to be able restore both topics (with all deleted messages) and individual messages
-		// For that we need to have views for both topics and messages
-		// Talk with Matias
+		$kunena_db = JFactory::getDBO ();
 
 		$orderby = '';
 		if ( $this->getState('list.ordering') && $this->getState('list.direction') )	$orderby = ' ORDER BY '. $this->getState('list.ordering') .' '. $this->getState('list.direction');
 
-		$where 	= ' WHERE hold=3 ';
+		$where 	= ' WHERE hold=2 ';
 		$query = 'SELECT a.*, b.name AS cats_name, c.username FROM #__kunena_messages AS a
 		INNER JOIN #__kunena_categories AS b ON a.catid=b.id
 		LEFT JOIN #__users AS c ON a.userid=c.id'
 		.$where
-		.orderby;
+		.$orderby;
 
 		$kunena_db->setQuery ( $query );
-		$trashitems = $kunena_db->loadObjectList ();
+		$messages = $kunena_db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
-		return $trashitems;
+		return $messages;
 	}
+
+	/**
+	 * Method to get all deleted topics.
+	 *
+	 * @return	Array
+	 * @since	1.6
+	 */
+	 public function getTopicsItems() {
+		return array();
+	 }
 
 	/**
 	 * Method to get details on selected items.
@@ -101,14 +104,22 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 */
 	public function getPurgeItems() {
 		kimport('kunena.error');
-		$kunena_db = &JFactory::getDBO ();
-		$ids = $this->getState ( 'com_kunena.purge' );
+
+		$app = JFactory::getApplication ();
+
+		$ids = $app->getUserState ( 'com_kunena.purge' );
+		$topic = $app->getUserState('com_kunena.topic');
+		$message = $app->getUserState('com_kunena.message');
 
 		$ids = implode ( ',', $ids );
-		// FIXME: new logic needed
-		$kunena_db->setQuery ( "SELECT * FROM #__kunena_messages WHERE hold=2 AND id IN ($ids)");
-		$items = $kunena_db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+
+		if ( $topic ) {
+			$items = KunenaForumTopicHelper::getTopics($ids);
+		} elseif ( $message ) {
+			$items = KunenaForumMessageHelper::getMessages($ids);
+		} else {
+
+		}
 
 		return $items;
 	}
@@ -120,7 +131,8 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * @since	1.6
 	 */
 	public function getMd5() {
-		$ids = $this->getState ( 'com_kunena.purge' );
+		$app = JFactory::getApplication ();
+		$ids = $app->getUserState ( 'com_kunena.purge' );
 
 		return md5(serialize($ids));
 	}

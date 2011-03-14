@@ -33,6 +33,9 @@ Legend:
 Kunena 1.6.4-DEV
 
 13-March-2011 Severdia
+# [#25335] Fixed Javascripts errors in IE compatibility mode. (thanks to srebbul)
+
+13-March-2011 Severdia
 # [#25329] Fixed missing style for search page header (from template param)
 
 13-March-2011 Matias

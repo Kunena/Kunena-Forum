@@ -26,10 +26,15 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-MyKunena 1.6.3-DEV
+MyKunena 1.6.4
+
+14-March-2011 Matias
+^ [#19002] Updated version to 1.6.4
+
+12-March-2011 svens(LDA)
++ [#24847] add nb-NO (thanks Joomla i Norge)
 
 17-February-2011 Matias
-^ [#19002] Updated version to 1.6.3-DEV
 # [#24959] Always initialize session if allowed=na
 
 MyKunena 1.6.0-RC2

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: COPYRIGHT.php 3548 2010-09-21 20:10:20Z mahagr $
+* @version $Id$
 * KunenaGroups Plugin for JomSocial
 * @package plg_jomsocial_kunenagroups
 *

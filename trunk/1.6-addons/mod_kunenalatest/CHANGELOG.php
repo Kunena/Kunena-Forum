@@ -28,10 +28,15 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaLatest 1.6.4-DEV
+KunenaLatest 1.6.4
+
+14-March-2011 Matias
+^ [#24415] Update version to 1.6.4
+
+12-March-2011 svens(LDA)
+^ [#24847] update ru-RU (thanks Zarkos)
 
 9-March-2011 Matias
-^ [#24415] Update version to 1.6.4-DEV
 - [#24415] Remove category subscriptions option (doesn't work)
 ^ [#24415] Add 3 minute caching for guests
 ^ [#24415] Fixed all languages to show right version when installing

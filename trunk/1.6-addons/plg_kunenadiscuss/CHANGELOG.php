@@ -29,11 +29,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena Discuss Plugin 1.6.4-DEV
+Kunena Discuss Plugin 1.6.4
+
+14-March-2011 Matias
+^ [#25215] Update version to 1.6.4
 
 8-March-2011 Matias
 # [#25215] Fix a few PHP Notices
-^ [#25215] Update version to 1.6.4-DEV
 ^ [#25215] Fixed all languages to show right version when installing
 
 7-March-2011 Matias
@@ -47,6 +49,10 @@ Kunena Discuss Plugin 1.6.4-DEV
 ^ [#20084] Change version to 1.6.3-DEV
 
 Kunena Discuss Plugin 1.6.2
+12-March-2011 svens(LDA)
++ [#24847] add nb-NO (thanks Joomla i Norge)
++ [#24847] add fi-FI (thanks Mortti)
+
 20-February-2011 svens(LDA)
 ^ [#24847] update hu-HU (thanks pedrohsi)
 

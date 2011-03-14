@@ -1,5 +1,5 @@
 /**
-* @version $Id: README.txt 3548 2010-09-21 20:10:20Z mahagr $
+* @version $Id$
 * Kunena Groups Plugin for JomSocial
 * @package plg_jomsocial_kunenagroups
 * @Copyright (C) 2009-2010 Kunena All rights reserved

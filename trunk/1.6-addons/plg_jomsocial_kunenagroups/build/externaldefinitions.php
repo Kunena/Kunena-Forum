@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: externaldefinitions.php 3911 2010-11-16 11:08:21Z mahagr $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

@@ -27,10 +27,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-JomsocialKunenaMenu 1.6.3-DEV
+JomsocialKunenaMenu 1.6.4
 
-17-February-2011 Matias
-^ [#19002] Updated version to 1.6.3-DEV
+14-March-2011 Matias
+^ [#19002] Updated version to 1.6.4
+
+12-March-2011 svens(LDA)
++ [#24847] add nb-NO (thanks Joomla i Norge)
+^ [#24847] update ru-RU (thanks Zarkos)
 
 JomsocialKunenaMenu 1.6.2
 

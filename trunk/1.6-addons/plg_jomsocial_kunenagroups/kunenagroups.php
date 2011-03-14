@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: kunenagroups.php 3913 2010-11-16 11:57:19Z mahagr $
+ * @version		$Id$
  * KunenaMenu Plugin for JomSocial
  * @package plg_jomsocial_kunenamenu
  * @copyright	Copyright (C) 2009 - 2010 Kunena Team. All rights reserved.

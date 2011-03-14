@@ -26,12 +26,16 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaSearch 1.6.3-DEV
+KunenaSearch 1.6.4
+
+14-March-2011 Matias
+^ [#20138] Updated version info 1.6.4
+
+6-March-2011 svens(LDA)
+^ [#24847] update nb-NO (thanks Joomla! i Norge)
 
 17-February-2011 Matias
 # [#24959] Always initialize session if allowed=na
-06-March-2011 svens(LDA)
-^ [#24847] update nb-NO (thanks Joomla! i Norge)
 
 18-February-2011 svens(LDA)
 ^ [#24847] update fi-FI (thanks Mortti)
@@ -41,7 +45,6 @@ KunenaSearch 1.6.3-DEV
 + [#24560] added fi-FI (thanks Mortti)
 
 2-January-2011 fxstein
-^ [#20138] Updated version info 1.6.3-DEV
 + [#23293] Load Kunena language files during init
 
 KunenaSearch 1.6.2

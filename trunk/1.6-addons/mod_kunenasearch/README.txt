@@ -1,5 +1,5 @@
 /**
-* @version $Id: README.txt 3255 2010-08-21 08:34:31Z mahagr $
+* @version $Id$
 * KunenaSearch Module
 * @package Kunena Search
 * @Copyright (C) 2010 Kunena All rights reserved

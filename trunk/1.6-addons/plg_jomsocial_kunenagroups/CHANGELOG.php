@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: CHANGELOG.php 3913 2010-11-16 11:57:19Z mahagr $
+* @version $Id$
 * Kunena Groups Support for JomSocial
 * @package plg_jomsocial_kunenagroups
 *
@@ -28,7 +28,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena Groups 1.6.3-DEV
+Kunena Groups 1.6.4
+
+14-March-2010 Matias
+^ [#22541] Update version info to 1.6.4
+
+12-March-2011 svens(LDA)
++ [#24847] languages folder
++ [#24847] add nb-NO (thanks Joomla i Norge)
 
 17-February-2011 Matias
 # [#24959] Always initialize session if allowed=na

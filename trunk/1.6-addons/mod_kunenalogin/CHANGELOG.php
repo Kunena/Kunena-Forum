@@ -26,10 +26,16 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaLogin 1.6.3-DEV
+KunenaLogin 1.6.4
+
+14-March-2011 Matias
+^ [#19002] Updated version to 1.6.4
+
+12-March-2011 svens(LDA)
++ [#24847] update nb-NO (thanks Joomla i Norge)
+^ [#24847] update ru-RU (thanks Zarkos)
 
 17-February-2011 Matias
-^ [#19002] Updated version to 1.6.3-DEV
 # [#24959] Always initialize session if allowed=na
 
 KunenaLogin 1.6.2

@@ -2,13 +2,13 @@
 <!DOCTYPE install>
 <install type="component" version="1.5.19" method="upgrade">
 	<name>KunenaImporter</name>
-	<version>1.6.0-RC2</version>
+	<version>1.6.4</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
 	<authorEmail>admin@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
-	<copyright>www.kunena.org</copyright>
+	<copyright>(c)2010-2011 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPL</license>
 	<description>Imports external forum data (phpBB3, SMF2) into Kunena Forum.</description>
 

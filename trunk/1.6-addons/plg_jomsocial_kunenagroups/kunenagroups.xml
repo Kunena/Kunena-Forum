@@ -5,16 +5,18 @@
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.com</authorEmail>
 	<authorUrl>http://www.kunena.com</authorUrl>
+	<version>1.6.4</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
-	<copyright>(c) 2009, 2010 Kunena Team, All rights reserved</copyright>
+	<copyright>(c) 2009-2011 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPL</license>
-	<version>1.6.3-DEV</version>
 	<isapplication>true</isapplication>
 	<isbrowseable>true</isbrowseable>
 	<description>PLG_COMMUNITY_KUNENAGROUPS_DESC</description>
-	<languages>
+	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_community_kunenagroups.ini</language>
+		<language tag="nb-NO">nb-NO.plg_community_kunenagroups.ini</language>
+		<language tag="ru-RU">ru-RU.plg_community_kunenagroups.ini</language>
 	</languages>
 	<files>
 		<file plugin="kunenagroups">kunenagroups.php</file>

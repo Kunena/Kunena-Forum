@@ -29,7 +29,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-JxFinder Kunena Plugin 1.6.3-DEV
+JxFinder Kunena Plugin 1.6.4
+
+14-March-2011 Matias
+^ [#24959] Changed version to 1.6.4
+
+12-March-2011 svens(LDA)
++ [#24847] add nb-NO (thanks Joomla i Norge)
 
 11-March-2011 Xillibit
 # [#24959] Add fr-FR translation for the plugin
@@ -39,7 +45,6 @@ JxFinder Kunena Plugin 1.6.3-DEV
 17-February-2011 Matias
 # [#24959] Always initialize session if allowed=na
 # [#24959] Better Kunena version detection
-^ [#24959] Changed version to 1.6.3-DEV
 
 23-January-2011 LDA(svens)
 + [#24560] added ru-RU (thanks Zarkos)

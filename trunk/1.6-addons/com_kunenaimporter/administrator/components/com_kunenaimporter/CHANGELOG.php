@@ -31,7 +31,7 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaImporter 1.6.0-RC2
+KunenaImporter 1.6.4
 
 29-November-2010 Xillibit
 # [#20178] Fixes some issues with ccBoard importer

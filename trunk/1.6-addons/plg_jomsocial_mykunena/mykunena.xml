@@ -6,9 +6,9 @@
 	<author>Kunena Team</author>
 	<authorEmail>admin@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
-	<copyright>(c)2009-2011 Kunena Team. All rights reserved</copyright>
+	<copyright>(c)2009-2011 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPL</license>
-	<version>1.6.3-DEV</version>
+	<version>1.6.4</version>
 	<build>@kunenaversionbuild@</build>
 	<isapplication>true</isapplication>
 	<isbrowseable>true</isbrowseable>
@@ -16,6 +16,7 @@
 	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_community_mykunena.ini</language>
 		<language tag="fr-FR">fr-FR.plg_community_mykunena.ini</language>
+		<language tag="nb-NO">nb-NO.plg_community_mykunena.ini</language>
 		<language tag="ru-RU">ru-RU.plg_community_mykunena.ini</language>
 	</languages>
 	<files>

@@ -3,7 +3,7 @@
 <!--
   Kunena ant build file
 
-  @version      $Id: build.xml 3256 2010-08-21 15:39:34Z mahagr $
+  @version      $Id$
   KunenaSearch Module
   @package Kunena Search
   @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.  				

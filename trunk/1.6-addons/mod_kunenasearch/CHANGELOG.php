@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: CHANGELOG.php 3904 2010-11-15 16:21:58Z mahagr $
+* @version $Id$
 * KunenaSearch Module
 * @package Kunena Search
 *
@@ -28,7 +28,16 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaSearch 1.6.3-DEV
+KunenaSearch 1.6.4
+
+14-March-2011 Matias
+^ [#22592] Update version info to 1.6.4
+
+12-March-2011 svens(LDA)
++ [#24847] add nb-NO (thanks Joomla i Norge)
+^ [#24847] added missing xml lines
+^ [#24847] update ru-RU (thanks Zarkos)
+
 18-February-2011 svens(LDA)
 + [#24847] add fi-FI (thanks Mortti)
 

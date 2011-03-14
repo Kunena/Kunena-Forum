@@ -34,6 +34,15 @@ Kunena 1.6.4-DEV
 
 13-March-2011 Matias
 + [#25326] Implement improved PHP error handlers (backport from K2.0)
+^ [#15886] Merged revisions 4567-4614 from /branches/1.6.4-LDA(svens)-language-2011-02-23
+
+12-March-2011 svens(LDA)
+^ [#24847] updated cs-CZ (thanks David Mara)
+^ [#24847] updated ca-ES (thanks Arivor)
+^ [#24847] updated nb-NO (thanks Joomla! i Norge)
+^ [#24847] updated lt-LT (thanks Joomla123.lt)
+^ [#24847] updated pl-PL (thanks JoomlAdmin.pl)
+^ [#24847] updated fi-FI (thanks Mortti)
 
 11-March-2011 Severdia
 ^ [#25296] Optimized images showing up as not fully optimized in Page Speed
@@ -81,11 +90,11 @@ Kunena 1.6.4-DEV
 ^ [#25168] Fix CSS layout and color issues (read announcement)
 
 6-March-2011 svens(LDA)
-^ [#24847] updated nb-NO (thanks Joomla! i Norge)
 ^ [#24847] updated ru-RU (thanks Zarkos)
 ^ [#24847] updated de-DE (thanks rich)
 ^ [#24847] updated id-ID (thanks Daniel)
-- [#24847] disabled pt-BR version 1.6.1
+^ [#24847] disabled nb-NO version 1.6.1
+^ [#24847] disabled pt-BR version 1.6.1
 
 6-March-2011 Matias
 # [#25192] Regression: the "insert" button for adding a url to a post does not work

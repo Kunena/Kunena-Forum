@@ -24,7 +24,8 @@ W oparciu o tłumaczenie wersji 1.5 wykonanej przez 'Sogo' i Stefana 'zwiastuna'
 
 	<files>
 		<filename>pl-PL.com_kunena.ini</filename>
-		<filename>pl-PL.com_kunena.install.ini</filename>
-		<!-- filename>pl-pL.com_kunena.menu.ini</filename -->
+    	<filename>pl-PL.com_kunena.install.ini</filename>
+    	<filename>pl-PL.com_kunena.menu.ini</filename>
+    	<filename>pl-PL.com_kunena.sys.ini</filename>
 	</files>
 </install>

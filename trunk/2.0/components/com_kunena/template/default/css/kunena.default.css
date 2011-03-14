@@ -245,9 +245,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 
 #Kunena .button,
 #Kunena .kbutton {
-	background-color: #F2F1EE;
-	border-color: #999999;
-	color: #000000;
+	/*   Moved to template parameters  */
 }
 
 #Kunena .kbutton-back {
@@ -258,9 +256,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 }
 #Kunena .kbutton:hover,
 #Kunena .kbutton:focus {
-	background-color: #609FBF;
-	border-color: #5388B4;
-	color: #FFFFFF;
+	/*   Moved to template parameters  */
 }
 
 #Kunena .klist-actions {
@@ -331,22 +327,17 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 /*---------- Pagination ------------- */
 
 #Kunena .kpagination a {
-	border-color:#5388B4;
-	background-color: #ffffff !important;
+	/*  Moved to template parameters   */
 }
 #Kunena .kpagination .active {
-	border-color:#5388B4;
-	background-color:#5388B4;
-	color:#FFFFFF;
+	/*  Moved to template parameters   */
 }
 #Kunena .kpagination a:link,
 #Kunena .kpagination a:visited {
 	color:#5388B4;
 }
 #Kunena .kpagination a:hover{
-	border-color:#5388B4;
-	color: #ffffff;
-	background-color: #609FBF;
+	/*  Moved to template parameters   */
 }
 #Kunena div.ktopic-title-cover ul.kpagination li.page {
 	color:#999;
@@ -372,10 +363,10 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton {
-	background-color: #fff;
+	/* Moved to template parameter */
 }
 #Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:hover {
-	background-color: #609FBF;
+	/* Moved to template parameter */
 }
 #Kunena div#kforum-head {
 	border-left-color: #BFC3C6;
@@ -777,28 +768,20 @@ BBCODE BUTTONS
 Multi file upload for bbcode editor
 -------------------------------------------------------------------- */
 
-#Kunena .kfile-input-button,
-#Kunena .kfile-input-button:hover,
-#Kunena .kfile-input-button:focus {
-	background-color: #F2F1EE;
-	border-color: #999999;
-	color: #000000;
+#Kunena .kfile-input-button {
+	/* Moved to template parameter */
 }
 #Kunena .kfile-input-button:hover,
 #Kunena .kfile-input-button:focus {
-	background-color: #609FBF;
-	border-color: #5388B4;
-	color: #FFFFFF;
+	/* Moved to template parameter */
 }
 #Kunena .kattachment-remove,
 #Kunena .kattachment-insert {
-	background-color: #F2F1EE;
-	border-color: #999999;
-	color: #000000;
+	/* Moved to template parameter */
 }
 #Kunena .kattachment-remove:hover,
 #Kunena .kattachment-insert:hover {
-	color: #FFFFFF;
+	/* Moved to template parameter */
 }
 #Kunena #kbbcode-filelist .file-invalid {
 	color: #514721;

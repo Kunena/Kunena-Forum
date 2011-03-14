@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+13-March-2011 Severdia
+^ [#25328] Added new template parameters to default template
+
 13-March-2011 Matias
 ^ [#22569] KunenaError: Make Internal Server Error page to validate
 # [#22569] KunenaError: Fix broken file path in Windows

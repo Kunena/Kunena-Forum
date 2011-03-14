@@ -46,6 +46,20 @@
 		<param name="activeFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
 		<param name="toggleButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" description="COM_KUNENA_TEMPLATE_TOGGLER_COLOR_DESC" />
 		
+		<param name="allButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_COLOR_DESC" />
+		<param name="allButtonhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_HOVER_COLOR_DESC" />
+		<param name="allButtonbordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_BORDER_COLOR_DESC" />
+		<param name="allButtonborderhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_BORDER_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_BORDER_HOVER_COLOR_DESC" />
+		<param name="allButtontextcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_TEXT_COLOR_DESC" />
+		<param name="allButtontexthovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_TEXT_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_TEXT_HOVER_COLOR_DESC" />
+		
+		<param name="paginationLinkcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_COLOR_DESC" />
+		<param name="paginationLinkhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_HOVER_COLOR_DESC" />
+		<param name="paginationBordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_COLOR_DESC" />
+		<param name="paginationBorderhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_HOVER_COLOR_DESC" />
+		<param name="paginationTextcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_COLOR_DESC" />
+		<param name="paginationTexthovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR_DESC" />
+		
 		<param name="enableSkinner" type="radio" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
 			<option value="0">COM_KUNENA_A_NO</option>
 			<option value="1">COM_KUNENA_A_YES</option>

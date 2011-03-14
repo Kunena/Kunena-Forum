@@ -135,7 +135,7 @@ $activeTab = $template->params->get('activeTabcolor', $skinner ? '' : '#5388B4')
 
 if ($activeTab) {
 	$styles .= <<<EOF
-	#Kunena #ktab ul.menu li.active a { background-color: {$activeTab} !important; }
+	#Kunena #ktab ul.menu li.active a,#Kunena #ktab li#current.selected a { background-color: {$activeTab} !important; }
 EOF;
 }
 
@@ -178,6 +178,101 @@ if ($toggleButton) {
 EOF;
 }
 
+$allButtoncolor = $template->params->get('allButtoncolor', $skinner ? '' : '#F2F1EE');
+
+if ($allButtoncolor) {
+	$styles .= <<<EOF
+	#Kunena .button,#Kunena .kbutton,#Kunena .kfile-input-button,#Kunena .kattachment-remove,#Kunena .kattachment-insert,#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton { background-color: {$toggleButton} !important; }
+EOF;
+}
+
+$allButtonbordercolor = $template->params->get('allButtonbordercolor', $skinner ? '' : '#999999');
+
+if ($allButtonbordercolor) {
+	$styles .= <<<EOF
+	#Kunena .button,#Kunena .kbutton,#Kunena .kfile-input-button,#Kunena .kattachment-remove,#Kunena .kattachment-insert,#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton { border-color: {$toggleButton} !important; }
+EOF;
+}
+
+$allButtontextcolor = $template->params->get('allButtontextcolor', $skinner ? '' : '#000000');
+
+if ($allButtontextcolor) {
+	$styles .= <<<EOF
+	#Kunena .button,#Kunena .kbutton,#Kunena .kfile-input-button,#Kunena .kattachment-remove,#Kunena .kattachment-insert,#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton { color: {$toggleButton} !important; }
+EOF;
+}
+
+$allButtonhovercolor = $template->params->get('allButtonhovercolor', $skinner ? '' : '#609FBF');
+
+if ($allButtoncolor) {
+	$styles .= <<<EOF
+	#Kunena .kfile-input-button:hover,#Kunena .kfile-input-button:focus,#Kunena .kattachment-remove:hover,#Kunena .kattachment-insert:hover,#Kunena .button:hover,#Kunena .kbutton:hover,#Kunena .button:focus, #Kunena .kbutton:focus,#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:hover,#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:focus { background-color: {$toggleButton} !important; }
+EOF;
+}
+
+$allButtonborderhovercolor = $template->params->get('allButtonborderhovercolor', $skinner ? '' : '#5388B4');
+
+if ($allButtonborderhovercolor) {
+	$styles .= <<<EOF
+	#Kunena .kfile-input-button:hover,#Kunena .kfile-input-button:focus,#Kunena .kattachment-remove:hover,#Kunena .kattachment-insert:hover,#Kunena .button:hover,#Kunena .kbutton:hover,#Kunena .button:focus, #Kunena .kbutton:focus,#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:hover,#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:focus { border-color: {$toggleButton} !important; }
+EOF;
+}
+
+$allButtontexthovercolor = $template->params->get('allButtontexthovercolor', $skinner ? '' : '#FFFFFF');
+
+if ($allButtontexthovercolor) {
+	$styles .= <<<EOF
+	#Kunena .kfile-input-button:hover,#Kunena .kfile-input-button:focus,#Kunena .kattachment-remove:hover,#Kunena .kattachment-insert:hover,#Kunena .button:hover,#Kunena .kbutton:hover,#Kunena .button:focus, #Kunena .kbutton:focus,#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:hover,#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:focus { color: {$toggleButton} !important; }
+EOF;
+}
+
+$paginationLinkcolor = $template->params->get('paginationLinkcolor', $skinner ? '' : '#FFFFFF');
+
+if ($paginationLinkcolor) {
+	$styles .= <<<EOF
+	#Kunena .kpagination li { background-color: {$toggleButton} !important; }
+EOF;
+}
+
+$paginationBordercolor = $template->params->get('paginationBordercolor', $skinner ? '' : '#5388B4');
+
+if ($paginationBordercolor) {
+	$styles .= <<<EOF
+	#Kunena .kpagination li { border-color: {$toggleButton} !important; }
+EOF;
+}
+
+$paginationTextcolor = $template->params->get('paginationTextcolor', $skinner ? '' : '#FFFFFF');
+
+if ($paginationTextcolor) {
+	$styles .= <<<EOF
+	#Kunena .kpagination li { color: {$toggleButton} !important; }
+EOF;
+}
+
+$paginationLinkhovercolor = $template->params->get('paginationLinkhovercolor', $skinner ? '' : '#609FBF');
+
+if ($paginationLinkhovercolor) {
+	$styles .= <<<EOF
+	#Kunena .kpagination .active,#Kunena .kpagination a:hover,#Kunena .kpagination a:focus { background-color: {$toggleButton} !important; }
+EOF;
+}
+
+$paginationBorderhovercolor = $template->params->get('paginationBorderhovercolor', $skinner ? '' : '#5388B4');
+
+if ($paginationBorderhovercolor) {
+	$styles .= <<<EOF
+	#Kunena .kpagination .active,#Kunena .kpagination a:hover,#Kunena .kpagination a:focus { border-color: {$toggleButton} !important; }
+EOF;
+}
+
+$paginationTexthovercolor = $template->params->get('paginationTexthovercolor', $skinner ? '' : '#FFFFFF');
+
+if ($paginationTexthovercolor) {
+	$styles .= <<<EOF
+	#Kunena .kpagination .active,#Kunena .kpagination a:hover,#Kunena .kpagination a:focus { color: {$toggleButton} !important; }
+EOF;
+}
 
 $styles .= <<<EOF
 	#Kunena .kicon-profile { background-image: url("{$mediaurl}/iconsets/profile/{$template->params->get('profileIconset', 'default')}/default.png"); }

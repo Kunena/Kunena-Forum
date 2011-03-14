@@ -71,7 +71,7 @@ $forumHeader = $this->params->get('forumHeadercolor', $skinner ? '' : '#5388B4')
 if ($forumHeader) {
 	$styles .= <<<EOF
 	
-	#Kunena div.kblock > div.kheader { background: {$forumHeader} !important; }
+	#Kunena div.kblock > div.kheader,#Kunena .kblock div.kheader { background: {$forumHeader} !important; }
 	#Kunena #ktop { border-color: {$forumHeader}; }
 	#Kunena #ktop span.ktoggler { background: {$forumHeader}; }
 	#Kunena #ktab a:hover,

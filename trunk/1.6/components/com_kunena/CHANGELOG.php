@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+13-March-2011 Severdia
+# [#25329] Fixed missing style for search page header (from template param)
+
 13-March-2011 Matias
 + [#25326] Implement improved PHP error handlers (backport from K2.0)
 ^ [#15886] Merged revisions 4567-4614 from /branches/1.6.4-LDA(svens)-language-2011-02-23

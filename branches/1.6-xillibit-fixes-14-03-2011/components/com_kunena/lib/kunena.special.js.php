@@ -74,13 +74,14 @@ window.addEvent('domready', function(){
 	//	to select if anynomous option is allowed on new topic tab
 	if(document.id('postcatid') != undefined) {
 		document.id('postcatid').addEvent('change', function(e) {
-			kunenaCheckAnonymousAllowed(catid.value);
+			var postcatid = document.id('postcatid').value;
+			kunenaCheckAnonymousAllowed(postcatid);
 		});
 	}
 
 	if(document.id('postcatid') != undefined) {
-		window.onload=kunenaCheckPollallowed(document.id('postcatid').getSelected().get("value"));
-		window.onload=kunenaCheckAnonymousAllowed(document.id('postcatid').getSelected().get("value"));
+		window.onload=function () {kunenaCheckPollallowed($('postcatid').getSelected().get("value"))};
+		window.onload=function () {kunenaCheckAnonymousAllowed($('postcatid').getSelected().get("value"))};
 	}
 });
 

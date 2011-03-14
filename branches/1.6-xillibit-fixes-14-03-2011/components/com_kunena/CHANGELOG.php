@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+14-March-2011 Xillibit
+# [#25334] Object doesn't support this property or method in IE compatibility mode
+
 13-March-2011 Severdia
 # [#25329] Fixed missing style for search page header (from template param)
 

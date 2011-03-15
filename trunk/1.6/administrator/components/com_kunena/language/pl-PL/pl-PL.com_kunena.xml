@@ -1,31 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- $Id$ -->
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE install>
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Polish</name>
 	<tag>pl-PL</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
-	<author>JoomlAdmin - www.joomladmin.pl</author>
-	<authoremail>andrzej@joomladmin.pl</authoremail>
-	<authorurl>www.joomladmin.pl</authorurl>
-	<copyright>2010</copyright>
-	<license>Open Source License, GPL v2 based</license>
-	<description><![CDATA[<b>Pakiet języka polskiego dla Kunena 1.6 RC1</b><br />
-Autor: 2010, <a href="http://joomladmin.pl">JoomlAdmin</a><br />
-<br />
-<strong>Tłumaczył: <b></strong> Andrzej 'Randal' Makowiecki <br /> <br /> 
-W oparciu o tłumaczenie wersji 1.5 wykonanej przez 'Sogo' i Stefana 'zwiastuna' Wajdę <br />
-<br />
-<b>Kontakt: <br />
-<a href="mailto:andrzej@joomladmin.pl">Andrzej Makowiecki</a>]]>
-	</description>
-
+	<creationDate>2011-02-12</creationDate>
+	<version>1.6.4</version>
+	<build>4555</build>
+	<author>Andrzej Makowiecki</author>
+	<authorEmail>andrzej@joomladmin.pl</authorEmail>
+	<authorUrl>http://www.joomladmin.net</authorUrl>
+	<copyright>(C) 2008 - 2011 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPL</license>
+	<description><![CDATA[
+  <div style="padding: 15px; font-weight: normal; border: 2px dashed #C8C8C8; width: 450px; margin: auto; " >
+<strong>Pakiet języka polskiego dla Kunena 1.6.3</strong>
+<br /><br />Autor: 2011, <a href="http://joomladmin.pl">JoomlAdmin</a>
+<br /><br />
+<strong>Tłumaczył:</strong> Andrzej 'Randal' Makowiecki - <a href="mailto:andrzej@joomladmin.pl">kontakt</a>
+<br /><br />
+W oparciu o tłumaczenie wersji 1.5 wykonanej przez 'Sogo' i Stefana 'zwiastuna' Wajdę
+</div>
+  ]]></description>
+	
 	<files>
 		<filename>pl-PL.com_kunena.ini</filename>
-    	<filename>pl-PL.com_kunena.install.ini</filename>
-    	<filename>pl-PL.com_kunena.menu.ini</filename>
-    	<filename>pl-PL.com_kunena.sys.ini</filename>
-	</files>
+		<filename>pl-PL.com_kunena.install.ini</filename>
+		<filename>pl-PL.com_kunena.sys.ini</filename>
+		<filename>pl-PL.com_kunena.menu.ini</filename>
+		<filename>pl-PL.plg_system_kunena.sys.ini</filename>		
+	</files>                                            
 </install>

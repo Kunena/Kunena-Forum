@@ -36,6 +36,12 @@ Kunena 1.6.4-DEV
 # [#25339] Joomla 1.6: Change event names
 # [#25343] Joomla 1.6: All links in modules have Itemid=0
 # [#25345] Userlist does not obey user setting to hide his email address
+^ [#15886] Merged revisions 4567-4644 from /branches/1.6.4-LDA(svens)-language-2011-02-23
+
+15-March-2011 LDA
+^ [#24847] updated ar-AA (thanks baazza)
+^ [#24847] updated pl-PL (thanks Andrzej Makowiecki)
+^ [#24847] updated ru-RU (thanks Zarkos)
 
 14-March-2011 Xillibit
 # [#25334] Object doesn't support this property or method in IE compatibility mode

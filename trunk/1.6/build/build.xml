@@ -232,7 +232,7 @@
 
 	<target name="copy" depends="minify">
 		<mkdir dir="${build_dir}/archive" />
-		<!--language tag="ar-AA" /-->
+		<language tag="ar-AA" />
 		<language tag="ca-ES" />
 		<language tag="cs-CZ" />
 		<language tag="da-DK" />

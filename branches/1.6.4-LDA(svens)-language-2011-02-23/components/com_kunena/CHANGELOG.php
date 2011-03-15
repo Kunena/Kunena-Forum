@@ -31,6 +31,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
+15-March-2011 LDA
+^ [#24847] updated ar-AA (thanks baazza)
+^ [#24847] updated pl-PL (thanks Andrzej Makowiecki)
+^ [#24847] updated ru-RU (thanks Zarkos)
+
 12-March-2011 svens(LDA)
 ^ [#24847] updated cs-CZ (thanks David Mara)
 ^ [#24847] updated ca-ES (thanks Arivor)

@@ -31,4 +31,17 @@
 			<option value="1">PLG_KUNENASEARCH_OPTION_YES</option>
 		</param>
 	</params>
+	
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="search_limit" type="text" size="5" default="50" label="PLG_KUNENASEARCH_PARAM_SEARCH_LIMIT" description="PLG_KUNENASEARCH_PARAM_SEARCH_LIMIT_DESC"/>
+				<field name="content_limit" type="text" size="5" default="40" label="PLG_KUNENASEARCH_PARAM_CONTENT_LIMIT" description="PLG_KUNENASEARCH_PARAM_CONTENT_LIMIT_DESC"/>
+				<field name="show_bbcode" type="radio" default="1" label="PLG_KUNENASEARCH_PARAM_SHOW_BBCODE" description="PLG_KUNENASEARCH_PARAM_SHOW_BBCODE_DESC">
+					<option value="0">PLG_KUNENASEARCH_OPTION_NO</option>
+					<option value="1">PLG_KUNENASEARCH_OPTION_YES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </install>

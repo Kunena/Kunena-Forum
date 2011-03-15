@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ( '' );
 
 require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/api.php');
+jimport ('joomla.html.parameter');
 
 // Kunena detection and version check
 $minKunenaVersion = '1.6.3';
@@ -25,6 +26,8 @@ if (! Kunena::enabled ()) {
 $app = JFactory::getApplication ();
 $app->registerEvent ( 'onSearch', 'plgSearchKunena' );
 $app->registerEvent ( 'onSearchAreas', 'plgSearchKunenaAreas' );
+$app->registerEvent ( 'onContentSearch', 'plgSearchKunena' );
+$app->registerEvent ( 'onContentSearchAreas', 'plgSearchKunenaAreas' );
 
 // load Kunena main language file so we can leverage language strings from it
 KunenaFactory::loadLanguage();

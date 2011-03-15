@@ -28,6 +28,9 @@ Legend:
 
 KunenaLogin 1.6.4
 
+15-March-2011 Matias
+# [#25339] Joomla 1.6: Make module parameters to work
+
 14-March-2011 Matias
 ^ [#19002] Updated version to 1.6.4
 

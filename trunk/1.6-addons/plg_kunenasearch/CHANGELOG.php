@@ -28,6 +28,10 @@ Legend:
 
 KunenaSearch 1.6.4
 
+15-March-2011 Matias
+# [#25339] Joomla 1.6: Change event names
+# [#25339] Joomla 1.6: Make plugin parameters to work
+
 14-March-2011 Matias
 ^ [#20138] Updated version info 1.6.4
 

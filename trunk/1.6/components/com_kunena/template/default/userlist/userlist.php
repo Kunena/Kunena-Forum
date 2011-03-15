@@ -173,7 +173,7 @@ function validate() {
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_email) : ?>
-							<td class="kcol-mid"><?php echo JHTML::_('email.cloak', $user->email) ?></td>
+							<td class="kcol-mid"><?php echo $user->email ? JHTML::_('email.cloak', $user->email) : '' ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_usertype) : ?>

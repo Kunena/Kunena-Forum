@@ -25,6 +25,7 @@ class CKunenaUserlist {
 		$this->config = KunenaFactory::getConfig ();
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
+		$this->me = KunenaFactory::getUser ();
 
 		$this->search = JRequest::getVar ( 'search', '' );
 		$this->limitstart = JRequest::getInt ( 'limitstart', 0 );
@@ -74,7 +75,8 @@ class CKunenaUserlist {
 		$useridAdmin = $jversion->RELEASE == '1.5' ? '62' : '42';
 
 		// Select query
-		$query = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id WHERE {$where}";
+		$moderator = intval($this->me->isModerator());
+		$query = "SELECT u.id, u.name, u.username, u.usertype, IF(fu.hideEmail=0 OR {$moderator},u.email,'') AS email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id WHERE {$where}";
 		$this->searchuri = "";
 		if ($this->search != "") {
 			 $query .= " AND (name LIKE '%{$this->db->getEscaped($this->search)}%' OR username LIKE '%{$this->db->getEscaped($this->search)}%') AND u.id NOT IN ($useridAdmin)";

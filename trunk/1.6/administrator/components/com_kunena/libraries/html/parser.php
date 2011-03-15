@@ -67,10 +67,15 @@ abstract class KunenaParser {
 			$params = new JParameter( '' );
 			$params->set('ksource', 'kunena');
 
-			$dispatcher	= JDispatcher::getInstance();
+			$dispatcher = JDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
-			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
-			$content =& $row->text;
+			$jversion = new JVersion();
+			if ($jversion->RELEASE == '1.5') {
+				$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
+			} else {
+				$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
+			}
+			$content = $row->text;
 		}
 		return $content;
 	}

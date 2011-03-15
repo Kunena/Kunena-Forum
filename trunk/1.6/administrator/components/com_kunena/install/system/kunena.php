@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+jimport ('joomla.version');
+
 class plgSystemKunena extends JPlugin {
 
 	function __construct(& $subject, $config) {
@@ -37,9 +39,9 @@ class plgSystemKunena extends JPlugin {
 	}
 
 	/*
-	function onAfterStoreUser($user, $isnew, $succes, $msg) {
+	public function onUserAfterSave($user, $isnew, $success, $msg) {
 		//Don't continue if the user wasn't stored succesfully
-		if (! $succes) {
+		if (! $success) {
 			return false;
 		}
 		if (! $isnew) {
@@ -49,6 +51,9 @@ class plgSystemKunena extends JPlugin {
 		$db = JFactory::getDBO ();
 		$db->setQuery ( "INSERT INTO #__kunena_users (userid) VALUES ('" . intval($user ['id']) . "')" );
 		$db->query ();
+	}
+	public function onAfterStoreUser($user, $isnew, $success, $msg) {
+		$this->onUserAfterSave($user, $isnew, $success, $msg);
 	}
 	*/
 }

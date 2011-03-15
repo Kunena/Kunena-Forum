@@ -34,6 +34,7 @@ Kunena 1.6.4-DEV
 
 15-March-2011 Matias
 # [#25339] Joomla 1.6: Change event names
+# [#25343] Joomla 1.6: All links in modules have Itemid=0
 
 14-March-2011 Xillibit
 # [#25334] Object doesn't support this property or method in IE compatibility mode

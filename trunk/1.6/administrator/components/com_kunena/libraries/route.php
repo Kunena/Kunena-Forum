@@ -150,7 +150,7 @@ abstract class KunenaRoute {
 					continue;
 				// Support both J1.6 and J1.5
 				$authorise = isset($item->parent_id) ? $menus->authorise($item->id) : !empty($item->published) && (!isset ( $item->access ) || $item->access <= $my->aid);
-				$parent = isset($item->parent_id) ? $item->parent_id : $item->parent;
+				$parent = isset($item->parent_id) ? ($item->parent_id == 1 ? 0 : $item->parent_id) : $item->parent;
 
 				if ($authorise) {
 					self::$childlist[$item->menutype][$parent][$item->id] = $item->id;

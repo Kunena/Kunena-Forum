@@ -31,6 +31,10 @@ Legend:
 
 Kunena Discuss Plugin 1.6.4
 
+15-March-2011 Matias
+# [#25339] Joomla 1.6: Change event names to make plugin to work
+# [#24364] Joomla 1.6: Fix CSS problems
+
 14-March-2011 Matias
 ^ [#25215] Update version to 1.6.4
 

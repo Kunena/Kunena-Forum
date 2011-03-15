@@ -107,81 +107,43 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="limit" type="text"
-					default="1"
-					description="PLG_KUNENADISCUSS_LIMIT_DESC"
-					label="PLG_KUNENADISCUSS_LIMIT"	/>				
-				<field name="ordering" type="radio"
-					default="1"
-					description="PLG_KUNENADISCUSS_ORDERING_DESC"
-					label="PLG_KUNENADISCUSS_ORDERING"
-				>
+				<field name="limit" type="text" default="25" description="PLG_KUNENADISCUSS_LIMIT_DESC" label="PLG_KUNENADISCUSS_LIMIT" />
+				<field name="ordering" type="radio" default="1" description="PLG_KUNENADISCUSS_ORDERING_DESC" label="PLG_KUNENADISCUSS_ORDERING">
 					<option value="0">PLG_KUNENADISCUSS_OPTION_FIRST</option>
 					<option value="1">PLG_KUNENADISCUSS_OPTION_LAST</option>
 				</field>
-				<field name="show_front_page"  type="radio" default="2"
-					label="PLG_KUNENADISCUSS_SHOW_FRONT_PAGE"
-					description="PLG_KUNENADISCUSS_SHOW_FRONT_PAGE_DESC" 
-				>
+				<field name="show_front_page"  type="radio" default="2" label="PLG_KUNENADISCUSS_SHOW_FRONT_PAGE" description="PLG_KUNENADISCUSS_SHOW_FRONT_PAGE_DESC">
 					<option value="0">PLG_KUNENADISCUSS_OPTION_NOTHING</option>
 					<option value="1">PLG_KUNENADISCUSS_OPTION_LINK</option>
 					<option value="2">PLG_KUNENADISCUSS_OPTION_REPLIES</option>
 				</field>
-				<field name="show_blog_page" type="radio"
-					default="2"
-					description="PLG_KUNENADISCUSS_SHOW_BLOG_PAGE_DESC"
-					label="PLG_KUNENADISCUSS_SHOW_BLOG_PAGE"
-				>
+				<field name="show_blog_page" type="radio" default="2" description="PLG_KUNENADISCUSS_SHOW_BLOG_PAGE_DESC" label="PLG_KUNENADISCUSS_SHOW_BLOG_PAGE">
 					<option value="0">PLG_KUNENADISCUSS_OPTION_NOTHING</option> 
 					<option value="1">PLG_KUNENADISCUSS_OPTION_LINK</option> 
 					<option value="2">PLG_KUNENADISCUSS_OPTION_REPLIES</option> 
 				</field>
-				<field name="show_other_pages" type="radio"
-					default="2"
-					description="PLG_KUNENADISCUSS_SHOW_OTHER_PAGES_DESC"
-					label="PLG_KUNENADISCUSS_SHOW_OTHER_PAGES"
-				>
+				<field name="show_other_pages" type="radio" default="2" description="PLG_KUNENADISCUSS_SHOW_OTHER_PAGES_DESC" label="PLG_KUNENADISCUSS_SHOW_OTHER_PAGES">
 					<option value="0">PLG_KUNENADISCUSS_OPTION_NOTHING</option>
 					<option value="1">PLG_KUNENADISCUSS_OPTION_LINK</option>
 					<option value="2">PLG_KUNENADISCUSS_OPTION_REPLIES</option>
-				</field>				
-				<field name="form" type="radio"
-					default="1"
-					description="PLG_KUNENADISCUSS_FORM_DESC"
-					label="PLG_KUNENADISCUSS_FORM"
-				>				
+				</field>
+				<field name="form" type="radio" default="1" description="PLG_KUNENADISCUSS_FORM_DESC" label="PLG_KUNENADISCUSS_FORM">
 					<option value="0">PLG_KUNENADISCUSS_OPTION_NO</option>
 					<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>
 				</field>
-				<field name="form_location" type="radio"
-					default="0"
-					description="PLG_KUNENADISCUSS_FORM_LOCATION_DESC"
-					label="PLG_KUNENADISCUSS_FORM_LOCATION"
-				>				
+				<field name="form_location" type="radio" default="0" description="PLG_KUNENADISCUSS_FORM_LOCATION_DESC" label="PLG_KUNENADISCUSS_FORM_LOCATION">
 					<option value="0">PLG_KUNENADISCUSS_OPTION_BEFORE</option>
 					<option value="1">PLG_KUNENADISCUSS_OPTION_AFTER</option>
 				</field>
-				<field name="custom_topics" type="radio"
-					default="1"
-					description="PLG_KUNENADISCUSS_CUSTOM_TOPICS_DESC"
-					label="PLG_KUNENADISCUSS_CUSTOM_TOPICS"
-				>				
+				<field name="custom_topics" type="radio" default="1" description="PLG_KUNENADISCUSS_CUSTOM_TOPICS_DESC" label="PLG_KUNENADISCUSS_CUSTOM_TOPICS">
 					<option value="0">PLG_KUNENADISCUSS_OPTION_NO</option>
 					<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>
 				</field>
-				<field name="create" type="radio"
-					default="0"
-					description="PLG_KUNENADISCUSS_CREATE_DESC"
-					label="PLG_KUNENADISCUSS_CREATE"
-				>				
+				<field name="create" type="radio" default="0" description="PLG_KUNENADISCUSS_CREATE_DESC" label="PLG_KUNENADISCUSS_CREATE">
 					<option value="1">PLG_KUNENADISCUSS_OPTION_CREATE_VISIT</option>
 					<option value="0">PLG_KUNENADISCUSS_OPTION_CREATE_REPLY</option>
 				</field>
-				<field name="create_time" type="list"
-					default="1"
-					description="PLG_KUNENADISCUSS_CREATE_TIME_DESC"
-					label="PLG_KUNENADISCUSS_CREATE_TIME"
-				>				
+				<field name="create_time" type="list" default="1" description="PLG_KUNENADISCUSS_CREATE_TIME_DESC" label="PLG_KUNENADISCUSS_CREATE_TIME">
 					<option value="1">PLG_KUNENADISCUSS_OPTION_1WEEKS</option>
 					<option value="2">PLG_KUNENADISCUSS_OPTION_2WEEKS</option>
 					<option value="4">PLG_KUNENADISCUSS_OPTION_4WEEKS</option>
@@ -191,11 +153,7 @@
 					<option value="52">PLG_KUNENADISCUSS_OPTION_52WEEKS</option>
 					<option value="0">PLG_KUNENADISCUSS_OPTION_UNLIMITED</option>
 				</field>
-				<field name="close_time" type="list"
-					default="0"
-					description="PLG_KUNENADISCUSS_CLOSE_TIME_DESC"
-					label="PLG_KUNENADISCUSS_CLOSE_TIME"
-				>				
+				<field name="close_time" type="list" default="0" description="PLG_KUNENADISCUSS_CLOSE_TIME_DESC" label="PLG_KUNENADISCUSS_CLOSE_TIME">
 					<option value="1">PLG_KUNENADISCUSS_OPTION_1WEEKS</option>
 					<option value="2">PLG_KUNENADISCUSS_OPTION_2WEEKS</option>
 					<option value="4">PLG_KUNENADISCUSS_OPTION_4WEEKS</option>
@@ -205,57 +163,27 @@
 					<option value="52">PLG_KUNENADISCUSS_OPTION_52WEEKS</option>
 					<option value="0">PLG_KUNENADISCUSS_OPTION_UNLIMITED</option>
 				</field>
-				<field name="close_reason" type="radio"
-					default="0"
-					description="PLG_KUNENADISCUSS_CLOSE_REASON_DESC"
-					label="PLG_KUNENADISCUSS_CLOSE_REASON"
-				>				
+				<field name="close_reason" type="radio" default="0" description="PLG_KUNENADISCUSS_CLOSE_REASON_DESC" label="PLG_KUNENADISCUSS_CLOSE_REASON">
 					<option value="0">PLG_KUNENADISCUSS_OPTION_TOPIC_CREATION</option>
 					<option value="1">PLG_KUNENADISCUSS_OPTION_LAST_POST</option>
 				</field>
-				<field name="bbcode" type="radio"
-					default="default"
-					description="PLG_KUNENADISCUSS_BBCODE_DESC"
-					label="PLG_KUNENADISCUSS_BBCODE"
-				>				
+				<field name="bbcode" type="radio" default="default" description="PLG_KUNENADISCUSS_BBCODE_DESC" label="PLG_KUNENADISCUSS_BBCODE">
 					<option value="default">PLG_KUNENADISCUSS_OPTION_BBCODE_DEFAULT</option>
 					<option value="full">PLG_KUNENADISCUSS_OPTION_BBCODE_FULL</option>
 					<option value="intro">PLG_KUNENADISCUSS_OPTION_BBCODE_INTRO</option>
 					<option value="link">PLG_KUNENADISCUSS_OPTION_BBCODE_LINK</option>
 					<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>
 				</field>
-				<field name="topic_owner" type="text"
-					default=""
-					description="PLG_KUNENADISCUSS_TOPIC_OWNER_DESC"
-					label="PLG_KUNENADISCUSS_TOPIC_OWNER" />	
-				<field name="category_mapping" type="text"
-					default=""
-					description="PLG_KUNENADISCUSS_CATEGORY_MAPPING_DESC"
-					label="PLG_KUNENADISCUSS_CATEGORY_MAPPING" />	
-				<field name="default_category" type="text"
-					default=""
-					description="PLG_KUNENADISCUSS_DEFAULT_CATEGORY_DESC"
-					label="PLG_KUNENADISCUSS_DEFAULT_CATEGORY" />	
-				<field name="allow_categories" type="text"
-					default=""
-					description="PLG_KUNENADISCUSS_ALLOW_CATEGORIES_DESC"
-					label="PLG_KUNENADISCUSS_ALLOW_CATEGORIES" />	
-				<field name="deny_categories" type="text"
-					default=""
-					description="PLG_KUNENADISCUSS_DENY_CATEGORIES_DESC"
-					label="PLG_KUNENADISCUSS_DENY_CATEGORIES" />	
-				<field name="show_debug" type="radio"
-					default="0"
-					description="PLG_KUNENADISCUSS_SHOW_DEBUG_DESC"
-					label="PLG_KUNENADISCUSS_SHOW_DEBUG"
-				>				
+				<field name="topic_owner" type="text" default="" description="PLG_KUNENADISCUSS_TOPIC_OWNER_DESC" label="PLG_KUNENADISCUSS_TOPIC_OWNER" />
+				<field name="category_mapping" type="text" default="" description="PLG_KUNENADISCUSS_CATEGORY_MAPPING_DESC" label="PLG_KUNENADISCUSS_CATEGORY_MAPPING" />
+				<field name="default_category" type="text" default="" description="PLG_KUNENADISCUSS_DEFAULT_CATEGORY_DESC" label="PLG_KUNENADISCUSS_DEFAULT_CATEGORY" />
+				<field name="allow_categories" type="text" default="" description="PLG_KUNENADISCUSS_ALLOW_CATEGORIES_DESC" label="PLG_KUNENADISCUSS_ALLOW_CATEGORIES" />
+				<field name="deny_categories" type="text" default="" description="PLG_KUNENADISCUSS_DENY_CATEGORIES_DESC" label="PLG_KUNENADISCUSS_DENY_CATEGORIES" />
+				<field name="show_debug" type="radio" default="0" description="PLG_KUNENADISCUSS_SHOW_DEBUG_DESC" label="PLG_KUNENADISCUSS_SHOW_DEBUG">
 					<option value="0">PLG_KUNENADISCUSS_OPTION_NO</option>
 					<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>
 				</field>
-				<field name="show_debug_userids" type="text"
-					default=""
-					description="PLG_KUNENADISCUSS_SHOW_DEBUG_USERIDS_DESC"
-					label="PLG_KUNENADISCUSS_SHOW_DEBUG_USERIDS" />		
+				<field name="show_debug_userids" type="text" default="" description="PLG_KUNENADISCUSS_SHOW_DEBUG_USERIDS_DESC" label="PLG_KUNENADISCUSS_SHOW_DEBUG_USERIDS" />
 			</fieldset>
 		</fields>
 	</config>

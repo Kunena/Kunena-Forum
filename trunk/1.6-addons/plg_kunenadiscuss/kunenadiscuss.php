@@ -11,11 +11,13 @@
 defined ( '_JEXEC' ) or die ( '' );
 
 jimport ( 'joomla.plugin.plugin' );
+jimport ( 'joomla.version');
 
 class plgContentKunenaDiscuss extends JPlugin {
 	// Associative array to hold results of the plugin
 	static $plgDisplay = array ();
 	static $includedCss = false;
+	protected $basepath = null;
 
 	// *** initialization ***
 	function plgContentKunenaDiscuss(&$subject, $params) {
@@ -25,6 +27,13 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// If plugin is not enabled in current scope, do not register it
 		if (! $this->enabled ())
 			return null;
+
+		$jversion = new JVersion();
+		if ($jversion->RELEASE != '1.5') {
+			$this->basepath = 'plugins/content/kunenadiscuss';
+		} else {
+			$this->basepath = 'plugins/content';
+		}
 
 		// Load language files
 		$this->loadLanguage ( 'plg_content_kunenadiscuss', JPATH_ADMINISTRATOR );
@@ -89,6 +98,24 @@ class plgContentKunenaDiscuss extends JPlugin {
 		$this->debug ( "Constructor called in " . $this->_app->scope );
 	}
 
+	// Joomla 1.5 support
+	public function onPrepareContent(&$article, &$params, $limitstart=0) {
+		$context = 'com_content.article';
+		return $this->prepare($context, $article, $params);
+	}
+	function onAfterDisplayContent(&$article, &$params, $limitstart=0) {
+		$context = 'com_content.article';
+		return $this->display($context, $article, $params);
+	}
+
+	// Joomla 1.6 support
+	public function onContentBeforeDisplay($context, &$article, &$params, $limitstart=0) {
+		return $this->prepare($context, $article, $params);
+	}
+	public function onContentAfterDisplay($context, &$article, &$params, $limitstart=0) {
+		return $this->display($context, $article, $params);
+	}
+
 	function enabled() {
 		if ($this->_app->scope == 'com_content')
 			return true;
@@ -97,9 +124,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 		return false;
 	}
 
-	// *** event prepare content ***
-	function onPrepareContent(&$article, &$params, $limitstart) {
-
+	// *** Prepare content ***
+	protected function prepare($context, &$article, &$params) {
 		// Only proceed if this event is not originated by Kunena itself or we run the danger of an event recursion
 		$ksource = '';
 		if ($params instanceof JParameter){
@@ -209,11 +235,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 		return true;
 	}
 
-	// *** event after display content ***
-	function onAfterDisplayContent(&$article, &$params, $limitstart) {
-		if (empty ( $article->id ))
-			return '';
-
+	// *** display content ***
+	protected function display($context, &$article, &$params) {
 		if (isset ( self::$plgDisplay [$article->id] )) {
 			$this->debug ( "onAfterDisplayContent: Returning content for article {$article->id}" );
 			return self::$plgDisplay [$article->id];
@@ -226,7 +249,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 	/******************************************************************************
 	 *
 	 *****************************************************************************/
-	function showPlugin($catid, $thread, &$row, $linkOnly) {
+	protected function showPlugin($catid, $thread, &$row, $linkOnly) {
 		// Show a simple form to allow posting to forum from the plugin
 		$plgShowForm = $this->params->get ( 'form', 1 );
 		// Default is to put QuickPost at the very bottom.
@@ -235,7 +258,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// Don't repeat the CSS for each instance of this plugin in a page!
 		if (! self::$includedCss) {
 			$doc = JFactory::getDocument ();
-			$doc->addStyleSheet ( KUNENA_JLIVEURL . 'plugins/content/kunenadiscuss/discuss.css' );
+			$doc->addStyleSheet ( KUNENA_JLIVEURL . $this->basepath .'/kunenadiscuss/discuss.css' );
 			self::$includedCss = true;
 		}
 
@@ -352,7 +375,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			$content = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );
 			return $content;
 		} elseif ( $thread && !$plgShowForm ) {
-     		 $this->debug ( "showPlugin: Displaying link to the topic because the form is disabled" );
+			 $this->debug ( "showPlugin: Displaying link to the topic because the form is disabled" );
 
 			$sql = "SELECT count(*) FROM #__kunena_messages WHERE hold=0 AND parent!=0 AND thread={$this->_db->quote($thread)}";
 			$this->_db->setQuery ( $sql );
@@ -361,9 +384,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 			$linktitle = JText::sprintf ( 'PLG_KUNENADISCUSS_DISCUSS_ON_FORUMS', $postCount );
 			require_once (KPATH_SITE . '/lib/kunena.link.class.php');
 			$link_topic = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );
-    	} elseif ( !$thread && !$plgShowForm ) {
-      		$link_topic = JText::_('PLG_KUNENADISCUSS_NEW_TOPIC_NOT_CREATED');
-    	}
+		} elseif ( !$thread && !$plgShowForm ) {
+			$link_topic = JText::_('PLG_KUNENADISCUSS_NEW_TOPIC_NOT_CREATED');
+		}
 
 		// ************************************************************************
 		// Process the QuickPost form
@@ -382,11 +405,11 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// This will be used all the way through to tell users how many posts are in the forum.
 		$this->debug ( "showPlugin: Rendering discussion" );
 		if ($link_topic) {
-      		$content = $link_topic;
-		  	$content .= $this->showTopic ( $catid, $thread, $link_topic );
+			$content = $link_topic;
+			$content .= $this->showTopic ( $catid, $thread, $link_topic );
 		} else {
-      		$content = $this->showTopic ( $catid, $thread, $link_topic );
-    	}
+			$content = $this->showTopic ( $catid, $thread, $link_topic );
+		}
 
 		if ($formLocation) {
 			$content = '<div class="kunenadiscuss">' . $content . '<br />' . $quickPost . '</div>';
@@ -401,7 +424,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 	 * Output
 	 *****************************************************************************/
 
-	function showTopic($catid, $thread) {
+	protected function showTopic($catid, $thread) {
 		if (!$thread) return;
 
 		// Limits the number of posts
@@ -412,7 +435,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		require_once (KPATH_SITE . '/funcs/view.php');
 		$thread = new CKunenaView ( 'view', $catid, $thread, $first, $limit+$first );
-		$thread->setTemplate ( '/plugins/content/kunenadiscuss' );
+		$thread->setTemplate ( "/{$this->basepath}/kunenadiscuss" );
 		$thread->ordering = $ordering ? 'DESC' : 'ASC';
 		$thread->hold = 0;
 
@@ -424,7 +447,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		return $str;
 	}
 
-	function showForm($row, $catid, $thread, $subject ) {
+	protected function showForm($row, $catid, $thread, $subject ) {
 		$canPost = $this->canPost ( $catid, $thread );
 		if (! $canPost) {
 			if (! $this->_my->id) {
@@ -443,7 +466,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		$this->name = $myprofile->getName();
 		ob_start ();
 		$this->debug ( "showForm: Rendering form" );
-		include (JPATH_ROOT . '/plugins/content/kunenadiscuss/form.php');
+		include (JPATH_ROOT . "/{$this->basepath}/kunenadiscuss/form.php");
 		$str = ob_get_contents ();
 		ob_end_clean ();
 		return $str;
@@ -453,7 +476,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 	 * Create and reply to topic
 	 *****************************************************************************/
 
-	function createReference($row, $thread) {
+	protected function createReference($row, $thread) {
 		$query = "INSERT INTO #__kunenadiscuss (content_id, thread_id) VALUES(
 			{$this->_db->quote($row->id)},
 			{$this->_db->quote($thread)})";
@@ -462,7 +485,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		CKunenaTools::checkDatabaseError ();
 	}
 
-	function createTopic($row, $catid, $subject) {
+	protected function createTopic($row, $catid, $subject) {
 		require_once (KPATH_SITE . '/lib/kunena.posting.class.php');
 		$message = new CKunenaPosting ( $this->params->get ( 'topic_owner', $row->created_by ) );
 
@@ -505,7 +528,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		return $newMessageId;
 	}
 
-	function replyTopic($row, $catid, $thread, $subject) {
+	protected function replyTopic($row, $catid, $thread, $subject) {
 		if (JRequest::checkToken () == false) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return false;
@@ -561,7 +584,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 	 * Debugging and error handling
 	 *****************************************************************************/
 
-	function debug($msg, $fatal = 0) {
+	protected function debug($msg, $fatal = 0) {
 		$debug = $this->params->get ( 'show_debug', false ); // Print out debug info!
 		$debugUsers = $this->params->get ( 'show_debug_userids', '' ); // Joomla Id's of Users who can see debug info
 
@@ -580,7 +603,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 	 * Permission checks
 	 *****************************************************************************/
 
-	function getForumCategory($catid) {
+	protected function getForumCategory($catid) {
 		// Default Kunena category to put new topics into
 		$default = intval ( $this->params->get ( 'default_category', 0 ) );
 		// Category pairs will be always allowed
@@ -631,7 +654,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		return $default;
 	}
 
-	function canPost($catid, $thread) {
+	protected function canPost($catid, $thread) {
 		require_once (KPATH_SITE . '/lib/kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		if ($thread) {
@@ -641,25 +664,25 @@ class plgContentKunenaDiscuss extends JPlugin {
 		}
 	}
 
-	function isBanned() {
+	protected function isBanned() {
 		require_once(KPATH_SITE . '/funcs/post.php');
 		$post = new CKunenaPost();
 		return $post->isUserBanned();
 	}
 
-	function checkFlood() {
+	protected function checkFlood() {
 		require_once(KPATH_SITE . '/funcs/post.php');
 		$post = new CKunenaPost();
 		return $post->floodProtection();
 	}
 
-	function displayCaptcha() {
+	protected function displayCaptcha() {
 		require_once(KPATH_SITE . '/funcs/post.php');
 		$post = new CKunenaPost();
 		$post->displayCaptcha();
 	}
 
-	function verifyCaptcha() {
+	protected function verifyCaptcha() {
 		require_once(KPATH_SITE . '/funcs/post.php');
 		$post = new CKunenaPost();
 		return $post->verifyCaptcha();

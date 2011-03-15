@@ -18,6 +18,11 @@
 	border:1px solid #f4f4f4;
 	padding:0 5px 5px;
 }
+.kdiscuss-form table,
+.kdiscuss-form tr,
+.kdiscuss-form td {
+	border:0px;
+}
 .kdiscuss-reply-header {
 	padding:5px;
 	font-size: 12px;
@@ -32,7 +37,7 @@
 	font-size: 11px;
 }
 .kdiscuss-form .kdiscuss-title {
-	margin-bottom:5px;;
+	margin-bottom:5px;
 }
 .kdiscuss-item {
 	clear:both;
@@ -43,14 +48,22 @@
 	color:#666;
 	background: #ffffff;
 }
+.kdiscuss-avatar a:link, 
+.kdiscuss-avatar a:visited,
+.kdiscuss-avatar a:hover,
+.kdiscuss-avatar a:active, 
+.kdiscuss-avatar a:focus {
+	background: inherit !important;
+}
 .kdiscuss-avatar {
 	float:left;
 	width: 48px;
 	margin-right: 15px;
 }
 .kdiscuss-avatar img {
-	padding:10px 15px 10px 0px;
+	margin:10px 15px 10px 0px;
 	max-width:48px !important;
+	border:0px;
 }
 .kdiscuss-content-cover{
 	padding:5px 10px 20px 0px;

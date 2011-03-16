@@ -38,9 +38,14 @@ class plgSystemKunena extends JPlugin {
 		parent::__construct ( $subject, $config );
 	}
 
-	function onAfterStoreUser($user, $isnew, $succes, $msg) {
+	// Joomla 1.5 support
+	public function onAfterStoreUser($user, $isnew, $success, $msg) {
+		$this->onUserAfterSave($user, $isnew, $success, $msg);
+	}
+	// Joomla 1.6 support
+	public function onUserAfterSave($user, $isnew, $success, $msg) {
 		//Don't continue if the user wasn't stored succesfully
-		if (! $succes) {
+		if (! $success) {
 			return false;
 		}
 		if ($isnew) {

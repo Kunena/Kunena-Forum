@@ -27,7 +27,7 @@ window.addEvent('domready', function(){
 	}
 
 	function kunenaCheckPollallowed(catid) {
-		if ( pollcategoriesid[catid] != undefined ) {
+		if ( pollcategoriesid[catid] !== undefined ) {
 			document.id('kbbcode-poll-options').setStyle('display');
 			document.id('kbbcode-poll-button').setStyle('display');
 		} else {
@@ -37,7 +37,7 @@ window.addEvent('domready', function(){
 	}
 
 	function kunenaCheckAnonymousAllowed(catid) {
-		if ( arrayanynomousbox[catid] != undefined ) {
+		if ( arrayanynomousbox[catid] !== undefined ) {
 			document.id('kanynomous-check').setStyle('display');
 		} else {
 			document.id('kanynomous-check').setStyle('display','none');
@@ -52,13 +52,13 @@ window.addEvent('domready', function(){
 		<?php } ?>
 	}
 	//	for hide or show polls if category is allowed
-	if(document.id('postcatid') != undefined) {
+	if(document.id('postcatid') !== undefined) {
 		document.id('postcatid').addEvent('change', function(e) {
 			kunenaCheckPollallowed(this.value);
 		});
 	}
 
-	if(document.id('kauthorname') != undefined) {
+	if(document.id('kauthorname') !== undefined) {
 		var kuser = document.id('kauthorname').get('value');
 		var kbutton = document.id('kanonymous');
 		<?php if ($this->my->id != 0) { ?>
@@ -69,13 +69,14 @@ window.addEvent('domready', function(){
 		<?php } ?>
 	}
 	//	to select if anynomous option is allowed on new topic tab
-	if(document.id('postcatid') != undefined) {
+	if(document.id('postcatid') !== undefined) {
 		document.id('postcatid').addEvent('change', function(e) {
-			kunenaCheckAnonymousAllowed(this.value);
+			var postcatid = document.id('postcatid').value;
+			kunenaCheckAnonymousAllowed(postcatid);
 		});
 	}
 
-	if(document.id('postcatid') != undefined) {
+	if(document.id('postcatid') !== undefined) {
 		kunenaCheckPollallowed(document.id('postcatid').getSelected().get("value"));
 		kunenaCheckAnonymousAllowed(document.id('postcatid').getSelected().get("value"));
 	}

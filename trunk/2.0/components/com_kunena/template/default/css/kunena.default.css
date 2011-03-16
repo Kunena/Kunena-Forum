@@ -586,14 +586,15 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	border-color: #F2CAB7;
 }
 
-#Kunena .kmsgtitle {
-	color: #fff ;
+#Kunena .kmsgtitle,
+#Kunena .kmsgtitle-new {
+	color: #FFF;
 }
 #Kunena div.kmsg-header-top span.kmsg-id-top a,
 #Kunena div.kmsg-header-bottom span.kmsg-id-bottom a,
 #Kunena div.kmsg-header-left span.kmsg-id-left a,
 #Kunena div.kmsg-header-right span.kmsg-id-right a {
-	color: #fff !important;
+	color: #FFF !important;
 }
 
 /* AVATAR POSITION

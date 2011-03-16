@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+16-March-2011 Matias
+^ [#22786] Merge revisions 4599-4648 from trunk/1.6
+
 13-March-2011 Severdia
 ^ [#25328] Added new template parameters to default template
 
@@ -1197,6 +1200,40 @@ Kunena 2.0.0-DEV
 
 Kunena 1.6.4-DEV
 
+15-March-2011 Matias
+# [#25339] Joomla 1.6: Change event names
+# [#25343] Joomla 1.6: All links in modules have Itemid=0
+# [#25345] Userlist does not obey user setting to hide his email address
+^ [#15886] Merged revisions 4567-4644 from /branches/1.6.4-LDA(svens)-language-2011-02-23
+
+15-March-2011 LDA
+^ [#24847] updated ar-AA (thanks baazza)
+^ [#24847] updated pl-PL (thanks Andrzej Makowiecki)
+^ [#24847] updated ru-RU (thanks Zarkos)
+
+14-March-2011 Xillibit
+# [#25334] Object doesn't support this property or method in IE compatibility mode
+
+13-March-2011 Severdia
+# [#25335] Fixed Javascripts errors in IE compatibility mode. (thanks to srebbul)
+# [#25329] Fixed missing style for search page header (from template param)
+
+13-March-2011 Matias
++ [#25326] Implement improved PHP error handlers (backport from K2.0)
+^ [#15886] Merged revisions 4567-4614 from /branches/1.6.4-LDA(svens)-language-2011-02-23
+
+12-March-2011 svens(LDA)
+^ [#24847] updated cs-CZ (thanks David Mara)
+^ [#24847] updated ca-ES (thanks Arivor)
+^ [#24847] updated nb-NO (thanks Joomla! i Norge)
+^ [#24847] updated lt-LT (thanks Joomla123.lt)
+^ [#24847] updated pl-PL (thanks JoomlAdmin.pl)
+^ [#24847] updated fi-FI (thanks Mortti)
+
+11-March-2011 Severdia
+^ [#25296] Optimized images showing up as not fully optimized in Page Speed
+# [#25299] Fixed missing active menu for Atomic under Joomla 1.6
+
 10-March-2011 Matias
 ^ [#15886] Merged revisions 4549-4590 from /branches/1.6-xillibit-01-03-2011
 
@@ -1239,11 +1276,11 @@ Kunena 1.6.4-DEV
 ^ [#25168] Fix CSS layout and color issues (read announcement)
 
 6-March-2011 svens(LDA)
-^ [#24847] updated nb-NO (thanks Joomla! i Norge)
 ^ [#24847] updated ru-RU (thanks Zarkos)
 ^ [#24847] updated de-DE (thanks rich)
 ^ [#24847] updated id-ID (thanks Daniel)
-- [#24847] disabled pt-BR version 1.6.1
+^ [#24847] disabled nb-NO version 1.6.1
+^ [#24847] disabled pt-BR version 1.6.1
 
 6-March-2011 Matias
 # [#25192] Regression: the "insert" button for adding a url to a post does not work

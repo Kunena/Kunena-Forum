@@ -108,7 +108,8 @@ class KunenaModelUsers extends KunenaModel {
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
-			$query = "SELECT *
+			$moderator = intval(KunenaFactory::getUser ()->isModerator());
+			$query = "SELECT *, IF(ku.hideEmail=0 OR {$moderator},u.email,'') AS email
 				FROM #__users AS u
 				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
 				WHERE {$where} {$search}";

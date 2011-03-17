@@ -698,8 +698,8 @@ class KunenaForumTopic extends JObject {
 		}
 
 		$db = JFactory::getDBO ();
-		$queries[] = "UPDATE #__kunena_messages SET hold='3' WHERE thread={$db->quote($this->id)}";
-		$queries[] = "UPDATE #__kunena_topics SET hold='3' WHERE id={$db->quote($this->id)}";
+		$queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread={$db->quote($this->id)}";
+		$queries[] = "UPDATE #__kunena_topics SET hold='2' WHERE id={$db->quote($this->id)}";
 
 		foreach ($queries as $query) {
 			$db->setQuery($query);

@@ -31,6 +31,11 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+17-March-2011 Matias
+# [#23443] Split recount categories into smaller tasks with breaks to handle large DB
+^ [#23442] KunenaForumTopicHelper::recount(): add possibility to split the task into smaller pieces
+^ [#23442] KunenaForumTopicUserHelper::recount(): add possibility to split the task into smaller pieces
+
 16-March-2011 Matias
 ^ [#22786] Merge revisions 4599-4648 from trunk/1.6
 

@@ -465,6 +465,10 @@ class KunenaModelInstall extends JModel {
 				if ($this->migrateAttachments ())
 					$this->setTask($task+1);
 				break;
+			case 8:
+				if ($this->recountCategories ())
+					$this->setTask($task+1);
+				break;
 			default:
 				if (! $this->getError ())
 					$this->setStep ( $this->getStep()+1 );
@@ -1001,6 +1005,64 @@ class KunenaModelInstall extends JModel {
 			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_ATTACHMENTS_DONE', $stats->migrated, $stats->missing, $stats->failed), true, '', 'attach' );
 		}
 		return !$count;
+	}
+
+	function recountCategories() {
+		$app = JFactory::getApplication ();
+		$state = $app->getUserState ( 'com_kunena.install.recount', null );
+
+		if ($state === null) {
+			// First run
+			$query = "SELECT MAX(id) FROM #__kunena_messages";
+			$this->db->setQuery ( $query );
+			$state = new StdClass();
+			$state->step = 0;
+			$state->maxId = (int) $this->db->loadResult ();
+			$state->start = 0;
+		}
+
+		while (1) {
+			$count = mt_rand(95000, 105000);
+			switch ($state->step) {
+				case 0:
+					// Update topic statistics
+					kimport('kunena.forum.topic.helper');
+					KunenaForumTopicHelper::recount(false, $state->start, $state->start+$count);
+					$state->start += $count;
+					$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_RECOUNT_TOPICS', min($state->start, $state->maxId), $state->maxId), true, '', 'recount' );
+					break;
+				case 1:
+					// Update usertopic statistics
+					kimport('kunena.forum.topic.user.helper');
+					KunenaForumTopicUserHelper::recount(false, $state->start, $state->start+$count);
+					$state->start += $count;
+					$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_RECOUNT_USERTOPICS', min($state->start, $state->maxId), $state->maxId), true, '', 'recount' );
+					break;
+				case 2:
+					// Update user statistics
+					kimport('kunena.user.helper');
+					KunenaUserHelper::recount();
+					$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_RECOUNT_USER'), true, '', 'recount' );
+					break;
+				case 3:
+					// Update category statistics
+					kimport('kunena.forum.category.helper');
+					KunenaForumCategoryHelper::recount();
+					$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_RECOUNT_CATEGORY'), true, '', 'recount' );
+					break;
+				default:
+					$app->setUserState ( 'com_kunena.install.recount', null );
+					$this->addStatus ( JText::_('COM_KUNENA_MIGRATE_RECOUNT_DONE'), true, '', 'recount' );
+					return true;
+			}
+			if (!$state->start || $state->start > $state->maxId) {
+				$state->step++;
+				$state->start = 0;
+			}
+			if ($this->checkTimeout()) break;
+		}
+		$app->setUserState ( 'com_kunena.install.recount', $state );
+		return false;
 	}
 
 	public function getRequirements() {

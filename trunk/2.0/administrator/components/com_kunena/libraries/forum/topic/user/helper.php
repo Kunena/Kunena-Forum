@@ -111,7 +111,7 @@ class KunenaForumTopicUserHelper {
 		return true;
 	}
 
-	static function recount($topicids=false) {
+	static function recount($topicids=false, $start=0, $end=0) {
 		$db = JFactory::getDBO ();
 
 		if (is_array($topicids)) {
@@ -123,6 +123,10 @@ class KunenaForumTopicUserHelper {
 		} else {
 			$where = '';
 			$where2 = '';
+		}
+		if ($end) {
+			$where .= " AND (m.thread BETWEEN {$start} AND {$end})";
+			$where2 .= " AND (ut.topic_id BETWEEN {$start} AND {$end})";
 		}
 
 		// Create missing user topics and update post count and last post if there are posts by that user

@@ -199,7 +199,7 @@ class KunenaForumTopicHelper {
 		return array($total, $topics);
 	}
 
-	static function recount($ids=false) {
+	static function recount($ids=false, $start=0, $end=0) {
 		$db = JFactory::getDBO ();
 
 		if (is_array($ids)) {
@@ -211,6 +211,9 @@ class KunenaForumTopicHelper {
 		}
 		$where = '';
 		if ($threads) $where = "AND {$threads}";
+		if ($end) {
+			$where .= " AND (tt.id BETWEEN {$start} AND {$end})";
+		}
 
 		// Mark all empty topics as deleted
 		$query ="UPDATE #__kunena_topics AS tt
@@ -243,22 +246,22 @@ class KunenaForumTopicHelper {
 				LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
 				GROUP BY m.thread, m.hold
 			) AS c ON tt.id=c.thread
-			INNER JOIN #__kunena_messages AS min ON c.thread=min.thread AND min.hold=tt.hold AND min.time=c.mintime
-			INNER JOIN #__kunena_messages AS max ON c.thread=max.thread AND max.hold=tt.hold AND max.time=c.maxtime
-			INNER JOIN #__kunena_messages_text AS tmin ON tmin.mesid=min.id
-			INNER JOIN #__kunena_messages_text AS tmax ON tmax.mesid=max.id
+			INNER JOIN #__kunena_messages AS mmin ON c.thread=mmin.thread AND mmin.hold=tt.hold AND mmin.time=c.mintime
+			INNER JOIN #__kunena_messages AS mmax ON c.thread=mmax.thread AND mmax.hold=tt.hold AND mmax.time=c.maxtime
+			INNER JOIN #__kunena_messages_text AS tmin ON tmin.mesid=mmin.id
+			INNER JOIN #__kunena_messages_text AS tmax ON tmax.mesid=mmax.id
 			SET tt.posts=c.posts,
 				tt.attachments=c.attachments,
-				tt.first_post_id = min.id,
-				tt.first_post_time = min.time,
-				tt.first_post_userid = min.userid,
-				tt.first_post_message = tmin.message,
-				tt.first_post_guest_name = IF(min.userid>0,null,min.name),
-				tt.last_post_id = max.id,
-				tt.last_post_time = max.time,
-				tt.last_post_userid = max.userid,
+				tt.first_post_id = mmin.id,
+				tt.first_post_time = mmin.time,
+				tt.first_post_userid = mmin.userid,
+				tt.first_post_message = tmmin.message,
+				tt.first_post_guest_name = IF(mmin.userid>0,null,mmin.name),
+				tt.last_post_id = mmax.id,
+				tt.last_post_time = mmax.time,
+				tt.last_post_userid = mmax.userid,
 				tt.last_post_message = tmax.message,
-				tt.last_post_guest_name = IF(max.userid>0,null,max.name)
+				tt.last_post_guest_name = IF(mmax.userid>0,null,mmax.name)
 			WHERE moved_id=0 {$where}";
 		$db->setQuery($query);
 		$db->query ();

@@ -263,7 +263,6 @@
 			<query>DROP TABLE IF EXISTS `#__kunena_subscriptions`</query>
 			<query>DROP TABLE IF EXISTS `#__kunena_subscriptions_categories`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `channels` TEXT NULL DEFAULT NULL AFTER `published`</query>
-			<phpfile name="upgrade-2.0.0_recount"></phpfile>
 
 			<!-- From Kunena 1.6.4 -->
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD INDEX ( `moderator` );</query>

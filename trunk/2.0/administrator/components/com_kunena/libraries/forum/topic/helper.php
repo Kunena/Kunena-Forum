@@ -255,7 +255,7 @@ class KunenaForumTopicHelper {
 				tt.first_post_id = mmin.id,
 				tt.first_post_time = mmin.time,
 				tt.first_post_userid = mmin.userid,
-				tt.first_post_message = tmmin.message,
+				tt.first_post_message = tmin.message,
 				tt.first_post_guest_name = IF(mmin.userid>0,null,mmin.name),
 				tt.last_post_id = mmax.id,
 				tt.last_post_time = mmax.time,

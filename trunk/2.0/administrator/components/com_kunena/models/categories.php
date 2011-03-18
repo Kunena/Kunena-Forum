@@ -15,6 +15,7 @@ kimport('kunena.forum.category.helper');
 kimport('kunena.model');
 kimport('kunena.user.helper');
 kimport ( 'kunena.html.pagination' );
+jimport ( 'joomla.version' );
 
 /**
  * Categories Model for Kunena
@@ -72,6 +73,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 	public function getAdminCategories() {
 		if ( $this->_admincategories === false ) {
 			$me = KunenaFactory::getUser();
+			$jversion = new JVersion ();
 			$params = array (
 				'ordering'=>$this->getState ( 'list.ordering' ),
 				'direction'=>$this->getState ( 'list.direction' ) == 'asc' ? 1 : -1,
@@ -102,15 +104,19 @@ class KunenaAdminModelCategories extends KunenaModel {
 				$category->reorder = $me->isAdmin($category->parent_id);
 				if ($category->accesstype != 'none') {
 					$category->pub_group = JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($category->accesstype));
-				} else if ($category->pub_access == 0) {
-					$category->pub_group = JText::_ ( 'COM_KUNENA_EVERYBODY' );
-				} else if ($category->pub_access == - 1) {
-					$category->pub_group = JText::_ ( 'COM_KUNENA_ALLREGISTERED' );
-				} else if ($category->pub_access == 1) {
-					$category->pub_group = JText::_ ( 'COM_KUNENA_NOBODY' );
+				} elseif ($jversion->RELEASE == '1.5') {
+					if ($category->pub_access == 0) {
+						$category->pub_group = JText::_('COM_KUNENA_EVERYBODY');
+					} else if ($category->pub_access == - 1) {
+						$category->pub_group = JText::_('COM_KUNENA_ALLREGISTERED');
+					} else if ($category->pub_access == 1) {
+						$category->pub_group = JText::_('COM_KUNENA_NOBODY');
+					} else {
+						$category->pub_group = JText::_( $acl->get_group_name($category->pub_access) );
+					}
 				} else {
 					// FIXME: Add Joomla 1.6 support
-					$category->pub_group = JText::_ ( $acl->get_group_name($category->pub_access));
+					$category->pub_group = $category->pub_group ? JText::_( $acl->get_group_name($category->pub_access) ) : JText::_('COM_KUNENA_NOBODY');
 				}
 				if ($category->accesstype != 'none') {
 					$category->admin_group = '';
@@ -166,7 +172,12 @@ class KunenaAdminModelCategories extends KunenaModel {
 				$category->access = 0;
 				$category->pub_recurse = 1;
 				$category->admin_recurse = 1;
-				$category->pub_access = 0;
+				$jversion = new JVersion ();
+				if ($jversion->RELEASE == '1.5') {
+					$category->pub_access = 0;
+				} else {
+					$category->pub_access = 1;
+				}
 				$category->moderated = 1;
 			}
 			$this->_admincategory = $category;
@@ -200,7 +211,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
-		if ($jversion->RELEASE == 1.5) {
+		if ($jversion->RELEASE == '1.5') {
 			$acl = JFactory::getACL ();
 			$pub_groups = array ();
 			$adm_groups = array ();

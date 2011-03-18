@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+18-March-2011 Matias
+^ [#22786] Merge revisions 4648-4654 from trunk/1.6
+
 17-March-2011 Matias
 # [#23443] Split recount categories into smaller tasks with breaks to handle large DB
 ^ [#23442] KunenaForumTopicHelper::recount(): add possibility to split the task into smaller pieces
@@ -1207,6 +1210,11 @@ Kunena 2.0.0-DEV
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
 Kunena 1.6.4-DEV
+
+18-March-2011 Matias
+# [#25168] Fix CSS color issue in sticky messages
+# [#25375] BBcode color editor doesn't display colors
+# [#24185] Joomla 1.6: Category ACL is not optimal (NOTE: migration from J1.5 needs manual step)
 
 15-March-2011 Matias
 # [#25339] Joomla 1.6: Change event names

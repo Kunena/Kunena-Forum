@@ -113,11 +113,21 @@ function installSampleData()
 
 	$queries[] = array ('kunena_smileys', $query);
 
-	$query="INSERT INTO `#__kunena_categories`
-	(`id`, `parent_id`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`) VALUES
-	(1, 0, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE')).", 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0),
-	(2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE')).", 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).",1 ,1, 0),
-	(3, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE')).", 0, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).",0 ,0, 1);";
+	jimport ( 'joomla.version' );
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE == '1.5') {
+		$query="INSERT INTO `#__kunena_categories`
+		(`id`, `parent_id`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`) VALUES
+		(1, 0, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE')).", 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0),
+		(2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE')).", 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).",1 ,1, 0),
+		(3, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE')).", 0, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).",0 ,0, 1);";
+	} else {
+		$query="INSERT INTO `#__kunena_categories`
+		(`id`, `parent_id`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`) VALUES
+		(1, 0, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE')).", 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0),
+		(2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE')).", 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).",1 ,1, 0),
+		(3, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE')).", 1, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).",0 ,0, 1);";
+	}
 
 	$queries[] = array ('kunena_categories', $query);
 

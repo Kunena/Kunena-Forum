@@ -991,7 +991,7 @@ function showAdministration($option) {
 
 	jimport ( 'joomla.version' );
 	$jversion = new JVersion ();
-	if ($jversion->RELEASE == 1.5) {
+	if ($jversion->RELEASE == '1.5') {
 		// Joomla 1.5
 		 $query= "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, g.id AS group_id, h.name AS admingroup
 			FROM #__kunena_categories AS a
@@ -1034,14 +1034,18 @@ function showAdministration($option) {
 		}
 		if ($v->accesstype != 'none') {
 			$v->groupname = JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($v->accesstype));
-		} else if ($v->pub_access == 0) {
-			$v->groupname = JText::_('COM_KUNENA_EVERYBODY');
-		} else if ($v->pub_access == - 1) {
-			$v->groupname = JText::_('COM_KUNENA_ALLREGISTERED');
-		} else if ($v->pub_access == 1) {
-			$v->groupname = JText::_('COM_KUNENA_NOBODY');
+		} elseif ($jversion->RELEASE == '1.5') {
+			if ($v->pub_access == 0) {
+				$v->groupname = JText::_('COM_KUNENA_EVERYBODY');
+			} else if ($v->pub_access == - 1) {
+				$v->groupname = JText::_('COM_KUNENA_ALLREGISTERED');
+			} else if ($v->pub_access == 1) {
+				$v->groupname = JText::_('COM_KUNENA_NOBODY');
+			} else {
+				$v->groupname = JText::_( $v->groupname );
+			}
 		} else {
-			$v->groupname = JText::_( $v->groupname );
+			$v->groupname = $v->groupname ? JText::_( $v->groupname ) : JText::_('COM_KUNENA_NOBODY');
 		}
 		if ($v->accesstype != 'none') {
 			$v->admingroup = $v->access;
@@ -1100,6 +1104,9 @@ function editForum($id, $option) {
 		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
 	}
 
+	jimport ( 'joomla.version' );
+	$jversion = new JVersion ();
+
 	$kunena_db = JFactory::getDBO ();
 	$kunena_acl = JFactory::getACL ();
 	$kunena_config = KunenaFactory::getConfig ();
@@ -1116,7 +1123,11 @@ function editForum($id, $option) {
 		$category->ordering = 9999;
 		$category->pub_recurse = 1;
 		$category->admin_recurse = 1;
-		$category->pub_access = 0;
+		if ($jversion->RELEASE == '1.5') {
+			$category->pub_access = 0;
+		} else {
+			$category->pub_access = 1;
+		}
 		$category->moderated = 1;
 		$category->accesstype = 'none';
 	}
@@ -1133,8 +1144,6 @@ function editForum($id, $option) {
 	$lists = array ();
 	$accessLists = array ();
 	//create custom group levels to include into the public group selectList
-	jimport ( 'joomla.version' );
-	$jversion = new JVersion ();
 	if ($jversion->RELEASE == 1.5) {
 		$pub_groups = array ();
 		$adm_groups = array ();

@@ -32,6 +32,11 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+18-March-2011 Matias
+# [#25168] Fix CSS color issue in sticky messages
+# [#25375] BBcode color editor doesn't display colors
+# [#24185] Joomla 1.6: Category ACL is not optimal (NOTE: migration from J1.5 needs manual step)
+
 15-March-2011 Matias
 # [#25339] Joomla 1.6: Change event names
 # [#25343] Joomla 1.6: All links in modules have Itemid=0

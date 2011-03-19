@@ -117,6 +117,10 @@
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="kunena_load_css" type="radio" default="1" label="MOD_KUNENALATEST_PARAM_LOAD_CSS" description="MOD_KUNENALATEST_PARAM_LOAD_CSS_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
+		</param>
 		<param name="moduleclass_sfx" type="text" default="" label="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX" description="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX_DESC" />
 	</params>
 	<config>
@@ -272,6 +276,8 @@
 					default=""
 					description="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX_DESC"
 					label="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX" />
+					
+					
 			</fieldset>
 		</fields>
 	</config>

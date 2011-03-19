@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.4
 
+19-March-2011 Severdia
+^ [#25396] Added param to not load module CSS file
+
 14-March-2011 Matias
 ^ [#24415] Update version to 1.6.4
 

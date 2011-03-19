@@ -22,7 +22,7 @@ class modKunenaLatest {
 		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/libraries/html/parser.php');
 		$this->kunena_config = KunenaFactory::getConfig ();
 		$this->myprofile = KunenaFactory::getUser ();
-
+		
 		// load Kunena main language file so we can leverage langaueg strings from it
 		KunenaFactory::loadLanguage();
 
@@ -31,7 +31,8 @@ class modKunenaLatest {
 		$session->updateAllowedForums();
 
 		$this->document = JFactory::getDocument ();
-		if ($cssadded == false) {
+		$kloadcss =  $params->get( 'kunena_load_css' );
+		if ($cssadded == false && $kloadcss) {
 			$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/css/kunenalatest.css' );
 			$cssadded = true;
 		}

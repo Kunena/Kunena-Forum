@@ -171,25 +171,25 @@ class KunenaTemplate extends JObject
 	}
 
 	public function getTopicIcons() {
+		$db = JFactory::getDBO ();
 		if (empty($this->topicIcons)) {
-			$curpath = $this->getPath();
-			$defpath = $this->getPath(true);
+			$path = $this->getPath();
 
-			$path = $curpath;
-			if (!is_file ( KPATH_SITE . "/{$path}/icons.php" )) {
-				$path = $defpath;
-			}
+			$query = "SELECT * FROM #__kunena_topics_icons WHERE published='1' ORDER BY ordering";
+			$db->setQuery ( $query );
+			$topicicons = $db->loadObjectlist();
+			if (KunenaError::checkDatabaseError()) return;
+
+			if ( empty($topicicons) ) return $this->topicIcons;
+
 			$topic_emoticons = array();
-			$this->topicIcons[0] = "/{$defpath}/images/icons/topic-default.gif";
-			include KPATH_SITE . "/{$path}/icons.php";
-			foreach ($topic_emoticons as $id=>$icon) {
-				if (is_file( KPATH_SITE . "/{$curpath}/images/icons/{$icon}" )) {
-					$this->topicIcons[$id] = "{$curpath}/images/icons/{$icon}";
-				} elseif (is_file( KPATH_SITE . "/{$defpath}/images/icons/{$icon}" )) {
-					$this->topicIcons[$id] = "{$defpath}/images/icons/{$icon}";
+			foreach ($topicicons as $icon) {
+				if (is_file( KPATH_SITE . "/{$path}/images/icons/{$icon->filename}" )) {
+					$this->topicIcons[$icon->id] = "{$path}/images/icons/{$icon->filename}";
 				}
 			}
 		}
+
 		return $this->topicIcons;
 	}
 
@@ -236,6 +236,14 @@ class KunenaTemplate extends JObject
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;
+	}
+
+public function getTopicsIconPath($filename) {
+		if ( empty($filename) ) return;
+
+		$path = $this->getPath();
+
+		return  "/{$path}/images/icons/{$filename}";
 	}
 
 	public function getTemplateDetails() {

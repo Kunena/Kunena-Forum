@@ -19,6 +19,7 @@ defined ( '_JEXEC' ) or die ();
 	<a class="kadmin-mainmenu icon-smilies-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=smilies') ?>"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-ranks-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=ranks') ?>"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-files-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=attachments') ?>"><?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW'); ?></a>
+	<a class="kadmin-mainmenu icon-ranks-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topicons') ?>"><?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-prune-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=prune') ?>"><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></a>
 	<a class="kadmin-mainmenu icon-syncusers-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=syncusers') ?>"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a>
 	<a class="kadmin-mainmenu icon-recount-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=recount') ?>"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>

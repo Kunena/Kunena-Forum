@@ -416,6 +416,17 @@
 		<key name="userid" columns="userid" />
 		<key name="targetuserid" columns="targetuserid" />
 	</table>
+	<table name="kunena_topics_icons">
+		<field primary_key="yes" name="id" type="mediumint(8) unsigned"
+			null="0" extra="auto_increment" />
+		<field name="name" type="varchar(255)" null="0" default="" />
+		<field name="filename" type="varchar(255)" null="0" 
+			default="0" />
+		<field name="published" type="tinyint(1) unsigned" null="0"
+			default="0" />
+		<field name="ordering" type="smallint(6)" null="0" default="0" />
+		<key name="PRIMARY" unique="1" columns="id" />
+	</table>
 	<table name="kunena_user_categories">
 		<field primary_key="yes" name="user_id" type="int(11)" null="0" />
 		<field primary_key="yes" name="category_id" type="int(11)" null="0" />

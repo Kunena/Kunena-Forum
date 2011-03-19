@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-March-2011 Xillibit
+# [#25395] Manage topic icons in backend
+
 18-March-2011 Matias
 ^ [#22786] Merge revisions 4648-4654 from trunk/1.6
 

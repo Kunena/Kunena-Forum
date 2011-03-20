@@ -48,6 +48,9 @@ class KunenaAdminModelTopicicons extends KunenaModel {
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
+
+		$id = $this->getInt ( 'id', 0 );
+		$this->setState ( 'item.id', $id );
 	}
 
 	public function getTopicicons() {

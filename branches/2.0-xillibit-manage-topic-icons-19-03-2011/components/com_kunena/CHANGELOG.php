@@ -33,6 +33,7 @@ Kunena 2.0.0-DEV
 
 20-March-2011 Xillibit
 ^ [#25395] Set new icon in backend for topic icons manager
+^ [#25395] Fix some issues in the topic icons manager
 
 19-March-2011 Xillibit
 # [#25395] Manage topic icons in backend

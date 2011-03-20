@@ -199,7 +199,25 @@ class KunenaTemplate extends JObject
 		}
 		$base = '';
 		if ($url) $base = KURL_SITE;
-		return $base.(isset($this->topicIcons[$index]) ? $this->topicIcons[$index] : array_shift($this->topicIcons));
+
+		// if index =0, so we get the topic icon set by default
+		if ( $index == 0 ) {
+			$this->topicIcons[0] = $this->getTopicIconDefault();
+		}
+
+		return $base.(isset($this->topicIcons[$index]) ? $this->topicIcons[$index] : $this->getTopicIconDefault());
+	}
+
+	public function getTopicIconDefault() {
+			$path = $this->getPath();
+		$db = JFactory::getDBO ();
+
+		$query = "SELECT filename FROM #__kunena_topics_icons WHERE published='1' AND isdefault='1'";
+		$db->setQuery ( $query );
+		$defautltopicicon = $db->loadResult();
+		if (KunenaError::checkDatabaseError()) return;
+
+		return "/{$path}/images/icons/{$defautltopicicon}";
 	}
 
 	public function getMovedIconPath($url = false) {
@@ -238,7 +256,7 @@ class KunenaTemplate extends JObject
 		return $html;
 	}
 
-public function getTopicsIconPath($filename) {
+	public function getTopicsIconPath($filename) {
 		if ( empty($filename) ) return;
 
 		$path = $this->getPath();

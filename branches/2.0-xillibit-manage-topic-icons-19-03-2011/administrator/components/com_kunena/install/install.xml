@@ -425,6 +425,8 @@
 		<field name="published" type="tinyint(1) unsigned" null="0"
 			default="0" />
 		<field name="ordering" type="smallint(6)" null="0" default="0" />
+		<field name="isdefault" type="tinyint(1) unsigned" null="0"
+			default="0" />
 		<key name="PRIMARY" unique="1" columns="id" />
 	</table>
 	<table name="kunena_user_categories">

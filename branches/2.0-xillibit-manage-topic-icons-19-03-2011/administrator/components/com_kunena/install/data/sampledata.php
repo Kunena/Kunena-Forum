@@ -43,16 +43,16 @@ function installSampleData()
 	$queries[] = array ('kunena_ranks', $query);
 
 	$query = "INSERT INTO `#__kunena_topics_icons`
-	(`id`, `name`, `filename`, `published`, `ordering`) VALUES
-	(1, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON1'))}, 'topic-default.png', 1, 0),
-	(2, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON2'))}, 'topic-exclamation.png', 1, 1),
-	(3, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON3'))}, 'topic-grin.png', 1, 2),
-	(4, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON4'))}, 'topic-love.png', 1, 3),
-	(5, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON5'))}, 'topic-mark.png', 1, 4),
-	(6, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON6'))}, 'topic-question.png', 1, 5),
-	(7, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON7'))}, 'topic-shock.png', 1, 6),
-	(8, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON8'))}, 'topic-arrow.png', 0, 7),
-	(9, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON9'))}, 'topic-smile.png', 1, 8);";
+	(`id`, `name`, `filename`, `published`, `ordering`, `isdefault`) VALUES
+	(1, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON1'))}, 'topic-default.png', 1, 0, 1),
+	(2, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON2'))}, 'topic-exclamation.png', 1, 1, 0),
+	(3, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON3'))}, 'topic-grin.png', 1, 2, 0),
+	(4, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON4'))}, 'topic-love.png', 1, 3, 0),
+	(5, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON5'))}, 'topic-mark.png', 1, 4, 0),
+	(6, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON6'))}, 'topic-question.png', 1, 5, 0),
+	(7, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON7'))}, 'topic-shock.png', 1, 6, 0),
+	(8, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON8'))}, 'topic-arrow.png', 0, 7, 0),
+	(9, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_TOPICICON9'))}, 'topic-smile.png', 1, 8, 0);";
 
 	$queries[] = array ('kunena_topics_icons', $query);
 

@@ -64,7 +64,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		}
 
 		$iconname = JRequest::getString ( 'topiciconname' );
-		$filename = JRequest::getString ( 'topiciconlist' );
+		$filename = JRequest::getString ( 'topiciconslist' );
 		$published = JRequest::getInt ( 'published' );
 		$ordering = JRequest::getInt ( 'ordering', 0 );
 		$topiciconid = JRequest::getInt( 'topiciconid', 0 );
@@ -152,6 +152,56 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		else $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_UNPUBLISHED' );
 
 		$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_TOPICICON', ' '.$status ) );
+		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+	}
+
+	function bydefault() {
+		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$this->setDefault($cid, 1);
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	function notbydefault() {
+		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$this->setDefault($cid, 0);
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	protected function setDefault($cid, $value) {
+		$app = JFactory::getApplication ();
+		$db = JFactory::getDBO ();
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			return;
+		}
+
+		$id = array_shift($cid);
+		if (empty ( $id )) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_TOPICICON_SELECTED' ), 'notice' );
+			return;
+		}
+
+		$defaultexist = 0;
+		if ($value == 1) {
+			$query = "SELECT isdefault FROM #__kunena_topics_icons WHERE isdefault='1'";
+			$db->setQuery ( $query );
+			$defaultexist = $db->loadResult();
+			if (KunenaError::checkDatabaseError()) return;
+		}
+
+		if ( $defaultexist == 1) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_TOPICICON_ALREADY_DEFAULT' ) );
+		} else {
+			$db->setQuery ( "UPDATE #__kunena_topics_icons SET isdefault = '$value' WHERE id='$id'" );
+			$db->query ();
+			if (KunenaError::checkDatabaseError()) return;
+
+			if ( $value ) $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_DEFAULT' );
+			else $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_NOTDEFAULT' );
+
+			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_TOPICICON', ' '.$status ) );
+		}
+
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 

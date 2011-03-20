@@ -33,6 +33,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					<th width="50%" align="left" ><?php echo JText::_('COM_KUNENA_TOPICICON_IMAGE'); ?></th>
 					<th width="10%" align="center" ><?php echo JText::_('COM_KUNENA_TOPICICON_PUBLISHED'); ?></th>
 					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_ORDERING'); ?></th>
+					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_DEFAULT'); ?></th>
 				</tr>
 			</thead>
 			<tfoot>
@@ -77,7 +78,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						echo $this->escape($row->name);
 						?></a>
 					</td>
-					<td><a href="#edit"
+					<td align="center"><a href="#edit"
 						onclick="return listItemTask('cb<?php
 						echo $row->id;
 						?>','edit')"><img
@@ -87,7 +88,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						alt="<?php
 						echo $this->escape($row->name);
 						?>" border="0" /></a></td>
-					<td class="nowrap"><a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo  ($row->published ? 'un':'').'publish'; ?>')">
+					<td class="nowrap"><a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $row->id; ?>','<?php echo  ($row->published ? 'un':'').'publish'; ?>')">
 						<?php echo ($row->published == 1 ? $img_yes : $img_no); ?></td>
 						</a>
 					</td>
@@ -95,6 +96,10 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						<span><?php echo $this->navigation->orderUpIcon ( $i, $row->up, 'orderup', 'Move Up', 1 ); ?></span>
 						<span><?php echo $this->navigation->orderDownIcon ( $i, $n, $row->down, 'orderdown', 'Move Down', 1 ); ?></span>
 						<input type="text" name="order[<?php echo intval($row->id) ?>]" size="5" value="<?php echo $this->escape ( $row->ordering ); ?>" class="text_area" style="text-align: center" />
+					</td>
+					<td class="nowrap"><a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $row->id; ?>','<?php echo  ($row->isdefault ? 'not':'').'bydefault'; ?>')">
+						<?php echo ($row->isdefault == 1 ? $img_yes : $img_no); ?></td>
+						</a>
 					</td>
 				</tr>
 				<?php

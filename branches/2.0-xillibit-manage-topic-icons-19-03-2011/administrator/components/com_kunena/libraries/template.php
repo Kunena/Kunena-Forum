@@ -199,7 +199,7 @@ class KunenaTemplate extends JObject
 		}
 		$base = '';
 		if ($url) $base = KURL_SITE;
-		return $base.(isset($this->topicIcons[$index]) ? $this->topicIcons[$index] : $this->topicIcons[0]);
+		return $base.(isset($this->topicIcons[$index]) ? $this->topicIcons[$index] : array_shift($this->topicIcons));
 	}
 
 	public function getMovedIconPath($url = false) {

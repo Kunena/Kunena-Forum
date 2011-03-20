@@ -19,7 +19,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER'); ?></div>
+	<div class="kadmin-functitle icon-topicicons"><?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER'); ?></div>
 	   <dl class="tabs" id="pane">
 		<dt><?php echo JText::_('COM_KUNENA_A_TOPICICONS'); ?></dt>
 		<dd>

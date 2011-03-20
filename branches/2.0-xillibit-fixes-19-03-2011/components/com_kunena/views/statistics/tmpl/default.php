@@ -71,11 +71,13 @@ $k = 0;
 			<table class = "kblocktable">
 				<tbody>
 					<tr class = "ksth" >
+						<th>#</th>
 						<th class="kname"> <?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ;?></th>
 						<th class="kbar">&nbsp;</th>
 						<th class="kname"><?php echo JText::_('COM_KUNENA_USRL_HITS') ;?></th>
 					</tr>
 					<?php
+					$i =0;
 					foreach ($this->toptitles as $toptitle) :
 						$k = 1 - $k;
 						if ($toptitle->hits == $this->toptitlehits) {
@@ -85,7 +87,11 @@ $k = 0;
 						}
 					?>
 					<tr class = "k<?php echo $this->escape($tabclass[$k]); ?>">
-						<td class="kcol-first">
+						<td class="kcol-first"><?php
+						echo $i;
+						?>
+						</td>
+						<td class="kcol-mid">
 							<?php echo CKunenaLink::GetThreadLink( 'view', intval($toptitle->catid), intval($toptitle->id), KunenaHtmlParser::parseText ($toptitle->subject), '' ); ?>
 						</td>
 						<td class="kcol-mid">
@@ -95,7 +101,8 @@ $k = 0;
 							<?php echo intval($toptitle->hits); ?>
 						</td>
 					</tr>
-					<?php endforeach; ?>
+					<?php $i++;
+					endforeach; ?>
 				</tbody>
 			</table>
 		</div>
@@ -116,11 +123,13 @@ $k = 0;
 			<table class = "kblocktable">
 				<tbody>
 					<tr  class = "ksth" >
+						<th>#</th>
 						<th class="kname"> <?php echo JText::_('COM_KUNENA_POLL_STATS_NAME');?></th>
 						<th class="kbar">&nbsp;  </th>
 						<th class="kname"><?php echo JText::_('COM_KUNENA_USRL_VOTES') ;?></th>
 					</tr>
 					<?php
+						$i =0;
 						foreach($this->toppolls as $toppoll) :
 						$k = 1 - $k;
 						if (intval($toppoll->total) == $this->toppollvotes) {
@@ -130,7 +139,11 @@ $k = 0;
 						}
 					?>
 					<tr class = "k<?php echo $this->escape($tabclass[$k]); ?>">
-						<td class="kcol-first">
+						<td class="kcol-first"><?php
+						echo $i;
+						?>
+						</td>
+						<td class="kcol-mid">
 							<?php echo CKunenaLink::GetThreadLink( 'view', intval($toppoll->catid), intval($toppoll->threadid), $this->escape($toppoll->title), '' ); ?>
 						</td>
 						<td class="kcol-mid">
@@ -140,7 +153,8 @@ $k = 0;
 							<?php echo intval($toppoll->total); ?>
 						</td>
 					</tr>
-					<?php endforeach; ?>
+					<?php $i++;
+					 endforeach; ?>
 				</tbody>
 			</table>
 		</div>
@@ -161,11 +175,12 @@ $k = 0;
 			<table class = "kblocktable">
 				<tbody>
 					<tr class = "ksth" >
+						<th>#</th>
 						<th class="kname"><?php echo JText::_('COM_KUNENA_USRL_USERNAME') ;?></th>
 						<th class="kbar">&nbsp;</th>
 						<th class="kname"><?php echo JText::_('COM_KUNENA_USRL_POSTS') ;?></th>
 					</tr>
-					<?php
+					<?php $i=0;
 						foreach ($this->topposters as $poster) :
 						$k = 1 - $k;
 						if ($poster->posts == $this->topmessage) {
@@ -175,7 +190,11 @@ $k = 0;
 						}
 					?>
 					<tr class = "k<?php echo $this->escape($tabclass[$k]); ?>">
-						<td class="kcol-first">
+						<td class="kcol-first"><?php
+						echo $i;
+						?>
+						</td>
+						<td class="kcol-mid">
 							<?php echo CKunenaLink::GetProfileLink(intval($poster->userid)); ?>
 						</td>
 						<td class="kcol-mid">
@@ -185,7 +204,8 @@ $k = 0;
 							<?php echo intval($poster->posts); ?>
 						</td>
 					</tr>
-					<?php endforeach; ?>
+					<?php $i++;
+					 endforeach; ?>
 				</tbody>
 			</table>
 		</div>
@@ -206,11 +226,12 @@ $k = 0;
 			<table class = "kblocktable">
 				<tbody>
 					<tr class = "ksth ks">
+						<th>#</th>
 						<th class="kname"> <?php echo JText::_('COM_KUNENA_USRL_USERNAME') ;?></th>
 						<th class="kbar">&nbsp;</th>
 						<th class="kname"><?php echo JText::_('COM_KUNENA_USRL_HITS') ;?></th>
 					</tr>
-					<?php
+					<?php $i=0;
 						foreach ($this->topprofiles as $topprofile) :
 						$k = 1 - $k;
 						if ($topprofile->hits == $this->topprofilehits) {
@@ -220,7 +241,11 @@ $k = 0;
 						}
 					?>
 					<tr class = "k<?php echo $this->escape($tabclass[$k]); ?>">
-						<td class="kcol-first">
+						<td class="kcol-first"><?php
+						echo $i;
+						?>
+						</td>
+						<td class="kcol-mid">
 							<?php echo CKunenaLink::GetProfileLink(intval($topprofile->user_id)); ?>
 						</td>
 						<td class="kcol-mid">
@@ -230,7 +255,8 @@ $k = 0;
 							<?php echo intval($topprofile->hits); ?>
 						</td>
 					</tr>
-					<?php endforeach; ?>
+					<?php $i++;
+					 endforeach; ?>
 				</tbody>
 			</table>
 		</div>
@@ -251,11 +277,12 @@ $k = 0;
 			<table class = "kblocktable">
 				<tbody>
 					<tr class = "ksth ks" >
+						<th>#</th>
 						<th class="kname"> <?php echo JText::_('COM_KUNENA_USRL_USERNAME') ;?></th>
 						<th class="kbar">&nbsp;</th>
 						<th class="kname"><?php echo JText::_('COM_KUNENA_STAT_THANKS_YOU_RECEIVED') ;?></th>
 					</tr>
-					<?php
+					<?php $i = 0;
 						foreach ($this->topuserthanks as $topthanks) :
 						$k = 1 - $k;
 						if ($topthanks->receivedthanks == $this->topthanks) {
@@ -265,7 +292,11 @@ $k = 0;
 						}
 					?>
 					<tr class = "k<?php echo $this->escape($tabclass[$k]); ?>">
-						<td class="kcol-first">
+						<td class="kcol-first"><?php
+						echo $i;
+						?>
+						</td>
+						<td class="kcol-mid">
 							<?php echo CKunenaLink::GetProfileLink(intval($topthanks->id)); ?>
 						</td>
 						<td class="kcol-mid">
@@ -275,7 +306,8 @@ $k = 0;
 							<?php echo intval($topthanks->receivedthanks); ?>
 						</td>
 					</tr>
-					<?php endforeach; ?>
+					<?php $i++;
+					 endforeach; ?>
 				</tbody>
 			</table>
 		</div>

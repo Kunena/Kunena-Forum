@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-March-2011 Xillibit
+^ [#24395] Put ranks and smilies upload into the same place
+^ [#22569] Into frontend statisitcs add number for each line
+
 18-March-2011 Matias
 ^ [#22786] Merge revisions 4648-4654 from trunk/1.6
 

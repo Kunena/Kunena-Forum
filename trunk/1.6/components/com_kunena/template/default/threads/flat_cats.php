@@ -95,7 +95,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<!-- /Latest Post -->
 					<br />
 					<!-- Latest Post Date -->
-					<span class="ktopic-date" title="<?php echo CKunenaTimeformat::showDate($this->lastreply [$leaf->thread]->time, 'config_post_dateformat_hover'); ?>">
+					<span class="ktopic-date" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>">
 						<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat'); ?>
 					</span>
 					<!-- /Latest Post Date -->

@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+21-March-2011 Matias
+# [#24379] Fix Regression: undefined variable
+
 18-March-2011 Matias
 # [#25168] Fix CSS color issue in sticky messages
 # [#25375] BBcode color editor doesn't display colors

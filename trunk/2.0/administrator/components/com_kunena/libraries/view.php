@@ -31,8 +31,9 @@ class KunenaView extends JView {
 
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
-		$template = KunenaFactory::getTemplate();
-		$template->loadTemplate('initialize.php');
+		$this->template = KunenaFactory::getTemplate();
+		$this->template->loadTemplate('initialize.php');
+
 		echo '<div id="Kunena">';
 		$this->common->display('menu');
 		$this->common->display('loginbox');
@@ -186,8 +187,8 @@ class KunenaView extends JView {
 		$this->setTitle(JText::_('COM_KUNENA_ACCESS_DENIED'));
 	}
 
-	function displayPathway() {
-		echo $this->common->display('pathway');
+	function displayBreadcrumb() {
+		echo $this->common->display('breadcrumb');
 	}
 
 	function displayForumJump() {
@@ -203,9 +204,9 @@ class KunenaView extends JView {
 		}
 	}
 
-	function displayStats() {
+	function displayStatistics() {
 		if (KunenaFactory::getConfig()->showstats > 0) {
-			echo $this->common->display('stats');
+			echo $this->common->display('statistics');
 		}
 	}
 

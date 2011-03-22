@@ -67,8 +67,9 @@ JHTML::_('behavior.tooltip');
 						<?php if ($row->published == 1) { ?>
 							<img src="<?php echo JURI::base(true); ?>/components/com_kunena/images/icons/default.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>" />
 						<?php } else { ?>
-							<a href="<?php echo JURI::base(true); ?>/index.php?option=com_kunena&amp;task=publish&amp;cid[]=<?php echo urlencode($row->directory);?>">
-								<img src="<?php echo JURI::base(true); ?>/components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" /></a>
+							<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo urlencode($row->directory);?>','publish')">
+								<img src="<?php echo JURI::base(true); ?>/components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" />
+							</a>
 						<?php } ?>
 					</td>
 					<td align="center">

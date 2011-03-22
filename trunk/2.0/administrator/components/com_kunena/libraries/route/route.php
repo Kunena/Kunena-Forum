@@ -30,6 +30,7 @@ abstract class KunenaRoute {
 	public static function current($object = false) {
 		if (self::$menus === false) self::initialize();
 		$uri = self::prepare();
+		if (!$uri) return false;
 		if ($object) return $uri;
 		return $uri->getQuery ();
 	}
@@ -41,6 +42,7 @@ abstract class KunenaRoute {
 		}
 		if (self::$menus === false) self::initialize();
 		$uri = self::prepare($uri);
+		if (!$uri) return false;
 		if (!$uri->getVar('Itemid')) {
 			self::setItemID ( $uri );
 		}
@@ -60,6 +62,7 @@ abstract class KunenaRoute {
 			return self::$uris[$key];
 		}
 		$uri = self::prepare($uri);
+		if (!$uri) return false;
 		if (!$uri->getVar('Itemid')) {
 			self::setItemID ( $uri );
 		}
@@ -68,6 +71,18 @@ abstract class KunenaRoute {
 		self::$uris[$key] = JRoute::_ ( 'index.php?' . $uri->getQuery (), $xhtml, $ssl ) . ($fragment ? '#'.$fragment : '');
 		self::$urisSave = true;
 		return self::$uris[$key];
+	}
+
+	public static function normalize($uri = null) {
+		if (self::$menus === false) self::initialize();
+
+		$uri = self::prepare($uri);
+		if (!$uri) return false;
+		if (!$uri->getVar('Itemid')) {
+			self::setItemID ( $uri );
+		}
+
+		return 'index.php?' . $uri->getQuery ();
 	}
 
 	public static function getHome($item) {
@@ -129,6 +144,9 @@ abstract class KunenaRoute {
 			}
 			$uri = $current;
 		} elseif (is_numeric($uri)) {
+			if (!isset(self::$menu[intval($uri)])) {
+				return false;
+			}
 			$item = self::$menu[intval($uri)];
 			$uri = JURI::getInstance ( "{$item->link}&Itemid={$item->id}" );
 		} elseif ($uri instanceof JURI) {
@@ -136,7 +154,19 @@ abstract class KunenaRoute {
 		} else {
 			$uri = JURI::getInstance ( (string)$uri );
 		}
-		switch ($uri->getVar('view')) {
+		$option = $uri->getVar('option');
+		$Itemid = $uri->getVar('Itemid');
+		if (!$option && !$Itemid) {
+			return false;
+		} elseif ($option && $option != 'com_kunena') {
+			return false;
+		} elseif ($Itemid && (!isset(self::$menu[$Itemid]) || self::$menu[$Itemid]->component != 'com_kunena')) {
+			return false;
+		}
+		switch ($uri->getVar('view', 'home')) {
+			case 'announcement':
+				$r = array();
+				break;
 			case 'category':
 				$r = array('catid', 'limitstart', 'limit');
 				break;
@@ -147,6 +177,9 @@ abstract class KunenaRoute {
 				$r = array();
 				break;
 			case 'home':
+				$r = array();
+				break;
+			case 'misc':
 				$r = array();
 				break;
 			case 'search':
@@ -170,7 +203,8 @@ abstract class KunenaRoute {
 				$r = array('search', 'limitstart', 'limit');
 				break;
 			default:
-				KunenaRouteLegacy::convert($uri);
+				$result = KunenaRouteLegacy::convert($uri);
+				if (!$result) return false;
 		}
 		return $uri;
 	}

@@ -102,6 +102,10 @@ class KunenaDate extends JDate {
 		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);
 	}
 
+	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset=false) {
+		return '<span class="kdate" title="'.$this->toKunena($title).'">'.$this->toKunena($mode).'</span>';
+	}
+
 	public function toKunena($mode = 'datetime_today', $offset=false) {
 		if (preg_match ( '/^config_/', $mode ) == 1) {
 			$option = substr ( $mode, 7 );

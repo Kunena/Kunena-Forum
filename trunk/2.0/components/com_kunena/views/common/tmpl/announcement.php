@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 <div class="kblock kannouncement">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kannouncement"></a></span>
-		<h2><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->announcement->id, KunenaHtmlParser::parseText($this->announcement->title), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></h2>
+		<h2><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->announcement->id, $this->annTitle, JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
 		<?php if ($this->canEdit) : ?>
@@ -28,16 +28,14 @@ defined ( '_JEXEC' ) or die ();
 		<div class="kbody">
 			<div class="kanndesc">
 				<?php if ($this->announcement->showdate) : ?>
-				<div class="anncreated"><?php echo KunenaDate::getInstance($this->announcement->created)->toKunena('date_today'); ?></div>
+				<div class="anncreated"><?php echo $this->annDate->toKunena('date_today') ?></div>
 				<?php endif; ?>
-				<?php if (!empty($this->announcement->sdescription)) : ?>
-					<div class="anndesc">
-						<?php echo KunenaHtmlParser::parseBBCode($this->announcement->sdescription); ?>
-						<?php if (!empty($this->announcement->description)) : ?>
-						...<br /><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->announcement->id, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
-						<?php endif; ?>
-					</div>
-				<?php endif; ?>
+				<div class="anndesc">
+					<?php echo $this->annDescription; ?>
+					<?php if (!empty($this->announcement->description)) : ?>
+					...<br /><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->announcement->id, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
+					<?php endif; ?>
+				</div>
 			</div>
 		</div>
 	</div>

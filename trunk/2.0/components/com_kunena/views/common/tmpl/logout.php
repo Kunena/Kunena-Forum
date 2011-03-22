@@ -16,19 +16,16 @@ defined ( '_JEXEC' ) or die ();
 <table class="kprofilebox">
 	<tbody>
 		<tr class="krow1">
-			<?php if ($this->me->getAvatarLink('welcome')) : ?>
+			<?php if ($this->me->getAvatarImage('welcome')) : ?>
 			<td class="kprofilebox-left">
-				<?php echo $this->me->getAvatarLink('kavatar', 'welcome'); ?>
+				<?php echo $this->me->getAvatarImage('kavatar', 'welcome'); ?>
 			</td>
 			<?php endif; ?>
 			<td class="kprofileboxcnt">
 				<ul class="kprofilebox-link">
-					<?php if (!empty($this->privateMessages)) : ?>
-						<li><?php echo $this->privateMessages; ?></li>
-					<?php endif ?>
-					<?php if (!empty($this->announcements)) : ?>
-						<li><?php echo $this->announcements; ?></li>
-					<?php endif; ?>
+					<?php if (!empty($this->privateMessagesLink)) : ?><li><?php echo $this->privateMessagesLink ?></li><?php endif ?>
+					<?php if (!empty($this->editProfileLink)) : ?><li><?php echo $this->editProfileLink ?></li><?php endif ?>
+					<?php if (!empty($this->announcementsLink)) : ?><li><?php echo $this->announcementsLink ?></li><?php endif ?>
 				</ul>
 				<ul class="kprofilebox-welcome">
 					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( intval($this->me->userid) ); ;?></strong></li>

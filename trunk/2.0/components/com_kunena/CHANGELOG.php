@@ -31,6 +31,31 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+22-March-2011 Matias
+^ [#22569] Use Joomla pathway instead of our own
++ [#25415] Tableless template: Add initial structure and CSS
++ [#25415] Tableless template: Add layouts from common view
+
+21-March-2011 Matias
+^ [#22569] KunenaRoute: Return false on invalid or unknown routes
+^ [#22569] Add function KunenaRoute::normalize() to return normalized non-SEF URI
+^ [#22569] KunenaRoute: do not allow URIs for other components
+^ [#22569] Rename KunenaUser::getAvatarLink() into getAvatarImage()
+^ [#22569] KunenaUser::getName(): add parameter to escape name - do it by default
++ [#22569] Add function KunenaUser::getLink()
++ [#22569] KunenaController: Add support for custom templates
++ [#22569] Add function KunenaDate::toSpan()
+^ [#22569] KunenaTemplate: change logic for minimized files (functions take now non-minimized version)
+^ [#22569] Rename KunenaView::displayPathway() into displayBreadcrumb()
+^ [#22569] Rename KunenaView::displayStats() into displayStatistics()
+^ [#22569] Cleanup common layouts
+
+19-March-2011 Matias
+# [#23443] Fix regression: category urls are form /category/catid-123
+# [#23443] Administrator, Template Manager: fix setting default template
+^ [#23442] Optimize query in KunenaUserHelper::getOnlineUsers()
+^ [#22569] CSS: rename classes kwho-* into kuser-*
+
 18-March-2011 Matias
 ^ [#22786] Merge revisions 4648-4654 from trunk/1.6
 

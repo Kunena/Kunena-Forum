@@ -42,7 +42,7 @@ $tabclass = array ("row1", "row2" );
 	<!-- Avatar -->
 	<?php
 		$profile = KunenaFactory::getUser((int)$last->last_post_userid);
-		$useravatar = $profile->getAvatarLink('klist-avatar', 'list');
+		$useravatar = $profile->getAvatarImage('klist-avatar', 'list');
 		if ($useravatar) : ?>
 			<span class="klatest-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $useravatar ); ?></span>
 		<?php endif; ?>

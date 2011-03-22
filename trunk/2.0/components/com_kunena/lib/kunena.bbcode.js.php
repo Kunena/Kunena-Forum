@@ -410,7 +410,7 @@ $script = ob_get_contents();
 ob_end_clean();
 
 $template = KunenaTemplate::getInstance();
-$template->addScript('js/editor-min.js');
+$template->addScript('js/editor.js');
 $document->addScriptDeclaration( "// <![CDATA[
 {$script}
 // ]]>");

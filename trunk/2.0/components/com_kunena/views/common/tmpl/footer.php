@@ -17,6 +17,6 @@ defined ( '_JEXEC' ) or die ();
 <?php endif; ?>
 <div class="kcredits kms"><?php echo $this->credits; ?></div>
 <div class="kfooter">
-	<span class="kfooter-time"><?php echo JText::_('COM_KUNENA_FOOTER_TIME_TO_CREATE').' '.$this->getTime().' '.JText::_('COM_KUNENA_FOOTER_TIME_SECONDS');?></span>
+	<span class="kfooter-time"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $this->getTime()) ?></span>
 </div>
 <!-- /Kunena Footer -->

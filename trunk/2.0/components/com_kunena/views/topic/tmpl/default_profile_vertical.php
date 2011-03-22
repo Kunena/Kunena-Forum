@@ -19,7 +19,7 @@ defined ( '_JEXEC' ) or die ();
 			<span class = "kmsgusertype">( <?php echo $this->escape($this->usertype) ?> )</span>
 		</li>
 		<?php endif ?>
-		<?php $avatar = $this->profile->getAvatarLink ('kavatar', 'post'); if ($avatar) : ?>
+		<?php $avatar = $this->profile->getAvatarImage ('kavatar', 'post'); if ($avatar) : ?>
 		<li class="kpost-avatar">
 			<span class="kavatar"><?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $avatar ); ?></span>
 		</li>

@@ -25,11 +25,11 @@ defined ( '_JEXEC' ) or die ();
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">
 					<div class="input">
 						<span>
-							<?php echo JText::_('COM_KUNENA_A_USERNAME'); ?>
+							<?php echo JText::_('COM_KUNENA_LOGIN_USERNAME') ?>
 							<input type="text" name="<?php echo $this->login['field_username']; ?>" class="inputbox ks" alt="username" size="18" />
 						</span>
 						<span>
-							<?php echo JText::_('COM_KUNENA_PASS'); ?>
+							<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD'); ?>
 							<input type="password" name="<?php echo $this->login['field_password']; ?>" class="inputbox ks" size="18" alt="password" /></span>
 						<span>
 							<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>

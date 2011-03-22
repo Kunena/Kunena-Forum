@@ -64,5 +64,5 @@ $this->getModulePosition ( 'kunena_announcement' );
 
 <?php
 $this->displayWhoIsOnline ();
-$this->displayStats ();
+$this->displayStatistics ();
 ?>

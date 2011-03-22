@@ -15,9 +15,10 @@ defined ( '_JEXEC' ) or die ();
 	<div class="kcontainer" id="pathway_tbody">
 		<div class="ksectionbody">
 			<div class = "kforum-pathway">
-				<div class="path-element-first"><?php echo array_shift($this->path) ?></div>
-				<?php foreach($this->path as $element) : ?>
-				<div class="path-element"><?php echo $element ?></div>
+				<?php $item = array_shift($this->pathway) ?>
+				<div class="path-element-first"><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></div>
+				<?php foreach($this->pathway as $item) : ?>
+				<div class="path-element"><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></div>
 				<?php endforeach; ?>
 			</div>
 		</div>

@@ -52,7 +52,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 							<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($this->message->userid), $this->escape($this->message->name) ); ?>
 						</span>
 					</div>
-					<div class="kmessage-avatar"><?php echo $this->user->getAvatarLink('', 'list'); ?></div>
+					<div class="kmessage-avatar"><?php echo $this->user->getAvatarImage('', 'list'); ?></div>
 					<div class="kmessage-msgtext"><?php echo KunenaHtmlParser::stripBBCode ($this->message->message, 300) ?></div>
 				</div>
 				<div>

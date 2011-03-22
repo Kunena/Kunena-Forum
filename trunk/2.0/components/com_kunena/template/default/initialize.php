@@ -24,29 +24,29 @@ var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 // ]]>');
 
 // We load mediaxboxadvanced library
-$template->addStyleSheet ( 'css/mediaboxAdv-min.css');
-$template->addScript( 'js/mediaboxAdv-min.js' );
+$template->addStyleSheet ( 'css/mediaboxAdv.css');
+$template->addScript( 'js/mediaboxAdv.js' );
 
 // New Kunena JS for default template
-$template->addScript ( 'js/default-min.js' );
+$template->addScript ( 'js/default.js' );
 
 $skinner = $template->params->get('enableSkinner', 0);
 
 if (file_exists ( JPATH_ROOT .DS. "templates" .DS. $app->getTemplate() .DS. 'css' .DS. 'kunena.forum.css' )) {
 	// Load css from Joomla template
-	KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.forum-min.css' );
+	KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.forum.css' );
 	if ($skinner && file_exists ( JPATH_ROOT. "templates/".$app->getTemplate().'css/kunena.skinner.css' )){
-		KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.skinner-min.css' );
+		KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.skinner.css' );
 	} elseif (!$skinner && file_exists ( JPATH_ROOT. "templates/".$app->getTemplate().'css/kunena.default.css' )) {
-		KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.default-min.css' );
+		KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.default.css' );
 	}
 } else {
 	// Load css from default template
-	$template->addStyleSheet ( 'css/kunena.forum-min.css' );
+	$template->addStyleSheet ( 'css/kunena.forum.css' );
 	if ($skinner) {
-		$template->addStyleSheet ( 'css/kunena.skinner-min.css' );
+		$template->addStyleSheet ( 'css/kunena.skinner.css' );
 	} else {
-		$template->addStyleSheet ( 'css/kunena.default-min.css' );
+		$template->addStyleSheet ( 'css/kunena.default.css' );
 	}
 }
 $cssurl = JURI::root(true) . '/components/com_kunena/template/default/css';

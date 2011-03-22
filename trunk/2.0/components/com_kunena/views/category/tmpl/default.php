@@ -10,9 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<!-- Pathway -->
-<?php $this->displayPathway () ?>
-<!-- / Pathway -->
+<?php $this->displayBreadcrumb () ?>
 
 <!-- Subcategories -->
 <?php $this->displayCategories () ?>
@@ -112,9 +110,7 @@ defined ( '_JEXEC' ) or die ();
 	</tr>
 </table>
 
-<!-- Pathway -->
-<?php $this->displayPathway () ?>
-<!-- / Pathway -->
+<?php $this->displayBreadcrumb () ?>
 
 <div class="kcontainer klist-bottom">
 	<div class="kbody">

@@ -35,7 +35,7 @@ defined ( '_JEXEC' ) or die ();
 		</li>
 		<?php endif ?>
 		<?php endif; ?>
-		<?php $avatar = $this->profile->getAvatarLink ('kavatar', 'welcome'); if ($avatar) : ?>
+		<?php $avatar = $this->profile->getAvatarImage ('kavatar', 'welcome'); if ($avatar) : ?>
 		<li class="kpost-avatar">
 			<span class="kavatar"><?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $avatar ); ?></span>
 		</li>

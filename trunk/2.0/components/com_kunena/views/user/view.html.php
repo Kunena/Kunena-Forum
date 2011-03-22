@@ -87,7 +87,7 @@ class KunenaViewUser extends KunenaView {
 		}
 		if ($this->config->userlist_joindate || $this->me->isModerator()) $this->registerdate = $this->user->registerDate;
 		if ($this->config->userlist_lastvisitdate || $this->me->isModerator()) $this->lastvisitdate = $this->user->lastvisitDate;
-		$this->avatarlink = $this->profile->getAvatarLink('kavatar','profile');
+		$this->avatarlink = $this->profile->getAvatarImage('kavatar','profile');
 		$this->personalText = $this->profile->personalText;
 		$this->signature = $this->profile->signature;
 		$this->localtime = KunenaDate::getInstance();

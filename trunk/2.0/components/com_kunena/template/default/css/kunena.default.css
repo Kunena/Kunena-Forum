@@ -166,44 +166,6 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	border-bottom-color: #BFC3C6;
 }
 
-/* COLOR ADMINISTRATOR AND MODERATOR
------------------------------------------------------------------------------------------------ */
-
-#Kunena .kwho-admin,
-#Kunena a.kwho-admin {
-	color: #FF0000 !important;
-}
-
-#Kunena .kwho-globalmoderator,
-#Kunena a.kwho-globalmoderator {
-	color: #800000 !important;
-}
-
-#Kunena .kwho-moderator,
-#Kunena a.kwho-moderator {
-	color: #0000FF !important;
-}
-
-#Kunena .kwho-user,
-#Kunena a.kwho-user {
-	color: #5388B4 !important;
-}
-
-#Kunena .kwho-guest,
-#Kunena a.kwho-guest {
-	color: #666666 !important;
-}
-
-#Kunena .kwho-banned ,
-#Kunena a.kwho-banned {
-	color: #A39D49 !important;
-}
-
-#Kunena .kwho-blocked,
-#Kunena a.kwho-blocked {
-	color: #ff0000 !important;
-}
-
 /* MENU
 ----------------------------------------------------------------------------------------------- */
 
@@ -1060,8 +1022,47 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 /* --------------------------------------------------------------- */
 
 /* Kunena 2.0 */
+
 #Kunena .kpagination span {
 	border-color:#5388B4;
 	background-color:#5388B4;
 	color:#FFFFFF;
+}
+
+/* COLOR ADMINISTRATOR AND MODERATOR
+----------------------------------------------------------------------------------------------- */
+
+#Kunena .kuser-admin,
+#Kunena a.kuser-admin {
+	color: #FF0000 !important;
+}
+
+#Kunena .kuser-globalmod,
+#Kunena a.kuser-globalmod {
+	color: #800000 !important;
+}
+
+#Kunena .kuser-moderator,
+#Kunena a.kuser-moderator {
+	color: #0000FF !important;
+}
+
+#Kunena .kuser-user,
+#Kunena a.kuser-user {
+	color: #5388B4 !important;
+}
+
+#Kunena .kuser-guest,
+#Kunena a.kuser-guest {
+	color: #666666 !important;
+}
+
+#Kunena .kuser-banned ,
+#Kunena a.kuser-banned {
+	color: #A39D49 !important;
+}
+
+#Kunena .kuser-blocked,
+#Kunena a.kuser-blocked {
+	color: #ff0000 !important;
 }

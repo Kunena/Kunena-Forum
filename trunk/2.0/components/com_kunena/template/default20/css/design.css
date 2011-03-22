@@ -1,0 +1,1053 @@
+@charset "utf-8";
+
+/* DESIGN STYLES
+-------------------------------------------------------------------------- */
+
+/* The following attributes belong in this file:
+
+font-family
+font-size
+font-style
+font-weight
+color
+background-color
+text-decoration
+text-transform
+border
+
+*/
+
+html {font-size:100.01%;}
+body {font-size:75%;color:#222;background:#fff;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}
+h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}
+h1 {font-size:20px;}
+h2 {font-size:16px;}
+h3 {font-size:15px;}
+h4 {font-size:12px;}
+h5,h6 {font-size:11px;}
+p {font-size:12px;}
+a:focus, a:hover {color:#09f;}
+a {color:#06c;text-decoration:underline;}
+blockquote {margin:1.5em;color:#666;font-style:italic;}
+strong, dfn {font-weight:bold;}
+em, dfn {font-style:italic;}
+select {font-size: 11px;}
+table {border-collapse: collapse;}
+
+input.kinputbox, textarea.ktxtarea {
+
+	background-color: #FFFFFF;
+
+    border-color: #BFC3C6;
+
+}
+
+
+.kheader {
+	background-color: #5388B4;
+	color: #fff;
+	font-weight: bold;
+}
+.kheader a {
+	color: #fff;
+	font-weight: bold;
+	text-decoration: none;
+}
+.kheader a:hover {
+	text-decoration: underline;
+}
+.ksection .kheader-desc {
+    background: #5388B4;
+    color: #fff;
+}
+.ksection .kheader-desc.ktoggle-close {
+    background-color: #999999;
+}
+li.kannounce-date {
+	font-style: italic;
+}
+
+tr.krow1 td {
+
+	background-color: #F2F1EE;
+
+}
+
+tr.krow2 td {
+
+	background-color: #FFFFFF;
+
+}
+
+td.kcol-first {
+
+    border-bottom-color: #BFC3C6;
+
+}
+
+td.kcol-mid {
+
+    border-bottom-color: #BFC3C6;
+
+    border-left-color: #BFC3C6;
+
+}
+
+td.kcol-last {
+
+    border-bottom-color: #BFC3C6;
+
+    border-left-color: #BFC3C6;
+
+}
+
+.kbutton {
+
+    background-color: #5388B4;
+
+    border: 1px solid #CCCCCC;
+
+    color: #FFFFFF;
+
+    font-size: 11px;
+
+}
+
+.kbutton:hover {
+
+    background-color: #CCCCCC;
+
+    border: 1px solid #000000;
+
+    color: #000000;
+
+}
+
+.kattachment .kbutton {
+
+    color: #000000;
+
+}
+
+.kfile-input-button, .kfile-input-button:hover, .kfile-input-button:focus {
+
+    background-color: #F2F1EE;
+
+    border-color: #999999;
+
+    color: #000000;
+
+}
+
+
+
+.kpostbuttonset,.kpostbuttons {
+
+    border-color: #BFC3C6;
+
+}
+
+/*---------- Top Menu ------------- */
+
+.kmenu {
+	border-bottom: 3px solid #5388B4;
+}
+.kmenu ul li { 
+	background: #ddd;
+	font-size: 13px;
+	}
+.kmenu ul li:hover,
+.kmenu ul li.active { 
+	background: #5388B4;
+}
+.kmenu ul li a { 
+	color: #000;
+	text-decoration: none;
+}
+.kmenu ul li:hover a,
+.kmenu ul li.active a { 
+	color: #FFF;
+}
+.klogin {
+	background-color: #f3f3f3; 
+	}
+ul.klogin-userlinks {
+	font-size: 11px;
+}
+li.klogin-avatar img {
+	border: 1px solid #ccc;
+	}
+
+
+
+/*---------- Breadcrumbs ------------- */
+
+.kbreadcrumb {
+	background-color: #f3f3f3; 
+}
+li.kbreadcumb-viewing,
+li.kbreadcumb-total {
+	font-weight: bold
+}
+
+
+/*---------- Category List ------------- */
+.kcategories-row table,
+.kposts-row table,
+.ktopics-row table,
+.ktags-row table,
+.kcategory-row table,
+.krecposts-row table {
+	border-top: 1px solid #ccc;
+}
+.kcategories-row table caption,
+.kposts-row table caption,
+.ktopics-row table caption,
+.ktags-row table caption,
+.krecposts-row table caption {
+	font-size: .001em;
+}
+
+td.kcategory-icon {
+	border-right: 1px solid #ccc;
+}
+.ktopic-title h3,
+.kpost-title h3,
+.kcategory-title h3,
+.krecposts-body h3,
+.ktag-title h3 {
+	font-weight: bold;
+}
+.ktopic-details,
+.ktopic-category,
+li.krecposts-det,
+.krecposts-title,
+.krecposts-title,
+.krecposts-sect-title,
+.krecposts-cats-title,
+.krecposts-topic,
+.krecposts-sect,
+.krecposts-cats,
+li.kcategory-smdetails h4,
+li.kpost-smdetails h4,
+li.ktopic-smdetails h4,
+li.ktag-smdetails h4,
+li.krecposts-smdetails h4 { 
+	font-size: 11px;	
+}
+.ktopic-category{
+	font-weight: bold;
+	color: #333;
+}
+.ktopic-actions,
+.kcategory-actions li a,
+.ktopic-actions li a {
+	text-decoration: none;
+}
+.ktopic-actions {
+	float:left;
+}
+.kcounts,
+.kcategory-smdetails-lastpost { 
+	color: #999;
+	font-size: 11px;
+}
+td.kcategory-subs,
+td.ktopic-subs,
+td.kcategory-topics,
+td.kcategory-replies,
+td.ktopic-replies,
+td.ktag-posts,
+td.kcategory-views,
+td.ktopic-views,
+td.kcategory-posts,
+td.krecposts-replies,
+td.krecposts-views {
+	border-left: 1px solid #ccc;
+	color: #999;
+	font-size: 20px;
+}
+#klatest-detailsbox .krow-odd td.kcategory-views,
+#klatest-detailsbox .krow-odd td.ktopic-views,
+#klatest-detailsbox .krow-even td.kcategory-views,
+#klatest-detailsbox .krow-even td.ktopic-views,
+#klatest-detailsbox .krow-odd td.kcategory-replies,
+#klatest-detailsbox .krow-odd td.ktopic-replies,
+#klatest-detailsbox .krow-even td.kcategory-replies,
+#klatest-detailsbox .krow-even td.ktopic-replies,
+#klatest-detailsbox .krow-odd td.kcategory-subs,
+#klatest-detailsbox .krow-odd td.ktopic-subs,
+#klatest-detailsbox .krow-even td.kcategory-subs,
+#klatest-detailsbox .krow-even td.ktopic-subs {
+	background-color: #F9F9F9;
+}
+
+td.kcategory-topics span,
+td.kcategory-replies span,
+td.ktopic-replies span,
+td.ktag-posts span,
+td.kcategory-views span,
+td.ktopic-views span,
+td.kcategory-posts span,
+td.krecposts-topics span,
+td.krecposts-replies span,
+td.krecposts-views span {
+	font-size: 14px;
+}
+td.kcategory-subs span,
+td.ktopic-subs span{
+	font-size: 12px;
+}
+
+.kcategories-row table td.kcategory-lastpost,
+.kposts-row table td.kpost-author,
+.ktopics-row table td.ktopic-lastpost,
+.ktags-row table td.ktag-lastpost,
+.krecposts-row table td.krecposts-lastpost {
+	border-left: 1px solid #ccc;
+}
+li.kcategory-smavatar img,
+li.kpost-smavatar img,
+li.ktopic-smavatar img,
+li.ktag-smavatar img,
+li.krecposts-smavatar img {
+	border: 1px solid #ccc;	
+}
+.krow-odd {
+	background-color: #f3f3f3; 
+}
+.krow-sticky {
+	background-color: #FFFFCC; 
+}
+.kcategories-row {
+	/* background-color: red; */	
+}
+.kwhosonline-users {
+	border-left: 1px solid #CCC;
+	}
+.kwhosonline-subtitle {
+	border-bottom: 1px solid #CCC;
+}
+.kwhosonline-legend ul li {
+	font-size: 11px;
+}
+.klegend-title 				{ font-weight: bold; }
+.kuser-admin 			{ color: #FF0000;}
+.kuser-globalmod 		{ color: #800000; }
+.kuser-moderator 		{ color: #0000FF; }
+.kuser-user 			{ color: #5388B4; }
+.kuser-guest 			{ color: #666666; }
+.kwhosonline-legend ul li span { color: #000; }	
+
+.kstatistics-totals {
+	border-left: 1px solid #CCC;
+}
+.kstatistics-totals ul li span,
+.kstatistics-totals-links ul li span {
+	font-weight: bold;	
+}
+.kheader-link {
+	color: #fff;
+	font-size: 11px;
+}
+.kcategory-smtitle h4 {
+	font-size: 11px;
+}
+h2.ktoggle-close {
+	background-color: #999999;
+}
+h2.ktoggle-close a {
+	color: #ccc;
+}
+
+.kfilter-button {
+	border: 1px solid #666;
+	margin: 2px;
+	background-color:#5388B4;
+	color: #fff;
+	font-size: 10px;
+}
+
+.kfilter-button:hover {
+	border: 1px solid #333;
+	background-color: #DDDDDD;
+	cursor:pointer;
+	color: #000;
+}
+
+li.kcategory-modtitle {
+	font-size: 11px;
+	font-weight:bold;
+}
+li.kcategory-modname {
+	font-size: 11px;
+	}
+	
+li.kcategory-mods { 
+	border-bottom: 1px solid #ccc;
+}	
+
+.ksubscriptions-category li.kcategory-mods,
+.kusercats li.kcategory-mods { 
+	border-bottom: 0px;
+}	
+
+td.ktopic-icon {
+	border-right: 1px solid #ccc;
+}
+.kcategory-lastpost li a,
+.kpost-author li,
+.kpost-author li a,
+.ktopic-lastpost li a,
+.ktag-lastpost li a,
+.kcategory-lastpost li,
+.ktopic-lastpost li,
+.ktag-lastpost li,
+.krecposts-lastpost li,
+.krecposts-lastpost li a {
+	font-size: 10px;
+}
+
+
+/*---------- Topic Tags ------------- */
+.ktopic-tags {
+	border-top: 1px solid #ddd;
+}
+.ktopic-tags li {
+	font-size: 11px;
+}
+
+.ktopic-tags li a,
+.krecposts-sect a,
+.krecposts-cats a {
+	color: #5388B4;
+}
+.ktopic-tags li a,
+.krecposts-sect a,
+.krecposts-cats a {
+	text-decoration: none;
+}
+.ktopic-tags li a:hover,
+.krecposts-sect a:hover,
+.krecposts-cats a:hover {
+	text-decoration: underline;
+}
+.ktopic-tags-title,
+.krecposts-title,
+.krecposts-sect-title,
+.krecposts-cats-title {
+	font-weight: bold;
+	color: #333;
+}
+.ktopic-taglist {
+	background-color: #14537b;
+}
+.ktopic-taglist li {
+	font-size: 11px;
+}
+.ktopic-taglist li a {
+	color: #f5f5f5;
+}
+.ktopic-taglist-title {
+	color: #FFF;
+}
+
+
+
+/*---------- Topic Categories ------------- */
+
+.ktopic-cats {
+
+	border-top: 1px solid #ddd;
+
+}
+
+.ktopic-cats li {
+
+	font-size: 11px;
+
+}
+
+.ktopic-cats li a {
+
+	color: #5388B4;
+
+}
+
+.ktopic-cats li a {
+
+	text-decoration: none;
+
+}
+
+.ktopic-cats li a:hover {
+
+	text-decoration: underline;
+
+}
+
+.ktopic-cats-title {
+
+	font-weight: bold;
+
+	color: #333;
+
+}
+
+.ktopic-catlist {
+
+	background-color: #14537b;
+
+}
+
+.ktopic-catlist li {
+
+	font-size: 11px;
+
+}
+
+.ktopic-catlist li a {
+
+	color: #f5f5f5;
+
+}
+
+.ktopic-catlist-title {
+
+	color: #FFF;
+
+}
+
+/*---------- Topics ------------- */
+
+.ktopic-subsc {
+    font-size: 11px;
+    color: #fff;
+}
+.kposthead {
+	background-color: #666;
+}
+.kposthead h3,
+.kposthead li,
+.kposthead li a{
+	color: #fff;
+}
+.kposthead-postsubs,
+.kposthead-posttime,
+.kposthead-postip,
+.kposthead-postid {
+	font-size: 11px;
+}
+/*.kposts-row {
+	border-bottom: 1px solid #BCBCBC;
+}*/
+
+/* User details */
+.kpost-user-username a { 
+	font-size: 16px;
+}
+.kpost-user-avatar img {
+	border: 1px solid #BCBCBC;
+	}
+.kpost-user-status {}
+.kpost-user-rank {}
+.kpost-user-points {}
+.kpost-user-posts {}
+.kpost-user-icons {}
+.kpost-user-perstext {
+	font-style:italic;
+}
+
+/* Post body */
+
+.kpost-container {
+	border-right: 1px solid #BCBCBC;
+}
+.kpost-body-attach {
+	font-size: 9px;
+}
+.kpost-body-lastedit {
+	font-size: 9px;
+}
+.kpost-body-editreason {
+	font-size: 9px;
+}
+.kpost-body-sig {
+	color: #999;
+	border-top: 1px dotted #BFC3C6;
+	border-bottom: 1px dotted #BFC3C6;
+    font-size: 11px;
+}
+
+
+/* Attachments */
+
+.kpost-body-attach {
+	border: 1px solid #BCBCBC;
+	background-color: #f9f9f9;
+}
+.kattach-title {
+	font-size: 11px;
+	font-weight: bold;
+	background-color: #bcbcbc;
+}
+.kattach-details span {
+	font-size: 11px;
+}
+
+
+/*---------- Pagination ------------- */
+
+.kpage li {
+    border: 0 none;
+    font-size: 11px;
+}
+li.kpage-title { 
+	font-weight: bold;
+}
+.kpage a:link, 
+.kpage a:visited {
+    color: #000;
+    border: 1px solid #5388B4;
+}
+.kpage a:hover {
+    color: #fff;
+    border: 1px solid #ccc;
+    background-color: #5388B4;
+}
+.kpagination-topic .kpage li {
+    font-size: 10px;
+    line-height: 11px;
+}
+.kpagination-topic li.kpage-title { 
+	font-size: 10px;
+}
+
+/*---------- Buttons ------------- */
+
+.kicon-button {
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 11px;
+	border: none;
+}
+a.kicon-button span span:hover {
+	text-decoration: underline;
+}
+a.kicon-button:hover {
+	color: #fff;
+}
+.kbuttonbar-post {
+	border-top: 1px solid #bcbcbc;
+}
+
+/*---------- Filter Options ------------- */
+ul.kfilter-options select { 
+	border: 1px solid #999999;
+}
+
+
+/*---------- Moderator Tools ------------- */
+#ksection-modbox select,
+
+#ktopics-modbox select {
+	border: 1px solid #999;
+}
+
+
+/*---------- Profile ------------- */
+
+.clrline {
+
+	border-top-color: #BFC3C6; 
+
+}
+
+.kblock.kflat {
+
+	border-color: #BCBCBC;	
+
+}
+
+div.kmsgsignature {
+
+	border-top-color: #BFC3C6;
+
+	color: #999999;
+
+}
+
+
+/*---------- User list ------------- */
+
+.kuserlist-checkbox {
+    font-size: 10px;
+}
+
+/*---------- Tabs ------------- */
+
+dl.tabs dt {
+
+	border-left-color: #BFC3C6;
+
+	border-right-color: #BFC3C6;
+
+	border-top-color: #BFC3C6;
+
+	background-color: #f0f0f0;
+
+	color: #666;
+
+}
+
+dl.tabs dt.open {
+
+	background-color: #F9F9F9;
+
+	border-bottom-color: #F9F9F9;
+
+	color: #000;
+
+}
+
+div.current {
+
+	border-color: #BFC3C6;
+
+}
+
+dt.kprofile-modbtn {
+
+	background-color:#999999 !important;
+
+	color: #FFF !important;
+
+}
+
+
+/*---------- New Topic Form ------------- */
+
+.kpostmessage select {
+	border-color: #999;
+
+}
+
+.kpostmessage fieldset {
+
+	background: #FFFFFF;
+
+	border-color: #BCBCBC;
+
+}
+
+.kpost-message .invalid {
+
+    background-color: #FFDDDD !important;
+
+    border-color: red !important;
+
+}
+
+table.kblocktable {
+
+    border-color: #BFC3C6;
+
+}
+
+img.kbbcode:hover {
+
+	background-color: #e4e4e4;
+
+}
+
+div#kbbcode-size-options span:hover {
+
+	background-color: #e4e4e4;
+
+}
+
+#kbbcode-toolbar li a:hover {
+
+	background-color: #e4e4e4;
+
+}
+
+ul#kbbcode-toolbar li a#kbbcode-separator1,
+
+ul#kbbcode-toolbar li a#kbbcode-separator2,
+
+ul#kbbcode-toolbar li a#kbbcode-separator3,
+
+ul#kbbcode-toolbar li a#kbbcode-separator4,
+
+ul#kbbcode-toolbar li a#kbbcode-separator5,
+
+ul#kbbcode-toolbar li a#kbbcode-separator6,
+
+ul#kbbcode-toolbar li a#kbbcode-separator7,
+
+ul#kbbcode-toolbar li a#kbbcode-separator8 {
+
+	background-color: #eeeeee;
+
+}
+
+.kpostmessage .kpostbuttonset td, .kpostmessage tr.krow2 .kpostbuttonset td {
+
+    border-color: #BFC3C6;
+
+}
+
+.kpostmessage .kpostbuttonset .kposthint {
+
+    background-color: #FFFFCC;
+
+    border-color: #DDD5BF;
+
+}
+
+.kpostmessage .kposthint .kinputbox {
+
+    background-color: #FFFFCC;
+
+    border-color: #FFFFCC;
+	padding: 0;
+}
+
+.kpostmessage .ktxtarea {
+
+    border-color: #BFC3C6;
+
+}
+
+
+
+/*---------- Statistics ------------- */
+
+#kstatistics-general .kstatistics-totals-col1 {
+
+	border-left: none;	
+
+}
+
+tr.ksth th.kname, tr.ksth th.kbar {
+
+	background: #DDDDDD;
+
+}
+
+
+
+/*---------- Advanced Search ------------- */
+
+#searchform {
+
+	background: #F3F3F3;
+
+}
+
+#searchform fieldset {
+
+	background: #FFFFFF;
+
+	border-color: #BCBCBC;	
+
+}
+
+#searchform .input {
+
+	background-color: #FFFFFF;
+
+    border-color: #BFC3C6;
+
+    color: #000000;
+
+}
+
+#searchform .clrline {
+
+	background-color: #FFFFFF;
+
+	border-color: #BFC3C6;
+
+}
+
+#searchform LEGEND {
+
+	font-size: 1.1em;
+
+}
+
+#searchform .kpost-buttons {
+
+	background-color: #FFFFFF;
+
+	border-top-color: #BFC3C6;
+
+}
+
+
+/*---------- Manage Categories ------------- */
+.kcategories .kcategory-row td {
+	border-right-color: #CCCCCC;
+}
+.kcategories .kcategory-title h3 {
+	color: #0066CC;
+}
+/*.kcategories .kcategory-row {
+	border-top-color: #CCCCCC;
+}*/
+
+.kcategory-row th {
+	background: #666;
+}
+.kcategory-row th a {
+	font-size: 10px;
+	color: #fff;
+	text-decoration: none;
+}
+.kcategory-row th a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+
+
+/*---------- Display User Posts ------------- */
+
+.kuser-posts .kpost-body {
+
+	border-color: #CCCCCC;
+
+}
+
+
+
+/*---------- Tooltips ------------- */
+
+.tool-tip {
+
+	background-color: #FFC;
+
+	border-color: #D4D5AA;
+
+}
+
+.tool-title {
+
+	font-size: 100%;
+
+	font-weight: bold;
+
+}
+
+.tool-text {
+
+	font-size: 100%;
+
+}
+
+
+
+/*---------- Edit Post ------------- */
+
+
+
+
+
+/*---------- Moderate Topic ------------- */
+
+.kmod-detailsbox .kpost-buttons {
+
+	border-top-color: #BCBCBC; 
+
+}
+
+.kmoderate-message {
+
+	border-color: #BCBCBC;
+
+}
+
+.kmoderate-message h4 {
+
+	font-weight: bold;
+
+}
+
+
+
+/*---------- Manage Subscribers ------------- */
+
+.kcatsubscribers-list th {
+
+	background-color: #DDDDDD;	
+
+}
+
+.kcatsubscribers-list td {
+
+	border-color: #BCBCBC;
+
+}
+
+#ksection-subscribe {
+
+	border-color: #BCBCBC;
+
+}
+
+
+/*---------- Footer ------------- */
+
+#kcredit p {
+	font-size: 10px;
+	color: #999;
+}
+
+
+
+/*---------- Manage Subscriptions ------------- */
+
+.kcategory-moderation {
+
+	border-left-color: #CCCCCC;
+
+}
+
+
+
+/*---------- Display Tags ------------- */
+
+
+
+/*---------- Create Category ------------- */
+
+.kpostcategory-row,
+.kpostmessage-row,
+.keditprofile-row {
+	border-bottom-color: #BFC3C6;
+}
+.ksubhead {
+	background-color: #DDDDDD;
+}
+
+/*---------- General Statistics ------------- */
+
+
+/*---------- Edit User ------------- */
+
+.kedit-user-information-row {
+	border-bottom-color: #BFC3C6;
+}
+.kedit-user-information-row .kform-label { width: 20%; }
+.kedit-user-information-row .kform-field { width: 73%; }
+#avatar_category_select {
+	margin-bottom: 15px;
+}
+.ks { font-weight: normal; }
+#kprofile-edit .kpost-buttons,
+.kmod-userbox .kpost-buttons {
+	border-color: #BFC3C6;
+}

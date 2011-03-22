@@ -332,7 +332,7 @@ class KunenaViewCategory extends KunenaView {
 			$this->message_position = $this->topic->getTotal() - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 			$this->pages = ceil ( $this->topic->getTotal() / $this->config->messages_per_page );
 			if ($this->config->avataroncat) {
-				$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarLink('klist-avatar', 'list');
+				$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 			}
 
 			if (is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering) {

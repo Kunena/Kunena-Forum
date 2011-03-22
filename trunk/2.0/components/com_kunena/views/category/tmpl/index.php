@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->common->display ('announcement');
+$this->displayAnnouncement ();
 $this->getModulePosition ( 'kunena_announcement' );
-$this->common->display ('pathway');
+$this->displayBreadcrumb ();
 ?>
 
 <div class="klist-markallcatsread kcontainer">
@@ -45,5 +45,5 @@ if (count ( $this->categories )) {
 	$this->displayInfoMessage ();
 }
 $this->displayWhoIsOnline();
-$this->displayStats();
+$this->displayStatistics();
 ?>

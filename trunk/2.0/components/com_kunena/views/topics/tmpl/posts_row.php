@@ -65,7 +65,7 @@ defined ( '_JEXEC' ) or die ();
 			<?php
 			if ($this->config->avataroncat > 0) :
 				$profile = KunenaFactory::getUser((int)$this->message->userid);
-				$useravatar = $profile->getAvatarLink('klist-avatar', 'list');
+				$useravatar = $profile->getAvatarImage('klist-avatar', 'list');
 				if ($useravatar) :
 			?>
 			<span class="ktopic-latest-post-avatar">

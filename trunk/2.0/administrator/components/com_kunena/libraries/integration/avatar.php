@@ -61,11 +61,8 @@ abstract class KunenaAvatar {
 		if (!$avatar) return;
 		if ($class) $class=' class="'.$class.'"';
 
-		// Why in the world do you need to have CSS here????
-		$link = '<img'.$class.' src="'.$avatar.'" alt="" style="max-width: '.$size->x.'px; max-height: '.$size->y.'px" />';
-
-		// Correcting that...but leaving that line above just in case...
-		//$link = '<img'.$class.' src="'.$avatar.'" alt="User Avatar" />';
+		$link = '<img'.$class.' src="'.$avatar.'" alt="'.JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()).'" />';
+		//$link = '<img'.$class.' src="'.$avatar.'" alt="'.JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()).'" style="max-width: '.$size->x.'px; max-height: '.$size->y.'px" />';
 
 		return $link;
 	}

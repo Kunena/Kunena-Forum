@@ -41,7 +41,7 @@ $k = 0;
 							<p><?php echo $this->escape( $message->name ) ?></p>
 							<p><?php
 								$profile = KunenaFactory::getUser(intval($message->userid));
-								$useravatar = $profile->getAvatarLink('','','profile');
+								$useravatar = $profile->getAvatarImage('','','profile');
 								if ($useravatar) :
 									echo CKunenaLink::GetProfileLink ( intval($message->userid), $useravatar );
 								endif;

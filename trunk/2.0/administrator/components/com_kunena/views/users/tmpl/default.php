@@ -80,7 +80,7 @@ $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/ad
 				<td align="center">
 					<?php echo JHTML::_('grid.id', $user->id, $user->id) ?>
 				</td>
-				<td align="center" width="1%"><?php echo $kunena_user->getAvatarLink('kavatar', 36, 36); ?></td>
+				<td align="center" width="1%"><?php echo $kunena_user->getAvatarImage('kavatar', 36, 36); ?></td>
 				<td align="center" width="1%"><?php echo $this->escape($kunena_user->userid); ?></td>
 				<td>
 					<a href="#edit" onclick="return listItemTask('cb<?php echo $user->id; ?>','edit')"><?php echo $this->escape($kunena_user->username); ?></a>

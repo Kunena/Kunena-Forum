@@ -15,7 +15,7 @@ $topic_emoticons = $template->getTopicIcons();
 
 if (!empty($this->poll)) {
 	$template = KunenaTemplate::getInstance();
-	$template->addScript('js/poll-min.js');
+	$template->addScript('js/poll.js');
 	$this->document->addScriptDeclaration('// <![CDATA[
 		var KUNENA_POLL_CATS_NOT_ALLOWED = "'.JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED').'";
 		var KUNENA_EDITOR_HELPLINE_OPTION = "'.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION').'";
@@ -45,7 +45,7 @@ $this->setTitle ( $this->title );
 
 $this->k=0;
 ?>
-<?php $this->common->display ( 'pathway' )?>
+<?php $this->displayBreadcrumb (); ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" class="postform form-validate" id="postform"
 	method="post" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">

@@ -126,7 +126,7 @@ document.addEvent('domready', function() {
 						}
 
 						$profile=KunenaFactory::getUser(intval($user->id));
-						$uslavatar=$profile->getAvatarLink('usl_avatar', 'list');
+						$uslavatar=$profile->getAvatarImage('usl_avatar', 'list');
 					?>
 
 					<tr class="k<?php echo $usrl_class ;?>">

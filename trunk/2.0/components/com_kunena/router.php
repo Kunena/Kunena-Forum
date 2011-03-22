@@ -198,7 +198,7 @@ class KunenaRouter {
 		$numeric = isset ( $menuitem->query ['catid'] );
 
 		// Support URIs like: /forum/12-my_category
-		if (isset ( $query ['catid'] ) && ($view == 'cetegory' || $view == 'topic')) {
+		if (isset ( $query ['catid'] ) && ($view == 'category' || $view == 'topic')) {
 			// TODO: ensure that we have view=categories/category/topic
 			$catid = ( int ) $query ['catid'];
 			if ($catid) {

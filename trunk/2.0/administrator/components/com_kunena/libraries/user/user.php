@@ -227,16 +227,17 @@ class KunenaUser extends JObject {
 		return false;
 	}
 
-	public function getName($visitorname = '') {
+	public function getName($visitorname = '', $escape = true) {
 		if (! $this->userid) {
 			$name = $visitorname;
 		} else {
 			$name = $this->_config->username ? $this->username : $this->name;
 		}
+		if ($escape) $name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
 		return $name;
 	}
 
-	public function getAvatarLink($class = '', $sizex = 'thumb', $sizey = 90) {
+	public function getAvatarImage($class = '', $sizex = 'thumb', $sizey = 90) {
 		$avatars = KunenaFactory::getAvatarIntegration ();
 		return $avatars->getLink ( $this, $class, $sizex, $sizey );
 	}
@@ -244,6 +245,26 @@ class KunenaUser extends JObject {
 	public function getAvatarURL($sizex = 'thumb', $sizey = 90) {
 		$avatars = KunenaFactory::getAvatarIntegration ();
 		return $avatars->getURL ( $this, $sizex, $sizey );
+	}
+
+	public function getLink($name = null, $title = null, $rel = 'nofollow') {
+		if (!$name) {
+			$name = $this->getName();
+		}
+		if (!$title) {
+			$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $name);
+		}
+		$uclass = "kuser-{$this->getType(0, true)}";
+		$link = $this->getURL ();
+		if (! empty ( $link ))
+			return "<a class=\"{$uclass}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
+		else
+			return "<span class=\"{$uclass}\">{$name}</span>";
+	}
+
+	public function GetURL($xhtml = true) {
+		if (!$this->exists()) return;
+		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, '', $xhtml );
 	}
 
 	public function getType($catid = 0, $code=false) {
@@ -255,7 +276,7 @@ class KunenaUser extends JObject {
 			} elseif ($this->isAdmin ()) {
 				$this->_type = $code ? 'admin' : JText::_ ( 'COM_KUNENA_VIEW_ADMIN' );
 			} elseif ($this->isModerator ( null )) {
-				$this->_type = $code ? 'globalmoderator' : JText::_ ( 'COM_KUNENA_VIEW_GLOBAL_MODERATOR' );
+				$this->_type = $code ? 'globalmod' : JText::_ ( 'COM_KUNENA_VIEW_GLOBAL_MODERATOR' );
 			} elseif ($this->isModerator ( $catid )) {
 				$this->_type = $code ? 'moderator' : JText::_ ( 'COM_KUNENA_VIEW_MODERATOR' );
 			} else {

@@ -16,9 +16,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
 ?>
 
-<!-- Pathway -->
-<?php $this->displayPathway () ?>
-<!-- / Pathway -->
+<?php $this->displayBreadcrumb () ?>
 
 <?php if ($this->category->headerdesc) : ?>
 	<div id="kforum-head" class="<?php echo isset ( $this->category->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>">
@@ -44,9 +42,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 </div>
 <?php $this->displayTopicActions(1); ?>
 
-<!-- Pathway -->
-<?php $this->displayPathway () ?>
-<!-- / Pathway -->
+<?php $this->displayBreadcrumb () ?>
 
 <!-- B: List Actions Bottom -->
 <div class="kcontainer klist-bottom">

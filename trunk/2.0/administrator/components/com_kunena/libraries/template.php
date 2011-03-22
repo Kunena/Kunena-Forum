@@ -95,7 +95,7 @@ class KunenaTemplate extends JObject
 
 		if (JDEBUG || KunenaFactory::getConfig()->debug) {
 			// Debugging Mootools issues
-			$this->addScript ( 'js/debug-min.js' );
+			$this->addScript ( 'js/debug.js' );
 		}
 	}
 
@@ -103,9 +103,9 @@ class KunenaTemplate extends JObject
 	 * Wrapper to addStyleSheet
 	 */
 	function addStyleSheet($filename) {
-		if (JDEBUG || KunenaFactory::getConfig ()->debug || KunenaForum::isSvn ()) {
+		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn ()) {
 			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace ( '/\-min\./u', '.', $filename );
+			$filename = preg_replace ( '/\.css$/u', '-min.css', $filename );
 		}
 		return JFactory::getDocument ()->addStyleSheet ( JURI::root(true).'/'.$this->getFile($filename) );
 	}
@@ -114,9 +114,9 @@ class KunenaTemplate extends JObject
 	 * Wrapper to addScript
 	 */
 	function addScript($filename) {
-		if (JDEBUG || KunenaFactory::getConfig ()->debug || KunenaForum::isSvn ()) {
+		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn ()) {
 			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace ( '/\-min\./u', '.', $filename );
+			$filename = preg_replace ( '/\.js$/u', '.min.js', $filename );
 		}
 		return JFactory::getDocument ()->addScript ( JURI::root(true).'/'.$this->getFile($filename) );
 	}

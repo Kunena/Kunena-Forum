@@ -244,7 +244,7 @@ class KunenaViewTopics extends KunenaView {
 			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 			$this->pages = ceil ( $this->topic->getTotal() / $this->config->messages_per_page );
 			if ($this->config->avataroncat) {
-				$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarLink('klist-avatar', 'list');
+				$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 			}
 
 			if (is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering) {
@@ -272,7 +272,7 @@ class KunenaViewTopics extends KunenaView {
 			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 			$this->pages = ceil ( $this->topic->posts / $this->config->messages_per_page );
 			if ($this->config->avataroncat) {
-				$this->topic->avatar = KunenaFactory::getUser($this->message->userid)->getAvatarLink('klist-avatar', 'list');
+				$this->topic->avatar = KunenaFactory::getUser($this->message->userid)->getAvatarImage('klist-avatar', 'list');
 			}
 			$this->spacing = 0;
 			echo $this->loadTemplate('row');

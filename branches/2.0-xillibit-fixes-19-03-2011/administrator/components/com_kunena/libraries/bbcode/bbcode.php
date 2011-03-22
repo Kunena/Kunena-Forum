@@ -711,6 +711,11 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		$config = KunenaFactory::getConfig();
+		$spoiler_image1 = '/components/com_kunena/template/default/images/emoticons/w00t.png';
+		$spoiler_image2 = '/components/com_kunena/template/default/images/emoticons/pinch.png';
+		if ( $config->spoiler_image ) $spoiler_image1 = $spoiler_image2 = $config->spoiler_image;
+
 		static $spoilerid = 0;
 		if (empty ( $spoilerid )) {
 			// Only need the script for the first spoiler we find
@@ -725,10 +730,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				imgElement = document.getElementById(imgElementID);
 				if (targetElement.style.display == "none") {
 					targetElement.style.display = "";
-					imgElement.src = "' . JURI::root(true) . '/components/com_kunena/template/default/images/emoticons/w00t.png";
+					imgElement.src = "' . JURI::root(true) . $spoiler_image1 . '";
 				} else {
 					targetElement.style.display = "none";
-					imgElement.src = "' . JURI::root(true) . '/components/com_kunena/template/default/images/emoticons/pinch.png";
+					imgElement.src = "' . JURI::root(true) . $spoiler_image2 . '";
 				}
 			} </script>' );
 		}

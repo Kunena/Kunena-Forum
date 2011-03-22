@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+22-March-2011 Xillibit
++ [#22569] Let users customize the spoiler image
+
 19-March-2011 Xillibit
 ^ [#24395] Put ranks and smilies upload into the same place
 ^ [#22569] Into frontend statisitcs add number for each line

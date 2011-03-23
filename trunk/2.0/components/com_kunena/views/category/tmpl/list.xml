@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE metadata>
 <metadata>
-	<layout title="COM_KUNENA_MENU_CATEGORY_INDEX">
-		<message>COM_KUNENA_MENU_CATEGORY_INDEX_DESC</message>
+	<layout title="COM_KUNENA_MENU_CATEGORY_LIST">
+		<message>COM_KUNENA_MENU_CATEGORY_LIST_DESC</message>
 	</layout>
 
 	<!-- Joomla 1.5 Support -->
 	<state>
-		<name>COM_KUNENA_MENU_CATEGORY_INDEX_LONG</name>
-		<description>COM_KUNENA_MENU_CATEGORY_INDEX_DESC_LONG</description>
+		<name>COM_KUNENA_MENU_CATEGORY_LIST_LONG</name>
+		<description>COM_KUNENA_MENU_CATEGORY_LIST_DESC_LONG</description>
 		<url addpath="/administrator/components/com_kunena/libraries/form/elements">
 			<param name="catid" type="kunenacategorylist" default="0" sections="1" toplevel="COM_KUNENA_TOPLEVEL" label="COM_KUNENA_MENU_CATID" />
 		</url>

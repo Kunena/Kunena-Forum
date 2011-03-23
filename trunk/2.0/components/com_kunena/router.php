@@ -65,7 +65,7 @@ class KunenaRouter {
 		'userlist'=>1,
 		'rss'=>1,
 		'post'=>1,
-//		'report'=>1,
+		'report'=>1,
 
 		'announcement'=>1,
 		'article'=>1,
@@ -153,12 +153,6 @@ class KunenaRouter {
 		$config = KunenaFactory::getConfig ();
 		if (! $config->sef) {
 			return $segments;
-		}
-
-		// DEPRECATED: Legacy support: URI has func instead of view
-		if (isset ( $query ['func'])) {
-			$query ['view'] = $query ['func'];
-			unset ($query ['func']);
 		}
 
 		// Get menu item

@@ -34,12 +34,7 @@ class KunenaView extends JView {
 		$this->template = KunenaFactory::getTemplate();
 		$this->template->loadTemplate('initialize.php');
 
-		echo '<div id="Kunena">';
-		$this->common->display('menu');
-		$this->common->display('loginbox');
 		$this->displayLayout ();
-		$this->common->display('footer');
-		echo '</div>';
 	}
 
 	function displayLayout($layout=null, $tpl = null) {
@@ -185,6 +180,18 @@ class KunenaView extends JView {
 		$this->common->assign ( 'html', true);
 		$this->common->display();
 		$this->setTitle(JText::_('COM_KUNENA_ACCESS_DENIED'));
+	}
+
+	function displayMenu() {
+		echo $this->common->display('menu');
+	}
+
+	function displayLoginBox() {
+		echo $this->common->display('loginbox');
+	}
+
+	function displayFooter() {
+		echo $this->common->display('footer');
 	}
 
 	function displayBreadcrumb() {

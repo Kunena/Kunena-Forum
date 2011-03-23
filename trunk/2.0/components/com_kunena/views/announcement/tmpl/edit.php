@@ -22,6 +22,11 @@ $document->addScriptDeclaration('// <![CDATA[
 }
 // ]]>');
 ?>
+<div id="Kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+?>
 <div class="kblock kannouncement">
 	<div class="kheader">
 		<h2><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo $this->announcement->id ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD'); ?></h2>
@@ -75,4 +80,6 @@ $document->addScriptDeclaration('// <![CDATA[
 			</div>
 		</div>
 	</div>
+</div>
+<?php $this->displayFooter (); ?>
 </div>

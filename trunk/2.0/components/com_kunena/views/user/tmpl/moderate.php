@@ -11,3 +11,10 @@
 defined ( '_JEXEC' ) or die ();
 
 ?>
+<div id="Kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+?>
+<?php $this->displayFooter (); ?>
+</div>

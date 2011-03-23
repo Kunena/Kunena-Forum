@@ -40,4 +40,5 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
+<?php echo $this->getModulePosition ( 'kunena_announcement' ) ?>
 <!-- / ANNOUNCEMENTS BOX -->

@@ -11,6 +11,11 @@
 defined ( '_JEXEC' ) or die ();
 
 ?>
+<div id="Kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+?>
 <div class="kblock kcredits">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></span></h2>
@@ -53,4 +58,6 @@ defined ( '_JEXEC' ) or die ();
 			<!-- /Version Info -->
 		</div>
 	</div>
+</div>
+<?php $this->displayFooter (); ?>
 </div>

@@ -29,6 +29,11 @@ document.addEvent('domready', function() {
 // ]]>");
 }
 ?>
+<div id="Kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+?>
 <div class="kblock">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="searchuser_tbody"></a></span>
@@ -203,3 +208,5 @@ document.addEvent('domready', function() {
 </div>
 
 <?php $this->displayWhoIsOnline(); ?>
+<?php $this->displayFooter (); ?>
+</div>

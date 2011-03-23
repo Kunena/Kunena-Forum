@@ -163,8 +163,16 @@ abstract class KunenaRoute {
 		} elseif ($Itemid && (!isset(self::$menu[$Itemid]) || self::$menu[$Itemid]->component != 'com_kunena')) {
 			return false;
 		}
+		// Support legacy URIs
+		if ($uri->getVar('func')) {
+			$result = KunenaRouteLegacy::convert($uri);
+			if (!$result) return false;
+			return $uri;
+		}
+		// Check URI
 		switch ($uri->getVar('view', 'home')) {
 			case 'announcement':
+				KunenaRouteLegacy::convert($uri);
 				$r = array();
 				break;
 			case 'category':

@@ -45,6 +45,11 @@ $this->setTitle ( $this->title );
 
 $this->k=0;
 ?>
+<div id="Kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+?>
 <?php $this->displayBreadcrumb (); ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" class="postform form-validate" id="postform"
@@ -246,3 +251,5 @@ if (!$this->message->name) {
 </form><?php if ($this->hasThreadHistory ()) : ?>
 <?php $this->displayThreadHistory (); ?>
 <?php endif; ?>
+<?php $this->displayFooter (); ?>
+</div>

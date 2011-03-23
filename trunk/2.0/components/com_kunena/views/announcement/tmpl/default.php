@@ -13,6 +13,11 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 ?>
+<div id="Kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+?>
 <div class="kblock kannouncement">
 	<div class="kheader">
 		<h2>
@@ -39,4 +44,6 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 			</div>
 		</div>
 	</div>
+</div>
+<?php $this->displayFooter (); ?>
 </div>

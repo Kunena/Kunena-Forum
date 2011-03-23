@@ -95,7 +95,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->display ($tpl);
 	}
 
-	function displayIndex($tpl = null) {
+	function displayList($tpl = null) {
 		$this->Itemid = $this->get ( 'Itemid' );
 		$this->assignRef ( 'category', $this->get ( 'Category' ) );
 		if ($this->category->id && ! $this->category->authorise('read')) {

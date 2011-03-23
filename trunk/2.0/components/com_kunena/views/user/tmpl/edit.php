@@ -15,6 +15,11 @@ window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new K
 // ]]>" );
 ?>
 
+<div id="Kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+?>
 <div class="kblock k-profile">
 	<div class="kheader">
 		<h2><span class="k-name"><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?></span>
@@ -38,4 +43,6 @@ window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new K
 			</table>
 		</div>
 	</div>
+</div>
+<?php $this->displayFooter (); ?>
 </div>

@@ -10,7 +10,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<?php $this->displayBreadcrumb () ?>
+<div id="Kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+$this->displayBreadcrumb ();
+?>
 
 <!-- Subcategories -->
 <?php $this->displayCategories () ?>
@@ -129,3 +134,5 @@ defined ( '_JEXEC' ) or die ();
 </div>
 <!-- F: List Actions Bottom -->
 <?php endif; ?>
+<?php $this->displayFooter (); ?>
+</div>

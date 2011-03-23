@@ -35,6 +35,9 @@ Kunena 2.0.0-DEV
 ^ [#22569] Use Joomla pathway instead of our own
 + [#25415] Tableless template: Add initial structure and CSS
 + [#25415] Tableless template: Add layouts from common view
+^ [#22569] Rename category/index into category/list
+# [#23443] Improve legacy URI support (found after router changes)
+^ [#22569] Display Menu, Login Box and Footer from inside template to give more freedom to designers
 
 21-March-2011 Matias
 ^ [#22569] KunenaRoute: Return false on invalid or unknown routes

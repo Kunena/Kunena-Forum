@@ -12,6 +12,11 @@ defined ( '_JEXEC' ) or die ();
 
 $template = KunenaTemplate::getInstance();
 ?>
+<div id="Kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+?>
 <!-- BEGIN: GENERAL STATS -->
 <?php if($this->config->showgenstats): ?>
 <div class="kblock kgenstats">
@@ -283,3 +288,5 @@ $k = 0;
 </div>
 <?php endif; ?>
 <!-- F: Thank you -->
+<?php $this->displayFooter (); ?>
+</div>

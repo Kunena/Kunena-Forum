@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+22-March-2011 Matias
+# [#24762] Regression in Installer: generate new moderator index only once
+
 21-March-2011 Matias
 # [#24379] Fix Regression: undefined variable
 

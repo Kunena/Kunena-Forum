@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+25-March-2011 Xillibit
+#[#25448] Timestamp isn't saved in database on anonymous post
+
 22-March-2011 Matias
 # [#24762] Regression in Installer: generate new moderator index only once
 

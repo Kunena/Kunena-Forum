@@ -374,14 +374,14 @@ class CKunenaPosting {
 				$this->set ( 'name', $this->_myuser->getName() );
 			if (! $this->get ( 'email' ))
 				$this->set ( 'email', $this->_my->email );
-			if (! $this->get ( 'time' ))
-				$this->set ( 'time', CKunenaTimeformat::internalTime () );
 		}
 
 		// Fill thread/post related information
 		$this->set ( 'parent', $this->parent->id );
 		$this->set ( 'thread', $this->parent->thread );
 		$this->set ( 'catid', $this->parent->catid );
+		if (! $this->get ( 'time' ))
+				$this->set ( 'time', CKunenaTimeformat::internalTime () );
 
 		// On reviewed forum, require approval if user is not a moderator
 		$this->set ( 'hold', CKunenaTools::isModerator ( $this->_my, $this->parent->catid ) ? 0 : ( int ) $this->parent->review );

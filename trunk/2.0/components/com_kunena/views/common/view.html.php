@@ -119,7 +119,7 @@ class KunenaViewCommon extends KunenaView {
 			}
 			if ($id) {
 				$topic = KunenaForumTopicHelper::get($id);
-				$pathway->addItem($this->escape( $topic->subject ), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$parent->id}&id={$topic->subject}"));
+				$pathway->addItem($this->escape( $topic->subject ), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));
 			}
 		}
 		$this->pathway = array();

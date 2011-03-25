@@ -179,7 +179,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $template = 'default';
 	var $showannouncement = 1;
 	var $avataroncat = 0;
-	var $catimagepath = 'category_images/';
+	var $catimagepath = 'category_images';
 	var $showchildcaticon = 1;
 	var $annmodid = '62';
 	var $rtewidth = 450;

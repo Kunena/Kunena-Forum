@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
 $template = KunenaFactory::getTemplate();
+$template->categoryIcons = array('knonew', 'knew');
 
 // Template requires Mootools 1.2 framework
 $template->loadMootools();

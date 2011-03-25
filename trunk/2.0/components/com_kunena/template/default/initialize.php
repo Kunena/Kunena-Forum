@@ -13,6 +13,7 @@ defined( '_JEXEC' ) or die();
 $app = JFactory::getApplication();
 $document = JFactory::getDocument();
 $template = KunenaFactory::getTemplate();
+$template->categoryIcons = array('kreadforum', 'kunreadforum');
 
 // Template requires Mootools 1.2 framework
 $template->loadMootools();

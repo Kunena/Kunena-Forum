@@ -24,6 +24,7 @@ class KunenaUser extends JObject {
 	protected static $_ranks = null;
 	protected $_type = false;
 	protected $_allowed = array();
+	protected $_link = array();
 
 	protected $_exists = false;
 	protected $_db = null;
@@ -248,18 +249,22 @@ class KunenaUser extends JObject {
 	}
 
 	public function getLink($name = null, $title = null, $rel = 'nofollow') {
-		if (!$name) {
-			$name = $this->getName();
+		$key = "{$name}.{$title}.{$rel}";
+		if (empty($this->_link[$key])) {
+			if (!$name) {
+				$name = $this->getName();
+			}
+			if (!$title) {
+				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
+			}
+			$uclass = "kuser-{$this->getType(0, true)}";
+			$link = $this->getURL ();
+			if (! empty ( $link ))
+				$this->_link[$key] = "<a class=\"{$uclass}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
+			else
+				$this->_link[$key] = "<span class=\"{$uclass}\">{$name}</span>";
 		}
-		if (!$title) {
-			$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $name);
-		}
-		$uclass = "kuser-{$this->getType(0, true)}";
-		$link = $this->getURL ();
-		if (! empty ( $link ))
-			return "<a class=\"{$uclass}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
-		else
-			return "<span class=\"{$uclass}\">{$name}</span>";
+		return $this->_link[$key];
 	}
 
 	public function GetURL($xhtml = true) {
@@ -273,7 +278,7 @@ class KunenaUser extends JObject {
 				$this->_type = $code ? 'guest' : JText::_ ( 'COM_KUNENA_VIEW_VISITOR' );
 			} elseif ($this->isBanned ()) {
 				$this->_type = $code ? 'banned' : JText::_ ( 'COM_KUNENA_VIEW_BANNED' );
-			} elseif ($this->isAdmin ()) {
+			} elseif ($this->isAdmin ( $catid )) {
 				$this->_type = $code ? 'admin' : JText::_ ( 'COM_KUNENA_VIEW_ADMIN' );
 			} elseif ($this->isModerator ( null )) {
 				$this->_type = $code ? 'globalmod' : JText::_ ( 'COM_KUNENA_VIEW_GLOBAL_MODERATOR' );

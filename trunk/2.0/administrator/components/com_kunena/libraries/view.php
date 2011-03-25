@@ -66,6 +66,10 @@ class KunenaView extends JView {
 		}
 	}
 
+	function displayModulePosition($position) {
+		echo $this->getModulePosition($position);
+	}
+
 	function getModulePosition($position) {
 		$html = '';
 		if (JDocumentHTML::countModules ( $position )) {
@@ -78,12 +82,24 @@ class KunenaView extends JView {
 		echo $html;
 	}
 
+	function parse($text) {
+		return KunenaHtmlParser::parseBBCode($text);
+	}
+
 	function getButton($name, $text) {
 		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
 	}
 
 	function getIcon($name, $title='') {
 		return '<span class="kicon '.$name.'" title="'.$title.'"></span>';
+	}
+
+	function getImage($image, $alt='') {
+		return '<img src="'.$this->template->getImagePath($image).'" alt="'.$alt.'" />';
+	}
+
+	function getClass($class, $class_sfx='') {
+		return $class.($class_sfx ? " {$class}.{$class_sfx}" : '');
 	}
 
 	function topicIcon($topic) {

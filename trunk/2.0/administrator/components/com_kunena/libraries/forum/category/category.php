@@ -212,7 +212,7 @@ class KunenaForumCategory extends JObject {
 	/**
 	 * Get userids, who can moderate this category
 	 **/
-	public function getModerators($includeGlobal = true) {
+	public function getModerators($includeGlobal = true, $objects = true) {
 		$access = KunenaFactory::getAccessControl();
 		$userlist = array();
 		if (!empty($this->id)) {
@@ -222,7 +222,7 @@ class KunenaForumCategory extends JObject {
 			$userlist += $access->getModerators();
 		}
 		foreach ($userlist as $userid => $val) {
-			$userlist[$userid] = $userid;
+			$userlist[$userid] = $objects ? KunenaUserHelper::get($userid) : $userid;
 		}
 		return $userlist;
 	}

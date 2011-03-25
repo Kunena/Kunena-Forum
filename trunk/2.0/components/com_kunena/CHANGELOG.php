@@ -31,6 +31,27 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+25-March-2011 Matias
++ [#25415] Tableless template: Category List view (part 3)
+# [#25415] Tableless template: cleanup and fix many issues in CSS
+
+24-March-2011 Matias
++ [#25415] Tableless template: Category List view (part 2)
+^ [#25415] KunenaViewCategory: improve URL/link functions
++ [#25415] Add KunenaViewCategory::displaySection(), displayCategory()
++ [#23442] Optimize KunenaUser::getLink(): add local caching
++ [#23442] Add intelligent caching to KunenaViewCategory::displayCategory()
+# [#23443] Fix a bug in KunenaViewCommon::displayBreadcrumb() topic item
+
+23-March-2011 Matias
++ [#25415] Tableless template: Category List view
+^ [#22569] KunenaCategory::getModerators(): add parameter to fetch objects vs userids
+^ [#22569] KunenaUserHelper::loadUsers(): if list item is object, ignore it
+^ [#22569] KunenaUser::getType(): add category administrators support
++ [#22569] KunenaView class: add few helper functions
+# [#23443] Category/List: fix mark all read view
++ [#22569] Add feed for Category/Default
+
 22-March-2011 Matias
 ^ [#22569] Use Joomla pathway instead of our own
 + [#25415] Tableless template: Add initial structure and CSS

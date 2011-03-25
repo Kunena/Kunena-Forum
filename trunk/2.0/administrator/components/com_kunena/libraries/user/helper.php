@@ -61,6 +61,7 @@ class KunenaUserHelper {
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
 		foreach($userids as $userid){
+			if ($userid instanceof KunenaUser) continue;
 			$e_userids[intval($userid)] = intval($userid);
 		}
 		unset($e_userids[0]);

@@ -205,11 +205,10 @@ class KunenaViewCategory extends KunenaView {
 		$this->display ();
 	}
 
-	function getCategoryLink($category, $content = null) {
-		if (!$content) $content = $this->escape($category->name);
-		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=category&catid={$category->id}", $content, $this->escape($category->name), '', 'follow');
+	function getCategoryURL($category) {
+		return "index.php?option=com_kunena&view=category&catid={$category->id}";
 	}
-	function getTopicLink($topic, $action, $content = null, $title = null, $class = null) {
+	function getTopicURL($topic, $action, $object=false) {
 		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&id={$topic->id}&action={$action}");
 		if ($uri->getVar('action') !== null) {
 			$uri->delVar('action');
@@ -249,59 +248,76 @@ class KunenaViewCategory extends KunenaView {
 				if ($limitstart) $uri->setVar('limitstart', $limitstart);
 			}
 		}
+		return $object ? $uri : KunenaRoute::_($uri);
+	}
+	function getLastPostURL($category) {
+		$limit = $this->config->messages_per_page;
+		$limitstart = intval($category->getLastPostLocation() / $limit) * $limit;
+		$anker = '';
+		$query = array();
+		$mesid = $category->last_post_id;
+		if ($mesid) {
+			$l = JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' );
+			if ($l == 'threaded') $query[] = "&mesid={$mesid}";
+			else $anker = '#'.$mesid;
+		}
+		if ($limitstart) {
+			$query[] = "&limitstart={$limitstart}";
+			$query[] = "&limit={$limit}";
+		}
+		$query = implode('', $query);
+		return "index.php?option=com_kunena&view=topic&catid={$category->id}&id={$category->last_topic_id}{$query}{$anker}";
+	}
+
+	function getCategoryLink($category, $content = null, $title = null) {
+		if (!$content) $content = $this->escape($category->name);
+		if ($title === null) $title = $this->escape($category->name);
+		return JHTML::_('kunenaforum.link', $this->getCategoryURL($category), $content, $title, '', 'follow');
+	}
+	function getTopicLink($topic, $action, $content = null, $title = null, $class = null) {
+		$uri = $this->getTopicURL($topic, $action, true);
 		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
 		if ($title === null) $title = $this->escape($topic->subject);
+		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+	}
+	function getLastPostLink($category, $content = null, $title = null, $class = null) {
+		$uri = $this->getLastPostURL($category);
+		if (!$content) $content = KunenaHtmlParser::parseText($category->last_topic_subject, 20);
+		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_LASTPOST_TITLE', $this->escape($category->last_topic_subject));
 		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
 	public function getCategoryIcon($category, $thumb = false) {
 		if (! $thumb) {
-			if ($this->config->shownew && $this->me->userid != 0) {
-				if ($category->getNewCount()) {
-					// Check Unread    Cat Images
-					if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif" )) {
-						return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-					} else {
-						return $this->getIcon ( 'kunreadforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
-					}
+			if ($this->config->shownew && $this->me->userid != 0 && $category->getNewCount()) {
+				// Check Unread    Cat Images
+				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif" )) {
+					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
-					// Check Read Cat Images
-					if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif" )) {
-						return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
-					} else {
-						return $this->getIcon ( 'kreadforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
-					}
+					return $this->getIcon ( $this->template->categoryIcons[1], JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 				}
 			} else {
-				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_notlogin.gif" )) {
-					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_notlogin.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+				// Check Read Cat Images
+				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif" )) {
+					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
 				} else {
-					return $this->getIcon ( 'knotloginforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+					return $this->getIcon ( $this->template->categoryIcons[0], JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 				}
 			}
 		} elseif ($this->config->showchildcaticon) {
-			if ($this->config->shownew && $this->me->userid != 0) {
-				if ($category->getNewCount()) {
-					// Check Unread    Cat Images
-					if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif" )) {
-						return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-					} else {
-						return $this->getIcon ( 'kunreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
-					}
+			if ($this->config->shownew && $this->me->userid != 0 && $category->getNewCount()) {
+				// Check Unread    Cat Images
+				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif" )) {
+					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
-					// Check Read Cat Images
-					if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif" )) {
-						return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-					} else {
-						return $this->getIcon ( 'kreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
-					}
+					return $this->getIcon ( $this->template->categoryIcons[1].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 				}
 			} else {
-				// Not Login Cat Images
-				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_notlogin_childsmall.gif" )) {
-					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_notlogin_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+				// Check Read Cat Images
+				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif" )) {
+					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
-					return $this->getIcon ( 'knotloginforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+					return $this->getIcon ( $this->template->categoryIcons[0].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 				}
 			}
 		}
@@ -313,6 +329,72 @@ class KunenaViewCategory extends KunenaView {
 		$this->common->body = '<p>'.JText::sprintf('COM_KUNENA_VIEW_CATEGORIES_INFO_EMPTY', $this->escape($this->category->name)).'</p>';
 		$this->common->html = true;
 		echo $this->common->display('default');
+	}
+
+	function displaySection($section) {
+		$this->section = $section;
+		$this->sectionURL = KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$this->section->id}");
+		$this->sectionRssURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$this->section->id}&format=feed") : '';
+		$this->sectionMarkReadURL = $this->me->exists() ? KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->section->id}") : '';
+		echo $this->loadTemplate('section');
+		$this->rowno = 0;
+	}
+
+	function displayCategory($category) {
+		$this->rowno++;
+		$this->category = $category;
+
+		$usertype = $this->me->getType($this->category->id, true);
+		$catid = $category->id;
+		$lastPost = $category->getLastPosted();
+
+		// TODO: add context (options, template) to caching
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$cachekey = "list.item.{$usertype}.{$catid}.{$lastPost->last_post_id}";
+		$cachegroup = 'com_kunena.category';
+
+		$contents = $cache->get($cachekey, $cachegroup);
+		if (!$contents) {
+			$this->categoryURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}") : '';
+			$this->categoryRssURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&format=feed") : '';
+			$this->moderators = $category->getModerators();
+			$this->subcategories = empty($this->categories [$catid]) ? array() : $this->categories [$catid];
+			$this->lastPost = $lastPost->last_post_id > 0;
+			if ($this->lastPost) {
+				$this->lastUser = KunenaFactory::getUser((int) $lastPost->last_post_userid);
+				$this->lastUserName = $lastPost->last_post_guest_name;
+				$this->lastPostSubject = $lastPost->last_topic_subject;
+				$this->lastPostTime = $lastPost->last_post_time;
+			}
+			$contents = $this->loadTemplate('category');
+			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillCategoryInfo'), $contents);
+			$cache->store($contents, $cachekey, $cachegroup);
+		} elseif ($usertype == 'guest') {
+			echo $contents;
+			return;
+		}
+		$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillCategoryInfo'), $contents);
+		echo $contents;
+	}
+
+	function fillCategoryInfo($matches) {
+		switch ($matches[1]) {
+			case 'ROW':
+				return $this->rowno & 1 ? 'odd' : 'even';
+			case 'CATEGORY_ICON':
+				return $this->getCategoryIcon($this->category);
+			case 'CATEGORY_NEW_SUFFIX':
+				if (!$this->config->shownew) return;
+				$new = empty($matches[2]) ? $this->category->getNewCount() : KunenaForumCategoryHelper::get($matches[2])->getNewCount();
+				return $new ? '-new' : '';
+			case 'CATEGORY_NEW_COUNT':
+				if (!$this->config->shownew) return;
+				$new = empty($matches[2]) ? $this->category->getNewCount() : KunenaForumCategoryHelper::get($matches[2])->getNewCount();
+				return $new ? '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>" : '';
+			case 'DATE':
+				$date = new KunenaDate($matches[2]);
+				return $date->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
+		}
 	}
 
 	function displayCategories() {

@@ -34,6 +34,7 @@ Kunena 2.0.0-DEV
 25-March-2011 Matias
 + [#25415] Tableless template: Category List view (part 3)
 # [#25415] Tableless template: cleanup and fix many issues in CSS
++ [#25415] Tableless template: Add static versions of most views/layouts
 
 24-March-2011 Matias
 + [#25415] Tableless template: Category List view (part 2)

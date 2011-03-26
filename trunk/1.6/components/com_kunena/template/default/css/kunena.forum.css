@@ -369,7 +369,8 @@ PX		EM			PCT			PT
 	float: left;
 }
 
-#Kunena img.klist-avatar {
+#Kunena img.klist-avatar,
+#Kunena .klist-avatar {
 	height: auto;
 	width: 36px;
 	border: 0px

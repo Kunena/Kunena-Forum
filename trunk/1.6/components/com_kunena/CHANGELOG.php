@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+26-March-2011 Severdia
+# [#25329] Fixed avatar border regression
+
 26-March-2011 Xillibit
 # [#25460] Issue on Joomla! 1.6 which prevent to show menu details in configuration report
 

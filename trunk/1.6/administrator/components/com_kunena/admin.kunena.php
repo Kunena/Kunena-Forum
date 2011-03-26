@@ -3348,7 +3348,7 @@ function getJoomlaMenuDetails($jversion) {
 		// Get Kunena menu items
 		$query = "SELECT id "
 				." FROM #__menu "
-				." WHERE type='component' AND title ='Kunena Forum' ORDER BY id ASC";
+				." WHERE type='component' AND title ='Forum' ORDER BY id ASC";
 		$kunena_db->setQuery($query);
 		$kmenuparentid = $kunena_db->loadResult();
 

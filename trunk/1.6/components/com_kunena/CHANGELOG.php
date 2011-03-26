@@ -32,8 +32,11 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+26-March-2011 Xillibit
+# [#25460] Issue on Joomla! 1.6 which prevent to show menu details in configuration report
+
 25-March-2011 Xillibit
-#[#25448] Timestamp isn't saved in database on anonymous post
+# [#25448] Timestamp isn't saved in database on anonymous post
 
 22-March-2011 Matias
 # [#24762] Regression in Installer: generate new moderator index only once

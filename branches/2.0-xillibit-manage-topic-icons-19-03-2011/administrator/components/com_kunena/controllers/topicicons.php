@@ -108,7 +108,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		}
 
 		$db = JFactory::getDBO ();
-		$row = new TableKunenaCategories ( $db );
+		$row = new TableKunenaTopicsIcons ( $db );
 		$row->load ( $id );
 
 		// Ensure that we have the right ordering
@@ -313,6 +313,43 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		}
 
 		$app->enqueueMessage (JText::_('COM_KUNENA_TOPICICONS_DELETED') );
+		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+	}
+
+	function saveorder() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$order = JRequest::getVar ( 'order', array (), 'post', 'array' );
+
+		if (empty ( $cid )) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_TOPICICONS_SELECTED' ), 'notice' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
+		$success = false;
+
+		// load topicicons
+		foreach ( $topicicons as $icon ) {
+			if (! isset ( $order [$icon->id] ) || $icon->ordering == $order [$icon->id])
+				continue;
+
+				$db = JFactory::getDBO ();
+				$db->setQuery ( "UPDATE #__kunena_topics_icons SET ordering='{$order [$icon->id]}' WHERE id='{$icon->id}'" );
+				$sections = $db->Query ();
+				KunenaError::checkDatabaseError ();
+				$success = true;
+		}
+
+		if ($success) {
+			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_NEW_ORDERING_SAVED' ) );
+		} else {
+			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_ORDERING_SAVE_FAILED' ) );
+		}
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 }

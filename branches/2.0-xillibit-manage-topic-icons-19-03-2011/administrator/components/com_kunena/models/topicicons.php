@@ -38,7 +38,7 @@ class KunenaAdminModelTopicicons extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.topicicons.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.topicicons.list.ordering', 'filter_order', 'filename', 'cmd' );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.topicicons.list.ordering', 'filter_order', 'name', 'cmd' );
 		$this->setState ( 'list.ordering', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.topicicons.list.start", 'limitstart', 0, 'int' );

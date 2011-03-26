@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+25-March-2011 Xillibit
+# [#25395] In topicisons default template, some typos
++ [#25395] Create table for topics_icons
+
 20-March-2011 Xillibit
 ^ [#25395] Set new icon in backend for topic icons manager
 ^ [#25395] Fix some issues in the topic icons manager

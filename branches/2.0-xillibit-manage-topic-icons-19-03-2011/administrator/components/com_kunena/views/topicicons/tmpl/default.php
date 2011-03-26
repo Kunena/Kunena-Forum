@@ -23,22 +23,23 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 	   <dl class="tabs" id="pane">
 		<dt><?php echo JText::_('COM_KUNENA_A_TOPICICONS'); ?></dt>
 		<dd>
-    <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
 			<thead>
 				<tr>
 					<th width="5" align="center">#</th>
-					<th width="5" align="left"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->ranks ); ?>);" /></th>
+					<th width="5" align="left"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->topicicons ); ?>);" /></th>
 					<th width="20%" align="left"><?php echo JText::_('COM_KUNENA_TOPICICON_NAME'); ?></th>
+					<th width="20%" align="left"><?php echo JText::_('COM_KUNENA_TOPICICON_ID'); ?></th>
 					<th width="50%" align="left" ><?php echo JText::_('COM_KUNENA_TOPICICON_IMAGE'); ?></th>
 					<th width="10%" align="center" ><?php echo JText::_('COM_KUNENA_TOPICICON_PUBLISHED'); ?></th>
-					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_ORDERING'); ?></th>
+					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_ORDERING'); ?><?php echo JHTML::_('grid.order',$this->topicicons); ?></th>
 					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_DEFAULT'); ?></th>
 				</tr>
 			</thead>
 			<tfoot>
 				<tr>
-					<td colspan="6">
+					<td colspan="7">
 						<div class="pagination">
 							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY')?><?php echo $this->navigation->getLimitBox (); ?></div>
 							<?php echo $this->navigation->getPagesLinks (); ?>
@@ -67,7 +68,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						echo $row->id;
 						?>" name="cid[]"
 						value="<?php
-						echo $this->escape($row->id);
+						echo $row->id;
 						?>"
 						onclick="isChecked(this.checked);" /></td>
 					<td align="center">
@@ -76,6 +77,14 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						echo $row->id;
 						?>','edit')"><?php
 						echo $this->escape($row->name);
+						?></a>
+					</td>
+					<td align="center">
+					<a href="#edit"
+						onclick="return listItemTask('cb<?php
+						echo $row->id;
+						?>','edit')"><?php
+						echo $row->id;
 						?></a>
 					</td>
 					<td align="center"><a href="#edit"
@@ -103,6 +112,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					</td>
 				</tr>
 				<?php
+					$i++;
 					}
 					?>
 			</table>
@@ -110,6 +120,8 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<input type="hidden" name="view" value="topicicons" />
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
+			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
+			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>

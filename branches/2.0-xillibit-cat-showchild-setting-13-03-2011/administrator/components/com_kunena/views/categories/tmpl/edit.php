@@ -136,9 +136,9 @@ function submitbutton(pressbutton)
 						</tr>
 						<?php endif; ?>
 						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_CHILD_DISPLAYED'); ?>:</td>
-							<td valign="top"><?php echo $this->options ['showchild']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_CHILD_DISPLAYED_DESC'); ?></td>
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_VISIBLE'); ?>:</td>
+							<td valign="top"><?php echo $this->options ['visible']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_VISIBLE_DESC'); ?></td>
 						</tr>
 					</table>
 				</fieldset>

@@ -68,7 +68,7 @@
 		<field name="last_post_userid" type="int(11)" null="0" default="0" />
 		<field name="last_post_message" type="text" null="1" />
 		<field name="last_post_guest_name" type="tinytext" null="1" />
-		<field name="showchild" type="int(11)" null="0" default="1" />
+		<field name="visible" type="int(11)" null="0" default="1" />
 		<field name="params" type="text" null="0" />
 
 		<key name="PRIMARY" unique="1" columns="id" />

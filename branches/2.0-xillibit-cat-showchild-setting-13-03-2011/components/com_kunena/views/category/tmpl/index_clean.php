@@ -65,7 +65,7 @@ foreach ( $this->sections as $section ) :
 		<?php endif; ?>
 		<?php
 			// Display subcategories
-			if (! empty ( $this->categories [$category->id] ) && $this->categories->showchild) :
+			if (! empty ( $this->categories [$category->id] ) ) :
 		?>
 			<div class="kthead-child">
 			<div class="kcc-table">

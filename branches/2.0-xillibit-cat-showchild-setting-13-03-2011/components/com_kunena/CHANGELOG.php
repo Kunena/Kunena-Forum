@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+27-March-2011
+^ [#25323] Configuration setting in categories to show childs categories or not (Part 2)
+
 13-March-2011 Xillibit
 + [#25323] Configuration setting in categories to show childs categories or not
 # [#25323] Icons tick and unpublished not displayed in categories manager

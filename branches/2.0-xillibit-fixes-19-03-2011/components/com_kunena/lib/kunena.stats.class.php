@@ -230,13 +230,12 @@ class CKunenaStats {
 	* Get the better votes in polls
 	* @return int
 	*/
-   protected function getTopVotes($PopPollsCount)
-   {
+	protected function getTopVotes($PopPollsCount) {
 		$query = "SELECT SUM(o.votes) AS total
-					FROM #__kunena_polls AS p
-					INNER JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
-					GROUP BY p.threadid
-					ORDER BY total DESC";
+				FROM jos_kunena_polls_options AS o
+				INNER JOIN jos_kunena_polls AS p
+				GROUP BY p.threadid
+				ORDER BY total DESC";
 		$this->_db->setQuery($query,0,$PopPollsCount);
 		$votecount = $this->_db->loadResult();
 		KunenaError::checkDatabaseError();
@@ -249,12 +248,12 @@ class CKunenaStats {
 	*/
 	protected function getTopPolls($PopPollsCount)
 	{
-		$query = "SELECT q.catid, q.id,p.*, SUM(o.votes) AS total
-					FROM #__kunena_polls AS p
-					INNER JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
-					INNER JOIN #__kunena_messages AS q ON p.threadid = q.id
-					GROUP BY p.threadid
-					ORDER BY total DESC";
+		$query = "SELECT m.*, poll.*, SUM(opt.votes) AS total
+				FROM jos_kunena_polls_options AS opt
+				INNER JOIN jos_kunena_polls AS poll ON poll.id=opt.pollid
+				LEFT JOIN jos_kunena_messages AS m ON poll.threadid=m.id
+				GROUP BY pollid
+				ORDER BY total DESC";
 		$this->_db->setQuery($query,0,$PopPollsCount);
 	 	$toppolls = $this->_db->loadObjectList();
 		KunenaError::checkDatabaseError();

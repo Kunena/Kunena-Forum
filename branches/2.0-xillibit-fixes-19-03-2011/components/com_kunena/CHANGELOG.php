@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+26-March-2011 Xillibit
+# [#25460] Issue on Joomla! 1.6 which prevent to show menu details in configuration report
+# [#22569] Fix weird thing in poll stats queries which prevent to have datas
+
 22-March-2011 Xillibit
 + [#22569] Let users customize the spoiler image
 

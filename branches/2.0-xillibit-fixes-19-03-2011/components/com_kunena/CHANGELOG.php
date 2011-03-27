@@ -31,6 +31,11 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+27-March-2011 Xillibit
+^ [#22569] In message history the user name point now to the user profile
+- [#22569] Remove announcements IDs and let only moderators and admin to manage announcements
+^ [#22569] In prune, let the user choose multiple categories
+
 26-March-2011 Xillibit
 # [#25460] Issue on Joomla! 1.6 which prevent to show menu details in configuration report
 # [#22569] Fix weird thing in poll stats queries which prevent to have datas

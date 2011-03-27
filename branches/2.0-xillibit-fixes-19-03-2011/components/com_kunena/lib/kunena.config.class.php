@@ -181,7 +181,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $avataroncat = 0;
 	var $catimagepath = 'category_images/';
 	var $showchildcaticon = 1;
-	var $annmodid = '62';
 	var $rtewidth = 450;
 	var $rteheight = 300;
 	var $enableforumjump = 1;

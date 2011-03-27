@@ -39,10 +39,8 @@ class KunenaViewCommon extends KunenaView {
 			$cache = JFactory::getCache('com_kunena', 'output');
 			if ($cache->start(0, 'com_kunena.view.common.announcement')) return;
 
-			$config = KunenaFactory::getConfig();
 			$me = KunenaFactory::getUser();
-			$annmods = explode ( ',', $config->annmodid );
-			if ($me->exists() && (in_array ( $me->userid, $annmods ) || $me->isAdmin ())) {
+			if ($me->exists() && ( $me->isModerator() || $me->isAdmin ())) {
 				$this->canEdit = true;
 			} else {
 				$this->canEdit = false;
@@ -236,9 +234,7 @@ class KunenaViewCommon extends KunenaView {
 			}
 
 			// Announcements
-			$config = KunenaFactory::getConfig();
-			$annmods = @explode ( ',', $config->annmodid );
-			if (in_array ( $this->me->userid, $annmods ) || $this->me->isAdmin()) {
+			if ( $this->me->isModerator() || $this->me->isAdmin()) {
 				$this->assign ( 'announcements', '<a href="' . CKunenaLink::GetAnnouncementURL ( 'show' ).'">'. JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS').'</a>');
 			}
 

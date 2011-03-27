@@ -97,7 +97,6 @@
 		<field name="avataroncat" type="int(11)" null="1" />
 		<field name="catimagepath" type="text" null="1" />
 		<field name="showchildcaticon" type="int(11)" null="1" />
-		<field name="annmodid" type="text" null="1" />
 		<field name="rtewidth" type="int(11)" null="1" />
 		<field name="rteheight" type="int(11)" null="1" />
 		<field name="enableforumjump" type="int(11)" null="1" />

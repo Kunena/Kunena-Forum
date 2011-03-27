@@ -57,9 +57,8 @@ class KunenaModelAnnouncement extends KunenaModel {
 
 	function getCanEdit() {
 		$me = KunenaFactory::getUser ();
-		$config = KunenaFactory::getConfig();
-		$annmods = explode ( ',', $config->annmodid );
-		if ($me->exists() && (in_array ( $me->userid, $annmods ) || $me->isAdmin ())) {
+
+		if ($me->exists() && ($me->isModerator() || $me->isAdmin ())) {
 			$this->canEdit = true;
 		} else {
 			$this->canEdit = false;

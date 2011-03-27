@@ -533,6 +533,7 @@ class KunenaViewTopic extends KunenaView {
 
 		//Thankyou info and buttons
 		$this->message_thankyou = '';
+		$this->message_thankyou_delete = '';
 		if ($this->config->showthankyou && $this->profile->userid) {
 			$thankyou = $this->message->getThankyou();
 			$this->thankyou = array();
@@ -541,6 +542,9 @@ class KunenaViewTopic extends KunenaView {
 			}
 			if($me->userid && !$thankyou->exists($me->userid) && $me->userid != $this->profile->userid) {
 				$this->message_thankyou = CKunenaLink::GetThankyouLink ( $this->topic->category_id, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');
+			}
+			if ( $me->userid && $thankyou->exists($me->userid) && array_key_exists($me->userid,$thankyou->getList()) ) {
+				$this->message_thankyou_delete = CKunenaLink::GetThankyouLink ( 'remove', $this->topic->category_id, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG'), 'kicon-button kbuttonuser btn-left');
 			}
 		}
 

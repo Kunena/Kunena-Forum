@@ -299,7 +299,7 @@ class KunenaControllerTopic extends KunenaController {
 		$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
 
-	function thankyou(){
+	function addthankyou(){
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -322,6 +322,32 @@ class KunenaControllerTopic extends KunenaController {
 		$activityIntegration->onAfterThankyou($message->userid, $this->my->id, $message);
 
 		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_SUCCESS' ) );
+		$this->redirectBack ();
+	}
+
+	function removethankyou(){
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		$message = KunenaForumMessageHelper::get($this->mesid);
+		if (!$message->authorise('thankyou')) {
+			$app->enqueueMessage ( $message->getError() );
+			$this->redirectBack ();
+		}
+
+		$thankyou = KunenaForumMessageThankyouHelper::get($this->mesid);
+		if (!$thankyou->delete ( KunenaFactory::getUser() )) {
+			$app->enqueueMessage ( $thankyou->getError() );
+			$this->redirectBack ();
+		}
+
+		/*$activityIntegration = KunenaFactory::getActivityIntegration();
+		$activityIntegration->onAfterThankyou($message->userid, $this->my->id, $message);*/
+
+		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_REMOVED_SUCCESS' ) );
 		$this->redirectBack ();
 	}
 

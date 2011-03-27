@@ -54,7 +54,7 @@ class KunenaForumMessageThankyou extends JObject {
 	}
 
 	/**
-	 * Perform insert the thank into table
+	 * Perform insert the thank you into table
 	 * @param int $userid
 	 * @return bool true if succes
 	 * @since 1.6
@@ -102,5 +102,38 @@ class KunenaForumMessageThankyou extends JObject {
 	 */
 	public function getList() {
 		return $this->users;
+	}
+
+	/**
+	 * Perform delete the thank you into table
+	 * @param int $userid
+	 * @return bool true if succes
+	 * @since 1.6
+	 */
+	public function delete($user) {
+		$user = KunenaFactory::getUser($user);
+		$message = KunenaForumMessageHelper::get($this->id);
+
+		if (!$user->exists()) {
+			$this->setError( JText::_('COM_KUNENA_THANKYOU_LOGIN') );
+			return false;
+		}
+		if (!$this->exists ( $user->userid )) {
+			$this->setError( JText::_ ( 'COM_KUNENA_THANKYOU_NOT_PRESENT' ) );
+			return false;
+		}
+		$db = JFactory::getDBO ();
+		$time = JFactory::getDate();
+		$query = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)} AND userid={$db->quote($user->userid)}";
+		$db->setQuery ( $query );
+		$db->query ();
+
+		// Check for an error message.
+		if ($db->getErrorNum ()) {
+			$this->setError ( $db->getErrorMsg () );
+			return false;
+		}
+
+		return true;
 	}
 }

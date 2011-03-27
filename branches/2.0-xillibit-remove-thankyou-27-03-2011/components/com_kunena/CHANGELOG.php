@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+27-March-2011 Xillibit
++ [#25478] Let user remove his thankyou
+
 25-March-2011 Matias
 + [#25415] Tableless template: Category List view (part 3)
 # [#25415] Tableless template: cleanup and fix many issues in CSS

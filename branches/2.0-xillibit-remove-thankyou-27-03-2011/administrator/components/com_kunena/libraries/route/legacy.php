@@ -428,7 +428,15 @@ class KunenaRouteLegacy {
 				if ($id) {
 					$changed = true;
 					$uri->setVar('view', 'topic');
-					$uri->setVar('task', 'thankyou');
+
+					switch ($uri->getVar('layout')) {
+					case 'add':
+						$uri->setVar('task', 'addthankyou');
+						break;
+					case 'remove':
+						$uri->setVar('task', 'removethankyou');
+						break;
+					}
 					$uri->delVar('pid');
 
 					$message = KunenaForumMessageHelper::get ( $id );
@@ -436,6 +444,7 @@ class KunenaRouteLegacy {
 						$id = $message->thread;
 						$uri->setVar ( 'mesid', $message->id );
 					}
+					$uri->delVar('layout');
 					$uri->setVar ( 'id', $id );
 				}
 				break;

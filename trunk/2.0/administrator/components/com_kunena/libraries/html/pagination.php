@@ -37,13 +37,16 @@ class KunenaHtmlPagination extends JPagination
 	 * @since	Joomla 1.6
 	 */
 	protected $_additionalUrlParams = array();
+	protected $_uri = '';
 
 	function __construct($total, $limitstart, $limit, $prefix = '') {
 		parent::__construct($total, $limitstart, $limit, $prefix);
 		$this->setDisplay();
+		$this->template = KunenaFactory::getTemplate();
 	}
 
-	function setDisplay($displayedPages = 7) {
+	function setDisplay($displayedPages = 7, $uri = null) {
+		$this->_uri = $uri;
 		// From Joomla 1.6:
 		// Set the pagination iteration loop values.
 		$this->set('pages.start', $this->get('pages.current') - intval($displayedPages / 2));
@@ -70,7 +73,9 @@ class KunenaHtmlPagination extends JPagination
 	 */
 	public function getPagesLinks()
 	{
-		$app = JFactory::getApplication();
+		if ($this->get('pages.total') <= 1) {
+			return;
+		}
 
 		// Build the page navigation list.
 		$data = $this->_buildDataObject();
@@ -78,27 +83,19 @@ class KunenaHtmlPagination extends JPagination
 		$list = array();
 		$list['prefix'] = $this->prefix;
 
-		$itemOverride = false;
-		$listOverride = false;
-
-		$list['pages'] = array(); //make sure it exists
+		$list['pages'] = array();
 		foreach ($data->pages as $i => $page)
 		{
 			if ($page->base !== null) {
 				$list['pages'][$i]['active'] = true;
-				$list['pages'][$i]['data'] = ($itemOverride) ? pagination_item_active($page) : $this->_item_active($page);
+				$list['pages'][$i]['data'] = $this->_item_active($page);
 			} else {
 				$list['pages'][$i]['active'] = false;
-				$list['pages'][$i]['data'] = ($itemOverride) ? pagination_item_inactive($page) : $this->_item_inactive($page);
+				$list['pages'][$i]['data'] = $this->_item_inactive($page);
 			}
 		}
 
-		if ($this->total > $this->limit){
-			return ($listOverride) ? pagination_list_render($list) : $this->_list_render($list);
-		}
-		else {
-			return '';
-		}
+		return $this->_list_render($list);
 	}
 
 	/**
@@ -120,14 +117,6 @@ class KunenaHtmlPagination extends JPagination
 		$list['pagescounter']	= $this->getPagesCounter();
 		$list['pageslinks']		= $this->getPagesLinks();
 
-		$chromePath	= JPATH_THEMES.DS.$app->getTemplate().DS.'html'.DS.'pagination.php';
-		if (file_exists($chromePath))
-		{
-			require_once $chromePath;
-			if (function_exists('pagination_list_footer')) {
-				return pagination_list_footer($list);
-			}
-		}
 		return $this->_list_footer($list);
 	}
 
@@ -168,41 +157,16 @@ class KunenaHtmlPagination extends JPagination
 		return $html;
 	}
 
-	public function _list_footer($list)
-	{
-		$html = "<div class=\"list-footer\">\n";
-
-		$html .= "\n<div class=\"limit\">".JText::_('COM_KUNENA_LIB_HTML_DISPLAY_NUM').$list['limitfield']."</div>";
-		$html .= $list['pageslinks'];
-		$html .= "\n<div class=\"counter\">".$list['pagescounter']."</div>";
-
-		$html .= "\n<input type=\"hidden\" name=\"" . $list['prefix'] . "limitstart\" value=\"".$list['limitstart']."\" />";
-		$html .= "\n</div>";
-
-		return $html;
+	public function _list_footer($list) {
+		return $this->template->getPaginationListFooter($list);
 	}
 
-	public function _list_render($list)
-	{
-		// Reverse output rendering for right-to-left display.
-		$html = '<ul class="kpagination">';
-		$html .= '<li class="page">'.JText::_('COM_KUNENA_PAGE').'</li>';
-		$last = 0;
-		foreach($list['pages'] as $i=>$page) {
-			if ($last+1 != $i) $html .= '<li>...</li>';
-			$html .= '<li>'.$page['data'].'</li>';
-			$last = $i;
-		}
-		$html .= '</ul>';
-
-		return $html;
+	public function _list_render($list) {
+		return $this->template->getPaginationListRender($list);
 	}
 
-	public function _item_active(&$item)
-	{
-		$app = JFactory::getApplication();
-		if ($app->isAdmin())
-		{
+	public function _item_active(&$item) {
+		if (JFactory::getApplication()->isAdmin()) {
 			if ($item->base > 0) {
 				$jversion = new JVersion ();
 				if ($jversion->RELEASE == '1.5') {
@@ -216,18 +180,17 @@ class KunenaHtmlPagination extends JPagination
 			}
 		}
 		else {
-			return "<a title=\"".$item->text."\" href=\"".$item->link."\" class=\"pagenav\">".$item->text."</a>";
+			return $this->template->getPaginationItemActive($item);
 		}
 	}
 
-	public function _item_inactive(&$item)
-	{
+	public function _item_inactive(&$item) {
 		$app = JFactory::getApplication();
 		if ($app->isAdmin()) {
 			return "<span>".$item->text."</span>";
 		}
 		else {
-			return "<span class=\"pagenav\">".$item->text."</span>";
+			return $this->template->getPaginationItemInactive($item);
 		}
 	}
 
@@ -237,18 +200,18 @@ class KunenaHtmlPagination extends JPagination
 	 * @return	object	Pagination data object.
 	 * @since	Joomla 1.6
 	 */
-	public function _buildDataObject()
-	{
+	public function _buildDataObject() {
 		// Initialise variables.
 		$data = new stdClass();
 
 		// Build the additional URL parameters string.
-		$params = '';
-		if (!empty($this->_additionalUrlParams))
-		{
-			foreach($this->_additionalUrlParams as $key => $value)
-			{
-				$params .= '&'.$key.'='.$value;
+		$uri = KunenaRoute::normalize($this->_uri, true);
+		$uri->delVar('start');
+		$uri->delVar('limitstart');
+		$uri->delVar('limit');
+		if (!empty($this->_additionalUrlParams)) {
+			foreach($this->_additionalUrlParams as $key => $value) {
+				$uri->setVar($key, $value);
 			}
 		}
 
@@ -262,8 +225,9 @@ class KunenaHtmlPagination extends JPagination
 
 			$data->pages[$i] = new JPaginationObject($i, $this->prefix);
 			if ($i != $this->get('pages.current') || $this->_viewall) {
+				$uri->setVar($this->prefix.'limitstart', $offset);
 				$data->pages[$i]->base	= $offset;
-				$data->pages[$i]->link	= JRoute::_($params.'&'.$this->prefix.'limitstart='.$offset);
+				$data->pages[$i]->link	= KunenaRoute::_($uri);
 			}
 		}
 		return $data;

@@ -520,6 +520,7 @@ table {border-collapse: collapse;}
 	color: #000;
 	border: 1px solid #5388B4;
 }
+#kunena .kpage span,
 #kunena .kpage a:hover {
 	color: #fff;
 	border: 1px solid #ccc;

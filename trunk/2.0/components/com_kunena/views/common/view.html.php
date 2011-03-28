@@ -22,6 +22,7 @@ class KunenaViewCommon extends KunenaView {
 
 	function display($layout = null, $tpl = null) {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
+		$this->template = KunenaFactory::getTemplate();
 		return $this->displayLayout($layout, $tpl);
 	}
 
@@ -37,7 +38,7 @@ class KunenaViewCommon extends KunenaView {
 	function displayAnnouncement($tpl = null) {
 		if (KunenaFactory::getConfig()->showannouncement > 0) {
 			$cache = JFactory::getCache('com_kunena', 'output');
-			if ($cache->start(0, 'com_kunena.view.common.announcement')) return;
+			if ($cache->start($this->template->name, 'com_kunena.view.common.announcement')) return;
 
 			$config = KunenaFactory::getConfig();
 			$me = KunenaFactory::getUser();
@@ -75,7 +76,7 @@ class KunenaViewCommon extends KunenaView {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$user = KunenaFactory::getUser ();
 		// TODO: we can improve this (not by user)
-		if ($cache->start("{$user->userid}.{$this->catid}", 'com_kunena.view.common.forumjump')) return;
+		if ($cache->start("{$this->template->name}.{$user->userid}.{$this->catid}", 'com_kunena.view.common.forumjump')) return;
 
 		$options = array ();
 		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
@@ -91,11 +92,11 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayBreadcrumb($tpl = null) {
-		$cache = JFactory::getCache('com_kunena', 'output');
 		$user = KunenaFactory::getUser ();
 		$catid = JRequest::getInt ( 'catid', 0 );
 		$id = JRequest::getInt ( 'id', 0 );
-		if ($cache->start("{$catid}.{$id}", 'com_kunena.view.common.breadcrumb')) return;
+		//$cache = JFactory::getCache('com_kunena', 'output');
+		//if ($cache->start("{$this->template->name}.{$catid}.{$id}", 'com_kunena.view.common.breadcrumb')) return;
 
 		$app = JFactory::getApplication();
 		$pathway = $app->getPathway();
@@ -135,13 +136,13 @@ class KunenaViewCommon extends KunenaView {
 			return $result;
 		}
 		echo $result;
-		$cache->end();
+		//$cache->end();
 	}
 
 	function displayWhosonline($tpl = null) {
-		$moderator = KunenaFactory::getUser()->isModerator();
+		$moderator = (int) KunenaFactory::getUser()->isModerator();
 		$cache = JFactory::getCache('com_kunena', 'output');
-		if ($cache->start(0, "com_kunena.view.common.whosonline.{$moderator}")) return;
+		if ($cache->start("{$this->template->name}.{$moderator}", "com_kunena.view.common.whosonline")) return;
 
 		$this->my = JFactory::getUser();
 		$this->me = KunenaFactory::getUser();
@@ -192,7 +193,7 @@ class KunenaViewCommon extends KunenaView {
 	function displayStatistics($tpl = null) {
 		$this->config = KunenaFactory::getConfig();
 		$cache = JFactory::getCache('com_kunena', 'output');
-		if ($cache->start(0, 'com_kunena.view.common.statistics')) return;
+		if ($cache->start("{$this->template->name}", 'com_kunena.view.common.statistics')) return;
 		// FIXME: refactor code
 		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
 		require_once(KPATH_SITE.'/lib/kunena.stats.class.php');
@@ -237,7 +238,7 @@ class KunenaViewCommon extends KunenaView {
 		$my = JFactory::getUser ();
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$token = JUtility::getToken();
-		if ($cache->start("{$my->id}.$token", 'com_kunena.view.common.loginbox')) return;
+		if ($cache->start("{$this->template->name}.{$my->id}.$token", 'com_kunena.view.common.loginbox')) return;
 
 		$this->assign ( 'me', KunenaFactory::getUser ());
 

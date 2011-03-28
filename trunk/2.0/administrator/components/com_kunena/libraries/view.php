@@ -32,13 +32,14 @@ class KunenaView extends JView {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$this->template = KunenaFactory::getTemplate();
-		$this->template->loadTemplate('initialize.php');
+		$this->template->initialize();
 
 		$this->displayLayout ();
 	}
 
 	function displayLayout($layout=null, $tpl = null) {
 		$this->config = KunenaFactory::getConfig();
+		$this->template = KunenaFactory::getTemplate();
 		$this->me = KunenaFactory::getUser();
 		if (isset($this->common)) {
 			if ($this->config->board_offline && ! $this->me->isAdmin ()) {
@@ -87,24 +88,19 @@ class KunenaView extends JView {
 	}
 
 	function getButton($name, $text) {
-		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
+		return $this->template->getButton($name, $text);
 	}
 
 	function getIcon($name, $title='') {
-		return '<span class="kicon '.$name.'" title="'.$title.'"></span>';
+		return $this->template->getIcon($name, $title);
 	}
 
 	function getImage($image, $alt='') {
-		return '<img src="'.$this->template->getImagePath($image).'" alt="'.$alt.'" />';
+		return $this->template->getImage($image, $alt);
 	}
 
 	function getClass($class, $class_sfx='') {
-		return $class.($class_sfx ? " {$class}.{$class_sfx}" : '');
-	}
-
-	function topicIcon($topic) {
-		$template = KunenaFactory::getTemplate ();
-		return $template->getTopicIcon($topic);
+		return $this->template->getClass($class, $class_sfx);
 	}
 
 	function getTime() {

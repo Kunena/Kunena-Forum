@@ -10,22 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-		<div class="kbuttonbar"> 
+		<div class="kbuttonbar">
 			<div class="kpaginationbar">
-				<ul class="kpage">
-					<!-- Loop this LI for each page -->
-					<li class="kpage-title">Page:</li>
-					<li class="kpage-active">1</li>
-					<li><a href="#" title="Page 2 of this topic">2</a></li>
-					<li><a href="#" title="Page 3 of this topic">3</a></li>
-					<li><a href="#" title="Page 4 of this topic">4</a></li>
-					<li><a href="#" title="Page 5 of this topic">5</a></li>
-					<li><a href="#" title="Page 6 of this topic">6</a></li>
-					<li><a href="#" title="Page 7 of this topic">7</a></li>
-					<li><a href="#" title="Page 8 of this topic">8</a></li>
-					<li class="kpage-more">...</li>
-					<li><a href="#" title="Page 14 of this topic">14</a></li>
-				</ul>
+				<?php echo $this->getPagination(7) ?>
 			</div>
 			<ul class="kmessage-buttons">
 				<li><a class="kicon-button kbuttoncomm btn-left" href="#" title="New Topic" rel="nofollow">

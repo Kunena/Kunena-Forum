@@ -283,7 +283,7 @@ class KunenaViewCategory extends KunenaView {
 	function getLastPostLink($category, $content = null, $title = null, $class = null) {
 		$uri = $this->getLastPostURL($category);
 		if (!$content) $content = KunenaHtmlParser::parseText($category->last_topic_subject, 20);
-		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_LASTPOST_TITLE', $this->escape($category->last_topic_subject));
+		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->last_topic_subject));
 		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
@@ -350,14 +350,14 @@ class KunenaViewCategory extends KunenaView {
 
 		// TODO: add context (options, template) to caching
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$cachekey = "list.item.{$usertype}.{$catid}.{$lastPost->last_post_id}";
+		$cachekey = "list.item.{$this->template->name}.{$usertype}.{$catid}.{$lastPost->last_post_id}";
 		$cachegroup = 'com_kunena.category';
 
 		$contents = $cache->get($cachekey, $cachegroup);
 		if (!$contents) {
 			$this->categoryURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}") : '';
 			$this->categoryRssURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&format=feed") : '';
-			$this->moderators = $category->getModerators();
+			$this->moderators = $this->config->listcat_show_moderators ? $category->getModerators() : array();
 			$this->subcategories = empty($this->categories [$catid]) ? array() : $this->categories [$catid];
 			$this->lastPost = $lastPost->last_post_id > 0;
 			if ($this->lastPost) {

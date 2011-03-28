@@ -1018,6 +1018,7 @@ body {line-height:1.5;}
 	margin: 0;
 	padding: 0;
 }
+#kunena .kpage span,
 #kunena .kpage a:link,
 #kunena .kpage a:visited {
 	display: block;
@@ -1028,6 +1029,7 @@ body {line-height:1.5;}
 #kunena .kpagination-topic {
 	margin: 5px 0;
 }
+#kunena .kpagination-topic .kpage span,
 #kunena .kpagination-topic .kpage a:link,
 #kunena .kpagination-topic .kpage a:visited {
 	margin: 1px;

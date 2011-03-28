@@ -58,6 +58,9 @@ abstract class KunenaRoute {
 		$home = self::getHome(self::$active);
 
 		$key = ($home ? $home->id : 0) .'-'.(int)$xhtml.(int)$ssl. ($uri instanceof JURI ? $uri->toString () : (string) $uri);
+		if (!$uri || (is_string($uri) && $uri[0]=='&')) {
+			$key = 'a'.(self::$active ? self::$active->id : '') . '-' . $key;
+		}
 		if (isset(self::$uris[$key])) {
 			return self::$uris[$key];
 		}
@@ -73,7 +76,7 @@ abstract class KunenaRoute {
 		return self::$uris[$key];
 	}
 
-	public static function normalize($uri = null) {
+	public static function normalize($uri = null, $object = false) {
 		if (self::$menus === false) self::initialize();
 
 		$uri = self::prepare($uri);
@@ -82,7 +85,7 @@ abstract class KunenaRoute {
 			self::setItemID ( $uri );
 		}
 
-		return 'index.php?' . $uri->getQuery ();
+		return $object ? $uri : 'index.php?' . $uri->getQuery ();
 	}
 
 	public static function getHome($item) {
@@ -128,7 +131,7 @@ abstract class KunenaRoute {
 		self::$menu = self::$menus->getMenu ();
 		self::$default = self::$menus->getDefault();
 		$active = self::$menus->getActive ();
-		if ($active && $active->type == 'component' && $active->component == 'com_kunena' && isset($item->query['view'])) {
+		if ($active && $active->type == 'component' && $active->component == 'com_kunena' && isset($active->query['view'])) {
 			self::$active = $active;
 		} else {
 			self::$active = null;
@@ -136,13 +139,13 @@ abstract class KunenaRoute {
 	}
 
 	protected static function prepare($uri = null) {
-		static $current = false;
-		if (!$uri) {
-			if (!$current) {
-				$current = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )));
-				$current->delVar ( 'Itemid' );
+		static $current = array();
+		if (!$uri || (is_string($uri) && $uri[0] == '&')) {
+			if (!isset($current[$uri])) {
+				$current[$uri] = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )).$uri);
+				$current[$uri]->delVar ( 'Itemid' );
 			}
-			$uri = $current;
+			$uri = $current[$uri];
 		} elseif (is_numeric($uri)) {
 			if (!isset(self::$menu[intval($uri)])) {
 				return false;

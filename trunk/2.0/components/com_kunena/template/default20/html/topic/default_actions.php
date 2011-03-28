@@ -12,17 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 		<div class="kbuttonbar-topic">
 			<div class="kpaginationbar">
-				<ul class="kpage">
-					<!-- Loop this LI for each page -->
-					<li class="kpage-title">Page:</li>
-					<li class="kpage-active">1</li>
-					<li><a href="#" title="Page 2 of this topic">2</a></li>
-					<li><a href="#" title="Page 3 of this topic">3</a></li>
-					<li><a href="#" title="Page 4 of this topic">4</a></li>
-					<li><a href="#" title="Page 5 of this topic">5</a></li>
-					<li class="kpage-more">...</li>
-					<li><a href="#" title="Page 12 of this topic">12</a></li>
-				</ul>
+				<?php echo $this->getPagination(4) ?>
 			</div>
 			<ul class="kmessage-buttons">
 				<!-- User buttons -->

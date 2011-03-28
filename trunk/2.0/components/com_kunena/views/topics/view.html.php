@@ -30,6 +30,9 @@ class KunenaViewTopics extends KunenaView {
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
+		$this->URL = KunenaRoute::_();
+		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
+
 		switch ($this->state->get ( 'list.mode' )) {
 			case 'topics' :
 				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
@@ -84,6 +87,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
+		$this->URL = KunenaRoute::_();
 		switch ($this->state->get ( 'list.mode' )) {
 			case 'posted' :
 				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
@@ -132,6 +136,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
+		$this->URL = KunenaRoute::_();
 		switch ($this->state->get ( 'list.mode' )) {
 			case 'unapproved':
 				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
@@ -171,7 +176,7 @@ class KunenaViewTopics extends KunenaView {
 
 	function getCategoryLink($category, $content = null) {
 		if (!$content) $content = $this->escape($category->name);
-		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=category&catid={$category->id}", $content, $this->escape($category->name), '', 'follow');
+		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=category&catid={$category->id}", $content, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name)), '', 'follow');
 	}
 	function getTopicLink($topic, $action, $content = null, $title = null, $class = null) {
 		if ($action instanceof StdClass) {
@@ -197,14 +202,17 @@ class KunenaViewTopics extends KunenaView {
 					case 'first':
 						$mesid = $topic->first_post_id;
 						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
+						if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
 						break;
 					case 'last':
 						$mesid = $topic->last_post_id;
 						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
+						if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
 						break;
 					case 'unread':
-						$mesid = $topic->lastread ? $topic->lastread : $topic->last_post_id;
+						$mesid = !empty($topic->lastread) ? $topic->lastread : $topic->last_post_id;
 						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
+						if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
 						break;
 				}
 			}
@@ -221,7 +229,7 @@ class KunenaViewTopics extends KunenaView {
 			}
 		}
 		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
-		if ($title === null) $title = $this->escape($topic->subject);
+		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
 		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
@@ -236,24 +244,63 @@ class KunenaViewTopics extends KunenaView {
 	function displayTopicRows() {
 		$lasttopic = NULL;
 		$this->position = 0;
-		foreach ( $this->topics as $this->topic ) {
-			$this->category = $this->topic->getCategory();
-			$this->position++;
-			$this->keywords = $this->topic->getKeywords(false, ', ');
-			$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
-			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
-			$this->pages = ceil ( $this->topic->getTotal() / $this->config->messages_per_page );
-			if ($this->config->avataroncat) {
-				$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
-			}
 
-			if (is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering) {
-				$this->spacing = 1;
-			} else {
-				$this->spacing = 0;
+		foreach ( $this->topics as $this->topic ) {
+			$this->position++;
+			$this->category = $this->topic->getCategory();
+			$usertype = $this->me->getType($this->category->id, true);
+
+			// TODO: add context (options, template) to caching
+			$this->cache = true;
+			$cache = JFactory::getCache('com_kunena', 'output');
+			$cachekey = "{$this->template->name}.{$usertype}.{$this->topic->id}.{$this->topic->last_post_id}";
+			$cachegroup = 'com_kunena.topics';
+
+			$contents = $cache->get($cachekey, $cachegroup);
+			if (!$contents) {
+				$this->firstPostAuthor = $this->topic->getfirstPostAuthor();
+				$this->firstPostTime = $this->topic->last_post_time;
+				$this->firstUserName = $this->topic->first_post_guest_name;
+				$this->lastPostAuthor = $this->topic->getLastPostAuthor();
+				$this->lastPostTime = $this->topic->last_post_time;
+				$this->lastUserName = $this->topic->last_post_guest_name;
+				$this->keywords = $this->topic->getKeywords(false, ', ');
+				$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
+				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
+				$this->pages = ceil ( $this->topic->getTotal() / $this->config->messages_per_page );
+				if ($this->config->avataroncat) {
+					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
+				}
+
+				if (is_object($lasttopic) && $lasttopic->ordering != $this->topic->ordering) {
+					$this->spacing = 1;
+				} else {
+					$this->spacing = 0;
+				}
+				$contents = $this->loadTemplate('row');
+				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
+				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
-			echo $this->loadTemplate('row');
+			if ($usertype != 'guest') {
+				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
+			}
+			echo $contents;
 			$lasttopic = $this->topic;
+		}
+	}
+
+	function fillTopicInfo($matches) {
+		switch ($matches[1]) {
+			case 'ROW':
+				return $matches[2].($this->position & 1 ? 'odd' : 'even').($this->topic->ordering ? " {$matches[2]}sticky" : '');
+			case 'TOPIC_ICON':
+				return $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() );
+			case 'TOPIC_NEW_COUNT':
+				if (!$this->config->shownew || !$this->me->exists()) return;
+				return $this->topic->unread ? $this->getTopicLink ( $this->topic, 'unread', '<sup class="kindicator-new">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' ) : '';
+			case 'DATE':
+				$date = new KunenaDate($matches[2]);
+				return $date->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
 		}
 	}
 

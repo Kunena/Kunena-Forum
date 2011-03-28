@@ -31,6 +31,7 @@ class KunenaForumTopic extends JObject {
 	protected $_db = null;
 	protected $_hold = 1;
 	protected $_posts = 0;
+	protected $_pagination = null;
 
 	/**
 	 * Constructor
@@ -174,12 +175,49 @@ class KunenaForumTopic extends JObject {
 		return $this->last_post_time > $session->lasttime && !in_array($this->id, $readtopics);
 	}
 
+	public function getHits() {
+		return $this->hits;
+	}
+
+	public function getPagination($limitstart=0, $limit=6, $display=4, $prefix='') {
+		if (!$this->_pagination) {
+			kimport ('kunena.html.pagination');
+			$this->_pagination = new KunenaHtmlPagination($this->posts, $limitstart, $limit, $prefix);
+			$this->_pagination->setDisplay($display, "index.php?option=com_kunena&view=topic&catid={$this->category_id}&id={$this->id}");
+		}
+		return $this->_pagination;
+	}
+
+	public function getFirstPostAuthor() {
+		return KunenaFactory::getUser($this->first_post_userid);
+	}
+
+	public function getLastPostAuthor() {
+		return KunenaFactory::getUser($this->last_post_userid);
+	}
+
+	public function getFirstPostTime() {
+		return new KunenaDate($this->first_post_time);
+	}
+
+	public function getLastPostTime() {
+		return new KunenaDate($this->last_post_time);
+	}
+
+	public function getIcon() {
+		return KunenaFactory::getTemplate()->getTopicIcon($this);
+	}
+
 	public function getTotal($hold=null) {
+		return $this->getReplies($hold) + 1;
+	}
+
+	public function getReplies($hold=null) {
 		$me = KunenaFactory::getUser();
 		if ($this->moved_id || !$me->isModerator($this->category_id)) {
-			return $this->posts;
+			return $this->posts - 1;
 		}
-		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold) + 1;
+		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold);
 	}
 
 	public function getPostLocation($mesid, $direction = 'asc', $hold=null) {

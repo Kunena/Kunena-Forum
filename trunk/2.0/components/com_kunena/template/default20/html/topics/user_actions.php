@@ -9,14 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+include dirname(__FILE__).'/default_actions.php';
 ?>
-	<div id="kunena">
-	<?php
-		$this->displayMenu ();
-		$this->displayLoginBox ();
-		$this->displayBreadcrumb ();
-		include 'user_actions.php';
-		include 'user_list.php';
-		$this->displayFooter ();
-	?>
-	</div>

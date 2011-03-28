@@ -10,149 +10,60 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-					<!-- Loop this LI for each recent topic  -->
-					<li class="ktopics-row krow-odd">
+					<li class="ktopics-row [K=ROW:krow-]">
 						<table summary="List of the latest forum topics">
-							<caption>Topic Title</caption>
+							<caption><?php echo $this->escape($this->topic->subject) ?></caption>
 							<tbody>
 								<tr>
-									<td class="ktopic-icon">
-										<a href="#" title="View Topic Title"><span class="ktopicicon-default">There are no new posts in this category.</span></a>
-									</td>
+									<td class="ktopic-icon">[K=TOPIC_ICON]</td>
 									<td class="ktopic-body">
 										<ul>
 											<li class="ktopic-title">
-												<h3><a href="#" title="View Topic Title">Topic Title</a></h3>
+												<h3><?php echo $this->getTopicLink($this->topic, null, null) ?></h3>
 												<ul class="ktopic-actions">
-													<li><sup class="kindicator-new">(12 NEW)</sup></li>
-													<li><span class="kattach-icon">There are attachments in this topic</span></li>
-													<li><span class="klocked-icon">This topic is locked</span></li>
-													<li><a href="#"><span class="ksubscribe-icon">Subscribe to this topic.</span></a></li>
+													<li>[K=TOPIC_NEW_COUNT]</li>
+													<li><?php if ($this->topic->locked) echo $this->getIcon ( 'klocked-icon', JText::_('COM_KUNENA_TOPIC_IS_LOCKED') ) ?></li>
+													<!-- li><a href="#"><span class="ksubscribe-icon">Subscribe to this topic.</span></a></li -->
 												</ul>
 											</li>
-											<li class="ktopic-category">Category: <a href="#" title="View Category">Templates and Design</a></li>
-											<li class="ktopic-details">Topic started 2 days, 9 hours ago by <a href="#" title="View Profile">severdia</a></li>
+											<li class="ktopic-category"><?php echo JText::_('COM_KUNENA_CATEGORY') ?> <?php echo $this->getCategoryLink($this->topic->getCategory()->getParent()) ?> / <?php echo $this->getCategoryLink($this->topic->getCategory()) ?></li>
+											<li class="ktopic-details"><?php echo JText::sprintf('COM_KUNENA_TOPIC_STARTED_ON_DATE_BY_USER', "[K=DATE:{$this->firstPostTime}]", $this->firstPostAuthor->getLink($this->firstUserName)) ?></li>
 											<li>
 												<div class="kpagination-topic">
-													<!-- Loop this LI for each page -->
-													<ul class="kpage">
-														<li class="kpage-title">Page:</li>
-														<li><a href="#" title="Page 1 of this topic">1</a></li>
-														<li><a href="#" title="Page 2 of this topic">2</a></li>
-														<li><a href="#" title="Page 3 of this topic">3</a></li>
-														<li class="kpage-more">...</li>
-														<li><a href="#" title="Page 14 of this topic">8</a></li>
-													</ul>
+													<?php echo $this->topic->getPagination(0, $this->config->messages_per_page, 3)->getPagesLinks() ?>
 												</div>
 											</li>
-											<li>
+											<!-- li>
 												<ul class="ktopic-tags">
 													<li class="ktopic-tags-title">Topic Tags:</li>
 													<li><a href="#">support</a></li>
 													<li><a href="#">templates</a></li>
 													<li><a href="#">css</a></li>
 												</ul>
-											</li>
+											</li -->
 										</ul>
+									</td>
+									<td class="ktopic-status-icons">
+										<?php if ($this->topic->attachments) echo $this->getIcon ( 'ktopic-attach', JText::_('COM_KUNENA_TOPIC_HAS_ATTACHMENTS') ) ?>
+										<?php if ($this->topic->ordering) echo $this->getIcon ( 'ktopic-sticky', JText::_('COM_KUNENA_TOPIC_IS_STICKY') ) ?>
 									</td>
 									<!-- <td class="ktopic-status-icons"><span class="ktopic-attach">Attachment</span><span class="ktopic-sticky">Sticky</span></td> -->
-									<td class="ktopic-replies">22 <span>Replies</span></td>
-									<td class="ktopic-views">105k <span>Views</span></td>
-									<td class="ktopic-subs">22 <span>Subscribers</span></td>
+									<td class="ktopic-replies"><?php echo $this->formatLargeNumber ( $this->topic->getReplies() ); ?><span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></td>
+									<td class="ktopic-views"><?php echo $this->formatLargeNumber ( $this->topic->getHits() );?> <span><?php echo JText::_('COM_KUNENA_GEN_HITS');?></span></td>
+									<!-- td class="ktopic-subs">22 <span>Subscribers</span></td -->
 									<td class="ktopic-lastpost">
 										<ul>
-											<li class="ktopic-smavatar"><a href="#" title="View Username's Profile"><img src="images/avatar.png" alt="Username's Avatar" /></a></li>
-											<li class="ktopic-smdetails klastpost"><a href="#" title="View Last post title">Last post title</a></li>
-											<li class="ktopic-smdetails kauthor">by <a href="#" title="View Author's Profile">Author Name</a></li>
-											<li class="ktopic-smdetails kdate">on December 31, 2011</li>
+											<li class="ktopic-smavatar"><?php echo $this->lastPostAuthor->getLink($this->lastPostAuthor->getAvatarImage('klist-avatar', 'list')) ?></li>
+											<li class="ktopic-smdetails klastpost"><?php echo $this->getTopicLink ( $this->topic, 'last', 'Last post' ) ?> <?php echo JText::_('COM_KUNENA_BY').' '.$this->lastPostAuthor->getLink($this->lastUserName) ?></li>
+											<li class="ktopic-smdetails kdate"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->lastPostTime}]") ?></li>
 										</ul>
 									</td>
+									<?php if ($this->topicActions) : ?>
 									<td class="ktopic-topic-checkbox">
-										<input type="checkbox" value="0" name="" class="kmoderate-topic-checkbox">
+										<input type="checkbox" class="kmoderate-topic-checkbox" name="topics[<?php echo $this->topic->id?>]" value="1">
 									</td>
+									<?php endif ?>
 								</tr>
 								</tbody>
 							</table>
-						</li>
-
-
-						<li class="ktopics-row krow-even">
-							<table summary="List of the latest forum topics">
-								<caption>Topic Title</caption>
-								<tbody>
-									<tr>
-										<td class="ktopic-icon">
-											<a href="#" title="View Topic Title"><span class="ktopicicon-question">Question icon</span></a>
-										</td>
-										<td class="ktopic-body">
-											<ul>
-												<li class="ktopic-title">
-													<h3><a href="#" title="View Topic Title">Topic Title</a></h3>
-													<ul class="ktopic-actions">
-														<li><a href="#"><span class="ksubscribe-icon">Subscribe to this topic.</span></a></li>
-													</ul>
-												</li>
-												<li class="ktopic-category">Category: <a href="#" title="View Category">Templates and Design</a></li>
-												<li class="ktopic-details">Topic started 2 days, 9 hours ago by <a href="#" title="View Profile">severdia</a></li>
-											</ul>
-										</td>
-										<!-- <td class="ktopic-status-icons"><span class="ktopic-attach">Attachment</span><span class="ktopic-sticky">Sticky</span></td> -->
-										<td class="ktopic-replies">22 <span>Replies</span></td>
-										<td class="ktopic-views">105k <span>Views</span></td>
-										<td class="ktopic-subs">331 <span>Subscribers</span></td>
-										<td class="ktopic-lastpost">
-											<ul>
-												<li class="ktopic-smavatar"><a href="#" title="View Username's Profile"><img src="images/avatar.png" alt="Username's Avatar" /></a></li>
-												<li class="ktopic-smdetails klastpost"><a href="#" title="View Last post title">Last post title</a></li>
-												<li class="ktopic-smdetails kauthor">by <a href="#" title="View Author's Profile">Author Name</a></li>
-												<li class="ktopic-smdetails kdate">on December 31, 2011</li>
-											</ul>
-										</td>
-										<td class="ktopic-topic-checkbox">
-											<input type="checkbox" value="0" name="" class="kmoderate-topic-checkbox">
-										</td>
-									</tr>
-									</tbody>
-								</table>
-						</li>
-
-
-
-						<li class="ktopics-row krow-sticky">
-							<table summary="List of the latest forum topics">
-								<caption>Topic Title</caption>
-								<tbody>
-									<tr>
-										<td class="ktopic-icon">
-											<a href="#" title="View Topic Title"><span class="ktopic-sticky">This is a sticky topic</span></a>
-										</td>
-										<td class="ktopic-body">
-											<ul>
-												<li class="ktopic-title">
-													<h3><a href="#" title="View Topic Title">Topic Title</a></h3>
-													<ul class="ktopic-actions">
-														<li><a href="#"><span class="ksubscribe-icon">Subscribe to this topic.</span></a></li>
-													</ul>
-												</li>
-												<li class="ktopic-category">Category: <a href="#" title="View Category">Templates and Design</a></li>
-												<li class="ktopic-details">Topic started 2 days, 9 hours ago by <a href="#" title="View Profile">severdia</a></li>
-											</ul>
-										</td>
-										<td class="ktopic-replies">22 <span>Replies</span></td>
-										<td class="ktopic-views">105k <span>Views</span></td>
-										<td class="ktopic-subs">1 <span>Subscriber</span></td>
-										<td class="ktopic-lastpost">
-											<ul>
-												<li class="ktopic-smavatar"><a href="#" title="View Username's Profile"><img src="images/avatar.png" alt="Username's Avatar" /></a></li>
-												<li class="ktopic-smdetails klastpost"><a href="#" title="View Last post title">Last post title</a></li>
-												<li class="ktopic-smdetails kauthor">by <a href="#" title="View Author's Profile">Author Name</a></li>
-												<li class="ktopic-smdetails kdate">on December 31, 2011</li>
-											</ul>
-										</td>
-										<td class="ktopic-topic-checkbox">
-											<input type="checkbox" value="0" name="" class="kmoderate-topic-checkbox">
-										</td>
-									</tr>
-									</tbody>
-								</table>
 						</li>

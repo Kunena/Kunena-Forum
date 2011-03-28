@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 	</td>
 
 	<td class="kcol-mid kcol-ktopicicon">
-		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topicIcon($this->topic) ) ?>
+		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
 	</td>
 
 	<td class="kcol-mid kcol-ktopictitle">

@@ -32,6 +32,7 @@ class KunenaTemplate extends JObject
 	public $name = null;
 	public $params = null;
 
+	protected $default = 'default';
 	protected $smileyPath = array();
 	protected $rankPath = array();
 	public $topicIcons = array();
@@ -65,6 +66,55 @@ class KunenaTemplate extends JObject
 			if ($param->attributes('type') != 'spacer') $this->params->def($param->attributes('name'), $param->attributes('default'));
 		}
 		$this->getTopicIconPath(0);
+	}
+
+	public function initialize() {}
+
+	public function getButton($name, $text) {
+		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
+	}
+
+	public function getIcon($name, $title='') {
+		return '<span class="kicon '.$name.'" title="'.$title.'"></span>';
+	}
+
+	public function getImage($image, $alt='') {
+		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
+	}
+
+	public function getPaginationListFooter($list) {
+		$html = '<div class="list-footer">';
+		$html .= '<div class="limit">'.JText::_('COM_KUNENA_LIB_HTML_DISPLAY_NUM').' '.$list['limitfield'].'</div>';
+		$html .= $list['pageslinks'];
+		$html .= '<div class="counter">'.$list['pagescounter'].'</div>';
+		$html .= '<input type="hidden" name="' . $list['prefix'] . 'limitstart" value="'.$list['limitstart'].'" />';
+		$html .= '</div>';
+		return $html;
+	}
+
+	public function getPaginationListRender($list) {
+		$html = '<ul class="kpagination">';
+		$html .= '<li class="page">'.JText::_('COM_KUNENA_PAGE').'</li>';
+		$last = 0;
+		foreach($list['pages'] as $i=>$page) {
+			if ($last+1 != $i) $html .= '<li>...</li>';
+			$html .= '<li>'.$page['data'].'</li>';
+			$last = $i;
+		}
+		$html .= '</ul>';
+		return $html;
+	}
+
+	public function getPaginationItemActive(&$item) {
+		return '<a title="'.$item->text.'" href="'.$item->link.'" class="pagenav">'.$item->text.'</a>';
+	}
+
+	public function getPaginationItemInactive(&$item) {
+		return '<span class="pagenav">'.$item->text.'</span>';
+	}
+
+	public function getClass($class, $class_sfx='') {
+		return $class.($class_sfx ? " {$class}.{$class_sfx}" : '');
 	}
 
 	public function loadMootools() {
@@ -122,7 +172,7 @@ class KunenaTemplate extends JObject
 	}
 
 	public function getPath($default = false) {
-		if ($default) return "template/default";
+		if ($default) return "template/{$this->default}";
 		return "template/{$this->name}";
 	}
 
@@ -267,14 +317,29 @@ class KunenaTemplate extends JObject
 	 * @return	KunenaTemplate	The template object.
 	 * @since	1.6
 	 */
-	static public function getInstance($name=null)
-	{
+	static public function getInstance($name=null) {
 		if (!$name) {
 			$config = KunenaFactory::getConfig();
 			$name = $config->template;
 		}
 		if (empty(self::$_instances[$name])) {
-			self::$_instances[$name] = new KunenaTemplate($name);
+			// Find overridden template class
+			$classname = "KunenaTemplate{$name}";
+			if (!class_exists($classname)) {
+				$file = KPATH_SITE."/template/{$name}/template.php";
+				if (!file_exists($file)) {
+					$classname = "KunenaTemplateDefault";
+					$file = KPATH_SITE."/template/default/template.php";
+				}
+				if (file_exists($file)) {
+					require_once $file;
+				}
+			}
+			if (class_exists($classname)) {
+				self::$_instances[$name] = new $classname($name);
+			} else {
+				self::$_instances[$name] = new KunenaTemplate($name);
+			}
 		}
 
 		return self::$_instances[$name];

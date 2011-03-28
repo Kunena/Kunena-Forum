@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">
 	<td class="kcol-first kcol-ktopicicon">
-		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topicIcon($this->topic) ) ?>
+		<?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?>
 	</td>
 
 	<td class="kcol-mid ktopictittle">

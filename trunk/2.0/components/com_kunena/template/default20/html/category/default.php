@@ -15,7 +15,6 @@ defined ( '_JEXEC' ) or die ();
 		$this->displayMenu ();
 		$this->displayLoginBox ();
 		$this->displayBreadcrumb ();
-		$location = 0;
 		include 'default_actions.php';
 		include 'default_list.php';
 		$this->displayFooter ();

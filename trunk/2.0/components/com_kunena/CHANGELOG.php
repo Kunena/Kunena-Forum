@@ -31,6 +31,28 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+28-March-2011 Matias
+# [#23443] KunenaRoute: Fix broken active menu item detection
+# [#23443] KunenaRoute: Fix broken empty URI caching
++ [#22569] KunenaRoute: Add support for short local URLs: &layout=feed
+^ [#23442] KunenaHtmlPagination: Optimize code path when pagination isn't shown
+
+27-March-2011 Matias
++ [#22569] KunenaHtmlPagination: Add support for custom URIs
++ [#23442] View caching: add support for different templates
++ [#25415] Tableless template: Implement Topics/Default layout (part 2)
+
+26-March-2011 Matias
++ [#22569] KunenaForumTopic: add functions to get some data from the topic
++ [#22569] Add function KunenaForumTopic::getPagination()
++ [#25415] KunenaHtmlPagination: Add Kunena template override
++ [#25415] KunenaTemplate: add functions to HTML overrides
++ [#25415] KunenaTemplate: add support for custom default fallback
++ [#25415] KunenaTemplate: add support for template override classes
++ [#25415] KunenaView: use template overrides for buttons etc
++ [#25415] Templates: Add template override class into new file template.php
++ [#25415] Tableless template: Implement Topics/Default layout
+
 25-March-2011 Matias
 + [#25415] Tableless template: Category List view (part 3)
 # [#25415] Tableless template: cleanup and fix many issues in CSS

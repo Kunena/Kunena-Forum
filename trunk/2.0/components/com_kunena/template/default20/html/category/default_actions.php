@@ -9,20 +9,15 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+if (!$this->getPagination(7) && empty($this->newTopicHtml) && empty($this->markReadHtml) && empty($this->subscribeCatHtml)) return;
 ?>
 		<div class="kbuttonbar">
 			<div class="kpaginationbar">
 				<?php echo $this->getPagination(7) ?>
 			</div>
 			<ul class="kmessage-buttons">
-				<li><a class="kicon-button kbuttoncomm btn-left" href="#" title="New Topic" rel="nofollow">
-					<span class="newtopic"><span>New Topic</span></span></a>
-				</li>
-				<li><a class="kicon-button kbuttonuser btn-left" href="#" title="Mark this Topics as Read" rel="nofollow">
-					<span class="markread"><span>Mark Topics Read</span></span></a>
-				</li>
-				<li><a class="kicon-button kbuttonuser btn-left" href="#" title="Subscribe Category" rel="nofollow">
-					<span class="subscribe"><span>Subscribe</span></span></a>
-				</li>
+				<?php if ($this->newTopicHtml) : ?><li><?php echo $this->newTopicHtml ?></li><?php endif ?>
+				<?php if ($this->markReadHtml) : ?><li><?php echo $this->markReadHtml ?></li><?php endif ?>
+				<?php if ($this->subscribeCatHtml) : ?><li><?php echo $this->subscribeCatHtml ?></li><?php endif ?>
 			</ul>
 		</div>

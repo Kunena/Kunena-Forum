@@ -26,7 +26,9 @@ defined ( '_JEXEC' ) or die ();
 													<!-- li><a href="#"><span class="ksubscribe-icon">Subscribe to this topic.</span></a></li -->
 												</ul>
 											</li>
-											<li class="ktopic-category"><?php echo JText::_('COM_KUNENA_CATEGORY') ?> <?php echo $this->getCategoryLink($this->topic->getCategory()->getParent()) ?> / <?php echo $this->getCategoryLink($this->topic->getCategory()) ?></li>
+											<?php if (!empty($this->categoryLink)) : ?>
+											<li class="ktopic-category"><?php echo JText::_('COM_KUNENA_CATEGORY') ?> <?php echo $this->categoryLink ?></li>
+											<?php endif ?>
 											<li class="ktopic-details"><?php echo JText::sprintf('COM_KUNENA_TOPIC_STARTED_ON_DATE_BY_USER', "[K=DATE:{$this->firstPostTime}]", $this->firstPostAuthor->getLink($this->firstUserName)) ?></li>
 											<li>
 												<div class="kpagination-topic">

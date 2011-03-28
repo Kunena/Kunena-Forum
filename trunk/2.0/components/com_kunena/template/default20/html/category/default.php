@@ -15,8 +15,11 @@ defined ( '_JEXEC' ) or die ();
 		$this->displayMenu ();
 		$this->displayLoginBox ();
 		$this->displayBreadcrumb ();
-		include 'default_actions.php';
-		include 'default_list.php';
+		$this->displaySection($this->category);
+		if (!$this->category->isSection()) {
+			include 'default_actions.php';
+			include 'default_list.php';
+		}
 		$this->displayFooter ();
 	?>
 	</div>

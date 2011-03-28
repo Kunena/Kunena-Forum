@@ -10,6 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+// Disable caching
+$this->cache = false;
+
 // Show one topic row
 ?>
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">

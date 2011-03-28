@@ -18,11 +18,11 @@ defined ( '_JEXEC' ) or die ();
 			<h2 class="kheader"><a rel="klatest-detailsbox"><?php echo $this->headerText ?></a></h2>
 			<div class="kdetailsbox" id="klatest-detailsbox">
 				<ul class="klatest">
-					<?php if (empty ( $this->topics ) && empty ( $this->subcategories )) : ?>
+					<?php if (empty($this->topics )) : ?>
 					<li class="ktopics-row krow-odd">
 						<?php echo JText::_('COM_KUNENA_VIEW_RECENT_NO_TOPICS'); ?>
 					</li>
-					<?php else : $this->displayRows (); endif ?>
+					<?php else : $this->displayRows(); endif ?>
 				</ul>
 			</div>
 			<div class="clr"></div>

@@ -215,7 +215,7 @@ class KunenaForumTopic extends JObject {
 	public function getReplies($hold=null) {
 		$me = KunenaFactory::getUser();
 		if ($this->moved_id || !$me->isModerator($this->category_id)) {
-			return $this->posts - 1;
+			return max($this->posts - 1, 0);
 		}
 		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold);
 	}

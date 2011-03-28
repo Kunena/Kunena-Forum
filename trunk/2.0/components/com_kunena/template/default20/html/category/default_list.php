@@ -11,25 +11,28 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 		<div class="ksection">
-			<a href="#" title="Announcement RSS Feed"><span class="krss-icon">Category RSS Feed</span></a>
-			<a href="#" class="kheader-link" title="Mark all categories read">Mark this category read</a>
-			<a href="#" class="ksection-headericon"><img src="images/icon-section.png" alt="" /></a>
-			<h2 class="kheader"><a href="#" title="Category Header" rel="ksection-detailsbox">Category Header</a></h2>
-			<p class="kheader-desc">Category Header Description</p>
+			<h2 class="kheader">
+				<a href="#" title="Category Header" rel="ksection-detailsbox">
+					<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_DEFAULT_TOPICS') ?>
+				</a>
+			</h2>
+			<?php if ($this->category->headerdesc) : ?>
+			<div class="kheader-desc"><?php echo $this->parse($this->category->headerdesc) ?></div>
+			<?php endif ?>
 			<div class="kdetailsbox" id="ktopics-detailsbox">
 				<ul class="ktopics">
-					<?php include 'default_row.php'; ?>
+					<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
+					<li class="ktopics-row krow-odd">
+						<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_NO_TOPICS'); ?>
+					</li>
+					<?php else : $this->displayRows(); endif ?>
 				</ul>
 			</div>
 			<div class="clr"></div>
 		</div>
+		<?php if ($this->topicActions) : ?>
 		<div id="ksection-modbox">
-			<select size="1" class="kinputbox" id="kmoderate-select" name="do">
-				<option value="ModerateTopics">Moderate Topics</option>
-				<option value="DeleteTopics">Delete Selected</option>
-				<option value="MoveSelected">Move Selected</option>
-				<option value="PermDelSel">Permanently Delete Selected</option>
-				<option value="RestoreSel">Restore Selected</option>
-			</select>
+			<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="kinputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
 			<input type="checkbox" value="0" name="" class="kmoderate-topic-checkall">
 		</div>
+		<?php endif ?>

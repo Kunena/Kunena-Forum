@@ -69,6 +69,11 @@ class KunenaForumCategory extends JObject {
 		return $this->_new;
 	}
 
+	public function isSection() {
+		$this->buildInfo();
+		return $this->parent_id == 0 || (!$this->numTopics && $this->locked);
+	}
+
 	public function getTopics() {
 		$this->buildInfo();
 		return $this->_topics;

@@ -38,6 +38,9 @@ Kunena 2.0.0-DEV
 ^ [#23442] KunenaHtmlPagination: Optimize code path when pagination isn't shown
 + [#25415] Tableless template: Add missing images
 ^ [#22786] Merge revisions 4660-4678 from branches/2.0-xillibit-fixes-19-03-2011
++ [#22569] Add function KunenaForumCategory::isSection()
++ [#25415] Tableless template: Implement Category/Default layout
++ [#23442] Add intelligent caching to KunenaViewCategory::displayRows()
 
 27-March-2011 Xillibit
 ^ [#22569] In message history the user name point now to the user profile
@@ -45,6 +48,7 @@ Kunena 2.0.0-DEV
 ^ [#22569] In prune, let the user choose multiple categories
 
 27-March-2011 Matias
++ [#23442] Add intelligent caching to KunenaViewTopics::displayRows()
 + [#22569] KunenaHtmlPagination: Add support for custom URIs
 + [#23442] View caching: add support for different templates
 + [#25415] Tableless template: Implement Topics/Default layout (part 2)

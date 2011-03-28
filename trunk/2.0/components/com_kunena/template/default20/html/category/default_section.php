@@ -10,5 +10,4 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-include dirname(__FILE__).'/../topics/default_row.php';
-?>
+include dirname ( __FILE__ ) . '/list_section.php';

@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.view' );
 
 /**
- * Tremplates view for Kunena backend
+ * Templates view for Kunena backend
  */
 class KunenaAdminViewTemplates extends KunenaView {
 	function display() {

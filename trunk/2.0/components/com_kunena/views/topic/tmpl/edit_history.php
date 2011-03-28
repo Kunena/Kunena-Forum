@@ -38,7 +38,7 @@ $k = 0;
 				<tbody>
 					<tr>
 						<td rowspan="2" valign="top" class="kprofile-left  kauthor">
-							<p><?php echo $this->escape( $message->name ) ?></p>
+							<p><?php echo CKunenaLink::GetProfileLink( intval($message->userid),$this->escape( $message->name )) ?></p>
 							<p><?php
 								$profile = KunenaFactory::getUser(intval($message->userid));
 								$useravatar = $profile->getAvatarImage('','','profile');

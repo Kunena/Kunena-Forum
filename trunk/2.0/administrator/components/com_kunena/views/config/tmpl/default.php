@@ -250,14 +250,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 					</tr>
 							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ANN_MODID') ?></td>
-								<td align="left" valign="top"><input type="text" name="cfg_annmodid"
-							value="<?php echo $this->escape($this->config->annmodid);
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ANN_MODID_DESC') ?>
-						</td>
-					</tr>
-							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TAWIDTH') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_rtewidth"
 							value="<?php echo $this->escape($this->config->rtewidth);
@@ -1022,6 +1014,16 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_DESC') ?>
 						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CUSTOM_SPOILER_IMAGE') ?>
+						</td>
+								<td align="left" valign="top"><input type="text"
+							name="cfg_spoiler_image"
+							value="<?php echo $this->escape($this->config->spoiler_image);
+						?>" /></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CUSTOM_SPOILER_IMAGE_DESC') ?>
+					</td>
 					</tr>
 				</table>
 			</fieldset>

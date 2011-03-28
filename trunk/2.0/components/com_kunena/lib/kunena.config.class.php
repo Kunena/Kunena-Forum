@@ -181,7 +181,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $avataroncat = 0;
 	var $catimagepath = 'category_images';
 	var $showchildcaticon = 1;
-	var $annmodid = '62';
 	var $rtewidth = 450;
 	var $rteheight = 300;
 	var $enableforumjump = 1;
@@ -362,6 +361,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $category_subscriptions = 'post';
 	var $topic_subscriptions = 'every';
 	var $pubprofile = 1;
+	// New for 2.0.0
+	var $spoiler_image = '';
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

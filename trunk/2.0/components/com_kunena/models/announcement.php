@@ -57,9 +57,9 @@ class KunenaModelAnnouncement extends KunenaModel {
 
 	function getCanEdit() {
 		$me = KunenaFactory::getUser ();
-		$config = KunenaFactory::getConfig();
-		$annmods = explode ( ',', $config->annmodid );
-		if ($me->exists() && (in_array ( $me->userid, $annmods ) || $me->isAdmin ())) {
+
+		// User needs to be global moderator to edit announcements
+		if ($me->exists() && $me->isModerator('global')) {
 			$this->canEdit = true;
 		} else {
 			$this->canEdit = false;

@@ -40,10 +40,9 @@ class KunenaViewCommon extends KunenaView {
 			$cache = JFactory::getCache('com_kunena', 'output');
 			if ($cache->start($this->template->name, 'com_kunena.view.common.announcement')) return;
 
-			$config = KunenaFactory::getConfig();
 			$me = KunenaFactory::getUser();
-			$annmods = explode ( ',', $config->annmodid );
-			if ($me->exists() && (in_array ( $me->userid, $annmods ) || $me->isAdmin ())) {
+			// User needs to be global moderator to edit announcements
+			if ($me->exists() && $me->isModerator('global')) {
 				$this->canEdit = true;
 			} else {
 				$this->canEdit = false;
@@ -273,9 +272,7 @@ class KunenaViewCommon extends KunenaView {
 			//$this->assign ( 'editProfileLink', '<a href="' . CKunenaLink::GetAnnouncementURL ( 'show' ).'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>');
 
 			// Announcements
-			$config = KunenaFactory::getConfig();
-			$annmods = @explode ( ',', $config->annmodid );
-			if (in_array ( $this->me->userid, $annmods ) || $this->me->isAdmin()) {
+			if ( $this->me->isModerator() || $this->me->isAdmin()) {
 				$this->assign ( 'announcementsLink', '<a href="' . CKunenaLink::GetAnnouncementURL ( 'show' ).'">'. JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS').'</a>');
 			}
 

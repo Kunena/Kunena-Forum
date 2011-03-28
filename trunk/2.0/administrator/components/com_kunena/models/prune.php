@@ -30,7 +30,7 @@ class KunenaAdminModelPrune extends KunenaModel {
 		$cat_params['unpublished'] = 1;
 		$cat_params['action'] = 'admin';
 
-		$forum = JHTML::_('kunenaforum.categorylist', 'prune_forum', 0, null, $cat_params, 'class="inputbox"', 'value', 'text');
+		$forum = JHTML::_('kunenaforum.categorylist', 'prune_forum', 0, null, $cat_params, 'class="inputbox" multiple="multiple"', 'value', 'text');
 		return $forum;
 	}
 

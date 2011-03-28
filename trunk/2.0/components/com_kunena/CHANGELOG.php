@@ -37,11 +37,21 @@ Kunena 2.0.0-DEV
 + [#22569] KunenaRoute: Add support for short local URLs: &layout=feed
 ^ [#23442] KunenaHtmlPagination: Optimize code path when pagination isn't shown
 + [#25415] Tableless template: Add missing images
+^ [#22786] Merge revisions 4660-4678 from branches/2.0-xillibit-fixes-19-03-2011
+
+27-March-2011 Xillibit
+^ [#22569] In message history the user name point now to the user profile
+- [#22569] Remove announcements IDs and let only moderators and admin to manage announcements
+^ [#22569] In prune, let the user choose multiple categories
 
 27-March-2011 Matias
 + [#22569] KunenaHtmlPagination: Add support for custom URIs
 + [#23442] View caching: add support for different templates
 + [#25415] Tableless template: Implement Topics/Default layout (part 2)
+
+26-March-2011 Xillibit
+# [#25460] Issue on Joomla! 1.6 which prevent to show menu details in configuration report
+# [#22569] Fix weird thing in poll stats queries which prevent to have datas
 
 26-March-2011 Matias
 + [#22569] KunenaForumTopic: add functions to get some data from the topic
@@ -76,6 +86,9 @@ Kunena 2.0.0-DEV
 # [#23443] Category/List: fix mark all read view
 + [#22569] Add feed for Category/Default
 
+22-March-2011 Xillibit
++ [#22569] Let users customize the spoiler image
+
 22-March-2011 Matias
 ^ [#22569] Use Joomla pathway instead of our own
 + [#25415] Tableless template: Add initial structure and CSS
@@ -97,6 +110,10 @@ Kunena 2.0.0-DEV
 ^ [#22569] Rename KunenaView::displayPathway() into displayBreadcrumb()
 ^ [#22569] Rename KunenaView::displayStats() into displayStatistics()
 ^ [#22569] Cleanup common layouts
+
+19-March-2011 Xillibit
+^ [#24395] Put ranks and smilies upload into the same place
+^ [#22569] Into frontend statisitcs add number for each line
 
 19-March-2011 Matias
 # [#23443] Fix regression: category urls are form /category/catid-123

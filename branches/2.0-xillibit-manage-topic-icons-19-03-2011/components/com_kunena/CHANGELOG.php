@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+28-March-2011 Xillibit
+# [#25395] Fix somes issues and fatal errors
+
 25-March-2011 Xillibit
 # [#25395] In topicisons default template, some typos
 + [#25395] Create table for topics_icons

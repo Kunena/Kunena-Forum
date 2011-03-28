@@ -39,7 +39,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			</thead>
 			<tfoot>
 				<tr>
-					<td colspan="7">
+					<td colspan="8">
 						<div class="pagination">
 							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY')?><?php echo $this->navigation->getLimitBox (); ?></div>
 							<?php echo $this->navigation->getPagesLinks (); ?>
@@ -63,14 +63,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					<td align="center"><?php
 						echo ($id + $this->navigation->limitstart + 1);
 						?></td>
-					<td align="center"><input type="checkbox"
-						id="cb<?php
-						echo $row->id;
-						?>" name="cid[]"
-						value="<?php
-						echo $row->id;
-						?>"
-						onclick="isChecked(this.checked);" /></td>
+					<td><?php echo JHTML::_('grid.id', $i, intval($row->id)) ?></td>
 					<td align="center">
 					<a href="#edit"
 						onclick="return listItemTask('cb<?php
@@ -101,9 +94,9 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						<?php echo ($row->published == 1 ? $img_yes : $img_no); ?></td>
 						</a>
 					</td>
-					<td align="center">
-						<span><?php echo $this->navigation->orderUpIcon ( $i, $row->up, 'orderup', 'Move Up', 1 ); ?></span>
-						<span><?php echo $this->navigation->orderDownIcon ( $i, $n, $row->down, 'orderdown', 'Move Down', 1 ); ?></span>
+					<td class="right nowrap">
+						<span><?php echo $this->navigation->orderUpIcon   ( $i, true,     'orderup',   'Move Up',   $row->ordering ); ?></span>
+						<span><?php echo $this->navigation->orderDownIcon ( $i, $n, true, 'orderdown', 'Move Down', $row->ordering ); ?></span>
 						<input type="text" name="order[<?php echo intval($row->id) ?>]" size="5" value="<?php echo $this->escape ( $row->ordering ); ?>" class="text_area" style="text-align: center" />
 					</td>
 					<td class="nowrap"><a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $row->id; ?>','<?php echo  ($row->isdefault ? 'not':'').'bydefault'; ?>')">

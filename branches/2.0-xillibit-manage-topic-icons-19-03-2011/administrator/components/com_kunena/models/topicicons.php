@@ -63,11 +63,6 @@ class KunenaAdminModelTopicicons extends KunenaModel {
 		$topicicons = $db->loadObjectlist();
 		if (KunenaError::checkDatabaseError()) return;
 
-		foreach ( $topicicons as $icon ) {
-			$icon->up = '';
-			$icon->down = '';
-		}
-
 		$this->setState ( 'list.total', count($topicicons) );
 
 		return $topicicons;

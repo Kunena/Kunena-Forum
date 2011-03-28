@@ -21,6 +21,10 @@ class TableKunenaTopicsIcons extends KunenaTable
 {
 	var $id = null;
 	var $name = null;
+	var $filename = null;
+	var $published = null;
+	var $ordering = null;
+	var $isdefault = null;
 
 	function __construct($db) {
 		parent::__construct ( '#__kunena_topics_icons', 'id', $db );
@@ -74,3 +78,9 @@ class TableKunenaTopicsIcons extends KunenaTable
 		}
 		return ($this->getError () == '');
 	}
+
+	function store($updateNulls = false) {
+		$ret = parent::store ( $updateNulls );
+		return $ret;
+	}
+}

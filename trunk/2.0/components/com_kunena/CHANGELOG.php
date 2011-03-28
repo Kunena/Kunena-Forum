@@ -36,6 +36,7 @@ Kunena 2.0.0-DEV
 # [#23443] KunenaRoute: Fix broken empty URI caching
 + [#22569] KunenaRoute: Add support for short local URLs: &layout=feed
 ^ [#23442] KunenaHtmlPagination: Optimize code path when pagination isn't shown
++ [#25415] Tableless template: Add missing images
 
 27-March-2011 Matias
 + [#22569] KunenaHtmlPagination: Add support for custom URIs

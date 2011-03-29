@@ -31,9 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
-27-March-2011 Xillibit
+29-March-2011 Xillibit
 ^ [#25478] Rename onAfterThankyou into onAfterAddThankyou and add onAfterRemoveThankyou
 # [#25478] Fix regressions detected in controller/topic.php and in views/topic/view.html.php
+^ [#25478] Add new authorisation for unthankyou function
 
 27-March-2011 Xillibit
 + [#25478] Let user remove his thankyou

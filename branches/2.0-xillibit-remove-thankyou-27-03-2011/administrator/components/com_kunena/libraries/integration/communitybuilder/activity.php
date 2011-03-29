@@ -69,9 +69,9 @@ class KunenaActivityCommunityBuilder extends KunenaActivity {
 		$this->integration->trigger ( 'onAfterUndelete', $params );
 	}
 
-	public function onAfterAddThankyou($target, $actor, $message) {
+	public function onAfterThankyou($target, $actor, $message) {
 		$params = array ('actor' => $actor, 'target' => $target, 'message' => $message );
-		$this->integration->trigger ( 'onAfterAddThankyou', $params );
+		$this->integration->trigger ( 'onAfterThankyou', $params );
 	}
 
 	public function onAfterSubscribe($topic, $action) {

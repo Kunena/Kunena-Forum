@@ -120,7 +120,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		}
 	}
 
-	public function onAfterAddThankyou($target, $actor, $message) {
+	public function onAfterThankyou($target, $actor, $message) {
 		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_GOT' ).': ' . KunenaFactory::getUser($target)->username );
 		$infoRootUser = ( JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . KunenaFactory::getUser($actor)->username );
 		$category = $message->getCategory();

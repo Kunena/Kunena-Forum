@@ -333,7 +333,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$message = KunenaForumMessageHelper::get($this->mesid);
-		if (!$message->authorise('thankyou')) {
+		if (!$message->authorise('unthankyou')) {
 			$app->enqueueMessage ( $message->getError() );
 			$this->redirectBack ();
 		}
@@ -345,7 +345,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$activityIntegration = KunenaFactory::getActivityIntegration();
-		$activityIntegration->onAfterRemoveThankyou($message->userid, $this->my->id, $message);
+		$activityIntegration->onAfterUnThankyou($message->userid, $this->my->id, $message);
 
 		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_REMOVED_SUCCESS' ) );
 		$this->redirectBack ();

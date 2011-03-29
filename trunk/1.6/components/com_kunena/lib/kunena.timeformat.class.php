@@ -95,7 +95,8 @@ class CKunenaTimeformat {
 
 		switch (strtolower ( $tz )) {
 			case 'utc' :
-				$date = new JDate ( $time, 0 );
+				$jversion = new JVersion();
+				$date = new JDate ( $time );
 				break;
 			default :
 				$date = new JDate ( $time, ( float ) $offset );

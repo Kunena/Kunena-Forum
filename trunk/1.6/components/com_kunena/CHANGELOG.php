@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+29-March-2011 Matias
+# [#24991] Birthdate in kunena profile is different under Joomla 1.6 and Joomla 1.5
+
 26-March-2011 Severdia
 # [#25329] Fixed avatar border regression
 

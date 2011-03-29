@@ -31,6 +31,12 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+29-March-2011 Matias
+^ [#25415] Add new parameters into CKunenaLink::GetReportMessageLink()
++ [#25415] Tableless template CSS: Add intended and threaded buttons
++ [#25415] Tableless template: Implement Topic/Default layout
++ [#23442] Add intelligent caching to KunenaViewCategory::getMessageProfileBox() and displayMessage()
+
 28-March-2011 Matias
 # [#23443] KunenaRoute: Fix broken active menu item detection
 # [#23443] KunenaRoute: Fix broken empty URI caching

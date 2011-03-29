@@ -174,10 +174,10 @@ class CKunenaLink {
 		return KunenaRoute::_ ( 'index.php?option=com_kunena&view=report', $xhtml );
 	}
 
-	function GetReportMessageLink($catid, $id, $name, $rel = 'nofollow') {
+	function GetReportMessageLink($catid, $id, $name, $rel = 'nofollow', $class = '', $title = '') {
 		kimport ('kunena.forum.message.helper');
 		$message = KunenaForumMessageHelper::get($id);
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=report&catid={$message->catid}&id={$message->thread}&mesid={$message->id}", $name, '', $rel );
+		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=report&catid={$message->catid}&id={$message->thread}&mesid={$message->id}", $name, $title, $rel, $class );
 	}
 
 	function GetMessageIPLink($msg_ip, $rel = 'nofollow') {

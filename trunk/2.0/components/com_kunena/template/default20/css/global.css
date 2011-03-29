@@ -1105,6 +1105,12 @@ body {line-height:1.5;}
 	padding: 0 7px;
 	height: 15px;
 }
+#kunena .kbuttonuser span.layout-flat span,
+#kunena .kbuttonuser span.layout-threaded span,
+#kunena .kbuttonuser span.layout-indented span
+{
+	padding: 0 7px;
+}
 #kunena .kbuttononline-yes span.online-yes	{ background-position: 0 0px;	}
 #kunena .kbuttononline-no span.online-no	{ background-position: 0 -400px;}
 #kunena .kbuttoncomm span.reply				{ background-position: 0 -460px;}
@@ -1126,6 +1132,9 @@ body {line-height:1.5;}
 #kunena .kbuttonmod span.split				{ background-position: 0 -160px;}
 #kunena .kbuttonmod span.approve			{ background-position: 0 -180px;}
 #kunena .kbuttonmod span.moderate			{ background-position: 0 -120px;}
+#kunena .kbuttonuser span.layout-flat		{ background-position: 0 -240px;}
+#kunena .kbuttonuser span.layout-threaded	{ background-position: 0 -240px;}
+#kunena .kbuttonuser span.layout-indented	{ background-position: 0 -240px;}
 
 /*---------- Filter Options ------------- */
 

@@ -365,6 +365,7 @@ class KunenaViewCategory extends KunenaView {
 		$lastPost = $category->getLastPosted();
 
 		// TODO: add context (options, template) to caching
+		$this->cache = true;
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$cachekey = "list.item.{$this->template->name}.{$usertype}.{$catid}.{$lastPost->last_post_id}";
 		$cachegroup = 'com_kunena.category';
@@ -384,7 +385,7 @@ class KunenaViewCategory extends KunenaView {
 			}
 			$contents = $this->loadTemplate('category');
 			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillCategoryInfo'), $contents);
-			$cache->store($contents, $cachekey, $cachegroup);
+			if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 		} elseif ($usertype == 'guest') {
 			echo $contents;
 			return;

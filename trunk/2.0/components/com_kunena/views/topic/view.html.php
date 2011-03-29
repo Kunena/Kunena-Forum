@@ -31,6 +31,7 @@ class KunenaViewTopic extends KunenaView {
 	var $topic_moderate = null;
 	var $poll = null;
 	var $mmm = 0;
+	var $cache = true;
 
 	function displayDefault($tpl = null) {
 		$this->layout = $this->state->get('layout');
@@ -456,10 +457,13 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function displayMessageProfile() {
+		echo $this->getMessageProfileBox();
+	}
+
+	function getMessageProfileBox() {
 		static $profiles = array ();
 
 		if (! isset ( $profiles [$this->profile->userid] )) {
-			$direction = $this->state->get('profile.direction');
 			// Modify profile values by integration
 			$triggerParams = array ('userid' => $this->profile->userid, 'userinfo' => &$this->profile );
 			$integration = KunenaFactory::getProfile();
@@ -498,37 +502,48 @@ class KunenaViewTopic extends KunenaView {
 				// Use integration
 				$profiles [$this->profile->userid] = $profileHtml;
 			} else {
-				$this->userkarma = "{$this->userkarma_title} {$this->userkarma_minus} {$this->userkarma_plus}";
-				// Use kunena profile
-				if ($this->config->showuserstats) {
-					if ($this->config->userlist_usertype)
-						$this->usertype = $this->profile->getType ( $this->topic->category_id );
-					$this->userrankimage = $this->profile->getRank ( $this->topic->category_id, 'image' );
-					$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
-					$this->userposts = $this->profile->posts;
-					$activityIntegration = KunenaFactory::getActivityIntegration ();
-					$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
-					$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
-				}
-				$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
+				$usertype = $this->profile->getType($this->category->id, true);
+				if ($this->profile->exists() && $this->message->userid == $this->profile->userid) $usertype = 'me';
 
-				$profiles [$this->profile->userid] = $this->loadTemplate ( "profile_{$direction}" );
+				// TODO: add context (options, template) to caching
+				$cache = JFactory::getCache('com_kunena', 'output');
+				$cachekey = "profile.{$this->template->name}.{$this->profile->userid}.{$usertype}";
+				$cachegroup = 'com_kunena.messages';
+
+				$contents = $cache->get($cachekey, $cachegroup);
+				if (!$contents) {
+					$this->userkarma = "{$this->userkarma_title} {$this->userkarma_minus} {$this->userkarma_plus}";
+					// Use kunena profile
+					if ($this->config->showuserstats) {
+						if ($this->config->userlist_usertype) {
+							$this->usertype = $this->profile->getType ( $this->topic->category_id );
+						}
+						$this->userrankimage = $this->profile->getRank ( $this->topic->category_id, 'image' );
+						$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
+						$this->userposts = $this->profile->posts;
+						$activityIntegration = KunenaFactory::getActivityIntegration ();
+						$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
+						$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
+					}
+					$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
+
+					$contents = $this->loadTemplate('profile');
+					if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				}
+				$profiles [$this->profile->userid] = $contents;
 			}
 		}
-		echo $profiles [$this->profile->userid];
+		return $profiles [$this->profile->userid];
 	}
 
 	function displayMessageContents() {
-		//Show admins the IP address of the user:
-		if ($this->message->ip && ($this->category->authorise('admin') || ($this->category->authorise('moderate') && !$this->config->hide_ip))) {
-			$this->ipLink = CKunenaLink::GetMessageIPLink ( $this->message->ip );
-		}
-		$this->signatureHtml = KunenaHtmlParser::parseBBCode ( $this->profile->signature );
-		$this->attachments = $this->message->getAttachments();
 		echo $this->loadTemplate("message");
 	}
 
 	function displayMessageActions() {
+		echo $this->getMessageActions();
+	}
+	function getMessageActions() {
 		$me = KunenaFactory::getUser();
 
 		//Thankyou info and buttons
@@ -542,6 +557,9 @@ class KunenaViewTopic extends KunenaView {
 			if($me->userid && !$thankyou->exists($me->userid) && $me->userid != $this->profile->userid) {
 				$this->message_thankyou = CKunenaLink::GetThankyouLink ( $this->topic->category_id, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');
 			}
+		}
+		if ($this->config->reportmsg && KunenaFactory::getUser()->exists()) {
+			$this->message_report = CKunenaLink::GetReportMessageLink ( $this->category->id, $this->message->id, $this->getButton ( 'report', JText::_('COM_KUNENA_BUTTON_REPORT') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_REPORT') );
 		}
 
 		$this->message_quickreply = $this->message_reply = $this->message_quote = '';
@@ -588,7 +606,7 @@ class KunenaViewTopic extends KunenaView {
 				}
 			}
 		}
-		echo $this->loadTemplate("message_actions");
+		return $this->loadTemplate("message_actions");
 	}
 
 	function displayMessage($id, $message, $template=null) {
@@ -597,34 +615,79 @@ class KunenaViewTopic extends KunenaView {
 			$template = $this->state->get('profile.location');
 			$this->setLayout('default');
 		}
+
 		$this->mmm ++;
 		$this->message = $message;
 		$this->profile = KunenaFactory::getUser($this->message->userid);
 		$this->replynum = $id;
+		$usertype = $this->me->getType($this->category->id, true);
+		if ($usertype == 'user' && $this->message->userid == $this->profile->userid) $usertype = 'owner';
 
-		// Link to individual message
-		if ($this->config->ordering_system == 'replyid') {
-			$this->numLink = CKunenaLink::GetSamePageAnkerLink( $message->id, '#' . $id );
-		} else {
-			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $message->id, '#' . $message->id );
+		// TODO: add context (options, template) to caching
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$cachekey = "message.{$this->template->name}.{$layout}.{$template}.{$usertype}.{$this->message->id}.{$this->message->modified_time}";
+		$cachegroup = 'com_kunena.messages';
+
+		$contents = $cache->get($cachekey, $cachegroup);
+		if (!$contents) {
+
+			//Show admins the IP address of the user:
+			if ($this->message->ip && ($this->category->authorise('admin') || ($this->category->authorise('moderate') && !$this->config->hide_ip))) {
+				$this->ipLink = CKunenaLink::GetMessageIPLink ( $this->message->ip );
+			}
+			$this->signatureHtml = KunenaHtmlParser::parseBBCode ( $this->profile->signature );
+			$this->attachments = $this->message->getAttachments();
+
+			// Link to individual message
+			if ($this->config->ordering_system == 'replyid') {
+				$this->numLink = CKunenaLink::GetSamePageAnkerLink( $message->id, '#[K=REPLYNO]' );
+			} else {
+				$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $message->id, '#' . $message->id );
+			}
+
+			if ($this->message->hold == 0) {
+				$this->class = 'kmsg';
+			} elseif ($this->message->hold == 1) {
+				$this->class = 'kmsg kunapproved';
+			} else if ($this->message->hold == 2 || $this->message->hold == 3) {
+				$this->class = 'kmsg kdeleted';
+			}
+
+			// New post suffix for class
+			$this->msgsuffix = '';
+			if ($this->message->isNew()) {
+				$this->msgsuffix = '-new';
+			}
+
+			$contents = $this->loadTemplate($template);
+			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
+			if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+		} elseif ($usertype == 'guest') {
+			echo $contents;
+			$this->setLayout($layout);
+			return;
 		}
-
-		if ($this->message->hold == 0) {
-			$this->class = 'kmsg';
-		} elseif ($this->message->hold == 1) {
-			$this->class = 'kmsg kunapproved';
-		} else if ($this->message->hold == 2 || $this->message->hold == 3) {
-			$this->class = 'kmsg kunapproved kdeleted';
-		}
-
-		// New post suffix for class
-		$this->msgsuffix = '';
-		if ($this->message->isNew()) {
-			$this->msgsuffix = '-new';
-		}
-
-		echo $this->loadtemplate($template);
+		$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
+		echo $contents;
 		$this->setLayout($layout);
+	}
+
+	function fillMessageInfo($matches) {
+		switch ($matches[1]) {
+			case 'ROW':
+				return $this->mmm & 1 ? 'odd' : 'even';
+			case 'DATE':
+				$date = new KunenaDate($matches[2]);
+				return $date->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
+			case 'NEW':
+				return $this->message->isNew() ? 'new' : 'old';
+			case 'REPLYNO':
+				return $this->replynum;
+			case 'MESSAGE_PROFILE':
+				return $this->getMessageProfileBox();
+			case 'MESSAGE_ACTIONS':
+				return $this->getMessageActions();
+		}
 	}
 
 	function displayMessages() {

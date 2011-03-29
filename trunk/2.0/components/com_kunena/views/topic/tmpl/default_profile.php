@@ -9,14 +9,7 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-?>
-	<div id="kunena">
-	<?php
-		$this->displayMenu ();
-		$this->displayLoginBox ();
-		$this->displayBreadcrumb ();
-		$this->displayTopicActions(0);
-		include 'default_list.php';
-		$this->displayFooter ();
-	?>
-	</div>
+
+$this->cache = false;
+$direction = $this->state->get('profile.direction');
+echo $this->loadTemplate("profile_{$direction}");

@@ -71,6 +71,9 @@ class KunenaView extends JView {
 		echo $this->getModulePosition($position);
 	}
 
+	function isModulePosition($position) {
+		return JDocumentHTML::countModules ( $position );
+	}
 	function getModulePosition($position) {
 		$html = '';
 		if (JDocumentHTML::countModules ( $position )) {

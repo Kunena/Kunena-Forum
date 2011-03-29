@@ -16,27 +16,16 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<ul class="kmessage-buttons">
 				<!-- User buttons -->
-				<li><a class="kicon-button kbuttoncomm btn-left" href="#" title="Reply to Topic" rel="nofollow">
-					<span class="reply"><span>Reply to Topic</span></span></a>
-				</li>
-				<li><a class="kicon-button kbuttonuser btn-left" href="#" title="Subscribe Category" rel="nofollow">
-					<span class="subscribe"><span>Subscribe</span></span></a>
-				</li>
-				<li><a class="kicon-button kbuttonuser btn-left" href="#" title="Save Favorite" rel="nofollow">
-					<span class="favorite"><span>Favorite</span></span></a>
-				</li>
+				<?php if (!empty($this->topic_reply)) : ?><li><?php echo $this->topic_reply ?></li><?php endif ?>
+				<?php if (!empty($this->topic_subscribe)) : ?><li><?php echo $this->topic_subscribe ?></li><?php endif ?>
+				<?php if (!empty($this->topic_favorite)) : ?><li><?php echo $this->topic_favorite ?></li><?php endif ?>
 				<!-- Moderator buttons -->
-				<li><a class="kicon-button kbuttonmod btn-left" href="#" title="Lock this topic" rel="nofollow">
-					<span class="lock"><span>Lock</span></span></a>
-				</li>
-				<li><a class="kicon-button kbuttonmod btn-left" href="#" title="Make sticky" rel="nofollow">
-					<span class="sticky"><span>Sticky</span></span></a>
-				</li>
-				<li><a class="kicon-button kbuttonmod btn-left" href="#" title="Moderate Topic" rel="nofollow">
-					<span class="moderate"><span>Moderate Topic</span></span></a>
-				</li>
-				<li><a class="kicon-button kbuttonmod btn-left" href="#" title="Delete Topic" rel="nofollow">
-					<span class="delete"><span>Delete Topic</span></span></a>
-				</li>
+				<?php if (!empty($this->topic_lock)) : ?><li><?php echo $this->topic_lock ?></li><?php endif ?>
+				<?php if (!empty($this->topic_sticky)) : ?><li><?php echo $this->topic_sticky ?></li><?php endif ?>
+				<?php if (!empty($this->topic_moderate)) : ?><li><?php echo $this->topic_moderate ?></li><?php endif ?>
+				<?php if (!empty($this->topic_delete)) : ?><li><?php echo $this->topic_delete ?></li><?php endif ?>
+				<?php if (!empty($this->layout_buttons)) : ?>
+				<li><?php echo implode('</li> <li>', $this->layout_buttons) ?></li>
+				<?php endif ?>
 			</ul>
 		</div>

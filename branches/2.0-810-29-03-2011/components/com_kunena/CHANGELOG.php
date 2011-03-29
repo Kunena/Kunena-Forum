@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+29-March-2011 810
+^ [#25415] Tableless template: Change button Markallread to text & Css fixes
+
 28-March-2011 Matias
 # [#23443] KunenaRoute: Fix broken active menu item detection
 # [#23443] KunenaRoute: Fix broken empty URI caching

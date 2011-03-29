@@ -341,7 +341,7 @@ body {line-height:1.5;}
 #kunena li.klogin-lastvisit,
 #kunena li.klogout-form {
 	line-height: 20px;
-	padding-left: 75px;
+	padding-left: 100px;
 }
 #kunena li.klogin-welcome {
 	font-weight: bold;
@@ -721,7 +721,7 @@ body {line-height:1.5;}
 #kunena .ktopics-row table td.ktopic-lastpost,
 #kunena .ktags-row table td.ktag-lastpost,
 #kunena .krecposts-row table td.krecposts-lastpost {
-	width: 160px;
+	width: 20%;
 	padding: 15px 10px;
 }
 #kunena li.kcategory-smavatar,

@@ -99,7 +99,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		}
 	}
 
-	public function onAfterThankyou($thankyoutargetid, $username , $message) {
+	public function onAfterAddThankyou($thankyoutargetid, $username , $message) {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $thankyoutargetid );
 

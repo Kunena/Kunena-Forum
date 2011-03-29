@@ -103,7 +103,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
-		if ( $this->message->hold == 0 ) {
+		if ( $message->hold == 0 ) {
 			if (!$topic->exists()) {
 				$activity->onBeforePost($message);
 			} else {
@@ -319,7 +319,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$activityIntegration = KunenaFactory::getActivityIntegration();
-		$activityIntegration->onAfterThankyou($message->userid, $this->my->id, $message);
+		$activityIntegration->onAfterAddThankyou($this->my->id, $message->userid, $message);
 
 		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_SUCCESS' ) );
 		$this->redirectBack ();
@@ -344,8 +344,8 @@ class KunenaControllerTopic extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		/*$activityIntegration = KunenaFactory::getActivityIntegration();
-		$activityIntegration->onAfterThankyou($message->userid, $this->my->id, $message);*/
+		$activityIntegration = KunenaFactory::getActivityIntegration();
+		$activityIntegration->onAfterRemoveThankyou($message->userid, $this->my->id, $message);
 
 		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_REMOVED_SUCCESS' ) );
 		$this->redirectBack ();

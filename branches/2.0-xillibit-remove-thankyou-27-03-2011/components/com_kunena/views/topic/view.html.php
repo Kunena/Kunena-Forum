@@ -541,7 +541,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->thankyou[] = CKunenaLink::GetProfileLink($userid);
 			}
 			if($me->userid && !$thankyou->exists($me->userid) && $me->userid != $this->profile->userid) {
-				$this->message_thankyou = CKunenaLink::GetThankyouLink ( $this->topic->category_id, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');
+				$this->message_thankyou = CKunenaLink::GetThankyouLink ( 'add', $this->topic->category_id, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');
 			}
 			if ( $me->userid && $thankyou->exists($me->userid) && array_key_exists($me->userid,$thankyou->getList()) ) {
 				$this->message_thankyou_delete = CKunenaLink::GetThankyouLink ( 'remove', $this->topic->category_id, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG'), 'kicon-button kbuttonuser btn-left');

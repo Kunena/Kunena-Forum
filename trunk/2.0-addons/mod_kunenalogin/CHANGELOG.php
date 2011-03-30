@@ -28,7 +28,11 @@ Legend:
 
 KunenaLogin 2.0.0-DEV
 
-29-January-2010 Matias
+30-March-2011 Matias
+# [#22073] Do not use deprecated CKunenaTimeformat class
+# [#22073] Do not use deprecated KunenaUser::getAvatarLink()
+
+29-January-2011 Matias
 ^ [#22073] Convert module to Kunena 2.0 API
 
 KunenaLogin 1.6.2

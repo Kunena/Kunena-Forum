@@ -29,9 +29,7 @@ defined('_JEXEC') or die();
 				<?php if ($this->params->get('lastlog')) : ?>
 					<li>
 						<span class="klogin-lasttext"><?php echo JText::_('MOD_KUNENALOGIN_LASTVISIT'); ?></span>
-						<span class="klogin-lastdate" title="<?php echo CKunenaTimeformat::showDate($this->my->lastvisitDate, 'ago', 'utc'); ?>">
-							<?php echo CKunenaTimeformat::showDate($this->my->lastvisitDate, 'date_today', 'utc'); ?>
-						</span>
+						<?php echo $this->lastvisitDate->toSpan('date_today', 'ago', 'klogin-lastdate') ?>
 					</li>
 				<?php endif; ?>
 					<li class="klogin-logout-button">

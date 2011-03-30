@@ -14,7 +14,7 @@ class ModKunenaLogin {
 	function __construct($params) {
 		// Include the syndicate functions only once
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
-		require_once KPATH_SITE . '/lib/kunena.timeformat.class.php';
+		kimport('kunena.date');
 		$this->params = $params;
 
 		// load Kunena main language file so we can leverage language strings from it
@@ -38,7 +38,7 @@ class ModKunenaLogin {
 	function kunenaAvatar($userid) {
 		$kunena_user = KunenaFactory::getUser ( ( int ) $userid );
 		$username = $kunena_user->getName(); // Takes care of realname vs username setting
-		$avatarlink = $kunena_user->getAvatarLink ( '', $this->params->get ( 'avatar_w' ), $this->params->get ( 'avatar_h' ) );
+		$avatarlink = $kunena_user->getAvatarImage ( '', $this->params->get ( 'avatar_w' ), $this->params->get ( 'avatar_h' ) );
 		return CKunenaLink::GetProfileLink ( $userid, $avatarlink, $username );
 	}
 
@@ -66,6 +66,7 @@ class ModKunenaLogin {
 		} else {
 			$this->type = 'logout';
 			$this->logout = null;
+			$this->lastvisitDate = new KunenaDate($this->my->lastvisitDate);
 			if ($login) {
 				$this->logout = $login->getLogoutFormFields();
 			}

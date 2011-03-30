@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+30-March-2011 Xillibit
+# [#25395] Make ordering working like it should
+
 28-March-2011 Xillibit
 # [#25395] Fix somes issues and fatal errors
 

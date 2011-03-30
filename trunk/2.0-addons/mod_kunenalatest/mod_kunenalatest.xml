@@ -29,8 +29,8 @@
 		<language tag="ru-RU">ru-RU.mod_kunenalatest.ini</language>
 	</languages>
 
-	<params addpath="/administrator/components/com_kunena/elements">
-		<param name="category_id" type="kunenacategories" default="0" none="MOD_KUNENALATEST_PARAM_CATEGORYLIST_NONE" label="MOD_KUNENALATEST_PARAM_CAT_IDS" description="MOD_KUNENALATEST_PARAM_CAT_IDS_DESC"  multiple="true" size="5" />
+	<params addpath="/administrator/components/com_kunena/libraries/form/elements">
+		<param name="category_id" type="kunenacategorylist" default="0" none="MOD_KUNENALATEST_PARAM_CATEGORYLIST_NONE" label="MOD_KUNENALATEST_PARAM_CAT_IDS" description="MOD_KUNENALATEST_PARAM_CAT_IDS_DESC"  multiple="true" size="5" />
 		<param name="sh_category_id_in" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_CAT_IDS_IN" description="MOD_KUNENALATEST_PARAM_CAT_IDS_IN_DESC">
 			<option value="1">MOD_KUNENALATEST_PARAM_SHOW_CATS</option>
 			<option value="0">MOD_KUNENALATEST_PARAM_HIDE_CATS</option>

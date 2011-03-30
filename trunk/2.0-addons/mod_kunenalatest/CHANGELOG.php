@@ -30,7 +30,10 @@ Legend:
 
 KunenaLatest 2.0.0-DEV
 
-29-January-2010 Matias
+30-March-2011 Matias
+# [#24676] Changing module parameters to new API
+
+29-January-2011 Matias
 ^ [#24676] Convert module to Kunena 2.0 API
 + [#24676] Add simple caching (by user and template parameters)
 

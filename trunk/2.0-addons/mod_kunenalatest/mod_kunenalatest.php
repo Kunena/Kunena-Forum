@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ( '' );
 
 // Kunena detection and version check
 $minKunenaVersion = '2.0.0-DEV';
-$minKunenaBuild = 4318;
+$minKunenaBuild = 4682;
 if (!class_exists('KunenaForum') || !KunenaForum::isCompatible($minKunenaVersion, $minKunenaBuild)) {
 	echo JText::sprintf ( 'MOD_KUNENALATEST_KUNENA_NOT_INSTALLED', $minKunenaVersion );
 	return;

@@ -629,16 +629,6 @@ table {border-collapse: collapse;}
 #kunena #kbbcode-toolbar li a:hover {
 	background-color: #e4e4e4;
 }
-#kunena ul#kbbcode-toolbar li a#kbbcode-separator1,
-#kunena ul#kbbcode-toolbar li a#kbbcode-separator2,
-#kunena ul#kbbcode-toolbar li a#kbbcode-separator3,
-#kunena ul#kbbcode-toolbar li a#kbbcode-separator4,
-#kunena ul#kbbcode-toolbar li a#kbbcode-separator5,
-#kunena ul#kbbcode-toolbar li a#kbbcode-separator6,
-#kunena ul#kbbcode-toolbar li a#kbbcode-separator7,
-#kunena ul#kbbcode-toolbar li a#kbbcode-separator8 {
-	background-color: #eeeeee;
-}
 #kunena .kpostmessage .kpostbuttonset td,
 #kunena .kpostmessage tr.krow2 .kpostbuttonset td {
 	border-color: #BFC3C6;

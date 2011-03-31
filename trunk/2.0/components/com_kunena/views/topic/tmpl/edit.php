@@ -10,37 +10,17 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$template = KunenaFactory::getTemplate();
-$topic_emoticons = $template->getTopicIcons();
+JHTML::_('behavior.formvalidation');
+JHTML::_('behavior.tooltip');
+JHTML::_('behavior.keepalive');
 
-if (!empty($this->poll)) {
-	$template = KunenaTemplate::getInstance();
-	$template->addScript('js/poll.js');
-	$this->document->addScriptDeclaration('// <![CDATA[
-		var KUNENA_POLL_CATS_NOT_ALLOWED = "'.JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED').'";
-		var KUNENA_EDITOR_HELPLINE_OPTION = "'.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION').'";
-		var KUNENA_POLL_OPTION_NAME = "'.JText::_('COM_KUNENA_POLL_OPTION_NAME').'";
-		var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'.JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW').'";
-		var KUNENA_ICON_ERROR = "'.JURI::root(true).'/components/com_kunena/template/default/images/publish_x.png";
-	// ]]>');
-}
+kimport ('kunena.bbcode.editor');
+$editor = KunenaBBCodeEditor::getInstance();
+$editor->initialize('id');
 
 include_once (KPATH_SITE.'/lib/kunena.bbcode.js.php');
 include_once (KPATH_SITE.'/lib/kunena.special.js.php');
-JHTML::_('behavior.formvalidation');
-JHTML::_('behavior.tooltip');
-//keep session alive while editing
-JHTML::_('behavior.keepalive');
 
-$document = JFactory::getDocument ();
-if ($this->my->id) {
-	$document->addScriptDeclaration('// <![CDATA[
-		var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
-	// ]]>');
- }
- $document->addScriptDeclaration('// <![CDATA[
- function kShowDetail(srcElement) {' . 'var targetID, srcElement, targetElement, imgElementID, imgElement;' . 'targetID = srcElement.id + "_details";' . 'imgElementID = srcElement.id + "_img";' . 'targetElement = document.getElementById(targetID);' . 'imgElement = document.getElementById(imgElementID);' . 'if (targetElement.style.display == "none") {' . 'targetElement.style.display = "";' . 'imgElement.src = "' . JURI::root(true) . '/components/com_kunena/template/default/images/emoticons/w00t.png";' . '} else {' . 'targetElement.style.display = "none";' . 'imgElement.src = "' . JURI::root() . '/components/com_kunena/template/default/images/emoticons/pinch.png";' . '}}
- // ]]>');
 $this->setTitle ( $this->title );
 
 $this->k=0;
@@ -127,9 +107,9 @@ $this->displayLoginBox ();
 			</td>
 
 			<td class="kcol-mid">
-				<?php foreach ($topic_emoticons as $emoid=>$emoimg): ?>
-				<input type="radio" name="topic_emoticon" value="<?php echo intval($emoid); ?>" <?php echo $this->topic->icon_id == $emoid ? ' checked="checked" ':'' ?> />
-				<img src="<?php echo $template->getTopicIconPath($emoid, true);?>" alt="" border="0" />
+				<?php foreach ($this->topicIcons as $iconId=>$iconImage): ?>
+				<input type="radio" name="topic_emoticon" value="<?php echo intval($iconId); ?>" <?php echo $this->topic->icon_id == $iconId ? ' checked="checked" ':'' ?> />
+				<img src="<?php echo $this->template->getTopicIconPath($iconId, true);?>" alt="" border="0" />
 				<?php endforeach; ?>
 			</td>
 		</tr>

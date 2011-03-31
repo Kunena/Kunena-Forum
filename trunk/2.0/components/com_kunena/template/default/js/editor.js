@@ -297,6 +297,7 @@ var kbbcode = new Class({
 			this.list = document.id(list);
 		}
 		this.oldContent = this.el.get('value');
+		this.list.empty();
 	},
 
 	/*
@@ -637,4 +638,46 @@ function kInsertVideo2() {
 	var videourl = document.id("kvideourl").get("value");
 	kbbcode.replaceSelection('[video]'+ videourl +'[/video]', false);
 	kToggleOrSwap("kbbcode-video-options");
+}
+
+function kEditorInitialize() {
+	$$('#kbbcode-toolbar li a').addEvent('mouseover', function(){
+		document.id('helpbox').set('value', this.getProperty('alt'));
+	});
+
+	document.id('kbbcode-message').addEvent('change', function(){
+		kPreviewHelper();
+	});
+
+	var color = $$("table.kbbcode-colortable td");
+	if (color) {
+		color.addEvent("click", function(){
+			var bg = this.getStyle( "background-color" );
+			kbbcode.wrapSelection('[color='+ bg +']', '[/color]', false);
+			kToggleOrSwap("kbbcode-colorpalette");
+		});
+	}
+	var size = $$("div#kbbcode-size-options span");
+	if (size) {
+		size.addEvent("click", function(){
+			var tag = this.get( "title" );
+			kbbcode.wrapSelection(tag , '[/size]', false);
+			kToggleOrSwap("kbbcode-size-options");
+		});
+	}
+
+	bindAttachments();
+	newAttachment();
+	//This is need to retrieve the video provider selected by the user in the dropdownlist
+	if (document.id('kvideoprovider') != undefined) {
+		document.id('kvideoprovider').addEvent('change', function() {
+			var sel = $$('#kvideoprovider option:selected');
+			sel.each(function(el) {
+				document.id('kvideoprovider').store('videoprov',el.value);
+			});
+		});
+	}
+
+	// Fianlly apply some screwy IE7 and IE8 fixes to the html...
+	IEcompatibility();
 }

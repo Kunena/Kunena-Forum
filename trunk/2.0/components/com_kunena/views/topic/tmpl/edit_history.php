@@ -22,44 +22,44 @@ $k = 0;
 	</div>
 	<div class="kcontainer" id="khistory">
 		<div class="kbody">
-			<?php foreach ( $this->history as $message ):?>
+			<?php foreach ( $this->history as $this->message ):?>
 			<table>
 				<thead>
 					<tr class="ksth">
 						<th colspan="2">
-							<span class="kmsgdate khistory-msgdate" title="<?php echo KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat_hover') ?>">
-								<?php echo KunenaDate::getInstance($message->time)->toKunena('config_post_dateformat') ?>
+							<span class="kmsgdate khistory-msgdate" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
+								<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 							</span>
-							<a name="<?php echo intval($message->id) ?>"></a>
-							<?php echo $this->getNumLink($message->id,$this->replycount--) ?>
+							<a name="<?php echo intval($this->message->id) ?>"></a>
+							<?php echo $this->getNumLink($this->message->id,$this->replycount--) ?>
 						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td rowspan="2" valign="top" class="kprofile-left  kauthor">
-							<p><?php echo CKunenaLink::GetProfileLink( intval($message->userid),$this->escape( $message->name )) ?></p>
+							<p><?php echo CKunenaLink::GetProfileLink( intval($this->message->userid),$this->escape( $this->message->name )) ?></p>
 							<p><?php
-								$profile = KunenaFactory::getUser(intval($message->userid));
+								$profile = KunenaFactory::getUser(intval($this->message->userid));
 								$useravatar = $profile->getAvatarImage('','','profile');
 								if ($useravatar) :
-									echo CKunenaLink::GetProfileLink ( intval($message->userid), $useravatar );
+									echo CKunenaLink::GetProfileLink ( intval($this->message->userid), $useravatar );
 								endif;
 							?></p>
 						</td>
 						<td class="kmessage-left khistorymsg">
 							<div class="kmsgbody">
 								<div class="kmsgtext">
-									<?php echo KunenaHtmlParser::parseBBCode( $message->message, $this ) ?>
+									<?php echo KunenaHtmlParser::parseBBCode( $this->message->message, $this ) ?>
 								</div>
 							</div>
 							<?php
-							$attachments = $message->getAttachments();
-							if (!empty($attachments)) : ?>
+							$this->attachments = $this->message->getAttachments();
+							if (!empty($this->attachments)) : ?>
 							<div class="kmsgattach">
 								<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
 								<ul class="kfile-attach">
-								<?php foreach($attachments as $attachment) : ?>
+								<?php foreach($this->attachments as $attachment) : ?>
 									<li>
 										<?php echo $attachment->getThumbnailLink(); ?>
 										<span>

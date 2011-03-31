@@ -94,11 +94,14 @@ class KunenaViewCommon extends KunenaView {
 		$user = KunenaFactory::getUser ();
 		$catid = JRequest::getInt ( 'catid', 0 );
 		$id = JRequest::getInt ( 'id', 0 );
+		$view = JRequest::getWord ( 'view', 'default' );
+		$layout = JRequest::getWord ( 'layout', 'default' );
 		//$cache = JFactory::getCache('com_kunena', 'output');
 		//if ($cache->start("{$this->template->name}.{$catid}.{$id}", 'com_kunena.view.common.breadcrumb')) return;
 
 		$app = JFactory::getApplication();
 		$pathway = $app->getPathway();
+		$active = JFactory::getApplication()->getMenu ()->getActive ();
 
 		if (empty($this->pathway)) {
 			if ($catid) {
@@ -106,7 +109,6 @@ class KunenaViewCommon extends KunenaView {
 				$parents[$catid] = KunenaForumCategoryHelper::get($catid);
 
 				// Remove categories from pathway if menu item contains/excludes them
-				$active = JFactory::getApplication()->getMenu ()->getActive ();
 				if (!empty($active->query['catid']) && isset($parents[$active->query['catid']])) {
 					$curcatid = $active->query['catid'];
 					while (($item = array_shift($parents)) !== null) {
@@ -120,6 +122,20 @@ class KunenaViewCommon extends KunenaView {
 			if ($id) {
 				$topic = KunenaForumTopicHelper::get($id);
 				$pathway->addItem($this->escape( $topic->subject ), KunenaRoute::normalize("index.php?option=com_kunena&view=category&catid={$catid}&id={$topic->id}"));
+			}
+			if ($view == 'topic') {
+				$active_layout = (!empty($active->query['view']) && $active->query['view'] == 'topic' && !empty($active->query['layout'])) ? $active->query['layout'] : '';
+				switch ($layout) {
+					case 'create':
+						if ($active_layout != 'create') $pathway->addItem($this->escape( JText::_('COM_KUNENA_BUTTON_NEW_TOPIC'), KunenaRoute::normalize() ));
+						break;
+					case 'reply':
+						if ($active_layout != 'reply') $pathway->addItem($this->escape( JText::_('COM_KUNENA_BUTTON_REPLY_TOPIC'), KunenaRoute::normalize() ));
+						break;
+					case 'edit':
+						if ($active_layout != 'edit') $pathway->addItem($this->escape( JText::_('COM_KUNENA_BUTTON_EDIT'), KunenaRoute::normalize() ));
+						break;
+				}
 			}
 		}
 		$this->pathway = array();

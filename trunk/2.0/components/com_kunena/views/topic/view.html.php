@@ -152,6 +152,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->my = JFactory::getUser();
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
+		$this->topicIcons = $this->template->getTopicIcons();
 
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$arrayanynomousbox = array();
@@ -201,6 +202,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->my = JFactory::getUser();
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
+		$this->topicIcons = $this->template->getTopicIcons();
 		$mesid = $this->state->get('item.mesid');
 		if (!$mesid) {
 			$this->topic = KunenaForumTopicHelper::get($this->state->get('item.id'));
@@ -227,6 +229,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->my = JFactory::getUser();
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
+		$this->topicIcons = $this->template->getTopicIcons();
 		$mesid = $this->state->get('item.mesid');
 		$document = JFactory::getDocument();
 
@@ -711,7 +714,7 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function displayThreadHistory() {
-		if (! $this->config->showhistory || !$this->topic->exists())
+		if (! $this->hasThreadHistory())
 			return;
 
 		$db = JFactory::getDBO();

@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport('joomla.html.parameter');
+jimport('joomla.filesystem.file');
 
 class KunenaParameter extends JParameter {
 	public function getXml() {
@@ -193,7 +194,7 @@ class KunenaTemplate extends JObject
 			$this->smileyPath[$filename] = $path;
 		}
 		$base = '';
-		if ($url) $base = KURL_SITE;
+		if ($url) $base = JURI::root(true).KPATH_COMPONENT_RELATIVE.'/';
 		return $base.$this->smileyPath[$filename];
 	}
 
@@ -206,7 +207,7 @@ class KunenaTemplate extends JObject
 			$this->rankPath[$filename] = $path;
 		}
 		$base = '';
-		if ($url) $base = KURL_SITE;
+		if ($url) $base = JURI::root(true).KPATH_COMPONENT_RELATIVE.'/';
 		return $base.$this->rankPath[$filename];
 	}
 
@@ -216,7 +217,7 @@ class KunenaTemplate extends JObject
 			$path = $this->getPath(true);
 		}
 		$base = '';
-		if ($url) $base = KURL_SITE;
+		if ($url) $base = JURI::root(true).KPATH_COMPONENT_RELATIVE.'/';
 		return "{$base}{$path}/images/{$image}";
 	}
 
@@ -230,14 +231,24 @@ class KunenaTemplate extends JObject
 				$path = $defpath;
 			}
 			$topic_emoticons = array();
-			$this->topicIcons[0] = "/{$defpath}/images/icons/topic-default.gif";
+			$item = new StdClass();
+			$item->id = 0;
+			$item->name = 'Default';
+			$item->relpath = "{$defpath}/images/topicicons/user/default.png";
+			$item->url = JURI::root(true).KPATH_COMPONENT_RELATIVE."/{$item->relpath}";
+			$this->topicIcons[0] = $item;
 			include KPATH_SITE . "/{$path}/icons.php";
 			foreach ($topic_emoticons as $id=>$icon) {
-				if (is_file( KPATH_SITE . "/{$curpath}/images/icons/{$icon}" )) {
-					$this->topicIcons[$id] = "{$curpath}/images/icons/{$icon}";
-				} elseif (is_file( KPATH_SITE . "/{$defpath}/images/icons/{$icon}" )) {
-					$this->topicIcons[$id] = "{$defpath}/images/icons/{$icon}";
-				}
+				$item = new StdClass();
+				$item->id = $id;
+				$item->name = JFile::stripExt($icon);
+				if (is_file( KPATH_SITE . "/{$curpath}/images/topicicons/user/{$icon}" )) {
+					$item->relpath = "{$curpath}/images/topicicons/user/{$icon}";
+				} elseif (is_file( KPATH_SITE . "/{$defpath}/images/topicicons/user/{$icon}" )) {
+					$item->relpath = "{$defpath}/images/topicicons/user/{$icon}";
+				} else continue;
+				$item->url = JURI::root(true).KPATH_COMPONENT_RELATIVE."/{$item->relpath}";
+				$this->topicIcons[$id] = $item;
 			}
 		}
 		return $this->topicIcons;
@@ -247,23 +258,23 @@ class KunenaTemplate extends JObject
 		if (empty($this->topicIcons)) {
 			$this->getTopicIcons();
 		}
-		$base = '';
-		if ($url) $base = KURL_SITE;
-		return $base.(isset($this->topicIcons[$index]) ? $this->topicIcons[$index] : $this->topicIcons[0]);
+		if ($url) $base = 'url';
+		else $base = 'relpath';
+		return isset($this->topicIcons[$index]) ? $this->topicIcons[$index]->$base : $this->topicIcons[0]->$base;
 	}
 
 	public function getMovedIconPath($url = false) {
 		static $moved = false;
 		if ($moved === false) {
 			$path = $this->getPath();
-			if (!is_file(KPATH_SITE . "/{$path}/images/icons/topic-arrow.png")) {
+			if (!is_file(KPATH_SITE . "/{$path}/images/topicicons/user/moved.png")) {
 				$path = $this->getPath(true);
 			}
-			$moved =  "/{$path}/images/icons/topic-arrow.png";
+			$moved =  "{$path}/images/topicicons/user/moved.png";
 		}
 
 		$base = '';
-		if ($url) $base = KURL_SITE;
+		if ($url) $base = JURI::root(true).KPATH_COMPONENT_RELATIVE.'/';
 		return $base.$moved;
 	}
 
@@ -282,7 +293,7 @@ class KunenaTemplate extends JObject
 			if ($topic->hold == 1) $icon = 'unapproved';
 			if ($topic->hold == 2) $icon = 'deleted';
 			if ($topic->unread) $icon .= '_new';
-			$iconurl = $this->getImagePath("topicicons/icon_{$icon}.png");
+			$iconurl = $this->getImagePath("topicicons/system/{$icon}.png");
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;

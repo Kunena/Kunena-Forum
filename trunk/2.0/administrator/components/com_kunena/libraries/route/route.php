@@ -77,6 +77,10 @@ abstract class KunenaRoute {
 	}
 
 	public static function normalize($uri = null, $object = false) {
+		if (JFactory::getApplication()->isAdmin()) {
+			// Use default routing in administration
+			return $object ? $uri : 'index.php?' . $uri->getQuery ();
+		}
 		if (self::$menus === false) self::initialize();
 
 		$uri = self::prepare($uri);

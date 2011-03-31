@@ -2310,18 +2310,6 @@ BBCODE BUTTONS
 	display:none;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator1,
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator2,
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator3,
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator4,
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator5,
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator6,
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator7,
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator8 {
-	background-position:-400px 0;
-	width: 8px;
-	cursor: default;
-}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-bold-button {background-position:0 0;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-italic-button {background-position:-18px 0;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-underline-button {background-position:-36px 0;}
@@ -3355,4 +3343,10 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	font-weight:bold;
 	padding:1px 5px;
 	margin: 2px;
+}
+
+#Kunena ul#kbbcode-toolbar li a.kbbcode-separator {
+	background-position:-400px 0;
+	width: 8px;
+	cursor: default;
 }

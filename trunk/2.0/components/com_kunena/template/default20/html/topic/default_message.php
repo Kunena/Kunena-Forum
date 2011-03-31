@@ -29,12 +29,8 @@ defined ( '_JEXEC' ) or die ();
 									<span class="kattach-title"><?php echo JText::_('COM_KUNENA_ATTACHMENTS') ?></span>
 									<ul>
 										<?php foreach($this->attachments as $attachment) : ?>
-										<!-- Loop this LI for each attachment  -->
 										<li class="kattach-details">
-											<?php echo $attachment->getThumbnailLink(); ?>
-											<span>
-												<?php echo $attachment->getTextLink(); ?>
-											</span>
+											<?php echo $attachment->getThumbnailLink(); ?> <span><?php echo $attachment->getTextLink(); ?></span>
 										</li>
 										<?php endforeach; ?>
 									</ul>

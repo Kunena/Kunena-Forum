@@ -12,7 +12,33 @@
 defined( '_JEXEC' ) or die();
 
 ob_start();
+if (!empty($this->poll)) :
+	$this->addScript('js/poll.js');
 ?>
+var KUNENA_POLL_CATS_NOT_ALLOWED = "<?php echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED') ?>";
+var KUNENA_EDITOR_HELPLINE_OPTION = "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION') ?>";
+var KUNENA_POLL_OPTION_NAME = "<?php echo JText::_('COM_KUNENA_POLL_OPTION_NAME') ?>";
+var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "<?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW') ?>";
+var KUNENA_ICON_ERROR = "<?php echo JURI::root(true) ?>/components/com_kunena/template/default/images/publish_x.png";
+<?php endif ?>
+<?php if ($this->my->id) : ?>
+var kunena_anonymous_name = "<?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS') ?>";
+<?php endif ?>
+
+function kShowDetail(srcElement) {
+	var targetID, srcElement, targetElement, imgElementID, imgElement;
+	targetID = srcElement.id + "_details";
+	imgElementID = srcElement.id + "_img";
+	targetElement = document.getElementById(targetID);
+	imgElement = document.getElementById(imgElementID);
+	if (targetElement.style.display == "none") {
+		targetElement.style.display = "";
+		imgElement.src = "<?php echo JURI::root(true) ?>/components/com_kunena/template/default/images/emoticons/w00t.png";
+	} else {
+		targetElement.style.display = "none";
+		imgElement.src = "<?php echo JURI::root() ?>/components/com_kunena/template/default/images/emoticons/pinch.png";
+	}
+}
 
 window.addEvent('domready', function(){
 
@@ -47,9 +73,9 @@ window.addEvent('domready', function(){
 		if ( arrayanynomousbox[catid] ) {
 			document.id('kanonymous').set('checked','checked');
 		}
-		<?php if ($this->my->id != 0) { ?>
+		<?php if ($this->my->id != 0) : ?>
 		kunenaSelectUsername(kbutton,kuser);
-		<?php } ?>
+		<?php endif ?>
 	}
 	//	for hide or show polls if category is allowed
 	if(document.id('postcatid') !== undefined) {
@@ -61,12 +87,12 @@ window.addEvent('domready', function(){
 	if(document.id('kauthorname') !== undefined) {
 		var kuser = document.id('kauthorname').get('value');
 		var kbutton = document.id('kanonymous');
-		<?php if ($this->my->id != 0) { ?>
+		<?php if ($this->my->id != 0) : ?>
 		kunenaSelectUsername(kbutton, kuser);
 		kbutton.addEvent('click', function(e) {
 			kunenaSelectUsername(this, kuser);
 		});
-		<?php } ?>
+		<?php endif ?>
 	}
 	//	to select if anynomous option is allowed on new topic tab
 	if(document.id('postcatid') !== undefined) {

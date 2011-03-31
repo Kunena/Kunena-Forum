@@ -167,23 +167,13 @@ class KunenaView extends JView {
 	}
 
 	function addStyleSheet($filename) {
-		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn()) {
-			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace ( '/\.css$/u', '-min.css', $filename );
-		}
-		$document = JFactory::getDocument ();
 		$template = KunenaFactory::getTemplate();
-		return $document->addStyleSheet ( $template->getFile($filename) );
+		return $template->addStyleSheet ( $filename );
 	}
 
 	function addScript($filename) {
-		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn()) {
-			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
-		}
-		$document = JFactory::getDocument ();
 		$template = KunenaFactory::getTemplate();
-		return $document->addScript ( $template->getFile($filename) );
+		return $template->addScript ( $filename );
 	}
 
 	function displayNoAccess($errors = array()) {

@@ -31,6 +31,26 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+31-March-2011 Matias
++ [#25415] Tableless template: Implement Topic/Create|Reply|Edit layouts (part 2)
+# [#23443] KunenaRoute::normalize() do nothing in administration to avoid fatal error
++ [#25415] Add javascript warning into bbcode editor if JS is not working
+# [#22569] Add breadchrumb item for Create / Reply / Edit Topic
+# [#23443] Topic/Reply: Fix history not having $this->message and $this->attachments
+
+30-March-2011 Matias
++ [#25415] Tableless template: Implement Topic/Create|Reply|Edit layouts
++ [#22569] Add new KunenaBBCodeEditor class
++ [#22569] Add editor.xml for custom BBCode editor buttons
+^ [#22569] Move/rename all topic icons into topicicons/system and topicicons/user directories
+^ [#22569] KunenaTemplate: use relative URLs
++ [#22569] KunenaTemplate::getTopicIcons(): make topic icons more intelligent
+# [#22569] KunenaView::addStyleSheet(), addScript(): make them to call template functions
+- [#22570] Remove most editor buttons from lib/kunena.bbcode.js.php
+^ [#25415] Move static stuff from lib/kunena.bbcode.js.php into js/editor.js
+^ [#25415] Move some javascript from the template files into lib/kunena.special.js.php
+^ [#25415] CSS: get rid of a#kbbcode-separator[1-8], use common class instead
+
 29-March-2011 Matias
 ^ [#25415] Add new parameters into CKunenaLink::GetReportMessageLink()
 + [#25415] Tableless template CSS: Add intended and threaded buttons

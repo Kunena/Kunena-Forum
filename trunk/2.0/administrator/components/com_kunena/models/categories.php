@@ -14,7 +14,7 @@ jimport ( 'joomla.application.component.model' );
 kimport('kunena.forum.category.helper');
 kimport('kunena.model');
 kimport('kunena.user.helper');
-kimport ( 'kunena.html.pagination' );
+jimport( 'joomla.html.pagination' );
 jimport ( 'joomla.version' );
 
 /**
@@ -142,7 +142,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 	}
 
 	public function getAdminNavigation() {
-		$navigation = new KunenaHtmlPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
+		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
 		return $navigation;
 	}
 

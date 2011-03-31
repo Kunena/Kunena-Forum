@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 jimport ( 'joomla.application.component.model' );
 kimport('kunena.model');
 kimport ( 'kunena.error' );
-kimport ( 'kunena.html.pagination' );
+jimport( 'joomla.html.pagination' );
 
 /**
  * Users Model for Kunena
@@ -221,7 +221,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 	}
 
 	public function getAdminNavigation() {
-		$navigation = new KunenaHtmlPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
+		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
 		return $navigation;
 	}
 }

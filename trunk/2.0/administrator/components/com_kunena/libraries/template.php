@@ -167,7 +167,7 @@ class KunenaTemplate extends JObject
 	function addScript($filename) {
 		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn ()) {
 			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace ( '/\.js$/u', '.min.js', $filename );
+			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		}
 		return JFactory::getDocument ()->addScript ( JURI::root(true).'/'.$this->getFile($filename) );
 	}

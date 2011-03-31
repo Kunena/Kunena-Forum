@@ -194,7 +194,7 @@ class KunenaTemplate extends JObject
 			$this->smileyPath[$filename] = $path;
 		}
 		$base = '';
-		if ($url) $base = JURI::root(true).KPATH_COMPONENT_RELATIVE.'/';
+		if ($url) $base = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE.'/';
 		return $base.$this->smileyPath[$filename];
 	}
 
@@ -207,7 +207,7 @@ class KunenaTemplate extends JObject
 			$this->rankPath[$filename] = $path;
 		}
 		$base = '';
-		if ($url) $base = JURI::root(true).KPATH_COMPONENT_RELATIVE.'/';
+		if ($url) $base = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE.'/';
 		return $base.$this->rankPath[$filename];
 	}
 
@@ -217,7 +217,7 @@ class KunenaTemplate extends JObject
 			$path = $this->getPath(true);
 		}
 		$base = '';
-		if ($url) $base = JURI::root(true).KPATH_COMPONENT_RELATIVE.'/';
+		if ($url) $base = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE.'/';
 		return "{$base}{$path}/images/{$image}";
 	}
 
@@ -235,7 +235,7 @@ class KunenaTemplate extends JObject
 			$item->id = 0;
 			$item->name = 'Default';
 			$item->relpath = "{$defpath}/images/topicicons/user/default.png";
-			$item->url = JURI::root(true).KPATH_COMPONENT_RELATIVE."/{$item->relpath}";
+			$item->url = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE."/{$item->relpath}";
 			$this->topicIcons[0] = $item;
 			include KPATH_SITE . "/{$path}/icons.php";
 			foreach ($topic_emoticons as $id=>$icon) {
@@ -247,7 +247,7 @@ class KunenaTemplate extends JObject
 				} elseif (is_file( KPATH_SITE . "/{$defpath}/images/topicicons/user/{$icon}" )) {
 					$item->relpath = "{$defpath}/images/topicicons/user/{$icon}";
 				} else continue;
-				$item->url = JURI::root(true).KPATH_COMPONENT_RELATIVE."/{$item->relpath}";
+				$item->url = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE."/{$item->relpath}";
 				$this->topicIcons[$id] = $item;
 			}
 		}
@@ -274,7 +274,7 @@ class KunenaTemplate extends JObject
 		}
 
 		$base = '';
-		if ($url) $base = JURI::root(true).KPATH_COMPONENT_RELATIVE.'/';
+		if ($url) $base = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE.'/';
 		return $base.$moved;
 	}
 

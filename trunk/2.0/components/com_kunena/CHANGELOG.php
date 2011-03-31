@@ -37,6 +37,7 @@ Kunena 2.0.0-DEV
 + [#25415] Add javascript warning into bbcode editor if JS is not working
 # [#22569] Add breadchrumb item for Create / Reply / Edit Topic
 # [#23443] Topic/Reply: Fix history not having $this->message and $this->attachments
+# [#23443] Fix regression: relative paths missing first /
 
 30-March-2011 Matias
 + [#25415] Tableless template: Implement Topic/Create|Reply|Edit layouts

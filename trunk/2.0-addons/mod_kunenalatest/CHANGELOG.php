@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 2.0.0-DEV
 
+1-April-2011 Matias
+# [#24676] Fix Fatal error: Class 'CKunenaLink' not found
+
 30-March-2011 Matias
 # [#24676] Changing module parameters to new API
 

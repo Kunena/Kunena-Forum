@@ -14,6 +14,7 @@ class modKunenaLatest {
 	static $cssadded = false;
 
 	public function __construct($params) {
+		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$this->params = $params;
 	}
 

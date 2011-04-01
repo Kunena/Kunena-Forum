@@ -39,6 +39,7 @@ Kunena 2.0.0-DEV
 # [#23443] Topic/Reply: Fix history not having $this->message and $this->attachments
 # [#23443] Fix regression: relative paths missing first /
 # [#23443] Use JPagination instead of KunenaHtmlPagination in administration (thanks Janich)
++ [#25415] Tableless template: Implement Misc/Default and Common/Default layouts
 
 30-March-2011 Matias
 + [#25415] Tableless template: Implement Topic/Create|Reply|Edit layouts

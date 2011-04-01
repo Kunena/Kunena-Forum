@@ -80,7 +80,7 @@ class KunenaControllerTopic extends KunenaController {
 			$ip = $_SERVER ["REMOTE_ADDR"];
 
 			$db = JFactory::getDBO();
-			$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} WHERE time>{$db->quote($timelimit)}" );
+			$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} AND time>{$db->quote($timelimit)}" );
 			$count = $db->loadResult ();
 			if (KunenaError::checkDatabaseError() || $count) {
 				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection) );

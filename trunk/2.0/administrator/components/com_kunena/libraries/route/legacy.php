@@ -187,7 +187,8 @@ class KunenaRouteLegacy {
 
 			case 'userlist' :
 				$changed = true;
-				$uri->setVar('view', 'users');
+				$uri->setVar('view', 'user');
+				$uri->setVar('layout', 'list');
 				break;
 			case 'rss' :
 				$changed = true;

@@ -15,8 +15,8 @@ kimport ( 'kunena.view' );
 /**
  * Users View
  */
-class KunenaViewUsers extends KunenaView {
-	function displayDefault($tpl = null) {
+class KunenaViewUser extends KunenaView {
+	function displayList($tpl = null) {
 		$response = array();
 		if ($this->me->exists()) {
 			$users = $this->get ( 'Items' );

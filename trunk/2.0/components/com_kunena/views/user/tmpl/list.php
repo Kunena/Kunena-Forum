@@ -24,7 +24,7 @@ if ($this->me->exists()) {
 	$this->document->addScriptDeclaration( "// <![CDATA[
 document.addEvent('domready', function() {
 	// Attach auto completer to the following ids:
-	new Autocompleter.Request.JSON('kusersearch', '".KunenaRoute::_('index.php?option=com_kunena&view=users&format=raw')."', { 'postVar': 'search' });
+	new Autocompleter.Request.JSON('kusersearch', '".KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&format=raw')."', { 'postVar': 'search' });
 });
 // ]]>");
 }
@@ -192,12 +192,8 @@ $this->displayLoginBox ();
 						<td>
 							<div>
 								<?php
-								// TODO: fxstein - Need to perform SEO cleanup
-								echo $this->pageNav->getPagesLinks();
+								echo $this->getPagination(7);
 								?>
-							<span style="float:right">
-								<?php echo $this->pageNav->getPagesCounter(); ?> | <?php echo JText::_('COM_KUNENA_USRL_DISPLAY_NR'); ?> <?php echo $this->pageNav->getLimitBox(CKunenaLink::GetUserlistURL()); ?>
-							</span>
 							</div>
 						</td>
 					</tr>

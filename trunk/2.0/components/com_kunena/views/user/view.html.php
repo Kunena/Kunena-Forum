@@ -34,6 +34,23 @@ class KunenaViewUser extends KunenaView {
 		$this->displayCommon($tpl);
 	}
 
+	function displayList($tpl = null) {
+		$this->app = JFactory::getApplication();
+		$this->config = KunenaFactory::getConfig();
+		$this->total = $this->get ( 'Total' );
+		$this->count = $this->get ( 'Count' );
+		$this->users = $this->get ( 'Items' );
+		// TODO: Deprecated:
+		$this->pageNav = $this->getPagination(7);
+		parent::display($tpl);
+	}
+
+	function getPagination($maxpages) {
+		$pagination = new KunenaHtmlPagination ( $this->count, $this->state->get('list.start'), $this->state->get('list.limit') );
+		$pagination->setDisplay($maxpages);
+		return $pagination->getPagesLinks();
+	}
+
 	protected function displayCommon($tpl = null) {
 		$userid = JRequest::getInt('userid');
 
@@ -395,5 +412,16 @@ class KunenaViewUser extends KunenaView {
 
 	function displayEditSettings() {
 		echo $this->loadTemplate('settings');
+	}
+
+	function displayUserList() {
+		echo $this->loadTemplate('list');
+	}
+
+	function displayUserRow($user) {
+		$this->user = KunenaFactory::getUser($user->id);
+		$this->rank_image = $this->user->getRank (0, 'image');
+		$this->rank_title = $this->user->getRank (0, 'title');
+		echo $this->loadTemplate('row');
 	}
 }

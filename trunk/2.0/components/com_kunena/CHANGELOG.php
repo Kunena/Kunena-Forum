@@ -41,6 +41,7 @@ Kunena 2.0.0-DEV
 ^ [#22569] Add email, registerDate into KunenaUser objects
 ^ [#22569] KunenaUser(Helper)::isOnline(): allow free naming convention for yes and no
 # [#23443] Set missing title in Users/Default
+^ [#25415] Move Users/Default layout to User/List
 
 31-March-2011 Matias
 + [#25415] Tableless template: Implement Topic/Create|Reply|Edit layouts (part 2)

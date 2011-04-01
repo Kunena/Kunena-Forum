@@ -10,15 +10,15 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
+$this->setTitle(JText::_('COM_KUNENA_VIEW_USER_LIST'));
 ?>
 	<div id="kunena">
 	<?php
 		$this->displayMenu ();
 		$this->displayLoginBox ();
 		$this->displayBreadcrumb ();
-		include 'default_actions.php';
-		include 'default_list.php';
+		include 'list_actions.php';
+		include 'list_list.php';
 		$this->displayFooter ();
 	?>
 	</div>

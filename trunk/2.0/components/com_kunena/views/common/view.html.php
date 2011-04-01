@@ -195,7 +195,7 @@ class KunenaViewCommon extends KunenaView {
 		ksort($this->onlineList);
 		ksort($this->hiddenList);
 
-		$this->usersURL = KunenaRoute::_('index.php?option=com_kunena&view=users');
+		$this->usersURL = KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list');
 
 		$result = $this->loadTemplate($tpl);
 		if (JError::isError($result)) {

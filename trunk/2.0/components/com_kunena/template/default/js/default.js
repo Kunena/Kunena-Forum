@@ -820,6 +820,9 @@ window.addEvent('domready', function(){
 	});
 	
 	// Set autocompleter to off
+	$$('.kautocomplete-off').each(function(){
+		this.setProperty('autocompleter', 'off');
+	});
 	if(document.id('kpassword') != undefined && document.id('kpassword2') != undefined){
 		document.id('kpassword').setProperty('autocompleter', 'off');
 		document.id('kpassword2').setProperty('autocompleter', 'off');

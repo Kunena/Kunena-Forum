@@ -25,9 +25,9 @@ defined ( '_JEXEC' ) or die ();
 						<option value="12">Number of Thank Yous</option>
 					</select>
 				</li>
-				<li>
+				<!-- li>
 					<input type="text" autocomplete="off" id="kfilter" class="kinput" name="filter" value="">
-				</li>
+				</li -->
 				<li>
 					<button class="kfilter-button">Go</button>
 				</li>

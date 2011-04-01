@@ -40,9 +40,9 @@ defined ( '_JEXEC' ) or die ();
 						<option value="48">Administrators</option>
 					</select>
 				</li>
-				<li>
+				<!-- li>
 					<input type="text" autocomplete="off" id="kfilter" class="kinput" name="filter" value="">
-				</li>
+				</li -->
 				<li>
 					<button class="kfilter-button">Go</button>
 				</li>

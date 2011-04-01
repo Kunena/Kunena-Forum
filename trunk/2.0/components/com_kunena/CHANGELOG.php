@@ -34,6 +34,8 @@ Kunena 2.0.0-DEV
 1-April-2011 Matias
 # [#23443] Output caching should check template path overrides
 # [#23443] Fix MySQL error in flood protection (thanks Janich)
+# [#23443] Fix Zend warnings on autocomplete="yes" by making it a class
+^ [#25415] Change long number precision to 3 to make 1.34k to fit into same space as <= 9999
 
 31-March-2011 Matias
 + [#25415] Tableless template: Implement Topic/Create|Reply|Edit layouts (part 2)

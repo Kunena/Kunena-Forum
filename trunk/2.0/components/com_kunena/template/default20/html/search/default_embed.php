@@ -31,7 +31,7 @@ defined ( '_JEXEC' ) or die ();
 						<fieldset class="fieldset">
 							<legend>Search by User Name</legend>
 							<label class="searchlabel">User Name:
-								<input type="text" value="" name="searchuser" class="ks input" id="kusername" autocomplete="off" />
+								<input type="text" value="" name="searchuser" class="ks input kautocomplete-off" id="kusername" />
 							</label>
 							<br />
 							<label class="searchlabel">

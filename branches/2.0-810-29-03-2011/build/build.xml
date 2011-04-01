@@ -65,7 +65,7 @@
 		-->
 		<taskdef name="yui-compressor" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
 			<classpath>
-				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.2.jar" />
+				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.5.jar" />
 				<pathelement path="${project_dir}/build/lib/yui-compressor-ant-task-0.5.jar" />
 			</classpath>
 		</taskdef>

@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+01-April-2011 810
+^ [#25521] update YUI Compressor to 2.4.5
+
 29-March-2011 810
 ^ [#25415] Tableless template: Change button Markallread to text & Css fixes
 

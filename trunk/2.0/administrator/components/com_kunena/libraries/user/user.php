@@ -124,7 +124,7 @@ class KunenaUser extends JObject {
 	function save($updateOnly = false) {
 		// Create the user table object
 		$table = &$this->getTable ();
-		$ignore = array ('name', 'username', 'blocked', 'lastvisitDate' );
+		$ignore = array('name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate');
 		$table->bind ( $this->getProperties (), $ignore );
 		$table->exists ( $this->_exists );
 

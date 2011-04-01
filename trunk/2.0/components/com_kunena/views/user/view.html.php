@@ -148,6 +148,13 @@ class KunenaViewUser extends KunenaView {
 			$this->profile->save();
 		}
 
+		$private = KunenaFactory::getPrivateMessaging();
+		if ($this->my->id == $this->user->id) {
+			$this->pmCount = $private->getUnreadCount($this->my->id);
+			$this->pmLink = $private->getInboxLink($this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX'));
+		} else {
+			$this->pmLink = $this->profile->profileIcon('private');
+		}
 		$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName()));
 		parent::display();
 	}

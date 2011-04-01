@@ -11,71 +11,78 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 		<div class="kuserprofile">
-			<h2 class="kheader"><a href="#" title="Profile for severdia" rel="ksection-detailsbox">Profile: severdia</a></h2>
+			<h2 class="kheader"><a href="#" rel="ksection-detailsbox"><?php echo JText::_('COM_KUNENA_USER_PROFILE').' '.$this->escape($this->name) ?></a></h2>
 			<div class="kprofilebox" id="ksection-detailsbox">
+				<?php if ($this->avatarlink) : ?>
 				<div id="kprofile-leftcol">
 					<div class="kavatar-lg">
-						<img alt="" src="images/avatar_lg.png" class="kavatar" />
+						<?php echo $this->avatarlink; ?>
 					</div>
 				</div>
+				<?php endif; ?>
 				<div id="kprofile-rightcol">
 
 					<div id="kprofile-stats" class="clearfix">
 						<ul>
-							<li><span class="kicon-button kbuttononline-yes"><span class="online-yes"><span>NOW ONLINE</span></span></span></li>
-							<li><strong>Rank: </strong>Fresh Boarder</li>
-							<li class="kprofile-rank"><img alt="" src="images/ranks/rank0.gif"></li>
+							<?php if ( !empty($this->banReason) ) : ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO') ?>:</strong> <?php echo $this->escape($this->banReason) ?></li><?php endif ?>
+							<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline('yes', 'no') ?>"><span class="online-<?php echo $this->profile->isOnline('yes', 'no') ?>"><span><?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')) ?></span></span></span></li>
+							<?php if (!empty($this->usertype)): ?><li class="kprofile-usertype"><?php echo $this->escape($this->usertype); ?></li><?php endif; ?>
+							<?php if (!empty($this->rank_title)): ?><li class="kprofile-ranktitle"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_RANK') ?>: </strong><?php echo $this->escape($this->rank_title); ?></li><?php endif; ?>
+							<?php if (!empty($this->rank_image)): ?><li class="kprofile-rankimage"><?php echo $this->rank_image; ?></li><?php endif; ?>
 						</ul>
 						<ul>
-							<li><strong>Register Date:</strong> <span title="1 day, 2 hours ago">Yesterday</span></li>
-							<li><strong>Last Visit Date:</strong> <span title="4 hours, 48 minutes ago">Today</span></li>
-							<li><strong>Time Zone:</strong> GMT -8:00</li>
-							<li><strong>Local Time:</strong> 04:00</li>
+							<?php if (!empty($this->registerdate)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE') ?>:</strong> <?php echo KunenaDate::getInstance($this->registerdate)->toSpan('date_today', 'ago', 'utc') ?></li><?php endif; ?>
+							<?php if (!empty($this->lastvisitdate)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE') ?>:</strong> <?php echo KunenaDate::getInstance($this->lastvisitdate)->toSpan('date_today', 'ago', 'utc') ?></li><?php endif; ?>
+							<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_TIMEZONE'); ?>:</strong> GMT <?php echo $this->localtime->toTimezone() ?></li>
+							<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCAL_TIME'); ?>:</strong> <?php echo $this->localtime->toKunena('time') ?></li>
 						</ul>
 						<ul>
-							<li><strong>Posts:</strong> 1</li>
-							<li><strong>Profile Views:</strong> 0</li>
-							<li><a rel="follow" title="" href="#">Private Messages</a></li>
-							<li><a title="Click here to send a private message to this user." onclick="joms.messaging.loadComposeWindow('16301')" href="javascript:void(0)"><span title="Click here to send a private message to this user." class="kicon-profile kicon-profile-pm"></span></a></li>
+							<?php if (!empty($this->posts)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_POSTS') ?>:</strong> <?php echo intval($this->posts) ?></li><?php endif; ?>
+							<?php if (!empty($this->userpoints)): ?><li><strong><?php echo JText::_('COM_KUNENA_AUP_POINTS') ?></strong> <?php echo intval($this->userpoints) ?></li><?php endif; ?>
+							<?php if (!empty($this->usermedals)) : ?><li><?php foreach ( $this->usermedals as $medal ) : echo $medal,' '; endforeach ?></li><?php endif ?>
+							<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_PROFILEVIEW') ?>:</strong> <?php echo intval($this->profile->uhits) ?></li>
+							<li><?php echo $this->displayKarma(); ?></li>
+							<?php if (!empty($this->pmLink)) : ?><li><?php echo $this->pmLink ?></li><?php endif ?>
 						</ul>
+
 						<ul class="kuserprofile-about">
-							<li><strong>About Me:</strong> Est id novum delicatissimi, an petentium consequuntur eam. Ne vix meis nonumy mediocrem, an porro menandri constituam nec, ea vel lucilius quaestio elaboraret.</li>
+							<?php if( !empty($this->personalText) ) : ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME') ?>:</strong> <?php echo KunenaHtmlParser::parseText($this->personalText) ?></li><?php endif ?>
 						</ul>
 					</div>
 					<div class="clrline"></div>
 					<div id="kprofile-rightcoltop">
 						<div class="kprofile-rightcol2">
 							<div class="kiconrow">
-								<span class="kicon-profile kicon-profile-twitter-off"></span>
-								<span class="kicon-profile kicon-profile-facebook-off"></span>
-								<span class="kicon-profile kicon-profile-myspace-off"></span>
-								<span class="kicon-profile kicon-profile-linkedin-off"></span>
-								<span class="kicon-profile kicon-profile-skype-off"></span>
+								<?php echo $this->profile->socialButton('twitter', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('facebook', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('myspace', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('linkedin', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('skype', $this->showUnusedSocial) ?>
 							</div>
 							<div class="kiconrow">
-								<span class="kicon-profile kicon-profile-delicious-off"></span>
-								<span class="kicon-profile kicon-profile-friendfeed-off"></span>
-								<span class="kicon-profile kicon-profile-digg-off"></span>
+								<?php echo $this->profile->socialButton('delicious', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('friendfeed', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('digg', $this->showUnusedSocial) ?>
 							</div>
 							<div class="clr"></div>
 							<div class="kiconrow">
-								<span class="kicon-profile kicon-profile-yim-off"></span>
-								<span class="kicon-profile kicon-profile-aim-off"></span>
-								<span class="kicon-profile kicon-profile-gtalk-off"></span>
-								<span class="kicon-profile kicon-profile-icq-off"></span>
-								<span class="kicon-profile kicon-profile-msn-off"></span>
+								<?php echo $this->profile->socialButton('yim', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('aim', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('gtalk', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('icq', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('msn', $this->showUnusedSocial) ?>
 							</div>
 							<div class="kiconrow">
-								<span class="kicon-profile kicon-profile-blogspot-off"></span>
-								<span class="kicon-profile kicon-profile-flickr-off"></span>
-								<span class="kicon-profile kicon-profile-bebo-off"></span>
+								<?php echo $this->profile->socialButton('blogspot', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('flickr', $this->showUnusedSocial) ?>
+								<?php echo $this->profile->socialButton('bebo', $this->showUnusedSocial) ?>
 							</div>
 						</div>
 						<div class="kprofile-rightcol1">
 							<ul>
-								<li><span class="kicon-profile kicon-profile-location"></span><strong>Location:</strong> Unknown</li>
-								<li><span class="kicon-profile kicon-profile-gender-unknown"></span><strong>Gender:</strong> Unknown</li>
-								<li class="bd"><span class="kicon-profile kicon-profile-birthdate"></span><strong>Birthdate:</strong> <span title="Unknown">Unknown</span></li>
+								<li><span class="kicon-profile kicon-profile-location"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong> <?php echo $this->locationlink ?></li>
+								<li><span class="kicon-profile kicon-profile-gender-unknown"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER') ?>:</strong> <?php echo $this->gender ?></li>
+								<li><span class="kicon-profile kicon-profile-birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') ?>:</strong> <?php echo KunenaDate::getInstance($this->profile->birthdate)->toKunena('date', 'ago', 'utc') ?></li>
 							</ul>
 						</div>
 					</div>
@@ -83,19 +90,19 @@ defined ( '_JEXEC' ) or die ();
 					<div id="kprofile-rightcolbot">
 						<div class="kprofile-rightcol2">
 							<ul>
-								<li>
-									<span class="kicon-profile kicon-profile-website"></span>
-									<a target="_blank" href="http://www.example.com">example.com</a>
-								</li>
+								<?php if ($this->config->showemail && (!$this->profile->hideEmail || $this->me->isModerator())) : ?><li><span class="kicon-profile kicon-profile-email"></span><?php echo JHTML::_('email.cloak', $this->user->email) ?></li><?php endif; ?>
+								<?php if (!empty($this->profile->websiteurl)):?><li><span class="kicon-profile kicon-profile-website"></span><a href="http://<?php echo $this->escape($this->profile->websiteurl) ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename) ?></a></li><?php endif ?>
+								<li>&nbsp;</li>
 							</ul>
 						</div>
+						<?php if ($this->signature) : ?>
 						<div class="kprofile-rightcol1">
-							<h4>Signature</h4>
-							<div class="kmsgsignature"><div>
-								Cum ea nibh torquatos, eu tale convenire vituperata mea.<br />
-								<a target="_blank" rel="nofollow" class="bbcode_url" href="#">Ne minimum sensibus laboramus pri</a>
-							</div></div>
+							<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE') ?></h4>
+							<div class="kmsgsignature">
+								<div><?php echo KunenaHtmlParser::parseBBCode($this->signature) ?></div>
+							</div>
 						</div>
+						<?php endif ?>
 					</div>
 				</div>
 				<div class="clr"></div>
@@ -104,114 +111,56 @@ defined ( '_JEXEC' ) or die ();
 			<div class="clrline"></div>
 				<div id="kprofile-tabs">
 					<dl class="tabs">
-						<dt title="Posts" class="open" style="cursor: pointer;">Posts</dt>
+						<?php if ($this->me->isModerator()): ?>
+						<dt class="closed" title="<?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION') ?>"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION') ?></dt>
 						<dd style="display: none;">
-							<form name="ktopicsform" method="post" action="#">
-								<input type="hidden" value="topics" name="view" />
-								<input type="hidden" value="1" name="90e41e48d249f2f0526bb3f823e30429" />
-								<div class="kblock kflat">
-									<h2 class="kheader"><span>Recent Posts</span></h2>
-									<table id="kflattable" class="kblocktable">
-										<tbody>
-											<tr class="krow2">
-												<td class="kcol-first kcol-ktopicicon">
-													<a title="Test 2" rel="nofollow" href="#"><img alt="emo" src="images/icons/topic-default.gif"></a>
-												</td>
-												<td class="kcol-mid ktopictittle">
-													<div class="ktopic-title-cover">
-														<a title="Test" rel="nofollow" href="#" class="ktopic-title km">Test 2</a>
-													</div>
-													<div style="display: none;">Test</div>
-												</td>
-												<td class="kcol-mid ktopictittle">
-													<div class="ktopic-title-cover">
-														<a title="Test" rel="nofollow" href="#" class="ktopic-title km">Test 2</a>
-													</div>
-													<div class="ks">
-														<span class="ktopic-category">
-															Category: <a title="General Talk about Kunena" rel="follow" href="#">General Talk about Kunena</a>
-														</span>
-													</div>
-												</td>
-												<td class="kcol-mid kcol-ktopiclastpost">
-													<div class="klatest-post-info">
-														<span class="ktopic-latest-post-avatar">
-															<a rel="nofollow" title="" href="#" class="kwho-user"><img style="max-width: 36px; max-height: 36px;" alt="" src="images/avatar.png" class="klist-avatar"></a>
-														</span>
-														<span title="17 Feb 2011 02:52" class="ktopic-posted-time">
-															Posted 1 hour, 47 minutes ago&nbsp;
-														</span>
-														<br />
-														<span class="ktopic-by">by <a rel="nofollow" title="" href="#" class="kwho-user">severdia</a></span>
-													</div>
-												</td>
-
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</form>
+							<?php $this->displayUnapprovedPosts(); ?>
 						</dd>
-						<dt title="Thank You" class="closed" style="cursor: pointer;">Thank You</dt>
+						<?php endif; ?>
+						<dt class="open" title="<?php echo JText::_('COM_KUNENA_USERPOSTS') ?>"><?php echo JText::_('COM_KUNENA_USERPOSTS') ?></dt>
 						<dd style="display: none;">
-							<form name="ktopicsform" method="post" action="#">
-								<input type="hidden" value="topics" name="view" />
-								<input type="hidden" value="1" name="90e41e48d249f2f0526bb3f823e30429" />
-								<div class="kblock kflat">
-									<h2 class="kheader"><span>Given Thank You</span></h2>
-									<table id="kflattable" class="kblocktable">
-										<tbody>
-											<tr class="krow2">
-												<td class="kcol-first">No Posts</td>
-											</tr>
-
-										</tbody>
-									</table>
-								</div>
-							</form>
-							<form name="ktopicsform" method="post" action="#">
-								<input type="hidden" value="topics" name="view" />
-								<input type="hidden" value="1" name="90e41e48d249f2f0526bb3f823e30429" />
-								<div class="kblock kflat">
-									<h2 class="kheader"><span>Received Thank You</span></h2>
-									<table id="kflattable" class="kblocktable">
-										<tbody>
-											<tr class="krow2"><td class="kcol-first">No Posts</td></tr>
-										</tbody>
-									</table>
-								</div>
-							</form>
+							<?php $this->displayUserPosts(); ?>
 						</dd>
-						<dt title="Subscriptions" class="closed" style="cursor: pointer;">Subscriptions</dt>
+						<?php if($this->config->showthankyou && $this->my->id != 0) : ?>
+						<dt class="closed" title="<?php echo JText::_('COM_KUNENA_THANK_YOU') ?>"><?php echo JText::_('COM_KUNENA_THANK_YOU') ?></dt>
 						<dd style="display: none;">
-							<form name="ktopicsform" method="post" action="/forum">
-								<input type="hidden" value="topics" name="view" />
-								<input type="hidden" value="1" name="90e41e48d249f2f0526bb3f823e30429" />
-								<div class="kblock kflat">
-									<h2 class="kheader"><span>Topic Subscriptions</span></h2>
-									<table id="kflattable" class="kblocktable">
-										<tbody>
-											<tr class="krow2"><td class="kcol-first">There are no posts in this forum.</td></tr>
-										</tbody>
-									</table>
-								</div>
-							</form>
+							<?php $this->displayGotThankYou(); ?>
+							<?php $this->displaySaidThankYou(); ?>
 						</dd>
-						<dt title="Favorites" class="closed" style="cursor: pointer;">Favorites</dt>
+						<?php endif; ?>
+						<?php if ($this->my->id == $this->user->id): ?>
+						<?php if ($this->config->allowsubscriptions) :?>
+						<dt class="closed" title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
 						<dd style="display: none;">
-							<form name="ktopicsform" method="post" action="#">
-								<input type="hidden" value="topics" name="view" />
-								<input type="hidden" value="1" name="90e41e48d249f2f0526bb3f823e30429" />
-								<div class="kblock kflat">
-									<h2 class="kheader"><span>Favorite Topics</span></h2>
-									<table id="kflattable" class="kblocktable">
-										<tbody>
-											<tr class="krow2"><td class="kcol-first">There are no posts in this forum.</td></tr>
-										</tbody>
-									</table>
-								</div>
-							</form>
+							<?php $this->displayCategoriesSubscriptions(); ?>
+							<?php $this->displaySubscriptions(); ?>
 						</dd>
+						<?php endif; ?>
+						<?php if ($this->config->allowfavorites) : ?>
+						<dt class="closed" title="<?php echo JText::_('COM_KUNENA_FAVORITES') ?>"><?php echo JText::_('COM_KUNENA_FAVORITES') ?></dt>
+						<dd style="display: none;">
+							<?php $this->displayFavorites(); ?>
+						</dd>
+						<?php endif; ?>
+						<?php endif;?>
+						<?php if ($this->me->isModerator() && $this->my->id == $this->profile->userid ): ?>
+						<dt class="closed" title="<?php echo JText::_('COM_KUNENA_BAN_BANMANAGER') ?>"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER') ?></dt>
+						<dd style="display: none;">
+							<?php $this->displayBanManager(); ?>
+						</dd>
+						<?php endif;?>
+						<?php if ($this->me->isModerator() && $this->my->id != $this->user->id):?>
+						<dt class="closed" title="<?php echo JText::_('COM_KUNENA_BAN_BANHISTORY') ?>"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY') ?></dt>
+						<dd style="display: none;">
+							<?php $this->displayBanHistory(); ?>
+						</dd>
+						<?php endif;?>
+						<?php if ($this->canBan) : ?>
+						<dt class="closed" title="<?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ) ?>"><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ) ?></dt>
+						<dd style="display: none;">
+							<?php $this->displayBanUser(); ?>
+						</dd>
+						<?php endif; ?>
 					</dl>
 				</div>
 

@@ -18,6 +18,23 @@ class KunenaDate extends JDate {
 	}
 
 	public function diff($d2 = 'now', $week = false) {
+		if (method_exists('DateTime', 'diff')) {
+			// PHP 5.3:
+			date_default_timezone_set('UTC');
+			$d1 = new DateTime($this->toISO8601());
+			$d2 = new DateTime(is_numeric($d2) ? date('c', $d2) : $d2);
+			$interval = $d1->diff($d2);
+			$diff = array('year'=>$interval->y, 'month'=>$interval->m, 'week'=>intval($interval->d/7), 'day'=>$interval->d,
+				'hour'=>$interval->h, 'minute'=>$interval->i, 'second'=>$interval->s);
+
+			if ($week) {
+				$diff ['day'] = $interval->d - $diff ['week']*7;
+			} else {
+				unset($diff ['week']);
+			}
+			return $diff;
+		}
+
 		/* compares two timestamps and returns array with differencies (year, month, day, hour, minute, second) */
 		/* Taken and modified from: http://www.php.net/manual/en/function.mktime.php (davix 06-Oct-2009 07:39) */
 		$d1 = $this->toUnix();

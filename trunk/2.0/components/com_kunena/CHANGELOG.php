@@ -43,6 +43,9 @@ Kunena 2.0.0-DEV
 # [#23443] Set missing title in Users/Default
 ^ [#25415] Move Users/Default layout to User/List
 # [#25415] Tableless template: Do not show email address to users who are not allowed to see it
+# [#23443] Fix Regression: saving user fails
+^ [#22569] KunenaDate::diff(): add PHP 5.3 implementation
++ [#25415] Tableless template: Implement User/Default
 
 31-March-2011 Matias
 + [#25415] Tableless template: Implement Topic/Create|Reply|Edit layouts (part 2)

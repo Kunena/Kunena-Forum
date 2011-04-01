@@ -18,6 +18,7 @@ document.addEvent('domready', function() {
 });
 // ]]>");
 }
+$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 ?>
 <div id="Kunena">
 <?php
@@ -31,7 +32,11 @@ $this->displayLoginBox ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="searchform" name="adminForm">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search') ?>" method="post" id="searchform" name="adminForm">
+	<input type="hidden" name="option" value="com_kunena" />
+	<input type="hidden" name="view" value="search" />
+	<input type="hidden" name="task" value="results" />
+	<?php echo JHTML::_( 'form.token' ); ?>
 	<table id="kforumsearch">
 		<tbody id="advsearch"<?php echo $this->search_style; ?>>
 			<tr class="krow1">
@@ -161,10 +166,6 @@ $this->displayLoginBox ();
 			</tr>
 		</tbody>
 	</table>
-	<input type="hidden" name="option" value="com_kunena" />
-	<input type="hidden" name="view" value="search" />
-	<input type="hidden" name="task" value="results" />
-	<?php echo JHTML::_( 'form.token' ); ?>
 </form>
 		</div>
 	</div>

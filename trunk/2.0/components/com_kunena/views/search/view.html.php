@@ -102,6 +102,12 @@ class KunenaViewSearch extends KunenaView {
 		$this->display ();
 	}
 
+	function displaySearchResults() {
+		if($this->results) {
+			echo $this->loadTemplate('results');
+		}
+	}
+
 	function getPagination($maxpages) {
 		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
 		$pagination->setDisplay($maxpages);

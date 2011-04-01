@@ -182,14 +182,8 @@ class KunenaUser extends JObject {
 
 	}
 
-	public function isOnline($yesno = false) {
-		$online = false;
-		$myprofile = KunenaFactory::getUser ();
-		if (intval($this->userid) > 0 && ($this->showOnline || $myprofile->isModerator ())) {
-			$online = KunenaUserHelper::isOnline($this->userid);
-		}
-		if ($yesno) return $online ? 'yes' : 'no';
-		return $online;
+	public function isOnline($yes = false, $no = 'offline') {
+		return KunenaUserHelper::isOnline($this->userid, $yes, $no);
 	}
 
 	public function getAllowedCategories($rule = 'read') {

@@ -37,6 +37,10 @@ Kunena 2.0.0-DEV
 # [#23443] Fix Zend warnings on autocomplete="yes" by making it a class
 ^ [#25415] Change long number precision to 3 to make 1.34k to fit into same space as <= 9999
 + [#25415] Tableless template: Implement Search/Default (without search results)
++ [#25415] Tableless template: Implement Userlist/Default
+^ [#22569] Add email, registerDate into KunenaUser objects
+^ [#22569] KunenaUser(Helper)::isOnline(): allow free naming convention for yes and no
+# [#23443] Set missing title in Users/Default
 
 31-March-2011 Matias
 + [#25415] Tableless template: Implement Topic/Create|Reply|Edit layouts (part 2)

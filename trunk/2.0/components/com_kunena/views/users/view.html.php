@@ -23,8 +23,25 @@ class KunenaViewUsers extends KunenaView {
 		$this->total = $this->get ( 'Total' );
 		$this->count = $this->get ( 'Count' );
 		$this->users = $this->get ( 'Items' );
-		$this->pageNav = new KunenaHtmlPagination ( $this->count, $this->state->get('list.start'), $this->state->get('list.limit') );
-		$this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
+		// TODO: Deprecated:
+		$this->pageNav = $this->getPagination(7);
 		parent::display($tpl);
+	}
+
+	function displayUserList() {
+		echo $this->loadTemplate('list');
+	}
+
+	function displayUserRow($user) {
+		$this->user = KunenaFactory::getUser($user->id);
+		$this->rank_image = $this->user->getRank (0, 'image');
+		$this->rank_title = $this->user->getRank (0, 'title');
+		echo $this->loadTemplate('row');
+	}
+
+	function getPagination($maxpages) {
+		$pagination = new KunenaHtmlPagination ( $this->count, $this->state->get('list.start'), $this->state->get('list.limit') );
+		$pagination->setDisplay($maxpages);
+		return $pagination->getPagesLinks();
 	}
 }

@@ -59,7 +59,7 @@ defined ( '_JEXEC' ) or die ();
 			<?php echo $this->userrankimage ?>
 		</li>
 		<?php endif ?>
-		<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>"><span class="online-<?php echo $this->profile->isOnline(true) ?>"><span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span></li>
+		<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline('yes', 'no') ?>"><span class="online-<?php echo $this->profile->isOnline('yes', 'no') ?>"><span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span></li>
 		<?php if ( !empty($this->userkarma) ) : ?>
 		<li class="kpost-karma">
 			<span class="kmsgkarma">

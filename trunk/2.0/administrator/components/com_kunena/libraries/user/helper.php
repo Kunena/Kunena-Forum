@@ -70,7 +70,7 @@ class KunenaUserHelper {
 		$userlist = implode ( ',', $e_userids );
 
 		$db = JFactory::getDBO ();
-		$query = "SELECT u.name, u.username, u.block as blocked, ku.*
+		$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*
 			FROM #__users AS u
 			LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
 			WHERE u.id IN ({$userlist})";
@@ -163,7 +163,7 @@ class KunenaUserHelper {
 		return $result;
 	}
 
-	public static function isOnline($user, $yesno = false) {
+	public static function isOnline($user, $yes = false, $no = 'offline') {
 		$user = self::get($user);
 		$online = false;
 		if (intval($user->userid) > 0) {
@@ -172,7 +172,7 @@ class KunenaUserHelper {
 			}
 			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > $user->_session_timeout) : false;
 		}
-		if ($yesno) return $online ? 'yes' : 'no';
+		if ($yes) return $online ? $yes : $no;
 		return $online;
 	}
 

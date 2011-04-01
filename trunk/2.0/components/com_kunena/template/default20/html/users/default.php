@@ -9,6 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
 ?>
 	<div id="kunena">
 	<?php

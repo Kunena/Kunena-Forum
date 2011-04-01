@@ -28,9 +28,9 @@ defined ( '_JEXEC' ) or die ();
 		<?php if ($this->profile->userid): ?>
 
 		<li>
-			<span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>">
-				<span class="online-<?php echo $this->profile->isOnline(true) ?>">
-					<span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span>
+			<span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline('yes', 'no') ?>">
+				<span class="online-<?php echo $this->profile->isOnline('yes', 'no') ?>">
+					<span><?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?></span>
 				</span>
 			</span>
 		</li>

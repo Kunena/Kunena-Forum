@@ -20,9 +20,9 @@ defined ( '_JEXEC' ) or die ();
 							<?php endif; ?>
 							<?php if ($this->profile->exists()): ?>
 							<li class="kpost-user-status">
-								<span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>">
-									<span class="online-<?php echo $this->profile->isOnline(true) ?>">
-										<span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE') ?></span>
+								<span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline('yes', 'no') ?>">
+									<span class="online-<?php echo $this->profile->isOnline('yes', 'no') ?>">
+										<span><?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')) ?></span>
 									</span>
 								</span>
 							</li>

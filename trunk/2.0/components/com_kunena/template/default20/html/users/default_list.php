@@ -11,10 +11,10 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 		<div class="kuserlist">
-			<a href="#" class="ksection-headericon"><img src="images/icon-whosonline-sm.png" alt="" /></a>
-			<h2 class="kheader"><a href="#" title="Category Header" rel="ksection-detailsbox">User List</a></h2>
+			<a href="#" class="ksection-headericon"><?php echo $this->getImage('icon-whosonline-sm.png') ?></a>
+			<h2 class="kheader"><a href="#" rel="ksection-detailsbox"><?php echo JText::_('COM_KUNENA_USRL_USERLIST') ?></a></h2>
 			<div class="kuserlist-items">
-				<?php include 'default_row.php' ?>
+				<?php foreach ($this->users as $user) { $this->displayUserRow($user); } ?>
 			</div>
 			<div class="clr"></div>
 		</div>

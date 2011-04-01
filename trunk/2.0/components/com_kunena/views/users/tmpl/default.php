@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$template = KunenaTemplate::getInstance();
+$this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
 
 $this->document->addScriptDeclaration( "// <![CDATA[
 function tableOrdering( order, dir, task ) {
@@ -45,7 +45,7 @@ $this->displayLoginBox ();
 				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>">
 					<input id="kusersearch" type="text" name="search" class="inputbox"
 						value="<?php echo $this->escape($this->state->get('list.search', JText::_('COM_KUNENA_USRL_SEARCH'))); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';" onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';" />
-					<input type="image" src="<?php echo $template->getImagePath('usl_search_icon.png') ?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;" />
+					<input type="image" src="<?php echo $this->template->getImagePath('usl_search_icon.png') ?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;" />
 					<?php echo JHTML::_( 'form.token' ); ?>
 				</form>
 			</div>
@@ -139,7 +139,7 @@ $this->displayLoginBox ();
 
 						<?php if ($this->config->userlist_online) : ?>
 						<td class="kcol-mid">
-							<span class="kicon-button kbuttononline-<?php echo $profile->isOnline(true) ?>"><span class="online-<?php echo $profile->isOnline(true) ?>"><span><?php echo $profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span>
+							<span class="kicon-button kbuttononline-<?php echo $profile->isOnline('yes', 'no') ?>"><span class="online-<?php echo $profile->isOnline('yes', 'no') ?>"><span><?php echo $profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?></span></span></span>
 						</td>
 						<?php endif; ?>
 

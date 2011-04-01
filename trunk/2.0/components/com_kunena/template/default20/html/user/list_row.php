@@ -29,8 +29,8 @@ defined ( '_JEXEC' ) or die ();
 						<li class="kdetails-username"><span><?php echo JText::_('COM_KUNENA_USRL_NAME') ?>:</span> <?php echo $this->escape($this->user->name) ?></li>
 						<?php endif; ?>
 
-						<?php if ($this->config->userlist_email && $this->user->email) : ?>
-						<li class="kdetails-joindate"><span><?php echo JText::_('COM_KUNENA_USRL_EMAIL') ?>:</span> <?php echo JHTML::_('email.cloak', $this->user->email) ?></li>
+						<?php if (!empty($this->email)) : ?>
+						<li class="kdetails-joindate"><span><?php echo JText::_('COM_KUNENA_USRL_EMAIL') ?>:</span> <?php echo $this->email ?></li>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_usertype) : ?>

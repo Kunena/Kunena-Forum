@@ -40,6 +40,7 @@ class KunenaViewUser extends KunenaView {
 		$this->total = $this->get ( 'Total' );
 		$this->count = $this->get ( 'Count' );
 		$this->users = $this->get ( 'Items' );
+		$this->me = KunenaFactory::getUser ();
 		// TODO: Deprecated:
 		$this->pageNav = $this->getPagination(7);
 		parent::display($tpl);
@@ -420,6 +421,9 @@ class KunenaViewUser extends KunenaView {
 
 	function displayUserRow($user) {
 		$this->user = KunenaFactory::getUser($user->id);
+		if ($this->config->userlist_email && (!$this->user->hideEmail || $this->me->isModerator())) {
+			$this->email = JHTML::_('email.cloak', $this->user->email);
+		}
 		$this->rank_image = $this->user->getRank (0, 'image');
 		$this->rank_title = $this->user->getRank (0, 'title');
 		echo $this->loadTemplate('row');

@@ -510,7 +510,7 @@ class KunenaViewTopic extends KunenaView {
 
 				// TODO: add context (options, template) to caching
 				$cache = JFactory::getCache('com_kunena', 'output');
-				$cachekey = "profile.{$this->template->name}.{$this->profile->userid}.{$usertype}";
+				$cachekey = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
 				$cachegroup = 'com_kunena.messages';
 
 				$contents = $cache->get($cachekey, $cachegroup);
@@ -628,7 +628,7 @@ class KunenaViewTopic extends KunenaView {
 
 		// TODO: add context (options, template) to caching
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$cachekey = "message.{$this->template->name}.{$layout}.{$template}.{$usertype}.{$this->message->id}.{$this->message->modified_time}";
+		$cachekey = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 
 		$contents = $cache->get($cachekey, $cachegroup);

@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+1-April-2011 Matias
+# [#23443] Output caching should check template path overrides
+
 31-March-2011 Matias
 + [#25415] Tableless template: Implement Topic/Create|Reply|Edit layouts (part 2)
 # [#23443] KunenaRoute::normalize() do nothing in administration to avoid fatal error

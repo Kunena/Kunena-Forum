@@ -367,7 +367,7 @@ class KunenaViewCategory extends KunenaView {
 		// TODO: add context (options, template) to caching
 		$this->cache = true;
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$cachekey = "list.item.{$this->template->name}.{$usertype}.{$catid}.{$lastPost->last_post_id}";
+		$cachekey = "list.item.{$this->getTemplateMD5()}.{$usertype}.{$catid}.{$lastPost->last_post_id}";
 		$cachegroup = 'com_kunena.category';
 
 		$contents = $cache->get($cachekey, $cachegroup);
@@ -431,7 +431,7 @@ class KunenaViewCategory extends KunenaView {
 			// TODO: add context (options, template) to caching
 			$this->cache = true;
 			$cache = JFactory::getCache('com_kunena', 'output');
-			$cachekey = "{$this->template->name}.{$usertype}.c{$this->category->id}.t{$this->topic->id}.p{$this->topic->last_post_id}";
+			$cachekey = "{$this->getTemplateMD5()}.{$usertype}.c{$this->category->id}.t{$this->topic->id}.p{$this->topic->last_post_id}";
 			$cachegroup = 'com_kunena.topics';
 
 			$contents = $cache->get($cachekey, $cachegroup);

@@ -253,7 +253,7 @@ class KunenaViewTopics extends KunenaView {
 			// TODO: add context (options, template) to caching
 			$this->cache = true;
 			$cache = JFactory::getCache('com_kunena', 'output');
-			$cachekey = "{$this->template->name}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
+			$cachekey = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
 			$cachegroup = 'com_kunena.topics';
 
 			$contents = $cache->get($cachekey, $cachegroup);

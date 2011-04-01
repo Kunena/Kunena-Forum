@@ -233,4 +233,9 @@ class KunenaView extends JView {
 			$this->document->setTitle ( KunenaFactory::getConfig()->board_title .' :: '. strip_tags($title) );
 		}
 	}
+
+	// Caching
+	function getTemplateMD5() {
+		return md5(serialize($this->_path['template']).'-'.$this->template->name);
+	}
 }

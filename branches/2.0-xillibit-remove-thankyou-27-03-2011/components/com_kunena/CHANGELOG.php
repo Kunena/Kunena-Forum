@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+2-April-2011 Xillibit
+# [#25478] Give more love on unthnakyou function
+
 29-March-2011 Xillibit
 ^ [#25478] Rename onAfterThankyou into onAfterAddThankyou and add onAfterRemoveThankyou
 # [#25478] Fix regressions detected in controller/topic.php and in views/topic/view.html.php

@@ -299,33 +299,25 @@ class KunenaControllerTopic extends KunenaController {
 		$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
 
-	function addthankyou(){
+	public function thankyou() {
 		$app = JFactory::getApplication ();
-		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
-		}
-
-		$message = KunenaForumMessageHelper::get($this->mesid);
-		if (!$message->authorise('thankyou')) {
-			$app->enqueueMessage ( $message->getError() );
-			$this->redirectBack ();
-		}
-
-		$thankyou = KunenaForumMessageThankyouHelper::get($this->mesid);
-		if (!$thankyou->save ( KunenaFactory::getUser() )) {
-			$app->enqueueMessage ( $thankyou->getError() );
-			$this->redirectBack ();
-		}
-
-		$activityIntegration = KunenaFactory::getActivityIntegration();
-		$activityIntegration->onAfterAddThankyou($this->my->id, $message->userid, $message);
+		$type = JRequest::getString('task');
+		$this->setThankyou($type);
 
 		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_SUCCESS' ) );
 		$this->redirectBack ();
 	}
 
-	function removethankyou(){
+	public function unthankyou() {
+		$app = JFactory::getApplication ();
+		$type = JRequest::getString('task');
+		$this->setThankyou($type);
+
+		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_REMOVED_SUCCESS' ) );
+		$this->redirectBack ();
+	}
+
+	protected function setThankyou($type){
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -333,22 +325,27 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$message = KunenaForumMessageHelper::get($this->mesid);
-		if (!$message->authorise('unthankyou')) {
+		if (!$message->authorise($type)) {
 			$app->enqueueMessage ( $message->getError() );
 			$this->redirectBack ();
 		}
 
 		$thankyou = KunenaForumMessageThankyouHelper::get($this->mesid);
-		if (!$thankyou->delete ( KunenaFactory::getUser() )) {
-			$app->enqueueMessage ( $thankyou->getError() );
-			$this->redirectBack ();
-		}
-
 		$activityIntegration = KunenaFactory::getActivityIntegration();
-		$activityIntegration->onAfterUnThankyou($message->userid, $this->my->id, $message);
-
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_REMOVED_SUCCESS' ) );
-		$this->redirectBack ();
+		if ( $type== 'thankyou') {
+			if (!$thankyou->save ( KunenaFactory::getUser() )) {
+				$app->enqueueMessage ( $thankyou->getError() );
+				$this->redirectBack ();
+			}
+			$activityIntegration->onAfterThankyou($this->my->id, $message->userid, $message);
+		} else {
+			$userid = JRequest::getInt('userid','0');
+			if (!$thankyou->delete ( $userid )) {
+				$app->enqueueMessage ( $thankyou->getError() );
+				$this->redirectBack ();
+			}
+			$activityIntegration->onAfterUnThankyou($userid, $this->my->id, $message);
+		}
 	}
 
 	public function subscribe() {

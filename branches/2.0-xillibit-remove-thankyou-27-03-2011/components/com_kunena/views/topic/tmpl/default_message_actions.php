@@ -62,7 +62,6 @@ if ($this->message->modified_time) {
 <?php if(!empty($this->thankyou)): ?>
 <div class="kmessage-thankyou">
 <?php
-	if(!empty($this->message_thankyou_delete)) echo $this->message_thankyou_delete;
 	echo JText::_('COM_KUNENA_THANKYOU').': ';
 	echo implode(', ', $this->thankyou);
 	if (count($this->thankyou) > 9) echo '...';

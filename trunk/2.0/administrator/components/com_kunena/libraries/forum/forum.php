@@ -139,14 +139,20 @@ class KunenaForum {
 		$model->initialize($parameters);
 		$view->setModel ( $model, true );
 
+		// Add template path
+		$ktemplate = KunenaFactory::getTemplate();
+		$templatepath = KPATH_SITE."/{$ktemplate->getPath()}/html/";
+		$view->addTemplatePath($templatepath.$viewName);
+		if ($parameters->get('templatepath')) $view->addTemplatePath($parameters->get('templatepath'));
+
 		if ($viewName != 'common') {
 			$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );
+			$view->common->addTemplatePath($templatepath.'common');
 		}
 		// Push document object into the view.
 		$view->assignRef ( 'document', JFactory::getDocument() );
 
 		// Render the view.
-		if ($parameters->get('templatepath')) $view->addTemplatePath($parameters->get('templatepath'));
 		$view->displayLayout ($layout, $template);
 	}
 }

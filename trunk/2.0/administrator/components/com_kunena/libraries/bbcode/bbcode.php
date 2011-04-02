@@ -905,13 +905,6 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		} elseif (!empty($denied)) {
 			$html = JText::_( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS' );
 		} else {
-			// Identify the source of the event to be Kunena itself
-			// this is important to avoid recursive event behaviour with our own plugins
-			$params->set('ksource', 'kunena');
-			JPluginHelper::importPlugin('content');
-			$dispatcher = JDispatcher::getInstance();
-			$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
-
 			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
 			if ($jversion->RELEASE == '1.5') {
 				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
@@ -924,22 +917,31 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			switch ($default) {
 				case 'full':
 					if ( !empty($article->fulltext) ) {
-						$html = $article->fulltext;
+						$article->text = $article->fulltext;
 						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ').'</a>';
 						break;
 					}
-					// continue to intro
+					// continue to intro if fulltext is empty
 				case 'intro':
 					if ( !empty($article->introtext) ) {
-						$html = $article->introtext;
+						$article->text = $article->introtext;
 						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_MORE').'</a>';
 						break;
 					}
-					// continue to link
+					// continue to link if introtext is empty
 				case 'link':
 				default:
 					$link = '<a href="'.$url.'" class="readon">'.$article->title.'</a>';
 					break;
+			}
+			if (!empty($article->text)) {
+				// Identify the source of the event to be Kunena itself
+				// this is important to avoid recursive event behaviour with our own plugins
+				$params->set('ksource', 'kunena');
+				JPluginHelper::importPlugin('content');
+				$dispatcher = JDispatcher::getInstance();
+				$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
+				$html = $article->text;
 			}
 		}
 		return '<div class="kmsgtext-article">' . $html . '</div>' . $link;

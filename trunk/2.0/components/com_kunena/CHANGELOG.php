@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+2-April-2011 Matias
+# [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text
++ [#22569] KunenaForum::display(): use current Kunena template instead of default one
+
 1-April-2011 Matias
 # [#23443] Output caching should check template path overrides
 # [#23443] Fix MySQL error in flood protection (thanks Janich)

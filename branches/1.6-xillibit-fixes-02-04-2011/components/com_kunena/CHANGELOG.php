@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+2-April-2011 Xillibit
+# [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text
+
 29-March-2011 Matias
 # [#24991] Birthdate in kunena profile is different under Joomla 1.6 and Joomla 1.5
 

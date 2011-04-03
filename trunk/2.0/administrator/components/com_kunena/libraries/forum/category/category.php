@@ -121,7 +121,7 @@ class KunenaForumCategory extends JObject {
 		$message->bind($fields, array ('name', 'email', 'subject', 'message'));
 
 		$topic = new KunenaForumTopic();
-		$topic->category_id = $this->id;
+		$topic->category_id = reset($this->getChannels())->id;
 		$topic->hold = $message->hold;
 		$topic->bind($fields, array ('subject','icon_id'));
 

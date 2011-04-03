@@ -40,6 +40,7 @@ class KunenaForumCategory extends JObject {
 		// Always load the category -- if category does not exist: fill empty data
 		$this->_db = JFactory::getDBO ();
 		$this->load ( $identifier );
+		$this->level = 0;
 	}
 
 	/**
@@ -71,7 +72,7 @@ class KunenaForumCategory extends JObject {
 
 	public function isSection() {
 		$this->buildInfo();
-		return $this->parent_id == 0 || (!$this->numTopics && $this->locked);
+		return empty($this->_channels);
 	}
 
 	public function getTopics() {
@@ -98,7 +99,10 @@ class KunenaForumCategory extends JObject {
 	public function getChannels() {
 		if ($this->_channels === false) {
 			$ids = explode(',', $this->channels);
-			if (in_array(0, $ids) || in_array('THIS', $ids)) $ids[] = $this->id;
+			// NOTE: sections do not have channels
+			if ($this->parent_id != 0 && ($this->numTopics || !$this->locked) && (in_array(0, $ids) || in_array('THIS', $ids))) {
+				array_unshift($ids, $this->id);
+			}
 			$this->_channels = KunenaForumCategoryHelper::getCategories($ids);
 			if (in_array('CHILDREN', $ids)) {
 				$this->_channels += KunenaForumCategoryHelper::getChildren($this->id);
@@ -107,13 +111,25 @@ class KunenaForumCategory extends JObject {
 		return $this->_channels;
 	}
 
+	public function getNewTopicCategory($user=null) {
+		foreach ($this->getChannels() as $category) {
+			if ($category->authorise('topic.create', $user, true)) return $category;
+		}
+		if ($this->exists() && $this->isSection()) return new KunenaForumCategory();
+		$categories = KunenaForumCategoryHelper::getChildren(intval($this->id), -1, array('action'=>'topic.create', 'parents'=>false));
+
+		if ($categories) return reset($categories);
+		return new KunenaForumCategory();
+	}
+
 	public function newTopic($fields=array(), $user=null) {
 		kimport ('kunena.forum.topic');
 		kimport ('kunena.forum.message');
 
+		$catid = $this->getNewTopicCategory()->id;
 		$user = KunenaUser::getInstance($user);
 		$message = new KunenaForumMessage();
-		$message->catid = reset($this->getChannels())->id;
+		$message->catid = $catid;
 		$message->name = $user->getName('');
 		$message->userid = $user->userid;
 		$message->ip = $_SERVER ["REMOTE_ADDR"];
@@ -121,7 +137,7 @@ class KunenaForumCategory extends JObject {
 		$message->bind($fields, array ('name', 'email', 'subject', 'message'));
 
 		$topic = new KunenaForumTopic();
-		$topic->category_id = reset($this->getChannels())->id;
+		$topic->category_id = $catid;
 		$topic->hold = $message->hold;
 		$topic->bind($fields, array ('subject','icon_id'));
 
@@ -156,10 +172,10 @@ class KunenaForumCategory extends JObject {
 			'moderate'=>array('Read', 'NotBanned', 'Moderate'),
 			'admin'=>array('Read', 'NotBanned', 'Admin'),
 			'topic.read'=>array('Read'),
-			'topic.create'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
+			'topic.create'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked', 'Channel'),
 			'topic.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
 			'topic.edit'=>array('Read', 'NotBanned', 'Unlocked'),
-			'topic.move'=>array('Read', 'NotBanned', 'Moderate'),
+			'topic.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
 			'topic.approve'=>array('Read','NotBanned', 'Moderate'),
 			'topic.delete'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.undelete'=>array('Read', 'NotBanned', 'Moderate'),
@@ -177,7 +193,7 @@ class KunenaForumCategory extends JObject {
 			'topic.post.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
 			'topic.post.thankyou' =>array('Read', 'NotBanned'),
 			'topic.post.edit'=>array('Read', 'NotBanned', 'Unlocked'),
-			'topic.post.move'=>array('Read', 'NotBanned', 'Moderate'),
+			'topic.post.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
 			'topic.post.approve'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.post.delete'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.post.undelete'=>array('Read', 'NotBanned', 'Moderate'),
@@ -665,8 +681,17 @@ class KunenaForumCategory extends JObject {
 	}
 	protected function authoriseNotSection($user) {
 		// Check if category is not a section
-		if (!$this->parent_id) {
+		if ($this->isSection()) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_IS_SECTION' ) );
+			return false;
+		}
+		return true;
+	}
+	protected function authoriseChannel($user) {
+		// Check if category is alias
+		$channels = $this->getChannels();
+		if (!isset($channels[$this->id])) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_IS_ALIAS' ) );
 			return false;
 		}
 		return true;

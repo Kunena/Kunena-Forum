@@ -27,10 +27,10 @@ defined ( '_JEXEC' ) or die ();
 													<?php if (!empty($this->categoryRssURL)) : ?>
 													<li><a href="<?php echo $this->categoryRssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?>"><span class="krss-icon"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?></span></a></li>
 													<?php endif ?>
-													<?php if ($this->category->locked) : ?>
+													<?php if ($this->category->locked && !$this->category->isSection()) : ?>
 													<li><?php echo $this->getIcon ( 'klocked-icon', JText::_('COM_KUNENA_CATEGORY_LOCKED_TITLE') ) ?></li>
 													<?php endif ?>
-													<?php if ($this->category->review) : ?>
+													<?php if ($this->category->review && !$this->category->isSection()) : ?>
 													<li><?php echo $this->getIcon ( 'kreview-icon', JText::_('COM_KUNENA_CATEGORY_REVIEW_TITLE') ) ?></li>
 													<?php endif ?>
 													<!-- li><a href="#"><span class="ksubscribe-icon" title="Subscribe to all posts in this category">Subscribe to all posts in this category</span></a></li -->

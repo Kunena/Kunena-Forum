@@ -45,7 +45,7 @@ class KunenaViewCategory extends KunenaView {
 
 		// Is user allowed to post new topic?
 		$this->newTopicHtml = '';
-		if ($this->category->authorise ( 'topic.create', null, true )) {
+		if ($this->category->getNewTopicCategory()->exists()) {
 			$this->newTopicHtml = CKunenaLink::GetPostNewTopicLink ( $this->category->id, $this->getButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
 		}
 
@@ -110,7 +110,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
-		if (!$this->category->parent_id) {
+		if ($this->category->isSection()) {
 			if ($this->me->isAdmin(null)) {
 				$this->category_manage = CKunenaLink::GetHrefLink(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage&catid='.$this->category->id), $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES') ), $title = '', 'nofollow', 'kicon-button kbuttonmod btn-left', '', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES_LONG'));
 			}
@@ -251,11 +251,16 @@ class KunenaViewCategory extends KunenaView {
 		return $object ? $uri : KunenaRoute::_($uri);
 	}
 	function getLastPostURL($category) {
+		$lastPost = $category->getLastPosted();
+		$channels = $category->getChannels();
+		if (isset($channels[$lastPost->id])) $catid = $category->id;
+		else $catid = $lastPost->id;
+
 		$limit = $this->config->messages_per_page;
-		$limitstart = intval($category->getLastPostLocation() / $limit) * $limit;
+		$limitstart = intval($lastPost->getLastPostLocation() / $limit) * $limit;
 		$anker = '';
 		$query = array();
-		$mesid = $category->last_post_id;
+		$mesid = $lastPost->last_post_id;
 		if ($mesid) {
 			$l = JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' );
 			if ($l == 'threaded') $query[] = "&mesid={$mesid}";
@@ -266,7 +271,7 @@ class KunenaViewCategory extends KunenaView {
 			$query[] = "&limit={$limit}";
 		}
 		$query = implode('', $query);
-		return "index.php?option=com_kunena&view=topic&catid={$category->id}&id={$category->last_topic_id}{$query}{$anker}";
+		return "index.php?option=com_kunena&view=topic&catid={$catid}&id={$lastPost->last_topic_id}{$query}{$anker}";
 	}
 
 	function getCategoryLink($category, $content = null, $title = null) {
@@ -296,8 +301,8 @@ class KunenaViewCategory extends KunenaView {
 	}
 	function getLastPostLink($category, $content = null, $title = null, $class = null) {
 		$uri = $this->getLastPostURL($category);
-		if (!$content) $content = KunenaHtmlParser::parseText($category->last_topic_subject, 20);
-		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->last_topic_subject));
+		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastPosted()->last_topic_subject, 20);
+		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastPosted()->last_topic_subject));
 		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
@@ -438,6 +443,8 @@ class KunenaViewCategory extends KunenaView {
 			if (!$contents) {
 				if ($this->category->id != $this->topic->category_id) {
 					$this->categoryLink = $this->getCategoryLink($this->topic->getCategory()->getParent()) . ' / ' . $this->getCategoryLink($this->topic->getCategory());
+				} else {
+					$this->categoryLink = null;
 				}
 				$this->firstPostAuthor = $this->topic->getfirstPostAuthor();
 				$this->firstPostTime = $this->topic->last_post_time;

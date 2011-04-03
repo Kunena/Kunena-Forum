@@ -37,7 +37,7 @@ $this->displayBreadcrumb ();
 </div>
 <?php endif; ?>
 
-<?php if ($this->category->parent_id) : ?>
+<?php if (!$this->category->isSection()) : ?>
 <!-- B: List Actions -->
 <table class="klist-actions">
 	<tr>

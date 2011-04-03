@@ -38,6 +38,16 @@ Kunena 2.0.0-DEV
 + [#25415] Tableless template: Implement Topics/Posts
 # [#25415] Tableless template: general CSS fixes and additions
 # [#22569] KunenaForumCategory::newTopic(): use default category channel instead of current category (thanks Janich)
+^ [#23466] KunenaForumCategory::getChannels(): return no channels if in section
+^ [#23466] Change behavior: Locked category with no topics or channels is threaded as section
+^ [#22569] KunenaForumCategory::isSection(): change check to test no channels and start using the new function
++ [#22569] Add function KunenaForumCategory::getNewTopicCategory() to return default category for new topic
+# [#23466] Do not allow creating topics into category aliases
+# [#23466] JHTMLKunenaForum::categorylist(): add support for category channels if action=topic.create
+# [#23443] KunenaViewCategory::getLastPostURL() returns URL into wrong topic
+# [#23443] KunenaViewCategory::getLastPostLink() has wrong subject
+# [#23443] KunenaViewCategory::displayRows(): forgets to reset category link
+# [#23466] KunenaViewTopic::DisplayCreate(): show only subcategories and category channels in category selection
 
 2-April-2011 Matias
 # [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text

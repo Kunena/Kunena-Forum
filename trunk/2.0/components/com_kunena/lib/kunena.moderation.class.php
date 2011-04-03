@@ -113,7 +113,7 @@ class CKunenaModeration {
 
 		// Check that thread can't be move into a section
 		$category = KunenaForumCategoryHelper::get($TargetCatID);
-		if ( $category->parent_id == '0' ) {
+		if ( $category->isSection() ) {
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MOVE_SECTION');
 			return false;
 		}

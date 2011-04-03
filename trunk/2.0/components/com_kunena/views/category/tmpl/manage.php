@@ -109,14 +109,19 @@ $this->displayLoginBox ();
 
 			<td colspan="6"></td>
 
-			<?php elseif ($category->section): ?>
+			<?php elseif ($category->isSection()): ?>
 
 			<td class="right nowrap">
 				<span><?php echo $this->navigation->orderUpIcon ( $i, $category->up, 'orderup', 'Move Up', 1 ); ?></span>
 				<span><?php echo $this->navigation->orderDownIcon ( $i, $n, $category->down, 'orderdown', 'Move Down', 1 ); ?></span>
 				<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5" value="<?php echo intval($category->ordering); ?>" class="text_area center" />
 			</td>
-			<td colspan="5" class="kcenter"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
+			<td class="kcenter">
+				<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->locked ? 'un':'').'lock'; ?>')">
+					<?php echo ($category->locked == 1 ? $img_yes : $img_no); ?>
+				</a>
+			</td>
+			<td colspan="4" class="kcenter"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
 
 			<?php else: ?>
 

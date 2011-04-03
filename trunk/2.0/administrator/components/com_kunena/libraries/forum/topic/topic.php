@@ -520,7 +520,7 @@ class KunenaForumTopic extends JObject {
 		} elseif ($target instanceof KunenaForumCategory) {
 			// Move messages into category
 
-			if ( $target->parent_id == 0 ) {
+			if ( $target->isSection() ) {
 				// Section cannot have any topics
 				$this->setError(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MOVE_SECTION'));
 				return false;

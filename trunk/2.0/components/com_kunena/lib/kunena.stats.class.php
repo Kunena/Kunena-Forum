@@ -138,7 +138,7 @@ class CKunenaStats {
 			$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 			foreach ($categories as $category) {
 				if (!$category->published) continue;
-				if ($category->parent_id == 0)
+				if ($category->isSection())
 					$this->totalsections ++;
 				else
 					$this->totalcats ++;

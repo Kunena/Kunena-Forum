@@ -236,7 +236,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 
 		$cat_params = array ();
 		$cat_params['ordering'] = 'ordering';
-		$cat_params['toplevel'] = 1;
+		$cat_params['toplevel'] = JText::_('COM_KUNENA_TOPLEVEL');
 		$cat_params['sections'] = 1;
 		$cat_params['direction'] = 1;
 		$cat_params['unpublished'] = 1;

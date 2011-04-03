@@ -177,9 +177,10 @@ class KunenaForumCategoryHelper {
 		$ordering = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
 		$direction = isset($params['direction']) ? (int) $params['direction'] : 1;
 		$search = isset($params['search']) ? (string) $params['search'] : '';
-		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
+		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : false;
 		$action = isset($params['action']) ? (string) $params['action'] : 'read';
 		$selected = isset($params['selected']) ? (int) $params['selected'] : 0;
+		$getparents = isset($params['parents']) ? (bool) $params['parents'] : true;
 
 		if (!is_array($parents))
 			$parents = array($parents);
@@ -225,7 +226,7 @@ class KunenaForumCategoryHelper {
 				if (empty ( $clist ) && ! self::$_instances [$id]->authorise ( $action, null, true ))
 					continue;
 				if (! empty ( $clist ) || ! $search || intval ( $search ) == $id || JString::stristr ( self::$_instances [$id]->name, ( string ) $search )) {
-					$list [$id] = self::$_instances [$id];
+					if (empty ( $clist ) || $getparents) $list [$id] = self::$_instances [$id];
 					$list += $clist;
 				}
 			}
@@ -335,7 +336,6 @@ class KunenaForumCategoryHelper {
 			foreach (self::$_tree [$parent] as $id=>$children) {
 				if (!empty($children)) array_push($heap, $id);
 				self::$_instances [$id]->level = $parent ? self::$_instances [$parent]->level+1 : 0;
-				self::$_instances [$id]->section = !self::$_instances [$id]->level;
 			}
 		}
 //		$cache->store(serialize(array(self::$_instances, self::$_tree, self::$_names)), 'instances', 'com_kunena.categories');

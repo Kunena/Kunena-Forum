@@ -158,10 +158,10 @@ class KunenaViewTopic extends KunenaView {
 		$arrayanynomousbox = array();
 		$arraypollcatid = array();
 		foreach ($categories as $category) {
-			if ($category->parent_id && $category->allow_anonymous) {
+			if (!$category->isSection() && $category->allow_anonymous) {
 				$arrayanynomousbox[] = '"'.$category->id.'":'.$category->post_anonymous;
 			}
-			if ($category->parent_id && $category->allow_polls) {
+			if (!$category->isSection() && $category->allow_polls) {
 				$arraypollcatid[] = '"'.$category->id.'":1';
 			}
 		}
@@ -175,19 +175,21 @@ class KunenaViewTopic extends KunenaView {
 		$cat_params['toplevel'] = 0;
 		$cat_params['sections'] = 0;
 		$cat_params['direction'] = 1;
+		$cat_params['hide_lonely'] = 1;
 		$cat_params['action'] = 'topic.create';
 
-		$selected = $this->catid ? $this->catid : null;
-		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $selected, 'postcatid');
-
 		$this->category = KunenaForumCategoryHelper::get($this->catid);
-		if (!$this->selectcatlist || ($this->catid && !$this->category->authorise('topic.create'))) {
-			$msg = JText::sprintf ( 'COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->category->getError());
+		list ($this->topic, $this->message) = $this->category->newTopic();
+
+		if (!$this->topic->category_id) {
+			$msg = JText::sprintf ( 'COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError());
 			$app = JFactory::getApplication();
 			$app->enqueueMessage ( $msg, 'notice' );
 			return false;
 		}
-		list ($this->topic, $this->message) = $this->category->newTopic();
+
+		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', $this->catid, null, $cat_params, 'class="inputbox"', 'value', 'text', $this->topic->category_id, 'postcatid');
+
 		$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
 		$this->action = 'post';
 

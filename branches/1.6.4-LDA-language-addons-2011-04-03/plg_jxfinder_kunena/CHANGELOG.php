@@ -31,6 +31,10 @@ Legend:
 
 JxFinder Kunena Plugin 1.6.4
 
+03-April-2011 LDA
++ [#24847] added es-ES (thanks Kunena Spanish Team)
+^ [#24847] update ru-RU (thanks Zarkos)
+
 14-March-2011 Matias
 ^ [#24959] Changed version to 1.6.4
 

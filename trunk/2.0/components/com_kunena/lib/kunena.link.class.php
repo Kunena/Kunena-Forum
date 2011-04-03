@@ -177,7 +177,7 @@ class CKunenaLink {
 	function GetReportMessageLink($catid, $id, $name, $rel = 'nofollow', $class = '', $title = '') {
 		kimport ('kunena.forum.message.helper');
 		$message = KunenaForumMessageHelper::get($id);
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=report&catid={$message->catid}&id={$message->thread}&mesid={$message->id}", $name, $title, $rel, $class );
+		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=report&catid={$catid}&id={$message->thread}&mesid={$message->id}", $name, $title, $rel, $class );
 	}
 
 	function GetMessageIPLink($msg_ip, $rel = 'nofollow') {
@@ -396,7 +396,7 @@ class CKunenaLink {
 		else $threadPages = ceil ( $result->totalmessages / $limit );
 
 		// Finally build output block
-		return self::GetThreadPageURL ( 'view', $result->catid, $result->thread, $result->totalmessages, $limit, $result->latest_id, $xhtml );
+		return self::GetThreadPageURL ( 'view', $catid, $result->thread, $result->totalmessages, $limit, $result->latest_id, $xhtml );
 	}
 
 	function GetMessageURL($pid, $catid=0, $limit = 0, $xhtml = true) {
@@ -421,8 +421,8 @@ class CKunenaLink {
 		$result = $db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return;
 		if (! is_object ( $result ))
-			return KunenaRoute::_ ( "index.php?option=com_kunena&view=showcat&catid={$result->catid}", $xhtml );
-		return self::GetThreadPageURL ( 'view', $result->catid, $result->thread, $result->totalmessages, $limit, $result->latest_id, $xhtml );
+			return KunenaRoute::_ ( "index.php?option=com_kunena&view=showcat&catid={$catid}", $xhtml );
+		return self::GetThreadPageURL ( 'view', $catid, $result->thread, $result->totalmessages, $limit, $result->latest_id, $xhtml );
 	}
 
 	function GetAutoRedirectHTML($url, $timeout) {

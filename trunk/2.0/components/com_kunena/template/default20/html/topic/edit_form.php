@@ -19,7 +19,10 @@ defined ( '_JEXEC' ) or die ();
 	<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>" />
 	<?php endif; ?>
 	<?php if (empty($this->selectcatlist)) : ?>
-	<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>" />
+	<input type="hidden" name="catid" value="<?php echo intval($this->topic->category_id) ?>" />
+	<?php endif; ?>
+	<?php if ($this->catid && $this->catid != $this->message->catid) : ?>
+	<input type="hidden" name="return" value="<?php echo intval($this->catid) ?>" />
 	<?php endif; ?>
 	<?php echo JHTML::_( 'form.token' ); ?>
 

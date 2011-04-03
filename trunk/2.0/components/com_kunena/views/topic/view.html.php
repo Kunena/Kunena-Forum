@@ -550,6 +550,7 @@ class KunenaViewTopic extends KunenaView {
 	}
 	function getMessageActions() {
 		$me = KunenaFactory::getUser();
+		$catid = $this->state->get('item.catid');
 
 		//Thankyou info and buttons
 		$this->message_thankyou = '';
@@ -560,21 +561,21 @@ class KunenaViewTopic extends KunenaView {
 				$this->thankyou[] = CKunenaLink::GetProfileLink($userid);
 			}
 			if($me->userid && !$thankyou->exists($me->userid) && $me->userid != $this->profile->userid) {
-				$this->message_thankyou = CKunenaLink::GetThankyouLink ( $this->topic->category_id, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');
+				$this->message_thankyou = CKunenaLink::GetThankyouLink ( $catid, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');
 			}
 		}
 		if ($this->config->reportmsg && KunenaFactory::getUser()->exists()) {
-			$this->message_report = CKunenaLink::GetReportMessageLink ( $this->category->id, $this->message->id, $this->getButton ( 'report', JText::_('COM_KUNENA_BUTTON_REPORT') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_REPORT') );
+			$this->message_report = CKunenaLink::GetReportMessageLink ( $catid, $this->message->id, $this->getButton ( 'report', JText::_('COM_KUNENA_BUTTON_REPORT') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_REPORT') );
 		}
 
 		$this->message_quickreply = $this->message_reply = $this->message_quote = '';
 		if ($this->topic->authorise('reply')) {
 			//user is allowed to reply/quote
 			if ($me->userid) {
-				$this->message_quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $this->topic->category_id, $this->message->id, $this->getButton ( 'reply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY') ), 'nofollow', 'kicon-button kbuttoncomm btn-left kqreply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY_LONG'), ' id="kreply'.$this->message->id.'"' );
+				$this->message_quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->message->id, $this->getButton ( 'reply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY') ), 'nofollow', 'kicon-button kbuttoncomm btn-left kqreply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY_LONG'), ' id="kreply'.$this->message->id.'"' );
 			}
-			$this->message_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $this->topic->category_id, $this->message->id, $this->getButton ( 'reply', JText::_('COM_KUNENA_BUTTON_REPLY') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_REPLY_LONG') );
-			$this->message_quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $this->topic->category_id, $this->message->id, $this->getButton ( 'quote', JText::_('COM_KUNENA_BUTTON_QUOTE') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_QUOTE_LONG') );
+			$this->message_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->message->id, $this->getButton ( 'reply', JText::_('COM_KUNENA_BUTTON_REPLY') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_REPLY_LONG') );
+			$this->message_quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $this->message->id, $this->getButton ( 'quote', JText::_('COM_KUNENA_BUTTON_QUOTE') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_QUOTE_LONG') );
 		} else {
 			//user is not allowed to write a post
 			if ($this->topic->locked) {
@@ -589,25 +590,25 @@ class KunenaViewTopic extends KunenaView {
 		$this->message_delete = $this->message_undelete = $this->message_permdelete = $this->message_publish = '';
 		if ($me->isModerator ( $this->topic->category_id )) {
 			unset($this->message_closed);
-			$this->message_edit = CKunenaLink::GetTopicPostReplyLink ( 'edit', $this->topic->category_id, $this->message->id, $this->getButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
-			$this->message_moderate = CKunenaLink::GetTopicPostReplyLink ( 'moderate', $this->topic->category_id, $this->message->id, $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE_LONG') );
+			$this->message_edit = CKunenaLink::GetTopicPostReplyLink ( 'edit', $catid, $this->message->id, $this->getButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
+			$this->message_moderate = CKunenaLink::GetTopicPostReplyLink ( 'moderate', $catid, $this->message->id, $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE_LONG') );
 			if ($this->message->hold == 1) {
-				$this->message_publish = CKunenaLink::GetTopicPostLink ( 'approve', $this->topic->category_id, $this->message->id, $this->getButton ( 'approve', JText::_('COM_KUNENA_BUTTON_APPROVE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_APPROVE_LONG') );
+				$this->message_publish = CKunenaLink::GetTopicPostLink ( 'approve', $catid, $this->message->id, $this->getButton ( 'approve', JText::_('COM_KUNENA_BUTTON_APPROVE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_APPROVE_LONG') );
 			}
 			if ($this->message->hold == 2 || $this->message->hold == 3) {
-				$this->message_undelete = CKunenaLink::GetTopicPostLink ( 'undelete', $this->topic->category_id, $this->message->id, $this->getButton ( 'undelete', JText::_('COM_KUNENA_BUTTON_UNDELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG') );
-				$this->message_permdelete = CKunenaLink::GetTopicPostLink ( 'permdelete', $this->topic->category_id, $this->message->id, $this->getButton ( 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG') );
+				$this->message_undelete = CKunenaLink::GetTopicPostLink ( 'undelete', $catid, $this->message->id, $this->getButton ( 'undelete', JText::_('COM_KUNENA_BUTTON_UNDELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG') );
+				$this->message_permdelete = CKunenaLink::GetTopicPostLink ( 'permdelete', $catid, $this->message->id, $this->getButton ( 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG') );
 			} else {
-				$this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->topic->category_id, $this->message->id, $this->getButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+				$this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->message->id, $this->getButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 			}
 		}
 		else if ($this->config->useredit && $me->userid && $me->userid == $this->profile->userid) {
 			if ($this->message->authorise('edit')) {
-				$this->message_edit = CKunenaLink::GetTopicPostReplyLink ( 'edit', $this->topic->category_id, $this->message->id, $this->getButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
+				$this->message_edit = CKunenaLink::GetTopicPostReplyLink ( 'edit', $catid, $this->message->id, $this->getButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
 				if ( $this->config->userdeletetmessage == '1' ) {
-					if ($this->replynum == $this->replycnt) $this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->topic->category_id, $this->message->id, $this->getButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+					if ($this->replynum == $this->replycnt) $this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->message->id, $this->getButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 				} else if ( $this->config->userdeletetmessage == '2' ) {
-					$this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->topic->category_id, $this->message->id, $this->getButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+					$this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->message->id, $this->getButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 				}
 			}
 		}
@@ -630,7 +631,7 @@ class KunenaViewTopic extends KunenaView {
 
 		// TODO: add context (options, template) to caching
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$cachekey = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.{$this->message->id}.{$this->message->modified_time}";
+		$cachekey = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 
 		$contents = $cache->get($cachekey, $cachegroup);

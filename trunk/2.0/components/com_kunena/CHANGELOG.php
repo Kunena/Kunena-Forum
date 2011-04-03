@@ -48,6 +48,9 @@ Kunena 2.0.0-DEV
 # [#23443] KunenaViewCategory::getLastPostLink() has wrong subject
 # [#23443] KunenaViewCategory::displayRows(): forgets to reset category link
 # [#23466] KunenaViewTopic::DisplayCreate(): show only subcategories and category channels in category selection
+# [#23466] KunenaControllerTopic: return to current category after action (not into topic category)
+# [#23466] CKunenaLink: fix URLs pointing to wrong category
+# [#23466] KunenaViewTopic::getMessageActions(): fix URLs pointing to wrong category
 
 2-April-2011 Matias
 # [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text

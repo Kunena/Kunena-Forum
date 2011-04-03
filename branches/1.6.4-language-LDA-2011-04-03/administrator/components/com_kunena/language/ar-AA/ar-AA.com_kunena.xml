@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Arabic</name>
 	<tag>ar-AA</tag>
-	<creationDate>2011-1-17</creationDate>
-	<version>1.6.3</version>
-	<build>4344</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>عبدالله بازهير baazza</author>
 	<authorEmail>baazza@live.nl</authorEmail>
 	<authorUrl>http://www.baazza.3web.me</authorUrl>
@@ -19,5 +19,6 @@
 		<filename>ar-AA.com_kunena.install.ini</filename>
 		<filename>ar-AA.com_kunena.menu.ini</filename>
 		<filename>ar-AA.com_kunena.sys.ini</filename>
+		<filename>ar-AA.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

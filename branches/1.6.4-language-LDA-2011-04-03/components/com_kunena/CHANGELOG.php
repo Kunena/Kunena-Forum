@@ -32,6 +32,12 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+03-April-2011 LDA
+^ [#24847] update es-ES (thanks Kunena Spanish Team)
+^ [#24847] update ar-AA (thanks baazza)
+^ [#24847] update ru-RU (thanks Zarkos)
+^ [#24847] update lt-LT (thanks joomla123.lt)
+
 29-March-2011 Matias
 # [#24991] Birthdate in kunena profile is different under Joomla 1.6 and Joomla 1.5
 

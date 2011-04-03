@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<install version="1.5" type="plugin" group="search" method="upgrade">
+	<name>Search - Kunena</name>
+	<author>Kunena Team</author>
+	<version>1.6.4</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<copyright>(c)2010-2011 Kunena Team. All rights reserved.</copyright>
+	<authorEmail>admin@kunena.org</authorEmail>
+	<authorUrl>www.kunena.org</authorUrl>
+	<license>GNU/GPL</license>
+	<description>PLG_KUNENASEARCH_DESCRIPTION</description>
+	<files>
+		<filename plugin="kunenasearch">kunenasearch.php</filename>
+	</files>
+	<languages folder="languages">
+		<language tag="de-DE">de-DE.plg_search_kunenasearch.ini</language>
+		<language tag="en-GB">en-GB.plg_search_kunenasearch.ini</language>
+		<language tag="fi-FI">fi-FI.plg_search_kunenasearch.ini</language>
+		<language tag="fr-FR">fr-FR.plg_search_kunenasearch.ini</language>
+		<language tag="nb-NO">nb-NO.plg_search_kunenasearch.ini</language>
+		<language tag="ru-RU">ru-RU.plg_search_kunenasearch.ini</language>
+	</languages>
+
+	<params>
+		<param name="search_limit" type="text" size="5" default="50" label="PLG_KUNENASEARCH_PARAM_SEARCH_LIMIT" description="PLG_KUNENASEARCH_PARAM_SEARCH_LIMIT_DESC"/>
+		<param name="content_limit" type="text" size="5" default="40" label="PLG_KUNENASEARCH_PARAM_CONTENT_LIMIT" description="PLG_KUNENASEARCH_PARAM_CONTENT_LIMIT_DESC"/>
+		<param name="show_bbcode" type="radio" default="1" label="PLG_KUNENASEARCH_PARAM_SHOW_BBCODE" description="PLG_KUNENASEARCH_PARAM_SHOW_BBCODE_DESC">
+			<option value="0">PLG_KUNENASEARCH_OPTION_NO</option>
+			<option value="1">PLG_KUNENASEARCH_OPTION_YES</option>
+		</param>
+	</params>
+	
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="search_limit" type="text" size="5" default="50" label="PLG_KUNENASEARCH_PARAM_SEARCH_LIMIT" description="PLG_KUNENASEARCH_PARAM_SEARCH_LIMIT_DESC"/>
+				<field name="content_limit" type="text" size="5" default="40" label="PLG_KUNENASEARCH_PARAM_CONTENT_LIMIT" description="PLG_KUNENASEARCH_PARAM_CONTENT_LIMIT_DESC"/>
+				<field name="show_bbcode" type="radio" default="1" label="PLG_KUNENASEARCH_PARAM_SHOW_BBCODE" description="PLG_KUNENASEARCH_PARAM_SHOW_BBCODE_DESC">
+					<option value="0">PLG_KUNENASEARCH_OPTION_NO</option>
+					<option value="1">PLG_KUNENASEARCH_OPTION_YES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</install>

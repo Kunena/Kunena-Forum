@@ -333,6 +333,7 @@ class KunenaForumCategory extends JObject {
 	}
 
 	public function bind($data, $ignore = array()) {
+		if (is_array($data['channels'])) $data['channels'] = implode(',', $data['channels']);
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties ( $data );
 	}

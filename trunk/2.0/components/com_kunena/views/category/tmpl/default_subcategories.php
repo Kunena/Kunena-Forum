@@ -10,4 +10,4 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-include dirname ( __FILE__ ) . '/list_clean.php';
+include dirname ( __FILE__ ) . '/list_embed.php';

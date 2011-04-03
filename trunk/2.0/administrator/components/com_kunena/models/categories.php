@@ -238,16 +238,24 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$cat_params['ordering'] = 'ordering';
 		$cat_params['toplevel'] = JText::_('COM_KUNENA_TOPLEVEL');
 		$cat_params['sections'] = 1;
-		$cat_params['direction'] = 1;
 		$cat_params['unpublished'] = 1;
 		$cat_params['catid'] = $category->id;
 		$cat_params['action'] = 'admin';
+
+		$channels_params = array();
+		$channels_params['catid'] = $category->id;
+		$channels_params['action'] = 'admin';
+		$channels_options = array();
+		$channels_options [] = JHTML::_ ( 'select.option', 'THIS', JText::_ ( 'COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS' ) );
+		$channels_options [] = JHTML::_ ( 'select.option', 'CHILDREN', JText::_ ( 'COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN' ) );
+		if (empty($category->channels)) $category->channels = 'THIS';
 
 		$lists = array ();
 		$lists ['access'] = KunenaFactory::getAccessControl()->getAccessLevelsList($category);
 		$lists ['pub_access'] = $accessLists ['pub_access'];
 		$lists ['admin_access'] = $accessLists ['admin_access'];
 		$lists ['categories'] = JHTML::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
+		$lists ['channels'] = JHTML::_('kunenaforum.categorylist', 'channels[]', 0, $channels_options, $channels_params, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
 		$lists ['published'] = JHTML::_ ( 'select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published );
 		$lists ['pub_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->pub_recurse );
 		$lists ['admin_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->admin_recurse );

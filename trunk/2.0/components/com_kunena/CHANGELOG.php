@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+4-April-2011 Matias
++ [#23466] Add configuration option for category channels
+
 3-April-2011 Matias
 + [#25415] Tableless template: Implement ban layouts into User view
 ^ [#25415] Rename *-clean.php to *-embed.php

@@ -158,7 +158,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 			}
 			// Only global admin can change access control and class_sfx (others are inherited from parent)
 			if (!$me->isAdmin ()) {
-				$access = array('accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'class_sfx');
+				$access = array('accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'channels', 'class_sfx');
 				if (!$category->exists() || intval ($post ['parent_id']) != $category->parent_id) {
 					// If category didn't exist or is moved, copy access and class_sfx from parent
 					$parent = KunenaForumCategoryHelper::get (intval ( $post ['parent_id']));

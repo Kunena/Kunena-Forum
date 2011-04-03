@@ -20,7 +20,7 @@ $j=0;
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : ''; ?> kblock-ban">
+			<table class="kblock-ban">
 				<thead>
 					<tr class="ksth">
 						<th class="kid"> # </th>

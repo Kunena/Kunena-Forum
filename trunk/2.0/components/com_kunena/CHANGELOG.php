@@ -31,6 +31,14 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+3-April-2011 Matias
++ [#25415] Tableless template: Implement ban layouts into User view
+^ [#25415] Rename *-clean.php to *-embed.php
+# [#22569] Add function KunenaView::row() to fetch odd/even information
++ [#25415] Tableless template: Implement Topics/Posts
+# [#25415] Tableless template: general CSS fixes and additions
+# [#22569] KunenaForumCategory::newTopic(): use default category channel instead of current category (thanks Janich)
+
 2-April-2011 Matias
 # [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text
 + [#22569] KunenaForum::display(): use current Kunena template instead of default one

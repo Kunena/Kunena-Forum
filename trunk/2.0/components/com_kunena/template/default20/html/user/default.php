@@ -9,6 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+JHTML::_('behavior.tooltip');
 ?>
 	<div id="kunena">
 	<?php

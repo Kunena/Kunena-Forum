@@ -171,7 +171,7 @@ class KunenaViewUser extends KunenaView {
 			'limitstart' => 0,
 			'filter_order_Dir' => 'desc',
 		);
-		KunenaForum::display('topics', 'posts', 'clean', $params);
+		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
 	function displayUserPosts() {
@@ -186,7 +186,7 @@ class KunenaViewUser extends KunenaView {
 			'limitstart' => 0,
 			'filter_order_Dir' => 'desc',
 		);
-		KunenaForum::display('topics', 'posts', 'clean', $params);
+		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
 	function displayGotThankYou() {
@@ -201,7 +201,7 @@ class KunenaViewUser extends KunenaView {
 			'limitstart' => 0,
 			'filter_order_Dir' => 'desc',
 		);
-		KunenaForum::display('topics', 'posts', 'clean', $params);
+		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
 	function displaySaidThankYou() {
@@ -216,7 +216,7 @@ class KunenaViewUser extends KunenaView {
 			'limitstart' => 0,
 			'filter_order_Dir' => 'desc',
 		);
-		KunenaForum::display('topics', 'posts', 'clean', $params);
+		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
 	function displayFavorites() {
@@ -231,7 +231,7 @@ class KunenaViewUser extends KunenaView {
 			'limitstart' => 0,
 			'filter_order_Dir' => 'desc',
 		);
-		KunenaForum::display('topics', 'user', 'clean', $params);
+		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
 	function displaySubscriptions() {
@@ -247,7 +247,7 @@ class KunenaViewUser extends KunenaView {
 			'limitstart' => 0,
 			'filter_order_Dir' => 'desc',
 		);
-		KunenaForum::display('topics', 'user', 'clean', $params);
+		KunenaForum::display('topics', 'user', 'embed', $params);
 	}
 
 	function displayCategoriesSubscriptions() {
@@ -259,7 +259,7 @@ class KunenaViewUser extends KunenaView {
 			'limitstart' => 0,
 			'filter_order_Dir' => 'desc',
 		);
-		//KunenaForum::display('category', 'user', 'clean', $params);
+		//KunenaForum::display('category', 'user', 'embed', $params);
 	}
 
 	function displayBanUser() {

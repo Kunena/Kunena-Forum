@@ -32,7 +32,7 @@ $this->getModulePosition ( 'kunena_announcement' );
 </table>
 <!-- F: List Actions -->
 
-<?php echo $this->loadTemplate('clean'); ?>
+<?php echo $this->loadTemplate('embed'); ?>
 
 <!-- B: List Actions -->
 <table class="klist-actions">

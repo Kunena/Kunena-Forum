@@ -13,21 +13,19 @@ defined ( '_JEXEC' ) or die ();
 $j=count($this->banhistory);
 ?>
 
-<div class="kblock banhistory">
-	<div class="kheader">
-		<h2><span><?php echo JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name)); ?></span></h2>
-	</div>
-	<div class="kcontainer">
+<div class="ksection">
+	<h2 class="kheader"><a rel="kbanhistory-detailsbox"><?php echo JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name)); ?></a></h2>
+	<div class="kdetailsbox kbanhistory" id="kbanhistory-detailsbox">
 		<div class="kbody">
-			<table class="kblock-ban">
+			<table class="kblocktable kbanhistory">
 				<thead>
 					<tr class="ksth">
-						<th class="kid"> # </th>
-						<th class="kbanfrom"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></th>
-						<th class="kbanstart"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></th>
-						<th class="kbanexpire"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></th>
-						<th class="kbancreate"><?php echo JText::_('COM_KUNENA_BAN_CREATEDBY'); ?></th>
-						<th class="kbanmodify"><?php echo JText::_('COM_KUNENA_BAN_MODIFIEDBY'); ?></th>
+						<th class="kcol-first kid"> # </th>
+						<th class="kcol-mid kbanfrom"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></th>
+						<th class="kcol-mid kbanstart"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></th>
+						<th class="kcol-mid kbanexpire"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></th>
+						<th class="kcol-mid kbancreate"><?php echo JText::_('COM_KUNENA_BAN_CREATEDBY'); ?></th>
+						<th class="kcol-last kbanmodify"><?php echo JText::_('COM_KUNENA_BAN_MODIFIEDBY'); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,7 +49,7 @@ $j=count($this->banhistory);
 					<td class="kcol-mid kbancreate">
 						<span><?php echo CKunenaLink::GetProfileLink ( intval($userban->created_by) ); ?></span>
 					</td>
-					<td class="kcol-mid kbanmodify">
+					<td class="kcol-last kbanmodify">
 						<?php if ( $userban->modified_by && $userban->modified_time) { ?>
 						<span>
 							<?php echo CKunenaLink::GetProfileLink ( intval($userban->modified_by) ); ?>

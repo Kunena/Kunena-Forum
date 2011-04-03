@@ -18,6 +18,8 @@ kimport ('kunena.date');
  * Kunena View Class
  */
 class KunenaView extends JView {
+	protected $_row = 0;
+
 	function displayAll() {
 		$this->app = JFactory::getApplication ();
 		$this->config = KunenaFactory::getConfig();
@@ -232,6 +234,11 @@ class KunenaView extends JView {
 		if (!$this->state->get('embedded')) {
 			$this->document->setTitle ( KunenaFactory::getConfig()->board_title .' :: '. strip_tags($title) );
 		}
+	}
+
+	function row($start=false) {
+		if ($start) $this->_row = 0;
+		return ++$this->_row & 1 ? 'odd' : 'even';
 	}
 
 	// Caching

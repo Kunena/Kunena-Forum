@@ -113,7 +113,7 @@ class KunenaForumCategory extends JObject {
 
 		$user = KunenaUser::getInstance($user);
 		$message = new KunenaForumMessage();
-		$message->catid = $this->id;
+		$message->catid = reset($this->getChannels())->id;
 		$message->name = $user->getName('');
 		$message->userid = $user->userid;
 		$message->ip = $_SERVER ["REMOTE_ADDR"];

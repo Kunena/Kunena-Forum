@@ -67,13 +67,16 @@ table {border-collapse: collapse;}
 #kunena tr.krow2 td {
 	background-color: #FFFFFF;
 }
+#kunena th.kcol-first,
 #kunena td.kcol-first {
 	border-bottom-color: #BFC3C6;
 }
+#kunena th.kcol-mid,
 #kunena td.kcol-mid {
 	border-bottom-color: #BFC3C6;
 	border-left-color: #BFC3C6;
 }
+#kunena th.kcol-last,
 #kunena td.kcol-last {
 	border-bottom-color: #BFC3C6;
 	border-left-color: #BFC3C6;
@@ -149,15 +152,13 @@ table {border-collapse: collapse;}
 #kunena .kposts-row table,
 #kunena .ktopics-row table,
 #kunena .ktags-row table,
-#kunena .kcategory-row table,
-#kunena .krecposts-row table {
+#kunena .kcategory-row table {
 	border-top: 1px solid #ccc;
 }
 #kunena .kcategories-row table caption,
 #kunena .kposts-row table caption,
 #kunena .ktopics-row table caption,
-#kunena .ktags-row table caption,
-#kunena .krecposts-row table caption {
+#kunena .ktags-row table caption {
 	font-size: .001em;
 }
 #kunena td.kcategory-icon {
@@ -166,25 +167,23 @@ table {border-collapse: collapse;}
 #kunena .ktopic-title h3,
 #kunena .kpost-title h3,
 #kunena .kcategory-title h3,
-#kunena .krecposts-body h3,
+#kunena .kposts-body h3,
 #kunena .ktag-title h3 {
 	font-weight: bold;
 }
 #kunena .ktopic-details,
 #kunena .ktopic-category,
-#kunena li.krecposts-det,
-#kunena .krecposts-title,
-#kunena .krecposts-title,
-#kunena .krecposts-sect-title,
-#kunena .krecposts-cats-title,
-#kunena .krecposts-topic,
-#kunena .krecposts-sect,
-#kunena .krecposts-cats,
+#kunena li.kposts-det,
+#kunena .kposts-title,
+#kunena .kposts-sect-title,
+#kunena .kposts-topic,
+#kunena .kposts-sect,
+#kunena .kposts-cats,
 #kunena li.kcategory-smdetails h4,
 #kunena li.kpost-smdetails h4,
 #kunena li.ktopic-smdetails h4,
 #kunena li.ktag-smdetails h4,
-#kunena li.krecposts-smdetails h4 {
+#kunena li.kposts-smdetails h4 {
 	font-size: 11px;
 }
 #kunena .ktopic-category{
@@ -213,8 +212,8 @@ table {border-collapse: collapse;}
 #kunena td.kcategory-views,
 #kunena td.ktopic-views,
 #kunena td.kcategory-posts,
-#kunena td.krecposts-replies,
-#kunena td.krecposts-views {
+#kunena td.kposts-replies,
+#kunena td.kposts-views {
 	border-left: 1px solid #ccc;
 	color: #999;
 	font-size: 20px;
@@ -240,9 +239,9 @@ table {border-collapse: collapse;}
 #kunena td.kcategory-views span,
 #kunena td.ktopic-views span,
 #kunena td.kcategory-posts span,
-#kunena td.krecposts-topics span,
-#kunena td.krecposts-replies span,
-#kunena td.krecposts-views span {
+#kunena td.kposts-topics span,
+#kunena td.kposts-replies span,
+#kunena td.kposts-views span {
 	font-size: 14px;
 }
 #kunena td.kcategory-subs span,
@@ -252,15 +251,14 @@ table {border-collapse: collapse;}
 #kunena .kcategories-row table td.kcategory-lastpost,
 #kunena .kposts-row table td.kpost-author,
 #kunena .ktopics-row table td.ktopic-lastpost,
-#kunena .ktags-row table td.ktag-lastpost,
-#kunena .krecposts-row table td.krecposts-lastpost {
+#kunena .ktags-row table td.ktag-lastpost {
 	border-left: 1px solid #ccc;
 }
 #kunena li.kcategory-smavatar img,
 #kunena li.kpost-smavatar img,
 #kunena li.ktopic-smavatar img,
 #kunena li.ktag-smavatar img,
-#kunena li.krecposts-smavatar img {
+#kunena li.kposts-smavatar img {
 	border: 1px solid #ccc;	
 }
 #kunena .krow-odd {
@@ -350,8 +348,8 @@ table {border-collapse: collapse;}
 #kunena .kcategory-lastpost li,
 #kunena .ktopic-lastpost li,
 #kunena .ktag-lastpost li,
-#kunena .krecposts-lastpost li,
-#kunena .krecposts-lastpost li a {
+#kunena .kposts-lastpost li,
+#kunena .kposts-lastpost li a {
 	font-size: 10px;
 }
 /*---------- Topic Tags ------------- */
@@ -362,24 +360,24 @@ table {border-collapse: collapse;}
 	font-size: 11px;
 }
 #kunena .ktopic-tags li a,
-#kunena .krecposts-sect a,
-#kunena .krecposts-cats a {
+#kunena .kposts-sect a,
+#kunena .kposts-cats a {
 	color: #5388B4;
 }
 #kunena .ktopic-tags li a,
-#kunena .krecposts-sect a,
-#kunena .krecposts-cats a {
+#kunena .kposts-sect a,
+#kunena .kposts-cats a {
 	text-decoration: none;
 }
 #kunena .ktopic-tags li a:hover,
-#kunena .krecposts-sect a:hover,
-#kunena .krecposts-cats a:hover {
+#kunena .kposts-sect a:hover,
+#kunena .kposts-cats a:hover {
 	text-decoration: underline;
 }
 #kunena .ktopic-tags-title,
-#kunena .krecposts-title,
-#kunena .krecposts-sect-title,
-#kunena .krecposts-cats-title {
+#kunena .kposts-title,
+#kunena .kposts-sect-title,
+#kunena .kposts-cats-title {
 	font-weight: bold;
 	color: #333;
 }
@@ -452,6 +450,11 @@ table {border-collapse: collapse;}
 /*#kunena .kposts-row {
 	border-bottom: 1px solid #BCBCBC;
 }*/
+
+#kunena .kpost-body {
+	width: 40%;
+	border-right: 1px solid #BCBCBC;
+}
 
 /* User details */
 

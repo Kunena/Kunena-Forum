@@ -11,8 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 		<div class="kuserprofile">
-			<h2 class="kheader"><a href="#" rel="ksection-detailsbox"><?php echo JText::_('COM_KUNENA_USER_PROFILE').' '.$this->escape($this->name) ?></a></h2>
-			<div class="kprofilebox" id="ksection-detailsbox">
+			<h2 class="kheader"><a href="#" rel="kmod-detailsbox"><?php echo JText::_('COM_KUNENA_USER_PROFILE').' '.$this->escape($this->name) ?></a></h2>
+			<div class="kdetailsbox kmod-userbox" id="kmod-detailsbox">
 				<?php if ($this->avatarlink) : ?>
 				<div id="kprofile-leftcol">
 					<div class="kavatar-lg">
@@ -44,10 +44,11 @@ defined ( '_JEXEC' ) or die ();
 							<li><?php echo $this->displayKarma(); ?></li>
 							<?php if (!empty($this->pmLink)) : ?><li><?php echo $this->pmLink ?></li><?php endif ?>
 						</ul>
-
+						<?php if( !empty($this->personalText) ) : ?>
 						<ul class="kuserprofile-about">
-							<?php if( !empty($this->personalText) ) : ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME') ?>:</strong> <?php echo KunenaHtmlParser::parseText($this->personalText) ?></li><?php endif ?>
+							<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME') ?>:</strong> <?php echo KunenaHtmlParser::parseText($this->personalText) ?></li>
 						</ul>
+						<?php endif ?>
 					</div>
 					<div class="clrline"></div>
 					<div id="kprofile-rightcoltop">
@@ -132,7 +133,7 @@ defined ( '_JEXEC' ) or die ();
 						<?php if ($this->config->allowsubscriptions) :?>
 						<dt class="closed" title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
 						<dd style="display: none;">
-							<?php $this->displayCategoriesSubscriptions(); ?>
+							<?php //$this->displayCategoriesSubscriptions(); ?>
 							<?php $this->displaySubscriptions(); ?>
 						</dd>
 						<?php endif; ?>

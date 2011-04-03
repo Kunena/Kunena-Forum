@@ -308,22 +308,42 @@ class KunenaViewTopics extends KunenaView {
 	function displayPostRows() {
 		$lasttopic = NULL;
 		$this->position = 0;
+
 		foreach ( $this->messages as $this->message ) {
-			if (!isset($this->topics[$this->message->thread])) {
-				// TODO: INTERNAL ERROR
-				return;
-			}
-			$this->topic = $this->topics[$this->message->thread];
-			$this->category = $this->topic->getCategory();
 			$this->position++;
-			$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
-			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
-			$this->pages = ceil ( $this->topic->posts / $this->config->messages_per_page );
-			if ($this->config->avataroncat) {
-				$this->topic->avatar = KunenaFactory::getUser($this->message->userid)->getAvatarImage('klist-avatar', 'list');
+			$this->topic = $this->message->getTopic();
+			$this->category = $this->topic->getCategory();
+			$usertype = $this->me->getType($this->category->id, true);
+
+			// TODO: add context (options, template) to caching
+			$this->cache = true;
+			$cache = JFactory::getCache('com_kunena', 'output');
+			$cachekey = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
+			$cachegroup = 'com_kunena.posts';
+
+			$contents = $cache->get($cachekey, $cachegroup);
+			if (!$contents) {
+				$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
+				$this->postAuthor = KunenaFactory::getUser($this->message->userid);
+				$this->firstPostAuthor = $this->topic->getfirstPostAuthor();
+				$this->firstPostTime = $this->topic->last_post_time;
+				$this->firstUserName = $this->topic->first_post_guest_name;
+				$this->keywords = $this->topic->getKeywords(false, ', ');
+				$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
+				$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
+				$this->pages = ceil ( $this->topic->getTotal() / $this->config->messages_per_page );
+				if ($this->config->avataroncat) {
+					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
+				}
+				$contents = $this->loadTemplate('row');
+				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
+				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
-			$this->spacing = 0;
-			echo $this->loadTemplate('row');
+			if ($usertype != 'guest') {
+				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
+			}
+			echo $contents;
+			$lasttopic = $this->topic;
 		}
 	}
 

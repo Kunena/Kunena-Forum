@@ -30,6 +30,6 @@ defined ( '_JEXEC' ) or die ();
 		<?php if ($this->topicActions) : ?>
 		<div id="ksection-modbox">
 			<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="kinputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
-			<input type="checkbox" value="0" name="" class="kmoderate-topic-checkall">
+			<input type="checkbox" value="0" name="" class="kmoderate-topic-checkall" />
 		</div>
 		<?php endif ?>

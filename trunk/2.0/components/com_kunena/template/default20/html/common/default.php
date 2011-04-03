@@ -21,5 +21,6 @@ defined ( '_JEXEC' ) or die ();
 					echo KunenaHtmlParser::parseBBCode($this->body);
 				endif; ?>
 				</div>
+				<div class="clr"></div>
 			</div>
 		</div>

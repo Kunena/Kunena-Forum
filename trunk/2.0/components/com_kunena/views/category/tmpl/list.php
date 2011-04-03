@@ -43,7 +43,7 @@ $this->displayBreadcrumb ();
 
 <?php
 if (count ( $this->categories )) {
-	echo $this->loadTemplate('clean');
+	echo $this->loadTemplate('embed');
 } else {
 	$this->displayInfoMessage ();
 }

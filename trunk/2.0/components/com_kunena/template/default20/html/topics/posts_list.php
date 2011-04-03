@@ -11,21 +11,21 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 		<div class="ksection">
-			<h2 class="kheader"><a title="Recent Posts" rel="krecposts-detailsbox">Recent Posts</a></h2>
-			<div class="kdetailsbox krec-posts" id="krecposts-detailsbox">
+			<h2 class="kheader"><a title="Recent Posts" rel="kposts-detailsbox"><?php echo $this->headerText ?></a></h2>
+			<div class="kdetailsbox krec-posts" id="kposts-detailsbox">
 				<ul class="kposts">
-					<?php include 'posts_row.php' ?>
+					<?php if (empty($this->messages )) : ?>
+					<li class="ktopics-row krow-odd">
+						<?php echo JText::_('COM_KUNENA_NO_POSTS'); ?>
+					</li>
+					<?php else : $this->displayRows(); endif ?>
 				</ul>
 			</div>
 			<div class="clr"></div>
 		</div>
+		<?php if ($this->postActions) : ?>
 		<div id="ksection-modbox">
-			<select size="1" class="kinputbox" id="krecposts-select" name="do">
-				<option value="ModeratePosts">Moderate Posts</option>
-				<option value="DeleteTopics">Delete Selected</option>
-				<option value="MoveSelected">Move Selected</option>
-				<option value="PermDelSel">Permanently Delete Selected</option>
-				<option value="RestoreSel">Restore Selected</option>
-			</select>
+			<?php echo JHTML::_('select.genericlist', $this->postActions, 'task', 'class="kinputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
 			<input type="checkbox" value="0" name="" class="kmoderate-topic-checkall" />
 		</div>
+		<?php endif ?>

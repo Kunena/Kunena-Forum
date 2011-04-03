@@ -451,7 +451,7 @@ table {border-collapse: collapse;}
 	border-bottom: 1px solid #BCBCBC;
 }*/
 
-#kunena .kpost-body {
+#kunena .kposts-body {
 	width: 40%;
 	border-right: 1px solid #BCBCBC;
 }

@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 						<table summary="List of all forum categories with posts and replies of each">
 							<tbody>
 								<tr>
-									<td class="kpost-body">
+									<td class="kposts-body">
 										<ul>
 											<li class="kpost-title">
 												<h3><a href="#" title="View Topic Title"><?php echo $this->escape($this->message->subject) ?></a></h3>

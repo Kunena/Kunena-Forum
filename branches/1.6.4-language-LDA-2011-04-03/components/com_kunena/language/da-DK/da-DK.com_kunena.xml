@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id$ -->
+<!DOCTYPE install>
+<install version="1.5" client="site" type="language" method="upgrade">
+	<name>Dansk (Danish)</name>
+	<tag>da-DK</tag>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
+	<author>Lars Westermann</author>
+	<authoremail>Lars.Westermann@privat.dk</authoremail>
+	<authorUrl></authorUrl>
+	<copyright></copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>Danish language files for Kunena 1.6.3</description>
+	<files>
+		<filename>da-DK.com_kunena.ini</filename>
+		<filename>da-DK.com_kunena.tpl_default.ini</filename>
+		<filename>da-DK.com_kunena.tpl_example.ini</filename>
+	</files>
+</install>

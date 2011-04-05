@@ -36,7 +36,7 @@ class KunenaForumTopicUserHelper {
 			$topic = $topic->id;
 		}
 		$topic = intval ( $topic );
-		$user = KunenaUser::getInstance($user);
+		$user = KunenaUserHelper::get($user);
 
 		if ($topic < 1)
 			return new KunenaForumTopicUser (0, $user);
@@ -49,7 +49,7 @@ class KunenaForumTopicUserHelper {
 	}
 
 	static public function getTopics($ids = false, $user=null) {
-		$user = KunenaUser::getInstance($user);
+		$user = KunenaUserHelper::get($user);
 		if ($ids === false) {
 			return self::$_instances[$user->userid];
 		} elseif (is_array ($ids) ) {

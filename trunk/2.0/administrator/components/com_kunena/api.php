@@ -13,6 +13,9 @@ defined ( '_JEXEC' ) or die ();
 if (defined ( 'KUNENA_LOADED' ))
 	return;
 
+// Manually enable code profiling by setting value to 1
+define ( 'KUNENA_PROFILER', 0 );
+
 // Component name amd database prefix
 define ( 'KUNENA_COMPONENT_NAME', basename ( dirname ( __FILE__ ) ) );
 define ( 'KUNENA_NAME', substr ( KUNENA_COMPONENT_NAME, 4 ) );
@@ -30,6 +33,19 @@ define ( 'KPATH_MEDIA', JPATH_ROOT . DS . 'media' . DS . KUNENA_NAME );
 define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
 define ( 'KURL_SITE', JURI::Root () . KPATH_COMPONENT_RELATIVE . '/' );
 define ( 'KURL_MEDIA', JURI::Root () . 'media/' . KUNENA_NAME . '/' );
+
+// Give access to all Kunena tables
+jimport('joomla.database.table');
+JTable::addIncludePath(KPATH_ADMIN.'/libraries/tables');
+// Give access to all JHTML functions
+jimport('joomla.html.html');
+JHTML::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
+
+kimport('kunena.forum');
+kimport('kunena.factory');
+kimport('kunena.route');
+
+KUNENA_PROFILER ? kimport('kunena.profiler') : null;
 
 /**
  * Intelligent library importer.
@@ -60,17 +76,6 @@ function kimport($path)
 	}
 	return $res;
 }
-
-// Give access to all Kunena tables
-jimport('joomla.database.table');
-JTable::addIncludePath(KPATH_ADMIN.'/libraries/tables');
-// Give access to all JHTML functions
-jimport('joomla.html.html');
-JHTML::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
-
-kimport('kunena.forum');
-kimport('kunena.factory');
-kimport('kunena.route');
 
 // Kunena has been initialized
 define ( 'KUNENA_LOADED', 1 );

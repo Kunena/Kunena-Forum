@@ -13,6 +13,8 @@ defined ( '_JEXEC' ) or die ();
 jimport ( 'joomla.application.component.view' );
 kimport ( 'kunena.html.parser' );
 kimport ('kunena.date');
+kimport ('kunena.user.helper');
+kimport ('kunena.profiler');
 
 /**
  * Kunena View Class
@@ -20,10 +22,16 @@ kimport ('kunena.date');
 class KunenaView extends JView {
 	protected $_row = 0;
 
+	function __construct($config = array()){
+		parent::__construct($config);
+		$this->profiler = KunenaProfiler::instance('Kunena');
+		$this->me = KunenaUserHelper::getMyself();
+		$this->config = KunenaFactory::getConfig();
+		$this->template = KunenaFactory::getTemplate();
+	}
+
 	function displayAll() {
 		$this->app = JFactory::getApplication ();
-		$this->config = KunenaFactory::getConfig();
-		$this->me = KunenaFactory::getUser();
 		if ($this->config->board_offline) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), $this->me->isAdmin () ? 'notice' : 'error');
 		}
@@ -33,40 +41,45 @@ class KunenaView extends JView {
 
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
-		$this->template = KunenaFactory::getTemplate();
 		$this->template->initialize();
 
 		$this->displayLayout ();
 	}
 
 	function displayLayout($layout=null, $tpl = null) {
-		$this->config = KunenaFactory::getConfig();
-		$this->template = KunenaFactory::getTemplate();
-		$this->me = KunenaFactory::getUser();
+		if ($layout) $this->setLayout ($layout);
+		$viewName = ucfirst($this->getName ());
+		$layoutName = ucfirst($this->getLayout ());
+
+		KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
+
 		if (isset($this->common)) {
 			if ($this->config->board_offline && ! $this->me->isAdmin ()) {
 				// Forum is offline
 				$this->common->header = JText::_('COM_KUNENA_FORUM_IS_OFFLINE');
 				$this->common->body = $this->config->offline_message;
 				$this->common->display('default');
+				KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
 				return;
 			} elseif ($this->config->regonly && ! $this->me->exists()) {
 				// Forum is for registered users only
 				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body = JText::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');
+				KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
 				return;
 			}
 		}
 
-		if ($layout) $this->setLayout ($layout);
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		$layoutFunction = 'display'.ucfirst($this->getLayout ());
+		$layoutFunction = 'display'.$layoutName;
 		if (method_exists($this, $layoutFunction)) {
-			return $this->$layoutFunction ($tpl);
+			$contents = $this->$layoutFunction ($tpl);
 		} else {
-			return $this->display($tpl);
+			$contents = $this->display($tpl);
 		}
+		KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
+		return $contents;
 	}
 
 	function displayModulePosition($position) {
@@ -108,8 +121,15 @@ class KunenaView extends JView {
 		return $this->template->getClass($class, $class_sfx);
 	}
 
+	public function get($property, $default = null) {
+		KUNENA_PROFILER ? $this->profiler->start("model get{$property}") : null;
+		$result = parent::get($property, $default);
+		KUNENA_PROFILER ? $this->profiler->stop("model get{$property}") : null;
+		return $result;
+	}
+
 	function getTime() {
-		$time = JProfiler::getmicrotime() - $this->starttime;
+		$time = $this->profiler->getTime('Total Time');
 		return sprintf('%0.3f', $time);
 	}
 

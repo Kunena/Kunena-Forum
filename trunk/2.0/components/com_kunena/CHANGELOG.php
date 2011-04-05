@@ -31,8 +31,22 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+5-April-2011 Matias
+^ [#23442] Optimize for speed: Category object creation, authentication
+# [#23443] KunenaForumCategory::getModerators() returns wrong values
+^ [#23442] Optimize for speed: Topic object creation, authentication
+^ [#23442] Optimize for speed: Use our notice/warning handler only in debug
+
 4-April-2011 Matias
 + [#23466] Add configuration option for category channels
++ [#23442] Added KunenaProfiler class
++ [#23442] Added profiling information into page (if KUNENA_PROFILING = 1)
+# [#23443] Use more reliable page creation time calculation
++ [#23442] Add profiling into many functions (router, categories, views..) to find bottlenecks
+^ [#23442] Optimize for speed: Make routing as fast as possible
+^ [#23442] Optimize for speed: Make user object creation and instance grabbing fast
++ [#23442] Added KunenaUserHelper::getMyself() function
+^ [#23442] Optimize for speed: Remove half of KunenaUserHelper::get() calls
 
 3-April-2011 Matias
 + [#25415] Tableless template: Implement ban layouts into User view

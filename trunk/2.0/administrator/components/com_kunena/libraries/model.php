@@ -48,7 +48,8 @@ class KunenaModel extends JModel {
 			$this->__state_set = true;
 		}
 
-		return $property === null ? $this->state : $this->state->get($property, $default);
+		$value = $property === null ? $this->state : $this->state->get($property, $default);
+		return $value;
 	}
 
 	/**

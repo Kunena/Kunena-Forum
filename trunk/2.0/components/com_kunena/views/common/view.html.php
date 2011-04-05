@@ -40,9 +40,8 @@ class KunenaViewCommon extends KunenaView {
 			$cache = JFactory::getCache('com_kunena', 'output');
 			if ($cache->start($this->template->name, 'com_kunena.view.common.announcement')) return;
 
-			$me = KunenaFactory::getUser();
 			// User needs to be global moderator to edit announcements
-			if ($me->exists() && $me->isModerator('global')) {
+			if ($this->me->exists() && $this->me->isModerator('global')) {
 				$this->canEdit = true;
 			} else {
 				$this->canEdit = false;
@@ -73,9 +72,8 @@ class KunenaViewCommon extends KunenaView {
 
 	function displayForumJump($tpl = null) {
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$user = KunenaFactory::getUser ();
 		// TODO: we can improve this (not by user)
-		if ($cache->start("{$this->template->name}.{$user->userid}.{$this->catid}", 'com_kunena.view.common.forumjump')) return;
+		if ($cache->start("{$this->template->name}.{$this->me->userid}.{$this->catid}", 'com_kunena.view.common.forumjump')) return;
 
 		$options = array ();
 		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
@@ -91,7 +89,6 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayBreadcrumb($tpl = null) {
-		$user = KunenaFactory::getUser ();
 		$catid = JRequest::getInt ( 'catid', 0 );
 		$id = JRequest::getInt ( 'id', 0 );
 		$view = JRequest::getWord ( 'view', 'default' );
@@ -155,12 +152,10 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayWhosonline($tpl = null) {
-		$moderator = (int) KunenaFactory::getUser()->isModerator();
 		$cache = JFactory::getCache('com_kunena', 'output');
-		if ($cache->start("{$this->template->name}.{$moderator}", "com_kunena.view.common.whosonline")) return;
+		if ($cache->start("{$this->template->name}.{$this->me->isModerator()}", "com_kunena.view.common.whosonline")) return;
 
 		$this->my = JFactory::getUser();
-		$this->me = KunenaFactory::getUser();
 
 		$users = KunenaUserHelper::getOnlineUsers();
 		KunenaUserHelper::loadUsers(array_keys($users));
@@ -254,8 +249,6 @@ class KunenaViewCommon extends KunenaView {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$token = JUtility::getToken();
 		if ($cache->start("{$this->template->name}.{$my->id}.$token", 'com_kunena.view.common.loginbox')) return;
-
-		$this->assign ( 'me', KunenaFactory::getUser ());
 
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 

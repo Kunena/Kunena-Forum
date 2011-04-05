@@ -38,9 +38,6 @@ class KunenaViewCategory extends KunenaView {
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
 
-		$this->me = KunenaFactory::getUser();
-		$this->config = KunenaFactory::getConfig();
-
 		$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 
 		// Is user allowed to post new topic?
@@ -107,9 +104,6 @@ class KunenaViewCategory extends KunenaView {
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
 
-		$this->me = KunenaFactory::getUser();
-		$this->config = KunenaFactory::getConfig();
-
 		if ($this->category->isSection()) {
 			if ($this->me->isAdmin(null)) {
 				$this->category_manage = CKunenaLink::GetHrefLink(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage&catid='.$this->category->id), $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES') ), $title = '', 'nofollow', 'kicon-button kbuttonmod btn-left', '', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES_LONG'));
@@ -137,9 +131,7 @@ class KunenaViewCategory extends KunenaView {
 	function displayUser($tpl = null) {
 		$this->Itemid = $this->get ( 'Itemid' );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
-		$this->me = KunenaFactory::getUser();
 		$this->app = JFactory::getApplication();
-		$this->config = KunenaFactory::getConfig();
 
 		$errors = $this->getErrors();
 		if ($errors) {
@@ -195,7 +187,6 @@ class KunenaViewCategory extends KunenaView {
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena',JPATH_ADMINISTRATOR);
 
-		$this->assignRef ( 'me', KunenaFactory::getUser() );
 		$this->assignRef ( 'options', $this->get ( 'AdminOptions' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'AdminModerators' ) );
 		$header = $this->category->exists() ? JText::sprintf('COM_KUNENA_CATEGORY_EDIT', $this->escape($this->category->name)) : JText::_('COM_KUNENA_CATEGORY_NEW');
@@ -377,9 +368,9 @@ class KunenaViewCategory extends KunenaView {
 
 		$contents = $cache->get($cachekey, $cachegroup);
 		if (!$contents) {
-			$this->categoryURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}") : '';
+			$this->categoryURL = KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}");
 			$this->categoryRssURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&format=feed") : '';
-			$this->moderators = $this->config->listcat_show_moderators ? $category->getModerators() : array();
+			$this->moderators = $this->config->listcat_show_moderators ? $category->getModerators(false) : array();
 			$this->subcategories = empty($this->categories [$catid]) ? array() : $this->categories [$catid];
 			$this->lastPost = $lastPost->last_post_id > 0;
 			if ($this->lastPost) {

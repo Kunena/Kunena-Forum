@@ -41,8 +41,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		}
 
 		$app = JFactory::getApplication ();
-		$config = KunenaFactory::getConfig ();
-		$me = KunenaUserHelper::get();
+		$this->config = KunenaFactory::getConfig ();
+		$this->me = KunenaUserHelper::get();
 
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
@@ -51,7 +51,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_list_limit", 'limit', 0, 'int' );
-		if ($value < 1) $value = $config->threads_per_page;
+		if ($value < 1) $value = $this->config->threads_per_page;
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );
@@ -69,8 +69,6 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 	public function getCategories() {
 		if ( $this->items === false ) {
 			$this->items = array();
-			$this->me = KunenaFactory::getUser();
-			$this->config = KunenaFactory::getConfig();
 			$catid = $this->getState ( 'item.id' );
 			$layout = $this->getState ( 'layout' );
 			$flat = false;
@@ -116,7 +114,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 				}
 
 				if ($this->config->listcat_show_moderators) {
-					$subcat->moderators = $subcat->getModerators ( false );
+					$subcat->moderators = $subcat->getModerators ( false, false );
 					$userlist += $subcat->moderators;
 				}
 
@@ -175,12 +173,10 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 	}
 
 	public function getMessageOrdering() {
-		$me = KunenaUserHelper::get();
-		if ($me->ordering != '0') {
-			$ordering = $me->ordering == '1' ? 'desc' : 'asc';
+		if ($this->me->ordering != '0') {
+			$ordering = $this->me->ordering == '1' ? 'desc' : 'asc';
 		} else {
-			$config = KunenaFactory::getConfig ();
-			$ordering = $config->default_sort == 'asc' ? 'asc' : 'desc';
+			$ordering = $this->config->default_sort == 'asc' ? 'asc' : 'desc';
 		}
 		if ($ordering != 'asc')
 			$ordering = 'desc';
@@ -194,10 +190,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			$limit = $this->getState ( 'list.limit');
 
 
-			$config = KunenaFactory::getConfig ();
 			$access = KunenaFactory::getAccessControl();
-			$me = KunenaUserHelper::get();
-			$hold = $access->getAllowedHold($me, $catid);
+			$hold = $access->getAllowedHold($this->me, $catid);
 			$params = array(
 				'orderby'=>'tt.ordering DESC, tt.last_post_time ' . strtoupper($this->getState ( 'list.direction')),
 				'hold'=>$hold,
@@ -219,12 +213,12 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 				KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
 				KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
 				$lastreadlist = array();
-				if ($config->shownew) {
+				if ($this->config->shownew) {
 					$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 				}
 
 				// Fetch last / new post positions when user can see unapproved or deleted posts
-				if (($lastpostlist || $lastreadlist) && $me->userid && $me->isModerator()) {
+				if (($lastpostlist || $lastreadlist) && $this->me->userid && $this->me->isModerator()) {
 					KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 				}
 
@@ -271,7 +265,6 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 
 	public function getModerators() {
 		$moderators = $this->getCategory()->getModerators(false);
-		if ( !empty($moderators) ) KunenaUserHelper::loadUsers($moderators);
 		return $moderators;
 	}
 }

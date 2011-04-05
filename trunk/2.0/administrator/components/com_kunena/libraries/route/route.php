@@ -12,13 +12,19 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.environment.uri' );
 kimport ('kunena.route.legacy');
+kimport ('kunena.user.herlper');
 jimport('joomla.html.parameter');
 
+KunenaRoute::initialize();
+
 abstract class KunenaRoute {
+	static $adminApp = false;
+	static $config = false;
 	static $menus = false;
 	static $menu = false;
 	static $default = false;
 	static $active = false;
+	static $home = false;
 	static $search = false;
 
 	static $childlist = false;
@@ -28,109 +34,131 @@ abstract class KunenaRoute {
 	static $urisSave = false;
 
 	public static function current($object = false) {
-		if (self::$menus === false) self::initialize();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$uri = self::prepare();
 		if (!$uri) return false;
 		if ($object) return $uri;
-		return $uri->getQuery ();
+		$result = $uri->getQuery ();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $result;
 	}
 
 	public static function getItemID($uri = null) {
-		if (JFactory::getApplication()->isAdmin()) {
+		if (self::$adminApp) {
 			// There are no itemids in administration
 			return 0;
 		}
-		if (self::$menus === false) self::initialize();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$uri = self::prepare($uri);
 		if (!$uri) return false;
 		if (!$uri->getVar('Itemid')) {
 			self::setItemID ( $uri );
 		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $uri->getVar('Itemid');
 	}
 
 	public static function _($uri = null, $xhtml = true, $ssl=0) {
-		if (JFactory::getApplication()->isAdmin()) {
+		if (self::$adminApp) {
 			// Use default routing in administration
 			return JRoute::_($uri, $xhtml, $ssl);
 		}
-		if (self::$menus === false) self::initialize();
-		$home = self::getHome(self::$active);
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
-		$key = ($home ? $home->id : 0) .'-'.(int)$xhtml.(int)$ssl. ($uri instanceof JURI ? $uri->toString () : (string) $uri);
+		$key = (self::$home ? self::$home->id : 0) .'-'.(int)$xhtml.(int)$ssl. ($uri instanceof JURI ? $uri->toString () : (string) $uri);
 		if (!$uri || (is_string($uri) && $uri[0]=='&')) {
 			$key = 'a'.(self::$active ? self::$active->id : '') . '-' . $key;
 		}
 		if (isset(self::$uris[$key])) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return self::$uris[$key];
 		}
 		$uri = self::prepare($uri);
-		if (!$uri) return false;
+		if (!$uri) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return false;
+		}
 		if (!$uri->getVar('Itemid')) {
 			self::setItemID ( $uri );
 		}
 
 		$fragment = $uri->getFragment();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'(t)') : null;
 		self::$uris[$key] = JRoute::_ ( 'index.php?' . $uri->getQuery (), $xhtml, $ssl ) . ($fragment ? '#'.$fragment : '');
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'(t)') : null;
 		self::$urisSave = true;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return self::$uris[$key];
 	}
 
 	public static function normalize($uri = null, $object = false) {
-		if (JFactory::getApplication()->isAdmin()) {
+		if (self::$adminApp) {
 			// Use default routing in administration
 			return $object ? $uri : 'index.php?' . $uri->getQuery ();
 		}
-		if (self::$menus === false) self::initialize();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
 		$uri = self::prepare($uri);
 		if (!$uri) return false;
 		if (!$uri->getVar('Itemid')) {
 			self::setItemID ( $uri );
 		}
-
-		return $object ? $uri : 'index.php?' . $uri->getQuery ();
+		$result = $object ? $uri : 'index.php?' . $uri->getQuery ();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $result;
 	}
 
-	public static function getHome($item) {
+	public static function getMenu() {
+		return self::$home;
+	}
+
+	protected static function getHome($item) {
 		if (!$item) return null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$id = $item->id;
 		if (!isset(self::$parent[$id])) {
 			if ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view']) && $item->query['view'] == 'home') {
 				self::$parent[$id] = $item;
 			} else {
-				if (self::$menus === false) self::initialize();
 				// Support both Joomla 1.5 and 1.6
 				$parentid = isset($item->parent_id) ? $item->parent_id : $item->parent;
 				$parent = isset(self::$menu[$parentid]) ? self::$menu[$parentid] : null;
 				self::$parent[$id] = self::getHome($parent);
 			}
 		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return self::$parent[$id];
 	}
 
-	public static function getMenu() {
-		if (self::$menus === false) self::initialize();
-		return self::getHome(self::$active);
-	}
-
 	public static function cacheLoad() {
-		$user = KunenaFactory::getUser();
+		$user = KunenaUserHelper::getMyself();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$cache = JFactory::getCache('_system', 'output');
 		$data = $cache->get($user->userid, 'com_kunena.route');
-		if ($data === false) return;
-		list(self::$subtree, self::$uris) = unserialize($data);
+		if ($data !== false) {
+			list(self::$subtree, self::$uris) = unserialize($data);
+		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
 	public static function cacheStore() {
 		if (!self::$urisSave) return;
-		$user = KunenaFactory::getUser();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		$user = KunenaUserHelper::getMyself();
 		$data = array(self::$subtree, self::$uris);
 		$cache = JFactory::getCache('_system', 'output');
 		$cache->store(serialize($data), $user->userid, 'com_kunena.route');
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
-	protected static function initialize() {
+	public static function initialize() {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		self::$config = KunenaFactory::getConfig ();
+		if (JFactory::getApplication()->isAdmin()) {
+			self::$adminApp = true;
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return;
+		}
 		self::$menus = JFactory::getApplication()->getMenu ();
 		self::$menu = self::$menus->getMenu ();
 		self::$default = self::$menus->getDefault();
@@ -140,10 +168,13 @@ abstract class KunenaRoute {
 		} else {
 			self::$active = null;
 		}
+		self::$home = self::getHome(self::$active);
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
 	protected static function prepare($uri = null) {
 		static $current = array();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!$uri || (is_string($uri) && $uri[0] == '&')) {
 			if (!isset($current[$uri])) {
 				$current[$uri] = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )).$uri);
@@ -152,6 +183,7 @@ abstract class KunenaRoute {
 			$uri = $current[$uri];
 		} elseif (is_numeric($uri)) {
 			if (!isset(self::$menu[intval($uri)])) {
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 				return false;
 			}
 			$item = self::$menu[intval($uri)];
@@ -164,15 +196,19 @@ abstract class KunenaRoute {
 		$option = $uri->getVar('option');
 		$Itemid = $uri->getVar('Itemid');
 		if (!$option && !$Itemid) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return false;
 		} elseif ($option && $option != 'com_kunena') {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return false;
 		} elseif ($Itemid && (!isset(self::$menu[$Itemid]) || self::$menu[$Itemid]->component != 'com_kunena')) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return false;
 		}
 		// Support legacy URIs
 		if ($uri->getVar('func')) {
 			$result = KunenaRouteLegacy::convert($uri);
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			if (!$result) return false;
 			return $uri;
 		}
@@ -219,12 +255,17 @@ abstract class KunenaRoute {
 				break;
 			default:
 				$result = KunenaRouteLegacy::convert($uri);
-				if (!$result) return false;
+				if (!$result) {
+					KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+					return false;
+				}
 		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $uri;
 	}
 
 	protected static function build() {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (self::$search === false) {
 			$cache = JFactory::getCache('_system', 'output');
 			self::$search = unserialize($cache->get('search', 'com_kunena.route'));
@@ -239,30 +280,30 @@ abstract class KunenaRoute {
 					}
 					// Save Kunena menu items so that we can make fast searches
 					if ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view'])) {
-						$home = self::getHome($item);
-						self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
+						self::$search[$item->query['view']][self::$home ? self::$home->id : 0][$item->id] = $item->id;
 					}
 				}
 				$cache->store(serialize(self::$search), 'search', 'com_kunena.route');
 			}
 		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
 	protected static function setItemID($uri) {
 		static $candidates = array();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
 		$view = $uri->getVar('view');
 		$catid = (int) $uri->getVar('catid');
 		$key = $view.$catid;
 		if (!isset($candidates[$key])) {
 			if (self::$search === false) self::build();
-			$home = self::getHome(self::$active);
 			$search = array();
-			if ($home) {
+			if (self::$home) {
 				// Search from the current home menu
-				$search[$home->id] = 1;
+				$search[self::$home->id] = 1;
 				// Then search from all linked home menus
-				$search += self::$search['home'][$home->id];
+				$search += self::$search['home'][self::$home->id];
 			}
 			// Finally search from other home menus
 			$search += self::$search['home'];
@@ -303,6 +344,7 @@ abstract class KunenaRoute {
 			}
 		}
 		$uri->setVar('Itemid', $bestid);
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $bestid;
 	}
 

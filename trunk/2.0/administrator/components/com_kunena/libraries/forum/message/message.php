@@ -262,7 +262,7 @@ class KunenaForumMessage extends JObject {
 			'attachment.create'=>array('Read','Own','EditTime'),
 			'attachment.delete'=>array('Read','Own','EditTime'),
 		);
-		$user = KunenaUser::getInstance($user);
+		$user = KunenaUserHelper::get($user);
 		if (!isset($actions[$action])) {
 			if (!$silent) $this->setError ( __CLASS__.'::'.__FUNCTION__.'(): '.JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
 			return false;
@@ -578,7 +578,7 @@ class KunenaForumMessage extends JObject {
 			$activity->onAfterDelete($this);
 		} elseif ($postDelta > 0) {
 			if ($this->parent == 0) {
-				$me = KunenaUser::getInstance();
+				$me = KunenaUserHelper::getMyself();
 				$topic->markRead();
 				$activity->onAfterPost($this);
 			} else {

@@ -145,7 +145,7 @@ $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/ad
 				$barwidth = round(($profile->hits * 100) / $this->topprofiles[0]->hits);
 			?>
 			<tr>
-			<td><?php echo KunenaUser::getInstance($profile->id)->getName(); ?></td>
+			<td><?php echo KunenaUserHelper::get($profile->id)->getName(); ?></td>
 			<td ><img style="margin-bottom:1px" src="<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>" /> </td>
 			<td ><?php echo $profile->hits;?></td>
 			</tr>

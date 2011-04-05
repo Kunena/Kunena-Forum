@@ -23,13 +23,51 @@ kimport ('kunena.forum.message.helper');
  */
 class KunenaForumCategory extends JObject {
 	protected $_exists = false;
-	protected $_db = null;
 	protected $_channels = false;
 	protected $_topics = false;
 	protected $_posts = false;
 	protected $_lastid = false;
 	protected $_authcache = array();
+	protected $_authfcache = array();
 	protected $_new = 0;
+	public $level = 0;
+	protected static $actions = array(
+			'none'=>array(),
+			'read'=>array('Read'),
+			'subscribe'=>array('Read', 'CatSubscribe', 'NotBanned', 'NotSection'),
+			'moderate'=>array('Read', 'NotBanned', 'Moderate'),
+			'admin'=>array('Read', 'NotBanned', 'Admin'),
+			'topic.read'=>array('Read'),
+			'topic.create'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked', 'Channel'),
+			'topic.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
+			'topic.edit'=>array('Read', 'NotBanned', 'Unlocked'),
+			'topic.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
+			'topic.approve'=>array('Read','NotBanned', 'Moderate'),
+			'topic.delete'=>array('Read', 'NotBanned', 'Unlocked'),
+			'topic.undelete'=>array('Read', 'NotBanned', 'Moderate'),
+			'topic.permdelete'=>array('Read', 'NotBanned', 'Admin'),
+			'topic.favorite'=>array('Read','NotBanned', 'Favorite'),
+			'topic.subscribe'=>array('Read','NotBanned', 'Subscribe'),
+			'topic.sticky'=>array('Read','NotBanned', 'Moderate'),
+			'topic.lock'=>array('Read','NotBanned', 'Moderate'),
+			'topic.poll.read'=>array('Read', 'Poll'),
+			'topic.poll.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Poll'),
+			'topic.poll.edit'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
+			'topic.poll.delete'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
+			'topic.poll.vote'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
+			'topic.post.read'=>array('Read'),
+			'topic.post.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
+			'topic.post.thankyou' =>array('Read', 'NotBanned'),
+			'topic.post.edit'=>array('Read', 'NotBanned', 'Unlocked'),
+			'topic.post.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
+			'topic.post.approve'=>array('Read', 'NotBanned', 'Moderate'),
+			'topic.post.delete'=>array('Read', 'NotBanned', 'Unlocked'),
+			'topic.post.undelete'=>array('Read', 'NotBanned', 'Moderate'),
+			'topic.post.permdelete'=>array('Read', 'NotBanned', 'Admin'),
+			'topic.post.attachment.read'=>array('Read'),
+			'topic.post.attachment.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked'),
+			'topic.post.attachment.delete'=>array('Read', 'NotBanned', 'Unlocked'),
+		);
 
 	/**
 	 * Constructor
@@ -38,9 +76,8 @@ class KunenaForumCategory extends JObject {
 	 */
 	public function __construct($identifier = 0) {
 		// Always load the category -- if category does not exist: fill empty data
-		$this->_db = JFactory::getDBO ();
-		$this->load ( $identifier );
-		$this->level = 0;
+		if($identifier !== false) $this->load ( $identifier );
+		$this->_me = KunenaUserHelper::getMyself();
 	}
 
 	/**
@@ -91,24 +128,23 @@ class KunenaForumCategory extends JObject {
 	}
 
 	public function getLastPostLocation($direction = 'asc', $hold = null) {
-		$me = KunenaFactory::getUser();
-		if (!$me->isModerator($this->id)) return $direction = 'asc' ? $this->last_topic_posts-1 : 0;
+		if (!$this->_me->isModerator($this->id)) return $direction = 'asc' ? $this->last_topic_posts-1 : 0;
 		return KunenaForumMessageHelper::getLocation($this->last_post_id, $direction, $hold);
 	}
 
-	public function getChannels() {
+	public function getChannels($action='read') {
 		if ($this->_channels === false) {
 			$ids = explode(',', $this->channels);
 			// NOTE: sections do not have channels
 			if ($this->parent_id != 0 && ($this->numTopics || !$this->locked) && (in_array(0, $ids) || in_array('THIS', $ids))) {
 				array_unshift($ids, $this->id);
 			}
-			$this->_channels = KunenaForumCategoryHelper::getCategories($ids);
+			$this->_channels = KunenaForumCategoryHelper::getCategories($ids, false, 'none');
 			if (in_array('CHILDREN', $ids)) {
-				$this->_channels += KunenaForumCategoryHelper::getChildren($this->id);
+				$this->_channels += KunenaForumCategoryHelper::getChildren($this->id, 1, array($action=>'none'));
 			}
 		}
-		return $this->_channels;
+		return $action == 'none' ? $this->_channels : KunenaForumCategoryHelper::getCategories(array_keys($this->_channels), false, $action);
 	}
 
 	public function getNewTopicCategory($user=null) {
@@ -127,7 +163,7 @@ class KunenaForumCategory extends JObject {
 		kimport ('kunena.forum.message');
 
 		$catid = $this->getNewTopicCategory()->id;
-		$user = KunenaUser::getInstance($user);
+		$user = KunenaUserHelper::get($user);
 		$message = new KunenaForumMessage();
 		$message->catid = $catid;
 		$message->name = $user->getName('');
@@ -155,68 +191,38 @@ class KunenaForumCategory extends JObject {
 	}
 
 	public function authorise($action='read', $user=null, $silent=false) {
-		$user = KunenaUser::getInstance($user);
-		// Avoid running same code many times during the same request
-		if (isset($this->_authcache[$user->userid][$action])) {
-			if ($this->_authcache[$user->userid][$action]) {
-				if (!$silent)
-					$this->setError ( $this->_authcache[$user->userid][$action] );
-				return false;
-			}
-			return true;
+		if ($action == 'none') return true;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		if ($user === null) {
+			$user = $this->_me;
+		} elseif (!($user instanceof KunenaUser)) {
+			$user = KunenaUserHelper::get($user);
 		}
-		static $actions  = array(
-			'none'=>array(),
-			'read'=>array('Read'),
-			'subscribe'=>array('Read', 'CatSubscribe', 'NotBanned', 'NotSection'),
-			'moderate'=>array('Read', 'NotBanned', 'Moderate'),
-			'admin'=>array('Read', 'NotBanned', 'Admin'),
-			'topic.read'=>array('Read'),
-			'topic.create'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked', 'Channel'),
-			'topic.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
-			'topic.edit'=>array('Read', 'NotBanned', 'Unlocked'),
-			'topic.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
-			'topic.approve'=>array('Read','NotBanned', 'Moderate'),
-			'topic.delete'=>array('Read', 'NotBanned', 'Unlocked'),
-			'topic.undelete'=>array('Read', 'NotBanned', 'Moderate'),
-			'topic.permdelete'=>array('Read', 'NotBanned', 'Admin'),
-			'topic.favorite'=>array('Read','NotBanned', 'Favorite'),
-			'topic.subscribe'=>array('Read','NotBanned', 'Subscribe'),
-			'topic.sticky'=>array('Read','NotBanned', 'Moderate'),
-			'topic.lock'=>array('Read','NotBanned', 'Moderate'),
-			'topic.poll.read'=>array('Read', 'Poll'),
-			'topic.poll.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Poll'),
-			'topic.poll.edit'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
-			'topic.poll.delete'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
-			'topic.poll.vote'=>array('Read', 'NotBanned', 'Unlocked', 'Poll'),
-			'topic.post.read'=>array('Read'),
-			'topic.post.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
-			'topic.post.thankyou' =>array('Read', 'NotBanned'),
-			'topic.post.edit'=>array('Read', 'NotBanned', 'Unlocked'),
-			'topic.post.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
-			'topic.post.approve'=>array('Read', 'NotBanned', 'Moderate'),
-			'topic.post.delete'=>array('Read', 'NotBanned', 'Unlocked'),
-			'topic.post.undelete'=>array('Read', 'NotBanned', 'Moderate'),
-			'topic.post.permdelete'=>array('Read', 'NotBanned', 'Admin'),
-			'topic.post.attachment.read'=>array('Read'),
-			'topic.post.attachment.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked'),
-			'topic.post.attachment.delete'=>array('Read', 'NotBanned', 'Unlocked'),
-		);
-		if (!isset($actions[$action])) {
-			$this->_authcache[$user->userid][$action] = __CLASS__.'::'.__FUNCTION__.'(): '.JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action );
-			if (!$silent) $this->setError ( $this->_authcache[$user->userid][$action] );
+		if (!isset(self::$actions[$action])) {
+			JError::raiseError(500, JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return false;
 		}
-		foreach ($actions[$action] as $function) {
-			$authFunction = 'authorise'.$function;
-			if (! method_exists($this, $authFunction) || ! $this->$authFunction($user)) {
-				$this->_authcache[$user->userid][$action] = $this->getError() ? $this->getError() : JText::_ ( 'COM_KUNENA_NO_ACCESS' );
-				if (!$silent) $this->setError ( $this->_authcache[$user->userid][$action] );
-				return false;
+
+		if (empty($this->_authcache[$user->userid][$action])) {
+			$this->_authcache[$user->userid][$action] = null;
+			foreach (self::$actions[$action] as $function) {
+				if (!isset($this->_authfcache[$user->userid][$function])) {
+					$authFunction = 'authorise'.$function;
+					$this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
+				}
+				$error = $this->_authfcache[$user->userid][$function];
+				if ($error) {
+					$this->_authcache[$user->userid][$action] = $error;
+					break;
+				}
 			}
 		}
-		$this->_authcache[$user->userid][$action] = null;
-		return true;
+		$error = $this->_authcache[$user->userid][$action];
+		if (!$silent && $error) $this->setError ( $error );
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return !$error;
 	}
 
 	/**
@@ -242,10 +248,9 @@ class KunenaForumCategory extends JObject {
 		if ($includeGlobal) {
 			$userlist += $access->getModerators();
 		}
-		foreach ($userlist as $userid => $val) {
-			$userlist[$userid] = $objects ? KunenaUserHelper::get($userid) : $userid;
-		}
-		return $userlist;
+		if (empty($userlist)) return $userlist;
+		$userlist = array_keys($userlist);
+		return $objects ? KunenaUserHelper::loadUsers($userlist) : array_combine($userlist, $userlist);
 	}
 
 	/**
@@ -253,7 +258,7 @@ class KunenaForumCategory extends JObject {
 	 **/
 	public function setModerator($user, $status = 1) {
 		// Do not allow this action if current user isn't admin in this category
-		if (!KunenaUser::getInstance()->isAdmin($this->id)) {
+		if (!$this->_me->isAdmin($this->id)) {
 			$this->setError ( JText::sprintf('COM_KUNENA_ERROR_NOT_CATEGORY_ADMIN', $this->name) );
 			return false;
 		}
@@ -262,7 +267,7 @@ class KunenaForumCategory extends JObject {
 		if (!$this->exists()) return false;
 
 		// Check if user exists
-		$user = KunenaUser::getInstance($user);
+		$user = KunenaUserHelper::get($user);
 		if (!$user->exists()) {
 			return false;
 		}
@@ -615,124 +620,97 @@ class KunenaForumCategory extends JObject {
 	}
 
 	protected function authoriseRead($user) {
+		static $catids = false;
+		if ($catids === false) {
+			$catids = $user->getAllowedCategories();
+		}
+
 		// Checks if user can read category
 		if (!$this->exists()) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
-		$catids = $user->getAllowedCategories();
 		$allow = !empty($catids[0]) || !empty($catids[$this->id]);
 		if (!$allow) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
-		return true;
 	}
 	protected function authoriseNotBanned($user) {
 		$banned = $user->isBanned();
 		if ($banned) {
 			$banned = KunenaUserBan::getInstanceByUserid($user->userid, true);
 			if (!$banned->isLifetime()) {
-				$this->setError ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena()) );
-				return false;
+				return JText::sprintf ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena());
 			} else {
-				$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' ) );
-				return false;
+				return JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' );
 			}
 		}
-		return true;
 	}
 	protected function authoriseGuestWrite($user) {
 		// Check if user is guest and they can create or reply topics
 		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' );
 		}
-
-		return true;
 	}
 	protected function authoriseSubscribe($user) {
 		// Check if user is guest and they can create or reply topics
 		$config = KunenaFactory::getConfig();
 		if ($user->userid == 0 || !$config->allowsubscriptions || $config->topic_subscriptions == 'disabled') {
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS' );
 		}
-
-		return true;
 	}
 	protected function authoriseCatSubscribe($user) {
 		// Check if user is guest and they can create or reply topics
 		$config = KunenaFactory::getConfig();
 		if ($user->userid == 0 || !$config->allowsubscriptions || $config->category_subscriptions == 'disabled') {
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_SUBSCRIPTIONS' );
 		}
-
-		return true;
 	}
 	protected function authoriseFavorite($user) {
 		// Check if user is guest and they can create or reply topics
 		if ($user->userid == 0 || !KunenaFactory::getConfig()->allowfavorites) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_FAVORITES' );
 		}
-
-		return true;
 	}
 	protected function authoriseNotSection($user) {
 		// Check if category is not a section
 		if ($this->isSection()) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_IS_SECTION' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_POST_ERROR_IS_SECTION' );
 		}
-		return true;
 	}
 	protected function authoriseChannel($user) {
 		// Check if category is alias
-		$channels = $this->getChannels();
+		$channels = $this->getChannels('none');
 		if (!isset($channels[$this->id])) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_IS_ALIAS' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_POST_ERROR_IS_ALIAS' );
 		}
-		return true;
 	}
 	protected function authoriseUnlocked($user) {
 		// Check that category is not locked or that user is a moderator
 		if ($this->locked && (!$user->userid || !$user->isModerator($this->id))) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' );
 		}
-		return true;
 	}
 	protected function authoriseModerate($user) {
 		// Check that user is moderator
 		if (!$user->userid || !$user->isModerator($this->id)) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' );
 		}
-		return true;
 	}
 	protected function authoriseAdmin($user) {
 		// Check that user is admin
 		if (!$user->userid || !$user->isAdmin($this->id)) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_MODERATION_ERROR_NOT_ADMIN' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_MODERATION_ERROR_NOT_ADMIN' );
 		}
-		return true;
 	}
 
 	protected function authorisePoll($user) {
 		// Check if polls are enabled at all
 		if (!KunenaFactory::getConfig()->pollenabled) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_DISABLED' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_DISABLED' );
 		}
 		// Check if polls are not enabled in this category
 		if (!$this->allow_polls) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED' ) );
-			return false;
+			return JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED' );
 		}
-		return true;
 	}
 }

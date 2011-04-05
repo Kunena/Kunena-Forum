@@ -41,7 +41,7 @@ class KunenaForumTopicUser extends JObject {
 		$this->topic_id = $topic->id;
 		$this->category_id = $topic->category_id;
 
-		$this->user_id = KunenaUser::getInstance($user)->userid;
+		$this->user_id = KunenaUserHelper::get($user)->userid;
 	}
 
 	static public function getInstance($id = null, $user = null, $reload = false) {
@@ -101,7 +101,7 @@ class KunenaForumTopicUser extends JObject {
 		if ($id === null) {
 			$id = $this->topic_id;
 		}
-		$user = KunenaUser::getInstance($user);
+		$user = KunenaUserHelper::get($user);
 
 		// Create the table object
 		$table = $this->getTable ();

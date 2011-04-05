@@ -31,7 +31,7 @@ class KunenaModelTopic extends KunenaModel {
 
 	protected function populateState() {
 		$app = JFactory::getApplication ();
-		$me = KunenaUserHelper::get();
+		$this->me = KunenaUserHelper::get();
 		$config = KunenaFactory::getConfig ();
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
@@ -55,7 +55,7 @@ class KunenaModelTopic extends KunenaModel {
 		$this->setState ( 'item.mesid', $id );
 
 		$access = KunenaFactory::getAccessControl();
-		$value = $access->getAllowedHold($me, $catid);
+		$value = $access->getAllowedHold($this->me, $catid);
 		$this->setState ( 'hold', $value );
 
 		$value = $this->getInt ( 'limit', 0 );
@@ -71,8 +71,8 @@ class KunenaModelTopic extends KunenaModel {
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_direction", 'filter_order_Dir', '', 'word' );
 		if (!$value) {
-			if ($me->ordering != '0') {
-				$value = $me->ordering == '1' ? 'desc' : 'asc';
+			if ($this->me->ordering != '0') {
+				$value = $this->me->ordering == '1' ? 'desc' : 'asc';
 			} else {
 				$value = $config->default_sort == 'asc' ? 'asc' : 'desc';
 			}
@@ -207,7 +207,6 @@ class KunenaModelTopic extends KunenaModel {
 
 	public function getModerators() {
 		$moderators = $this->getCategory()->getModerators(false);
-		if ( !empty($moderators) ) KunenaUserHelper::loadUsers($moderators);
 		return $moderators;
 	}
 

@@ -272,7 +272,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$category = $this->getAdminCategory();
 		if (!$category) return false;
 
-		$moderators = KunenaUserHelper::loadUsers($category->getModerators(false));
+		$moderators = $category->getModerators(false);
 		return $moderators;
 	}
 }

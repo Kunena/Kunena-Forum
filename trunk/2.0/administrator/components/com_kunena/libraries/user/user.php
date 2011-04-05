@@ -36,7 +36,7 @@ class KunenaUser extends JObject {
 	 */
 	public function __construct($identifier = 0) {
 		// Always load the user -- if user does not exist: fill empty data
-		$this->load ( $identifier );
+		if ($identifier !== false) $this->load ( $identifier );
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = KunenaFactory::getConfig ();
@@ -59,6 +59,12 @@ class KunenaUser extends JObject {
 		$return = $this->_exists;
 		if ($exists !== null) $this->_exists = $exists;
 		return $return;
+	}
+
+	public function isMyself() {
+		static $result = null;
+		if ($result === null) $result = KunenaUserHelper::getMyself()->userid == $this->userid;
+		return $result;
 	}
 
 	/**

@@ -12,9 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.controller' );
 jimport ( 'joomla.application.component.helper' );
-jimport ( 'joomla.error.profiler' );
-
-require_once KPATH_SITE . '/router.php';
+kimport ( 'kunena.profiler' );
 
 /**
  * Base controller class for Kunena.
@@ -28,6 +26,7 @@ class KunenaController extends JController {
 
 	function __construct() {
 		parent::__construct ();
+		$this->profiler = KunenaProfiler::instance('Kunena');
 	}
 
 	/**
@@ -43,8 +42,6 @@ class KunenaController extends JController {
 			return $instance;
 		}
 
-		// Display time it took to create the entire page in the footer
-		$starttime = JProfiler::getmicrotime() - KunenaRouter::$time;
 		$view = strtolower ( JRequest::getWord ( 'view', 'none' ) );
 
 		$app = JFactory::getApplication();
@@ -76,7 +73,6 @@ class KunenaController extends JController {
 		}
 		if (class_exists ( $class )) {
 			$instance = new $class ();
-			$instance->starttime = $starttime;
 		} else {
 			JError::raiseError ( 500, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER_CLASS', $class ) );
 		}
@@ -91,6 +87,7 @@ class KunenaController extends JController {
 	 * @since	1.6
 	 */
 	public function display() {
+		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
 		$app = JFactory::getApplication();
 		if ($app->isAdmin()) {
 			// Version warning
@@ -124,7 +121,6 @@ class KunenaController extends JController {
 			if ($app->isSite() && $vFormat=='html') {
 				$view->template = KunenaFactory::getTemplate();
 				$common = $this->getView ( 'common', $vFormat, '', array ('base_path' => $this->_basePath ) );
-				$common->starttime = $this->starttime;
 				$common->setModel ( $this->getModel ( 'common' ), true );
 				$view->common = $common;
 				$templatepath = KPATH_SITE."/{$view->template->getPath()}/html/";

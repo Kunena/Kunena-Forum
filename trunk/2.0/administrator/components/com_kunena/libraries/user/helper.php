@@ -13,15 +13,22 @@ defined ( '_JEXEC' ) or die ();
 kimport('kunena.error');
 kimport('kunena.user');
 
+KunenaUserHelper::initialize();
+
 /**
  * Kunena User Helper Class
  */
 class KunenaUserHelper {
 	protected static $_instances = array ();
 	protected static $_online = null;
+	protected static $_me = null;
 
 	private function __construct() {}
 
+	public function initialize() {
+		$id = JFactory::getUser()->id;
+		self::$_me = self::$_instances [$id] = new KunenaUser ( $id );
+	}
 	/**
 	 * Returns the global KunenaUserHelper object, only creating it if it doesn't already exist.
 	 *
@@ -31,11 +38,14 @@ class KunenaUserHelper {
 	 * @since	1.6
 	 */
 	static public function get($identifier = null, $reload = false) {
-		if ($identifier instanceof KunenaUser) {
-			return $identifier;
-		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($identifier === null || $identifier === false) {
-			$identifier = JFactory::getUser ();
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return self::$_me;
+		}
+		if ($identifier instanceof KunenaUser) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return $identifier;
 		}
 		// Find the user id
 		if ($identifier instanceof JUser) {
@@ -50,7 +60,12 @@ class KunenaUserHelper {
 			self::$_instances [$id] = new KunenaUser ( $id );
 		}
 
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return self::$_instances [$id];
+	}
+
+	static public function getMyself() {
+		return self::$_me;
 	}
 
 	static public function loadUsers($userids = array()) {
@@ -61,8 +76,7 @@ class KunenaUserHelper {
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
 		foreach($userids as $userid){
-			if ($userid instanceof KunenaUser) continue;
-			$e_userids[intval($userid)] = intval($userid);
+			if (empty ( self::$_instances [intval($userid)] )) $e_userids[intval($userid)] = intval($userid);
 		}
 		unset($e_userids[0]);
 		if (empty($e_userids)) return array();
@@ -80,8 +94,8 @@ class KunenaUserHelper {
 
 		$list = array ();
 		foreach ( $results as $user ) {
-			$instance = new KunenaUser ();
-			$instance->bind ( $user );
+			$instance = new KunenaUser (false);
+			$instance->setProperties ( $user );
 			$instance->exists(true);
 			self::$_instances [$instance->userid] = $instance;
 			$list [$instance->userid] = $instance;

@@ -25,7 +25,6 @@ abstract class JHTMLKunenaForum {
 		$catid = isset($params['catid']) ? (int) $params['catid'] : 0;
 		$hide_lonely = isset($params['hide_lonely']) ? (bool) $params['hide_lonely'] : 0;
 
-		$me = KunenaFactory::getUser();
 		$params = array ();
 		$params['ordering'] = $ordering;
 		$params['direction'] = $direction;
@@ -60,6 +59,7 @@ abstract class JHTMLKunenaForum {
 			$selected = array((string) $selected);
 		}
 		if ($topleveltxt) {
+			$me = KunenaUserHelper::getMyself();
 			$disabled = ($action == 'admin' && !$me->isAdmin());
 			$options [] = JHTML::_ ( 'select.option', '0', JText::_ ( $topleveltxt ), 'value', 'text', $disabled );
 			if (empty($selected) && !$disabled) {

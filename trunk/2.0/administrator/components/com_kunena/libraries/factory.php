@@ -49,8 +49,8 @@ abstract class KunenaFactory {
 	 * @return object KunenaUser
 	 */
 	static public function getUser($id = null, $reload = false) {
-		kimport('kunena.user');
-		return KunenaUser::getInstance($id, $reload);
+		kimport('kunena.user.helper');
+		return KunenaUserHelper::get($id, $reload);
 	}
 
 	/**

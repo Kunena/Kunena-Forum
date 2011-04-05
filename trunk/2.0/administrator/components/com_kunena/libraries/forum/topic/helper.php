@@ -115,7 +115,7 @@ class KunenaForumTopicHelper {
 		$reverse = isset($params['reverse']) ? (int) $params['reverse'] : 0;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'tt.last_post_time DESC';
 		$starttime = isset($params['starttime']) ? (int) $params['starttime'] : 0;
-		$user = isset($params['user']) ? KunenaUser::getInstance($params['user']) : KunenaUser::getInstance();
+		$user = isset($params['user']) ? KunenaUserHelper::get($params['user']) : KunenaUserHelper::getMyself();
 		$hold = isset($params['hold']) ? (string) $params['hold'] : 0;
 		$moved = isset($params['moved']) ? (string) $params['moved'] : 0;
 		$where = isset($params['where']) ? (string) $params['where'] : '';

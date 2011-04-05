@@ -89,7 +89,7 @@ class KunenaForumMessageHelper {
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'm.time DESC';
 		$starttime = isset($params['starttime']) ? (int) $params['starttime'] : 0;
 		$mode = isset($params['mode']) ? $params['mode'] : 'recent';
-		$user = isset($params['user']) ? KunenaUser::getInstance($params['user']) : KunenaUser::getInstance();
+		$user = isset($params['user']) ? KunenaUserHelper::get($params['user']) : KunenaUserHelper::getMyself();
 		$where = isset($params['where']) ? (string) $params['where'] : '';
 
 		$db = JFactory::getDBO();

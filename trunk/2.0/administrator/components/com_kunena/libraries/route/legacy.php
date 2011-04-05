@@ -18,14 +18,25 @@ class KunenaRouteLegacy {
 		// We need to convert URIs only in site
 		if (!JFactory::getApplication()->isSite()) return;
 
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		// Make sure that input is JURI to legacy Kunena func=xxx
-		if (!($uri instanceof JURI)) return;
-		if ($uri->getVar('option') != 'com_kunena') return;
+		if (!($uri instanceof JURI)) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return;
+		}
+		if ($uri->getVar('option') != 'com_kunena') {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return;
+		}
 		if ($uri->getVar('func')) {
 			$uri->setVar('view', $uri->getVar('func'));
 			$uri->delVar('func');
 		}
-		if (!isset(KunenaRouter::$functions[$uri->getVar('view')])) return;
+		if (!isset(KunenaRouter::$functions[$uri->getVar('view')])) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return;
+		}
 
 		// Turn &do=xxx into &layout=xxx
 		if ($uri->getVar('do')) {
@@ -456,6 +467,7 @@ class KunenaRouteLegacy {
 				break;
 
 		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $changed;
 	}
 }

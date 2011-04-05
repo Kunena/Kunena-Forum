@@ -34,7 +34,6 @@ class KunenaAdminViewCategories extends KunenaView {
 	}
 
 	function displayEdit() {
-		$this->me = KunenaFactory::getUser();
 		$this->assignRef ( 'category', $this->get ( 'AdminCategory' ) );
 		$this->assignRef ( 'options', $this->get ( 'AdminOptions' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'AdminModerators' ) );

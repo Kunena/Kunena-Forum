@@ -13,16 +13,18 @@ defined( '_JEXEC' ) or die();
 
 class KunenaError {
 	static $enabled = 0;
+	static $handler = false;
 
 	function initialize() {
 		if (!self::$enabled) {
 			$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
-			set_error_handler('kunenaErrorHandler');
 			register_shutdown_function('kunenaShutdownHandler', $debug);
 			if (!$debug) return;
 
 			@ini_set('display_errors', 1);
 			@error_reporting(E_ALL);
+			set_error_handler('kunenaErrorHandler');
+			self::$handler = true;
 			JFactory::getDBO()->debug(1);
 
 			self::$enabled++;
@@ -31,7 +33,10 @@ class KunenaError {
 
 	function cleanup() {
 		if (self::$enabled && (--self::$enabled) == 0) {
-			restore_error_handler ();
+			if (self::$handler) {
+				restore_error_handler ();
+				self::$handler = false;
+			}
 		}
 	}
 

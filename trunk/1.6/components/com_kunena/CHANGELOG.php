@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+5-April-2011 Matias
+# [#25326] Turn off PHP notice/warning handlers when not in debug mode (Joomla 1.5 surpresses way too many errors with @)
+
 29-March-2011 Matias
 # [#24991] Birthdate in kunena profile is different under Joomla 1.6 and Joomla 1.5
 

@@ -15,6 +15,7 @@
 	<description>PLG_MYKUNENA_DESCRIPTION</description>
 	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_community_mykunena.ini</language>
+		<language tag="es-ES">es-ES.plg_community_mykunena.ini</language>
 		<language tag="fr-FR">fr-FR.plg_community_mykunena.ini</language>
 		<language tag="nb-NO">nb-NO.plg_community_mykunena.ini</language>
 		<language tag="ru-RU">ru-RU.plg_community_mykunena.ini</language>

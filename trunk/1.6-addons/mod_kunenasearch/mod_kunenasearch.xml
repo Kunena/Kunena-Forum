@@ -22,6 +22,7 @@
 	<languages folder="languages">
 		<language tag="de-DE">de-DE.mod_kunenasearch.ini</language>
 		<language tag="en-GB">en-GB.mod_kunenasearch.ini</language>
+		<language tag="es-ES">es-ES.mod_kunenasearch.ini</language>
 		<language tag="fi-FI">fi-FI.mod_kunenasearch.ini</language>
 		<language tag="fr-FR">fr-FR.mod_kunenasearch.ini</language>
 		<language tag="nb-NO">nb-NO.mod_kunenasearch.ini</language>

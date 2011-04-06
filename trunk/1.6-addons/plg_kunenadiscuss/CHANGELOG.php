@@ -31,6 +31,12 @@ Legend:
 
 Kunena Discuss Plugin 1.6.4
 
+03-April-2011 LDA
+^ [#24847] update es-ES (thanks Kunena Spanish Team)
+^ [#24847] update ru-RU (thanks Zarkos)
+^ [#24847] update fi-FI (thanks Mortti)
+
+
 15-March-2011 Matias
 # [#25339] Joomla 1.6: Change event names to make plugin to work
 # [#24364] Joomla 1.6: Fix CSS problems

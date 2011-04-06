@@ -30,6 +30,11 @@ Legend:
 
 KunenaLatest 1.6.4
 
+03-April-2011 LDA
+^ [#24847] update es-ES (thanks Kunena Spanish Team)
+^ [#24847] update fi-FI (thanks Mortti)
+^ [#24847] update de-DE (thanks rich)
+
 19-March-2011 Severdia
 ^ [#25396] Added param to not load module CSS file
 

@@ -28,6 +28,11 @@ Legend:
 
 KunenaLogin 1.6.4
 
+03-April-2011 LDA
++ [#24847] added es-ES (thanks Kunena Spanish Team)
+^ [#24847] update fi-FI (thanks Mortti)
+^ [#24847] .com -> .org
+
 15-March-2011 Matias
 # [#25339] Joomla 1.6: Make module parameters to work
 

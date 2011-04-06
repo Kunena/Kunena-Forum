@@ -16,6 +16,7 @@
 	</files>
 	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_finder_jxfinder_kunena.ini</language>
+		<language tag="es-ES">es-ES.plg_finder_jxfinder_kunena.ini</language>
 		<language tag="nb-NO">nb-NO.plg_finder_jxfinder_kunena.ini</language>
 		<language tag="fr-FR">fr-FR.plg_finder_jxfinder_kunena.ini</language>
 		<language tag="ru-RU">ru-RU.plg_finder_jxfinder_kunena.ini</language>

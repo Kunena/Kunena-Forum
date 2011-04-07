@@ -652,7 +652,7 @@ class KunenaForumCategory extends JObject {
 		if (!$this->exists()) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
-		if (!empty($catids[0]) && empty($catids[$this->id])) {
+		if (empty($catids[0]) && empty($catids[$this->id])) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
 	}

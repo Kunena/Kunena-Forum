@@ -34,6 +34,7 @@ Kunena 2.0.0-DEV
 7-April-2011 Matias
 ^ [#23442] Optimize for speed: KunenaAccessJoomla15::__construct() do not use slow JFactory::getACL()
 ^ [#23442] Optimize for speed: KunenaAccess::getAllowedCategories() + store information into user state
+# [#23443] Fixed typo in KunenaForumCategory::authoriseRead() giving access to everyone
 
 6-April-2011 Matias
 # [#23443] New category should be ordered as last item, not first

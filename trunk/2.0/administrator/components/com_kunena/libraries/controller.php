@@ -88,6 +88,7 @@ class KunenaController extends JController {
 	 */
 	public function display() {
 		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$app = JFactory::getApplication();
 		if ($app->isAdmin()) {
 			// Version warning
@@ -160,6 +161,7 @@ class KunenaController extends JController {
 			$integration = KunenaFactory::getProfile();
 			$integration->close();
 		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
 	/**

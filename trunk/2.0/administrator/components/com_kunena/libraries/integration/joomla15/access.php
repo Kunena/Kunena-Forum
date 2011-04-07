@@ -17,9 +17,11 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 			return null;
 		$this->priority = 25;
 
+/* TOO SLOW:
 		$authorization = JFactory::getACL();
 		$authorization->addACL( 'com_kunena', 'administrator', 'users', 'super administrator' );
 		$authorization->addACL( 'com_kunena', 'administrator', 'users', 'administrator' );
+*/
 	}
 
 	public function loadAdmins() {
@@ -47,16 +49,12 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		return $this->storeModerators($list);
 	}
 
-	public function loadAllowedCategories($user) {
+	public function loadAllowedCategories($user, &$categories) {
 		$user = JFactory::getUser($user);
 
 		// Get all Joomla user groups for current user
-		$usergroups = array();
-		if ($user->id) {
-			$usergroups = $this->acl_get_groups('users', $user->id);
-		}
+		$usergroups = $user->id ? $this->acl_get_groups('users', $user->id) : array();
 
-		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 		$catlist = array();
 		foreach ( $categories as $category ) {
 			// Check if user is a moderator

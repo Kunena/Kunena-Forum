@@ -19,7 +19,7 @@ kimport ('kunena.forum.category');
  */
 class KunenaForumCategoryHelper {
 	// Global for every instance
-	protected static $_instances = false;
+	public static $_instances = false;
 	protected static $_tree = array ();
 
 	// Static class
@@ -129,26 +129,37 @@ class KunenaForumCategoryHelper {
 		}
 
 		if ($ids === false) {
-			$ids = array_keys(self::$_instances);
+			if ($authorise != 'none') {
+				$ids = self::$_instances;
+			} else {
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+				return self::$_instances;
+			}
 		} elseif (is_array ($ids) ) {
-			$ids = array_unique($ids);
+			$ids = array_flip($ids);
 		} else {
-			$ids = array(intval($ids));
+			$ids = array(intval($ids)=>1);
 		}
 
 		$list = array ();
 		if (!$reverse) {
-			foreach ( $ids as $id ) {
-				if (!isset(self::$_instances [$id])) continue;
-				if ($authorise == 'none' || self::$_instances [$id]->authorise($authorise, null, true)) {
-					$list [$id] = self::$_instances [$id];
+			$allowed = $authorise != 'none' ? array_intersect_key($ids, KunenaFactory::getAccessControl ()->getAllowedCategories ( null, 'read' )) : $ids;
+			$list = array_intersect_key(self::$_instances, $allowed);
+			if ($authorise != 'none' && $authorise != 'read') {
+				foreach ( $list as $category ) {
+					if (!$category->authorise($authorise, null, true)) {
+						unset($list [$category->id]);
+					}
 				}
 			}
 		} else {
-			foreach ( self::$_instances as $category ) {
-				if (in_array($category->id, $ids)) continue;
-				if ($authorise == 'none' || $category->authorise($authorise, null, true)) {
-					$list [$category->id] = $category;
+			$allowed = $authorise != 'none' ? array_intersect_key(self::$_instances, KunenaFactory::getAccessControl ()->getAllowedCategories ( null, 'read' )) : self::$_instances;
+			$list = array_diff_key($allowed, $ids);
+			if ($authorise != 'none' && $authorise != 'read') {
+				foreach ( $list as $category ) {
+					if (!$category->authorise($authorise, null, true)) {
+						unset($list [$category->id]);
+					}
 				}
 			}
 		}

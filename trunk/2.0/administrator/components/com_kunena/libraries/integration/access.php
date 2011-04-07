@@ -30,10 +30,11 @@ abstract class KunenaAccess {
 	abstract public function __construct();
 
 	static public function getInstance($integration = null) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (self::$instance === false) {
-			$config = KunenaFactory::getConfig ();
-			if (! $integration)
-				$integration = $config->integration_access;
+			if (! $integration) {
+				$integration = KunenaFactory::getConfig ()->integration_access;
+			}
 			self::$instance = KunenaIntegration::initialize ( 'access', $integration );
 
 			// Load administrators and moderators
@@ -46,12 +47,13 @@ abstract class KunenaAccess {
 				self::$moderatorsByCatid = (array)$data['mc'];
 				self::$moderatorsByUserid = (array)$data['mu'];
 			}
-			$my = JFactory::getUser();
-			// If values were not cached or users permissions have been changed, force reload
-			if (!$data || ($my->id && $my->authorize('com_kunena', 'administrator') == empty(self::$adminsByUserid[$my->id][0]) )) {
+			//$my = JFactory::getUser();
+			// If values were not cached (or users permissions have been changed), force reload
+			if (!$data) { // || ($my->id && $my->authorize('com_kunena', 'administrator') == empty(self::$adminsByUserid[$my->id][0]) )) {
 				self::$instance->clearCache();
 			}
 		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return self::$instance;
 	}
 
@@ -62,7 +64,6 @@ abstract class KunenaAccess {
 		self::$moderatorsByUserid = array();
 		self::$instance->loadAdmins();
 		self::$instance->loadModerators();
-
 
 		// Store new data into cache
 		$cache = JFactory::getCache('com_kunena', 'output');
@@ -132,9 +133,11 @@ abstract class KunenaAccess {
 	}
 
 	public function getAllowedCategories($user = null, $rule = 'read') {
-		static $read = false;
+		static $read = array();
 
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$user = KunenaFactory::getUser($user);
+		$id = $user->userid;
 
 		$allowed = array();
 		switch ($rule) {
@@ -142,17 +145,36 @@ abstract class KunenaAccess {
 			case 'post':
 			case 'reply':
 			case 'edit':
-				if ($read === false) {
-					$read = self::$instance->loadAllowedCategories($user->userid);
+				if (!isset($read[$id])) {
+					$app = JFactory::getApplication();
+					// TODO: handle guests/bots with no userstate
+					$read[$id] = $app->getUserState("com_kunena.user{$id}_read");
+					if ($read[$id] === null) {
+						$read[$id] = array();
+						$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
+						foreach ( $categories as $category ) {
+							if (!$category->published) {
+								unset($categories[$category->id]);
+							}
+							if ($id && self::isModerator($id, $category->id)) {
+								$read[$id][$category->id] = $category->id;
+								unset($categories[$category->id]);
+							}
+						}
+
+						$read[$id] += self::$instance->loadAllowedCategories($id, $categories);
+						$app->setUserState("com_kunena.user{$id}_read", $read[$id]);
+					}
 				}
-				$allowed = $read;
+				$allowed = $read[$id];
 				break;
 			case 'moderate':
-				if (isset(self::$moderatorsByUserid[$user->userid])) $allowed += self::$moderatorsByUserid[$user->userid];
+				if (isset(self::$moderatorsByUserid[$id])) $allowed += self::$moderatorsByUserid[$id];
 				// Continue: Administrators have also moderation permissions
 			case 'admin':
-				if (isset(self::$adminsByUserid[$user->userid])) $allowed += self::$adminsByUserid[$user->userid];
+				if (isset(self::$adminsByUserid[$id])) $allowed += self::$adminsByUserid[$id];
 		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $allowed;
 	}
 
@@ -297,5 +319,5 @@ abstract class KunenaAccess {
 
 	abstract public function checkSubscribers($topic, &$userids);
 
-	abstract public function loadAllowedCategories($userid);
+	abstract public function loadAllowedCategories($userid, &$categories);
 }

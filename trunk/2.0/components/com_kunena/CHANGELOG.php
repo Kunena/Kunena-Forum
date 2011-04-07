@@ -31,6 +31,18 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+7-April-2011 Matias
+^ [#23442] Optimize for speed: KunenaAccessJoomla15::__construct() do not use slow JFactory::getACL()
+^ [#23442] Optimize for speed: KunenaAccess::getAllowedCategories() + store information into user state
+
+6-April-2011 Matias
+# [#23443] New category should be ordered as last item, not first
+# [#23443] Fix Fatal error: KunenaUserHelper::getMe () doesn't exist
+^ [#23442] Optimize for speed: Stop using $session->allowed; use user state instead
+^ [#23442] Optimize for speed: KunenaForumCategory::getChannels()
+^ [#23442] Optimize for speed: KunenaForumCategoryHelper::getCategories()
+^ [#23442] Optimize for speed: KunenaForumTopic::authorise()
+
 5-April-2011 Matias
 ^ [#23442] Optimize for speed: Category object creation, authentication
 # [#23443] KunenaForumCategory::getModerators() returns wrong values

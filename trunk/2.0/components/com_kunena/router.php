@@ -97,7 +97,6 @@ class KunenaRouter {
 
 	function initialize() {
 		self::$config = KunenaFactory::getConfig ();
-		KunenaRouter::loadCategories ();
 	}
 
 	function loadCategories() {
@@ -115,6 +114,9 @@ class KunenaRouter {
 		if (isset ( self::$views[$catname] ) || isset ( self::$layouts[$catname] ) || isset ( self::$functions[$catname] ) ) {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return true;
+		}
+		if (self::$catidcache === null) {
+			self::loadCategories ();
 		}
 		$keys = array_keys(self::$catidcache, $catname);
 		if (count($keys) == 1) return false;
@@ -227,6 +229,9 @@ function KunenaBuildRoute(&$query) {
 		if ($catid) {
 			$numeric = true;
 
+			if (KunenaRouter::$catidcache === null) {
+				KunenaRouter::loadCategories ();
+			}
 			if (isset ( KunenaRouter::$catidcache [$catid] )) {
 				$catname = KunenaRouter::$catidcache [$catid];
 			}

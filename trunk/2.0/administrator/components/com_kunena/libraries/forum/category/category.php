@@ -133,18 +133,40 @@ class KunenaForumCategory extends JObject {
 	}
 
 	public function getChannels($action='read') {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($this->_channels === false) {
-			$ids = explode(',', $this->channels);
-			// NOTE: sections do not have channels
-			if ($this->parent_id != 0 && ($this->numTopics || !$this->locked) && (in_array(0, $ids) || in_array('THIS', $ids))) {
-				array_unshift($ids, $this->id);
-			}
-			$this->_channels = KunenaForumCategoryHelper::getCategories($ids, false, 'none');
-			if (in_array('CHILDREN', $ids)) {
-				$this->_channels += KunenaForumCategoryHelper::getChildren($this->id, 1, array($action=>'none'));
+			$this->_channels['none'] = array();
+			if (!$this->published || $this->parent_id == 0 && ($this->numTopics || !$this->locked)) {
+				// Sections do not have channels
+			} elseif (empty($this->channels) || $this->channels == $this->id) {
+				// No channels defined
+				$this->_channels['none'][$this->id] = $this;
+			} else {
+				// Fetch all channels
+				$ids = array_flip(explode(',', $this->channels));
+				if (isset($ids[0]) || isset($ids['THIS'])) {
+					// Handle current category
+					$this->_channels['none'][$this->id] = $this;
+				}
+				if (!empty($ids)) {
+					// More category channels
+					$this->_channels['none'] += KunenaForumCategoryHelper::getCategories(array_keys($ids), null, 'none');
+				}
+				if (isset($ids['CHILDREN'])) {
+					// Children category channels
+					$this->_channels['none'] += KunenaForumCategoryHelper::getChildren($this->id, 1, array($action=>'none'));
+				}
 			}
 		}
-		return $action == 'none' ? $this->_channels : KunenaForumCategoryHelper::getCategories(array_keys($this->_channels), false, $action);
+		if (!isset($this->_channels[$action])) {
+			$this->_channels[$action] = array();
+			foreach ($this->_channels['none'] as $channel) {
+				if (($channel->id == $this->id && $action == 'read') || $channel->authorise($action, null, false))
+					$this->_channels[$action][$channel->id] = $channel;
+			}
+		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $this->_channels[$action];
 	}
 
 	public function getNewTopicCategory($user=null) {
@@ -198,13 +220,14 @@ class KunenaForumCategory extends JObject {
 		} elseif (!($user instanceof KunenaUser)) {
 			$user = KunenaUserHelper::get($user);
 		}
-		if (!isset(self::$actions[$action])) {
-			JError::raiseError(500, JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-			return false;
-		}
 
 		if (empty($this->_authcache[$user->userid][$action])) {
+			if (!isset(self::$actions[$action])) {
+				JError::raiseError(500, JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+				return false;
+			}
+
 			$this->_authcache[$user->userid][$action] = null;
 			foreach (self::$actions[$action] as $function) {
 				if (!isset($this->_authfcache[$user->userid][$function])) {
@@ -272,7 +295,7 @@ class KunenaForumCategory extends JObject {
 			return false;
 		}
 
-		$catids = $user->getAllowedCategories('moderate');
+		$catids = KunenaFactory::getAccessControl ()->getAllowedCategories ( $user, 'moderate');
 
 		// Do not touch global moderators
 		if (!empty($catids[0])) {
@@ -622,15 +645,14 @@ class KunenaForumCategory extends JObject {
 	protected function authoriseRead($user) {
 		static $catids = false;
 		if ($catids === false) {
-			$catids = $user->getAllowedCategories();
+			$catids = KunenaFactory::getAccessControl ()->getAllowedCategories ( $user, 'read' );
 		}
 
 		// Checks if user can read category
 		if (!$this->exists()) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
-		$allow = !empty($catids[0]) || !empty($catids[$this->id]);
-		if (!$allow) {
+		if (!empty($catids[0]) && empty($catids[$this->id])) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
 	}

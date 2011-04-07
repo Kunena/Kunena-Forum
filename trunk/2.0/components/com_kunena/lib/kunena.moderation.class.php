@@ -41,7 +41,8 @@ class CKunenaModeration {
 		$this->_my = &JFactory::getUser ();
 		$this->_me = KunenaFactory::getUser ();
 		$this->_session = KunenaFactory::getSession ();
-		$this->_allowed = ($this->_session->allowed != '') ? explode ( ',', $this->_session->allowed ) : array();
+		// FIXME:
+		$this->_allowed = array();
 		$this->_ResetErrorMessage ();
 		$this->_config = $config;
 	}

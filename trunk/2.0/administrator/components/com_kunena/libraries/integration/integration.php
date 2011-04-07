@@ -39,8 +39,10 @@ abstract class KunenaIntegration extends JObject {
 	}
 
 	static public function initialize($name, $integration) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__."($name,$integration)") : null;
 		$object = self::_initialize($name, $integration);
 		if (!$object) $object = self::_initialize($name, 'auto');
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__."($name,$integration)") : null;
 		return $object;
 	}
 
@@ -58,8 +60,9 @@ abstract class KunenaIntegration extends JObject {
 			$class = 'Kunena' . ucfirst ( $name ) . ucfirst ( $integration );
 			if (class_exists ( $class )) {
 				$object = new $class ( );
-				if ($object->priority)
+				if ($object->priority) {
 					return $object;
+				}
 			}
 		}
 	}

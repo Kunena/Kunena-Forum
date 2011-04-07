@@ -94,10 +94,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 			}
 		}
 
-		$db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na' WHERE userid='$uid'" );
-		$db->query ();
-		KunenaError::checkDatabaseError();
-
 		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY' ) );
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}

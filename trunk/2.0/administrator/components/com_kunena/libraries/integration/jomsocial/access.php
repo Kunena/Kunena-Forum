@@ -40,8 +40,8 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		return $this->joomlaAccess->loadModerators();
 	}
 
-	public function loadAllowedCategories($userid) {
-		$allowed = $this->joomlaAccess->loadAllowedCategories($userid);
+	public function loadAllowedCategories($userid, &$categories) {
+		$allowed = $this->joomlaAccess->loadAllowedCategories($userid, $categories);
 
 		if (KunenaFactory::getUser($userid)->exists()) {
 			$db = JFactory::getDBO();

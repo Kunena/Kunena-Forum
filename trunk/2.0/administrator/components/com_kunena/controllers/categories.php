@@ -170,6 +170,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 			$category->bind ( $post, $ignore );
 
+			if (!$category->exists()) {
+				$category->ordering = 99999;
+			}
 			$success = $category->save ();
 
 			// Update read access

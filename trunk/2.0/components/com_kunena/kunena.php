@@ -30,7 +30,7 @@ KunenaError::initialize ();
 $ksession = KunenaFactory::getSession ( true );
 if ($ksession->userid > 0) {
 	// Create user if it does not exist
-	$kuser = KunenaUserHelper::getMe ();
+	$kuser = KunenaUserHelper::getMyself ();
 	if (! $kuser->exists ()) {
 		$kuser->save ();
 	}
@@ -60,12 +60,13 @@ if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
 		// FIXME: using wrong Itemid
 		JFactory::getApplication ()->redirect (KunenaRoute::_($uri, false));
 	} else {
-		return JError::raiseError( 404, "Kunena legacy function '{$view}' not found" );
+		return JError::raiseError( 404, "Kunena view '{$view}' not found" );
 	}
 }
 
 KunenaError::cleanup ();
 
+// Display profiler information
 $kunena_time = $kunena_profiler->stop('Total Time');
 if (KUNENA_PROFILER) {
 	echo '<div class="kprofiler">';

@@ -29,7 +29,6 @@ class KunenaSession extends JObject
 				$this->lasttime -= 14*24*60*60; // 14 days
 			}
 		}
-		$this->updateAllowedForums();
 	}
 
 	static public function getInstance( $update=false, $userid = null )
@@ -197,14 +196,5 @@ class KunenaSession extends JObject
 			$this->readtopics = 0;
 		}
 		$this->currvisit = JFactory::getDate()->toUnix();
-	}
-
-	function updateAllowedForums()
-	{
-		$acl = KunenaFactory::getAccessControl();
-		$this->allowed = implode(',', array_keys($acl->getAllowedCategories($this->userid)));
-		if (!$this->allowed) {
-			$this->allowed = '0';
-		}
 	}
 }

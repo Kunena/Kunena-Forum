@@ -23,7 +23,9 @@ class KunenaAvatarJomSocial extends KunenaAvatar
 
 	public function load($userlist)
 	{
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (method_exists('CFactory', 'loadUsers')) CFactory::loadUsers($userlist);
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
 	public function getEditURL()

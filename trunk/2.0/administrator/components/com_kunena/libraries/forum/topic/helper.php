@@ -109,6 +109,7 @@ class KunenaForumTopicHelper {
 	}
 
 	static public function getLatestTopics($categories=false, $limitstart=0, $limit=0, $params=array()) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$db = JFactory::getDBO ();
 		if ($limit < 1) $limit = KunenaFactory::getConfig ()->threads_per_page;
 
@@ -133,7 +134,10 @@ class KunenaForumTopicHelper {
 		foreach ($categories as $category) {
 			$catlist += $category->getChannels();
 		}
-		if (empty($catlist)) return array(0, array());
+		if (empty($catlist)) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return array(0, array());
+		}
 		$catlist = implode(',', array_keys($catlist));
 
 		$whereuser = array();
@@ -170,7 +174,10 @@ class KunenaForumTopicHelper {
 			$query = "SELECT COUNT(*) FROM #__kunena_topics AS tt WHERE {$where}";
 		$db->setQuery ( $query );
 		$total = ( int ) $db->loadResult ();
-		if (KunenaError::checkDatabaseError() || !$total) return array(0, array());
+		if (KunenaError::checkDatabaseError() || !$total) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return array(0, array());
+		}
 
 		// Get items
 		if ($whereuser)
@@ -185,7 +192,10 @@ class KunenaForumTopicHelper {
 				WHERE {$where} ORDER BY {$orderby}";
 		$db->setQuery ( $query, $limitstart, $limit );
 		$results = (array) $db->loadAssocList ('id');
-		if (KunenaError::checkDatabaseError()) return array(0, array());
+		if (KunenaError::checkDatabaseError()) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return array(0, array());
+		}
 
 		$topics = array();
 		foreach ( $results as $id=>$result ) {
@@ -196,6 +206,7 @@ class KunenaForumTopicHelper {
 			$topics[$id] = $instance;
 		}
 		unset ($results);
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return array($total, $topics);
 	}
 

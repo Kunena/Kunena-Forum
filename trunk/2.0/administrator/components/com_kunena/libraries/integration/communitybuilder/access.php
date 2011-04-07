@@ -38,8 +38,8 @@ class KunenaAccessCommunityBuilder extends KunenaAccess {
 		return $this->storeModerators($list);
 	}
 
-	public function loadAllowedCategories($userid) {
-		$allowed = $this->joomlaAccess->getAllowedCategories($userid);
+	public function loadAllowedCategories($userid, &$categories) {
+		$allowed = $this->joomlaAccess->getAllowedCategories($userid, $categories);
 		$allowed = implode(',', $allowed);
 		$params = array ($userid, &$allowed);
 		$this->integration->trigger ( 'getAllowedForumsRead', $params );

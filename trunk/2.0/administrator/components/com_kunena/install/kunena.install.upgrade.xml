@@ -63,7 +63,6 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` MODIFY `title` tinytext NOT NULL AFTER `id`;</query>
 		</version>
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
-		    <query>UPDATE `#__kunena_sessions` SET `allowed`='na'</query>
 			<query>UPDATE `#__kunena_users` SET `rank`=8 WHERE `moderator`=1 AND `rank`=0</query>
 			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;#039;", "'")</query>
             <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;quot;", '"')</query>

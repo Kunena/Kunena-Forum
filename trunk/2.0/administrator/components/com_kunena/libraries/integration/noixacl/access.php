@@ -45,7 +45,7 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		return $this->storeModerators($list);
 	}
 
-	public function loadAllowedCategories($user) {
+	public function loadAllowedCategories($user, &$categories) {
 		$user = JFactory::getUser($user);
 		$db = JFactory::getDBO ();
 
@@ -76,7 +76,6 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		$levels = array_unique(explode(',', implode(',', (array) $db->loadResultArray())));
 		if (KunenaError::checkDatabaseError()) return array();
 
-		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 		$catlist = array();
 		foreach ( $categories as $category ) {
 			// Check if user is a moderator

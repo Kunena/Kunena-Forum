@@ -45,10 +45,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$config->template = $id;
 			$config->remove ();
 			$config->create ();
-
-			$db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
-			$db->query ();
-			KunenaError::checkDatabaseError();
 		}
 		$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT_SELECTED'));
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );

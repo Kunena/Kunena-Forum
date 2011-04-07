@@ -62,10 +62,6 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$config->remove ();
 		$config->create ();
 
-		$db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
-		$db->query ();
-		KunenaError::checkDatabaseError();
-
 		$app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
@@ -84,10 +80,6 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$config->remove ();
 		$config = new CKunenaConfig();
 		$config->create();
-
-		$db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
-		$db->query ();
-		KunenaError::checkDatabaseError();
 
 		$app->enqueueMessage ( JText::_('COM_KUNENA_CONFIG_DEFAULT'));
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );

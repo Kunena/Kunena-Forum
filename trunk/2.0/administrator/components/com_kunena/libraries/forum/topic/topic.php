@@ -29,7 +29,9 @@ kimport ('kunena.keyword.helper');
 class KunenaForumTopic extends JObject {
 	protected $_exists = false;
 	protected $_db = null;
-	protected $_auth = array();
+	protected $_authcache = array();
+	protected $_authccache = array();
+	protected $_authfcache = array();
 	protected $_hold = 1;
 	protected $_posts = 0;
 	protected $_pagination = null;
@@ -377,36 +379,42 @@ class KunenaForumTopic extends JObject {
 	}
 
 	public function authorise($action='read', $user=null, $silent=false) {
+		if ($action == 'none') return true;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($user === null) {
 			$user = $this->_me;
 		} elseif (!($user instanceof KunenaUser)) {
 			$user = KunenaUserHelper::get($user);
 		}
-		if (!isset(self::$actions[$action])) {
-			JError::raiseError(500, JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-			return false;
-		}
-		$key = "{$user->userid}.{$action}";
-		if (!$silent || !isset($this->_auth[$key])) {
-			$category = $this->getCategory();
-			$this->_auth[$key] = $category->authorise('topic.'.$action, $user, $silent);
-		}
-		if (!$this->_auth[$key]) {
-			if (!$silent) $this->setError ( $this->_auth[$key] );
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-			return false;
-		}
-		foreach (self::$actions[$action] as $function) {
-			$authFunction = 'authorise'.$function;
-			$error = $this->$authFunction($user);
-			if ($error) {
-				if (!$silent) $this->setError ( $error );
+
+		if (empty($this->_authcache[$user->userid][$action])) {
+			if (!isset(self::$actions[$action])) {
+				JError::raiseError(500, JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 				return false;
 			}
+
+			if (!$silent || !isset($this->_authccache[$user->userid][$action])) {
+				$category = $this->getCategory();
+				$this->_authccache[$user->userid][$action] = $category->authorise('topic.'.$action, $user, $silent);
+			}
+
+			$this->_authcache[$user->userid][$action] = null;
+			foreach (self::$actions[$action] as $function) {
+				if (!isset($this->_authfcache[$user->userid][$function])) {
+					$authFunction = 'authorise'.$function;
+					$this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
+				}
+				$error = $this->_authfcache[$user->userid][$function];
+				if ($error) {
+					$this->_authcache[$user->userid][$action] = $error;
+					break;
+				}
+			}
 		}
+		$error = $this->_authcache[$user->userid][$action];
+		if (!$silent && $error) $this->setError ( $error );
+
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return true;
 	}

@@ -48,14 +48,13 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		return $this->storeModerators($list);
 	}
 
-	public function loadAllowedCategories($user) {
+	public function loadAllowedCategories($user, &$categories) {
 		$user = JFactory::getUser($user);
 
 		$accesslevels = (array) $user->authorisedLevels();
 		$groups_r = JAccess::getGroupsByUser($user->id, true);
 		$groups = JAccess::getGroupsByUser($user->id, false);
 
-		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 		$catlist = array();
 		foreach ( $categories as $category ) {
 			// Check if user is a moderator

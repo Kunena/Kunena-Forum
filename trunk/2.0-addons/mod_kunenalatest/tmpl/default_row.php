@@ -15,7 +15,7 @@ if ( $this->params->get ( 'sh_topiciconoravatar' ) == 1 ) : ?>
 <li class="klatest-avatar">
 	<?php
 	$user = KunenaFactory::getUser ( ( int ) $this->topic->last_post_userid );
-	echo CKunenaLink::GetProfileLink ( $user->userid, $user->getAvatarLink ( '', $this->params->get ( 'avatarwidth' ), $this->params->get ( 'avatarheight' ) ) );
+	echo CKunenaLink::GetProfileLink ( $user->userid, $user->getAvatarImage ( '', $this->params->get ( 'avatarwidth' ), $this->params->get ( 'avatarheight' ) ) );
 	?>
 </li>
 <?php elseif ( $this->params->get ( 'sh_topiciconoravatar' ) == 0 ) : ?>
@@ -55,5 +55,5 @@ if ( $this->params->get ( 'sh_topiciconoravatar' ) == 1 ) : ?>
 <li class="klatest-author"><?php echo JText::_ ( 'MOD_KUNENALATEST_LAST_POST_BY' ) .' '. CKunenaLink::GetProfileLink ( $this->topic->last_post_userid, $this->escape ( $this->topic->last_post_guest_name ) ); ?></li>
 <?php endif; ?>
 <?php if ($this->params->get ( 'sh_time' )) : ?>
-<li class="klatest-posttime"><?php $override = $this->params->get ( 'dateformat' ); echo CKunenaTimeformat::showDate($this->topic->last_post_time, $override ? $override : 'config_post_dateformat');?></li>
+<li class="klatest-posttime"><?php $override = $this->params->get ( 'dateformat' ); echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena($override ? $override : 'config_post_dateformat');?></li>
 <?php endif; ?>

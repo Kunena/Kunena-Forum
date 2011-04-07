@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 2.0.0-DEV
 
+7-April-2011 Matias
+# [#24676] Fix Fatal error: Class 'CKunenaTimeformat' and KunenaUser::getAvatarLink() not found
+
 1-April-2011 Matias
 # [#24676] Fix Fatal error: Class 'CKunenaLink' not found
 

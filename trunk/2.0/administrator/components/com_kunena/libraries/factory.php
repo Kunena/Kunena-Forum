@@ -159,29 +159,41 @@ abstract class KunenaFactory {
 		static $loaded = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
-		if (!isset($loaded[$file])) {
+		if (empty($loaded[$file])) {
 			$version = new JVersion();
 			$lang = JFactory::getLanguage();
 			if ($version->RELEASE == '1.5' && !$lang->getDebug()) {
 				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang).DS."{$lang->_lang}.{$file}.ini";
-				$version = phpversion();
-				if ($version >= '5.3.1') {
-					$contents = file_get_contents($filename);
-					$contents = str_replace('_QQ_','"\""',$contents);
-					$strings = (array) @parse_ini_string($contents);
-				} else {
-					$strings = (array) @parse_ini_file($filename);
-					if ($version == '5.3.0') {
-						foreach($strings as $key => $string) {
-							$strings[$key]=str_replace('_QQ_','"',$string);
-						}
-					}
+				$loaded[$file] = self::parseLanguage($lang, $filename);
+				if (!$loaded[$file]) {
+					$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang).DS."{$lang->_default}.{$file}.ini";
+					$loaded[$file] = self::parseLanguage($lang, $filename);
 				}
-				$lang->_strings = array_merge($lang->_strings, $strings);
 			} else {
 				$loaded[$file] = $lang->load($file, JPATH_SITE, null, 1);
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $loaded[$file];
+}
+
+	protected function parseLanguage($lang, $filename) {
+		if (!file_exists($filename)) return false;
+		$version = phpversion();
+		if ($version >= '5.3.1') {
+			$contents = file_get_contents($filename);
+			$contents = str_replace('_QQ_','"\""',$contents);
+			$strings = (array) @parse_ini_string($contents);
+		} else {
+			$strings = (array) @parse_ini_file($filename);
+			// _QQ_ is currently not used in Kunena -- we can ignore the following code for now:
+			/*if ($version == '5.3.0') {
+				foreach($strings as $key => $string) {
+					$strings[$key]=str_replace('_QQ_','"',$string);
+				}
+			}*/
+		}
+		$lang->_strings = array_merge($lang->_strings, $strings);
+		return !empty($strings);
 	}
 }

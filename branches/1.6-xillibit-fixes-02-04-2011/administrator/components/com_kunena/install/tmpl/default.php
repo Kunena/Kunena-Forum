@@ -10,6 +10,10 @@
 defined('_JEXEC') or die;
 $this->document->addStyleSheet ( JURI::base().'components/com_kunena/install/media/install.css' );
 if ($this->go == 'next') {
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE != '1.5') {
+		JHtml::_('behavior.framework');
+	}
 	$this->document = JFactory::getDocument();
 	$this->document->addScriptDeclaration(" // <![CDATA[
 window.addEvent('domready', function() {window.location='".JRoute::_('index.php?option=com_kunena&view=install&task=run&'.JUtility::getToken() .'=1', false)."';});

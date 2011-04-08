@@ -204,7 +204,16 @@ table.kadmin-stat caption {
 
 	function editKTemplate($row, & $params, $option, & $ftp, & $template)
 	{
-		JHTML::_('behavior.tooltip');?>
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE != '1.5') {
+			// Include the component HTML helpers.
+			JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+			// Load the tooltip behavior.
+			JHtml::_('behavior.tooltip');
+			JHtml::_('behavior.formvalidation');
+		}
+		?>
 		<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_TEMPLATE'); ?> - <?php echo JText::_($row->name); ?></div><br />
 		<div style="border: 1px solid #ccc; padding: 10px 0 0;">
 		<form action="index.php" method="post" name="adminForm">
@@ -269,6 +278,15 @@ table.kadmin-stat caption {
 
 	function chooseCSSFiles($template, $t_dir, $t_files, $option)
 	{
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE != '1.5') {
+			// Include the component HTML helpers.
+			JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+			// Load the tooltip behavior.
+			JHtml::_('behavior.tooltip');
+			JHtml::_('behavior.formvalidation');
+		}
  ?>
 	<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CHOOSE_CSS_TEMPLATE'); ?></div><br />
 	<form action="index.php" method="post" name="adminForm">
@@ -308,6 +326,15 @@ table.kadmin-stat caption {
 
 	function editCSSSource($template, $filename, & $content, $option, & $ftp)
 	{
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE != '1.5') {
+			// Include the component HTML helpers.
+			JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+			// Load the tooltip behavior.
+			JHtml::_('behavior.tooltip');
+			JHtml::_('behavior.formvalidation');
+		}
 		$css_path = KUNENA_PATH_TEMPLATE.DS.$template.DS.'css'.DS.$filename; ?>
 	<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_CSS_TEMPLATE'); ?></div><br />
 		<form action="index.php" method="post" name="adminForm">
@@ -358,6 +385,12 @@ table.kadmin-stat caption {
 //******************************************/
 
 function showAdministration($rows, $children, $pageNav, $option, $lists) {
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE != '1.5') { 
+		JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+		JHtml::_('behavior.tooltip');
+		JHtml::_('script','system/multiselect.js',false,true);
+	}
 ?>
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
 	<form action="index.php" method="post" name="adminForm">
@@ -2133,6 +2166,12 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 			} //end function showCss
 
 function showProfiles($option, &$users, $pageNav, $order, $lists) {
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE != '1.5') { 
+		JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+		JHtml::_('behavior.tooltip');
+		JHtml::_('script','system/multiselect.js',false,true);
+	}
 ?>
 <div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_FUM'); ?></div>
 	<form action="index.php" method="post" name="adminForm">
@@ -2249,6 +2288,15 @@ function showProfiles($option, &$users, $pageNav, $order, $lists) {
 } //end function showProfiles
 
 function newModerator($option, $id, $moderators, &$modIDs, $forumName, &$userList, $countUL, $pageNav) {
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE != '1.5') {
+		// Include the component HTML helpers.
+		JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+		// Load the tooltip behavior.
+		JHtml::_('behavior.tooltip');
+		JHtml::_('behavior.formvalidation');
+	}
 	?>
 
 	<form action="index.php" method="post" name="adminForm">
@@ -2341,6 +2389,15 @@ function newModerator($option, $id, $moderators, &$modIDs, $forumName, &$userLis
 }
 
 function editUserProfile($option, $user, $subslist, $subscatslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats, $useriplist) {
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE != '1.5') {
+		// Include the component HTML helpers.
+		JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+		// Load the tooltip behavior.
+		JHtml::_('behavior.tooltip');
+		JHtml::_('behavior.formvalidation');
+	}
 				$kunena_config = KunenaFactory::getConfig ();
 				$kunena_db = &JFactory::getDBO ();
 				//fill the variables needed later
@@ -2590,6 +2647,15 @@ function textCounter(field, target) {
 	<?php
 		}
 		function moveUserMessages ( $option, $return, $uid, $lists, $userids ) {
+			$jversion = new JVersion ();
+			if ($jversion->RELEASE != '1.5') {
+				// Include the component HTML helpers.
+				JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+				// Load the tooltip behavior.
+				JHtml::_('behavior.tooltip');
+				JHtml::_('behavior.formvalidation');
+			}
 	?>
 			<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_A_MOVE_USERMESSAGES'); ?></div>
 			<table class="adminform">
@@ -2628,6 +2694,15 @@ function textCounter(field, target) {
 		// Prune Forum
 		//**************************
 		function pruneforum($option, $forumList) {
+			$jversion = new JVersion ();
+			if ($jversion->RELEASE != '1.5') {
+				// Include the component HTML helpers.
+				JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+				// Load the tooltip behavior.
+				JHtml::_('behavior.tooltip');
+				JHtml::_('behavior.formvalidation');
+			}
 	?>
 	<div class="kadmin-functitle icon-prune"><?php echo JText::_('COM_KUNENA_A_PRUNE'); ?></div>
 	<form action="index.php" method="post" name="adminForm">
@@ -2655,6 +2730,15 @@ function textCounter(field, target) {
 			// Sync Users
 			//**************************
 			function syncusers($option) {
+				$jversion = new JVersion ();
+				if ($jversion->RELEASE != '1.5') {
+					// Include the component HTML helpers.
+					JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+					// Load the tooltip behavior.
+					JHtml::_('behavior.tooltip');
+					JHtml::_('behavior.formvalidation');
+				}
 		?>
 		<div id="kadmin-congifcover">
 			<div class="kadmin-functitle icon-syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></div>
@@ -2883,6 +2967,15 @@ function textCounter(field, target) {
 			} //end function showsmilies
 
 			function editsmiley($option, $smiley_edit_img, $filename_list, $smileypath, $smileycfg) {
+				$jversion = new JVersion ();
+				if ($jversion->RELEASE != '1.5') {
+					// Include the component HTML helpers.
+					JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+					// Load the tooltip behavior.
+					JHtml::_('behavior.tooltip');
+					JHtml::_('behavior.formvalidation');
+				}
 			?>
 		<script language="javascript" type="text/javascript">
 			<!--
@@ -2949,6 +3042,15 @@ function textCounter(field, target) {
 		<?php
 			} //end function editmilies
 			function newsmiley($option, $filename_list, $smileypath) {
+				$jversion = new JVersion ();
+				if ($jversion->RELEASE != '1.5') {
+					// Include the component HTML helpers.
+					JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+					// Load the tooltip behavior.
+					JHtml::_('behavior.tooltip');
+					JHtml::_('behavior.formvalidation');
+				}
 		?>
 		<script language="javascript" type="text/javascript">
 			<!--
@@ -3115,6 +3217,15 @@ function textCounter(field, target) {
 			} //end function showRanks
 
 		function newRank($option, $filename_list, $rankpath) {
+			$jversion = new JVersion ();
+			if ($jversion->RELEASE != '1.5') {
+				// Include the component HTML helpers.
+				JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+				// Load the tooltip behavior.
+				JHtml::_('behavior.tooltip');
+				JHtml::_('behavior.formvalidation');
+			}
 		?>
 		<script language="javascript" type="text/javascript">
 			<!--
@@ -3173,6 +3284,15 @@ function textCounter(field, target) {
 		<?php
 			} //end function edit rank
 			function editrank($option, $edit_img, $filename_list, $path, $row) {
+				$jversion = new JVersion ();
+				if ($jversion->RELEASE != '1.5') {
+					// Include the component HTML helpers.
+					JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+					// Load the tooltip behavior.
+					JHtml::_('behavior.tooltip');
+					JHtml::_('behavior.formvalidation');
+				}
 		?>
 		<script language="javascript" type="text/javascript">
 			<!--
@@ -3248,6 +3368,12 @@ function textCounter(field, target) {
 
 //Start trash view
 function showtrashview($option, $trashitems, $pageNav, $lists) {
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE != '1.5') { 
+		JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+		JHtml::_('behavior.tooltip');
+		JHtml::_('script','system/multiselect.js',false,true);
+	}
 			?>
 		<div class="kadmin-functitle icon-trash"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></div>
 		<form action="index.php" method="post" name="adminForm" class="adminform">
@@ -3366,6 +3492,15 @@ function showtrashview($option, $trashitems, $pageNav, $lists) {
 		<?php
 			}
 			function trashpurge($option, $return, $cid, $items) {
+				$jversion = new JVersion ();
+				if ($jversion->RELEASE != '1.5') {
+					// Include the component HTML helpers.
+					JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+					// Load the tooltip behavior.
+					JHtml::_('behavior.tooltip');
+					JHtml::_('behavior.formvalidation');
+				}
 		?>
 		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_TRASH_PURGE'); ?></div>
 		<form action="index.php" method="post" name="adminForm">
@@ -3407,15 +3542,21 @@ function showtrashview($option, $trashitems, $pageNav, $lists) {
 
 			//Start report system
 			function showSystemReport($option, $report) {
+				$jversion = new JVersion ();
+				if ($jversion->RELEASE == '1.5') { 
+					JHtml::_('behavior.mootools');
+				} else {
+					JHtml::_('behavior.framework');
+				}
+				$doc = JFactory::getDocument();
+				$doc->addScriptDeclaration("	window.addEvent('domready', function(){
+					$('link_sel_all').addEvent('click', function(e){
+						$('report_final').select();
+					});
+				});");
 		?>
 		<div class="kadmin-functitle icon-systemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
-		<script type="text/javascript">
-			window.addEvent('domready', function(){
-				$('link_sel_all').addEvent('click', function(e){
-					$('report_final').select();
-				});
-			});
-		</script>
+		
 		<form action="index.php" method="post" name="adminForm" class="adminform">
 		<fieldset><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?><br /></fieldset>
 		<fieldset>

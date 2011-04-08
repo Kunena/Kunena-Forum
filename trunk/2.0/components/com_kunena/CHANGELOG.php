@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+8-April-2011 Matias
+^ [#23442] Optimize for speed: Load language files by using faster method
+
 7-April-2011 Matias
 ^ [#23442] Optimize for speed: KunenaAccessJoomla15::__construct() do not use slow JFactory::getACL()
 ^ [#23442] Optimize for speed: KunenaAccess::getAllowedCategories() + store information into user state

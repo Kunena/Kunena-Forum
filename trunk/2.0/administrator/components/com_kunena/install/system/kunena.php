@@ -29,10 +29,16 @@ class plgSystemKunena extends JPlugin {
 		// Load Kunena API
 		require_once $api;
 
-		// Fix Joomla 1.5 bug
+		// Fix Joomla 1.5 bugs and bad performance
 		$version = new JVersion();
-		if (JFactory::getApplication()->isAdmin() && $version->RELEASE == '1.5') {
-			JFactory::getLanguage()->load('com_kunena.menu', JPATH_ADMINISTRATOR);
+		if ($version->RELEASE == '1.5') {
+			$lang = JFactory::getLanguage();
+			if (JFactory::getApplication()->isAdmin()) {
+				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR);
+			} else {
+				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang).DS.$lang->_lang.'.com_kunena.ini';
+				$lang->_paths['com_kunena'][$filename] = 1;
+			}
 		}
 
 		parent::__construct ( $subject, $config );

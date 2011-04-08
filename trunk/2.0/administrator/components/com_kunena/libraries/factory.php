@@ -154,13 +154,34 @@ abstract class KunenaFactory {
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
 	 */
-	public static function loadLanguage( $file = 'com_kunena', $reload = false )
+	public static function loadLanguage( $file = 'com_kunena' )
 	{
-		static $lang = null;
+		static $loaded = array();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
-		if ($lang == null or $reload == true) {
+		if (!isset($loaded[$file])) {
+			$version = new JVersion();
 			$lang = JFactory::getLanguage();
-			$lang->load($file, JPATH_SITE, null, $reload);
+			if ($version->RELEASE == '1.5' && !$lang->getDebug()) {
+				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang).DS."{$lang->_lang}.{$file}.ini";
+				$version = phpversion();
+				if ($version >= '5.3.1') {
+					$contents = file_get_contents($filename);
+					$contents = str_replace('_QQ_','"\""',$contents);
+					$strings = (array) @parse_ini_string($contents);
+				} else {
+					$strings = (array) @parse_ini_file($filename);
+					if ($version == '5.3.0') {
+						foreach($strings as $key => $string) {
+							$strings[$key]=str_replace('_QQ_','"',$string);
+						}
+					}
+				}
+				$lang->_strings = array_merge($lang->_strings, $strings);
+			} else {
+				$loaded[$file] = $lang->load($file, JPATH_SITE, null, 1);
+			}
 		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 }

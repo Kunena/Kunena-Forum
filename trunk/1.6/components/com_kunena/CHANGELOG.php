@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+7-April-2011 Xillibit
+# [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text
+
 5-April-2011 Matias
 # [#25326] Turn off PHP notice/warning handlers when not in debug mode (Joomla 1.5 surpresses way too many errors with @)
 ^ [#15886] Merged revisions 4714-4720 from /branches/1.6.4-language-LDA-2011-04-03

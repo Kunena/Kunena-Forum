@@ -646,8 +646,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					$kunena_db		= JFactory::getDBO();
 					$user			= JFactory::getUser();
 
-					$articlecandisplayed = 0;
-					$tag_start = '<div class="kmsgtext-article">';
+					$html = $link = '';
 
 					if ($jversion->RELEASE == '1.5') {
 						$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, s.title AS section,
@@ -662,23 +661,14 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$article = $kunena_db->loadObject();
 						if ( $article ) {
 							if ((!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
-								$tag_new = $tag_start;
-								$tag_new .= JText::_("Article cannot be shown");
-								$tag_new .= '</div>';
+								$html = JText::_("Article cannot be shown");
 							} else if ((($article->cat_access > $user->get('aid', 0)) && $article->catid)
 							|| (($article->sec_access > $user->get('aid', 0)) && $article->sectionid)
 							|| ($article->access > $user->get('aid', 0))) {
-								$tag_new = $tag_start;
-								$tag_new .= JText::_("This message contains an article, but you do not have permissions to see it.");
-								$tag_new .= '</div>';
-							} else {
-								$articlecandisplayed = 1;
+								$html = JText::_("This message contains an article, but you do not have permissions to see it.");
 							}
 						} else {
-							$tag_new = $tag_start;
-							$tag_new .= JText::_("Article cannot be shown");
-							// End of div wrapper for article
-							$tag_new .= '</div>';
+							$html = JText::_("Article cannot be shown");
 						}
 					} elseif ($jversion->RELEASE == '1.6') {
 						$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, cc.published AS cat_pub, cc.access AS cat_access
@@ -701,85 +691,62 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							$groups = $user->getAuthorisedViewLevels();
 
 							if (!$article->cat_pub && $article->catid) {
-								$tag_new = $tag_start;
-								$tag_new .= JText::_("Article cannot be shown");
-								$tag_new .= '</div>';
-
+								$html = JText::_("Article cannot be shown");
 							} else if ( !in_array($article->access, $groups) ) {
-								$tag_new = $tag_start;
-								$tag_new .= JText::_("This message contains an article, but you do not have permissions to see it.");
-								$tag_new .= '</div>';
-							} else {
-								$articlecandisplayed = 1;
+								$html = JText::_("This message contains an article, but you do not have permissions to see it.");
 							}
 						} else {
-							$tag_new = $tag_start;
-							$tag_new .= JText::_("Article cannot be shown");
-							// End of div wrapper for article
-							$tag_new .= '</div>';
+							$html = JText::_("Article cannot be shown");
 						}
 					}
 
-					if ( $articlecandisplayed ) {
-						$params = clone($kunena_app->getParams('com_content'));
-						$aparams = new JParameter($article->attribs);
-						$params->merge($aparams);
-						// Identify the source of the event to be Kunena itself
-						// this is important to avoid recursive event behaviour with our own plugins
-						$params->set('ksource', 'kunena');
-						JPluginHelper::importPlugin('content');
-						$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
+					if ( !$html ) {
 						require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
 
 						if ($jversion->RELEASE == '1.5') {
-							$link_readmore = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
-												'" class="readon">'.JText::sprintf('Read more...').'</a>';
-							$link_title = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
-												'" class="readon">'.$article->title.'</a>';
-						} elseif ($jversion->RELEASE == '1.6') {
-							$link_readmore = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid)).
-												'" class="readon">'.JText::sprintf('Read more...').'</a>';
-							$link_title = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid)).
-												'" class="readon">'.$article->title.'</a>';
+							$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
+						} else {
+							$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid));
 						}
 
-						if ($param == 'intro') {
-							if ( !empty($article->introtext) ) {
-								$tag_new = $tag_start;
-								$tag_new .= $article->introtext;
-								$tag_new .= '</div>';
-							} else {
-								$tag_new = $link_title;
-							}
-						} elseif ($param == 'full') {
-							if ( !empty($article->fulltext) ) {
-								$tag_new = $tag_start;
-								$tag_new .= $article->fulltext;
-								$tag_new .= '</div>';
-							} else {
-								$tag_new = $link_title;
-							}
-						} elseif ($param == 'link' || empty($param)) {
-							if ( empty($param) ) {
-								if(!empty($article->introtext))	{
-									$article->text = $article->introtext;
-								} else {
+						// TODO: make configurable
+						if (!$param) $param = 'intro';
+							switch ($param) {
+							case 'full':
+								if ( !empty($article->fulltext) ) {
 									$article->text = $article->fulltext;
+									// TODO: Add language string instead the JText::sprintf('Read more...') for k1.6.4+
+									$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read more...').'</a>';
+							break;
 								}
-							}
-
-							$tag_new = $tag_start;
-
-							if ( $param != 'link' ) {
-								$tag_new .= $article->text;
-								$tag_new .= '</div>';
-								$tag_new .= $link_readmore;
-							} else {
-								$tag_new = $link_title;
-							}
+							// continue to intro
+							case 'intro':
+								if ( !empty($article->introtext) ) {
+									$article->text = $article->introtext;
+									// TODO: Add language string instead the JText::sprintf('Read more...') for k1.6.4+
+									$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read more...').'</a>';
+							break;
+								}
+							// continue to link
+							case 'link':
+							default:
+								$link = '<a href="'.$url.'" class="readon">'.$article->title.'</a>';
+							break;
 						}
 
+						if (!empty($article->text)) {
+							$params = clone($kunena_app->getParams('com_content'));
+							$aparams = new JParameter($article->attribs);
+							$params->merge($aparams);
+							// Identify the source of the event to be Kunena itself
+							// this is important to avoid recursive event behaviour with our own plugins
+							$params->set('ksource', 'kunena');
+							JPluginHelper::importPlugin('content');
+							$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
+							$html = $article->text;
+						}
 					}
+					$tag_new = '<div class="kmsgtext-article">'.$html.'</div>'.$link;
 					return TAGPARSER_RET_REPLACED;
 				}
 				return TAGPARSER_RET_NOTHING;

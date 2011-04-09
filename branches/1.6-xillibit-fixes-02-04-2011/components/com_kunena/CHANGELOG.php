@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+9-April-2011 Xillibit
+# [#25594] Remove adress mail from report kunena config
+
 8-April-2011 Xillibit
 # [#25592] Under J1.6.1+ need to load proper for javascript and mootools
 

@@ -3345,18 +3345,28 @@ function getJoomlaMenuDetails($jversion) {
 			$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
 		}
 	} elseif ($jversion->RELEASE == '1.6') {
+		// Get Kunena extension id
+		$query = "SELECT extension_id "
+				." FROM #__extensions "
+				." WHERE name='com_kunena' AND type='component'";
+		$kunena_db->setQuery($query);
+		$kextensionid = $kunena_db->loadResult();
+		if (KunenaError::checkDatabaseError()) return;
+
 		// Get Kunena menu items
 		$query = "SELECT id "
 				." FROM #__menu "
-				." WHERE type='component' AND title ='Forum' ORDER BY id ASC";
+				." WHERE component_id='$kextensionid' AND published='1' AND parent_id='1' AND level='1' ORDER BY id ASC";
 		$kunena_db->setQuery($query);
 		$kmenuparentid = $kunena_db->loadResult();
+		if (KunenaError::checkDatabaseError()) return;
 
 		$query = "SELECT id, menutype, title, alias, link, path "
 				." FROM #__menu "
 				." WHERE parent_id={$kunena_db->Quote($kmenuparentid)} AND type='component' OR title='Kunena Forum' OR title='Kunena' ORDER BY id ASC";
 		$kunena_db->setQuery($query);
 		$kmenustype = $kunena_db->loadObjectlist();
+		if (KunenaError::checkDatabaseError()) return;
 
 		$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
 		foreach($kmenustype as $item) {

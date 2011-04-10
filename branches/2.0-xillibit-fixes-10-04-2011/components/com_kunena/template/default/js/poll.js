@@ -50,8 +50,11 @@ window.addEvent('domready', function() {
 		document.id('kbutton-poll-add').onclick = function () {
 			var nboptionsmax = document.id('nb_options_allowed').get('value');
 			var koptions = document.id('kbbcode-poll-options').getChildren('div.polloption');
-			if(!nboptionsmax || koptions.length < nboptionsmax){
+			if(!nboptionsmax || (koptions.length < nboptionsmax && koptions.length > 1 ) ){
 				create_new_field_now(koptions.length+1);
+			} else if ( !nboptionsmax || koptions.length < 1 ) {
+				create_new_field_now(koptions.length+1);
+				create_new_field_now(koptions.length+2);
 			} else {
 				if(document.id('option_error')== undefined){
 					insert_text_write(KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW);

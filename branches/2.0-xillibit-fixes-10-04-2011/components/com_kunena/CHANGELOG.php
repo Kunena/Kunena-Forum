@@ -31,6 +31,11 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+10-April-2011 Xillibit
+# [#23443] In message IP is visible two times
+# [#23443] Private message is a dead link in log box
+# [#23443] Regression in polls : set two fields the first time
+
 8-April-2011 Matias
 ^ [#23442] Optimize for speed: Load language files by using faster method
 

@@ -61,6 +61,6 @@ class KunenaPrivateCommunityBuilder extends KunenaPrivate
 
 		$itemid = getCBprofileItemid();
 
-		return CKunenaLink::GetSefHrefLink ( 'index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid, $text, '', 'follow');
+		return '<a href="'.JRoute::_ ('index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid).'" rel="follow">'.$text.'</a>';
 	}
 }

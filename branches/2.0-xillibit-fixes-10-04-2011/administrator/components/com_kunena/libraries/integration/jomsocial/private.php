@@ -43,6 +43,6 @@ class KunenaPrivateJomSocial extends KunenaPrivate
 
 	public function getInboxLink ($text) {
 		if (!$text) $text = JText::_('COM_KUNENA_PMS_INBOX');
-		return CKunenaLink::GetSefHrefLink ('index.php?option=com_community&view=inbox', $text, '', 'follow');
+		return '<a href="'.JRoute::_ ('index.php?option=com_community&view=inbox').'" rel="follow">'.$text.'</a>';
 	}
 }

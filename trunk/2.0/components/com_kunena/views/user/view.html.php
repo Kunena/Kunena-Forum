@@ -90,6 +90,10 @@ class KunenaViewUser extends KunenaView {
 			$this->profile->save();
 		}
 		if ($this->profile->userid == $this->my->id) {
+			if ($this->do != 'edit') $this->editLink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_EDIT').' &raquo;', 'nofollow', 'edit', 'kheader-link' );
+			else $this->editLink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow', '', 'kheader-link' );
+
+			// TODO: Deprecated
 			if ($this->do != 'edit') $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
 			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK'), 'nofollow' );
 		}
@@ -402,6 +406,9 @@ class KunenaViewUser extends KunenaView {
 		$this->genders[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
 		$this->genders[] = JHTML::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
+		$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
+			'friendfeed', 'digg', 'yim', 'aim', 'gtalk', 'icq', 'msn', 'blogspot', 'flickr', 'bebo');
+
 		echo $this->loadTemplate('profile');
 	}
 
@@ -415,10 +422,41 @@ class KunenaViewUser extends KunenaView {
 		$this->galleryurl = JURI::root(true) . '/media/kunena/avatars/gallery';
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
+
+		$this->row(true);
 		echo $this->loadTemplate('avatar');
 	}
 
 	function displayEditSettings() {
+		$item = new StdClass();
+		$item->name = 'messageordering';
+		$item->label = JText::_('COM_KUNENA_USER_ORDER');
+		$options = array();
+		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+		$options[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_USER_ORDER_ASC'));
+		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_DESC'));
+		$item->field = JHTML::_('select.genericlist', $options, 'messageordering', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->ordering), 'kmessageordering');
+		$this->settings[] = $item;
+
+		$item = new StdClass();
+		$item->name = 'hidemail';
+		$item->label = JText::_('COM_KUNENA_USER_HIDEEMAIL');
+		$options = array();
+		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
+		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
+		$item->field = JHTML::_('select.genericlist', $options, 'hidemail', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->hideEmail), 'khidemail');
+		$this->settings[] = $item;
+
+		$item = new StdClass();
+		$item->name = 'showonline';
+		$item->label = JText::_('COM_KUNENA_USER_SHOWONLINE');
+		$options = array();
+		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
+		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
+		$item->field = JHTML::_('select.genericlist', $options, 'showonline', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->showOnline), 'kshowonline');
+		$this->settings[] = $item;
+
+		$this->row(true);
 		echo $this->loadTemplate('settings');
 	}
 

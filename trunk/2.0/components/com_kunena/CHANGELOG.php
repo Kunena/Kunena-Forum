@@ -33,6 +33,11 @@ Kunena 2.0.0-DEV
 
 11-April-2011 Matias
 + [#25415] Tableless template: Implement Statistics/Default
+^ [#22792] Data Model Revisions: change social fields into lower case
++ [#25415] Tableless template: Implement User/Edit
++ [#25415] User/Default: Move common HTML into own files
+^ [#22569] User/Edit: foreach over social settings and forum settings to simplify template and making it dynamic
+^ [#22569] KunenaViewUser::displayEditProfile() and displayEditSettings(): add code from template files
 
 8-April-2011 Matias
 ^ [#23442] Optimize for speed: Load language files by using faster method

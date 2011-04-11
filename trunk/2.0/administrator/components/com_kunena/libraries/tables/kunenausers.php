@@ -139,88 +139,88 @@ class TableKunenaUsers extends KunenaTable
 	* ICQ ID
 	* @var string
 	**/
-	var $ICQ = null;
+	var $icq = null;
 
 	/**
 	* AIM ID
 	* @var string
 	**/
-	var $AIM = null;
+	var $aim = null;
 
 	/**
 	* YIM ID
 	* @var string
 	**/
-	var $YIM = null;
+	var $yim = null;
 
 	/**
 	* MSN ID
 	* @var string
 	**/
-	var $MSN = null;
+	var $msn = null;
 
 	/**
 	* SKYPE ID
 	* @var string
 	**/
-	var $SKYPE = null;
+	var $skype = null;
 	/**
 	* TWITTER ID
 	* @var string
 	**/
-	var $TWITTER = null;
+	var $twitter = null;
 	/**
 	* FACEBOOK ID
 	* @var string
 	**/
-	var $FACEBOOK = null;
+	var $facebook = null;
 
 	/**
 	* GTALK ID
 	* @var string
 	**/
-	var $GTALK = null;
+	var $gtalk = null;
 
 	/**
 	* MYSPACE ID
 	* @var string
 	**/
-	var $MYSPACE = null;
+	var $myspace = null;
 	/**
 	* LINKEDIN ID
 	* @var string
 	**/
-	var $LINKEDIN = null;
+	var $linkedin = null;
 	/**
 	* DELICIOUS ID
 	* @var string
 	**/
-	var $DELICIOUS = null;
+	var $delicious = null;
 	/**
 	* FRIENDFEED ID
 	* @var string
 	**/
-	var $FRIENDFEED = null;
+	var $friendfeed = null;
 	/**
 	* $DIGG ID
 	* @var string
 	**/
-	var $DIGG = null;
+	var $digg = null;
 	/**
 	* BLOGSPOT ID
 	* @var string
 	**/
-	var $BLOGSPOT = null;
+	var $blogspot = null;
 	/**
 	* FLICKR ID
 	* @var string
 	**/
-	var $FLICKR = null;
+	var $flickr = null;
 	/**
 	* BEBO ID
 	* @var string
 	**/
-	var $BEBO = null;
+	var $bebo = null;
 
 	function __construct($db) {
 		parent::__construct('#__kunena_users', 'userid', $db);

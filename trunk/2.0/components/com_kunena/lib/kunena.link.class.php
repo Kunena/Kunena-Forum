@@ -192,12 +192,12 @@ class CKunenaLink {
 	}
 
 	// Returns always link to Kunena profile
-	function GetMyProfileLink($userid, $name = null, $rel = 'nofollow', $task = '') {
+	function GetMyProfileLink($userid, $name = null, $rel = 'nofollow', $task = '', $class = '') {
 		if (!$name) {
 			$profile = KunenaFactory::getUser($userid);
 			$name = htmlspecialchars($profile->getName(), ENT_COMPAT, 'UTF-8');
 		}
-		return self::GetHrefLink ( self::GetMyProfileURL ( $userid, $task ), $name, '', $rel );
+		return self::GetHrefLink ( self::GetMyProfileURL ( $userid, $task ), $name, '', $rel, $class );
 	}
 
 	// Returns always url to Kunena profile

@@ -247,6 +247,10 @@
 		<field name="userlist_allowed" type="int(11)" null="1"/>
 		<field name="userlist_count_users" type="int(11)" null="1"/>
 		<field name="enable_threaded_layouts" type="int(11)" null="1"/>
+		<field name="category_subscriptions" type="text" null="1"/>
+		<field name="topic_subscriptions" type="text" null="1"/>
+		<field name="pubprofile" type="int(11)" null="1"/>
+		<field name="spoiler_image" type="text" null="1"/>
 		<key name="PRIMARY" unique="1" columns="id" />
 	</table>
 	<table name="kunena_keywords">
@@ -410,7 +414,7 @@
 		<field primary_key="yes" name="postid" type="int(11)" null="0" />
 		<field primary_key="yes" name="userid" type="int(11)" null="0" />
 		<field name="targetuserid" type="int(11)" null="0" />
-		<field name="time" type="timestamp" null="0" />
+		<field name="time" type="datetime" null="0" />
 		<key name="postid" unique="1" columns="postid,userid" />
 		<key name="userid" columns="userid" />
 		<key name="targetuserid" columns="targetuserid" />
@@ -429,8 +433,7 @@
 		<field primary_key="yes" name="topic_id" type="int(11)" null="0" />
 		<field name="category_id" type="int(11)" null="0" />
 		<field name="message_id" type="int(11)" null="0" />
-		<field name="time" type="timestamp" null="0"
-			extra="on update CURRENT_TIMESTAMP" />
+		<field name="time" type="datetime" null="0" />
 		<key name="user_topic_id" unique="1" columns="user_id,topic_id" />
 		<key name="category_user_id" columns="category_id,user_id" />
 	</table>
@@ -471,22 +474,22 @@
 		<field name="gender" type="tinyint(4)" null="0" default="0" />
 		<field name="birthdate" type="date" null="0" default="0001-01-01" />
 		<field name="location" type="varchar(50)" null="1" />
-		<field name="ICQ" type="varchar(50)" null="1" />
-		<field name="AIM" type="varchar(50)" null="1" />
-		<field name="YIM" type="varchar(50)" null="1" />
-		<field name="MSN" type="varchar(50)" null="1" />
-		<field name="SKYPE" type="varchar(50)" null="1" />
-		<field name="TWITTER" type="varchar(50)" null="1" />
-		<field name="FACEBOOK" type="varchar(50)" null="1" />
-		<field name="GTALK" type="varchar(50)" null="1" />
-		<field name="MYSPACE" type="varchar(50)" null="1" />
-		<field name="LINKEDIN" type="varchar(50)" null="1" />
-		<field name="DELICIOUS" type="varchar(50)" null="1" />
-		<field name="FRIENDFEED" type="varchar(50)" null="1" />
-		<field name="DIGG" type="varchar(50)" null="1" />
-		<field name="BLOGSPOT" type="varchar(50)" null="1" />
-		<field name="FLICKR" type="varchar(50)" null="1" />
-		<field name="BEBO" type="varchar(50)" null="1" />
+		<field name="icq" type="varchar(50)" null="1" />
+		<field name="aim" type="varchar(50)" null="1" />
+		<field name="yim" type="varchar(50)" null="1" />
+		<field name="msn" type="varchar(50)" null="1" />
+		<field name="skype" type="varchar(50)" null="1" />
+		<field name="twitter" type="varchar(50)" null="1" />
+		<field name="facebook" type="varchar(50)" null="1" />
+		<field name="gtalk" type="varchar(50)" null="1" />
+		<field name="myspace" type="varchar(50)" null="1" />
+		<field name="linkedin" type="varchar(50)" null="1" />
+		<field name="delicious" type="varchar(50)" null="1" />
+		<field name="friendfeed" type="varchar(50)" null="1" />
+		<field name="digg" type="varchar(50)" null="1" />
+		<field name="blogspot" type="varchar(50)" null="1" />
+		<field name="flickr" type="varchar(50)" null="1" />
+		<field name="bebo" type="varchar(50)" null="1" />
 		<field name="websitename" type="varchar(50)" null="1" />
 		<field name="websiteurl" type="varchar(50)" null="1" />
 		<field name="rank" type="tinyint(4)" null="0" default="0" />

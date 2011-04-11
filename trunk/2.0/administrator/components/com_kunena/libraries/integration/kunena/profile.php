@@ -35,20 +35,13 @@ class KunenaProfileKunena extends KunenaProfile
 		return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}", $xhtml);
 	}
 
-	public function getProfileView($PopUserCount=0) {
-		$_db = &JFactory::getDBO ();
-		$_config = KunenaFactory::getConfig ();
-
-		$queryName = $_config->username ? "username" : "name";
-		if (!$PopUserCount) $PopUserCount = $_config->popusercount;
-		$query = "SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$queryName} AS user FROM #__kunena_users AS u
-					INNER JOIN #__users AS j ON j.id = u.userid
-					WHERE u.uhits>'0' AND j.block=0 ORDER BY u.uhits DESC";
-		$_db->setQuery ( $query, 0, $PopUserCount );
-		$topKunenaProfileView = $_db->loadObjectList ();
+	public function _getTopHits($limit=0) {
+		$db = JFactory::getDBO ();
+		$query = "SELECT userid AS id, uhits AS count FROM #__kunena_users WHERE uhits>0 ORDER BY uhits DESC";
+		$db->setQuery ( $query, 0, $limit );
+		$top = $db->loadObjectList ();
 		KunenaError::checkDatabaseError();
-
-		return $topKunenaProfileView;
+		return $top;
 	}
 
 	public function showProfile($userid, &$msg_params) {}

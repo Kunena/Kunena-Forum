@@ -87,7 +87,7 @@ foreach ( $this->sections as $section ) :
 				// get the Moderator list for display
 				$modslist = array();
 				foreach ( $category->moderators as $moderator ) {
-					$modslist[] = CKunenaLink::GetProfileLink ( $moderator->userid );
+					$modslist[] = CKunenaLink::GetProfileLink ( $moderator );
 				}
 				echo JText::_('COM_KUNENA_GEN_MODERATORS') . ': ' . implode(', ', $modslist);
 		?>

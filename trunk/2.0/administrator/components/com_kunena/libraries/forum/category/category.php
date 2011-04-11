@@ -109,7 +109,7 @@ class KunenaForumCategory extends JObject {
 
 	public function isSection() {
 		$this->buildInfo();
-		return empty($this->_channels);
+		return empty($this->_channels['none']);
 	}
 
 	public function getTopics() {

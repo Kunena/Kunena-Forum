@@ -2068,3 +2068,51 @@ body {line-height:1.5;}
 #kunena #kprofile-rightcol {
 	padding-top: 2px;
 }
+
+/*---------- Credits ------------- */
+
+#kunena .kcredits-footer {
+	text-align: center;
+	font-size: .833em;
+}
+
+#kunena .kcredits-intro {
+	margin:5px;
+	padding:15px 30px;
+	text-align:left;
+	border: 1px solid;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+#kunena .kcredits-team {
+	margin: 0;
+	padding: 0;
+}
+#kunena li.kcredits-teammember {
+	list-style-type:circle;
+	margin:0 10px;
+	padding:0;
+	text-align:left;
+	background: transparent none;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+#kunena .kcredits-more {
+	padding: 10px 20px;
+	margin: 15px;
+	border: 1px solid;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+
+#kunena .kcredits-language {
+	padding: 10px 20px;
+	border: 1px solid;
+	margin: 15px;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+}

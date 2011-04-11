@@ -804,3 +804,17 @@ table {border-collapse: collapse;}
 #kunena .kmod-userbox .kpost-buttons {
 	border-color: #BFC3C6;
 }
+
+/*---------- Credits ------------- */
+
+#kunena .kcredits-intro {
+	border-color: #BFC3C6;
+}
+#kunena .kcredits-more {
+	background-color: #F2F1EE;
+	border-color: #BFC3C6;
+}
+
+#kunena .kcredits-language {
+	border-color: #BFC3C6;
+}

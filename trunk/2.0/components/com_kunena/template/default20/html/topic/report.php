@@ -9,15 +9,13 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-kimport ( 'kunena.model' );
-
-/**
- * Statistics Model for Kunena
- *
- * @package		Kunena
- * @subpackage	com_kunena
- * @since		2.0
- */
-class KunenaModelStatistics extends KunenaModel {
-}
+?>
+	<div id="kunena">
+	<?php
+		$this->displayMenu ();
+		$this->displayLoginBox ();
+		$this->displayBreadcrumb ();
+		include 'report_embed.php';
+		$this->displayFooter ();
+	?>
+	</div>

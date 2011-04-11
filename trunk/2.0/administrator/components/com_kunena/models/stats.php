@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
 kimport('kunena.model');
+kimport('kunena.forum.statistics');
 
 /**
  * Stats Model for Kunena
@@ -22,8 +23,7 @@ kimport('kunena.model');
  */
 class KunenaAdminModelStats extends KunenaModel {
 	protected function _getStatsClass() {
-		require_once(KPATH_SITE.'/lib/kunena.stats.class.php');
-		$kunena_stats = CKunenaStats::getInstance();
+		$kunena_stats = KunenaForumStatistics::getInstance();
 
 		return $kunena_stats;
 	}

@@ -21,6 +21,9 @@ KunenaUserHelper::initialize();
 class KunenaUserHelper {
 	protected static $_instances = array ();
 	protected static $_online = null;
+	protected static $_lastid = null;
+	protected static $_total = null;
+	protected static $_topposters = null;
 	protected static $_me = null;
 
 	private function __construct() {}
@@ -107,6 +110,46 @@ class KunenaUserHelper {
 		$avatars->load($userids);
 
 		return $list;
+	}
+
+	static public function getLastId() {
+		if (self::$_lastid === null) {
+			$db = JFactory::getDBO ();
+			$config = KunenaFactory::getConfig();
+			if ($config->userlist_count_users == '0' ) $where = '1';
+			elseif ($config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
+			elseif ($config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
+			$db->setQuery ( "SELECT id FROM #__users WHERE {$where} ORDER BY id DESC", 0, 1 );
+			self::$_lastid = (int) $db->loadResult ();
+			KunenaError::checkDatabaseError();
+		}
+		return self::$_lastid;
+	}
+
+	static public function getTotalCount() {
+		if (self::$_total === null) {
+			$db = JFactory::getDBO ();
+			$config = KunenaFactory::getConfig();
+			if ($config->userlist_count_users == '0' ) $where = '1';
+			elseif ($config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
+			elseif ($config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
+			$db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE {$where}" );
+			self::$_total = (int) $db->loadResult ();
+			KunenaError::checkDatabaseError();
+		}
+		return self::$_total;
+	}
+
+	static public function getTopPosters($limit=0) {
+		$limit = $limit ? $limit : KunenaFactory::getConfig()->popusercount;
+		if (count(self::$_topposters) < $limit) {
+			$db = JFactory::getDBO ();
+			$query = "SELECT userid as id, posts AS count FROM #__kunena_users WHERE posts>0 ORDER BY posts DESC";
+			$db->setQuery ( $query, 0, $limit );
+			self::$_topposters = $db->loadObjectList ();
+			KunenaError::checkDatabaseError();
+		}
+		return self::$_topposters;
 	}
 
 	public static function getOnlineUsers() {

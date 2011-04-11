@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 jimport ( 'joomla.cache.handler.output' );
 kimport ( 'kunena.view' );
 kimport ( 'kunena.forum.category.helper' );
+kimport ( 'kunena.forum.statistics' );
 
 /**
  * Common view
@@ -206,23 +207,11 @@ class KunenaViewCommon extends KunenaView {
 		if ($cache->start("{$this->template->name}", 'com_kunena.view.common.statistics')) return;
 		// FIXME: refactor code
 		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
-		require_once(KPATH_SITE.'/lib/kunena.stats.class.php');
-		$kunena_stats = CKunenaStats::getInstance ( );
-		$kunena_stats->loadGenStats();
-		$kunena_stats->loadLastUser();
-		$kunena_stats->loadLastDays();
-		$kunena_stats->loadTotalTopics();
-		$kunena_stats->loadTotalCategories();
-		$this->todayOpenCount = $kunena_stats->todayopen;
-		$this->yesterdayOpenCount = $kunena_stats->yesterdayopen;
-		$this->todayAnswerCount = $kunena_stats->todayanswer;
-		$this->yesterdayAnswerCount = $kunena_stats->yesterdayanswer;
-		$this->totalSubjectsCount = $kunena_stats->totaltitles;
-		$this->totalPostsCount = $kunena_stats->totalmsgs;
-		$this->totalSectionsCount = $kunena_stats->totalsections;
-		$this->totalCategoriesCount = $kunena_stats->totalcats;
-		$this->totalUsersCount = $kunena_stats->totalmembers;
-		$this->latestMemberLink = CKunenaLink::GetProfileLink($kunena_stats->lastestmemberid);
+		$kunena_stats = KunenaForumStatistics::getInstance ( );
+		$kunena_stats->loadGeneral();
+
+		$this->assign($kunena_stats);
+		$this->latestMemberLink = CKunenaLink::GetProfileLink($this->lastUserId);
 		$this->statisticsURL = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 
 		$result = $this->loadTemplate($tpl);

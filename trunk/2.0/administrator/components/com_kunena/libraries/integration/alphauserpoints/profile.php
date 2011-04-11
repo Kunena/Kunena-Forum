@@ -57,21 +57,13 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile {
 		return JRoute::_ ( 'index.php?option=com_alphauserpoints&view=account' . $userid . '&Itemid=' . $AUP_itemid, $xhtml );
 	}
 
-	public function getProfileView($PopUserCount = 0) {
-		$_db = &JFactory::getDBO ();
-		$_config = KunenaFactory::getConfig ();
-
-		$queryName = $_config->username ? "username" : "name";
-		if (! $PopUserCount)
-			$PopUserCount = $_config->popusercount;
-		$query = "SELECT a.profileviews AS hits, u.id AS user_id, u.{$queryName} AS user FROM #__alpha_userpoints AS a
-					INNER JOIN #__users AS u ON u.id = a.userid
-					WHERE a.profileviews>'0' ORDER BY a.profileviews DESC";
-		$_db->setQuery ( $query, 0, $PopUserCount );
-		$topAUPProfileView = $_db->loadObjectList ();
+	public function _getTopHits($limit=0) {
+		$db = JFactory::getDBO ();
+		$query = "SELECT userid AS id, profileviews AS count FROM #__alpha_userpoints WHERE a.profileviews>0 ORDER BY profileviews DESC";
+		$db->setQuery ( $query, 0, $limit );
+		$top = $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
-
-		return $topAUPProfileView;
+		return $top;
 	}
 
 	public function showProfile($userid, &$msg_params) {

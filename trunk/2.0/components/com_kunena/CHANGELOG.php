@@ -33,6 +33,14 @@ Kunena 2.0.0-DEV
 
 8-April-2011 Matias
 ^ [#23442] Optimize for speed: Load language files by using faster method
+# [#23443] Fix regression in Category/Default: moderator list broken
+# [#23443] Fix regression in KunenaForumCategory::isSection()
+^ [#22569] Reimplement CKunenaStats class as KunenaForumStatistics
+^ [#22569] Move some functions from CKunenaStats into KunenaUserHelper (getLastId, getTotalCount, getTopPosters)
+^ [#22569] Rename variables in KunenaForumStatistics
+^ [#22569] Rename KunenaProfileX::getProfileView() into _getTopHits() and simplify function
++ [#25415] Tableless template: Implement Credits/Default
++ [#25415] Tableless template: Implement Topic/Report
 
 7-April-2011 Matias
 ^ [#23442] Optimize for speed: KunenaAccessJoomla15::__construct() do not use slow JFactory::getACL()

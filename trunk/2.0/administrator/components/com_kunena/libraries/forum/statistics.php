@@ -84,17 +84,25 @@ class KunenaForumStatistics {
 	public function loadUserStats($override=false) {
 		if ($this->showpopuserstats || $override) {
 			$this->top[] = $this->loadTopPosters();
+			if (!end($this->top)) array_pop($this->top);
 			$this->top[] = $this->loadTopProfiles();
+			if (!end($this->top)) array_pop($this->top);
 		}
-		if ($this->showpopthankyoustats || $override)
+		if ($this->showpopthankyoustats || $override) {
 			$this->top[] = $this->loadTopThankyous();
+			if (!end($this->top)) array_pop($this->top);
+		}
 	}
 
 	public function loadTopicStats($override=false) {
-		if ($this->showpopsubjectstats || $override)
+		if ($this->showpopsubjectstats || $override) {
 			$this->top[] = $this->loadTopTopics();
-		if ($this->showpoppollstats || $override)
+			if (!end($this->top)) array_pop($this->top);
+		}
+		if ($this->showpoppollstats || $override) {
 			$this->top[] = $this->loadTopPolls();
+			if (!end($this->top)) array_pop($this->top);
+		}
 	}
 
 	public function loadLastUserId() {
@@ -132,19 +140,19 @@ class KunenaForumStatistics {
 			$todaystart = strtotime ( date ( 'Y-m-d' ) );
 			$yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
 			$this->_db->setQuery ( "SELECT
-				SUM(time >= '{$todaystart}' AND parent='0') AS todayTopicCount,
-				SUM(time >= '{$todaystart}' AND parent>'0') AS todayReplyCount,
-				SUM(time >= '{$yesterdaystart}' AND time < '{$todaystart}' AND parent='0') AS yesterdayTopicCount,
-				SUM(time >= '{$yesterdaystart}' AND time < '{$todaystart}' AND parent>'0') AS yesterdayReplyCount
-				FROM #__kunena_messages WHERE time >= '{$yesterdaystart}' AND hold='0'" );
+				SUM(time>={$todaystart} AND parent=0) AS todayTopicCount,
+				SUM(time>={$todaystart} AND parent>0) AS todayReplyCount,
+				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent=0) AS yesterdayTopicCount,
+				SUM(time>={$yesterdaystart} AND time<{$todaystart} AND parent>0) AS yesterdayReplyCount
+				FROM #__kunena_messages WHERE time>={$yesterdaystart} AND hold=0" );
 
 			$counts = $this->_db->loadObject ();
 			KunenaError::checkDatabaseError();
 			if ($counts) {
-				$this->todayTopicCount = $counts->todayTopicCount;
-				$this->todayReplyCount = $counts->todayReplyCount;
-				$this->yesterdayTopicCount = $counts->yesterdayTopicCount;
-				$this->yesterdayReplyCount = $counts->yesterdayReplyCount;
+				$this->todayTopicCount = (int) $counts->todayTopicCount;
+				$this->todayReplyCount = (int) $counts->todayReplyCount;
+				$this->yesterdayTopicCount = (int) $counts->yesterdayTopicCount;
+				$this->yesterdayReplyCount = (int) $counts->yesterdayReplyCount;
 			} else {
 				$this->todayTopicCount = $this->todayReplyCount = $this->yesterdayTopicCount = $this->yesterdayReplyCount = 0;
 			}

@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+11-April-2011 Matias
++ [#25415] Tableless template: Implement Statistics/Default
+
 8-April-2011 Matias
 ^ [#23442] Optimize for speed: Load language files by using faster method
 # [#23443] Fix regression in Category/Default: moderator list broken

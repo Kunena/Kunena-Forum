@@ -64,7 +64,6 @@ $tabclass = array("row1","row2");
 $k = 0;
 ?>
 <?php foreach ($this->top as $top) : ?>
-<?php if(!empty($top)) : ?>
 <div class="kblock kpopsubjstats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpopsubstats-tbody"></a></span>
@@ -99,7 +98,6 @@ $k = 0;
 		</div>
 	</div>
 </div>
-<?php endif; ?>
 <?php endforeach; ?>
 
 <?php $this->displayFooter (); ?>

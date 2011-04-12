@@ -31,11 +31,13 @@ class modKunenaLatest {
 		if ($cache->start("display.{$me->userid}.{$hash}", 'mod_kunenalatest')) return;
 
 		// Convert module parameters into topics view parameters
+		$categories = $this->params->get ( 'category_id', 0 );
+		$categories = is_array($categories) ? implode(',', $categories) : $categories;
 		$this->params->set('limitstart', 0);
 		$this->params->set('limit', $this->params->get ( 'nbpost',5 ));
-		$this->params->set('latestcategory', $this->params->get ( 'category_id', 0 ));
-		$this->params->set('latestcategory_in', $this->params->get ( 'sh_category_id_in', 1 ));
-		$this->params->set('sel', $this->params->get ( 'show_list_time', -1 ));
+		$this->params->set('topics_categories', $categories);
+		$this->params->set('topics_catselection', $this->params->get ( 'sh_category_id_in', 1 ));
+		$this->params->set('topics_time', $this->params->get ( 'show_list_time', -1 ));
 		$userid = 0;
 		switch ( $this->params->get( 'choosemodel' ) ) {
 			case 'latestposts' :

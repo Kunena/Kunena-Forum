@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 2.0.0-DEV
 
+12-April-2011 Matias
+# [#24676] Module doesn't obey category or time selection
+
 7-April-2011 Matias
 # [#24676] Fix Fatal error: Class 'CKunenaTimeformat' and KunenaUser::getAvatarLink() not found
 

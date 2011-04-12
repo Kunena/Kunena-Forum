@@ -13,6 +13,36 @@ JToolBarHelper::title( JText::_( 'Kunena Translate' ).': <small><small>'.JText::
 JToolBarHelper::save(); 
 JToolBarHelper::cancel();?>
 
+<script type="text/javascript">
+<!--
+window.addEvent( 'domready' , function() {
+	var ext = document.getElementById('extension');
+
+	ext.addEvent('change' , function(){
+		var num = ext.get('value');
+		if( num != -1){
+			var tdc = document.getElementsByName('client');
+			var req = new Request( {
+				method: 'get',
+				url: 'index.php',
+				onRequest: function(){
+					tdc[0].set( 'text', '<?php echo JText::_('COM_KUNENATRANSLATE_LOADING'); ?>');
+				},
+				onSuccess: function(response){
+					tdc[0].set( 'html', response );
+				},
+				onFailure: function(){
+					tdc[0].set( 'text', '<?php echo JText::_('COM_KUNENATRANSLATE_LOADING_FAILED');?>');
+				}
+			});
+			req.send( 'option=com_kunenatranslate&controller=import&task=getClientList&extension='+num );
+		}
+	});
+});
+
+//-->
+</script>
+
 <form action="index.php" method="post" name="adminForm" id="adminForm">
 <table class="adminlist">
 	<thead>
@@ -29,7 +59,10 @@ JToolBarHelper::cancel();?>
 				</th>
 			<?php endforeach;?>
 			<th class="title">
-				Client
+				<?php echo JText::_('COM_KUNENATRANSLATE_EXTENSION')?>
+			</th>
+			<th class="title">
+				<?php echo JText::_('COM_KUNENATRANSLATE_CLIENT')?>
 			</th>
 		</tr>
 	</thead>
@@ -45,7 +78,10 @@ JToolBarHelper::cancel();?>
 				</td>
 			<?php endforeach;?>
 			<td>
-				<?php echo $this->client; ?>
+				<?php echo $this->extensionlist; ?>
+			</td>
+			<td name="client">
+				<?php echo JText::_('COM_KUNENATRANSLATE_CHOOSE_EXTENSION'); ?>
 			</td>
 		</tr>
 	</tbody>

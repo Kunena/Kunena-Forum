@@ -22,6 +22,12 @@ class KunenaTranslateControllerImport extends KunenaTranslateController
 		
 	}
 	
+	function display(){
+		$view = $this->getView('import', 'html', 'KunenaTranslateView');
+		$view->setModel( $this->getModel('extension') );
+		parent::display();
+	}
+	
 	function import(){
 		// Check for request forgeries
 		JRequest::checkToken() or jexit( 'Invalid Token' );
@@ -29,18 +35,27 @@ class KunenaTranslateControllerImport extends KunenaTranslateController
 		$model = $this->getModel('import');
 		$res = $model->getImport();
 		$msg = 'Import success';
+		JRequest::setVar('view', 'import');
 		if($res == false){
 			$msg = 'Import failed';
-			$this->setRedirect('index.php?option=com_kunenatranslate&view=import&task=importview' , $msg);
+			JRequest::setVar('task', 'import');
 		}elseif(is_array($res)){
-			$this->setMessage($msg);
 			JRequest::setVar('exist', $res);
 			JRequest::setVar('layout','exist');
-			JRequest::setVar('view', 'import');
-			parent::display();
 		}else{
-			$this->setRedirect('index.php?option=com_kunenatranslate&view=import&task=importview' , $msg);
+			JRequest::setVar('task', 'import');
 		}
+		JError::raiseNotice('', $msg);
+		self::display();
+	}
+	
+	function getClientList(){
+		$mainframe = JFactory::getApplication();
+		//get the config file
+		$model = $this->getModel('import');
+		require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
+		echo KunenaTranslateHelper::getClientList( $model->getExtensionFilename() , true);
+		$mainframe->close();
 	}
 	
 	function export(){
@@ -72,7 +87,7 @@ class KunenaTranslateControllerImport extends KunenaTranslateController
 		}else{
 			$msg = JText::_('No override choosed');
 		}
-		$link = 'index.php?option=com_kunenatranslate&view=import';
-		$this->setRedirect($link,$msg);
+		JError::raiseNotice('', $msg);
+		self::display();
 	}
 }

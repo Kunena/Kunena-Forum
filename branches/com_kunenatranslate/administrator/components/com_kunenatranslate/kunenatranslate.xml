@@ -9,7 +9,7 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>sven@kunena.com</authorEmail>
 	<authorUrl>http://www.kunena.com</authorUrl>
-	<version>1.0.0 Alpha</version>
+	<version>0.1.0</version>
 	<description>MOD_KUNENATRANSLATE_DESC</description>
 	<install>
 		<sql>

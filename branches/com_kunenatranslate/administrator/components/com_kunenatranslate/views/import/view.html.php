@@ -18,7 +18,8 @@ jimport('joomla.application.component.view');
 class KunenaTranslateViewImport extends JView
 {
 	function display($tpl = null){
-		if(JRequest::getVar('task') == 'importview'){
+		if(JRequest::getVar('task') == 'import' || 
+			JRequest::getVar('show') == 'import'){
 			$text = JText::_('Import');
 		}else{
 			$text = JText::_('Export');
@@ -29,15 +30,15 @@ class KunenaTranslateViewImport extends JView
 			$exist = JRequest::getVar('exist', array());
 			$this->assignRef('exist', $exist);
 		}else{
-			require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
-			$client = KunenaTranslateHelper::getClientList(true);
+			//get extension list
+			$ext = $this->getModel('extension');
+			$this->assignRef('extensionlist', $ext->getHtmlList() );
 			$lang		= JLanguage::getKnownLanguages();
 			foreach ($lang as $v) {
 				$langs[] = array('text'=>$v['tag'], 'value'=>$v['tag']);
 			}
 			$lang		= JHTML::_('select.genericlist', $langs, 'language', '', 'value', 'text');
 			$this->assignRef('lang',$lang);
-			$this->assignRef('client', $client);
 		}
 		parent::display($tpl);
 	}

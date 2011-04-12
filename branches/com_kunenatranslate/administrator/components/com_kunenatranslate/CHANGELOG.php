@@ -29,6 +29,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena Translate 0.1.0
+
+12-April-2011 svens (LDA)
++ [#25629] add config files translations
+
 21-February-2011 svens(LDA)
 + [#25009] Install & uninstall config files
 

@@ -36,7 +36,7 @@ class TableTranslation extends JTable
 		parent::__construct('#__kunenatranslate_translation', 'labelid', $db);
 	}
 	
-	function loadTranslations($id=null,$lang=null, $client=null){
+	function loadTranslations($id=null,$lang=null, $client=null, $extension=null){
 		$db =& $this->getDBO();
 		$where = null;
 		if(!empty($id) && is_array($id)){
@@ -59,6 +59,11 @@ class TableTranslation extends JTable
 			else $where = ' WHERE ';
 			$where .= " b.client='{$client}'";
 		}
+		if (!empty($extension) && is_int($extension)){
+			if(!empty($where)) $where .= ' AND ';
+			else $where = ' WHERE ';
+			$where .= " b.extension='{$extension}'";
+		}
 		$query = "SELECT a.*, b.label
 				FROM {$this->_tbl} AS a
 				LEFT JOIN #__kunenatranslate_label AS b
@@ -77,7 +82,7 @@ class TableTranslation extends JTable
 		}
 	}
 	
-	function store($data, $label= null, $client= null){
+	function store($data, $label= null, $client= null, $extension= null){
 		$db = &$this->getDBO();
 		if(!empty($label)){
 			$query = "SELECT id FROM #__kunenatranslate_label WHERE label='{$label}'";
@@ -87,8 +92,8 @@ class TableTranslation extends JTable
 				$this->setError('Label already exist');
 				return false;
 			}
-			$query = "INSERT INTO #__kunenatranslate_label (label, client)
-					VALUES ('{$label}','{$client}')";
+			$query = "INSERT INTO #__kunenatranslate_label (label, client, extension)
+					VALUES ('{$label}','{$client}','{$extension}')";
 			$db->setQuery($query);
 			if(!$db->query()){
 				$this->setError($this->_db->getErrorMsg());

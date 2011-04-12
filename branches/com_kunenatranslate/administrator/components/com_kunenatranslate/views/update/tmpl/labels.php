@@ -66,5 +66,6 @@ JToolBarHelper::cancel();?>
 <input type="hidden" name="controller" value="update" />
 <input type="hidden" name="labels" value="<?php echo implode(";",$this->labels['new']); ?>" />
 <input type="hidden" name="client" value="<?php echo $this->client; ?>" />
+<input type="hidden" name="extension" value="<?php echo $this->extension; ?>" />
 <?php echo JHTML::_( 'form.token' ); ?>
 </form>

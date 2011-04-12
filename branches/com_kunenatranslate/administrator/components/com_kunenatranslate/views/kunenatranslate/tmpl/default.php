@@ -12,8 +12,6 @@ defined('_JEXEC') or die('Restricted access');
 JToolBarHelper::addNew('add','New Label');
 JToolBarHelper::custom('update', 'refresh', 'refresh', 'Search New Labels', false, true );
 JToolBarHelper::custom('old', 'archive', 'archive', 'Search outdated Labels', false, true);
-JToolBarHelper::custom('importview', 'upload', 'upload', 'Import', false, true);
-JToolBarHelper::custom('exportview', 'download', 'download', 'Export', false, true);
 JToolBarHelper::editListX();
 JToolBarHelper::deleteList();?>
 

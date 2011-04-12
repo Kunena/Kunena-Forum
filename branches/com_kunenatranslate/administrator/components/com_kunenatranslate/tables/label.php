@@ -36,7 +36,7 @@ class TableLabel extends JTable
 		parent::__construct('#__kunenatranslate_label', 'id', $db);
 	}
 	
-	function loadLabels($id=null, $client=null){
+	function loadLabels($id=null, $client=null, $ext=null){
 		$db = $this->getDBO();
 		$where = null;
 		if(!empty($id) && is_array($id)){
@@ -48,10 +48,17 @@ class TableLabel extends JTable
 			}
 		}elseif (!empty($id) && is_int($id)){
 			$where = ' WHERE id='.$id;
-		}elseif (!empty($client) && is_string($client)){
-			if(empty($where)) $where = " WHERE ";
-			else $where .= " AND ";
-			$where .= " client='{$client}'";
+		}else{
+			if (!empty($client) && is_string($client)){
+				if(empty($where)) $where = " WHERE ";
+				else $where .= " AND ";
+				$where .= " client='{$client}'";
+			}
+			if (!empty($ext) && is_int($ext)){
+				if(empty($where)) $where = " WHERE ";
+				else $where .= " AND ";
+				$where .= " extension='{$ext}'";
+			}
 		}
 		$query = 'SELECT * 
 				FROM '. $this->_tbl
@@ -89,17 +96,17 @@ class TableLabel extends JTable
 		}
 	}
 	
-	function store($data, $client){
+	function store($data, $client, $extension){
 		$db = $this->getDBO();
 		$cdata = count($data);
 		$values = '';
 		if(is_array($data)){
 			foreach ($data as $k=>$value) {
-				$values .= "('', '{$value}', '{$client}')";
+				$values .= "('', '{$value}', '{$client}', '{$extension}')";
 				if ($cdata != $k+1) $values .= ",";
 			}
 		}
-		$query = "INSERT INTO {$this->_tbl} ( id, label, client )
+		$query = "INSERT INTO {$this->_tbl} ( id, label, client, extension )
 				VALUES {$values}";
 		$db->setQuery( $query );
 		if(!$db->query()){
@@ -115,15 +122,14 @@ class TableLabel extends JTable
 		foreach ($id as $v) {
 			$query = "DELETE {$this->_tbl} , #__kunenatranslate_translation 
 					FROM {$this->_tbl}, #__kunenatranslate_translation
-					WHERE {$this->_tbl}.{$this->_tbl_key}={$v}
-					AND #__kunenatranslate_translation.labelid={$v}";
+					WHERE {$this->_tbl}.{$this->_tbl_key}=#__kunenatranslate_translation.labelid
+					AND {$this->_tbl}.{$this->_tbl_key}={$v}";
 			$db->setQuery($query);
 			if(!$db->query()){
 				$this->setError($db->getErrorMsg());
 				return false;
-			}else{
-				return true;
 			} 
 		}
+		return true;
 	}
 }

@@ -21,15 +21,18 @@ class KunenaTranslateViewUpdate extends JView
 		JToolBarHelper::title( JText::_( 'Kunena Translate' ).': <small><small>'.
 			JText::_('Update Labels').'</small></small>', 'generic.png' );
 		
-		require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
-		$client = KunenaTranslateHelper::getClientList(true);
-		
 		if($this->getLayout() == 'labels'){
 			$labels =& $this->get('Update');
 			$client = JRequest::getWord('client');
+			$extension = JRequest::getInt('extension');
 			$this->assignRef('labels',$labels);
+			$this->assignRef('client', $client);
+			$this->assignRef('extension', $extension);
+		}else{
+			//get extension list
+			$ext = $this->getModel('extension');
+			$this->assignRef('extensionlist', $ext->getHtmlList() );
 		}
-		$this->assignRef('client', $client);
 
 		parent::display($tpl);
 	}

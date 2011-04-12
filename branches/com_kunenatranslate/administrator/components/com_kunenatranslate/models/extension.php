@@ -32,6 +32,33 @@ class KunenaTranslateModelExtension extends JModel {
 		$table = $this->getTable('Extension');
 		return $table->loadList();
 	}
+	
+	/**
+	 * Returns a HTML selectlist of installed config files
+	 * @return string
+	 */
+	function getHtmlList($hide_none = false){
+		if(!$hide_none)
+			$listarray[] = array ('text' => JText::_('COM_KUNENATRANSLATE_NONESELECTED') ,
+							 'value' => '-1');
+		$list = self::getList();
+		foreach ($list as $value) {
+			$listarray[] = array('text' => $value['name'],
+							'value' => $value['id']);
+		}
+		return JHTML::_('select.genericlist', $listarray, 'extension');
+	}
+	
+	/**
+	 * returns the filename of the wanted extension
+	 * @return string
+	 */
+	function getFilename(){
+		$table = $this->getTable('Extension');
+		$table->id = JRequest::getInt('extension');
+		return $table->getFilename();
+	}
+	
 	/**
 	 * Installs the given xml file
 	 * @return bool

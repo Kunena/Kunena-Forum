@@ -22,7 +22,11 @@ class KunenaTranslateHelper
 	var $dir = null;
 	
     public function scan_dir() {
-        if(!$temp = @scandir($this->dir)) {
+        if(is_file($this->dir)){
+        	$this->files[] = "$this->dir";
+        	return;
+        }
+    	if(!$temp = @scandir($this->dir)) {
         	JError::raiseWarning('', JText::_('Error! Files not found!'));
         	return;
         }
@@ -140,6 +144,29 @@ class KunenaTranslateHelper
 	        }
 	    }
 	}
+	
+	/*
+	 * Get the Labels for the admin Menu
+	 * @param &$xmlLinesParams referenz to save all the strings in it
+	 * @param $menu administration piece of the XML 
+	 */
+	static private function parseAdminMenu( &$xmlLinesParams, $menu ){
+		if(!empty($menu)){
+			//mainmenu item
+			$mmenu = $menu->getElementByPath('menu');
+			$mmenu = trim($mmenu->data());
+			if (!empty($mmenu)) $xmlLinesParams[strtoupper($mmenu)] = $mmenu;
+			//submenu
+			if($smenu = $menu->getElementByPath('submenu')){
+				$smenu = $smenu->children();
+				for( $i=0; $i< count($smenu); $i++){
+					$label = trim($smenu[$i]->data());
+					if (!empty($label)) $xmlLinesParams[strtoupper($label)] = $label;
+				}	
+			}
+		}
+	}
+	
     /*
      * Read php and xml file into array
      * @param $php array of php files
@@ -172,10 +199,13 @@ class KunenaTranslateHelper
 	            $xml->loadFile($xmlfi);
 				// get params
 	            $params = $xml->document->getElementByPath('params');
-	            self::parseXmlGroup( &$xmlLinesParams, $params );
+	            self::parseXmlGroup( $xmlLinesParams, $params );
 	            // get metadata state
 	            $params = $xml->document->getElementByPath('state');
-	            self::parseXmlGroup( &$xmlLinesParams, $params );
+	            self::parseXmlGroup( $xmlLinesParams, $params );
+	            //get admin menu
+	            $menu = $xml->document->getElementByPath('administration');
+	            self::parseAdminMenu( $xmlLinesParams, $menu);
 	            // get metadata layout
 	            $layout = $xml->document->getElementByPath('layout');
 	            if (!empty($layout)) {
@@ -240,8 +270,6 @@ class KunenaTranslateHelper
 						'new' => array()
 		);
 		$px = $phpxml;
-//fb($dbase);
-//fb($px);
 		// TODO find better way to do the compare
 		//look if there are new strings in php/xml
 		if($task == 'update'){
@@ -264,6 +292,8 @@ class KunenaTranslateHelper
 			}
 		}//look if there are old strings in teh ini file
 		elseif($task == 'old' && $dbase!=false){
+			fb($dbase);
+			fb($px);
 			foreach ($dbase as $dk=>$dv){
 				foreach ($px as $pv) {
 					if(is_array($pv)){
@@ -307,9 +337,9 @@ class KunenaTranslateHelper
 	 * @param boolean $htmllist false for array, true for HTML Selectlist
 	 * @return array or html selectlist
 	 */
-	static public function getClientList($htmllist=false){
+	static public function getClientList($filename, $htmllist=false){
 		$client = array();
-		$xml = self::loadXML();
+		$xml = self::loadXML($filename);
 		$files = $xml->document->getElementbyPath('files');
 		foreach ($files->children() as $child){
 			$client[] = array('text' => $child->attributes('name'),
@@ -341,8 +371,8 @@ class KunenaTranslateHelper
 	 * @param string language code
 	 * @return string inifile path if param $lang is set
 	 */
-	public function loadClientData($client, $lang=null){
-		$xml = $this->loadXML();
+	public function loadClientData($client, $lang=null, $filename){
+		$xml = $this->loadXML($filename);
 		$this->type = $xml->document->attributes('type');
 		$this->clientdata = $xml->document->getElementbyPath('files/'.$client);
 		if($lang){

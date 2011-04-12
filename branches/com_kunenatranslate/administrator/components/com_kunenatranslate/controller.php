@@ -19,32 +19,31 @@ class KunenaTranslateController extends JController
 {
 	function __construct($config = array()){
 		parent::__construct($config);
-		
-		$this->registerTask('exportview', 'importview');
 	}
 	
 	function update(){
 		JRequest::setVar('view','update');
+		$view = $this->getView('update', 'html', 'KunenaTranslateView');
+		$view->setModel( $this->getModel('extension') );
 		parent::display();
 	}
 	
 	function old(){
 		JRequest::setVar('view','update');
+		$view = $this->getView('update', 'html', 'KunenaTranslateView');
+		$view->setModel( $this->getModel('extension') );
 		parent::display();
 	}
 	
 	function add(){
 		JRequest::setVar('layout','empty');
+		$view = $this->getView('kunenatranslate', 'html', 'KunenaTranslateView');
+		$view->setModel( $this->getModel('extension') );
 		parent::display();
 	}
 	
 	function edit(){
 		JRequest::setVar('layout','form');
-		parent::display();
-	}
-	
-	function importview(){
-		JRequest::setVar('view','import');
 		parent::display();
 	}
 	

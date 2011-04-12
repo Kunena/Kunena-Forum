@@ -23,6 +23,12 @@ class KunenaTranslateControllerUpdate extends KunenaTranslateController
 		$this->registerTask('old', 'update');
 	}
 	
+	function display(){
+		$view = $this->getView('update', 'html', 'KunenaTranslateView');
+		$view->setModel( $this->getModel('extension') );
+		parent::display();
+	}
+	
 	function update(){
 		JRequest::setVar('layout','labels');
 		JRequest::setVar('view', 'update');
@@ -37,6 +43,7 @@ class KunenaTranslateControllerUpdate extends KunenaTranslateController
 		$labels = explode(";",$labels);
 		//get client
 		$client = JRequest::getWord('client');
+		$extension = JRequest::getInt('extension');
 		//get the array position of the wanted labels
 		$cid = JRequest::getVar('cid');
 		//select wanted labels
@@ -51,12 +58,12 @@ class KunenaTranslateControllerUpdate extends KunenaTranslateController
 		//get the model
 		$model = $this->getModel('update');
 		//store to database
-		$res = $model->store($new, $client);
+		$res = $model->store($new, $client, $extension);
 		if ($res == true)
 			$msg = JText::_('Success');
 		else
 			$msg = Jtext::_('Fail');
-		$this->setRedirect('index.php?option=com_kunenatranslate&view=update', $msg);
+		$this->setRedirect('index.php?option=com_kunenatranslate&task=update', $msg);
 	}
 	
 	function remove(){

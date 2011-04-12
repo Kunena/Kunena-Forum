@@ -35,7 +35,6 @@ JToolBarHelper::cancel();?>
 			require_once ( dirname(__FILE__).DS.'empty.php');
 		} 
 		$k = 0;
-fb($this->labels);
 		foreach ($this->labels as $i=>$v):?>
 			<tr class="row<?php echo $k;?>">
 				<td><?php echo $i+1; ?></td>

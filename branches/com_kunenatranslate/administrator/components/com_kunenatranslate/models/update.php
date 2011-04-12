@@ -26,18 +26,22 @@ class KunenaTranslateModelUpdate extends JModel{
 		$helper = new KunenaTranslateHelper();
 		//get the configdata for the client
 		$client	= JRequest::getWord('client');
-		$helper->loadClientData($client);
+		$table = $this->getTable('Extension');
+		$table->id = JRequest::getInt('extension');
+		$helper->loadClientData($client, '', $table->getFilename());
 		//scan for files		
 		$helper->scan_dir();
 		//get the array of folder/files to ignore
 		$kill = array(0);
 		$kills = $helper->clientdata->getElementByPath('kills');
-		foreach ( $kills->children() as $child) {
-			if($child->name() == 'kill'){
-				$kill[] = $child->data();
-			};
+		if(!empty($kills)){
+			foreach ( $kills->children() as $child) {
+				if($child->name() == 'kill'){
+					$kill[] = $child->data();
+				};
+			}
+			$helper->killfolder($kill);
 		}
-		$helper->killfolder($kill);
 		$phplist = '';
 		$phplist	= $helper->getfiles();
 		$xmllist	= $helper->getfiles('xml');
@@ -53,9 +57,9 @@ class KunenaTranslateModelUpdate extends JModel{
 		return $res;
 	}
 	
-	function store($new, $client){
+	function store($new, $client, $extension){
 		$table =& $this->getTable('Label');
-		$res = $table->store($new, $client);
+		$res = $table->store($new, $client, $extension);
 		return $res;
 	}
 	

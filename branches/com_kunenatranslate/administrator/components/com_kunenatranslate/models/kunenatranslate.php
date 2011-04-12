@@ -59,8 +59,9 @@ class KunenaTranslateModelKunenaTranslate extends JModel {
 		if(JRequest::getWord('add')){
 			$label = JRequest::getVar('label');
 			$client = JRequest::getVar('client');
+			$extension = JRequest::getVar('extension');
 		}else{
-			$label=$client=null;
+			$label=$client=$extension=null;
 		}
 		$languages = JRequest::getVar('knownlanguages', 'en-GB');
 		$languages = explode(',',$languages);
@@ -68,7 +69,7 @@ class KunenaTranslateModelKunenaTranslate extends JModel {
 			$data[$v] = JRequest::getVar($v, null);
 		}
 		$table = $this->getTable('Translation');
-		$res = $table->store($data, $label, $client);
+		$res = $table->store($data, $label, $client, $extension);
 		return $res;
 	}
 	

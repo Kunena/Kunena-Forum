@@ -56,6 +56,23 @@ class TableExtension extends JTable
 		return false;		
 	}
 	
+	function getFilename(){
+		$db= & $this->getDBO();
+		$query = 'SELECT filename'
+				.' FROM '.$this->_tbl
+				.' WHERE '.$this->_tbl_key.'='.$this->_db->Quote($this->id);
+		$db->setQuery($query);
+		
+		if ($result = $db->loadResult( )) {
+			return $result;
+		}
+		else
+		{
+			$this->setError( $db->getErrorMsg() );
+			return false;
+		}
+	}
+	
 	function loadByName($name){
 		$this->reset();
 		$db=& $this->getDBO();

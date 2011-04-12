@@ -27,7 +27,7 @@
 			</kills>
 		</install>
 		<backendmenu name="Backend Menu" type="administrator">
-			<dir>com_kunena/kunena.xml'</dir>
+			<dir>com_kunena/kunena.xml</dir>
 			<ini>com_kunena.menu.ini</ini>
 		</backendmenu>
 		<frontend name="Frontend" type="site">

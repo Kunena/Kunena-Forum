@@ -18,6 +18,7 @@ class KunenaTranslateModelImport extends JModel{
 	function getImport(){
 		$lang = JRequest::getVar('language');
 		$client = JRequest::getVar('client');
+		$extension = JRequest::getVar('extension');
 		//read ini file
 		$inifile = $this->_getPathIni($client, $lang);
 		jimport('joomla.filesystem.file');
@@ -33,32 +34,35 @@ class KunenaTranslateModelImport extends JModel{
 			return false;
 		}
 		//get the labels from DB
-		$labels = $this->_loadLabels();
+		$labels = $this->_loadLabels($client, $extension);
 		//look for labels that are missing in DB
 		$missing = $ini['nocomments'];
-		foreach ( $missing as $kini=>$vini){
-			foreach ($labels as $label) {
-				if($label->label == $kini && $label->client == $client){
-					unset($missing[$kini]);
+		if(!empty($labels)){
+			foreach ( $missing as $kini=>$vini){
+				foreach ($labels as $label) {
+					if($label->label == $kini && $label->client == $client){
+						unset($missing[$kini]);
+					}
 				}
 			}
 		}
 		//add missing labels
 		if(JRequest::getInt('addmissinglabel') == 1 && !empty($missing)){
 			$missing = array_keys($missing);
-			if(!$this->store($missing,$client)){
+			if(!$this->store($missing,$client, $extension)){
 				JError::raiseWarning('','Saving Labels failed');
 				return false;
 			}
+			//get the new labels from DB
+			$labels = $this->_loadLabels($client, $extension);
 		}else{
 			$ini['nocomments'] = array_diff($ini['nocomments'],$missing);
 		}
-		$labels = $this->_loadLabels();
 		//are there translations available for some labels?
 		$table = $this->getTable('Translation');
-		$trans = $table->loadTranslations(null,$lang);
+		$trans = $table->loadTranslations(null,$lang, $client, $extension);
 		$ntrans = null;
-		if(empty($trans)){
+		if(empty($trans) && !empty($labels)){
 			foreach ($labels as $value) {
 				foreach ($ini['nocomments'] as $inik=>$iniv) {
 					if( $value->label == $inik){
@@ -84,7 +88,7 @@ class KunenaTranslateModelImport extends JModel{
 		}		
 		//store the new translations
 		if(!empty($ntrans)){
-			if(!$table->store($ntrans, '', $client)){
+			if(!$table->store($ntrans, '', $client, $extension)){
 				JError::raiseWarning('','Saving Translations failed');
 				return false;
 			}
@@ -92,27 +96,34 @@ class KunenaTranslateModelImport extends JModel{
 		
 		//give existing translation back, if they exist
 		if(isset($exist))	return $exist;
-
 		
 		return true;
+	}
+	
+	function getExtensionFilename(){
+		$table = $this->getTable('Extension');
+		$id = JRequest::getVar('extension');
+		$table->load( $id );
+		return $table->filename;
 	}
 	
 	function _getPathIni($client,$lang){
 		require_once (dirname(__FILE__).DS.'..'.DS.'helper.php');
 		$helper = new KunenaTranslateHelper();
-		$inifile = $helper->loadClientData($client,$lang);
+		$filename = self::getExtensionFilename();
+		$inifile = $helper->loadClientData($client,$lang, $filename);
 		return $inifile;
 	}
 	
-	function _loadLabels(){
+	function _loadLabels($client, $extension){
 		$row =& $this->getTable('Label');
-		$res = $row->loadLabels();
+		$res = $row->loadLabels(null, $client, $extension);
 		return $res;
 	}
 	
-	function store($new, $client){
+	function store($new, $client, $extension){
 		$table =& $this->getTable('Label');
-		$res = $table->store($new, $client);
+		$res = $table->store($new, $client, $extension);
 		
 		return $res;
 	}
@@ -139,6 +150,7 @@ class KunenaTranslateModelImport extends JModel{
 	function export(){
 		$client = JRequest::getWord('client', 'backend');
 		$lang = JRequest::getVar('language', 'en-GB');
+		$extension = JRequest::getVar('extension');
 		$ini = $this->_getPathIni($client, $lang);
 		jimport('joomla.filesystem.file');
 		if(JFile::exists($ini)){
@@ -158,7 +170,7 @@ class KunenaTranslateModelImport extends JModel{
 		}
 		//get the data from DB
 		$table = $this->getTable('Translation');
-		$trans = $table->loadTranslations('',$lang, $client);
+		$trans = $table->loadTranslations('',$lang, $client, $extension);
 		if(empty($trans)){
 			JError::raiseWarning('', JText::_('No translations found in DB'));
 			return false;

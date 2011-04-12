@@ -27,9 +27,9 @@ class KunenaTranslateViewKunenaTranslate extends JView
 		}elseif ($layout == 'empty'){
 			$languages = JLanguage::getKnownLanguages();
 			$this->assignRef('languages', array_keys($languages));
-			require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
-			$client = KunenaTranslateHelper::getClientList(true);
-			$this->assignRef('client',$client);
+			//get extension list
+			$ext = $this->getModel('extension');
+			$this->assignRef('extensionlist', $ext->getHtmlList() );
 		}else{
 			$labels = $this->get('Labels');
 		}

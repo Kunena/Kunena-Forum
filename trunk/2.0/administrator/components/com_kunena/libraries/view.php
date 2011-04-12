@@ -101,8 +101,8 @@ class KunenaView extends JView {
 		echo $html;
 	}
 
-	function parse($text) {
-		return KunenaHtmlParser::parseBBCode($text);
+	function parse($text, $len=0) {
+		return KunenaHtmlParser::parseBBCode($text, $this, $len);
 	}
 
 	function getButton($name, $text) {
@@ -188,12 +188,86 @@ class KunenaView extends JView {
 		return $output;
 	}
 
-	function addStyleSheet($filename) {
+	public function getCategoryLink($category, $content = null, $title = null) {
+		if (!$content) $content = $this->escape($category->name);
+		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
+		return JHTML::_('kunenaforum.link', $category->getUrl(), $content, $title, '', 'follow');
+	}
+
+	public function getTopicUrl($topic, $action, $object=false) {
+		if ($action instanceof StdClass || $action instanceof KunenaForumMessage) {
+			$message = $action;
+			$action = 'm'.$message->id;
+		}
+		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&id={$topic->id}&action={$action}");
+		if ($uri->getVar('action') !== null) {
+			$uri->delVar('action');
+			$uri->setVar('catid', isset($this->category) ? $this->category->id : $topic->catid);
+			$limit = max(1, $this->config->messages_per_page);
+			$mesid = 0;
+			if (is_numeric($action)) {
+				if ($action) $uri->setVar('limitstart', $action * $limit);
+			} elseif (isset($message)) {
+				$mesid = $message->id;
+				$position = $topic->getPostLocation($mesid, $this->message_ordering);
+			} else {
+				switch ($action) {
+					case 'first':
+						$mesid = $topic->first_post_id;
+						$position = $topic->getPostLocation($mesid, $this->message_ordering);
+						break;
+					case 'last':
+						$mesid = $topic->last_post_id;
+						$position = $topic->getPostLocation($mesid, $this->message_ordering);
+						break;
+					case 'unread':
+						$mesid = $topic->lastread ? $topic->lastread : $topic->last_post_id;
+						$position = $topic->getPostLocation($mesid, $this->message_ordering);
+						break;
+				}
+			}
+			if ($mesid) {
+				if (JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' ) != 'threaded') {
+					$uri->setFragment($mesid);
+				} else {
+					$uri->setVar('mesid', $mesid);
+				}
+			}
+			if (isset($position)) {
+				$limitstart = intval($position / $limit) * $limit;
+				if ($limitstart) $uri->setVar('limitstart', $limitstart);
+			}
+		}
+		return $object ? $uri : KunenaRoute::_($uri);
+	}
+
+	public function getTopicLink($topic, $action, $content = null, $title = null, $class = null) {
+		$uri = $this->getTopicUrl($topic, $action, true);
+		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
+		if ($title === null) {
+			switch ($action) {
+				case 'first':
+					$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
+					break;
+				case 'last':
+					$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
+					break;
+				case 'unread':
+					$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
+					break;
+				default:
+					$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
+			}
+		}
+		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+	}
+
+	public function addStyleSheet($filename) {
 		$template = KunenaFactory::getTemplate();
 		return $template->addStyleSheet ( $filename );
 	}
 
-	function addScript($filename) {
+	public function addScript($filename) {
 		$template = KunenaFactory::getTemplate();
 		return $template->addScript ( $filename );
 	}

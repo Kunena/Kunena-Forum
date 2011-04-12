@@ -41,7 +41,7 @@ class KunenaForumMessage extends JObject {
 	public function __construct($identifier = 0) {
 		// Always load the message -- if message does not exist: fill empty data
 		$this->_db = JFactory::getDBO ();
-		$this->load ( $identifier );
+		if($identifier !== false) $this->load ( $identifier );
 	}
 
 	/**
@@ -244,6 +244,10 @@ class KunenaForumMessage extends JObject {
 
 	public function getCategory() {
 		return KunenaForumCategoryHelper::get($this->catid);
+	}
+
+	public function getAuthor() {
+		return KunenaUserHelper::getAuthor($this->userid, $this->name);
 	}
 
 	public function authorise($action='read', $user=null, $silent=false) {

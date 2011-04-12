@@ -21,6 +21,8 @@ class KunenaViewSearch extends KunenaView {
 		$this->me = KunenaFactory::getUser();
 		$app = JFactory::getApplication ();
 
+		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
+
 		$searchdatelist	= array();
 		$searchdatelist[] 	= JHTML::_('select.option',  'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT') );
 		$searchdatelist[] 	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_SEARCH_DATE_YESTERDAY') );
@@ -70,23 +72,6 @@ class KunenaViewSearch extends KunenaView {
 		$this->total = $this->get('Total');
 		if ($this->total) {
 			$this->results = $this->get('Results');
-
-			foreach ( $this->results as $i => $result ) {
-				// Clean up subject
-				$ressubject = KunenaHtmlParser::parseText ($result->subject);
-				// Strip smiles and bbcode out of search results; they look ugly
-				$resmessage = KunenaHtmlParser::parseBBCode ($result->message, 500);
-
-				foreach ( $this->searchwords as $searchword ) {
-					if (empty ( $searchword ))
-					continue;
-					$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
-					// FIXME: enable highlighting, but only after we can be sure that we do not break html
-					//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
-				}
-				$this->results [$i]->htmlsubject = $ressubject;
-				$this->results [$i]->htmlmessage = $resmessage;
-			}
 			$this->search_class = ' open';
 			$this->search_style = ' style="display: none;"';
 			$this->search_title = JText::_('COM_KUNENA_TOGGLER_EXPAND');
@@ -105,6 +90,45 @@ class KunenaViewSearch extends KunenaView {
 	function displaySearchResults() {
 		if($this->results) {
 			echo $this->loadTemplate('results');
+		}
+	}
+
+	function displayRows() {
+		$this->row(true);
+		foreach ($this->results as $this->message) {
+			$this->topic = $this->message->getTopic();
+			$this->category = $this->message->getCategory();
+			$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
+			$ressubject = KunenaHtmlParser::parseText ($this->message->subject);
+			$resmessage = $this->parse ($this->message->message, 500);
+
+			foreach ( $this->searchwords as $searchword ) {
+				if (empty ( $searchword )) continue;
+				$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
+				// FIXME: enable highlighting, but only after we can be sure that we do not break html
+				//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
+			}
+			$this->author = $this->message->getAuthor();
+			$this->topicAuthor = $this->topic->getAuthor();
+			$this->topicTime = $this->topic->first_post_time;
+			$this->subjectHtml = $ressubject;
+			$this->messageHtml = $resmessage;
+
+			$contents = $this->loadTemplate('row');
+			$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
+			echo $contents;
+		}
+	}
+
+	function fillTopicInfo($matches) {
+		switch ($matches[1]) {
+			case 'ROW':
+				return $matches[2].$this->row().($this->topic->ordering ? " {$matches[2]}sticky" : '');
+			case 'TOPIC_ICON':
+				return $this->getTopicLink ( $this->topic, 'last', $this->topic->getIcon() );
+			case 'DATE':
+				$date = new KunenaDate($matches[2]);
+				return $date->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
 		}
 	}
 

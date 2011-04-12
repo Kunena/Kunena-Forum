@@ -17,14 +17,11 @@ defined ( '_JEXEC' ) or die ();
 									<td class="kposts-body">
 										<ul>
 											<li class="kpost-title">
-												<h3><?php echo $this->getTopicLink($this->topic, $this->message, $this->escape($this->message->subject)) ?></h3>
-												<ul class="kpost-actions">
-													<li>[K=POST_NEW]</li>
-												</ul>
+												<h3><?php echo $this->getTopicLink($this->topic, $this->message, $this->subjectHtml) ?></h3>
 												<div class="clr"></div>
 											</li>
-											<li class="kpost-smavatar"><?php echo $this->postAuthor->getLink($this->postAuthor->getAvatarImage('kavatar', 'list')) ?></li>
-											<li class="kpost-details kauthor"><?php echo JText::_('COM_KUNENA_BY').' '.$this->postAuthor->getLink($this->message->name) ?></li>
+											<li class="kpost-smavatar"><?php echo $this->author->getLink($this->author->getAvatarImage('kavatar', 'list')) ?></li>
+											<li class="kpost-details kauthor"><?php echo JText::_('COM_KUNENA_BY').' '.$this->author->getLink() ?></li>
 											<li class="kpost-details kdate"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->message->time}]") ?></li>
 										</ul>
 									</td>
@@ -34,28 +31,26 @@ defined ( '_JEXEC' ) or die ();
 											<li class="ktopic-title">
 												<h3><?php echo $this->getTopicLink($this->topic, null, null) ?></h3>
 												<ul class="ktopic-actions">
-													<li>[K=TOPIC_NEW_COUNT]</li>
 													<li><?php if ($this->topic->locked) echo $this->getIcon ( 'klocked-icon', JText::_('COM_KUNENA_TOPIC_IS_LOCKED') ) ?></li>
-													<!-- li><a href="#"><span class="ksubscribe-icon">Subscribe to this topic.</span></a></li -->
 												</ul>
 												<div class="clr"></div>
 											</li>
 											<?php if (!empty($this->categoryLink)) : ?>
 											<li class="ktopic-category"><?php echo JText::_('COM_KUNENA_CATEGORY') ?> <?php echo $this->categoryLink ?></li>
 											<?php endif ?>
-											<li class="ktopic-details"><?php echo JText::sprintf('COM_KUNENA_TOPIC_STARTED_ON_DATE_BY_USER', "[K=DATE:{$this->firstPostTime}]", $this->firstPostAuthor->getLink($this->firstUserName)) ?></li>
+											<li class="ktopic-details"><?php echo JText::sprintf('COM_KUNENA_TOPIC_STARTED_ON_DATE_BY_USER', "[K=DATE:{$this->topicTime}]", $this->topicAuthor->getLink()) ?></li>
 											<li>
 												<div class="kpagination-topic">
-													<?php echo $this->topic->getPagination(0, $this->config->messages_per_page, 3)->getPagesLinks() ?>
+													<?php echo $this->topic->getPagination(false, $this->config->messages_per_page, 3)->getPagesLinks() ?>
 												</div>
 											</li>
 										</ul>
 									</td>
-									<?php if ($this->postActions) : ?>
-									<td class="kpost-checkbox">
-										<input type="checkbox" value="0" name="" class="kmoderate-post-checkbox" />
+								</tr>
+								<tr>
+									<td class="kpost-message" colspan="3">
+										<?php echo $this->messageHtml ?>
 									</td>
-									<?php endif ?>
 								</tr>
 							</tbody>
 						</table>

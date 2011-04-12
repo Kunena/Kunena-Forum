@@ -112,6 +112,10 @@ class KunenaForumCategory extends JObject {
 		return empty($this->_channels['none']);
 	}
 
+	public function getUrl() {
+		return "index.php?option=com_kunena&view=category&catid={$this->id}";
+	}
+
 	public function getTopics() {
 		$this->buildInfo();
 		return $this->_topics;

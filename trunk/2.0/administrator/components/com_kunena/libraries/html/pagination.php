@@ -42,6 +42,7 @@ class KunenaHtmlPagination extends JPagination
 	function __construct($total, $limitstart, $limit, $prefix = '') {
 		parent::__construct($total, $limitstart, $limit, $prefix);
 		$this->setDisplay();
+		if ($limitstart === false) $this->set('pages.current', -1);
 		$this->template = KunenaFactory::getTemplate();
 	}
 

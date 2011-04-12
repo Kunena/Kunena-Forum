@@ -26,7 +26,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
@@ -83,7 +83,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
@@ -132,7 +132,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'postActions', $this->get ( 'PostActions' ) );
 		$this->actionMove = false;
-		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 
@@ -172,65 +172,6 @@ class KunenaViewTopics extends KunenaView {
 		$this->setTitle ( "{$this->title} ({$pagesTxt})" );
 
 		$this->display($tpl);
-	}
-
-	function getCategoryLink($category, $content = null) {
-		if (!$content) $content = $this->escape($category->name);
-		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=category&catid={$category->id}", $content, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name)), '', 'follow');
-	}
-	function getTopicLink($topic, $action, $content = null, $title = null, $class = null) {
-		if ($action instanceof StdClass) {
-			$message = $action;
-			$action = 'm'.$message->id;
-		}
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&id={$topic->id}&action={$action}");
-		if ($uri->getVar('action') !== null) {
-			$uri->delVar('action');
-			$uri->setVar('catid', $topic->getCategory()->id);
-			/*if ($this->Itemid) {
-				$uri->setVar('Itemid', $this->Itemid);
-			}*/
-			$limit = max(1, $this->config->messages_per_page);
-			$mesid = 0;
-			if (is_numeric($action)) {
-				if ($action) $uri->setVar('limitstart', $action * $limit);
-			} elseif (isset($message)) {
-				$position = $topic->getPostLocation($message->id, $this->topic_ordering);
-				$uri->setFragment($message->id);
-			} else {
-				switch ($action) {
-					case 'first':
-						$mesid = $topic->first_post_id;
-						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
-						if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
-						break;
-					case 'last':
-						$mesid = $topic->last_post_id;
-						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
-						if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
-						break;
-					case 'unread':
-						$mesid = !empty($topic->lastread) ? $topic->lastread : $topic->last_post_id;
-						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
-						if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
-						break;
-				}
-			}
-			if ($mesid) {
-				if (JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' ) != 'threaded') {
-					$uri->setFragment($mesid);
-				} else {
-					$uri->setVar('mesid', $mesid);
-				}
-			}
-			if (isset($position)) {
-				$limitstart = intval($position / $limit) * $limit;
-				if ($limitstart) $uri->setVar('limitstart', $limitstart);
-			}
-		}
-		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
-		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
-		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
 	function displayRows() {

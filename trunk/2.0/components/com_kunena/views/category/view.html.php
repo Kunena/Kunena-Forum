@@ -33,7 +33,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
 
-		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
@@ -98,7 +98,7 @@ class KunenaViewCategory extends KunenaView {
 		if ($this->category->id && ! $this->category->authorise('read')) {
 			$this->setError($this->category->getError());
 		}
-		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
@@ -196,52 +196,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->display ();
 	}
 
-	function getCategoryURL($category) {
-		return "index.php?option=com_kunena&view=category&catid={$category->id}";
-	}
-	function getTopicURL($topic, $action, $object=false) {
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&id={$topic->id}&action={$action}");
-		if ($uri->getVar('action') !== null) {
-			$uri->delVar('action');
-			$uri->setVar('catid', $this->category->id);
-			/*if ($this->Itemid) {
-				$uri->setVar('Itemid', $this->Itemid);
-			}*/
-			$limit = max(1, $this->config->messages_per_page);
-			$mesid = 0;
-			if (is_numeric($action)) {
-				if ($action) $uri->setVar('limitstart', $action * $limit);
-			} else {
-				switch ($action) {
-					case 'first':
-						$mesid = $topic->first_post_id;
-						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
-						break;
-					case 'last':
-						$mesid = $topic->last_post_id;
-						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
-						break;
-					case 'unread':
-						$mesid = $topic->lastread ? $topic->lastread : $topic->last_post_id;
-						$position = $topic->getPostLocation($mesid, $this->topic_ordering);
-						break;
-				}
-			}
-			if ($mesid) {
-				if (JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' ) != 'threaded') {
-					$uri->setFragment($mesid);
-				} else {
-					$uri->setVar('mesid', $mesid);
-				}
-			}
-			if (isset($position)) {
-				$limitstart = intval($position / $limit) * $limit;
-				if ($limitstart) $uri->setVar('limitstart', $limitstart);
-			}
-		}
-		return $object ? $uri : KunenaRoute::_($uri);
-	}
-	function getLastPostURL($category) {
+	function getLastPostUrl($category) {
 		$lastPost = $category->getLastPosted();
 		$channels = $category->getChannels();
 		if (isset($channels[$lastPost->id])) $catid = $category->id;
@@ -265,33 +220,8 @@ class KunenaViewCategory extends KunenaView {
 		return "index.php?option=com_kunena&view=topic&catid={$catid}&id={$lastPost->last_topic_id}{$query}{$anker}";
 	}
 
-	function getCategoryLink($category, $content = null, $title = null) {
-		if (!$content) $content = $this->escape($category->name);
-		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
-		return JHTML::_('kunenaforum.link', $this->getCategoryURL($category), $content, $title, '', 'follow');
-	}
-	function getTopicLink($topic, $action, $content = null, $title = null, $class = null) {
-		$uri = $this->getTopicURL($topic, $action, true);
-		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
-		if ($title === null) {
-			switch ($action) {
-				case 'first':
-					$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
-					break;
-				case 'last':
-					$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
-					break;
-				case 'unread':
-					$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
-					break;
-				default:
-					$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
-			}
-		}
-		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
-	}
 	function getLastPostLink($category, $content = null, $title = null, $class = null) {
-		$uri = $this->getLastPostURL($category);
+		$uri = $this->getLastPostUrl($category);
 		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastPosted()->last_topic_subject, 20);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastPosted()->last_topic_subject));
 		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');

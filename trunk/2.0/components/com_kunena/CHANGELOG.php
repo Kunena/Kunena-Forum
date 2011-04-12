@@ -36,6 +36,20 @@ Kunena 2.0.0-DEV
 # [#23443] KunenaAvatar::getLink(): if avatar size is numeric, set styles for max-width and max-height
 # [#23443] KunenaModel::getUserStateFromRequest() doesn't obey parameters
 # [#23443] Category/List: use new link functions to get rid of legacy category/topic urls
+^ [#22569] KunenaForumMessageHelper::getLatestMessages(): implement searches
+^ [#23442] Optimize for speed: KunenaForumMessageHelper::getLatestMessages()
+# [#23443] KunenaForumMessageHelper::getLatestMessages(): if out of range, use last page
+# [#23443] KunenaForumMessageHelper::getLatestMessages(): store instances into correct index
+^ [#22569] KunenaModelSearch: use library instead of custom code
+^ [#23442] KunenaModelSearch: optimize ORDER BY
+# [#23443] Search/Default: Fix displaying wrong result range in pagination
++ [#22569] Add function KunenaForumTopic::getAuthor()
++ [#22569] Add function KunenaForumCategory::getUrl()
+# [#23443] Allow no selected pages in KunenaHtmlPagination class (limitstart=false)
++ [#22569] Add function KunenaUserHelper::getAuthor()
+^ [#22569] Move some link/url functions out of views into KunenaView
++ [#25415] Tableless template: Implement Search/Default (results)
+# [#25415] Tableless template: Fix broken URL in Topics/Posts
 
 11-April-2011 Matias
 + [#25415] Tableless template: Implement Statistics/Default

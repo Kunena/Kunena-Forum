@@ -188,6 +188,10 @@ class KunenaForumTopic extends JObject {
 		return $usertopic;
 	}
 
+	public function getAuthor() {
+		return KunenaUserHelper::getAuthor($this->first_post_userid, $this->first_post_guest_name);
+	}
+
 	public function getCategory() {
 		return KunenaForumCategoryHelper::get($this->category_id);
 	}

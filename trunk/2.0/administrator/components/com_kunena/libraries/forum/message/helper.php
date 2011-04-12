@@ -89,8 +89,9 @@ class KunenaForumMessageHelper {
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'm.time DESC';
 		$starttime = isset($params['starttime']) ? (int) $params['starttime'] : 0;
 		$mode = isset($params['mode']) ? $params['mode'] : 'recent';
-		$user = isset($params['user']) ? KunenaUserHelper::get($params['user']) : KunenaUserHelper::getMyself();
+		$user = isset($params['user']) ? $params['user'] : false;
 		$where = isset($params['where']) ? (string) $params['where'] : '';
+		$childforums = isset($params['childforums']) ? (bool) $params['childforums'] : false;
 
 		$db = JFactory::getDBO();
 		// FIXME: use right config setting
@@ -98,14 +99,13 @@ class KunenaForumMessageHelper {
 		$cquery = new KunenaDatabaseQuery();
 		$cquery->select('COUNT(*)')
 			->from('#__kunena_messages AS m')
-			->innerJoin('#__kunena_topics AS tt ON m.thread = tt.id')
+			->innerJoin('#__kunena_messages_text AS t ON m.id = t.mesid')
 			->where('m.moved=0'); // TODO: remove column
 
 		$rquery = new KunenaDatabaseQuery();
 		$rquery->select('m.*, t.message')
 			->from('#__kunena_messages AS m')
 			->innerJoin('#__kunena_messages_text AS t ON m.id = t.mesid')
-			->innerJoin('#__kunena_topics AS tt ON m.thread = tt.id')
 			->where('m.moved=0') // TODO: remove column
 			->order($orderby);
 
@@ -115,7 +115,7 @@ class KunenaForumMessageHelper {
 		switch ($mode) {
 			case 'unapproved':
 				$authorise = 'approve';
-				$hold = "m.hold=1 AND tt.hold<=1";
+				$hold = "m.hold=1";
 				break;
 			case 'deleted':
 				$authorise = 'undelete';
@@ -134,49 +134,63 @@ class KunenaForumMessageHelper {
 			case 'recent':
 			default:
 		}
+		if (is_array($categories) && in_array(0, $categories)) {
+			$categories = false;
+		}
 		$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse, 'topic.'.$authorise);
+		if ($childforums) {
+			$categories += KunenaForumCategoryHelper::getChildren($categories, -1, false, array('action'=>'topic.'.$authorise));
+		}
 		$catlist = array();
 		foreach ($categories as $category) {
 			$catlist += $category->getChannels();
 		}
 		if (empty($catlist)) return array(0, array());
 		$allowed = implode(',', array_keys($catlist));
-		$cquery->where("tt.category_id IN ({$allowed})");
-		$rquery->where("tt.category_id IN ({$allowed})");
+		$cquery->where("m.catid IN ({$allowed})");
+		$rquery->where("m.catid IN ({$allowed})");
 
 		$cquery->where($hold);
 		$rquery->where($hold);
-		if ($user->exists()) {
-			$cquery->where("{$userfield}={$db->Quote($user->userid)}");
-			$rquery->where("{$userfield}={$db->Quote($user->userid)}");
+		if ($user) {
+			$cquery->where("{$userfield}={$db->Quote($user)}");
+			$rquery->where("{$userfield}={$db->Quote($user)}");
 		}
 
+		// Negative time means no time
 		if ($starttime == 0) {
 			$starttime = KunenaFactory::getSession ()->lasttime;
 		} elseif ($starttime > 0) {
 			$starttime = JFactory::getDate ()->toUnix () - ($starttime * 3600);
 		}
-		// Negative time means no time
 		if ($starttime > 0) {
 			$cquery->where("m.time>{$db->Quote($starttime)}");
 			$rquery->where("m.time>{$db->Quote($starttime)}");
+		}
+		if ($where) {
+			$cquery->where($where);
+			$rquery->where($where);
 		}
 
 		$db->setQuery ( $cquery );
 		$total = ( int ) $db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$total) return array(0, array());
 
+		// If out of range, use last page
+		if ($total < $limitstart)
+			$limitstart = intval($total / $limit) * $limit;
+
 		$db->setQuery ( $rquery, $limitstart, $limit );
 		$results = $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return array(0, array());
 
 		$messages = array();
-		foreach ( $results as $id=>$result ) {
-			$instance = new KunenaForumMessage ();
-			$instance->bind ( $result );
+		foreach ( $results as $result ) {
+			$instance = new KunenaForumMessage (false);
+			$instance->setProperties ( $result );
 			$instance->exists(true);
-			self::$_instances [$id] = $instance;
-			$messages[$id] = $instance;
+			self::$_instances [$instance->id] = $instance;
+			$messages[$instance->id] = $instance;
 		}
 		unset ($results);
 		return array($total, $messages);
@@ -283,8 +297,8 @@ class KunenaForumMessageHelper {
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumMessage ();
-				$instance->bind ( $results[$id] );
+				$instance = new KunenaForumMessage (false);
+				$instance->setProperties ( $results[$id] );
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;
 			} else {
@@ -306,8 +320,8 @@ class KunenaForumMessageHelper {
 
 		$list = array();
 		foreach ( $results as $id=>$result ) {
-			$instance = new KunenaForumMessage ();
-			$instance->bind ( $result );
+			$instance = new KunenaForumMessage (false);
+			$instance->setProperties ( $result );
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;
 			$list[$orderbyid ? $id : $start++] = $instance;

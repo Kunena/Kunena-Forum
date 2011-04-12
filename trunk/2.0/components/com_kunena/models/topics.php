@@ -90,7 +90,7 @@ class KunenaModelTopics extends KunenaModel {
 	}
 
 	public function getMessageOrdering() {
-		$me = KunenaUserHelper::get();
+		$me = KunenaUserHelper::getMyself();
 		if ($me->ordering != '0') {
 			$ordering = $me->ordering == '1' ? 'desc' : 'asc';
 		} else {

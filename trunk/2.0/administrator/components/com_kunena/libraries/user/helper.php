@@ -20,6 +20,7 @@ KunenaUserHelper::initialize();
  */
 class KunenaUserHelper {
 	protected static $_instances = array ();
+	protected static $_instances_name = array ();
 	protected static $_online = null;
 	protected static $_lastid = null;
 	protected static $_total = null;
@@ -65,6 +66,22 @@ class KunenaUserHelper {
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return self::$_instances [$id];
+	}
+
+	static public function getAuthor($id, $name) {
+		$id = (int) $id;
+		if (!empty ( self::$_instances [$id] )) {
+			return self::$_instances [$id];
+		}
+		if (!empty ( self::$_instances_name [$name] )) {
+			return self::$_instances_name [$name];
+		}
+		$user = self::get($id);
+		if (!$user->exists()) {
+			$user->username = $user->name = $name;
+		}
+		self::$_instances_name [$name] = $user;
+		return $user;
 	}
 
 	static public function getMyself() {

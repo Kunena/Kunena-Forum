@@ -194,7 +194,7 @@ class KunenaView extends JView {
 		return JHTML::_('kunenaforum.link', $category->getUrl(), $content, $title, '', 'follow');
 	}
 
-	public function getTopicUrl($topic, $action, $object=false) {
+	public function getTopicUrl($topic, $action = null, $object=false) {
 		if ($action instanceof StdClass || $action instanceof KunenaForumMessage) {
 			$message = $action;
 			$action = 'm'.$message->id;
@@ -241,7 +241,7 @@ class KunenaView extends JView {
 		return $object ? $uri : KunenaRoute::_($uri);
 	}
 
-	public function getTopicLink($topic, $action, $content = null, $title = null, $class = null) {
+	public function getTopicLink($topic, $action = null, $content = null, $title = null, $class = null) {
 		$uri = $this->getTopicUrl($topic, $action, true);
 		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
 		if ($title === null) {

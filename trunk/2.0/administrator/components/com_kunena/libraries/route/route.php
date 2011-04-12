@@ -274,13 +274,14 @@ abstract class KunenaRoute {
 				foreach ( self::$menu as $item ) {
 					if (! is_object ( $item ))
 						continue;
+					$home = self::getHome($item);
 					// Follow links
 					if ($item->type == 'menulink' && !empty($item->query['Itemid']) && !empty(self::$menu[$item->query['Itemid']])) {
 						$item = self::$menu[$item->query['Itemid']];
 					}
 					// Save Kunena menu items so that we can make fast searches
 					if ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view'])) {
-						self::$search[$item->query['view']][self::$home ? self::$home->id : 0][$item->id] = $item->id;
+						self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
 					}
 				}
 				$cache->store(serialize(self::$search), 'search', 'com_kunena.route');
@@ -311,7 +312,7 @@ abstract class KunenaRoute {
 			// Find all potential candidates
 			$candidates[$key] = array();
 			foreach ($search as $id=>$dummy) {
-				$follow = isset(self::$menu[$id]) ? self::$menu[$id] : null;
+				$follow = !empty(self::$menu[$id]) ? self::$menu[$id] : null;
 				if ($follow && self::checkHome($follow, $catid)) {
 					$candidates[$key] += !empty(self::$search[$view][$follow->id]) ? self::$search[$view][$follow->id] : array();
 					if ($view == 'topic') $candidates[$key] += !empty(self::$search['category'][$follow->id]) ? self::$search['category'][$follow->id] : array();

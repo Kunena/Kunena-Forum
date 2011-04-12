@@ -1852,11 +1852,11 @@ body {line-height:1.5;}
 	float: left;
 	padding: 5px 10px;
 }
-#kunena .kpost-body {
+#kunena .kposts-body {
 	border-right: 1px solid;
 	width: 30%;
 }
-#kunena .kpost-message {
+#kunena .kposts-message {
 	border-top: 1px solid;
 }
 

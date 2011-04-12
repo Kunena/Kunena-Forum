@@ -48,7 +48,7 @@ defined ( '_JEXEC' ) or die ();
 									</td>
 								</tr>
 								<tr>
-									<td class="kpost-message" colspan="3">
+									<td class="kposts-message" colspan="3">
 										<?php echo $this->messageHtml ?>
 									</td>
 								</tr>

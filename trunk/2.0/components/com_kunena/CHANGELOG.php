@@ -52,6 +52,8 @@ Kunena 2.0.0-DEV
 # [#25415] Tableless template: Fix broken URL in Topics/Posts
 # [#23443] Fatal error: Class 'KunenaForumMessageHelper' not found in models/topics.php
 ^ [#23442] Optimize a few extra queries from KunenaModelSearch class
+# [#23443] KunenaRoute doesn't assign Itemids when called outside of Kunena
+# [#25415] Tableless template regression: Fix layout issues inside topic
 
 11-April-2011 Matias
 + [#25415] Tableless template: Implement Statistics/Default

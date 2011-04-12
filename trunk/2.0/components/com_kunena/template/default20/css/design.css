@@ -711,8 +711,8 @@ table {border-collapse: collapse;}
 
 /*---------- Display User Posts ------------- */
 
-#kunena .kpost-body,
-#kunena .kpost-message {
+#kunena .kposts-body,
+#kunena .kposts-message {
 	border-color: #CCCCCC;
 }
 

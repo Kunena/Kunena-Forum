@@ -19,6 +19,8 @@ class modKunenaLatest {
 	}
 
 	function display() {
+		KunenaFactory::loadLanguage();
+
 		// Load CSS only once
 		$this->document = JFactory::getDocument ();
 		if (self::$cssadded == false) {

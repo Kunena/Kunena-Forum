@@ -12,25 +12,14 @@ defined ( '_JEXEC' ) or die ( '' );
 ?>
 <?php
 if ( $this->params->get ( 'sh_topiciconoravatar' ) == 1 ) : ?>
-<li class="klatest-avatar">
-	<?php
-	$user = KunenaFactory::getUser ( ( int ) $this->message->userid );
-	echo CKunenaLink::GetProfileLink ( $user->userid, $user->getAvatarLink ( '', $this->params->get ( 'avatarwidth' ), $this->params->get ( 'avatarheight' ) ) );
-	?>
-</li>
+<li class="klatest-avatar"><?php echo $this->lastPostAuthor->getLink($this->lastPostAuthor->getAvatarImage('', $this->params->get ( 'avatarwidth' ), $this->params->get ( 'avatarheight' ))) ?></li>
 <?php elseif ( $this->params->get ( 'sh_topiciconoravatar' ) == 0 ) : ?>
-<li class="klatest-topicicon">
-	<?php echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, $this->message_position, intval($this->config->messages_per_page), $this->topicIcon($this->topic), $this->message->id ) ?>
-</li>
+<li class="klatest-topicicon">[K=TOPIC_ICON]</li>
 <?php endif; ?>
 
 <li class="klatest-subject">
+	<?php echo $this->getTopicLink($this->topic, $this->message, $this->escape ( JString::substr ( $this->message->subject, '0', $this->params->get ( 'titlelength' ) ) )) ?>
 	<?php
-	if ($this->topic_ordering == 'ASC') {
-		echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, $this->pages*$this->config->messages_per_page, intval($this->config->messages_per_page), $this->escape ( JString::substr ( $this->message->subject, '0', $this->params->get ( 'titlelength' ) ) ), $this->message->id );
-	} else {
-		echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, 0, intval($this->config->messages_per_page), $this->escape ( JString::substr ( $this->message->subject, '0', $this->params->get ( 'titlelength' ) ) ), $this->message->id );
-	}
 	if ($this->topic->unread) {
 		echo '<sup class="knewchar">(' . JText::_($this->params->get ( 'unreadindicator' )) . ')</sup>';
 	}
@@ -49,11 +38,11 @@ if ( $this->params->get ( 'sh_topiciconoravatar' ) == 1 ) : ?>
 <li class="klatest-preview-content"><?php echo KunenaHtmlParser::stripBBCode($this->message->message, $this->params->get ( 'lengthcontentcharacters' )); ?></li>
 <?php endif; ?>
 <?php if ($this->params->get ( 'sh_category' )) : ?>
-<li class="klatest-cat"><?php echo JText::_ ( 'MOD_KUNENALATEST_IN_CATEGORY' ).' '.CKunenaLink::GetCategoryLink ( 'showcat', $this->category->id, $this->escape ( $this->category->name ) ); ?></li>
+<li class="klatest-cat"><?php echo JText::_ ( 'MOD_KUNENALATEST_IN_CATEGORY' ).' '.$this->categoryLink ?></li>
 <?php endif; ?>
 <?php if ($this->params->get ( 'sh_author' )) : ?>
 <li class="klatest-author"><?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_BY' ) .' '. CKunenaLink::GetProfileLink ( $this->message->userid, $this->escape ( $this->message->name ) ); ?></li>
 <?php endif; ?>
 <?php if ($this->params->get ( 'sh_time' )) : ?>
-<li class="klatest-posttime"><?php $override = $this->params->get ( 'dateformat' ); echo CKunenaTimeformat::showDate($this->message->time, $override ? $override : 'config_post_dateformat');?></li>
+<li class="klatest-posttime"><?php $override = $this->params->get ( 'dateformat' ); echo KunenaDate::getInstance($this->message->time)->toKunena($override ? $override : 'config_post_dateformat'); ?></li>
 <?php endif; ?>

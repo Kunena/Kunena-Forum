@@ -31,6 +31,8 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
+12-April-2011 svens (LDA)
+^ [#24847] update de-DE (thanks rich)
 
 03-April-2011 LDA
 ^ [#24847] update es-ES (thanks Kunena Spanish Team)

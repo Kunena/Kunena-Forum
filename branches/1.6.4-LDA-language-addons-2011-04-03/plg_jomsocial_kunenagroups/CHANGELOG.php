@@ -30,6 +30,9 @@ Legend:
 
 Kunena Groups 1.6.4
 
+03-April-2011 LDA
++ [#24847] add es-ES (thanks Kunena Spanish Team)
+
 14-March-2010 Matias
 ^ [#22541] Update version info to 1.6.4
 

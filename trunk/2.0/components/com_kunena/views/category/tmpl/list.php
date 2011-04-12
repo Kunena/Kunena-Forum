@@ -22,8 +22,8 @@ $this->displayBreadcrumb ();
 	<div class="ksectionbody">
 		<div class="fltlft">
 			<div class="fltlft">
-			<?php if ($this->me->exists()) : ?>
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="markAllForumsRead" method="post">
+			<?php if (!empty($this->sectionMarkReadURL)) : ?>
+			<form action="<?php echo $this->sectionMarkReadURL ?>" name="markAllForumsRead" method="post">
 				<input type="hidden" name="view" value="category" />
 				<input type="hidden" name="task" value="markread" />
 				<input type="submit" class="kbutton button ks" value="<?php echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ'); ?>" />

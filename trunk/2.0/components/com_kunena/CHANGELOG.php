@@ -31,6 +31,12 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+12-April-2011 Matias
+# [#23443] KunenaForumTopicHelper::recount(): Fill always guest name (there may be deleted users)
+# [#23443] KunenaAvatar::getLink(): if avatar size is numeric, set styles for max-width and max-height
+# [#23443] KunenaModel::getUserStateFromRequest() doesn't obey parameters
+# [#23443] Category/List: use new link functions to get rid of legacy category/topic urls
+
 11-April-2011 Matias
 + [#25415] Tableless template: Implement Statistics/Default
 ^ [#22792] Data Model Revisions: change social fields into lower case

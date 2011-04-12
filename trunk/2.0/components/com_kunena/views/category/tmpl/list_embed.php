@@ -40,14 +40,16 @@ foreach ( $this->sections as $section ) :
 		<tr class="k<?php echo $tabclass [$k ^= 1], isset ( $category->class_sfx ) ? ' k' . $this->escape($tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
 			id="kcat<?php echo intval($category->id) ?>">
 			<td class="kcol-first kcol-category-icon">
-				<?php echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->getCategoryIcon($category) ) ?>
+				<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '')
+				//CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->getCategoryIcon($category) ) ?>
 			</td>
 
 			<td class="kcol-mid kcol-kcattitle">
 			<div class="kthead-title kl">
 			<?php
 				// Show new posts, locked, review
-				echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->escape($category->name ) );
+				//echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->escape($category->name ) );
+				echo $this->getCategoryLink($category);
 				if ($category->getNewCount()) {
 					echo '<sup class="knewchar">(' . $category->getNewCount() . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
 				}
@@ -73,7 +75,8 @@ foreach ( $this->sections as $section ) :
 			<div class="kcc-subcat km">
 			<?php
 				echo $this->getCategoryIcon($childforum, true);
-				echo CKunenaLink::GetCategoryLink ( 'showcat', intval($childforum->id), $this->escape($childforum->name), '','', KunenaHtmlParser::stripBBCode ( $childforum->description ) );
+				//echo CKunenaLink::GetCategoryLink ( 'showcat', intval($childforum->id), $this->escape($childforum->name), '','', KunenaHtmlParser::stripBBCode ( $childforum->description ) );
+				echo $this->getCategoryLink($childforum);
 				echo '<span class="kchildcount ks">(' . $childforum->getTopics() . "/" . $childforum->getPosts() . ')</span>';
 			?>
 			</div>
@@ -128,7 +131,8 @@ foreach ( $this->sections as $section ) :
 			<!-- /Avatar -->
 			<?php endif; ?>
 			<div class="klatest-subject ks">
-				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($last->id), intval($last->last_topic_id), intval($last->getLastPostLocation()), intval($this->config->messages_per_page), KunenaHtmlParser::parseText($last->last_topic_subject, 30), intval($last->last_post_id) );?>
+				<?php //echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($last->id), intval($last->last_topic_id), intval($last->getLastPostLocation()), intval($this->config->messages_per_page), KunenaHtmlParser::parseText($last->last_topic_subject, 30), intval($last->last_post_id) );?>
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. $this->getLastPostLink($last);?>
 			</div>
 
 			<div class="klatest-subject-by ks">

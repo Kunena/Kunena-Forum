@@ -137,7 +137,7 @@ class KunenaModel extends JModel {
 		}
 
 		// Embedded models/views do not have user state -- all variables come from parameters
-		return $this->getVar($request, null, 'default', $type);
+		return $this->getVar($request, $default, 'default', $type);
 	}
 
 	protected function getVar($name, $default = null, $hash = 'default', $type = 'none', $mask = 0) {

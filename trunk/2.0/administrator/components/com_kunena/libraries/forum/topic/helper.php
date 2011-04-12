@@ -267,12 +267,12 @@ class KunenaForumTopicHelper {
 				tt.first_post_time = mmin.time,
 				tt.first_post_userid = mmin.userid,
 				tt.first_post_message = tmin.message,
-				tt.first_post_guest_name = IF(mmin.userid>0,null,mmin.name),
+				tt.first_post_guest_name = mmin.name,
 				tt.last_post_id = mmax.id,
 				tt.last_post_time = mmax.time,
 				tt.last_post_userid = mmax.userid,
 				tt.last_post_message = tmax.message,
-				tt.last_post_guest_name = IF(mmax.userid>0,null,mmax.name)
+				tt.last_post_guest_name = mmax.name
 			WHERE moved_id=0 {$where}";
 		$db->setQuery($query);
 		$db->query ();

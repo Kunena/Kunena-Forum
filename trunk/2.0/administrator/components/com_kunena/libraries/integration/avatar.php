@@ -64,8 +64,11 @@ abstract class KunenaAvatar {
 		if (!$avatar) return;
 		if ($class) $class=' class="'.$class.'"';
 
-		$link = '<img'.$class.' src="'.$avatar.'" alt="'.JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()).'" />';
-		//$link = '<img'.$class.' src="'.$avatar.'" alt="'.JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()).'" style="max-width: '.$size->x.'px; max-height: '.$size->y.'px" />';
+		// Style is needed to resize avatar inside module parameters
+		if (intval($sizex)>0) $style = 'style="max-width: '.$size->x.'px; max-height: '.$size->y.'px"';
+		else $style = '';
+
+		$link = '<img'.$class.' src="'.$avatar.'" alt="'.JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()).'" '.$style.' />';
 
 		return $link;
 	}

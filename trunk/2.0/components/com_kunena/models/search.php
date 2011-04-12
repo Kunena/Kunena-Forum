@@ -265,11 +265,19 @@ class KunenaModelSearch extends KunenaModel {
 			$this->setState('list.start', intval($this->total / $limit) * $limit);
 
 		$topicids = array();
+		$userids = array();
 		foreach ($this->messages as $message) {
 			$topicids[$message->thread] = $message->thread;
+			$userids[$message->userid] = $message->userid;
 		}
-		if ($topicids) KunenaForumTopicHelper::getTopics($topicids);
-
+		if ($topicids) {
+			$topics = KunenaForumTopicHelper::getTopics($topicids);
+			foreach ($topics as $topic) {
+				$userids[$topic->first_post_userid] = $topic->first_post_userid;
+			}
+		}
+		KunenaUserHelper::loadUsers($userids);
+		KunenaForumMessageHelper::loadLocation($this->messages);
 		return $this->messages;
 	}
 

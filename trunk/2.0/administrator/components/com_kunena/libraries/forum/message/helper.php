@@ -222,7 +222,11 @@ class KunenaForumMessageHelper {
 		$list = array();
 		$ids = array();
 		foreach ($mesids as $id) {
-			$id = (int) $id;
+			if ($id instanceof KunenaForumMessage) {
+				$id = $id->id;
+			} else {
+				$id = (int) $id;
+			}
 			if (!isset(self::$_location [$id])) {
 				$ids[$id] = $id;
 				self::$_location [$id] = new stdClass();

@@ -50,6 +50,8 @@ Kunena 2.0.0-DEV
 ^ [#22569] Move some link/url functions out of views into KunenaView
 + [#25415] Tableless template: Implement Search/Default (results)
 # [#25415] Tableless template: Fix broken URL in Topics/Posts
+# [#23443] Fatal error: Class 'KunenaForumMessageHelper' not found in models/topics.php
+^ [#23442] Optimize a few extra queries from KunenaModelSearch class
 
 11-April-2011 Matias
 + [#25415] Tableless template: Implement Statistics/Default

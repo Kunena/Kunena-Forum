@@ -31,17 +31,17 @@ class KunenaLoginJomSocial extends KunenaLogin {
 	}
 
 	public function getLoginURL() {
-		return 'index.php?option=com_community&view=frontpage';
+		return CRoute::_('index.php?option=com_community&view=frontpage');
 	}
 
 	public function getLogoutURL() {
-		return 'index.php?option=com_community&view=frontpage';
+		return CRoute::_('index.php?option=com_community&view=frontpage');
 	}
 
 	public function getRegistrationURL() {
 		$usersConfig = JComponentHelper::getParams ( 'com_users' );
 		if ($usersConfig->get ( 'allowUserRegistration' ))
-			return 'index.php?option=com_community&view=register';
+			return CRoute::_('index.php?option=com_community&view=register');
 	}
 
 	public function getResetURL() {

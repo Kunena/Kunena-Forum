@@ -37,6 +37,7 @@ Kunena 2.0.0-DEV
 # [#23443] Administration: menu creation uses always English
 # [#23443] Announcement Box: cache different version for global moderators/administrators
 # [#23443] Login Box: fix small caching bug (login redirects to wrong page)
+# [#23443] Integration: Fix broken SEF links (do not use KunenaRoute)
 
 12-April-2011 Matias
 # [#23443] KunenaForumTopicHelper::recount(): Fill always guest name (there may be deleted users)

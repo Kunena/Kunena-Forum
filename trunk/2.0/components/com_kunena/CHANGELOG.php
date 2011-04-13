@@ -33,6 +33,10 @@ Kunena 2.0.0-DEV
 
 13-April-2011 Matias
 # [#23443] Module positions are wrong in Kunena front page (Joomla didn't obey Itemid)
+^ [#24847] updated fi-FI frontend and installer (thanks Jared)
+# [#23443] Administration: menu creation uses always English
+# [#23443] Announcement Box: cache different version for global moderators/administrators
+# [#23443] Login Box: fix small caching bug (login redirects to wrong page)
 
 12-April-2011 Matias
 # [#23443] KunenaForumTopicHelper::recount(): Fill always guest name (there may be deleted users)

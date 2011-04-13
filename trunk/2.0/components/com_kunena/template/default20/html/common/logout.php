@@ -33,8 +33,8 @@ defined ( '_JEXEC' ) or die ();
 							<input type="hidden" name="view" value="<?php echo $this->logout['view'] ?>" />
 							<?php endif ?>
 							<input type="hidden" name="task" value="<?php echo $this->logout['task'] ?>" />
-							<input type="hidden" name="<?php echo $this->logout['field_return'] ?>" value="<?php echo $this->return ?>" />
-							<?php echo JHTML::_ ( 'form.token' ); ?>
+							<input type="hidden" name="<?php echo $this->logout['field_return'] ?>" value="[K=RETURN_URL]" />
+							[K=TOKEN]
 						</fieldset>
 					</form>
 				</li>

@@ -29,7 +29,7 @@ class KunenaAdminControllerCreatemenu extends KunenaController {
 		$lang = JFactory::getLanguage();
 		// Start by loading English strings and override them by current locale
 		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
+		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, null, true);
 
 		require_once(KPATH_ADMIN . '/install/model.php');
 		$installer = new KunenaModelInstall();

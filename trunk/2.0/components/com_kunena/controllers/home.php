@@ -24,6 +24,7 @@ class KunenaControllerHome extends KunenaController {
 	public $home = 1;
 
 	public function display() {
+		global $Itemid;
 		$menu = JFactory::getApplication ()->getMenu ();
 		$home = $menu->getActive ();
 		// TODO: maybe add error
@@ -72,6 +73,10 @@ class KunenaControllerHome extends KunenaController {
 		}
 		// Set active menu item to point the real page
 		$menu->setActive ( $default->id );
+
+		// Joomla 1.5 hack:
+		$Itemid = $default->id;
+		KunenaRoute::initialize();
 
 		if (JRequest::getVar ( 'view' ) != 'home') {
 			// Run display task from our new controller

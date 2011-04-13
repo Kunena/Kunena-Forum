@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+13-April-2011 Matias
+# [#23443] Module positions are wrong in Kunena front page (Joomla didn't obey Itemid)
+
 12-April-2011 Matias
 # [#23443] KunenaForumTopicHelper::recount(): Fill always guest name (there may be deleted users)
 # [#23443] KunenaAvatar::getLink(): if avatar size is numeric, set styles for max-width and max-height

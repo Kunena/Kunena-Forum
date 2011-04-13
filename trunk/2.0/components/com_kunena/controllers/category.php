@@ -32,7 +32,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 
 	function markread() {
 		$app = JFactory::getApplication ();
-		if (! JRequest::checkToken ('get')) {
+		if (! JRequest::checkToken ('request')) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}

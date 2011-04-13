@@ -39,6 +39,8 @@ Kunena 2.0.0-DEV
 # [#23443] Login Box: fix small caching bug (login redirects to wrong page)
 # [#23443] Integration: Fix broken SEF links (do not use KunenaRoute)
 # [#23443] Topics/Posts: message link points to wrong URL
+# [#23443] Mark all topics read doesn't work
+# [#23443] Topic/Edit: BBCode button color doesn't work
 
 12-April-2011 Matias
 # [#23443] KunenaForumTopicHelper::recount(): Fill always guest name (there may be deleted users)

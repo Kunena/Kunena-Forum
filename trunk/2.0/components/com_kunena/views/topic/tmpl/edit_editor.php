@@ -62,7 +62,7 @@ defined ( '_JEXEC' ) or die ();
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
 				?>&nbsp;</span>
 			</div>
-			<div id="kbbcode-colorpalette" style="display: none;">
+			<div id="kbbcode-color-options" style="display: none;">
 				<script type="text/javascript">kGenerateColorPalette('4%', '15px');</script>
 			</div>
 

@@ -20,7 +20,6 @@ class KunenaDate extends JDate {
 	public function diff($d2 = 'now', $week = false) {
 		if (method_exists('DateTime', 'diff')) {
 			// PHP 5.3:
-			date_default_timezone_set('UTC');
 			$d1 = new DateTime($this->toISO8601());
 			$d2 = new DateTime(is_numeric($d2) ? date('c', $d2) : $d2);
 			$interval = $d1->diff($d2);

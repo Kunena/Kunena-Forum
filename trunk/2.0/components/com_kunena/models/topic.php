@@ -131,7 +131,7 @@ class KunenaModelTopic extends KunenaModel {
 				$userlist[intval($message->userid)] = intval($message->userid);
 				$userlist[intval($message->modified_by)] = intval($message->modified_by);
 			}
-			if (!isset($this->messages[$this->getState ( 'item.mesid')])) $this->setState ( 'item.mesid', reset($this->messages)->id);
+			if (!isset($this->messages[$this->getState ( 'item.mesid')]) && !empty($this->messages)) $this->setState ( 'item.mesid', reset($this->messages)->id);
 			if ($threaded) {
 				if (!isset($this->messages[$this->topic->first_post_id]))
 					$this->messages = $this->getThreadedOrdering(0, array('edge'));

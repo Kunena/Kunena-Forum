@@ -178,8 +178,8 @@
 					MODIFY `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
 					MODIFY `userid` INT( 11 ) NOT NULL DEFAULT '0',
 					ADD INDEX `userid_userip` ( `userid` , `userip` ),
-					ADD INDEX ( `func` ),
-					ADD INDEX ( `time` );
+					ADD INDEX `func` ( `func` ),
+					ADD INDEX `time` ( `time` );
 			</query>
 		</version>
 		<version version="1.6.4" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">

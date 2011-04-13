@@ -41,6 +41,7 @@ Kunena 2.0.0-DEV
 # [#23443] Topics/Posts: message link points to wrong URL
 # [#23443] Mark all topics read doesn't work
 # [#23443] Topic/Edit: BBCode button color doesn't work
+^ [#22786] Merge revisions 4654-4731 from trunk/1.6
 
 12-April-2011 Matias
 # [#23443] KunenaForumTopicHelper::recount(): Fill always guest name (there may be deleted users)
@@ -1458,6 +1459,37 @@ Kunena 2.0.0-DEV
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
 Kunena 1.6.4-DEV
+
+7-April-2011 Xillibit
+# [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text
+
+5-April-2011 Matias
+# [#25326] Turn off PHP notice/warning handlers when not in debug mode (Joomla 1.5 surpresses way too many errors with @)
+^ [#15886] Merged revisions 4714-4720 from /branches/1.6.4-language-LDA-2011-04-03
+
+03-April-2011 LDA
+^ [#24847] update es-ES (thanks Kunena Spanish Team)
+^ [#24847] update ar-AA (thanks baazza)
+^ [#24847] update ru-RU (thanks Zarkos)
+^ [#24847] update lt-LT (thanks joomla123.lt)
+
+29-March-2011 Matias
+# [#24991] Birthdate in kunena profile is different under Joomla 1.6 and Joomla 1.5
+
+26-March-2011 Severdia
+# [#25329] Fixed avatar border regression
+
+26-March-2011 Xillibit
+# [#25460] Issue on Joomla! 1.6 which prevent to show menu details in configuration report
+
+25-March-2011 Xillibit
+# [#25448] Timestamp isn't saved in database on anonymous post
+
+22-March-2011 Matias
+# [#24762] Regression in Installer: generate new moderator index only once
+
+21-March-2011 Matias
+# [#24379] Fix Regression: undefined variable
 
 18-March-2011 Matias
 # [#25168] Fix CSS color issue in sticky messages

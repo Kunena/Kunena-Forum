@@ -369,7 +369,8 @@ PX		EM			PCT			PT
 	float: left;
 }
 
-#Kunena img.klist-avatar {
+#Kunena img.klist-avatar,
+#Kunena .klist-avatar {
 	height: auto;
 	width: 36px;
 	border: 0px
@@ -3336,6 +3337,7 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	width: 100% !important;	
 }
 /* --------------------------------------------------------------- */
+
 /* Kunena 2.0 */
 
 #Kunena .kpagination span {

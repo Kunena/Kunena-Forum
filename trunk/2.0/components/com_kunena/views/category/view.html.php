@@ -105,9 +105,10 @@ class KunenaViewCategory extends KunenaView {
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
 
 		if ($this->category->isSection()) {
-			if ($this->me->isAdmin(null)) {
+// TODO: turn this on:
+/*			if ($this->me->isAdmin(null)) {
 				$this->category_manage = CKunenaLink::GetHrefLink(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage&catid='.$this->category->id), $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES') ), $title = '', 'nofollow', 'kicon-button kbuttonmod btn-left', '', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES_LONG'));
-			}
+			}*/
 		}
 		if ($this->me->exists()) {
 			$this->markAllReadURL = KunenaRoute::_();

@@ -10,4 +10,4 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-include dirname ( __FILE__ ) . '/vote.php';
+include dirname ( __FILE__ ) . '/vote_embed.php';

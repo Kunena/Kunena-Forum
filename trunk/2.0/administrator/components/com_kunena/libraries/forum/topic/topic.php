@@ -399,7 +399,7 @@ class KunenaForumTopic extends JObject {
 			}
 
 			if (!isset($this->_authccache[$user->userid][$action])) {
-				$this->_authccache[$user->userid][$action] = $this->getCategory()->authorise('topic.'.$action, $user, 'ret');
+				$this->_authccache[$user->userid][$action] = $this->getCategory()->authorise('topic.'.$action, $user, null);
 			}
 
 			$this->_authcache[$user->userid][$action] = $this->_authccache[$user->userid][$action];
@@ -418,10 +418,11 @@ class KunenaForumTopic extends JObject {
 			}
 		}
 		$error = $this->_authcache[$user->userid][$action];
-		if (!$silent && $error) $this->setError ( $error );
+		if ($silent === false && $error) $this->setError ( $error );
 
+		if ($silent !== null) $error = !$error;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		return !$error;
+		return $error;
 	}
 
 	/**

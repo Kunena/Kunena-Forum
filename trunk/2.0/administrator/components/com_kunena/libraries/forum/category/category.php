@@ -246,10 +246,11 @@ class KunenaForumCategory extends JObject {
 			}
 		}
 		$error = $this->_authcache[$user->userid][$action];
-		if (!$silent && $error) $this->setError ( $error );
+		if ($silent === false && $error) $this->setError ( $error );
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		return $silent == 'ret' ? $error : !$error;
+		if ($silent !== null) $error = !$error;
+		return $error;
 	}
 
 	/**

@@ -313,6 +313,7 @@ class KunenaModelTopics extends KunenaModel {
 		}
 		$delete = $approve = $undelete = $move = $permdelete = false;
 		foreach ($this->topics as $topic) {
+			if (!KunenaUserHelper::get()->isModerator($topic->id)) continue;
 			if (!$delete && $topic->authorise('delete')) $delete = true;
 			if (!$approve && $topic->authorise('approve')) $approve = true;
 			if (!$undelete && $topic->authorise('undelete')) $undelete = true;
@@ -336,8 +337,10 @@ class KunenaModelTopics extends KunenaModel {
 		if ($this->messages === false) {
 			$this->getPosts();
 		}
+
 		$delete = $approve = $undelete = $move = $permdelete = false;
 		foreach ($this->messages as $message) {
+			if (!KunenaUserHelper::get()->isModerator($message->catid)) return;
 			if (!$delete && $message->authorise('delete')) $delete = true;
 			if (!$approve && $message->authorise('approve')) $approve = true;
 			if (!$undelete && $message->authorise('undelete')) $undelete = true;

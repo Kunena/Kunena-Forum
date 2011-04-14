@@ -45,6 +45,7 @@ Kunena 2.0.0-DEV
 # [#23443] Topic/Default with poll has extra footer
 # [#23443] Hide incomplete shadow topic and category manager links for now
 # [#23443] Wrong timezone in all dates
+# [#23443] Moderator actions is shown to visitors
 
 12-April-2011 Matias
 # [#23443] KunenaForumTopicHelper::recount(): Fill always guest name (there may be deleted users)

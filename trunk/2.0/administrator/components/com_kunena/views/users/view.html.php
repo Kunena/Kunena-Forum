@@ -67,7 +67,7 @@ class KunenaAdminViewUsers extends KunenaView {
 
 		$avatarint = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = is_a($avatarint, 'KunenaAvatarKunena') ? true : false;
-		$this->avatar = $avatarint->getLink($this->user->userid, '', 'profile');
+		$this->avatar = $avatarint->getLink($this->user, '', 'profile');
 
 		// make the select list for the moderator flag
 		$yesnoMod [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_ANN_YES') );

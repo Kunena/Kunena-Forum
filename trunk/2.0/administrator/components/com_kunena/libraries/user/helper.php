@@ -118,7 +118,6 @@ class KunenaUserHelper {
 			$instance->setProperties ( $user );
 			$instance->exists(true);
 			self::$_instances [$instance->userid] = $instance;
-			$list [$instance->userid] = $instance;
 		}
 
 		// Finally call integration preload as well
@@ -126,6 +125,9 @@ class KunenaUserHelper {
 		$avatars = KunenaFactory::getAvatarIntegration();
 		$avatars->load($userids);
 
+		foreach ($userids as $userid) {
+			if (isset(self::$_instances [$userid])) $list [$userid] = self::$_instances [$userid];
+		}
 		return $list;
 	}
 

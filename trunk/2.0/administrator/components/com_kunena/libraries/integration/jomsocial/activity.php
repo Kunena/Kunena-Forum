@@ -45,8 +45,8 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			$act->target = 0; // no target
 			$act->title = JText::_ ( '{actor} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1' ) . ' <a href="' . $JSPostLink . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2' ) );
 			$act->content = $content;
-			$act->app = 'wall';
-			$act->cid = 0;
+			$act->app = 'kunena.post';
+			$act->cid = $message->thread;
 
 			// jomsocial 0 = public, 20 = registered members
 			if ($message->getCategory()->pub_access == 0) {
@@ -84,8 +84,8 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			$act->target = 0; // no target
 			$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1' ) . ' <a href="' . $JSPostLink . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
 			$act->content = $content;
-			$act->app = 'wall';
-			$act->cid = 0;
+			$act->app = 'kunena.post';
+			$act->cid = $message->thread;
 
 			// jomsocial 0 = public, 20 = registered members
 			if ($message->getCategory()->pub_access == 0) {
@@ -115,8 +115,8 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			$act->target = $thankyoutargetid;
 			$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_( 'COM_KUNENA_JS_ACTIVITYSTREAM_THANKYOU' ).' <a href="' . $JSPostLink . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
 			$act->content = NULL;
-			$act->app = 'wall';
-			$act->cid = 0;
+			$act->app = 'kunena.thankyou';
+			$act->cid = $message->id;
 
 			// jomsocial 0 = public, 20 = registered members
 			if ($message->getCategory()->pub_access == 0) {

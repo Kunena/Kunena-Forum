@@ -31,6 +31,11 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+14-April-2011 Matias
+# [#23443] JomSocial activity stream: add app and cid to all wall entries
+# [#23443] KunenaForumUserHelper::loadUsers() should return all users, not just last loaded
+# [#23443] Administrator: Fix fatal error when trying to edit user
+
 13-April-2011 Matias
 # [#23443] Module positions are wrong in Kunena front page (Joomla didn't obey Itemid)
 ^ [#24847] updated fi-FI frontend and installer (thanks Jared)

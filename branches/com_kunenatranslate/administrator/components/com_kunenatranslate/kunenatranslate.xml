@@ -10,7 +10,7 @@
 	<authorEmail>sven@kunena.com</authorEmail>
 	<authorUrl>http://www.kunena.com</authorUrl>
 	<version>0.1.0</version>
-	<description>MOD_KUNENATRANSLATE_DESC</description>
+	<description>COM_KUNENATRANSLATE_DESC</description>
 	<install>
 		<sql>
 			<file charset="utf8" driver="mysql">install.sql</file>

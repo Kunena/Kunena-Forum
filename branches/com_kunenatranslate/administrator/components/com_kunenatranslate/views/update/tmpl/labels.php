@@ -23,8 +23,11 @@ if( JRequest::getVar('task') == 'old'){
 JToolBarHelper::cancel();?>
 
 <fieldset class="adminform">
-	<legend>Note</legend>
-	<p><?php echo $text; ?></p>
+	<legend><?php echo JText::_('COM_KUNENATRANSLATE_HOWTOUSE');?></legend> 
+	<p><?php //Comment for the script to find the correct Labels 
+		//JText::_('COM_KUNENATRANSLATE_OLD);
+		//JText::_('COM_KUNENATRANSLATE_NEW);
+		echo JText::_('COM_KUNENATRANSLATE_'.$arr); ?></p>
 </fieldset>
 
 <form action="index.php" method="post" name="adminForm" id="adminForm">
@@ -33,18 +36,18 @@ JToolBarHelper::cancel();?>
 		<tr>
 			<th width="10">
 				<?php if( $arr == 'old')
-					echo JText::_('Id');
+					echo JText::_('COM_KUNENATRANSLATE_ID');
 				else 
-					echo JText::_( 'Num' ); ?>
+					echo JText::_( 'COM_KUNENATRANSLATE_NUM' ); ?>
 			</th>
 			<th class="title" width="10">
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->labels[$arr]); ?>);" />
 			</th>
 			<th class="title">
-				Label
+				<?php echo JText::_('COM_KUNENATRANSLATE_LABEL'); ?>
 			</th>
 			<th class="title">
-				Client
+				<?php echo JText::_('COM_KUNENATRANSLATE_CLIENT'); ?>
 			</th>
 		</tr>
 	</thead>

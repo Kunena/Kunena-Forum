@@ -16,26 +16,36 @@ JToolBarHelper::editListX();
 JToolBarHelper::deleteList();?>
 
 <form action="index.php" method="post" name="adminForm" id="adminForm">
+<table>
+	<tr>
+		<td align="left" width="100%"></td>
+		<td nowrap="nowrap">
+			<?php 
+			echo $this->lists['extension'];
+			echo $this->lists['client'];
+			?>
+		</td>
+</table>
 <table class="adminlist">
 	<thead>
 		<tr>
 			<th width="10">
-				<?php echo JText::_( 'Num' ); ?>
+				<?php echo JText::_( 'COM_KUNENATRANSLATE_NUM' ); ?>
 			</th>
 			<th class="title" width="10">
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->labels); ?>);" />
 			</th>
 			<th class="title">
-				Label
+				<?php echo JText::_ ( 'COM_KUNENATRANSLATE_LABEL' ); ?>
 			</th>
 			<th class="title">
-				Translations
+				<?php echo JText::_ ( 'COM_KUNENATRANSLATE_TRANSLATION' ); ?>
 			</th>
 			<th class="title">
-				Client
+				<?php echo JText::_ ( 'COM_KUNENATRANSLATE_CLIENT' ); ?>
 			</th>
 			<th width="1%" nowrap="nowrap">
-				ID
+				<?php echo JText::_ ( 'COM_KUNENATRANSLATE_ID' ); ?>
 			</th>
 		</tr>
 	</thead>
@@ -71,5 +81,6 @@ JToolBarHelper::deleteList();?>
 <input type="hidden" name="id" value="" />
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="boxchecked" value="0" />
+<input type="hidden" name="oldext" value="<?php echo $this->ext; ?>" />
 <?php echo JHTML::_( 'form.token' ); ?>
 </form>

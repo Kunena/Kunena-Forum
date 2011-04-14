@@ -9,7 +9,7 @@
  * @link http://www.kunena.com
  */
 defined('_JEXEC') or die('Restricted access');
-JToolBarHelper::title( JText::_( 'Kunena Translate' ).': <small><small>'.JText::_('New Label').'</small></small>', 'generic.png' );
+JToolBarHelper::title( JText::_( 'COM_KUNENATRANSLATE' ).': <small><small>'.JText::_('COM_KUNENATRANSLATE_LABEL_NEW').'</small></small>', 'generic.png' );
 JToolBarHelper::save(); 
 JToolBarHelper::cancel();?>
 
@@ -48,10 +48,10 @@ window.addEvent( 'domready' , function() {
 	<thead>
 		<tr>
 			<th width="10">
-				<?php echo JText::_( 'Num' ); ?>
+				<?php echo JText::_( 'COM_KUNENATRANSLATE_NUM' ); ?>
 			</th>
 			<th class="title">
-				Label
+				<?php echo JText::_('COM_KUNENATRANSLATE_LABEL'); ?>
 			</th>
 			<?php foreach ($this->languages as $v):?>
 				<th class="title">

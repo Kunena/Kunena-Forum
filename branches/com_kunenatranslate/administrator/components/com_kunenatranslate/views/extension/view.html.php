@@ -17,7 +17,7 @@ jimport('joomla.application.component.view');
 class KunenaTranslateViewExtension extends JView
 {
 	function display($tpl = null){
-		JToolBarHelper::title( JText::_( 'Kunena Translate' ).': <small><small>'.JText::_('Extension Manager').'</small></small>', 'generic.png' );
+		JToolBarHelper::title( JText::_( 'COM_KUNENATRANSLATE' ).': <small><small>'.JText::_('COM_KUNENATRANSLATE_EXTENSION_MANAGER').'</small></small>', 'generic.png' );
 		fb($this->getLayout());
 		$extension = $this->get('List');
 		$this->assignRef('extension', $extension);

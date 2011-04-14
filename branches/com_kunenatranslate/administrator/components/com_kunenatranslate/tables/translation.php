@@ -54,10 +54,16 @@ class TableTranslation extends JTable
 			else $where = ' WHERE ';
 			$where .= " a.lang='{$lang}'";
 		}
+		if(empty($client)){
+			$client = $this->client;
+		}
 		if (!empty($client) && is_string($client)){
 			if(!empty($where)) $where .= ' AND ';
 			else $where = ' WHERE ';
 			$where .= " b.client='{$client}'";
+		}
+		if(empty($extension)){
+			$extension = $this->extension;
 		}
 		if (!empty($extension) && is_int($extension)){
 			if(!empty($where)) $where .= ' AND ';
@@ -70,7 +76,6 @@ class TableTranslation extends JTable
 				ON a.labelid=b.id  
 				{$where}";
 		$db->setQuery($query);
-		
 		$result = $db->loadObjectlist();
 		if ($result) {
 			return $result;

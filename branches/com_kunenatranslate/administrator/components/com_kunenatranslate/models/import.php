@@ -142,7 +142,7 @@ class KunenaTranslateModelImport extends JModel{
 				return false;
 			}
 		}else{
-			JError::raiseNotice('', JText::_('Nothing to override'));
+			JError::raiseNotice('', JText::_('COM_KUNENATRANSLATE_OVERRIDE_NOTHINGTO'));
 		}
 		return true;		
 	}
@@ -172,7 +172,7 @@ class KunenaTranslateModelImport extends JModel{
 		$table = $this->getTable('Translation');
 		$trans = $table->loadTranslations('',$lang, $client, $extension);
 		if(empty($trans)){
-			JError::raiseWarning('', JText::_('No translations found in DB'));
+			JError::raiseWarning('', JText::_('COM_KUNENATRANSLATE_DB_NOTRANSLATION'));
 			return false;
 		}
 		$cont = '';
@@ -180,7 +180,7 @@ class KunenaTranslateModelImport extends JModel{
 			$cont .= "{$value->label}=\"{$value->translation}\"\n";
 		}
 		if(!JFile::write( $ini, $cont)){
-			JError::raiseWarning(21, 'JFile::write: '.JText::_('Unable to write file') . ": '$ini'");
+			JError::raiseWarning(21, 'JFile::write: '.JText::_('COM_KUNENATRANSLATE_FILE_WRITE_FAIL') . ": '$ini'");
 			return false;
 		}
 		

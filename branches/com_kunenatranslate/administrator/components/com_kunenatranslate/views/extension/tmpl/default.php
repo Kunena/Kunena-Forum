@@ -21,7 +21,7 @@ JToolBarHelper::deleteListX();
 	<thead>
 		<tr>
 			<th width="10">
-				<?php echo JText::_( 'Num' ); ?>
+				<?php echo JText::_( 'COM_KUNENATRANSLATE_NUM' ); ?>
 			</th>
 			<th class="title" width="10">
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->extension); ?>);" />

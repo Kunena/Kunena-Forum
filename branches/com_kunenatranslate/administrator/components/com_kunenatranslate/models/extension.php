@@ -37,16 +37,16 @@ class KunenaTranslateModelExtension extends JModel {
 	 * Returns a HTML selectlist of installed config files
 	 * @return string
 	 */
-	function getHtmlList($hide_none = false){
+	function getHtmlList($hide_none = false, $special = NULL, $selected = NULL){
 		if(!$hide_none)
-			$listarray[] = array ('text' => JText::_('COM_KUNENATRANSLATE_NONESELECTED') ,
+			$listarray[] = array ('text' => JText::_('COM_KUNENATRANSLATE_EXTENSION_NONESELECTED') ,
 							 'value' => '-1');
 		$list = self::getList();
 		foreach ($list as $value) {
 			$listarray[] = array('text' => $value['name'],
 							'value' => $value['id']);
 		}
-		return JHTML::_('select.genericlist', $listarray, 'extension');
+		return JHTML::_('select.genericlist', $listarray, 'extension', $special, 'value', 'text', $selected);
 	}
 	
 	/**

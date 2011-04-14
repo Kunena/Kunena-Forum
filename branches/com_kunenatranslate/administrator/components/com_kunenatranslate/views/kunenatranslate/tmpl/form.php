@@ -9,7 +9,7 @@
  * @link http://www.kunena.com
  */
 defined('_JEXEC') or die('Restricted access');
-JToolBarHelper::title( JText::_( 'Kunena Translate' ).': <small><small>'.JText::_('Edit').'</small></small>', 'generic.png' );
+JToolBarHelper::title( JText::_( 'COM_KUNENATRANSLATE' ).': <small><small>'.JText::_('COM_KUNENATRANSLATE_EDIT').'</small></small>', 'generic.png' );
 JToolBarHelper::save(); 
 JToolBarHelper::cancel();?>
 
@@ -18,10 +18,10 @@ JToolBarHelper::cancel();?>
 	<thead>
 		<tr>
 			<th width="10">
-				<?php echo JText::_( 'Num' ); ?>
+				<?php echo JText::_( 'COM_KUNENATRANSLATE_NUM' ); ?>
 			</th>
 			<th class="title">
-				Label
+				<?php echo JText::_('COM_KUNENATRANSLATE_LABEL'); ?>
 			</th>
 			<?php foreach ($this->languages as $v):?>
 				<th class="title">
@@ -42,10 +42,12 @@ JToolBarHelper::cancel();?>
 				<?php foreach ($this->languages as $val):
 					$fvalue = '';
 					$name = 'insert';
-					foreach ($v->lang as $value){
-						if($value->lang == $val)
-							$fvalue = $value->translation;
-							$name = 'update';
+					if(!empty($v->lang)){
+						foreach ($v->lang as $value){
+							if($value->lang == $val)
+								$fvalue = $value->translation;
+								$name = 'update';
+							}
 						}?>
 					<td>
 						<input type="text" name="<?php echo $val.'['.$v->id.']['.$name.']';?>"

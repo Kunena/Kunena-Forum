@@ -49,10 +49,16 @@ class TableLabel extends JTable
 		}elseif (!empty($id) && is_int($id)){
 			$where = ' WHERE id='.$id;
 		}else{
+			if(empty($client)){
+				$client = $this->client;
+			}
 			if (!empty($client) && is_string($client)){
 				if(empty($where)) $where = " WHERE ";
 				else $where .= " AND ";
 				$where .= " client='{$client}'";
+			}
+			if(empty($ext)){
+				$ext = $this->extension;
 			}
 			if (!empty($ext) && is_int($ext)){
 				if(empty($where)) $where = " WHERE ";
@@ -120,6 +126,7 @@ class TableLabel extends JTable
 	function delete($id=array()){
 		$db = $this->getDBO();
 		foreach ($id as $v) {
+			//TODO Find better way!
 			$query = "DELETE {$this->_tbl} , #__kunenatranslate_translation 
 					FROM {$this->_tbl}, #__kunenatranslate_translation
 					WHERE {$this->_tbl}.{$this->_tbl_key}=#__kunenatranslate_translation.labelid
@@ -128,7 +135,14 @@ class TableLabel extends JTable
 			if(!$db->query()){
 				$this->setError($db->getErrorMsg());
 				return false;
-			} 
+			}
+			$query = "DELETE FROM {$this->_tbl}
+					WHERE {$this->_tbl}.{$this->_tbl_key}={$v}";
+			$db->setQuery($query);
+			if(!$db->query()){
+				$this->setError($db->getErrorMsg());
+				return false;
+			}
 		}
 		return true;
 	}

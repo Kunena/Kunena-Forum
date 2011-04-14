@@ -21,6 +21,13 @@ class KunenaTranslateController extends JController
 		parent::__construct($config);
 	}
 	
+	function display(){
+		$view = $this->getView('kunenatranslate', 'html', 'KunenaTranslateView');
+		$view->setModel( $this->getModel('extension') );
+		$view->setModel( $this->getModel('import') );
+		parent::display();
+	}
+	
 	function update(){
 		JRequest::setVar('view','update');
 		$view = $this->getView('update', 'html', 'KunenaTranslateView');
@@ -37,9 +44,7 @@ class KunenaTranslateController extends JController
 	
 	function add(){
 		JRequest::setVar('layout','empty');
-		$view = $this->getView('kunenatranslate', 'html', 'KunenaTranslateView');
-		$view->setModel( $this->getModel('extension') );
-		parent::display();
+		self::display();
 	}
 	
 	function edit(){

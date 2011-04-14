@@ -18,8 +18,8 @@ jimport('joomla.application.component.view');
 class KunenaTranslateViewUpdate extends JView
 {
 	function display($tpl = null){
-		JToolBarHelper::title( JText::_( 'Kunena Translate' ).': <small><small>'.
-			JText::_('Update Labels').'</small></small>', 'generic.png' );
+		JToolBarHelper::title( JText::_( 'COM_KUNENATRANSLATE' ).': <small><small>'.
+			JText::_('COM_KUNENATRANSLATE_UPDATE_LABEL').'</small></small>', 'generic.png' );
 		
 		if($this->getLayout() == 'labels'){
 			$labels =& $this->get('Update');

@@ -37,17 +37,27 @@ class KunenaTranslateModelKunenaTranslate extends JModel {
 	}
 	
 	function _getLabels($edit=false){
-		$table = $this->getTable('Label');
+		$extension = JRequest::getInt('extension');
+		$client = null;
+		if(JRequest::getInt('oldext') == $extension)
+			$client = JRequest::getWord('client');
+		$table = $this->getTable('Label'); 
+		$table->extension = $extension;
+		$table->client = $client;
 		$labels = $table->loadLabels($this->_id, $edit);
 		$table = $this->getTable('Translation');
+		$table->extension = $extension;
+		$table->client = $client;
 		$trans = $table->loadTranslations($this->_id);
 
 		if(!empty($labels)){
 			foreach ($labels as $k=>$v){
 				$labels[$k]->lang = '';
-				foreach ($trans as $value) {
-					if($v->id == $value->labelid)
-						$labels[$k]->lang[] = $value;
+				if(!empty($trans)){
+					foreach ($trans as $value) {
+						if($v->id == $value->labelid)
+							$labels[$k]->lang[] = $value;
+					}
 				}
 			}
 		}

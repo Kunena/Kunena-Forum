@@ -65,10 +65,10 @@ class KunenaTranslateControllerImport extends KunenaTranslateController
 		$model = $this->getModel('import');
 		if(!$model->export()){
 			$msg = 'Export failed';
-			$this->setRedirect('index.php?option=com_kunenatranslate&view=import&task=exportview' , $msg);			
+			$this->setRedirect('index.php?option=com_kunenatranslate' , $msg);			
 		}else{
 			$msg = 'Export success';
-			$this->setRedirect('index.php?option=com_kunenatranslate&view=import&task=exportview' , $msg);
+			$this->setRedirect('index.php?option=com_kunenatranslate' , $msg);
 		}
 	}
 	
@@ -80,12 +80,12 @@ class KunenaTranslateControllerImport extends KunenaTranslateController
 		if(!empty($cid)){
 			$model = $this->getModel('import');
 			if($model->update()){
-				$msg = JText::_('Override sucess');
+				$msg = JText::_('COM_KUNENATRANSLATE_OVERRIDE_SUCCESS');
 			}else{
-				$msg = JText::_('Override failed');
+				$msg = JText::_('COM_KUNENATRANSLATE_OVERRIDE_FAILED');
 			}
 		}else{
-			$msg = JText::_('No override choosed');
+			$msg = JText::_('COM_KUNENATRANSLATE_OVERRIDE_NOCHOOSED');
 		}
 		JError::raiseNotice('', $msg);
 		self::display();

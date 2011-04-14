@@ -13,8 +13,8 @@ JToolBarHelper::save ( 'update', 'Overwrite' );
 JToolBarHelper::cancel ();
 ?>
 <fieldset class="adminform">
-	<legend><?php echo JText::_('How to use');?></legend>
-	<p><?php echo JText::_('HOWTO'); ?></p>
+	<legend><?php echo JText::_('COM_KUNENATRANSLATE_HOWTOUSE');?></legend>
+	<p><?php echo JText::_('COM_KUNENATRANSLATE_EXIST_HOWTO'); ?></p>
 	<p>Check the checkboxes if you want to use the new translation and overright the old
 	one. Leave boxes unchecked if you want to keep the old one.</p>
 </fieldset>
@@ -23,20 +23,20 @@ JToolBarHelper::cancel ();
 <thead>
 	<tr>
 		<th width="10">
-			<?php echo JText::_ ( 'Num' ); ?>
+			<?php echo JText::_ ( 'COM_KUNENATRANSLATE_NUM' ); ?>
 		</th>
 		<th class="title" width="10">
 			<input type="checkbox" name="toggle" value="" 
 				onclick="checkAll(<?php echo count ( $this->exist );?>);" />
 		</th>
 		<th class="title">
-			<?php echo JText::_ ( 'Label' ); ?>
+			<?php echo JText::_ ( 'COM_KUNENATRANSLATE_LABEL' ); ?>
 		</th>
 		<th class="title">
-			<?php echo JText::_ ( 'Old' ); ?>
+			<?php echo JText::_ ( 'COM_KUNENATRANSLATE_OLD' ); ?>
 		</th>
 		<th class="title">
-			<?php echo JText::_ ( 'New' ); ?>
+			<?php echo JText::_ ( 'COM_KUNENATRANSLATE_NEW' ); ?>
 		</th>
 	</tr>
 </thead>

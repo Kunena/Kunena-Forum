@@ -60,9 +60,9 @@ class KunenaTranslateControllerUpdate extends KunenaTranslateController
 		//store to database
 		$res = $model->store($new, $client, $extension);
 		if ($res == true)
-			$msg = JText::_('Success');
+			$msg = JText::_('COM_KUNENATRANSLATE_SAVE_SUCCESS');
 		else
-			$msg = Jtext::_('Fail');
+			$msg = Jtext::_('COM_KUNENATRANSLATE_SAVE_FAIL');
 		$this->setRedirect('index.php?option=com_kunenatranslate&task=update', $msg);
 	}
 	
@@ -72,9 +72,9 @@ class KunenaTranslateControllerUpdate extends KunenaTranslateController
 		$model = $this->getModel('update');
 		$res = $model->remove();
 		if ($res == true)
-			$msg = JText::_('Success DELETE');
+			$msg = JText::_('COM_KUNENATRANSLATE_DELETE_SUCCESS');
 		else
-			$msg = Jtext::_('Fail DELETE');
+			$msg = Jtext::_('COM_KUNENATRANSLATE_DELETE_FAIL');
 		$this->setRedirect('index.php?option=com_kunenatranslate&view=update&task=old', $msg);
 		
 	}

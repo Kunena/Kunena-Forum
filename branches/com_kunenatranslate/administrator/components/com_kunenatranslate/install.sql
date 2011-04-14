@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `#__kunenatranslate_label` (
   `client` varchar(30) NOT NULL,
   `extension` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `label` (`label`),
+  KEY `label` (`label`),
   KEY `client` (`client`),
   KEY `extension` (`extension`)
 )ENGINE=MyISAM;
@@ -38,4 +38,5 @@ CREATE TABLE IF NOT EXISTS `#__kunenatranslate_extension` (
 --
 
 INSERT INTO `#__kunenatranslate_extension` (`id`, `name`, `filename`) VALUES
-(1, 'Kunena', 'kunena.xml');
+(1, 'Kunena', 'kunena.xml'),
+(2, 'Kunenatranslate', 'kunenatranslate.xml');

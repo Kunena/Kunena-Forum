@@ -20,11 +20,11 @@ class KunenaTranslateViewImport extends JView
 	function display($tpl = null){
 		if(JRequest::getVar('task') == 'import' || 
 			JRequest::getVar('show') == 'import'){
-			$text = JText::_('Import');
+			$text = JText::_('COM_KUNENATRANSLATE_IMPORT_IMPORT');
 		}else{
-			$text = JText::_('Export');
+			$text = JText::_('COM_KUNENATRANSLATE_IMPORT_EXPORT');
 		}
-		JToolBarHelper::title( JText::_( 'Kunena Translate' ).': 
+		JToolBarHelper::title( JText::_( 'COM_KUNENATRANSLATE' ).': 
 			<small><small>'.$text.'</small></small>', 'generic.png' );
 		if($this->getLayout()== 'exist'){
 			$exist = JRequest::getVar('exist', array());

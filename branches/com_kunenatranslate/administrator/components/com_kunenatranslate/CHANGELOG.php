@@ -29,6 +29,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena Translate 0.1.0
+14-April-2011 svens(LDA)
++ [#25637] adding kunentranslate.xml
++ [#25638] adding translations of component
++ [#25638] adding en-GB
++ [#25641] adding filter for main view
 
 12-April-2011 svens (LDA)
 + [#25629] add config files translations

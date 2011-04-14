@@ -27,7 +27,7 @@ class KunenaTranslateHelper
         	return;
         }
     	if(!$temp = @scandir($this->dir)) {
-        	JError::raiseWarning('', JText::_('Error! Files not found!'));
+        	JError::raiseWarning('', JText::_('COM_KUNENATRANSLATE_ERROR_FILE_NOTFOUND'));
         	return;
         }
         for($i=0; $i < count($temp); $i++) {
@@ -337,8 +337,11 @@ class KunenaTranslateHelper
 	 * @param boolean $htmllist false for array, true for HTML Selectlist
 	 * @return array or html selectlist
 	 */
-	static public function getClientList($filename, $htmllist=false){
+	static public function getClientList($filename, $htmllist=false, $attribute = NULL, $selected = NULL, $hide_none = false){
 		$client = array();
+		if(!$hide_none)
+			$client[] = array ('text' => JText::_('COM_KUNENATRANSLATE_CLIENT_NONESELECTED') ,
+							 'value' => '-1');
 		$xml = self::loadXML($filename);
 		$files = $xml->document->getElementbyPath('files');
 		foreach ($files->children() as $child){
@@ -346,7 +349,7 @@ class KunenaTranslateHelper
 						'value' => $child->name() );
 		}
 		if($htmllist){
-			$client = JHTML::_('select.genericlist', $client, 'client','', 'value','text');
+			$client = JHTML::_('select.genericlist', $client, 'client', $attribute , 'value','text', $selected);
 		}
 		return $client;
 	}
@@ -401,7 +404,7 @@ class KunenaTranslateHelper
 					break;
 			}
 		}else{
-			JError::raiseWarning('', JText::sprintf( 'Invalid clienttype %s', $this->type) );
+			JError::raiseWarning('', JText::sprintf( 'COM_KUNENATRANSLATE_CLIENT_INVALID', $this->type) ); //%s
 			$this->dir = false;
 			return ;
 		}
@@ -421,7 +424,7 @@ class KunenaTranslateHelper
 		}elseif ($area == 'site'){
 			$dir = JPATH_SITE.DS.'language'.DS.$lang.DS.$lang.'.'.$ini->data();
 		}else{
-			JError::raiseWarning('', JText::sprintf( 'Invalid clienttype %s', $this->type) );
+			JError::raiseWarning('', JText::sprintf( 'COM_KUNENATRANSLATE_CLIENT_INVALID', $this->type) ); //%s
 			return false;
 		}
 		return $dir;		

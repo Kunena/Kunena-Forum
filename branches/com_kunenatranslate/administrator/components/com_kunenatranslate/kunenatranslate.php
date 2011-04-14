@@ -21,16 +21,16 @@ require_once (dirname(__FILE__).DS.'controller.php');
 $view = JRequest::getVar('view');
 switch ($view){
 	case 'extension':
-		JSubMenuHelper::addEntry(JText::_('Kunena Translate'), 'index.php?option=com_kunenatranslate');
-		JSubMenuHelper::addEntry(JText::_('Extension Manager'), 'index.php?option=com_kunenatranslate&view=extension', true);
+		JSubMenuHelper::addEntry(JText::_('COM_KUNENATRANSLATE'), 'index.php?option=com_kunenatranslate');
+		JSubMenuHelper::addEntry(JText::_('COM_KUNENATRANSLATE_EXTENSION_MANAGER'), 'index.php?option=com_kunenatranslate&view=extension', true);
 		JSubMenuHelper::addEntry(JText::_('COM_KUNENATRANSLATE_IMPORT'), 'index.php?option=com_kunenatranslate&controller=import&task=display&view=import&show=import');
 		JSubMenuHelper::addEntry(JText::_('COM_KUNENATRANSLATE_EXPORT'), 'index.php?option=com_kunenatranslate&controller=import&task=display&view=import&show=export');
 		break;
 	case 'import':
 		break;
 	default:
-		JSubMenuHelper::addEntry(JText::_('Kunena Translate'), 'index.php?option=com_kunenatranslate', true);
-		JSubMenuHelper::addEntry(JText::_('Extension Manager'), 'index.php?option=com_kunenatranslate&view=extension');
+		JSubMenuHelper::addEntry(JText::_('COM_KUNENATRANSLATE'), 'index.php?option=com_kunenatranslate', true);
+		JSubMenuHelper::addEntry(JText::_('COM_KUNENATRANSLATE_EXTENSION_MANAGER'), 'index.php?option=com_kunenatranslate&view=extension');
 		JSubMenuHelper::addEntry(JText::_('COM_KUNENATRANSLATE_IMPORT'), 'index.php?option=com_kunenatranslate&controller=import&task=display&view=import&show=import');
 		JSubMenuHelper::addEntry(JText::_('COM_KUNENATRANSLATE_EXPORT'), 'index.php?option=com_kunenatranslate&controller=import&task=display&view=import&show=export');
 }

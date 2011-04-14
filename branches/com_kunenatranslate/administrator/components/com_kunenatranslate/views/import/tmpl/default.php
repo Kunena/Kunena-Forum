@@ -57,17 +57,17 @@ window.addEvent( 'domready' , function() {
 			<td><?php echo $this->extensionlist; ?></td>
 		</tr>
 		<tr>
-			<td><?php echo JText::_('Client'); ?></td>
+			<td><?php echo JText::_('COM_KUNENATRANSLATE_Client'); ?></td>
 			<td id="client"><?php echo JText::_('COM_KUNENATRANSLATE_CHOOSE_EXTENSION'); ?></td>
 		</tr>
 		<tr style="display: none;">
-			<td><?php echo JText::_('Language'); ?></td>
+			<td><?php echo JText::_('COM_KUNENATRANSLATE_LANGUAGE'); ?></td>
 			<td><?php echo $this->lang; ?></td>
 		</tr>
 		<?php if(JRequest::getVar('task') == 'import' || 
 			JRequest::getVar('show') == 'import'):?>
 		<tr style="display: none;">
-			<td><?php echo JText::_('add missing labels'); ?></td>
+			<td><?php echo JText::_('COM_KUNENATRANSLATE_LABELS_ADDMISSING'); ?></td>
 			<td><?php echo JHTMLSelect::booleanlist('addmissinglabel'); ?></td>
 		</tr>
 		<?php endif; ?>

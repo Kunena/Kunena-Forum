@@ -10,9 +10,9 @@
  */
 defined('_JEXEC') or die('Restricted access');
 if( JRequest::getVar('task') == 'old')
-	JToolBarHelper::custom('old', 'save.png', '', JText::_('Find outdated') , false);
+	JToolBarHelper::custom('old', 'save.png', '', JText::_('COM_KUNENATRANSLATE_UPDATE_FIND_OLD') , false);
 else
-	JToolBarHelper::custom('update', 'save.png', '', JText::_('Update Labels') , false);
+	JToolBarHelper::custom('update', 'save.png', '', JText::_('COM_KUNENATRANSLATE_UPDATE_FIND_NEW') , false);
 JToolBarHelper::cancel();
 ?>
 

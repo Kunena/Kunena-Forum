@@ -39,6 +39,9 @@ Kunena 2.0.0-DEV
 # [#23443] Redirect instead of showing Access Denied when URL doesn't contain category
 # [#23443] Legacy URL requests are not redirecting as they should
 # [#23443] KunenaForumMessage::sendNotification() sends emails to wrong groups of users
+# [#23443] KunenaForumMessage::sendNotification() doesn't obey configuration settings
+# [#23443] KunenaForumMessage::sendNotification() email doesn't contain URL
+# [#23443] KunenaAccess::loadSubscribers() sends emails to everyone, not only when subscribed=1
 
 13-April-2011 Matias
 # [#23443] Module positions are wrong in Kunena front page (Joomla didn't obey Itemid)

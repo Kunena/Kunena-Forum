@@ -105,23 +105,20 @@ class KunenaForumMessage extends JObject {
 	}
 
 	public function sendNotification($url=null) {
-		kimport ('kunena.html.parser');
+		$config = KunenaFactory::getConfig();
 		if ($this->hold > 1) {
-			$mailsubs = 0;
-			$mailmods = 0;
-			$mailadmins = 0;
+			return;
 		} elseif ($this->hold == 1) {
 			$mailsubs = 0;
-			// TODO: check configuration
-			$mailmods = 1;
-			$mailadmins = 1;
+			$mailmods = (bool) $config->mailmod;
+			$mailadmins = (bool) $config->mailadmin;
 		} else {
-			$mailsubs = 1;
-			// TODO: check configuration
+			$mailsubs = (bool) $config->allowsubscriptions;
 			$mailmods = 0;
 			$mailadmins = 0;
 		}
 
+		kimport ('kunena.html.parser');
 		$once = false;
 		if ($mailsubs) {
 			if (!$this->parent) {
@@ -140,15 +137,15 @@ class KunenaForumMessage extends JObject {
 			}
 		}
 
-		if ($url === false) {
-			$url = CKunenaLink::GetMessageURL($this->id, $this->catid, 0, false);
+		if (!$url) {
+			$url = JURI::root().trim(CKunenaLink::GetMessageURL($this->id, $this->catid, 0, false), '/');
 		}
+		KunenaError::warning ( "URL: ".$url );
 		//get all subscribers, moderators and admins who will get the email
 		$me = KunenaUserHelper::get();
 		$acl = KunenaFactory::getAccessControl();
 		$emailToList = $acl->getSubscribers($this->catid, $this->thread, $mailsubs, $mailmods, $mailadmins, $me->userid);
 
-		$config = KunenaFactory::getConfig();
 		$category = $this->getCategory();
 		$topic = $this->getTopic();
 		if (count ( $emailToList )) {

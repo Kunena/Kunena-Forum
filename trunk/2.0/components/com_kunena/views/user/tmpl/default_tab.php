@@ -68,7 +68,7 @@ JHTML::_('behavior.tooltip');
 			<?php $this->displaySaidThankYou(); ?>
 		</dd>
 		<?php endif; ?>
-		<?php if ($this->my->id == $this->user->id): ?>
+		<?php if ($this->my->id == $this->user->id || $this->me->isAdmin()): ?>
 		<?php if ($this->config->allowsubscriptions) :?>
 		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?>"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
 		<dd style="display: none;">

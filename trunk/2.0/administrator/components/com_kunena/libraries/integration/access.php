@@ -301,11 +301,11 @@ abstract class KunenaAccess {
 			// Get topic subscriptions
 			//FIXME: user topics is missing a column
 			$once = false; //KunenaFactory::getConfig()->topic_subscriptions == 'first' ? 'AND future1=0' : '';
-			$query[] = "SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topic->id} {$once}";
+			$query[] = "SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topic->id} AND subscribed=1 {$once}";
 		}
 		if ($subsriptions == 1 || $subsriptions == 3) {
 			// Get category subscriptions
-			$query[] = "SELECT user_id FROM #__kunena_user_categories WHERE category_id={$category->id}";
+			$query[] = "SELECT user_id FROM #__kunena_user_categories WHERE category_id={$category->id} AND subscribed=1";
 		}
 		$query = implode(' UNION ', $query);
 		$db->setQuery ($query);

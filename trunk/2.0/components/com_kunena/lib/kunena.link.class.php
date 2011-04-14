@@ -424,13 +424,4 @@ class CKunenaLink {
 			return KunenaRoute::_ ( "index.php?option=com_kunena&view=showcat&catid={$catid}", $xhtml );
 		return self::GetThreadPageURL ( 'view', $catid, $result->thread, $result->totalmessages, $limit, $result->latest_id, $xhtml );
 	}
-
-	function GetAutoRedirectHTML($url, $timeout) {
-		$url = htmlspecialchars_decode ( $url );
-		$Output = "\n<script type=\"text/javascript\">\n// <![CDATA[\n";
-		$Output .= "kunenaRedirectTimeout('$url', $timeout);";
-		$Output .= "\n// ]]>\n</script>\n";
-
-		return $Output;
-	}
 }

@@ -34,6 +34,7 @@ Kunena Translate 0.1.0
 + [#25638] adding translations of component
 + [#25638] adding en-GB
 + [#25641] adding filter for main view
++ [#25645] add missing clients for Path building
 
 12-April-2011 svens (LDA)
 + [#25629] add config files translations

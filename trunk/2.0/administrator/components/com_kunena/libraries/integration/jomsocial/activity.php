@@ -36,7 +36,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 
 			// Add readmore link
 			$content .= '<br /><a href="'.
-					CKunenaLink::GetMessageURL($message->id).
+					CKunenaLink::GetMessageURL($message->id, $message->catid).
 					'" class="small profile-newsfeed-item-action">'.JText::sprintf('Read more...').'</a>';
 
 			$act = new stdClass ();
@@ -75,7 +75,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 
 			// Add readmore link
 			$content .= '<br /><a href="'.
-					CKunenaLink::GetMessageURL($message->id).
+					CKunenaLink::GetMessageURL($message->id, $message->catid).
 					'" class="small profile-newsfeed-item-action">'.JText::sprintf('Read more...').'</a>';
 
 			$act = new stdClass ();

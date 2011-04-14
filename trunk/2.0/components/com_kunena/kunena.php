@@ -58,7 +58,7 @@ if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
 	// Legacy support
 	kimport ('kunena.route.legacy');
 	$uri = KunenaRoute::current(true);
-	if (KunenaRouteLegacy::convert($uri)) {
+	if ($uri) {
 		// FIXME: using wrong Itemid
 		JFactory::getApplication ()->redirect (KunenaRoute::_($uri, false));
 	} else {

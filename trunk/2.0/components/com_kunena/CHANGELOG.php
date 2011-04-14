@@ -35,6 +35,10 @@ Kunena 2.0.0-DEV
 # [#23443] JomSocial activity stream: add app and cid to all wall entries
 # [#23443] KunenaForumUserHelper::loadUsers() should return all users, not just last loaded
 # [#23443] Administrator: Fix fatal error when trying to edit user
+# [#23443] JomSocial activity stream: Read more link has no category id
+# [#23443] Redirect instead of showing Access Denied when URL doesn't contain category
+# [#23443] Legacy URL requests are not redirecting as they should
+# [#23443] KunenaForumMessage::sendNotification() sends emails to wrong groups of users
 
 13-April-2011 Matias
 # [#23443] Module positions are wrong in Kunena front page (Joomla didn't obey Itemid)

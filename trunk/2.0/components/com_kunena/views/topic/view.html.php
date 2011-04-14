@@ -39,7 +39,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->assignRef ( 'category', $this->get ( 'Category' ) );
 		$this->assignRef ( 'topic', $this->get ( 'Topic' ) );
 		$channels = $this->category->getChannels();
-		if (! $this->category->authorise('read')) {
+		if ($this->category->id && ! $this->category->authorise('read')) {
 			// User is not allowed to see the category
 			$this->setError($this->category->getError());
 		} elseif (! $this->topic) {

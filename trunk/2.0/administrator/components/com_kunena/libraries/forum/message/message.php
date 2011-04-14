@@ -106,7 +106,11 @@ class KunenaForumMessage extends JObject {
 
 	public function sendNotification($url=null) {
 		kimport ('kunena.html.parser');
-		if ($this->hold == 0) {
+		if ($this->hold > 1) {
+			$mailsubs = 0;
+			$mailmods = 0;
+			$mailadmins = 0;
+		} elseif ($this->hold == 1) {
 			$mailsubs = 0;
 			// TODO: check configuration
 			$mailmods = 1;

@@ -398,21 +398,22 @@ class KunenaForumTopic extends JObject {
 				return false;
 			}
 
-			if (!$silent || !isset($this->_authccache[$user->userid][$action])) {
-				$category = $this->getCategory();
-				$this->_authccache[$user->userid][$action] = $category->authorise('topic.'.$action, $user, $silent);
+			if (!isset($this->_authccache[$user->userid][$action])) {
+				$this->_authccache[$user->userid][$action] = $this->getCategory()->authorise('topic.'.$action, $user, 'ret');
 			}
 
-			$this->_authcache[$user->userid][$action] = null;
-			foreach (self::$actions[$action] as $function) {
-				if (!isset($this->_authfcache[$user->userid][$function])) {
-					$authFunction = 'authorise'.$function;
-					$this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
-				}
-				$error = $this->_authfcache[$user->userid][$function];
-				if ($error) {
-					$this->_authcache[$user->userid][$action] = $error;
-					break;
+			$this->_authcache[$user->userid][$action] = $this->_authccache[$user->userid][$action];
+			if (empty($this->_authcache[$user->userid][$action])) {
+				foreach (self::$actions[$action] as $function) {
+					if (!isset($this->_authfcache[$user->userid][$function])) {
+						$authFunction = 'authorise'.$function;
+						$this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
+					}
+					$error = $this->_authfcache[$user->userid][$function];
+					if ($error) {
+						$this->_authcache[$user->userid][$action] = $error;
+						break;
+					}
 				}
 			}
 		}
@@ -420,7 +421,7 @@ class KunenaForumTopic extends JObject {
 		if (!$silent && $error) $this->setError ( $error );
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		return true;
+		return !$error;
 	}
 
 	/**
@@ -996,8 +997,8 @@ class KunenaForumTopic extends JObject {
 	protected function authoriseOwn($user) {
 		// Check that topic owned by the user or user is a moderator
 		$usertopic = $this->getUserTopic($user);
-		if (!$usertopic->owner && !$user->isModerator($this->category_id)) {
-			return JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' );
+		if (!$user->exists() || (!$usertopic->owner && !$user->isModerator($this->category_id))) {
+			return JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' );
 		}
 	}
 	protected function authoriseVote($user) {

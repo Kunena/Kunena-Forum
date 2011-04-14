@@ -249,7 +249,7 @@ class KunenaForumCategory extends JObject {
 		if (!$silent && $error) $this->setError ( $error );
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		return !$error;
+		return $silent == 'ret' ? $error : !$error;
 	}
 
 	/**

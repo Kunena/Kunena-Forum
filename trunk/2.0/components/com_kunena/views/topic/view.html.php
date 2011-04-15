@@ -523,6 +523,8 @@ class KunenaViewTopic extends KunenaView {
 					if ($this->config->showuserstats) {
 						if ($this->config->userlist_usertype) {
 							$this->usertype = $this->profile->getType ( $this->topic->category_id );
+						} else {
+							$this->usertype = null;
 						}
 						$this->userrankimage = $this->profile->getRank ( $this->topic->category_id, 'image' );
 						$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
@@ -530,6 +532,13 @@ class KunenaViewTopic extends KunenaView {
 						$activityIntegration = KunenaFactory::getActivityIntegration ();
 						$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
 						$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
+					} else {
+						$this->usertype = null;
+						$this->userrankimage = null;
+						$this->userranktitle = null;
+						$this->userposts = null;
+						$this->userpoints = null;
+						$this->usermedals = null;
 					}
 					$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
 

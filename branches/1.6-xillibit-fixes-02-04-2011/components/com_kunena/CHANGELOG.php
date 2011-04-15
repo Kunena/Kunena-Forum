@@ -34,6 +34,7 @@ Kunena 1.6.4-DEV
 
 15-April-2011 Xillibit
 # [#25654] J1.6: the submenu created are not the right access
+# [#25655] Categories locked are showed in drop-down list
 
 9-April-2011 Xillibit
 # [#25594] Remove adress mail from report kunena config

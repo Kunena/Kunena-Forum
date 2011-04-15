@@ -32,8 +32,12 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+15-April-2011 Xillibit
+# [#25654] J1.6: the submenu created are not the right access
+
 9-April-2011 Xillibit
 # [#25594] Remove adress mail from report kunena config
+# [#25595] Get menu details in report configuration doesn't work when it's translated in J1.6.1+
 
 8-April-2011 Xillibit
 # [#25592] Under J1.6.1+ need to load proper for javascript and mootools

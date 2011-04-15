@@ -1607,7 +1607,7 @@ class KunenaModelInstall extends JModel {
 				'published' => 1,
 				'parent_id' => 1,
 				'component_id' => $component_id,
-				'access' => $menu ['access'] + 1,
+				'access' => $menuitem ['access'] + 1,
 				'params' => $params,
 				'home' => 0,
 				'language' => '*',

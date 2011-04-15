@@ -32,6 +32,11 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+15-April-2011 810
+^ [#25168] Some CSS fixes
+^ [#24847] updated nl-NL
+# [#22684] Load mootools in backend J1.6.2
+
 7-April-2011 Xillibit
 # [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text
 

@@ -20,7 +20,7 @@
  **/
 
 defined( '_JEXEC' ) or die();
-
+JHTML::_('behavior.mootools');
 
 class html_Kunena {
 	// Begin: HEADER FUNC

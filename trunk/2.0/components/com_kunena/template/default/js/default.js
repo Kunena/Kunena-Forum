@@ -770,8 +770,8 @@ window.addEvent('domready', function(){
 			kRequestGetTopics(this);
 		});
 	}
-	if(document.id('kmod_targettopic') != undefined){
-		document.id('kmod_targettopic').addEvent('change', function(e){
+	if(document.id('kmod_topics') != undefined){
+		document.id('kmod_topics').addEvent('change', function(e){
 			id = this.get('value');
 			if (id != 0) {
 				targetid = this.get('value');

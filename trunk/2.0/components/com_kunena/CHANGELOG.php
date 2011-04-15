@@ -31,6 +31,13 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+15-April-2011 Matias
+# [#23443] KunenaControllerTopic::report() Fatal Error: Class 'KunenaHtmlParser' not found
+# [#23443] Topic/Moderate: 'Manually enter topic ID' doesn't work
+# [#23443] CSS: J1.6 Atomic fix breaks deleted/unapproved topic style
+# [#23443] KunenaTemplate::getTopicIcon() deleted & moved topic icon should be moved
+# [#23443] KunenaViewTopic::getMessageActions() Notice: Undefined property: KunenaViewTopic::$replycnt
+
 14-April-2011 Matias
 # [#23443] JomSocial activity stream: add app and cid to all wall entries
 # [#23443] KunenaForumUserHelper::loadUsers() should return all users, not just last loaded

@@ -606,7 +606,7 @@ class KunenaViewTopic extends KunenaView {
 			if ($this->message->authorise('edit')) {
 				$this->message_edit = CKunenaLink::GetTopicPostReplyLink ( 'edit', $catid, $this->message->id, $this->getButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
 				if ( $this->config->userdeletetmessage == '1' ) {
-					if ($this->replynum == $this->replycnt) $this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->message->id, $this->getButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+					if ($this->message->id == $this->topic->last_post_id) $this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->message->id, $this->getButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 				} else if ( $this->config->userdeletetmessage == '2' ) {
 					$this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->message->id, $this->getButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 				}

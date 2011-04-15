@@ -140,7 +140,6 @@ class KunenaForumMessage extends JObject {
 		if (!$url) {
 			$url = JURI::root().trim(CKunenaLink::GetMessageURL($this->id, $this->catid, 0, false), '/');
 		}
-		KunenaError::warning ( "URL: ".$url );
 		//get all subscribers, moderators and admins who will get the email
 		$me = KunenaUserHelper::get();
 		$acl = KunenaFactory::getAccessControl();

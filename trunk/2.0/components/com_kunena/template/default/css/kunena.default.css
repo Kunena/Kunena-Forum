@@ -598,11 +598,11 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	border-bottom-color: #BFC3C6;
 }
 
-#Kunena .kunapproved td {
+#Kunena tr.kunapproved td {
 	background-color: #DDDDDD !important;
 }
 
-#Kunena .kdeleted td {
+#Kunena tr.kdeleted td {
 	background-color: #CCCCCC !important;
 }
 
@@ -1030,12 +1030,13 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 }
 
 /* Fix Atomic Joomla 1.6 template*/
-
+/* Breaks unapproved / deleted messages!!! */
+/*
 #Kunena tbody tr:nth-child(2n).krow2 td, 
 #Kunena tbody tr.even.krow2 td {
 	background-color: #FFF !important;
 }
-
+*/
 /* --------------------------------------------------------------- */
 
 /* Kunena 2.0 */

@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.controller' );
 kimport ( 'kunena.error' );
+kimport ( 'kunena.html.parser' );
 kimport ( 'kunena.forum.message.helper' );
 kimport ( 'kunena.forum.message.thankyou.helper' );
 kimport ( 'kunena.forum.topic.helper' );
@@ -605,7 +606,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		$topicId = JRequest::getInt('id', 0);
 		$messageId = JRequest::getInt('mesid', 0);
-		$targetTopic = JRequest::getInt ( 'targettopic', 0 );
+		$targetTopic = JRequest::getInt ( 'targetid', JRequest::getInt ( 'targettopic', 0 ));
 		$targetCategory = JRequest::getInt ( 'targetcategory', 0 );
 
 		if ($messageId) {

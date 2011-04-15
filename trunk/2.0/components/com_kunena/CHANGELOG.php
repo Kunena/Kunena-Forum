@@ -37,6 +37,8 @@ Kunena 2.0.0-DEV
 # [#23443] CSS: J1.6 Atomic fix breaks deleted/unapproved topic style
 # [#23443] KunenaTemplate::getTopicIcon() deleted & moved topic icon should be moved
 # [#23443] KunenaViewTopic::getMessageActions() Notice: Undefined property: KunenaViewTopic::$replycnt
+# [#23443] Installer: only recount categories/topics if needed
+# [#23443] Deleting first/last message doesn't update topic/category data
 
 14-April-2011 Matias
 # [#23443] JomSocial activity stream: add app and cid to all wall entries

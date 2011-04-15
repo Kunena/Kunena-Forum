@@ -885,6 +885,7 @@ class KunenaForumTopic extends JObject {
 				KunenaError::checkDatabaseError ();
 
 				if ($first) {
+					$this->first_post_time = 0;
 					$this->updatePostInfo($first->id, $first->time, $first->userid, $first->message, $first->name);
 				} else {
 					$this->updatePostInfo(false);
@@ -900,6 +901,7 @@ class KunenaForumTopic extends JObject {
 				KunenaError::checkDatabaseError ();
 
 				if ($last) {
+					$this->last_post_time = 0;
 					$this->updatePostInfo($last->id, $last->time, $last->userid, $last->message, $last->name);
 				} else {
 					$this->updatePostInfo(false);

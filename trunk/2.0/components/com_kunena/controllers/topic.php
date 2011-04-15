@@ -105,7 +105,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
-		if ( $this->message->hold == 0 ) {
+		if ( $message->hold == 0 ) {
 			if (!$topic->exists()) {
 				$activity->onBeforePost($message);
 			} else {

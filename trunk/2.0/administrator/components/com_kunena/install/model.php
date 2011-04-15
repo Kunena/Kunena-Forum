@@ -1011,6 +1011,12 @@ class KunenaModelInstall extends JModel {
 		$app = JFactory::getApplication ();
 		$state = $app->getUserState ( 'com_kunena.install.recount', null );
 
+		// Only perform this stage if database needs recounting (upgrade from older version)
+		$version = $this->getVersion();
+		if (version_compare ( $version->version, '2.0.0-DEV-SVN', ">=" ) && $version->build >= 4765) {
+			return true;
+		}
+
 		if ($state === null) {
 			// First run
 			$query = "SELECT MAX(id) FROM #__kunena_messages";

@@ -11,7 +11,13 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport('joomla.application.component.controller');
-
+// Load Mootools 1.2
+$jversion = new JVersion ();
+  if ($jversion->RELEASE == '1.5') {
+   JHTML::_ ( 'behavior.mootools' );
+  } else {
+   JHTML::_ ( 'behavior.framework' );
+  }
 /**
  * The Kunena Installer Controller
  *

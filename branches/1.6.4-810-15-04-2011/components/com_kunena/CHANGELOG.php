@@ -36,6 +36,7 @@ Kunena 1.6.4-DEV
 ^ [#25168] Some CSS fixes
 ^ [#24847] updated nl-NL
 # [#22684] Load mootools in backend J1.6.2
+# [#25130] Load mootools in backend J1.6.2 (part 2: installer & backend)
 
 7-April-2011 Xillibit
 # [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text

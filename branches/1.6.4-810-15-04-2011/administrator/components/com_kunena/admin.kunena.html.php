@@ -20,7 +20,13 @@
  **/
 
 defined( '_JEXEC' ) or die();
-JHTML::_('behavior.mootools');
+// Load Mootools 1.2
+$jversion = new JVersion ();
+  if ($jversion->RELEASE == '1.5') {
+   JHTML::_ ( 'behavior.mootools' );
+  } else {
+   JHTML::_ ( 'behavior.framework' );
+  }
 
 class html_Kunena {
 	// Begin: HEADER FUNC

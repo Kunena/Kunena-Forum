@@ -468,7 +468,8 @@ class KunenaViewTopic extends KunenaView {
 	function getMessageProfileBox() {
 		static $profiles = array ();
 
-		if (! isset ( $profiles [$this->profile->userid] )) {
+		$key = $this->profile->userid.'.'.$this->profile->username;
+		if (! isset ( $profiles [$key] )) {
 			// Modify profile values by integration
 			$triggerParams = array ('userid' => $this->profile->userid, 'userinfo' => &$this->profile );
 			$integration = KunenaFactory::getProfile();
@@ -505,10 +506,10 @@ class KunenaViewTopic extends KunenaView {
 			$profileHtml = '';
 			if ($profileHtml) {
 				// Use integration
-				$profiles [$this->profile->userid] = $profileHtml;
+				$profiles [$key] = $profileHtml;
 			} else {
 				$usertype = $this->profile->getType($this->category->id, true);
-				if ($this->profile->exists() && $this->message->userid == $this->profile->userid) $usertype = 'me';
+				if ($me->exists() && $this->message->userid == $me->userid) $usertype = 'me';
 
 				// TODO: add context (options, template) to caching
 				$cache = JFactory::getCache('com_kunena', 'output');
@@ -535,10 +536,10 @@ class KunenaViewTopic extends KunenaView {
 					$contents = $this->loadTemplate('profile');
 					if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 				}
-				$profiles [$this->profile->userid] = $contents;
+				$profiles [$key] = $contents;
 			}
 		}
-		return $profiles [$this->profile->userid];
+		return $profiles [$key];
 	}
 
 	function displayMessageContents() {
@@ -622,7 +623,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$this->mmm ++;
 		$this->message = $message;
-		$this->profile = KunenaFactory::getUser($this->message->userid);
+		$this->profile = $this->message->getAuthor();
 		$this->replynum = $id;
 		$usertype = $this->me->getType($this->category->id, true);
 		if ($usertype == 'user' && $this->message->userid == $this->profile->userid) $usertype = 'owner';

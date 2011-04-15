@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 	<ul class="kpost-profile">
 		<li class="kpost-username">
-			<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->escape($this->message->name) ); ?>
+			<?php echo $this->profile->getLink() ?>
 		</li>
 		<?php if (!empty($this->usertype)) : ?>
 		<li class="kpost-usertype">
@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 		</li>
 		<?php endif; ?>
 
-		<?php if ($this->profile->userid): ?>
+		<?php if ($this->profile->exists()): ?>
 
 		<li>
 			<span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline('yes', 'no') ?>">

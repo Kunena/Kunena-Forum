@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 	<ul id="kpost-profiletop">
-		<?php if ($this->profile->userid): ?>
+		<?php if ($this->profile->exists()): ?>
 		<li class="kpost-smallicons">
 			<?php echo $this->profile->profileIcon('gender'); ?>
 			<?php echo $this->profile->profileIcon('birthdate'); ?>
@@ -41,14 +41,14 @@ defined ( '_JEXEC' ) or die ();
 		</li>
 		<?php endif; ?>
 		<li class="kpost-username">
-			<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->escape($this->message->name) ); ?>
+			<?php echo $this->profile->getLink() ?>
 		</li>
 		<?php if (!empty($this->usertype)) : ?>
 		<li class="kpost-usertype">
 			<span class = "kmsgusertype">( <?php echo $this->escape($this->usertype) ?> )</span>
 		</li>
 		<?php endif ?>
-		<?php if ($this->profile->userid): ?>
+		<?php if ($this->profile->exists()): ?>
 		<?php if (!empty($this->userranktitle)) : ?>
 		<li class="kpost-userrank">
 			<?php echo $this->escape($this->userranktitle) ?>

@@ -70,7 +70,7 @@ class KunenaUserHelper {
 
 	static public function getAuthor($id, $name) {
 		$id = (int) $id;
-		if (!empty ( self::$_instances [$id] )) {
+		if ($id && !empty ( self::$_instances [$id] )) {
 			return self::$_instances [$id];
 		}
 		if (!empty ( self::$_instances_name [$name] )) {

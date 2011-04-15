@@ -40,6 +40,7 @@ Kunena 2.0.0-DEV
 # [#23443] Installer: only recount categories/topics if needed
 # [#23443] Deleting first/last message doesn't update topic/category data
 # [#23443] Allow user to delete his own post also when he didn't start topic
+# [#23443] Topic/Default: Messages posted by anonymous users have wrong profile information
 
 14-April-2011 Matias
 # [#23443] JomSocial activity stream: add app and cid to all wall entries

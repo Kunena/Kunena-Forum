@@ -229,7 +229,7 @@ class KunenaUser extends JObject {
 	}
 
 	public function getName($visitorname = '', $escape = true) {
-		if (! $this->userid) {
+		if (! $this->userid && !$this->name) {
 			$name = $visitorname;
 		} else {
 			$name = $this->_config->username ? $this->username : $this->name;
@@ -249,11 +249,11 @@ class KunenaUser extends JObject {
 	}
 
 	public function getLink($name = null, $title = null, $rel = 'nofollow') {
+		if (!$name) {
+			$name = $this->getName();
+		}
 		$key = "{$name}.{$title}.{$rel}";
 		if (empty($this->_link[$key])) {
-			if (!$name) {
-				$name = $this->getName();
-			}
 			if (!$title) {
 				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
 			}

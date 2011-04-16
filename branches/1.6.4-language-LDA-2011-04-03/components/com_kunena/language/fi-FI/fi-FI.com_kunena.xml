@@ -4,7 +4,7 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Finnish (Suomi)</name>
 	<tag>fi-FI</tag>
-	<creationDate>2011-03-07</creationDate>
+	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
 	<build>4560</build>
 	<author>Sami Haaranen</author>

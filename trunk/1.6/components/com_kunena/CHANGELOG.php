@@ -32,6 +32,20 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+16-April-2011 Xillibit
+^ [#15886] Merged revisions 4711-4778 from /branches/1.6-xillibit-fixes-02-04-2011
+
+15-April-2011 Xillibit
+# [#25654] J1.6: the submenu created are not the right access
+# [#25655] Categories locked are showed in drop-down list
+
+9-April-2011 Xillibit
+# [#25594] Remove adress mail from report kunena config
+# [#25595] Get menu details in report configuration doesn't work when it's translated in J1.6.1+
+
+8-April-2011 Xillibit
+# [#25592] Under J1.6.1+ need to load proper for javascript and mootools
+
 7-April-2011 Xillibit
 # [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text
 
@@ -39,7 +53,7 @@ Kunena 1.6.4-DEV
 # [#25326] Turn off PHP notice/warning handlers when not in debug mode (Joomla 1.5 surpresses way too many errors with @)
 ^ [#15886] Merged revisions 4714-4720 from /branches/1.6.4-language-LDA-2011-04-03
 
-03-April-2011 LDA
+3-April-2011 LDA
 ^ [#24847] update es-ES (thanks Kunena Spanish Team)
 ^ [#24847] update ar-AA (thanks baazza)
 ^ [#24847] update ru-RU (thanks Zarkos)

@@ -3268,7 +3268,7 @@ function generateSystemReport () {
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
 	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().'[/confidential][quote][b]Database collation check:[/b] '.$collation.'
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
-	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
+	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$templatedetails->name.' | [u]author:[/u] '.$templatedetails->author.' | [u]version:[/u] '.$templatedetails->version.' | [u]creationdate:[/u] '.$templatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
 	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
@@ -3345,18 +3345,28 @@ function getJoomlaMenuDetails($jversion) {
 			$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
 		}
 	} elseif ($jversion->RELEASE == '1.6') {
+		// Get Kunena extension id
+		$query = "SELECT extension_id "
+				." FROM #__extensions "
+				." WHERE name='com_kunena' AND type='component'";
+		$kunena_db->setQuery($query);
+		$kextensionid = $kunena_db->loadResult();
+		if (KunenaError::checkDatabaseError()) return;
+
 		// Get Kunena menu items
 		$query = "SELECT id "
 				." FROM #__menu "
-				." WHERE type='component' AND title ='Forum' ORDER BY id ASC";
+				." WHERE component_id='$kextensionid' AND published='1' AND parent_id='1' AND level='1' ORDER BY id ASC";
 		$kunena_db->setQuery($query);
 		$kmenuparentid = $kunena_db->loadResult();
+		if (KunenaError::checkDatabaseError()) return;
 
 		$query = "SELECT id, menutype, title, alias, link, path "
 				." FROM #__menu "
 				." WHERE parent_id={$kunena_db->Quote($kmenuparentid)} AND type='component' OR title='Kunena Forum' OR title='Kunena' ORDER BY id ASC";
 		$kunena_db->setQuery($query);
 		$kmenustype = $kunena_db->loadObjectlist();
+		if (KunenaError::checkDatabaseError()) return;
 
 		$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
 		foreach($kmenustype as $item) {

@@ -25,6 +25,16 @@ defined( '_JEXEC' ) or die();
 class html_Kunena {
 	// Begin: HEADER FUNC
 	function showFbHeader() {
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE == '1.5') { 
+			JHtml::_('behavior.mootools');
+		} else {
+			JHtml::_('behavior.framework');
+			JHtml::_('script','system/multiselect.js',false,true);
+		}
+		JHtml::_('behavior.tooltip');
+		JHtml::_('behavior.formvalidation');
+		
 		$document = JFactory::getDocument();
 		$document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
 		?>
@@ -204,7 +214,7 @@ table.kadmin-stat caption {
 
 	function editKTemplate($row, & $params, $option, & $ftp, & $template)
 	{
-		JHTML::_('behavior.tooltip');?>
+		?>
 		<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_TEMPLATE'); ?> - <?php echo JText::_($row->name); ?></div><br />
 		<div style="border: 1px solid #ccc; padding: 10px 0 0;">
 		<form action="index.php" method="post" name="adminForm">
@@ -3407,15 +3417,14 @@ function showtrashview($option, $trashitems, $pageNav, $lists) {
 
 			//Start report system
 			function showSystemReport($option, $report) {
+				$doc = JFactory::getDocument();
+				$doc->addScriptDeclaration("	window.addEvent('domready', function(){
+					$('link_sel_all').addEvent('click', function(e){
+						$('report_final').select();
+					});
+				});");
 		?>
 		<div class="kadmin-functitle icon-systemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
-		<script type="text/javascript">
-			window.addEvent('domready', function(){
-				$('link_sel_all').addEvent('click', function(e){
-					$('report_final').select();
-				});
-			});
-		</script>
 		<form action="index.php" method="post" name="adminForm" class="adminform">
 		<fieldset><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?><br /></fieldset>
 		<fieldset>

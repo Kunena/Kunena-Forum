@@ -35,9 +35,15 @@ Kunena 1.6.4-DEV
 16-April-2011 Matias
 ^ [#15886] Merged revisions 4711-4778 from /branches/1.6-xillibit-fixes-02-04-2011
 ^ [#15886] Merged revisions 4720-4780 from /branches/1.6.4-language-LDA-2011-04-03
+^ [#15886] Merged revisions 4773-4779 from /branches/1.6.4-810-15-04-2011
 
 16-April-2011 svens(LDA)
 ^ [#24847] update fi-FI (thanks Mortti)
+
+15-April-2011 810
+^ [#25168] Minor CSS fixes
+^ [#24847] updated nl-NL
+# [#25656] Last visit date is 1999-11-30 if user has never logged in
 
 15-April-2011 Xillibit
 # [#25654] J1.6: the submenu created are not the right access

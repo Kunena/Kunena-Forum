@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+﻿﻿@charset "utf-8";
 
 /**
 * @version $Id$
@@ -72,3 +72,4 @@
 #Kunena #ktop { overflow:hidden; }
 #Kunena .kfile-input {top: 7px;}
 #Kunena spn.kmsgtitle { float: left; }
+#Kunena .kcredits {height: auto;}

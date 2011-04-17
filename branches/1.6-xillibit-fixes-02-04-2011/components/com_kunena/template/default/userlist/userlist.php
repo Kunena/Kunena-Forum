@@ -141,6 +141,11 @@ function validate() {
 
 							$profile=KunenaFactory::getUser(intval($user->id));
 							$uslavatar=$profile->getAvatarLink('usl_avatar', 'list');
+							if ($user->lastvisitDate == "0000-00-00 00:00:00") {
+								$klvisit = $this->getLastvisitdate($user->registerDate);
+							} else {
+								$klvisit = $this->getLastvisitdate($user->lastvisitDate);
+							}
 						?>
 
 						<tr class="k<?php echo $usrl_class ;?>">
@@ -185,7 +190,7 @@ function validate() {
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_lastvisitdate) : ?>
-							<td class="kcol-mid" title="<?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'datetime_today', 'utc') ?></td>
+							<td class="kcol-mid" title="<?php echo CKunenaTimeformat::showDate($klvisit) ?>"><?php echo CKunenaTimeformat::showDate($klvisit) ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_userhits) : ?>

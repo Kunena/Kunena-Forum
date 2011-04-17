@@ -35,6 +35,7 @@ Kunena 1.6.4-DEV
 17-April-2011 Xillibit
 ^ [#24847] Little update on fr-FR translation
 # [#25664] Javascript error : document.id("postcatid") is null
+# [#25656] Date 1999-11-30 If someone has never logged-in
 
 15-April-2011 Xillibit
 # [#25654] J1.6: the submenu created are not the right access

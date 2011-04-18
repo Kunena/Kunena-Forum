@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+18-April-2011 Xillibit
+# [#25655] Categories locked are showed in drop-down list (Part 2)
+
 17-April-2011 Xillibit
 ^ [#24847] Little update on fr-FR translation
 # [#25664] Javascript error : document.id("postcatid") is null

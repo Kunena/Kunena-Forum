@@ -837,13 +837,14 @@ function JJ_categoryArray($admin=0) {
 	$kunena_db = &JFactory::getDBO();
 	$app = JFactory::getApplication();
 	$kunena_my = JFactory::getUser();
+	$func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'view', '' )) );
 
     // get a list of the menu items
 	$query = "SELECT * FROM #__kunena_categories";
 	if($app->isSite()) {
 		$kunena_session =& KunenaFactory::getSession();
 		$locked = "AND locked='0'";
-		if(CKunenaTools::isModerator($kunena_my->id)) $locked = '';
+		if(CKunenaTools::isModerator($kunena_my->id) || $func == 'search') $locked = '';
 		if ($kunena_session && $kunena_session->allowed != 'na') {
 			$query .= " WHERE id IN ($kunena_session->allowed) AND published='1' ".$locked;
 		} else {

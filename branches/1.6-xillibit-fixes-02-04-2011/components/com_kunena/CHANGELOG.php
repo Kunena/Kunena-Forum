@@ -34,6 +34,7 @@ Kunena 1.6.4-DEV
 
 18-April-2011 Xillibit
 # [#25655] Categories locked are showed in drop-down list (Part 2)
+# [#25655] Categories locked are showed in drop-down list - Display locked cats in search
 
 17-April-2011 Xillibit
 ^ [#24847] Little update on fr-FR translation

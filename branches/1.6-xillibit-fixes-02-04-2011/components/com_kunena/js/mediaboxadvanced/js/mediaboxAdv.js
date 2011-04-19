@@ -204,9 +204,10 @@ var Mediabox;
 
 			var links = this;
 
+			/* this part of code prevent right-click on image in Kunena message
 			links.addEvent('contextmenu', function(e){
 				if (this.toString().match(/\.gif|\.jpg|\.jpeg|\.png/i)) e.stop();
-			});
+			});*/
 
 			links.removeEvents("click").addEvent("click", function() {
 				// Build the list of images that will be displayed

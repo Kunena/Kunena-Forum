@@ -65,6 +65,9 @@ class KunenaForumMessage extends JObject {
 	public function isNew() {
 		static $readtopics = false;
 
+		if (!KunenaFactory::getConfig()->shownew) {
+			return false;
+		}
 		$session = KunenaFactory::getSession ();
 		if (!$session->userid)
 			return false;

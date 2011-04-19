@@ -92,9 +92,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		if (empty ( $allsubcats ))
 			return array();
 
-		if ($this->config->shownew && $this->me->userid) {
-			KunenaForumCategoryHelper::getNewTopics(array_keys($allsubcats));
-		}
+		KunenaForumCategoryHelper::getNewTopics(array_keys($allsubcats));
 
 		$modcats = array ();
 		$lastpostlist = array ();
@@ -212,10 +210,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 
 				KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
 				KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
-				$lastreadlist = array();
-				if ($this->config->shownew) {
-					$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
-				}
+				$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
 				// Fetch last / new post positions when user can see unapproved or deleted posts
 				if (($lastpostlist || $lastreadlist) && $this->me->userid && $this->me->isModerator()) {

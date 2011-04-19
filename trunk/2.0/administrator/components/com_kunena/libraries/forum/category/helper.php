@@ -69,6 +69,9 @@ class KunenaForumCategoryHelper {
 
 	static public function getNewTopics($catids) {
 		$session = KunenaFactory::getSession ();
+		if (!$session->userid || !KunenaFactory::getConfig()->shownew) {
+			return;
+		}
 		$readlist = $session->readtopics;
 		$prevCheck = $session->lasttime;
 		$categories = self::getCategories($catids);

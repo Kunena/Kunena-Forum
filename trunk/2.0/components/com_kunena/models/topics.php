@@ -281,10 +281,7 @@ class KunenaModelTopics extends KunenaModel {
 
 			KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
 			KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
-			$lastreadlist = array();
-			if ($config->shownew) {
-				$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
-			}
+			$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 			// Fetch last / new post positions when user can see unapproved or deleted posts
 			$me = KunenaUserHelper::get();
 			if (($lastpostlist || $lastreadlist) && $me->userid && $me->isModerator()) {

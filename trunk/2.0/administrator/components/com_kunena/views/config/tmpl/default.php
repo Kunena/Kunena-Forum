@@ -1016,15 +1016,22 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CUSTOM_SPOILER_IMAGE') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_spoiler_image"
-							value="<?php echo $this->escape($this->config->spoiler_image);
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CUSTOM_SPOILER_IMAGE_DESC') ?>
-					</td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CUSTOM_SPOILER_IMAGE') ?></td>
+						<td align="left" valign="top"><input type="text" name="cfg_spoiler_image" value="<?php echo $this->escape($this->config->spoiler_image); ?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CUSTOM_SPOILER_IMAGE_DESC') ?></td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KEYWORDS') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['keywords']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KEYWORDS_DESC') ?></td>
+					</tr>
+					<?php /*
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_USER_KEYWORDS') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['userkeywords']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_USER_KEYWORDS_DESC') ?></td>
+					</tr>
+					*/ ?>
 				</table>
 			</fieldset>
 			</dd>

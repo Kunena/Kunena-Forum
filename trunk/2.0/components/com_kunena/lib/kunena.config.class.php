@@ -363,6 +363,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $pubprofile = 1;
 	// New for 2.0.0
 	var $spoiler_image = '';
+	var $keywords = 1;
+	var $userkeywords = 0;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

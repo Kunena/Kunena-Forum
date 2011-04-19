@@ -318,6 +318,10 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$topic_subscriptions[] = JHTML::_('select.option', 'every', JText::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_EVERY'));
 		$lists ['topic_subscriptions'] = JHTML::_ ( 'select.genericlist', $topic_subscriptions, 'cfg_topic_subscriptions', 'class="inputbox" size="1"', 'value', 'text', $config->topic_subscriptions );
 
+		// Kunena 2.0.0
+		$lists ['keywords'] = JHTML::_('select.genericlist', $yesno, 'cfg_keywords', 'class="inputbox" size="1"', 'value', 'text', $config->keywords);
+		$lists ['userkeywords'] = JHTML::_('select.genericlist', $yesno, 'cfg_userkeywords', 'class="inputbox" size="1"', 'value', 'text', $config->userkeywords);
+
 		return $lists;
 	}
 }

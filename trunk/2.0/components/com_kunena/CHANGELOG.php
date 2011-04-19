@@ -31,6 +31,11 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+16-April-2011 Matias
+# [#23443] Turn off all New indication code if it's disabled inside configuration
+# [#23443] Topic/Reply: history limit setting has no effect
++ [#22569] Add configuration option for keywords
+
 15-April-2011 Matias
 # [#23443] KunenaControllerTopic::report() Fatal Error: Class 'KunenaHtmlParser' not found
 # [#23443] Topic/Moderate: 'Manually enter topic ID' doesn't work

@@ -238,7 +238,6 @@ class KunenaViewTopics extends KunenaView {
 			case 'TOPIC_ICON':
 				return $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() );
 			case 'TOPIC_NEW_COUNT':
-				if (!$this->config->shownew || !$this->me->exists()) return;
 				return $this->topic->unread ? $this->getTopicLink ( $this->topic, 'unread', '<sup class="kindicator-new">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' ) : '';
 			case 'DATE':
 				$date = new KunenaDate($matches[2]);

@@ -111,7 +111,8 @@ class KunenaForumTopicHelper {
 	static public function getLatestTopics($categories=false, $limitstart=0, $limit=0, $params=array()) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$db = JFactory::getDBO ();
-		if ($limit < 1) $limit = KunenaFactory::getConfig ()->threads_per_page;
+		$config = KunenaFactory::getConfig ();
+		if ($limit < 1) $limit = $config->threads_per_page;
 
 		$reverse = isset($params['reverse']) ? (int) $params['reverse'] : 0;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'tt.last_post_time DESC';
@@ -147,20 +148,22 @@ class KunenaForumTopicHelper {
 		if (!empty($params['favorited'])) $whereuser[] = 'ut.favorite=1';
 		if (!empty($params['subscribed'])) $whereuser[] = 'ut.subscribed=1';
 
-		$kwids = array();
-		if (!empty($params['keywords'])) {
-			$keywords = KunenaKeywordHelper::getByKeywords($params['keywords']);
-			foreach ($keywords as $keyword) {
-				$kwids[] = $keyword->$id;
+		if ($config->keywords || $config->userkeywords) {
+			$kwids = array();
+			if (!empty($params['keywords'])) {
+				$keywords = KunenaKeywordHelper::getByKeywords($params['keywords']);
+				foreach ($keywords as $keyword) {
+					$kwids[] = $keyword->$id;
+				}
+				$kwids = implode(',', $kwids);
 			}
-			$kwids = implode(',', $kwids);
+			//TODO: add support for keywords (example:)
+			/* SELECT tt.*, COUNT(*) AS score FROM #__kunena_keywords_map AS km
+			INNER JOIN #__kunena_topics` AS tt ON km.topic_id=tt.id
+			WHERE km.keyword_id IN (1,2) AND km.user_id IN (0,62)
+			GROUP BY topic_id
+			ORDER BY score DESC, tt.last_post_time DESC */
 		}
-		//TODO: add support for keywords (example:)
-		/* SELECT tt.*, COUNT(*) AS score FROM #__kunena_keywords_map AS km
-		INNER JOIN #__kunena_topics` AS tt ON km.topic_id=tt.id
-		WHERE km.keyword_id IN (1,2) AND km.user_id IN (0,62)
-		GROUP BY topic_id
-		ORDER BY score DESC, tt.last_post_time DESC */
 
 		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->Quote($starttime)}" : '');
 		$whereuser = ($whereuser ? " AND ut.user_id={$db->Quote($user->userid)} AND (".implode(' OR ',$whereuser).')' : '');
@@ -283,11 +286,12 @@ class KunenaForumTopicHelper {
 	}
 
 	static public function fetchNewStatus($topics, $user = null) {
-		if (empty($topics))
+		$user = KunenaUserHelper::get($user);
+		if (empty($topics) || !$user->exists() || !KunenaFactory::getConfig()->shownew) {
 			return array();
+		}
 
 		// TODO: Need to convert to topics table design
-		$user = KunenaUserHelper::get($user);
 		if ($user->userid) {
 			$idstr = implode ( ",", array_keys ( $topics ) );
 			$readlist = KunenaFactory::getSession ()->readtopics;
@@ -302,14 +306,9 @@ class KunenaForumTopicHelper {
 		}
 		$list = array();
 		foreach ( $topics as $topic ) {
-			if (!isset($topiclist[$topic->id])) {
-				$topic->lastread = 0;
-				$topic->unread = 0;
-			} else {
-				$topic->lastread = $topiclist[$topic->id]->lastread;
-				$topic->unread = $topiclist[$topic->id]->unread;
-				$list[$topic->id] = $topic->lastread;
-			}
+			$topic->lastread = $topiclist[$topic->id]->lastread;
+			$topic->unread = $topiclist[$topic->id]->unread;
+			$list[$topic->id] = $topic->lastread;
 		}
 		return $list;
 	}

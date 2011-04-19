@@ -729,7 +729,7 @@ class KunenaViewTopic extends KunenaView {
 			return;
 
 		$db = JFactory::getDBO();
-		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, 10, $ordering='DESC');
+		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
 		$this->historycount = count ( $this->history );
 		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
 

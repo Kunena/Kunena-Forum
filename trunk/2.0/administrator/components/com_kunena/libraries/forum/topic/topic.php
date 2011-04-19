@@ -27,6 +27,9 @@ kimport ('kunena.keyword.helper');
  * Kunena Forum Topic Class
  */
 class KunenaForumTopic extends JObject {
+	public $unread = 0;
+	public $lastread = 0;
+
 	protected $_exists = false;
 	protected $_db = null;
 	protected $_authcache = array();
@@ -132,12 +135,16 @@ class KunenaForumTopic extends JObject {
 	}
 
 	public function getKeywords($user=null, $glue=false) {
+		$config = KunenaFactory::getConfig();
 		if ($user !== false) {
 			$user = KunenaUserHelper::get($user);
 			// Guests or non-existing cannot have personal keywords
-			if (!$user->exists())
+			if (!$config->userkeywords || !$user->exists()) {
 				return $glue ? '' : array();
+			}
 			$user = $user->userid;
+		} elseif (!$config->keywords) {
+			return $glue ? '' : array();
 		}
 		$user = (int) $user;
 		if (!isset($this->_keywords[$user])) {
@@ -156,12 +163,15 @@ class KunenaForumTopic extends JObject {
 	}
 
 	public function setKeywords($keywords, $user=null, $glue=null) {
+		$config = KunenaFactory::getConfig();
 		if ($user !== false) {
 			$user = KunenaUserHelper::get($user);
 			// Guests or non-existing cannot have personal keywords
-			if (!$user->exists())
+			if (!$config->userkeywords || !$user->exists())
 				return false;
 			$user = $user->userid;
+		} elseif (!$config->keywords) {
+			return false;
 		}
 		$user = (int) $user;
 		$keywords = KunenaKeywordHelper::setTopicKeywords($keywords, $this->id, $user);
@@ -203,17 +213,6 @@ class KunenaForumTopic extends JObject {
 			$poll->threadid = $this->id;
 		}
 		return $poll;
-	}
-
-	public function newPosts() {
-		static $readtopics = false;
-
-		$session = KunenaFactory::getSession ();
-		if (!$session->userid)
-			return false;
-		if ($readtopics === false)
-			$readtopics = explode(',', $session->readtopics);
-		return $this->last_post_time > $session->lasttime && !in_array($this->id, $readtopics);
 	}
 
 	public function getHits() {
@@ -307,10 +306,25 @@ class KunenaForumTopic extends JObject {
 		return $message;
 	}
 
+	public function hasNew() {
+		static $readtopics = false;
+
+		if (!KunenaFactory::getConfig()->shownew) {
+			return false;
+		}
+		$session = KunenaFactory::getSession ();
+		if (!$session->userid)
+			return false;
+		if ($readtopics === false)
+			$readtopics = explode(',', $session->readtopics);
+		return $this->last_post_time > $session->lasttime && !in_array($this->id, $readtopics);
+	}
+
 	function markRead($user = null) {
 		$user = KunenaUserHelper::get($user);
-		if (! $user->exists())
+		if (! $user->exists() || !KunenaFactory::getConfig()->shownew) {
 			return;
+		}
 
 		$db = JFactory::getDBO ();
 		$session = KunenaFactory::getSession ();
@@ -332,6 +346,10 @@ class KunenaForumTopic extends JObject {
 
 	// TODO: this code needs to be removed after new indication handling is in its place
 	function markNew() {
+		if (!KunenaFactory::getConfig()->shownew) {
+			return true;
+		}
+
 		// Mark topic read for current user
 		$this->markRead ();
 

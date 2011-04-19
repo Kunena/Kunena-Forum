@@ -233,7 +233,7 @@ class KunenaViewCategory extends KunenaView {
 
 	public function getCategoryIcon($category, $thumb = false) {
 		if (! $thumb) {
-			if ($this->config->shownew && $this->me->userid != 0 && $category->getNewCount()) {
+			if ($category->getNewCount()) {
 				// Check Unread    Cat Images
 				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif" )) {
 					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
@@ -249,7 +249,7 @@ class KunenaViewCategory extends KunenaView {
 				}
 			}
 		} elseif ($this->config->showchildcaticon) {
-			if ($this->config->shownew && $this->me->userid != 0 && $category->getNewCount()) {
+			if ($category->getNewCount()) {
 				// Check Unread    Cat Images
 				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif" )) {
 					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
@@ -331,11 +331,9 @@ class KunenaViewCategory extends KunenaView {
 			case 'CATEGORY_ICON':
 				return $this->getCategoryIcon($this->category);
 			case 'CATEGORY_NEW_SUFFIX':
-				if (!$this->config->shownew) return;
 				$new = empty($matches[2]) ? $this->category->getNewCount() : KunenaForumCategoryHelper::get($matches[2])->getNewCount();
 				return $new ? '-new' : '';
 			case 'CATEGORY_NEW_COUNT':
-				if (!$this->config->shownew) return;
 				$new = empty($matches[2]) ? $this->category->getNewCount() : KunenaForumCategoryHelper::get($matches[2])->getNewCount();
 				return $new ? '<sup class="knewchar">(' . $new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>" : '';
 			case 'DATE':
@@ -409,7 +407,6 @@ class KunenaViewCategory extends KunenaView {
 			case 'TOPIC_ICON':
 				return $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() );
 			case 'TOPIC_NEW_COUNT':
-				if (!$this->config->shownew || !$this->me->exists()) return;
 				return $this->topic->unread ? $this->getTopicLink ( $this->topic, 'unread', '<sup class="kindicator-new">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' ) : '';
 			case 'DATE':
 				$date = new KunenaDate($matches[2]);

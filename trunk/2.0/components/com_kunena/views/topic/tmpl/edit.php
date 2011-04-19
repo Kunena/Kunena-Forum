@@ -147,7 +147,7 @@ $this->displayLoginBox ();
 		</tr>
 		<?php endif; ?>
 
-		<?php if ($this->me->isModerator ( $this->message->catid ) ) : ?>
+		<?php if ($this->config->keywords && $this->me->isModerator ( $this->message->catid ) ) : ?>
 		<tr id="kpost-tags" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?></strong>
@@ -158,7 +158,7 @@ $this->displayLoginBox ();
 		</tr>
 		<?php endif; ?>
 
-		<?php if ($this->my->id) : ?>
+		<?php if ($this->config->userkeywords && $this->my->id) : ?>
 		<tr id="kpost-tags" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?></strong>

@@ -34,6 +34,7 @@ Kunena 1.6.4-DEV
 
 19-April-2011 Xillibit
 # [#25644] Image attachement can't be saved by right clicking the image, just allowing it in message
+^ [#24847] Little update on fr-FR translation in backend
 
 18-April-2011 Xillibit
 # [#25655] Categories locked are showed in drop-down list (Part 2)

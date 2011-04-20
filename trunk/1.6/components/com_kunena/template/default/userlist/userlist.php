@@ -142,9 +142,9 @@ function validate() {
 							$profile=KunenaFactory::getUser(intval($user->id));
 							$uslavatar=$profile->getAvatarLink('usl_avatar', 'list');
 							if ($user->lastvisitDate == "0000-00-00 00:00:00") {
-								$klvisit = JHTML::_('date', $user->registerDate, '%Y-%m-%d %H:%M:%S');
+								$klvisit = $this->getLastvisitdate($user->registerDate);
 							} else {
-								$klvisit = JHTML::_('date', $user->lastvisitDate, '%Y-%m-%d %H:%M:%S');
+								$klvisit = $this->getLastvisitdate($user->lastvisitDate);
 							}
 						?>
 

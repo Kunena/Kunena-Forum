@@ -32,6 +32,14 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+18-April-2011 Xillibit
+# [#25655] Categories locked are showed in drop-down list - Display locked cats in search
+
+17-April-2011 Xillibit
+^ [#24847] Little update on fr-FR translation
+# [#25664] Javascript error : document.id("postcatid") is null
+# [#25656] Date 1999-11-30 If someone has never logged-in
+
 16-April-2011 Matias
 ^ [#15886] Merged revisions 4711-4778 from /branches/1.6-xillibit-fixes-02-04-2011
 ^ [#15886] Merged revisions 4720-4780 from /branches/1.6.4-language-LDA-2011-04-03

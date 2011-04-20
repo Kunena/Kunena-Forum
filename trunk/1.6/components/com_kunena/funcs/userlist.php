@@ -149,6 +149,18 @@ class CKunenaUserlist {
 		return true;
 	}
 
+	function getLastvisitdate($date) {
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE == '1.5') {
+			$lastvisit = JHTML::_('date', $date, '%Y-%m-%d %H:%M:%S');
+		} else {
+			$lastvisit = JHTML::_('date', $date, 'Y-m-d\TH:i:sP ');
+		}
+
+		return $lastvisit;
+	}
+
 	function display() {
 		if (! $this->allow) {
 			echo JText::_('COM_KUNENA_NO_ACCESS');

@@ -55,7 +55,7 @@ window.addEvent('domready', function(){
 		<?php } ?>
 	}
 	//	for hide or show polls if category is allowed
-	if(document.id('postcatid') !== undefined) {
+	if(document.id('postcatid') !== null) {
 		document.id('postcatid').addEvent('change', function(e) {
 			kunenaCheckPollallowed(this.value);
 		});
@@ -72,14 +72,14 @@ window.addEvent('domready', function(){
 		<?php } ?>
 	}
 	//	to select if anynomous option is allowed on new topic tab
-	if(document.id('postcatid') !== undefined) {
+	if(document.id('postcatid') !== null) {
 		document.id('postcatid').addEvent('change', function(e) {
 			var postcatid = document.id('postcatid').value;
 			kunenaCheckAnonymousAllowed(postcatid);
 		});
 	}
 
-	if(document.id('postcatid') !== undefined) {
+	if(document.id('postcatid') !== null) {
 		kunenaCheckPollallowed(document.id('postcatid').getSelected().get("value"));
 		kunenaCheckAnonymousAllowed(document.id('postcatid').getSelected().get("value"));
 	}

@@ -1067,11 +1067,10 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	background-color:#E5E3DF;
 }
 
-/* Fix Atomic Joomla 1.6 template*/
-
-#Kunena tbody tr:nth-child(2n).krow2 td, 
+/* Fix Atomic Joomla 1.6 template (breaks topic coloration) */
+/*#Kunena tbody tr:nth-child(2n).krow2 td, 
 #Kunena tbody tr.even.krow2 td {
 	background-color: #FFF !important;
-}
+}*/
 
 /* --------------------------------------------------------------- */

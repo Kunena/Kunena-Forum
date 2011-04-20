@@ -93,7 +93,7 @@ class KunenaTemplate extends JObject
 			}
 		} else {
 			// Joomla 1.6+
-			JHTML::_ ( 'behavior.framework' );
+			JHTML::_ ( 'behavior.framework', true );
 		}
 
 		if (KunenaFactory::getConfig()->debug) {

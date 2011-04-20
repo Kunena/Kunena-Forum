@@ -29,7 +29,7 @@ class html_Kunena {
 		if ($jversion->RELEASE == '1.5') { 
 			JHtml::_('behavior.mootools');
 		} else {
-			JHtml::_('behavior.framework');
+			JHtml::_('behavior.framework', true);
 			JHtml::_('script','system/multiselect.js',false,true);
 		}
 		JHtml::_('behavior.tooltip');

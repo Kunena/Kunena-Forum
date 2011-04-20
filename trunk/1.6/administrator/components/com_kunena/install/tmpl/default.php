@@ -14,7 +14,7 @@ if ($this->go == 'next') {
 	if ($jversion->RELEASE == '1.5') {
 		JHtml::_('behavior.mootools');
 	} else {
-		JHtml::_('behavior.framework');
+		JHtml::_('behavior.framework', true);
 	}
 	$this->document = JFactory::getDocument();
 	$this->document->addScriptDeclaration(" // <![CDATA[

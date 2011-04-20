@@ -204,9 +204,10 @@ var Mediabox;
 
 			var links = this;
 
+			/* this part of code prevent right-click on image in Kunena message
 			links.addEvent('contextmenu', function(e){
 				if (this.toString().match(/\.gif|\.jpg|\.jpeg|\.png/i)) e.stop();
-			});
+			});*/
 
 			links.removeEvents("click").addEvent("click", function() {
 				// Build the list of images that will be displayed
@@ -903,8 +904,8 @@ var Mediabox;
 
 		mediaWidth = image.offsetWidth;
 		mediaHeight = image.offsetHeight+bottom.offsetHeight;
-		if (mediaHeight >= top+top) { mTop = -top } else { mTop = -(mediaHeight/2) };
-		if (mediaWidth >= left+left) { mLeft = -left } else { mLeft = -(mediaWidth/2) };
+		if (mediaHeight >= top+top) { mTop = -top; } else { mTop = -(mediaHeight/2); };
+		if (mediaWidth >= left+left) { mLeft = -left; } else { mLeft = -(mediaWidth/2); };
 		if (options.resizeOpening) { fx.resize.start({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin});
 		} else { center.setStyles({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin}); imageAnimate(); }
 	}

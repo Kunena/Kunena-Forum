@@ -32,6 +32,13 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+20-April-2011 Matias
+^ [#15886] Merged revisions 4778-4793 from /branches/1.6-xillibit-fixes-02-04-2011
+
+19-April-2011 Xillibit
+# [#25644] Image attachement can't be saved by right clicking the image, just allowing it in message
+^ [#24847] Little update on fr-FR translation in backend
+
 18-April-2011 Xillibit
 # [#25655] Categories locked are showed in drop-down list - Display locked cats in search
 

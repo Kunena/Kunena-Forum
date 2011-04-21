@@ -35,6 +35,7 @@ Kunena 1.6.4-DEV
 20-April-2011 Matias
 ^ [#15886] Merged revisions 4778-4793 from /branches/1.6-xillibit-fixes-02-04-2011
 # [#25168] CSS coloration and layout fixes (thanks Jelle)
+# [#25710] Adminitration: Behavior reversed for Show Deleted Messages options
 
 19-April-2011 Xillibit
 # [#25644] Image attachement can't be saved by right clicking the image, just allowing it in message

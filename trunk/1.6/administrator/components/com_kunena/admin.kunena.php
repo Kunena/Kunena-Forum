@@ -1605,8 +1605,8 @@ function showConfig($option) {
 
 	$seerestoredeleted = array();
 	$seerestoredeleted[] =JHTML::_('select.option', 2, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_NOBODY'));
-	$seerestoredeleted[] =JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINS'));
-	$seerestoredeleted[] =JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINSMODS'));
+	$seerestoredeleted[] =JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINS'));
+	$seerestoredeleted[] =JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_SEE_RESTORE_DELETED_ADMINSMODS'));
 	$lists ['mod_see_deleted'] = JHTML::_('select.genericlist', $seerestoredeleted, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
 
 

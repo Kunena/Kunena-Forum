@@ -72,11 +72,15 @@ class KunenaForumMessageHelper {
 		$topic = KunenaForumTopicHelper::get($topic);
 		if (!$topic->exists())
 			return array();
+		$total = $topic->getTotal();
 
 		if ($start < 0)
 			$start = 0;
 		if ($limit < 1)
 			$limit = KunenaFactory::getConfig()->messages_per_page;
+		// If out of range, use last page
+		if ($total < $start)
+			$start = intval($total / $limit) * $limit;
 		$ordering = strtoupper($ordering);
 		if ($ordering != 'DESC')
 			$ordering = 'ASC';

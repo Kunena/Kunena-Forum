@@ -19,18 +19,7 @@ kimport('kunena.forum.statistics');
  *
  * @package		Kunena
  * @subpackage	com_kunena
- * @since		1.6
+ * @since		2.0
  */
 class KunenaAdminModelStats extends KunenaModel {
-	protected function _getStatsClass() {
-		$kunena_stats = KunenaForumStatistics::getInstance();
-
-		return $kunena_stats;
-	}
-
-	public function getStatsDatas() {
-		$statsclass = $this->_getStatsClass();
-
-		return $statsclass;
-	}
 }

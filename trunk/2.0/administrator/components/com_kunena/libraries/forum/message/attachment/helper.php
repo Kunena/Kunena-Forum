@@ -96,6 +96,71 @@ class KunenaForumMessageAttachmentHelper {
 		return $list;
 	}
 
+	static public function getExtensions($category, $user = null) {
+		$imagetypes = self::getImageExtensions($category, $user);
+		$filetypes = self::getFileExtensions($category, $user);
+		if ($imagetypes === false && $filetypes === false) return false;
+		return array_merge((array)$imagetypes, (array)$filetypes);
+	}
+
+	static public function getImageExtensions($category, $user = null) {
+		$category = KunenaForumCategoryHelper::get($category);
+		$user = KunenaUserHelper::get($user);
+		$config = KunenaFactory::getConfig();
+		$types = explode(',', $config->imagetypes);
+		foreach ($types as &$type) {
+			$type = trim($type);
+			if (empty($type)) unset ($type);
+		}
+
+		// Check if attachments are allowed at all
+		if (!$config->image_upload) return false;
+		if ($config->image_upload == 'all') return $types;
+
+		// For now on we only allow registered users
+		if (!$user->exists()) return false;
+		if ($config->image_upload == 'user') return $types;
+
+		// For now on we only allow moderators
+		if (!$user->isModerator($category->id)) return false;
+		if ($config->image_upload == 'moderator') return $types;
+
+		// For now on we only allow administrators
+		if (!$user->isAdmin($category->id)) return false;
+		if ( $config->image_upload == 'admin') return $types;
+
+		return false;
+	}
+
+	static public function getFileExtensions($category, $user = null) {
+		$category = KunenaForumCategoryHelper::get($category);
+		$user = KunenaUserHelper::get($user);
+		$config = KunenaFactory::getConfig();
+		$types = explode(',', $config->filetypes);
+		foreach ($types as &$type) {
+			$type = trim($type);
+			if (empty($type)) unset ($type);
+		}
+
+		// Check if attachments are allowed at all
+		if (!$config->file_upload) return false;
+		if ($config->file_upload == 'all') return $types;
+
+		// For now on we only allow registered users
+		if (!$user->exists()) return false;
+		if ($config->file_upload == 'user') return $types;
+
+		// For now on we only allow moderators
+		if (!$user->isModerator($category->id)) return false;
+		if ($config->file_upload == 'moderator') return $types;
+
+		// For now on we only allow administrators
+		if (!$user->isAdmin($category->id)) return false;
+		if ( $config->file_upload == 'admin') return $types;
+
+		return false;
+	}
+
 	static public function cleanup() {
 		$db = JFactory::getDBO ();
 		// Find up to 50 orphan attachments and delete them

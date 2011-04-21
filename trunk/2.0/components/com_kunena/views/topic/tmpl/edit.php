@@ -120,11 +120,7 @@ $this->displayLoginBox ();
 		echo $this->loadTemplate('editor');
 		?>
 
-		<?php
-		if ($this->config->allowfileupload || ($this->config->allowfileregupload && $this->my->id != 0)
-			|| ($this->config->allowimageupload || ($this->config->allowimageregupload && $this->my->id != 0)
-			|| $this->me->isModerator ( $this->message->catid ))) :
-			?>
+		<?php if ($this->allowedExtensions) : ?>
 		<tr id="kpost-attachments" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS') ?></strong>
@@ -134,7 +130,7 @@ $this->displayLoginBox ();
 					<span class="kattachment-id-container"></span>
 
 					<input class="kfile-input-textbox" type="text" readonly="readonly" />
-					<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape($this->config->imagetypes); ?>,<?php echo $this->escape($this->config->filetypes); ?>" >
+					<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>" >
 						<input type="button" value="<?php echo  JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button kbutton" />
 						<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" />
 					</div>

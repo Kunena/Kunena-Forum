@@ -212,13 +212,13 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $allowavatargallery = 1;
 	var $avatarquality = 65;
 	var $avatarsize = 2048;
-	var $allowimageupload = 0;
-	var $allowimageregupload = 1;
+	var $allowimageupload = 0; // DEPRECATED, needed in installer
+	var $allowimageregupload = 1; // DEPRECATED, needed in installer
 	var $imageheight = 800;
 	var $imagewidth = 800;
 	var $imagesize = 150;
-	var $allowfileupload = 0;
-	var $allowfileregupload = 1;
+	var $allowfileupload = 0; // DEPRECATED, needed in installer
+	var $allowfileregupload = 1; // DEPRECATED, needed in installer
 	var $filetypes = 'txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2';
 	var $filesize = 120;
 	var $showranking = 1;
@@ -365,6 +365,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $spoiler_image = '';
 	var $keywords = 1;
 	var $userkeywords = 0;
+	var $image_upload = 'registered';
+	var $file_upload = 'registered';
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

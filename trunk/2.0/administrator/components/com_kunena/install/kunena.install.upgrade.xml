@@ -282,6 +282,7 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD INDEX `posts` ( `posts` );</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_user_read` MODIFY `time` datetime NOT NULL;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_thankyou` MODIFY `time` datetime NOT NULL;</query>
+			<phpfile name="upgrade-2.0.0_configuration"></phpfile>
 			<!-- From Kunena 1.6.4 -->
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD INDEX `moderator` ( `moderator` );</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `ordering` smallint(6) NOT NULL default '0' AFTER `admin_recurse`;</query>

@@ -17,6 +17,7 @@ kimport ('kunena.user.helper');
 kimport ('kunena.user.ban');
 kimport ('kunena.forum.category.helper');
 kimport ('kunena.forum.message.helper');
+kimport ('kunena.forum.attachment.helper');
 
 /**
  * Kunena Forum Category Class
@@ -65,7 +66,7 @@ class KunenaForumCategory extends JObject {
 			'topic.post.undelete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.post.permdelete'=>array('Read', 'NotBanned', 'Admin'),
 			'topic.post.attachment.read'=>array('Read'),
-			'topic.post.attachment.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked'),
+			'topic.post.attachment.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
 			'topic.post.attachment.delete'=>array('Read', 'NotBanned', 'Unlocked'),
 		);
 
@@ -738,6 +739,13 @@ class KunenaForumCategory extends JObject {
 		// Check if polls are not enabled in this category
 		if (!$this->allow_polls) {
 			return JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED' );
+		}
+	}
+
+	protected function authoriseUpload($user) {
+		// Check if attachments are allowed
+		if (KunenaForumMessageAttachmentHelper::getExtensions($this, $user) === false) {
+			return JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_UPLOAD_NOT_ALLOWED' );
 		}
 	}
 }

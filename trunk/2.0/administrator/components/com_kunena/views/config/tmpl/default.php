@@ -719,22 +719,9 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 				<legend><?php echo JText::_('COM_KUNENA_A_IMAGE') ?></legend>
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr align="center" valign="middle">
-						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_IMAGEUPLOAD') ?>
-						</td>
-								<td align="left" valign="top" width="25%"><?php echo $this->lists ['allowimageupload'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEUPLOAD_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEREGUPLOAD') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $this->lists ['allowimageregupload'];
-						?>
-						</td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEREGUPLOAD_DESC') ?>
-						</td>
+						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_IMAGE_UPLOAD') ?></td>
+						<td align="left" valign="top" width="25%"><?php echo $this->lists ['image_upload']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGE_UPLOAD_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_SHOWIMGFORGUEST') ?>
@@ -826,22 +813,9 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 				<legend><?php echo JText::_('COM_KUNENA_A_FILE') ?></legend>
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr align="center" valign="middle">
-						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_FILEUPLOAD') ?>
-						</td>
-								<td align="left" valign="top" width="25%"><?php echo $this->lists ['allowfileupload'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILEUPLOAD_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILEREGUPLOAD') ?>
-						</td>
-						<td align="left" valign="top"><?php echo $this->lists ['allowfileregupload'];
-						?>
-						</td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILEREGUPLOAD_DESC') ?>
-						</td>
+						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_FILE_UPLOAD') ?></td>
+						<td align="left" valign="top" width="25%"><?php echo $this->lists ['file_upload']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILE_UPLOAD_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_SHOWFILEFORGUEST') ?>

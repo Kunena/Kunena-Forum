@@ -54,6 +54,9 @@ class KunenaForumStatistics {
 			$this->showpoppollstats = (bool) $this->_config->showpoppollstats;
 			$this->showpopthankyoustats = (bool) $this->_config->showpopthankyoustats;
 		}
+
+		// TODO: deprecated
+		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 	}
 
 	public static function getInstance()
@@ -66,19 +69,19 @@ class KunenaForumStatistics {
 
 	public function loadAll($force=false) {
 		$this->top = array();
-		$this->loadGeneral();
-		$this->loadTopicStats();
-		$this->loadUserStats();
+		$this->loadGeneral($force);
+		$this->loadTopicStats($force);
+		$this->loadUserStats($force);
 	}
 
 	public function loadGeneral($force=false) {
 		if (! $this->showgenstats && ! $force)
 			return;
 
-		$this->loadMemberCount();
-		$this->loadLastUserId();
-		$this->loadCategoryCount();
-		$this->loadLastDays();
+		$this->loadMemberCount($force);
+		$this->loadLastUserId($force);
+		$this->loadCategoryCount($force);
+		$this->loadLastDays($force);
 	}
 
 	public function loadUserStats($override=false) {

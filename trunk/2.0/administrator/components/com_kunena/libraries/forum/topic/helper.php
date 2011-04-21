@@ -182,6 +182,10 @@ class KunenaForumTopicHelper {
 			return array(0, array());
 		}
 
+		// If out of range, use last page
+		if ($total < $limitstart)
+			$limitstart = intval($total / $limit) * $limit;
+
 		// Get items
 		if ($whereuser)
 			$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread

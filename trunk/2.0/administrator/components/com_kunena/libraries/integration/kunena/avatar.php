@@ -14,6 +14,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 {
 	public function __construct() {
 		$this->priority = 25;
+		$this->resize = true;
 	}
 
 	public function getEditURL()

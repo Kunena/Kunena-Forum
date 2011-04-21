@@ -15,6 +15,7 @@ require_once KPATH_ADMIN . '/libraries/integration/integration.php';
 abstract class KunenaAvatar {
 	public $priority = 0;
 	public $avatarSizes = null;
+	protected $resize = false;
 
 	protected static $instance = false;
 
@@ -64,8 +65,8 @@ abstract class KunenaAvatar {
 		if (!$avatar) return;
 		if ($class) $class=' class="'.$class.'"';
 
-		// Style is needed to resize avatar inside module parameters
-		if (intval($sizex)>0) $style = 'style="max-width: '.$size->x.'px; max-height: '.$size->y.'px"';
+		// Style is needed to resize avatar for JomSocial and other integration that do not have automatic resizing
+		if (!$this->resize) $style = 'style="max-width: '.$size->x.'px; max-height: '.$size->y.'px"';
 		else $style = '';
 
 		$link = '<img'.$class.' src="'.$avatar.'" alt="'.JText::sprintf('COM_KUNENA_LIB_AVATAR_TITLE', $user->getName()).'" '.$style.' />';

@@ -193,6 +193,8 @@ class KunenaViewTopic extends KunenaView {
 		$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
 		$this->action = 'post';
 
+		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+
 		if ($arraypollcatid) $this->poll = $this->topic->getPoll();
 
 		$this->display($tpl);
@@ -222,6 +224,8 @@ class KunenaViewTopic extends KunenaView {
 		$this->category = $this->topic->getCategory();
 		$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->topic->subject;
 		$this->action = 'post';
+
+		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
 
 		$this->display($tpl);
 	}
@@ -253,6 +257,8 @@ class KunenaViewTopic extends KunenaView {
 		if ($this->message->parent == 0 && ($this->topic->authorise('poll.create', null, false) || $this->topic->authorise('poll.edit', null, false))) {
 			$this->poll = $this->topic->getPoll();
 		}
+
+		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
 
 		$this->display($tpl);
 	}
@@ -732,6 +738,11 @@ class KunenaViewTopic extends KunenaView {
 		$this->history = KunenaForumMessageHelper::getMessagesByTopic($this->topic, 0, (int) $this->config->historylimit, $ordering='DESC');
 		$this->historycount = count ( $this->history );
 		KunenaForumMessageAttachmentHelper::getByMessage($this->history);
+		$userlist = array();
+		foreach ($this->history as $message) {
+			$userlist[(int) $message->userid] = (int) $message->userid;
+		}
+		KunenaUserHelper::loadUsers($userlist);
 
 		echo $this->loadTemplate ( 'history' );
 	}

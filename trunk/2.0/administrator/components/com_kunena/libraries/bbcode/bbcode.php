@@ -36,6 +36,7 @@ class KunenaBBCode extends BBCode {
 		$this->defaults = new KunenaBBCodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 		$this->smileys = $this->defaults->default_smileys;
+		if (empty($this->smileys)) $this->SetEnableSmileys(false);
 		$this->SetSmileyDir ( JPATH_ROOT .'/'. KPATH_COMPONENT_RELATIVE );
 		$this->SetSmileyURL ( JURI::root(true) . '/' . KPATH_COMPONENT_RELATIVE );
 		$this->SetDetectURLs ( true );
@@ -578,14 +579,16 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 	);
 
 	function __construct() {
-		$db = JFactory::getDBO ();
-		$query = "SELECT code, location FROM #__kunena_smileys";
-		$db->setQuery ( $query );
-		$smileys = $db->loadObjectList ();
+		if (!KunenaFactory::getConfig()->disemoticons) {
+			$db = JFactory::getDBO ();
+			$query = "SELECT code, location FROM #__kunena_smileys";
+			$db->setQuery ( $query );
+			$smileys = $db->loadObjectList ();
 
-		$template = KunenaFactory::getTemplate();
-		foreach ( $smileys as $smiley ) {
-			$this->default_smileys [$smiley->code] = $template->getSmileyPath($smiley->location);
+			$template = KunenaFactory::getTemplate();
+			foreach ( $smileys as $smiley ) {
+				$this->default_smileys [$smiley->code] = $template->getSmileyPath($smiley->location);
+			}
 		}
 	}
 

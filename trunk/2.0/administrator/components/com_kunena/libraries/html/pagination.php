@@ -40,6 +40,10 @@ class KunenaHtmlPagination extends JPagination
 	protected $_uri = '';
 
 	function __construct($total, $limitstart, $limit, $prefix = '') {
+		// If out of range, use last page
+		if ($total < (int) $limitstart)
+			$limitstart = intval($total / $limit) * $limit;
+
 		parent::__construct($total, $limitstart, $limit, $prefix);
 		$this->setDisplay();
 		if ($limitstart === false) $this->set('pages.current', -1);

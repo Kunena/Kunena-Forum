@@ -34,6 +34,7 @@ Kunena 1.6.4-DEV
 
 21-April-2011 810
 ^ [#24847] updated nl-NL
+# [#25718] PermDelete redirecting
 
 18-April-2011 810
 ^ [#25168] CSS fix (Color problem)

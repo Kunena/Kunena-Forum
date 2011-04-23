@@ -134,16 +134,15 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<!-- /Category -->
 					<span class="divider fltlft">|</span>
 					<?php endif; ?>
-					<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>">
+					<?php if ($leaf->name && $leaf->userid) : ?>
+					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($this->config->username ? $leaf->username:$leaf->uname) ); ?><br /></span>
+					<?php else : ?>
+					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($leaf->name) ); ?><br /></span>
+					<?php endif; ?>
+                    <span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>">
 						<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') ?>
 						<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat');?>&nbsp;
 					</span>
-
-					<?php if ($leaf->name && $leaf->userid) : ?>
-					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($this->config->username ? $leaf->username:$leaf->uname) ); ?></span>
-					<?php else : ?>
-					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($leaf->name) ); ?></span>
-					<?php endif; ?>
 					<!-- /By -->
 				</div>
 			</td>
@@ -215,7 +214,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 			<?php endif; ?>
 		</tr>
-		
+
 		<?php if (JDocumentHTML::countModules ( 'kunena_topic_' . $counter )) : ?>
 		<tr>
 			<td class="ktopicmodule" colspan="<?php echo intval($this->columns) ?>">
@@ -223,7 +222,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 		</tr>
 		<?php endif; ?>
-		
+
 		<?php } ?>
 		<?php  if ( count($this->actionDropdown) > 1 || $this->embedded ) : ?>
 		<!-- Bulk Actions -->

@@ -29,6 +29,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena Translate 0.1.0
+
+25-April-2011 svens(LDA)
+# [#25744] invalid argument import model
++ [#25745] bulk import/export
+
 14-April-2011 svens(LDA)
 + [#25637] adding kunentranslate.xml
 + [#25638] adding translations of component

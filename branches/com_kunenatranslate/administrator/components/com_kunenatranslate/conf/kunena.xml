@@ -61,16 +61,5 @@
 				<kill>media</kill>
 			</kills>	
 		</tpl_example>
-		<tpl_skinner name="Skinner Template" type="site">
-			<dir>com_kunena/template/skinner</dir>
-			<ini>com_kunena.tpl_skinner.ini</ini>
-			<kills>
-				<kill>language</kill>
-				<kill>svn</kill>
-				<kill>images</kill>
-				<kill>css</kill>
-				<kill>media</kill>
-			</kills>
-		</tpl_skinner> 
 	</files>
 </ktranslate> 

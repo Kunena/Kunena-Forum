@@ -16,81 +16,95 @@ defined('_JEXEC') or die('Restricted access');
 class KunenaTranslateModelImport extends JModel{
 	
 	function getImport(){
+		jimport('joomla.filesystem.file');
+		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
 		$lang = JRequest::getVar('language');
 		$client = JRequest::getVar('client');
+		$clientall = JRequest::getBool('clientall');
 		$extension = JRequest::getVar('extension');
-		//read ini file
-		$inifile = $this->_getPathIni($client, $lang);
-		jimport('joomla.filesystem.file');
-		if(!JFile::exists($inifile)){
-			JError::raiseWarning('', 'File '.$inifile.' not exist');
-			return false;
+		if($clientall == true){
+			$clients = KunenaTranslateHelper::getClientList( self::getExtensionFilename() , false, null,null, true);
+		}else{
+			$clients[] = array('text'=>$client,
+								'value' => $client);
 		}
-		//read the ini file
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
-		$ini = KunenaTranslateHelper::readINIfile($inifile);
-		if(!$ini){
-			JError::raiseWarning('', 'Failed reading: '.$inifile);
-			return false;
-		}
-		//get the labels from DB
-		$labels = $this->_loadLabels($client, $extension);
-		//look for labels that are missing in DB
-		$missing = $ini['nocomments'];
-		if(!empty($labels)){
-			foreach ( $missing as $kini=>$vini){
-				foreach ($labels as $label) {
-					if($label->label == $kini && $label->client == $client){
-						unset($missing[$kini]);
-					}
-				}
-			}
-		}
-		//add missing labels
-		if(JRequest::getInt('addmissinglabel') == 1 && !empty($missing)){
-			$missing = array_keys($missing);
-			if(!$this->store($missing,$client, $extension)){
-				JError::raiseWarning('','Saving Labels failed');
+		foreach ($clients as $val){
+			$client = $val['value'];
+			//read ini file
+			$inifile = $this->_getPathIni($client, $lang);
+			if(!JFile::exists($inifile)){
+				JError::raiseWarning('', 'File '.$inifile.' not exist');
 				return false;
 			}
-			//get the new labels from DB
+			//read the ini file
+			$ini = KunenaTranslateHelper::readINIfile($inifile);
+			if(!$ini){
+				JError::raiseWarning('', 'Failed reading: '.$inifile);
+				return false;
+			}
+			//get the labels from DB
 			$labels = $this->_loadLabels($client, $extension);
-		}else{
-			$ini['nocomments'] = array_diff($ini['nocomments'],$missing);
-		}
-		//are there translations available for some labels?
-		$table = $this->getTable('Translation');
-		$trans = $table->loadTranslations(null,$lang, $client, $extension);
-		$ntrans = null;
-		if(empty($trans) && !empty($labels)){
-			foreach ($labels as $value) {
-				foreach ($ini['nocomments'] as $inik=>$iniv) {
-					if( $value->label == $inik){
-						$ntrans[$lang][$value->id]['insert'] = $iniv;
+			//look for labels that are missing in DB
+			$missing = $ini['nocomments'];
+			if(!empty($labels)){
+				foreach ( $missing as $kini=>$vini){
+					foreach ($labels as $label) {
+						if($label->label == $kini && $label->client == $client){
+							unset($missing[$kini]);
+						}
 					}
 				}
 			}
-		}else{
-			foreach ($trans as $value) {
-				foreach ($ini['nocomments'] as $inik=>$iniv) {
-					if($value->label == $inik){
-						$exist[] = array('old' => $value,
-										'new' => $iniv);
-						unset($ini['nocomments'][$inik]);
-					}
+			//add missing labels
+			if(JRequest::getInt('addmissinglabel') == 1 && !empty($missing)){
+				$missing = array_keys($missing);
+				if(!$this->store($missing,$client, $extension)){
+					JError::raiseWarning('','Saving Labels failed');
+					return false;
 				}
+				//get the new labels from DB
+				$labels = $this->_loadLabels($client, $extension);
+			}else{
+				$ini['nocomments'] = array_diff($ini['nocomments'],$missing);
 			}
-			foreach ($trans as $value) {
-				foreach ($ini['nocomments'] as $iniv){
-					$ntrans[$lang][$value->labelid]['insert'] = $iniv;
-				}
-			}
-		}		
-		//store the new translations
-		if(!empty($ntrans)){
-			if(!$table->store($ntrans, '', $client, $extension)){
-				JError::raiseWarning('','Saving Translations failed');
+			//are there translations available for some labels?
+			$table = $this->getTable('Translation');
+			$trans = $table->loadTranslations(null,$lang, $client, $extension);
+			$ntrans = null;
+			if(empty($labels)){
+				JError::raiseWarning('', JText::_('COM_KUNENATRANSLATE_LABELS_FOUND_NONE') );
 				return false;
+			}
+			if(empty($trans) && !empty($labels)){
+				foreach ($labels as $value) {
+					foreach ($ini['nocomments'] as $inik=>$iniv) {
+						if( $value->label == $inik){
+							$ntrans[$lang][$value->id]['insert'] = $iniv;
+						}
+					}
+				}
+			}else{
+				foreach ($trans as $value) {
+					foreach ($ini['nocomments'] as $inik=>$iniv) {
+						if($value->label == $inik){
+							$exist[] = array('old' => $value,
+											'new' => $iniv);
+							unset($ini['nocomments'][$inik]);
+						}
+					}
+				}
+				foreach ($trans as $value) {
+					foreach ($ini['nocomments'] as $iniv){
+						$ntrans[$lang][$value->labelid]['insert'] = $iniv;
+					}
+				}
+			}		
+			//store the new translations
+			if(!empty($ntrans)){
+				if(!$table->store($ntrans, '', $client, $extension)){
+					JError::raiseWarning('', JText::_('COM_KUNENATRANSLATE_TRANSLATION_SAVE_FAILED') );
+					return false;
+				}
 			}
 		}
 		
@@ -148,40 +162,51 @@ class KunenaTranslateModelImport extends JModel{
 	}
 	
 	function export(){
+		jimport('joomla.filesystem.file');
+		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
 		$client = JRequest::getWord('client', 'backend');
 		$lang = JRequest::getVar('language', 'en-GB');
+		$clientall = JRequest::getBool('clientall');
 		$extension = JRequest::getVar('extension');
-		$ini = $this->_getPathIni($client, $lang);
-		jimport('joomla.filesystem.file');
-		if(JFile::exists($ini)){
-			if(!JFile::copy($ini, $ini.'.bak')){
+		if($clientall == true){
+			$clients = KunenaTranslateHelper::getClientList( self::getExtensionFilename() , false, null,null, true);
+		}else{
+			$clients[] = array('text'=>$client,
+								'value' => $client);
+		}
+		foreach ($clients as $val){
+			$client = $val['value'];
+			$ini = $this->_getPathIni($client, $lang);
+			if(JFile::exists($ini)){
+				if(!JFile::copy($ini, $ini.'.bak')){
+					//JFile will throw an error
+					return false;
+				}
+				if(!JFile::delete($ini)){
+					//JFile will throw an error
+					return false;
+				}
+			}
+			$path = JPATH_COMPONENT_ADMINISTRATOR.DS.'dummy.ini'; 
+			if(!JFile::copy($path, $ini)){
 				//JFile will throw an error
 				return false;
 			}
-			if(!JFile::delete($ini)){
-				//JFile will throw an error
+			//get the data from DB
+			$table = $this->getTable('Translation');
+			$trans = $table->loadTranslations('',$lang, $client, $extension);
+			if(empty($trans)){
+				JError::raiseWarning('', JText::_('COM_KUNENATRANSLATE_DB_NOTRANSLATION'));
 				return false;
 			}
-		}
-		$path = JPATH_COMPONENT_ADMINISTRATOR.DS.'dummy.ini'; 
-		if(!JFile::copy($path, $ini)){
-			//JFile will throw an error
-			return false;
-		}
-		//get the data from DB
-		$table = $this->getTable('Translation');
-		$trans = $table->loadTranslations('',$lang, $client, $extension);
-		if(empty($trans)){
-			JError::raiseWarning('', JText::_('COM_KUNENATRANSLATE_DB_NOTRANSLATION'));
-			return false;
-		}
-		$cont = '';
-		foreach ($trans as $value) {
-			$cont .= "{$value->label}=\"{$value->translation}\"\n";
-		}
-		if(!JFile::write( $ini, $cont)){
-			JError::raiseWarning(21, 'JFile::write: '.JText::_('COM_KUNENATRANSLATE_FILE_WRITE_FAIL') . ": '$ini'");
-			return false;
+			$cont = '';
+			foreach ($trans as $value) {
+				$cont .= "{$value->label}=\"{$value->translation}\"\n";
+			}
+			if(!JFile::write( $ini, $cont)){
+				JError::raiseWarning(21, 'JFile::write: '.JText::_('COM_KUNENATRANSLATE_FILE_WRITE_FAIL') . ": '$ini'");
+				return false;
+			}
 		}
 		
 		return true;

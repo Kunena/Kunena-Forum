@@ -396,15 +396,30 @@ class KunenaTranslateHelper
 				case 'component':
 					$dir = JPATH_ADMINISTRATOR.DS.'components'.DS.$path->data();
 					break;
+				case 'module':
+					$dir = JPATH_ADMINISTRATOR.DS.'modules'.DS.$path->data();
+					break;
+				case 'template':
+					$dir = JPATH_ADMINISTRATOR.DS.'templates'.DS.$path->data();
+					break;
 			}	
 		}elseif ($area == 'site'){
 			switch ($this->type){
 				case 'component':
 					$dir = JPATH_SITE.DS.'components'.DS.$path->data();
 					break;
+				case 'module':
+					$dir = JPATH_SITE.DS.'modules'.DS.$path->data();
+					break;
+				case 'plugin':
+					$dir = JPATH_SITE.DS.'plugins'.DS.$path->data();
+					break;
+				case 'template':
+					$dir = JPATH_SITE.DS.'templates'.DS.$path->data();
+					break;
 			}
 		}else{
-			JError::raiseWarning('', JText::sprintf( 'COM_KUNENATRANSLATE_CLIENT_INVALID', $this->type) ); //%s
+			JError::raiseWarning('', JText::sprintf( 'COM_KUNENATRANSLATE_CLIENT_INVALID', $this->type) );
 			$this->dir = false;
 			return ;
 		}
@@ -424,7 +439,7 @@ class KunenaTranslateHelper
 		}elseif ($area == 'site'){
 			$dir = JPATH_SITE.DS.'language'.DS.$lang.DS.$lang.'.'.$ini->data();
 		}else{
-			JError::raiseWarning('', JText::sprintf( 'COM_KUNENATRANSLATE_CLIENT_INVALID', $this->type) ); //%s
+			JError::raiseWarning('', JText::sprintf( 'COM_KUNENATRANSLATE_CLIENT_INVALID', $this->type) );
 			return false;
 		}
 		return $dir;		

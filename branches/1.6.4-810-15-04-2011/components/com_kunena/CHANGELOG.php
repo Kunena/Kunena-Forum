@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+26-April-2011 810
+^ [#25762] load geshi on J1.6 for highlight code (thnx JoniJnm )
+
 23-April-2011 810
 ^ [#25168] CSS fix (flat)
 

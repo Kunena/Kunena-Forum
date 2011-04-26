@@ -352,7 +352,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							require_once($path.'/geshi.php');
 						}
 						if (file_exists($path.'/geshi.php')) {
-							if (substr(JVERSION, 0, 3) == 1.5) $path .= '/geshi';
+							$path .= '/geshi';
 							$type = isset($tag->options["type"]) ? $tag->options["type"] : "php";
 							if ($type == "js") $type = "javascript";
 							else if ($type == "html") $type = "html4strict";

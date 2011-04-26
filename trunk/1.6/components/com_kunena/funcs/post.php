@@ -522,7 +522,7 @@ class CKunenaPost {
 			$this->_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ));
 		}
 
-		if ($this->parent)
+		if ($this->msg_cat->parent)
 			$this->redirectBack ();
 		else
 			$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ));

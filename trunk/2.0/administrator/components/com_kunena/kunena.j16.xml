@@ -34,7 +34,6 @@
 		<files>
 			<filename>api.php</filename>
 			<filename>admin.kunena.php</filename>
-			<filename>install.script.php</filename>
 			<folder>install</folder>
 			<folder>archive</folder>
 		</files>

@@ -31,10 +31,14 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+21-April-2011 Matias
+# [#23443] Joomla 1.6: Installation fails because of wrong file in xml manifest file
+
 20-April-2011 Matias
 ^ [#23442] Topic/Reply: Optimize topic history by loading all users at once
 # [#23443] Avatar Integration: all integrated avatars need max-width and max-height
 + [#22569] Make attachment upload (files & images) configurable also for moderators/admins only
+# [#23443] Administration: Fatal error in statistics view
 
 19-April-2011 Matias
 # [#23443] Text (umlauts etc) converts into smileys if no smileys are defined
@@ -42,7 +46,6 @@ Kunena 2.0.0-DEV
 # [#23443] Topics view: If you're in last page and showing Month, changing to Week will show empty page
 # [#23443] Topic view: If you set limitstart > total, no messages are shown
 # [#23443] Category view: If you set limitstart > total, no topics are shown
-# [#23443] Administration: Fatal error in statistics view
 
 16-April-2011 Matias
 # [#23443] Turn off all New indication code if it's disabled inside configuration

@@ -132,6 +132,11 @@ $this->displayLoginBox ();
 
 						$profile=KunenaFactory::getUser(intval($user->id));
 						$uslavatar=$profile->getAvatarImage('usl_avatar', 'list');
+						if ($user->lastvisitDate == "0000-00-00 00:00:00") {
+							$lastvisitDate = $this->getLastvisitdate($user->registerDate);
+						} else {
+							$lastvisitDate = $this->getLastvisitdate($user->lastvisitDate);
+						}
 					?>
 
 					<tr class="k<?php echo $usrl_class ;?>">
@@ -176,7 +181,7 @@ $this->displayLoginBox ();
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_lastvisitdate) : ?>
-						<td class="kcol-mid" title="<?php echo KunenaDate::getInstance($user->lastvisitDate)->toKunena('ago') ?>"><?php echo KunenaDate::getInstance($user->lastvisitDate)->toKunena('datetime_today') ?></td>
+						<td class="kcol-mid" title="<?php echo KunenaDate::getInstance($lastvisitDate)->toKunena('ago') ?>"><?php echo KunenaDate::getInstance($lastvisitDate)->toKunena('datetime_today') ?></td>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_userhits) : ?>

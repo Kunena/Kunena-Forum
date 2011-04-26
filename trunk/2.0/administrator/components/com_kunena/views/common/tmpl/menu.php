@@ -9,6 +9,17 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+// Load Mootools
+$jversion = new JVersion ();
+if ($jversion->RELEASE == '1.5') {
+	JHtml::_('behavior.mootools');
+} else {
+	JHtml::_('behavior.framework', true);
+	JHtml::_('script','system/multiselect.js',false,true);
+}
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.formvalidation');
 ?>
 <div id="kadmin-menu">
 	<a class="kadmin-mainmenu icon-cp-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>"><?php echo JText::_('COM_KUNENA_CP'); ?></a>

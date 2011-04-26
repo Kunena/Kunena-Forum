@@ -203,10 +203,11 @@ var Mediabox;
 			};
 
 			var links = this;
-
+			/*
 			links.addEvent('contextmenu', function(e){
 				if (this.toString().match(/\.gif|\.jpg|\.jpeg|\.png/i)) e.stop();
 			});
+			*/
 
 			links.removeEvents("click").addEvent("click", function() {
 				// Build the list of images that will be displayed

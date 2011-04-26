@@ -162,8 +162,8 @@ class KunenaForumMessage extends JObject {
 			// clean up the message for review
 			$message = KunenaHtmlParser::plainBBCode ( $this->message );
 
-			$mailsender = JMailHelper::cleanAddress ( $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
-			$mailsubject = JMailHelper::cleanSubject ( "[" . $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . $topic->subject . " (" . $category->name . ")" );
+			$mailsender = JMailHelper::cleanAddress ( $config->board_title );
+			$mailsubject = JMailHelper::cleanSubject ( "[" . $config->board_title . "] " . $topic->subject . " (" . $category->name . ")" );
 			$subject = $this->subject ? $this->subject : $topic->subject;
 
 			$sentusers = array();

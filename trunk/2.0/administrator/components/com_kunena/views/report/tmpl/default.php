@@ -12,18 +12,16 @@ defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
+$document->addScriptDeclaration("	window.addEvent('domready', function(){
+	$('link_sel_all').addEvent('click', function(e){
+		$('report_final').select();
+	});
+});");
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-systemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
-		<script type="text/javascript">
-			window.addEvent('domready', function(){
-				$('link_sel_all').addEvent('click', function(e){
-					$('report_final').select();
-				});
-			});
-		</script>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" class="adminform">
 		<fieldset><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?><br /></fieldset>
 		<fieldset>

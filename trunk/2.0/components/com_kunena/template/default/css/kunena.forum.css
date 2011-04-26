@@ -1447,7 +1447,6 @@ PX		EM			PCT			PT
 	min-height: 180px;
 }
 #Kunena div.kmsgbody div.kmsgtext {
-	overflow: auto;
 	word-wrap:break-word;
 }
 #Kunena td.kmessage-right div.kmsgbody,

@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+25-April-2011 Matias
+^ [#22786] Merge revisions 4731-4807 from trunk/1.6
+
 21-April-2011 Matias
 # [#23443] Joomla 1.6: Installation fails because of wrong file in xml manifest file
 
@@ -1509,6 +1512,66 @@ Kunena 2.0.0-DEV
 
 Kunena 1.6.4-DEV
 
+26-April-2011 Matias
+# [#25756] Joomla 1.6: Menu creation fails on duplicated menu alias (profile)
+# [#25095] Subscription email: remove hardcoded "XXX forum"
+^ [#15886] Merged revisions 4801-4802 from /branches/1.6.4-810-15-04-2011
+
+23-April-2011 Xillibit
+^ [#24847] Make all updates on fr-FR languages files which are remaining
+
+21-April-2011 810
+^ [#24847] updated nl-NL
+# [#25718] PermDelete redirecting
+
+20-April-2011 Matias
+^ [#15886] Merged revisions 4778-4793 from /branches/1.6-xillibit-fixes-02-04-2011
+# [#25168] CSS coloration and layout fixes (thanks Jelle)
+# [#25710] Adminitration: Behavior reversed for Show Deleted Messages options
+
+19-April-2011 Xillibit
+# [#25644] Image attachement can't be saved by right clicking the image, just allowing it in message
+^ [#24847] Little update on fr-FR translation in backend
+# [#25592] Set true for JHtml::_('behavior.framework') to load mootools more
+
+18-April-2011 Xillibit
+# [#25655] Categories locked are showed in drop-down list - Display locked cats in search
+
+17-April-2011 Xillibit
+^ [#24847] Little update on fr-FR translation
+# [#25664] Javascript error : document.id("postcatid") is null
+# [#25656] Date 1999-11-30 If someone has never logged-in
+
+16-April-2011 Matias
+^ [#15886] Merged revisions 4711-4778 from /branches/1.6-xillibit-fixes-02-04-2011
+^ [#15886] Merged revisions 4720-4780 from /branches/1.6.4-language-LDA-2011-04-03
+^ [#15886] Merged revisions 4773-4779 from /branches/1.6.4-810-15-04-2011
+
+16-April-2011 svens(LDA)
+^ [#24847] update fi-FI (thanks Mortti)
+
+15-April-2011 810
+^ [#25168] Minor CSS fixes
+^ [#24847] updated nl-NL
+# [#25656] Last visit date is 1999-11-30 if user has never logged in
+
+15-April-2011 Xillibit
+# [#25654] J1.6: the submenu created are not the right access
+# [#25655] Categories locked are showed in drop-down list
+
+14-April-2011 svens(LDA)
+^ [#24847] update ru-RU (thanks Zarkos)
+
+12-April-2011 svens (LDA)
+^ [#24847] update de-DE (thanks rich)
+
+9-April-2011 Xillibit
+# [#25594] Remove adress mail from report kunena config
+# [#25595] Get menu details in report configuration doesn't work when it's translated in J1.6.1+
+
+8-April-2011 Xillibit
+# [#25592] Under J1.6.1+ need to load proper for javascript and mootools
+
 7-April-2011 Xillibit
 # [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text
 
@@ -1516,7 +1579,7 @@ Kunena 1.6.4-DEV
 # [#25326] Turn off PHP notice/warning handlers when not in debug mode (Joomla 1.5 surpresses way too many errors with @)
 ^ [#15886] Merged revisions 4714-4720 from /branches/1.6.4-language-LDA-2011-04-03
 
-03-April-2011 LDA
+3-April-2011 LDA
 ^ [#24847] update es-ES (thanks Kunena Spanish Team)
 ^ [#24847] update ar-AA (thanks baazza)
 ^ [#24847] update ru-RU (thanks Zarkos)

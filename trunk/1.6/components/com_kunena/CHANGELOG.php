@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
+26-April-2011 Matias
+# [#25756] Joomla 1.6: Menu creation fails on duplicated menu alias (profile)
+# [#25095] Subscription email: remove hardcoded "XXX forum"
+
 23-April-2011 Xillibit
 ^ [#24847] Make all updates on fr-FR languages files which are remaining
 

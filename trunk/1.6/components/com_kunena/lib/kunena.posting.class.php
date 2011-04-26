@@ -963,8 +963,8 @@ class CKunenaPosting {
 			$subject = $this->get ( 'subject' );
 			$topicsubject = $this->parent->subject ? $this->parent->subject : $subject;
 
-			$mailsender = JMailHelper::cleanAddress ( $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
-			$mailsubject = JMailHelper::cleanSubject ( "[" . $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . $topicsubject . " (" . $this->parent->catname . ")" );
+			$mailsender = JMailHelper::cleanAddress ( $this->_config->board_title );
+			$mailsubject = JMailHelper::cleanSubject ( "[" . $this->_config->board_title . "] " . $topicsubject . " (" . $this->parent->catname . ")" );
 
 			$sentusers = array();
 			foreach ( $emailToList as $emailTo ) {

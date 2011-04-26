@@ -16,11 +16,11 @@ kimport ( 'kunena.view' );
  * About view for Kunena cpanel
  */
 class KunenaAdminViewCpanel extends KunenaView {
-	function display() {
+	function displayDefault() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		$this->config = KunenaFactory::getConfig ();
 		$this->versioncheck = $this->get('latestversion');
 
-		parent::display ();
+		$this->display ();
 	}
 }

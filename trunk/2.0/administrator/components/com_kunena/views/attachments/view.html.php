@@ -11,23 +11,18 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.view' );
+kimport ('kunena.forum.message.attachment.helper');
 
 /**
  * Attachments view for Kunena backend
  */
 class KunenaAdminViewAttachments extends KunenaView {
-	function display() {
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		kimport ('kunena.forum.message.attachment.helper');
-		$this->displayDefault ();
-		$this->setToolBarDefault();
-
-		parent::display ();
-	}
-
 	function displayDefault() {
 		$this->items = $this->get('Items');
 		$this->navigation = $this->get ( 'AdminNavigation' );
+		$this->setToolBarDefault();
+
+		$this->display ();
 	}
 
 	protected function setToolBarDefault() {

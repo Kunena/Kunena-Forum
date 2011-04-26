@@ -16,12 +16,12 @@ kimport ( 'kunena.view' );
  * About view for Kunena config backend
  */
 class KunenaAdminViewConfig extends KunenaView {
-	function display() {
+	function displayDefault() {
 		$this->setToolBarDefault();
 		$this->lists = $this->get('Configlists');
 		$this->config = KunenaFactory::getConfig ();
 
-		parent::display ();
+		$this->display ();
 	}
 
 	protected function setToolBarDefault() {

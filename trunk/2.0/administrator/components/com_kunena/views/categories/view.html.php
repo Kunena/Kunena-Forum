@@ -16,32 +16,23 @@ kimport ( 'kunena.view' );
  * About view for Kunena backend
  */
 class KunenaAdminViewCategories extends KunenaView {
-	function display() {
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		if ($this->state->get('item.id')) $this->setLayout ('edit');
-		switch ($this->getLayout ()) {
-			case 'create' :
-			case 'edit' :
-				$this->displayEdit ();
-				$this->setToolBarEdit();
-				break;
-			case 'default' :
-				$this->displayDefault ();
-				$this->setToolBarDefault();
-				break;
-		}
-		parent::display ();
+	function displayCreate() {
+		return $this->displayEdit();
 	}
 
 	function displayEdit() {
+		$this->setToolBarEdit();
 		$this->assignRef ( 'category', $this->get ( 'AdminCategory' ) );
 		$this->assignRef ( 'options', $this->get ( 'AdminOptions' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'AdminModerators' ) );
+		$this->display();
 	}
 
 	function displayDefault() {
+		$this->setToolBarDefault();
 		$this->assignRef ( 'categories', $this->get ( 'AdminCategories' ) );
 		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$this->display();
 	}
 
 	protected function setToolBarEdit() {

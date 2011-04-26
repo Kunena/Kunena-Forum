@@ -16,28 +16,27 @@ kimport ( 'kunena.view' );
  * About view for Kunena ranks backend
  */
 class KunenaAdminViewRanks extends KunenaView {
-	function display() {
-		switch ($this->getLayout ()) {
-			case 'add' :
-			case 'edit' :
-				$this->displayEdit ();
-				$this->setToolBarEdit();
-				break;
-			case 'default' :
-				$this->displayDefault ();
-				$this->setToolBarDefault();
-				break;
-		}
-
-
-		parent::display ();
-	}
-
 	function displayDefault() {
+		$this->setToolBarDefault();
 		$this->template = $template = KunenaFactory::getTemplate();
 		$this->ranks = $this->get('Ranks');
 		$this->state = $this->get('state');
 		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$this->display ();
+	}
+
+	function displayAdd() {
+		$this->displayEdit();
+	}
+
+	function displayEdit() {
+		$this->setToolBarEdit();
+		$this->state = $this->get('state');
+		$this->rank_selected = $this->get('rank');
+		$this->template = KunenaFactory::getTemplate();
+		$this->rankpath = $this->template->getRankPath();
+		$this->listranks = $this->get('Rankspaths');
+		$this->display ();
 	}
 
 	protected function setToolBarDefault() {
@@ -49,14 +48,6 @@ class KunenaAdminViewRanks extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('delete', 'delete.png', 'delete_f2.png', 'COM_KUNENA_GEN_DELETE');
 		JToolBarHelper::spacer();
-	}
-
-	function displayEdit() {
-		$this->state = $this->get('state');
-		$this->rank_selected = $this->get('rank');
-		$this->template = KunenaFactory::getTemplate();
-		$this->rankpath = $this->template->getRankPath();
-		$this->listranks = $this->get('Rankspaths');
 	}
 
 	protected function setToolBarEdit() {

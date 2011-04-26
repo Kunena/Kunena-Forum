@@ -218,9 +218,6 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayMenu($tpl = null) {
-		// Menu module has already caching in it
-		$menu = KunenaRoute::getMenu ();
-		$key = $menu ? "{$menu->id}.{$menu->name}" : '0';
 		$result = $this->loadTemplate($tpl);
 		if (JError::isError($result)) {
 			return $result;

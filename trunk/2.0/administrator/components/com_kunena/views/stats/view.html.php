@@ -16,7 +16,7 @@ kimport ( 'kunena.view' );
  * About view for Kunena stats backend
  */
 class KunenaAdminViewStats extends KunenaView {
-	function display($tpl = null) {
+	function displayDefault($tpl = null) {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 
 		$this->config = KunenaFactory::getConfig ();
@@ -27,6 +27,6 @@ class KunenaAdminViewStats extends KunenaView {
 		$kunena_stats->loadAll();
 		$this->assign($kunena_stats);
 
-		parent::display ();
+		$this->display ();
 	}
 }

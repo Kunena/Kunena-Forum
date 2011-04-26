@@ -16,10 +16,10 @@ kimport ( 'kunena.view' );
  * Kunena Syncusers view for Kunena backend
  */
 class KunenaAdminViewSyncusers extends KunenaView {
-	function display() {
+	function displayDefault() {
 		$this->setToolBarDefault();
 
-		parent::display ();
+		$this->display ();
 	}
 
 	protected function setToolBarDefault() {

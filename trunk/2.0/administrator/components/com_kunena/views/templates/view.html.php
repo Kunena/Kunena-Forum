@@ -16,36 +16,55 @@ kimport ( 'kunena.view' );
  * Templates view for Kunena backend
  */
 class KunenaAdminViewTemplates extends KunenaView {
-	function display() {
-		switch ($this->getLayout ()) {
-			case 'add' :
-				JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
-	 			JToolBarHelper::spacer();
-				break;
-			case 'edit' :
-				$this->displayEdit ();
-				$this->setToolBarEdit();
-				break;
-			case 'choosecss' :
-				$this->displayChoosecss ();
-				$this->setToolBarChoosecss();
-				break;
-			case 'editcss' :
-				$this->displayEditcss ();
-				$this->setToolBarEditcss();
-				break;
-			case 'default' :
-				$this->displayDefault ();
-				$this->setToolBarDefault();
-				break;
-		}
-
-		parent::display ();
-	}
-
 	function displayDefault() {
+		$this->setToolBarDefault();
 		$this->templates = $this->get('templates');
 		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$this->display();
+	}
+
+	function displayAdd () {
+		$this->setToolBarAdd();
+		$this->display ();
+	}
+
+	function displayEdit () {
+		$this->setToolBarEdit();
+		$app = JFactory::getApplication ();
+		$this->params = $this->get('editparams');
+		$this->details = $this->get('templatedetails');
+		$this->templatename = $app->getUserState ( 'kunena.edit.template');
+
+		// Loading language strings for default template and override with current template
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena.tpl_default', JPATH_SITE);
+		if ($this->templatename != 'default') {
+			if (!$lang->load('com_kunena.tpl_'.$this->templatename, JPATH_SITE)) {
+				$lang->load('com_kunena.tpl_'.$this->templatename, KPATH_SITE.'/template/'.$this->templatename);
+			}
+		}
+		$this->display();
+	}
+
+	function displayChoosecss() {
+		$this->setToolBarChoosecss();
+		$app = JFactory::getApplication ();
+		$this->templatename = $app->getUserState ( 'kunena.edit.template');
+		$this->dir = KPATH_SITE.'/template/'.$this->templatename.'/css';
+		jimport('joomla.filesystem.folder');
+		$this->files = JFolder::files($this->dir, '\.css$', false, false);		;
+		$this->display();
+	}
+
+	function displayEditcss() {
+		$this->setToolBarEditcss();
+		$app = JFactory::getApplication ();
+		$this->templatename = $app->getUserState ( 'kunena.editcss.tmpl');
+		$this->filename = $app->getUserState ( 'kunena.editcss.filename');
+		$this->content = $this->get ( 'FileContentParsed');
+		$this->css_path = KPATH_SITE.'/template/'.$this->templatename.'/css/'.$this->filename;
+		$this->ftp = $this->get('FTPcredentials');
+		$this->display();
 	}
 
 	protected function setToolBarDefault() {
@@ -61,20 +80,9 @@ class KunenaAdminViewTemplates extends KunenaView {
 		JToolBarHelper::spacer();
 	}
 
-	function displayEdit () {
-		$app = JFactory::getApplication ();
-		$this->params = $this->get('editparams');
-		$this->details = $this->get('templatedetails');
-		$this->templatename = $app->getUserState ( 'kunena.edit.template');
-
-		// Loading language strings for default template and override with current template
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena.tpl_default', JPATH_SITE);
-		if ($this->templatename != 'default') {
-			if (!$lang->load('com_kunena.tpl_'.$this->templatename, JPATH_SITE)) {
-				$lang->load('com_kunena.tpl_'.$this->templatename, KPATH_SITE.'/template/'.$this->templatename);
-			}
-		}
+	protected function setToolBarAdd() {
+		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::spacer();
 	}
 
 	protected function setToolBarEdit() {
@@ -90,19 +98,6 @@ class KunenaAdminViewTemplates extends KunenaView {
 		JToolBarHelper::spacer();
 	}
 
-	protected function setToolBarAdd() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
-		JToolBarHelper::spacer();
-	}
-
-	function displayChoosecss() {
-		$app = JFactory::getApplication ();
-		$this->templatename = $app->getUserState ( 'kunena.edit.template');
-		$this->dir = KPATH_SITE.'/template/'.$this->templatename.'/css';
-		jimport('joomla.filesystem.folder');
-		$this->files = JFolder::files($this->dir, '\.css$', false, false);		;
-	}
-
 	protected function setToolBarChoosecss() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
@@ -111,15 +106,6 @@ class KunenaAdminViewTemplates extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel('templates');
 		JToolBarHelper::spacer();
-	}
-
-	function displayEditcss() {
-		$app = JFactory::getApplication ();
-		$this->templatename = $app->getUserState ( 'kunena.editcss.tmpl');
-		$this->filename = $app->getUserState ( 'kunena.editcss.filename');
-		$this->content = $this->get ( 'FileContentParsed');
-		$this->css_path = KPATH_SITE.'/template/'.$this->templatename.'/css/'.$this->filename;
-		$this->ftp = $this->get('FTPcredentials');
 	}
 
 	protected function setToolBarEditcss() {

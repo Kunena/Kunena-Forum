@@ -117,11 +117,11 @@ class KunenaController extends JController {
 		$lName = JRequest::getWord ( 'layout', 'default' );
 		$vFormat = $document->getType ();
 
-		$view = $this->getView ( $vName, $vFormat, '', array ('base_path' => $this->_basePath ) );
+		$view = $this->getView ( $vName, $vFormat );
 		if ($view) {
 			if ($app->isSite() && $vFormat=='html') {
 				$view->template = KunenaFactory::getTemplate();
-				$common = $this->getView ( 'common', $vFormat, '', array ('base_path' => $this->_basePath ) );
+				$common = $this->getView ( 'common', $vFormat );
 				$common->setModel ( $this->getModel ( 'common' ), true );
 				$view->common = $common;
 				$templatepath = KPATH_SITE."/{$view->template->getPath()}/html/";
@@ -147,9 +147,7 @@ class KunenaController extends JController {
 			$view->assignRef ( 'document', $document );
 
 			// Render the view.
-			if ($app->isAdmin()) {
-				$view->display ();
-			} elseif ($vFormat=='html') {
+			if ($vFormat=='html') {
 				$view->displayAll ();
 			} else {
 				$view->displayLayout ();

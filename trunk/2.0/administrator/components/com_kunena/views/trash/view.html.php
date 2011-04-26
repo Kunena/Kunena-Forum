@@ -16,39 +16,30 @@ kimport ( 'kunena.view' );
  * Trash view for Kunena backend
  */
 class KunenaAdminViewTrash extends KunenaView {
-	function display() {
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		switch ($this->getLayout ()) {
-			case 'purge' :
-				$this->displayPurge ();
-				$this->setToolBarPurge();
-				break;
-			case 'default' :
-				$this->setToolBarDefault();
-				break;
-			case 'messages' :
-				$this->displayMessages ();
-				$this->setToolBarMessages();
-				break;
-			case 'topics' :
-				$this->displayTopics ();
-				$this->setToolBarTopics();
-				break;
-		}
-		parent::display ();
+	function displayDefault() {
+		$this->setToolBarDefault();
+		$this->display();
 	}
 
 	function displayPurge() {
+		$this->setToolBarPurge();
 		$this->purgeitems = $this->get('PurgeItems');
 		$this->md5Calculated = $this->get('Md5');
+		$this->display();
 	}
 
-	protected function setToolBarPurge() {
-		// Set the titlebar text
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('purge','delete.png','delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY');
-		JToolBarHelper::spacer();
+	function displayTopics () {
+		$this->setToolBarTopics();
+		$this->topics = $this->get('TopicsItems');
+		$this->navigation = $this->get ( 'Navigation' );
+		$this->display();
+	}
+
+	function displayMessages () {
+		$this->setToolBarMessages();
+		$this->messages = $this->get('MessagesItems');
+		$this->navigation = $this->get ( 'Navigation' );
+		$this->display();
 	}
 
 	protected function setToolBarDefault() {
@@ -57,9 +48,12 @@ class KunenaAdminViewTrash extends KunenaView {
 		JToolBarHelper::spacer();
 	}
 
-	function displayTopics () {
-		$this->topics = $this->get('TopicsItems');
-		$this->navigation = $this->get ( 'Navigation' );
+	protected function setToolBarPurge() {
+		// Set the titlebar text
+		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('purge','delete.png','delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY');
+		JToolBarHelper::spacer();
 	}
 
 	protected function setToolBarTopics() {
@@ -71,11 +65,6 @@ class KunenaAdminViewTrash extends KunenaView {
 		JToolBarHelper::custom('purge','trash.png','trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel('trash');
-	}
-
-	function displayMessages () {
-		$this->messages = $this->get('MessagesItems');
-		$this->navigation = $this->get ( 'Navigation' );
 	}
 
 	protected function setToolBarMessages() {

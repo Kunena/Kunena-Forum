@@ -16,12 +16,12 @@ kimport ( 'kunena.view' );
  * Kunena report view for Kunena backend
  */
 class KunenaAdminViewPrune extends KunenaView {
-	function display() {
+	function displayDefault() {
 		$this->setToolBarDefault();
 		$this->forumList = $this->get('Forumlist');
 		$this->listtrashdelete = $this->get('Listtrashdelete');
 
-		parent::display ();
+		$this->display ();
 	}
 
 	protected function setToolBarDefault() {

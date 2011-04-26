@@ -33,6 +33,9 @@ Kunena 2.0.0-DEV
 
 25-April-2011 Matias
 ^ [#22786] Merge revisions 4731-4807 from trunk/1.6
+# [#23443] Add Joomla 1.6 support into KunenaController
+# [#23443] Use more features from KunenaView in administration
+# [#23443] Joomla 1.6: Fix some bugs
 
 21-April-2011 Matias
 # [#23443] Joomla 1.6: Installation fails because of wrong file in xml manifest file

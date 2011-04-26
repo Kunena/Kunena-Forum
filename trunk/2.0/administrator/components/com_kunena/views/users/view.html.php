@@ -16,49 +16,15 @@ kimport ( 'kunena.view' );
  * Users view for Kunena backend
  */
 class KunenaAdminViewUsers extends KunenaView {
-	function display() {
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
-
-		switch ($this->getLayout ()) {
-			case 'move' :
-				$this->displayMove();
-				$this->setToolBarMove();
-				break;
-			case 'edit' :
-				$this->displayEdit ();
-				$this->setToolBarEdit();
-				break;
-			case 'default' :
-				$this->displayDefault ();
-				$this->setToolBarDefault();
-				break;
-		}
-
-		parent::display ();
-	}
-
 	function displayDefault() {
+		$this->setToolBarDefault();
 		$this->users = $this->get('users');
 		$this->navigation = $this->get ( 'AdminNavigation' );
-	}
-
-	protected function setToolBarDefault() {
-		// Set the titlebar text
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('delete','delete.png','delete_f2.png', 'COM_KUNENA_USER_DELETE');
-		JToolBarHelper::spacer();
+		$this->display();
 	}
 
 	function displayEdit() {
+		$this->setToolBarEdit();
 		$this->config = KunenaFactory::getConfig ();
 		$this->user = $this->get('user');
 		$this->sub = $this->get('subscriptions');
@@ -81,6 +47,32 @@ class KunenaAdminViewUsers extends KunenaView {
 		$this->selectOrder = JHTML::_ ( 'select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $this->user->ordering );
 		$this->modCats = $this->get('listmodcats');
 		$this->selectRank = $this->get('listuserranks');
+		$this->display();
+	}
+
+	function displayMove() {
+		$this->setToolBarMove();
+		$this->catslist = $this->get('movecatslist');
+		$app = JFactory::getApplication ();
+		$this->userid = $app->getUserState ( 'kunena.usermove.userid');
+		$this->user = $this->get('moveuser');
+		$this->display();
+	}
+
+	protected function setToolBarDefault() {
+		// Set the titlebar text
+		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('logout', 'cancel.png', 'cancel_f2.png', 'COM_KUNENA_LOGOUT');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('move', 'move.png', 'move_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('trashusermessages', 'trash.png', 'icon-32-move.png', 'COM_KUNENA_TRASH_USERMESSAGES');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('delete','delete.png','delete_f2.png', 'COM_KUNENA_USER_DELETE');
+		JToolBarHelper::spacer();
 	}
 
 	protected function setToolBarEdit() {
@@ -91,13 +83,6 @@ class KunenaAdminViewUsers extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel('users', 'COM_KUNENA_CANCEL');
 		JToolBarHelper::spacer();
-	}
-
-	function displayMove() {
-		$this->catslist = $this->get('movecatslist');
-		$app = JFactory::getApplication ();
-		$this->userid = $app->getUserState ( 'kunena.usermove.userid');
-		$this->user = $this->get('moveuser');
 	}
 
 	protected function setToolBarMove() {

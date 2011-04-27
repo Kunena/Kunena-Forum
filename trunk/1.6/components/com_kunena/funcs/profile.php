@@ -171,33 +171,38 @@ class CKunenaProfile {
 		$this->user = JFactory::getUser();
 
 		// check to see if Frontend User Params have been enabled
-		$usersConfig = JComponentHelper::getParams( 'com_users' );
-		$check = $usersConfig->get('frontend_userparams');
-
-		if ($check == 1 || $check == NULL) {
-			if($this->user->authorize( 'com_user', 'edit' )) {
-				if ($jversion->RELEASE == '1.5') {
-					$lang = JFactory::getLanguage();
-					$lang->load('com_user', JPATH_SITE);
-					$params = $this->user->getParameters(true);
-					// Legacy template support:
-					$this->userparams = $params->renderToArray();
-					$i=0;
-					// New templates use this:
-					foreach ($this->userparams as $userparam) {
-						$this->userparameters[$i]->input = $userparam[1];
-						$this->userparameters[$i]->label = '<label for="params'.$userparam[5].'" title="'.$userparam[2].'">'.$userparam[0].'</label>';
-						$i++;
-					}
-				} elseif ($jversion->RELEASE == '1.6') {
-					$lang = JFactory::getLanguage();
-					$lang->load('com_users', JPATH_ADMINISTRATOR);
-
-					jimport( 'joomla.form.form' );
-					$form = JForm::getInstance('juserprofilesettings', JPATH_ADMINISTRATOR.'/components/com_users/models/forms/user.xml');
-					// this get only the fields for user settings (template, editor, language...)
-					$this->userparameters = $form->getFieldset('settings');
+		if ($jversion->RELEASE == '1.5' && $this->user->authorize( 'com_user', 'edit' )) {
+			$usersConfig = JComponentHelper::getParams( 'com_user' );
+			if ($usersConfig->get('frontend_userparams', 0)) {
+				$lang = JFactory::getLanguage();
+				$lang->load('com_user', JPATH_SITE);
+				$params = $this->user->getParameters(true);
+				// Legacy template support:
+				$this->userparams = $params->renderToArray();
+				$i=0;
+				// New templates use this:
+				foreach ($this->userparams as $userparam) {
+					$this->userparameters[$i]->input = $userparam[1];
+					$this->userparameters[$i]->label = '<label for="params'.$userparam[5].'" title="'.$userparam[2].'">'.$userparam[0].'</label>';
+					$i++;
 				}
+			}
+		} elseif ($jversion->RELEASE == '1.6' && $this->user->authorise( 'com_users', 'edit' )) {
+			$usersConfig = JComponentHelper::getParams( 'com_users' );
+			if ($usersConfig->get('frontend_userparams', 0)) {
+				$lang = JFactory::getLanguage();
+				$lang->load('com_users', JPATH_ADMINISTRATOR);
+
+				jimport( 'joomla.form.form' );
+				JForm::addFormPath(JPATH_ROOT.'/components/com_users/models/forms');
+				JForm::addFieldPath(JPATH_ROOT.'/components/com_users/models/fields');
+				$form = JForm::getInstance('com_users.profile', 'frontend');
+				$registry = new JRegistry($this->user->params);
+				$data = new StdClass();
+				$data->params = $registry->toArray();
+				$form->bind($data);
+				// this get only the fields for user settings (template, editor, language...)
+				$this->userparameters = $form->getFieldset('params');
 			}
 		}
 		CKunenaTools::loadTemplate('/profile/edituser.php');

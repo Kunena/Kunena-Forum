@@ -85,22 +85,32 @@ class CKunenaTimeformat {
 	}
 
 	function showTimezone($timezone) {
+		if (!is_numeric($timezone)) {
+			// Joomla 1.6 support
+			$date = JFactory::getDate ();
+			$timezone = new DateTimeZone($timezone);
+			$date->setTimezone($timezone);
+			$timezone = $date->getOffset()/3600;
+		}
+
 		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);
 	}
 
 	// Format a time to make it look purdy.
-	function showDate($time, $mode = 'datetime_today', $tz = 'kunena', $offset=false) {
+	function showDate($time, $mode = 'datetime_today', $tz = 'kunena', $offset=null) {
 		$app = & JFactory::getApplication ();
 		$kunena_config = KunenaFactory::getConfig ();
 
-		switch (strtolower ( $tz )) {
-			case 'utc' :
-				$jversion = new JVersion();
-				$date = new JDate ( $time );
-				break;
-			default :
-				$date = new JDate ( $time, ( float ) $offset );
-				break;
+		$date = JFactory::getDate ( $time );
+		if ($offset === null || strtolower ($tz) != 'utc') {
+			$offset = JFactory::getUser()->getParam('timezone', $app->getCfg ( 'offset', 0 ));
+		}
+		if (is_numeric($offset)) {
+			$date->setOffset($offset);
+		} else {
+			// Joomla 1.6 support
+			$offset = new DateTimeZone($offset);
+			$date->setTimezone($offset);
 		}
 		if ($date->toFormat('%Y')<1902) return JText::_('COM_KUNENA_DT_DATETIME_UNKNOWN');
 		if (preg_match ( '/^config_/', $mode ) == 1) {
@@ -136,16 +146,9 @@ class CKunenaTimeformat {
 
 		}
 
-		if ($offset === false) {
-			$my = JFactory::getUser();
-			if ($my->id) $offset = $my->getParam('timezone', $app->getCfg ( 'offset', 0 ));
-			else $offset = $app->getCfg ( 'offset', 0 );
-		}
-		$date->setOffset($offset);
 		// Today and Yesterday?
 		if ($modearr [count ( $modearr ) - 1] == 'today') {
-			$now = new JDate();
-			$now->setOffset($offset);
+			$now = JFactory::getDate ( 'now' );
 			$now = @getdate ( $now->toUnix() );
 			$then = @getdate ( $date->toUnix() );
 
@@ -159,7 +162,7 @@ class CKunenaTimeformat {
 				($now ['yday'] == 0 && $then ['year'] == $now ['year'] - 1) && $then ['mon'] == 12 && $then ['mday'] == 31)
 				$usertime_format = $yesterday_format;
 		}
-		return $date->toFormat ( $usertime_format );
+		return $date->toFormat ( $usertime_format, true );
 	}
 
 }

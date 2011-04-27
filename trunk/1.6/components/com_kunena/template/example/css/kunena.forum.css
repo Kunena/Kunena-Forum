@@ -921,6 +921,7 @@ PX		EM			PCT			PT
 }
 	
 #Kunena span.ktopic-by { 
+	float:left;
 }
 
 #Kunena span.ktopic-locked { 

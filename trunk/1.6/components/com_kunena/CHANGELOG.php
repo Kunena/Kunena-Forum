@@ -35,6 +35,8 @@ Kunena 1.6.4-DEV
 27-April-2011 Matias
 # [#25597] Joomla 1.6: Edit profile / Global Settings are not showing up
 # [#25770] Joomla 1.6: All dates are presented in UTC
+# [#25762] Joomla 1.6: Fix geshi highlighting (thanks JoniJnm)
+# [#25168] CSS fix to show Topic started Today by User in right order (thanks Jelle)
 
 26-April-2011 Matias
 # [#25756] Joomla 1.6: Menu creation fails on duplicated menu alias (profile)

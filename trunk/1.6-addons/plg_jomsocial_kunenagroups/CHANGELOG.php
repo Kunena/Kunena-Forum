@@ -30,7 +30,11 @@ Legend:
 
 Kunena Groups 1.6.4
 
-14-March-2010 Matias
+30-April-2011 Xillibit
+# [#22541] Update xml file to make it working under Joomla! 1.6
++ [#22541] Add fr-FR translation
+
+14-March-2011 Matias
 ^ [#22541] Update version info to 1.6.4
 
 12-March-2011 svens(LDA)

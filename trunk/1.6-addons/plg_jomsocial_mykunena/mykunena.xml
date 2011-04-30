@@ -42,4 +42,22 @@
 			<option value="0">PLG_MYKUNENA_CORE_APPS_NO</option>
 		</param>
 	</params>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">	
+				<field name="count" type="text"
+					default="5"
+					description="PLG_MYKUNENA_POST_COUNT_DESC"
+					label="PLG_MYKUNENA_POST_COUNT" />
+				<field name="coreapp" type="list" default="0" description="PLG_MYKUNENA_CORE_APPS_DESC" label="PLG_MYKUNENA_CORE_APPS">
+					<option value="0">PLG_MYKUNENA_CORE_APPS_NO</option>
+					<option value="1">PLG_MYKUNENA_CORE_APPS_YES</option>
+				</field>
+				<field name="cache"  type="list" default="1" label="PLG_MYKUNENA_CACHING" description="PLG_MYKUNENA_CACHING_DESC">
+					<option value="1">PLG_MYKUNENA_CACHING_GLOBAL</option>
+					<option value="0">PLG_MYKUNENA_CORE_APPS_NO</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </install>

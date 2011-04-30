@@ -52,4 +52,34 @@
 			<option value="1">PLG_COMMUNITY_KUNENAMENU_OPTION_YES</option>
 		</param>
 	</params>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">	
+				<field name="coreapp" type="list" default="0" description="PLG_COMMUNITY_KUNENAMENU_PARAM_COREAPP_DESC" label="PLG_COMMUNITY_KUNENAMENU_PARAM_COREAPP">
+					<option value="0">PLG_COMMUNITY_KUNENAMENU_OPTION_NO</option>
+					<option value="1">PLG_COMMUNITY_KUNENAMENU_OPTION_YES</option>
+				</field>
+				<field name="sh_editprofile"  type="list" default="1" label="PLG_COMMUNITY_KUNENAMENU_PARAM_SHOW_EDITPROFILE" description="PLG_COMMUNITY_KUNENAMENU_PARAM_SHOW_EDITPROFILE_DESC">
+					<option value="0">PLG_COMMUNITY_KUNENAMENU_OPTION_NO</option>
+					<option value="1">PLG_COMMUNITY_KUNENAMENU_OPTION_YES</option>
+				</field>
+				<field name="sh_myprofile" type="list" default="1" description="PLG_COMMUNITY_KUNENAMENU_PARAM_SHOW_MYPROFILE_DESC" label="PLG_COMMUNITY_KUNENAMENU_PARAM_SHOW_MYPROFILE">
+					<option value="0">PLG_COMMUNITY_KUNENAMENU_OPTION_NO</option>
+					<option value="1">PLG_COMMUNITY_KUNENAMENU_OPTION_YES</option> 
+				</field>
+				<field name="sh_myposts" type="list" default="1" description="PLG_COMMUNITY_KUNENAMENU_PARAM_SHOW_MYPOSTS_DESC" label="PLG_COMMUNITY_KUNENAMENU_PARAM_SHOW_MYPOSTS">
+					<option value="0">PLG_COMMUNITY_KUNENAMENU_OPTION_NO</option>
+					<option value="1">PLG_COMMUNITY_KUNENAMENU_OPTION_YES</option>
+				</field>
+				<field name="sh_mysubscriptions" type="list" default="1" description="PLG_COMMUNITY_KUNENAMENU_PARAM_SHOW_MYSUBSCRIPTIONS_DESC" label="PLG_COMMUNITY_KUNENAMENU_PARAM_SHOW_MYSUBSCRIPTIONS">
+					<option value="0">PLG_COMMUNITY_KUNENAMENU_OPTION_NO</option>
+					<option value="1">PLG_COMMUNITY_KUNENAMENU_OPTION_YES</option>
+				</field>
+				<field name="sh_myfavorites" type="list" default="1" description="PLG_COMMUNITY_KUNENAMENU_PARAM_SHOW_MYFAVORITES_DESC" label="PLG_COMMUNITY_KUNENAMENU_PARAM_SHOW_MYFAVORITES">
+					<option value="0">PLG_COMMUNITY_KUNENAMENU_OPTION_NO</option>
+					<option value="1">PLG_COMMUNITY_KUNENAMENU_OPTION_YES</option>
+				</field>				
+			</fieldset>
+		</fields>
+	</config>
 </install>

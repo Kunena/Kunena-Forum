@@ -29,6 +29,10 @@ Legend:
 
 JomsocialKunenaMenu 1.6.4
 
+30-April-2011 Xillibit
+# [#19002] Fix little issue in en-GB and nb-NO language file which are broken
+# [#19002] Make working plugin settings under Joomla! 1.6
+
 14-March-2011 Matias
 ^ [#19002] Updated version to 1.6.4
 

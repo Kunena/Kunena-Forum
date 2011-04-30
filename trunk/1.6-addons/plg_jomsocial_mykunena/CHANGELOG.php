@@ -30,6 +30,7 @@ MyKunena 1.6.4
 
 30-April-2011 Xillibit
 # [#19002] Make working plugins settings under Joomla! 1.6 and fix little issue in language files
+# [#19002] Add new languages in build file
 
 03-April-2011 LDA
 + [#24847] added es-ES (thanks Kunena Spanish Team)

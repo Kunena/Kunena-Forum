@@ -1158,7 +1158,7 @@ function editForum($id, $option) {
 	} else {
 		// Create the access control lists for Joomla 1.6
 		$accessLists ['pub_access'] = JHTML::_ ( 'access.usergroup', 'pub_access', $category->pub_access, 'class="inputbox" size="4"', false);
-		$accessLists ['admin_access'] = JHTML::_ ( 'access.usergroup', 'pub_access', $category->admin_access, 'class="inputbox" size="4"', false);
+		$accessLists ['admin_access'] = JHTML::_ ( 'access.usergroup', 'admin_access', $category->admin_access, 'class="inputbox" size="4"', false);
 	}
 	// Anonymous posts default
 	$post_anonymous = array ();

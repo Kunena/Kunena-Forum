@@ -32,7 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.4-DEV
 
-02-May-2011 Xillibit
+4-May-2011 Matias
+# [#25819] Add Joomla 1.5 to 1.6 migration support
+
+2-May-2011 Xillibit
 # [#25799] Joomla! 1.6 : when you set an admin group in a category, it doesn't saved
 
 27-April-2011 Matias

@@ -47,3 +47,6 @@ class MenusModelMenutype {}
 function jximport() {}
 function juimport() {}
 class JxAcl {};
+
+// JUpgrage
+class jUpgrade {};

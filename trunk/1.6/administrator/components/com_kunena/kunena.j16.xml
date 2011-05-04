@@ -38,4 +38,7 @@
 			<folder>archive</folder>
 		</files>
 	</administration>
+	<updateservers>
+		<server type="extension" priority="1" name="Kunena 1.6 Update Site">http://update.kunena.org/kunena16.xml</server>
+	</updateservers>
 </extension>

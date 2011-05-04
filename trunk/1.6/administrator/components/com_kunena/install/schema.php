@@ -7,10 +7,7 @@
  * @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
  * @link		http://www.kunena.org
  */
-
-//
-// Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
 
 DEFINE('KUNENA_SCHEMA_FILE', KPATH_ADMIN.'/install/install.xml');
 DEFINE('KUNENA_UPGRADE_SCHEMA_FILE', KPATH_ADMIN.'/install/upgrade/upgrade.xml');
@@ -136,6 +133,20 @@ class KunenaModelSchema extends JModel
 			$this->sql = $this->getSchemaSQL($diff);
 		}
 		return $this->sql;
+	}
+
+	public function getSchemaTables($prefix = null)
+	{
+		$schema = $this->getXmlSchema();
+		if ($prefix === null) {
+			$prefix = $this->db->getPrefix();
+		}
+		$tables = array();
+		foreach ($schema->getElementsByTagName('table') as $table)
+		{
+			$tables[$table->getAttribute('name')] = $prefix . $table->getAttribute('name');
+		}
+		return $tables;
 	}
 
 	// helper function to update table schema

@@ -19,6 +19,8 @@
 -->
 <project name="KunenaTranslate" default="dist" basedir=".">
 	<description>Build file for Kunena Translation Component</description>
+	<defaultexcludes add="**/*.project"/>
+	<defaultexcludes add="**/*.externalToolBuilders"/>
 	<condition property="project_dir" value="..">
 		<not>
 			<isset property="project_dir" />
@@ -65,7 +67,7 @@
 			<fileset dir="${kunena.directory}/administrator/components/com_kunenatranslate">
 				<exclude name="build/" />
 				<!-- <exclude name="*install.kunenaimporter.php" />-->
-				<exclude name="language/" />
+				<!-- exclude name="language/" /-->
 				<exclude name="kunenaimporter.xml" />
 			</fileset>
 		</copy>

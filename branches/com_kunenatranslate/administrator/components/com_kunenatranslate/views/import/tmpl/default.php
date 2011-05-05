@@ -9,10 +9,12 @@
  * @link http://www.kunena.com
  */
 defined('_JEXEC') or die('Restricted access');
+$imp = false;
 if(JRequest::getVar('task') == 'import'  || 
-	JRequest::getVar('show') == 'import') 
+ JRequest::getVar('show') == 'import') {
+	$imp = true;
 	JToolBarHelper::save('import', 'Import');
-else
+}else
 	JToolBarHelper::save('export', 'Export');
 JToolBarHelper::cancel();
 ?>
@@ -22,16 +24,30 @@ window.addEvent( 'domready' , function() {
 	var ext = document.getElementById('extension');
 	var clientchoose = document.getElementById('clientchoose');
 	var clientall = document.getElementsByName('clientall');
+	var bulk = document.getElementsByName('build');
+	var task = document.getElementsByName('do');
 
 	ext.addEvent('change' , function(){
 		clientchoose.setStyle('display', 'none');
 		clientall[1].checked = true;
 		num = ext.get('value');
 		if( num != -1){
+			<?php if($imp != true){?>
+			document.getElementById('bulk').setStyle('display', '');
+			<?php }else{?>
 			document.getElementById('all').setStyle('display', '');
+			<?php } ?>
 			document.getElementById('lang').setStyle('display', '');
+			<?php if($imp == true):?>
 			document.getElementById('addmissing').setStyle('display', '');
-		}
+			<?php endif; ?>
+			}
+	});
+	bulk[0].addEvent('click', function(){
+		task[0].set('value', '');
+	});
+	bulk[1].addEvent('click', function(){
+		task[0].set('value', 'buildfile');
 	});
 	clientall[0].addEvent('click' , function(){
 		var tdc = document.getElementById('client');
@@ -65,6 +81,10 @@ window.addEvent( 'domready' , function() {
 			<td><?php echo JText::_('COM_KUNENATRANSLATE_EXTENSION'); ?></td>
 			<td><?php echo $this->extensionlist; ?></td>
 		</tr>
+		<tr style="display: none;" id="bulk">
+			<td><?php echo JText::_('COM_KUNENATRANSLATE_BUILD_INSTALLFILE');?></td>
+			<td><?php echo JHTMLSelect::booleanlist('build'); ?></td>
+		</tr>
 		<tr style="display: none;" id="all">
 			<td><?php echo JText::_('COM_KUNENATRANSLATE_CLIENT_ALL')?></td>
 			<td><?php echo JHTMLSelect::booleanlist('clientall', null, 1); ?></td>
@@ -89,5 +109,6 @@ window.addEvent( 'domready' , function() {
 <input type="hidden" name="controller" value="import" />
 <input type="hidden" name="option" value="com_kunenatranslate" />
 <input type="hidden" name="task" value="" />
+<input type="hidden" name="do" value="" />
 <?php echo JHTML::_( 'form.token' ); ?>
 </form>

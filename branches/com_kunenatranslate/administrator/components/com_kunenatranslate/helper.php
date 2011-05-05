@@ -374,12 +374,12 @@ class KunenaTranslateHelper
 	 * @param string language code
 	 * @return string inifile path if param $lang is set
 	 */
-	public function loadClientData($client, $lang=null, $filename){
+	public function loadClientData($client, $lang=null, $filename , $do=null){
 		$xml = $this->loadXML($filename);
 		$this->type = $xml->document->attributes('type');
 		$this->clientdata = $xml->document->getElementbyPath('files/'.$client);
 		if($lang){
-			$ini = self::createIniPath($lang);
+			$ini = self::createIniPath($lang, $do);
 			return $ini;
 		}
 		else self::createPath();
@@ -431,13 +431,19 @@ class KunenaTranslateHelper
 	 * @param $lang language code
 	 * @return mixed string with path or false
 	 */
-	protected function createIniPath($lang){
+	protected function createIniPath($lang, $do=null){
 		$area = $this->clientdata->attributes('type');
 		$ini = $this->clientdata->getElementByPath('ini');
 		if($area == 'administrator'){
-			$dir = JPATH_ADMINISTRATOR.DS.'language'.DS.$lang.DS.$lang.'.'.$ini->data();
+			if($do == 'buildfile')
+				$dir = JPATH_ROOT.DS.'tmp'.DS.$lang.DS.'admin'.DS.$lang.'.'.$ini->data();
+			else
+				$dir = JPATH_ADMINISTRATOR.DS.'language'.DS.$lang.DS.$lang.'.'.$ini->data();
 		}elseif ($area == 'site'){
-			$dir = JPATH_SITE.DS.'language'.DS.$lang.DS.$lang.'.'.$ini->data();
+			if($do == 'buildfile')
+				$dir = JPATH_ROOT.DS.'tmp'.DS.$lang.DS.'site'.DS.$lang.'.'.$ini->data();
+			else
+				$dir = JPATH_SITE.DS.'language'.DS.$lang.DS.$lang.'.'.$ini->data();
 		}else{
 			JError::raiseWarning('', JText::sprintf( 'COM_KUNENATRANSLATE_CLIENT_INVALID', $this->type) );
 			return false;

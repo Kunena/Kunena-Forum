@@ -29,6 +29,8 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena Translate 0.1.0
+05-MAy-2011 svens(LDA)
+^ [#25750] build install file in export - part 1
 
 25-April-2011 svens(LDA)
 # [#25744] invalid argument import model

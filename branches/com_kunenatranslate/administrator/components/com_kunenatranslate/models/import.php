@@ -121,11 +121,11 @@ class KunenaTranslateModelImport extends JModel{
 		return $table->filename;
 	}
 	
-	function _getPathIni($client,$lang){
+	function _getPathIni($client,$lang , $do = null){
 		require_once (dirname(__FILE__).DS.'..'.DS.'helper.php');
 		$helper = new KunenaTranslateHelper();
 		$filename = self::getExtensionFilename();
-		$inifile = $helper->loadClientData($client,$lang, $filename);
+		$inifile = $helper->loadClientData($client,$lang, $filename, $do);
 		return $inifile;
 	}
 	
@@ -168,15 +168,60 @@ class KunenaTranslateModelImport extends JModel{
 		$lang = JRequest::getVar('language', 'en-GB');
 		$clientall = JRequest::getBool('clientall');
 		$extension = JRequest::getVar('extension');
-		if($clientall == true){
-			$clients = KunenaTranslateHelper::getClientList( self::getExtensionFilename() , false, null,null, true);
+		$do = JRequest::getVar('do');
+		$extensionfile = self::getExtensionFilename();
+		if($clientall == true || $do == 'buildfile'){
+			$clients = KunenaTranslateHelper::getClientList( $extensionfile , false, null,null, true);
 		}else{
 			$clients[] = array('text'=>$client,
 								'value' => $client);
 		}
+		//create temp folder for building install zip file
+		if( $do == 'buildfile' ){
+			$path = JPATH_ROOT.DS.'tmp'.DS.$lang;
+			if( !JFolder::exists( $path ) ){
+				if(!JFolder::create( $path ) )
+					return false;
+			}
+			if( !JFolder::exists( $path.DS.'admin' ) ){
+				if(!JFolder::create( $path.DS.'admin' ) )
+					return false;
+			}
+			if( !JFolder::exists( $path.DS.'site' ) ){
+				if(!JFolder::create( $path.DS.'site' ) )
+					return false;
+			}
+			if( !JFile::exists( $path.DS.$extension.'.xml' ) ){
+				if(!JFile::copy( JPATH_COMPONENT_ADMINISTRATOR.DS.'dummy.xml', 
+				  $path.DS.$extension.'.xml')){
+					//JFile will throw an error
+					return false;
+				}
+			}
+			$xml = JSimpleXML::loadFile( $path.DS.$extension.'.xml' );
+			$conf = KunenaTranslateHelper::loadXML( $extensionfile );
+			$afiles[] = $path.DS.$extension.'.xml';
+		}
 		foreach ($clients as $val){
+			//prepare xml file for installfile
+			if( $do == 'buildfile'){
+				$type = $conf->document->getElementbyPath('files/'.$val['value']);
+				$type = $type->attributes('type');
+				$cini = $conf->document->getElementbyPath('files/'.$val['value'].'/ini');
+				$cini = $cini->data();
+				if( $type == 'administrator'){
+					$xpath = 'administration/files';
+				}else{
+					$xpath = 'site/files';
+				}
+				$part = &$xml->document->getElementbyPath( $xpath );
+				$files = $part->data();
+				$files .= '<filename>'.$lang.'.'.$cini.'</filename>';
+				$part->setData($files);
+			}
+			// create the ini file			
 			$client = $val['value'];
-			$ini = $this->_getPathIni($client, $lang);
+			$ini = $this->_getPathIni($client, $lang, $do);
 			if(JFile::exists($ini)){
 				if(!JFile::copy($ini, $ini.'.bak')){
 					//JFile will throw an error
@@ -207,8 +252,19 @@ class KunenaTranslateModelImport extends JModel{
 				JError::raiseWarning(21, 'JFile::write: '.JText::_('COM_KUNENATRANSLATE_FILE_WRITE_FAIL') . ": '$ini'");
 				return false;
 			}
+			$afiles[] = $ini;
 		}
-		
+		//write the xml install file
+		if( $do == 'buildfile'){
+			if(!JFile::write( $path.DS.$extension.'.xml' , $xml)){
+				JError::raiseWarning(21, 'JFile::write: '.JText::_('COM_KUNENATRANSLATE_FILE_WRITE_FAIL') . ': '.$path.DS.$extension.'.xml');
+				return false;
+			}
+			//pack all together
+			jimport('joomla.filesystem.archive');
+			JArchive::create( $lang.'.'.$extension , $afiles, 'zip', '', '', true, true);
+		}
+				
 		return true;
 	}
 }

@@ -30,7 +30,10 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Kunena 1.6.4-DEV
+Kunena 1.6.4
+
+7-May-2011 fxstein
+# [#24703] Update readme and version info
 
 4-May-2011 Matias
 # [#25819] Add Joomla 1.5 to 1.6 migration support

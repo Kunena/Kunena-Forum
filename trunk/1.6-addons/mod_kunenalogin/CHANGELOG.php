@@ -28,6 +28,9 @@ Legend:
 
 KunenaLogin 1.6.4
 
+7-May-2011 fxstein
+^ [#19002] Updated Readme
+
 03-April-2011 LDA
 + [#24847] added es-ES (thanks Kunena Spanish Team)
 ^ [#24847] update fi-FI (thanks Mortti)

@@ -213,9 +213,13 @@ PX		EM			PCT			PT
 	height: 1px;
 	position: relative;
 }
-#Kunena .ktoggler a:hover {
+#Kunena .ktoggler.close a:hover {
 	color:#ff0000;
 	background: url("../images/expand.gif") no-repeat scroll 0 0 transparent;
+}
+#Kunena .ktoggler.open a:hover {
+	color:#ff0000;
+	background: url("../images/shrink.gif") no-repeat scroll 0 0 transparent;
 }
 #Kunena div.kblock span.select-toggle {
 	float: right;

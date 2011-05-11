@@ -34,6 +34,7 @@ Kunena 1.6.4
 
 10-May-2011 severdia
 # [#25856] Fixed regression in image set selection
+# [#25859] Fixed toggler rollover
 
 7-May-2011 fxstein
 # [#24703] Update readme and version info

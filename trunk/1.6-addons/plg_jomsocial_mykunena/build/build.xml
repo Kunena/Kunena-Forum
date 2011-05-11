@@ -116,14 +116,12 @@
 
 		<copy file="${project_dir}/${cfg.name}.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/${cfg.name}.php" todir="${tmp_dir}" overwrite="true" filtering="false" />
-		<copy file="${project_dir}/languages/en-GB.plg_community_${cfg.name}.ini" todir="${tmp_dir}/languages/" overwrite="true" filtering="false" />
-		<copy file="${project_dir}/languages/es-ES.plg_community_${cfg.name}.ini" todir="${tmp_dir}/languages/" overwrite="true" filtering="false" />
-		<copy file="${project_dir}/languages/fr-FR.plg_community_${cfg.name}.ini" todir="${tmp_dir}/languages/" overwrite="true" filtering="false" />
-		<copy file="${project_dir}/languages/nb-NO.plg_community_${cfg.name}.ini" todir="${tmp_dir}/languages/" overwrite="true" filtering="false" />
-		<copy file="${project_dir}/languages/ru-RU.plg_community_${cfg.name}.ini" todir="${tmp_dir}/languages/" overwrite="true" filtering="false" />
 		<copy file="${project_dir}/CHANGELOG.php" todir="${tmp_dir}" overwrite="true" filtering="false" />
 		<copy file="${project_dir}/COPYRIGHT.php" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy todir="${tmp_dir}/languages" overwrite="true" filtering="true" >
+			<fileset dir="${project_dir}/languages" />
+		</copy>
 	</target>
 
 	<target name="tar" depends="package" if="do.tar">

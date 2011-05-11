@@ -28,6 +28,9 @@ Legend:
 
 MyKunena 1.6.4
 
+11-May-2011 Xillibit
+# [#19002] Put all language files automatically in archive during build like all others modules/plugins
+
 30-April-2011 Xillibit
 # [#19002] Make working plugins settings under Joomla! 1.6 and fix little issue in language files
 # [#19002] Add new languages in build file

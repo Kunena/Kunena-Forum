@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.4
 
+11-May-2011 Xillibit
++ [#24847] Add setting to show number post near to the topic title
+
 03-April-2011 LDA
 ^ [#24847] update es-ES (thanks Kunena Spanish Team)
 ^ [#24847] update fi-FI (thanks Mortti)

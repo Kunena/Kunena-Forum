@@ -111,6 +111,10 @@
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
 		</param>
+		<param name="sh_postcount" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWPOSTCOUNT" description="MOD_KUNENALATEST_PARAM_SHOWPOSTCOUNT_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
+		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="sh_morelink" type="radio" default="1" label="MOD_KUNENALATEST_PARAM_MORELINK" description="MOD_KUNENALATEST_PARAM_MORELINK_DESC">
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
@@ -262,6 +266,13 @@
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_SHOWSTICKY_DESC"
 					label="MOD_KUNENALATEST_PARAM_SHOWSTICKY">
+					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
+					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
+				</field>
+				<field name="sh_postcount" type="radio"
+					default="0"
+					description="MOD_KUNENALATEST_PARAM_SHOWPOSTCOUNT_DESC"
+					label="MOD_KUNENALATEST_PARAM_SHOWPOSTCOUNT">
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
 				</field>

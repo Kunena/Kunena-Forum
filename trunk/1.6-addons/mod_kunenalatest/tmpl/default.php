@@ -40,13 +40,17 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 					echo '<img src="' . JURI::root () . 'modules/mod_kunenalatest/tmpl/images/sticky.png" alt="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" />';
 				}
 			}
-			if ( $this->params->get ( 'choosemodel' ) != 'latestposts' && $this->params->get ( 'choosemodel' ) != 'latesttopics'  ):
+				if ( $this->params->get ( 'choosemodel' ) != 'latestposts' && $this->params->get ( 'choosemodel' ) != 'latesttopics'  ):
 				echo CKunenaLink::GetThreadLink ( 'view', $item->catid, $item->id, JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0', $this->params->get ( 'messagelength' ) ), 'follow' );
 			else :
 				if ($this->topic_ordering == 'ASC') :
 					echo CKunenaLink::GetThreadPageSpecialLink ( 'view', intval($item->catid), intval($item->thread), $threadPages, intval($this->kunena_config->messages_per_page), JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), intval($item->id), '','', JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0',  $this->params->get ( 'messagelength' ) ) );
+					if ( $this->params->get ( 'sh_postcount' ) ) : echo ' ('.$item->msgcount.' '.JText::_('MOD_KUNENALATEST_MSG').')';
+					endif;
 				else :
-					echo CKunenaLink::GetThreadPageSpecialLink ( 'view', intval($item->catid), intval($item->thread), 1, intval($this->kunena_config->messages_per_page), JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), intval($item->id), '','', JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0',  $this->params->get ( 'messagelength' ) ) );
+					echo CKunenaLink::GetThreadPageSpecialLink ( 'view', intval($item->catid), intval($item->thread), 1, intval($this->kunena_config->messages_per_page), JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), intval($item->id), '','', JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0',  $this->params->get ( 'messagelength' ) ));
+					if ( $this->params->get ( 'sh_postcount' ) ): echo ' ('.$item->msgcount.' '.JText::_('MOD_KUNENALATEST_MSG').')';
+					endif;
 				endif;
 			endif;
 			if ($item->unread) {

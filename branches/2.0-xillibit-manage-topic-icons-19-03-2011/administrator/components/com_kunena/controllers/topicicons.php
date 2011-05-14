@@ -69,7 +69,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		$ordering = JRequest::getInt ( 'ordering', 0 );
 		$topiciconid = JRequest::getInt( 'topiciconid', 0 );
 
-		if ( !$topiciconid ) {
+		/*if ( !$topiciconid ) {
 			$db->setQuery ( "INSERT INTO #__kunena_topics_icons SET name = '$iconname', filename = '$filename', published = '$published', ordering ='$ordering'" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
@@ -77,7 +77,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 			$db->setQuery ( "UPDATE #__kunena_topics_icons SET name = '$iconname', filename = '$filename', published = '$published', ordering ='$ordering' WHERE id = '$topiciconid'" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
-		}
+		}*/
 
 		$app->enqueueMessage ( JText::_('COM_KUNENA_TOPICICON_SAVED') );
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -145,9 +145,11 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 			return;
 		}
 
-		$db->setQuery ( "UPDATE #__kunena_topics_icons SET published = '$value' WHERE id='$id'" );
-		$db->query ();
-		if (KunenaError::checkDatabaseError()) return;
+		$topicicons_xml = simplexml_load_file(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
+		$id = (Int) $id-1;
+		$topicicons_xml->icons->icon[$id]['published'] = $value;
+
+	  $topicicons_xml->asXML(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
 
 		if ( $value ) $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_PUBLISHED' );
 		else $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_UNPUBLISHED' );
@@ -182,20 +184,23 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 			return;
 		}
 
+    $id = (Int) $id-1;
+
 		$defaultexist = 0;
 		if ($value == 1) {
-			$query = "SELECT isdefault FROM #__kunena_topics_icons WHERE isdefault='1'";
-			$db->setQuery ( $query );
-			$defaultexist = $db->loadResult();
-			if (KunenaError::checkDatabaseError()) return;
+		  $topicicons_xml = simplexml_load_file(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
+
+		  $defaultexist = $topicicons_xml->icons->icon[$id]['isdefault'];
 		}
 
 		if ( $defaultexist == 1) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_TOPICICON_ALREADY_DEFAULT' ) );
 		} else {
-			$db->setQuery ( "UPDATE #__kunena_topics_icons SET isdefault = '$value' WHERE id='$id'" );
-			$db->query ();
-			if (KunenaError::checkDatabaseError()) return;
+				$topicicons_xml = simplexml_load_file(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
+
+		    $topicicons_xml->icons->icon[$id]['isdefault'] = $value;
+
+	     $topicicons_xml->asXML(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
 
 			if ( $value ) $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_DEFAULT' );
 			else $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_NOTDEFAULT' );
@@ -206,93 +211,111 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
+	function parseXMLTopiciconFile($topiciconBaseDir) {
+		// Check if the xml file exists
+		if(!is_file($topiciconBaseDir.'topicicons.xml')) {
+			return false;
+		}
+		$data = $this->parseKunenaInstallFile($topiciconBaseDir.'topicicons.xml');
+		if ($data->type != 'kunena-topicicons') {
+			return false;
+		}
+
+		return $data;
+	}
+
+	function parseKunenaInstallFile($path) {
+		// FIXME : deprecated under Joomla! 1.6
+		$xml = JFactory::getXMLParser ( 'Simple' );
+		if (! $xml->loadFile ( $path )) {
+			unset ( $xml );
+			return false;
+		}
+		if (! is_object ( $xml->document ) || ($xml->document->name () != 'kunena-topicicons')) {
+			unset ( $xml );
+			return false;
+		}
+
+		$data = new stdClass ();
+		$element = & $xml->document->name [0];
+		$data->name = $element ? $element->data () : '';
+		$data->type = $element ? $xml->document->attributes ( "type" ) : '';
+
+		$element = & $xml->document->creationDate [0];
+		$data->creationdate = $element ? $element->data () : JText::_ ( 'Unknown' );
+
+		$element = & $xml->document->author [0];
+		$data->author = $element ? $element->data () : JText::_ ( 'Unknown' );
+
+		$element = & $xml->document->copyright [0];
+		$data->copyright = $element ? $element->data () : '';
+
+		$element = & $xml->document->authorEmail [0];
+		$data->authorEmail = $element ? $element->data () : '';
+
+		$element = & $xml->document->authorUrl [0];
+		$data->authorUrl = $element ? $element->data () : '';
+
+		$element = & $xml->document->version [0];
+		$data->version = $element ? $element->data () : '';
+
+		$element = & $xml->document->description [0];
+		$data->description = $element ? $element->data () : '';
+
+		$element = & $xml->document->thumbnail [0];
+		$data->thumbnail = $element ? $element->data () : '';
+
+		return $data;
+	}
+
 	function topiciconupload() {
-		$config = KunenaFactory::getConfig ();
 		$app = JFactory::getApplication ();
-		// load language fo component media
-		JPlugin::loadLanguage( 'com_media' );
-		$params = JComponentHelper::getParams('com_media');
-		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
-		define('COM_KUNENA_MEDIA_BASE', JPATH_ROOT.'/components/com_kunena/template/'.$config->template.'/images');
-		// Check for request forgeries
-		JRequest::checkToken( 'request' ) or jexit( 'Invalid Token' );
 
-		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
-		$foldertopicicons	= JRequest::getVar( 'foldertopicicons', 'emoticons', '', 'path' );
-		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
-		$view 			= JRequest::getVar( 'view', '' );
-		$err			= null;
+		jimport ( 'joomla.filesystem.folder' );
+		jimport ( 'joomla.filesystem.file' );
+		jimport ( 'joomla.filesystem.archive' );
+		$tmp = JPATH_ROOT . '/tmp/kinstall/';
+		$dest = JPATH_ROOT . '/media/kunena/topicicons/';
+		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
 
-		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
 
-		// Make the filename safe
-		jimport('joomla.filesystem.file');
-		$file['name']	= JFile::makeSafe($file['name']);
-
-		if (isset($file['name'])) {
-			$filepathtopicicon = JPath::clean(COM_KUNENA_MEDIA_BASE.'/'.$foldertopicicons.'/'.strtolower($file['name']));
-
-			if (!MediaHelper::canUpload( $file, $err )) {
-				if ($format == 'json') {
-					jimport('joomla.error.log');
-					$log = &JLog::getInstance('upload.error.php');
-					$log->addEntry(array('comment' => 'Invalid: '.$filepathtopicicon.': '.$err));
-					header('HTTP/1.0 415 Unsupported Media Type');
-					jexit('Error. Unsupported Media Type!');
-				} else {
-					JError::raiseNotice(100, JText::_($err));
-					$app->redirect ( KunenaRoute::_($this->baseurl, false) );
-
-					return;
-				}
+		if (!$file || !is_uploaded_file ( $file ['tmp_name'])) {
+			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
+		}
+		else {
+			$success = JFile::upload($file ['tmp_name'], $tmp . $file ['name']);
+			$success = JArchive::extract ( $tmp . $file ['name'], $tmp );
+			if (! $success) {
+				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
 			}
+			// Delete the tmp install directory
+			if (JFolder::exists($tmp)) {
+				$topicicons = $this->parseXMLTopiciconFile($tmp);
+				if (!empty($topicicons)) {
+          	// Never overwrite existing topic icon set
+						if (!JFolder::exists($dest.(String)$topicicons->name)) {
+					 	   $error = JFolder::move($tmp, $dest.(String)$topicicons->name);
+						    if ($error !== true) $app->enqueueMessage ( JText::_('COM_KUNENA_A_TOPICON_MANAGER_TEMPLATE').': ' . $error, 'notice' );
 
-			if (JFile::exists($filepathtopicicon)) {
-				if ($format == 'json') {
-					jimport('joomla.error.log');
-					$log = &JLog::getInstance('upload.error.php');
-					$log->addEntry(array('comment' => 'File already exists: '.$filepathtopicicon));
-					header('HTTP/1.0 409 Conflict');
-					jexit('Error. File already exists');
+					       JFile::delete($dest.(String)$topicicons->name.'/'.$file['name']);
+
+				        	if(JFolder::exists ($tmp)) $retval = JFolder::delete($tmp);
+					       $app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
+					}
 				} else {
-					JError::raiseNotice(100, JText::_('COM_KUNENA_A_TOPICON_UPLOAD_ERROR_EXIST'));
-					$app->redirect ( KunenaRoute::_($this->baseurl, false) );
-
-					return;
-				}
-			}
-
-			if (!JFile::upload($file['tmp_name'], $filepathtopicicon)) {
-				if ($format == 'json') {
-					jimport('joomla.error.log');
-					$log = &JLog::getInstance('upload.error.php');
-					$log->addEntry(array('comment' => 'Cannot upload: '.$filepathtopicicon));
-					header('HTTP/1.0 400 Bad Request');
-					jexit('Error. Unable to upload file');
-				} else {
-					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TOPICON_UPLOAD_ERROR_UNABLE'));
-					$app->redirect ( KunenaRoute::_($this->baseurl, false) );
-
-					return;
+					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TOPICON_MANAGER_TEMPLATE_MISSING_FILE'));
+					$retval = false;
 				}
 			} else {
-				if ($format == 'json') {
-					jimport('joomla.error.log');
-					$log = &JLog::getInstance();
-					$log->addEntry(array('comment' => $foldertopicicons));
-					jexit('Upload complete');
-				} else {
-					$app->enqueueMessage(JText::_('COM_KUNENA_A_TOPICON_UPLOAD_SUCCESS'));
-					$app->redirect ( KunenaRoute::_($this->baseurl, false) );
-
-					return;
-				}
+				JError::raiseWarning(100, JText::_('COM_KUNENA_A_TOPICON_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TOPICON_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TOPICON_MANAGER_DIR_NOT_EXIST'));
+				$retval = false;
 			}
-		} else {
-			JError::raiseError ( 500, JText::sprintf ( 'COM_KUNENA_INVALID_REQUEST', ucfirst ( $view ) ) );
 		}
+		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
 	function delete() {
@@ -306,11 +329,14 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		}
 
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$cids = implode ( ',', $cids );
+
 		if ($cids) {
-			$db->setQuery ( "DELETE FROM #__kunena_topics_icons WHERE id IN ($cids)" );
-			$db->query ();
-			if (KunenaError::checkDatabaseError()) return;
+		  $topicicons_xml = simplexml_load_file(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
+		  foreach( $cids as $id ) {
+		    $id = (Int) $id-1;
+        unset($topicicons_xml->icons->icon[$id]);
+      }
+			$topicicons_xml->asXML(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
 		}
 
 		$app->enqueueMessage (JText::_('COM_KUNENA_TOPICICONS_DELETED') );

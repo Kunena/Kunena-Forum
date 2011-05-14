@@ -64,7 +64,6 @@ class KunenaTemplate extends JObject
 		foreach ($xml['_default']->children() as $param)  {
 			if ($param->attributes('type') != 'spacer') $this->params->def($param->attributes('name'), $param->attributes('default'));
 		}
-		$this->getTopicIconPath(0);
 	}
 
 	public function loadMootools() {
@@ -171,21 +170,38 @@ class KunenaTemplate extends JObject
 	}
 
 	public function getTopicIcons() {
-		$db = JFactory::getDBO ();
 		if (empty($this->topicIcons)) {
 			$path = $this->getPath();
 
-			$query = "SELECT * FROM #__kunena_topics_icons WHERE published='1' ORDER BY ordering";
-			$db->setQuery ( $query );
-			$topicicons = $db->loadObjectlist();
-			if (KunenaError::checkDatabaseError()) return;
+			$topicicons_xml = simplexml_load_file(JPATH_ROOT.'/media/kunena/topicicons/default/topicicons.xml');
+			$topicicons_array = array();
+			$filename = array();
 
-			if ( empty($topicicons) ) return $this->topicIcons;
+			foreach($topicicons_xml->icons as $icons) {
+
+				foreach($icons->icon as $icon) {
+					$topicicons = new stdClass();
+					$id = (Int) $icon->attributes()->id;
+
+					$topicicons->id = (Int) $icon->attributes()->id;
+					$topicicons->name = (String) $icon->attributes()->name;
+					$topicicons->published = (Int) $icon->attributes()->published;
+					$topicicons->ordering = (Int) $icon->attributes()->ordering;
+					$topicicons->isdefault = (Int) $icon->attributes()->isdefault;
+					$topicicons->title = (String) $icon->attributes()->title;
+					$topicicons->filename = (String) $icon->attributes()->src;
+
+					$topicicons_array[$id] = $topicicons;
+
+				}
+		}
+
+			$topicicons = $topicicons_array;
 
 			$topic_emoticons = array();
 			foreach ($topicicons as $icon) {
-				if (is_file( KPATH_SITE . "/{$path}/images/icons/{$icon->filename}" )) {
-					$this->topicIcons[$icon->id] = "{$path}/images/icons/{$icon->filename}";
+				if (is_file( JPATH_ROOT . "/media/kunena/topicicons/{$icon->filename}" )) {
+					$this->topicIcons[$icon->id] = "media/kunena/topicicons/{$icon->filename}";
 				}
 			}
 		}
@@ -193,31 +209,35 @@ class KunenaTemplate extends JObject
 		return $this->topicIcons;
 	}
 
-	public function getTopicIconPath($index, $url = false) {
+	public function getTopicIconPath($index, $url=false, $isdefault=false) {
+		$path = $this->getPath();
 		if (empty($this->topicIcons)) {
 			$this->getTopicIcons();
 		}
 		$base = '';
-		if ($url) $base = KURL_SITE;
+		if ($url) $base = JURI::Root();
 
 		// if index =0, so we get the topic icon set by default
 		if ( $index == 0 ) {
-			$this->topicIcons[0] = $this->getTopicIconDefault();
+			if ( $isdefault ) $this->topicIcons[0] = "/{$path}/images/icons/{$this->topicIcons[$index]}";
+			else $this->topicIcons[0] = $this->getTopicIconDefault();
 		}
 
-		return $base.(isset($this->topicIcons[$index]) ? $this->topicIcons[$index] : $this->getTopicIconDefault());
+		return $base.(isset($this->topicIcons[$index]) ? $this->topicIcons[$index] : $isdefault);
 	}
 
 	public function getTopicIconDefault() {
-			$path = $this->getPath();
-		$db = JFactory::getDBO ();
+		$topicicons_xml = simplexml_load_file(JPATH_ROOT.'/media/kunena/topicicons/default/topicicons.xml');
+		$defautltopicicon ='';
 
-		$query = "SELECT filename FROM #__kunena_topics_icons WHERE published='1' AND isdefault='1'";
-		$db->setQuery ( $query );
-		$defautltopicicon = $db->loadResult();
-		if (KunenaError::checkDatabaseError()) return;
+		foreach($topicicons_xml->icons as $icons) {
 
-		return "/{$path}/images/icons/{$defautltopicicon}";
+			foreach($icons->icon as $icon) {
+				if ( $icon->attributes()->isdefault == 1 ) $defautltopicicon = $icon->attributes()->src;
+			}
+		}
+
+		return "media/kunena/topicicons/{$defautltopicicon}";
 	}
 
 	public function getMovedIconPath($url = false) {
@@ -259,9 +279,8 @@ class KunenaTemplate extends JObject
 	public function getTopicsIconPath($filename) {
 		if ( empty($filename) ) return;
 
-		$path = $this->getPath();
 
-		return  "/{$path}/images/icons/{$filename}";
+		return  "media/kunena/topicicons/{$filename}";
 	}
 
 	public function getTemplateDetails() {

@@ -24,6 +24,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 		<dt><?php echo JText::_('COM_KUNENA_A_TOPICICONS'); ?></dt>
 		<dd>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+			<?php echo $this->iconsetlist; ?>
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
 			<thead>
 				<tr>
@@ -50,6 +51,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			</tfoot>
 				<?php
 					$k = 1;
+					$y = 1;
 					$i = 0;
 					$n = count($this->topicicons);
 					$img_yes = '<img src="images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
@@ -63,11 +65,11 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					<td align="center"><?php
 						echo ($id + $this->navigation->limitstart + 1);
 						?></td>
-					<td><?php echo JHTML::_('grid.id', $i, intval($row->id)) ?></td>
+					<td><?php echo JHTML::_('grid.id',  $y, $y) ?></td>
 					<td align="center">
 					<a href="#edit"
 						onclick="return listItemTask('cb<?php
-						echo $row->id;
+						echo $y;
 						?>','edit')"><?php
 						echo $this->escape($row->name);
 						?></a>
@@ -75,22 +77,24 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					<td align="center">
 					<a href="#edit"
 						onclick="return listItemTask('cb<?php
-						echo $row->id;
+						echo $y;
 						?>','edit')"><?php
-						echo $row->id;
+						echo intval($row->id);
 						?></a>
 					</td>
 					<td align="center"><a href="#edit"
 						onclick="return listItemTask('cb<?php
-						echo $row->id;
+						echo $y;
 						?>','edit')"><img
 						src="<?php
-						echo $this->escape(KURL_SITE . $this->template->getTopicsIconPath($row->filename))
+						echo $this->escape(JURI::root() . $this->template->getTopicsIconPath($row->filename, 'default'))
 						?>"
 						alt="<?php
-						echo $this->escape($row->name);
+						echo $this->escape($row->title);
+						?>" title="<?php
+						echo $this->escape($row->title);
 						?>" border="0" /></a></td>
-					<td class="nowrap"><a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $row->id; ?>','<?php echo  ($row->published ? 'un':'').'publish'; ?>')">
+					<td class="nowrap"><a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $y; ?>','<?php echo  ($row->published ? 'un':'').'publish'; ?>')">
 						<?php echo ($row->published == 1 ? $img_yes : $img_no); ?></td>
 						</a>
 					</td>
@@ -99,13 +103,14 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						<span><?php echo $this->navigation->orderDownIcon ( $i, $n, true, 'orderdown', 'Move Down', $row->ordering ); ?></span>
 						<input type="text" name="order[<?php echo intval($row->id) ?>]" size="5" value="<?php echo $this->escape ( $row->ordering ); ?>" class="text_area" style="text-align: center" />
 					</td>
-					<td class="nowrap"><a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $row->id; ?>','<?php echo  ($row->isdefault ? 'not':'').'bydefault'; ?>')">
+					<td class="nowrap"><a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $y; ?>','<?php echo  ($row->isdefault ? 'not':'').'bydefault'; ?>')">
 						<?php echo ($row->isdefault == 1 ? $img_yes : $img_no); ?></td>
 						</a>
 					</td>
 				</tr>
 				<?php
 					$i++;
+					$y++;
 					}
 					?>
 			</table>

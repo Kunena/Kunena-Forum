@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+<!DOCTYPE kunena-topicicons>
+<kunena-topicicons type="kunena-topicicons"> 
+	<name>custom</name>
+	<version>1.0</version>
+	<creationDate>2011-14-05</creationDate>
+	<author>Kunena Team</author>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>Kunena</copyright>
+	<license>GNU/GPL</license>
+	<thumbnail>template_thumbnail.png</thumbnail>
+	<system>
+		<location type="state" x="16" y="0" width="16" height="16" opacity="50" />
+		<location type="user" x="16" y="16" width="16" height="16" opacity="50" />
+		<location type="mode1" x="0" y="16" width="16" height="16" opacity="50" />
+		<location type="mode2" x="0" y="0" width="16" height="16" opacity="50" />
+
+		<icon type="state" name="unapproved" src="system/unapproved.png" />
+		<icon type="state" name="deleted" src="system/deleted.png" />
+		<icon type="state" name="new" src="system/new.png" />
+
+		<icon type="user" name="favorite" src="system/favorite.png" />
+		<icon type="user" name="own" src="system/own.png" />
+		<icon type="user" name="replied" src="system/replied.png" />
+		<icon type="user" name="noreplies" src="system/noreplies.png" />
+
+		<icon type="mode1" name="sticky" src="system/sticky.png" />
+		<icon type="mode2" name="locked" src="system/locked.png" />
+	</system>
+
+	<tags>
+		<location x="32" y="*" width="16" height="16" opacity="50" />
+
+		<icon name="bug" src="tags/bug.png" />
+		<icon name="configuration" src="tags/config.png" />
+		<icon name="javascript" src="tags/javascript.png" />
+	</tags>
+
+	<icons>
+		<location width="48" height="48" opacity="0" />
+		<icon id="1" name="normal" published="1" ordering="1" isdefault="1" title="COM_KUNENA_ICON_NORMAL" src="custom/icon_normal.png" />
+		<icon id="2" name="normal_new" published="1" ordering="2" isdefault="0" title="COM_KUNENA_ICON_NORMAL_NEW" src="custom/icon_normal_new.png" />
+		<icon id="3" name="sticky" published="1" ordering="3" isdefault="0" title="COM_KUNENA_ICON_STICKY" src="custom/icon_sticky.png" />
+		<icon id="4" name="sticky_new" published="1" ordering="4" isdefault="0" title="COM_KUNENA_ICON_STICKY_NEW" src="custom/icon_sticky_new.png" />
+		<icon id="5" name="locked" published="1" ordering="5" isdefault="0" title="COM_KUNENA_ICON_LOCKED" src="custom/icon_locked.png" />
+		<icon id="6" name="locked_new" published="1" ordering="6" isdefault="0" title="COM_KUNENA_ICON_LOCKED_NEW" src="custom/icon_locked_new.png" />
+		<icon id="7" name="moved" published="1" ordering="7" isdefault="0" title="COM_KUNENA_ICON_MOVED" src="custom/icon_moved.png" />
+		<icon id="8" name="unanswered" published="1" ordering="8" isdefault="0" title="COM_KUNENA_ICON_UNANSWERED" src="custom/icon_unanswered.png" />
+		<icon id="9" name="unanswered_new" published="1" ordering="9" isdefault="0" title="COM_KUNENA_ICON_UNANSWERED_NEW" src="custom/icon_unanswered_new.png" />
+		<icon id="10" name="unapproved" published="1" ordering="10" isdefault="0" title="COM_KUNENA_ICON_UNAPPROVED" src="custom/icon_unapproved.png" />
+		<icon id="11" name="unapproved_new" published="1" ordering="11" isdefault="0" title="COM_KUNENA_ICON_UNAPPROVED_NEW" src="custom/icon_unapproved_new.png" />
+		<icon id="12" name="deleted" published="1" ordering="12" isdefault="0" title="COM_KUNENA_ICON_DELETED" src="custom/icon_deleted.png" />
+		<icon id="13" name="deleted_new" published="1" ordering="13" isdefault="0" title="COM_KUNENA_ICON_DELETED_NEW" src="custom/icon_deleted_new.png" />
+	</icons>
+
+	<rules>
+		<rule name="new">
+			<state default="open" />
+		</rule>
+		<rule action="reply" user="owner">
+			<state from="open" default="open" allow="open,solved" />
+			<state from="solved" default="solved" allow="open,solved" />
+			<state from="more-user" default="open" allow="open,solved" />
+			<state from="more-dev" default="more-dev" allow="more-dev,open,solved" />
+		</rule>
+		<rule action="reply" user="moderator">
+			<state from="*" allow="open,solved,more-user,more-dev" />
+		</rule>
+	</rules>
+</kunena-topicicons>

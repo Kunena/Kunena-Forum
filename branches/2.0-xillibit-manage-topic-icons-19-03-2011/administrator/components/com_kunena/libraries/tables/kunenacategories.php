@@ -55,6 +55,7 @@ class TableKunenaCategories extends KunenaTable
 	var $last_post_message = null;
 	var $last_post_guest_name = null;
 	var $params = null;
+	var $iconset = null;
 
 	function __construct($db) {
 		parent::__construct ( '#__kunena_categories', 'id', $db );

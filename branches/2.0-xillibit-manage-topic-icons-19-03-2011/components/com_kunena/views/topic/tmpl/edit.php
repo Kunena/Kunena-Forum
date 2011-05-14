@@ -124,7 +124,7 @@ $this->k=0;
 			<td class="kcol-mid">
 				<?php foreach ($topic_emoticons as $id=>$img): ?>
 				<input type="radio" name="topic_emoticon" value="<?php echo intval($id); ?>" <?php echo $this->topic->icon_id == $id ? ' checked="checked" ':'' ?> />
-				<img src="<?php echo JURI::Root() . 'components/com_kunena/' . $img;?>" alt="" border="0" />
+				<img src="<?php echo JURI::Root() . $img;?>" alt="" border="0" />
 				<?php endforeach; ?>
 			</td>
 		</tr>

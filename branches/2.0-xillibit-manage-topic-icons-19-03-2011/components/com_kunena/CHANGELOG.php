@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+14-May-2011 Xillibit
+# [#25395] Now use xml file for topic icons and icon set can be choosed by categories
+
 30-March-2011 Xillibit
 # [#25395] Make ordering working like it should
 

@@ -134,6 +134,11 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo $this->options ['allow_polls']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 						</tr>
+						<tr>
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
+							<td valign="top"><?php echo $this->options ['category_iconset']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
+						</tr>
 						<?php endif; ?>
 					</table>
 				</fieldset>

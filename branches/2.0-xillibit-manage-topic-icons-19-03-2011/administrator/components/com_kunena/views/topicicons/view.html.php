@@ -37,6 +37,7 @@ class KunenaAdminViewTopicicons extends KunenaView {
 		$this->template = $template = KunenaFactory::getTemplate();
 		$this->topicicons = $this->get('Topicicons');
 		$this->state = $this->get('state');
+		$this->iconsetlist = $this->get('iconsetlist');
 	}
 
 	protected function setToolBarDefault() {

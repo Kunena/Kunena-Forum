@@ -69,6 +69,7 @@
 		<field name="last_post_message" type="text" null="1" />
 		<field name="last_post_guest_name" type="tinytext" null="1" />
 		<field name="params" type="text" null="0" />
+		<field name="iconset" type="varchar(20)" null="0" default="none" />
 
 		<key name="PRIMARY" unique="1" columns="id" />
 		<key name="parent_id" columns="parent_id" />
@@ -415,19 +416,6 @@
 		<key name="postid" unique="1" columns="postid,userid" />
 		<key name="userid" columns="userid" />
 		<key name="targetuserid" columns="targetuserid" />
-	</table>
-	<table name="kunena_topics_icons">
-		<field primary_key="yes" name="id" type="mediumint(8) unsigned"
-			null="0" extra="auto_increment" />
-		<field name="name" type="varchar(255)" null="0" default="" />
-		<field name="filename" type="varchar(255)" null="0" 
-			default="0" />
-		<field name="published" type="tinyint(1) unsigned" null="0"
-			default="0" />
-		<field name="ordering" type="smallint(6)" null="0" default="0" />
-		<field name="isdefault" type="tinyint(1) unsigned" null="0"
-			default="0" />
-		<key name="PRIMARY" unique="1" columns="id" />
 	</table>
 	<table name="kunena_user_categories">
 		<field primary_key="yes" name="user_id" type="int(11)" null="0" />

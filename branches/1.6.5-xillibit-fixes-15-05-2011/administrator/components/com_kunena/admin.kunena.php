@@ -3126,6 +3126,8 @@ function generateSystemReport () {
 	}
 	if(!$kunena_app->getCfg('smtpuser' )) {
 		$jconfig_smtpuser = 'Empty';
+	} else {
+		$jconfig_smtpuser = $kunena_app->getCfg('smtpuser' );
 	}
 	if($kunena_app->getCfg('ftp_enable' )) {
 		$jconfig_ftp = 'Enabled';

@@ -34,6 +34,8 @@ Kunena 1.6.5
 
 15-May-2011 Xillibit
 ^ [#25895] Let user choose to load completly the lightbox (class and script) or just set the class on images
+# [#25896] Links in RSS Feed go to first page of thread when thread is more than 1 page
+# [#25897] Notice: Undefined variable: jconfig_smtpuser in ...\administrator\components\c​om_kunena\admin.kunena
 
 12-May-2011 Xillibit
 ^ [#24703] Update version info to 1.6.5-DEV

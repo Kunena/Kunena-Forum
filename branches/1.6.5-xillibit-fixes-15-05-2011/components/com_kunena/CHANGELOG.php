@@ -32,7 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.5
 
-12-May-2011
+15-May-2011 Xillibit
+^ [#25895] Let user choose to load completly the lightbox (class and script) or just set the class on images
+
+12-May-2011 Xillibit
 ^ [#24703] Update version info to 1.6.5-DEV
 
 10-May-2011 severdia

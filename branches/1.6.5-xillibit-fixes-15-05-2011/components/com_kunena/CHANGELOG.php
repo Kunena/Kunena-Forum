@@ -36,6 +36,8 @@ Kunena 1.6.5
 ^ [#25895] Let user choose to load completly the lightbox (class and script) or just set the class on images
 # [#25896] Links in RSS Feed go to first page of thread when thread is more than 1 page
 # [#25897] Notice: Undefined variable: jconfig_smtpuser in ...\administrator\components\c​om_kunena\admin.kunena
+# [#24888] Under J!1.6, just sync user in right way when save profile to avoid issues
+^ [#25898] Instead of showing "the profile page ins't available for guests" in system message, show it just below the loginbox
 
 12-May-2011 Xillibit
 ^ [#24703] Update version info to 1.6.5-DEV

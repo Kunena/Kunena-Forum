@@ -35,8 +35,9 @@ class CKunenaProfile {
 		}
 
 		if ($this->user->id == 0 || ($this->my->id == 0 && !$this->config->pubprofile)) {
-			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice' );
-			return;
+			$this->allow = false;
+			CKunenaTools::loadTemplate ( '/loginprofile.php' );
+			return false;
 		}
 
 		$integration = KunenaFactory::getProfile();
@@ -45,7 +46,8 @@ class CKunenaProfile {
 		$this->params = $template->params;
 
 		if (get_class($integration) == 'KunenaProfileNone') {
-			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_DISABLED'), 'notice' );
+			$this->allow = false;
+			CKunenaTools::loadTemplate ( '/loginprofiledisabled.php' );
 			return;
 		}
 
@@ -418,7 +420,6 @@ class CKunenaProfile {
 			return;
 		}
 		if (!$this->allow) {
-			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
 		}
 		switch ($this->do) {
@@ -567,17 +568,6 @@ class CKunenaProfile {
 		$upload = new CKunenaUpload();
 		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
 
-		// FIXME: Joomla 1.6 this code shouldn't be in here (if user doesn't exist, everything else will fail too!)
-		$this->_db->setQuery ( "SELECT userid FROM #__kunena_users WHERE userid='{$this->profile->userid}'" );
-		$table_exist = $this->_db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return;
-
-    	if ( empty($table_exist) ) {
-      		$this->_db->setQuery( "INSERT INTO #__kunena_users (userid) VALUES ({$this->profile->userid})" );
-      		$this->_db->query ();
-     		 if (KunenaError::checkDatabaseError()) return;
-    	}
-
 		if ( $upload->uploaded('avatarfile') ) {
 			$filename = 'avatar'.$this->profile->userid;
 
@@ -652,6 +642,17 @@ class CKunenaProfile {
 		if ($this->user->get('id') <= 0 || $this->user->get('id') != $this->my->get('id')) {
 			JError::raiseError( 403, JText::_('Access Forbidden') );
 			return;
+		}
+
+		// check if the user is synced into Kunena table
+		$this->_db->setQuery ( "SELECT userid FROM #__kunena_users WHERE userid='{$this->profile->userid}'" );
+		$kuser_exist = $this->_db->loadResult ();
+		if (KunenaError::checkDatabaseError()) return;
+
+		if ( $kuser_exist == '0' ) {
+			$kunena_db->setQuery ( "INSERT INTO #__kunena_users (userid) SELECT a.id FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL" );
+			$kunena_db->query ();
+			if (KunenaError::checkDatabaseError()) return;
 		}
 
 		$this->saveUser();

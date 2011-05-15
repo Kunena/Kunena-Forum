@@ -85,7 +85,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								<?php endif; ?>
 						</table>
 						<?php
-						} elseif (JFactory::getDate()->toUnix() <= $dataspollresult[0]->polltimetolive
+						} elseif (JFactory::getDate()->toMySQL() <= $dataspollresult[0]->polltimetolive
 							|| $dataspollresult[0]->polltimetolive == "0000-00-00 00:00:00") {
 						?>
 						<div id="kpoll-text-help"></div>

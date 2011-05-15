@@ -38,6 +38,7 @@ Kunena 1.6.5
 # [#25897] Notice: Undefined variable: jconfig_smtpuser in ...\administrator\components\c​om_kunena\admin.kunena
 # [#24888] Under J!1.6, just sync user in right way when save profile to avoid issues
 ^ [#25898] Instead of showing "the profile page ins't available for guests" in system message, show it just below the loginbox
+# [#25899] End of poll doesn't work
 
 12-May-2011 Xillibit
 ^ [#24703] Update version info to 1.6.5-DEV

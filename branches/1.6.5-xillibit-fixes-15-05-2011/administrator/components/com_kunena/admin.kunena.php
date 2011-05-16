@@ -1619,9 +1619,9 @@ function showConfig($option) {
 	$lists ['listcat_show_moderators'] = JHTML::_('select.genericlist', $yesno, 'cfg_listcat_show_moderators', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->listcat_show_moderators);
 
 	$showlightbox = array();
-	$showlightbox = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_LIGHTBOX_DISABLE'));
-	$showlightbox = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_LIGHTBOX_LOAD'));
-	$showlightbox = JHTML::_('select.option', 2, JText::_('COM_KUNENA_A_LIGHTBOX_LOAD_ALL'));
+	$showlightbox[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_LIGHTBOX_DISABLE'));
+	$showlightbox[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_LIGHTBOX_LOAD'));
+	$showlightbox[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_A_LIGHTBOX_LOAD_ALL'));
 	$lists ['lightbox'] = JHTML::_('select.genericlist', $showlightbox, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->lightbox);
 
 	$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));

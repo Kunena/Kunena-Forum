@@ -38,7 +38,7 @@ class KunenaApp {
 		$__kstarttime = JProfiler::getmicrotime();
 
 		$kunena_config = KunenaFactory::getConfig ();
-		
+
 		kimport('error');
 		KunenaError::initialize();
 
@@ -271,6 +271,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
 	}
 	echo '<div id="Kunena">';
+	$this->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
+	$this->body = JText::_('COM_KUNENA_LOGIN_FORUM');
 	CKunenaTools::loadTemplate('/login.php');
 	echo '</div>';
 } else {

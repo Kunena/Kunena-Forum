@@ -36,7 +36,9 @@ class CKunenaProfile {
 
 		if ($this->user->id == 0 || ($this->my->id == 0 && !$this->config->pubprofile)) {
 			$this->allow = false;
-			CKunenaTools::loadTemplate ( '/loginprofile.php' );
+			$this->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
+			$this->body = JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS').' '.JText::_('COM_KUNENA_NO_ACCESS');
+			CKunenaTools::loadTemplate ( '/login.php' );
 			return false;
 		}
 
@@ -47,7 +49,9 @@ class CKunenaProfile {
 
 		if (get_class($integration) == 'KunenaProfileNone') {
 			$this->allow = false;
-			CKunenaTools::loadTemplate ( '/loginprofiledisabled.php' );
+			$this->header = JText::_('COM_KUNENA_PROFILE_DISABLED');
+			$this->body = JText::_('COM_KUNENA_PROFILE_DISABLED').' '.JText::_('COM_KUNENA_NO_ACCESS');
+			CKunenaTools::loadTemplate ( '/login.php' );
 			return;
 		}
 
@@ -642,17 +646,6 @@ class CKunenaProfile {
 		if ($this->user->get('id') <= 0 || $this->user->get('id') != $this->my->get('id')) {
 			JError::raiseError( 403, JText::_('Access Forbidden') );
 			return;
-		}
-
-		// check if the user is synced into Kunena table
-		$this->_db->setQuery ( "SELECT userid FROM #__kunena_users WHERE userid='{$this->profile->userid}'" );
-		$kuser_exist = $this->_db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		if ( $kuser_exist == '0' ) {
-			$kunena_db->setQuery ( "INSERT INTO #__kunena_users (userid) SELECT a.id FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL" );
-			$kunena_db->query ();
-			if (KunenaError::checkDatabaseError()) return;
 		}
 
 		$this->saveUser();

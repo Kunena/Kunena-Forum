@@ -349,7 +349,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $bbcode_img_secure = 'text';
 	var $listcat_show_moderators = 1;
 	//New for 1.6.1: allow the admin to disable lightbox
-	var $lightbox = 1;
+	var $lightbox = 2;
 	//New for 1.6.1: allow the admin to limit the length of the activity stream
 	var $activity_limit = 0;
 	//New for 1.6.2: choose the time since which to show the topics

@@ -3,8 +3,8 @@
 <!DOCTYPE extension>
 <extension type="component" version="1.6" method="upgrade">
 	<name>com_kunena</name>
-	<version>1.6.4-DEV</version>
-	<versionname>Rename Me for Release!</versionname>
+	<version>@kunenaversion@</version>
+	<versionname>@kunenaversionname@</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>

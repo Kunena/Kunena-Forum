@@ -119,15 +119,18 @@ class CKunenaRSSView {
 		foreach ($items as $data) {
 			$item = new JFeedItem();
 
+			// Calcution to define the last page of the topic
+			$threadPages = ceil ( $data->msgcount / $this->config->messages_per_page );
+
 			// Build unique direct linking url for each item (htmlspecialchars_decode because FeedCreator uses htmlspecialchars on input)
-			$url = htmlspecialchars_decode(CKunenaLink::GetThreadPageURL(
+			$url = CKunenaLink::GetThreadPageURL(
 				'view',
 				$data->catid,
 				$data->thread,
-				1,
+				$threadPages,
 				$this->config->messages_per_page,
 				$data->id
-			));
+			);
 
 			// Extract the data, we want to present and store it in $tmp
 			$tmp = array();

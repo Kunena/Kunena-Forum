@@ -10,6 +10,7 @@
 **/
 defined( '_JEXEC' ) or die();
 
+$kunena_config = KunenaFactory::getConfig ();
 $document = JFactory::getDocument();
 $template = KunenaFactory::getTemplate();
 $this->params = $template->params;
@@ -17,9 +18,12 @@ $this->params = $template->params;
 // Template requires Mootools 1.2 framework
 $template->loadMootools();
 
-// We load mediaxboxadvanced library
-CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'js/mediaboxadvanced/css/mediaboxAdv.css');
-CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/mediaboxadvanced/js/mediaboxAdv.js' );
+// We load mediaxboxadvanced library only if configuration setting allow it
+if ( $kunena_config->lightbox == 1 ) {
+	// We load mediaxboxadvanced library
+	CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'js/mediaboxadvanced/css/mediaboxAdv.css');
+	CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/mediaboxadvanced/js/mediaboxAdv.js' );
+}
 
 // New Kunena JS for default template
 // TODO: Need to check if selected template has an override
@@ -70,7 +74,7 @@ $forumHeader = $this->params->get('forumHeadercolor', $skinner ? '' : '#5388B4')
 
 if ($forumHeader) {
 	$styles .= <<<EOF
-	
+
 	#Kunena div.kblock > div.kheader,#Kunena .kblock div.kheader { background: {$forumHeader} !important; }
 	#Kunena #ktop { border-color: {$forumHeader}; }
 	#Kunena #ktop span.ktoggler { background: {$forumHeader}; }

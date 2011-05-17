@@ -110,6 +110,8 @@ class CKunenaPost {
 
 		// Check if anonymous user needs to log in
 		if ($this->my->id == 0 && (! $this->config->pubwrite || ($this->catid && ! $this->_session->canRead ( $this->catid )))) {
+			$this->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
+			$this->body = JText::_('COM_KUNENA_LOGIN_FORUM');
 			CKunenaTools::loadTemplate ( '/login.php' );
 			return false;
 		}

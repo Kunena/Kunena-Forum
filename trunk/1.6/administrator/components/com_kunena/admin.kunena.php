@@ -1618,7 +1618,9 @@ function showConfig($option) {
 
 	$lists ['listcat_show_moderators'] = JHTML::_('select.genericlist', $yesno, 'cfg_listcat_show_moderators', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->listcat_show_moderators);
 
-	$lists ['lightbox'] = JHTML::_('select.genericlist', $yesno, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->lightbox);
+	$showlightbox = $yesno;
+	$showlightbox[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_A_LIGHTBOX_NO_JS'));
+	$lists ['lightbox'] = JHTML::_('select.genericlist', $showlightbox, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->lightbox);
 
 	$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
 	$timesel[] = JHTML::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
@@ -3122,6 +3124,8 @@ function generateSystemReport () {
 	}
 	if(!$kunena_app->getCfg('smtpuser' )) {
 		$jconfig_smtpuser = 'Empty';
+	} else {
+		$jconfig_smtpuser = $kunena_app->getCfg('smtpuser' );
 	}
 	if($kunena_app->getCfg('ftp_enable' )) {
 		$jconfig_ftp = 'Enabled';

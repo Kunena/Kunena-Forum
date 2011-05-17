@@ -30,9 +30,24 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Kunena 1.6.5
 
-12-May-2011
+Kunena 1.6.5-DEV
+
+17-May-2011 Matias
+^ [#25917] Merged revisions 4857-4862 from /branches/1.6.5-xillibit-fixes-15-05-2011
+
+16-May-2011 Xillibit
+^ [#25895] Simplify lightbox setting
+# [#24888] Under J!1.6, just sync user in right way when save profile to avoid issues
+
+15-May-2011 Xillibit
+^ [#25895] Let user choose to load completelly the lightbox (class and script) or just set the class on images
+# [#25896] Links in RSS Feed go to first page of thread when thread is more than 1 page
+# [#25897] Notice: Undefined variable: jconfig_smtpuser in administrator/components/c​om_kunena/admin.kunena.php
+^ [#25898] Instead of showing "the profile page ins't available for guests" in system message, show it just below the loginbox
+# [#25899] Endtime of poll doesn't work
+
+12-May-2011 Xillibit
 ^ [#24703] Update version info to 1.6.5-DEV
 
 10-May-2011 severdia

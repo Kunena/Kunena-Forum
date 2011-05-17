@@ -35,7 +35,10 @@ class CKunenaProfile {
 		}
 
 		if ($this->user->id == 0 || ($this->my->id == 0 && !$this->config->pubprofile)) {
-			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice' );
+			$this->allow = false;
+			$this->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
+			$this->body = JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS').' '.JText::_('COM_KUNENA_NO_ACCESS');
+			CKunenaTools::loadTemplate ( '/login.php' );
 			return;
 		}
 
@@ -45,7 +48,10 @@ class CKunenaProfile {
 		$this->params = $template->params;
 
 		if (get_class($integration) == 'KunenaProfileNone') {
-			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_DISABLED'), 'notice' );
+			$this->allow = false;
+			$this->header = JText::_('COM_KUNENA_PROFILE_DISABLED');
+			$this->body = JText::_('COM_KUNENA_PROFILE_DISABLED').' '.JText::_('COM_KUNENA_NO_ACCESS');
+			CKunenaTools::loadTemplate ( '/login.php' );
 			return;
 		}
 
@@ -418,7 +424,6 @@ class CKunenaProfile {
 			return;
 		}
 		if (!$this->allow) {
-			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
 		}
 		switch ($this->do) {
@@ -566,17 +571,6 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
 		$upload = new CKunenaUpload();
 		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
-
-		// FIXME: Joomla 1.6 this code shouldn't be in here (if user doesn't exist, everything else will fail too!)
-		$this->_db->setQuery ( "SELECT userid FROM #__kunena_users WHERE userid='{$this->profile->userid}'" );
-		$table_exist = $this->_db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return;
-
-    	if ( empty($table_exist) ) {
-      		$this->_db->setQuery( "INSERT INTO #__kunena_users (userid) VALUES ({$this->profile->userid})" );
-      		$this->_db->query ();
-     		 if (KunenaError::checkDatabaseError()) return;
-    	}
 
 		if ( $upload->uploaded('avatarfile') ) {
 			$filename = 'avatar'.$this->profile->userid;

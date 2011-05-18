@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+18-May-2011 810
+^ [#25934] fix quote button
+^ [#25934] fix pagination size for rockettheme, yootheme ect templates
+^ [#25934] Minor CSS fixes
++ [#25935] add option template: Header image
+
 17-May-2011 Matias
 ^ [#25917] Merged revisions 4857-4862 from /branches/1.6.5-xillibit-fixes-15-05-2011
 

@@ -50,6 +50,7 @@ PX		EM			PCT			PT
 	padding: 0;
 	margin: 0;
 	line-height: 1.333em;
+	min-width:700px;
 }
 
 #Kunena td,
@@ -643,7 +644,7 @@ PX		EM			PCT			PT
 	padding: 0px 4px;
 }
 
-#Kunena .klist-actions {
+#Kunena .klist-actions-top {
 	border: 1px solid;
 	margin-top: -1px;
 }
@@ -706,7 +707,6 @@ PX		EM			PCT			PT
 	line-height: 28px;
 	padding-left: 15px;
 	padding-right: 10px;
-	width: 100%;
 }
 
 #Kunena .klist-actions-goto {
@@ -829,34 +829,34 @@ PX		EM			PCT			PT
 
 /*---------- Pagination ------------- */
 
-#Kunena ul.kpagination{ 
+#Kunena kul.kpagination{ 
 	border:0; 
 	margin:0; 
 	padding:0 5px 0 0;
 }
-#Kunena .kpagination li{
+#Kunena .kpagination kli{
 	border:0; 
 	margin:0; 
 	padding:0;
-	font-size: .667em;
+	font-size: .667em !important;
 	list-style-type:none;
-	line-height: .667em;
+	line-height: .667em !important;
 	display:inline-block;
 }
 
-#Kunena #kflattable ul.kpagination { 
+#Kunena #kflattable kul.kpagination { 
 	width: auto;
-	font-size: 1.167em;
-	line-height: 1.167em;
+	font-size: 1.167em !important;
+	line-height: 1.167em !important;
 }
 
 #Kunena .kpagination a {
 	border:solid 1px;
 }
-#Kunena .kpagination li.page {
+#Kunena .kpagination kli.page {
 	margin-right:2px;
 } 
-#Kunena .kpagination li.more {
+#Kunena .kpagination kli.more {
 	padding:4px 2px;
 	font-weight:bold;
 } 
@@ -882,25 +882,25 @@ PX		EM			PCT			PT
 }
 
 /* Inline pagination in topics */
-#Kunena div.ktopic-title-cover ul.kpagination { 
+#Kunena div.ktopic-title-cover kul.kpagination { 
 	padding-top: 2px;
 	text-align:left;
 	/* display:inline; */
 }
-#Kunena div.ktopic-title-cover ul.kpagination li{
-	font-size:.833em;
+#Kunena div.ktopic-title-cover kul.kpagination kli{
+	font-size:.833em !important;
 }
-#Kunena div.ktopic-title-cover ul.kpagination li.page {
+#Kunena div.ktopic-title-cover kul.kpagination kli.page {
 	float:left;
 	padding:4px 3px 0 0; 
 } 
-#Kunena div.ktopic-title-cover ul.kpagination a {
+#Kunena div.ktopic-title-cover kul.kpagination a {
 	border:solid 1px;
 }
-#Kunena div.ktopic-title-cover ul.kpagination a:hover{
+#Kunena div.ktopic-title-cover kul.kpagination a:hover{
 	border:solid 1px;
 }
-#Kunena #kflattable ul.kpagination li {
+#Kunena #kflattable kul.kpagination kli {
 	margin-right: 5px;
 }
 
@@ -1622,7 +1622,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena div.kmsgtext-article,
-#Kunena div.kmsgtext-quote,
+#Kunena div.kmsgtext-kquote,
 #Kunena div.kmsgtext-hide,
 #Kunena div.kmsgtext-confidential {
 	display: block;
@@ -2167,7 +2167,7 @@ POST PAGE
 #Kunena .kbuttononline-yes span.online-yes {background-position: 0 0px;}
 #Kunena .kbuttononline-no span.online-no {background-position: 0 -400px;}
 #Kunena .kbuttoncomm span.reply {background-position: 0 -460px;}
-#Kunena .kbuttoncomm span.quote {background-position: 0 -440px;}
+#Kunena .kbuttoncomm span.kquote {background-position: 0 -440px;}
 #Kunena .kbuttoncomm span.newtopic {background-position: 0 -420px;}
 #Kunena .kbuttonuser span.layout-flat {background-position: 0 -240px}
 #Kunena .kbuttonuser span.layout-flat span {padding: 0 7px;}
@@ -2344,7 +2344,7 @@ BBCODE BUTTONS
 #Kunena ul#kbbcode-toolbar li a#kbbcode-left-button {background-position:-234px 0;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-center-button {background-position:-252px 0;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-right-button {background-position:-270px 0;}
-#Kunena ul#kbbcode-toolbar li a#kbbcode-quote-button {background-position:-288px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-kquote-button {background-position:-288px 0;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-code-button {background-position:-306px 0;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-image-button {background-position:-324px 0;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-link-button {background-position:-342px 0;}

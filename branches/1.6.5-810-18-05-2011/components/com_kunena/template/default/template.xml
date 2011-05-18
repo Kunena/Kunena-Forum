@@ -2,9 +2,9 @@
 <!DOCTYPE install>
 <kinstall type="kunena-template" version="1.6">
 	<name>Blue Eagle (default)</name>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
+	<creationDate>2011-05-18</creationDate>
+	<version>1.6.5-DEV</version>
+	<build>4836</build>
 	<author>Kunena Team</author>
 	<authorEmail>team@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
@@ -45,7 +45,7 @@
 		<param name="inactiveFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC" />
 		<param name="activeFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
 		<param name="toggleButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" description="COM_KUNENA_TEMPLATE_TOGGLER_COLOR_DESC" />
-		
+		<param name="forumHeaderbackgroundimage" type="text" default="" label="BackgroundImage" description="BackgroundImage" />
 		<param name="enableSkinner" type="radio" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
 			<option value="0">COM_KUNENA_A_NO</option>
 			<option value="1">COM_KUNENA_A_YES</option>

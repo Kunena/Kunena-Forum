@@ -27,7 +27,7 @@ $this->displayAnnouncement ();
 CKunenaTools::showModulePosition ( 'kunena_announcement' );
 ?>
 <!-- B: List Actions -->
-<table class="klist-actions">
+<table class="klist-actions-top">
 	<tr>
 <?php if ($this->mode=='posts') : ?>
 		<td class="klist-actions-info-all">
@@ -85,7 +85,7 @@ if (count ( $this->threads ) > 0) :
 ?>
 
 <!-- B: List Actions -->
-<table class="klist-actions">
+<table class="klist-actions-top">
 	<tr>
 		<td class="klist-actions-info-all">
 			<strong>

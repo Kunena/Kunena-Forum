@@ -656,35 +656,35 @@ class CKunenaLatestX {
 			$endpage = $totalpages;
 		}
 
-		$output = '<ul class="kpagination">';
-		$output .= '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
+		$output = '<kul class="kpagination">';
+		$output .= '<kli class="page">' . JText::_('COM_KUNENA_PAGE') . '</kli>';
 
 		if (($startpage) > 1) {
 			if ($endpage < $totalpages)
 				$endpage --;
-			$output .= '<li>' . CKunenaLink::GetLatestPageLink ( $func, 1, 'follow', '', $sel ) . '</li>';
+			$output .= '<kli>' . CKunenaLink::GetLatestPageLink ( $func, 1, 'follow', '', $sel ) . '</kli>';
 			if (($startpage) > 2) {
-				$output .= '<li class="more">...</li>';
+				$output .= '<kli class="more">...</kli>';
 			}
 		}
 
 		for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
 			if ($page == $i) {
-				$output .= '<li class="active">' . $i . '</li>';
+				$output .= '<kli class="active">' . $i . '</kli>';
 			} else {
-				$output .= '<li>' . CKunenaLink::GetLatestPageLink ( $func, $i, 'follow', '', $sel ) . '</li>';
+				$output .= '<kli>' . CKunenaLink::GetLatestPageLink ( $func, $i, 'follow', '', $sel ) . '</kli>';
 			}
 		}
 
 		if ($endpage < $totalpages) {
 			if ($endpage < $totalpages - 1) {
-				$output .= '<li class="more">...</li>';
+				$output .= '<kli class="more">...</kli>';
 			}
 
-			$output .= '<li>' . CKunenaLink::GetLatestPageLink ( $func, $totalpages, 'follow', '', $sel ) . '</li>';
+			$output .= '<kli>' . CKunenaLink::GetLatestPageLink ( $func, $totalpages, 'follow', '', $sel ) . '</kli>';
 		}
 
-		$output .= '</ul>';
+		$output .= '</kul>';
 		return $output;
 	}
 

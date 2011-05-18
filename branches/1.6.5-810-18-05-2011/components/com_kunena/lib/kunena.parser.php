@@ -608,7 +608,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$user = isset($tag->options["default"]) ? $tag->options["default"] : false;
 				$tag_new = '';
 				if ($user) $tag_new .= "<b>" . $user . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":</b>\n";
-				$tag_new .= '<div class="kmsgtext-quote">' . $between . '</div>';
+				$tag_new .= '<div class="kmsgtext-kquote">' . $between . '</div>';
 				return TAGPARSER_RET_REPLACED;
 				break;
 //

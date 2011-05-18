@@ -238,7 +238,7 @@ class CKunenaViewMessage {
 				$this->message_quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $this->catid, $this->id, CKunenaTools::showButton ( 'reply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY') ), 'nofollow', 'kicon-button kbuttoncomm btn-left kqreply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY_LONG'), ' id="kreply'.$this->id.'"' );
 			}
 			$this->message_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $this->catid, $this->id, CKunenaTools::showButton ( 'reply', JText::_('COM_KUNENA_BUTTON_REPLY') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_REPLY_LONG') );
-			$this->message_quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $this->catid, $this->id, CKunenaTools::showButton ( 'quote', JText::_('COM_KUNENA_BUTTON_QUOTE') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_QUOTE_LONG') );
+			$this->message_quote = CKunenaLink::GetTopicPostReplyLink ( 'kquote', $this->catid, $this->id, CKunenaTools::showButton ( 'kquote', JText::_('COM_KUNENA_BUTTON_QUOTE') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_QUOTE_LONG') );
 		} else {
 			//user is not allowed to write a post
 			if ($this->topicLocked) {
@@ -779,35 +779,35 @@ class CKunenaView {
 			$endpage = $totalpages;
 		}
 
-		$output = '<ul class="kpagination">';
-		$output .= '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
+		$output = '<kul class="kpagination">';
+		$output .= '<kli class="page">' . JText::_('COM_KUNENA_PAGE') . '</kli>';
 
 		if ($startpage > 1) {
 			if ($endpage < $totalpages)
 				$endpage --;
-			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, 1, $this->config->messages_per_page, 1, '', $rel = 'follow' ) . '</li>';
+			$output .= '<kli>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, 1, $this->config->messages_per_page, 1, '', $rel = 'follow' ) . '</kli>';
 			if ($startpage > 2) {
-				$output .= '<li class="more">...</li>';
+				$output .= '<kli class="more">...</kli>';
 			}
 		}
 
 		for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
 			if ($page == $i) {
-				$output .= '<li class="active">' . $i . '</li>';
+				$output .= '<kli class="active">' . $i . '</kli>';
 			} else {
-				$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $i, $this->config->messages_per_page, $i, '', $rel = 'follow' ) . '</li>';
+				$output .= '<kli>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $i, $this->config->messages_per_page, $i, '', $rel = 'follow' ) . '</kli>';
 			}
 		}
 
 		if ($endpage < $totalpages) {
 			if ($endpage < $totalpages - 1) {
-				$output .= '<li class="more">...</li>';
+				$output .= '<kli class="more">...</kli>';
 			}
 
-			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $totalpages, $this->config->messages_per_page, $totalpages, '', $rel = 'follow' ) . '</li>';
+			$output .= '<kli>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $totalpages, $this->config->messages_per_page, $totalpages, '', $rel = 'follow' ) . '</kli>';
 		}
 
-		$output .= '</ul>';
+		$output .= '</kul>';
 		return $output;
 	}
 

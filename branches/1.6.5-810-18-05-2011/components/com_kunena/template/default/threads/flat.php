@@ -114,16 +114,16 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				</div>
 
 				<?php if ($leaf->msgcount > $this->config->messages_per_page) : ?>
-				<ul class="kpagination">
-					<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
-					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->id), 1, intval($this->config->messages_per_page), 1 ) ?></li>
+				<kul class="kpagination">
+					<kli class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></kli>
+					<kli><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->id), 1, intval($this->config->messages_per_page), 1 ) ?></kli>
 					<?php if ($threadPages > 3) : $startPage = $threadPages - 2; ?>
-					<li class="more">...</li>
+					<kli class="more">...</kli>
 					<?php else: $startPage = 2; endif;
 					for($hopPage = $startPage; $hopPage <= $threadPages; $hopPage ++) : ?>
-					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), $hopPage, intval($this->config->messages_per_page), $hopPage ) ?></li>
+					<kli><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), $hopPage, intval($this->config->messages_per_page), $hopPage ) ?></kli>
 					<?php endfor; ?>
-				</ul>
+				</kul>
 				<?php endif; ?>
 
 				<div class="ktopic-details">
@@ -215,7 +215,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 			<?php endif; ?>
 		</tr>
-		
+
 		<?php if (JDocumentHTML::countModules ( 'kunena_topic_' . $counter )) : ?>
 		<tr>
 			<td class="ktopicmodule" colspan="<?php echo intval($this->columns) ?>">
@@ -223,7 +223,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 		</tr>
 		<?php endif; ?>
-		
+
 		<?php } ?>
 		<?php  if ( count($this->actionDropdown) > 1 || $this->embedded ) : ?>
 		<!-- Bulk Actions -->

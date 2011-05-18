@@ -290,35 +290,35 @@ class CKunenaShowcat {
 			$endpage = $totalpages;
 		}
 
-		$output = '<ul class="kpagination">';
-		$output .= '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
+		$output = '<kul class="kpagination">';
+		$output .= '<kli class="page">' . JText::_('COM_KUNENA_PAGE') . '</kli>';
 
 		if (($startpage) > 1) {
 			if ($endpage < $totalpages)
 				$endpage --;
-			$output .= '<li>' . CKunenaLink::GetCategoryPageLink ( 'showcat', $catid, 1, 1, $rel = 'follow' ) . '</li>';
+			$output .= '<kli>' . CKunenaLink::GetCategoryPageLink ( 'showcat', $catid, 1, 1, $rel = 'follow' ) . '</kli>';
 			if (($startpage) > 2) {
-				$output .= '<li class="more">...</li>';
+				$output .= '<kli class="more">...</kli>';
 			}
 		}
 
 		for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
 			if ($page == $i) {
-				$output .= '<li class="active">' . $i . '</li>';
+				$output .= '<kli class="active">' . $i . '</kli>';
 			} else {
-				$output .= '<li>' . CKunenaLink::GetCategoryPageLink ( 'showcat', $catid, $i, $i, $rel = 'follow' ) . '</li>';
+				$output .= '<kli>' . CKunenaLink::GetCategoryPageLink ( 'showcat', $catid, $i, $i, $rel = 'follow' ) . '</kli>';
 			}
 		}
 
 		if ($endpage < $totalpages) {
 			if ($endpage < $totalpages - 1) {
-				$output .= '<li class="more">...</li>';
+				$output .= '<kli class="more">...</kli>';
 			}
 
-			$output .= '<li>' . CKunenaLink::GetCategoryPageLink ( 'showcat', $catid, $totalpages, $totalpages, $rel = 'follow' ) . '</li>';
+			$output .= '<kli>' . CKunenaLink::GetCategoryPageLink ( 'showcat', $catid, $totalpages, $totalpages, $rel = 'follow' ) . '</kli>';
 		}
 
-		$output .= '</ul>';
+		$output .= '</kul>';
 		return $output;
 	}
 

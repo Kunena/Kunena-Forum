@@ -43,7 +43,7 @@ defined ( '_JEXEC' ) or die ();
 <?php endif; ?>
 
 <!-- B: List Actions -->
-<table class="klist-actions">
+<table class="klist-actions-top">
 	<tr>
 		<td class="klist-actions-goto">
 			<a name="forumtop"> </a>

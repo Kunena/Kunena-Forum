@@ -13,7 +13,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <!-- B: Thread Actions -->
-<table class="klist-actions">
+<table class="klist-actions-top">
 	<tr>
 		<td class="klist-actions-goto">
 			<?php echo $this->goto ?>

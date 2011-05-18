@@ -89,6 +89,15 @@ if ($forumHeader) {
 EOF;
 }
 
+$forumHeaderbackgroundimage = $this->params->get('forumHeaderbackgroundimage');
+
+if ($forumHeaderbackgroundimage) {
+	$styles .= <<<EOF
+
+#Kunena div.kblock > div.kheader { background-image: url($forumHeaderbackgroundimage) !important; }
+EOF;
+}
+
 $forumLink = $this->params->get('forumLinkcolor', $skinner ? '' : '#5388B4');
 
 if ($forumLink) {

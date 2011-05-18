@@ -183,7 +183,7 @@ kbbcode.addFunction('#', function() {
 
 kbbcode.addFunction('Quote', function() {
 	this.wrapSelection('[quote]', '[/quote]', false);
-}, {'id': 'kbbcode-quote-button',
+}, {'id': 'kbbcode-kquote-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_QUOTE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_QUOTE');?>',
 	'onmouseover' : 'document.id("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_QUOTE');?>")'});

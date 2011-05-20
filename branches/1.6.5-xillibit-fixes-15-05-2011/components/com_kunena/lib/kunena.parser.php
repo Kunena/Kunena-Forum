@@ -568,11 +568,13 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				} else if (empty($between)) {
 					$attachment = array_shift ( $attachments );
 				} else {
-					foreach ($attachments as $att) {
-						if ($att->filename == $between) {
-							$attachment = $att;
-							unset ( $attachments [$att->id] );
-							break;
+					if ( !empty($attachments) ) {
+						foreach ($attachments as $att) {
+							if ($att->filename == $between) {
+								$attachment = $att;
+								unset ( $attachments [$att->id] );
+								break;
+							}
 						}
 					}
 				}

@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.5
 
+20-May-2011 Xillibit
+# [#25939] Missing image causes Invalid argument supplied /lib/kunena.parser.p​hp on line 572
+
 16-May-2011 Xillibit
 ^ [#25895] Just keep previous configuration setting for lightbox setting
 - [#24888] Under J!1.6, just sync user in right way when save profile to avoid issues

@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<!DOCTYPE jupgrade>
+<jupgrade>
+	<!-- List of update servers -->
+	<updateservers>
+		<server type="extension" priority="1" name="Kunena 1.6 Update Site">http://update.kunena.org/kunena16.xml</server>
+	</updateservers>
+
+	<installer>
+		<file>administrator/components/com_kunena/install/j16upgrade.php</file>
+		<class>jUpgradeComponentKunena</class>
+	</installer>
+
+	<!-- The folders to copy to the new site. -->
+	<folders>
+		<folder>media/kunena</folder>
+		<folder>administrator/components/com_kunena</folder>
+		<folder>components/com_kunena</folder>
+	</folders>
+</jupgrade>

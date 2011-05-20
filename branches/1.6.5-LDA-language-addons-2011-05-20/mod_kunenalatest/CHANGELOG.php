@@ -28,6 +28,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+20-May-2011 LDA
+^ [#25944] udpate de-DE (thanks rich)
+^ [#25944] update hu-HU (thanks pedrohsi)
++ [#25944] add th-TH (thanks drlovecat)
+
 KunenaLatest 1.6.4
 
 11-May-2011 Xillibit

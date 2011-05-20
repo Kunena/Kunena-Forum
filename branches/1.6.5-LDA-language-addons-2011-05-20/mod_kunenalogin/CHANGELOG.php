@@ -26,6 +26,9 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+20-May-2011 LDA
+^ [#25944] update hu-HU (thanks pedrohsi)
+
 KunenaLogin 1.6.4
 
 7-May-2011 fxstein

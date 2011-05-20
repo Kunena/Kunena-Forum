@@ -29,6 +29,9 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+20-May-2011 LDA
+^ [#25944] update hu-HU (thanks pedrohsi)
+
 Kunena Discuss Plugin 1.6.4
 
 03-April-2011 LDA

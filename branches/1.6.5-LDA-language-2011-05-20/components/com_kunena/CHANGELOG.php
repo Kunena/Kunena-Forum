@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+20-May-2011 LDA
+^ [#25944] update el-GR (thanks Chrysovalantis Mochlas)
+^ [#25944] update hu-HU (thanks pedrohsi)
+^ [#25944] update th-TH (thanks drlovecat)
+^ [#25944] update pt-BR (thanks iLucato)
+
 17-May-2011 Matias
 ^ [#25917] Merged revisions 4857-4862 from /branches/1.6.5-xillibit-fixes-15-05-2011
 

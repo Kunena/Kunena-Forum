@@ -28,7 +28,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaLatest 1.6.5
+
+20-May-2011 Xillibit
+# [#25945] Under Joomla! 1.6 not possible to see categories list
+
 KunenaLatest 1.6.4
+
+20-May-2011 Xillibit
 
 11-May-2011 Xillibit
 + [#24847] Add setting to show number post near to the topic title

@@ -29,6 +29,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena Discuss Plugin 1.6.5
+
+20-May-2011 Xillibit
+# [#25947] Update fr-FR because there was errors detected under Joomla! 1.6
+# [#25947] Number thingy issue
+
 Kunena Discuss Plugin 1.6.4
 
 03-April-2011 LDA

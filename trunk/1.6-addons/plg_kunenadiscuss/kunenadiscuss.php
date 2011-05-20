@@ -231,8 +231,6 @@ class plgContentKunenaDiscuss extends JPlugin {
 				self::$plgDisplay [$article->id] = $this->showPlugin ( $kunenaCategory, $kunenaTopic, $article, $show == 1 );
 			}
 		} // end of $ksource!='kunena' check
-
-		return true;
 	}
 
 	// *** display content ***

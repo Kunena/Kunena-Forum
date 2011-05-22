@@ -1542,6 +1542,12 @@ body {line-height:1.5;}
 #kunena #kflattable td {
 	border-bottom: none;
 }
+#kunena #kchange-avatar-image span {
+	display:block;
+	float:left;
+	margin-bottom: 20px;
+}
+
 
 /*---------- Tabs ------------- */
 

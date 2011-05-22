@@ -34,6 +34,7 @@ Kunena 1.6.5
 
 22-May-2011 Xillibit
 # [#25959] Error 500 when you submit a pol without check any case
+# [#25931] Member Search from Memberlist not working
 
 20-May-2011 Xillibit
 # [#25939] Missing image causes Invalid argument supplied /lib/kunena.parser.p​hp on line 572

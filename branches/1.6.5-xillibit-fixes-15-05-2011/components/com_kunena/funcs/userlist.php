@@ -40,9 +40,14 @@ class CKunenaUserlist {
 		$direction = ($filter_order_dir == 'asc' ? 'ASC' : 'DESC');
 		$orderby = " ORDER BY {$this->db->nameQuote($filter_order)} {$direction}";
 
-		if ($this->config->userlist_count_users == '0' ) $where = '1';
-		elseif ($this->config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
-		elseif ($this->config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
+		if ( empty($this->search) ) {
+			if ($this->config->userlist_count_users == '0' && empty($this->search) ) $where = '1';
+			elseif ($this->config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
+			elseif ($this->config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
+		} else {
+			$where = '1';
+		}
+
 
 		// Total
 		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE {$where}" );
@@ -57,7 +62,7 @@ class CKunenaUserlist {
 				$this->app->redirect ( CKunenaLink::GetUserlistURL() );
 				return false;
 			}
-			$query .= " AND (u.name LIKE '%{$this->db->getEscaped($this->search)}%' OR u.username LIKE '%{{$this->db->getEscaped($this->search)}%')";
+			$query .= " AND (u.name LIKE '%{$this->db->getEscaped($this->search)}%' OR u.username LIKE '%{$this->db->getEscaped($this->search)}%')";
 		}
 
 		$this->db->setQuery ( $query );

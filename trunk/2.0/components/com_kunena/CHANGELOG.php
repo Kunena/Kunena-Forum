@@ -30,6 +30,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 2.0.0-DEV
+21-May-2011 Severdia
+^ [#25415] CSS cleanup in main template
 
 25-April-2011 Matias
 ^ [#22786] Merge revisions 4731-4807 from trunk/1.6

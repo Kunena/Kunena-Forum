@@ -261,6 +261,9 @@ body {line-height:1.5;}
 	margin: 0 5px 0 0 !important;
 	padding: 0;
 	line-height: 30px;
+	-webkit-border-radius:5px 5px 0 0;
+	-moz-border-radius:5px 5px 0 0;
+	border-radius:5px 5px 0 0;
 }
 #kunena .kmenu ul.menu li.active a,
 #kunena .kmenu ul.menu li a {
@@ -321,6 +324,9 @@ body {line-height:1.5;}
 	margin-right: 10px;
 	line-height: 25px;
 }
+#kunena ul.klogin-guest li button{
+	margin-left: 10px;
+}
 #kunena .klogin .kinputbox {
 	margin-right: 15px;
 }
@@ -348,6 +354,9 @@ body {line-height:1.5;}
 }
 #kunena li.klogin-welcome {
 	font-weight: bold;
+}
+#kunena li.klogin-welcome.kguest {
+	padding-left: 0;
 }
 #kunena li.klogin-lastvisit {
 	font-size: 11px;
@@ -412,7 +421,7 @@ body {line-height:1.5;}
 	padding: 5px 10px;
 }
 #kunena .kheader-desc {
-	padding: 10px;
+	padding: 0 10px 5px 10px;
 	width: auto;
 }
 #kunena .krss-icon {
@@ -437,6 +446,9 @@ body {line-height:1.5;}
 	margin-right: 10px;
 	margin-top: 5px;
 	text-indent: -9999em;
+}
+#kunena .kcategory-actions .krss-icon {
+	margin-top: 0;
 }
 #kunena li.kannounce-desc p {
 	width: 80%;
@@ -951,7 +963,7 @@ body {line-height:1.5;}
 	padding: 10px;
 	display: block;
 	float:left;
-	width: 90%;
+	width: 88%;
 }
 #kunena .ksection-icon span {
 	margin: 15px auto;
@@ -1008,7 +1020,7 @@ body {line-height:1.5;}
 	padding: 10px;
 	line-height: 20px;
 	min-height: 80px;
-	width: 29%;
+	width: 27%;
 }
 #kunena .kstatistics-totals ul li span {
 	margin-left: 3px;
@@ -1090,7 +1102,7 @@ body {line-height:1.5;}
 	margin: 0;
 	padding: 0 7px 0 20px;
 	background-repeat: no-repeat;
-	line-height: 15px;
+	line-height: 16px;
 }
 #kunena .kbuttonuser {
 	background-position: 0 -360px;
@@ -1540,6 +1552,7 @@ body {line-height:1.5;}
 	z-index: 1;
 	z-index: 50;
 	padding: .22em 0;
+	margin-bottom: 0;
 }
 #kunena dl.tabs dt {
 	/*float: left;*/
@@ -1729,7 +1742,7 @@ body {line-height:1.5;}
 /*---------- Statistics ------------- */
 
 #kunena #kstatistics-general .kstatistics-totals {
-	width: 31%;
+	width: 29%;
 }
 #kunena tr.ksth {
 	font-size: 1em;
@@ -1770,6 +1783,7 @@ body {line-height:1.5;}
 #kunena #searchform select {
 	border-width: 1px;
 	border-style: solid;
+	border-color: #BFC3C6;
 }
 #kunena .ksearchform-leftcol {
 	float: left;

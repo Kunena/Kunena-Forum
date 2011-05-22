@@ -306,63 +306,58 @@ class CKunenaPolls {
 			if(empty($pollusers)){
 				$poll_timediff = false;
 				$pollusers[0]->timediff = null;
-    		} else {
-    			$poll_timediff = true;
-    		}
-      		if ($poll_timediff || $pollusers[0]->timediff == null)
-      		{
-        		$query = "SELECT * FROM #__kunena_polls_options WHERE pollid={$this->_db->Quote($pollid)} AND id={$this->_db->Quote($vote)};";
-        		$this->_db->setQuery($query);
-        		$polloption = $this->_db->loadObject();
-        		if (KunenaError::checkDatabaseError()) return;
+			} else {
+				$poll_timediff = true;
+			}
+			if ($poll_timediff || $pollusers[0]->timediff == null) {
+				$query = "SELECT * FROM #__kunena_polls_options WHERE pollid={$this->_db->Quote($pollid)} AND id={$this->_db->Quote($vote)};";
+				$this->_db->setQuery($query);
+				$polloption = $this->_db->loadObject();
+				if (KunenaError::checkDatabaseError()) return;
 
-        		if (!$polloption) return $data['results'] = '4'; // OPTION DOES NOT EXIST
+				if (!$polloption) return $data['results'] = '4'; // OPTION DOES NOT EXIST
 
-        		$query = "SELECT votes FROM #__kunena_polls_users WHERE pollid={$this->_db->Quote($pollid)} AND userid={$this->_db->Quote($userid)};";
-        		$this->_db->setQuery($query);
-          		$votes = $this->_db->loadResult();
-          		if (KunenaError::checkDatabaseError()) return;
+				$query = "SELECT votes FROM #__kunena_polls_users WHERE pollid={$this->_db->Quote($pollid)} AND userid={$this->_db->Quote($userid)};";
+				$this->_db->setQuery($query);
+				$votes = $this->_db->loadResult();
+				if (KunenaError::checkDatabaseError()) return;
 
-          		if (empty($votes))
-          		{
-          			$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote) VALUES({$this->_db->Quote($pollid)},{$this->_db->Quote($userid)},'1',{$this->_db->Quote($vote)});";
-            		$this->_db->setQuery($query);
-            		$this->_db->query();
-            		if (KunenaError::checkDatabaseError()) return;
+				if (empty($votes)) {
+					$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote) VALUES({$this->_db->Quote($pollid)},{$this->_db->Quote($userid)},'1',{$this->_db->Quote($vote)});";
+					$this->_db->setQuery($query);
+					$this->_db->query();
+					if (KunenaError::checkDatabaseError()) return;
 
-            		$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id={$this->_db->Quote($vote)};";
-             		$this->_db->setQuery($query);
-             		$this->_db->query();
-            		if (KunenaError::checkDatabaseError()) return;
-
-            		$data['results'] = '1';
-          		}
-         		else if ($votes < $this->config->pollnbvotesbyuser)
-         		{
-         			$query = "UPDATE #__kunena_polls_users SET votes=votes+1,lastvote={$this->_db->Quote($vote)} WHERE pollid={$this->_db->Quote($pollid)} AND userid={$this->_db->Quote($userid)};";
-            		$this->_db->setQuery($query);
-            		$this->_db->query();
-            		if (KunenaError::checkDatabaseError()) return;
-
-            		$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id={$this->_db->Quote($vote)};";
-            		$this->_db->setQuery($query);
-            		$this->_db->query();
-            		if (KunenaError::checkDatabaseError()) return;
+					$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id={$this->_db->Quote($vote)};";
+					$this->_db->setQuery($query);
+					$this->_db->query();
+					if (KunenaError::checkDatabaseError()) return;
 
 					$data['results'] = '1';
-         		}
-      		}
-      		elseif ($pollusers[0]->timediff <= $this->config->polltimebtvotes)
-      		{
-      			$data['results'] = '2';
-      		}
-     	}
-     	else
-     	{
-     		$data['results'] = '3';
-     	}
+				} else if ($votes < $this->config->pollnbvotesbyuser) {
+					$query = "UPDATE #__kunena_polls_users SET votes=votes+1,lastvote={$this->_db->Quote($vote)} WHERE pollid={$this->_db->Quote($pollid)} AND userid={$this->_db->Quote($userid)};";
+					$this->_db->setQuery($query);
+					$this->_db->query();
+					if (KunenaError::checkDatabaseError()) return;
 
-     	return $data;
+					$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id={$this->_db->Quote($vote)};";
+					$this->_db->setQuery($query);
+					$this->_db->query();
+					if (KunenaError::checkDatabaseError()) return;
+
+					$data['results'] = '1';
+         		} else {
+					$data['results'] = '5';
+					$data['user_votes'] =  $votes;
+				}
+			} elseif ($pollusers[0]->timediff <= $this->config->polltimebtvotes) {
+				$data['results'] = '2';
+			}
+		} else 	{
+			$data['results'] = '3';
+		}
+
+		return $data;
 	}
 	/**
 	* Update poll during edit
@@ -553,14 +548,16 @@ class CKunenaPolls {
 			case 'pollvote' :
 				$result = $this->save_results($id,$this->my->id,$vote);
 
-				if ($result['results'] == 1) {
+				if ($result['results'] == '1' ) {
 					$message = JText::_('COM_KUNENA_POLL_SAVE_ALERT_OK');
-				} elseif($result['results'] == 2) {
+				} elseif($result['results'] == '2' ) {
 					$message = JText::_('COM_KUNENA_POLL_SAVE_VOTE_ALREADY');
-				} elseif($result['results'] == 3) {
+				} elseif($result['results'] == '3') {
 					$message = JText::_('COM_KUNENA_POLL_WAIT_BEFORE_VOTE');
-				} elseif ( $result['results'] ==4 ) {
+				} elseif ( $result['results'] == '4' ) {
 					$message = JText::_('COM_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK');
+				} elseif ( $result['results'] == '5' ) {
+					$message = JText::sprintf('COM_KUNENA_POLL_MAXIMUM_VOTES_ALLOWED_REACH', $result['user_votes'] );
 				}
 
 				$this->_app->enqueueMessage ( $message );

@@ -56,8 +56,7 @@ class CKunenaPolls {
 	* @param  mixed $var The output to escape.
 	* @return mixed The escaped value.
 	*/
-	function escape($var)
-	{
+	function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
@@ -65,61 +64,57 @@ class CKunenaPolls {
 	 * Get the datas for a poll
 	 * @return array
 	 */
-	function get_poll_data($threadid)
-	{
-    	$query = "SELECT a.*,b.*,b.id AS poll_option_id
-    				FROM #__kunena_polls AS a
-    				INNER JOIN #__kunena_polls_options AS b ON a.threadid=b.pollid
-    				WHERE a.threadid={$this->_db->Quote($threadid)}";
-    	$this->_db->setQuery($query);
-    	$polldata = $this->_db->loadObjectList();
-    	KunenaError::checkDatabaseError();
+	function get_poll_data($threadid) {
+		$query = "SELECT a.*,b.*,b.id AS poll_option_id
+					FROM #__kunena_polls AS a
+					INNER JOIN #__kunena_polls_options AS b ON a.threadid=b.pollid
+					WHERE a.threadid={$this->_db->Quote($threadid)}";
+		$this->_db->setQuery($query);
+		$polldata = $this->_db->loadObjectList();
+		KunenaError::checkDatabaseError();
 
-    	return $polldata;
+		return $polldata;
 	}
 
 	/**
 	 * Get the users which have voted for a poll
 	 * @return array
 	 */
-	function get_users_voted($threadid)
-	{
+	function get_users_voted($threadid) {
 		//To show the usernames of the users which have voted for this poll
 		$query = "SELECT pollid,userid,name,username
 					FROM #__kunena_polls_users AS a
 					INNER JOIN #__users AS b ON a.userid=b.id
 					WHERE pollid={$this->_db->Quote($threadid)}";
-    	$this->_db->setQuery($query);
-    	$uservotedata = $this->_db->loadObjectList();
-    	KunenaError::checkDatabaseError();
+		$this->_db->setQuery($query);
+		$uservotedata = $this->_db->loadObjectList();
+		KunenaError::checkDatabaseError();
 
-    	return $uservotedata;
+		return $uservotedata;
 	}
 	/**
 	 * Get the total number of voters in a poll
 	 * @return int
 	 */
-	function get_number_total_voters($pollid)
-	{
-    	$query = "SELECT SUM(votes) FROM #__kunena_polls_users WHERE pollid={$this->_db->Quote($pollid)}";
-    	$this->_db->setQuery($query);
-    	$numvotes = $this->_db->loadResult();
-    	KunenaError::checkDatabaseError();
+	function get_number_total_voters($pollid) {
+		$query = "SELECT SUM(votes) FROM #__kunena_polls_users WHERE pollid={$this->_db->Quote($pollid)}";
+		$this->_db->setQuery($query);
+		$numvotes = $this->_db->loadResult();
+		KunenaError::checkDatabaseError();
 
-    	return $numvotes;
+		return $numvotes;
 	}
 	/**
 	 * Get the number options of an poll
 	 * @return int
 	 */
-	function get_total_options($pollid)
-	{
-    	$query = "SELECT COUNT(*) FROM #__kunena_polls_options WHERE pollid={$this->_db->Quote($pollid)}";
-    	$this->_db->setQuery($query);
-    	$numoptions = $this->_db->loadResult();
-    	KunenaError::checkDatabaseError();
+	function get_total_options($pollid) {
+		$query = "SELECT COUNT(*) FROM #__kunena_polls_options WHERE pollid={$this->_db->Quote($pollid)}";
+		$this->_db->setQuery($query);
+		$numoptions = $this->_db->loadResult();
+		KunenaError::checkDatabaseError();
 
-    	return $numoptions;
+		return $numoptions;
 	}
 	/**
 	* Get if the poll is allowed to be displayed
@@ -142,27 +137,26 @@ class CKunenaPolls {
 		return false;
 	}
 
-   /**
+	/**
 	* Insert javascript and ajax for vote
 	*/
-   function call_javascript_vote()
-   {
-    	CKunenaTools::addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll.ajax-min.js');
+	function call_javascript_vote() {
+		CKunenaTools::addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll.ajax-min.js');
 		$this->document->addCustomTag('
-      <script type="text/javascript">
-	   <!--
-	   var KUNENA_POLL_SAVE_ALERT_OK = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_OK').'";
-	   var KUNENA_POLL_SAVE_ALERT_ERROR = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_ERROR').'";
-	   var KUNENA_POLL_SAVE_VOTE_ALREADY = "'.JText::_('COM_KUNENA_POLL_SAVE_VOTE_ALREADY').'";
-	   var KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK').'";
-	   var KUNENA_POLL_WAIT_BEFORE_VOTE = "'.JText::_('COM_KUNENA_POLL_WAIT_BEFORE_VOTE').'";
-	   var KUNENA_POLL_CANNOT_VOTE_NEW_TIME = "'.JText::_('COM_KUNENA_POLL_CANNOT_VOTE_NEW_TIME').'";
-	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";
-	   var KUNENA_ICON_INFO = "'.JURI::root(). 'images/M_images/con_info.png'.'";
-     //-->
-     </script>
+		<script type="text/javascript">
+		<!--
+		var KUNENA_POLL_SAVE_ALERT_OK = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_OK').'";
+		var KUNENA_POLL_SAVE_ALERT_ERROR = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_ERROR').'";
+		var KUNENA_POLL_SAVE_VOTE_ALREADY = "'.JText::_('COM_KUNENA_POLL_SAVE_VOTE_ALREADY').'";
+		var KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK').'";
+		var KUNENA_POLL_WAIT_BEFORE_VOTE = "'.JText::_('COM_KUNENA_POLL_WAIT_BEFORE_VOTE').'";
+		var KUNENA_POLL_CANNOT_VOTE_NEW_TIME = "'.JText::_('COM_KUNENA_POLL_CANNOT_VOTE_NEW_TIME').'";
+		var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";
+		var KUNENA_ICON_INFO = "'.JURI::root(). 'images/M_images/con_info.png'.'";
+		//-->
+		</script>
 		');
-   }
+	}
 	/**
 	* Get poll input when you are in editmode
 	*/
@@ -171,22 +165,22 @@ class CKunenaPolls {
 		if ($kunena_editmode) {
 			$polloptions  = $this->get_total_options($id);
 			if (isset($polloptions)) {
-        		$nboptions = '1';
+				$nboptions = '1';
 
-			for ($i=0;$i < $polloptions;$i++) {
-        			if(empty($html_poll_edit)) {
+				for ($i=0;$i < $polloptions;$i++) {
+					if(empty($html_poll_edit)) {
 						$html_poll_edit = "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"polloptionsID[".$polldatasedit[$i]->poll_option_id."]\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
 						javascript:document.id('helpbox').set('value', '"
 				. JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'). "')\" />
 				</div>";
-        			} else {
+					} else {
 						$html_poll_edit .= "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"polloptionsID[".$polldatasedit[$i]->poll_option_id."]\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
 						javascript:document.id('helpbox').set('value', '"
 				. JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'). "')\" />
 				</div>";
-        			}
-        			$nboptions++;
-        		}
+					}
+					$nboptions++;
+				}
 			}
 		}
 		return $html_poll_edit;
@@ -208,11 +202,10 @@ class CKunenaPolls {
 			// ]]>');
 		}
 	}
-   /**
+	/**
 	* Insert javascript for form of new post
 	*/
-   function call_javascript_form()
-   {
+	function call_javascript_form() {
     	CKunenaTools::addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll-min.js');
 		$this->document->addScriptDeclaration('// <![CDATA[
 	   var KUNENA_POLL_CATS_NOT_ALLOWED = "'.JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED').'";
@@ -222,12 +215,11 @@ class CKunenaPolls {
 	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'components/com_kunena/template/default/images/icons/publish_x.png'.'";
 	   var kunena_ajax_url_poll = "'.CKunenaLink::GetJsonURL('pollcatsallowed').'";
 	// ]]>');
-   }
-   /**
+	}
+	/**
 	* Save a new poll
 	*/
-   function save_new_poll($polltimetolive,$polltitle,$pid,$optionvalue)
-   {
+	function save_new_poll($polltimetolive, $polltitle, $pid, $optionvalue) {
 		if (isset($polltitle) && sizeof($optionvalue) > '0') {
 			$query = "INSERT INTO #__kunena_polls (title,threadid,polltimetolive)
 						VALUES(".$this->_db->quote($polltitle).",{$this->_db->Quote($pid)},{$this->_db->Quote($polltimetolive)})";
@@ -243,13 +235,12 @@ class CKunenaPolls {
     			if (KunenaError::checkDatabaseError()) return;
     		}
 		}
-   }
-   /**
+	}
+	/**
 	* Save the results of a poll to prevent spam
 	* @return array
 	*/
-   function get_data_poll_users($userid,$threadid)
-   {
+	function get_data_poll_users($userid, $threadid) {
 		$query = "SELECT pollid,userid,lasttime,votes,
 						TIMEDIFF(CURTIME(),DATE_FORMAT(lasttime, '%H:%i:%s')) AS timediff
 					FROM #__kunena_polls_users
@@ -259,13 +250,12 @@ class CKunenaPolls {
 		KunenaError::checkDatabaseError();
 
 		return $polluserdata;
-   }
-   /**
+	}
+	/**
 	* Get the five better votes in polls
 	* @return int
 	*/
-   function get_top_five_votes($PopPollsCount)
-   {
+	function get_top_five_votes($PopPollsCount) {
 		$query = "SELECT SUM(o.votes) AS total
 					FROM #__kunena_polls AS p
 					LEFT JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
@@ -277,50 +267,43 @@ class CKunenaPolls {
 		KunenaError::checkDatabaseError();
 
 		return $votecount;
-   }
-   /**
+	}
+	/**
 	* Get the five better polls
 	* @return Array
 	*/
-	function get_top_five_polls($PopPollsCount)
-	{
-    	$query = "SELECT q.catid, q.id,p.*, SUM(o.votes) AS total
-    				FROM #__kunena_polls AS p
-    				INNER JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
-    				INNER JOIN #__kunena_messages AS q ON p.threadid = q.id
-    				GROUP BY p.threadid
-    				ORDER BY total DESC";
-    	$this->_db->setQuery($query,0,$PopPollsCount);
-	    $toppolls = $this->_db->loadObjectList();
-	    KunenaError::checkDatabaseError();
+	function get_top_five_polls($PopPollsCount) {
+		$query = "SELECT q.catid, q.id,p.*, SUM(o.votes) AS total
+					FROM #__kunena_polls AS p
+					INNER JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
+					INNER JOIN #__kunena_messages AS q ON p.threadid = q.id
+					GROUP BY p.threadid
+					ORDER BY total DESC";
+		$this->_db->setQuery($query,0,$PopPollsCount);
+		$toppolls = $this->_db->loadObjectList();
+		KunenaError::checkDatabaseError();
 
-    	return $toppolls;
-   }
-   /**
+		return $toppolls;
+	}
+	/**
 	* Save the results of a poll
 	*/
-   function save_results($pollid,$userid,$vote)
-   {
-   		// Sanitize parameters!
-   		$pollid = intval ( $pollid );
-   		$userid = intval ( $userid );
-   		$vote   = intval ( $vote );
+	function save_results($pollid, $userid, $vote) {
+		// Sanitize parameters!
+		$pollid = intval ( $pollid );
+		$userid = intval ( $userid );
+		$vote   = intval ( $vote );
 
-    	$pollusers = $this->get_data_poll_users($userid,$pollid);
-    	$nonewvote = "0";
-    	$data = array();
-    	if ($this->config->pollallowvoteone)
-    	{
-      		if(!empty($pollusers)){
-    			if ($pollusers[0]->userid == $userid)
-      			{
-        			$nonewvote = "1";
-      			}
-      		}
-    	}
-    	if ($nonewvote == "0")
-    	{
-    		if(empty($pollusers)){
+		$pollusers = $this->get_data_poll_users($userid, $pollid);
+		$nonewvote = "0";
+		$data = array();
+		if ( $this->config->pollallowvoteone ) {
+			if(!empty($pollusers)){
+				if ($pollusers[0]->userid == $userid) $nonewvote = "1";
+			}
+		}
+		if ($nonewvote == "0") {
+			if(empty($pollusers)){
 				$poll_timediff = false;
 				$pollusers[0]->timediff = null;
     		} else {
@@ -333,7 +316,7 @@ class CKunenaPolls {
         		$polloption = $this->_db->loadObject();
         		if (KunenaError::checkDatabaseError()) return;
 
-        		if (!$polloption) break; // OPTION DOES NOT EXIST
+        		if (!$polloption) return $data['results'] = '4'; // OPTION DOES NOT EXIST
 
         		$query = "SELECT votes FROM #__kunena_polls_users WHERE pollid={$this->_db->Quote($pollid)} AND userid={$this->_db->Quote($userid)};";
         		$this->_db->setQuery($query);
@@ -380,25 +363,23 @@ class CKunenaPolls {
      	}
 
      	return $data;
-   }
-   /**
+	}
+	/**
 	* Update poll during edit
 	*/
-   function save_changevote($threadid,$userid,$vote)
-   {
-   		// Sanitize parameters!
-   		$threadid = intval ( $threadid );
-   		$userid   = intval ( $userid );
-   		$vote     = intval ( $vote );
-   		$now      = JFactory::getDate();
+	function save_changevote($threadid, $userid, $vote) {
+		// Sanitize parameters!
+		$threadid	= intval ( $threadid );
+		$userid		= intval ( $userid );
+		$vote		= intval ( $vote );
+		$now		= JFactory::getDate();
 
 		$pollusers = $this->get_data_poll_users($userid,$threadid);
 		$data = array();
 
-		if ($pollusers[0]->timediff > $this->config->polltimebtvotes)
-      	{
-      		// call reset vote
-      		$this->reset_vote($userid,$threadid);
+		if ($pollusers[0]->timediff > $this->config->polltimebtvotes) {
+			// call reset vote
+			$this->reset_vote($userid,$threadid);
 
 			$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id={$this->_db->Quote($vote)};";
         	$this->_db->setQuery($query);
@@ -417,13 +398,12 @@ class CKunenaPolls {
         	$data['results'] = '3';
       	}
       	return $data;
-   }
-   /**
+	}
+	/**
 	* Update poll during edit
 	*/
-   function update_poll_edit($polltimetolive,$threadid,$polltitle,$optionsnumbers,$poll_optionsID)
-   {
-    	$polloptions = $this->get_total_options($threadid);
+	function update_poll_edit($polltimetolive, $threadid, $polltitle, $optionsnumbers, $poll_optionsID) {
+		$polloptions = $this->get_total_options($threadid);
 
     	$query = "SELECT b.id AS poll_option_id
     				FROM #__kunena_polls AS a
@@ -488,80 +468,76 @@ class CKunenaPolls {
     					}
     				}
 				}
-    		}
-    	} elseif( $optionsnumbers > $polloptions) {
+			}
+		} elseif( $optionsnumbers > $polloptions) {
 			// Just create the missing options
-    		foreach($poll_optionsID as $key=>$value) {
+			foreach($poll_optionsID as $key=>$value) {
 				if ( preg_match('`newoption`',$key) && !empty($value)) {
 					$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
 								VALUES(".$this->_db->quote($value).",{$this->_db->Quote($this->id)},'0')";
-        			$this->_db->setQuery($query);
-          			$this->_db->query();
-          	    	if (KunenaError::checkDatabaseError()) return;
+					$this->_db->setQuery($query);
+					$this->_db->query();
+					if (KunenaError::checkDatabaseError()) return;
 				}
 			}
 		}
-   }
-   /**
+	}
+	/**
 	* To get the last vote id from the user
 	*/
-   function get_last_vote_id($userid,$pollid)
-   {
-
+	function get_last_vote_id($userid, $pollid) {
 		$query = "SELECT lastvote FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($pollid)} AND userid={$this->_db->Quote($userid)};";
-    	$this->_db->setQuery($query);
-    	$id_last_vote = $this->_db->loadResult();
-    	KunenaError::checkDatabaseError();
+		$this->_db->setQuery($query);
+		$id_last_vote = $this->_db->loadResult();
+		KunenaError::checkDatabaseError();
 
-    	return $id_last_vote;
-   }
-   /**
+		return $id_last_vote;
+	}
+	/**
 	* For the user can vote a new once, need to remove one vote
 	*/
-   function reset_vote($userid,$threadid)
-   {
+	function reset_vote($userid, $threadid) {
 		$query = "SELECT a.id, a.pollid,a.votes AS option_votes, b.votes AS user_votes, b.lastvote, b.userid FROM #__kunena_polls_options AS a
 				INNER JOIN #__kunena_polls_users AS b ON a.id=b.lastvote
 				WHERE a.pollid={$this->_db->Quote($threadid)} AND b.userid={$this->_db->Quote($userid)}";
-    	$this->_db->setQuery($query);
-    	$poll_options_user = $this->_db->loadObject();
+		$this->_db->setQuery($query);
+		$poll_options_user = $this->_db->loadObject();
 		if (KunenaError::checkDatabaseError()) return;
 
 
 		if($poll_options_user->option_votes > '0' && $poll_options_user->user_votes > '0') {
 			$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id={$this->_db->Quote($poll_options_user->lastvote)} AND pollid={$this->_db->Quote($threadid)};";
-    		$this->_db->setQuery($query);
-    		$this->_db->query();
+			$this->_db->setQuery($query);
+			$this->_db->query();
 			if (KunenaError::checkDatabaseError()) return;
 
 			$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid={$this->_db->Quote($userid)} AND pollid={$this->_db->Quote($threadid)};";
-    		$this->_db->setQuery($query);
-    		$this->_db->query();
+			$this->_db->setQuery($query);
+			$this->_db->query();
 			if (KunenaError::checkDatabaseError()) return;
 		}
 
-   }
-   /**
+	}
+	/**
 	* Delete a poll
 	*/
-   function delete_poll($threadid)
-   {
-    	$query = "DELETE FROM #__kunena_polls WHERE threadid={$this->_db->Quote($threadid)}";
-    	$this->_db->setQuery($query);
-    	$this->_db->query();
-    	if (KunenaError::checkDatabaseError()) return;
+	function delete_poll($threadid) {
+		$query = "DELETE FROM #__kunena_polls WHERE threadid={$this->_db->Quote($threadid)}";
+		$this->_db->setQuery($query);
+		$this->_db->query();
+		if (KunenaError::checkDatabaseError()) return;
 
-    	$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$this->_db->Quote($threadid)}";
-    	$this->_db->setQuery($query);
-    	$this->_db->query();
-    	if (KunenaError::checkDatabaseError()) return;
+		$query = "DELETE FROM #__kunena_polls_options WHERE pollid={$this->_db->Quote($threadid)}";
+		$this->_db->setQuery($query);
+		$this->_db->query();
+		if (KunenaError::checkDatabaseError()) return;
 
-    	$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->Quote($threadid)}";
-    	$this->_db->setQuery($query);
-    	$this->_db->query();
-    	if (KunenaError::checkDatabaseError()) return;
-   }
+		$query = "DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->Quote($threadid)}";
+		$this->_db->setQuery($query);
+		$this->_db->query();
+		if (KunenaError::checkDatabaseError()) return;
+	}
 
 	/*
 	 * Function to do things without json
@@ -583,6 +559,8 @@ class CKunenaPolls {
 					$message = JText::_('COM_KUNENA_POLL_SAVE_VOTE_ALREADY');
 				} elseif($result['results'] == 3) {
 					$message = JText::_('COM_KUNENA_POLL_WAIT_BEFORE_VOTE');
+				} elseif ( $result['results'] ==4 ) {
+					$message = JText::_('COM_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK');
 				}
 
 				$this->_app->enqueueMessage ( $message );
@@ -603,16 +581,16 @@ class CKunenaPolls {
 		}
 	}
 
-   /**
-    *  Show pollbox
-    */
+	/**
+	*  Show pollbox
+	*/
 
-    public function showPollbox() {
+	public function showPollbox() {
 		CKunenaTools::loadTemplate('/plugin/poll/pollbox.php');
-    }
+	}
 
-    public function display() {
-    	switch ($this->do) {
+	public function display() {
+		switch ($this->do) {
 			case 'vote' :
 				$this->changevote = '';
 				CKunenaTools::loadTemplate('/plugin/poll/pollvote.php');
@@ -621,7 +599,7 @@ class CKunenaPolls {
 				$this->changevote = '1';
 				CKunenaTools::loadTemplate('/plugin/poll/pollvote.php');
 				break;
-    	}
-    }
+		}
+	}
 }
 ?>

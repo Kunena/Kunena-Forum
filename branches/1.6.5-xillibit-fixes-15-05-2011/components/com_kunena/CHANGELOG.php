@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.5
 
+23-May-2011 Xillibit
+# [#25972] Global settings in profile doesn't follow disable or enable setting
+
 22-May-2011 Xillibit
 # [#25959] Error 500 when you submit a pol without check any case
 # [#25931] Member Search from Memberlist not working

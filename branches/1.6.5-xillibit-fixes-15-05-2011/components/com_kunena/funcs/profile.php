@@ -177,23 +177,20 @@ class CKunenaProfile {
 		$this->user = JFactory::getUser();
 
 		// check to see if Frontend User Params have been enabled
-		if ($jversion->RELEASE == '1.5' && $this->user->authorize( 'com_user', 'edit' )) {
-			$usersConfig = JComponentHelper::getParams( 'com_user' );
-			if ($usersConfig->get('frontend_userparams', 0)) {
-				$lang = JFactory::getLanguage();
-				$lang->load('com_user', JPATH_SITE);
-				$params = $this->user->getParameters(true);
-				// Legacy template support:
-				$this->userparams = $params->renderToArray();
-				$i=0;
-				// New templates use this:
-				foreach ($this->userparams as $userparam) {
-					$this->userparameters[$i]->input = $userparam[1];
-					$this->userparameters[$i]->label = '<label for="params'.$userparam[5].'" title="'.$userparam[2].'">'.$userparam[0].'</label>';
-					$i++;
-				}
+		if ($jversion->RELEASE == '1.5' && JComponentHelper::getParams('com_users')->get('frontend_userparams')) {
+			$lang = JFactory::getLanguage();
+			$lang->load('com_user', JPATH_SITE);
+			$params = $this->user->getParameters(true);
+			// Legacy template support:
+			$this->userparams = $params->renderToArray();
+			$i=0;
+			// New templates use this:
+			foreach ($this->userparams as $userparam) {
+				$this->userparameters[$i]->input = $userparam[1];
+				$this->userparameters[$i]->label = '<label for="params'.$userparam[5].'" title="'.$userparam[2].'">'.$userparam[0].'</label>';
+				$i++;
 			}
-		} elseif ($jversion->RELEASE == '1.6' && $this->user->authorise( 'com_users', 'edit' )) {
+		} elseif ($jversion->RELEASE == '1.6' && JComponentHelper::getParams('com_users')->get('frontend_userparams')) {
 			$usersConfig = JComponentHelper::getParams( 'com_users' );
 			if ($usersConfig->get('frontend_userparams', 0)) {
 				$lang = JFactory::getLanguage();

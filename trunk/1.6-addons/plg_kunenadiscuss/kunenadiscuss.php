@@ -143,10 +143,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			} else {
 				$kunenaCategory = $this->getForumCategory ( $articleCategory );
 				if (! $kunenaCategory ) {
-					if ( ! $customTopics)
-						return true;
-					else
-						$this->debug ( "onPrepareContent: Allowing only Custom Topics" );
+					if ( ! $customTopics)	$this->debug ( "onPrepareContent: Allowing only Custom Topics" );
 				}
 			}
 			$kunenaTopic = false;
@@ -161,7 +158,6 @@ class plgContentKunenaDiscuss extends JPlugin {
 					$article->introtext = preg_replace ( $regex, '', $article->introtext );
 				if (isset ( $article->fulltext ))
 					$article->fulltext = preg_replace ( $regex, '', $article->fulltext );
-				return true;
 			}
 
 			$isFrontPage = JRequest::getVar ( 'view' ) == 'frontpage';
@@ -181,7 +177,6 @@ class plgContentKunenaDiscuss extends JPlugin {
 					$article->introtext = preg_replace ( $regex, '', $article->introtext );
 				if (isset ( $article->fulltext ))
 					$article->fulltext = preg_replace ( $regex, '', $article->fulltext );
-				return true;
 			}
 
 			$this->debug ( "onPrepareContent: Article {$article->id}" );
@@ -221,7 +216,6 @@ class plgContentKunenaDiscuss extends JPlugin {
 						$article->fulltext = preg_replace ( "/{kunena_discuss:$kunenaTopic}/", '', $article->fulltext, 1 );
 					if ($kunenaTopic == 0) {
 						$this->debug ( "onPrepareContent: Searched for {kunena_discuss:#}: Discussion of this article has been disabled." );
-						return true;
 					}
 				}
 				$this->debug ( "onPrepareContent: Searched for {kunena_discuss:#}: Custom Topic " . ($kunenaTopic ? "{$kunenaTopic} found." : "not found.") );

@@ -276,6 +276,13 @@
 					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
 				</field>
+				<field name="kunena_load_css" type="radio"
+					default="1"
+					description="MOD_KUNENALATEST_PARAM_LOAD_CSS_DESC"
+					label="MOD_KUNENALATEST_PARAM_LOAD_CSS">
+					<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
+					<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
+				</field>
 				<field name="sh_morelink" type="radio"
 					default="0"
 					description="MOD_KUNENALATEST_PARAM_MORELINK_DESC"

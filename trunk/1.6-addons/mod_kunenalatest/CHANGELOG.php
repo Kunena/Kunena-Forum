@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.5
 
+24-May-2011 Xillibit
+# [#25945] Missing strings in french translation and missing settings in J!1.6
+
 20-May-2011 Xillibit
 # [#25945] Under Joomla! 1.6 not possible to see categories list
 

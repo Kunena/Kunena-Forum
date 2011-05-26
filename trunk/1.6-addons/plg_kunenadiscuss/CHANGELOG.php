@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.5
 
+25-May-2011 Xillibit
+# [#25947] Setting content in first post has an extra option
+
 23-May-2011 Xillibit
 # [#25947] Number thingy issue (Part 2)
 

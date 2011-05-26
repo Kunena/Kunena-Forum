@@ -172,7 +172,6 @@
 					<option value="full">PLG_KUNENADISCUSS_OPTION_BBCODE_FULL</option>
 					<option value="intro">PLG_KUNENADISCUSS_OPTION_BBCODE_INTRO</option>
 					<option value="link">PLG_KUNENADISCUSS_OPTION_BBCODE_LINK</option>
-					<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>
 				</field>
 				<field name="topic_owner" type="text" default="" description="PLG_KUNENADISCUSS_TOPIC_OWNER_DESC" label="PLG_KUNENADISCUSS_TOPIC_OWNER" />
 				<field name="category_mapping" type="text" default="" description="PLG_KUNENADISCUSS_CATEGORY_MAPPING_DESC" label="PLG_KUNENADISCUSS_CATEGORY_MAPPING" />

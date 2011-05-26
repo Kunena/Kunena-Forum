@@ -27,6 +27,8 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+26-May-2011 LDA
+# [#25944] added missing strings
 
 20-May-2011 LDA
 ^ [#25944] udpate de-DE (thanks rich)

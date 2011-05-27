@@ -843,12 +843,11 @@ function JJ_categoryArray($admin=0) {
 	$query = "SELECT * FROM #__kunena_categories";
 	if($app->isSite()) {
 		$kunena_session =& KunenaFactory::getSession();
-		$locked = "AND locked='0'";
-		if(CKunenaTools::isModerator($kunena_my->id) || $func == 'search') $locked = '';
+
 		if ($kunena_session && $kunena_session->allowed != 'na') {
-			$query .= " WHERE id IN ($kunena_session->allowed) AND published='1' ".$locked;
+			$query .= " WHERE id IN ($kunena_session->allowed) AND published='1' ";
 		} else {
-			$query .= " WHERE pub_access='0' AND published='1' ".$locked;
+			$query .= " WHERE pub_access='0' AND published='1' ";
 		}
 	}
     $query .= " ORDER BY ordering, name";

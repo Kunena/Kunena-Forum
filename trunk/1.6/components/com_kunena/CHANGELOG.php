@@ -33,8 +33,11 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+27-May-2011 Xillibit
+^ [#25980] Typo in en-GB language file in backend (thanks nima.abbc)
+
 25-May-2011 Xillibit
-^ [#25980] Type in en-GB language file in backend (thanks nima.abbc)
+^ [#25980] Typo in en-GB language file in backend (thanks nima.abbc)
 
 17-May-2011 Matias
 ^ [#25917] Merged revisions 4857-4862 from /branches/1.6.5-xillibit-fixes-15-05-2011

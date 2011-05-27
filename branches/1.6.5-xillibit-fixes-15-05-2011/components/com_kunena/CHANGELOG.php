@@ -34,6 +34,8 @@ Kunena 1.6.5
 
 25-May-2011 Xillibit
 - [#25992] Revert change : Categories locked are showed in drop-down list
+^ [#25993] Add language string instead the JText::sprintf('Read more...') into article bbcode
+# [#25993] When setting full is choosed in discuss plugin, only the part after the readmore is showed in Kunena
 
 23-May-2011 Xillibit
 # [#25972] Global settings in profile doesn't follow disable or enable setting

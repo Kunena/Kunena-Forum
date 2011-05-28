@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.5
 
+28-May-2011 Xillibit
++ [#25998] Add setting to allow the user to show the number wanted of thankyou in the message
+
 25-May-2011 Xillibit
 - [#25992] Revert change : Categories locked are showed in drop-down list
 ^ [#25993] Add language string instead the JText::sprintf('Read more...') into article bbcode

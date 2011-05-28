@@ -1262,6 +1262,16 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SHOWBANNEDREASON_PROFILE_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
+								<td align="left" valign="top"><input type="text"
+							name="cfg_thankyounumbers" class="ksm-field"
+							value="<?php echo kescape($kunena_config->thankyounumbers);
+						?>" />
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			</dd>

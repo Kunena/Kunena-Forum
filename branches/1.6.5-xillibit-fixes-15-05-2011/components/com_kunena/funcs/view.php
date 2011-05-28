@@ -224,8 +224,9 @@ class CKunenaViewMessage {
 		if ($this->config->showthankyou && $this->profile->userid && $mode != 'threaded') {
 			require_once(KPATH_SITE .DS. 'lib'.DS.'kunena.thankyou.php');
 			$thankyou = new CKunenaThankyou();
-			$this->thankyou = $thankyou->getThankYouUser($this->id);
+			$this->total_thankyou = $thankyou->getThankYouUser($this->id);
 
+			$this->thankyou = array_slice($this->total_thankyou, 0, $this->config->thankyounumbers);
 
 			if($this->my->id && $this->my->id != $this->profile->userid) {
 				$this->message_thankyou = CKunenaLink::GetThankYouLink ( $this->catid, $this->id , $this->userid , CKunenaTools::showButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');

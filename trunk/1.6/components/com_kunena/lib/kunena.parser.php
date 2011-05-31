@@ -568,11 +568,13 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				} else if (empty($between)) {
 					$attachment = array_shift ( $attachments );
 				} else {
-					foreach ($attachments as $att) {
-						if ($att->filename == $between) {
-							$attachment = $att;
-							unset ( $attachments [$att->id] );
-							break;
+					if ( !empty($attachments) ) {
+						foreach ($attachments as $att) {
+							if ($att->filename == $between) {
+								$attachment = $att;
+								unset ( $attachments [$att->id] );
+								break;
+							}
 						}
 					}
 				}
@@ -714,17 +716,15 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							switch ($param) {
 							case 'full':
 								if ( !empty($article->fulltext) ) {
-									$article->text = $article->fulltext;
-									// TODO: Add language string instead the JText::sprintf('Read more...') for k1.6.4+
-									$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read more...').'</a>';
+									$article->text = $article->introtext. ' '. $article->fulltext;
+									$link = '<a href="'.$url.'" class="readon">'.JText::_('COM_KUNENA_ARTICLE_READMORE').'</a>';
 							break;
 								}
 							// continue to intro
 							case 'intro':
 								if ( !empty($article->introtext) ) {
 									$article->text = $article->introtext;
-									// TODO: Add language string instead the JText::sprintf('Read more...') for k1.6.4+
-									$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read more...').'</a>';
+									$link = '<a href="'.$url.'" class="readon">'.JText::_('COM_KUNENA_ARTICLE_READMORE').'</a>';
 							break;
 								}
 							// continue to link

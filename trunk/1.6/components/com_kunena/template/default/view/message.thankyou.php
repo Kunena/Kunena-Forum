@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 <?php
 	echo JText::_('COM_KUNENA_THANKYOU').': ';
 	echo implode(', ', $this->thankyou);
-	if (count($this->thankyou) > 9) echo '...';
+	if (count($this->total_thankyou) > $this->config->thankyou_max ) echo '...';
 ?>
 </div>
 <?php endif; ?>

@@ -33,11 +33,28 @@ Legend:
 
 Kunena 1.6.5-DEV
 
-27-May-2011 Xillibit
-^ [#25980] Typo in en-GB language file in backend (thanks nima.abbc)
+31-May-2011 Matias
+^ [#25917] Merged revisions 4862-4890 from /branches/1.6.5-xillibit-fixes-15-05-2011
+
+28-May-2011 Xillibit
++ [#25998] Add setting to allow the user to show the number wanted of thankyou in the message
 
 25-May-2011 Xillibit
+- [#25992] Revert change : Categories locked are showed in drop-down list
+^ [#25993] Add language string instead the JText::sprintf('Read more...') into article bbcode
+# [#25993] When setting full is choosed in discuss plugin, only the part after the readmore is showed in Kunena
 ^ [#25980] Typo in en-GB language file in backend (thanks nima.abbc)
+
+23-May-2011 Xillibit
+# [#25972] Global settings in profile doesn't follow disable or enable setting
+
+22-May-2011 Xillibit
+# [#25959] Error 500 when you submit a pol without check any case
+# [#25931] Member Search from Memberlist not working
+# [#25960] When set a number limit for poll vote, the limit isn't reach
+
+20-May-2011 Xillibit
+# [#25939] Missing image causes Invalid argument supplied /lib/kunena.parser.p​hp on line 572
 
 17-May-2011 Matias
 ^ [#25917] Merged revisions 4857-4862 from /branches/1.6.5-xillibit-fixes-15-05-2011

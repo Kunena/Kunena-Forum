@@ -36,6 +36,7 @@ Kunena 2.0.0-DEV
 ^ [#25395] Disable topic icon maneger & category option in backend
 ^ [#25395] Change XML file definition
 ^ [#25395] Move media files into /admin/media/kunena and install them also in SVN installer
+# [#25323] Icons yes/no not displayed in categories manager (thanks xillibit)
 
 21-May-2011 Severdia
 ^ [#25415] CSS cleanup in main template

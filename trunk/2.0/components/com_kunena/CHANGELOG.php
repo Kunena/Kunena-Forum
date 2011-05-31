@@ -32,7 +32,7 @@ Legend:
 Kunena 2.0.0-DEV
 
 31-May-2011 Matias
-^ [#25395] Merge revisions 4658-4856 from branches/2.0-xillibit-manage-topic-icons-19-03-2011
+^ [#22786] Merge revisions 4658-4856 from branches/2.0-xillibit-manage-topic-icons-19-03-2011
 ^ [#25395] Disable topic icon maneger & category option in backend
 ^ [#25395] Change XML file definition
 ^ [#25395] Move media files into /admin/media/kunena and install them also in SVN installer
@@ -44,22 +44,7 @@ Kunena 2.0.0-DEV
 
 14-May-2011 Xillibit
 # [#25395] Now use xml file for topic icons and icon set can be choosed by categories
-
-30-March-2011 Xillibit
-# [#25395] Make ordering working like it should
-
-28-March-2011 Xillibit
-# [#25395] Fix somes issues and fatal errors
-
-25-March-2011 Xillibit
-# [#25395] In topicisons default template, some typos
-+ [#25395] Create table for topics_icons
-
-20-March-2011 Xillibit
 ^ [#25395] Set new icon in backend for topic icons manager
-^ [#25395] Fix some issues in the topic icons manager
-
-19-March-2011 Xillibit
 # [#25395] Manage topic icons in backend
 
 25-April-2011 Matias

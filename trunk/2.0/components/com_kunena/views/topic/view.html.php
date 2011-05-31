@@ -581,20 +581,25 @@ class KunenaViewTopic extends KunenaView {
 
 		//Thankyou info and buttons
 		$this->message_thankyou = '';
+		$this->message_thankyou_delete = '';
 		if ($this->config->showthankyou && $this->profile->userid) {
 			$thankyou = $this->message->getThankyou();
 			$this->thankyou = array();
 			foreach( $thankyou->getList() as $userid=>$time){
-				$this->thankyou[] = CKunenaLink::GetProfileLink($userid);
+				if ( $me->userid  && $me->isModerator()  ) {
+					$this->message_thankyou_delete = '<a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'.KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->topic->category_id}&mesid={$this->message->id}&task=unthankyou&userid={$userid}&".JUtility::getToken() .'=1').'"><img src="'.$this->template->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>';
+				}
+				$this->thankyou[] = CKunenaLink::GetProfileLink($userid).' '.$this->message_thankyou_delete;
 			}
 			if($me->userid && !$thankyou->exists($me->userid) && $me->userid != $this->profile->userid) {
-				$this->message_thankyou = CKunenaLink::GetThankyouLink ( $catid, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');
+				$this->message_thankyou = CKunenaLink::GetThankyouLink ( 'thankyou', $catid, $this->message->id, $this->profile->userid , $this->getButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kicon-button kbuttonuser btn-left');
 			}
+
 		}
 		if ($this->config->reportmsg && KunenaFactory::getUser()->exists()) {
 			$this->message_report = CKunenaLink::GetReportMessageLink ( $catid, $this->message->id, $this->getButton ( 'report', JText::_('COM_KUNENA_BUTTON_REPORT') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_REPORT') );
 		}
-
+		
 		$this->message_quickreply = $this->message_reply = $this->message_quote = '';
 		if ($this->topic->authorise('reply')) {
 			//user is allowed to reply/quote
@@ -611,7 +616,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->message_closed = JText::_('COM_KUNENA_VIEW_DISABLED');
 			}
 		}
-
+		
 		//Offer an moderator a few tools
 		$this->message_edit = $this->message_moderate = '';
 		$this->message_delete = $this->message_undelete = $this->message_permdelete = $this->message_publish = '';

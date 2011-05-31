@@ -60,6 +60,7 @@ class KunenaForumTopic extends JObject {
 			'poll.vote'=>array('Read', 'Vote'),
 			'post.read'=>array('Read'),
 			'post.thankyou'=>array('Read','NotMoved'),
+			'post.unthankyou'=>array('Read'),
 			'post.reply'=>array('Read','NotHold','NotMoved','Unlocked'),
 			'post.edit'=>array('Read','Unlocked'),
 			'post.move'=>array('Read'),

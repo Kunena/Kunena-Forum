@@ -37,6 +37,7 @@ Kunena 2.0.0-DEV
 ^ [#25395] Change XML file definition
 ^ [#25395] Move media files into /admin/media/kunena and install them also in SVN installer
 # [#25323] Icons yes/no not displayed in categories manager (thanks xillibit)
+^ [#22786] Merge revisions 4679-4713 from branches/2.0-xillibit-remove-thankyou-27-03-2011
 
 21-May-2011 Severdia
 ^ [#25415] CSS cleanup in main template
@@ -208,6 +209,9 @@ Kunena 2.0.0-DEV
 # [#23466] CKunenaLink: fix URLs pointing to wrong category
 # [#23466] KunenaViewTopic::getMessageActions(): fix URLs pointing to wrong category
 
+2-April-2011 Xillibit
+# [#25478] Give more love on unthnakyou function
+
 2-April-2011 Matias
 # [#23443] Article BBCode: dispatch onPrepareContent only after filling $article->text
 + [#22569] KunenaForum::display(): use current Kunena template instead of default one
@@ -250,6 +254,12 @@ Kunena 2.0.0-DEV
 ^ [#25415] Move static stuff from lib/kunena.bbcode.js.php into js/editor.js
 ^ [#25415] Move some javascript from the template files into lib/kunena.special.js.php
 ^ [#25415] CSS: get rid of a#kbbcode-separator[1-8], use common class instead
+
+29-March-2011 Xillibit
++ [#25478] Allow moderators to remove thankyou
+^ [#25478] Rename onAfterThankyou into onAfterAddThankyou and add onAfterRemoveThankyou
+# [#25478] Fix regressions detected in controller/topic.php and in views/topic/view.html.php
+^ [#25478] Add new authorisation for unthankyou function
 
 29-March-2011 Matias
 ^ [#25415] Add new parameters into CKunenaLink::GetReportMessageLink()

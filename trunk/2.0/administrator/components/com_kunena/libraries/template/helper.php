@@ -15,18 +15,18 @@ kimport('kunena.error');
 /**
  * Kunena Template Helper Class
  */
-class KunenaTemplatesHelper {
+class KunenaTemplateHelper {
 	protected static $_instances = array ();
 
 	private function __construct() {}
 
-	public static function isTemplateDefault($template) {
+	public static function isDefault($template) {
 		$config = KunenaFactory::getConfig ();
 		$defaultemplate = $config->template;
 		return $defaultemplate == $template ? 1 : 0;
 	}
 
-	public static function parseXMLTemplateFiles($templateBaseDir) {
+	public static function parseXmlFiles($templateBaseDir) {
 		// Read the template folder to find templates
 		jimport('joomla.filesystem.folder');
 		$templateDirs = JFolder::folders($templateBaseDir);
@@ -34,7 +34,7 @@ class KunenaTemplatesHelper {
 		// Check that the directory contains an xml file
 		foreach ($templateDirs as $templateDir)
 		{
-			if(!$data = self::parseXMLTemplateFile($templateBaseDir, $templateDir)){
+			if(!$data = self::parseXmlFile($templateBaseDir, $templateDir)){
 				continue;
 			} else {
 				$rows[] = $data;
@@ -43,7 +43,7 @@ class KunenaTemplatesHelper {
 		return $rows;
 	}
 
-	function parseXMLTemplateFile($templateBaseDir, $templateDir) {
+	function parseXmlFile($templateBaseDir, $templateDir) {
 		// Check if the xml file exists
 		if(!is_file($templateBaseDir.'/'.$templateDir.'/template.xml')) {
 			return false;

@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<!DOCTYPE kunena-topicicons>
+<kunena-topicicons>
+	<name>system</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>www.kunena.org</copyright>
+	<license>GNU/GPL</license>
+	<description>System topic icons for Kunena</description>
+	
+	<icons type="system" width="48" height="48">
+		<icon name="normal" published="1" src="normal.png" new="normal_new.png" />
+		<icon name="unapproved" published="1" src="unapproved.png" new="unapproved_new.png" />
+		<icon name="deleted" published="1" src="deleted.png" new="deleted_new.png" />
+		<icon name="noreplies" published="1" src="noreplies.png" new="noreplies_new.png" />
+		<icon name="sticky" published="1" src="sticky.png" new="sticky_new.png" />
+		<icon name="locked" published="1" src="locked.png" new="locked_new.png" />
+		<icon name="moved" published="1" src="moved.png" />
+	</icons>
+
+	<topicicon width="48" height="48">
+		<main type="system">
+			<icon name="moved" />
+			<icon name="deleted" />
+			<icon name="unapproved" />
+			<icon name="locked" />
+			<icon name="sticky" />
+			<icon name="unanswered" />
+			<icon name="normal" />
+		</main>
+	</topicicon>
+</kunena-topicicons>

@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.model' );
-kimport('kunena.model');
-kimport ( 'kunena.templates.helper' );
+jimport( 'joomla.application.component.model' );
+kimport( 'kunena.model' );
+kimport( 'kunena.template.helper' );
 jimport( 'joomla.html.pagination' );
 
 /**
@@ -49,10 +49,10 @@ class KunenaAdminModelTemplates extends KunenaModel {
 		$tBaseDir = KPATH_SITE.'/template';
 		//get template xml file info
 		$rows = array();
-		$rows = KunenaTemplatesHelper::parseXMLTemplateFiles($tBaseDir);
+		$rows = KunenaTemplateHelper::parseXmlFiles($tBaseDir);
 		// set dynamic template information
 		foreach( $rows as $row ) {
-			$row->published = KunenaTemplatesHelper::isTemplateDefault($row->directory);
+			$row->published = KunenaTemplateHelper::isDefault($row->directory);
 		}
 		$this->setState ( 'list.total', count($rows) );
 		$rows = array_slice($rows, $this->getState ( 'list.start'), $this->getState ( 'list.limit'));
@@ -83,7 +83,7 @@ class KunenaAdminModelTemplates extends KunenaModel {
 		$app = JFactory::getApplication ();
 		$tBaseDir	= JPath::clean(KPATH_SITE.'/template');
 		$template = $app->getUserState ( 'kunena.edit.template');
-		$details	= KunenaTemplatesHelper::parseXMLTemplateFile($tBaseDir, $template);
+		$details	= KunenaTemplateHelper::parseXmlFile($tBaseDir, $template);
 
 		return $details;
 	}

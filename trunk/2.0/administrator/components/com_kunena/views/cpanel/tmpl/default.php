@@ -47,6 +47,9 @@ $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/ad
 					<div class="icon-container">
 						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=attachments') ?>" title="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/files.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW'); ?> </span></a> </div>
 					</div>
+					<!-- div class="icon-container">
+						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topicicons') ?>" title="<?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/topicicons.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER'); ?> </span></a> </div>
+					</div -->
 					<div class="icon-container">
 						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=prune') ?>" title="<?php echo JText::_('COM_KUNENA_C_PRUNETABDESC');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/prune.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?> </span></a> </div>
 					</div>

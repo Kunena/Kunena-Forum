@@ -88,6 +88,7 @@ a.icon-profiles-sm { background: url(../icons/small/users.png) 5px 5px no-repeat
 a.icon-template-sm { background: url(../icons/small/templates.png) 5px 5px no-repeat; }
 a.icon-smilies-sm{ background: url(../icons/small/smileys.png) 5px 5px no-repeat; }
 a.icon-ranks-sm { background: url(../icons/small/ranks.png) 5px 5px no-repeat; }
+a.icon-topicicons-sm { background: url(../icons/small/topicicons.png) 5px 5px no-repeat; }
 a.icon-files-sm { background: url(../icons/small/files.png) 5px 5px no-repeat; }
 a.icon-images-sm { background: url(../icons/small/images.png) 5px 5px no-repeat; }
 a.icon-prune-sm { background: url(../icons/small/prune.png) 5px 5px no-repeat; }
@@ -107,6 +108,7 @@ div.kadmin-functitle.icon-profiles { background: url(../icons/large/users.png) 5
 div.kadmin-functitle.icon-template { background: url(../icons/large/templates.png) 5px 5px no-repeat; }
 div.kadmin-functitle.icon-smilies{ background: url(../icons/large/smileys.png) 5px 5px no-repeat; }
 div.kadmin-functitle.icon-ranks { background: url(../icons/large/ranks.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-topicicons { background: url(../icons/large/topicicons.png) 5px 5px no-repeat; }
 div.kadmin-functitle.icon-files { background: url(../icons/large/files.png) 5px 5px no-repeat; }
 div.kadmin-functitle.icon-images { background: url(../icons/large/images.png) 5px 5px no-repeat; }
 div.kadmin-functitle.icon-prune { background: url(../icons/large/prune.png) 5px 5px no-repeat; }

@@ -152,7 +152,9 @@ class KunenaViewTopic extends KunenaView {
 		$this->my = JFactory::getUser();
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
-		$this->topicIcons = $this->template->getTopicIcons();
+		if ($this->config->topicicons) {
+			$this->topicIcons = $this->template->getTopicIcons();
+		}
 
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$arrayanynomousbox = array();
@@ -206,7 +208,6 @@ class KunenaViewTopic extends KunenaView {
 		$this->my = JFactory::getUser();
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
-		$this->topicIcons = $this->template->getTopicIcons();
 		$mesid = $this->state->get('item.mesid');
 		if (!$mesid) {
 			$this->topic = KunenaForumTopicHelper::get($this->state->get('item.id'));
@@ -220,8 +221,11 @@ class KunenaViewTopic extends KunenaView {
 			return false;
 		}
 		$quote = JRequest::getBool ( 'quote', false );
-		list ($this->topic, $this->message) = $parent->newReply($quote);
 		$this->category = $this->topic->getCategory();
+		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
+			$this->topicIcons = $this->template->getTopicIcons();
+		}
+		list ($this->topic, $this->message) = $parent->newReply($quote);
 		$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->topic->subject;
 		$this->action = 'post';
 
@@ -235,7 +239,6 @@ class KunenaViewTopic extends KunenaView {
 		$this->my = JFactory::getUser();
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
-		$this->topicIcons = $this->template->getTopicIcons();
 		$mesid = $this->state->get('item.mesid');
 		$document = JFactory::getDocument();
 
@@ -247,6 +250,14 @@ class KunenaViewTopic extends KunenaView {
 		}
 		$this->topic = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
+		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
+			$this->topicIcons = $this->template->getTopicIcons();
+			if (isset($this->topicIcons[$this->topic->icon_id])) {
+				$this->topicIcons[$this->topic->icon_id]->checked = 1;
+			} else {
+				$this->topicIcons[0]->checked = 1;
+			}
+		}
 		$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->topic->subject;
 		$this->action = 'edit';
 

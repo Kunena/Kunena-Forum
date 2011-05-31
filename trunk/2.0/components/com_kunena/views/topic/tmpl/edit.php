@@ -100,16 +100,16 @@ $this->displayLoginBox ();
 			</td>
 		</tr>
 
-		<?php if ($this->message->parent==0 && $this->config->topicicons) : ?>
+		<?php if (!empty($this->topicIcons)) : ?>
 		<tr id="kpost-topicicons" class="krow<?php echo 1 + $this->k^=1 ?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></strong>
 			</td>
 
 			<td class="kcol-mid">
-				<?php foreach ($this->topicIcons as $iconId=>$iconImage): ?>
-				<input type="radio" name="topic_emoticon" value="<?php echo intval($iconId); ?>" <?php echo $this->topic->icon_id == $iconId ? ' checked="checked" ':'' ?> />
-				<img src="<?php echo $this->template->getTopicIconPath($iconId, true);?>" alt="" border="0" />
+				<?php foreach ($this->topicIcons as $id=>$icon): ?>
+				<input type="radio" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
+				<img src="<?php echo $this->template->getTopicIconPath($icon->id, true);?>" alt="" border="0" />
 				<?php endforeach; ?>
 			</td>
 		</tr>

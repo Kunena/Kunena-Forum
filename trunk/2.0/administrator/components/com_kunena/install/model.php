@@ -396,6 +396,11 @@ class KunenaModelInstall extends JModel {
 	public function stepExtract() {
 		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
 		if (!is_file("{$path}/fileformat")) {
+			// SVN install
+			$dir = '/components/com_kunena/media/kunena';
+			if (is_dir(JPATH_ADMINISTRATOR.$dir)) {
+				JFolder::copy(JPATH_ADMINISTRATOR.$dir, KPATH_MEDIA, false, true);
+			}
 			$this->setStep($this->getStep()+1);
 			return;
 		}

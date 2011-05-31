@@ -107,7 +107,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			}
 			// Delete the tmp install directory
 			if (JFolder::exists($tmp)) {
-				$templates = KunenaTemplatesHelper::parseXMLTemplateFiles($tmp);
+				$templates = KunenaTemplateHelper::parseXmlFiles($tmp);
 				if (!empty($templates)) {
 					foreach ($templates as $template) {
 						// Never overwrite default template
@@ -158,7 +158,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
-		if (KunenaTemplatesHelper::isTemplateDefault($template) || $id == 'default') {
+		if (KunenaTemplateHelper::isDefault($template) || $id == 'default') {
 			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_CANNOT_DEFAULT', $id), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;

@@ -36,8 +36,8 @@
 		<not><isset property="build_dir" /></not>
 	</condition>
 	<property file="build.config.ini" />
-	<property name="kunena.frontend" value="components/com_kunena" />
-	<property name="kunena.backend" value="administrator/components/com_kunena" />
+	<property name="kunena.site" value="components/com_kunena" />
+	<property name="kunena.admin" value="administrator/components/com_kunena" />
 	<property name="kunena.media" value="media/kunena" />
 
 	<target name="dist" depends="mkdir,archive_old,init,build,minify,copy,info,cleanup" />
@@ -76,7 +76,7 @@
 			</classpath>
 		</taskdef>
 
-		<xmlproperty file="${project_dir}/${kunena.backend}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<xmlproperty file="${project_dir}/${kunena.admin}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<buildnumber />
 		<tstamp>
 			<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
@@ -108,22 +108,16 @@
 			<istrue value="${cfg.bz2}" />
 		</condition>
 
-		<copy todir="${tmp_dir}/administrator">
-			<fileset dir="${project_dir}/administrator">
-				<exclude name="components/com_kunena/language/**"/>
+		<copy todir="${tmp_dir}/admin">
+			<fileset dir="${project_dir}/${kunena.admin}">
+				<exclude name="language/**"/>
 			</fileset>
 		</copy>	
-		<copy todir="${tmp_dir}/components">
-			<fileset dir="${project_dir}/components">
-				<exclude name="com_kunena/language/**"/>
-				<exclude name="com_kunena/template/**/params.ini"/>
+		<copy todir="${tmp_dir}/site">
+			<fileset dir="${project_dir}/${kunena.site}">
+				<exclude name="language/**"/>
+				<exclude name="template/**/params.ini"/>
 			</fileset>
-		</copy>	
-		<copy todir="${tmp_dir}/media">
-			<fileset dir="${project_dir}/media" />
-		</copy>	
-		<copy todir="${tmp_dir}">
-			<fileset file="${project_dir}/README.txt" />
 		</copy>	
 	</target>
 
@@ -134,40 +128,52 @@
 		<filter token="kunenaversionbuild" value="${build.number}" />
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
-		<move file="${tmp_dir}/${kunena.backend}/${cfg.name}.xml" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/${cfg.name}.j16.xml" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.frontend}/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.frontend}/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
-		<move file="${tmp_dir}/README.txt" todir="${build_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/${kunena.backend}/libraries/forum/forum.php" todir="${tmp_dir}/${kunena.backend}/libraries/forum" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/${kunena.frontend}/template/default/template.xml" todir="${tmp_dir}/${kunena.frontend}/template/default" overwrite="true" filtering="true" />		
+		<!-- Add version information to all xml files and forum.php -->
+		<copy todir="${tmp_dir}/admin" overwrite="true" filtering="true">
+			<fileset dir="${project_dir}/${kunena.admin}">
+				<include name="**/*.xml"/>
+				<include name="libraries/forum/forum.php"/>
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/site" overwrite="true" filtering="true">
+			<fileset dir="${project_dir}/${kunena.site}">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+
+		<!-- Move media files -->
+		<move todir="${tmp_dir}/media">
+			<fileset dir="${tmp_dir}/admin/${kunena.media}" />
+		</move>	
 
 		<!-- Move files needed by the installer -->
-		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/api.php" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/admin.kunena.php" todir="${build_dir}" overwrite="true" filtering="flse" />
-		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/kunena.php" todir="${build_dir}" overwrite="true" filtering="false" />
-		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/router.php" todir="${build_dir}" overwrite="true" filtering="false" />
-		<move file="${tmp_dir}/${kunena.backend}/install/system/kunena.xml" todir="${build_dir}/install/system" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/install/system/kunena.j16.xml" todir="${build_dir}/install/system" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/install/kunena.install.upgrade.xml" todir="${build_dir}/install" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/admin/${cfg.name}.xml" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/admin/${cfg.name}.j16.xml" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/site/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/site/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
+		<copy file="${project_dir}/README.txt" todir="${build_dir}" overwrite="true" filtering="true" />
+		<!-- Copy installer entry files to keep forum offline during installation process. -->
+		<move file="${tmp_dir}/admin/install/entrypoints/api.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/admin/install/entrypoints/admin.kunena.php" todir="${build_dir}" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/admin/install/entrypoints/kunena.php" todir="${build_dir}" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/admin/install/entrypoints/router.php" todir="${build_dir}" overwrite="true" filtering="false" />
 		<move todir="${build_dir}">
-			<fileset dir="${tmp_dir}/${kunena.backend}">
-				<include name="*install*"/>
+			<fileset dir="${tmp_dir}/admin">
 				<include name="install/**"/>
 			</fileset>
 		</move>
-		<!-- Rename component entry files so that they replace the old ones just before the end of the installation process, thus keeping forum offline while installing. -->
-		<move file="${tmp_dir}/${kunena.backend}/api.php" tofile="${tmp_dir}/${kunena.backend}/api.new.php" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/admin.kunena.php" tofile="${tmp_dir}/${kunena.backend}/admin.kunena.new.php" overwrite="true" filtering="false" />
-		<move file="${tmp_dir}/${kunena.frontend}/kunena.php" tofile="${tmp_dir}/${kunena.frontend}/kunena.new.php" overwrite="true" filtering="false" />
-		<move file="${tmp_dir}/${kunena.frontend}/router.php" tofile="${tmp_dir}/${kunena.frontend}/router.new.php" overwrite="true" filtering="false" />
+		<!-- Rename component entry files so that they replace the installer files just before the end of the installation process. -->
+		<move file="${tmp_dir}/admin/api.php" tofile="${tmp_dir}/admin/api.new.php" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/admin/admin.kunena.php" tofile="${tmp_dir}/admin/admin.kunena.new.php" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/site/kunena.php" tofile="${tmp_dir}/site/kunena.new.php" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/site/router.php" tofile="${tmp_dir}/site/router.new.php" overwrite="true" filtering="false" />
 		<move todir="${build_dir}/archive" includeEmptyDirs="no">
-			<fileset dir="${tmp_dir}/${kunena.backend}/archive" />
+			<fileset dir="${tmp_dir}/admin/archive" />
 		</move>
 	</target>
 
 	<target name="minify" depends="build">
-		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/${kunena.frontend}" todir="${tmp_dir}/${kunena.frontend}">
+		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/site" todir="${tmp_dir}/site">
 			<include name="**/*.js" />
 			<include name="**/*.css" />
 		</yui-compressor>
@@ -176,15 +182,15 @@
 	<macrodef name="language">
 		<attribute name="tag" default="en-GB"/>
 		<sequential>
-			<copy file="${project_dir}/${kunena.backend}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}/admin" overwrite="true" filtering="true" />
+			<copy file="${project_dir}/${kunena.admin}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}/admin" overwrite="true" filtering="true" />
 			<copy todir="${tmp_dir}/languages/@{tag}/admin" flatten="yes" includeEmptyDirs="no" overwrite="true">
-				<fileset dir="${project_dir}/${kunena.backend}">
+				<fileset dir="${project_dir}/${kunena.admin}">
 					<include name="**/@{tag}.*.ini"/>
 				</fileset>
 			</copy>
-			<copy file="${project_dir}/${kunena.frontend}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}/site" overwrite="true" filtering="true" />
+			<copy file="${project_dir}/${kunena.site}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}/site" overwrite="true" filtering="true" />
 			<copy todir="${tmp_dir}/languages/@{tag}/site" flatten="yes" includeEmptyDirs="no" overwrite="true">
-				<fileset dir="${project_dir}/${kunena.frontend}">
+				<fileset dir="${project_dir}/${kunena.site}">
 					<include name="**/@{tag}.*.ini"/>
 				</fileset>
 			</copy>
@@ -260,10 +266,11 @@
 		<!--language tag="vi-VN" /-->
 		<!--language tag="zh-CN" /-->
 		<!--language tag="zh-TW" /-->
-		<archive destfile="${build_dir}/archive/com_kunena-admin" basedir="${tmp_dir}/${kunena.backend}" />
-		<archive destfile="${build_dir}/archive/com_kunena-site" basedir="${tmp_dir}/${kunena.frontend}" />
-		<archive destfile="${build_dir}/archive/com_kunena-media" basedir="${tmp_dir}/${kunena.media}" />
+		<archive destfile="${build_dir}/archive/com_kunena-media" basedir="${tmp_dir}/media" />
+		<archive destfile="${build_dir}/archive/com_kunena-admin" basedir="${tmp_dir}/admin" />
+		<archive destfile="${build_dir}/archive/com_kunena-site" basedir="${tmp_dir}/site" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />
+		<copy file="${build_dir}/README.txt" todir="${package_dir}" />
 	</target>
 
 	<target name="info" depends="copy">

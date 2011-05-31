@@ -66,7 +66,6 @@ class KunenaTemplate extends JObject
 		foreach ($xml['_default']->children() as $param)  {
 			if ($param->attributes('type') != 'spacer') $this->params->def($param->attributes('name'), $param->attributes('default'));
 		}
-		$this->getTopicIconPath(0);
 	}
 
 	public function initialize() {}
@@ -221,46 +220,84 @@ class KunenaTemplate extends JObject
 		return "{$base}{$path}/images/{$image}";
 	}
 
-	public function getTopicIcons() {
+	public function getTopicIcons($all = false) {
 		if (empty($this->topicIcons)) {
-			$curpath = $this->getPath();
-			$defpath = $this->getPath(true);
-
-			$path = $curpath;
-			if (!is_file ( KPATH_SITE . "/{$path}/icons.php" )) {
-				$path = $defpath;
+			$xmlfile = JPATH_ROOT.'/media/kunena/topicicons/default/topicicons.xml';
+			if (file_exists($xmlfile)) {
+				$xml = simplexml_load_file($xmlfile);
 			}
-			$topic_emoticons = array();
-			$item = new StdClass();
-			$item->id = 0;
-			$item->name = 'Default';
-			$item->relpath = "{$defpath}/images/topicicons/user/default.png";
-			$item->url = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE."/{$item->relpath}";
-			$this->topicIcons[0] = $item;
-			include KPATH_SITE . "/{$path}/icons.php";
-			foreach ($topic_emoticons as $id=>$icon) {
-				$item = new StdClass();
-				$item->id = $id;
-				$item->name = JFile::stripExt($icon);
-				if (is_file( KPATH_SITE . "/{$curpath}/images/topicicons/user/{$icon}" )) {
-					$item->relpath = "{$curpath}/images/topicicons/user/{$icon}";
-				} elseif (is_file( KPATH_SITE . "/{$defpath}/images/topicicons/user/{$icon}" )) {
-					$item->relpath = "{$defpath}/images/topicicons/user/{$icon}";
-				} else continue;
-				$item->url = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE."/{$item->relpath}";
-				$this->topicIcons[$id] = $item;
+			if (isset($xml->icons)) {
+				foreach($xml->icons as $icons) {
+					$type = (string) $icons->attributes()->type;
+					$width = (int) $icons->attributes()->width;
+					$height = (int) $icons->attributes()->height;
+					foreach($icons->icon as $icon) {
+						$attributes = $icon->attributes();
+						$icon = new stdClass();
+						$icon->id = (int) $attributes->id;
+						$icon->type = (string) $attributes->type ? (string) $attributes->type : $type;
+						$icon->name = (string) $attributes->name;
+						if ($icon->type != 'user') {
+							$icon->id = $icon->type.'_'.$icon->name;
+						}
+						$icon->published = (int) $attributes->published;
+						$icon->title = (string) $attributes->title;
+						$icon->filename = (string) $attributes->src;
+						$icon->width = (int) $attributes->width ? (int) $attributes->width : $width;
+						$icon->height = (int) $attributes->height ? (int) $attributes->height : $height;
+						$this->topicIcons[$icon->id] = $icon;
+					}
+				}
+			}
+			// Make sure that default icon exists (use user/default.png in current template)
+			if (!isset($this->topicIcons[0])) {
+				$icon = new StdClass();
+				$icon->id = 0;
+				$icon->type = 'user';
+				$icon->name = 'default';
+				$icon->published = 0;
+				$icon->title = 'Default';
+				$icon->filename = 'default.png';
+				$icon->width = 48;
+				$icon->height = 48;
+				$default = !is_file( KPATH_SITE . "/{$this->getPath()}/images/topicicons/user/{$icon->filename}" );
+				$icon->relpath = KPATH_COMPONENT_RELATIVE."/{$this->getPath($default)}/images/topicicons/user/{$icon->filename}";
+				$this->topicIcons[0] = $icon;
 			}
 		}
-		return $this->topicIcons;
+		if ($all) {
+			$icons = $this->topicIcons;
+		} else {
+			$icons = array();
+			foreach ($this->topicIcons as $icon) {
+				if ($icon->published && is_numeric($icon->id)) {
+					$icons[$icon->id] = $icon;
+				}
+			}
+		}
+		return $icons;
 	}
 
 	public function getTopicIconPath($index, $url = false) {
 		if (empty($this->topicIcons)) {
 			$this->getTopicIcons();
 		}
-		if ($url) $base = 'url';
-		else $base = 'relpath';
-		return isset($this->topicIcons[$index]) ? $this->topicIcons[$index]->$base : $this->topicIcons[0]->$base;
+		if (empty($this->topicIcons[$index]->published)) {
+			$index = 0;
+		}
+		$icon = $this->topicIcons[$index];
+		if (!isset($icon->relpath)) {
+			$curpath = $this->getPath();
+			$defpath = $this->getPath(true);
+			if (is_file( KPATH_SITE . "/{$curpath}/images/topicicons/default/{$icon->filename}" )) {
+				$icon->relpath = KPATH_COMPONENT_RELATIVE."/{$curpath}/images/topicicons/default/{$icon->filename}";
+			} elseif (is_file( KPATH_SITE . "/{$defpath}/images/topicicons/default/{$icon->filename}" )) {
+				$icon->relpath = KPATH_COMPONENT_RELATIVE."/{$defpath}/images/topicicons/default/{$icon->filename}";
+			} else {
+				$icon->relpath = "media/kunena/topicicons/default/{$icon->filename}";
+			}
+		}
+		return ($url ? JURI::root(true).'/' : '') . $icon->relpath;
 	}
 
 	public function getMovedIconPath($url = false) {
@@ -297,6 +334,13 @@ class KunenaTemplate extends JObject
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;
+	}
+
+	// FIXME: remove:
+	public function getTopicsIconPath($filename) {
+		if ( empty($filename) ) return;
+
+		return "media/kunena/topicicons/{$filename}";
 	}
 
 	public function getTemplateDetails() {

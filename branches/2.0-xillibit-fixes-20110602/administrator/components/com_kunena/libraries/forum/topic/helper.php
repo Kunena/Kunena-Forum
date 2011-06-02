@@ -309,10 +309,12 @@ class KunenaForumTopicHelper {
 			KunenaError::checkDatabaseError ();
 		}
 		$list = array();
-		foreach ( $topics as $topic ) {
-			$topic->lastread = $topiclist[$topic->id]->lastread;
-			$topic->unread = $topiclist[$topic->id]->unread;
-			$list[$topic->id] = $topic->lastread;
+		if ( $topiclist ) {
+			foreach ( $topics as $topic ) {
+				$topic->lastread = $topiclist[$topic->id]->lastread;
+				$topic->unread = $topiclist[$topic->id]->unread;
+				$list[$topic->id] = $topic->lastread;
+			}
 		}
 		return $list;
 	}

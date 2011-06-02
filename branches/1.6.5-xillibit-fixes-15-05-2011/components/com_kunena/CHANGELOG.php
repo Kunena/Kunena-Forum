@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.5
 
+02-June-2011 Xillibit
+# [#26036] Add in userlist and stats a user count like jomsocial
+^ [#25980] Weird characters in en-GB language file in backend (thanks nima.abbc)
+
 28-May-2011 Xillibit
 + [#25998] Add setting to allow the user to show the number wanted of thankyou in the message
 

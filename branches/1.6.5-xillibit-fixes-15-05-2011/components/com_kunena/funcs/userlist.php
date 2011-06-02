@@ -44,6 +44,7 @@ class CKunenaUserlist {
 			if ($this->config->userlist_count_users == '0' && empty($this->search) ) $where = '1';
 			elseif ($this->config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
 			elseif ($this->config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
+			elseif ($this->config->userlist_count_users == '3' ) $where = 'block=0';
 		} else {
 			$where = '1';
 		}

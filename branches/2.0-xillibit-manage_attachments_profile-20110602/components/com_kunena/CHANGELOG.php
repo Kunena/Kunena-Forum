@@ -33,6 +33,7 @@ Kunena 2.0.0-DEV
 
 02-June-2011 Xillibit
 + [#26034] Let users manage attachements in their profiles
+# [#26034] Let users manage attachements in their profiles (Part 2)
 
 31-May-2011 Matias
 ^ [#22786] Merge revisions 4658-4856 from branches/2.0-xillibit-manage-topic-icons-19-03-2011

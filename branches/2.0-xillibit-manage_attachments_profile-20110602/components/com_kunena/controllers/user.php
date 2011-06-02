@@ -453,15 +453,17 @@ class KunenaControllerUser extends KunenaController {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
-		kimport('kunena.forum.message.attachment.helper');
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
 		$number = count($cids);
 
-		$attach = KunenaForumMessageAttachmentHelper::get($cids);
-		$attach->delete();
+		foreach( $cids as $id ) {
+			kimport ('kunena.forum.message.attachment.helper');
+			$attachment = KunenaForumMessageAttachmentHelper::get($id);
+			$attachment->delete();
+		}
 
-		$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY' ), $number );
+		$app->enqueueMessage ( JText::sprintf( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number) );
 		$this->redirectBack ();
 	}
 }

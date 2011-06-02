@@ -41,7 +41,7 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 
 					<?php
 					$i=0;
-
+					$y=1;
 					foreach ($this->items as $file) :
 						$instance = KunenaForumMessageAttachmentHelper::get($file->id);
 
@@ -52,7 +52,7 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 					?>
 
 					<tr class="k<?php echo $usrl_class ;?>">
-						<td class="kcol-first"><?php echo $i; ?></td>
+						<td class="kcol-first"><?php echo $y; ?></td>
 						<td><?php echo JHTML::_('grid.id', $i, intval($file->id)) ?></td>
 						<td align="center" class="kcol-mid"><img src="<?php echo $file->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
 
@@ -67,7 +67,7 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 						?>','delete')"><img src="<?php echo JURI::root().'components/com_kunena/template/default/images/icons/publish_x.png'; ?>" alt="" title="" /></a></td>
 
 					</tr>
-					<?php $i++; endforeach; ?>
+					<?php $i++; $y++; endforeach; ?>
 				</table>
 				<input class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>" style="float:right;" />
 				<input type="hidden" name="boxchecked" value="0" />

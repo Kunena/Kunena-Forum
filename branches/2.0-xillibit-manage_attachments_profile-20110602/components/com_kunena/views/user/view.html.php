@@ -476,6 +476,7 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayUserImages() {
+		kimport('kunena.forum.message.attachment.helper');
 		$this->me = KunenaFactory::getUser ();
 		$params = array('filetype' => '', 'orderby' => 'ASC', 'limit' => '6');
 		$this->items = KunenaForumMessageAttachmentHelper::getByUserid($this->me, $params);

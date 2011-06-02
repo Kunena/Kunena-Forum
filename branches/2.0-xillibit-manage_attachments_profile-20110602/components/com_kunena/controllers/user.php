@@ -446,4 +446,22 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->hideEmail = JRequest::getInt('hidemail', '', 'post', 'hidemail');
 		$this->me->showOnline = JRequest::getInt('showonline', '', 'post', 'showonline');
 	}
+
+	function delete() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ()) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+		kimport('kunena.forum.message.attachment.helper');
+		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+
+		$number = count($cids);
+
+		$attach = KunenaForumMessageAttachmentHelper::get($cids);
+		$attach->delete();
+
+		$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY' ), $number );
+		$this->redirectBack ();
+	}
 }

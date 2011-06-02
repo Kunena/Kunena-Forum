@@ -474,4 +474,14 @@ class KunenaViewUser extends KunenaView {
 		$this->rank_title = $this->user->getRank (0, 'title');
 		echo $this->loadTemplate('row');
 	}
+
+	function displayUserImages() {
+		$this->me = KunenaFactory::getUser ();
+		$params = array('filetype' => '', 'orderby' => 'ASC', 'limit' => '6');
+		$this->items = KunenaForumMessageAttachmentHelper::getByUserid($this->me, $params);
+
+		$this->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
+
+		echo $this->loadTemplate('imagesfileslist');
+	}
 }

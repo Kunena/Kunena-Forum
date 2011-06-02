@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 						<ul class="kposthead">
 							<li class="kposthead-replytitle"><h3>RE: <?php echo $this->escape($this->message->subject) ?></h3></li>
 							<li class="kposthead-postid" ><?php echo $this->numLink ?></li>
-							<?php if (!empty($this->ipLink)) : ?><li class="kposthead-postip">IP: <?php echo $this->ipLink ?></li><?php endif ?>
+							<?php if (!empty($this->ipLink)) : ?><li class="kposthead-postip"><?php echo $this->ipLink ?></li><?php endif ?>
 							<li class="kposthead-posttime">Posted [K=DATE:<?php echo $this->message->time ?>]</li>
 						</ul>
 						[K=MESSAGE_PROFILE]

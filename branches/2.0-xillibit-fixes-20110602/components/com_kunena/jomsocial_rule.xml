@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE jomsocial>
+<jomsocial>
+     <component>com_kunena</component>
+     <rules>
+          <rule>
+			  <name>Post a new topic in Kunena Forums</name>
+			  <description>Give points when a registered user creates a new thread.</description>
+			  <action_string>com_kunena.thread.new</action_string>
+			  <publish>true</publish>
+			  <points>2</points>
+			  <access_level>1</access_level>       
+          </rule>
+          <rule>
+			  <name>Reply to a topic in Kunena Forums</name>
+			  <description>Give points when a registered user replies to a thread.</description>
+			  <action_string>com_kunena.thread.reply</action_string>
+			  <publish>true</publish>
+			  <points>1</points>
+			  <access_level>1</access_level>
+           </rule>
+          <rule>
+			  <name>Attach an image to a topic in Kunena Forums</name>
+			  <description>Give points when a registered user attaches an image to a post.</description>
+			  <action_string>com_kunena.thread.attach.image</action_string>
+			  <publish>true</publish>
+			  <points>1</points>
+			  <access_level>1</access_level>
+           </rule>
+          <rule>
+			  <name>Attach a file to a topic in Kunena Forums</name>
+			  <description>Give points when a registered user attaches a file to a post.</description>
+			  <action_string>com_kunena.thread.attach.file</action_string>
+			  <publish>true</publish>
+			  <points>1</points>
+			  <access_level>1</access_level>
+           </rule>
+           <rule>
+               <name>Say thank you for a post</name>
+               <description>Give points when a registered user thank you a post.</description>
+               <action_string>com_kunena.thread.thankyou</action_string>
+               <publish>true</publish>
+               <points>1</points>
+               <access_level>1</access_level>
+           </rule>
+     </rules>
+</jomsocial>

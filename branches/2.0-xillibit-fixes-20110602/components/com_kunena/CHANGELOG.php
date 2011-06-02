@@ -36,6 +36,7 @@ Kunena 2.0.0-DEV
 # [#23443] Regression in polls : set two fields the first time
 # [#22569] Better mehtod to get spoiler image
 # [#26030] Undefined variables on recent discussions page
+^ [#25986] IPv6 in kunena_messages
 
 31-May-2011 Matias
 ^ [#22786] Merge revisions 4658-4856 from branches/2.0-xillibit-manage-topic-icons-19-03-2011

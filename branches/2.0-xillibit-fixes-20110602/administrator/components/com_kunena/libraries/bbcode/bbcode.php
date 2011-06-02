@@ -715,8 +715,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			return true;
 
 		$config = KunenaFactory::getConfig();
-		$spoiler_image1 = KunenaFactory::getTemplate()->getImage('emoticons/w00t.png');
-		$spoiler_image2 = KunenaFactory::getTemplate()->getImage('emoticons/pinch.png');
+		$spoiler_image1 = KunenaFactory::getTemplate()->getImagePath('emoticons/w00t.png');
+		$spoiler_image2 = KunenaFactory::getTemplate()->getImagePath('emoticons/pinch.png');
 		if ( $config->spoiler_image ) $spoiler_image1 = $spoiler_image2 = $template->getImagePath($config->spoiler_image);
 
 		static $spoilerid = 0;

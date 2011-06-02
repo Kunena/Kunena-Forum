@@ -24,7 +24,8 @@ class JFormFieldKunenaCategoryList extends JFormField {
 		$none = $this->element['none'];
 
 		// Get the field options.
-		$options = (array) $this->getOptions();
+		$options = array();
+		//$options = (array) $this->getOptions();
 
 		$size = $this->element['size'];
 		$class = $this->element['class'];

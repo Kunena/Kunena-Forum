@@ -151,7 +151,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		$id = (Int) $id-1;
 		$topicicons_xml->icons->icon[$id]['published'] = $value;
 
-	  $topicicons_xml->asXML(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
+		$topicicons_xml->asXML(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
 
 		if ( $value ) $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_PUBLISHED' );
 		else $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_UNPUBLISHED' );
@@ -186,7 +186,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 			return;
 		}
 
-    $id = (Int) $id-1;
+		$id = (Int) $id-1;
 
 		$defaultexist = 0;
 		if ($value == 1) {

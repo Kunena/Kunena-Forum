@@ -474,4 +474,16 @@ class KunenaViewUser extends KunenaView {
 		$this->rank_title = $this->user->getRank (0, 'title');
 		echo $this->loadTemplate('row');
 	}
+
+	function getLastvisitdate($date) {
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE == '1.5') {
+			$lastvisit = JHTML::_('date', $date, '%Y-%m-%d %H:%M:%S');
+		} else {
+			$lastvisit = JHTML::_('date', $date, 'Y-m-d\TH:i:sP ');
+		}
+
+		return $lastvisit;
+	}
 }

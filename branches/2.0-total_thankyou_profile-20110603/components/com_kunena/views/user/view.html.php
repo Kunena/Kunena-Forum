@@ -104,6 +104,7 @@ class KunenaViewUser extends KunenaView {
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');
 			$this->posts = $this->profile->posts;
+			$this->usertyr = $this->profile->ty_received;
 			$this->userpoints = $activityIntegration->getUserPoints($this->profile->userid);
 			$this->usermedals = $activityIntegration->getUserMedals($this->profile->userid);
 		}

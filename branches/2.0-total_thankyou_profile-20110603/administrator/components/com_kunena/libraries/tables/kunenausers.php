@@ -129,7 +129,11 @@ class TableKunenaUsers extends KunenaTable
 	* @var int
 	**/
 	var $hideEmail = null;
-
+	/**
+	* User thank yous received
+	* @var int
+	**/
+	var $ty_received = null;
 	/**
 	* Show online
 	* @var int

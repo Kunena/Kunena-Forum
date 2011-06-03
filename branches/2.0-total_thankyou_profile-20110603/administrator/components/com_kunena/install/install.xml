@@ -475,6 +475,7 @@
 		<field name="birthdate" type="date" null="0" default="0001-01-01" />
 		<field name="location" type="varchar(50)" null="1" />
 		<field name="icq" type="varchar(50)" null="1" />
+		<field name="ty_received" type="int(11)" null="1" default="0" />
 		<field name="aim" type="varchar(50)" null="1" />
 		<field name="yim" type="varchar(50)" null="1" />
 		<field name="msn" type="varchar(50)" null="1" />

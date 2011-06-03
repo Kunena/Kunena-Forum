@@ -54,6 +54,9 @@ defined ( '_JEXEC' ) or die ();
 		<?php if ($this->userposts) : ?>
 		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') .' '. intval($this->userposts); ?></li>
 		<?php endif ?>
+		<?php if ($this->usertyr) : ?>
+		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') .' '. intval($this->usertyr); ?></li>
+		<?php endif ?>
 		<?php if ($this->userpoints) : ?>
 		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') .' '. intval($this->userpoints); ?></li>
 		<?php endif ?>

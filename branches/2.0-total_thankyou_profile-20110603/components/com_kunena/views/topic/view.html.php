@@ -547,6 +547,7 @@ class KunenaViewTopic extends KunenaView {
 						$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
 						$this->userposts = $this->profile->posts;
 						$activityIntegration = KunenaFactory::getActivityIntegration ();
+						$this->usertyr = $this->profile->ty_received;
 						$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
 						$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
 					} else {
@@ -554,6 +555,7 @@ class KunenaViewTopic extends KunenaView {
 						$this->userrankimage = null;
 						$this->userranktitle = null;
 						$this->userposts = null;
+						$this->usertyr = null;
 						$this->userpoints = null;
 						$this->usermedals = null;
 					}
@@ -599,7 +601,7 @@ class KunenaViewTopic extends KunenaView {
 		if ($this->config->reportmsg && KunenaFactory::getUser()->exists()) {
 			$this->message_report = CKunenaLink::GetReportMessageLink ( $catid, $this->message->id, $this->getButton ( 'report', JText::_('COM_KUNENA_BUTTON_REPORT') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_REPORT') );
 		}
-		
+
 		$this->message_quickreply = $this->message_reply = $this->message_quote = '';
 		if ($this->topic->authorise('reply')) {
 			//user is allowed to reply/quote
@@ -616,7 +618,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->message_closed = JText::_('COM_KUNENA_VIEW_DISABLED');
 			}
 		}
-		
+
 		//Offer an moderator a few tools
 		$this->message_edit = $this->message_moderate = '';
 		$this->message_delete = $this->message_undelete = $this->message_permdelete = $this->message_publish = '';

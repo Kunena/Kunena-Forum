@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.6.5
 
+03-June-2011 Xillibit
+# [#26042] In config report for third party components under Joomla! 1.6 the wrong xml file is called
+
 02-June-2011 Xillibit
 # [#26036] Add in userlist and stats a user count like jomsocial
 ^ [#25980] Weird characters in en-GB language file in backend (thanks nima.abbc)

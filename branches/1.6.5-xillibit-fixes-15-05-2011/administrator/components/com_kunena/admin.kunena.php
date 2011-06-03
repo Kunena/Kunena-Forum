@@ -3251,10 +3251,22 @@ function generateSystemReport () {
 	else $modtext = '[quote][b]Modules:[/b] None [/quote]';
 
 	$thirdparty = array();
-	$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
-	$thirdparty['cb'] = checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
+	if ($JVersion->RELEASE == '1.5') {
+		$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+	} else {
+		$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'manifest', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+	}
+	if ($JVersion->RELEASE == '1.5') {
+		$thirdparty['cb'] = checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
+	} else {
+		$thirdparty['cb'] = checkThirdPartyVersion('comprofiler', 'comprofileg' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
+	}
 	$thirdparty['jomsocial'] = checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
-	$thirdparty['uddeim'] = checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+	if ($JVersion->RELEASE == '1.5') {
+		$thirdparty['uddeim'] = checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+	} else {
+		$thirdparty['uddeim'] = checkThirdPartyVersion('uddeim', 'uddeim', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+	}
 	foreach ($thirdparty as $id=>$item) {
 		if (empty($item)) unset ($thirdparty[$id]);
 	}

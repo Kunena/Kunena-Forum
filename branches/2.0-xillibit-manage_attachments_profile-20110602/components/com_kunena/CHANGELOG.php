@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+03-June-2011 Xillibit
+# [#26034] Let users manage attachements in their profiles - missing tab in default20 template
+
 02-June-2011 Xillibit
 + [#26034] Let users manage attachements in their profiles
 # [#26034] Let users manage attachements in their profiles (Part 2)

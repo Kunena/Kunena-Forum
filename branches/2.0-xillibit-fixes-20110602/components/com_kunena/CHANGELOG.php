@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+03-June-2011 Xillibit
+# [#23443] Fix regression in report configuration setting
+
 02-June-2011 Xillibit
 # [#23443] In message IP is visible two times
 # [#23443] Regression in polls : set two fields the first time

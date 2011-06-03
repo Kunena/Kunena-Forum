@@ -43,6 +43,8 @@ class KunenaAdminModelReport extends KunenaModel {
 		}
 		if(!$kunena_app->getCfg('smtpuser' )) {
 			$jconfig_smtpuser = 'Empty';
+		} else {
+			$jconfig_smtpuser = $kunena_app->getCfg('smtpuser' );
 		}
 		if($kunena_app->getCfg('ftp_enable' )) {
 			$jconfig_ftp = 'Enabled';
@@ -141,10 +143,22 @@ class KunenaAdminModelReport extends KunenaModel {
 		else $modtext = '[quote][b]Modules:[/b] None [/quote]';
 
 		$thirdparty = array();
-		$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
-		$thirdparty['cb'] = $this->_checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
-		$thirdparty['jomsocial'] =$this->_checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
-		$thirdparty['uddeim'] = $this->_checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+		if ($JVersion->RELEASE == '1.5') {
+			$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+		} else {
+		$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'manifest', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+		}
+		if ($JVersion->RELEASE == '1.5') {
+			$thirdparty['cb'] = $this->_checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
+		} else {
+			$thirdparty['cb'] = $this->_checkThirdPartyVersion('comprofiler', 'comprofileg' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
+		}
+		$thirdparty['jomsocial'] = $this->_checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
+		if ($JVersion->RELEASE == '1.5') {
+			$thirdparty['uddeim'] = $this->_checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+		} else {
+			$thirdparty['uddeim'] = $this->_checkThirdPartyVersion('uddeim', 'uddeim', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+		}
 		foreach ($thirdparty as $id=>$item) {
 			if (empty($item)) unset ($thirdparty[$id]);
 		}
@@ -236,7 +250,7 @@ class KunenaAdminModelReport extends KunenaModel {
 			$templatedetails->author = $templateauthor->data();
 			$templateversion = $xml_tmpl->document->version[0];
 			$templatedetails->version = $templateversion->data();
-		} elseif ($jversion->RELEASE == '1.6') {
+		} else {
 			$templatedetails = new stdClass();
 			// Get Joomla! frontend assigned template for Joomla! 1.6
 			$query = " SELECT template,title "
@@ -272,11 +286,11 @@ class KunenaAdminModelReport extends KunenaModel {
 		$kunena_db = JFactory::getDBO ();
 		if ($jversion->RELEASE == '1.5') {
 			// Get Kunena aliases
-			 $query = "SELECT m.id, m.menutype, m.name, m.alias, m.link, m.parent
- 	  	     	FROM #__menu AS m
- 	  	        INNER JOIN #__menu AS mm ON m.link LIKE CONCAT( '%Itemid=', mm.id )
- 	  	        WHERE m.published=1 AND m.type = 'menulink' AND mm.link LIKE '%com_kunena%'
- 	  	        ORDER BY m.menutype, m.parent, m.ordering ASC";
+			$query = "SELECT m.id, m.menutype, m.name, m.alias, m.link, m.parent
+					FROM #__menu AS m
+					INNER JOIN #__menu AS mm ON m.link LIKE CONCAT( '%Itemid=', mm.id )
+					WHERE m.published=1 AND m.type = 'menulink' AND mm.link LIKE '%com_kunena%'
+					ORDER BY m.menutype, m.parent, m.ordering ASC";
  	  	    $kunena_db->setQuery($query);
 			$kmenustype = (array) $kunena_db->loadObjectlist('id');
 			// Get Kunena menu items
@@ -291,11 +305,19 @@ class KunenaAdminModelReport extends KunenaModel {
 			foreach($kmenustype as $item) {
 				$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
 			}
-		} elseif ($jversion->RELEASE == '1.6') {
+		} else {
+			// Get Kunena extension id
+			$query = "SELECT extension_id "
+				." FROM #__extensions "
+				." WHERE name='com_kunena' AND type='component'";
+			$kunena_db->setQuery($query);
+			$kextensionid = $kunena_db->loadResult();
+			if (KunenaError::checkDatabaseError()) return;
+
 			// Get Kunena menu items
 			$query = "SELECT id "
 				." FROM #__menu "
-				." WHERE type='component' AND title ='Forum' ORDER BY id ASC";
+				." WHERE component_id='$kextensionid' AND published='1' AND parent_id='1' AND level='1' ORDER BY id ASC";
 			$kunena_db->setQuery($query);
 			$kmenuparentid = $kunena_db->loadResult();
 			if (KunenaError::checkDatabaseError()) return;
@@ -381,7 +403,7 @@ class KunenaAdminModelReport extends KunenaModel {
 				$com_version = $xml_com->document->version[0];
 				$com_version = '[u]'.$namedetailled.':[/u] Installed (Version : '.$com_version->data().')';
 			} else {
-				$com_version = '[u]'.$namedetailled.'[/u] '.$com_version->data();
+				$com_version = '[u]'.$namedetailled.'[/u] The file doesn\'t exist '.$namexml.'.xml !';
 			}
 		} else {
 			$com_version = '';
@@ -395,7 +417,7 @@ class KunenaAdminModelReport extends KunenaModel {
 				$mod_version = $xml_mod->document->version[0];
 				$mod_version = '[u]'.$namedetailled.':[/u] Enabled (Version : '.$mod_version->data().')';
 			} else {
-				$mod_version = '[u]'.$namedetailled.'[/u] '.$mod_version->data();
+				$mod_version = '[u]'.$namedetailled.'[/u] The file doesn\'t exist '.$namexml.'.xml !';
 			}
 		} else {
 			$mod_version = '';

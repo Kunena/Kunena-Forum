@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+04-June-2011 Xillibit
+# [#23443] Fix fatal error Call to a member function getCategory() on a non-object on views/topic/view.html.php on line 225 when reply on a topic with default tableless template
+
 03-June-2011 Xillibit
 # [#23443] Fix regression in report configuration setting
 

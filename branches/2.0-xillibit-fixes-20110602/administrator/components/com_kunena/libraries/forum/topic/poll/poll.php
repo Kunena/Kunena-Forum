@@ -125,11 +125,11 @@ class KunenaForumTopicPoll extends JObject {
 	public function getMyVotes($user = null) {
 		$user = KunenaFactory::getUser($user);
 		if (!isset($this->myvotes[$user->userid])) {
-			$query = "SELECT *
+			$query = "SELECT userid
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
 			$this->_db->setQuery($query);
-			$this->myvotes[$user->userid] = $this->_db->loadObject('userid');
+			$this->myvotes[$user->userid] = $this->_db->loadObject();
 			KunenaError::checkDatabaseError();
 		}
 		return $this->myvotes[$user->userid];

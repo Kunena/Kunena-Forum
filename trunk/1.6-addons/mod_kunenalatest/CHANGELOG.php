@@ -27,6 +27,13 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+26-May-2011 LDA
+# [#25944] added missing strings
+
+20-May-2011 LDA
+^ [#25944] udpate de-DE (thanks rich)
+^ [#25944] update hu-HU (thanks pedrohsi)
++ [#25944] add th-TH (thanks drlovecat)
 
 KunenaLatest 1.6.5
 

@@ -37,6 +37,9 @@ Kunena Discuss Plugin 1.6.5
 23-May-2011 Xillibit
 # [#25947] Number thingy issue (Part 2)
 
+20-May-2011 LDA
+^ [#25944] update hu-HU (thanks pedrohsi)
+
 20-May-2011 Xillibit
 # [#25947] Update fr-FR because there was errors detected under Joomla! 1.6
 # [#25947] Number thingy issue

@@ -35,6 +35,14 @@ Kunena 1.6.5-DEV
 
 7-June-2011 Matias
 ^ [#25917] Merged revision 4866 from /branches/1.6.5-810-18-05-2011
+^ [#25917] Merged revisions 4890-4909 from /branches/1.6.5-xillibit-fixes-15-05-2011
+
+3-June-2011 Xillibit
+# [#26042] In config report for third party components under Joomla! 1.6 the wrong xml file is called
+
+2-June-2011 Xillibit
+# [#26036] Add in userlist and stats a user count like jomsocial
+^ [#25980] Weird characters in en-GB language file in backend (thanks nima.abbc)
 
 31-May-2011 Matias
 ^ [#25917] Merged revisions 4862-4890 from /branches/1.6.5-xillibit-fixes-15-05-2011

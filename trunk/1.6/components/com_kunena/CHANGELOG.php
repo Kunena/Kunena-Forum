@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+7-June-2011 Matias
+^ [#25917] Merged revision 4866 from /branches/1.6.5-810-18-05-2011
+
 31-May-2011 Matias
 ^ [#25917] Merged revisions 4862-4890 from /branches/1.6.5-xillibit-fixes-15-05-2011
 
@@ -55,6 +58,11 @@ Kunena 1.6.5-DEV
 
 20-May-2011 Xillibit
 # [#25939] Missing image causes Invalid argument supplied /lib/kunena.parser.p​hp on line 572
+
+18-May-2011 810
+^ [#25934] fix quote button
+^ [#25934] fix pagination size for rockettheme, yootheme ect templates
+^ [#25934] Minor CSS fixes
 
 17-May-2011 Matias
 ^ [#25917] Merged revisions 4857-4862 from /branches/1.6.5-xillibit-fixes-15-05-2011

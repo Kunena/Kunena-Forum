@@ -50,15 +50,18 @@ PX		EM			PCT			PT
 	padding: 0;
 	margin: 0;
 	line-height: 1.333em;
+	min-width:700px;
 }
 
-#Kunena td,
-#Kunena table,
-#Kunena th,
+#Kunena table tr th,
+#Kunena table tr td,
 #Kunena div,
 #Kunena p,
-#Kunena span {
+#Kunena span,
+#Kunena ul li,
+#Kunena ul li a {
 	font-size: 1em;
+	line-height: 1.333em;
 }
 #Kunena sup {
 	vertical-align: super;
@@ -66,9 +69,11 @@ PX		EM			PCT			PT
 #Kunena sub {
 	vertical-align: sub;
 }
-#Kunena ul li {
+#Kunena ul li,
+#Kunena ul li a {
 	background: none;
 	margin: 0;
+	padding: 0;
 }
 
 #Kunena .clr { clear:both; height:1px; overflow:hidden;}
@@ -706,7 +711,6 @@ PX		EM			PCT			PT
 	line-height: 28px;
 	padding-left: 15px;
 	padding-right: 10px;
-	width: 100%;
 }
 
 #Kunena .klist-actions-goto {
@@ -868,8 +872,7 @@ PX		EM			PCT			PT
 }
 #Kunena .kpagination a:link,
 #Kunena .kpagination a:visited {
-	display:block;
-	padding:3px 5px;
+	padding:0px 5px;
 	margin: 2px;
 	text-decoration:none;
 }
@@ -2107,8 +2110,10 @@ POST PAGE
 }
 */
 #Kunena .kicon-button span {
+	background-color: inherit;
 	background-image: inherit;
 	background-repeat: no-repeat;
+	border:0;
 	display: inline-block;
 	margin:0 -5px;
 }

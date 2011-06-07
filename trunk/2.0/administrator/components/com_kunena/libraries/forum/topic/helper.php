@@ -310,8 +310,13 @@ class KunenaForumTopicHelper {
 		}
 		$list = array();
 		foreach ( $topics as $topic ) {
-			$topic->lastread = $topiclist[$topic->id]->lastread;
-			$topic->unread = $topiclist[$topic->id]->unread;
+			if (isset($topiclist[$topic->id])) {
+				$topic->lastread = $topiclist[$topic->id]->lastread;
+				$topic->unread = $topiclist[$topic->id]->unread;
+			} else {
+				$topic->lastread = $topic->last_post_id;
+				$topic->unread = 0;
+			}
 			$list[$topic->id] = $topic->lastread;
 		}
 		return $list;

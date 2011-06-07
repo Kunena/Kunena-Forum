@@ -23,6 +23,9 @@ kimport ( 'kunena.profiler' );
  */
 class KunenaController extends JController {
 	var $_escape = 'htmlspecialchars';
+	var $_redirect = null;
+	var $_message= null;
+	var $_messageType = null;
 
 	function __construct() {
 		parent::__construct ();

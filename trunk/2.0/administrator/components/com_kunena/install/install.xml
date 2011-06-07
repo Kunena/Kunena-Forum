@@ -318,7 +318,7 @@
 		<field name="email" type="tinytext" null="1" />
 		<field name="subject" type="tinytext" null="1" />
 		<field name="time" type="int(11)" null="0" default="0" />
-		<field name="ip" type="varchar(15)" null="1" />
+		<field name="ip" type="varchar(128)" null="1" />
 		<field name="topic_emoticon" type="int(11)" null="0" default="0" />
 		<field name="locked" type="tinyint(4)" null="0" default="0" />
 		<field name="hold" type="tinyint(4)" null="0" default="0" />

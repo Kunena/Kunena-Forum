@@ -28,7 +28,8 @@ class KunenaForumTopicPoll extends JObject {
 	protected $usercount = false;
 	protected $users = false;
 	protected $myvotes = array();
-
+	protected $mytime = array();
+	
 	/**
 	 * Constructor
 	 *
@@ -125,14 +126,27 @@ class KunenaForumTopicPoll extends JObject {
 	public function getMyVotes($user = null) {
 		$user = KunenaFactory::getUser($user);
 		if (!isset($this->myvotes[$user->userid])) {
-			$query = "SELECT *
+			$query = "SELECT SUM(votes)
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
 			$this->_db->setQuery($query);
-			$this->myvotes[$user->userid] = $this->_db->loadObject('userid');
+			$this->myvotes[$user->userid] = $this->_db->loadResult();
 			KunenaError::checkDatabaseError();
 		}
 		return $this->myvotes[$user->userid];
+	}
+
+	public function getMyTime($user = null) {
+		$user = KunenaFactory::getUser($user);
+		if (!isset($this->mytime[$user->userid])) {
+			$query = "SELECT MAX(time)
+				FROM #__kunena_polls_users
+				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
+			$this->_db->setQuery($query);
+			$this->mytime[$user->userid] = $this->_db->loadResult();
+			KunenaError::checkDatabaseError();
+		}
+		return $this->mytime[$user->userid];
 	}
 
 	public function vote($option, $change = false, $user = null) {

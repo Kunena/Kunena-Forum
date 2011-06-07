@@ -211,10 +211,12 @@ class KunenaViewTopic extends KunenaView {
 		$mesid = $this->state->get('item.mesid');
 		if (!$mesid) {
 			$this->topic = KunenaForumTopicHelper::get($this->state->get('item.id'));
-			$mesid = $this->topic->first_post_id;
+			$parent = KunenaForumMessageHelper::get($this->topic->first_post_id);
+		} else {
+			$parent = KunenaForumMessageHelper::get($mesid);
+			$this->topic = $parent->getTopic();
 		}
 
-		$parent = KunenaForumMessageHelper::get($mesid);
 		if (!$parent->authorise('reply')) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage ( $parent->getError(), 'notice' );
@@ -599,7 +601,7 @@ class KunenaViewTopic extends KunenaView {
 		if ($this->config->reportmsg && KunenaFactory::getUser()->exists()) {
 			$this->message_report = CKunenaLink::GetReportMessageLink ( $catid, $this->message->id, $this->getButton ( 'report', JText::_('COM_KUNENA_BUTTON_REPORT') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_REPORT') );
 		}
-		
+
 		$this->message_quickreply = $this->message_reply = $this->message_quote = '';
 		if ($this->topic->authorise('reply')) {
 			//user is allowed to reply/quote
@@ -616,7 +618,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->message_closed = JText::_('COM_KUNENA_VIEW_DISABLED');
 			}
 		}
-		
+
 		//Offer an moderator a few tools
 		$this->message_edit = $this->message_moderate = '';
 		$this->message_delete = $this->message_undelete = $this->message_permdelete = $this->message_publish = '';

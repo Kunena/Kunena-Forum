@@ -1027,15 +1027,14 @@ class KunenaForumTopic extends JObject {
 		// Check that user can vote
 		$config = KunenaFactory::getConfig();
 		$poll = $this->getPoll();
-		$voted = $poll->getMyVotes($user);
 // TODO: allow support for only one vote without possibility to change it
 //		if ($voted && $config->pollallowvoteone) {
 //			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE' );
 //		}
-		if ($voted->votes >= $config->pollnbvotesbyuser) {
+		if ( $poll->getMyVotes($user) >= $config->pollnbvotesbyuser) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES' );
 		}
-		if ($config->polltimebtvotes && $voted->time + $config->polltimebtvotes > JFactory::getDate()->toUnix()) {
+		if ($config->polltimebtvotes && $poll->getMyTime($user) + $config->polltimebtvotes > JFactory::getDate()->toUnix()) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY' );
 		}
 	}

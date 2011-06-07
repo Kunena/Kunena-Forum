@@ -23,9 +23,6 @@ class JFormFieldKunenaCategoryList extends JFormField {
 	protected function getInput() {
 		$none = $this->element['none'];
 
-		// Get the field options.
-		$options = (array) $this->getOptions();
-
 		$size = $this->element['size'];
 		$class = $this->element['class'];
 
@@ -42,6 +39,6 @@ class JFormFieldKunenaCategoryList extends JFormField {
 			$attribs .= ' multiple="multiple"';
 		}
 
-		return JHTML::_('kunenaforum.categorylist', $this->name, 0, $options, $this->element, $attribs, 'value', 'text', $this->value);
+		return JHTML::_('kunenaforum.categorylist', $this->name, 0, (array) $this->element, $this->element, $attribs, 'value', 'text', $this->value);
 	}
 }

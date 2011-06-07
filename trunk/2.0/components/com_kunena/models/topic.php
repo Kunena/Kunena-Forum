@@ -221,8 +221,4 @@ class KunenaModelTopic extends KunenaModel {
 	public function getPollUsers() {
 		return $this->getPoll()->getUsers();
 	}
-
-	public function getMyVotes() {
-		return $this->getPoll()->getMyVotes();
-	}
 }

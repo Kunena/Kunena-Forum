@@ -33,9 +33,28 @@ Kunena 2.0.0-DEV
 
 7-June-2011 Matias
 # [#23444] Joomla 1.6: Fatal error in category manager (thanks LDA)
+^ [#22786] Merge revisions 4900-4916 from branches/2.0-xillibit-fixes-20110602
 
 7-June-2011 810
 ^ [#25521] update YUI Compressor to 2.4.5
+
+5-June-2011 Xillibit
+# [#23443] Undefined properties: KunenaControllerTopic::$_redirect, KunenaControllerTopic::$_message and KunenaControllerTopic::$_messageType
+# [#23443] Only under Joomla! 1.6 : Fatal Error: Class 'userid' not found in libraries/joomla/database/database/mysqli.php on line 438
+
+4-June-2011 Xillibit
+# [#23443] Fix fatal error Call to a member function getCategory() on a non-object when replying a topic with default tableless template
+
+3-June-2011 Xillibit
+# [#23443] Fix regression in report configuration setting
+
+2-June-2011 Xillibit
+# [#23443] In message IP is visible two times
+# [#23443] Regression in polls: set two fields the first time
+# [#26030] Undefined variables on recent discussions page
+^ [#25986] Add IPv6 support into kunena_messages table
+# [#26033] Fatal Error: Call to undefined method KunenaViewUser::getLastvisitdate()
+# [#26033] Fatal error: Call to undefined method JFormFieldKunenaCategoryList::getOptions()
 
 31-May-2011 Matias
 ^ [#22786] Merge revisions 4658-4856 from branches/2.0-xillibit-manage-topic-icons-19-03-2011

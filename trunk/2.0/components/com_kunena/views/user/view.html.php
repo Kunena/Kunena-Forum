@@ -486,4 +486,15 @@ class KunenaViewUser extends KunenaView {
 
 		return $lastvisit;
 	}
+
+	function displayAttachments() {
+		kimport('kunena.forum.message.attachment.helper');
+		$this->me = KunenaFactory::getUser ();
+		$params = array('filetype' => '', 'orderby' => 'ASC', 'limit' => '6');
+		$this->items = KunenaForumMessageAttachmentHelper::getByUserid($this->me, $params);
+
+		$this->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
+
+		echo $this->loadTemplate('attachments');
+	}
 }

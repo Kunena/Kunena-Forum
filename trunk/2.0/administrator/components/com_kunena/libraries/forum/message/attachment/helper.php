@@ -200,6 +200,24 @@ class KunenaForumMessageAttachmentHelper {
 		return $output;
 	}
 
+	public static function getByUserid($user, $params) {
+		if ( $params['filetype'] == 'files' ) $filetype = " AND filetype=''";
+		elseif ( $params['filetype'] == 'images' ) $filetype = " AND filetype!=''";
+		else $filetype = '';
+
+		$orderby = '';
+		if ( $params['orderby'] == 'desc' ) $orderby = ' ORDER BY id DESC';
+		else $orderby = ' ORDER BY id ASC';
+
+		$db = JFactory::getDBO ();
+		$query = "SELECT * FROM #__kunena_attachments WHERE userid='$user->userid' $filetype $orderby";
+		$db->setQuery ( $query, 0, $params['limit'] );
+		$results = $db->loadObjectList ();
+		KunenaError::checkDatabaseError ();
+
+		return $results;
+	}
+
 	// Internal functions
 
 	static protected function loadById($ids) {

@@ -56,6 +56,12 @@ defined ( '_JEXEC' ) or die ();
 							<?php $this->displayBanHistory(); ?>
 						</dd>
 						<?php endif;?>
+						<?php if ($this->me->isModerator() || $this->my->id == $this->profile->userid ): ?>
+						<dt class="closed" title="<?php echo JText::_('COM_KUNENA_MANAGE_ATTACHMENTS'); ?>"><?php echo JText::_('COM_KUNENA_MANAGE_ATTACHMENTS'); ?></dt>
+						<dd style="display: none;">
+							<?php $this->displayAttachments(); ?>
+						</dd>
+						<?php endif;?>
 						<?php if ($this->canBan) : ?>
 						<dt class="closed" title="<?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ) ?>"><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ) ?></dt>
 						<dd style="display: none;">

@@ -46,6 +46,10 @@ class KunenaAccessCommunityBuilder extends KunenaAccess {
 		return explode(',', $allowed);
 	}
 
+	public function getGroupName($id){
+		return $this->joomlaAccess->getGroupName($id);
+	}
+
 	public function checkSubscribers($topic, &$userids) {
 		$category = $topic->getCategory();
 		if ($category->accesstype == 'communitybuilder') {

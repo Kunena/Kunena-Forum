@@ -317,6 +317,8 @@ abstract class KunenaAccess {
 		return $userids;
 	}
 
+	abstract public function getGroupName($id);
+
 	abstract public function checkSubscribers($topic, &$userids);
 
 	abstract public function loadAllowedCategories($userid, &$categories);

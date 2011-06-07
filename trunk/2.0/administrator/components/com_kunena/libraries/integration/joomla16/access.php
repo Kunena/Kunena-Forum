@@ -83,6 +83,19 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		return $catlist;
 	}
 
+	public function getGroupName($id){
+		static $groups = false;
+		if ($groups == false) {
+			$db = JFactory::getDBO ();
+			$query = $db->getQuery(true);
+			$query->select('id, title');
+			$query->from('#__usergroups');
+			$db->setQuery((string)$query);
+			$groups = $db->loadObjectList('id');
+		}
+		return isset($groups[$id]) ? $groups[$id] : '';
+	}
+
 	public function checkSubscribers($topic, &$userids) {
 		$category = $topic->getCategory();
 		if (empty($userids) || $category->pub_access <= 0)

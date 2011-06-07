@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+7-June-2011 Matias
+# [#23444] Joomla 1.6: Fatal error in category manager (thanks LDA)
+
 7-June-2011 810
 ^ [#25521] update YUI Compressor to 2.4.5
 

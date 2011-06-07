@@ -59,6 +59,10 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		return $allowed;
 	}
 
+	public function getGroupName($id){
+		return $this->joomlaAccess->getGroupName($id);
+	}
+
 	public function checkSubscribers($topic, &$userids) {
 		$category = $topic->getCategory();
 		// TODO: check if user should get email or not

@@ -89,8 +89,8 @@ class KunenaAdminModelCategories extends KunenaModel {
 			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'list.levels' ), $params));
 			$this->setState ( 'list.total', count($categories) );
 			$this->_admincategories = array_slice ( $categories, $this->getState ( 'list.start' ), $this->getState ( 'list.limit' ) );
-			$acl = JFactory::getACL ();
 			$admin = 0;
+			$acl = KunenaFactory::getAccessControl();
 			foreach ($this->_admincategories as $category) {
 				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
 				if (empty($siblings)) {
@@ -112,17 +112,15 @@ class KunenaAdminModelCategories extends KunenaModel {
 					} else if ($category->pub_access == 1) {
 						$category->pub_group = JText::_('COM_KUNENA_NOBODY');
 					} else {
-						$category->pub_group = JText::_( $acl->get_group_name($category->pub_access) );
+						$category->pub_group = JText::_( $acl->getGroupName($category->pub_access) );
 					}
 				} else {
-					// FIXME: Add Joomla 1.6 support
-					$category->pub_group = $category->pub_group ? JText::_( $acl->get_group_name($category->pub_access) ) : JText::_('COM_KUNENA_NOBODY');
+					$category->pub_group = $category->pub_access ? JText::_( $acl->getGroupName($category->pub_access) ) : JText::_('COM_KUNENA_NOBODY');
 				}
 				if ($category->accesstype != 'none') {
 					$category->admin_group = '';
 				} else {
-					$category->admin_group = JText::_ ( $acl->get_group_name($category->admin_access ));
-
+					$category->admin_group = JText::_ ( $acl->getGroupName($category->admin_access ));
 				}
 				if ($me->isAdmin($category->id) && $category->isCheckedOut(0)) {
 					$category->editor = KunenaFactory::getUser($category->checked_out)->getName();

@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+7-June-2011 810
+^ [#25521] update YUI Compressor to 2.4.5
+
 31-May-2011 Matias
 ^ [#22786] Merge revisions 4658-4856 from branches/2.0-xillibit-manage-topic-icons-19-03-2011
 ^ [#25395] Disable topic icon maneger & category option in backend

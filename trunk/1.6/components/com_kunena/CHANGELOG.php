@@ -36,6 +36,7 @@ Kunena 1.6.5-DEV
 7-June-2011 Matias
 ^ [#25917] Merged revision 4866 from /branches/1.6.5-810-18-05-2011
 ^ [#25917] Merged revisions 4890-4909 from /branches/1.6.5-xillibit-fixes-15-05-2011
+^ [#25917] Merged revision 4868 from /branches/1.6.5-LDA-language-2011-05-20
 
 3-June-2011 Xillibit
 # [#26042] In config report for third party components under Joomla! 1.6 the wrong xml file is called
@@ -63,6 +64,12 @@ Kunena 1.6.5-DEV
 # [#25959] Error 500 when you submit a pol without check any case
 # [#25931] Member Search from Memberlist not working
 # [#25960] When set a number limit for poll vote, the limit isn't reach
+
+20-May-2011 LDA
+^ [#25944] update el-GR (thanks Chrysovalantis Mochlas)
+^ [#25944] update hu-HU (thanks pedrohsi)
+^ [#25944] update th-TH (thanks drlovecat)
+^ [#25944] update pt-BR (thanks iLucato)
 
 20-May-2011 Xillibit
 # [#25939] Missing image causes Invalid argument supplied /lib/kunena.parser.p​hp on line 572

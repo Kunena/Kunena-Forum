@@ -12,7 +12,7 @@
 	<authorUrl>www.kunenathai.com</authorUrl>
 	<copyright>(C) 2011 Kunenathai.com</copyright>
 	<license>GNU/GPL</license>
-	<description>ชุดติดตั้งภาษาไทยสำหรับระบบฟอรัม Kunena 1.6.1</description>
+	<description>ชุดติดตั้งภาษาไทยสำหรับระบบฟอรัม Kunena 1.6</description>
 
 	<files>
 		<filename>th-TH.com_kunena.ini</filename>

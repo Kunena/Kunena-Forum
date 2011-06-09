@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+8-June-2011 Matias
+# [#25415] Tableless template: fix broken topic icons
+
 7-June-2011 Matias
 # [#23444] Joomla 1.6: Fatal error in category manager (thanks LDA)
 ^ [#22786] Merge revisions 4900-4916 from branches/2.0-xillibit-fixes-20110602

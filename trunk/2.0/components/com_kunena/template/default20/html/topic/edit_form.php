@@ -99,10 +99,10 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 				<div class="kform-field">
 					<ul>
-						<?php foreach ($this->topicIcons as $topicIcon) : ?>
-						<li class="hasTip" title="Topic icon :: <?php echo $this->escape(ucfirst($topicIcon->name)) ?>">
-							<input type="radio" name="topic_emoticon" id="topic_emoticon_<?php echo $this->escape($topicIcon->name) ?>" value="<?php echo $this->escape($topicIcon->id) ?>" <?php echo $this->topic->icon_id == $topicIcon->id ? ' checked="checked" ':'' ?> />
-							<label for="topic_emoticon_<?php echo $this->escape($topicIcon->name) ?>"><img src="<?php echo $topicIcon->url ?>" alt="" border="0" /></label>
+						<?php foreach ($this->topicIcons as $id=>$icon) : ?>
+						<li class="hasTip" title="Topic icon :: <?php echo $this->escape(ucfirst($icon->name)) ?>">
+							<input type="radio" name="topic_emoticon" id="topic_emoticon_<?php echo $this->escape($icon->name) ?>" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
+							<label for="topic_emoticon_<?php echo $this->escape($icon->name) ?>"><img src="<?php echo $this->template->getTopicIconPath($icon->id, true) ?>" alt="" border="0" /></label>
 						</li>
 						<?php endforeach ?>
 					</ul>

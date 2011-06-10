@@ -520,6 +520,25 @@ table {border-collapse: collapse;}
 	font-size: 11px;
 }
 
+/* Threaded view 
+----------------------------------------------------------------------------------------------- */
+#kunena .ktree { 
+	width: 15px;
+	height: 27px;
+	margin: -9px 0;
+	display: inline-block;
+	background: url("../images/treenodes.png") no-repeat left center;
+}
+#kunena .ktree-crossedge { background-position: -45px 0; }
+#kunena .ktree-lastedge { background-position: -75px 0; }
+#kunena .ktree-root { background-position: -15px 0; }
+#kunena .ktree-single { background-position: 0 0; }
+#kunena .ktree-leaf { background-position: -90px 0; }
+#kunena .ktree-node { background-position: -60px 0; }
+#kunena .ktree-edge { background-position: -30px 0; }
+#kunena .ktree-gap { background-position: -105px 0; }
+#kunena .ktree-empty { background: none; }
+
 /*---------- Pagination ------------- */
 
 #kunena .kpage li {

@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+10-June-2011 Matias
++ [#25415] Tableless template: Add intended and threaded layouts
+^ [#25415] Change logic on how to change between topic layouts
+
 9-June-2011 LittleJohn
 + [#25415] Add configuration option and user option to select default topic layout (flat, intended, threaded)
 

@@ -44,6 +44,19 @@ class KunenaControllerUser extends KunenaController {
 		}
 		parent::display();
 	}
+
+	public function change() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		$layout = JRequest::getString ( 'topic_layout', 'default' );
+		KunenaFactory::getUser()->setTopicLayout ( $layout );
+		$this->redirectBack ();
+	}
+
 	public function karmaup() {
 		$this->karma(1);
 	}

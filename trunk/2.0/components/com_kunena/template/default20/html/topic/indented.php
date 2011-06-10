@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 		$this->displayPoll();
 		$this->getModulePosition( 'kunena_poll' );
 		$this->displayTopicActions(0);
-		include 'default_list.php';
+		include 'indented_list.php';
 		$this->displayFooter ();
 	?>
 	</div>

@@ -35,6 +35,7 @@ class KunenaViewTopic extends KunenaView {
 
 	function displayDefault($tpl = null) {
 		$this->layout = $this->state->get('layout');
+		if ($this->layout == 'flat') $this->layout = 'default';
 		$this->setLayout($this->layout);
 		$this->assignRef ( 'category', $this->get ( 'Category' ) );
 		$this->assignRef ( 'topic', $this->get ( 'Topic' ) );
@@ -465,13 +466,13 @@ class KunenaViewTopic extends KunenaView {
 		$this->layout_buttons = array();
 		if ($this->config->enable_threaded_layouts) {
 			if ($this->layout != 'default') {
-				$this->layout_buttons[] = CKunenaLink::GetThreadLayoutLink('flat', $catid, $id, $mesid,  $this->getButton ( 'layout-flat', JText::_('COM_KUNENA_BUTTON_LAYOUT_FLAT') ), $limitstart, $limit, JText::_('COM_KUNENA_BUTTON_LAYOUT_FLAT_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
+				$this->layout_buttons[] = CKunenaLink::GetUserLayoutLink('flat', $this->getButton ( 'layout-flat', JText::_('COM_KUNENA_BUTTON_LAYOUT_FLAT') ), JText::_('COM_KUNENA_BUTTON_LAYOUT_FLAT_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
 			}
 			if ($this->layout != 'threaded') {
-				$this->layout_buttons[] = CKunenaLink::GetThreadLayoutLink('threaded', $catid, $id, $mesid,  $this->getButton ( 'layout-threaded', JText::_('COM_KUNENA_BUTTON_LAYOUT_THREADED') ), $limitstart, $limit, JText::_('COM_KUNENA_BUTTON_LAYOUT_THREADED_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
+				$this->layout_buttons[] = CKunenaLink::GetUserLayoutLink('threaded', $this->getButton ( 'layout-threaded', JText::_('COM_KUNENA_BUTTON_LAYOUT_THREADED') ), JText::_('COM_KUNENA_BUTTON_LAYOUT_THREADED_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
 			}
 			if ($this->layout != 'indented') {
-				$this->layout_buttons[] = CKunenaLink::GetThreadLayoutLink('indented', $catid, $id, $mesid,  $this->getButton ( 'layout-indented', JText::_('COM_KUNENA_BUTTON_LAYOUT_INDENTED') ), $limitstart, $limit, JText::_('COM_KUNENA_BUTTON_LAYOUT_INDENTED_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
+				$this->layout_buttons[] = CKunenaLink::GetUserLayoutLink('indented', $this->getButton ( 'layout-indented', JText::_('COM_KUNENA_BUTTON_LAYOUT_INDENTED') ), JText::_('COM_KUNENA_BUTTON_LAYOUT_INDENTED_LONG'), 'nofollow', 'kicon-button kbuttonuser btn-left');
 			}
 		}
 		$location ^= 1;

@@ -36,11 +36,8 @@ class KunenaModelTopic extends KunenaModel {
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
 
-		$layout = $this->getWord ( 'layout' );
-		if (!$layout) {
-			$layout = $this->me->getTopicLayout ();
-			if ($layout == 'flat') $layout = 'default';
-		}
+		$layout = $this->getWord ( 'layout', 'default' );
+		$layout = $this->me->getTopicLayout ();
 		$this->setState ( 'layout', $layout );
 
 		$template = KunenaFactory::getTemplate();

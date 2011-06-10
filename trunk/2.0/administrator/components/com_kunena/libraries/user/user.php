@@ -377,6 +377,7 @@ class KunenaUser extends JObject {
 	}
 
 	public function getTopicLayout( $layout = null ) {
+		if ($layout == 'default') $layout = null;
 		if (!$layout) $layout = $this->_app->getUserState ( 'com_kunena.topic_layout' );
 		if (!$layout) $layout = $this->view;
 
@@ -388,19 +389,21 @@ class KunenaUser extends JObject {
 			default:
 				$layout = $this->_config->topic_layout;
 		}
-		
+
 		return $layout;
 	}
-	
-	public function setTopicLayout( $layout = null ) {
-		$layout = $this->getTopicLayout( $layout );
+
+	public function setTopicLayout( $layout = 'default' ) {
+		if ($layout != 'default') $layout = $this->getTopicLayout( $layout );
 
 		$this->_app->setUserState ( 'com_kunena.topic_layout', $layout );
-		
-		$this->view = $layout;
-		$this->save();
+
+		if ($this->userid) {
+			$this->view = $layout;
+			$this->save();
+		}
 	}
-	
+
 	public function profileIcon($name) {
 		switch ($name) {
 			case 'gender' :

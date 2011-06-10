@@ -130,6 +130,11 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( 'index.php?option=com_kunena&func=view&catid=' . $catid . '&id=' . $threadid . $query, $threadname, $title, $rel, $class, $anker );
 	}
 
+	function GetUserLayoutLink($layout, $text, $title='', $rel = 'nofollow', $class = '') {
+		$token = '&'.JUtility::getToken().'=1';
+		return CKunenaLink::GetSefHrefLink ( "index.php?option=com_kunena&view=user&task=change&topic_layout={$layout}{$token}", $text, $title, 'nofollow', $class );
+	}
+
 	function GetThreadPageLink($view, $catid, $id, $limitstart, $limit, $name, $anker = '', $rel = 'follow', $class = '') {
 		$kunena_config = KunenaFactory::getConfig ();
 		$pagelink = CKunenaLink::GetHrefLink ( self::GetThreadPageURL($view, $catid, $id, $limitstart, $limit, $anker), $name, '', $rel, $class );

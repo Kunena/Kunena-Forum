@@ -111,7 +111,7 @@ class KunenaForumCategory extends JObject {
 
 	public function isSection() {
 		$this->buildInfo();
-		return empty($this->_channels['none']);
+		return $this->parent_id == 0 || (!$this->numTopics && $this->locked && empty($this->_channels['none']));
 	}
 
 	public function getUrl() {
@@ -142,8 +142,8 @@ class KunenaForumCategory extends JObject {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($this->_channels === false) {
 			$this->_channels['none'] = array();
-			if (!$this->published || $this->parent_id == 0 && ($this->numTopics || !$this->locked)) {
-				// Sections do not have channels
+			if (!$this->published || $this->parent_id == 0 || (!$this->numTopics && $this->locked)) {
+				// Unpublished categories and sections do not have channels
 			} elseif (empty($this->channels) || $this->channels == $this->id) {
 				// No channels defined
 				$this->_channels['none'][$this->id] = $this;

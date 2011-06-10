@@ -130,19 +130,19 @@ class KunenaViewTopic extends KunenaView {
 
 	function displayFlat($tpl = null) {
 		$this->state->set('layout', 'default');
-		JFactory::getApplication()->setUserState( 'com_kunena.topic_layout', 'default' );
+		KunenaFactory::getUser()->setTopicLayout ( 'flat' );
 		$this->displayDefault($tpl);
 	}
 
 	function displayThreaded($tpl = null) {
 		$this->state->set('layout', 'threaded');
-		JFactory::getApplication()->setUserState( 'com_kunena.topic_layout', 'threaded' );
+		KunenaFactory::getUser()->setTopicLayout ( 'threaded' );
 		$this->displayDefault($tpl);
 	}
 
 	function displayIndented($tpl = null) {
 		$this->state->set('layout', 'indented');
-		JFactory::getApplication()->setUserState( 'com_kunena.topic_layout', 'indented' );
+		KunenaFactory::getUser()->setTopicLayout ( 'indented' );
 		$this->displayDefault($tpl);
 	}
 

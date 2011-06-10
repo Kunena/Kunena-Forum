@@ -386,6 +386,11 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo $this->lists ['userlist_count_users']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_WAY_COUNT_USERS_USERLIST_DESC') ?></td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['topic_layout']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_DESC') ?></td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>

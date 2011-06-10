@@ -376,6 +376,31 @@ class KunenaUser extends JObject {
 		return $rank;
 	}
 
+	public function getTopicLayout( $layout = null ) {
+		if (!$layout) $layout = $this->_app->getUserState ( 'com_kunena.topic_layout' );
+		if (!$layout) $layout = $this->view;
+
+		switch ( $layout ) {
+			case 'flat':
+			case 'threaded':
+			case 'indented':
+				break;
+			default:
+				$layout = $this->_config->topic_layout;
+		}
+		
+		return $layout;
+	}
+	
+	public function setTopicLayout( $layout = null ) {
+		$layout = $this->getTopicLayout( $layout );
+
+		$this->_app->setUserState ( 'com_kunena.topic_layout', $layout );
+		
+		$this->view = $layout;
+		$this->save();
+	}
+	
 	public function profileIcon($name) {
 		switch ($name) {
 			case 'gender' :

@@ -367,6 +367,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $userkeywords = 0;
 	var $image_upload = 'registered';
 	var $file_upload = 'registered';
+	var $topic_layout = 'flat';
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

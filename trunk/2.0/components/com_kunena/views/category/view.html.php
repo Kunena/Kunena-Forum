@@ -212,8 +212,8 @@ class KunenaViewCategory extends KunenaView {
 		$query = array();
 		$mesid = $lastPost->last_post_id;
 		if ($mesid) {
-			$l = JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' );
-			if ($l == 'threaded') $query[] = "&mesid={$mesid}";
+			$layout = $this->me->getTopicLayout();
+			if ($layout == 'threaded') $query[] = "&mesid={$mesid}";
 			else $anker = '#'.$mesid;
 		}
 		if ($limitstart) {

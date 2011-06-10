@@ -35,9 +35,13 @@ class KunenaModelTopic extends KunenaModel {
 		$config = KunenaFactory::getConfig ();
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
-		$layout = $this->getWord ( 'layout', 'default' );
-		if ($layout == 'default') $layout = $app->getUserState( 'com_kunena.topic_layout', 'default' );
-		$this->setState ( 'layout', !$layout ? 'default' : $layout );
+
+		$layout = $this->getWord ( 'layout' );
+		if (!$layout) {
+			$layout = $this->me->getTopicLayout ();
+			if ($layout == 'flat') $layout = 'default';
+		}
+		$this->setState ( 'layout', $layout );
 
 		$template = KunenaFactory::getTemplate();
 		$profile_location = $template->params->get('avatarPosition', 'left');

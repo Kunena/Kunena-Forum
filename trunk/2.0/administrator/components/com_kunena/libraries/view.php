@@ -227,7 +227,7 @@ class KunenaView extends JView {
 				}
 			}
 			if ($mesid) {
-				if (JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' ) != 'threaded') {
+				if (KunenaUserHelper::get()->getTopicLayout() != 'threaded') {
 					$uri->setFragment($mesid);
 				} else {
 					$uri->setVar('mesid', $mesid);

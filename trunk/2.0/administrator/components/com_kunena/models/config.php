@@ -327,6 +327,11 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['image_upload'] = JHTML::_('select.genericlist', $uploads, 'cfg_image_upload', 'class="inputbox" size="1"', 'value', 'text', $config->image_upload);
 		$lists ['file_upload'] = JHTML::_('select.genericlist', $uploads, 'cfg_file_upload', 'class="inputbox" size="1"', 'value', 'text', $config->file_upload);
 
+		$topic_layout[] = JHTML::_('select.option', 'flat', JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_FLAT'));
+		$topic_layout[] = JHTML::_('select.option', 'threaded', JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_THREADED'));
+		$topic_layout[] = JHTML::_('select.option', 'indented', JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_INDENTED'));
+		$lists ['topic_layout'] = JHTML::_('select.genericlist', $topic_layout, 'cfg_topic_layout', 'class="inputbox" size="1"', 'value', 'text', $config->topic_layout);
+
 		return $lists;
 	}
 }

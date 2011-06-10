@@ -116,7 +116,7 @@ class CKunenaLink {
 		$anker = '';
 		$query = array();
 		if ($mesid) {
-			if (!$layout) $l = JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' );
+			if (!$layout) $l = KunenaUserHelper::get()->getTopicLayout();
 			else $l = $layout;
 			if ($l == 'threaded') $query[] = "&mesid={$mesid}";
 			else $anker = $mesid;
@@ -149,7 +149,7 @@ class CKunenaLink {
 	}
 
 	function GetThreadPageURL($view, $catid, $id, $limitstart, $limit = '', $anker = '', $xhtml = true) {
-		$layout = JFactory::getApplication()->getUserState( 'com_kunena.topic_layout', 'default' );
+		$layout = KunenaUserHelper::get()->getTopicLayout();
 		$query = '';
 		if ($layout == 'threaded' && $anker>0) {
 			$query = "&mesid={$anker}";

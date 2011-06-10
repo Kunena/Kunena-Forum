@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+9-June-2011 LittleJohn
++ [#25415] Add configuration option and user option to select default topic layout (flat, intended, threaded)
+
 8-June-2011 Matias
 # [#25415] Tableless template: fix broken topic icons
 

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+11-June-2011 Xillibit
+# [#26141] Use third parties API to get version of AUP and Uddeim (AUP version)
+
 7-June-2011 Matias
 ^ [#25917] Merged revision 4866 from /branches/1.6.5-810-18-05-2011
 ^ [#25917] Merged revisions 4890-4909 from /branches/1.6.5-xillibit-fixes-15-05-2011

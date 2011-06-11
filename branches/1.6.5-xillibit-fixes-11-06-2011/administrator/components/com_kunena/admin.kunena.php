@@ -3112,6 +3112,7 @@ function showSystemReport ( $option ) {
 }
 
 function generateSystemReport () {
+	jimport('joomla.filesystem.file');
 	$kunena_config = KunenaFactory::getConfig ();
 	$kunena_app = JFactory::getApplication ();
 	$kunena_db = JFactory::getDBO ();
@@ -3252,7 +3253,13 @@ function generateSystemReport () {
 	if ($JVersion->RELEASE == '1.5') {
 		$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
 	} else {
-		$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'manifest', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+		if ( JFile::exists(JPATH_SITE . '/components/com_alphauserpoints/helper.php') ) {
+			require_once(JPATH_SITE . '/components/com_alphauserpoints/helper.php');
+			$aup = new AlphaUserPointsHelper ();
+			$thirdparty['aup'] = '[u]AlphaUserPoints[/u] '.$aup->getAupVersion();
+		} else {
+			$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'manifest', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+		}
 	}
 	if ($JVersion->RELEASE == '1.5') {
 		$thirdparty['cb'] = checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);

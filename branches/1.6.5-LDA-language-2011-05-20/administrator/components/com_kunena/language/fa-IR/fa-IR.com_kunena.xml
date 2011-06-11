@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<!DOCTYPE install>
+<install type="language" version="1.5" client="administrator" method="upgrade">
+	<name>Kunena Forum - Farsi</name>
+	<tag>fa-IR</tag>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
+	<author>عبدالحليم پوردريائي</author>
+	<authorEmail>abdulhalim.po@gmail.com</authorEmail>
+	<authorUrl>http://www.pourdaryaei.com</authorUrl>
+	<copyright>(C) 2011.</copyright>
+	<license>GNU/GPL</license>
+	<description>فايل زبان فارسي براي كامپوننت كيوننا</description>
+
+	<files>
+		<filename>fa-IR.com_kunena.ini</filename>
+		<filename>fa-IR.com_kunena.install.ini</filename>
+		<filename>fa-IR.com_kunena.menu.ini</filename>
+		<filename>fa-IR.com_kunena.sys.ini</filename>
+		<filename>fa-IR.plg_system_kunena.sys.ini</filename>
+	</files>
+</install>

@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+11-May-2011 LDA
+^ [#25944] update id-ID (thanks Daniel)
++ [#25944] added fa-IR (thanks Abdulhalim)
+
 20-May-2011 LDA
 ^ [#25944] update el-GR (thanks Chrysovalantis Mochlas)
 ^ [#25944] update hu-HU (thanks pedrohsi)

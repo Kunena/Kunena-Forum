@@ -15,7 +15,7 @@ defined( '_JEXEC' ) or die('');
 
 class KunenaIntegrationJomSocial extends KunenaIntegration {
 	public function __construct() {
-		$path = JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php';
+		$path = JPATH_ROOT . '/components/com_community/libraries/core.php';
 		if (!is_file ( $path )) return;
 		include_once ($path);
 		$this->loaded = 1;

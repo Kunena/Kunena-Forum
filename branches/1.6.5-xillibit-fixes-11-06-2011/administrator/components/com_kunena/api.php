@@ -21,9 +21,9 @@ define ( 'KUNENA_COMPONENT_LOCATION', basename ( dirname ( dirname ( __FILE__ ) 
 
 // Component paths
 define ( 'KPATH_COMPONENT_RELATIVE', KUNENA_COMPONENT_LOCATION . '/' . KUNENA_COMPONENT_NAME );
-define ( 'KPATH_SITE', JPATH_ROOT . DS . KPATH_COMPONENT_RELATIVE );
-define ( 'KPATH_ADMIN', JPATH_ADMINISTRATOR . DS . KPATH_COMPONENT_RELATIVE );
-define ( 'KPATH_MEDIA', JPATH_ROOT . DS . 'media' . DS . KUNENA_NAME );
+define ( 'KPATH_SITE', JPATH_ROOT .'/'.  KPATH_COMPONENT_RELATIVE );
+define ( 'KPATH_ADMIN', JPATH_ADMINISTRATOR .'/'. KPATH_COMPONENT_RELATIVE );
+define ( 'KPATH_MEDIA', JPATH_ROOT .'/media/'. KUNENA_NAME );
 
 // URLs
 define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
@@ -54,7 +54,7 @@ kimport('route');
  * Defines public interface for class Kunena. Loads version information and APIs to be used in the third party application.
  *
  * Usage:
- *  $kapipath = JPATH_ADMINISTRATOR . DS. 'components' . DS . 'com_kunena' . DS . 'api.php';
+ *  $kapipath = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
  *  if (file_exists ($kapipath)) {
  *  	require_once($kapipath);
  *  	$kunenaVersion = Kunena::version();

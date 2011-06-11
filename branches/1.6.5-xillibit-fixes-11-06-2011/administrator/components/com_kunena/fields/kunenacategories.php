@@ -19,9 +19,9 @@ class JFormFieldKunenaCategories extends JFormField {
 	protected function getInput() {
 		$kunena_db = JFactory::getDBO ();
 
-		$kunena_api = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php';
+		$kunena_api = JPATH_ADMINISTRATOR .  '/components/com_kunena/api.php';
 		require_once ($kunena_api);
-		require_once (KUNENA_PATH . DS . 'class.kunena.php');
+		require_once (KUNENA_PATH .  '/class.kunena.php');
 		$items = JJ_categoryArray ();
 
 		$sections = $this->element['sections'];

@@ -76,8 +76,8 @@ class KunenaTemplate extends JObject
 			if (! $mtupgrade) {
 				$app = JFactory::getApplication ();
 				if (!class_exists ( 'JHTMLBehavior' )) {
-					if (is_dir ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' )) {
-						JHTML::addIncludePath ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' );
+					if (is_dir ( JPATH_PLUGINS .  '/system/mtupgrade' )) {
+						JHTML::addIncludePath ( JPATH_PLUGINS .  '/system/mtupgrade' );
 					} else {
 						// TODO: translate
 						KunenaError::warning ( '<em>System - MooTools Upgrade</em> plug-in is not installed into your system. Many features, including the BBCode editor, may be broken.', 'notice' );
@@ -110,7 +110,7 @@ class KunenaTemplate extends JObject
 	public function getSmileyPath($filename='') {
 		if (!isset($this->smileyPath[$filename])) {
 			$path = "{$this->getPath()}/images/emoticons/{$filename}";
-			if (($filename && !is_file(KPATH_SITE .DS. $path)) || !is_dir(KPATH_SITE .DS. $path)) {
+			if (($filename && !is_file(KPATH_SITE .'/'. $path)) || !is_dir(KPATH_SITE .'/'. $path)) {
 				$path = "{$this->getPath(true)}/images/emoticons/{$filename}";
 			}
 			$this->smileyPath[$filename] = $path;
@@ -121,7 +121,7 @@ class KunenaTemplate extends JObject
 	public function getRankPath($filename='') {
 		if (!isset($this->rankPath[$filename])) {
 			$path = "{$this->getPath()}/images/ranks/{$filename}";
-			if (($filename && !is_file(KPATH_SITE .DS. $path)) || !is_dir(KPATH_SITE .DS. $path)) {
+			if (($filename && !is_file(KPATH_SITE .'/'. $path)) || !is_dir(KPATH_SITE .'/'. $path)) {
 				$path = "{$this->getPath(true)}/images/ranks/{$filename}";
 			}
 			$this->rankPath[$filename] = $path;

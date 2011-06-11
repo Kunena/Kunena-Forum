@@ -78,7 +78,7 @@ class KunenaActivityCommunityBuilder extends KunenaActivity {
 	}
 
 	public function onAfterSubscribe($topicid, $action) {
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		require_once (KUNENA_PATH_LIB .  '/kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$message->action($topicid);
 		$my = JFactory::getUser();
@@ -87,7 +87,7 @@ class KunenaActivityCommunityBuilder extends KunenaActivity {
 	}
 
 	public function onAfterFavorite($topicid, $action) {
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$message->action($topicid);
 		$my = JFactory::getUser();
@@ -96,7 +96,7 @@ class KunenaActivityCommunityBuilder extends KunenaActivity {
 	}
 
 	public function onAfterSticky($topicid, $action) {
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		require_once (KUNENA_PATH_LIB .  '/kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$message->action($topicid);
 		$my = JFactory::getUser();
@@ -105,7 +105,7 @@ class KunenaActivityCommunityBuilder extends KunenaActivity {
 	}
 
 	public function onAfterLock($topicid, $action) {
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		require_once (KUNENA_PATH_LIB .  '/kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$message->action($topicid);
 		$my = JFactory::getUser();

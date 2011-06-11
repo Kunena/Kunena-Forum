@@ -58,3 +58,10 @@ switch ($type) {
 	</tr>
 </table>
 <?php endforeach; ?>
+<tr>
+		<td class="left"><input type="button"
+			onclick="window.history.back()"
+			value="<?php echo JText::_('COM_KUNENA_INSTALL_WIZARD_CANCEL') ?>"
+			 class="kbuttonright" />
+		</td>
+	</tr>

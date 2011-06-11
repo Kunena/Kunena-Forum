@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+
+12-June-2011 810
++ [#26144] New install template Part 1
+
 10-June-2011 Matias
 + [#25415] Tableless template: Add intended and threaded layouts
 ^ [#25415] Change logic on how to change between topic layouts

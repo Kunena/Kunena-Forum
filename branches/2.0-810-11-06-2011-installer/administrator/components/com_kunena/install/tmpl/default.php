@@ -9,7 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
 $this->document->addStyleSheet ( JURI::base(true).'/components/com_kunena/install/media/install.css' );
 if ($this->go == 'next') {
 	$jversion = new JVersion ();
@@ -24,57 +23,14 @@ window.addEvent('domready', function() {window.location='".JRoute::_('index.php?
 // ]]>");
 }
 ?>
-<div id="stepbar">
-	<div class="u">
-		<div class="u">
-			<div class="u"></div>
-		</div>
-	</div>
-	<div class="n">
-			<h1><?php echo JText::_('COM_KUNENA_INSTALL_STEPS') ?></h1>
+
+<div id="container" class="clearfix fixed fluid_">
+		<div class="section"> 
+			<div class="full">  
+				<div class="panel wizard">
+			<div class="kheader"><div class="wizard-title"> <h2><?php echo JText::_('COM_KUNENA_INSTALL_WIZARD_SETUP') ?></h2> <span><?php echo JText::_('COM_KUNENA_INSTALL_WIZARD_GUIDE') ?></span> </div><div class="progress-bar"></div> </div>  <div class="content"> <div class="wizard-content"> <ul> <li> <div class="wizard-text"><div id="stepbar"><h1><?php echo JText::_('COM_KUNENA_INSTALL_STEPS') ?></h1>
 			<?php $this->showSteps(); ?>
-	</div>
-	<div class="c">
-		<div class="c">
-			<div class="c"></div>
-		</div>
-	</div>
-</div>
-
-<div id="right">
-	<div id="rightpad">
-		<div id="step">
-			<div class="u">
-				<div class="u">
-					<div class="u"></div>
-				</div>
-			</div>
-			<div class="n">
-<?php if ($this->step) :?>
-				<div class="far-right">
-
-							<div class="button1-left"><div class="next"><a onclick="<?php echo $this->getActionURL(); ?>"><?php echo $this->getAction(); ?></a></div></div>
-
-				</div>
-<?php endif; ?>
-				<span class="step"><?php echo $this->steps[$this->step]['menu']; ?></span>
-
-			</div>
-			<div class="c">
-				<div class="c">
-					<div class="c"></div>
-				</div>
-			</div>
-		</div>
-
-		<div id="installer">
-			<div class="u">
-				<div class="u">
-					<div class="u"></div>
-				</div>
-			</div>
-			<div class="n">
-<?php
+ </div></div> <div class="step-content"> <?php
 if (!empty($this->requirements->fail)):
 	echo $this->loadTemplate('reqfail');
 elseif (!$this->step):
@@ -82,15 +38,14 @@ elseif (!$this->step):
 else:
 	echo $this->loadTemplate('install');
 endif;
-?>
-			</div>
-			<div class="c">
-				<div class="c">
-					<div class="c"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="clr"></div>
+?>  
+		<div class="wizard-nav clearfix">
+            <?php if ($this->step) : ?><div class="far-right">
+       <div class="button1-left"><div class="next"><a onclick="<?php echo $this->getActionURL(); ?>"><?php echo $this->getAction(); ?></a>               </div></div></span> </a></div> <?php endif; ?></div>
+       						</div>
+       					</div>
+       				</div>
+       			</div>
+       		</div>
+       	</div>
+       </div>

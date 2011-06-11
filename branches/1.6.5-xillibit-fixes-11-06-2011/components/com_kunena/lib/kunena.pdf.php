@@ -73,7 +73,7 @@ function dofreePDF()
 	$limitstart = JRequest::getInt ( 'limitstart', 0 );
 	if ($limit < 1) $limit = $kunena_config->messages_per_page-1;
 
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
+	require_once (KUNENA_PATH_LIB .  '/kunena.timeformat.class.php');
     $kunena_session = KunenaFactory::getSession(true);
     $kunena_session->updateAllowedForums ();
 	$allow_forum = ($kunena_session->allowed <> '')?explode(',', $kunena_session->allowed):array();
@@ -89,8 +89,8 @@ function dofreePDF()
         $row = $kunena_db->loadObjectList();
         if (KunenaError::checkDatabaseError()) return;
 
-        if (file_exists(KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php')) {
-			include (KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php');
+        if (file_exists(KUNENA_ROOT_PATH . '/includes/class.ezpdf.php')) {
+			include (KUNENA_ROOT_PATH . '/includes/class.ezpdf.php');
 			$pdf = new Cezpdf('a4', 'P'); //A4 Portrait
 		} elseif (class_exists('JDocument')) {
         	$pdf = new fbpdfwrapper();

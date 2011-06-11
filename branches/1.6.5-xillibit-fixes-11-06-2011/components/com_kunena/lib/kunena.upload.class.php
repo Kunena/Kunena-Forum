@@ -12,8 +12,8 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
-require_once (KUNENA_PATH_LIB .DS. 'kunena.image.class.php');
+require_once(KUNENA_PATH_LIB . '/kunena.file.class.php');
+require_once (KUNENA_PATH_LIB . '/kunena.image.class.php');
 
 /**
  * Class to handle file uploads and process the uploaded files.
@@ -238,7 +238,7 @@ class CKunenaUpload {
 		} else {
 			// Currently not in use: this is meant for experimental AJAX uploads
 			// Open temp file
-			$this->fileTemp = CKunenaPath::tmpdir() . DS . 'kunena_' . md5 ( $this->_my->id . '/' . $this->_my->username . '/' . $this->fileName );
+			$this->fileTemp = CKunenaPath::tmpdir() .  '/kunena_' . md5 ( $this->_my->id . '/' . $this->_my->username . '/' . $this->fileName );
 			$out = fopen ($this->fileTemp, $chunk == 0 ? "wb" : "ab");
 			if ($out) {
 				// Read binary input stream and append it to temp file
@@ -355,7 +355,7 @@ class CKunenaUpload {
 		$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;
 		if (file_exists($uploadPath .'/'. $newFileName)) {
 			$newFileName = $uploadedFileBasename . date('_Y-m-d') . "." . $uploadedFileExtension;
-			for ($i=2; file_exists($uploadPath .DS. $newFileName); $i++) {
+			for ($i=2; file_exists($uploadPath .'/'. $newFileName); $i++) {
 				$newFileName = $uploadedFileBasename . date('_Y-m-d') . "-$i." . $uploadedFileExtension;
 			}
 		}

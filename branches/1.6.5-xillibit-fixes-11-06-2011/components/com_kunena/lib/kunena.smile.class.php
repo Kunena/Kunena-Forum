@@ -20,8 +20,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-include_once (KUNENA_PATH_LIB . DS . "kunena.parser.base.php");
-include_once (KUNENA_PATH_LIB . DS . "kunena.parser.php");
+include_once (KUNENA_PATH_LIB . '/kunena.parser.base.php');
+include_once (KUNENA_PATH_LIB . '/kunena.parser.php');
 
 class smile {
 	function smileParserCallback($fb_message, $history, $emoticons, $iconList = null) {

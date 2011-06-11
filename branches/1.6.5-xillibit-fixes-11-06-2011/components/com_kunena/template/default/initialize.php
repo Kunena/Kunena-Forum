@@ -31,7 +31,7 @@ CKunenaTools::addScript ( KUNENA_DIRECTURL . 'template/default/js/default-min.js
 
 $skinner = $this->params->get('enableSkinner', 0);
 
-if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
+if (file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.forum.css' )) {
 	// Load css from Joomla template
 	CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.forum-min.css' );
 
@@ -40,7 +40,7 @@ if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
 	} elseif (!$skinner && file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.default.css' )) {
 		CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.default-min.css' );
 	}
-} else if (file_exists ( KUNENA_ABSTMPLTPATH .DS. 'css' .DS. 'kunena.forum.css' )){
+} else if (file_exists ( KUNENA_ABSTMPLTPATH . '/css/kunena.forum.css' )){
 	// Load css from the current template
 	CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
 

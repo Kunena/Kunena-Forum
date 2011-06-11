@@ -36,6 +36,7 @@ Kunena 1.6.5-DEV
 11-June-2011 Xillibit
 # [#26141] Use third parties API to get version of AUP and Uddeim (AUP version)
 # [#26140] J1.7 support : Systematic elimination of DS as directory separator (Backend part)
+# [#26140] J1.7 support : Systematic elimination of DS as directory separator (Frontend part)
 
 7-June-2011 Matias
 ^ [#25917] Merged revision 4866 from /branches/1.6.5-810-18-05-2011

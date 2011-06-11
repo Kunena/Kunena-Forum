@@ -27,7 +27,7 @@ class CKunenaPath extends JPath
 
 		$tmp = md5(JUserHelper::genRandomPassword(16));
 		$ssp = ini_get('session.save_path');
-		$jtp = JPATH_SITE.DS.'tmp';
+		$jtp = JPATH_SITE.'/tmp';
 
 		// Try to find a writable directory
 		$tmpdir = @is_writable('/tmp') ? '/tmp' : false;
@@ -35,7 +35,7 @@ class CKunenaPath extends JPath
 		$tmpdir = (!$tmpdir && is_writable($jtp)) ? $jtp : false;
 
 		if (!$tmpdir) {
-			$temp=tempnam(JPATH_ROOT . DS . 'tmp','');
+			$temp=tempnam(JPATH_ROOT .  '/tmp','');
 			if (file_exists($temp)) {
 				unlink($temp);
 				$tmpdir = dirname($temp);
@@ -55,8 +55,8 @@ class CKunenaFolder extends JFolder
 {
 	static function createIndex($folder) {
 		// Make sure we have an index.html file in the current folder
-		if (!CKunenaFile::exists($folder.DS.'index.html')) {
-			CKunenaFile::write($folder.DS.'index.html','<html><body></body></html>');
+		if (!CKunenaFile::exists($folder.'/index.html')) {
+			CKunenaFile::write($folder.'/index.html','<html><body></body></html>');
 		}
 	}
 }
@@ -71,8 +71,8 @@ class CKunenaFile extends JFile
 		$FTPOptions = JClientHelper::getCredentials('ftp');
 
 		if ($path) {
-			$src = CKunenaPath::clean($path.DS.$src);
-			$dest = CKunenaPath::clean($path.DS.$dest);
+			$src = CKunenaPath::clean($path.'/'.$src);
+			$dest = CKunenaPath::clean($path.'/'.$dest);
 		}
 
 		if ($FTPOptions['enabled'] == 1) {
@@ -92,8 +92,8 @@ class CKunenaFile extends JFile
 		$FTPOptions = JClientHelper::getCredentials('ftp');
 
 		if ($path) {
-			$src = CKunenaPath::clean($path.DS.$src);
-			$dest = CKunenaPath::clean($path.DS.$dest);
+			$src = CKunenaPath::clean($path.'/'.$src);
+			$dest = CKunenaPath::clean($path.'/'.$dest);
 		}
 
 		if ($FTPOptions['enabled'] == 1) {

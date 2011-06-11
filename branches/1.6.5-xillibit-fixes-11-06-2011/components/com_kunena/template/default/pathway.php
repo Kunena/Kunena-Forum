@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-require_once(KUNENA_PATH_LIB .DS. 'kunena.pathway.class.php');
+require_once(KUNENA_PATH_LIB . '/kunena.pathway.class.php');
 $pathway = new CKunenaPathway();
 
 $func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );

@@ -221,7 +221,7 @@ class CKunenaStats {
 		if (!$override) $PopPollsCount = $this->_config->poppollscount;
 		else $PopPollsCount = $override;
 
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.poll.class.php');
   		$kunena_polls =& CKunenaPolls::getInstance();
 
 		if (count($this->toppolls) < $PopPollsCount) {

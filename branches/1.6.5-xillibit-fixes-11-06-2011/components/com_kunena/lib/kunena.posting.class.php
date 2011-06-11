@@ -475,7 +475,7 @@ class CKunenaPosting {
 		// Add attachments if there are any
 		// TODO: find better way
 		if ($this->getOption ( 'attachments' )) {
-			require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
+			require_once (KUNENA_PATH_LIB .  '/kunena.attachments.class.php');
 			$attachments = CKunenaAttachments::getInstance ();
 			$message = $this->get ( 'message' );
 			$fileinfos = $attachments->multiupload ( $id, $message );
@@ -618,7 +618,7 @@ class CKunenaPosting {
 		// Add/delete attachments if there are any changes
 		// TODO: find better way
 		if ($this->getOption ( 'attachments' )) {
-			require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
+			require_once (KUNENA_PATH_LIB .  '/kunena.attachments.class.php');
 			$attachments = CKunenaAttachments::getInstance ();
 			$message = $this->get ( 'message' );
 

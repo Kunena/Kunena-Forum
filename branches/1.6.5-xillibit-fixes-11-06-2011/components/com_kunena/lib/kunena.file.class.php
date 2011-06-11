@@ -13,8 +13,8 @@ defined( '_JEXEC' ) or die();
 jimport ( 'joomla.version' );
 $jversion = new JVersion ();
 if ($jversion->RELEASE == 1.6) {
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.1.6.php');
+	require_once (KUNENA_PATH_LIB . '/kunena.file.class.1.6.php');
 } else {
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.1.5.php');
+	require_once (KUNENA_PATH_LIB . '/kunena.file.class.1.5.php');
 }
 ?>

@@ -249,7 +249,7 @@ class CKunenaProfile {
 
 	function displayUserPosts()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS .  '/latestx.php');
 		$obj = new CKunenaLatestX('userposts', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -260,7 +260,7 @@ class CKunenaProfile {
 
 	function displayReviewPosts()
 	{
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
+		require_once (KUNENA_PATH_LIB .  '/kunena.review.php');
 		$review = new CKunenaReview();
 		$obj->embedded = 1;
 		$review->display();
@@ -268,7 +268,7 @@ class CKunenaProfile {
 
 	function displayGotThankYou()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS .  '/latestx.php');
 		$obj = new CKunenaLatestX('gotthankyouposts',0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -278,7 +278,7 @@ class CKunenaProfile {
 
 	function displaySaidThankYou()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS .  '/latestx.php');
 		$obj = new CKunenaLatestX('saidthankyouposts',0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -287,7 +287,7 @@ class CKunenaProfile {
 	}
 	function displayOwnTopics()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS .  '/latestx.php');
 		$obj = new CKunenaLatestX('owntopics', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -298,7 +298,7 @@ class CKunenaProfile {
 
 	function displayUserTopics()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS .  '/latestx.php');
 		$obj = new CKunenaLatestX('usertopics', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -309,7 +309,7 @@ class CKunenaProfile {
 
 	function displayFavorites()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS .  '/latestx.php');
 		$obj = new CKunenaLatestX('favorites', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -321,7 +321,7 @@ class CKunenaProfile {
 	function displaySubscriptions()
 	{
 		if ($this->config->topic_subscriptions == 'disabled') return;
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS .  '/latestx.php');
 		$obj = new CKunenaLatestX('subscriptions', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -333,7 +333,7 @@ class CKunenaProfile {
 	function displayCategoriesSubscriptions()
 	{
 		if ($this->config->category_subscriptions == 'disabled') return;
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS .  '/latestx.php');
 		$obj = new CKunenaLatestX('catsSubscriptions', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -565,7 +565,7 @@ class CKunenaProfile {
 	protected function saveAvatar() {
 		$action = JRequest::getString('avatar', 'keep');
 
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.upload.class.php');
 		$upload = new CKunenaUpload();
 		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
 
@@ -720,8 +720,8 @@ class CKunenaProfile {
 
 			$avatar_deleted = '';
 			// Delete avatar from file system
-			if (JFile::exists ( KUNENA_PATH_AVATAR_UPLOADED . DS . $userprofile->avatar ) && !stristr($userprofile->avatar,'gallery/')) {
-				JFile::delete ( KUNENA_PATH_AVATAR_UPLOADED . DS . $userprofile->avatar );
+			if (JFile::exists ( KUNENA_PATH_AVATAR_UPLOADED . '/' . $userprofile->avatar ) && !stristr($userprofile->avatar,'gallery/')) {
+				JFile::delete ( KUNENA_PATH_AVATAR_UPLOADED . '/' . $userprofile->avatar );
 				$avatar_deleted = $this->_app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM') );
 			}
 			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted );

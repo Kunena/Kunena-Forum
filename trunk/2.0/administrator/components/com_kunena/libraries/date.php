@@ -163,10 +163,16 @@ class KunenaDate extends JDate {
 			if ($my->id) $offset = $my->getParam('timezone', $app->getCfg ( 'offset', 0 ));
 			else $offset = $app->getCfg ( 'offset', 0 );
 		}
-		$this->setOffset($offset);
+		if (is_numeric($offset)) {
+			$this->setOffset($offset);
+		} else {
+			// Joomla 1.6 support
+			$offset = new DateTimeZone($offset);
+			$this->setTimezone($offset);
+		}
 		// Today and Yesterday?
 		if (end($modearr) == 'today') {
-			$now = new JDate();
+			$now = JFactory::getDate ( 'now' );
 			$now->setOffset($offset);
 			$now = @getdate ( $now->toUnix(true) );
 			$then = @getdate ( $this->toUnix(true) );
@@ -181,6 +187,6 @@ class KunenaDate extends JDate {
 				($now ['yday'] == 0 && $then ['year'] == $now ['year'] - 1) && $then ['mon'] == 12 && $then ['mday'] == 31)
 				$usertime_format = $yesterday_format;
 		}
-		return $this->toFormat ( $usertime_format );
+		return $this->toFormat ( $usertime_format, true );
 	}
 }

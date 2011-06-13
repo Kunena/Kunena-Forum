@@ -60,9 +60,10 @@ class KunenaModelUser extends KunenaModel {
 
 	public function getQueryWhere() {
 		$config = KunenaFactory::getConfig();
-		if ($config->userlist_count_users == '0' ) $where = '1';
-		elseif ($config->userlist_count_users == '1' ) $where = '(block=0 OR activation="")';
+		if ($config->userlist_count_users == '1' ) $where = '(block=0 OR activation="")';
 		elseif ($config->userlist_count_users == '2' ) $where = '(block=0 AND activation="")';
+		elseif ($config->userlist_count_users == '3' ) $where = 'block=0';
+		else $where = '1';
 		return $where;
 	}
 

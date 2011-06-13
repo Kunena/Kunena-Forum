@@ -268,7 +268,9 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$lists ['listcat_show_moderators'] = JHTML::_('select.genericlist', $yesno, 'cfg_listcat_show_moderators', 'class="inputbox" size="1"', 'value', 'text', $config->listcat_show_moderators);
 
-		$lists ['lightbox'] = JHTML::_('select.genericlist', $yesno, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $config->lightbox);
+		$showlightbox = $yesno;
+		$showlightbox[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_A_LIGHTBOX_NO_JS'));
+		$lists ['lightbox'] = JHTML::_('select.genericlist', $showlightbox, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $config->lightbox);
 
 		$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
 		$timesel[] = JHTML::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
@@ -297,6 +299,7 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$userlist_count_users[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ALL'));
 		$userlist_count_users[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVATED_ACCOUNT'));
 		$userlist_count_users[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_ACTIVE'));
+		$userlist_count_users[] = JHTML::_('select.option', 3, JText::_('COM_KUNENA_SHOW_USERLIST_COUNTUNSERS_NON_BLOCKED_USERS'));
 		$lists ['userlist_count_users'] = JHTML::_('select.genericlist', $userlist_count_users, 'cfg_userlist_count_users', 'class="inputbox" size="1"', 'value', 'text', $config->userlist_count_users);
 
 		// Added new options into K1.6.4

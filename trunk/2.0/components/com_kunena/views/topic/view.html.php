@@ -278,7 +278,8 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function displayVote($tpl = null) {
-		// need to check if poll is allowed in this category
+		// TODO: need to check if poll is allowed in this category
+		// TODO: need to check if poll is still active
 		$this->config = KunenaFactory::getConfig();
 		$this->assignRef ( 'category', $this->get ( 'Category' ) );
 		$this->assignRef ( 'topic', $this->get ( 'Topic' ) );
@@ -588,6 +589,7 @@ class KunenaViewTopic extends KunenaView {
 		if ($this->config->showthankyou && $this->profile->userid) {
 			$thankyou = $this->message->getThankyou();
 			$this->thankyou = array();
+			//TODO: for normal users, show only limited number of thankyou (config->thankyou_max)
 			foreach( $thankyou->getList() as $userid=>$time){
 				if ( $me->userid  && $me->isModerator()  ) {
 					$this->message_thankyou_delete = '<a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'.KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->topic->category_id}&mesid={$this->message->id}&task=unthankyou&userid={$userid}&".JUtility::getToken() .'=1').'"><img src="'.$this->template->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>';

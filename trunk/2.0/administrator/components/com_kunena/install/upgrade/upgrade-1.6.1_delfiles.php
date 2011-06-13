@@ -17,7 +17,7 @@ function kunena_upgrade_161_delfiles($parent) {
 	//Import filesystem libraries.
 	jimport ( 'joomla.filesystem.folder' );
 
-	$path = JPATH_COMPONENT.DS.'views'.DS.'article';
+	$path = JPATH_COMPONENT.'/views/article';
 	if(JFolder::exists($path)) JFolder::delete($path);
 
 	return array('action'=>'', 'name'=>JText::_ ( 'COM_KUNENA_INSTALL_161_DELFILES' ), 'success'=>true);

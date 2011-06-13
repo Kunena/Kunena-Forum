@@ -23,22 +23,24 @@ var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
 var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 // ]]>');
 
-// We load mediaxboxadvanced library
-$template->addStyleSheet ( 'css/mediaboxAdv.css');
-$template->addScript( 'js/mediaboxAdv.js' );
+// We load mediaxboxadvanced library only if configuration setting allow it
+if ( KunenaFactory::getConfig()->lightbox == 1 ) {
+	$template->addStyleSheet ( 'css/mediaboxAdv.css');
+	$template->addScript( 'js/mediaboxAdv.js' );
+}
 
 // New Kunena JS for default template
 $template->addScript ( 'js/default.js' );
 
 $skinner = $template->params->get('enableSkinner', 0);
 
-if (file_exists ( JPATH_ROOT .DS. "templates" .DS. $app->getTemplate() .DS. 'css' .DS. 'kunena.forum.css' )) {
+if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.forum.css" )) {
 	// Load css from Joomla template
-	KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.forum.css' );
-	if ($skinner && file_exists ( JPATH_ROOT. "templates/".$app->getTemplate().'css/kunena.skinner.css' )){
-		KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.skinner.css' );
-	} elseif (!$skinner && file_exists ( JPATH_ROOT. "templates/".$app->getTemplate().'css/kunena.default.css' )) {
-		KunenaAddStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.default.css' );
+	KunenaAddStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.forum.css" );
+	if ($skinner && file_exists ( JPATH_ROOT. "templates/{$app->getTemplate()}css/kunena.skinner.css" )){
+		KunenaAddStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.skinner.css" );
+	} elseif (!$skinner && file_exists ( JPATH_ROOT. "templates/{$app->getTemplate()}css/kunena.default.css" )) {
+		KunenaAddStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.default.css" );
 	}
 } else {
 	// Load css from default template
@@ -181,7 +183,7 @@ EOF;
 
 $styles .= <<<EOF
 	#Kunena .kicon-profile { background-image: url("{$mediaurl}/iconsets/profile/{$template->params->get('profileIconset', 'default')}/default.png"); }
-	#Kunena .kicon-button { background-image: url("{$mediaurl}/iconsets/buttons/{$template->params->get('buttonIconset', 'default')}/default.png"); }
+	#Kunena .kicon-button { background-image: url("{$mediaurl}/iconsets/buttons/{$template->params->get('buttonIconset', 'default')}/default.png") !important; }
 	#Kunena #kbbcode-toolbar li a,#Kunena #kattachments a { background-image:url("{$mediaurl}/iconsets/editor/{$template->params->get('editorIconset', 'default')}/default.png"); }
 	/* End of Kunena Custom CSS */
 EOF;

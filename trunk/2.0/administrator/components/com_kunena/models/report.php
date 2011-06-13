@@ -145,18 +145,13 @@ class KunenaAdminModelReport extends KunenaModel {
 		$thirdparty = array();
 		if ($JVersion->RELEASE == '1.5') {
 			$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
-		} else {
-		$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'manifest', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
-		}
-		if ($JVersion->RELEASE == '1.5') {
 			$thirdparty['cb'] = $this->_checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
-		} else {
-			$thirdparty['cb'] = $this->_checkThirdPartyVersion('comprofiler', 'comprofileg' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
-		}
-		$thirdparty['jomsocial'] = $this->_checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
-		if ($JVersion->RELEASE == '1.5') {
+			$thirdparty['jomsocial'] = $this->_checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
 			$thirdparty['uddeim'] = $this->_checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
 		} else {
+			$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'manifest', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+			$thirdparty['cb'] = $this->_checkThirdPartyVersion('comprofiler', 'comprofileg' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
+			$thirdparty['jomsocial'] = $this->_checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
 			$thirdparty['uddeim'] = $this->_checkThirdPartyVersion('uddeim', 'uddeim', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
 		}
 		foreach ($thirdparty as $id=>$item) {

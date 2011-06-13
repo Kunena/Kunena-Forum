@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+13-June-2011 Matias
+^ [#22786] Merge revisions 4807-4940 from trunk/1.6
+
 10-June-2011 Matias
 + [#25415] Tableless template: Add intended and threaded layouts
 ^ [#25415] Change logic on how to change between topic layouts
@@ -1578,7 +1581,107 @@ Kunena 2.0.0-DEV
 - [#22543] Remove old BBCode parser (lib/kunena.parser*.php, lib/kunena.smile.class.php)
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
-Kunena 1.6.4-DEV
+Kunena 1.6.5-DEV
+
+13-June-2011 Matias
+^ [#25917] Merged revision 4936 from /branches/1.6.5-LDA-language-2011-05-20
+^ [#25917] Merged revisions 4932-4934 from /branches/1.6.5-xillibit-fixes-11-06-2011
+
+11-June-2011 Xillibit
+# [#26141] Use third parties API to get version of AUP and Uddeim (AUP version)
+# [#26140] J1.7 support : Systematic elimination of DS as directory separator (Backend part)
+# [#26140] J1.7 support : Systematic elimination of DS as directory separator (Frontend part)
+
+11-June-2011 LDA
+^ [#25944] update id-ID (thanks Daniel)
++ [#25944] added fa-IR (thanks Abdulhalim)
+
+9-June-2011 Matias
+# [#26152] Fix undefined properties when approving messages (and showing system topic icon)
+
+7-June-2011 Matias
+^ [#25917] Merged revision 4866 from /branches/1.6.5-810-18-05-2011
+^ [#25917] Merged revisions 4890-4909 from /branches/1.6.5-xillibit-fixes-15-05-2011
+^ [#25917] Merged revision 4868 from /branches/1.6.5-LDA-language-2011-05-20
+
+3-June-2011 Xillibit
+# [#26042] In config report for third party components under Joomla! 1.6 the wrong xml file is called
+
+2-June-2011 Xillibit
+# [#26036] Add in userlist and stats a user count like jomsocial
+^ [#25980] Weird characters in en-GB language file in backend (thanks nima.abbc)
+
+31-May-2011 Matias
+^ [#25917] Merged revisions 4862-4890 from /branches/1.6.5-xillibit-fixes-15-05-2011
+
+28-May-2011 Xillibit
++ [#25998] Add setting to allow the user to show the number wanted of thankyou in the message
+
+25-May-2011 Xillibit
+- [#25992] Revert change : Categories locked are showed in drop-down list
+^ [#25993] Add language string instead the JText::sprintf('Read more...') into article bbcode
+# [#25993] When setting full is choosed in discuss plugin, only the part after the readmore is showed in Kunena
+^ [#25980] Typo in en-GB language file in backend (thanks nima.abbc)
+
+23-May-2011 Xillibit
+# [#25972] Global settings in profile doesn't follow disable or enable setting
+
+22-May-2011 Xillibit
+# [#25959] Error 500 when you submit a pol without check any case
+# [#25931] Member Search from Memberlist not working
+# [#25960] When set a number limit for poll vote, the limit isn't reach
+
+20-May-2011 LDA
+^ [#25944] update el-GR (thanks Chrysovalantis Mochlas)
+^ [#25944] update hu-HU (thanks pedrohsi)
+^ [#25944] update th-TH (thanks drlovecat)
+^ [#25944] update pt-BR (thanks iLucato)
+
+20-May-2011 Xillibit
+# [#25939] Missing image causes Invalid argument supplied in BBCode parser
+
+18-May-2011 810
+^ [#25934] fix quote button
+^ [#25934] fix pagination size for rockettheme, yootheme ect templates
+^ [#25934] Minor CSS fixes
+
+17-May-2011 Matias
+^ [#25917] Merged revisions 4857-4862 from /branches/1.6.5-xillibit-fixes-15-05-2011
+
+16-May-2011 Xillibit
+^ [#25895] Simplify lightbox setting
+# [#24888] Under J!1.6, just sync user in right way when save profile to avoid issues
+
+15-May-2011 Xillibit
+^ [#25895] Let user choose to load completelly the lightbox (class and script) or just set the class on images
+# [#25896] Links in RSS Feed go to first page of thread when thread is more than 1 page
+# [#25897] Notice: Undefined variable: jconfig_smtpuser in admin.kunena.php
+^ [#25898] Instead of showing "the profile page ins't available for guests" in system message, show it just below the loginbox
+# [#25899] Endtime of poll doesn't work
+
+12-May-2011 Xillibit
+^ [#24703] Update version info to 1.6.5-DEV
+
+10-May-2011 severdia
+# [#25856] Fixed regression in image set selection
+# [#25859] Fixed toggler rollover
+
+Kunena 1.6.4
+
+7-May-2011 fxstein
+# [#24703] Update readme and version info
+
+4-May-2011 Matias
+# [#25819] Add Joomla 1.5 to 1.6 migration support
+
+2-May-2011 Xillibit
+# [#25799] Joomla! 1.6 : when you set an admin group in a category, it doesn't saved
+
+27-April-2011 Matias
+# [#25597] Joomla 1.6: Edit profile / Global Settings are not showing up
+# [#25770] Joomla 1.6: All dates are presented in UTC
+# [#25762] Joomla 1.6: Fix geshi highlighting (thanks JoniJnm)
+# [#25168] CSS fix to show Topic started Today by User in right order (thanks Jelle)
 
 26-April-2011 Matias
 # [#25756] Joomla 1.6: Menu creation fails on duplicated menu alias (profile)
@@ -1967,26 +2070,29 @@ Kunena 1.6.3
 ^ [#23898] Updated 2011 dates (additional)
 ^ [#24074] Update version info to 1.6.3 (Parlare)
 
-30-January-2010 Severdia
+30-January-2011 Severdia
 # [#22921] Updated Template Manager icon in menu
 ^ [#23898] Updated 2011 dates and .org instead of .com
 # [#24687] Fixed button text color when skinner is activated
+^ [#24688] Reverted publish/unpublish images to Joomla 1.5 defaults
+# [#24022] Fixed extra table spacing on module positions
+# [#24022] Added check for module position to hide row if no module published.
 
-30-January-2010 Matias
+30-January-2011 Matias
 * [#24563] Security (High/High): SQL injection vulnerability in search (thanks Adam Nichols)
 # [#24682] Joomla 1.6: Kunena Menu doesn't show up
 
-29-January-2010 Matias
+29-January-2011 Matias
 # [#24656] CommunityBuilder: fix performance issues from loading users one by one (CB1.4+)
 ^ [#15886] Merged revisions 4298-4317 from /branches/1.6.3-language-LDAsvens-2011-01-22
 
 29-January-2011 svens(LDA)
 ^ [#24560] update fi-FI (thanks Mortti)
 
-28-January-2010 Severdia
+28-January-2011 Severdia
 # [#24659] Fixed Google maps controls CSS
 
-28-January-2010 Matias
+28-January-2011 Matias
 ^ [#24385] Performance optimization for high joomla guest counts by CB team (Thanks Beat!)
 ^ [#15886] Merged revisions 4303-4304 from /branches/1.6-xillibit-fixes-27-01-2011
 + [#24655] Add activity events for subscribe, favorite, sticky, lock, karma and onBeforePost/Reply/Edit
@@ -1996,13 +2102,13 @@ Kunena 1.6.3
 27-January-2011 svens(LDA)
 ^ [#24560] update ru-RU (thanks Zarkos)
 
-27-January-2010 Xillibit
+27-January-2011 Xillibit
 # [#24272] When you want edit an anouncement unpublished, the forms is empty (Part 2)
 
-27-January-2010 Severdia
+27-January-2011 Severdia
 # [#24649] Fixed template params for header color in IE
 
-26-January-2010 Matias
+26-January-2011 Matias
 ^ [#15886] Merged revisions 4157-4285 from /branches/1.6-xillibit-fixes-20111205
 ^ [#15886] Merged revisions 4274-4291 from /branches/1.6.3-language-LDAsvens-2011-01-22
 
@@ -2010,10 +2116,10 @@ Kunena 1.6.3
 ^ [#24560] update es-ES (thanks Kunena Spanish Team)
 ^ [#24560] update en-GB
 
-24-January-2010 Xillibit
+24-January-2011 Xillibit
 # [#24590] Topic/Create: Showing poll and anonymous options works only in FireFox
 
-23-January-2010 Xillibit
+23-January-2011 Xillibit
 ^ [#24413] Add title parameter in function CKunenaLink::GetThreadPageLink for module latest (Part 2)
 
 22-January-2011 svens(LDA)
@@ -2026,17 +2132,17 @@ Kunena 1.6.3
 22-January-2011 Matias
 # [#24563] Search does not check all variables
 
-22-January-2010 Xillibit
+22-January-2011 Xillibit
 # [#24559] Hide confidential information also from moderators who are not moderating current category
 
-19-January-2010 Xillibit
+19-January-2011 Xillibit
 # [#24277] Kunena userlist under J! 1.6 grab super admin with userid=62 instead of 42 (Part 2)
 
 19-January-2011 Matias
 # [#24480] Regression: Do not send email to author itself
 * [#24494] Security (Low/Low): User can make XSS attack to himself (thanks Ervis Tusha)
 
-17-January-2010 Xillibit
+17-January-2011 Xillibit
 # [#24443] BBCode help input need to be disabled to avoid to be edited
 
 16-January-2011 Xillibit

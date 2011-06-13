@@ -135,9 +135,10 @@ class KunenaUserHelper {
 		if (self::$_lastid === null) {
 			$db = JFactory::getDBO ();
 			$config = KunenaFactory::getConfig();
-			if ($config->userlist_count_users == '0' ) $where = '1';
-			elseif ($config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
+			if ($config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
 			elseif ($config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
+			elseif ($config->userlist_count_users == '3' ) $where = 'block=0';
+			else $where = '1';
 			$db->setQuery ( "SELECT id FROM #__users WHERE {$where} ORDER BY id DESC", 0, 1 );
 			self::$_lastid = (int) $db->loadResult ();
 			KunenaError::checkDatabaseError();
@@ -149,9 +150,10 @@ class KunenaUserHelper {
 		if (self::$_total === null) {
 			$db = JFactory::getDBO ();
 			$config = KunenaFactory::getConfig();
-			if ($config->userlist_count_users == '0' ) $where = '1';
-			elseif ($config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
+			if ($config->userlist_count_users == '1' ) $where = 'block=0 OR activation=""';
 			elseif ($config->userlist_count_users == '2' ) $where = 'block=0 AND activation=""';
+			elseif ($config->userlist_count_users == '3' ) $where = 'block=0';
+			else $where = '1';
 			$db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE {$where}" );
 			self::$_total = (int) $db->loadResult ();
 			KunenaError::checkDatabaseError();

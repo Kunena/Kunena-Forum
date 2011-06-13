@@ -361,6 +361,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $category_subscriptions = 'post';
 	var $topic_subscriptions = 'every';
 	var $pubprofile = 1;
+	// New for 1.6.5
+	var $thankyou_max = 10;
 	// New for 2.0.0
 	var $spoiler_image = '';
 	var $keywords = 1;

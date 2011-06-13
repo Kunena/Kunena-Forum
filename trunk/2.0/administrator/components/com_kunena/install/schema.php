@@ -136,6 +136,20 @@ class KunenaModelSchema extends JModel
 		return $this->sql;
 	}
 
+	public function getSchemaTables($prefix = null)
+	{
+		$schema = $this->getXmlSchema();
+		if ($prefix === null) {
+			$prefix = $this->db->getPrefix();
+		}
+		$tables = array();
+		foreach ($schema->getElementsByTagName('table') as $table)
+		{
+			$tables[$table->getAttribute('name')] = $prefix . $table->getAttribute('name');
+		}
+		return $tables;
+	}
+
 	// helper function to update table schema
 	public function updateSchemaTable($table)
 	{

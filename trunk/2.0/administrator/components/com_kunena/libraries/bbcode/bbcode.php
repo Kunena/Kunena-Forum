@@ -920,7 +920,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			switch ($default) {
 				case 'full':
 					if ( !empty($article->fulltext) ) {
-						$article->text = $article->fulltext;
+						$article->text = $article->introtext. ' '. $article->fulltext;
 						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('COM_KUNENA_LIB_BBCODE_ARTICLE_READ').'</a>';
 						break;
 					}
@@ -1320,9 +1320,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			if (is_object ( $attachment )) {
 				unset ( $attachments [$attachment->id] );
 			}
-		} else if (empty ( $content )) {
+		} elseif (empty ( $content )) {
 			$attachment = array_shift ( $attachments );
-		} else {
+		} elseif (!empty ( $attachments )) {
 			foreach ( $attachments as $att ) {
 				if ($att->filename == $content) {
 					$attachment = $att;

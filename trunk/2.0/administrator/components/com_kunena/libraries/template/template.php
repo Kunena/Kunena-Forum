@@ -329,7 +329,7 @@ class KunenaTemplate extends JObject
 			if ($topic->hold == 1) $icon = 'unapproved';
 			if ($topic->hold == 2) $icon = 'deleted';
 			if ($topic->moved_id) $icon = 'moved';
-			if ($topic->unread) $icon .= '_new';
+			if (!empty($topic->unread)) $icon .= '_new';
 			$iconurl = $this->getImagePath("topicicons/system/{$icon}.png");
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';

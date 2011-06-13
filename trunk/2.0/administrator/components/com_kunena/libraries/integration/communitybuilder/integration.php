@@ -16,7 +16,7 @@ class KunenaIntegrationCommunityBuilder extends KunenaIntegration {
 	protected $open = false;
 
 	public function __construct() {
-		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_comprofiler' . DS . 'plugin.foundation.php';
+		$path = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
 		if (!is_file ( $path )) return;
 
 		require_once ($path);

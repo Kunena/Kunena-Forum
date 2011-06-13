@@ -38,4 +38,7 @@
 			<folder>archive</folder>
 		</files>
 	</administration>
+	<updateservers>
+		<server type="extension" priority="1" name="Kunena 2.0 Update Site">http://update.kunena.org/kunena20.xml</server>
+	</updateservers>
 </extension>

@@ -33,8 +33,15 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+13-June-2011 Matias
+^ [#25917] Merged revision 4936 from /branches/1.6.5-LDA-language-2011-05-20
+
+11-June-2011 LDA
+^ [#25944] update id-ID (thanks Daniel)
++ [#25944] added fa-IR (thanks Abdulhalim)
+
 9-June-2011 Matias
-Fix undefined properties when approving messages (and showing system topic icon)
+# [#26152] Fix undefined properties when approving messages (and showing system topic icon)
 
 7-June-2011 Matias
 ^ [#25917] Merged revision 4866 from /branches/1.6.5-810-18-05-2011

@@ -10,7 +10,7 @@
 	<author>Daniel</author>
 	<authorEmail>daniells@ymail.com</authorEmail>
 	<authorUrl>unknown</authorUrl>
-	<copyright>(C) 2010 unknown</copyright>
+	<copyright>(C) 2011 unknown</copyright>
 	<license>GNU/GPL</license>
 	<description>Indonesia language file for Kunena Forum Component</description>
 
@@ -18,5 +18,7 @@
 		<filename>id-ID.com_kunena.ini</filename>
 		<filename>id-ID.com_kunena.install.ini</filename>
 		<filename>id-ID.com_kunena.menu.ini</filename>
+		<filename>id-ID.com_kunena.sys.ini</filename>
+		<filename>id-ID.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

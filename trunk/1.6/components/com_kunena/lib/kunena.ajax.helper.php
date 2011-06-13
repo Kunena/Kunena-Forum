@@ -235,7 +235,7 @@ class CKunenaAjaxHelper {
 	protected function _addPollVote ($value_choosed, $id, $userid) {
 		$result = array ();
 
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.poll.class.php');
 		$kunena_polls =& CKunenaPolls::getInstance();
 		$result = $kunena_polls->save_results($id,$userid,$value_choosed);
 
@@ -245,7 +245,7 @@ class CKunenaAjaxHelper {
 	protected function _changePollVote ($value_choosed, $id, $userid) {
 		$result = array ();
 
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.poll.class.php');
 		$kunena_polls =& CKunenaPolls::getInstance();
 		$result = $kunena_polls->save_changevote($id,$userid,$value_choosed);
 
@@ -272,7 +272,7 @@ class CKunenaAjaxHelper {
 	}
 
 	protected function _uploadFile ($do) {
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.attachments.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance();
 		return $attachments->upload();
 	}

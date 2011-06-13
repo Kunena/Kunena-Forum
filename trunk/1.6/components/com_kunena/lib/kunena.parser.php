@@ -36,9 +36,9 @@ implement further extended links (username, ...)
 
 defined( '_JEXEC' ) or die();
 
-include_once (KUNENA_PATH_LIB . DS . "kunena.parser.bbcode.php");
+include_once (KUNENA_PATH_LIB . '/kunena.parser.bbcode.php');
 
-include_once (KUNENA_PATH_LIB . DS . "kunena.google.maps.class.php");
+include_once (KUNENA_PATH_LIB . '/kunena.google.maps.class.php');
 
 class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 	// these are samples... we used the parser to refer to files!
@@ -356,7 +356,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							$type = isset($tag->options["type"]) ? $tag->options["type"] : "php";
 							if ($type == "js") $type = "javascript";
 							else if ($type == "html") $type = "html4strict";
-							if (!file_exists($path.DS.$type.".php"))
+							if (!file_exists($path.'/'.$type.".php"))
 								$type = "php";
 							$code = str_replace("\t", "	", $between);
 							$geshi = new GeSHi($code, $type);

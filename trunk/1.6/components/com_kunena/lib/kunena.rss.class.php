@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 require_once (KPATH_SITE .'/lib/kunena.link.class.php');
 require_once (KPATH_SITE .'/lib/kunena.image.class.php');
 require_once (KPATH_SITE .'/lib/kunena.timeformat.class.php');
-require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+require_once (KUNENA_PATH_FUNCS . '/latestx.php');
 
 kimport('html.parser');
 kimport('session');

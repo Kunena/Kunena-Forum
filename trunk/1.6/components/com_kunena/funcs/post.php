@@ -23,7 +23,7 @@ class CKunenaPost {
 		$this->_session = KunenaFactory::getSession ();
 		$this->_db = &JFactory::getDBO ();
 		$this->document = JFactory::getDocument ();
-		require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
+		require_once (KPATH_SITE . '/lib/kunena.poll.class.php');
 		$this->poll =& CKunenaPolls::getInstance();
 
 		$this->my = &JFactory::getUser ();
@@ -146,7 +146,7 @@ class CKunenaPost {
 		$options ['anonymous'] = JRequest::getInt ( 'anonymous', 0 );
 		$contentURL = JRequest::getVar ( 'contentURL', '' );
 
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		if (! $this->id) {
 			$success = $message->post ( $this->catid, $fields, $options );
@@ -345,7 +345,7 @@ class CKunenaPost {
 
 		if ($allowEdit == 1) {
 			// Load attachments
-			require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+			require_once(KUNENA_PATH_LIB.'/kunena.attachments.class.php');
 			$attachments = CKunenaAttachments::getInstance ();
 			$this->attachments = array_pop($attachments->get($message->id));
 
@@ -405,7 +405,7 @@ class CKunenaPost {
 		$options ['attachments'] = 1;
 		$options ['anonymous'] = JRequest::getInt ( 'anonymous', 0 );
 
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$success = $message->edit ( $this->id, $fields, $options );
 		if ($success) {
@@ -461,7 +461,7 @@ class CKunenaPost {
 		if ($this->isIPBanned())
 			return false;
 
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$success = $message->delete ( $this->id );
 
@@ -485,7 +485,7 @@ class CKunenaPost {
 		if ($this->isIPBanned())
 			return false;
 
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$success = $message->undelete ( $this->id );
 
@@ -834,7 +834,7 @@ class CKunenaPost {
 		if ($this->isIPBanned())
 			return false;
 
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.posting.class.php');
 		$message = new CKunenaPosting();
 		$message->action($this->id);
 		if ($message->canApprove()) {
@@ -884,7 +884,7 @@ class CKunenaPost {
 			$mesids[]=$mes->id;
 		}
 		$mesids = implode(',', $mesids);
-		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+		require_once(KUNENA_PATH_LIB.'/kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance ();
 		$this->attachmentslist = $attachments->get($mesids);
 

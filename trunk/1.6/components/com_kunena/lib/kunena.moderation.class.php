@@ -376,7 +376,7 @@ class CKunenaModeration {
 				$sql = "UPDATE #__kunena_messages SET `hold`=3 WHERE hold IN (0,1) AND `thread`={$this->_db->Quote($currentMessage->thread)} AND `id`!={$this->_db->Quote($MessageID)} ;";
 				break;
 			case KN_DEL_ATTACH : //Delete only the attachments
-				require_once (KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+				require_once (KUNENA_PATH_LIB.'/kunena.attachments.class.php');
 				$attachments = CKunenaAttachments::getInstance();
 				$attachments->deleteMessage($MessageID);
 				break;

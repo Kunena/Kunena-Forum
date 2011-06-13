@@ -46,7 +46,7 @@ class CKunenaReview {
 		$backUrl = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
 
 		$success = 0;
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.posting.class.php');
 		foreach ( $array as $id => $value ) {
 			if (!$value) continue;
 

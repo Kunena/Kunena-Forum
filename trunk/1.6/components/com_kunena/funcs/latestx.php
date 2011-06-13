@@ -11,7 +11,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once (KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
+require_once (KUNENA_PATH_LIB . '/kunena.smile.class.php');
 
 class CKunenaLatestX {
 	public $allow = 0;
@@ -144,7 +144,7 @@ class CKunenaLatestX {
 
 			// Load threads to Kunena router to avoid extra SQL queries
 			if (!empty($routerlist)) {
-				include_once (KUNENA_PATH . DS . 'router.php');
+				include_once (KUNENA_PATH . '/router.php');
 				KunenaRouter::loadMessages ( $routerlist );
 			}
 
@@ -567,7 +567,7 @@ class CKunenaLatestX {
 
 	function displayAnnouncement() {
 		if ($this->config->showannouncement > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			require_once(KUNENA_PATH_LIB .'/kunena.announcement.class.php');
 			$ann = new CKunenaAnnouncement();
 			$ann->getAnnouncement();
 			$ann->displayBox();
@@ -632,7 +632,7 @@ class CKunenaLatestX {
 
 	function displayStats() {
 		if ($this->config->showstats > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+			require_once(KUNENA_PATH_LIB . '/kunena.stats.class.php');
 			$kunena_stats = CKunenaStats::getInstance ( );
 			$kunena_stats->showFrontStats ();
 		}
@@ -640,7 +640,7 @@ class CKunenaLatestX {
 
 	function displayWhoIsOnline() {
 		if ($this->config->showwhoisonline > 0) {
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+			require_once (KUNENA_PATH_LIB . '/kunena.who.class.php');
 			$online =& CKunenaWhoIsOnline::getInstance();
 			$online->displayWhoIsOnline();
 		}

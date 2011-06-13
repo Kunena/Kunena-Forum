@@ -32,8 +32,8 @@ $kunena_db = &JFactory::getDBO();
 $kunena_my = &JFactory::getUser();
 
 // Joomla template dir
-define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $kunena_app->getTemplate());
-define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$kunena_app->getTemplate());
+define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH . "/templates/{$kunena_app->getTemplate()}");
+define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/{$kunena_app->getTemplate()}");
 
 /*       _\|/_
          (o o)
@@ -68,11 +68,11 @@ $fb_user_img_template = JRequest::getString('fb_user_img_template', '', 'COOKIE'
 $fb_user_template = strtr($fb_user_template, '\\/', '');
 $fb_user_img_template = strtr($fb_user_img_template, '\\/', '');
 
-if (JString::strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'template.xml'))
+if (JString::strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .'/'. $fb_user_template . '/template.xml'))
 {
     $fb_cur_template = $fb_user_template;
     }
-else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_config->template .DS. 'css'))
+else if (file_exists(KUNENA_PATH_TEMPLATE .'/'. $kunena_config->template . '/css'))
 {
     $fb_cur_template = $kunena_config->template;
     }
@@ -81,11 +81,11 @@ else
     $fb_cur_template = 'default';
     }
 
-if (JString::strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_img_template .DS. 'images'))
+if (JString::strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .'/'. $fb_user_img_template . '/images'))
 {
     $fb_cur_img_template = $fb_user_img_template;
     }
-else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_config->template .DS. 'images'))
+else if (file_exists(KUNENA_PATH_TEMPLATE .'/'. $kunena_config->template . '/images'))
 {
     $fb_cur_img_template = $kunena_config->template;
     }
@@ -97,10 +97,10 @@ else
 // only for preview module - maybe used later by users to change template
 
 define('KUNENA_RELTMPLTPATH', $fb_cur_template);
-define('KUNENA_ABSTMPLTPATH', KUNENA_PATH_TEMPLATE .DS. $fb_cur_template);
-define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_PATH_TEMPLATE .DS. $fb_cur_img_template);
+define('KUNENA_ABSTMPLTPATH', KUNENA_PATH_TEMPLATE .'/'. $fb_cur_template);
+define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_PATH_TEMPLATE .'/'. $fb_cur_img_template);
 
-define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images/');
+define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/');
 
 // absolute icons path
 define('KUNENA_ABSICONSPATH', KUNENA_ABSIMAGESPATH . 'icons/');
@@ -112,7 +112,7 @@ define('KUNENA_ABSEMOTIONSPATH', KUNENA_ABSIMAGESPATH . 'emoticons/');
 define('KUNENA_ABSRANKSPATH', KUNENA_ABSIMAGESPATH . 'ranks/');
 
 // absolute catimages path
-define('KUNENA_ABSCATIMAGESPATH', KUNENA_ROOT_PATH.DS.'media'.DS.'kunena'.DS.$kunena_config->catimagepath); // Kunena category images absolute path
+define('KUNENA_ABSCATIMAGESPATH', KUNENA_ROOT_PATH.'/media/kunena/'.$kunena_config->catimagepath); // Kunena category images absolute path
 
 define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . "template/{$fb_cur_template}/");
 define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . "template/{$fb_cur_img_template}/");
@@ -717,7 +717,7 @@ class CKunenaTools {
 	}
 
 	function displayLoginBox() {
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.login.php');
+		require_once (KUNENA_PATH_LIB . '/kunena.login.php');
 		$type = CKunenaLogin::getType ();
 		if ($type == 'login') {
 			CKunenaTools::loadTemplate('/loginbox/login.php');

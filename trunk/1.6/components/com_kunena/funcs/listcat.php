@@ -150,7 +150,7 @@ class CKunenaListcat {
 			$userlist[intval($subcat->userid)] = intval($subcat->userid);
 		}
 
-		require_once (KUNENA_PATH . DS . 'router.php');
+		require_once (KUNENA_PATH . '/router.php');
 		KunenaRouter::loadMessages ( $routerlist );
 
 		$modcats = array ();
@@ -255,7 +255,7 @@ class CKunenaListcat {
 
 	function displayAnnouncement() {
 		if ($this->config->showannouncement > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			require_once(KUNENA_PATH_LIB . '/kunena.announcement.class.php');
 			$ann = new CKunenaAnnouncement();
 			$ann->getAnnouncement();
 			$ann->displayBox();
@@ -275,7 +275,7 @@ class CKunenaListcat {
 
 	function displayStats() {
 		if ($this->config->showstats > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+			require_once(KUNENA_PATH_LIB . '/kunena.stats.class.php');
 			$kunena_stats = CKunenaStats::getInstance ( );
 			$kunena_stats->showFrontStats ();
 		}
@@ -283,7 +283,7 @@ class CKunenaListcat {
 
 	function displayWhoIsOnline() {
 		if ($this->config->showwhoisonline > 0) {
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+			require_once (KUNENA_PATH_LIB . '/kunena.who.class.php');
 			$online =& CKunenaWhoIsOnline::getInstance();
 			$online->displayWhoIsOnline();
 		}

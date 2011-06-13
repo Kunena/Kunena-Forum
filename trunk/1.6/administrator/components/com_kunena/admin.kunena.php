@@ -26,7 +26,7 @@ JToolBarHelper::title('&nbsp;', 'kunena.png');
 $view = JRequest::getCmd ( 'view' );
 $task = JRequest::getCmd ( 'task' );
 
-require_once (JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php');
+require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/api.php');
 kimport('error');
 
 $kunena_app = & JFactory::getApplication ();
@@ -55,15 +55,15 @@ $lang->load('com_kunena',JPATH_SITE);
 jimport( 'joomla.utilities.arrayhelper' );
 
 // Now that we have the global defines we can use shortcut defines
-require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
-require_once (KUNENA_PATH_LIB . DS . 'kunena.version.php');
+require_once (KUNENA_PATH_LIB . '/kunena.config.class.php');
+require_once (KUNENA_PATH_LIB . '/kunena.version.php');
 
 $kunena_config = KunenaFactory::getConfig ();
 $kunena_db = JFactory::getDBO ();
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once (KUNENA_PATH . DS . 'class.kunena.php');
-require_once (KUNENA_PATH_ADMIN . DS . 'admin.kunena.html.php');
+require_once (KUNENA_PATH . '/class.kunena.php');
+require_once (KUNENA_PATH_ADMIN . '/admin.kunena.html.php');
 
 $cid = JRequest::getVar ( 'cid', array () );
 
@@ -728,10 +728,10 @@ function parseKunenaInstallFile($path) {
 function parseXMLTemplateFile($templateBaseDir, $templateDir)
 	{
 		// Check if the xml file exists
-		if(!is_file($templateBaseDir.DS.$templateDir.DS.'template.xml')) {
+		if(!is_file("{$templateBaseDir}/{$templateDir}/template.xml")) {
 			return false;
 		}
-		$data = parseKunenaInstallFile($templateBaseDir.DS.$templateDir.DS.'template.xml');
+		$data = parseKunenaInstallFile("{$templateBaseDir}/{$templateDir}/template.xml");
 		if ($data->type != 'kunena-template') {
 			return false;
 		}
@@ -772,21 +772,21 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED') );
 		}
 		$tBaseDir	= JPath::clean(KUNENA_PATH_TEMPLATE);
-		if (!is_dir( $tBaseDir . DS . $template )) {
+		if (!is_dir( "{$tBaseDir}/{$template}" )) {
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
 		}
 		$lang = JFactory::getLanguage();
 		// Start by loading strings for default template and override with current template
 		if (!$lang->load('com_kunena.tpl_default', JPATH_SITE)) {
-			$lang->load('com_kunena.tpl_default', KUNENA_PATH_TEMPLATE.DS.'default');
+			$lang->load('com_kunena.tpl_default', KUNENA_PATH_TEMPLATE.'/default');
 		}
 		if ($template != 'default') {
 			if (!$lang->load('com_kunena.tpl_'.$template, JPATH_SITE)) {
-				$lang->load('com_kunena.tpl_'.$template, KUNENA_PATH_TEMPLATE.DS.$template);
+				$lang->load('com_kunena.tpl_'.$template, KUNENA_PATH_TEMPLATE.'/'.$template);
 			}
 		}
-		$ini	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
-		$xml	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'template.xml';
+		$ini	= KUNENA_PATH_TEMPLATE.'/'.$template.'/params.ini';
+		$xml	= KUNENA_PATH_TEMPLATE.'/'.$template.'/template.xml';
 		$row	= parseXMLTemplateFile($tBaseDir, $template);
 		jimport('joomla.filesystem.file');
 		// Read the ini file
@@ -825,7 +825,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$ftp = JClientHelper::getCredentials('ftp');
-		$file = KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
+		$file = KUNENA_PATH_TEMPLATE.'/'.$template.'/params.ini';
 		jimport('joomla.filesystem.file');
 		if (count($params))
 		{
@@ -872,7 +872,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 		$option 	= JRequest::getCmd('option');
 		$template	= JRequest::getVar('id', '', 'method', 'cmd');
 		// Determine template CSS directory
-		$dir = KUNENA_PATH_TEMPLATE.DS.$template.DS.'css';
+		$dir = KUNENA_PATH_TEMPLATE.'/'.$template.'/css';
 		// List template .css files
 		jimport('joomla.filesystem.folder');
 		$files = JFolder::files($dir, '\.css$', false, false);
@@ -893,7 +893,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 			$msg = JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS');
 			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=chooseCSSTemplate&id='.$template, $msg, 'error');
 		}
-		$content = JFile::read(KUNENA_PATH_TEMPLATE.DS.$template.DS.'css'.DS.$filename);
+		$content = JFile::read(KUNENA_PATH_TEMPLATE.'/'.$template.'/css/'.$filename);
 		if ($content !== false)
 		{
 			// Set FTP credentials, if given
@@ -926,7 +926,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$ftp = JClientHelper::getCredentials('ftp');
-		$file = KUNENA_PATH_TEMPLATE.DS.$template.DS.'css'.DS.$filename;
+		$file = KUNENA_PATH_TEMPLATE.'/'.$template.'/css/'.$filename;
 		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0755')) {
 			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_WRITABLE'));
 		}
@@ -1552,7 +1552,7 @@ function showConfig($option) {
   	$ordering_system_list[] = JHTML::_('select.option', 'replyid', JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_OLD'));
   	$lists['ordering_system'] = JHTML::_('select.genericlist', $ordering_system_list, 'cfg_ordering_system', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->ordering_system);
 	// New for 1.6: datetime
-	require_once(KUNENA_PATH_LIB .DS. 'kunena.timeformat.class.php');
+	require_once(KUNENA_PATH_LIB . '/kunena.timeformat.class.php');
 	$dateformatlist = array ();
 	$time = CKunenaTimeformat::internalTime() - 80000;
 	$dateformatlist[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_OPTION_DATEFORMAT_NONE'));
@@ -1751,10 +1751,10 @@ function saveConfig($option) {
 // CSS functions
 //===============================
 function showCss($option) {
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
+	require_once (KUNENA_PATH_LIB . '/kunena.file.class.php');
 
 	$kunena_config = KunenaFactory::getConfig ();
-	$file = KUNENA_PATH_TEMPLATE . DS . $kunena_config->template . DS .'css'. DS . "kunena.forum.css";
+	$file = KUNENA_PATH_TEMPLATE . '/' . $kunena_config->template . '/css/kunena.forum.css';
 	$permission = CKunenaPath::isWritable ( $file );
 
 	if (! $permission) {
@@ -1767,7 +1767,7 @@ function showCss($option) {
 }
 
 function saveCss($file, $csscontent, $option) {
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
+	require_once (KUNENA_PATH_LIB . '/kunena.file.class.php');
 
 	$kunena_app = & JFactory::getApplication ();
 	$tmpstr = JText::_('COM_KUNENA_CSS_SAVE');
@@ -2294,7 +2294,7 @@ function doprune($kunena_db, $option) {
 	$threadlist = $kunena_db->loadResultArray ();
 	if (KunenaError::checkDatabaseError()) return;
 
-	require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+	require_once(KUNENA_PATH_LIB.'/kunena.attachments.class.php');
 	foreach ( $threadlist as $thread ) {
 		//get the id's for all posts belonging to this thread
 		$kunena_db->setQuery ( "SELECT id FROM #__kunena_messages WHERE thread={$thread}" );
@@ -2420,7 +2420,7 @@ function deleteAttachment($id, $redirect, $message) {
 		return;
 	}
 
-	require_once (KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+	require_once (KUNENA_PATH_LIB.'/kunena.attachments.class.php');
 	$attachments = CKunenaAttachments::getInstance();
 	$attachments->deleteAttachment($id);
 
@@ -2476,8 +2476,8 @@ function showsmilies($option) {
 		// load language fo component media
 		JPlugin::loadLanguage( 'com_media' );
 		$params =& JComponentHelper::getParams('com_media');
-		require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_media'.DS.'helpers'.DS.'media.php' );
-		define('COM_KUNENA_MEDIA_BASE', JPATH_ROOT.DS.'components'.DS.'com_kunena'.DS.'template'.DS.$kunena_config->template.DS.'images');
+		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
+		define('COM_KUNENA_MEDIA_BASE', JPATH_ROOT.'/components/com_kunena/template/'.$kunena_config->template.'/images');
 		// Check for request forgeries
 		JRequest::checkToken( 'request' ) or jexit( 'Invalid Token' );
 
@@ -2496,7 +2496,7 @@ function showsmilies($option) {
 		$file['name']	= JFile::makeSafe($file['name']);
 
 		if (isset($file['name'])) {
-			$filepathsmiley = JPath::clean(COM_KUNENA_MEDIA_BASE.DS.$foldersmiley.DS.strtolower($file['name']));
+			$filepathsmiley = JPath::clean(COM_KUNENA_MEDIA_BASE.'/'.$foldersmiley.'/'.strtolower($file['name']));
 
 			if (!MediaHelper::canUpload( $file, $err )) {
 				if ($format == 'json') {
@@ -2577,7 +2577,7 @@ function editsmiley($option, $id) {
 
 	$template = KunenaFactory::getTemplate();
 	$smileypath = $template->getSmileyPath();
-	$smiley_images = collect_smilies_ranks(KPATH_SITE.DS.$smileypath);
+	$smiley_images = collect_smilies_ranks(KPATH_SITE.'/'.$smileypath);
 
 	$smiley_edit_img = '';
 
@@ -2598,7 +2598,7 @@ function editsmiley($option, $id) {
 function newsmiley($option) {
 	$template = KunenaFactory::getTemplate();
 	$smileypath = $template->getSmileyPath();
-	$smiley_images = collect_smilies_ranks(KPATH_SITE.DS.$smileypath);
+	$smiley_images = collect_smilies_ranks(KPATH_SITE.'/'.$smileypath);
 
 	$filename_list = "";
 	for($i = 0; $i < count ( $smiley_images ); $i ++) {
@@ -2731,8 +2731,8 @@ function showRanks($option) {
 		// load language fo component media
 		JPlugin::loadLanguage( 'com_media' );
 		$params =& JComponentHelper::getParams('com_media');
-		require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_media'.DS.'helpers'.DS.'media.php' );
-		define('COM_KUNENA_MEDIA_BASE', JPATH_ROOT.DS.'components'.DS.'com_kunena'.DS.'template'.DS.$kunena_config->template.DS.'images');
+		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
+		define('COM_KUNENA_MEDIA_BASE', JPATH_ROOT.'/components/com_kunena/template/'.$kunena_config->template.'/images');
 		// Check for request forgeries
 		JRequest::checkToken( 'request' ) or jexit( 'Invalid Token' );
 
@@ -2751,7 +2751,7 @@ function showRanks($option) {
 		$file['name']	= JFile::makeSafe($file['name']);
 
 		if (isset($file['name'])) {
-			$filepathranks = JPath::clean(COM_KUNENA_MEDIA_BASE.DS.$folderranks.DS.strtolower($file['name']));
+			$filepathranks = JPath::clean(COM_KUNENA_MEDIA_BASE.'/'.$folderranks.'/'.strtolower($file['name']));
 
 			if (!MediaHelper::canUpload( $file, $err )) {
 				if ($format == 'json') {
@@ -2838,7 +2838,7 @@ function newRank($option) {
 
 	$template = KunenaFactory::getTemplate();
 	$rankpath = $template->getRankPath();
-	$rank_images = collect_smilies_ranks(KPATH_SITE.DS.$rankpath);
+	$rank_images = collect_smilies_ranks(KPATH_SITE.'/'.$rankpath);
 
 	$filename_list = "";
 	$i = 0;
@@ -2922,7 +2922,7 @@ function editRank($option, $id) {
 
 	$template = KunenaFactory::getTemplate();
 	$rankpath = $template->getRankPath();
-	$rank_images = collect_smilies_ranks(KPATH_SITE.DS.$rankpath);
+	$rank_images = collect_smilies_ranks(KPATH_SITE.'/'.$rankpath);
 
 	$edit_img = $filename_list = '';
 
@@ -3034,7 +3034,7 @@ function deleteitemsnow ( $option, $cid ) {
 			if( !empty($mes[0])) {
 				if ($mes[0]->parent == '0' && !empty($mes[0]->threadid) ) {
 					//remove of poll
-					require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+					require_once (KUNENA_PATH_LIB .'/'. 'kunena.poll.class.php');
 					$poll = CKunenaPolls::getInstance();
 					$poll->delete_poll($mes[0]->threadid);
 				}
@@ -3112,6 +3112,7 @@ function showSystemReport ( $option ) {
 }
 
 function generateSystemReport () {
+	jimport('joomla.filesystem.file');
 	$kunena_config = KunenaFactory::getConfig ();
 	$kunena_app = JFactory::getApplication ();
 	$kunena_db = JFactory::getDBO ();
@@ -3144,7 +3145,7 @@ function generateSystemReport () {
 		$jconfig_sef_rewrite = 'Disabled';
 	}
 
-	if (file_exists(JPATH_ROOT. DS. '.htaccess')) {
+	if (file_exists(JPATH_ROOT. '/.htaccess')) {
 		$htaccess = 'Exists';
 	} else {
 		$htaccess = 'Missing';
@@ -3252,7 +3253,13 @@ function generateSystemReport () {
 	if ($JVersion->RELEASE == '1.5') {
 		$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
 	} else {
-		$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'manifest', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+		if ( JFile::exists(JPATH_SITE . '/components/com_alphauserpoints/helper.php') ) {
+			require_once(JPATH_SITE . '/components/com_alphauserpoints/helper.php');
+			$aup = new AlphaUserPointsHelper ();
+			$thirdparty['aup'] = '[u]AlphaUserPoints[/u] '.$aup->getAupVersion();
+		} else {
+			$thirdparty['aup'] = checkThirdPartyVersion('alphauserpoints', 'manifest', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+		}
 	}
 	if ($JVersion->RELEASE == '1.5') {
 		$thirdparty['cb'] = checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);

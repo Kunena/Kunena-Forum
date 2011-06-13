@@ -35,8 +35,8 @@ class CKunenaAttachments {
 	}
 
 	function upload($mesid=0, $key='kattachment', $ajax=true, &$message=null) {
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
-		$path = KUNENA_PATH_UPLOADED . DS . $this->_my->id;
+		require_once (KUNENA_PATH_LIB . '/kunena.upload.class.php');
+		$path = KUNENA_PATH_UPLOADED . '/' . $this->_my->id;
 		$upload = new CKunenaUpload();
 		$upload->uploadFile($path, $key, '', $ajax);
 		$fileinfo = $upload->getFileInfo();
@@ -60,7 +60,7 @@ class CKunenaAttachments {
 		}
 
 		if (!empty($fileinfo['mime']) && $this->isImage($fileinfo['mime']))
-			CKunenaImageHelper::version($path . DS . $fileinfo['name'], $path .DS. 'thumb', $fileinfo['name'], $this->_config->thumbwidth, $this->_config->thumbheight, intval($this->_config->imagequality));
+			CKunenaImageHelper::version($path . '/' . $fileinfo['name'], $path . '/thumb', $fileinfo['name'], $this->_config->thumbwidth, $this->_config->thumbheight, intval($this->_config->imagequality));
 
 			// Fix attachments names inside message
 		$found = preg_match('/\D*(\d)+/', $key, $matches);
@@ -226,7 +226,7 @@ class CKunenaAttachments {
 
 	protected function deleteFile($file) {
 		jimport('joomla.filesystem.file');
-		$path = JPATH_ROOT.DS.$file->folder;
+		$path = JPATH_ROOT.'/'.$file->folder;
 		$filetoDelete = $path.'/'.$file->filename;
 		if (JFile::exists($filetoDelete)) {
 			JFile::delete($filetoDelete);

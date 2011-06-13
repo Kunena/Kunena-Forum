@@ -12,7 +12,7 @@
 defined( '_JEXEC' ) or die();
 
 $kunena_config = KunenaFactory::getConfig ();
-require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
+require_once (KPATH_SITE . '/lib/kunena.poll.class.php');
 $kunena_poll =& CKunenaPolls::getInstance();
 $document =& JFactory::getDocument();
 

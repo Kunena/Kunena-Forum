@@ -222,7 +222,7 @@ class CKunenaViewMessage {
 
 		//Thankyou info and buttons
 		if ($this->config->showthankyou && $this->profile->userid && $mode != 'threaded') {
-			require_once(KPATH_SITE .DS. 'lib'.DS.'kunena.thankyou.php');
+			require_once(KPATH_SITE . '/lib/kunena.thankyou.php');
 			$thankyou = new CKunenaThankyou();
 			$this->total_thankyou = $thankyou->getThankYouUser($this->id);
 
@@ -311,8 +311,8 @@ class CKunenaView {
 	public $goto = null;
 
 	function __construct($layout, $catid, $id, $limitstart=0, $limit=0, $mesid=0) {
-		require_once(KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
-		require_once(KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
+		require_once(KUNENA_PATH_LIB . '/kunena.smile.class.php');
+		require_once(KUNENA_PATH_LIB . '/kunena.link.class.php');
 
 		$this->db = JFactory::getDBO ();
 		$this->config = KunenaFactory::getConfig ();
@@ -563,7 +563,7 @@ class CKunenaView {
 		$idstr = @join ( ",", $messageids );
 
 		// Load attachments
-		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+		require_once(KUNENA_PATH_LIB.'/kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance();
 		if ( is_a($attachments, 'CKunenaAttachments') ) {
 			$message_attachments = $attachments->get($idstr);
@@ -744,7 +744,7 @@ class CKunenaView {
 	function displayPoll() {
 		if ($this->config->pollenabled == "1" && $this->first_message->poll_id) {
 			if ( $this->catinfo->allow_polls ) {
-				require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
+				require_once (KPATH_SITE . '/lib/kunena.poll.class.php');
   				$kunena_polls =& CKunenaPolls::getInstance();
   				$kunena_polls->showPollbox();
 			}

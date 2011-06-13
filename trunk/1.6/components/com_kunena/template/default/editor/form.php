@@ -22,7 +22,7 @@ defined( '_JEXEC' ) or die();
 
 global $topic_emoticons;
 
-require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
+require_once (KPATH_SITE . '/lib/kunena.poll.class.php');
 $kunena_poll = CKunenaPolls::getInstance();
 $kunena_poll->call_javascript_form();
 include_once (KUNENA_PATH_LIB . '/kunena.bbcode.js.php');

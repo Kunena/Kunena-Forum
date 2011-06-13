@@ -16,7 +16,7 @@ defined( '_JEXEC' ) or die('');
 class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 {
 	public function __construct() {
-		$aup = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
+		$aup = JPATH_SITE . '/components/com_alphauserpoints/helper.php';
 		if (!file_exists ( $aup )) return;
 		require_once ($aup);
 		$this->priority = 60;

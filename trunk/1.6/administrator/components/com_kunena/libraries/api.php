@@ -88,7 +88,7 @@ class Kunena implements iKunena {
 	}
 
 	public static function getConfig() {
-		require_once (KPATH_SITE . DS . 'lib' . DS . "kunena.config.class.php");
+		require_once (KPATH_SITE . '/lib/kunena.config.class.php');
 		return KunenaFactory::getConfig ();
 	}
 
@@ -136,7 +136,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		return KunenaFactory::getUser ( $userid );
 	}
 	public function getRank($userid) {
-		require_once (KPATH_SITE .DS. "class.kunena.php");
+		require_once (KPATH_SITE . '/class.kunena.php');
 
 		$profile = KunenaFactory::getUser ( $userid );
 		return $profile->getRank ();
@@ -147,7 +147,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		return $result->total;
 	}
 	public function getTopics($userid, $start = 0, $limit = 10, $search=false) {
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . '/latestx.php');
 		$obj = new CKunenaLatestX('usertopics', 0);
 		$obj->user = JUser::getInstance ( $userid );
 		$obj->offset = $start;
@@ -163,7 +163,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		return $result->total;
 	}
 	public function getPosts($userid, $start = 0, $limit = 10, $search=false) {
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . '/latestx.php');
 		$obj = new CKunenaLatestX('ownposts', 0);
 		$obj->user = JUser::getInstance ( $userid );
 		$obj->offset = $start;
@@ -179,7 +179,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		return $result->total;
 	}
 	public function getFavorites($userid, $start = 0, $limit = 10, $search=false) {
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . '/latestx.php');
 		$obj = new CKunenaLatestX('favorites', 0);
 		$obj->user = JUser::getInstance ( $userid );
 		$obj->offset = $start;
@@ -195,7 +195,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		return $result->total;
 	}
 	public function getSubscriptions($userid, $start = 0, $limit = 10, $search=false) {
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . '/latestx.php');
 		$obj = new CKunenaLatestX('subscriptions', 0);
 		$obj->user = JUser::getInstance ( $userid );
 		$obj->offset = $start;
@@ -359,7 +359,7 @@ class KunenaStatsAPI {
 		$this->_db = JFactory::getDBO ();
 		$this->_session = KunenaFactory::getSession( true );
 		$this->_config = KunenaFactory::getConfig ();
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+		require_once(KUNENA_PATH_LIB . '/kunena.stats.class.php');
 		$this->_stats = CKunenaStats::getInstance ( );
 	}
 
@@ -456,7 +456,7 @@ class KunenaStatsAPI {
 
 	public function getTopPollStats($PollCount) {
 		if ((int)$PollCount<0) return;
-		require_once(KPATH_SITE . DS . 'lib' . DS .'kunena.poll.class.php');
+		require_once(KPATH_SITE . '/lib/kunena.poll.class.php');
 		$kunena_poll =& CKunenaPolls::getInstance();
 		$toppolls = $kunena_poll->get_top_five_polls ( (int)$PollCount );
 		return $toppolls;
@@ -464,7 +464,7 @@ class KunenaStatsAPI {
 
 	public function getTopPollVotesStats($PollCount) {
 		if ((int)$PollCount<0) return;
-		require_once(KPATH_SITE . DS . 'lib' . DS .'kunena.poll.class.php');
+		require_once(KPATH_SITE . '/lib/kunena.poll.class.php');
 		$kunena_poll =& CKunenaPolls::getInstance();
 		$toppollvotes = $kunena_poll->get_top_five_votes ( (int)$PollCount );
 		return $toppollvotes;

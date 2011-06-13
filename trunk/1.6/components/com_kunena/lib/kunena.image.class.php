@@ -626,7 +626,7 @@ class CKunenaImageHelper
 	}
 
 	function version($file, $newpath, $newfile, $maxwidth = 800, $maxheight = 800, $quality = 70, $scale = CKunenaImage::SCALE_INSIDE) {
-		require_once(KUNENA_PATH_LIB.DS.'kunena.file.class.php');
+		require_once(KUNENA_PATH_LIB.'/kunena.file.class.php');
 		// create upload directory if it does not exist
 		$imageinfo = self::getProperties($file);
 		if (!$imageinfo) return false;
@@ -648,7 +648,7 @@ class CKunenaImageHelper
 			$options = array('quality' => $quality);
 			$image = $image->resize($maxwidth, $maxheight, true, $scale);
 			$type = $image->getType();
-			$temp = CKunenaPath::tmpdir() . DS . 'kunena_' . md5 ( rand() );
+			$temp = CKunenaPath::tmpdir() . '/kunena_' . md5 ( rand() );
 			$image->toFile($temp, $type, $options);
 			unset ($image);
 			if (! CKunenaFile::move ( $temp, $newpath.'/'.$newfile )) {

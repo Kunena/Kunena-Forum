@@ -15,9 +15,9 @@ defined ( '_JEXEC' ) or die ();
 jimport ( 'joomla.version' );
 $jversion = new JVersion ();
 if ($jversion->RELEASE == 1.6) {
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.profiler.1.6.php');
+	require_once (KUNENA_PATH_LIB . '/kunena.profiler.1.6.php');
 } else {
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.profiler.1.5.php');
+	require_once (KUNENA_PATH_LIB . '/kunena.profiler.1.5.php');
 }
 
 ?>

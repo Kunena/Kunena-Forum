@@ -87,7 +87,7 @@ class KunenaUser extends JObject {
 //FB::log($userids, 'Need to preload uerlist for avatars');
 
 		// Before we do anything to cache the users, check if we should add active users
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+		require_once(KUNENA_PATH_LIB . '/kunena.who.class.php');
 		$who = CKunenaWhoIsOnline::GetInstance();
 
 		$users = $who->getActiveUsersList();
@@ -96,7 +96,7 @@ class KunenaUser extends JObject {
 		}
 
 		// Also get latest user and add to the list
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+		require_once(KUNENA_PATH_LIB . '/kunena.stats.class.php');
 		$kunena_stats = CKunenaStats::getInstance ( );
 		$kunena_stats->loadLastUser();
 		$userids[intval($kunena_stats->lastestmemberid)] = intval($kunena_stats->lastestmemberid);

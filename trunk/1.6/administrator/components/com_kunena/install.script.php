@@ -32,7 +32,7 @@ class Com_KunenaInstallerScript {
 	}
 
 	function uninstall($parent) {
-		require_once (JPATH_ADMINISTRATOR .DS. 'components' .DS. 'com_kunena' .DS. 'api.php');
+		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/api.php');
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 

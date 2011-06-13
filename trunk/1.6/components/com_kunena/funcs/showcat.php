@@ -132,7 +132,7 @@ class CKunenaShowcat {
 				$userlist[intval($message->userid)] = intval($message->userid);
 				$userlist[intval($message->modified_by)] = intval($message->modified_by);
 			}
-			require_once (KUNENA_PATH . DS . 'router.php');
+			require_once (KUNENA_PATH . '/router.php');
 			KunenaRouter::loadMessages ( $routerlist );
 
 			if ($this->config->shownew && $this->my->id) {
@@ -225,7 +225,7 @@ class CKunenaShowcat {
 
 	function displayAnnouncement() {
 		if ($this->config->showannouncement > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			require_once(KUNENA_PATH_LIB . '/kunena.announcement.class.php');
 			$ann = new CKunenaAnnouncement();
 			$ann->getAnnouncement();
 			$ann->displayBox();
@@ -239,7 +239,7 @@ class CKunenaShowcat {
 	}
 
 	function displaySubCategories() {
-		require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
+		require_once (KUNENA_PATH_FUNCS . '/listcat.php');
 		$obj = new CKunenaListCat($this->catid);
 		$obj->loadCategories();
 		if (!empty($obj->categories [$this->catid])) {
@@ -270,7 +270,7 @@ class CKunenaShowcat {
 
 	function displayStats() {
 		if ($this->config->showstats > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+			require_once(KUNENA_PATH_LIB . '/kunena.stats.class.php');
 			$kunena_stats = CKunenaStats::getInstance ( );
 			$kunena_stats->showFrontStats ();
 		}

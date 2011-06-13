@@ -26,7 +26,7 @@ defined( '_JEXEC' ) or die();
 jimport( 'joomla.html.parameter' );
 
 // Kunena wide defines
-require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.defines.php');
+require_once (JPATH_COMPONENT . '/lib/kunena.defines.php');
 
 class KunenaApp {
 
@@ -44,7 +44,7 @@ class KunenaApp {
 
 // First of all take a profiling information snapshot for JFirePHP
 if(JDEBUG){
-	require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.profiler.php');
+	require_once (JPATH_COMPONENT . '/lib/kunena.profiler.php');
 	$__profiler = KProfiler::GetInstance();
 	$__profiler->mark('Start');
 }
@@ -53,7 +53,7 @@ $func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'vie
 JRequest::setVar ( 'func', $func );
 $format = JRequest::getCmd ( 'format', 'html' );
 
-require_once(KUNENA_PATH . DS . 'router.php');
+require_once(KUNENA_PATH . '/router.php');
 if ($func && !isset(KunenaRouter::$functions[$func])) {
 	// If func is not legal, raise joomla error
 	return JError::raiseError( 404, 'Kunena function "' . $func . '" not found' );
@@ -198,12 +198,12 @@ var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 global $lang, $topic_emoticons;
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once (JPATH_COMPONENT . DS . 'class.kunena.php');
+require_once (JPATH_COMPONENT . '/class.kunena.php');
 
 // Central Location for all internal links
-require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.link.class.php');
+require_once (JPATH_COMPONENT . '/lib/kunena.link.class.php');
 
-require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.smile.class.php');
+require_once (JPATH_COMPONENT . '/lib/kunena.smile.class.php');
 
 // Redirect profile (menu item) to the right component
 if ($func == 'profile' && !$do && empty($_POST)) {
@@ -229,7 +229,7 @@ if ($func == "json") {
 	}
 
 	// URL format for JSON requests: e.g: index.php?option=com_kunena&func=json&action=autocomplete&do=getcat
-	require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.ajax.helper.php');
+	require_once (JPATH_COMPONENT . '/lib/kunena.ajax.helper.php');
 
 	$ajaxHelper = &CKunenaAjaxHelper::getInstance();
 
@@ -265,7 +265,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	echo $kunena_config->offline_message;
 } else if ($kunena_config->regonly && ! $kunena_my->id) {
 	// if we only allow registered users
-	if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum-min.css' )) {
+	if (file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.forum-min.css' )) {
 		CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum-min.css' );
 	} else {
 		CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
@@ -281,7 +281,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	//intercept the RSS request; we should stop afterwards
 	if ($func == 'rss') {
-		require_once ( JPATH_COMPONENT.DS.'funcs'.DS.'rss.php');
+		require_once ( JPATH_COMPONENT.'/funcs/rss.php');
 
 		$feed = new CKunenaRSSView($catid);
 		$feed->display();
@@ -294,7 +294,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
 
 		if ($jversion->RELEASE != '1.6') {
-			include (JPATH_COMPONENT.DS.'lib'.DS.'kunena.pdf.php');
+			include (JPATH_COMPONENT.'/lib/kunena.pdf.php');
 			$kunena_app->close ();
 		}
 	}
@@ -309,7 +309,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	$integration->open();
 
 	//time format
-	include_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.timeformat.class.php');
+	include_once (JPATH_COMPONENT . '/lib/kunena.timeformat.class.php');
 
 	$document = & JFactory::getDocument ();
 
@@ -320,7 +320,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	}
 
 	// Insert WhoIsOnlineDatas
-	require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+	require_once (KUNENA_PATH_LIB . '/kunena.who.class.php');
 
 	$who =& CKunenaWhoIsOnline::getInstance();
 	$who->insertOnlineDatas ();
@@ -332,7 +332,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/icons.php' )) {
 		include (KUNENA_ABSTMPLTPATH . '/icons.php');
 	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'icons.php');
+		include (KUNENA_PATH_TEMPLATE_DEFAULT . '/icons.php');
 	}
 
 	if(JDEBUG){
@@ -440,35 +440,35 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	switch ($func) {
 		case 'who' :
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+			require_once (KUNENA_PATH_LIB . '/kunena.who.class.php');
 			$online =& CKunenaWhoIsOnline::getInstance();
 			$online->displayWho();
 
 			break;
 
 		case 'announcement' :
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			require_once (KUNENA_PATH_LIB . '/kunena.announcement.class.php');
 			$ann = CKunenaAnnouncement::getInstance();
 			$ann->display();
 
 			break;
 
         case 'poll':
-  			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+  			require_once (KUNENA_PATH_LIB . '/kunena.poll.class.php');
   			$kunena_polls =& CKunenaPolls::getInstance();
   			$kunena_polls->display();
 
             break;
 
 		case 'polls':
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+			require_once (KUNENA_PATH_LIB . '/kunena.poll.class.php');
 			$kunena_polls =& CKunenaPolls::getInstance();
 			$kunena_polls->polldo();
 
 			break;
 
 		case 'stats' :
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+			require_once(KUNENA_PATH_LIB . '/kunena.stats.class.php');
 			$kunena_stats = new CKunenaStats ( );
 			$kunena_stats->showStats ();
 
@@ -479,28 +479,28 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'fbprofile' :
 		case 'profile' :
 		case 'moderateuser' :
-			require_once ( KUNENA_PATH_FUNCS .DS. 'profile.php');
+			require_once ( KUNENA_PATH_FUNCS . '/profile.php');
 			$page = new CKunenaProfile($userid, $task ? $task : $do);
 			$page->display();
 
 			break;
 
 		case 'userlist' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'userlist.php');
+			require_once (KUNENA_PATH_FUNCS . '/userlist.php');
 			$page = new CKunenaUserlist();
 			$page->display();
 
 			break;
 
 		case 'post' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'post.php');
+			require_once (KUNENA_PATH_FUNCS . '/post.php');
 			$page = new CKunenaPost();
 			$page->display();
 
 			break;
 
 		case 'view' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'view.php');
+			require_once (KUNENA_PATH_FUNCS . '/view.php');
 			$layout = $kunena_app->getUserStateFromRequest( "com_kunena.view_layout", 'layout', 'view' );
 			$page = new CKunenaView($layout, $catid, $id, $limitstart, $limit, $mesid);
 			$page->display(true);
@@ -508,21 +508,21 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'showcat' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'showcat.php');
+			require_once (KUNENA_PATH_FUNCS . '/showcat.php');
 			$page = new CKunenaShowcat($catid, $page);
 			$page->display();
 
 			break;
 
 		case 'listcat' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
+			require_once (KUNENA_PATH_FUNCS . '/listcat.php');
 			$page = new CKunenaListcat($catid);
 			$page->display();
 
 			break;
 
 		case 'review' :
-			require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
+			require_once (KUNENA_PATH_LIB . '/kunena.review.php');
 			$review = new CKunenaReview($catid);
 			$review->display();
 
@@ -535,7 +535,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'report' :
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.report.class.php');
+			require_once(KUNENA_PATH_LIB . '/kunena.report.class.php');
 			$report = new CKunenaReport();
 			$report->display();
 
@@ -549,7 +549,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'userposts' :
 		case 'unapproved' :
 		case 'deleted' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+			require_once (KUNENA_PATH_FUNCS . '/latestx.php');
 			if ($do) $func = $do;
 			$page = new CKunenaLatestX($func, $page);
 			$page->display();
@@ -558,7 +558,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 		case 'search' :
 		case 'advsearch' :
-			require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.search.class.php');
+			require_once (JPATH_COMPONENT . '/lib/kunena.search.class.php');
 
 			$kunenaSearch = new CKunenaSearch ( );
 			$kunenaSearch->show ();
@@ -635,12 +635,12 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'karma' :
-			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.karma.php');
+			include (JPATH_COMPONENT . '/lib/kunena.karma.php');
 
 			break;
 
 		case 'thankyou':
-			require_once(JPATH_COMPONENT.DS.'lib'.DS.'kunena.thankyou.php');
+			require_once(JPATH_COMPONENT.'/lib/kunena.thankyou.php');
 			$thankyou = new CKunenaThankyou ();
 			$thankyou->setThankyou();
 
@@ -662,7 +662,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 						$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 						$kunena_app->redirect ( CKunenaLink::GetProfileURL($kunena_my->id, false) );
 					}
-					require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
+					require_once(JPATH_ROOT.'/administrator/components/com_kunena/libraries/api.php');
 					$KunenaUserAPI = new KunenaUserAPI();
 					$cb = KGetArrayReverseInts ( "cb" );
 					$result = $KunenaUserAPI->unfavoriteThreads($kunena_my->id, $cb);
@@ -681,7 +681,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 						$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 						$kunena_app->redirect ( CKunenaLink::GetProfileURL($kunena_my->id, false) );
 					}
-					require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
+					require_once(JPATH_ROOT.'/administrator/components/com_kunena/libraries/api.php');
 					$KunenaUserAPI = new KunenaUserAPI();
 					$cb = KGetArrayReverseInts ( "cb" );
 					$result = $KunenaUserAPI->unsubscribeThreads($kunena_my->id, $cb);
@@ -723,7 +723,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 				// check that template exists in case it was deleted
 
-				if (file_exists ( KUNENA_PATH_TEMPLATE . DS . $fb_change_template . '/css/kunena.forum.css' )) {
+				if (file_exists ( KUNENA_PATH_TEMPLATE . '/' . $fb_change_template . '/css/kunena.forum.css' )) {
 					$lifetime = 60 * 10;
 					$fb_current_template = $fb_change_template;
 					setcookie ( 'kunena_user_template', "$fb_change_template", time () + $lifetime );
@@ -743,7 +743,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 				// check that template exists in case it was deleted
 
-				if (file_exists ( KUNENA_PATH_TEMPLATE . DS . $fb_change_img_template . '/css/kunena.forum.css' )) {
+				if (file_exists ( KUNENA_PATH_TEMPLATE . '/' . $fb_change_img_template . '/css/kunena.forum.css' )) {
 					$lifetime = 60 * 10;
 					$fb_current_img_template = $fb_change_img_template;
 					setcookie ( 'kunena_user_img_template', "$fb_change_img_template", time () + $lifetime );
@@ -756,12 +756,12 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'credits' :
-			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.credits.php');
+			include (JPATH_COMPONENT . '/lib/kunena.credits.php');
 
 			break;
 
 		default :
-			require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
+			require_once (KUNENA_PATH_FUNCS . '/listcat.php');
 			$page = new CKunenaListcat($catid);
 			$page->display();
 

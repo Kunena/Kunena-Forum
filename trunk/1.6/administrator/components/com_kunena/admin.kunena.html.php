@@ -231,7 +231,7 @@ table.kadmin-stat caption {
 				</tr>
 				<tr>
 					<td valign="top" class="key"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION' ); ?>:</td>
-					<td><?php $path = KUNENA_PATH_TEMPLATE.DS.$template . '/images/template_thumbnail.png';
+					<td><?php $path = KUNENA_PATH_TEMPLATE."/{$template}/images/template_thumbnail.png";
 						if (file_exists ( $path )) : ?>
 						<div class="tpl-thumbnail"><img src ="<?php echo JURI::root (); ?>/components/com_kunena/template/<?php echo kescape($template); ?>/images/template_thumbnail.png" alt="" /></div>
 						<?php endif; ?>
@@ -247,7 +247,7 @@ table.kadmin-stat caption {
 				<table class="admintable">
 				<tr>
 					<td colspan="2" class="key" style="text-align:left; padding: 10px">
-						<?php $templatefile = KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
+						<?php $templatefile = KUNENA_PATH_TEMPLATE."/{$template}/params.ini";
 							echo is_writable($templatefile) ? JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', kescape($templatefile)):JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', kescape($templatefile));
 						?>
 					</td>
@@ -300,7 +300,7 @@ table.kadmin-stat caption {
 			<tr class="<?php echo 'row'. $k; ?>">
 				<td width="5%"><input type="radio" id="cb<?php echo $i;?>" name="filename" value="<?php echo kescape($file); ?>" onclick="isChecked(this.checked);" /></td>
 				<td width="85%"><?php echo kescape($file); ?></td>
-				<td width="10%"><?php echo is_writable($t_dir.DS.$file) ? '<font color="green"> '. JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE' ) .'</font>' : '<font color="red"> '. JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE' ) .'</font>' ?></td>
+				<td width="10%"><?php echo is_writable("{$t_dir}/{$file}") ? '<font color="green"> '. JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE' ) .'</font>' : '<font color="red"> '. JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE' ) .'</font>' ?></td>
 			</tr>
 		<?php
 			$k = 1 - $k; } ?>
@@ -318,7 +318,7 @@ table.kadmin-stat caption {
 
 	function editCSSSource($template, $filename, & $content, $option, & $ftp)
 	{
-		$css_path = KUNENA_PATH_TEMPLATE.DS.$template.DS.'css'.DS.$filename; ?>
+		$css_path = KUNENA_PATH_TEMPLATE."/{$template}/css/{$filename}"; ?>
 	<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_CSS_TEMPLATE'); ?></div><br />
 		<form action="index.php" method="post" name="adminForm">
 		<?php if($ftp): ?>

@@ -219,7 +219,7 @@ class KunenaModelInstall extends JModel {
 	public function extract($path, $filename, $dest = null, $silent = false) {
 		if (! $dest)
 			$dest = $path;
-		$file = $path . DS . $filename;
+		$file = $path . '/' . $filename;
 
 		$text = '';
 
@@ -396,7 +396,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepExtract() {
-		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
+		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
 		if (!is_file("{$path}/fileformat")) {
 			$this->setStep($this->getStep()+1);
 			return;
@@ -410,7 +410,7 @@ class KunenaModelInstall extends JModel {
 		$task = $this->getTask();
 		if (isset($files[$task])) {
 			$file = $files[$task];
-			if (file_exists ( $path . DS . $file['name'] . $ext )) {
+			if (file_exists ( $path . '/' . $file['name'] . $ext )) {
 				$this->extract ( $path, $file['name'] . $ext, $file['dest'], Kunena::isSVN() );
 			}
 			$this->setTask($task+1);
@@ -421,7 +421,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepPlugins() {
-		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
+		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
 
 		$this->installSystemPlugin();
 

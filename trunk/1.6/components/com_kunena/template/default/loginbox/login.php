@@ -12,7 +12,7 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
-require_once (KUNENA_PATH_LIB . DS . 'kunena.login.php');
+require_once (KUNENA_PATH_LIB . '/kunena.login.php');
 $this->user = JFactory::getUser();
 $this->config = KunenaFactory::getConfig ();
 $type = CKunenaLogin::getType ();

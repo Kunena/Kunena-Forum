@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
+require_once (dirname ( __FILE__ ) . '/kunena.php');
 
 /**
  * Kunena Messages

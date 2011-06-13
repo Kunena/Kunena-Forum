@@ -36,7 +36,7 @@ class plgSystemKunena extends JPlugin {
 			if (JFactory::getApplication()->isAdmin()) {
 				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR);
 			} else {
-				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang).DS.$lang->_lang.'.com_kunena.ini';
+				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang)."/{$lang->_lang}.com_kunena.ini";
 				$lang->_paths['com_kunena'][$filename] = 1;
 			}
 		}

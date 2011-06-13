@@ -313,7 +313,7 @@ class KunenaForumMessageAttachment extends JObject {
 		if (self::$_directory != substr($this->folder, 0, strlen(self::$_directory)))
 			return;
 		jimport('joomla.filesystem.file');
-		$path = JPATH_ROOT.DS.$this->folder;
+		$path = JPATH_ROOT."/{$this->folder}";
 		$filetoDelete = $path.'/'.$this->filename;
 		if (JFile::exists($filetoDelete)) {
 			JFile::delete($filetoDelete);

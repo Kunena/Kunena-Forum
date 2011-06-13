@@ -62,7 +62,7 @@ class KunenaAdminModelReport extends KunenaModel {
 			$jconfig_sef_rewrite = 'Disabled';
 		}
 
-		if (file_exists(JPATH_ROOT. DS. '.htaccess')) {
+		if (file_exists(JPATH_ROOT.'/.htaccess')) {
 			$htaccess = 'Exists';
 		} else {
 			$htaccess = 'Missing';

@@ -59,7 +59,7 @@ class KunenaController extends JController {
 				$view = 'home';
 			}
 		}
-		$path = JPATH_COMPONENT . DS . 'controllers' . DS . $view . '.php';
+		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.
 		if (file_exists ( $path )) {

@@ -989,7 +989,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				$type = "javascript";
 			else if ($type == "html")
 				$type = "html4strict";
-			if (! file_exists ( $geshipath . DS . $type . ".php" ))
+			if (! file_exists ( "{$geshipath}/{$type}.php" ))
 				$type = "php";
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );

@@ -33,6 +33,8 @@ Kunena 2.0.0-DEV
 
 13-June-2011 Matias
 ^ [#22786] Merge revisions 4807-4940 from trunk/1.6
+# [#26140] J1.7 support: Systematic elimination of DS as directory separator (K2.0 part)
+
 
 10-June-2011 Matias
 + [#25415] Tableless template: Add intended and threaded layouts

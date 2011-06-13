@@ -163,10 +163,10 @@ abstract class KunenaFactory {
 			$version = new JVersion();
 			$lang = JFactory::getLanguage();
 			if ($version->RELEASE == '1.5' && !$lang->getDebug()) {
-				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang).DS."{$lang->_lang}.{$file}.ini";
+				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang)."/{$lang->_lang}.{$file}.ini";
 				$loaded[$file] = self::parseLanguage($lang, $filename);
 				if (!$loaded[$file]) {
-					$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang).DS."{$lang->_default}.{$file}.ini";
+					$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang)."/{$lang->_default}.{$file}.ini";
 					$loaded[$file] = self::parseLanguage($lang, $filename);
 				}
 			} else {

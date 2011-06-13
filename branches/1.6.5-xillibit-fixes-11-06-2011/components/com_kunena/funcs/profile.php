@@ -190,7 +190,7 @@ class CKunenaProfile {
 				$this->userparameters[$i]->label = '<label for="params'.$userparam[5].'" title="'.$userparam[2].'">'.$userparam[0].'</label>';
 				$i++;
 			}
-		} elseif ($jversion->RELEASE == '1.6' && JComponentHelper::getParams('com_users')->get('frontend_userparams')) {
+		} else {
 			$usersConfig = JComponentHelper::getParams( 'com_users' );
 			if ($usersConfig->get('frontend_userparams', 0)) {
 				$lang = JFactory::getLanguage();
@@ -466,7 +466,7 @@ class CKunenaProfile {
 				unset($post[$field]);
 		}
 
-		if ( $jversion->RELEASE == '1.6' ) {
+		if ( $jversion->RELEASE != '1.5' ) {
 			jimport('joomla.user.helper');
 			$result = JUserHelper::getUserGroups($user->id);
 

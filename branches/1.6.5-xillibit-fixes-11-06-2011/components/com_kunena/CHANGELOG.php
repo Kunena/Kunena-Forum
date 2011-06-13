@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+13-June-2011 Xillibit
+# [#25972] Global settings in profile doesn't follow disable or enable setting (Little issue in Joomla! 1.6)
+
 11-June-2011 Xillibit
 # [#26141] Use third parties API to get version of AUP and Uddeim (AUP version)
 # [#26140] J1.7 support : Systematic elimination of DS as directory separator (Backend part)

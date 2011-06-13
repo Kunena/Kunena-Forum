@@ -32,7 +32,7 @@ $kunena_db = &JFactory::getDBO();
 $kunena_my = &JFactory::getUser();
 
 // Joomla template dir
-define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH . '/templates/' $kunena_app->getTemplate());
+define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH . '/templates/'. $kunena_app->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. 'templates/'.$kunena_app->getTemplate());
 
 /*       _\|/_

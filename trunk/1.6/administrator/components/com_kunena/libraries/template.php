@@ -186,14 +186,14 @@ class KunenaTemplate extends JObject
 			else $iconurl = $this->getMovedIconPath(true);
 		} else {
 			$icon = 'normal';
-			if ($topic->msgcount < 2) $icon = 'unanswered';
+			if (isset($topic->msgcount) && $topic->msgcount < 2) $icon = 'unanswered';
 			if ($topic->ordering) $icon = 'sticky';
 			//if ($topic->myfavorite) $icon = 'favorite';
 			if ($topic->locked) $icon = 'locked';
 			if ($topic->moved) $icon = 'moved';
 			if ($topic->hold == 1) $icon = 'unapproved';
 			if ($topic->hold == 2) $icon = 'deleted';
-			if ($topic->unread) $icon .= '_new';
+			if (!empty($topic->unread)) $icon .= '_new';
 			$iconurl = $this->getImagePath("topicicons/icon_{$icon}.png");
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';

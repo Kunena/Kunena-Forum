@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+9-June-2011 Matias
+Fix undefined properties when approving messages (and showing system topic icon)
+
 7-June-2011 Matias
 ^ [#25917] Merged revision 4866 from /branches/1.6.5-810-18-05-2011
 ^ [#25917] Merged revisions 4890-4909 from /branches/1.6.5-xillibit-fixes-15-05-2011
@@ -72,7 +75,7 @@ Kunena 1.6.5-DEV
 ^ [#25944] update pt-BR (thanks iLucato)
 
 20-May-2011 Xillibit
-# [#25939] Missing image causes Invalid argument supplied /lib/kunena.parser.p​hp on line 572
+# [#25939] Missing image causes Invalid argument supplied in BBCode parser
 
 18-May-2011 810
 ^ [#25934] fix quote button

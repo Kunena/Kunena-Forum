@@ -27,15 +27,14 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-26-May-2011 LDA
-# [#25944] added missing strings
-
-20-May-2011 LDA
-^ [#25944] udpate de-DE (thanks rich)
-^ [#25944] update hu-HU (thanks pedrohsi)
-+ [#25944] add th-TH (thanks drlovecat)
 
 KunenaLatest 1.6.5
+
+14-June-2011 Xillibit
+# [#25944] Typo in en-GB language file
+
+26-May-2011 LDA
+# [#25944] added missing strings
 
 24-May-2011 Xillibit
 # [#25945] Missing strings in french translation and missing settings in J!1.6
@@ -43,9 +42,12 @@ KunenaLatest 1.6.5
 20-May-2011 Xillibit
 # [#25945] Under Joomla! 1.6 not possible to see categories list
 
-KunenaLatest 1.6.4
+20-May-2011 LDA
+^ [#25944] udpate de-DE (thanks rich)
+^ [#25944] update hu-HU (thanks pedrohsi)
++ [#25944] add th-TH (thanks drlovecat)
 
-20-May-2011 Xillibit
+KunenaLatest 1.6.4
 
 11-May-2011 Xillibit
 + [#24847] Add setting to show number post near to the topic title

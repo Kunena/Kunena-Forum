@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+14-June-2011 Xillibit
+# [#23443] kunena.file.class.php has a wrong check for Joomla! 1.7
+
 05-June-2011 Xillibit
 # [#23443] Undefined variables Undefined property: KunenaControllerTopic::$_redirect, KunenaControllerTopic::$_message and KunenaControllerTopic::$_messageType in /libraries/controller.php
 # [#23443] Only under Joomla! 1.6 : Fatal Error: Class 'userid' not found in libraries/joomla/database/database/mysqli.php on line 438

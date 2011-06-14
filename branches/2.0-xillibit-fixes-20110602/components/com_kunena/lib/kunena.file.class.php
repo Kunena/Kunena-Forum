@@ -12,9 +12,9 @@ defined( '_JEXEC' ) or die();
 
 jimport ( 'joomla.version' );
 $jversion = new JVersion ();
-if ($jversion->RELEASE == 1.6) {
-	require_once (KPATH_SITE.'/lib/kunena.file.class.1.6.php');
-} else {
+if ($jversion->RELEASE == '1.5') {
 	require_once (KPATH_SITE.'/lib/kunena.file.class.1.5.php');
+} else {
+	require_once (KPATH_SITE.'/lib/kunena.file.class.1.6.php');
 }
 ?>

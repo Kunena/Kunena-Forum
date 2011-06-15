@@ -71,8 +71,10 @@ abstract class KunenaIntegration extends JObject {
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == '1.5') {
 			return 'joomla15';
-		} else {
+		} elseif ($jversion->RELEASE == '1.6') {
 			return 'joomla16';
+		} else {
+			return 'joomla17';
 		}
 	}
 
@@ -115,7 +117,7 @@ abstract class KunenaIntegration extends JObject {
 
 		$opt[] = JHTML::_('select.option', 'auto',JText::_('COM_KUNENA_INTEGRATION_AUTO'));
 		foreach ($options as $component=>$status) {
-			if ($component == 'joomla15' || $component == 'joomla16') {
+			if ($component == 'joomla15' || $component == 'joomla16' || $component == 'joomla17') {
 				if (!$status) continue;
 				$component = 'joomla';
 			}

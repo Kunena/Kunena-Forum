@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+15-June-2011 Xillibit
+# [#23443] Fix undefined variables into report configuration settings
+
 14-June-2011 Xillibit
 # [#23443] kunena.file.class.php has a wrong check for Joomla! 1.7
 

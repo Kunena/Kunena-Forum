@@ -35,7 +35,8 @@ Kunena 2.0.0-DEV
 + [#25415] Tableless template: Add announcement layouts
 ^ [#25415] Tableless template: Move common header and footer into html/display.php
 + [#25415] Tableless template: Add Topic/Vote layout
-# [#23443] Topic threaded/intended layout: Fix 404 error when topic has a poll
+# [#23443] Topic threaded/intended layout: Fix fatal error when topic has a poll
+- [#25415] Remove unused moderate layouts from category and user
 
 13-June-2011 Matias
 ^ [#22786] Merge revisions 4807-4940 from trunk/1.6

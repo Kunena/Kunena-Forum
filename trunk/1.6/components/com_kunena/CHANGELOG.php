@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+14-June-2011 Matias
+# [#26152] KunenaAccess::loadSubscribers(): warning if all users gets removed from the list
+
 14-June-2011 Xillibit
 # [#25980] Fix typo in en-GB file in backend
 

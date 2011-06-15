@@ -9,17 +9,10 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$this->displaySection($this->category);
+if (!$this->category->isSection()) {
+	include 'default_actions.php';
+	include 'default_list.php';
+}
 ?>
-	<div id="kunena">
-	<?php
-		$this->displayMenu ();
-		$this->displayLoginBox ();
-		$this->displayBreadcrumb ();
-		$this->displaySection($this->category);
-		if (!$this->category->isSection()) {
-			include 'default_actions.php';
-			include 'default_list.php';
-		}
-		$this->displayFooter ();
-	?>
-	</div>

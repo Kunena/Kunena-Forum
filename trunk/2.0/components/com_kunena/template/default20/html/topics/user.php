@@ -9,14 +9,7 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-?>
-	<div id="kunena">
-	<?php
-		$this->displayMenu ();
-		$this->displayLoginBox ();
-		$this->displayBreadcrumb ();
-		include 'user_actions.php';
-		include 'user_list.php';
-		$this->displayFooter ();
-	?>
-	</div>
+
+$this->displayAnnouncement ();
+include 'user_actions.php';
+include 'user_list.php';

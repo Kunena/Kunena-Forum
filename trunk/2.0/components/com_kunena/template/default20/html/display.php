@@ -9,7 +9,16 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+?>
+<div id="kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+$this->displayBreadcrumb ();
 
-$this->displayAnnouncement ();
-include 'posts_actions.php';
-include 'posts_list.php';
+// Display current view/layout
+$this->displayLayout();
+
+$this->displayFooter ();
+?>
+</div>

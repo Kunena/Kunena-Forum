@@ -9,20 +9,13 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$this->displayAnnouncement ();
+$location = 0;
+foreach ( $this->sections as $section ) {
+	$this->displaySection($section);
+	$this->displayModulePosition('kunena_section_' . ++$location);
+}
+$this->displayWhoIsOnline ();
+$this->displayStatistics ();
 ?>
-	<div id="kunena">
-	<?php
-		$this->displayMenu ();
-		$this->displayLoginBox ();
-		$this->displayAnnouncement ();
-		$this->displayBreadcrumb ();
-		$location = 0;
-		foreach ( $this->sections as $section ) {
-			$this->displaySection($section);
-			$this->displayModulePosition('kunena_section_' . ++$location);
-		}
-		$this->displayWhoIsOnline ();
-		$this->displayStatistics ();
-		$this->displayFooter ();
-	?>
-	</div>

@@ -10,6 +10,4 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->displayAnnouncement ();
-include 'posts_actions.php';
-include 'posts_list.php';
+include dirname ( __FILE__ ) . '/edit.php';

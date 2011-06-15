@@ -10,12 +10,19 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-	<div id="kunena">
-	<?php
-		$this->displayMenu ();
-		$this->displayLoginBox ();
-		$this->displayBreadcrumb ();
-		include 'default_embed.php';
-		$this->displayFooter ();
-	?>
-	</div>
+		<div class="ksection">
+			<h2 class="kheader"><?php echo $this->escape($this->header); ?></h2>
+			<div class=kdetailsbox>
+				<div class="kcontent">
+				<?php
+				if ($this->format == 'html') :
+					echo $this->body;
+				elseif ($this->format == 'text') :
+					echo $this->escape($this->body);
+				else :
+				echo KunenaHtmlParser::parseBBCode($this->body);
+				endif; ?>
+				</div>
+				<div class="clr"></div>
+			</div>
+		</div>

@@ -11,14 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->setTitle(JText::_('COM_KUNENA_VIEW_USER_LIST'));
-?>
-	<div id="kunena">
-	<?php
-		$this->displayMenu ();
-		$this->displayLoginBox ();
-		$this->displayBreadcrumb ();
-		include 'list_actions.php';
-		include 'list_list.php';
-		$this->displayFooter ();
-	?>
-	</div>
+
+include 'list_actions.php';
+include 'list_list.php';

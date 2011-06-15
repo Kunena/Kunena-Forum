@@ -22,13 +22,5 @@ $editor->initialize();
 
 include_once (KPATH_SITE.'/lib/kunena.bbcode.js.php');
 include_once (KPATH_SITE.'/lib/kunena.special.js.php');
-?>
-	<div id="kunena">
-	<?php
-		$this->displayMenu ();
-		$this->displayLoginBox ();
-		$this->displayBreadcrumb ();
-		include 'edit_form.php';
-		$this->displayFooter ();
-	?>
-	</div>
+
+include 'edit_form.php';

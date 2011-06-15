@@ -43,7 +43,11 @@ class KunenaView extends JView {
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$this->template->initialize();
 
-		$this->displayLayout ();
+		if (JFactory::getApplication()->isAdmin()) {
+			$this->displayLayout();
+		} else {
+			include $this->template->getFile ('html/display.php');
+		}
 	}
 
 	function displayLayout($layout=null, $tpl = null) {

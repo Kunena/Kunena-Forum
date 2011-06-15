@@ -9,16 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-?>
-	<div id="kunena">
-	<?php
-		$this->displayMenu ();
-		$this->displayLoginBox ();
-		$this->displayBreadcrumb ();
-		$this->displayPoll();
-		$this->getModulePosition( 'kunena_poll' );
-		$this->displayTopicActions(0);
-		include 'indented_list.php';
-		$this->displayFooter ();
-	?>
-	</div>
+
+$this->displayPoll();
+$this->getModulePosition( 'kunena_poll' );
+$this->displayTopicActions(0);
+include 'indented_list.php';

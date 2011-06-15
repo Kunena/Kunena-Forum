@@ -10,6 +10,5 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->displayAnnouncement ();
-include 'posts_actions.php';
-include 'posts_list.php';
+// Display current view/layout
+$this->displayLayout();

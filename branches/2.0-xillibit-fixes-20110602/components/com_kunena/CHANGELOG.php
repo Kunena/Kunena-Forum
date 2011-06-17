@@ -33,6 +33,7 @@ Kunena 2.0.0-DEV
 
 17-June-2011 Xillibit
 + [#26185] New options to control the map
++ [#26186] Allow moderators to reset poll votes
 
 15-June-2011 Xillibit
 # [#23443] Fix undefined variables into report configuration settings

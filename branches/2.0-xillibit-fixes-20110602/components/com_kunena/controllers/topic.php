@@ -819,4 +819,20 @@ class KunenaControllerTopic extends KunenaController {
 		}
 		$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->return, $this->id, 0, NULL, $this->id, false ) );
 	}
+
+	public function resetvotes() {
+		$app = JFactory::getApplication ();
+		if (!JRequest::checkToken('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		$pollid = JRequest::getInt ( 'pollid', 0 );
+
+		$topic = KunenaForumTopicHelper::get($this->id);
+		$result = $topic->resetvotes($pollid);
+
+		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS' ) );
+		$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->return, $this->id, 0, NULL, $this->id, false ) );
+	}
 }

@@ -977,6 +977,25 @@ class KunenaForumTopic extends JObject {
 		return $this->update();
 	}
 
+	public function resetvotes($mesid) {
+		if( !isset($mesid) ) return false;
+
+		$query ="UPDATE #__kunena_polls_options SET votes=0 WHERE pollid={$this->_db->quote($mesid)}";
+			$this->_db->setQuery($query);
+			$this->_db->Query();
+		if (KunenaError::checkDatabaseError ())
+		return false;
+
+		$query ="DELETE FROM #__kunena_polls_users WHERE pollid={$this->_db->quote($mesid)}";
+			$this->_db->setQuery($query);
+			$this->_db->Query();
+		if (KunenaError::checkDatabaseError ())
+		return false;
+
+		return true;
+	}
+
+
 	// Internal functions
 
 	protected function authoriseNotExists($user) {

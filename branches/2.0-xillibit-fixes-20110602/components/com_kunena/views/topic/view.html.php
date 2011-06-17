@@ -34,6 +34,7 @@ class KunenaViewTopic extends KunenaView {
 	var $cache = true;
 
 	function displayDefault($tpl = null) {
+		$this->me = KunenaFactory::getUser();
 		$this->layout = $this->state->get('layout');
 		$this->setLayout($this->layout);
 		$this->assignRef ( 'category', $this->get ( 'Category' ) );

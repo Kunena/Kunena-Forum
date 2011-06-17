@@ -187,6 +187,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				'mode' => BBCODE_MODE_LIBRARY,
 				'method' => 'DoMap',
 				'class' => 'block',
+				'allow' => array( 'type' => '/^[\w\d.-_]*$/', 'zoom' => '/^\d*$/', 'control' => '/^\d*$/' ),
 				'allow_in' => array('listitem', 'block', 'columns'),
 				'content' => BBCODE_PROHIBIT
 			),
@@ -786,6 +787,12 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		$id ++;
 		$mapid = 'kgooglemap'.$id;
 
+		$map_type = isset($params ["type"]) ? strtoupper($params ["type"]): 'ROADMAP';
+		$map_typeId = array('HYBRID','ROADMAP','SATELLITE','TERRAIN');
+		if ( !in_array($map_type, $map_typeId) ) $map_type = 'ROADMAP';
+		$map_zoom = isset($params ["zoom"]) ? $params ["zoom"]: '10';
+		$map_control = $params ["control"] ? $params ["control"] : 0;
+
 		$document->addScriptDeclaration("
 		// <![CDATA[
 			var geocoder;
@@ -807,8 +814,10 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				if (status == google.maps.GeocoderStatus.OK) {
 					$mapid.setCenter(results[0].geometry.location);
 					var marker = new google.maps.Marker({
-						map: $mapid,
-						position: results[0].geometry.location
+						zoom: $map_zoom,
+						disableDefaultUI: $map_control,
+						center: latlng,
+						mapTypeId: google.maps.MapTypeId.$map_type
 					});
 				} else {
 					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$content</i></strong></p>';

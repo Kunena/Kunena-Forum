@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+17-June-2011 Xillibit
++ [#26185] New options to control the map
+
 15-June-2011 Xillibit
 # [#23443] Fix undefined variables into report configuration settings
 # [#23443] No access class for Joomla! 1.7 which leverage some fatal errors

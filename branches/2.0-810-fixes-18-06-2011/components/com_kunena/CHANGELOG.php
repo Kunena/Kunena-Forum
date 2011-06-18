@@ -31,7 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
-19-June-2011 Matias
+19-June-2011 810
+^ [#25415] Css add font header
+^ [#25415] Css Hide go button default.actions
 ^ [#25415] Fix css Trash manager
 
 14-June-2011 Matias

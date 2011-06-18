@@ -86,6 +86,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 #Kunena .kheader h2,
 #Kunena .kheader h2 a {
 	color: #fff !important;
+	font-size:15px !important;
 }
 
 #Kunena div.kblock div.ktitle {

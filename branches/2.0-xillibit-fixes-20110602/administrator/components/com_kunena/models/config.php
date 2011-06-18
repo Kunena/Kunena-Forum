@@ -252,6 +252,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$lists['version_check'] = JHTML::_('select.genericlist', $yesno, 'cfg_version_check', 'class="inputbox" size="1"', 'value', 'text', $config->version_check);
 
+		$lists['time_to_create_page'] = JHTML::_('select.genericlist', $yesno, 'cfg_time_to_create_page', 'class="inputbox" size="1"', 'value', 'text', $config->time_to_create_page);
+
 		$lists['showpopthankyoustats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopthankyoustats', 'class="inputbox" size="1"', 'value', 'text', $config->showpopthankyoustats);
 
 		$seerestoredeleted = array();

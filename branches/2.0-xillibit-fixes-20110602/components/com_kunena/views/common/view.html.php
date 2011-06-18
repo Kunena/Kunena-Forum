@@ -138,6 +138,8 @@ class KunenaViewCommon extends KunenaView {
 			if ($item->link) $this->pathway[] = $item;
 		}
 
+		$this->item = array_shift($this->pathway);
+
 		$result = $this->loadTemplate($tpl);
 		if (JError::isError($result)) {
 			return $result;

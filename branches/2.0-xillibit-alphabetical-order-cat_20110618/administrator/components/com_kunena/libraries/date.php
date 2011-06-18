@@ -113,6 +113,10 @@ class KunenaDate extends JDate {
 		return str_replace ( '%time%', trim($output), JText::_('COM_KUNENA_TIME_SINCE') );
 	}
 
+	public function setTimezone($offset) {
+		// TODO : need to do something here
+	}
+
 	public function toTimezone() {
 		$timezone = $this->getOffset();
 		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);

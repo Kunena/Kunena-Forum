@@ -150,6 +150,11 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo $this->options ['channels']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS_DESC'); ?></td>
 						</tr>
+						<tr>
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ALPHABETICAL'); ?>:</td>
+							<td valign="top"><?php echo $this->options ['alphabetical']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ALPHABETICAL_DESC'); ?></td>
+						</tr>
 						<?php endif; ?>
 					</table>
 				</fieldset>

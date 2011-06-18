@@ -187,14 +187,21 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			$limitstart = $this->getState ( 'list.start');
 			$limit = $this->getState ( 'list.limit');
 
+			$alphabetical = $this->getCategory()->alphabetical;
 
 			$access = KunenaFactory::getAccessControl();
 			$hold = $access->getAllowedHold($this->me, $catid);
-			$params = array(
+			if ( $alphabetical ) {
+				$params = array(
+				'orderby'=>'tt.ordering DESC, tt.subject ASC ' ,
+				'hold'=>$hold,
+				'moved'=>1);
+			} else {
+				$params = array(
 				'orderby'=>'tt.ordering DESC, tt.last_post_time ' . strtoupper($this->getState ( 'list.direction')),
 				'hold'=>$hold,
 				'moved'=>1);
-
+			}
 			list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 			if ($this->total > 0) {
 				// collect user ids for avatar prefetch when integrated

@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+18-June-2011 Xillibit
++ [#26191] Option to choose ordering topics in alphabetical mode in categories
+
 14-June-2011 Matias
 + [#25415] Tableless template: Add announcement layouts
 ^ [#25415] Tableless template: Move common header and footer into html/display.php

@@ -263,6 +263,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$lists ['allow_polls'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $category->allow_polls );
 		$lists ['allow_anonymous'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->allow_anonymous );
 		$lists ['post_anonymous'] = JHTML::_ ( 'select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->post_anonymous );
+		$lists ['alphabetical'] = JHTML::_ ( 'select.genericlist', $yesno, 'alphabetical', 'class="inputbox" size="1"', 'value', 'text', $category->alphabetical );
 
 		// TODO:
 		/*

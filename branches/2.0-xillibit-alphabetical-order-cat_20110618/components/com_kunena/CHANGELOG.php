@@ -35,6 +35,8 @@ Kunena 2.0.0-DEV
 + [#26191] Option to choose ordering topics in alphabetical mode in categories
 # [#23443] SQL error : Unknown column 'time' in 'field list' SQL=SELECT MAX(time) FROM jos_kunena_polls_users WHERE pollid='4' AND userid='62'
 # [#23443] Fatal Error: Call to undefined method KunenaDate::setTimezone() in components/com_kunena/libraries/date.php on line 171
+# [#23443] Missing new topic button in actions in tabless template
+# [#23443] Missing Total number of topics in recent discussions
 
 14-June-2011 Matias
 + [#25415] Tableless template: Add announcement layouts

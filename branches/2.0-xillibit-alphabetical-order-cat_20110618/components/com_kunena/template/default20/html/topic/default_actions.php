@@ -16,6 +16,7 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<ul class="kmessage-buttons">
 				<!-- User buttons -->
+				<?php if (!empty($this->topic_new)) : ?><li><?php echo $this->topic_new ?></li><?php endif ?>
 				<?php if (!empty($this->topic_reply)) : ?><li><?php echo $this->topic_reply ?></li><?php endif ?>
 				<?php if (!empty($this->topic_subscribe)) : ?><li><?php echo $this->topic_subscribe ?></li><?php endif ?>
 				<?php if (!empty($this->topic_favorite)) : ?><li><?php echo $this->topic_favorite ?></li><?php endif ?>

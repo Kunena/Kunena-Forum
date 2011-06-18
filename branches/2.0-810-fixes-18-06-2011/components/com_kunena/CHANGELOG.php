@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-June-2011 Matias
+^ [#25415] Fix css Trash manager
+
 14-June-2011 Matias
 + [#25415] Tableless template: Add announcement layouts
 ^ [#25415] Tableless template: Move common header and footer into html/display.php

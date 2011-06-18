@@ -35,6 +35,7 @@ Kunena 2.0.0-DEV
 # [#23443] Missing thank you users list in bottom of messages
 # [#26031] Undefined variable in breadcrumb when sessions expire
 + [#26190] Option to hide Time to create page
+# [#23443] Missing quick reply box in tabless template
 
 17-June-2011 Xillibit
 + [#26185] New options to control the map

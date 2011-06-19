@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+19-June-2011 Xillibit
+# [#25980] Some strings are defined multiples times in en-GB file in frontend
+
 15-June-2011 Xillibit
 # [#25980] A string was defined twice time in en-GB file in backend
 

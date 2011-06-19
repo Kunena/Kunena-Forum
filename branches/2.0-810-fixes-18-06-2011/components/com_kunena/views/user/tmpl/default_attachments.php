@@ -25,7 +25,7 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
 				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="task" value="delfile" />
-				<table>
+				<table width="100%">
 					<tr class="ksth">
 						<th class="frst"> # </th>
 						<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
@@ -35,7 +35,7 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 
 						<th><?php echo JText::_('COM_KUNENA_FILESIZE'); ?></th>
 
-						<th><?php echo JText::_('COM_KUNENA_FILETYPE'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_FILE_PREVIEW'); ?></th>
 
 						<th><?php echo JText::_('COM_KUNENA_FILE_DELETE'); ?></th>
 					</tr>
@@ -54,7 +54,7 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 
 					<tr class="k<?php echo $usrl_class ;?>">
 						<td class="kcol-first"><?php echo $y; ?></td>
-						<td><?php echo JHTML::_('grid.id', $i, intval($file->id)) ?></td>
+						<td class="kcol-mid"><?php echo JHTML::_('grid.id', $i, intval($file->id)) ?></td>
 						<td align="center" class="kcol-mid"><img src="<?php echo $file->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
 
 						<td class="kcol-mid"><?php echo $file->filename; ?></td>

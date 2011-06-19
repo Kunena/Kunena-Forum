@@ -35,6 +35,7 @@ Kunena 2.0.0-DEV
 ^ [#25415] Css add font header
 ^ [#25415] Css Hide go button default.actions
 ^ [#25415] Fix css Trash manager
+^ [#25415] Css Manage Your Attachments
 
 14-June-2011 Matias
 + [#25415] Tableless template: Add announcement layouts

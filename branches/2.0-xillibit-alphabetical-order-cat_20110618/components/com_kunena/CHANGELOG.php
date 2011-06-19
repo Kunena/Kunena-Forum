@@ -31,6 +31,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-June-2011 Xillibit
+# [#23443] When you have voted to a poll, the results aren't displayed
+# [#23443] The link create a new announcement in announcements control panel is incorrect
+
 18-June-2011 Xillibit
 + [#26191] Option to choose ordering topics in alphabetical mode in categories
 # [#23443] SQL error : Unknown column 'time' in 'field list' SQL=SELECT MAX(time) FROM jos_kunena_polls_users WHERE pollid='4' AND userid='62'

@@ -16,7 +16,7 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 ?>
 		<div id="kannouncements">
 			<?php if ($this->canEdit) : ?>
-			<a href="<?php KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create') ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_ANN_ADD') ?> &raquo;</a>
+			<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create') ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_ANN_ADD') ?> &raquo;</a>
 			<?php endif ?>
 			<h2 class="kheader">
 				<a title="<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>" rel="kannouncements-detailsbox">

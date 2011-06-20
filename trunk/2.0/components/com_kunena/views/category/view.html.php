@@ -370,7 +370,7 @@ class KunenaViewCategory extends KunenaView {
 					$this->categoryLink = null;
 				}
 				$this->firstPostAuthor = $this->topic->getfirstPostAuthor();
-				$this->firstPostTime = $this->topic->last_post_time;
+				$this->firstPostTime = $this->topic->first_post_time;
 				$this->firstUserName = $this->topic->first_post_guest_name;
 				$this->lastPostAuthor = $this->topic->getLastPostAuthor();
 				$this->lastPostTime = $this->topic->last_post_time;

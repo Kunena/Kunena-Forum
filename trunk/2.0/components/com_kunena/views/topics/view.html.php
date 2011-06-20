@@ -201,7 +201,7 @@ class KunenaViewTopics extends KunenaView {
 			if (!$contents) {
 				$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 				$this->firstPostAuthor = $this->topic->getfirstPostAuthor();
-				$this->firstPostTime = $this->topic->last_post_time;
+				$this->firstPostTime = $this->topic->first_post_time;
 				$this->firstUserName = $this->topic->first_post_guest_name;
 				$this->lastPostAuthor = $this->topic->getLastPostAuthor();
 				$this->lastPostTime = $this->topic->last_post_time;
@@ -266,7 +266,7 @@ class KunenaViewTopics extends KunenaView {
 				$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 				$this->postAuthor = KunenaFactory::getUser($this->message->userid);
 				$this->firstPostAuthor = $this->topic->getfirstPostAuthor();
-				$this->firstPostTime = $this->topic->last_post_time;
+				$this->firstPostTime = $this->topic->first_post_time;
 				$this->firstUserName = $this->topic->first_post_guest_name;
 				$this->keywords = $this->topic->getKeywords(false, ', ');
 				$this->module = $this->getModulePosition('kunena_topic_' . $this->position);

@@ -187,13 +187,24 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			$limitstart = $this->getState ( 'list.start');
 			$limit = $this->getState ( 'list.limit');
 
+			$topic_ordering = $this->getCategory()->topic_ordering;
 
 			$access = KunenaFactory::getAccessControl();
 			$hold = $access->getAllowedHold($this->me, $catid);
 			$params = array(
-				'orderby'=>'tt.ordering DESC, tt.last_post_time ' . strtoupper($this->getState ( 'list.direction')),
 				'hold'=>$hold,
 				'moved'=>1);
+			switch ($topic_ordering) {
+				case 'alpha':
+					$params['orderby'] = 'tt.ordering DESC, tt.subject ASC ';
+					break;
+				case 'creation':
+					$params['orderby'] = 'tt.ordering DESC, tt.first_post_time ' . strtoupper($this->getState ( 'list.direction'));
+					break;
+				case 'lastpost':
+				default:
+					$params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . strtoupper($this->getState ( 'list.direction'));
+			}
 
 			list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 			if ($this->total > 0) {

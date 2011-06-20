@@ -177,6 +177,14 @@ JHTML::_('behavior.tooltip');
 					<?php echo $this->options ['channels']; ?>
 				</div>
 			</li>
+			<li class="kpostcategory-row krow-odd">
+				<div class="kform-label">
+					<label for="channels"><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING') ?></label>
+				</div>
+				<div class="kform-field">
+					<?php echo $this->options ['topic_ordering']; ?>
+				</div>
+			</li>
 			<?php endif ?>
 		</ul>
 

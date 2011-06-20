@@ -44,6 +44,7 @@ class TableKunenaCategories extends KunenaTable
 	var $headerdesc = null;
 	var $class_sfx = null;
 	var $allow_polls = null;
+	var $topic_ordering = null;
 	var $numTopics = null;
 	var $numPosts = null;
 	var $last_topic_id = null;

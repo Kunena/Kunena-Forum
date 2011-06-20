@@ -16,6 +16,11 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<form name="kfilter" method="post" action="<?php echo $this->URL ?>">
 			<ul class="kfilter-options">
+				<?php // TODO: better place? ?>
+				<li class="kfilter-total">
+					<strong><?php echo intval($this->total) ?></strong>
+					<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>
+				</li>
 				<!-- li class="kfilter-title">Filter posts by:</li>
 				<li>
 					<select size="1" onchange="this.form.submit()" class="kinputbox" id="kfilter-select-cat" name="do">

@@ -249,6 +249,11 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$channels_options [] = JHTML::_ ( 'select.option', 'CHILDREN', JText::_ ( 'COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN' ) );
 		if (empty($category->channels)) $category->channels = 'THIS';
 
+		$topic_ordering_options = array();
+		$topic_ordering_options[] = JHTML::_ ( 'select.option', 'lastpost', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST' ) );
+		$topic_ordering_options[] = JHTML::_ ( 'select.option', 'creation', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION' ) );
+		$topic_ordering_options[] = JHTML::_ ( 'select.option', 'alpha', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA' ) );
+
 		$lists = array ();
 		$lists ['access'] = KunenaFactory::getAccessControl()->getAccessLevelsList($category);
 		$lists ['pub_access'] = $accessLists ['pub_access'];
@@ -264,6 +269,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$lists ['allow_polls'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $category->allow_polls );
 		$lists ['allow_anonymous'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->allow_anonymous );
 		$lists ['post_anonymous'] = JHTML::_ ( 'select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->post_anonymous );
+		$lists ['topic_ordering'] = JHTML::_ ( 'select.genericlist', $topic_ordering_options, 'topic_ordering', 'class="inputbox" size="1"', 'value', 'text', $category->topic_ordering );
 
 		// TODO:
 		/*

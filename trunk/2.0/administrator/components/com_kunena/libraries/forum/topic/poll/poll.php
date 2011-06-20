@@ -29,7 +29,7 @@ class KunenaForumTopicPoll extends JObject {
 	protected $users = false;
 	protected $myvotes = array();
 	protected $mytime = array();
-	
+
 	/**
 	 * Constructor
 	 *
@@ -139,7 +139,7 @@ class KunenaForumTopicPoll extends JObject {
 	public function getMyTime($user = null) {
 		$user = KunenaFactory::getUser($user);
 		if (!isset($this->mytime[$user->userid])) {
-			$query = "SELECT MAX(time)
+			$query = "SELECT MAX(lasttime)
 				FROM #__kunena_polls_users
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
 			$this->_db->setQuery($query);

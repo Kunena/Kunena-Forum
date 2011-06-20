@@ -38,15 +38,25 @@ Kunena 2.0.0-DEV
 + [#22569] KunenaAdminControllerCategories::_save(): add logic to remove moderators
 # [#23443] Removed some duplicated translation strings
 + [#22569] Add class JHtmlKunenaGrid: advanced version of JHtml(J)Grid with CSS and JS
-+ [#25415] Tableless template: some cleanup
+^ [#25415] Tableless template: some cleanup
 # [#23443] Fix missing locked input from sections
-^ [#22786] Merge revisions 4916-4969 from branches/2.0-xillibit-fixes-20110602
+^ [#22786] Merge revisions 4916-4963 from branches/2.0-xillibit-fixes-20110602
+^ [#22786] Merge revisions 4959-4969 from branches/2.0-xillibit-alphabetical-order-cat_20110618
+^ [#26191] Generalize topic ordering inside category to allow other orderings as well
+# [#25415] Tableless template: wrong first post time
+
+19-June-2011 Xillibit
+# [#23443] When you have voted to a poll, the results aren't displayed
+# [#23443] The link create a new announcement in announcements control panel is incorrect
 
 18-June-2011 Xillibit
 # [#23443] Tableless template: Missing thank you users list in bottom of messages
 # [#26031] Undefined variable in breadcrumb when sessions expire
 + [#26190] Option to hide Time to create page
 # [#23443] Tableless template: Missing quick reply box
++ [#26191] Option to choose ordering topics in alphabetical mode in categories
+# [#23443] SQL error : Unknown column 'time' in 'field list' SQL=SELECT MAX(time) FROM jos_kunena_polls_users WHERE pollid='4' AND userid='62'
+# [#23443] Tableless template: Missing Total number of topics in recent discussions
 
 17-June-2011 Xillibit
 + [#26185] New options to control the map

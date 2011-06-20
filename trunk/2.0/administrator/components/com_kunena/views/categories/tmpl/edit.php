@@ -139,6 +139,11 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo $this->options ['channels']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS_DESC'); ?></td>
 						</tr>
+						<tr>
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING'); ?>:</td>
+							<td valign="top"><?php echo $this->options ['topic_ordering']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
+						</tr>
 						<?php /*
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>

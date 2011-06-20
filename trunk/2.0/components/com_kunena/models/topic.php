@@ -206,6 +206,10 @@ class KunenaModelTopic extends KunenaModel {
 		return $this->getTopic()->getTotal();
 	}
 
+	public function getMyVotes() {
+		return $this->getPoll()->getMyVotes();
+	}
+
 	public function getModerators() {
 		$moderators = $this->getCategory()->getModerators(false);
 		return $moderators;

@@ -287,6 +287,8 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD INDEX `moderator` ( `moderator` );</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `ordering` smallint(6) NOT NULL default '0' AFTER `admin_recurse`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` MODIFY `ip` varchar(128) NULL AFTER `time`;</query>
+			<!-- From Kunena 2.0.0 -->
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `topic_ordering` VARCHAR(16) NOT NULL default 'lastpost' AFTER `allow_polls`;</query>
 		</version>
 	</upgrade>
 </comupgrade>

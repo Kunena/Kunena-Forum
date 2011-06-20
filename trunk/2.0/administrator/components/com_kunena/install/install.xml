@@ -58,6 +58,7 @@
 		<field name="headerdesc" type="text" null="0" />
 		<field name="class_sfx" type="varchar(20)" null="0" />
 		<field name="allow_polls" type="tinyint(4)" null="0" default="0" />
+		<field name="topic_ordering" type="varchar(16)" null="0" default="lastpost" />
 		<field name="numTopics" type="mediumint(8)" null="0" default="0" />
 		<field name="numPosts" type="mediumint(8)" null="0" default="0" />
 		<field name="last_topic_id" type="int(11)" null="0" default="0" />

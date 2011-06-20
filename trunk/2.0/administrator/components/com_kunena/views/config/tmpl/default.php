@@ -101,6 +101,15 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_VERSION_CHECK_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $this->lists ['time_to_create_page'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_TIME_TO_CREATEPAGE_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 

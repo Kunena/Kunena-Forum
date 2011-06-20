@@ -40,6 +40,17 @@ Kunena 2.0.0-DEV
 + [#22569] Add class JHtmlKunenaGrid: advanced version of JHtml(J)Grid with CSS and JS
 + [#25415] Tableless template: some cleanup
 # [#23443] Fix missing locked input from sections
+^ [#22786] Merge revisions 4916-4969 from branches/2.0-xillibit-fixes-20110602
+
+18-June-2011 Xillibit
+# [#23443] Tableless template: Missing thank you users list in bottom of messages
+# [#26031] Undefined variable in breadcrumb when sessions expire
++ [#26190] Option to hide Time to create page
+# [#23443] Tableless template: Missing quick reply box
+
+17-June-2011 Xillibit
++ [#26185] New options to control the map
++ [#26186] Allow moderators to reset poll votes
 
 17-June-2011 Matias
 # [#23443] KunenaForumCategory::setModerator(): administrator cannot resign from category
@@ -53,8 +64,15 @@ Kunena 2.0.0-DEV
 + [#25415] Tableless template: Category manager: Add tree images
 + [#25415] Update tree sprite & CSS
 
+15-June-2011 Xillibit
+# [#23443] Fix undefined variables into report configuration settings
+# [#23443] No access class for Joomla! 1.7 which leverage some fatal errors
+
 15-June-2011 Matias
 + [#25415] Tableless template: New Category / Manage layout
+
+14-June-2011 Xillibit
+# [#23443] kunena.file.class.php has a wrong check for Joomla! 1.7
 
 14-June-2011 Matias
 + [#25415] Tableless template: Add announcement layouts

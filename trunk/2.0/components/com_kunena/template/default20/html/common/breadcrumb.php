@@ -9,13 +9,16 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$item = array_shift($this->pathway);
 ?>
+		<?php if ($item) : ?>
 		<div class="kbreadcrumb">
 			<ul class="kbreadcrumb-path">
-				<?php $item = array_shift($this->pathway); ?>
 				<li><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
 				<?php foreach ($this->pathway as $item) : ?>
 				<li> &raquo; <a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
 				<?php endforeach ?>
 			</ul>
 		</div>
+		<?php endif ?>

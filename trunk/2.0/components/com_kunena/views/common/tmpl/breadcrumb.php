@@ -9,13 +9,15 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$item = array_shift($this->pathway);
 ?>
 
+<?php if ($item) : ?>
 <div class="kblock kpathway">
 	<div class="kcontainer" id="pathway_tbody">
 		<div class="ksectionbody">
 			<div class = "kforum-pathway">
-				<?php $item = array_shift($this->pathway) ?>
 				<div class="path-element-first"><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></div>
 				<?php foreach($this->pathway as $item) : ?>
 				<div class="path-element"><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></div>
@@ -24,3 +26,4 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
+<?php endif ?>

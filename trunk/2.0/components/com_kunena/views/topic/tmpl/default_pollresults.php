@@ -55,6 +55,9 @@ $row = 0;
 										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>
 									</a>
 									<?php endif; ?>
+									<?php if( $this->me->isModerator() ) : ?>
+									<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&id={$this->topic->id}&catid={$this->category->id}&pollid={$this->poll->id}&task=resetvotes&".JUtility::getToken() .'=1') ?>">Reset votes</a>
+									<?php endif; ?>
 								</td>
 							</tr>
 							</table>

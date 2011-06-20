@@ -305,7 +305,7 @@ class KunenaForumCategory extends JObject {
 		$catids = KunenaFactory::getAccessControl ()->getAllowedCategories ( $user, 'moderate');
 
 		// Do not touch global moderators
-		if (!empty($catids[0])) {
+		if (!empty($catids[0]) && !$user->isAdmin($this->id)) {
 			return true;
 		}
 
@@ -315,6 +315,7 @@ class KunenaForumCategory extends JObject {
 		}
 
 		$db = JFactory::getDBO ();
+		$success = true;
 		if ($status == 1) {
 			$query = "INSERT INTO #__kunena_moderation (catid, userid) VALUES  ({$db->quote($this->id)}, {$db->quote($user->userid)})";
 			$db->setQuery ( $query );
@@ -322,7 +323,7 @@ class KunenaForumCategory extends JObject {
 			// Finally set user to be a moderator
 			if (!KunenaError::checkDatabaseError () && $user->moderator == 0) {
 				$user->moderator = 1;
-				$user->save();
+				$success = $user->save();
 			}
 		} else {
 			$query = "DELETE FROM #__kunena_moderation WHERE catid={$db->Quote($this->id)} AND userid={$db->Quote($user->userid)}";
@@ -332,13 +333,14 @@ class KunenaForumCategory extends JObject {
 			// Finally check if user looses his moderator status
 			if (!KunenaError::checkDatabaseError () && empty($catids)) {
 				$user->moderator = 0;
-				$user->save();
+				$success = $user->save();
 			}
 		}
 
 		// Clear moderator cache
 		$access = KunenaFactory::getAccessControl();
 		$access->clearCache();
+		return $success;
 	}
 
 	/**

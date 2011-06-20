@@ -31,6 +31,31 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+20-June-2011 Matias
+# [#23443] KunenaAdminControllerCategories: redirect back instead of predefined URLs
++ [#22569] Add new task KunenaAdminControllerCategories::apply()
+# [#23443] Fix warning in KunenaAdminControllerCategories::_save()
++ [#22569] KunenaAdminControllerCategories::_save(): add logic to remove moderators
+# [#23443] Removed some duplicated translation strings
++ [#22569] Add class JHtmlKunenaGrid: advanced version of JHtml(J)Grid with CSS and JS
++ [#25415] Tableless template: some cleanup
+# [#23443] Fix missing locked input from sections
+
+17-June-2011 Matias
+# [#23443] KunenaForumCategory::setModerator(): administrator cannot resign from category
+# [#23443] KunenaForumCategory::setModerator() returns wrong success status
++ [#22569] Add function KunenaForumCategory::getIndentation()
++ [#22569] Add class KunenaTree
++ [#25415] Tableless template: User / List: add possible action to users
+
+16-June-2011 Matias
++ [#25415] Tableless template: New Category / Edit layout
++ [#25415] Tableless template: Category manager: Add tree images
++ [#25415] Update tree sprite & CSS
+
+15-June-2011 Matias
++ [#25415] Tableless template: New Category / Manage layout
+
 14-June-2011 Matias
 + [#25415] Tableless template: Add announcement layouts
 ^ [#25415] Tableless template: Move common header and footer into html/display.php

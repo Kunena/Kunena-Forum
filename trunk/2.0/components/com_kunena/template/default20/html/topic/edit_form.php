@@ -9,6 +9,9 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+JHTML::_('behavior.formvalidation');
+JHTML::_('behavior.tooltip');
 ?>
 <form enctype="multipart/form-data" name="postform" method="post" id="postform" class="postform form-validate" action="#">
 	<?php if ($this->message->exists()) : ?>

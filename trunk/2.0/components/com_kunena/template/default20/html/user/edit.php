@@ -9,6 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+JHTML::_('behavior.tooltip');
 ?>
 		<div class="kuserprofile">
 			<?php if (!empty($this->editLink)) echo $this->editLink ?>
@@ -20,11 +22,3 @@ defined ( '_JEXEC' ) or die ();
 				<div class="clr"></div>
 			</div>
 		</div>
-	<script type="text/javascript">
-	// <![CDATA[
-	window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });
-	window.addEvent("domready", function() {
-		var JTooltips = new Tips($$(".hasTip"), { maxTitleChars: 50, fixed: false});
-	});
-	// ]]>
-	</script>

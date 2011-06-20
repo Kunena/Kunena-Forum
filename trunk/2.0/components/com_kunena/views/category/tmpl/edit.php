@@ -83,13 +83,11 @@ function submitbutton(pressbutton)
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
 					<table class="kadmin-adminform">
-						<?php if (!$this->category->id || !$this->category->isSection()): ?>
 						<tr>
 							<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
  							<td><?php echo $this->options ['forumLocked']; ?></td>
 							<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
 						</tr>
-						<?php endif; ?>
 						<?php if ($this->category->accesstype != 'none') : ?>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE'); ?></td>

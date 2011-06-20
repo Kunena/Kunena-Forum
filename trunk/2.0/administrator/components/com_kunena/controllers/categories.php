@@ -23,6 +23,7 @@ kimport ( 'kunena.user.helper' );
  */
 class KunenaAdminControllerCategories extends KunenaController {
 	protected $baseurl = null;
+	protected $baseurl2 = null;
 
 	public function __construct($config = array()) {
 		parent::__construct($config);
@@ -34,62 +35,62 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function lock() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'locked', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function unlock() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'locked', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function moderate() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'moderated', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function unmoderate() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'moderated', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function review() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'review', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function unreview() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'review', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function allow_anonymous() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'allow_anonymous', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function deny_anonymous() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'allow_anonymous', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function allow_polls() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'allow_polls', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function deny_polls() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'allow_polls', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function publish() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'published', 1);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 	function unpublish() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'published', 0);
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 
 	function add() {
@@ -99,7 +100,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->redirectBack();
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
@@ -114,27 +115,36 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->redirectBack();
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$id = array_shift($cid);
 		if (!$id) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->redirectBack();
 		} else {
 			$this->setRedirect(KunenaRoute::_($this->baseurl2."&layout=edit&catid={$id}", false));
 		}
 	}
 
+	function apply() {
+		$this->_save();
+		$this->redirectBack();
+	}
+
 	function save() {
+		$this->_save();
+		JFactory::getApplication ()->redirect ( KunenaRoute::_($this->baseurl, false) );
+	}
+	protected function _save() {
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
 
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->redirectBack();
 		}
 
 		$post = JRequest::get('post', JREQUEST_ALLOWRAW);
@@ -178,7 +188,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 			// Update read access
 			$read = $app->getUserState("com_kunena.user{$this->me->userid}_read");
 			$read[$category->id] = $category->id;
-			$app->setUserState("com_kunena.user{$this->me->userid}_read");
+			$app->setUserState("com_kunena.user{$this->me->userid}_read", null);
 
 			if (! $success) {
 				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $this->escape ( $category->getError () ) ), 'notice' );
@@ -191,7 +201,15 @@ class KunenaAdminControllerCategories extends KunenaController {
 		if ($success) {
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVED', $this->escape ( $category->name ) ) );
 		}
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+
+		if (!empty($post['rmmod'])) {
+			foreach ((array) $post['rmmod'] as $userid=>$value) {
+				$user = KunenaFactory::getUser($userid);
+				if ($category->setModerator($user, 0)) {
+					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED', $this->escape ( $user->getName() ), $this->escape ( $category->name ) ) );
+				}
+			}
+		}
 	}
 
 	function remove() {
@@ -201,14 +219,14 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->redirectBack();
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
 		if (empty ( $cid )) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->redirectBack();
 		}
 
 		$count = 0;
@@ -229,9 +247,10 @@ class KunenaAdminControllerCategories extends KunenaController {
 		}
 
 		if ($count == 1)
-			$app->redirect ( KunenaRoute::_($this->baseurl, false), JText::sprintf ( 'COM_KUNENA_A_CATEGORY_DELETED', $this->escape ( $name ) ) );
+			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_DELETED', $this->escape ( $name ) ) );
 		if ($count > 1)
-			$app->redirect ( KunenaRoute::_($this->baseurl, false), JText::sprintf ( 'COM_KUNENA_A_CATEGORIES_DELETED', $count ) );
+			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORIES_DELETED', $count ) );
+		$this->redirectBack();
 	}
 
 	function cancel() {
@@ -241,7 +260,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->redirectBack();
 		}
 
 		$id = JRequest::getInt('catid', 0);
@@ -254,7 +273,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		} else {
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 		}
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->redirectBack();
 	}
 
 	function saveorder() {
@@ -264,7 +283,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->redirectBack();
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
@@ -272,7 +291,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (empty ( $cid )) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->redirectBack();
 		}
 
 		$success = false;
@@ -297,19 +316,19 @@ class KunenaAdminControllerCategories extends KunenaController {
 		if ($success) {
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_NEW_ORDERING_SAVED' ) );
 		}
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->redirectBack();
 	}
 
 	function orderup() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->orderUpDown ( array_shift($cid), -1 );
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 
 	function orderdown() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->orderUpDown ( array_shift($cid), 1 );
-		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		$this->redirectBack();
 	}
 
 	protected function orderUpDown($id, $direction) {

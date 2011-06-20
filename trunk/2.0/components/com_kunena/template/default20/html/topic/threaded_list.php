@@ -23,6 +23,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php endif ?>
 				<li class="ktopic-taglist-edit"><a href="#">Add/edit tags</a></li>
 			</ul>
+			<?php $this->displayTopicActions(0) ?>
 			<div class="kdetailsbox" id="ktopic-detailsbox">
 				<ul class="kposts">
 					<?php $this->displayMessage($this->state->get('item.mesid'), $this->messages[$this->state->get('item.mesid')], 'message') ?>
@@ -39,5 +40,8 @@ defined ( '_JEXEC' ) or die ();
 				<table class="kblocktable">
 					<?php foreach ( $this->messages as $id=>$message ) $this->displayMessage($id, $message, 'row') ?>
 				</table>
+				<div class="kpaginationbar">
+					<?php echo $this->getPagination(10) ?>
+				</div>
 			</div>
 		</div>

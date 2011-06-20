@@ -279,6 +279,12 @@ class KunenaForumCategoryHelper {
 		return isset(self::$_tree[$parent]) ? self::$_tree[$parent] : array();
 	}
 
+	static public function &getIndentation($categories) {
+		kimport('kunena.tree');
+		$tree = new Kunenatree($categories);
+		return $tree->getIndentation();
+	}
+
 	static public function recount() {
 		$db = JFactory::getDBO ();
 

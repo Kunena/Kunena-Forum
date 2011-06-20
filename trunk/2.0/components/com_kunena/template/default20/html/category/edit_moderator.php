@@ -10,6 +10,4 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->displayPoll();
-$this->getModulePosition( 'kunena_poll' );
-include 'threaded_list.php';
+include dirname ( __FILE__ ) . '/../user/list_row.php';

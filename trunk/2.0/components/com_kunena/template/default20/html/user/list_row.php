@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 				<div class="kuserlist-user">
+					<?php if (!empty($this->action)) echo $this->action ?>
 					<h3 class="kuserlist-fullname"><?php echo $this->user->getLink() ?></h3>
 					<?php if ($this->config->userlist_avatar) : ?>
 					<div class="kuserlist-avatar">

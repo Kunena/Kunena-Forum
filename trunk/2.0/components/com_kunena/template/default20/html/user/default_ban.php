@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 $i=0;
 JHTML::_('behavior.calendar');
 JHTML::_('behavior.formvalidation');
+JHTML::_('behavior.tooltip');
 ?>
 							<div class="kblock kflat">
 								<form action="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=user") ?>" id="kform-ban" name="kformban" method="post">

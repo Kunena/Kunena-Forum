@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.5-DEV
+21-June-2011 LDA
+^ [#25944] update tr-TR (thanks Tolga)
+^ [#25944] update es-ES (thanks Kunena Spanish Team)
+^ [#25944] update fi-FI (thanks Mortti)
 
 11-May-2011 LDA
 ^ [#25944] update id-ID (thanks Daniel)

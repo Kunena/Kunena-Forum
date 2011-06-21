@@ -28,6 +28,8 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+21-June-2011 LDA
++ [#25944] added lt-LT (thanks Andrius Balsevičius)
 
 20-May-2011 LDA
 ^ [#25944] update hu-HU (thanks pedrohsi)

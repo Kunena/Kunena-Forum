@@ -27,6 +27,9 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+21-June-2011 LDA
+^ [#25944] udpate tr-TR (thanks Tolga4)
+
 26-May-2011 LDA
 # [#25944] added missing strings
 

@@ -1,0 +1,111 @@
+/**
+* @version $Id$
+* Kunena Component
+* @package Kunena
+
+**/
+
+@CHARSET "UTF-8";
+
+.jgrid span.state {
+	float:right;
+}
+div.header {
+	/* TODO: override left rule */
+	padding-right:148px !important;
+}
+#kadmin {
+	text-align: right;
+}
+.kadmin-left {
+	float:right;
+	/* TODO: override right rule */
+	border-left: 1px solid #ccc;
+	/* TODO: override right rule */
+	margin-left: 20px;
+}
+
+/* Small icons  */
+a.icon-cp-sm { background-position: 162px 5px; }
+a.icon-config-sm { background-position: 162px 5px; }
+a.icon-adminforum-sm { background-position: 162px 5px; }
+a.icon-profiles-sm { background-position: 162px 5px; }
+a.icon-smilies-sm{ background-position: 162px 5px; }
+a.icon-ranks-sm { background-position: 162px 5px; }
+a.icon-files-sm { background-position: 162px 5px; }
+a.icon-images-sm { background-position: 162px 5px; }
+a.icon-editcss-sm { background-position: 162px 5px; }
+a.icon-prune-sm { background-position: 162px 5px; }
+a.icon-syncusers-sm { background-position: 162px 5px; }
+a.icon-recount-sm { background-position: 162px 5px; }
+a.icon-trash-sm { background-position: 162px 5px; }
+a.icon-stats-sm { background-position: 162px 5px; }
+a.icon-systemreport-sm { background-position: 162px 5px; }
+a.icon-support-sm { background-position: 162px 5px; }
+a.icon-template-sm { background-position: 162px 5px; }
+
+/* Large icons */
+div.kadmin-functitle.icon-cpanel { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-config { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-adminforum { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-profiles { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-smilies{ background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-ranks { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-files { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-images { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-editcss { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-prune { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-syncusers { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-trash { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-stats { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-systemreport { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-support { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-template { background-position: right center;margin-right:5px;margin-top:5px; }
+
+.left 	{ text-align:right; }
+.right 	{ text-align:left; }
+
+#kadmin-menu a {
+	/* TODO: override left rule */
+	border-right: 1px solid #ccc;
+}
+.kadmin-submenu {
+	padding: 5px 15px 5px 5px;
+}
+.kadmin-right {
+	padding: 5px 220px 5px 5px;
+}
+.kadmin-footer {
+	text-align: left;
+}
+.kadmin-functitle {
+	text-align: right;
+}
+.kadmin-funcsubtitle {
+	text-align: right;
+}
+.krow0 td {
+	text-align: right;
+}
+.krow1 td {
+	text-align: right;
+}
+td.kadmin-tdtitle {
+	/* TODO: override left rule */
+	padding-right: 10px;
+}
+div.tpl-thumbnail img {
+	float:right;
+}
+div.tpl-desc {
+	clear: right;
+}
+table.kadmin-stat th {
+	text-align:right;
+}
+table.kadmin-stat td {
+	text-align:right;
+}
+table.kadmin-stat caption {
+	text-align:right;
+}

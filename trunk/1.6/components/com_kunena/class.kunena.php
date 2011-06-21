@@ -801,8 +801,7 @@ class CKunenaTools {
 		 * Wrapper to addStyleSheet
 		 *
 		 */
-		function addStyleSheet($filename) {
-
+		function addStyleSheet($filename, $rtl=false) {
 			$document = & JFactory::getDocument ();
 			$kunena_config = KunenaFactory::getConfig ();
 
@@ -810,8 +809,13 @@ class CKunenaTools {
 				// If we are in debug more, make sure we load the unpacked css
 				$filename = preg_replace ( '/\-min\./u', '.', $filename );
 			}
+			$result = $document->addStyleSheet ( $filename );
 
-			return $document->addStyleSheet ( $filename );
+			if ($rtl) {
+				$filename = preg_replace ( '/((-min)?\.css)$/u', '.rtl\\1', $filename );
+				$result = $document->addStyleSheet ( $filename );
+			}
+			return $result;
 		}
 
 		/**

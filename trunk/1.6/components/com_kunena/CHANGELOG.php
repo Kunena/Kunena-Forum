@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+21-June-2011 Matias
++ [#26213] Add very basic RTL support for default template
+
 19-June-2011 Xillibit
 # [#25980] Some strings are defined multiples times in en-GB file in frontend
 

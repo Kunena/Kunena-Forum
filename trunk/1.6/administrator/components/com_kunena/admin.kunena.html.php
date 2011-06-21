@@ -26,7 +26,7 @@ class html_Kunena {
 	// Begin: HEADER FUNC
 	function showFbHeader() {
 		$jversion = new JVersion ();
-		if ($jversion->RELEASE == '1.5') { 
+		if ($jversion->RELEASE == '1.5') {
 			JHtml::_('behavior.mootools');
 		} else {
 			JHtml::_('behavior.framework', true);
@@ -34,9 +34,10 @@ class html_Kunena {
 		}
 		JHtml::_('behavior.tooltip');
 		JHtml::_('behavior.formvalidation');
-		
+
 		$document = JFactory::getDocument();
 		$document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
+		if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
 		?>
 <!--[if IE]>
 <style type="text/css">

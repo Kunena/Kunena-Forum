@@ -15,6 +15,8 @@ $document = JFactory::getDocument();
 $template = KunenaFactory::getTemplate();
 $this->params = $template->params;
 
+$rtl = JFactory::getLanguage()->isRTL();
+
 // Template requires Mootools 1.2 framework
 $template->loadMootools();
 
@@ -33,29 +35,29 @@ $skinner = $this->params->get('enableSkinner', 0);
 
 if (file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.forum.css' )) {
 	// Load css from Joomla template
-	CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.forum-min.css' );
+	CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.forum-min.css', $rtl );
 
 	if ($skinner && file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.skinner.css' )){
-		CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.skinner-min.css' );
+		CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.skinner-min.css', $rtl );
 	} elseif (!$skinner && file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.default.css' )) {
-		CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.default-min.css' );
+		CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.default-min.css', $rtl );
 	}
 } else if (file_exists ( KUNENA_ABSTMPLTPATH . '/css/kunena.forum.css' )){
 	// Load css from the current template
-	CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
+	CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL, $rtl );
 
 	if ($skinner && file_exists ( KUNENA_ABSTMPLTPATH . '/css/kunena.skinner.css' )){
-		CKunenaTools::addStyleSheet ( KUNENA_TMPLTURL . 'css/kunena.skinner-min.css' );
+		CKunenaTools::addStyleSheet ( KUNENA_TMPLTURL . 'css/kunena.skinner-min.css', $rtl );
 	} elseif (!$skinner && file_exists ( KUNENA_ABSTMPLTPATH . '/css/kunena.default.css' )) {
-		CKunenaTools::addStyleSheet ( KUNENA_TMPLTURL . 'css/kunena.default-min.css' );
+		CKunenaTools::addStyleSheet ( KUNENA_TMPLTURL . 'css/kunena.default-min.css', $rtl );
 	}
 } else {
 	// Load css from default template
-	CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.forum-min.css' );
+	CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.forum-min.css', $rtl );
 	if ($skinner){
-		CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.skinner-min.css' );
+		CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.skinner-min.css', $rtl );
 	} else {
-		CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.default-min.css' );
+		CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.default-min.css', $rtl );
 	}
 }
 $cssurl = JURI::base() . "components/com_kunena/template/default/css";

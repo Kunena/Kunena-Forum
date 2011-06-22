@@ -67,7 +67,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		KunenaFactory::loadLanguage();
 
 		// Create plugin table if doesn't exist
-		$query = "SHOW TABLES LIKE '#__kunenadiscuss'";
+		$query = "SHOW TABLES LIKE '{$this->_db->getPrefix()}kunenadiscuss'";
 		$this->_db->setQuery ( $query );
 		if (!$this->_db->loadResult ()) {
 			CKunenaTools::checkDatabaseError ();
@@ -82,7 +82,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			$this->debug ( "Created #__kunenadiscuss cross reference table." );
 
 			// Migrate data from old FireBoard discussbot if it exists
-			$query = "SHOW TABLES LIKE '#__fb_discussbot'";
+			$query = "SHOW TABLES LIKE '{$this->_db->getPrefix()}fb_discussbot'";
 			$this->_db->setQuery ( $query );
 			if ($this->_db->loadResult ()) {
 				$query = "REPLACE INTO `#__kunenadiscuss`

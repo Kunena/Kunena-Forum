@@ -29,7 +29,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena Discuss Plugin 1.6.5
+Kunena Discuss Plugin 1.6.5-DEV
+
+22-June-2011 Matias
+# [#25947] Fix cross reference table creation
+^ [#25947] Update version to 1.6.5-DEV
 
 25-May-2011 Xillibit
 # [#25947] Setting content in first post has an extra option
@@ -50,7 +54,6 @@ Kunena Discuss Plugin 1.6.4
 ^ [#24847] update es-ES (thanks Kunena Spanish Team)
 ^ [#24847] update ru-RU (thanks Zarkos)
 ^ [#24847] update fi-FI (thanks Mortti)
-
 
 15-March-2011 Matias
 # [#25339] Joomla 1.6: Change event names to make plugin to work

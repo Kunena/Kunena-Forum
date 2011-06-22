@@ -32,7 +32,7 @@ KunenaLatest 1.6.5-DEV
 
 22-June-2011 Matias
 # [#25944] Fix missing CSS styling for visitors if caching is turned on
-# [#25944] Updated version to 1.6.5-DEV
+^ [#25944] Updated version to 1.6.5-DEV
 
 14-June-2011 Xillibit
 # [#25944] Typo in en-GB language file

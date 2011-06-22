@@ -12,7 +12,21 @@
 // no direct access
 defined ( '_JEXEC' ) or die ( '' );
 class modKunenaLatest {
+	protected $params = null;
+
 	public function __construct($params) {
+		static $cssadded = false;
+
+		$this->params = $params;
+		$this->document = JFactory::getDocument ();
+
+		if ($cssadded == false && $this->params->get( 'kunena_load_css' )) {
+			$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/css/kunenalatest.css' );
+			$cssadded = true;
+		}
+	}
+
+	public function display() {
 		static $cssadded = false;
 
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
@@ -22,7 +36,7 @@ class modKunenaLatest {
 		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/libraries/html/parser.php');
 		$this->kunena_config = KunenaFactory::getConfig ();
 		$this->myprofile = KunenaFactory::getUser ();
-		
+
 		// load Kunena main language file so we can leverage langaueg strings from it
 		KunenaFactory::loadLanguage();
 
@@ -30,22 +44,14 @@ class modKunenaLatest {
 		$session = KunenaFactory::getSession ();
 		$session->updateAllowedForums();
 
-		$this->document = JFactory::getDocument ();
-		$kloadcss =  $params->get( 'kunena_load_css' );
-		if ($cssadded == false && $kloadcss) {
-			$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/css/kunenalatest.css' );
-			$cssadded = true;
-		}
-
 		$this->latestdo = null;
 
-		if ($params->get ( 'choosemodel' ) != 'latest') {
-			$this->latestdo = $params->get ( 'choosemodel' );
+		if ($this->params->get ( 'choosemodel' ) != 'latest') {
+			$this->latestdo = $this->params->get ( 'choosemodel' );
 		}
 
-		$this->params = $params;
 		$this->ktemplate = KunenaFactory::getTemplate();
-		$this->klistpost = modKunenaLatestHelper::getKunenaLatestList ( $params );
+		$this->klistpost = modKunenaLatestHelper::getKunenaLatestList ( $this->params );
 		$this->topic_ordering = modKunenaLatestHelper::getTopicsOrdering($this->myprofile, $this->kunena_config);
 
 		require (JModuleHelper::getLayoutPath ( 'mod_kunenalatest' ));
@@ -141,7 +147,7 @@ class modKunenaLatestHelper {
 	}
 
 	function getTopicsOrdering($myprofile, $kunena_config) {
-    	if ($myprofile->ordering != '0') {
+		if ($myprofile->ordering != '0') {
 			$topic_ordering = $myprofile->ordering == '1' ? 'DESC' : 'ASC';
 		} else {
 			$topic_ordering =  $kunena_config->default_sort == 'asc' ? 'ASC' : 'DESC'; // Just to make sure only valid options make it

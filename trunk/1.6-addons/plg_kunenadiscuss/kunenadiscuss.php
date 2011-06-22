@@ -160,13 +160,18 @@ class plgContentKunenaDiscuss extends JPlugin {
 					$article->fulltext = preg_replace ( $regex, '', $article->fulltext );
 			}
 
-			$isFrontPage = JRequest::getVar ( 'view' ) == 'frontpage';
-			$isBlogPage = JRequest::getVar ( 'layout' ) == 'blog';
+			$view = JRequest::getVar ( 'view' );
+			$layout = JRequest::getVar ( 'layout' );
+			$isBlogPage = $view == 'category' && $layout == 'blog';
+			$isFrontPage = $view == 'frontpage' || $view == 'featured';
 			if ($isBlogPage) {
+				$this->debug ( "onPrepareContent: we are in blog page." );
 				$show = $this->params->get ( 'show_blog_page', 2 );
 			} else if ($isFrontPage) {
+				$this->debug ( "onPrepareContent: we are in front page." );
 				$show = $this->params->get ( 'show_front_page', 2 );
 			} else {
+				$this->debug ( "onPrepareContent: we are in {$view}/{$layout} page." );
 				$show = $this->params->get ( 'show_other_pages', 2 );
 			}
 			if (! $show || isset ( self::$plgDisplay [$article->id] )) {
@@ -177,6 +182,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 					$article->introtext = preg_replace ( $regex, '', $article->introtext );
 				if (isset ( $article->fulltext ))
 					$article->fulltext = preg_replace ( $regex, '', $article->fulltext );
+				return;
 			}
 
 			$this->debug ( "onPrepareContent: Article {$article->id}" );
@@ -354,37 +360,26 @@ class plgContentKunenaDiscuss extends JPlugin {
 			}
 		}
 
-		$link_topic = '';
-		if ($thread && $linkOnly) {
-			$this->debug ( "showPlugin: Displaying only link to the topic" );
+		if ($linkOnly && $thread) {
+			$this->debug ( "showPlugin: Link only" );
 
-			$sql = "SELECT count(*) FROM #__kunena_messages WHERE hold=0 AND parent!=0 AND thread={$this->_db->quote($thread)}";
+			$sql = "SELECT COUNT(*) FROM #__kunena_messages WHERE hold=0 AND parent!=0 AND thread={$this->_db->quote($thread)}";
 			$this->_db->setQuery ( $sql );
 			$postCount = $this->_db->loadResult ();
 			CKunenaTools::checkDatabaseError ();
 			$linktitle = JText::sprintf ( 'PLG_KUNENADISCUSS_DISCUSS_ON_FORUMS', $postCount );
 			require_once (KPATH_SITE . '/lib/kunena.link.class.php');
-			$content = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );
-			return $content;
-		} elseif ( $thread && !$plgShowForm ) {
-			 $this->debug ( "showPlugin: Displaying link to the topic because the form is disabled" );
-
-			$sql = "SELECT count(*) FROM #__kunena_messages WHERE hold=0 AND parent!=0 AND thread={$this->_db->quote($thread)}";
-			$this->_db->setQuery ( $sql );
-			$postCount = $this->_db->loadResult ();
-			CKunenaTools::checkDatabaseError ();
-			$linktitle = JText::sprintf ( 'PLG_KUNENADISCUSS_DISCUSS_ON_FORUMS', $postCount );
-			require_once (KPATH_SITE . '/lib/kunena.link.class.php');
-			$link_topic = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );
-		} elseif ( !$thread && !$plgShowForm ) {
-			$link_topic = JText::_('PLG_KUNENADISCUSS_NEW_TOPIC_NOT_CREATED');
+			$link = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );
+			return '<div class="kunenadiscuss">' . $link . '</div>';
 		}
 
 		// ************************************************************************
 		// Process the QuickPost form
 
 		$quickPost = '';
-		if ($plgShowForm && (!$closeTime || $closeTime >= $now)) {
+		if (!$plgShowForm) {
+			$this->debug ( "showPlugin: Form has been disabled" );
+		} elseif (!$closeTime || $closeTime >= $now) {
 			$canPost = $this->canPost ( $catid, $thread );
 			if ($canPost && JRequest::getInt ( 'kdiscussContentId', 0, 'POST' ) == $row->id) {
 				$this->debug ( "showPlugin: Reply topic!" );
@@ -395,14 +390,11 @@ class plgContentKunenaDiscuss extends JPlugin {
 		}
 
 		// This will be used all the way through to tell users how many posts are in the forum.
-		$this->debug ( "showPlugin: Rendering discussion" );
-		if ($link_topic) {
-			$content = $link_topic;
-			$content .= $this->showTopic ( $catid, $thread, $link_topic );
-		} else {
-			$content = $this->showTopic ( $catid, $thread, $link_topic );
-		}
+		$content = $this->showTopic ( $catid, $thread );
 
+		if (!$content && !$quickPost) {
+			return '';
+		}
 		if ($formLocation) {
 			$content = '<div class="kunenadiscuss">' . $content . '<br />' . $quickPost . '</div>';
 		} else {
@@ -416,8 +408,13 @@ class plgContentKunenaDiscuss extends JPlugin {
 	 * Output
 	 *****************************************************************************/
 
-	protected function showTopic($catid, $thread) {
-		if (!$thread) return;
+	protected function showTopic($catid, $thread, $link) {
+		if (!$thread) {
+			$this->debug ( "showTopic: No messages to render" );
+			return '';
+		}
+
+		$this->debug ( "showTopic: Rendering discussion" );
 
 		// Limits the number of posts
 		$limit = $this->params->get ( 'limit', 25 );

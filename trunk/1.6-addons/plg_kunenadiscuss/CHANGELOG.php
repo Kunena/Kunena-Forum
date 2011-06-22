@@ -32,6 +32,8 @@ Legend:
 Kunena Discuss Plugin 1.6.5-DEV
 
 22-June-2011 Matias
+# [#25947] Obey configuration option to show nothing in front/blog/other pages
+# [#25947] If set to show only a link, do not try to show more
 # [#25947] Fix cross reference table creation
 ^ [#25947] Update version to 1.6.5-DEV
 

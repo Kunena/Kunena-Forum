@@ -32,7 +32,7 @@ $login = CKunenaLogin::getloginFields();
 					<b><?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST'); ?></b>
 				</div>
 				<?php if ($login) : ?>
-				<form action="<?php echo KUNENA_LIVEURLREL ?>" method="post" name="login">
+				<form action="<?php echo KunenaRoute::_(KUNENA_LIVEURLREL) ?>" method="post" name="login">
 					<div class="input">
 						<span>
 							<?php echo JText::_('COM_KUNENA_A_USERNAME'); ?>

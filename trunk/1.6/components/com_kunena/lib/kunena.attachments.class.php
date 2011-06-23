@@ -102,6 +102,7 @@ class CKunenaAttachments {
 	}
 
 	function getAttachment($id) {
+		$id = intval($id);
 		if (isset($this->_instances[$id])) return $this->_instances[$id];
 
 		$query = "SELECT * FROM #__kunena_attachments WHERE id={$id}";

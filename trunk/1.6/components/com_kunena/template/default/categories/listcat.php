@@ -30,7 +30,7 @@ $this->displayPathway ();
 	<div class="ksectionbody">
 		<div class="fltlft">
 			<?php if ($this->my->id != 0) : ?>
-			<form action="<?php echo KUNENA_LIVEURLREL; ?>" name="markAllForumsRead" method="post">
+			<form action="<?php echo KunenaRoute::_(KUNENA_LIVEURLREL); ?>" name="markAllForumsRead" method="post">
 				<input type="hidden" name="option" value="com_kunena" />
 				<input type="hidden" name="func" value="markallcatsread" />
 				<input type="hidden" name="markaction" value="allread" />

@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.5-DEV
 
+23-June-2011 Matias
+# [#26236] Fix Kunena Internal Error on ill-formed attachments
+# [#26237] Fix Kunena login/logout form URL for sh404SEF
+
 21-June-2011 Matias
 + [#26213] Add very basic RTL support for default template
 

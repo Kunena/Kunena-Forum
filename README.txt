@@ -1,3 +1,3 @@
 Kunena 2.0 ReadMe
 
-ToDo: Create new readme for Kunena 2.0 branch
+ToDo: Create new readme for Kunena 2.0 branch (potentially use html)

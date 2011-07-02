@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+02-July-2011 Xillibit
+# [20] Put commas between users name in poll results
+
 20-June-2011 Matias
 # [#23443] KunenaAdminControllerCategories: redirect back instead of predefined URLs
 + [#22569] Add new task KunenaAdminControllerCategories::apply()

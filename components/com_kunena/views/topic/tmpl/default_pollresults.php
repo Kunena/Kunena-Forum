@@ -35,11 +35,7 @@ $row = 0;
 								<td colspan="4">
 									<?php
 									echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL')." <strong>".$this->usercount."</strong> ";
-									if($this->config->pollresultsuserslist && !empty($this->usersvoted)) :
-										echo " ( ";
-										foreach($this->usersvoted as $userid=>$vote) echo CKunenaLink::GetProfileLink($userid)." ";
-										echo " ) ";
-									endif; ?>
+									echo $this->users_voted_list; ?>
 								</td>
 							</tr>
 							<tr class="krow<?php echo $row%2+1;?>">

@@ -32,7 +32,8 @@ Legend:
 Kunena 2.0.0-DEV
 
 02-July-2011 Xillibit
-# [20] Put commas between users name in poll results
+# [#21] Warning and catchable error in kunena 2.0 in category manager
+# [#20] Put commas between users name in poll results
 
 20-June-2011 Matias
 # [#23443] KunenaAdminControllerCategories: redirect back instead of predefined URLs

@@ -116,7 +116,8 @@ class KunenaAdminModelCategories extends KunenaModel {
 						$category->pub_group = JText::_( $acl->getGroupName($category->pub_access) );
 					}
 				} else {
-					$category->pub_group = $category->pub_access ? JText::_( $acl->getGroupName($category->pub_access) ) : JText::_('COM_KUNENA_NOBODY');
+					$groupname = $acl->getGroupName($category->pub_access);
+					$category->pub_group = $category->pub_access ? JText::_( $groupname->title ) : JText::_('COM_KUNENA_NOBODY');
 				}
 				if ($category->accesstype != 'none') {
 					$category->admin_group = '';

@@ -1,3 +1,24 @@
-Kunena 2.0 ReadMe
+Kunena
+======
 
-ToDo: Create new readme for Kunena 2.0 branch (potentially use html)
+*Kunena* is a native Joomla forum and communications component. *Kunena* enables forums, bulletin board, support forums, discussions and comments for a Jooomla base website.
+
+
+Requirements
+------------
+
+
+
+Examples
+--------
+
+
+
+Installation
+------------
+
+
+
+
+Support
+-------

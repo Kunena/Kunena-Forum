@@ -35,7 +35,7 @@ In addition we recommend the following PHP settings:
 
 ## EXAMPLES
 
-If you are looking for examples on how *Kunena* works or can be installed, we recommend you checkout our team site at www.kunena.org
+If you are looking for examples on how *Kunena* works or can be installed, we recommend you checkout our team site at http://www.kunena.org
 
 We have setup a Playground for users and developers to try out various features of Kunena: http://www.kunena.org/playground
 
@@ -57,7 +57,7 @@ Upgrades are performed just like new installs. There is no need to uninstall Kun
 
 *Kunena* is a community built and maintained project. There is no commercial entity behind *Kunena*. We provide all our work for free and donate generous amounts of our time into the project.
 
-As such *Kunena* itself does not offer commercial or paid for support. We provide our community with a support forum and in general you will find what you need on there. You can find the community support forums here: www.kunena.org/forum
+As such *Kunena* itself does not offer commercial or paid for support. We provide our community with a support forum and in general you will find what you need on there. You can find the community support forums here: http://www.kunena.org/forum
 
 If you are interested in commercial grade support we encourage you to check the Joomla Resource Directory at: http://resources.joomla.org/
 

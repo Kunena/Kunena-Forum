@@ -496,6 +496,7 @@
 		<field name="rank" type="tinyint(4)" null="0" default="0" />
 		<field name="hideEmail" type="tinyint(1)" null="0" default="1" />
 		<field name="showOnline" type="tinyint(1)" null="0" default="1" />
+		<field name="ty_received" type="int(11)" null="1" default="0" />
 		<key name="PRIMARY" unique="1" columns="userid" />
 		<key name="group_id" columns="group_id" />
 		<key name="posts" columns="posts" />

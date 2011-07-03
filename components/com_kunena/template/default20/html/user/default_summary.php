@@ -39,6 +39,7 @@ defined ( '_JEXEC' ) or die ();
 							<?php if (!empty($this->usermedals)) : ?><li><?php foreach ( $this->usermedals as $medal ) : echo $medal,' '; endforeach ?></li><?php endif ?>
 							<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_PROFILEVIEW') ?>:</strong> <?php echo intval($this->profile->uhits) ?></li>
 							<li><?php echo $this->displayKarma(); ?></li>
+							<?php if (!empty($this->usertyr)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') ?></strong> <?php echo intval($this->usertyr) ?></li><?php endif; ?>
 							<?php if (!empty($this->pmLink)) : ?><li><?php echo $this->pmLink ?></li><?php endif ?>
 						</ul>
 						<?php if( !empty($this->personalText) ) : ?>

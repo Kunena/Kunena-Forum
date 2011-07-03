@@ -16,7 +16,7 @@ die ();
 Changelog
 ------------
 This is a non-exhaustive (but still near complete) changelog for
-Kunena 1.6.x, including beta and release candidate versions.
+Kunena 2.0.x, including beta and release candidate versions.
 
 Legend:
 
@@ -30,6 +30,15 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 2.0.0-DEV
+
+03-July-2011 Xillibit
++ [#20] Put commas between users name in poll results - Limit to five users, order users in descending and add link to show more users
+# [#25] Resolve some fix me in kunena 2.0
+^ [#20] Fixes wrong language string name (thanks oliver)
+
+02-July-2011 Xillibit
+# [#21] Warning and catchable error in kunena 2.0 in category manager
+# [#20] Put commas between users name in poll results
 
 20-June-2011 Matias
 # [#23443] KunenaAdminControllerCategories: redirect back instead of predefined URLs

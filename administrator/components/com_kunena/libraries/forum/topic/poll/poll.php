@@ -115,7 +115,7 @@ class KunenaForumTopicPoll extends JObject {
 		if ($this->users === false) {
 			$query = "SELECT *
 				FROM #__kunena_polls_users
-				WHERE pollid={$this->_db->Quote($this->id)}";
+				WHERE pollid={$this->_db->Quote($this->id)} ORDER BY lasttime DESC";
 			$this->_db->setQuery($query, $start, $limit);
 			$this->myvotes = $this->users = (array) $this->_db->loadObjectList('userid');
 			KunenaError::checkDatabaseError();

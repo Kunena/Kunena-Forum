@@ -828,4 +828,11 @@ window.addEvent('domready', function(){
 		document.id('kpassword2').setProperty('autocompleter', 'off');
 	}
 	
+	if(document.id('kpoll-moreusers') != undefined){
+		document.id('kpoll-moreusers').addEvent('click', function(){
+			var displaytype = document.id('kpoll-moreusers-div').getStyle('display');
+			if ( displaytype == 'none' ) document.id('kpoll-moreusers-div').setStyle('display');
+			else document.id('kpoll-moreusers-div').setStyle('display', 'none');
+		});
+	}
 });

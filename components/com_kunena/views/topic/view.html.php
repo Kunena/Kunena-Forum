@@ -455,11 +455,16 @@ class KunenaViewTopic extends KunenaView {
 		$this->users_voted_list = '';
 		if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
 			$users_voted_list = array();
+			$users_voted_morelist = array();
 
+			$i = 0;
 			foreach($this->usersvoted as $userid=>$vote) {
-				$users_voted_list[] = CKunenaLink::GetProfileLink($userid);
+				if ( $i <= '4' ) $users_voted_list[] = CKunenaLink::GetProfileLink($userid);
+				else $users_voted_morelist[] = CKunenaLink::GetProfileLink($userid);
+				$i++;
 			}
 			$this->users_voted_list = " ( ".implode(', ', $users_voted_list)." ) ";
+			$this->users_voted_morelist = implode(', ', $users_voted_morelist);
 		}
 
 		if ($this->voted) echo $this->loadTemplate("pollresults");

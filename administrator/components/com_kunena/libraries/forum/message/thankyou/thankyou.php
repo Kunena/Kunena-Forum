@@ -89,6 +89,30 @@ class KunenaForumMessageThankyou extends JObject {
 			return false;
 		}
 
+		$this->_savethankyou($message);
+
+		return true;
+	}
+
+	/**
+	* Perform insert the received thank you into user table
+	* @param int $userid
+	* @return bool true if succes
+	* @since 2.0
+	*/
+	protected function _savethankyou($message) {
+		$db = JFactory::getDBO ();
+		$query = "UPDATE #__kunena_users
+				SET ty_received=ty_received+1 WHERE userid={$db->quote($message->userid)}";
+		$db->setQuery ( $query );
+		$db->query ();
+
+		// Check for an error message.
+		if ($db->getErrorNum ()) {
+			$this->setError ( $db->getErrorMsg () );
+			return false;
+		}
+
 		return true;
 	}
 

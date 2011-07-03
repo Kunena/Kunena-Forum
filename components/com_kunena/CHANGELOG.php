@@ -35,6 +35,7 @@ Kunena 2.0.0-DEV
 + [#20] Put commas between users name in poll results - Limit to five users, order users in descending and add link to show more users
 # [#25] Resolve some fix me in kunena 2.0
 ^ [#20] Fixes wrong language string name (thanks oliver)
++ [#27] Feature: Show total thank you in your profile
 
 02-July-2011 Xillibit
 # [#21] Warning and catchable error in kunena 2.0 in category manager

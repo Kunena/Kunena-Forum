@@ -813,8 +813,7 @@ class KunenaViewTopic extends KunenaView {
 			$this->attachments = $message->getAttachments();
 			if (!empty($this->attachments)) echo $this->loadTemplate ( 'attachments' );
 		} else {
-			// FIXME:
-			echo 'ERROR: no message provided (attachments)';
+			echo JText::_('COM_KUNENA_ATTACHMENTS_ERROR_NO_MESSAGE');
 		}
 	}
 

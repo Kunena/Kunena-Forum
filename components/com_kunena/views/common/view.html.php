@@ -48,12 +48,7 @@ class KunenaViewCommon extends KunenaView {
 			} else {
 				$this->canEdit = false;
 			}
-			// FIXME: move into model
-			$db = JFactory::getDBO();
-			$query = "SELECT * FROM #__kunena_announcement WHERE published='1' ORDER BY created DESC";
-			$db->setQuery ( $query, 0, 1 );
-			$this->announcement = $db->loadObject ();
-			if (KunenaError::checkDatabaseError()) return;
+			$this->announcement = $this->get('Announcement');
 			if ($this->announcement) {
 				$this->annTitle = KunenaHtmlParser::parseText($this->announcement->title);
 				$this->annDescription = $this->announcement->sdescription ? KunenaHtmlParser::parseBBCode($this->announcement->sdescription) : KunenaHtmlParser::parseBBCode($this->announcement->description, 300);

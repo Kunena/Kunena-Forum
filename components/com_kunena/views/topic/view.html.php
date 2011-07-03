@@ -567,6 +567,7 @@ class KunenaViewTopic extends KunenaView {
 						$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
 						$this->userposts = $this->profile->posts;
 						$activityIntegration = KunenaFactory::getActivityIntegration ();
+						$this->usertyr = $this->profile->ty_received;
 						$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
 						$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
 					} else {
@@ -574,6 +575,7 @@ class KunenaViewTopic extends KunenaView {
 						$this->userrankimage = null;
 						$this->userranktitle = null;
 						$this->userposts = null;
+						$this->usertyr = null;
 						$this->userpoints = null;
 						$this->usermedals = null;
 					}

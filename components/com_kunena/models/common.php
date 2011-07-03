@@ -24,4 +24,14 @@ class KunenaModelCommon extends KunenaModel {
 		$params = $this->getParameters();
 		$this->setState ( 'params', $params );
 	}
+
+	public function getAnnouncement() {
+		$db = JFactory::getDBO();
+		$query = "SELECT * FROM #__kunena_announcement WHERE published='1' ORDER BY created DESC";
+		$db->setQuery ( $query, 0, 1 );
+		$announcement = $db->loadObject ();
+		if (KunenaError::checkDatabaseError()) return;
+
+		return $announcement;
+	}
 }

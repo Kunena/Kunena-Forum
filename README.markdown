@@ -2,8 +2,6 @@
 [![Kunena](http://www.kunena.org/images/kunena.png)](http://www.kunena.org)
 
 
-# Kunena
-
 
 ## ABOUT
 

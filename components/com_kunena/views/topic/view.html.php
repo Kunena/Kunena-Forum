@@ -459,12 +459,10 @@ class KunenaViewTopic extends KunenaView {
 
 			$i = 0;
 			foreach($this->usersvoted as $userid=>$vote) {
-				if ( $i <= '4' ) $users_voted_list[] = CKunenaLink::GetProfileLink($userid);
-				else $users_voted_morelist[] = CKunenaLink::GetProfileLink($userid);
+				if ( $i <= '4' ) $this->users_voted_list[] = CKunenaLink::GetProfileLink($userid);
+				else $this->users_voted_morelist[] = CKunenaLink::GetProfileLink($userid);
 				$i++;
 			}
-			$this->users_voted_list = " ( ".implode(', ', $users_voted_list)." ) ";
-			$this->users_voted_morelist = implode(', ', $users_voted_morelist);
 		}
 
 		if ($this->voted) echo $this->loadTemplate("pollresults");

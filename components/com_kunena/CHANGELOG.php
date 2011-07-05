@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+05-July-2011 Xillibit
+^ [#34] Poll users list voted put the implode into the template
+
 03-July-2011 Xillibit
 + [#20] Put commas between users name in poll results - Limit to five users, order users in descending and add link to show more users
 # [#25] Resolve some fix me in kunena 2.0

@@ -577,6 +577,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				'plain_start' => "\n * ",
 				'plain_end' => "\n",
 			),
+
+			'terminal' => array(
+				'mode' => BBCODE_MODE_LIBRARY,
+				'method' => 'DoTerminal',
+				'allow_in' => array('listitem', 'block', 'columns'),
+				'class' => 'block',
+				'allow' => array( 'colortext' => '/^[\w\d.-_]*$/' ),
+				'content' => BBCODE_PROHIBIT
+			),
 	);
 
 	function __construct() {
@@ -1462,5 +1471,15 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.($width ? ' width="'.$width.'"' : '').'" style="max-height:'.$config->imageheight.'px; " alt="" /></a></div>';
 		}
 		return '<div class="kmsgimage"><img src="' . $fileurl . ($width ? '" width="' . $width : '') .'" style="max-height:'.$config->imageheight.'px; " alt="" /></div>';
+	}
+
+	function DoTerminal($bbcode, $action, $name, $default, $params, $content) {
+		if ($action == BBCODE_CHECK)
+			return true;
+
+		if ( !isset($params ["colortext"])) $colortext = '#ffffff';
+		else $colortext = $params ["colortext"];
+
+		return "<div class=\"highlight\"><pre style=\"font-family:monospace;background-color:#444444;\"><span style=\"color:{$colortext};\">{$content}</span></pre></div>";
 	}
 }

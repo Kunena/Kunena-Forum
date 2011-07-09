@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+09-July-2011 Xillibit
++ [#33] Add new "terminal" type code tag
+
 05-July-2011 Xillibit
 ^ [#34] Poll users list voted put the implode into the template
 

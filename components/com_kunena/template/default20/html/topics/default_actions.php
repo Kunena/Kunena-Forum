@@ -47,7 +47,7 @@ defined ( '_JEXEC' ) or die ();
 						?>
 				</li>
 				<li>
-					<button class="kfilter-button">Go</button>
+				<button class="kfilter-button" style="display:none">Go</button>
 				</li>
 			</ul>
 			</form>

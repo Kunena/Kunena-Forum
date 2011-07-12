@@ -47,6 +47,8 @@ table {border-collapse: collapse;}
 	color: #fff;
 	font-weight: bold;
 	text-decoration: none;
+	font-size:16px !important;
+	
 }
 #kunena .kheader a:hover {
 	text-decoration: underline;

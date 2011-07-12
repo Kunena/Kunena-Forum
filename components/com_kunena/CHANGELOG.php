@@ -31,6 +31,12 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+12-July-2011 810
+^ [#31] Fix css: Trash manager backend
+^ [#31] Fix css: Css add font header
+^ [#31] Fix css: Css Hide go button default.actions
+^ [#31] Fix css: Css Manage Your Attachments
+
 09-July-2011 Xillibit
 + [#33] Add new "terminal" type code tag
 

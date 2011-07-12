@@ -2563,10 +2563,10 @@ Kunena 1.6.2
 
 12-November-2010 svens(LDA)
 ^ [#23293] updated es-ES (thanks Alakentu)
-^ [#23293] updated lt-LT (thanks Zylkin, Andrius BalseviÄ�ius)
+^ [#23293] updated lt-LT (thanks Zylkin, Andrius Balsevičius)
 
 11-November-2010 Xillibit
-# [#23224] DonÂ´t show karma in horizontal profile
+# [#23224] Don´t show karma in horizontal profile
 + [#23250] Configuration setting to set since which time to show topics in latestx class and works too independently wth Klatest module
 
 9-November-2010 Severdia
@@ -2631,7 +2631,7 @@ Kunena 1.6.1
 
 30-October-2010 svens (LDA)
 ^ [#22975] update de-DE (thanks rich)
-^ [#22975] update nb-NO (thanks rued, Roar and BjÃ¸rn)
+^ [#22975] update nb-NO (thanks rued, Roar and Bjørn)
 
 29-October-2010 Xillibit
 # [#20084] Fix undefined variable on parser.php line 642 and wrong location of link readmore when there is not params used
@@ -2684,7 +2684,7 @@ Kunena 1.6.1
 
 21-October-2010 svens (LDA)
 ^ [#22975] Updated tr-TR (thanks Tolga), th-TH (drlovecat), hu-HU (pedrohsi) , es-ES (Neon26), ca-ES  (Neon26), fi-FI (Mortti)
-+ [#22975] added pt-PT (thanks AurÃ©lio Vieira and Mickael Cavaco), nb-NO (Joomla! i Norge), ja-JP (Masato Sato)
++ [#22975] added pt-PT (thanks Aurélio Vieira and Mickael Cavaco), nb-NO (Joomla! i Norge), ja-JP (Masato Sato)
 
 21-October-2010 Xillibit
 + [#22971] AUP integration adds points on delete message

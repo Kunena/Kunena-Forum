@@ -201,6 +201,10 @@ class KunenaControllerUser extends KunenaController {
 		if (! empty ( $banDelPosts )) {
 			// FIXME: delete user posts needs new logic (not here)
 			//select only the messages which aren't already in the trash
+
+			// load all user message which have hold=2
+			// delete them
+
 /*			$db->setQuery ( "UPDATE #__kunena_messages SET hold=2 WHERE hold!=2 AND userid={$db->Quote($user->userid)}" );
 			$idusermessages = $db->loadObjectList ();
 			KunenaError::checkDatabaseError();

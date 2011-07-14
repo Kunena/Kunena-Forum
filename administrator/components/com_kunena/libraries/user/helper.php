@@ -281,4 +281,22 @@ class KunenaUserHelper {
 		$rows += $db->getAffectedRows ();
 		return $rows;
 	}
+
+	/**
+	 *
+	 * Load user message which are deleted
+	 */
+	public static function getUserMessagesByID() {
+		$db = JFactory::getDBO ();
+		$me = self::getMyself();
+
+		$query = 'SELECT *
+				FROM #__kunena_messages
+				WHERE hold = 2 AND userid = ' . $me->userid;
+		$db->setQuery ( $query );
+		$userMessages = $db->loadObjectList ();
+		KunenaError::checkDatabaseError ();
+
+		return $userMessages;
+	}
 }

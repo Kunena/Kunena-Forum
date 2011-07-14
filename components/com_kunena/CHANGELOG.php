@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+14-July-2011 Xillibit
+^ [#44] Profile tab manages attachements : follow upload settings
+
 12-July-2011 810
 ^ [#31] Fix css: Trash manager backend
 ^ [#31] Fix css: Css add font header

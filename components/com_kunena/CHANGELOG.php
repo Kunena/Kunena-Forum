@@ -31,6 +31,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+16-July-2011 Xillibit
+# [#44] Profile tab manages attachements : revert unuseful changes
+
 14-July-2011 Xillibit
 ^ [#44] Profile tab manages attachements : follow upload settings
 # [#44] Profile tab manages attachements : follow upload settings (change function name in /libraries/user/helper.php)

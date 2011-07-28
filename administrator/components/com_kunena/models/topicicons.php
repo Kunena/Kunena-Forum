@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id: attachments.php 4611 2011-03-11 18:35:52Z mahagr $
  * Kunena Component
  * @package Kunena
  *

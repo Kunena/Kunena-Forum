@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id: default.php 4416 2011-02-16 08:43:29Z xillibit $
  * Kunena Component
  * @package Kunena
  *

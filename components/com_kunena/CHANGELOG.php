@@ -30,8 +30,11 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+28-July-2011 Matias
+^ [#3] Update all file headers and remove $Id tags (admin MVC)
+
 26-July-2011 Matias
-^ [#3] Update all file headers and remove $Id tags
+^ [#3] Update all file headers and remove $Id tags (installer, libraries)
 
 12-July-2011 810
 ^ [#31] Fix css: Trash manager backend

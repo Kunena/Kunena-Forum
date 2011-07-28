@@ -47,3 +47,6 @@ class JxAcl {};
 
 // JUpgrage
 class jUpgrade {};
+
+// PHP 5.3
+function parse_ini_string($str) {}

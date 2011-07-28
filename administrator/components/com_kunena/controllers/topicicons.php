@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id: topicicons.php 4488 2011-02-24 09:41:43Z xillibit $
  * Kunena Component
  * @package Kunena
  *

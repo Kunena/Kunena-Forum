@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id$ -->
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>

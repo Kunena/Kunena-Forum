@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id$
  * Kunena Component
  * @package Kunena
  * @Copyright (C) 2011 Kunena All rights reserved.

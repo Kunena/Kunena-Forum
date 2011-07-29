@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id: default.php 4385 2011-02-06 12:55:38Z mahagr $
  * Kunena Component
  * @package Kunena
  *

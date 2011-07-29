@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id: view.html.php 4387 2011-02-08 16:19:37Z mahagr $
  * Kunena Component
  * @package Kunena
  *

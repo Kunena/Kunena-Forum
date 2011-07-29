@@ -30,6 +30,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+29-July-2011 Matias
+^ [#3] Update all file headers and remove $Id tags (site MVC)
+
 28-July-2011 Matias
 ^ [#3] Update all file headers and remove $Id tags (admin MVC)
 

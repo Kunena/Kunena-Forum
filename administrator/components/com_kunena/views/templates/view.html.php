@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id: view.html.php 4443 2011-02-18 19:51:15Z xillibit $
  * Kunena Component
  * @package Kunena
  *

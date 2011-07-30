@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -30,6 +29,12 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 2.0.0-DEV
+
+28-July-2011 Matias
+^ [#3] Update all file headers and remove $Id tags (admin MVC)
+
+26-July-2011 Matias
+^ [#3] Update all file headers and remove $Id tags (installer, libraries)
 
 16-July-2011 Xillibit
 # [#44] Profile tab manages attachements : revert unuseful changes

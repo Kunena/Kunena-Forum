@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id$
  * Kunena System Plugin
  * @package Kunena
  *

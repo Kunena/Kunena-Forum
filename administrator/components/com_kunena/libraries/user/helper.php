@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -60,7 +59,12 @@ class KunenaUserHelper {
 			jimport ( 'joomla.user.helper' );
 			$id = intval ( JUserHelper::getUserId ( ( string ) $identifier ) );
 		}
-		if ($reload || empty ( self::$_instances [$id] )) {
+
+		// Always return fresh user if id is anonymous/not found
+		if ($id === 0) {
+			return new KunenaUser ( $id );
+		}
+		else if ($reload || empty ( self::$_instances [$id] )) {
 			self::$_instances [$id] = new KunenaUser ( $id );
 		}
 

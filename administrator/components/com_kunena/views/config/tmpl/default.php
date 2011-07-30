@@ -588,6 +588,14 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE') ?></td>
+							<td align="left" valign="top"><?php echo $this->lists ['show_imgfiles_manage_profile'] ?>
+							</td>
+						<td>
+							<?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			</dd>

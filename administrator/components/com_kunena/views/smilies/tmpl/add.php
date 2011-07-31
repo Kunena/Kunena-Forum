@@ -1,9 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Administrator.Template
+ * @subpackage Smilies
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/

@@ -1,9 +1,9 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Framework
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,9 +16,7 @@ kimport ( 'kunena.profiler' );
 /**
  * Base controller class for Kunena.
  *
- * @package		Kunena
- * @subpackage	com_kunena
- * @since		1.6
+ * @since		2.0
  */
 class KunenaController extends JController {
 	var $_escape = 'htmlspecialchars';

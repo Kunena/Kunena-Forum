@@ -1,9 +1,9 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Installer
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -27,8 +27,6 @@ require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 /**
  * Install Model for Kunena
  *
- * @package		Kunena
- * @subpackage	com_kunena
  * @since		1.6
  */
 class KunenaModelInstall extends JModel {

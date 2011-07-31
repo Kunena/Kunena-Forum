@@ -1,8 +1,9 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
- * @Copyright (C) 2011 Kunena All rights reserved.
+ * @package Kunena.Site
+ * @subpackage Lib
+ * @copyright (C) 2011 Kunena All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/

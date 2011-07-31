@@ -1,9 +1,9 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Site
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -29,6 +29,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 2.0.0-DEV
+
+30-July-2011 Matias
+# [#50] Improve source code documentation (fix @Copyright warnings)
+^ [#50] Improve source code documentation (split documentation into logical parts)
 
 29-July-2011 Matias
 ^ [#3] Update all file headers and remove $Id tags (site MVC)

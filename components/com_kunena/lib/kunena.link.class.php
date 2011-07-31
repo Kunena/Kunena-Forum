@@ -1,14 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Site
+ * @subpackage Lib
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
  * Based on FireBoard Component
- * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
+ * @copyright (C) 2006 - 2007 Best Of Joomla All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.bestofjoomla.com
  **/

@@ -1,9 +1,10 @@
 <?php
 /**
  * Kunena Component - CKunenaAjaxHelper class
- * @package Kunena
+ * @package Kunena.Site
+ * @subpackage Lib
  *
- * @Copyright (C) 2008-2011 www.kunena.org All rights reserved.
+ * @copyright (C) 2008-2011 www.kunena.org All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,7 +18,6 @@ require_once (KPATH_SITE.'/lib/kunena.image.class.php');
 /**
  * Class to handle file uploads and process the uploaded files.
  *
- * @package		Kunena.lib
  * @since		1.6
  */
 

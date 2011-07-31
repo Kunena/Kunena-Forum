@@ -11,6 +11,7 @@ defined( '_JEXEC' ) or die();
 
 class KunenaTemplateDefault extends KunenaTemplate {
 	protected $default = 'default';
+	protected $css_compile = false;
 	public $categoryIcons = array('kreadforum', 'kunreadforum');
 
 	public function initialize() {

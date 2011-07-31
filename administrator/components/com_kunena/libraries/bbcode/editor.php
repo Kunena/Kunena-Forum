@@ -1,9 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Framework
+ * @subpackage BBCode
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,8 +18,6 @@ kimport ('kunena.bbcode');
 /**
  * Kunena BBCode Editor Class
  *
- * @package		Kunena
- * @subpackage	com_kunena
  * @version		2.0
  */
 class KunenaBBCodeEditor {

@@ -1,9 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Framework
+ * @subpackage HTML
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -15,10 +16,6 @@ defined ( '_JEXEC' ) or die ();
 
 /**
  * Utility class for creating HTML Grids
- *
- * @package     Joomla.Platform
- * @subpackage  HTML
- * @since       11.1
  */
 abstract class JHtmlKunenaGrid
 {
@@ -31,7 +28,6 @@ abstract class JHtmlKunenaGrid
 	 * @param   string   Task to turn the boolean setting off.
 	 *
 	 * @return  string   The boolean setting widget.
-	 * @since	11.1
 	 */
 	static function boolean($i, $value, $taskOn = null, $taskOff = null) {
 		// Load the behavior.

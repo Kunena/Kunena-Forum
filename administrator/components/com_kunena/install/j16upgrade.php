@@ -1,12 +1,12 @@
 <?php
 /**
- * @package		Kunena
- * @subpackage	com_kunena
- * @copyright	Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
- * @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
- * @link		http://www.kunena.org
- */
-
+ * Kunena Component
+ * @package Kunena.Installer
+ *
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
 defined ( '_JEXEC' ) or die ();
 
 define ( 'KPATH_ADMIN', dirname ( dirname ( __FILE__ ) ) );
@@ -25,8 +25,6 @@ define ( 'KPATH_ADMIN', dirname ( dirname ( __FILE__ ) ) );
  * 	</jupgrade>
  * For more information, see ./j16upgrade.xml
  *
- * @package		Kunena
- * @subpackage	com_kunena
  * @since		1.6.4
  */
 class jUpgradeComponentKunena extends jUpgrade {

@@ -1,9 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Framework
+ * @subpackage BBCode
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,18 +18,15 @@ require_once KPATH_ADMIN . '/libraries/bbcode/nbbc/nbbc.php';
 /**
  * Kunena BBCode Class
  *
- * @package		Kunena
- * @subpackage	com_kunena
- * @version		1.7
+ * @version		2.0
  */
 class KunenaBBCode extends BBCode {
 	public $autolink_disable = false;
+
 	/**
 	 * Object Constructor
 	 *
-	 * @param
 	 * @return	void
-	 * @since	1.0
 	 */
 	function __construct() {
 		parent::__construct ();

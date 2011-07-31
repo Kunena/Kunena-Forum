@@ -1,10 +1,10 @@
 <?php
 /**
- * @version $Id$
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Site
+ * @subpackage Controllers
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -25,8 +25,6 @@ require_once KPATH_SITE . '/lib/kunena.link.class.php';
 /**
  * Kunena Topic Controller
  *
- * @package		Kunena
- * @subpackage	com_kunena
  * @since		2.0
  */
 class KunenaControllerTopic extends KunenaController {

@@ -33,6 +33,7 @@ Kunena 2.0.0-DEV
 31-July-2011 Matias
 + [#39] Implement live CSS minimizer using cached files
 + [#39] Move NBBC and CssMin into libraries/external
++ [#39] Add support for template variables (style* in template parameters)
 
 30-July-2011 Matias
 # [#50] Improve source code documentation (fix @Copyright warnings)

@@ -1,9 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Administrator
+ * @subpackage Models
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,9 +18,7 @@ jimport( 'joomla.html.pagination' );
 /**
  * Templates Model for Kunena
  *
- * @package		Kunena
- * @subpackage	com_kunena
- * @since		1.6
+ * @since 2.0
  */
 class KunenaAdminModelTemplates extends KunenaModel {
 	protected $__state_set = false;

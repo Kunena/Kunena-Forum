@@ -1,9 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Administrator
+ * @subpackage Controllers
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,9 +15,7 @@ kimport ( 'kunena.controller' );
 /**
  * Kunena Backend Stats Controller
  *
- * @package		Kunena
- * @subpackage	com_kunena
- * @since		1.6
+ * @since 2.0
  */
 class KunenaAdminControllerStats extends KunenaController {
 	protected $baseurl = null;

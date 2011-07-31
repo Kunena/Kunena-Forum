@@ -1,10 +1,10 @@
 <?php
 /**
- * @version $Id: default.php 4385 2011-02-06 12:55:38Z mahagr $
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Template.Default
+ * @subpackage Announcement
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/

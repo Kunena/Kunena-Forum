@@ -1,10 +1,10 @@
 <?php
 /**
- * @version $Id: view.html.php 4387 2011-02-08 16:19:37Z mahagr $
  * Kunena Component
- * @package Kunena
+ * @package Kunena.Site
+ * @subpackage Views
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/

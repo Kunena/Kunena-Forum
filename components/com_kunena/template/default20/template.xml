@@ -13,6 +13,55 @@
 	<description>COM_KUNENA_TEMPLATE_DEFAULT_TEMPLATE_DESC</description>
 	<thumbnail>template_thumbnail.png</thumbnail>
 	<params>
+		<param name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
+			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
+			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
+			<option value="right">COM_KUNENA_TEMPLATE_RIGHT</option>
+			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
+		</param>
+		<param name="buttonIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_BUTTON_SET" description="COM_KUNENA_TEMPLATE_BUTTON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+			<option value="bluebird">COM_KUNENA_TEMPLATE_BUTTON_SET_BLUEBIRD</option>
+			<option value="graybird">COM_KUNENA_TEMPLATE_BUTTON_SET_GRAYBIRD</option>
+			<option value="blackbird">COM_KUNENA_TEMPLATE_BUTTON_SET_BLACKBIRD</option>
+			<option value="whitebird">COM_KUNENA_TEMPLATE_BUTTON_SET_WHITEBIRD</option>
+		</param>
+		<param name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET" description="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+		</param>
+		<param name="editorIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET" description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+		</param>
+		<param name="styleForumHeadercolor" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_FORUM_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<!--
+		<param name="styleAnnouncementHeadercolor" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="styleAnnouncementBoxbgcolor" type="text" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_BOX_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="styleFrontstatsHeadercolor" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="styleWhoisonlineHeadercolor" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_WHOISONLINE_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		-->
+		
+		<param name="styleInactiveTabcolor" type="text" default="#DDDDDD" label="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_TAB_COLOR_DESC" />
+		<param name="styleActiveTabcolor" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_TAB_COLOR_DESC" />
+		<param name="styleTopBordercolor" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR_DESC" />
+		<param name="styleInactiveFontcolor" type="text" default="#000000" label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC" />
+		<param name="styleActiveFontcolor" type="text" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
+		
+		<!--
+		<param name="styleAllButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_COLOR_DESC" />
+		<param name="styleAllButtonhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_HOVER_COLOR_DESC" />
+		<param name="styleAllButtonbordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_BORDER_COLOR_DESC" />
+		<param name="styleAllButtonborderhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_BORDER_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_BORDER_HOVER_COLOR_DESC" />
+		<param name="styleAllButtontextcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_TEXT_COLOR_DESC" />
+		<param name="styleAllButtontexthovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_TEXT_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_TEXT_HOVER_COLOR_DESC" />
+		
+		<param name="stylePaginationLinkcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_COLOR_DESC" />
+		<param name="stylePaginationLinkhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_HOVER_COLOR_DESC" />
+		<param name="stylePaginationBordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_COLOR_DESC" />
+		<param name="stylePaginationBorderhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_HOVER_COLOR_DESC" />
+		<param name="stylePaginationTextcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_COLOR_DESC" />
+		<param name="stylePaginationTexthovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR_DESC" />
+		-->
+		
 		<param name="templatebyText" type="hidden" default="" />
 		<param name="templatebyName" type="hidden" default="" />
 		<param name="templatebyLink" type="hidden" default="" />

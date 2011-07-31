@@ -33,6 +33,7 @@ class KunenaTemplate extends JObject
 
 	public $name = null;
 	public $params = null;
+	public $paramstime = false;
 
 	protected $default = 'default';
 	protected $css_compile = true;
@@ -41,6 +42,8 @@ class KunenaTemplate extends JObject
 	public $topicIcons = array();
 
 	protected $stylesheets = array();
+	protected $style_variables = array();
+	protected $compiled_style_variables = null;
 	protected $scripts = array();
 
 	/**
@@ -62,6 +65,7 @@ class KunenaTemplate extends JObject
 		$ini = KPATH_SITE . "/template/{$name}/params.ini";
 		$content = '';
 		if (is_readable( $ini ) ) {
+			$this->paramstime = filemtime($ini);
 			$content = file_get_contents($ini);
 		}
 		$this->name = $name;
@@ -69,7 +73,12 @@ class KunenaTemplate extends JObject
 
 		$xml = $this->params->getXml();
 		foreach ($xml['_default']->children() as $param)  {
-			if ($param->attributes('type') != 'spacer') $this->params->def($param->attributes('name'), $param->attributes('default'));
+			if ($param->attributes('type') == 'spacer') continue;
+			$this->params->def($param->attributes('name'), $param->attributes('default'));
+			$name = $param->attributes('name');
+			if (substr($name,0,5) == 'style') {
+				$this->style_variables[$name] = $this->params->get($name);
+			}
 		}
 	}
 
@@ -154,12 +163,36 @@ class KunenaTemplate extends JObject
 		}
 	}
 
+	public function getStyleVariables() {
+		if ($this->compiled_style_variables === null) {
+			// FIXME: add Joomla 1.6 support
+			$xml = $this->params->getXml();
+			$variables = array();
+			foreach ($this->style_variables as $name=>$value)  {
+				$variables[] = "\t{$name}:{$this->params->get($name)};";
+			}
+			$this->compiled_style_variables = "@variables {\n".implode("\n", $variables)."\n}\n\n";
+
+		}
+		return $this->compiled_style_variables;
+	}
+
+	public function getStyleVariable($name, $default='') {
+		return isset($this->style_variables[$name]) ? $this->style_variables[$name] : $default;
+	}
+
+	public function setStyleVariable($name, $value) {
+		$this->compiled_style_variables = null;
+		return $this->style_variables[$name] = $value;
+	}
+
 	public function addStyleSheet($filename) {
 		if ($this->css_compile) {
 			// If template supports CSS compiler
 			$source = $this->getFile($filename);
 			$filename = $this->getCachePath($filename);
-			if (!JFile::exists(JPATH_ROOT.'/'.$filename) || filemtime(JPATH_ROOT.'/'.$source) > filemtime(JPATH_ROOT.'/'.$filename)) {
+			$filemtime = filemtime(JPATH_ROOT.'/'.$filename);
+			if (!JFile::exists(JPATH_ROOT.'/'.$filename) || filemtime(JPATH_ROOT.'/'.$source) > $filemtime || ($this->paramstime && $this->paramstime > $filemtime )) {
 				$this->compileStyleSheet($source, $filename);
 			}
 		} else {
@@ -189,7 +222,8 @@ class KunenaTemplate extends JObject
 	}
 
 	public function compileStyleSheet($source, $dest) {
-		$buffer = JFile::read(JPATH_ROOT.'/'.$source);
+		$buffer = $this->getStyleVariables();
+		$buffer .= JFile::read(JPATH_ROOT.'/'.$source);
 
 		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
 			$filters = array (

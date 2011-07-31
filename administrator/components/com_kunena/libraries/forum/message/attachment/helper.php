@@ -202,7 +202,8 @@ class KunenaForumMessageAttachmentHelper {
 	public static function getByUserid($user, $params) {
 		if ( $params['filetype'] == 'files' ) $filetype = " AND filetype=''";
 		elseif ( $params['filetype'] == 'images' ) $filetype = " AND filetype!=''";
-		else $filetype = '';
+		elseif ( empty ($params['filetype'])) $filetype = '';
+		else return;
 
 		$orderby = '';
 		if ( $params['orderby'] == 'desc' ) $orderby = ' ORDER BY id DESC';

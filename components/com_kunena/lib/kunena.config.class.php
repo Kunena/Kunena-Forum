@@ -371,6 +371,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $file_upload = 'registered';
 	var $topic_layout = 'flat';
 	var $time_to_create_page = 1;
+	var $show_imgfiles_manage_profile = 1;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

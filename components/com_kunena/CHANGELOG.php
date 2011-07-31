@@ -30,6 +30,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+31-July-2011 Matias
++ [#39] Implement live CSS minimizer using cached files
++ [#39] Move NBBC and CssMin into libraries/external
+
 30-July-2011 Matias
 # [#50] Improve source code documentation (fix @Copyright warnings)
 ^ [#50] Improve source code documentation (split documentation into logical parts)

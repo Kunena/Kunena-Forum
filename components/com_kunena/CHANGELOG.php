@@ -35,6 +35,7 @@ Kunena 2.0.0-DEV
 + [#39] Move NBBC and CssMin into libraries/external
 + [#39] Add support for template variables (style* in template parameters)
 + [#39] Add some template style parameters into default20 template
+# [#39] Remove browser specific CSS3 rules from default20 template (generated automatically)
 
 30-July-2011 Matias
 # [#50] Improve source code documentation (fix @Copyright warnings)

@@ -48,7 +48,7 @@ table {border-collapse: collapse;}
 	border-color: #BFC3C6;
 }
 #kunena .kheader {
-	background-color: #5388B4;
+	background-color: var(styleForumHeadercolor);
 	color: #fff;
 	font-weight: bold;
 }
@@ -63,7 +63,7 @@ table {border-collapse: collapse;}
 	text-decoration: underline;
 }
 #kunena .ksection .kheader-desc {
-	background: #5388B4;
+	background: var(styleForumHeadercolor);
 	color: #fff;
 }
 #kunena .ksection .kheader-desc.ktoggle-close {
@@ -120,23 +120,23 @@ table {border-collapse: collapse;}
 /*---------- Top Menu ------------- */
 
 #kunena .kmenu {
-	border-bottom: 3px solid #5388B4;
+	border-bottom: 3px solid var(styleTopBordercolor);
 }
 #kunena .kmenu ul.menu li {
-	background: #ddd !important;
+	background: var(styleInactiveTabcolor) !important;
 	font-size: 13px;
 }
 #kunena .kmenu ul.menu li:hover,
 #kunena .kmenu ul.menu li.active {
-	background: #5388B4 !important;
+	background: var(styleActiveTabcolor) !important;
 }
 #kunena .kmenu ul.menu li a {
-	color: #000;
+	color: var(styleInactiveFontcolor);
 	text-decoration: none;
 }
 #kunena .kmenu ul.menu li:hover a,
 #kunena .kmenu ul.menu li.active a {
-	color: #FFF;
+	color: var(styleActiveFontcolor);
 }
 #kunena .klogin {
 	background-color: #f3f3f3;

@@ -335,6 +335,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$topic_layout[] = JHTML::_('select.option', 'indented', JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_INDENTED'));
 		$lists ['topic_layout'] = JHTML::_('select.genericlist', $topic_layout, 'cfg_topic_layout', 'class="inputbox" size="1"', 'value', 'text', $config->topic_layout);
 
+		$lists ['show_imgfiles_manage_profile'] = JHTML::_('select.genericlist', $yesno, 'cfg_show_imgfiles_manage_profile', 'class="inputbox" size="1"', 'value', 'text', $config->show_imgfiles_manage_profile);
+
 		return $lists;
 	}
 }

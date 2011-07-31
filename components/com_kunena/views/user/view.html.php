@@ -154,6 +154,8 @@ class KunenaViewUser extends KunenaView {
 			$this->profile->save();
 		}
 
+		$this->canManageAttachs = $this->canManageAttachments ();
+
 		$private = KunenaFactory::getPrivateMessaging();
 		if ($this->my->id == $this->user->id) {
 			$this->pmCount = $private->getUnreadCount($this->my->id);
@@ -490,13 +492,45 @@ class KunenaViewUser extends KunenaView {
 		return $lastvisit;
 	}
 
-	function displayAttachments() {
+	function canManageAttachments () {
 		kimport('kunena.forum.message.attachment.helper');
 		$this->me = KunenaFactory::getUser ();
-		$params = array('filetype' => '', 'orderby' => 'ASC', 'limit' => '6');
-		$this->items = KunenaForumMessageAttachmentHelper::getByUserid($this->me, $params);
+		$this->config = KunenaFactory::getConfig();
 
+		if ( $this->config->show_imgfiles_manage_profile ) {
+			$filetype = 'none';
+			if ( $this->config->image_upload=='all' && $this->config->file_upload==''  ) $filetype = 'images';
+			elseif ( $this->config->image_upload=='' && $this->config->file_upload=='all' ) $filetype = 'files';
+			elseif ( $this->config->image_upload=='' && $this->config->file_upload=='' ) $filetype = 'none';
+			else $filetype = 'none';
+
+			if ( $this->me->isModerator() && ($this->config->image_upload=='moderator' || $this->config->file_upload=='moderator')  ) {
+				if (  $this->config->image_upload=='moderator' && $this->config->file_upload==''  ) $filetype = 'images';
+				elseif ( $this->config->image_upload=='' && $this->config->file_upload=='moderator' ) $filetype = 'files';
+				elseif ( $this->config->image_upload=='' && $this->config->file_upload=='' ) $filetype = 'none';
+				else $filetype = 'none';
+			}
+
+			if ( $this->me->isAdmin() &&  ($this->config->image_upload=='admin' || $this->config->file_upload=='admin') ) {
+				if ( $this->config->image_upload=='admin' && $this->config->file_upload==''  ) $filetype = 'images';
+				elseif ( $this->config->image_upload=='' && $this->config->file_upload=='admin' ) $filetype = 'files';
+				elseif ( $this->config->image_upload=='' && $this->config->file_upload=='' ) $filetype = 'none';
+					else $filetype = 'none';
+			}
+
+			$params = array('filetype' => $filetype, 'orderby' => 'ASC', 'limit' => '6');
+			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->me, $params);
+
+			if ($this->userattachs) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	function displayAttachments() {
 		$this->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
+		$this->items = $this->userattachs;
 
 		echo $this->loadTemplate('attachments');
 	}

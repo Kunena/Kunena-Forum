@@ -225,7 +225,7 @@ class TableKunenaUsers extends KunenaTable
 	* User thank yous received
 	* @var int
 	**/
-	var $ty_received = null;
+	var $thankyou = null;
 
 	function __construct($db) {
 		parent::__construct('#__kunena_users', 'userid', $db);

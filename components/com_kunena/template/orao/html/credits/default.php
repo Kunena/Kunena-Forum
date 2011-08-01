@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -9,7 +8,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
 ?>
 		<div class="ksection kcredits">
 			<h2 class="kheader"><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></h2>

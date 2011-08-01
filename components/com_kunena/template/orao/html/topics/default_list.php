@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -28,7 +27,6 @@ $this->params = $template->params;
 					</dl>
 				</li>
 			</ul>
-
 			<?php if (empty($this->topics )) : ?>
 			<ul class="topiclist forums">
 				<li class="row tk-nopost-info">

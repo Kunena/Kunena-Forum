@@ -1,6 +1,5 @@
 <?php
 /**
- * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -61,8 +60,8 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 </div>
 
-<?php echo $this->loadTemplate("rules");?>
-<?php echo $this->loadTemplate("register");?>
+<?php include dirname ( __FILE__ ) . '/rules.php'; ?>
+<?php include dirname ( __FILE__ ) . '/register.php'; ?>
 
 <script type="text/javascript">
 //<![CDATA[

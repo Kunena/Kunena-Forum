@@ -28,6 +28,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 2.0.0-DEV2
+
+1-Aug-2011 Matias
+- [#55] Get rid of build numbers
+
 Kunena 2.0.0-DEV
 
 31-July-2011 Matias

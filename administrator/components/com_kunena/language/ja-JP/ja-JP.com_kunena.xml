@@ -5,7 +5,6 @@
 	<tag>ja-JP</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>Masato Sato</author>
 	<authorEmail>webmaster@joomlaway.net</authorEmail> 
 	<authorUrl>http://www.joomlaway.net/</authorUrl> 

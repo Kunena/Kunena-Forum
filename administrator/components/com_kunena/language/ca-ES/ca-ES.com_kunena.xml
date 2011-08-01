@@ -3,9 +3,8 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Catalan</name>
 	<tag>ca-ES</tag>
-	<creationDate>2011-03-04</creationDate>
-	<version>1.6.4</version>
-	<build>4559</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
 	<author>Arivor</author>
 	<authorEmail>projectenucat@gmail.com</authorEmail>
 	<authorUrl>http://www.nucat.cat</authorUrl>

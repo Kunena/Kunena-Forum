@@ -291,6 +291,7 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `topic_ordering` VARCHAR(16) NOT NULL default 'lastpost' AFTER `allow_polls`;</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD `thankyou` int(11) NULL default '0' AFTER `showOnline`;</query>
 		</version>
 	</upgrade>
 </comupgrade>

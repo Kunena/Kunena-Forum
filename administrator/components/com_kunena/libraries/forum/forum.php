@@ -85,10 +85,13 @@ class KunenaForum {
 
 	protected static function buildVersion() {
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
-			$changelog = file_get_contents ( KPATH_SITE . '/CHANGELOG.php', NULL, NULL, 0, 1000 );
-			preg_match ( '|~~\s+Kunena\s(\d+\.\d+.\d+\S*)|', $changelog, $version );
+			$xml = KPATH_ADMIN . '/kunena.xml';
+			$parser = JFactory::getXMLParser ( 'Simple' );
+			$parser->loadFile ( $xml );
+			self::$version = $parser->document->getElementByPath ( 'version' )->data () . '-SVN';
+		} else {
+			self::$version = strtoupper ( '@kunenaversion@' );
 		}
-		self::$version = ('@kunenaversion@' == '@' . 'kunenaversion' . '@') ? strtoupper ( $version [1] . '-SVN' ) : strtoupper ( '@kunenaversion@' );
 		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toMySQL() : '@kunenaversiondate@';
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'SVN Revision' : '@kunenaversionname@';
 	}

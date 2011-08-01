@@ -270,8 +270,6 @@ body {line-height:1.5;}
 	margin: 0 5px 0 0 !important;
 	padding: 0;
 	line-height: 30px;
-	-webkit-border-radius:5px 5px 0 0;
-	-moz-border-radius:5px 5px 0 0;
 	border-radius:5px 5px 0 0;
 }
 #kunena .kmenu ul.menu li.active a,
@@ -2115,8 +2113,6 @@ body {line-height:1.5;}
 	text-align:left;
 	border: 1px solid;
 	border-radius: 15px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
 }
 #kunena .kcredits-team {
 	margin: 0;
@@ -2129,16 +2125,12 @@ body {line-height:1.5;}
 	text-align:left;
 	background: transparent none;
 	border-radius: 15px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
 }
 #kunena .kcredits-more {
 	padding: 10px 20px;
 	margin: 15px;
 	border: 1px solid;
 	border-radius: 15px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
 }
 
 #kunena .kcredits-language {
@@ -2146,6 +2138,4 @@ body {line-height:1.5;}
 	border: 1px solid;
 	margin: 15px;
 	border-radius: 15px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
 }

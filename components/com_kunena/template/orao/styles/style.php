@@ -60,15 +60,6 @@ $document->addStyleDeclaration($styles);
 
 
 $styles = <<<EOF
-#kunena .kicon-profile,
-#kunena .tk-profile-icons {
-	background-image: url("{$mediaurl}/iconsets/profile/{$this->params->get('profileIconset')}/default.png");
-}
-#kbbcode-toolbar li a,
-#kattachments a {
-	background-image:url("{$mediaurl}/iconsets/editor/{$this->params->get('editorIconset')}/default.png");
-	background-repeat: no-repeat;
-}
 #kunena div.kmsgimage img,
 #kunena div.kmsgsignature img {
 	max-width:{$this->params->get('maxwidthPostimage')}px;

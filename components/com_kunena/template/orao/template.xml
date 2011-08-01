@@ -81,7 +81,7 @@
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
 
-		<param name="showPathway" class="tk_switch" type="list" default="1" label="Show Pathway" description="You can Hide or Show Pathway">
+		<param name="showPathway" class="tk_switch" type="list" default="0" label="Show Pathway" description="You can Hide or Show Pathway">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
@@ -134,65 +134,65 @@
 		<param name="tabRadius" type="text" default="0" label="Menu Tab Radius" description="" />
 
 <param type="spacer" default="Top Menu icons" />
-		<param name="topmenu1Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="1. Icon" description="" /> 
-		<param name="topmenu1Itemid" type="text" class="text_area group-end" default="" label="1. ItemId" description="" />
+		<param name="topmenu1Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu1Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu2Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="2. Icon" description="" /> 
-		<param name="topmenu2Itemid" type="text" class="text_area group-end" default="" label="2. ItemId" description="" />
+		<param name="topmenu2Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu2Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu3Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="3. Icon" description="" /> 
-		<param name="topmenu3Itemid" type="text" class="text_area group-end" default="" label="3. ItemId" description="" />
+		<param name="topmenu3Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu3Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu4Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="4. Icon" description="" /> 
-		<param name="topmenu4Itemid" type="text" class="text_area group-end" default="" label="4. ItemId" description="" />
+		<param name="topmenu4Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu4Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu5Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="5. Icon" description="" /> 
-		<param name="topmenu5Itemid" type="text" class="text_area group-end" default="" label="5. ItemId" description="" />
+		<param name="topmenu5Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu5Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu6Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="6. Icon" description="" /> 
-		<param name="topmenu6Itemid" type="text" class="text_area group-end" default="" label="6. ItemId" description="" />
+		<param name="topmenu6Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu6Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu7Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="7. Icon" description="" /> 
-		<param name="topmenu7Itemid" type="text" class="text_area group-end" default="" label="7. ItemId" description="" />
+		<param name="topmenu7Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu7Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu8Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="8. Icon" description="" /> 
-		<param name="topmenu8Itemid" type="text" class="text_area group-end" default="" label="8. ItemId" description="" />
+		<param name="topmenu8Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu8Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu9Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="9. Icon" description="" /> 
-		<param name="topmenu9Itemid" type="text" class="text_area group-end" default="" label="9. ItemId" description="" />
+		<param name="topmenu9Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu9Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu10Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="10. Icon" description="" /> 
-		<param name="topmenu10Itemid" type="text" default="" class="text_area group-end" label="10. ItemId" description="" />
+		<param name="topmenu10Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu10Itemid" type="text" default="" class="text_area group-end" label="ItemId" description="" />
 		
-		<param name="topmenu11Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="11. Icon" description="" /> 
-		<param name="topmenu11Itemid" type="text" class="text_area group-end" default="" label="11. ItemId" description="" />
+		<param name="topmenu11Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu11Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu12Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="12. Icon" description="" /> 
-		<param name="topmenu12Itemid" type="text" class="text_area group-end" default="" label="12. ItemId" description="" />
+		<param name="topmenu12Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu12Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu13Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="13. Icon" description="" /> 
-		<param name="topmenu13Itemid" type="text" class="text_area group-end" default="" label="13. ItemId" description="" />
+		<param name="topmenu13Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu13Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu14Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="14. Icon" description="" /> 
-		<param name="topmenu14Itemid" type="text" class="text_area group-end" default="" label="14. ItemId" description="" />
+		<param name="topmenu14Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu14Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu15Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="15. Icon" description="" /> 
-		<param name="topmenu15Itemid" type="text" class="text_area group-end" default="" label="15. ItemId" description="" />
+		<param name="topmenu15Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu15Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu16Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="16. Icon" description="" /> 
-		<param name="topmenu16Itemid" type="text" class="text_area group-end" default="" label="16. ItemId" description="" />
+		<param name="topmenu16Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu16Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu17Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="17. Icon" description="" /> 
-		<param name="topmenu17Itemid" type="text" class="text_area group-end" default="" label="17. ItemId" description="" />
+		<param name="topmenu17Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu17Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu18Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="18. Icon" description="" /> 
-		<param name="topmenu18Itemid" type="text" class="text_area group-end" default="" label="18. ItemId" description="" />
+		<param name="topmenu18Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu18Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu19Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="19. Icon" description="" /> 
-		<param name="topmenu19Itemid" type="text" class="text_area group-end" default="" label="19. ItemId" description="" />
+		<param name="topmenu19Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu19Itemid" type="text" class="text_area group-end" default="" label="ItemId" description="" />
 
-		<param name="topmenu20Itemidimage" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/menuicons" default="" label="20. Icon" description="" /> 
-		<param name="topmenu20Itemid" type="text" default="" label="20. ItemId" description="" />
+		<param name="topmenu20Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="Icon" description="" /> 
+		<param name="topmenu20Itemid" type="text" default="" label="ItemId" description="" />
 
 <param type="spacer" default="Users Color" />
 
@@ -208,48 +208,48 @@
 		<param name="userGuest" type="text" default="#666666" label="Guests" description="" />
 
 <param type="spacer" default="Sections style" />
-		<param name="section1icon" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/headericons" class="group-end" default="" label="1. Header Icon" description="" /> 
-		<param name="section1ID" type="text" default="" label="1. ID" description="" />
-		<param name="section1bgColor" type="text" class="text_area group-end" default="" label="1. Background Color" description="" />
+		<param name="section1icon" type="imagelist" directory="/media/kunena/icons" default="" label="Header Icon" description="" /> 
+		<param name="section1ID" type="text" default="" label="ID" description="" />
+		<param name="section1bgColor" type="text" class="text_area group-end" default="" label="Background Color" description="" />
 		
-		<param name="section2icon" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/headericons" default="" label="2. Header Icon" description="" /> 
-		<param name="section2ID" type="text" default="" label="2. ID" description="" />
-		<param name="section2bgColor" type="text" class="text_area group-end" default="" label="2. Background Color" description="" />
+		<param name="section2icon" type="imagelist" directory="/media/kunena/icons" default="" label="Header Icon" description="" /> 
+		<param name="section2ID" type="text" default="" label="ID" description="" />
+		<param name="section2bgColor" type="text" class="text_area group-end" default="" label="Background Color" description="" />
 		
-		<param name="section3icon" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/headericons" default="" label="3. Header Icon" description="" /> 
-		<param name="section3ID" type="text" default="" label="3. ID" description="" />
-		<param name="section3bgColor" type="text" class="text_area group-end" default="" label="3. Background Color" description="" />
+		<param name="section3icon" type="imagelist" directory="/media/kunena/icons" default="" label="Header Icon" description="" /> 
+		<param name="section3ID" type="text" default="" label="ID" description="" />
+		<param name="section3bgColor" type="text" class="text_area group-end" default="" label="Background Color" description="" />
 		
-		<param name="section4icon" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/headericons" default="" label="4. Header Icon" description="" /> 
-		<param name="section4ID" type="text" default="" label="4. ID" description="" />
-		<param name="section4bgColor" type="text" class="text_area group-end" default="" label="4. Background Color" description="" />
+		<param name="section4icon" type="imagelist" directory="/media/kunena/icons" default="" label="Header Icon" description="" /> 
+		<param name="section4ID" type="text" default="" label="ID" description="" />
+		<param name="section4bgColor" type="text" class="text_area group-end" default="" label="Background Color" description="" />
 
-		<param name="section5icon" type="imagelist" directory="/components/com_kunena/template/orao/media/iconsets/headericons" default="" label="5. Header Icon" description="" /> 
-		<param name="section5ID" type="text" default="" label="5. ID" description="" />
-		<param name="section5bgtColor" type="text" default="" label="5. Background Color" description="" />
+		<param name="section5icon" type="imagelist" directory="/media/kunena/icons" default="" label="Header Icon" description="" /> 
+		<param name="section5ID" type="text" default="" label="ID" description="" />
+		<param name="section5bgtColor" type="text" class="text_area" default="" label="Background Color" description="" />
 
 
 <param type="spacer" default="Category Colors" />
-		<param name="category1ID" type="text" default="" label="Category 1 ID" description="" />
-		<param name="category1Color" type="text" class="text_area group-end" default="" label="Category 1 Color" description="" />
-		<param name="category2ID" type="text" default="" label="Category 2 ID" description="" />
-		<param name="category2Color" type="text" class="text_area group-end" default="" label="Category 2 Color" description="" />
-		<param name="category3ID" type="text" default="" label="Category 3 ID" description="" />
-		<param name="category3Color" type="text" class="text_area group-end" default="" label="Category 3 Color" description="" />
-		<param name="category4ID" type="text" default="" label="Category 4 ID" description="" />
-		<param name="category4Color" type="text" class="text_area group-end" default="" label="Category 4 Color" description="" />
-		<param name="category5ID" type="text" default="" label="Category 5 ID" description="" />
-		<param name="category5Color" type="text" class="text_area group-end" default="" label="Category 5 Color" description="" />
-		<param name="category6ID" type="text" default="" label="Category 6 ID" description="" />
-		<param name="category6Color" type="text" class="text_area group-end" default="" label="Category 6 Color" description="" />
-		<param name="category7ID" type="text" default="" label="Category 7 ID" description="" />
-		<param name="category7Color" type="text" class="text_area group-end" default="" label="Category 7 Color" description="" />
-		<param name="category8ID" type="text" default="" label="Category 8 ID" description="" />
-		<param name="category8Color" type="text" class="text_area group-end" default="" label="Category 8 Color" description="" />
-		<param name="category9ID" type="text" default="" label="Category 9 ID" description="" />
-		<param name="category9Color" type="text" class="text_area group-end" default="" label="Category 9 Color" description="" />
-		<param name="category10ID" type="text" default="" label="Category 10 ID" description="" />
-		<param name="category10Color" type="text" default="" label="Category 10 Color" description="" />
+		<param name="category1ID" type="text" default="" label="Category ID" description="" />
+		<param name="category1Color" type="text" class="text_area group-end" default="" label="Category Color" description="" />
+		<param name="category2ID" type="text" default="" label="Category ID" description="" />
+		<param name="category2Color" type="text" class="text_area group-end" default="" label="Category Color" description="" />
+		<param name="category3ID" type="text" default="" label="Category ID" description="" />
+		<param name="category3Color" type="text" class="text_area group-end" default="" label="Category Color" description="" />
+		<param name="category4ID" type="text" default="" label="Category ID" description="" />
+		<param name="category4Color" type="text" class="text_area group-end" default="" label="Category Color" description="" />
+		<param name="category5ID" type="text" default="" label="Category ID" description="" />
+		<param name="category5Color" type="text" class="text_area group-end" default="" label="Category Color" description="" />
+		<param name="category6ID" type="text" default="" label="Category ID" description="" />
+		<param name="category6Color" type="text" class="text_area group-end" default="" label="Category Color" description="" />
+		<param name="category7ID" type="text" default="" label="Category ID" description="" />
+		<param name="category7Color" type="text" class="text_area group-end" default="" label="Category Color" description="" />
+		<param name="category8ID" type="text" default="" label="Category ID" description="" />
+		<param name="category8Color" type="text" class="text_area group-end" default="" label="Category Color" description="" />
+		<param name="category9ID" type="text" default="" label="Category ID" description="" />
+		<param name="category9Color" type="text" class="text_area group-end" default="" label="Category Color" description="" />
+		<param name="category10ID" type="text" default="" label="Category ID" description="" />
+		<param name="category10Color" type="text" class="text_area" default="" label="Category Color" description="" />
 
 <param type="spacer" default="Topic Status" />
 

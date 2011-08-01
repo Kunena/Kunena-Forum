@@ -21,7 +21,8 @@ BBCODE BUTTONS
 
 #kbbcode-toolbar li a,
 #kattachments a {
-	background:url("../media/iconsets/editor/default/default.png") no-repeat;
+	background-image:url("../images/editor-default.png");
+	background-repeat: no-repeat;
 }
 
 /*					ICONS
@@ -622,13 +623,7 @@ div#mbCenter input#tk-submit-button.kbutton,
 #kunena span.ktopic-sticky {
 	background: url("../images/sticky.png") no-repeat;
 }
-#kunena span.kposticon-default,
-#kunena span.ktopicicon-default {
-	background: url("../images/topic-default.png") no-repeat;
-}
-#kunena span.ktopicicon-question {
-	background: url("../images/topic-question.png") no-repeat;
-}
+
 #kunena li.kcategory-smicon {
 	background: url("../images/icon-category-sm.png") no-repeat;
 }
@@ -658,6 +653,10 @@ div#mbCenter input#tk-submit-button.kbutton,
 }
 #kunena .tool-title {
 	background: url(../images/selector-arrow.png) no-repeat;
+}
+#kunena .kicon-profile,
+#kunena .tk-profile-icons {
+	background-image: url("../images/profile-default.png");
 }
 
 /*

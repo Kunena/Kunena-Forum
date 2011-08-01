@@ -6,7 +6,6 @@
 	<tag>vi-VN</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>lmt-net</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>

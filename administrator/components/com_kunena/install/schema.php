@@ -554,7 +554,6 @@ class KunenaModelSchema extends JModel
 				case 'version':
 					if (!$this->version) break;
 					$version = $action->getAttribute('version');
-					$build = $action->getAttribute('build');
 					$date = $action->getAttribute('date');
 					$this->upgradeNewAction($dbschema, $action, $table);
 				case 'if':

@@ -57,7 +57,6 @@ class KunenaVersion
 		if (!isset($version->version)) return false;
 		if ($version->state) return false;
 		if ($version->version != KunenaForum::version()) return false;
-		if ($version->build != KunenaForum::versionBuild()) return false;
 		return true;
 	}
 
@@ -84,7 +83,7 @@ class KunenaVersion
 		}
 		else if (!empty($version->state))
 		{
-			if ($version->version != KunenaForum::version() || $version->build != KunenaForum::versionBuild()) $version->state = '';
+			if ($version->version != KunenaForum::version()) $version->state = '';
 		}
 		return $version;
 	}
@@ -92,11 +91,11 @@ class KunenaVersion
 	/**
 	* Retrieve installed Kunena version as string.
 	*
-	* @return string "Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname]"
+	* @return string "Kunena X.Y.Z | YYYY-MM-DD [versionname]"
 	*/
 	static function getVersionHTML()
 	{
-		return 'Kunena '.KunenaForum::version().' | '.KunenaForum::versionDate().' | '.KunenaForum::versionBuild().' [ '.KunenaForum::versionName().' ]';
+		return 'Kunena '.KunenaForum::version().' | '.KunenaForum::versionDate().' [ '.KunenaForum::versionName().' ]';
 	}
 
 	/**
@@ -115,7 +114,7 @@ class KunenaVersion
 	/**
 	* Retrieve installed Kunena version, copyright and license as string.
 	*
-	* @return string "Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname] | © 2008-2011 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	* @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008-2011 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	*/
 	static function getLongVersionHTML()
 	{

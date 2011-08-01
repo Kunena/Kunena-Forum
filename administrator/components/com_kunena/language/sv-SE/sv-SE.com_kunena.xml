@@ -5,7 +5,6 @@
 	<tag>sv-SE</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>Jorgen Sjoholm</author>
 	<authorEmail>jorgen.sjoholm@resurspoolen.se</authorEmail>
 	<authorUrl>----</authorUrl>

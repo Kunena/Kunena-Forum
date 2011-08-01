@@ -4,9 +4,8 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Chinese</name>
 	<tag>zh-TW</tag>
-	<creationDate>2010-12-29</creationDate>
-	<version>1.6.2</version>
-	<build>@kunenaversionbuild@</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
 	<author>gewed</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>http://gewed.com</authorUrl>

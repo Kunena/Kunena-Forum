@@ -6,7 +6,6 @@
 	<tag>zh-CN</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>baijianpeng</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>http://www.joomlagate.com</authorUrl>

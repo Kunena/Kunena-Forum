@@ -368,7 +368,7 @@ class KunenaModelInstall extends JModel {
 
 		// Insert data from the old version, if it does not exist in the version table
 		if ($version->id == 0 && $version->component) {
-			$this->insertVersionData ( $version->version, $version->versiondate, $version->build, $version->versionname, null );
+			$this->insertVersionData ( $version->version, $version->versiondate, $version->versionname, null );
 		}
 
 		foreach ( $results as $i => $r )
@@ -660,11 +660,7 @@ class KunenaModelInstall extends JModel {
 				$svn = 1;
 				$vernum = KunenaForum::version();
 			}
-			if(isset($svn) ||
-					($version['versiondate'] > $curversion->versiondate) ||
-					(version_compare(strtolower($version['version']), strtolower($curversion->version), '>')) ||
-					(version_compare(strtolower($version['version']), strtolower($curversion->version), '==') &&
-					$version['build'] > $curversion->build)) {
+			if(isset($svn) || version_compare(strtolower($version['version']), strtolower($curversion->version), '>')) {
 				foreach ($version as $action) {
 					$result = $this->processUpgradeXMLNode($action);
 					if ($result) $this->addStatus ( $result ['action'] . ' ' . $result ['name'], $result ['success'] );
@@ -1015,7 +1011,7 @@ class KunenaModelInstall extends JModel {
 
 		// Only perform this stage if database needs recounting (upgrade from older version)
 		$version = $this->getVersion();
-		if (version_compare ( $version->version, '2.0.0-DEV-SVN', ">=" ) && $version->build >= 4765) {
+		if (version_compare ( $version->version, '2.0.0-DEV', ">" )) {
 			return true;
 		}
 
@@ -1225,7 +1221,6 @@ class KunenaModelInstall extends JModel {
 			$version->version = strtoupper ( $match ['version'] );
 			$version->versiondate = $match ['date'];
 			$version->installdate = '';
-			$version->build = '';
 			$version->versionname = '';
 			$version->prefix = $match ['prefix'];
 		}
@@ -1235,7 +1230,7 @@ class KunenaModelInstall extends JModel {
 
 	protected function insertVersion($state = 'beginInstall') {
 		// Insert data from the new version
-		$this->insertVersionData ( KunenaForum::version(), KunenaForum::versionDate(), KunenaForum::versionBuild(), KunenaForum::versionName(), $state );
+		$this->insertVersionData ( KunenaForum::version(), KunenaForum::versionDate(), KunenaForum::versionName(), $state );
 	}
 
 	protected function updateVersionState($state) {
@@ -1247,8 +1242,8 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function getActionText($version, $type='', $action=null) {
-		static $search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#BUILD_OLD#','#VERSION#','#BUILD#');
-		$replace = array ($version->component, $version->version, $version->build, KunenaForum::version(), KunenaForum::versionBuild());
+		static $search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#VERSION#');
+		$replace = array ($version->component, $version->version, KunenaForum::version());
 		if (!$action) $action = $version->action;
 		$str = '';
 		if ($type == 'hint' || $type == 'warn') {
@@ -1268,10 +1263,6 @@ class KunenaModelInstall extends JModel {
 			$this->_action = 'UPGRADE';
 		else if (version_compare ( strtolower(KunenaForum::version()), strtolower($version->version), '<' ))
 			$this->_action = 'DOWNGRADE';
-		else if (KunenaForum::versionBuild() && KunenaForum::versionBuild() > $version->build)
-			$this->_action = 'UP_BUILD';
-		else if (KunenaForum::versionBuild() && KunenaForum::versionBuild() < $version->build)
-			$this->_action = 'DOWN_BUILD';
 		else
 			$this->_action = 'REINSTALL';
 
@@ -1394,8 +1385,13 @@ class KunenaModelInstall extends JModel {
 	}
 
 	// also insert old version if not in the table
-	protected function insertVersionData($version, $versiondate, $build, $versionname, $state = '') {
-		$this->db->setQuery ( "INSERT INTO  `#__kunena_version`" . "SET `version` = " . $this->db->quote ( $version ) . "," . "`versiondate` = " . $this->db->quote ( $versiondate ) . "," . "`installdate` = CURDATE()," . "`build` = " . $this->db->quote ( $build ) . "," . "`versionname` = " . $this->db->quote ( $versionname ) . "," . "`state` = " . $this->db->quote ( $state ) );
+	protected function insertVersionData($version, $versiondate, $versionname, $state = '') {
+		$this->db->setQuery ( "INSERT INTO `#__kunena_version` SET
+			`version` = {$this->db->quote($version)},
+			`versiondate` = {$this->db->quote($versiondate)},
+			`installdate` = CURDATE(),
+			`versionname` = {$this->db->quote($versionname)},
+			`state` = {$this->db->quote($state)}");
 		$this->db->query ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );

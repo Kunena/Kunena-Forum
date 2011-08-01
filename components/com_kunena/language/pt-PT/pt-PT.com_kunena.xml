@@ -6,7 +6,6 @@
 	<tag>pt-PT</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>Aurélio Vieira and Mickael Cavaco - www.lph2o.com</author>
 	<authorEmail>webmaster@lph2o.com</authorEmail>
 	<authorUrl>http://www.lph2o.com</authorUrl>

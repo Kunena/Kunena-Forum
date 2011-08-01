@@ -30,6 +30,11 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+1-August-2011 draganz
+# [#55] Get rid of build numbers
++ [#54] Add new template - initial commit
++ [#54] Added missing editor.js to Orao template
+
 31-July-2011 Matias
 + [#39] Implement live CSS minimizer using cached files
 + [#39] Move NBBC and CssMin into libraries/external

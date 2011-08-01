@@ -170,20 +170,6 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 /*
 				MENU
 -------------------------------------------------------------------- */
-#kunena #kunena_tab a:hover,
-#kunena #kunena_tab li.Kunena_item_active a	{
-	/*background: #f0f0f0 !important;*/
-}
-#kunena #ktop {
-	background: transparent;
-	color: #000000;
-}
-#kunena #ktop span.ktoggler {
-	background: #5388B4;
-}
-#kunena #ktab a:hover,
-#kunena #ktab li.Kunena-item-active a	{
-	background-color: #ccc;
 
 /*
 				VIEW

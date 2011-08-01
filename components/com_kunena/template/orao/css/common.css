@@ -718,11 +718,7 @@ div#mbCenter div.tk-mb-inboxlink {
 #kunena .klegend-title {
 	font-weight: bold;
 }
-#kunena .kuser-admin			{ color: #FF0000; }
-#kunena .kuser-globalmod		{ color: #800000; }
-#kunena .kuser-moderator		{ color: #0000FF; }
-#kunena .kuser-user				{ color: #5388B4; }
-#kunena .kuser-guest			{ color: #666666; }
+
 #kunena .kwhosonline-legend ul li span {
 	color: #000;
 }
@@ -1520,5 +1516,3 @@ div#mbCenter div.tk-mb-inboxlink {
 	background-position: 0px 50%;
 	background-repeat: no-repeat;
 }
-.closed      { height:5px; }
-.open      { height:35px; }

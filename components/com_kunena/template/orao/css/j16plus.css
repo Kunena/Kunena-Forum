@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+/*  Kunena 2.0 StyleSheet
+    --------------------------------------------------------------------
+	 Style name:	Orao
+	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
+    --------------------------------------------------------------------
+*/
+
+#kunena #ktab a {
+	color: #fff !important;
+	display: block;
+	padding: 0px 10px !important;
+	font-size: 1em; 
+	line-height: 1.8em;
+	text-indent: 0;
+}
+#kunena #ktab ul.menu li.current.active a {
+    color: #fff !important;
+    padding: 0px 10px;
+	white-space:nowrap;
+	text-indent: 0;
+}

@@ -1,0 +1,410 @@
+@charset "utf-8";
+
+/*  Kunena 2.0 StyleSheet
+    --------------------------------------------------------------------
+	 Style name:	Orao
+	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
+    --------------------------------------------------------------------
+*/
+
+/*					THREADS
+################################################*/
+
+#kunena .klatest-post-info {
+	margin: 2px 0;
+}
+
+#kunena li.header dl.flat,
+#kunena li.header dl.flatmyrecent {
+	min-height: 20px;
+	background-position: 2px center;
+	background-repeat: no-repeat;
+}
+
+/* 
+---------------------------------------- */
+#kunena ul.topiclist {
+	display: block;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#kunena div.forumlist {
+	background-repeat: repeat-x;
+	background-position: center top;
+	margin-bottom: 10px !important;
+}
+#kunena ul.topiclist li {
+	display: block;
+	list-style-type: none;
+	overflow:hidden;
+	padding-left: 0 !important;
+}
+#kunena ul.topiclist dl {
+	position: relative;
+	margin:0;
+}
+#kunena ul.topiclist dt {
+	display: block;
+	float: left;
+	width: 49%;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+#kunena ul.topiclist dd {
+	display: block;
+	float: left;
+}
+#kunena ul.topiclist #kunena li.row dt a.subforum {
+	background-image: none;
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+	position: relative;
+	white-space: nowrap;
+	padding: 0 0 0 12px;
+}
+#kunena .forum-image {
+	float: left;
+	padding-top: 5px;
+	margin-right: 5px;
+}
+#kunena div.row {
+	border-top-width: 1px;
+	border-top-style: solid;
+	padding: 0;
+	margin:0px 0;
+}
+#kunena li.row {
+	padding: 3px 0 0;
+	margin: 0px 0 0 0;
+	line-height: 1.5em;
+	position: relative;
+}
+#kunena li.rowfull dt {
+	width: 95%;
+	padding: 0px;
+	margin: 0;
+}
+#kunena li.rowfull dd,
+#kunena li.rowfull:hover dd {
+	border-left-width: 1px;
+	border-left-style: solid;
+	margin: 3px 0 0;
+}
+
+#kunena li.row dd,
+#kunena li.row:hover dd {
+	border-left-width: 1px;
+	border-left-style: solid;
+	margin: 0;
+}
+#kunena li.header dt, #kunena li.header dd {
+	border-left-width: 0;
+	margin: 0;
+	padding: 0px;
+	font-size: 1em;
+}
+#kunena li.header dt {
+	font-weight: normal;
+	min-height: 16px;
+	background-position: 0px 0px !important;
+	background-repeat: no-repeat;
+	padding-left: 30px !important;
+	margin-right: -30px;
+}
+#kunena li.header dd {
+	margin-left: 1px;
+}
+#kunena li.header dl.icon {
+	min-height: 16px;
+}
+#kunena li.header dl.profilebox {
+	min-height: 16px;
+	margin-top: 0px;
+}
+#kunena li.header dl.icon dt {
+	padding-right: 60px;
+	margin-top: 0px;
+}
+/* Forum list column styles */
+#kunena dl.icon {
+	min-height: 45px;
+	background-position: 5px 5px;		/* Position of folder icon */
+	background-repeat: no-repeat;
+}
+#kunena dl.icon dt {
+	padding-left: 45px;
+	background-repeat: no-repeat;
+	background-position: 5px 95%;
+	line-height: 1.2em;
+	position: relative;
+}
+
+#kunena dd.posts, #kunena dd.topics, #kunena dd.views {
+	width: 8%;
+	text-align: center;
+	line-height: 3.5em;
+}
+#kunena li.header dd.posts,#kunena li.header dd.topics,#kunena li.header dd.views {
+	width: 8%;
+	text-align: center;
+	line-height: 1em;
+}
+
+#kunena dd.lastpost {
+	width: 24%;
+	padding: 0px 0 0 5px;
+	line-height: 1.3em;
+}
+#kunena dd.lastpost span.tklatest-avatar {
+	padding: 3px 0 0;
+	margin: 0 10px 0 0;
+}
+#kunena li.rowbulk dd {
+	float: right;
+	padding-right: 5px;
+}
+#kunena dd.nopost {
+	line-height: 3em;
+}
+#kunena li.header dd.lastpost {
+	width: 23%;
+	padding-left: 5px;
+	line-height: 1em;
+}
+#kunena li.header dd{
+	border-left:none;
+	line-height: 1em;
+}
+#kunena dd.redirect {
+	font-size: 1.1em;
+	line-height: 2.5em;
+}
+
+#kunena dd.moderation {
+	font-size: 1.3em;
+}
+
+#kunena dd.lastpost span {
+	display: block;
+	float: left;
+	white-space: normal;
+}
+#kunena dd.lastpost span a {
+	font-weight: bold;
+}
+
+#kunena dd.lastpost div.catlast {
+	display: block;
+	margin: 0px 0 3px 0;
+}
+
+#kunena dd.lastpost span span{
+    display: inline;
+    float: none;
+    padding-left: 0;
+}
+
+#kunena dl.icon dt.profilebox {
+	width:80% !important;
+	background-image:none !important;
+	padding-left:0 !important;
+}
+
+#kunena span.threadtitle a {
+	font-weight:bold;
+	font-size:13px !important;
+}
+#kunena span.cattitle a {
+	font-weight:bold;
+	font-size:14px !important;
+}
+
+#kunena ul.forums li.favorite {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+#kunena .topic_latest_post_avatar {
+	display: block;
+	height: auto;
+	width: 47px;
+	float: left;
+}
+
+#kunena img.klist_avatar {
+	height: auto;
+	width: 32px;
+	border-width: 0px;
+	border-style: solid;
+	padding: 3px;
+	margin-right: 5px;
+	margin-left: 0px;
+}
+#kunena .ktitle,
+#kunena a.ktitle {
+	font-weight: normal;
+	display: block;
+	text-decoration: none;
+	float:left;
+}
+
+#kunena .ktitle a {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+/*                 CORNERS TOP AND BOTTOM
+--------------------------------------------------------*/
+
+#kunena span.corners-top, 
+#kunena span.corners-bottom, 
+#kunena span.corners-top span, 
+#kunena span.corners-bottom span {
+	font-size: 1px;
+	line-height: 1px;
+	display: block;
+	/*height: 5px;*/
+	background-repeat: no-repeat;
+}
+
+#kunena span.corners-top {
+	background-image: none;
+	background-position: 0 0;
+	margin: 0 -5px;
+}
+
+#kunena span.corners-top span {
+	background-image: none;
+	background-position: 100% 0;
+}
+
+#kunena span.corners-bottom {
+	background-image: none;
+	background-position: 0 100%;
+	margin: 0 -5px;
+	clear: both;
+}
+
+#kunena span.corners-bottom span {
+	background-image: none;
+	background-position: 100% 100%;
+}
+
+#kunena .headbg span.corners-bottom {
+	margin-bottom: -1px;
+}
+
+#kunena .rules span.corners-top {
+	margin: 0 -10px 5px -10px;
+}
+
+#kunena .rules span.corners-bottom {
+	margin: 5px -10px 0 -10px;
+}
+
+#kunena span.status {
+	font-size: 0.833em;
+	padding: 0 5px;
+	margin:0px 3px 0 0;
+	line-height:1.3em;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+#kunena div.tk-posts {
+	clear: both;;
+}
+#kunena div.tk-posts div.tk-posts-avatar {
+	padding: 0 10px;
+}
+#kunena div.tk-posts div.tk-posts-useravatar {
+	text-align: center;
+	width: 95%;
+	margin: 0 10px;
+}
+#kunena div.tk-posts div.tk-posts-postbody {
+	float:right;
+}
+#kunena div.tk-posts span.tk-posts-topicicon {
+	float:right !important;
+}
+#kunena div.tk-posts h3 {
+	background:none !important;
+}
+/*
+ * LATESTX
+ */
+#kunena div.tk-latestx rowfull {
+	padding: 2px 0;
+}
+#kunena div.tk-latestx dl.icon {
+	min-height: 20px;
+}
+#kunena div.tk-latestx dt {
+	padding-left:5px !important;
+	width:15% !important;
+	margin-top:2px;
+}
+#kunena div.tk-latestx dd.tk-selecttime {
+	border-left: none;
+	margin:0 !important;
+}
+#kunena div.tk-latestx dd.tk-pagination {
+	float:right !important;
+	border-left:none;
+}
+#kunena div.tk-latestx dd.tk-pagination span.tk-total {
+	display:inline;
+	float:left;
+	margin-top:2px
+}
+#kunena div.tk-latestx dd.tk-pagination span.klist-pages-all {
+	display:inline;
+	float:right;
+	margin-top:2px
+}
+#kunena div.tk-latestx li.tk-latestx {
+	padding: 2px 0;
+}
+#kunena dd.tk-lastpost {
+	width: 25% !important;
+}
+#kunena dd.tk-flat-toggle {
+	float:right !important;
+	margin-bottom:-5px !important;
+	margin-left:-15px !important;
+	position:relative;
+	right:0;
+	top:0;
+	width:1%;
+}
+#kunena span.tk-recent-info {
+	font-size: 90%;
+}
+#kunena dd.tk-recent-lastpost {
+	line-height: 160%;
+	font-size: 90%;
+}
+#kunena li.tk-nopost-info {
+	min-height:48px;
+	padding:10px;
+	text-align:center;
+}
+#kunena li.tk-nopost-info span {
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	background-color: transparent;
+	min-height:48px;
+	padding:20px 10px 20px 68px;
+	line-height:5em;
+}
+#kunena span.tk-topic-author {
+	display:block;
+	min-width:45px;
+	min-height: 40px;
+	float: left;
+	margin: 2px;
+}

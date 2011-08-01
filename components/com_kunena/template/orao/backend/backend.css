@@ -1,0 +1,212 @@
+.tk_opt{
+	border:1px solid #d1d1d1;
+	border-bottom:1px solid #e1e1e1;
+	height:43px;
+	background:url('images.png') repeat-x 0 0;
+	cursor:pointer;
+}
+
+.tk_opt:hover div{
+	background:url('images.png') no-repeat ;
+}
+.tk_opt span.tk_text{
+	display:block;
+	background:url('images.png') repeat-x 0 -43px;
+	margin:7px 0 7px 10px;
+	padding:0 0 0 14px;
+	float:left;
+	width: 200px;
+	border:1px solid #fff;
+	height:27px;
+	line-height:27px;
+	font-size:12px;
+	color:#fff;
+	float:left;
+	font-weight:bold;
+	text-transform:uppercase;
+	text-shadow: 1px 1px #000;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+.tk_opt span.tk_btn{
+	display:block;
+	background:url('images.png') repeat-x 0 -82px;
+	margin:16px 16px 0 0;
+	float:right;
+	width: 14px;
+	height:10px;
+	text-indent:-999em;
+}
+
+.tk_opt.active span.tk_btn{
+	background-position:0 -72px;
+}
+.tk_opt:hover span.tk_btn{
+	background-position:14px -82px;
+}
+.tk_opt.active:hover span.tk_btn{
+	background-position:14px -72px;
+}
+.tk_opts{
+	border-left:1px solid #d1d1d1;
+	border-right:1px solid #d1d1d1;
+}
+td.paramlist_value input.text_area {
+	width:150px;
+	background: url(gradient-2.png) repeat-x top;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	padding:4px;
+	border:1px solid #ddd;
+	color:#555555;
+	cursor:default;
+	font-size:14px;
+	line-height:24px;
+	text-shadow:1px 1px #FFFFFF;
+}
+td.paramlist_value select.inputbox {
+	/*width:70px;*/
+	background: url(gradient.png) repeat-x top;
+	-moz-border-radius:3px;
+	padding:3px;
+	border:1px solid #ddd;
+	color:#555555;
+	cursor:default;
+	font-size:14px;
+	line-height:24px;
+	text-shadow:1px 1px #FFFFFF;
+}
+td.key {
+	padding:5px !important;
+}
+div.tk_desc {
+	padding:5px;
+	background:#f8f8f8;
+}
+/*
+.paramlist_value .inputbox,
+.paramlist_value input.text_area{
+	width:260px;
+	height:24px;
+	border:1px solid #d1d1d1;
+	font-size:14px;
+	padding:5px 0 0 5px;	
+}
+.paramlist_value .inputbox{
+	height:30px;
+	padding:5px;
+}
+.paramlist_key label{
+	font-size:13px;
+}
+*/
+#tk_social_icons .paramlist_value .text_area{
+	margin:-4px 0 0 5px;
+	padding-top:6px;
+}
+#tk_social_icons .paramlist_value .inputbox{
+	width:100px;
+	height:32px;
+}
+#tk_update_div{
+	border-bottom:1px solid #d1d1d1;
+	color:#aaa;
+	padding:10px;
+	text-align:center;
+	height:150px;
+	overflow:auto;
+}
+#tk_loader{
+	background:url('loader.gif') no-repeat 0 0;
+	display:block;
+	width:16px;
+	height:16px;
+	margin:10px auto 10px auto;
+}
+.tk_update{
+	clear:both;
+}
+#tk_update_div p{
+	font-size:11px;
+	text-align:left;
+	color:#999;
+}
+.tk_update{
+	line-height:25px;
+	border-bottom:1px dotted #d1d1d1;
+}
+span.tk_update_version{
+	color:#666;
+	float:left;
+	padding:0 20px;
+	border-right:1px dotted #d1d1d1;
+	font-size:12px;
+}
+span.tk_update_data{
+	float:left;
+	color:#666;
+	padding:0 20px;
+	font-size:12px;
+	border-right:1px dotted #d1d1d1;
+}
+span.tk_update_link{
+	float:left;
+	font-size:14px;
+	padding-left:20px;
+}
+
+.switcher-on,
+.switcher-off{
+	width:94px;
+	height:27px;
+	background:transparent url('on-off.png') no-repeat 0 0;
+	cursor:pointer;
+}
+
+.switcher-off{
+	background-position:-94px 0;
+}
+.paramlist_key {
+	padding:5px !important;
+	width:180px !important;
+	font-size:13px;
+	background: #fafafa !important;
+	border-right: 1px solid #eee !important;
+	border-bottom: 1px solid #eee !important;
+}
+.tk_divider{
+	border:0px solid #d1d1d1;
+	border-bottom:0px solid #e1e1e1;
+	height:5px;
+	background:none !important;
+	cursor:none;
+}
+/* Tooltips */
+.tool-tip {
+	color:#eee;
+	float: left;
+	background: #222 !important;
+	border: 1px solid #333 !important;
+	padding: 5px 10px !important;
+	max-width: 200px !important;
+	/*-moz-box-shadow: 0px 0px 2px #000;*/
+	-moz-border-radius: 5px 5px 5px 5px;
+}
+
+.tool-title {
+   padding: 0;
+   margin: 0;
+   font-size: 100%;
+   font-weight: bold;
+   margin-top: -15px;
+   padding: 15px 10px 5px 0 !important;
+   /*background: url(../images/selector-arrow.png) no-repeat;*/
+   background: none !important;
+}
+
+.tool-text {
+   font-size: 100%;
+   margin: 0;
+}

@@ -1,0 +1,671 @@
+@charset "utf-8";
+
+/*  Kunena 2.0 StyleSheet
+    --------------------------------------------------------------------
+	 Style name:	Orao
+	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
+    --------------------------------------------------------------------
+*/
+
+#kunena a.kbuttongoto span.top {
+	background-image: url("../images/icons/top_arrow.png");
+}
+
+#kunena a.kbuttongoto span.bottom {
+	background-image: url("../images/icons/bottom_arrow.png");
+}
+
+/*
+BBCODE BUTTONS
+-------------------------------------------------------------------- */
+
+#kbbcode-toolbar li a,
+#kattachments a {
+	background:url("../media/iconsets/editor/default/default.png") no-repeat;
+}
+
+/*					ICONS
+---------------------------------------------------------*/
+#kunena li.header dl.icon {
+	background-image: url('../images/icons/other.png');
+	background-position: 5px center !important;
+	background-repeat: no-repeat;
+}
+#kunena li.header dl.section-ads {
+	background-image: url('../images/icons/coffee.png');
+}
+
+#kunena li.header dl.userlist-top,
+#kunena li.header dl.userlist {
+	background-image: url('../images/icons/users_16.png');
+}
+#kunena li.header dl.quickreply {
+	background-image: url('../images/icons/quickreply_16.png');
+}
+#kunena li.header dl.whoisonline {
+	background-image: url('../images/icons/users_16.png');
+}
+#kunena li.header dl.tk-edituser {
+	background-image: url('../images/icons/edituser.png');
+}
+#kunena li.header dl.annbox {
+	background-image: url('../images/icons/announcement_16.png');
+}
+#kunena li.header dl.login {
+	background-image: url('../images/icons/login.png');
+}
+#kunena li.header dl.register {
+	background-image: url('../images/icons/register.png');
+}
+#kunena li.header dl.info {
+	background-image: url('../images/icons/information.png');
+}
+#kunena li.header dl.advsearch {
+	background-image: url('../images/icons/advsearch.png');
+}
+#kunena li.header dl.rules {
+	background-image: url('../images/icons/rules.png');
+}
+#kunena li.header dl.help {
+	background-image: url('../images/icons/help.png');
+}
+
+#kunena li.header dl.pathway {
+	background-image: url('../images/icons/pathway_16.png');
+}
+
+#kunena li.header dl.form {
+	background-image: url('../images/icons/form_16.png');
+}
+
+#kunena li.header dl.history {
+	background-image: url('../images/icons/history_16.png');
+}
+
+#kunena li.header dl.frontstats {
+	background-image: url('../images/icons/stats_16.png');
+}
+
+#kunena li.header dl.moderate {
+	background-image: url('../images/icons/moderate_16.png');
+}
+
+#kunena li.header dl.flat {
+	background-image: url('../images/icons/flat_recent_16.png');
+}
+
+#kunena li.header dl.flatmyrecent {
+	background-image: url('../images/icons/flat_myrecent_16.png');
+}
+
+#kunena li.header dl.forumheader {
+	background-image: url('../images/icons/information.png');
+}
+#kunena li.header dl.pollvote,
+#kunena li.header dl.pollbox {
+	background-image: url('../images/icons/poll_16.png');
+}
+
+#kunena li.rowfull dl.quickreply {
+	background-image: url('../images/icons/quickreply_32.png');
+}
+#kunena li.rowfull dl.caticon-annboxicon {
+	background-image: url('../images/icons/announcement_32.png');
+}
+#kunena li.rowfull dl.caticon-pollicon {
+	background-image: url('../images/icons/poll_32.png');
+}
+#kunena li.rowfull dl.whoisonline {
+	background-image: url('../images/icons/users_32.png');
+}
+#kunena li.rowfull dl.rules {
+	background-image: url('../images/icons/rules_32.png');
+}
+#kunena li.rowfull dl.caticon-stats {
+	background-image: url('../images/icons/stats_32.png');
+}
+#kunena li.row dl.topicicon-nonew {
+	background-image: url('../images/icons/file_nonew.png');
+}
+
+#kunena li.row dl.topicicon-new {
+	background-image: url('../images/icons/file.png');
+}
+
+#kunena li.row dl.caticon {
+	background-image: url('../images/icons/caticon_nonew.png');
+}
+
+#kunena li.row dl.caticon-new {
+	background-image: url('../images/icons/caticon_new.png');
+}
+
+#kunena li.row dl.caticon-notlogin {
+	background-image: url('../images/icons/caticon_notlogin.png');
+}
+#kunena li.rowfull dl.caticon-register {
+	background-image: url('../images/icons/users_add.png');
+}
+
+/*
+ PROFILE
+-------------------------------------------------------------------- */
+
+div#kprofile-stats ul li span.online-status-yes {
+	background-image: url("../images/icons/online.gif"); 
+}
+
+div#kprofile-stats ul li span.online-status-no {
+	background-image: url("../images/icons/offline.gif"); 
+}
+
+div#kprofile-stats ul li span.rank-admin {
+	background-image: url("../images/ranks/rankadmin.gif");
+}
+
+#kunena span.location { 
+	background-image: url("../images/icons/location.png"); 
+}
+
+#kunena span.gender-male {  
+	background-image: url("../images/icons/male.png");
+}
+
+#kunena span.gender-female { 
+	background-image: url("../images/icons/female.png"); 
+}
+
+#kunena span.gender-unknown { 
+	background-image: url("../images/icons/gender-unknown.png"); 
+}
+
+#kunena span.bday-remind { 
+	background-image: url("../images/icons/remind.png"); 
+}
+
+#kunena span.email { 
+	background-image: url("../images/icons/email.png");
+}
+
+#kunena span.website {
+	background-image: url("../images/icons/website.png");
+}
+
+
+/* Post body lights
+----------------------------------------*/
+#kunena div.post div.inner {
+	/*background-image:url("../images/icons/post-bg.png");*/
+}
+#kunena .imagereport {
+	background-image: url("../images/icons/icon_post_report.png");
+}
+#kunena .imagereport:hover {
+	background-image: url("../images/icons/icon_post_report.png");
+}
+#kunena .imagereportuser {
+	background-image: url("../images/icons/icon_user_warn.gif");
+}
+#kunena .imagereportuser:hover {
+	background-image: url("../images/icons/icon_user_warn.gif");
+}
+#kunena .kkarma-minus {
+	background-image: url("../images/icons/icon_rate_bad.gif");
+}
+#kunena .kkarma-minus:hover {
+	background-image: url("../images/icons/icon_rate_bad.gif");
+}
+#kunena .kkarma-plus {
+	background-image: url("../images/icons/icon_rate_good.gif");
+}
+#kunena .kkarma-plus:hover {
+	background-image: url("../images/icons/icon_rate_good.gif");
+}
+
+#kunena div.ranking-left-yes {
+	background-image: url('../images/icons/coppacampioni_50.png');
+}
+
+#kunena div.ranking-left-no {
+	background-image: url('../images/icons/Coppacoppe_50.png');
+}
+
+#kunena div.uslstatus-yes {
+	background-image: url('../images/icons/online-right.png');
+}
+#kunena div.uslstatus-no {
+	background-image: url('../images/icons/offline-left.png');
+}
+
+#kunena div.status-left-yes {
+	background-image: url('../images/icons/online-right.png');
+}
+
+#kunena div.status-left-no {
+	background-image: url('../images/icons/offline-left.png');
+}
+
+#kunena div.status-right-yes {
+	background-image: url('../images/icons/online-left.png');
+}
+
+#kunena div.status-right-no {
+	background-image: url('../images/icons/offline-right.png');
+}
+
+#kunena span.msgtitle {
+}
+
+#kunena span.msgtitle-new {
+	background-image: url("../images/icons/new.gif");
+}
+
+#kunena div.attachttitle,
+#kunena div.kmsgattach h4 {
+	background-image: url("../images/icons/attachment_picc.png");
+}
+
+
+#kunena li.kpost-online-status-yes {
+	background-image: url("../images/icons/online.gif"); 
+}
+#kunena li.kpost-online-status-no {
+	background-image: url("../images/icons/offline.gif");
+}
+
+#kunena li.kpost-online-status-top-yes {
+	background-image: url("../images/icons/online.gif");
+}
+#kunena li.kpost-online-status-top-no {		
+	background-image: url("../images/icons/offline.gif");
+}
+
+#kunena span.deleteattach {
+	background-image: url("../images/icons/delete.png");
+}
+
+
+/* SLIDERS
+----------------------------------------------------------------------------------------------- */
+
+span.close, a.close {
+	background-image: url("../images/sprite-1.png");
+	background-position: 67% center;
+}
+span.open, a.open {
+	background-image: url("../images/sprite-1.png");
+	background-position: 33% center;
+}
+
+/* PATHWAY 
+----------------------------------------------------------------------------------------------- */
+
+#kunena .path-element-first {
+	background-image: url("../images/pathway_start.png");
+}
+
+#kunena .kforum-pathway .path-element,
+#kunena .kforum-pathway-bottom .path-element	{
+	background-image: url("../images/icons/arrow.png");
+}
+
+#kunena .kforum-pathway .path-element-last,
+#kunena .kforum-pathway-bottom .path-element-last {
+	background-image: url("../images/pathway_finallink.png");
+}
+
+/*					PAGINATION
+-------------------------------------------------------*/
+
+#kunena strong.pagination li.page {
+	background-image: url("../images/icon_pages.gif");
+}
+
+#kunena div.tk-msgcontent div.kmsgtext-quote {
+	background-image: url("../images/quote.png");
+}
+
+#kunena table#kforumcredits {
+	background-image: url("../images/bg_list.png");
+}
+
+#kunena div.kmsgtext-code-header {
+	background-image: url("../images/icons/code.png");
+}
+
+/*-------------------------------------------------*/
+
+#kunena span.tk-editlink span {
+    background-image: url("../images/buttons/buttons.png");
+}
+
+/*		ICONS		
+-------------------------------------------------*/
+
+#kunena .kforumlocked {
+	background-image: url("../images/icons/lock_24.png");
+}
+
+#kunena .kforummoderated {
+	background-image: url("../images/icons/tmoder_24.png");
+}
+
+#kunena .favoriteicon {
+	background-image: url("../images/icons/favoritestar.png");
+}
+
+
+#kunena .catunreadeicon {
+	background-image: url("../images/icons/new.png");
+}
+
+#kunena .hoticon {
+    background-image: url("../images/icons/hot.png");
+}
+
+#kunena .attachicons {
+    background-image: url("../images/icons/attachment_picc.png");
+}
+
+
+
+#kunena .krss-icon {
+    background: url("../images/icon-rss.png") no-repeat scroll 0 0 transparent;
+}
+#kunena .kmarkread-icon {
+    background: url("../images/icon-markread.png") no-repeat scroll 0 0 transparent;
+}
+#kunena .ksubs-icon {
+    background: url("../images/icon-subs.png") no-repeat scroll 0 0 transparent;
+}
+#kunena span.kcategory-smicon {
+	background: url("../images/icons/childicon_nonew.png") no-repeat;
+}
+#kunena span.kcategory-smicon-new {
+	background: url("../images/icons/childicon_new.png") no-repeat;
+}
+#kunena span.krss {
+	background-image: url("../images/icons/rss.png");
+}
+
+#kunena span.kforumbottom {
+	background-image: url("../images/icons/bottom_arrow.png");
+}
+#kunena span.kforumtop {
+	background-image: url("../images/icons/top_arrow.png");
+}
+
+
+div#mbCenter a.tk-mb-inboxlink {
+	background-image: url("../images/icons/book_next.png");
+}
+#kunena input#tk-preview-button.kbutton {
+	background-image: url("../images/icons/preview.png");
+}
+div#mbCenter input#tk-submit-button.kbutton,
+#kunena input#tk-submit-button.kbutton {
+	background-image: url("../images/icons/submit.png");
+}
+#kunena input#tk-cancel-button.kbutton {
+	background-image: url("../images/icons/closelabel.png");
+}
+#kunena input.tk-submit-button,
+#kunena button.tk-submit-button {
+	background-image: url("../images/icons/submit.png");
+}
+#kunena input.tk-save-button,
+#kunena button.tk-save-button {
+	background-image: url("../images/icons/save-16.png");
+}
+#kunena input.tk-cancel-button,
+#kunena button.tk-cancel-button {
+	background-image: url("../images/icons/closelabel.png");
+}
+#kunena input#tk-reset-button.kbutton {
+	background-image: url("../images/icons/pill.png");
+}
+#kunena span.tk-register-agree a {
+	background-image: url("../images/icons/register-link.png");
+}
+#kunena span.tk-register-cancel a {
+	background-image: url("../images/icons/user_remove.png");
+}
+#kunena span.tk-latestpost {
+	background-image: url("../images/icons/icon_topic_latest.gif");
+}
+#kunena a.grid_true,
+#kunena a.grid_unpublish {
+	background-image: url("../images/publish.png");
+}
+#kunena a.grid_false,
+#kunena a.grid_publish {
+	background-image: url("../images/unpublish.png");
+}
+#kunena a.move_up {
+	background-image: url("../images/arrow-up.png");
+}
+#kunena a.move_down {
+	background-image: url("../images/arrow-down.png");
+}
+#kunena .kgrid-lock a.grid_true {
+	background-image: url("../images/icon-locked.png");
+}
+#kunena .ktree { 
+	background-image: url("../images/treenodes.png");
+}
+
+#kunena .shadetabs li a { background-image: url("../images/profile-tabs.png"); }
+
+#kunena .shadetabs li.tk-profiletab-info a 				{ background-position: 50% 0; }
+#kunena .shadetabs li.tk-profiletab-banh a 				{ background-position: 50% -77px; }
+#kunena .shadetabs li.tk-profiletab-banm a 				{ background-position: 50% -159px; }
+#kunena .shadetabs li.tk-profiletab-edit-avatar a 		{ background-position: 50% -241px; }
+#kunena .shadetabs li.tk-profiletab-banu a				{ background-position: 50% -323px; }
+#kunena .shadetabs li.tk-profiletab-edit-profile a 		{ background-position: 50% -405px; }
+#kunena .shadetabs li.tk-profiletab-edit-settings a 	{ background-position: 50% -487px; }
+#kunena .shadetabs li.tk-profiletab-edit-user a 		{ background-position: 50% -569px; }
+#kunena .shadetabs li.tk-profiletab-fav a				{ background-position: 50% -651px; }
+#kunena .shadetabs li.tk-profiletab-banu a				{ background-position: 50% -733px; }
+#kunena .shadetabs li.tk-profiletab-posts a				{ background-position: 50% -815px; }
+#kunena .shadetabs li.tk-profiletab-about a				{ background-position: 50% -897px; }
+#kunena .shadetabs li.tk-profiletab-sub a 				{ background-position: 50% -984px; }
+#kunena .shadetabs li.tk-profiletab-thankyou a 			{ background-position: 50% -1061px; }
+#kunena .shadetabs li.tk-profiletab-review a 			{ background-position: 50% -1143px; }
+
+
+#kunena .profile-info {
+	background-image:url(../images/members.png);
+}
+#kunena ul.topiclist li.row dl.topicicon {
+	background-image: url("../images/icons/file_nonew.png");
+}
+#kunena li.tk-nopost-info span {
+	background-image:url("../images/tk-info.png");
+}
+#kunena dd.tk-usersactivity-total {
+	background-image: url('../images/icons/chart.png');
+}
+#kunena dd.tk-users-total {
+	background-image: url('../images/icons/usersstats.png');
+}
+#kunena a.tk-loginlink {
+	background-image: url(../images/icons/login-link.png) !important;
+}
+#kunena a.tk-logoutlink {
+	background-image: url(../images/icons/user_remove.png);
+}
+#kunena span.tk-registerlink a {
+	background-image: url(../images/icons/register-link.png);
+}
+#kunena span.tk-searchlink a {
+	background-image: url(../images/icons/search-link.png);
+}
+#kunena a.kbuttonmod span span,
+#kunena a.kbuttoncomm span span,
+#kunena a.kbuttonuser span span,
+#kunena a.kbuttongen span span { background-image:none !important;}
+
+
+/* Social Icons */
+#kunena .kdetails-links li a span {
+	/*background-image: url("../images/icons-profile.png");*/
+}
+
+/*		OWN RANKS		*/
+
+#kunena dd.view-ranktitle span.rank-left {
+	height:18px;
+	margin:0;
+	padding:0 5px 4px;
+}
+#kunena dd.view-ranktitle span.fresh{
+	background:  url("../images/ranks/rank-fresh.png") no-repeat left top;
+}
+#kunena dd.view-ranktitle span.junior{
+	background:  url("../images/ranks/rank-junior.png") no-repeat left top;
+}
+#kunena dd.view-ranktitle span.senior{
+	background:  url("../images/ranks/rank-senior.png") no-repeat left top;
+}
+#kunena dd.view-ranktitle span.expert{
+	background:  url("../images/ranks/rank-expert.png") no-repeat left top;
+}
+#kunena dd.view-ranktitle span.gold{
+	background:  url("../images/ranks/rank-gold.png") no-repeat left top;
+}
+#kunena dd.view-ranktitle span.platinum{
+	background:  url("../images/ranks/rank-platinum.png") no-repeat left top;
+}
+#kunena dd.view-ranktitle span.admin{
+	background:  url("../images/ranks/rank-admin.png") no-repeat left top;
+}
+#kunena dd.view-ranktitle span.rank-left span {
+	background:  url("../images/ranks/rnk-right.png") no-repeat right top;
+	font-weight:bold;
+	height:18px;
+	margin:0 0 0 15px;
+	padding:2px 5px 4px;
+	text-transform: uppercase;
+	font-size: x-small;
+}
+
+#kunena div.msgcontent-deleted {
+	background-image: url('../images/icons/deleted.png');
+}
+#kunena div.msgcontent-unaproved {
+	background-image: url('../images/icons/unaproved.png');
+}
+
+#kunena a.kbuttoncomm span,
+#kunena a.kbuttonuser span,
+#kunena a.kbuttonmod span,
+#kunena a.kbuttongen span {
+	background-image: url("../images/buttons/buttons.png");
+}
+#kunena .ktree { 
+	background-image: url("../images/treenodes.png");
+}
+
+#lbPrevLink:hover {
+	background: transparent url(../images/prevlabel.png) no-repeat 0 15%;
+}
+#lbNextLink:hover {
+	background: transparent url(../images/nextlabel.png) no-repeat 100% 15%;
+}
+#lbCloseLink {
+	background: transparent url(../images/closelabel.png) no-repeat center;
+}
+.lbLoading {
+	background-image: url(../images/loading.gif);
+}
+
+/*
+ * FROM global.css da controllare
+ */
+
+#kunena li.krsslink {
+	background: url("../images/icon-rss.png") 0 4px no-repeat;
+}
+#kunena li.kpm {
+	background: url("../images/icon-pm.png") 0 4px  no-repeat;
+}
+#kunena li.keditprofile {
+	background: url("../images/icon-edit-profile.png") 0 4px  no-repeat;
+}
+#kunena li.kmarkall {
+	background: url("../images/icon-pm.png") 0 4px  no-repeat;
+}
+#kunena .krss-icon {
+	/*background: url("../images/rss.png") no-repeat;*/
+}
+#kunena .klocked-icon {
+	background: url("../images/icon-locked.png") no-repeat;
+}
+#kunena .kattach-icon {
+	background: url("../images/icon-attachment.png") no-repeat;
+}
+#kunena .kfeed-icon {
+	background: url("../images/icon-rss.png") 0 2px no-repeat;
+}
+#kunena .ksubscribe-icon {
+	background: url("../images/icon-favorite.png") 0 0 no-repeat;
+}
+#kunena span.knew {
+	background: url("../images/icon-category-new.png") no-repeat;
+}
+#kunena span.knonew {
+	background: url("../images/icon-category.png") no-repeat;
+}
+#kunena span.ktopic-attach {
+	background: url("../images/attachment.png") no-repeat;
+}
+#kunena span.ktopic-sticky {
+	background: url("../images/sticky.png") no-repeat;
+}
+#kunena span.kposticon-default,
+#kunena span.ktopicicon-default {
+	background: url("../images/topic-default.png") no-repeat;
+}
+#kunena span.ktopicicon-question {
+	background: url("../images/topic-question.png") no-repeat;
+}
+#kunena li.kcategory-smicon {
+	background: url("../images/icon-category-sm.png") no-repeat;
+}
+#kunena li.kcategory-smicon-new {
+	background: url("../images/icon-category-sm-new.png") no-repeat;
+}
+#kunena .kpost-body-attach ul li {
+	background: url("../images/attachment.png") left no-repeat;
+}
+#kunena span.kwho-smicon {
+	background: url("../images/icon-whosonline.png") no-repeat;
+}
+#kunena .kstats-smicon {
+	background: url("../images/icon-stats.png") no-repeat;
+}
+#kunena #kprofile-stats ul li span.konline-status-yes {
+	background: url("../images/icons/online.gif") no-repeat;
+}
+#kunena #kprofile-stats ul li span.konline-status-no {
+	background: url("../images/icons/offline.gif") no-repeat;
+}
+#kunena #kprofile-stats ul li span.krank-admin {
+	background: url("../images/ranks/rankadmin.gif") no-repeat;
+}
+#kunena .kprofile-rightcol2 ul li span.email {
+	background: url("../images/icons/email.png") no-repeat;
+}
+#kunena .tool-title {
+	background: url(../images/selector-arrow.png) no-repeat;
+}
+
+/*
+ * MediaboxAdvanced
+ */
+#mbOverlay.mbOverlayFF {
+	background: transparent url(/images/80.png) repeat;
+}
+#mbCenter.mbLoading {
+	background: #fff url(../images/loading.gif) no-repeat center;
+}

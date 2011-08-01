@@ -1,0 +1,155 @@
+@charset "utf-8";
+
+/*  Kunena 2.0 StyleSheet
+    --------------------------------------------------------------------
+	 Style name:	Orao
+	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
+    --------------------------------------------------------------------
+*/
+
+#kunena div#tk-register.register input.inputbox {
+	width:200px !important;
+	padding:2px !important;
+	border:1px solid #ccc;
+}
+#kunena div.tk-login ul.tk-login,
+#kunena div.tk-register ul.tk-register {
+	padding-left: 0px !important;
+}
+#kunena div.tk-login ul.tk-login dl {
+	min-height:25px;
+}
+#kunena div.tk-login ul.tk-login dt {
+	width: 20%;
+	padding-left: 5px !important;
+}
+#kunena div.tk-login ul.tk-login dd {
+	padding-left: 8px !important;
+}
+
+#kunena div.tk-register dt {
+	width: 95%;
+}
+#kunena div.tk-register span.tk-ruleshelp-link {
+	width:100%;
+	text-align:center;
+	clear:left; display:block;
+	overflow:hidden;
+}
+
+#kunena div.tk-logoutbox ul.profilebox {
+	padding-top:5px !important;
+	margin: 5px 0 0 0;
+}
+#kunena div.tk-logoutbox ul.profilebox li.rowfull {
+	padding:5px 5px 0;
+}
+#kunena div.tk-logoutbox ul.profilebox li.rowfull dt {
+	padding-left:10px;
+	margin:0; width: 7%;
+}
+#kunena div.tk-logoutbox dd.cnt ul.profilebox-logout {
+	float:left;
+	margin:0px;
+}
+#kunena div.tk-logoutbox dd.cnt ul.profilebox-links {
+	float:right;
+	text-align:left;
+	display: inline;
+	margin:0px;
+}
+#kunena div.tk-logoutbox dd.cnt ul.profilebox-logout li {
+	margin: 2px 0;
+}
+
+#kunena div.tk-loginbox ul.forums {
+	padding-top:5px !important;
+	margin: 5px 0 0 0;
+}
+#kunena div.tk-loginbox ul.forums li.rowfull {
+	padding:5px 5px 0;
+}
+#kunena div.tk-loginbox ul.forums li.rowfull dt {
+	width: 22% !important;
+}
+#kunena div.tk-loginbox ul.forums li.rowfull dd.tk-welcome {
+	padding:0 5px 0 0;
+}
+
+#kunena div.tk-loginbox ul.forums li.rowfull dd.tk-loginform {
+	padding-left:5px !important;
+}
+#kunena div.tk-loginbox ul.forums li.rowfull dd.tk-loginform ul {
+	float:left;
+	margin:0px;
+	padding-left:5px;
+}
+#kunena div.tk-loginbox ul.forums li.rowfull dd.tk-module {
+	padding: 5px;
+	display:inline;
+	float:right
+}
+
+
+/*		LOGIN		*/
+
+#kunena a.tk-loginlink {
+	background-repeat: no-repeat;
+	background-position: 5px center;
+    display: block;
+    float: right;
+    line-height: 1.3em;
+    margin: -5px 10px 0 0 !important;
+    min-height: 19px;
+    position: relative;
+    right: 0px;
+    text-indent: 20px;
+    top: 10px;
+    padding:3px 10px 5px 5px;
+	position:relative !important;
+}
+#kunena a.tk-logoutlink {
+	background-repeat: no-repeat;
+	background-position: left center;
+    display: block;
+    float: right;
+    line-height: 1.3em;
+    margin: -2px 10px 0 0;
+    min-height: 16px;
+    position: relative;
+    right: 0px;
+    text-indent: 20px;
+    top: 10px;
+}
+#kunena span.tk-registerlink a {
+	background-repeat: no-repeat;
+	background-position: left center;
+    display: block;
+    float: right;
+    line-height: 1.3em;
+    margin: -2px 15px 0 0;
+    min-height: 16px;
+    position: relative;
+    right: 0px;
+    text-indent: 20px;
+    top: 10px;
+}
+#kunena span.tk-searchlink a {
+	background-repeat: no-repeat;
+	background-position: left center;
+    display: block;
+    float: right;
+    line-height: 1.3em;
+    margin: -2px 0 0 0;
+    min-height: 16px;
+    position: relative;
+    right: 0px;
+    text-indent: 20px;
+    top: 10px;
+}
+#kunena div.tk-reg_ins input#email {
+	margin:0 10px 0 0;
+	background-image:none;
+	height:15px;
+	width:200px;
+}

@@ -5,7 +5,6 @@
 	<tag>de-DE</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>Sven Schultschik (LDA) / Richard Binder (rich)</author>
         <lector>Jan Erik Zassenhaus (Team J!German)</lector>
 	<authorEmail>kunena@kunena.org</authorEmail>

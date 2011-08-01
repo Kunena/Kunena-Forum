@@ -5,7 +5,6 @@
 	<tag>en-GB</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>

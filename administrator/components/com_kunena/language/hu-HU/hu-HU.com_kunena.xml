@@ -5,7 +5,6 @@
 	<tag>hu-HU</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>pedrohsi</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>

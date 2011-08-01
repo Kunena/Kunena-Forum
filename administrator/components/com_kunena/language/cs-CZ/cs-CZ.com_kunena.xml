@@ -3,9 +3,8 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Czech</name>
 	<tag>cs-CZ</tag>
-	<creationDate>2011-01-31</creationDate>
-	<version>1.6.3</version>
-	<build>4344</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
 	<author>David Mara - JoomlaExpert.cz</author>
 	<authorEmail>team@sixsix.eu</authorEmail>
 	<authorUrl>http://www.JoomlaExpert.cz</authorUrl>

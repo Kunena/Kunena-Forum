@@ -6,7 +6,6 @@
 	<tag>th-TH</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>drlovecat</author>
 	<authorEmail>admin@kunenathai.com</authorEmail>
 	<authorUrl>www.kunenathai.com</authorUrl>

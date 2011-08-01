@@ -17,7 +17,6 @@ class KunenaForum {
 	protected static $version = false;
 	protected static $version_date = false;
 	protected static $version_name = false;
-	protected static $version_build = false;
 
 	const PUBLISHED = 0;
 	const UNAPPROVED = 1;
@@ -33,13 +32,13 @@ class KunenaForum {
 		return false;
 	}
 
-	public static function isCompatible($version, $build=false) {
-		// If requested version is smaller than 2.0.0-DEV build 4316, it's not compatible
-		if (version_compare($version, '2.0.0-DEV', '<') || ($build && $build < 4316)) {
+	public static function isCompatible($version) {
+		// If requested version is smaller than 2.0.0-DEV, it's not compatible
+		if (version_compare($version, '2.0.0-DEV', '<')) {
 			return false;
 		}
 		// Check if future version is needed (remove SVN from the check)
-		if (version_compare($version, preg_replace('/-SVN/i', '', self::version()), '>') || $build > self::versionBuild()) {
+		if (version_compare($version, preg_replace('/-SVN/i', '', self::version()), '>')) {
 			return false;
 		}
 		return true;
@@ -66,19 +65,11 @@ class KunenaForum {
 		return self::$version_name;
 	}
 
-	public static function versionBuild() {
-		if (self::$version_build === false) {
-			self::buildVersion();
-		}
-		return self::$version_build;
-	}
-
 	public static function getVersionInfo() {
 		$version = new stdClass();
 		$version->version = self::version();
 		$version->date = self::versionDate();
 		$version->name = self::versionName();
-		$version->build = self::versionBuild();
 		return $version;
 	}
 
@@ -95,13 +86,11 @@ class KunenaForum {
 	protected static function buildVersion() {
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
 			$changelog = file_get_contents ( KPATH_SITE . '/CHANGELOG.php', NULL, NULL, 0, 1000 );
-			preg_match ( '|\$Id\: CHANGELOG.php (\d+) (\S+) (\S+) (\S+) \$|', $changelog, $svn );
 			preg_match ( '|~~\s+Kunena\s(\d+\.\d+.\d+\S*)|', $changelog, $version );
 		}
 		self::$version = ('@kunenaversion@' == '@' . 'kunenaversion' . '@') ? strtoupper ( $version [1] . '-SVN' ) : strtoupper ( '@kunenaversion@' );
-		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? $svn [2] : '@kunenaversiondate@';
+		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toMySQL() : '@kunenaversiondate@';
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'SVN Revision' : '@kunenaversionname@';
-		self::$version_build = ('@kunenaversionbuild@' == '@' . 'kunenaversionbuild' . '@') ? $svn [1] : '@kunenaversionbuild@';
 	}
 
 	public function display($viewName, $layout='default', $template=null, $params = array()) {

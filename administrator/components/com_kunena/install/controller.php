@@ -147,16 +147,6 @@ class KunenaControllerInstall extends JController {
 		$this->model->setAction ( 'downgrade' );
 		$this->run();
 	}
-	function up_build() {
-		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
-		$this->model->setAction ( 'up_build' );
-		$this->run();
-	}
-	function down_build() {
-		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
-		$this->model->setAction ( 'down_build' );
-		$this->run();
-	}
 	function reinstall() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$this->model->setAction ( 'reinstall' );

@@ -5,7 +5,6 @@
 	<tag>nl-NL</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>Jelle Kok</author>
 	<authorEmail>info@newf1.nl</authorEmail>
 	<authorUrl>http://www.newf1.nl</authorUrl>

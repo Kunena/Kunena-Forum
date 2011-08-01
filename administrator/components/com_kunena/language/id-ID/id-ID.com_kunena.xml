@@ -5,7 +5,6 @@
 	<tag>id-ID</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>Daniel</author>
 	<authorEmail>daniells@ymail.com</authorEmail>
 	<authorUrl>unknown</authorUrl>

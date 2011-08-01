@@ -6,7 +6,6 @@
 	<tag>da-DK</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>Lars Westermann</author>
 	<authoremail>Lars.Westermann@privat.dk</authoremail>
 	<authorUrl></authorUrl>

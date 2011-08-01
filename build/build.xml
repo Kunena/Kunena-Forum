@@ -76,15 +76,11 @@
 		</taskdef>
 
 		<xmlproperty file="${project_dir}/${kunena.admin}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
-		<buildnumber />
 		<tstamp>
 			<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
 		</tstamp>
 		<condition property="version.date" value="${str.datefmt}" else="">
 			<istrue value="${cfg.adddate}" />
-		</condition>
-		<condition property="str.build" value="_${cfg.buildprefix}${build.number}" else="">
-			<istrue value="${cfg.addbuild}" />
 		</condition>
 		<condition property="str.version" value="_${cfg.versionprefix}${xml.version}" else="">
 			<istrue value="${cfg.addversion}" />
@@ -92,7 +88,7 @@
 		<condition property="str.date" value="_${str.datefmt}" else="">
 			<istrue value="${cfg.adddate}" />
 		</condition>
-		<property name="str.destfile" value="${package_dir}/${cfg.prefix}${cfg.name}${str.version}${str.build}${str.date}" />
+		<property name="str.destfile" value="${package_dir}/${cfg.prefix}${cfg.name}${str.version}${str.date}" />
 
 		<condition property="do.tar">
 			<istrue value="${cfg.tar}" />
@@ -124,7 +120,6 @@
 		<!-- Move files that contain version tags again and perform token replacement -->
 		<filter token="kunenaversion" value="${xml.version}" />
 		<filter token="kunenaversiondate" value="${version.date}" />
-		<filter token="kunenaversionbuild" value="${build.number}" />
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
 		<!-- Add version information to all xml files and forum.php -->
@@ -282,7 +277,6 @@
 		<echo message="XML Copyright:   ${xml.copyright}" />
 		<echo message="XML License:     ${xml.license}" />
 		<echo message="XML Description: ${xml.description}" />
-		<echo message="Build:           ${build.number}" />
 		<echo message="Date:            ${TODAY}" />
 	</target>
 

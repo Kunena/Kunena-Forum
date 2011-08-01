@@ -87,14 +87,13 @@ class KunenaForum {
 		return false;
 	}
 
-	public static function isCompatible($version, $build=false) {
-		if (version_compare($version, '2.0.0-DEV-SVN', '<')) {
+	public static function isCompatible($version) {
+		// If requested version is smaller than 2.0.0-DEV, it's not compatible
+		if (version_compare($version, '2.0.0-DEV', '<')) {
 			return false;
 		}
-		if (version_compare($version, self::version(), '>')) {
-			return false;
-		}
-		if ($build && $build < self::versionBuild()) {
+		// Check if future version is needed (remove SVN from the check)
+		if (version_compare($version, preg_replace('/-SVN/i', '', self::version()), '>')) {
 			return false;
 		}
 		return true;
@@ -112,16 +111,11 @@ class KunenaForum {
 		return '@kunenaversionname@';
 	}
 
-	public static function versionBuild() {
-		return '@kunenaversionbuild@';
-	}
-
 	public static function getVersionInfo() {
 		$version = new stdClass();
 		$version->version = self::version();
 		$version->date = self::versionDate();
 		$version->name = self::versionName();
-		$version->build = self::versionBuild();
 		return $version;
 	}
 

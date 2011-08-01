@@ -5,7 +5,6 @@
 	<tag>it-IT</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>detlef, ohifra, onishima</author>
 	<authorEmail>francescodegiorgio81@gmail.com</authorEmail>
 	<authorUrl>http://www.iibunicz.com/</authorUrl>

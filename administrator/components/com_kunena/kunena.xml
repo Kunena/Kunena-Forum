@@ -2,10 +2,9 @@
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>2.0.0-DEV</version>
-	<versionname>Spika</versionname>
+	<version>2.0.0-DEV2</version>
+	<versionname>Internal</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
-	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
@@ -17,7 +16,6 @@
 	<files>
 		<filename>kunena.php</filename>
 		<filename>router.php</filename>
-		<filename>CHANGELOG.php</filename>
 		<filename>COPYRIGHT.php</filename>
 	</files>
 	<administration>

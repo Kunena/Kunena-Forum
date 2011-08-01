@@ -5,7 +5,6 @@
 	<tag>mk-MK</tag>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<build>@kunenaversionbuild@</build>
 	<author>unknown</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>

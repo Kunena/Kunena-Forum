@@ -55,8 +55,8 @@ class KunenaTemplateOrao extends KunenaTemplate {
 			//$this->addStyleSheet ( 'css/j16plus.css' );
 		//}
 
-		include dirname(__FILE__).'/html/styles/preset.php';
-		include dirname(__FILE__).'/html/styles/style.php';
+		include dirname(__FILE__).'/styles/preset.php';
+		include dirname(__FILE__).'/styles/style.php';
 
 
 		$document = JFactory::getDocument();

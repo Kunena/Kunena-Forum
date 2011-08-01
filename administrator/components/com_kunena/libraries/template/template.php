@@ -191,8 +191,9 @@ class KunenaTemplate extends JObject
 			// If template supports CSS compiler
 			$source = $this->getFile($filename);
 			$filename = $this->getCachePath($filename);
-			$filemtime = filemtime(JPATH_ROOT.'/'.$filename);
-			if (!JFile::exists(JPATH_ROOT.'/'.$filename) || filemtime(JPATH_ROOT.'/'.$source) > $filemtime || ($this->paramstime && $this->paramstime > $filemtime )) {
+			if (!JFile::exists(JPATH_ROOT.'/'.$filename)
+				|| filemtime(JPATH_ROOT.'/'.$source) > filemtime(JPATH_ROOT.'/'.$filename)
+				|| ($this->paramstime && $this->paramstime > filemtime(JPATH_ROOT.'/'.$filename) )) {
 				$this->compileStyleSheet($source, $filename);
 			}
 		} else {

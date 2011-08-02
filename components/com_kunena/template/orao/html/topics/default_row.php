@@ -52,7 +52,7 @@ defined ( '_JEXEC' ) or die ();
 								</span>
 							<?php endif; ?>
 
-							<?php /*if ($this->lastPostAuthor == $this->me) : ?>
+							<?php /*if ($this->topic->posted) : ?>
 								<span class="myanswericons tk-tips" title="<?php echo JText::_('You have answered in this topic')?>">
 									<?php  echo $this->getImage ( 'icons/myanswer.png', JText::_('My Answers') ); ?>
 								</span>

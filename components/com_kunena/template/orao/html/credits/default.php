@@ -9,8 +9,18 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-		<div class="ksection kcredits">
-			<h2 class="kheader"><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></h2>
+<div class="forumlist">
+	<div class="inner">
+		<span class="corners-top"><span></span></span>
+			<ul class="topiclist">
+				<li class="header">
+					<dl class="icon">
+						<dt><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></dt>
+						<dd>&nbsp;</dd>
+					</dl>
+				</li>
+			</ul>
+
 			<div class=kdetailsbox>
 				<div class="kcontent">
 					<div class="kcredits-header">
@@ -49,5 +59,7 @@ defined ( '_JEXEC' ) or die ();
 					<!-- /Version Info -->
 				</div>
 			</div>
-		</div>
 		<div class="clr"></div>
+		<span class="corners-bottom"><span></span></span>
+	</div>
+</div>

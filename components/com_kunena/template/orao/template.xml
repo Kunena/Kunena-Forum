@@ -20,8 +20,6 @@
 			.leftart {margin: 0px}
 			-->
 			</style>
-			<a target="_blank" href="http://www.kunena.org">
-				<h2>Orao - Kunena 2.0 Template</h2></a>
 			<div id="wrap1">
 				<div class="wrap2">
 					<div class="leftart">
@@ -38,7 +36,6 @@
 	<thumbnail>template_thumbnail.png</thumbnail>
 	<params>
 <param type="spacer" default="COM_KUNENA_TEMPLATE_GENERAL_CONFIGURATION" />
-
 		<param name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
 			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
 			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
@@ -58,12 +55,7 @@
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
-<!-- 
-		<param name="uddeimPopup" class="tk_switch" type="list" default="0" label="UddeIM Popup" description="Use Popup window to send Private Messages to users">
-			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
-			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
-		</param>
- -->
+
 <param type="spacer" default="COM_KUNENA_TEMPLATE_ADDITIONAL_CONFIGURATION" />
 		<param name="hotTopic" type="text" default="200" label="COM_KUNENA_TEMPLATE_HOT_TOPIC" description="COM_KUNENA_TEMPLATE_HOT_TOPIC_DESC" />
 		<param name="showWoisonlineavatar" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_AVATAR_WHOISONLINE" description="COM_KUNENA_TEMPLATE_SHOW_AVATAR_WHOISONLINE_DESC">

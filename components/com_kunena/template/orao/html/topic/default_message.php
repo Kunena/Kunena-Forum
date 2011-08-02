@@ -98,7 +98,12 @@ $this->params = $template->params;
 					<div class="clr"></div>
 					</li>
 				</ul>
-					<?php endif; ?>
+				<?php endif; ?>
+	<?php if ($this->signatureHtml) : ?>
+	<div class="kmsgsignature">
+		<?php echo $this->signatureHtml ?>
+	</div>
+	<?php endif ?>
 			</div>
 			<div class="clr"></div>
 			<div class="msgaction-left">[K=MESSAGE_ACTIONS]</div>

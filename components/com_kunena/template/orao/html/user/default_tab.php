@@ -117,8 +117,8 @@ defined ( '_JEXEC' ) or die ();
 </li>
 <?php endif;?>
 <?php if ($this->me->isModerator() || $this->my->id == $this->profile->userid ): ?>
-<li class="tk-profiletab-edit-avatar tk-tip" title=" ::<?php echo JText::_('COM_KUNENA_MANAGE_ATTACHMENTS'); ?>">
-	<a href="#" rel="tcontent-edit-avatar"><?php echo JText::_('Attachhments'); ?><br /><span></span></a>
+<li class="tk-profiletab-edit-avatar tk-tips" title=" ::<?php echo JText::_('COM_KUNENA_MANAGE_ATTACHMENTS'); ?>">
+	<a href="#" rel="tcontent-attachments"><?php echo JText::_('Attachhments'); ?><br /><span></span></a>
 </li>
 <?php endif;?>
 <?php if ($this->me->isModerator()): ?>
@@ -150,13 +150,13 @@ defined ( '_JEXEC' ) or die ();
 			<ul class="topiclist forums">
 				<li class="rowfull">
 	<div id="kprofile-rightcolbot">
-		<div class="kprofile-rightcol1 fltlft">
+		<div class="kprofile-rightcol1 fltlft" style="margin-left:5px;">
 			<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?></h4>
-			<div class="tk-profile-personal-text"><?php //echo KunenaParser::parseText($this->personalText); ?></div>
+			<div class="tk-profile-personal-text"><?php echo KunenaHtmlParser::parseText($this->personalText); ?></div>
 		</div>
 		<div class="kprofile-rightcol1 fltrt">
 			<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?></h4>
-			<div class="msgsignature"><div><?php //echo KunenaParser::parseBBCode($this->signature); ?></div></div>
+			<div class="msgsignature"><div><?php echo KunenaHtmlParser::parseBBCode($this->signature); ?></div></div>
 		</div>
 	</div>
 					</li>
@@ -274,6 +274,11 @@ defined ( '_JEXEC' ) or die ();
 <?php $this->displayBanUser(); ?>
 </div>
 <?php endif?>
+<?php if ($this->me->isModerator() || $this->my->id == $this->profile->userid ): ?>
+<div id="tcontent-attachments" class="tabcontent">
+	<?php $this->displayAttachments(); ?>
+</div>
+<?php endif;?>
 <?php //if (CKunenaTools::isModerator($this->my->id)): ?>
 <div id="tcontent-review" class="tabcontent">
 <?php //$this->displayReviewPosts(); ?>

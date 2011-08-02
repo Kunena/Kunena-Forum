@@ -14,11 +14,18 @@ $doc = JFactory::getDocument();
 // FIXME: Isn't there a better way to load this file?
 $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 ?>
+<div class="forumlist">
+	<div class="inner">
+		<span class="corners-top"><span></span></span>
+			<ul class="topiclist">
+				<li class="header">
+					<dl class="icon">
+						<dt><?php echo $this->title;?></dt>
+						<dd>&nbsp;</dd>
+					</dl>
+				</li>
+			</ul>
 
-<div class="kblock">
-<div class="kheader">
-  <h2><span><?php echo $this->title;?></span></h2>
-</div>
 	<div class="kcontainer">
 		<div class="kbody">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
@@ -69,10 +76,12 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 					</tr>
 					<?php $i++; $y++; endforeach; ?>
 				</table>
-				<input class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>" style="float:right;" />
+				<input class="tk-submit-button" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>" style="float:right;" />
 				<input type="hidden" name="boxchecked" value="0" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 			</form>
 		</div>
+	</div>
+		<span class="corners-bottom"><span></span></span>
 	</div>
 </div>

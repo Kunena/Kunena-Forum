@@ -71,7 +71,8 @@ div.tk-mb-header-register {
 	border-color: {$bordercolor};
 	/*line-height: 120%;*/
 }
-#kunena div.tksection-desc {
+#kunena div.tksection-desc,
+#kunena div.kmsgsignature {
 	background: {$bordercolor};
 }
 #kunena div.forumlist,

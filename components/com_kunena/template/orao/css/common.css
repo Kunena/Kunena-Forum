@@ -1073,6 +1073,7 @@ div#mbCenter div.tk-mb-inboxlink {
 #kunena div.kmsgsignature {
 	border-top-color: #BFC3C6;
 	color: #999999;
+	font-style: italic;
 }
 
 /*---------- User list ------------- */

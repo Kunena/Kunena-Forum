@@ -14,7 +14,6 @@ $template = KunenaFactory::getTemplate();
 $this->params = $template->params;
 $mediaurl = JURI::base() . "components/com_kunena/template/".$template->name."/media";
 $imagesurl = JURI::base() . "components/com_kunena/template/".$template->name."/images/";
-$pieurl = JURI::base() . "components/com_kunena/template/".$template->name;
 $headericonsurl = JURI::base() . "components/com_kunena/template/".$template->name."/media/iconsets/headericons";
 $iconsurl = JURI::base() . "media/kunena/icons";
 $cssurl = JURI::base() . "components/com_kunena/template/".$template->name."/css";
@@ -66,7 +65,6 @@ $styles .= <<<EOF
 	background: -webkit-gradient(linear, 0 0, 0 bottom, from({$this->params->get('headerBg')}), to({$this->params->get('headerBg')}));
 	background: -moz-linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
 	background: linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
-	-pie-background: linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
 EOF;
 endif;
 
@@ -431,7 +429,6 @@ background:none;
 	-moz-border-radius: 5px 5px 5px 5px;
 	-webkit-border-radius: 5px 5px 5px 5px;
 	border-radius: 5px 5px 5px 5px;
-	behavior: url("{$pieurl}/PIE.php");position:relative;
 	z-index:999;
 }
 
@@ -467,7 +464,6 @@ span.tk-view-msgid a {
 	-webkit-box-shadow: 0 0 10px 1px #FFFFFF;
 	-moz-box-shadow: 0 0 10px 1px #FFFFFF;
 	box-shadow: 0 0 10px 1px #FFFFFF;
-    behavior: url("{$pieurl}/PIE.php");
 }
 div.tk-mb-header-pm,
 div.tk-mb-header-pmread,
@@ -746,36 +742,7 @@ textarea,
     width: 271px;
 }
 /*	End Fix	*/
-#kunena div#ktab-flat,
-#kunena div#ktab-flat .moduletable,
-#kunena #ktab-flat li#current.active a,
-#kunena #ktab-flat li.active a,
-#kunena #ktab-flat li:focus a,
-#kunena #ktab-flat li:hover a,
-#kunena a.tk-loginlink,
-#kunena span.tk-editlink,
-#kunena #ktab li:focus a,
-#kunena #ktab li:hover a,
-#kunena #ktab li.parent.active a,
-#kunena #ktab li#current.active a,
-#kunena #ktab li.active a,
-#kunena #ktab div.moduletable ul.menu li:hover a,
-#kunena a.kicon-button,
-#kunena input.kbutton,
-#kunena div.inner-odd,
-#kunena div.inner-even,
-#kunena div.forumlist,
-#kunena div.attachttitle,
-#kunena div.kmsgattach h4,
-#kunena div.tk-msgcontent div.kmsgtext-quote,
-.pane-sliders .panel,
-.shadetabs li a,
-#kunena div.tk-profile-info-body,
-#kunena div.tk-profile-info-body span.tk-info-header,
-.shadetabs li a.selected,
-.shadetabs li a:hover {
-	/*behavior: url("{$pieurl}/PIE.php");position:relative;*/
-}
+
 #kunena div.tk-userlist-user-name h2,
 #kunena dd.tk-userlist-content div.tk-pagecount,
 #kunena div.tk-search div.tk-pagecount {

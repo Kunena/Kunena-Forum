@@ -3,7 +3,6 @@ $document = JFactory::getDocument();
 $template = KunenaFactory::getTemplate();
 $this->params = $template->params;
 $images = JURI::base() . "components/com_kunena/template/".$template->name."/images/";
-$pieurl = JURI::base() . "components/com_kunena/template/".$template->name;
 if ($this->params->get('showStyle') == 'orange') : $pos = '-90'; $bgcolor = '#ce6815'; $bordercolor = '#eaded5';
 elseif ($this->params->get('showStyle') == 'purple') : $pos= '-135'; $bgcolor = '#8a4590'; $bordercolor = '#F9DEFB';
 elseif ($this->params->get('showStyle') == 'green') : $pos = '0'; $bgcolor = '#547345'; $bordercolor = '#e3e9c7';
@@ -40,7 +39,6 @@ $styles = <<<EOF
 	background-position: left {$pos}px;
 	background-repeat: repeat-x;
 	background-color:{$bgcolor};
-	/*behavior: url("{$pieurl}/PIE.php");position:relative;*/
 }
 div.tk-mb-header-pm,
 div.tk-mb-header-pmread,

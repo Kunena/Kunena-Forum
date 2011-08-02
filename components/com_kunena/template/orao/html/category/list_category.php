@@ -18,13 +18,15 @@ defined ( '_JEXEC' ) or die ();
 							<?php if (!empty($this->categoryRssURL)) : ?>
 								<a href="<?php echo $this->categoryRssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?>"><span class="krss-icon" style="display:none;"></span></a>
 							<?php endif ?>
-							<?php // TODO: some cool ajax functions?  ?>
+							<?php // TODO: some cool ajax functions?
+							if( $this->me->userid != 0 ): ?>
 								<a href="#" title="<?php echo JText::_('Mark topics as read'); ?>"><span class="kmarkread-icon" style="margin-right:3px; display:none;"></span></a>
 								<a href="#" title="<?php echo JText::_('Subscribe Now'); ?>"><span class="ksubs-icon" style="margin-right:3px;display:none;"></span></a>
 							<?php /*?>
 								<a href="" title="<?php echo JText::_('Start New Topic'); ?>"><span class="knewtopic-icon" style="margin-right:3px;"></span></a>
 								<a href="" title="<?php echo JText::_('New Posts'); ?>"><span class="knewposts-icon" style="margin-right:3px;"></span></a>
 							<?php */?>
+							<?php endif ?>
 							<?php if ($this->category->description) : ?>
 							<span class="catdesc">
 								<?php echo $this->parse($this->category->description) ?>

@@ -34,27 +34,27 @@ $this->params = $template->params;
 					</div>
 					<div>
 						<?php
-							foreach ($this->onlineList as $user) {
-							if ( $this->params->get('showWoisonlineavatar') == '1' ){ ?>
+							foreach ($this->onlineList as $user) :
+							if ( $this->params->get('showWoisonlineavatar') == '1' ): ?>
 							<div class="online_hor">
 								<div class="online_avatar" style="position:relateive;">
 									<?php echo $user->getLink($user->getAvatarImage('klist-avatar', 'list')) ?>
 								</div>
 							</div>
-							<?php } else { ?>
+							<?php else : ?>
 							<div class="online_hor">
 							<div class="online_username">
 								<?php echo $user->getLink() ?>
-							</div>&nbsp;
 							</div>
-							<?php } }?>
+							</div>
+							<?php endif; endforeach;?>
 							<div class="clr"></div>
 							<?php if ($this->hiddenList) : ?>
 							<div class="who-hidenusers">
 								<span class="km"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>: </span><br />
-								<?php foreach ($this->hiddenList as $user) { ?>
+								<?php foreach ($this->hiddenList as $user) : ?>
 									<?php echo $user->getLink() ?>
-								<?php } ?>
+								<?php endforeach; ?>
 							</div>
 							<?php endif ?>
 					</div>

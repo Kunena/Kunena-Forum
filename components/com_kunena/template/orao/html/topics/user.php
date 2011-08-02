@@ -10,5 +10,5 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->displayAnnouncement ();
-include 'user_actions.php';
 include 'user_list.php';
+include 'user_actions.php';

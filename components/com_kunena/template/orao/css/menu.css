@@ -29,6 +29,7 @@
 #kunena #ktopmenu {
 	margin:0;
 	display: inline;
+	position:relative;
 }
 
 #kunena #ktab {

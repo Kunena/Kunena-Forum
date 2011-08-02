@@ -12,9 +12,7 @@
 $document = JFactory::getDocument();
 $template = KunenaFactory::getTemplate();
 $this->params = $template->params;
-$mediaurl = JURI::base() . "components/com_kunena/template/".$template->name."/media";
 $imagesurl = JURI::base() . "components/com_kunena/template/".$template->name."/images/";
-$headericonsurl = JURI::base() . "components/com_kunena/template/".$template->name."/media/iconsets/headericons";
 $iconsurl = JURI::base() . "media/kunena/icons";
 $cssurl = JURI::base() . "components/com_kunena/template/".$template->name."/css";
 ?>
@@ -130,11 +128,11 @@ $styles .= <<<EOF
 #kunena li.categorysuffix-{$this->params->get('category9ID')} { background-color: {$this->params->get('category9Color')} !important }
 #kunena li.categorysuffix-{$this->params->get('category10ID')} { background-color: {$this->params->get('category10Color')} !important }
 
-#kunena li.header dl.cat_{$this->params->get('section1ID')} { background-image: url('{$headericonsurl}/{$this->params->get('section1icon')}'); }
-#kunena li.header dl.cat_{$this->params->get('section2ID')} { background-image: url('{$headericonsurl}/{$this->params->get('section2icon')}'); }
-#kunena li.header dl.cat_{$this->params->get('section3ID')} { background-image: url('{$headericonsurl}/{$this->params->get('section3icon')}'); }
-#kunena li.header dl.cat_{$this->params->get('section4ID')} { background-image: url('{$headericonsurl}/{$this->params->get('section4icon')}'); }
-#kunena li.header dl.cat_{$this->params->get('section5ID')} { background-image: url('{$headericonsurl}/{$this->params->get('section5icon')}'); }
+#kunena li.header dl.cat_{$this->params->get('section1ID')} { background-image: url('{$iconsurl}/{$this->params->get('section1icon')}'); }
+#kunena li.header dl.cat_{$this->params->get('section2ID')} { background-image: url('{$iconsurl}/{$this->params->get('section2icon')}'); }
+#kunena li.header dl.cat_{$this->params->get('section3ID')} { background-image: url('{$iconsurl}/{$this->params->get('section3icon')}'); }
+#kunena li.header dl.cat_{$this->params->get('section4ID')} { background-image: url('{$iconsurl}/{$this->params->get('section4icon')}'); }
+#kunena li.header dl.cat_{$this->params->get('section5ID')} { background-image: url('{$iconsurl}/{$this->params->get('section5icon')}'); }
 
 #kunena div.sectionsuffix-{$this->params->get('section1ID')} {background-color: {$this->params->get('section1bgColor')}!important;}
 #kunena div.sectionsuffix-{$this->params->get('section2ID')} {background-color: {$this->params->get('section2bgColor')}!important;}

@@ -12,9 +12,10 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaAccessJoomla15 extends KunenaAccess {
 	public function __construct() {
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE != '1.5')
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Do not use in Joomla 1.6+
 			return null;
+		}
 		$this->priority = 25;
 
 /* TOO SLOW:

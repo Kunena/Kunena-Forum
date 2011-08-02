@@ -31,8 +31,13 @@ class KunenaAdminModelReport extends KunenaModel {
 		$kunena_app = JFactory::getApplication ();
 		$kunena_db = JFactory::getDBO ();
 
-		$JVersion = new JVersion();
-		$jversion = $JVersion->getLongVersion();
+		// Joomla 1.7 compatibility (class already exists)
+		if (!class_exists('JVersion')) {
+			// Joomla 1.5 and 1.6 compatibility (jimport needed)
+			jimport ( 'joomla.version' );
+		}
+		$jversion = new JVersion();
+		$jversion = $jversion->getLongVersion();
 
 		if($kunena_app->getCfg('legacy' )) {
 			$jconfig_legacy = '[color=#FF0000]Enabled[/color]';
@@ -99,9 +104,9 @@ class KunenaAdminModelReport extends KunenaModel {
 		//get all the config settings for Kunena
 		$kconfig = $this->_getKunenaConfiguration();
 
-		$jtemplatedetails = $this->_getJoomlaTemplate($JVersion);
+		$jtemplatedetails = $this->_getJoomlaTemplate();
 
-		$joomlamenudetails = $this->_getJoomlaMenuDetails($JVersion);
+		$joomlamenudetails = $this->_getJoomlaMenuDetails();
 
 		$collation = $this->_getTablesCollation();
 
@@ -141,16 +146,18 @@ class KunenaAdminModelReport extends KunenaModel {
 		else $modtext = '[quote][b]Modules:[/b] None [/quote]';
 
 		$thirdparty = array();
-		if ($JVersion->RELEASE == '1.5') {
-			$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
-			$thirdparty['cb'] = $this->_checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
-			$thirdparty['jomsocial'] = $this->_checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
-			$thirdparty['uddeim'] = $this->_checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
-		} else {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
 			$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'manifest', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
 			$thirdparty['cb'] = $this->_checkThirdPartyVersion('comprofiler', 'comprofileg' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
 			$thirdparty['jomsocial'] = $this->_checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
 			$thirdparty['uddeim'] = $this->_checkThirdPartyVersion('uddeim', 'uddeim', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
+		} else {
+			// Joomla 1.5
+			$thirdparty['aup'] = $this->_checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+			$thirdparty['cb'] = $this->_checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
+			$thirdparty['jomsocial'] = $this->_checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
+			$thirdparty['uddeim'] = $this->_checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
 		}
 		foreach ($thirdparty as $id=>$item) {
 			if (empty($item)) unset ($thirdparty[$id]);
@@ -218,52 +225,31 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @return	string
 	 * @since	1.6
 	 */
-	protected function _getJoomlaTemplate($jversion) {
+	protected function _getJoomlaTemplate() {
 		kimport('kunena.error');
-  		$kunena_db = JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 
-		if ($jversion->RELEASE == '1.5') {
-			$templatedetails = new stdClass();
-			// Get Joomla! frontend assigned template for Joomla! 1.5
-
-			$query = ' SELECT template '
-				.' FROM #__templates_menu '
-				.' WHERE client_id = 0 AND menuid = 0 ';
-			$kunena_db->setQuery($query);
-			$jdefaultemplate = $kunena_db->loadResult();
-			if (KunenaError::checkDatabaseError()) return;
-
-			$templatedetails->name = $jdefaultemplate;
-
-			$xml_tmpl = JFactory::getXMLparser('Simple');
-			$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate.'/templateDetails.xml');
-			$templatecreationdate= $xml_tmpl->document->creationDate[0];
-			$templatedetails->creationdate = $templatecreationdate->data();
-			$templateauthor= $xml_tmpl->document->author[0];
-			$templatedetails->author = $templateauthor->data();
-			$templateversion = $xml_tmpl->document->version[0];
-			$templatedetails->version = $templateversion->data();
+		// Get Joomla! frontend assigned template
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
+			$query = "SELECT template FROM #__template_styles WHERE client_id=0 AND home=1";
 		} else {
-			$templatedetails = new stdClass();
-			// Get Joomla! frontend assigned template for Joomla! 1.6
-			$query = " SELECT template,title "
-				." FROM #__template_styles "
-				." WHERE client_id = '0' AND home = '1'";
-			$kunena_db->setQuery($query);
-			$jdefaultemplate = $kunena_db->loadObject();
-			//if (KunenaError::checkDatabaseError()) return;
-
-			$templatedetails->name = $jdefaultemplate->template;
-
-			$xml_tmpl = JFactory::getXMLparser('Simple');
-			$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate->template.'/templateDetails.xml');
-			$templatecreationdate= $xml_tmpl->document->creationDate[0];
-			$templatedetails->creationdate = $templatecreationdate->data();
-			$templateauthor= $xml_tmpl->document->author[0];
-			$templatedetails->author = $templateauthor->data();
-			$templateversion = $xml_tmpl->document->version[0];
-			$templatedetails->version = $templateversion->data();
+			// Joomla 1.5
+			$query = "SELECT template FROM #__templates_menu WHERE client_id=0 AND menuid=0";
 		}
+
+		$db->setQuery($query);
+		$template = $db->loadResult();
+		if (KunenaError::checkDatabaseError()) return;
+
+		$xml = JFactory::getXMLparser('Simple');
+		$xml->loadFile(JPATH_SITE.'/templates/'.$template.'/templateDetails.xml');
+
+		$templatedetails = new stdClass();
+		$templatedetails->name = $template;
+		$templatedetails->creationdate = $xml->document->creationDate[0]->data();
+		$templatedetails->author = $xml->document->author[0]->data();
+		$templatedetails->version = $xml->document->version[0]->data();
 
 		return $templatedetails;
 	}
@@ -274,31 +260,11 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @return	string
 	 * @since	1.6
 	 */
-	protected function _getJoomlaMenuDetails($jversion) {
+	protected function _getJoomlaMenuDetails() {
 		kimport('kunena.error');
 		$kunena_db = JFactory::getDBO ();
-		if ($jversion->RELEASE == '1.5') {
-			// Get Kunena aliases
-			$query = "SELECT m.id, m.menutype, m.name, m.alias, m.link, m.parent
-					FROM #__menu AS m
-					INNER JOIN #__menu AS mm ON m.link LIKE CONCAT( '%Itemid=', mm.id )
-					WHERE m.published=1 AND m.type = 'menulink' AND mm.link LIKE '%com_kunena%'
-					ORDER BY m.menutype, m.parent, m.ordering ASC";
- 	  	    $kunena_db->setQuery($query);
-			$kmenustype = (array) $kunena_db->loadObjectlist('id');
-			// Get Kunena menu items
-			$query = "SELECT id, menutype, name, alias, link, parent "
-				." FROM #__menu "
-				." WHERE published=1 AND link LIKE '%com_kunena%' ORDER BY menutype, parent, ordering";
-			$kunena_db->setQuery($query);
-			$kmenustype += (array) $kunena_db->loadObjectlist('id');
-			if (KunenaError::checkDatabaseError()) return;
-
-			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
-			foreach($kmenustype as $item) {
-				$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
-			}
-		} else {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
 			// Get Kunena extension id
 			$query = "SELECT extension_id "
 				." FROM #__extensions "
@@ -325,6 +291,28 @@ class KunenaAdminModelReport extends KunenaModel {
 			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
 			foreach($kmenustype as $item) {
 				$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->title.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->path.'[/td][/tr] ';
+			}
+		} else {
+			// Joomla 1.5
+			// Get Kunena aliases
+			$query = "SELECT m.id, m.menutype, m.name, m.alias, m.link, m.parent
+					FROM #__menu AS m
+					INNER JOIN #__menu AS mm ON m.link LIKE CONCAT( '%Itemid=', mm.id )
+					WHERE m.published=1 AND m.type = 'menulink' AND mm.link LIKE '%com_kunena%'
+					ORDER BY m.menutype, m.parent, m.ordering ASC";
+			$kunena_db->setQuery($query);
+			$kmenustype = (array) $kunena_db->loadObjectlist('id');
+			// Get Kunena menu items
+			$query = "SELECT id, menutype, name, alias, link, parent "
+				." FROM #__menu "
+				." WHERE published=1 AND link LIKE '%com_kunena%' ORDER BY menutype, parent, ordering";
+			$kunena_db->setQuery($query);
+			$kmenustype += (array) $kunena_db->loadObjectlist('id');
+			if (KunenaError::checkDatabaseError()) return;
+
+			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
+			foreach($kmenustype as $item) {
+				$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
 			}
 		}
 		$joomlamenudetails .='[/table]';
@@ -417,13 +405,14 @@ class KunenaAdminModelReport extends KunenaModel {
 		}
 		return $mod_version;
 	} elseif ($plugin) {
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == '1.5') {
-			$pathphp = JPATH_SITE.'/'.$path.'/'.$namephp;
-			$pathxml = JPATH_SITE.'/'.$path.'/'.$namexml;
-		} else {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
 			$pathphp = JPATH_SITE.'/'.$path.'/'.$namephp.'/'.$namephp;
 			$pathxml =JPATH_SITE.'/'.$path.'/'.$namephp.'/'.$namexml;
+		} else {
+			// Joomla 1.5
+			$pathphp = JPATH_SITE.'/'.$path.'/'.$namephp;
+			$pathxml = JPATH_SITE.'/'.$path.'/'.$namexml;
 		}
 		if ( JPluginHelper::isEnabled($plggroup, $namephp) && JFile::exists($pathphp.'.php') ) {
 			if ( JFile::exists($pathxml.'.xml') ) {

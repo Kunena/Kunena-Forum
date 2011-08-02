@@ -11,7 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.html.pagination' );
-jimport ( 'joomla.version' );
 
 /**
  * Pagination Class.  Provides a common interface for content pagination for the
@@ -149,11 +148,12 @@ class KunenaHtmlPagination extends JPagination
 
 		// Build the select list.
 		if ($app->isAdmin()) {
-			$jversion = new JVersion ();
-			if ($jversion->RELEASE == '1.5') {
-				$html = JHTML::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="submitform();"', 'value', 'text', $selected);
-			} else {
+			if (version_compare(JVERSION, '1.6','>')) {
+				// Joomla 1.6+
 				$html = JHtml::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="Joomla.submitform();"', 'value', 'text', $selected);
+			} else {
+				// Joomla 1.5
+				$html = JHTML::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="submitform();"', 'value', 'text', $selected);
 			}
 		}
 		else {
@@ -173,11 +173,12 @@ class KunenaHtmlPagination extends JPagination
 	public function _item_active(&$item) {
 		if (JFactory::getApplication()->isAdmin()) {
 			if ($item->base > 0) {
-				$jversion = new JVersion ();
-				if ($jversion->RELEASE == '1.5') {
-					return "<a title=\"".$item->text."\" onclick=\"javascript: document.adminForm.." . $this->prefix . "limitstart.value=".$item->base."; submitform();return false;\">".$item->text."</a>";
-				} else {
+				if (version_compare(JVERSION, '1.6','>')) {
+					// Joomla 1.6+
 					return "<a title=\"".$item->text."\" onclick=\"javascript: document.adminForm.." . $this->prefix . "limitstart.value=".$item->base."; Joomla.submitform();return false;\">".$item->text."</a>";
+				} else {
+					// Joomla 1.5
+					return "<a title=\"".$item->text."\" onclick=\"javascript: document.adminForm.." . $this->prefix . "limitstart.value=".$item->base."; submitform();return false;\">".$item->text."</a>";
 				}
 			}
 			else {

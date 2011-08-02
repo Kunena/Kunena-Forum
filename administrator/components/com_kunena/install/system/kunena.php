@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport('joomla.version');
-
 class plgSystemKunena extends JPlugin {
 
 	function __construct(& $subject, $config) {
@@ -29,9 +27,8 @@ class plgSystemKunena extends JPlugin {
 		// Load Kunena API
 		require_once $api;
 
-		// Fix Joomla 1.5 bugs and bad performance
-		$version = new JVersion();
-		if ($version->RELEASE == '1.5') {
+		if (version_compare(JVERSION, '1.6','<')) {
+			// Joomla 1.5: Fix bugs and bad performance
 			$lang = JFactory::getLanguage();
 			if (JFactory::getApplication()->isAdmin()) {
 				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR);

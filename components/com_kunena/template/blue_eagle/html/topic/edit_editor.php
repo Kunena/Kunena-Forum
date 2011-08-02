@@ -126,10 +126,12 @@ defined ( '_JEXEC' ) or die ();
 			<?php
 			if ($this->config->highlightcode) {
 				$this->config = KunenaFactory::getConfig();
-				if (substr(JVERSION, 0, 3) == 1.5) {
-					$path = JPATH_ROOT.'/libraries/geshi/geshi';
-				} else {
+				if (version_compare(JVERSION, '1.6','>')) {
+					// Joomla 1.6+
 					$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi';
+				} else {
+					// Joomla 1.5
+					$path = JPATH_ROOT.'/libraries/geshi/geshi';
 				}
 				if ( file_exists($path) ) {
 					$files = JFolder::files($path, ".php"); ?>

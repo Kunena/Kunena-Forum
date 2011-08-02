@@ -83,11 +83,23 @@ defined ( '_JEXEC' ) or die ();
 				<div id="kprofile-rightcolbot">
 					<div class="kprofile-rightcol1 fltlft" style="margin-left:5px;">
 						<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?></h4>
-						<div class="tk-profile-personal-text"><?php echo KunenaHtmlParser::parseText($this->personalText); ?></div>
+						<div class="tk-profile-personal-text">
+						<?php if( !empty($this->personalText) ) : ?>
+							<?php echo KunenaHtmlParser::parseText($this->personalText); ?>
+						<?php else :?>
+							<?php echo JText::_('No Personal text'); ?>
+						<?php endif ?>
+						</div>
 					</div>
 					<div class="kprofile-rightcol1 fltrt">
 						<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?></h4>
-						<div class="msgsignature"><div><?php echo KunenaHtmlParser::parseBBCode($this->signature); ?></div></div>
+						<div class="msgsignature">
+						<?php if ($this->signature) : ?>
+							<?php echo KunenaHtmlParser::parseBBCode($this->signature); ?>
+						<?php else :?>
+							<?php echo JText::_('No Signature'); ?>
+						<?php endif ?>
+						</div>
 					</div>
 				</div>
 				</li>

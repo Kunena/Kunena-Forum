@@ -50,7 +50,13 @@ defined ( '_JEXEC' ) or die ();
 							<ul>
 								<?php if ($this->config->showemail && (!$this->profile->hideEmail || $this->me->isModerator())) : ?><li><span class="kicon-profile kicon-profile-email"></span><?php echo JHTML::_('email.cloak', $this->user->email) ?></li><?php endif; ?>
 								<?php if (!empty($this->profile->websiteurl)):?><li><span class="kicon-profile kicon-profile-website"></span><a href="http://<?php echo $this->escape($this->profile->websiteurl) ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename) ?></a></li><?php endif ?>
-								<li>&nbsp;</li>
+								<?php if (!empty($this->registerdate)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE') ?>:</strong> <?php echo KunenaDate::getInstance($this->registerdate)->toSpan('date_today', 'ago', 'utc') ?></li><?php endif; ?>
+								<?php if (!empty($this->lastvisitdate)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE') ?>:</strong> <?php echo KunenaDate::getInstance($this->lastvisitdate)->toSpan('date_today', 'ago', 'utc') ?></li><?php endif; ?>
+								<?php if (!empty($this->posts)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_POSTS') ?>:</strong> <?php echo intval($this->posts) ?></li><?php endif; ?>
+								<?php if (!empty($this->userpoints)): ?><li><strong><?php echo JText::_('COM_KUNENA_AUP_POINTS') ?></strong> <?php echo intval($this->userpoints) ?></li><?php endif; ?>
+								<?php if (!empty($this->thankyou)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') ?></strong> <?php echo intval($this->thankyou) ?></li><?php endif; ?>
+								<?php if (!empty($this->pmLink)) : ?><li><?php echo $this->pmLink ?></li><?php endif ?>
+								<?php if (!empty($this->usermedals)) : ?><li><?php foreach ( $this->usermedals as $medal ) : echo $medal,' '; endforeach ?></li><?php endif ?>
 							</ul>
 						</div>
 					</div>

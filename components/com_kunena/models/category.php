@@ -47,18 +47,21 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		$catid = $this->getInt ( 'catid', 0 );
 		$this->setState ( 'item.id', $catid );
 
+		$format = $this->getWord ( 'format', 'html' );
+		$this->setState ( 'format', $format );
+
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_list_limit", 'limit', 0, 'int' );
-		if ($value < 1) $value = $this->config->threads_per_page;
+		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_list_limit", 'limit', 0, 'int' );
+		if ($value < 1) $value = $format=='feed' ? $this->config->rss_limit : $this->config->threads_per_page;
 		$this->setState ( 'list.limit', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_list_start", 'limitstart', 0, 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_list_start", 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$active}_list_direction", 'filter_order_Dir', 'desc', 'word' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_{$active}_list_direction", 'filter_order_Dir', 'desc', 'word' );
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
@@ -184,14 +187,16 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			$catid = $this->getState ( 'item.id');
 			$limitstart = $this->getState ( 'list.start');
 			$limit = $this->getState ( 'list.limit');
+			$format = $this->getState ( 'format');
 
 			$topic_ordering = $this->getCategory()->topic_ordering;
 
 			$access = KunenaFactory::getAccessControl();
-			$hold = $access->getAllowedHold($this->me, $catid);
+			$hold = $format == 'feed' ? 0 : $access->getAllowedHold($this->me, $catid);
+			$moved = $format == 'feed' ? 0 : 1;
 			$params = array(
 				'hold'=>$hold,
-				'moved'=>1);
+				'moved'=>$moved);
 			switch ($topic_ordering) {
 				case 'alpha':
 					$params['orderby'] = 'tt.ordering DESC, tt.subject ASC ';
@@ -204,6 +209,9 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 					$params['orderby'] = 'tt.ordering DESC, tt.last_post_time ' . strtoupper($this->getState ( 'list.direction'));
 			}
 
+			if ($format == 'feed') {
+				$catid = array_keys(KunenaForumCategoryHelper::getChildren($catid, 100)+array($catid=>1));
+			}
 			list($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($catid, $limitstart, $limit, $params);
 			if ($this->total > 0) {
 				// collect user ids for avatar prefetch when integrated

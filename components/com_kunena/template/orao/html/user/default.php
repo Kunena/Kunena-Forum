@@ -11,18 +11,6 @@ defined ( '_JEXEC' ) or die ();
 
 JHTML::_('behavior.tooltip');
 ?>
-<?php /*?>
-		<div class="kuserprofile">
-			<?php if (!empty($this->editLink)) echo $this->editLink ?>
-			<h2 class="kheader"><a href="#" rel="kmod-detailsbox"><?php echo JText::_('COM_KUNENA_USER_PROFILE').' '.$this->escape($this->name) ?></a></h2>
-			<div class="kdetailsbox kmod-userbox" id="kmod-detailsbox">
-				<?php $this->displaySummary(); ?>
-				<div class="clrline"></div>
-				<?php $this->displayTab(); ?>
-				<div class="clr"></div>
-			</div>
-		</div>
-<?php */?>
 
 <div class="forumlist tk-profile-sommary">
 	<div class="catinner">
@@ -91,11 +79,9 @@ JHTML::_('behavior.tooltip');
 		<span class="corners-bottom"><span></span></span>
 	</div>
 </div>
-
-			<div>
-			<?php $this->displayTab(); ?>
-			</div>
-
+<div>
+	<?php $this->displayTab(); ?>
+</div>
 
 
 <script type="text/javascript">

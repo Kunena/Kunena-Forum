@@ -71,7 +71,7 @@ defined ( '_JEXEC' ) or die ();
 </div>
 
 
-							<?php if(!empty($this->userparameters)) : ?>
+<?php if(!empty($this->userparameters)) : ?>
 <div class="forumlist">
 	<div class="inner">
 		<span class="corners-top"><span></span></span>
@@ -83,21 +83,19 @@ defined ( '_JEXEC' ) or die ();
 					</dl>
 				</li>
 			</ul>
-
-								<ul class="kform kedit-user-information clearfix">
-									<?php foreach ($this->userparameters as $userparam): ?>
-									<li class="kedit-user-information-row krow-<?php echo $this->row() ?>">
-										<div class="kform-label">
-											<?php echo $userparam->label ?>
-										</div>
-										<div class="kform-field">
-											<?php echo $userparam->input ?>
-										</div>
-									</li>
-									<?php endforeach ?>
-								</ul>
-
+			<ul class="kform kedit-user-information clearfix">
+				<?php foreach ($this->userparameters as $userparam): ?>
+				<li class="kedit-user-information-row krow-<?php echo $this->row() ?>">
+					<div class="kform-label">
+						<?php echo $userparam->label ?>
+					</div>
+					<div class="kform-field">
+						<?php echo $userparam->input ?>
+					</div>
+				</li>
+				<?php endforeach ?>
+			</ul>
 		<span class="corners-bottom"><span></span></span>
 	</div>
 </div>
-							<?php endif; ?>
+<?php endif; ?>

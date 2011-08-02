@@ -20,12 +20,10 @@ defined ( '_JEXEC' ) or die ();
 					</dl>
 				</li>
 			</ul>
-
 			<div class="kuserlist-items">
 				<?php foreach ($this->users as $user) { $this->displayUserRow($user); } ?>
 			</div>
 			<div class="clr"></div>
-
 		<span class="corners-bottom"><span></span></span>
 	</div>
 </div>

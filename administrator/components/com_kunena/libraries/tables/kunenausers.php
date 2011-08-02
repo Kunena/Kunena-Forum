@@ -222,7 +222,7 @@ class TableKunenaUsers extends KunenaTable
 	**/
 	var $bebo = null;
 	/**
-	* User thank yous received
+	* Thankyou count
 	* @var int
 	**/
 	var $thankyou = null;

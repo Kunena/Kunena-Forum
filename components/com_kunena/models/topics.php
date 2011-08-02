@@ -34,6 +34,9 @@ class KunenaModelTopics extends KunenaModel {
 		$this->setState ( 'params', $params );
 		$config = KunenaFactory::getConfig ();
 
+		$format = $this->getWord ( 'format', 'html' );
+		$this->setState ( 'format', $format );
+
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
 		$layout = $this->getWord ( 'layout', 'default' );

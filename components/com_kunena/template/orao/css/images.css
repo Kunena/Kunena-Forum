@@ -195,70 +195,41 @@ div#kprofile-stats ul li span.rank-admin {
 
 /* Post body lights
 ----------------------------------------*/
-#kunena div.post div.inner {
-	/*background-image:url("../images/icons/post-bg.png");*/
-}
-#kunena .imagereport {
-	background-image: url("../images/icons/icon_post_report.png");
-}
-#kunena .imagereport:hover {
-	background-image: url("../images/icons/icon_post_report.png");
-}
-#kunena .imagereportuser {
-	background-image: url("../images/icons/icon_user_warn.gif");
-}
-#kunena .imagereportuser:hover {
-	background-image: url("../images/icons/icon_user_warn.gif");
-}
+
 #kunena .kkarma-minus {
-	background-image: url("../images/icons/icon_rate_bad.gif");
+	background-image: url("../images/rate_bad.gif");
 }
 #kunena .kkarma-minus:hover {
-	background-image: url("../images/icons/icon_rate_bad.gif");
+	background-image: url("../images/rate_bad.gif");
 }
 #kunena .kkarma-plus {
-	background-image: url("../images/icons/icon_rate_good.gif");
+	background-image: url("../images/rate_good.gif");
 }
 #kunena .kkarma-plus:hover {
-	background-image: url("../images/icons/icon_rate_good.gif");
-}
-
-#kunena div.ranking-left-yes {
-	background-image: url('../images/icons/coppacampioni_50.png');
-}
-
-#kunena div.ranking-left-no {
-	background-image: url('../images/icons/Coppacoppe_50.png');
-}
-
-#kunena div.uslstatus-yes {
-	background-image: url('../images/icons/online-right.png');
-}
-#kunena div.uslstatus-no {
-	background-image: url('../images/icons/offline-left.png');
+	background-image: url("../images/rate_good.gif");
 }
 
 #kunena div.status-left-yes {
-	background-image: url('../images/icons/online-right.png');
+	background-image: url('../images/online-right.png');
 }
 
 #kunena div.status-left-no {
-	background-image: url('../images/icons/offline-left.png');
+	background-image: none;
 }
 
 #kunena div.status-right-yes {
-	background-image: url('../images/icons/online-left.png');
+	background-image: url('../images/online-left.png');
 }
 
 #kunena div.status-right-no {
-	background-image: url('../images/icons/offline-right.png');
+	background-image: none;
 }
 
 #kunena span.msgtitle {
 }
 
 #kunena span.msgtitle-new {
-	background-image: url("../images/icons/new.gif");
+	background-image: url("../images/new.gif");
 }
 
 #kunena div.attachttitle,
@@ -266,60 +237,23 @@ div#kprofile-stats ul li span.rank-admin {
 	background-image: url("../images/icons/attachment_picc.png");
 }
 
-
-#kunena li.kpost-online-status-yes {
-	background-image: url("../images/icons/online.gif"); 
-}
-#kunena li.kpost-online-status-no {
-	background-image: url("../images/icons/offline.gif");
-}
-
-#kunena li.kpost-online-status-top-yes {
-	background-image: url("../images/icons/online.gif");
-}
-#kunena li.kpost-online-status-top-no {		
-	background-image: url("../images/icons/offline.gif");
-}
-
-#kunena span.deleteattach {
-	background-image: url("../images/icons/delete.png");
-}
-
-
 /* SLIDERS
 ----------------------------------------------------------------------------------------------- */
 
 span.close, a.close {
-	background-image: url("../images/sprite-1.png");
+	background-image: url("../images/sprite.png");
 	background-position: 67% center;
 }
 span.open, a.open {
-	background-image: url("../images/sprite-1.png");
+	background-image: url("../images/sprite.png");
 	background-position: 33% center;
-}
-
-/* PATHWAY 
------------------------------------------------------------------------------------------------ */
-
-#kunena .path-element-first {
-	background-image: url("../images/pathway_start.png");
-}
-
-#kunena .kforum-pathway .path-element,
-#kunena .kforum-pathway-bottom .path-element	{
-	background-image: url("../images/icons/arrow.png");
-}
-
-#kunena .kforum-pathway .path-element-last,
-#kunena .kforum-pathway-bottom .path-element-last {
-	background-image: url("../images/pathway_finallink.png");
 }
 
 /*					PAGINATION
 -------------------------------------------------------*/
 
 #kunena strong.pagination li.page {
-	background-image: url("../images/icon_pages.gif");
+	background-image: url("../images/icons/icon_pages.gif");
 }
 
 #kunena div.tk-msgcontent div.kmsgtext-quote {
@@ -361,7 +295,7 @@ span.open, a.open {
 }
 
 #kunena .hoticon {
-    background-image: url("../images/icons/hot.png");
+    background-image: url("../images/hot.png");
 }
 
 #kunena .attachicons {
@@ -371,13 +305,13 @@ span.open, a.open {
 
 
 #kunena .krss-icon {
-    background: url("../images/icon-rss.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/icons/icon-rss.png") no-repeat scroll 0 0 transparent;
 }
 #kunena .kmarkread-icon {
-    background: url("../images/icon-markread.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/icons/icon-markread.png") no-repeat scroll 0 0 transparent;
 }
 #kunena .ksubs-icon {
-    background: url("../images/icon-subs.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/icons/icon-subs.png") no-repeat scroll 0 0 transparent;
 }
 #kunena span.kcategory-smicon {
 	background: url("../images/icons/childicon_nonew.png") no-repeat;
@@ -436,11 +370,11 @@ div#mbCenter input#tk-submit-button.kbutton,
 }
 #kunena a.grid_true,
 #kunena a.grid_unpublish {
-	background-image: url("../images/publish.png");
+	background-image: url("../images/icons/publish.png");
 }
 #kunena a.grid_false,
 #kunena a.grid_publish {
-	background-image: url("../images/unpublish.png");
+	background-image: url("../images/icons/unpublish.png");
 }
 #kunena a.move_up {
 	background-image: url("../images/arrow-up.png");
@@ -481,7 +415,7 @@ div#mbCenter input#tk-submit-button.kbutton,
 	background-image: url("../images/icons/file_nonew.png");
 }
 #kunena li.tk-nopost-info span {
-	background-image:url("../images/tk-info.png");
+	background-image:url("../images/info.png");
 }
 #kunena dd.tk-usersactivity-total {
 	background-image: url('../images/icons/chart.png');
@@ -565,19 +499,6 @@ div#mbCenter input#tk-submit-button.kbutton,
 }
 #kunena .ktree { 
 	background-image: url("../images/treenodes.png");
-}
-
-#lbPrevLink:hover {
-	background: transparent url(../images/prevlabel.png) no-repeat 0 15%;
-}
-#lbNextLink:hover {
-	background: transparent url(../images/nextlabel.png) no-repeat 100% 15%;
-}
-#lbCloseLink {
-	background: transparent url(../images/closelabel.png) no-repeat center;
-}
-.lbLoading {
-	background-image: url(../images/loading.gif);
 }
 
 /*

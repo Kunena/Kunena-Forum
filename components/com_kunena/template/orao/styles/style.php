@@ -496,7 +496,6 @@ div.tk-mb-header-pmread span.tk-mb-first {
 	padding: 1px 1px 1px 25px;
 }
 div.tk-mb-header-pm span.tk-mb-first {
-	background: url("{$imagesurl}sendemail.gif") no-repeat left center;
 	padding: 1px 1px 1px 25px;
 }
 #mbBottom {
@@ -542,7 +541,7 @@ div.tk-mb-header-pm span.tk-mb-first {
 }
 
 a#mbCloseLink {
-    background-image: url("{$imagesurl}closelabel.png");
+    background-image: url("{$imagesurl}icons/closelabel.png");
     width:16px;
     height:16px;
     display:block;
@@ -559,7 +558,7 @@ a#mbCloseLink big {
     margin: 5px 0;
 }
 #mbImage ul.forums li.rowfull {
-    background: url("{$imagesurl}icons/members-login.png") no-repeat left center;
+    background: url("{$imagesurl}members-login.png") no-repeat left center;
     padding:5px 0;
 }
 #mbImage ul.forums li.rowfull dd {
@@ -613,7 +612,7 @@ input[type=checkbox] {
 }
 
 a#mbCloseLink {
-    background-image: url("{$imagesurl}closelabel.png");
+    background-image: url("{$imagesurl}icons/closelabel.png");
     width:16px;
     height:16px;
     display:block;
@@ -646,13 +645,12 @@ input.tk-mb-cancel {
     cursor:pointer;
 }
 input.tk-mb-cancel {
-    background-image: url("{$imagesurl}closelabel.png");
+    background-image: url("{$imagesurl}icons/closelabel.png");
 }
 input.tk-mb-submit {
     background-image: url("{$imagesurl}icons/submit.png");
 }
 div.tk-mb-header {
-	background: url("{$imagesurl}sendemail.gif") no-repeat 5px center #555;
 	border:0px;
 	margin: -10px -10px 0;
 	padding: 4px 5px 6px 30px;
@@ -661,7 +659,7 @@ div.tk-mb-header {
 }
 div.tk-mb-result {
 	padding: 30px 0 0 0
-	background: url("{$imagesurl}tk-info.png") no-repeat 5px center transparent;
+	background: url("{$imagesurl}info.png") no-repeat 5px center transparent;
 	text-align:center;
 	font-size:25px;
 }
@@ -674,7 +672,6 @@ a.tk-mb-profile-pmlink {
 	width:18px;
 	height:16px;
 	display:block;
-	background: url("{$imagesurl}sendemail.gif") no-repeat center center transparent;
 }
 #kunena span.tk-pmlink {
 	float: right;
@@ -702,7 +699,7 @@ a.tk-mb-profile-pmlink {
 	background: url({$imagesurl}icons/email_new.png) no-repeat left center transparent;
 }
 #kunena span.tk-pm-new {
-	background: url({$imagesurl}icons/new.gif) no-repeat left center transparent;
+	background: url({$imagesurl}new.gif) no-repeat left center transparent;
 }
 
 /*		end PM Popup 	*/

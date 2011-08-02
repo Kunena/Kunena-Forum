@@ -551,10 +551,10 @@ div#mbCenter input#tk-submit-button.kbutton,
 }
 
 #kunena div.msgcontent-deleted {
-	background-image: url('../images/icons/deleted.png');
+	background-image: url('../images/deleted.png');
 }
 #kunena div.msgcontent-unaproved {
-	background-image: url('../images/icons/unaproved.png');
+	background-image: url('../images/unaproved.png');
 }
 
 #kunena a.kbuttoncomm span,

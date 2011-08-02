@@ -38,12 +38,12 @@ defined ( '_JEXEC' ) or die ();
 							</span>
 							<?php if ($this->topic->hold == 1) : ?>
 								<span class="unaprovedicons">
-									<?php echo $this->getImage ( 'icons/unaproved_picc.png', JText::_('Unapproved') ); ?>
+									<?php echo $this->getImage ( 'topics-unaproved.png', JText::_('Unapproved') ); ?>
 								</span>
 							<?php endif; ?>
 							<?php if ($this->topic->hold == 2) : ?>
 								<span class="deletedicons">
-									<?php echo $this->getImage ( 'icons/deleted_picc.png', JText::_('Deleted') ); ?>
+									<?php echo $this->getImage ( 'topics-deleted.png', JText::_('Deleted') ); ?>
 								</span>
 							<?php endif; ?>
 							<?php if ($this->topic->ordering != 0) : ?>

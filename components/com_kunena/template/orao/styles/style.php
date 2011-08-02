@@ -16,7 +16,7 @@ $mediaurl = JURI::base() . "components/com_kunena/template/".$template->name."/m
 $imagesurl = JURI::base() . "components/com_kunena/template/".$template->name."/images/";
 $pieurl = JURI::base() . "components/com_kunena/template/".$template->name;
 $headericonsurl = JURI::base() . "components/com_kunena/template/".$template->name."/media/iconsets/headericons";
-$iconsurl = JURI::base() . "components/com_kunena/template/".$template->name."/media/iconsets/menuicons";
+$iconsurl = JURI::base() . "media/kunena/icons";
 $cssurl = JURI::base() . "components/com_kunena/template/".$template->name."/css";
 ?>
 <!--[if lte IE 8]>
@@ -38,28 +38,39 @@ $styles = <<<EOF
 }
 
 EOF;
-$document->addStyleDeclaration($styles);
 }
 if ($this->params->get('countcolumnShow') == '0') {
-$styles = <<<EOF
+$styles .= <<<EOF
 #kunena ul.topiclist dt { width: 65%; }
 EOF;
-$document->addStyleDeclaration($styles);
 }
 
 if ($this->params->get('avborderColor') == '1') {
-$styles = <<<EOF
+$styles .= <<<EOF
 #kunena .kuser-admin img { border-color: {$this->params->get('userAdmin')} !important }
 #kunena .kuser-globalmod img { border-color: {$this->params->get('userGlmoderator')} !important }
 #kunena .kuser-moderator img { border-color: {$this->params->get('userModerator')} !important }
 #kunena .kuser-user img { border-color: {$this->params->get('userUser')} !important }
 #kunena .kuser-guest img { border-color: {$this->params->get('userGuest')} !important }
 EOF;
-$document->addStyleDeclaration($styles);
 }
+if ($this->params->get('showStyle') == 'nopreset') :
+$styles .= <<<EOF
+#mbImage div.tk-mb-header-pm,
+#mbImage div.tk-mb-header-pmread,
+#mbImage div.tk-mb-header-logout,
+#mbImage div.tk-mb-header-search,
+#mbImage div.tk-mb-header-login,
+#mbImage div.tk-mb-header-register {
+	background: {$this->params->get('headerBg')};
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from({$this->params->get('headerBg')}), to({$this->params->get('headerBg')}));
+	background: -moz-linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
+	background: linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
+	-pie-background: linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
+EOF;
+endif;
 
-
-$styles = <<<EOF
+$styles .= <<<EOF
 #kunena div.kmsgimage img,
 #kunena div.kmsgsignature img {
 	max-width:{$this->params->get('maxwidthPostimage')}px;
@@ -84,7 +95,6 @@ $styles = <<<EOF
     background-color:{$this->params->get('buttonsBg')};
 }
 
-
 #kunena .kuser-admin { color: {$this->params->get('userAdmin')} !important }
 #kunena .kuser-globalmod { color: {$this->params->get('userGlmoderator')} !important }
 #kunena .kuser-moderator { color: {$this->params->get('userModerator')} !important }
@@ -98,26 +108,17 @@ $styles = <<<EOF
 #kunena li.row,
 #kunena li.rowfull,
 #kunena ul.forums li.sticky {
-	border-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-radius: {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px;
 	margin:0;
 }
 
 #kunena div.tk-msgcontent {
 	background-color:#FFFFFF/*msgBg*/;
-	border-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-radius: {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px;
 	min-height:170px;
 	padding:5px;
 }
 #kunena .tk-tools-options ul.tk-tools-container {
 	background-color:#FFFFFF/*boxBg*/;
 	border-color:#DFDFDF/*borderColor*/;
-	border-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-radius: {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px;
 }
 
 #kunena li.categorysuffix-{$this->params->get('category1ID')} { background-color: {$this->params->get('category1Color')} !important }
@@ -227,9 +228,6 @@ div.kbbcode-preview-bottom,
 #kbbcode-code-options,
 #kpoll-hide-not-allowed {
 	background-color: #FFFFFF/*boxBg*/;
-	border-radius: {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px;
-	-webkit-border-radius: {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px;
-	-moz-border-radius: {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px;
 }
 #kunena li.row:hover { background-color: #F4F4F4; }
 #kunena div.forumlist,
@@ -244,9 +242,6 @@ div.kbbcode-preview-bottom,
 
 #kunena div.inner-odd,
 #kunena div.inner-even {
-	border-radius: {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px;
-	-webkit-border-radius: {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px;
-	-moz-border-radius: {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px {$this->params->get('boxRadius')}px;
 }
 
 #kunena li.row,
@@ -336,10 +331,6 @@ div.kbbcode-preview-bottom,
 	background-position: 3px center;
 	border:1px solid {$this->params->get('buttonsborderColor')};
 	color:{$this->params->get('buttonstextColor')};
-	border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-webkit-border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	behavior: url("{$pieurl}/PIE.php");position:relative;
 }
 
 #mbCenter input.tk-login-button,
@@ -401,23 +392,17 @@ text-shadow:0 -1px 0 rgba(0, 0, 0, 0.5);
 	-moz-box-shadow:0 0 5px {$this->params->get('subshadowColor')};
 	-webkit-box-shadow:0 0 5px {$this->params->get('subshadowColor')};
 	box-shadow:0 0 5px {$this->params->get('subshadowColor')};
-	border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-webkit-border-top-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-top-left-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-left-radius: {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
+	border-radius: {$this->params->get('tabRadius')}px {$this->params->get('tabRadius')}px {$this->params->get('tabRadius')}px {$this->params->get('tabRadius')}px;
+	-webkit-border-top-right-radius: {$this->params->get('tabRadius')}px;
+	-webkit-border-top-left-radius: {$this->params->get('tabRadius')}px;
+	-webkit-border-bottom-right-radius: {$this->params->get('tabRadius')}px;
+	-webkit-border-bottom-left-radius: {$this->params->get('tabRadius')}px;
+	-moz-border-radius: {$this->params->get('tabRadius')}px {$this->params->get('tabRadius')}px {$this->params->get('tabRadius')}px {$this->params->get('tabRadius')}px;
 }
 #kunena div#ktab-flat,
 #kunena div#ktab-flat .moduletable {
 	border-left: 1px solid {$this->params->get('headerBorder')};
 	border-right:1px solid {$this->params->get('headerBorder')};
-	border-radius: 0px 0px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-webkit-border-top-right-radius: 0px;
-	-webkit-border-top-left-radius: 0px;
-	-webkit-border-bottom-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-left-radius: {$this->params->get('rowRadius')}px;
-	-moz-border-radius: 0px 0px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
 }
 #kunena #ktab-flat li.active a,
 #kunena #ktab-flat li#current.active a,
@@ -547,11 +532,6 @@ div.tk-mb-header-pm span.tk-mb-first {
 #mbImage div.tk-mb-header-search,
 #mbImage div.tk-mb-header-login,
 #mbImage div.tk-mb-header-register {
-background: {$this->params->get('headerBg')};
-background: -webkit-gradient(linear, 0 0, 0 bottom, from({$this->params->get('headerBg')}), to({$this->params->get('headerBg')}));
-background: -moz-linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
-background: linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
--pie-background: linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
     border-bottom-color: {$this->params->get('headerBorder')};
     border-bottom-width: 3px;
     border-bottom-style: solid;
@@ -607,13 +587,6 @@ a#mbCloseLink big {
 #mbImage div.tk-reg input.inputbox {
 	border:1px solid #DFDFDF/*borderColor*/;
 	padding:5px 2px 5px 20px;
-	border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-webkit-border-top-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-top-left-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-left-radius: {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-
 }
 #mbImage ul.forums li input[type=checkbox],
 input[type=checkbox] {
@@ -676,14 +649,7 @@ input.tk-mb-cancel {
     border: 1px solid {$this->params->get('buttonsborderColor')};
     color: {$this->params->get('buttonstextColor')};
     text-shadow: {$this->params->get('buttonstextshadowColor')};
-    border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-webkit-border-top-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-top-left-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-left-radius: {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
     cursor:pointer;
-    behavior: url("{$pieurl}/PIE.php");position:relative;
 }
 input.tk-mb-cancel {
     background-image: url("{$imagesurl}closelabel.png");
@@ -822,12 +788,6 @@ textarea,
 #kunena span.kforumbottom,
 #kunena span.kforumtop {
 	border:1px solid {$this->params->get('buttonsborderColor')};
-	border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-webkit-border-top-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-top-left-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-left-radius: {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
 }
 #kunena div.tk-profile-info-body span.tk-info-header,
 .shadetabs li a.selected,
@@ -835,12 +795,6 @@ textarea,
 	background-color:{$this->params->get('buttonsBg')};
 	color: {$this->params->get('buttonstextColor')};
 	text-shadow: 0 1px 0 {$this->params->get('buttonstextshadowColor')};
-		border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-webkit-border-top-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-top-left-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-left-radius: {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
 }
 .shadetabs li a.selected,
 .shadetabs li a:hover {
@@ -872,12 +826,6 @@ border-right: 45px solid #FFFFFF/*boxBg*/;
 }
 .shadetabs li a {
 	border:1px solid #FFFFFF/*boxBg*/;
-	border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-webkit-border-top-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-top-left-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-right-radius: {$this->params->get('rowRadius')}px;
-	-webkit-border-bottom-left-radius: {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
 }
 #system-message dd.message {
 	background-image:url("{$imagesurl}icons/info.png");

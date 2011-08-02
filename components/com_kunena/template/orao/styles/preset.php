@@ -40,9 +40,6 @@ $styles = <<<EOF
 	background-position: left {$pos}px;
 	background-repeat: repeat-x;
 	background-color:{$bgcolor};
-	border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-webkit-border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
-	-moz-border-radius: {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px {$this->params->get('rowRadius')}px;
 	/*behavior: url("{$pieurl}/PIE.php");position:relative;*/
 }
 div.tk-mb-header-pm,

@@ -1375,8 +1375,8 @@ div#mbCenter div.tk-mb-inboxlink {
 	background-repeat: no-repeat;
 	background-color: transparent;
 	position:absolute;
-	left:50.5%;
-	top:10px;
+	right:0%;
+	top:20px;
 	width:24px;
 	height:24px;
 	z-index: 2;
@@ -1387,8 +1387,8 @@ div#mbCenter div.tk-mb-inboxlink {
 	background-repeat: no-repeat;
 	background-color: transparent;
 	position:absolute;
-	left:50.5%;
-	top:10px;
+	right:0%;
+	top:20px;
 	width:24px;
 	height:24px;
 	z-index: 2;

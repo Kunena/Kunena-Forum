@@ -94,7 +94,7 @@
 /*		LOGIN		*/
 
 #kunena a.tk-loginlink {
-	background-repeat: no-repeat;
+	/*background-repeat: no-repeat;
 	background-position: 5px center;
     display: block;
     float: right;
@@ -106,7 +106,19 @@
     text-indent: 20px;
     top: 10px;
     padding:3px 10px 5px 5px;
-	position:relative !important;
+	position:relative !important;*/
+	background-repeat: no-repeat;
+	background-position: 5px center;
+    display: block;
+    float: right;
+    /*line-height: 1.3em;*/
+    margin: -2px 15px 0 !important;
+    min-height: 16px;
+    position: relative;
+    right: 0px;
+    text-indent: 20px;
+    top: 10px;
+    padding: 2px 5px;
 }
 #kunena a.tk-logoutlink {
 	background-repeat: no-repeat;

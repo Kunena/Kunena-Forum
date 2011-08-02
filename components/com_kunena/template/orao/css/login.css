@@ -107,21 +107,20 @@
     top: 10px;
     padding:3px 10px 5px 5px;
 	position:relative !important;*/
-	background-repeat: no-repeat;
+	/*background-repeat: no-repeat;
 	background-position: 5px center;
     display: block;
     float: right;
-    /*line-height: 1.3em;*/
     margin: -2px 15px 0 !important;
     min-height: 16px;
     position: relative;
     right: 0px;
     text-indent: 20px;
     top: 10px;
-    padding: 2px 5px;
+    padding: 2px 5px;*/
 }
 #kunena a.tk-logoutlink {
-	background-repeat: no-repeat;
+	/*background-repeat: no-repeat;
 	background-position: left center;
     display: block;
     float: right;
@@ -131,10 +130,10 @@
     position: relative;
     right: 0px;
     text-indent: 20px;
-    top: 10px;
+    top: 10px;*/
 }
 #kunena span.tk-registerlink a {
-	background-repeat: no-repeat;
+	/*background-repeat: no-repeat;
 	background-position: left center;
     display: block;
     float: right;
@@ -144,10 +143,10 @@
     position: relative;
     right: 0px;
     text-indent: 20px;
-    top: 10px;
+    top: 10px;*/
 }
 #kunena span.tk-searchlink a {
-	background-repeat: no-repeat;
+	/*background-repeat: no-repeat;
 	background-position: left center;
     display: block;
     float: right;
@@ -157,7 +156,7 @@
     position: relative;
     right: 0px;
     text-indent: 20px;
-    top: 10px;
+    top: 10px;*/
 }
 #kunena div.tk-reg_ins input#email {
 	margin:0 10px 0 0;

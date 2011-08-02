@@ -7,6 +7,21 @@
     --------------------------------------------------------------------
 */
 
+#kunena .tk-topmenu-links a {
+	background-repeat: no-repeat;
+	background-position: 5px center;
+    display: block;
+    float: right;
+    /*line-height: 1.3em;*/
+    margin: -2px 5px 0 0 !important;
+    min-height: 16px;
+    position: relative;
+    right: 0px;
+    text-indent: 20px;
+    top: 10px;
+    padding: 2px 5px
+}
+
 #kunena div#ktab li span,
 #kunena div#ktab-flat li span {
 	background-repeat: no-repeat;

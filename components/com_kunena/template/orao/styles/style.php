@@ -674,16 +674,16 @@ a.tk-mb-profile-pmlink {
 	display:block;
 }
 #kunena span.tk-pmlink {
-	float: right;
+	/*float: right;
 	margin: 10px 15px 0 0;
 	min-height: 16px;
-	min-width: 70px;
+	min-width: 70px;*/
 }
 #kunena span.tk-pmlink a {
-	color: #ffffff !important;
+	/*color: #ffffff !important;
 	padding: 0 0 0 20px;
 	float:right;
-	min-height: 16px;
+	min-height: 16px;*/
 }
 
 
@@ -693,13 +693,16 @@ a.tk-mb-profile-pmlink {
 	display:block;
 }
 #kunena span.tk-pm-nonew a {
-	background: url({$imagesurl}icons/email_16.png) no-repeat left center transparent;
+	background: url({$imagesurl}icons/email_new.png) no-repeat left center transparent;
 }
 #kunena span.tk-pm-new a {
 	background: url({$imagesurl}icons/email_new.png) no-repeat left center transparent;
 }
 #kunena span.tk-pm-new {
-	background: url({$imagesurl}new.gif) no-repeat left center transparent;
+	background: url({$imagesurl}new.gif) no-repeat left bottom transparent;
+    display: block;
+    float: left;
+    padding-left: 30px;
 }
 
 /*		end PM Popup 	*/

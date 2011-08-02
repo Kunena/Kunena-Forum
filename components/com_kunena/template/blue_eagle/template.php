@@ -9,8 +9,8 @@
 **/
 defined( '_JEXEC' ) or die();
 
-class KunenaTemplateDefault extends KunenaTemplate {
-	protected $default = 'default';
+class KunenaTemplateBlue_Eagle extends KunenaTemplate {
+	protected $default = 'blue_eagle';
 	protected $css_compile = false;
 	public $categoryIcons = array('kreadforum', 'kunreadforum');
 

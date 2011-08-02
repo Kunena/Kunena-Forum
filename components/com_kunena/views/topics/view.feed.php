@@ -32,6 +32,7 @@ class KunenaViewTopics extends KunenaView {
 		$data = $cache->call( array( 'CKunenaRSSData', 'fetch' ), $this->type, $this->incl_cat, $this->excl_cat, $this->limit, $this->timelimit );
 		*/
 		$this->layout = 'default';
+		$this->params = $this->state->get('params');
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->me = KunenaFactory::getUser();

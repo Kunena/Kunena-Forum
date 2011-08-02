@@ -30,7 +30,7 @@ class KunenaViewCategory extends KunenaView {
 		}
 
 		$this->template = KunenaTemplate::getInstance();
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
+		$this->topics = $this->get ( 'Topics' );
 
 		$title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 		$this->setTitle ( $title );

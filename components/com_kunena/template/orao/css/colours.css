@@ -267,28 +267,6 @@ div#video {
 /* FORUM PLUGINS
 -------------------------------------------------------- */
 
-#kunena img.online_admin {
-	border-color: #A95618;
-}
-#kunena img.online_globalmoderator {
-	border-color: #008000;
-}
-#kunena img.online_moderator {
-	border-color: #84618B;
-}
-#kunena img.online_user {
-	border-color: #5388B4;
-}
-#kunena img.online_guest {
-	border-color: #666666;
-}
-#kunena img.online_banned {
-	border-color: #A39D49;
-}
-#kunena img.online_banned_red {
-	border-color: #ff0000;
-}
-
 #kunena div#kannouncement div.kheader {
 	background: #e6e6e6;
 }

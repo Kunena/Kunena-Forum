@@ -72,7 +72,9 @@ div.tk-mb-header-register {
 	/*line-height: 120%;*/
 }
 #kunena div.tksection-desc,
-#kunena div.kmsgsignature {
+#kunena div.kmsgsignature,
+#kunena .kpostmessage .kpostbuttonset .kposthint,
+#kunena .kpostmessage .kposthint .kinputbox {
 	background: {$bordercolor};
 }
 #kunena div.forumlist,
@@ -106,7 +108,8 @@ div.kbbcode-preview-bottom,
 #kunena input.kinputbox,
 #kunena textarea.ktxtarea,
 #kunena .kpostmessage .ktxtarea,
-#kunena .kpostmessage select {
+#kunena .kpostmessage select,
+#kunena .kpostmessage .kpostbuttonset .kposthint {
 	border-color: {$bordercolor};
 }
 
@@ -115,7 +118,6 @@ div.kbbcode-preview-bottom,
 #kunena div.inner-even {
 	background: {$messagecolor};
 }
-
 EOF;
 $document->addStyleDeclaration($styles);
 

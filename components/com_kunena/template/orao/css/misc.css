@@ -130,6 +130,7 @@
 
 /* Userlist
 ----------------------------------------*/
+/*
 #kunena div.tk-pagecount ul.pagination li {
 	display: inline !important;
 	float: left;
@@ -287,7 +288,7 @@
 #kunena dl.icon-search dd {
 	padding: 0 5px 5px 5px;
 }
-
+*/
 /* STATISTICS 
 ----------------------------------------------------------------------------------------------- */
 
@@ -409,33 +410,22 @@
 	clear:left;
 }
 
-#kunena img.online_admin,
-#kunena img.online_globalmoderator,
-#kunena img.online_moderator,
-#kunena img.online_user,
-#kunena img.online_guest {
-	border-width: 1px;
-	border-style: solid;
-}
-
 /*
 POLLS
 -------------------------------------------------------------------- */
-
+/*
 #kunena div#poll_text_help {
 	font-weight:bold;
 }
 #kunena div#kpoll_hide_not_allowed {
 	clear: left;
-}
+}*/
 /* Top Profile Box
 ----------------------------------------*/
-
+/*
 #kunena li.header dl.frontstats {
 	vertical-align: middle;
 	min-height: 16px;
-/*	background-position: 2px center;
-	background-repeat: no-repeat;*/
 }
 
 
@@ -477,9 +467,8 @@ POLLS
 #kunena div#profilebox {
 	min-height: 20px;
 	margin-top: -9px;
-}
-/*			AVATARS WHO IS ONLINE
-------------------------------------------------*/
+}*/
+
 
 /*
 ANNOUNCMENT

@@ -381,23 +381,6 @@ div#mbCenter input#tk-submit-button.kbutton,
 
 #kunena .shadetabs li a { background-image: url("../images/profile-tabs.png"); }
 
-#kunena .shadetabs li.tk-profiletab-info a 				{ background-position: 50% 0; }
-#kunena .shadetabs li.tk-profiletab-banh a 				{ background-position: 50% -77px; }
-#kunena .shadetabs li.tk-profiletab-banm a 				{ background-position: 50% -159px; }
-#kunena .shadetabs li.tk-profiletab-edit-avatar a 		{ background-position: 50% -241px; }
-#kunena .shadetabs li.tk-profiletab-banu a				{ background-position: 50% -323px; }
-#kunena .shadetabs li.tk-profiletab-edit-profile a 		{ background-position: 50% -405px; }
-#kunena .shadetabs li.tk-profiletab-edit-settings a 	{ background-position: 50% -487px; }
-#kunena .shadetabs li.tk-profiletab-edit-user a 		{ background-position: 50% -569px; }
-#kunena .shadetabs li.tk-profiletab-fav a				{ background-position: 50% -651px; }
-#kunena .shadetabs li.tk-profiletab-banu a				{ background-position: 50% -733px; }
-#kunena .shadetabs li.tk-profiletab-posts a				{ background-position: 50% -815px; }
-#kunena .shadetabs li.tk-profiletab-about a				{ background-position: 50% -897px; }
-#kunena .shadetabs li.tk-profiletab-sub a 				{ background-position: 50% -984px; }
-#kunena .shadetabs li.tk-profiletab-thankyou a 			{ background-position: 50% -1061px; }
-#kunena .shadetabs li.tk-profiletab-review a 			{ background-position: 50% -1143px; }
-
-
 #kunena .profile-info {
 	background-image:url(../images/members.png);
 }
@@ -429,12 +412,6 @@ div#mbCenter input#tk-submit-button.kbutton,
 #kunena a.kbuttoncomm span span,
 #kunena a.kbuttonuser span span,
 #kunena a.kbuttongen span span { background-image:none !important;}
-
-
-/* Social Icons */
-#kunena .kdetails-links li a span {
-	/*background-image: url("../images/icons-profile.png");*/
-}
 
 /*		OWN RANKS		*/
 

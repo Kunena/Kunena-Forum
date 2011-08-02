@@ -1515,14 +1515,7 @@ body {line-height:1.5;}
 	border-width: 1px 1px 0;
 	padding: 4px 8px;
 }
-#kunena .kpostmessage .kpostbuttonset .kposthint {
-	border: 1px solid;
-	padding: 2px 5px;
-}
-#kunena .kpostmessage .kposthint .kinputbox {
-	border: 0 solid;
-	width: 99%;
-}
+
 #kunena .kpostmessage .ktxtarea {
 	border: 1px solid;
 	height: 200px;

@@ -59,7 +59,7 @@ $this->params = $template->params;
 							<?php endif ?>
 					</div>
 					<div class="clr"></div>
-					<div class="wholegend km">
+					<div class="wholegend">
 						<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?> :: </span>&nbsp;
 						<span class = "kuser-admin" title = "<?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></span>,&nbsp;
 						<span class = "kuser-globalmod" title = "<?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></span>,&nbsp;

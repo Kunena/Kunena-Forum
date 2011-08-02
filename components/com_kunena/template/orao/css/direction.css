@@ -179,6 +179,22 @@ div#mbCenter a.tk-mb-inboxlink {
 #kunena .kgrid-lock a.grid_true {
 	background-position: left center;
 }
+#kunena span.kforumbottom {
+	margin-right: 0 !important;
+}
+#kunena span.kforumtop {
+	margin-right: 0 !important;
+}
+#kunena li.rowfull dd.pollfirst,
+#kunena li.rowfull dd.annfirst {
+	border-left:none;
+}
+#kunena td.kcategory-icon {
+	border-right: 1px solid #ccc;
+}
+#kunena .ktopic-actions {
+	float:left;
+}
 
 
 

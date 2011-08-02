@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.version' );
-
 // Abstract base class for various 3rd party integration classes
 abstract class KunenaIntegration extends JObject {
 	protected static $instances = array ();
@@ -68,11 +66,12 @@ abstract class KunenaIntegration extends JObject {
 	}
 
 	static protected function detectJoomla() {
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == '1.5') {
-			return 'joomla15';
-		} else {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
 			return 'joomla16';
+		} else {
+			// Joomla 1.5
+			return 'joomla15';
 		}
 	}
 

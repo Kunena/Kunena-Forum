@@ -9,8 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.version' );
-
 // This isn't called because of redirect
 $this->parent->copyManifest();
 
@@ -20,8 +18,7 @@ function com_install() {
 		return false;
 	}
 
-	$jversion = new JVersion ();
-	if ($jversion->RELEASE != '1.5') {
+	if (version_compare(JVERSION, '1.6','>')) {
 		echo "ERROR: WRONG MANIFEST FILE LOADED, PLEASE TRY AGAIN WITH THE LATEST VERSION OF JOOMLA!";
 		return false;
 	}

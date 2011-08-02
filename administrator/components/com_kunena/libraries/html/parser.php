@@ -121,11 +121,12 @@ abstract class KunenaHtmlParser {
 
 			$dispatcher = JDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
-			$jversion = new JVersion();
-			if ($jversion->RELEASE == '1.5') {
-				$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
-			} else {
+			if (version_compare(JVERSION, '1.6','>')) {
+				// Joomla 1.6+
 				$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
+			} else {
+				// Joomla 1.5
+				$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
 			}
 			$content = $row->text;
 		}

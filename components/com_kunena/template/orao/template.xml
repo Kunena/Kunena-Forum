@@ -66,19 +66,19 @@
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
-		<param name="showPathway" class="tk_switch" type="list" default="0" label="Show Pathway" description="You can Hide or Show Pathway">
+		<param name="showPathway" class="tk_switch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_PATHWAY" description="COM_KUNENA_TEMPLATE_SHOW_PATHWAY_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
-		<param name="countcolumnShow" class="tk_switch" type="list" default="0" label="Column Topics and Views" description="Show or Hide Topics and Views number Column">
+		<param name="countcolumnShow" class="tk_switch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_COLUMN" description="COM_KUNENA_TEMPLATE_SHOW_COLUMN_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
-		<param name="loginLogout" class="tk_switch" type="list" default="1" label="Login / Logout link" description="Show or Hide Login / Logout links at top menu bar">
+		<param name="loginLogout" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_LOGIN_LINK" description="COM_KUNENA_TEMPLATE_SHOW_LOGIN_LINK_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
-		<param name="searchLink" class="tk_switch" type="list" default="1" label="Search link" description="Show or Hide Search Link at top menu bar">
+		<param name="searchLink" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_SEARCH_LINK" description="COM_KUNENA_TEMPLATE_SHOW_SEARCH_LINK_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
@@ -89,7 +89,7 @@
 			<option value="3">COM_KUNENA_TEMPLATE_THREE_COLUMN</option>
 			<option value="4">COM_KUNENA_TEMPLATE_FOUR_COLUMN</option>
 		</param>
-		<param name="maxwidthPostimage" type="text" default="700" label="Max. Width Images" description="Limit a width of uploaded images in a Post Messages" />
+		<param name="maxwidthPostimage" type="text" default="700" label="COM_KUNENA_TEMPLATE_IMAGES_WIDTH" description="COM_KUNENA_TEMPLATE_IMAGES_WIDTH_DESC" />
 
 <param type="spacer" default="COM_KUNENA_TEMPLATE_STYLE_CONFIGURATION" />
 
@@ -99,18 +99,18 @@
 			<option value="purple">COM_KUNENA_TEMPLATE_PURPLE</option>
 			<option value="grey">COM_KUNENA_TEMPLATE_GREY</option>
 			<option value="green">COM_KUNENA_TEMPLATE_GREEN</option>
-			<option value="nopreset">No Preset</option>
+			<option value="nopreset">COM_KUNENA_TEMPLATE_NO_PRESET</option>
 		</param>
-		<param name="headerBg" type="text" default="#888888" label="Header Bg Color" description="" />
-		<param name="headerBorder" type="text" default="#222222" label="Header Border Color" description="" />
-		<param name="tabshadowColor" type="text" default="#EEEEEE" label="Tab Shadow Color" description="" />
-		<param name="subshadowColor" type="text" default="#FFFFFF" label="Submenu Shadow Color" description="" />
-		<param name="buttonsBg" type="text" default="#444444" label="Buttons Bg Color" description="" />
-		<param name="buttonsborderColor" type="text" default="#000000" label="Buttons Border Color" description="" />
-		<param name="buttonstextColor" type="text" default="#FFFFFF" label="Buttons Text Color" description="" />
-		<param name="buttonstextshadowColor" type="text" default="#000000" label="Buttons Text Shadow" description="" />
-		<param name="stickyColor" type="text" default="" label="Sticky Color" description="" />
-		<param name="tabRadius" type="text" default="0" label="Menu Tab Radius" description="" />
+		<param name="headerBg" type="text" default="#888888" label="COM_KUNENA_TEMPLATE_HEADER_BG_COLOR" description="COM_KUNENA_TEMPLATE_HEADER_BG_COLOR_DESC" />
+		<param name="headerBorder" type="text" default="#222222" label="COM_KUNENA_TEMPLATE_HEADER_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_HEADER_BORDER_COLOR_DESC" />
+		<param name="tabshadowColor" type="text" default="#EEEEEE" label="COM_KUNENA_TEMPLATE_TAB_SHADOW_COLOR" description="COM_KUNENA_TEMPLATE_TAB_SHADOW_COLOR_DESC" />
+		<param name="subshadowColor" type="text" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_SUBMENU_SHADOW_COLOR" description="COM_KUNENA_TEMPLATE_SUBMENU_SHADOW_COLOR_DESC" />
+		<param name="buttonsBg" type="text" default="#444444" label="COM_KUNENA_TEMPLATE_BUTTONS_BG_COLOR" description="COM_KUNENA_TEMPLATE_BUTTONS_BG_COLOR_DESC" />
+		<param name="buttonsborderColor" type="text" default="#000000" label="COM_KUNENA_TEMPLATE_BUTTONS_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTONS_BORDER_COLOR_DESC" />
+		<param name="buttonstextColor" type="text" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_BUTTONS_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_BUTTONS_TEXT_COLOR_DESC" />
+		<param name="buttonstextshadowColor" type="text" default="#000000" label="COM_KUNENA_TEMPLATE_BUTTONS_TEXT_SHADOW" description="COM_KUNENA_TEMPLATE_BUTTONS_TEXT_SHADOW_DESC" />
+		<param name="stickyColor" type="text" default="" label="COM_KUNENA_TEMPLATE_STICKY_COLOR" description="COM_KUNENA_TEMPLATE_STICKY_COLOR_DESC" />
+		<param name="tabRadius" type="text" default="0" label="COM_KUNENA_TEMPLATE_MENU_TAB_RADIUS" description="COM_KUNENA_TEMPLATE_MENU_TAB_RADIUS_DESC_DESC" />
 
 <param type="spacer" default="COM_KUNENA_TEMPLATE_TOP_MENU_ICONS" />
 		<param name="topmenu1Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 

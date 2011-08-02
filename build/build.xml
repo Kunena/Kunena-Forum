@@ -143,8 +143,7 @@
 		<!-- Move files needed by the installer -->
 		<move file="${tmp_dir}/admin/${cfg.name}.xml" todir="${build_dir}" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/admin/${cfg.name}.j16.xml" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/site/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/site/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/site/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />		
 		<copy file="${project_dir}/README.markdown" tofile="${build_dir}/README.txt" overwrite="true" filtering="true" />
 		<!-- Copy installer entry files to keep forum offline during installation process. -->
 		<move file="${tmp_dir}/admin/install/entrypoints/api.php" todir="${build_dir}" overwrite="true" filtering="true" />

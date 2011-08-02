@@ -26,6 +26,7 @@ class KunenaAvatarGravatar extends KunenaAvatar
 
 	protected function _getURL($user, $sizex, $sizey)
 	{
+		jimport( 'joomla.environment.browser' );
 		$browser = JBrowser::getInstance();
 		$protocol = $browser->isSSLConnection() ? "https" : "http";
 

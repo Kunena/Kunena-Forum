@@ -79,15 +79,6 @@ defined ( '_JEXEC' ) or die ();
 					<?php echo $this->topic->getPagination(0, $this->config->messages_per_page, 3)->getPagesLinks() ?>
 				</dd>
 			</dl>
-			<?php
-			//echo CKunenaLink::GetThreadLink ( 'view', $message->catid, $message->id, CKunenaTools::showButton ( 'reply', JText::_('Post') ), JText::_('Go to Post'), 'follow', 'kicon-button kbuttoncomm btn-left' ).'&nbsp;&nbsp;';
-			?>
-			<?php
-			//echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, CKunenaTools::showButton ( 'reply', JText::_('Topic') ), JText::_('Go to Topic'), 'follow', 'kicon-button kbuttoncomm btn-left' ).'&nbsp;&nbsp;';
-			?>
-			<?php
-			//echo CKunenaLink::GetCategoryLink ( 'showcat', $message->catid, CKunenaTools::showButton ( 'reply', JText::_('Category') ), JText::_('Go to Category'), 'kicon-button kbuttoncomm btn-left', JText::_('Go to Category').': '.$message->catname);
-			?>
 			</div>
 		<span class=""><span></span></span>
 	</div>

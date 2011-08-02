@@ -301,12 +301,6 @@ span.open, a.open {
 #kunena .attachicons {
     background-image: url("../images/icons/attachment_picc.png");
 }
-
-
-
-#kunena .krss-icon {
-    background: url("../images/icons/icon-rss.png") no-repeat scroll 0 0 transparent;
-}
 #kunena .kmarkread-icon {
     background: url("../images/icons/icon-markread.png") no-repeat scroll 0 0 transparent;
 }
@@ -319,9 +313,6 @@ span.open, a.open {
 #kunena span.kcategory-smicon-new {
 	background: url("../images/icons/childicon_new.png") no-repeat;
 }
-#kunena span.krss {
-	background-image: url("../images/icons/rss.png");
-}
 
 #kunena span.kforumbottom {
 	background-image: url("../images/icons/bottom_arrow.png");
@@ -329,7 +320,6 @@ span.open, a.open {
 #kunena span.kforumtop {
 	background-image: url("../images/icons/top_arrow.png");
 }
-
 
 div#mbCenter a.tk-mb-inboxlink {
 	background-image: url("../images/icons/book_next.png");
@@ -366,7 +356,7 @@ div#mbCenter input#tk-submit-button.kbutton,
 	background-image: url("../images/icons/user_remove.png");
 }
 #kunena span.tk-latestpost {
-	background-image: url("../images/icons/icon_topic_latest.gif");
+	background-image: url("../images/icons/topic-latest.gif");
 }
 #kunena a.grid_true,
 #kunena a.grid_unpublish {
@@ -516,9 +506,6 @@ div#mbCenter input#tk-submit-button.kbutton,
 }
 #kunena li.kmarkall {
 	background: url("../images/icon-pm.png") 0 4px  no-repeat;
-}
-#kunena .krss-icon {
-	/*background: url("../images/rss.png") no-repeat;*/
 }
 #kunena .klocked-icon {
 	background: url("../images/icon-locked.png") no-repeat;

@@ -271,7 +271,7 @@ span.open, a.open {
 /*-------------------------------------------------*/
 
 #kunena span.tk-editlink span {
-    background-image: url("../images/buttons/buttons.png");
+    background-image: url("../images/buttons.png");
 }
 
 /*		ICONS		
@@ -495,7 +495,7 @@ div#mbCenter input#tk-submit-button.kbutton,
 #kunena a.kbuttonuser span,
 #kunena a.kbuttonmod span,
 #kunena a.kbuttongen span {
-	background-image: url("../images/buttons/buttons.png");
+	background-image: url("../images/buttons.png");
 }
 #kunena .ktree { 
 	background-image: url("../images/treenodes.png");

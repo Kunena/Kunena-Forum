@@ -35,7 +35,7 @@ class KunenaTemplate extends JObject
 	public $params = null;
 	public $paramstime = false;
 
-	protected $default = 'default';
+	protected $default = 'blue_eagle';
 	protected $css_compile = true;
 	protected $smileyPath = array();
 	protected $rankPath = array();
@@ -58,7 +58,7 @@ class KunenaTemplate extends JObject
 		}
 		$xml = KPATH_SITE . "/template/{$name}/template.xml";
 		if (!is_readable ( $xml )) {
-			$name = 'default';
+			$name = 'blue_eagle';
 			$xml = KPATH_SITE . "/template/{$name}/template.xml";
 		}
 		$this->xml_path = $xml;
@@ -511,8 +511,8 @@ class KunenaTemplate extends JObject
 			if (!class_exists($classname)) {
 				$file = KPATH_SITE."/template/{$name}/template.php";
 				if (!file_exists($file)) {
-					$classname = "KunenaTemplateDefault";
-					$file = KPATH_SITE."/template/default/template.php";
+					$classname = "KunenaTemplateBlue_Eagle";
+					$file = KPATH_SITE."/template/blue_eagle/template.php";
 				}
 				if (file_exists($file)) {
 					require_once $file;

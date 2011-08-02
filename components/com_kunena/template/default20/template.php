@@ -10,7 +10,7 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaTemplateDefault20 extends KunenaTemplate {
-	protected $default = 'default';
+	protected $default = 'blue_eagle';
 	public $categoryIcons = array('knonew', 'knew');
 
 	public function initialize() {

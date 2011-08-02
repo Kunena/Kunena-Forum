@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
 <kinstall type="kunena-template" version="1.6">
-	<name>Blue Eagle (default)</name>
+	<name>Blue Eagle (Kunena 1.6)</name>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
 	<author>Kunena Team</author>

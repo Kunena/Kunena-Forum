@@ -16,5 +16,7 @@
 		<filename>nl-NL.com_kunena.ini</filename>
 		<filename>nl-NL.com_kunena.install.ini</filename>
 		<filename>nl-NL.com_kunena.menu.ini</filename>
+		<filename>nl-NL.com_kunena.sys.ini</filename>
+		<filename>nl-NL.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

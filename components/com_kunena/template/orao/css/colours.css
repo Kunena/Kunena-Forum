@@ -87,8 +87,6 @@
 
 ul.autocompleter-choices {
 	border-color: #7c7c7c;
-	border-left-color: #c3c3c3;
-	border-right-color: #c3c3c3;
 	border-bottom-color:	#ddd;
 	background-color: #fff;
 }
@@ -203,23 +201,18 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 
 #kunena div.msgcontent div.highlight pre.php {
 	background-color: #f0f0f0;
-	border-left-color: #CCCCCC;
 }
 #kunena div.msgcontent div.highlight pre.css {
 	background-color: #f2ffff;
-	border-left-color: #6495ED;
 }
 #kunena div.postbody div.highlight pre.ini {
 	background-color: #FFE8DF;
-	border-left-color: #FFB295;
 }
 #kunena div.postbody div.highlight pre.html4strict {
 	background-color: #EFDFF7;
-	border-left-color: #CE9CE7;
 }
 #kunena div.postbody div.highlight pre.xml {
 	background-color: #D7E7D7;
-	border-left-color: #8FBC8F;
 }
 .kgooglemap {
 	background-color:#E5E3DF;
@@ -305,8 +298,6 @@ div#kprofile-stats ul li span.online-status-no {
 	color: #FFF !important;
 }
 #kprofile-tabs dl.tabs dt {
-	border-left-color: #BFC3C6;
-	border-right-color: #BFC3C6;
 	border-top-color: #BFC3C6;
 	background: #f0f0f0;
 	color: #666;
@@ -323,8 +314,6 @@ div.clrline {
 	border-top-color: #BFC3C6;
 }
 #kunena dl.tabs dt {
-	border-left-color: #BFC3C6;
-	border-right-color: #BFC3C6;
 	border-top-color: #BFC3C6;
 	background: #f0f0f0;
 	color: #666;

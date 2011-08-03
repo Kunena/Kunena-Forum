@@ -195,6 +195,33 @@ div#mbCenter a.tk-mb-inboxlink {
 #kunena .ktopic-actions {
 	float:left;
 }
+ul.autocompleter-choices {
+	border-left-color: #c3c3c3;
+	border-right-color: #c3c3c3;
+}
+#kprofile-tabs dl.tabs dt {
+	border-left-color: #BFC3C6;
+	border-right-color: #BFC3C6;
+}
+#kunena dl.tabs dt {
+	border-left-color: #BFC3C6;
+	border-right-color: #BFC3C6;
+}
+#kunena div.msgcontent div.highlight pre.php {
+	border-left-color: #CCCCCC;
+}
+#kunena div.msgcontent div.highlight pre.css {
+	border-left-color: #6495ED;
+}
+#kunena div.postbody div.highlight pre.ini {
+	border-left-color: #FFB295;
+}
+#kunena div.postbody div.highlight pre.html4strict {
+	border-left-color: #CE9CE7;
+}
+#kunena div.postbody div.highlight pre.xml {
+	border-left-color: #8FBC8F;
+}
 
 
 

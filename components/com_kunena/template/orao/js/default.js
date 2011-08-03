@@ -741,7 +741,7 @@ window.addEvent('domready', function(){
 	$$('.kreply-cancel').addEvent('click', function(e){
 		$$('.kreply-form').setStyle('display', 'none');
 	});
-	
+
 	/* Logic for bulkactions */
 	$$('input.kcheckall').addEvent('click', function(e){
 		this.getParent('form').getElements('input.kcheck').each(function(el){
@@ -843,4 +843,18 @@ window.addEvent('domready', function(){
 			else document.id('kpoll-moreusers-div').setStyle('display', 'none');
 		});
 	}
+	
+	/* Tips 2 */
+	var MyTips = new Tips($$('.my-tips'), {
+		initialize:function(){
+			this.fx = new Fx.Style(this.toolTip, 'opacity', {duration: 500, wait: false}).set(0);
+		},
+		onShow: function(toolTip) {
+			this.fx.start(1);
+		},
+		onHide: function(toolTip) {
+			this.fx.start(0);
+		}
+	});
+	
 });

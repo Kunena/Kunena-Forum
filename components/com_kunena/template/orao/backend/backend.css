@@ -110,53 +110,6 @@ div.tk_desc {
 	width:100px;
 	height:32px;
 }
-#tk_update_div{
-	border-bottom:1px solid #d1d1d1;
-	color:#aaa;
-	padding:10px;
-	text-align:center;
-	height:150px;
-	overflow:auto;
-}
-#tk_loader{
-	background:url('loader.gif') no-repeat 0 0;
-	display:block;
-	width:16px;
-	height:16px;
-	margin:10px auto 10px auto;
-}
-.tk_update{
-	clear:both;
-}
-#tk_update_div p{
-	font-size:11px;
-	text-align:left;
-	color:#999;
-}
-.tk_update{
-	line-height:25px;
-	border-bottom:1px dotted #d1d1d1;
-}
-span.tk_update_version{
-	color:#666;
-	float:left;
-	padding:0 20px;
-	border-right:1px dotted #d1d1d1;
-	font-size:12px;
-}
-span.tk_update_data{
-	float:left;
-	color:#666;
-	padding:0 20px;
-	font-size:12px;
-	border-right:1px dotted #d1d1d1;
-}
-span.tk_update_link{
-	float:left;
-	font-size:14px;
-	padding-left:20px;
-}
-
 .switcher-on,
 .switcher-off{
 	width:94px;

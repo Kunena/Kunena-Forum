@@ -824,6 +824,5 @@ border-right: 45px solid #FFFFFF/*boxBg*/;
 #kunena li.row:hover span.ksubs-icon {
     display:block !important;
 }
-
 EOF;
 $document->addStyleDeclaration($styles);

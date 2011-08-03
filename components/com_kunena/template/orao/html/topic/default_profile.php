@@ -19,8 +19,8 @@ defined ( '_JEXEC' ) or die ();
 							</li>
 							<?php endif; ?>
 							<?php if ($this->profile->exists()): ?>
-							<?php if (!empty($this->userranktitle)) : ?><li class="kpost-user-rank"><?php echo $this->escape($this->userranktitle) ?></li><?php endif ?>
-							<?php if (!empty($this->userrankimage)) : ?><li class="kpost-user-rank-img"><?php echo $this->userrankimage ?></li><?php endif ?>
+							<?php /*if (!empty($this->userranktitle)) : ?><li class="kpost-user-rank"><?php echo $this->escape($this->userranktitle) ?></li><?php endif*/ ?>
+							<?php /*if (!empty($this->userrankimage)) : ?><li class="kpost-user-rank-img"><?php echo $this->userrankimage ?></li><?php endif*/ ?>
 							<?php if ($this->userposts) : ?><li class="kpost-user-posts"><?php echo JText::_('COM_KUNENA_POSTS') .' '. intval($this->userposts) ?></li><?php endif ?>
 							<?php if ($this->userpoints) : ?><li class="kpost-user-points"><?php echo JText::_('COM_KUNENA_AUP_POINTS') .' '. intval($this->userpoints); ?></li><?php endif ?>
 							<?php if ( $this->userkarma ) : ?><li class="kpost-user-karma"><?php echo $this->userkarma ?></li><?php endif ?>

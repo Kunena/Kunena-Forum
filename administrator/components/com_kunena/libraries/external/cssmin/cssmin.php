@@ -52,7 +52,6 @@ abstract class aCssToken
 	 */
 	abstract public function __toString();
 	}
-
 /**
  * Abstract definition of a for a ruleset start token.
  *

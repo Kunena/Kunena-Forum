@@ -11,12 +11,13 @@
 defined ( '_JEXEC' ) or die ();
 
 // Load Mootools
-$jversion = new JVersion ();
-if ($jversion->RELEASE == '1.5') {
-	JHtml::_('behavior.mootools');
-} else {
+if (version_compare(JVERSION, '1.6','>')) {
+	// Joomla 1.6+
 	JHtml::_('behavior.framework', true);
 	JHtml::_('script','system/multiselect.js',false,true);
+} else {
+	// Joomla 1.5
+	JHtml::_('behavior.mootools');
 }
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');

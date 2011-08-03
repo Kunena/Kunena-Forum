@@ -132,8 +132,11 @@ class KunenaTemplate extends JObject
 	}
 
 	public function loadMootools() {
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == '1.5') {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
+			JHTML::_ ( 'behavior.framework', true );
+		} else {
+			// Joomla 1.5
 			jimport ( 'joomla.plugin.helper' );
 			$mtupgrade = JPluginHelper::isEnabled ( 'system', 'mtupgrade' );
 			if (! $mtupgrade) {
@@ -152,9 +155,6 @@ class KunenaTemplate extends JObject
 			if (version_compare($mtversion, '1.2.4', '<')) {
 				KunenaError::warning ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_LEGACY').' '.JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_WARNING') );
 			}
-		} else {
-			// Joomla 1.6+
-			JHTML::_ ( 'behavior.framework', true );
 		}
 
 		if (JDEBUG || KunenaFactory::getConfig()->debug) {

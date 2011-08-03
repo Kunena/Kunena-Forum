@@ -12,11 +12,12 @@ defined ( '_JEXEC' ) or die ();
 
 $this->document->addStyleSheet ( JURI::base(true).'/components/com_kunena/install/media/install.css' );
 if ($this->go == 'next') {
-	$jversion = new JVersion ();
-	if ($jversion->RELEASE == '1.5') {
-		JHtml::_('behavior.mootools');
-	} else {
+	if (version_compare(JVERSION, '1.6','>')) {
+		// Joomla 1.6+
 		JHtml::_('behavior.framework', true);
+	} else {
+		// Joomla 1.5
+		JHtml::_('behavior.mootools');
 	}
 	$this->document = JFactory::getDocument();
 	$this->document->addScriptDeclaration(" // <![CDATA[

@@ -52,8 +52,8 @@ class KunenaModelUser extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_search", 'search', '' );
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH')) $this->setState ( 'list.search', $value );
 
-		$jversion = new JVersion ();
-		$this->setState ( 'list.exclude', $jversion->RELEASE == '1.5' ? '62' : '42');
+		// FIXME: doesn't work: Super administrator id may vary (JUpgrade 1.5 -> 1.6, migrations etc)
+		$this->setState ( 'list.exclude', version_compare(JVERSION, '1.6','>') ? '42' : '62');
 	}
 
 	public function getQueryWhere() {

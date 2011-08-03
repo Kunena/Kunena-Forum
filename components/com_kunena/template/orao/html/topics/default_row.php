@@ -114,7 +114,7 @@ defined ( '_JEXEC' ) or die ();
 						</span>
 						<?php endif ?>
 						<span class="tk-latestpost">
-							<?php echo $this->getTopicLink ( $this->topic, 'last', 'Last post' ) ?> <?php echo JText::_('COM_KUNENA_BY').' '.$this->lastPostAuthor->getLink($this->lastUserName) ?>
+							<?php echo $this->getTopicLink ( $this->topic, 'last', $this->getIcon('tk-lastposticon') ) ?> <?php echo JText::_('COM_KUNENA_BY').' '.$this->lastPostAuthor->getLink($this->lastUserName) ?>
 						</span>
 						<br />
 						<span class="topic_date">

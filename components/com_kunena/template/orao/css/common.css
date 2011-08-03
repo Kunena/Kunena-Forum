@@ -1147,6 +1147,23 @@ div#mbCenter div.tk-mb-inboxlink {
 	z-index: 2;
 	max-width: 16px;
 }
+#kunena .krss-icon {
+	background-position: left center;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#kunena .tk-lastposticon {
+	background-position: left center;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	position:absolute !important;
+	left:0;
+	top:5px;
+	width:11px;
+	height:9px;
+	margin: 0 !important;
+}
 
 
 #kunena .lockedicon {

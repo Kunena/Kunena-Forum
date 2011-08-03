@@ -190,6 +190,7 @@
 	display: block;
 	float: left;
 	white-space: normal;
+	position: relative;
 }
 #kunena dd.lastpost span a {
 	font-weight: bold;

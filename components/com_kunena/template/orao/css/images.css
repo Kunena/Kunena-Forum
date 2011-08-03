@@ -297,7 +297,12 @@ span.open, a.open {
 #kunena .hoticon {
     background-image: url("../images/hot.png");
 }
-
+#kunena .krss-icon {
+    background-image: url("../images/icons/icon-rss.png");
+}
+#kunena .tk-lastposticon {
+    background-image: url("../images/icons/topic-latest.gif");
+}
 #kunena .attachicons {
     background-image: url("../images/icons/attachment_picc.png");
 }
@@ -354,9 +359,6 @@ div#mbCenter input#tk-submit-button.kbutton,
 }
 #kunena span.tk-register-cancel a {
 	background-image: url("../images/icons/user_remove.png");
-}
-#kunena span.tk-latestpost {
-	background-image: url("../images/icons/topic-latest.gif");
 }
 #kunena a.grid_true,
 #kunena a.grid_unpublish {

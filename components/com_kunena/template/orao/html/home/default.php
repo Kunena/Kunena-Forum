@@ -9,6 +9,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
+?>
 <div class="forumlist">
 	<div class="inner">
 		<span class="corners-top"><span></span></span>

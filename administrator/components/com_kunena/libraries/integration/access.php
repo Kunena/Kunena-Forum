@@ -311,9 +311,12 @@ abstract class KunenaAccess {
 		$db->setQuery ($query);
 		$userids = (array) $db->loadResultArray();
 		KunenaError::checkDatabaseError();
-		if (empty($userids)) return $userids;
-		$this->checkSubscribers($topic, $userids);
-		$userids = (array) array_combine ($userids, $userids);
+		if (!empty($userids)) {
+			$this->checkSubscribers($topic, $userids);
+		}
+		if (!empty($userids)) {
+			$userids = (array) array_combine ($userids, $userids);
+		}
 		return $userids;
 	}
 

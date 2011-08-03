@@ -1931,6 +1931,15 @@ class CssMinifier
 			}
 		}
 	/**
+	 * Returns the minified Source.
+	 *
+	 * @return string
+	 */
+	public function getMinified()
+		{
+		return $this->minified;
+		}
+	/**
 	 * Returns the minified tokens.
 	 *
 	 * @return string

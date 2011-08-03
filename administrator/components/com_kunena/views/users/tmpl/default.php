@@ -11,7 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' )
+$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>

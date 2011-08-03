@@ -31,6 +31,6 @@ dir = sys.argv[1]
 
 for root, dirs, files in os.walk(dir):
 	for name in files:
-		if name[-4:] != '.php' and name[-4:] != '.xml' and name[-3:] != '.js':
+		if name[-4:] != '.php' and name[-4:] != '.xml' and name[-4:] != '.ini' and name[-3:] != '.js':
 			continue
 		file_replace(root+'/'+name, dictionary)

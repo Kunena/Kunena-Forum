@@ -14,9 +14,10 @@ require_once KPATH_ADMIN . '/libraries/integration/joomla15/access.php';
 
 class KunenaAccessJXtended extends KunenaAccessJoomla15 {
 	public function __construct() {
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE != '1.5')
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Do not use in Joomla 1.6+
 			return null;
+		}
 
 		$loader = JPATH_ADMINISTRATOR . '/components/com_artofuser/libraries/loader.php';
 		if (is_file($loader)) {

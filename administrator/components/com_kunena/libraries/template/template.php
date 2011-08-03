@@ -35,7 +35,7 @@ class KunenaTemplate extends JObject
 	public $params = null;
 	public $paramstime = false;
 
-	protected $default = 'default';
+	protected $default = 'blue_eagle';
 	protected $css_compile = true;
 	protected $smileyPath = array();
 	protected $rankPath = array();
@@ -58,7 +58,7 @@ class KunenaTemplate extends JObject
 		}
 		$xml = KPATH_SITE . "/template/{$name}/template.xml";
 		if (!is_readable ( $xml )) {
-			$name = 'default';
+			$name = 'blue_eagle';
 			$xml = KPATH_SITE . "/template/{$name}/template.xml";
 		}
 		$this->xml_path = $xml;
@@ -132,8 +132,11 @@ class KunenaTemplate extends JObject
 	}
 
 	public function loadMootools() {
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == '1.5') {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
+			JHTML::_ ( 'behavior.framework', true );
+		} else {
+			// Joomla 1.5
 			jimport ( 'joomla.plugin.helper' );
 			$mtupgrade = JPluginHelper::isEnabled ( 'system', 'mtupgrade' );
 			if (! $mtupgrade) {
@@ -152,9 +155,6 @@ class KunenaTemplate extends JObject
 			if (version_compare($mtversion, '1.2.4', '<')) {
 				KunenaError::warning ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_LEGACY').' '.JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_WARNING') );
 			}
-		} else {
-			// Joomla 1.6+
-			JHTML::_ ( 'behavior.framework', true );
 		}
 
 		if (JDEBUG || KunenaFactory::getConfig()->debug) {
@@ -191,8 +191,9 @@ class KunenaTemplate extends JObject
 			// If template supports CSS compiler
 			$source = $this->getFile($filename);
 			$filename = $this->getCachePath($filename);
-			$filemtime = filemtime(JPATH_ROOT.'/'.$filename);
-			if (!JFile::exists(JPATH_ROOT.'/'.$filename) || filemtime(JPATH_ROOT.'/'.$source) > $filemtime || ($this->paramstime && $this->paramstime > $filemtime )) {
+			if (!JFile::exists(JPATH_ROOT.'/'.$filename)
+				|| filemtime(JPATH_ROOT.'/'.$source) > filemtime(JPATH_ROOT.'/'.$filename)
+				|| ($this->paramstime && $this->paramstime > filemtime(JPATH_ROOT.'/'.$filename) )) {
 				$this->compileStyleSheet($source, $filename);
 			}
 		} else {
@@ -510,8 +511,8 @@ class KunenaTemplate extends JObject
 			if (!class_exists($classname)) {
 				$file = KPATH_SITE."/template/{$name}/template.php";
 				if (!file_exists($file)) {
-					$classname = "KunenaTemplateDefault";
-					$file = KPATH_SITE."/template/default/template.php";
+					$classname = "KunenaTemplateBlue_Eagle";
+					$file = KPATH_SITE."/template/blue_eagle/template.php";
 				}
 				if (file_exists($file)) {
 					require_once $file;

@@ -144,7 +144,6 @@
 		<move file="${tmp_dir}/admin/${cfg.name}.xml" todir="${build_dir}" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/admin/${cfg.name}.j16.xml" todir="${build_dir}" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/site/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/site/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
 		<copy file="${project_dir}/README.markdown" tofile="${build_dir}/README.txt" overwrite="true" filtering="true" />
 		<!-- Copy installer entry files to keep forum offline during installation process. -->
 		<move file="${tmp_dir}/admin/install/entrypoints/api.php" todir="${build_dir}" overwrite="true" filtering="true" />
@@ -232,13 +231,13 @@
 		<mkdir dir="${build_dir}/archive" />
 		<language tag="ar-AA" />
 		<language tag="ca-ES" />
-		<language tag="cs-CZ" />
+		<!-- language tag="cs-CZ" /-->
 		<language tag="da-DK" />
 		<language tag="de-DE" />
 		<language tag="el-GR" />
 		<language tag="en-GB" />
 		<language tag="es-ES" />
-        <language tag="fa-IR" />
+		<language tag="fa-IR" />
 		<language tag="fi-FI" />
 		<language tag="fr-FR" />
 		<language tag="hu-HU" />
@@ -246,7 +245,7 @@
 		<!--language tag="it-IT" /-->
 		<!--language tag="ja-JP" /-->
 		<language tag="lt-LT" />
-		<language tag="mk-MK" />
+		<!-- language tag="mk-MK" /-->
 		<language tag="nb-NO" />
 		<language tag="nl-NL" />
 		<language tag="pl-PL" />

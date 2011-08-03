@@ -31,6 +31,7 @@ if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 // New Kunena JS for default template
 $template->addScript ( 'js/default.js' );
 
+$rtl = JFactory::getLanguage()->isRTL();
 $skinner = $template->params->get('enableSkinner', 0);
 
 if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.forum.css" )) {

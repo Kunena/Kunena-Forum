@@ -14,7 +14,6 @@ DEFINE('KUNENA_MIN_PHP', '5.2.3');
 DEFINE('KUNENA_MIN_MYSQL', '5.0.4');
 DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.22' );
 
-jimport ( 'joomla.version' );
 jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.folder' );
 jimport ( 'joomla.filesystem.file' );
@@ -271,11 +270,12 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function publishPlugin($folder, $name, $enable = 1) {
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == '1.5') {
-			$query = "UPDATE #__plugins SET published='{$enable}' WHERE folder='{$folder}' AND element='{$name}'";
-		} else {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
 			$query = "UPDATE #__extensions SET enabled='{$enable}' WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
+		} else {
+			// Joomla 1.5
+			$query = "UPDATE #__plugins SET published='{$enable}' WHERE folder='{$folder}' AND element='{$name}'";
 		}
 		$this->db->setQuery ( $query );
 		$this->db->query ();
@@ -306,11 +306,12 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function uninstallPlugin($folder, $name) {
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == '1.5') {
-			$query = "SELECT id FROM #__plugins WHERE folder='{$folder}' AND element='{$name}'";
-		} else {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
 			$query = "SELECT extension_id FROM #__extensions WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
+		} else {
+			// Joomla 1.5
+			$query = "SELECT id FROM #__plugins WHERE folder='{$folder}' AND element='{$name}'";
 		}
 		$this->db->setQuery ( $query );
 		$pluginid = $this->db->loadResult ();
@@ -324,13 +325,14 @@ class KunenaModelInstall extends JModel {
 		$src = KPATH_ADMIN . '/install/system';
 		$dest = JPATH_ROOT.'/tmp/kinstall_plugin';
 		JFolder::copy($src, $dest);
-		$jversion = new JVersion ();
 		// We need to have only one manifest which is named as kunena.xml
-		if ($jversion->RELEASE == '1.5') {
-			JFile::delete($dest.'/kunena.j16.xml');
-		} else {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
 			JFile::delete($dest.'/kunena.xml');
 			JFile::move($dest.'/kunena.j16.xml', $dest.'/kunena.xml');
+		} else {
+			// Joomla 1.5
+			JFile::delete($dest.'/kunena.j16.xml');
 		}
 		$installer = new JInstaller ( );
 		if ($installer->install ( $dest )) {
@@ -1464,11 +1466,12 @@ class KunenaModelInstall extends JModel {
 			$submenu['help']['params']['body'] = "[article=full]{$config->help_cid}[/article]";
 			$submenu['help']['params']['body_format'] = 'bbcode';
 		}
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == '1.5') {
-			$this->createMenuJ15($menu, $submenu);
-		} else {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
 			$this->createMenuJ16($menu, $submenu);
+		} else {
+			// Joomla 1.5
+			$this->createMenuJ15($menu, $submenu);
 		}
 	}
 
@@ -1777,11 +1780,12 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function deleteMenu() {
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == '1.5') {
-			$this->DeleteMenuJ15();
-		} else {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
 			$this->DeleteMenuJ16();
+		} else {
+			// Joomla 1.5
+			$this->DeleteMenuJ15();
 		}
 	}
 
@@ -1825,10 +1829,9 @@ class KunenaModelInstall extends JModel {
 	}
 
 	protected function _getJoomlaArchiveError($archive) {
-		$jversion = new JVersion ();
 		$error = '';
-		if ($jversion->RELEASE == '1.5') {
-			// Unfortunately Joomla 1.5 needs this rather ugly hack to get the error message
+		if (version_compare(JVERSION, '1.6','<')) {
+			// Joomla 1.5: Unfortunately we need this rather ugly hack to get the error message
 			$ext = JFile::getExt(strtolower($archive));
 			$adapter = null;
 

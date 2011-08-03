@@ -123,7 +123,7 @@ class KunenaControllerUser extends KunenaController {
 			} else {
 				$ban->blocked = $block;
 				$ban->setExpiration ( $expiration, $comment );
-				$ban->setReason ( $reason_private, $reason_public );
+				$ban->setReason ( $reason_public, $reason_private );
 				$success = $ban->save ();
 			}
 		}
@@ -325,9 +325,8 @@ class KunenaControllerUser extends KunenaController {
 				unset($post[$field]);
 		}
 
-		jimport ( 'joomla.version' );
-		$jversion = new JVersion ();
-		if ( $jversion->RELEASE == '1.6' ) {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
 			jimport('joomla.user.helper');
 			$result = JUserHelper::getUserGroups($user->id);
 

@@ -159,9 +159,9 @@ abstract class KunenaFactory {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
 		if (empty($loaded[$file])) {
-			$version = new JVersion();
 			$lang = JFactory::getLanguage();
-			if ($version->RELEASE == '1.5' && !$lang->getDebug()) {
+			if (version_compare(JVERSION, '1.6','<') && !$lang->getDebug()) {
+				// Joomla 1.5 hack to make languages to load faster
 				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang)."/{$lang->_lang}.{$file}.ini";
 				$loaded[$file] = self::parseLanguage($lang, $filename);
 				if (!$loaded[$file]) {

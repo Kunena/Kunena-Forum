@@ -297,3 +297,36 @@ table.kadmin-stat .col2 {
 
 span.kwriteable { color: green; }
 span.kunwriteable { color: red; }
+
+/* standard form style table */
+div.col { float: left; }
+div.width-45 { width: 45%; }
+div.width-55 { width: 55%; }
+div.width-50 { width: 50%; }
+div.width-70 { width: 70%; }
+div.width-30 { width: 30%; }
+div.width-60 { width: 60%; }
+div.width-40 { width: 40%; }
+
+table.admintable td 					 { padding: 3px; }
+table.admintable td.key,
+table.admintable td.paramlist_key {
+	background-color: #f6f6f6;
+	text-align: right;
+	width: 140px;
+	color: #666;
+	font-weight: bold;
+	border-bottom: 1px solid #e9e9e9;
+	border-right: 1px solid #e9e9e9;
+}
+
+fieldset.adminform label, fieldset.adminform span.faux-label {
+	background-color: #f6f6f6;
+	text-align: right;
+	width: 150px;
+	color: #666;
+	font-weight: bold;
+	border-bottom: 1px solid #e9e9e9;
+	border-right: 1px solid #e9e9e9;
+	margin-right:10px;
+}

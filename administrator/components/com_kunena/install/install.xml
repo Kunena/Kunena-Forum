@@ -248,11 +248,8 @@
 		<field name="userlist_allowed" type="int(11)" null="1"/>
 		<field name="userlist_count_users" type="int(11)" null="1"/>
 		<field name="enable_threaded_layouts" type="int(11)" null="1"/>
-		<field name="category_subscriptions" type="text" null="1"/>
-		<field name="topic_subscriptions" type="text" null="1"/>
-		<field name="pubprofile" type="int(11)" null="1"/>
-		<field name="thankyou_max" type="int(11)" null="1"/>
-		<field name="category_subscriptions" type="text" null="1"/>
+		<field name="category_subscriptions" type="text" null="1"/>		
+		<field name="thankyou_max" type="int(11)" null="1"/>		
 		<field name="topic_subscriptions" type="text" null="1"/>
 		<field name="pubprofile" type="int(11)" null="1"/>
 		<field name="spoiler_image" type="text" null="1"/>

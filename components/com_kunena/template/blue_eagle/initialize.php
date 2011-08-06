@@ -51,13 +51,13 @@ if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.foru
 		$template->addStyleSheet ( 'css/kunena.default.css' );
 	}
 }
-$cssurl = JURI::root(true) . '/components/com_kunena/template/default/css';
+$cssurl = JURI::root(true) . '/components/com_kunena/template/'.$template->name.'/css';
 ?>
 <!--[if lte IE 7]>
 <link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css" />
 <![endif]-->
 <?php
-$mediaurl = JURI::root(true) . '/components/com_kunena/template/default/media';
+$mediaurl = JURI::root(true) . '/components/com_kunena/template/'.$template->name.'/media';
 
 $styles = <<<EOF
 	/* Kunena Custom CSS */
@@ -182,9 +182,9 @@ EOF;
 
 
 $styles .= <<<EOF
-	#Kunena .kicon-profile { background-image: url("{$mediaurl}/iconsets/profile/{$template->params->get('profileIconset', 'default')}/default.png"); }
-	#Kunena .kicon-button { background-image: url("{$mediaurl}/iconsets/buttons/{$template->params->get('buttonIconset', 'default')}/default.png") !important; }
-	#Kunena #kbbcode-toolbar li a,#Kunena #kattachments a { background-image:url("{$mediaurl}/iconsets/editor/{$template->params->get('editorIconset', 'default')}/default.png"); }
+	#Kunena .kicon-profile { background-image: url("{$mediaurl}/iconsets/profile/{$template->params->get('profileIconset', $template->name)}/default.png"); }
+	#Kunena .kicon-button { background-image: url("{$mediaurl}/iconsets/buttons/{$template->params->get('buttonIconset', $template->name)}/default.png") !important; }
+	#Kunena #kbbcode-toolbar li a,#Kunena #kattachments a { background-image:url("{$mediaurl}/iconsets/editor/{$template->params->get('editorIconset', $template->name)}/default.png"); }
 	/* End of Kunena Custom CSS */
 EOF;
 

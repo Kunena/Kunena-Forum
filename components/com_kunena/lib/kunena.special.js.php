@@ -19,7 +19,7 @@ var KUNENA_POLL_CATS_NOT_ALLOWED = "<?php echo JText::_('COM_KUNENA_POLL_CATS_NO
 var KUNENA_EDITOR_HELPLINE_OPTION = "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION') ?>";
 var KUNENA_POLL_OPTION_NAME = "<?php echo JText::_('COM_KUNENA_POLL_OPTION_NAME') ?>";
 var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "<?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW') ?>";
-var KUNENA_ICON_ERROR = "<?php echo JURI::root(true) ?>/components/com_kunena/template/default/images/publish_x.png";
+var KUNENA_ICON_ERROR = "<?php echo JURI::root(true) ?>/components/com_kunena/template/blue_eagle/images/icons/publish_x.png";
 <?php endif ?>
 <?php if ($this->my->id) : ?>
 var kunena_anonymous_name = "<?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS') ?>";

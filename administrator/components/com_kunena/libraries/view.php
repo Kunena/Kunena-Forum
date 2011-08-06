@@ -120,6 +120,10 @@ class KunenaView extends JView {
 		return $this->template->getImage($image, $alt);
 	}
 
+	function getImageURL($image) {
+		return $this->template->getImageURL($image);
+	}
+
 	function getClass($class, $class_sfx='') {
 		return $this->template->getClass($class, $class_sfx);
 	}

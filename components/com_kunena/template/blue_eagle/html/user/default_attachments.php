@@ -65,7 +65,7 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 
 						<td align="center" class="kcol-mid"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php
 						echo $i;
-						?>','delete')"><img src="<?php echo JURI::root().'components/com_kunena/template/default/images/icons/publish_x.png'; ?>" alt="" title="" /></a></td>
+						?>','delete')"><img src="<?php echo $this->template->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
 
 					</tr>
 					<?php $i++; $y++; endforeach; ?>

@@ -96,6 +96,10 @@ class KunenaTemplate extends JObject
 		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
 	}
 
+	public function getImageURL($image) {
+		return JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE.'/'.$this->getPath().'/images/'.$image;
+	}
+
 	public function getPaginationListFooter($list) {
 		$html = '<div class="list-footer">';
 		$html .= '<div class="limit">'.JText::_('COM_KUNENA_LIB_HTML_DISPLAY_NUM').' '.$list['limitfield'].'</div>';

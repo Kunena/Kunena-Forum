@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class=kdetailsbox>
 				<div class="kcontent">
 					<div class="kcredits-header">
-						<img src="<?php echo JURI::root(true) . '/components/com_kunena/template/default/images/kunena.logo.png';?>" alt="Kunena" align="left" hspace="5" vspace="5"/>
+						<img src="<?php echo $this->template->getImagePath('kunena.logo.png') ?>" alt="Kunena" align="left" hspace="5" vspace="5"/>
 						<div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div>
 					</div>
 					<div class="kcredits-language">

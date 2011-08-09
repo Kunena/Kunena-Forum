@@ -365,7 +365,7 @@ class KunenaForumCategory extends JObject {
 			$tabletype ['prefix'] = $prefix;
 		}
 
-		// Create the user table object
+		// Create the category table object
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
@@ -497,6 +497,7 @@ class KunenaForumCategory extends JObject {
 		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount();
 
+		$this->id = null;
 		return $result;
 	}
 

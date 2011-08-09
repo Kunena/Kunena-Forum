@@ -382,6 +382,30 @@ class KunenaModelInstall extends JModel {
 		$this->checkTimeout(true);
 	}
 
+	public function deleteKunenaFiles() {
+		jimport('joomla.filesystem.folder');
+		jimport('joomla.filesystem.file');
+		if ( JFolder::exists(JPATH_ADMINISTRATOR . '/components/com_kunena') ) {
+			JFolder::delete(JPATH_ADMINISTRATOR . '/components/com_kunena');
+		}
+		if ( JFolder::exists(JPATH_ROOT . '/components/com_kunena/funcs') ) {
+			JFolder::delete(JPATH_ROOT . '/components/com_kunena/funcs');
+		}
+		if ( JFolder::exists(JPATH_ROOT . '/components/com_kunena/lib') ) {
+			JFolder::delete(JPATH_ROOT . '/components/com_kunena/lib');
+		}
+		if ( JFolder::exists(JPATH_ROOT . '/components/com_kunena/js') ) {
+			JFolder::delete(JPATH_ROOT . '/components/com_kunena/js');
+		}
+		if ( JFolder::exists(JPATH_ROOT . '/components/com_kunena/views') ) {
+			JFolder::delete(JPATH_ROOT . '/components/com_kunena/views');
+		}
+		$kunenafiles = JFolder::files(JPATH_ROOT . '/components/com_kunena', '', '', 'true');
+		foreach($kunenafiles as $file) {
+			JFile::delete($file);
+		}
+	}
+
 	public function stepLanguage() {
 		$lang = JFactory::getLanguage();
 		$languages = $lang->getKnownLanguages();
@@ -393,6 +417,8 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepExtract() {
+		if ( $action == 'upgrade' ) $this->deleteKunenaFiles();
+
 		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
 		if (!is_file("{$path}/fileformat")) {
 			// SVN install

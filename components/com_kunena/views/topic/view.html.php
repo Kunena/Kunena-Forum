@@ -226,9 +226,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 		$quote = JRequest::getBool ( 'quote', false );
 		$this->category = $this->topic->getCategory();
-		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
-			$this->topicIcons = $this->template->getTopicIcons();
-		}
+
 		list ($this->topic, $this->message) = $parent->newReply($quote);
 		$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->topic->subject;
 		$this->action = 'post';
@@ -254,7 +252,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 		$this->topic = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
-		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
+		if ($this->config->topicicons && $this->topic->authorise('edit', null, false) &&  $mesid==$this->topic->first_post_id) {
 			$this->topicIcons = $this->template->getTopicIcons();
 			if (isset($this->topicIcons[$this->topic->icon_id])) {
 				$this->topicIcons[$this->topic->icon_id]->checked = 1;

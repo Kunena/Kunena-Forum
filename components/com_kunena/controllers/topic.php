@@ -769,6 +769,9 @@ class KunenaControllerTopic extends KunenaController {
 
 				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );
 				$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->return, $this->id, 0, NULL, $this->id, false ) );
+			} else {
+				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_NOT_SEND' ) );
+				$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->return, $this->id, 0, NULL, $this->id, false ) );
 			}
 		}
 	}

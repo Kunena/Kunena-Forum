@@ -124,9 +124,15 @@ class KunenaController extends JController {
 				$common = $this->getView ( 'common', $vFormat );
 				$common->setModel ( $this->getModel ( 'common' ), true );
 				$view->common = $common;
-				$templatepath = KPATH_SITE."/{$view->template->getPath()}/html/";
-				$view->addTemplatePath($templatepath.$vName);
-				$view->common->addTemplatePath($templatepath.'common');
+
+				$defaultpath = KPATH_SITE."/{$view->template->getPath(true)}/html";
+				$templatepath = KPATH_SITE."/{$view->template->getPath()}/html";
+				if ($templatepath != $defaultpath) {
+					$view->addTemplatePath("{$defaultpath}/{$vName}" );
+					$view->common->addTemplatePath("{$defaultpath}/common");
+				}
+				$view->addTemplatePath("{$templatepath}/{$vName}" );
+				$view->common->addTemplatePath("{$templatepath}/common");
 			}
 
 			// Do any specific processing for the view.

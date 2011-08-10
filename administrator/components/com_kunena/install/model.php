@@ -677,7 +677,13 @@ class KunenaModelInstall extends JModel {
 		}
 
 		// Allow queries to fail
-		$this->db->debug(0);
+		if (version_compare(JVERSION, '1.7', '>')) {
+			// Joomla 1.7+
+			$this->db->setDebug(false);
+		} else {
+			// Joomla 1.5 and 1.6
+			$this->db->debug(0);
+		}
 
 		$results = array();
 		foreach ($xml->upgrade[0] as $version) {

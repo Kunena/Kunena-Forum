@@ -203,7 +203,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		if (!empty($post['rmmod'])) {
 			foreach ((array) $post['rmmod'] as $userid=>$value) {
 				$user = KunenaFactory::getUser($userid);
-				if ($category->setModerator($user, 0)) {
+				if ($category->authorise('admin', null, false) && $category->removeModerator($user)) {
 					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED', $this->escape ( $user->getName() ), $this->escape ( $category->name ) ) );
 				}
 			}

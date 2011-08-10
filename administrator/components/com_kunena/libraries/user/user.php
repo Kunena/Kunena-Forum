@@ -23,6 +23,7 @@ class KunenaUser extends JObject {
 	// Global for every instance
 	protected static $_ranks = null;
 	protected $_type = false;
+	protected $_class = false;
 	protected $_allowed = array();
 	protected $_link = array();
 
@@ -257,7 +258,7 @@ class KunenaUser extends JObject {
 			if (!$title) {
 				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
 			}
-			$uclass = "kuser-{$this->getType(0, true)}";
+			$uclass = $this->getType(0, 'class');
 			$link = $this->getURL ();
 			if (! empty ( $link ))
 				$this->_link[$key] = "<a class=\"{$uclass}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
@@ -273,22 +274,34 @@ class KunenaUser extends JObject {
 	}
 
 	public function getType($catid = 0, $code=false) {
+		static $types = array(
+			'admin'=>'COM_KUNENA_VIEW_ADMIN',
+			'globalmod'=>'COM_KUNENA_VIEW_GLOBAL_MODERATOR',
+			'moderator'=>'COM_KUNENA_VIEW_MODERATOR',
+			'user'=>'COM_KUNENA_VIEW_USER',
+			'guest'=>'COM_KUNENA_VIEW_VISITOR',
+			'banned'=>'COM_KUNENA_VIEW_BANNED',
+			'blocked'=>'COM_KUNENA_VIEW_BANNED'
+		);
 		if (!$this->_type) {
 			if ($this->userid == 0) {
-				$this->_type = $code ? 'guest' : JText::_ ( 'COM_KUNENA_VIEW_VISITOR' );
+				$this->_type = 'guest';
 			} elseif ($this->isBanned ()) {
-				$this->_type = $code ? 'banned' : JText::_ ( 'COM_KUNENA_VIEW_BANNED' );
+				$this->_type = 'banned';
 			} elseif ($this->isAdmin ( $catid )) {
-				$this->_type = $code ? 'admin' : JText::_ ( 'COM_KUNENA_VIEW_ADMIN' );
+				$this->_type = 'admin';
 			} elseif ($this->isModerator ( null )) {
-				$this->_type = $code ? 'globalmod' : JText::_ ( 'COM_KUNENA_VIEW_GLOBAL_MODERATOR' );
+				$this->_type = 'globalmod';
 			} elseif ($this->isModerator ( $catid )) {
-				$this->_type = $code ? 'moderator' : JText::_ ( 'COM_KUNENA_VIEW_MODERATOR' );
+				$this->_type = 'moderator';
 			} else {
-				$this->_type = $code ? 'user' : JText::_ ( 'COM_KUNENA_VIEW_USER' );
+				$this->_type = 'user';
 			}
+			$userClasses = KunenaFactory::getTemplate()->getUserClasses();
+			$this->_class = isset($userClasses[$this->_type]) ? $userClasses[$this->_type] : $userClasses[0].$this->_type;
 		}
-		return $this->_type;
+
+		return $code == 'class' ? $this->_class : ($code == false ? $types[$this->_type] : $this->_type);
 	}
 	public function getRank($catid = 0, $type = false) {
 		// Default rank

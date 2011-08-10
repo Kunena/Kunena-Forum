@@ -225,7 +225,7 @@ class CKunenaLink {
 		If (!$name) {
 			$name = htmlspecialchars($user->getName(), ENT_COMPAT, 'UTF-8');
 		}
-		$uclass = "kuser-{$user->getType(0,true)}";
+		$uclass = $user->getType(0,'class');
 		$link = self::GetProfileURL ( $user->userid );
 		if (! empty ( $link ))
 			return self::GetHrefLink ( $link, $name, $title, $rel, $uclass );

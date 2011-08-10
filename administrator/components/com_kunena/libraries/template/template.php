@@ -39,6 +39,16 @@ class KunenaTemplate extends JObject
 	protected $css_compile = true;
 	protected $smileyPath = array();
 	protected $rankPath = array();
+	protected $userClasses = array(
+		'kuser-',
+		'admin'=>'kuser-admin',
+		'globalmod'=>'kuser-globalmod',
+		'moderator'=>'kuser-moderator',
+		'user'=>'kuser-user',
+		'guest'=>'kuser-guest',
+		'banned'=>'kuser-banned',
+		'blocked'=>'kuser-blocked'
+	);
 	public $topicIcons = array();
 
 	protected $stylesheets = array();
@@ -83,6 +93,10 @@ class KunenaTemplate extends JObject
 	}
 
 	public function initialize() {}
+
+	public function getUserClasses() {
+		return $this->userClasses;
+	}
 
 	public function getButton($name, $text) {
 		return '<span class="'.$name.'"><span>'.$text.'</span></span>';

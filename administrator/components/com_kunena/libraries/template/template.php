@@ -179,7 +179,6 @@ class KunenaTemplate extends JObject
 
 	public function getStyleVariables() {
 		if ($this->compiled_style_variables === null) {
-			// FIXME: add Joomla 1.6 support
 			$xml = $this->params->getXml();
 			$variables = array();
 			foreach ($this->style_variables as $name=>$value)  {

@@ -89,6 +89,16 @@ abstract class KunenaAccess {
 		return !empty(self::$moderatorsByCatid[$catid]) ? self::$moderatorsByCatid[$catid] : array();
 	}
 
+	public function getAdminStatus($user = null) {
+		$user = KunenaFactory::getUser($user);
+		return !empty(self::$adminsByUserid[$user->userid]) ? self::$adminsByUserid[$user->userid] : array();
+	}
+
+	public function getModeratorStatus($user = null) {
+		$user = KunenaFactory::getUser($user);
+		return !empty(self::$moderatorsByUserid[$user->userid]) ? self::$moderatorsByUserid[$user->userid] : array();
+	}
+
 	public function isAdmin($user = null, $catid = 0) {
 		$user = KunenaFactory::getUser($user);
 
@@ -130,6 +140,63 @@ abstract class KunenaAccess {
 			if (!empty(self::$moderatorsByUserid[$user->userid][$catid])) return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Assign user as moderator or resign him
+	 *
+	 * @example if ($category->authorise('admin')) $category->setModerator($user, true);
+	 **/
+	public function setModerator($category, $user, $status = true) {
+		// Check if category exists
+		if (!$category->exists()) return false;
+
+		// Check if user exists
+		$user = KunenaUserHelper::get($user);
+		if (!$user->exists()) {
+			return false;
+		}
+
+		$catids = $this->getModeratorStatus ( $user );
+
+		// Do not touch global moderators
+		if (!empty($catids[0])) {
+			return true;
+		}
+
+		// If the user state remains the same, do nothing
+		if (!empty($catids[$category->id]) == $status) {
+			return true;
+		}
+
+		$db = JFactory::getDBO ();
+		$success = true;
+		if ($status) {
+			$query = "INSERT INTO #__kunena_moderation (catid, userid) VALUES ({$db->quote($category->id)}, {$db->quote($user->userid)})";
+			$db->setQuery ( $query );
+			$db->query ();
+			$success = !KunenaError::checkDatabaseError ();
+			// Finally set user to be a moderator
+			if ($success && $user->moderator == 0) {
+				$user->moderator = 1;
+				$success = $user->save();
+			}
+		} else {
+			$query = "DELETE FROM #__kunena_moderation WHERE catid={$db->Quote($category->id)} AND userid={$db->Quote($user->userid)}";
+			$db->setQuery ( $query );
+			$db->query ();
+			unset($catids[$category->id]);
+			$success = !KunenaError::checkDatabaseError ();
+			// Finally check if user looses his moderator status
+			if ($success && empty($catids)) {
+				$user->moderator = 0;
+				$success = $user->save();
+			}
+		}
+
+		// Clear moderator cache
+		$this->clearCache();
+		return $success;
 	}
 
 	public function getAllowedCategories($user = null, $rule = 'read') {

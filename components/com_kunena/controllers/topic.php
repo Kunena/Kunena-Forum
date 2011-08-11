@@ -110,6 +110,11 @@ class KunenaControllerTopic extends KunenaController {
 				$activity->onBeforeReply($message);
 			}
 		}
+		
+		// Approval message if the user has the minimal messages number
+		if ( $this->me->posts < $this->config->min_messages && $this->config->approval_messages ) {
+			$message->hold = 1;
+		}
 
 		// Save message
 		$success = $message->save ();

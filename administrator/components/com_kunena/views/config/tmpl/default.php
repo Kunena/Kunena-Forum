@@ -598,6 +598,23 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_APPROVAL_FIRST_USERMESSAGES') ?></td>
+							<td align="left" valign="top"><?php echo $this->lists ['approval_messages'] ?>
+							</td>
+						<td>
+							<?php echo JText::_('COM_KUNENA_A_APPROVAL_FIRST_USERMESSAGES_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_APPROVAL_FIRST_USERMESSAGES_NUMBER') ?></td>
+						<td align="left" valign="top">
+							<input type="text" name="cfg_thankyou_max" class="ksm-field" value="<?php echo $this->escape($this->config->min_messages) ?>" />
+						</td>
+						<td align="left" valign="top">
+							<?php echo JText::_('COM_KUNENA_A_APPROVAL_FIRST_USERMESSAGES_NUMBER_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			</dd>

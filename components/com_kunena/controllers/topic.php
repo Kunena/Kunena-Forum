@@ -105,15 +105,6 @@ class KunenaControllerTopic extends KunenaController {
 			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key);
 		}
 
-		// Approval message if the user has the minimal messages number
-		if ( $this->me->getType()=='user' && $this->config->hold_newusers_posts > 0 && $this->me->posts < $this->config->hold_newusers_posts ) {
-			$message->hold = 1;
-		}
-
-		if ( $this->me->getType()=='guest' && $this->config->hold_newusers_posts > 0 && $this->me->posts < $this->config->hold_guest_posts) {
-			$message->hold = 1;
-		}
-
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		if ( $message->hold == 0 ) {

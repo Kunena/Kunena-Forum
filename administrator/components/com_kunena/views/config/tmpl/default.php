@@ -599,20 +599,20 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_APPROVAL_FIRST_USERMESSAGES') ?></td>
-							<td align="left" valign="top"><?php echo $this->lists ['approval_messages'] ?>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POST') ?></td>
+							<td align="left" valign="top"><input type="text" name="cfg_hold_newusers_posts" class="ksm-field" value="<?php echo $this->escape($this->config->hold_newusers_posts) ?>" />
 							</td>
 						<td>
-							<?php echo JText::_('COM_KUNENA_A_APPROVAL_FIRST_USERMESSAGES_DESC') ?>
+							<?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POST_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_APPROVAL_FIRST_USERMESSAGES_NUMBER') ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_GUEST_POST_NUMBER') ?></td>
 						<td align="left" valign="top">
-							<input type="text" name="cfg_thankyou_max" class="ksm-field" value="<?php echo $this->escape($this->config->min_messages) ?>" />
+							<?php echo $this->lists ['hold_guest_posts'] ?>
 						</td>
 						<td align="left" valign="top">
-							<?php echo JText::_('COM_KUNENA_A_APPROVAL_FIRST_USERMESSAGES_NUMBER_DESC') ?>
+							<?php echo JText::_('COM_KUNENA_A_HOLD_GUEST_POST_DESC') ?>
 						</td>
 					</tr>
 				</table>

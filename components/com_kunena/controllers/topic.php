@@ -89,8 +89,12 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// If requested: Make message to be anonymous
-		if (JRequest::getInt ( 'anonymous', 0 ) && $message->getCategory()->allow_anonymous) {
-			$message->makeAnonymous();
+		if ( !$this->me->isModerator() && $this->config->hold_newusers_posts > 0 && $this->me->posts < $this->config->hold_newusers_posts ) {
+			$message->hold = 1;
+		}
+
+		if ( $this->me->userid == '0' && $this->config->hold_guest_posts) {
+			$message->hold = 1;
 		}
 
 		// Upload new attachments
@@ -101,6 +105,15 @@ class KunenaControllerTopic extends KunenaController {
 			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key);
 		}
 
+		// Approval message if the user has the minimal messages number
+		if ( $this->me->getType()=='user' && $this->config->hold_newusers_posts > 0 && $this->me->posts < $this->config->hold_newusers_posts ) {
+			$message->hold = 1;
+		}
+
+		if ( $this->me->getType()=='guest' && $this->config->hold_newusers_posts > 0 && $this->me->posts < $this->config->hold_guest_posts) {
+			$message->hold = 1;
+		}
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		if ( $message->hold == 0 ) {
@@ -109,11 +122,6 @@ class KunenaControllerTopic extends KunenaController {
 			} else {
 				$activity->onBeforeReply($message);
 			}
-		}
-		
-		// Approval message if the user has the minimal messages number
-		if ( $this->me->posts < $this->config->min_messages && $this->config->approval_messages ) {
-			$message->hold = 1;
 		}
 
 		// Save message

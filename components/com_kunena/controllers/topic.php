@@ -89,8 +89,12 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// If requested: Make message to be anonymous
-		if (JRequest::getInt ( 'anonymous', 0 ) && $message->getCategory()->allow_anonymous) {
-			$message->makeAnonymous();
+		if ( !$this->me->isModerator() && $this->config->hold_newusers_posts > 0 && $this->me->posts < $this->config->hold_newusers_posts ) {
+			$message->hold = 1;
+		}
+
+		if ( $this->me->userid == '0' && $this->config->hold_guest_posts) {
+			$message->hold = 1;
 		}
 
 		// Upload new attachments

@@ -598,6 +598,23 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POST') ?></td>
+							<td align="left" valign="top"><input type="text" name="cfg_hold_newusers_posts" class="ksm-field" value="<?php echo $this->escape($this->config->hold_newusers_posts) ?>" />
+							</td>
+						<td>
+							<?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POST_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_GUEST_POST_NUMBER') ?></td>
+						<td align="left" valign="top">
+							<?php echo $this->lists ['hold_guest_posts'] ?>
+						</td>
+						<td align="left" valign="top">
+							<?php echo JText::_('COM_KUNENA_A_HOLD_GUEST_POST_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			</dd>

@@ -337,6 +337,10 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$lists ['show_imgfiles_manage_profile'] = JHTML::_('select.genericlist', $yesno, 'cfg_show_imgfiles_manage_profile', 'class="inputbox" size="1"', 'value', 'text', $config->show_imgfiles_manage_profile);
 
+		$lists ['show_imgfiles_manage_profile'] = JHTML::_('select.genericlist', $yesno, 'cfg_show_imgfiles_manage_profile', 'class="inputbox" size="1"', 'value', 'text', $config->show_imgfiles_manage_profile);
+
+		$lists ['hold_guest_posts'] = JHTML::_('select.genericlist', $yesno, 'cfg_hold_guest_posts', 'class="inputbox" size="1"', 'value', 'text', $config->hold_guest_posts);
+
 		return $lists;
 	}
 }

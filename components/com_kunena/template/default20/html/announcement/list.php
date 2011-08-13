@@ -14,7 +14,7 @@ $document=JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 //FIXME: announcement show only 5 ann. in table
 ?>
-<div id="Kunena">
+<div id="kunena">
 		<div id="kannouncements">
 			<?php if ($this->canEdit) : ?>
 			<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create') ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_ANN_ADD') ?> &raquo;</a>

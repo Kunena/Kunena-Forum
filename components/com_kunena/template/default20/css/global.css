@@ -19,7 +19,9 @@ article, aside, dialog, figure, footer, header, hgroup, nav, section {display:bl
 body {line-height:1.5;}
 */
 #kunena {
-	margin: 10px;
+	padding: 0;
+	margin: 0;
+	line-height: 1.333em;
 }
 #kunena h1,
 #kunena h2,
@@ -2137,35 +2139,35 @@ body {line-height:1.5;}
 	margin: 15px;
 	border-radius: 15px;
 }
-#Kunena input.ksmall {
+#kunena input.ksmall {
 	width: 25%;
 }
-#Kunena input.kmedium {
+#kunena input.kmedium {
 	width: 45%;
 }
-#Kunena input.klarge {
+#kunena input.klarge {
 	width: 95%;
 }
-#Kunena textarea,
-#Kunena textarea.kmedium {
+#kunena textarea,
+#kunena textarea.kmedium {
 	font-size: 1em;
 	width: 95%;
 	height: 10em;
 }
-#Kunena textarea.ksmall {
+#kunena textarea.ksmall {
 	height: 5em;
 }
-#Kunena textarea.klarge {
+#kunena textarea.klarge {
 	height: 20em;
 }
-#Kunena .kactions {
+#kunena .kactions {
 	background-color:#f3f3f3;	
 }
-#Kunena div.kblock div.kactions {
+#kunena div.kblock div.kactions {
 	padding: 5px 10px;
 	line-height: 13px;
 }
-#Kunena div.kblock div.kactions a {
+#kunena div.kblock div.kactions a {
 	color: #FFF !important; 
 	background-color:transparent !important;
 }

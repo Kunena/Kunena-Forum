@@ -22,6 +22,7 @@ $document->addScriptDeclaration('// <![CDATA[
 }
 // ]]>');
 ?>
+<div id="Kunena">
 		<div id="kannouncement">
 			<h2 class="kheader">
 				<a title="<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>" rel="kannouncement-detailsbox">

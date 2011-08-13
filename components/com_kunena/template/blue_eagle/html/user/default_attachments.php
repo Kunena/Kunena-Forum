@@ -11,9 +11,15 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
-$doc = JFactory::getDocument();
-// FIXME: Isn't there a better way to load this file?
-$doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
+if (version_compare(JVERSION, '1.5','=')) {
+	// FIXME: Isn't there a better way to load this file?
+	// I don't think so that this file can be loaded by an another way under Joomla! 1.5
+	$this->document->addScript(JURI::Root()."includes/js/joomla.javascript.js");
+} elseif (version_compare(JVERSION, '1.6','=')) {
+	JHtml::_('script','system/multiselect.js',false,true);
+} elseif (version_compare(JVERSION, '1.7','>'))  {
+	JHtml::_('behavior.multiselect');
+}
 ?>
 
 <div class="kblock">
@@ -22,13 +28,13 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 </div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" id="adminForm">
 				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="task" value="delfile" />
 				<table width="100%">
 					<tr class="ksth">
 						<th class="frst"> # </th>
-						<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
+						<th width="5"><?php if (version_compare(JVERSION, '1.6','<')): ?><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /><?php else: ?><input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" /><?php endif; ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILETYPE'); ?></th>
 
 						<th><?php echo JText::_('COM_KUNENA_FILENAME'); ?></th>
@@ -41,6 +47,9 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 					</tr>
 
 					<?php
+					if ( empty($this->items) ):
+					 echo JText::_('COM_KUNENA_USER_NO_ATTACHMENTS');
+					else:
 					$i=0;
 					$y=1;
 					foreach ($this->items as $file) :
@@ -68,7 +77,7 @@ $doc->addScript(JURI::Root()."includes/js/joomla.javascript.js");
 						?>','delete')"><img src="<?php echo $this->template->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
 
 					</tr>
-					<?php $i++; $y++; endforeach; ?>
+					<?php $i++; $y++; endforeach; endif; ?>
 				</table>
 				<input class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>" style="float:right;" />
 				<input type="hidden" name="boxchecked" value="0" />

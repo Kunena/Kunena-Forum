@@ -9,6 +9,9 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+$this->document->addScriptDeclaration ( "// <![CDATA[
+	window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });
+// ]]>" );
 ?>
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="kuserform" class="form-validate" enctype="multipart/form-data">
 				<input type="hidden" name="view" value="user" />

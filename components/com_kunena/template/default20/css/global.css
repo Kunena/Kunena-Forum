@@ -19,7 +19,9 @@ article, aside, dialog, figure, footer, header, hgroup, nav, section {display:bl
 body {line-height:1.5;}
 */
 #kunena {
-	margin: 10px;
+	padding: 0;
+	margin: 0;
+	line-height: 1.333em;
 }
 #kunena h1,
 #kunena h2,
@@ -135,6 +137,8 @@ body {line-height:1.5;}
 	width: 25%;
 }
 #kunena .klogin,
+#kunena #kannouncements,
+#kunena #kannouncement,
 #kunena #kannounce,
 #kunena .kbreadcrumb,
 #kunena .ksection,
@@ -155,6 +159,7 @@ body {line-height:1.5;}
 	padding: 0px;
 	clear:both;
 	text-align:left;
+	border-radius:7px;
 }
 #kunena label {
 	font-weight:bold;
@@ -318,7 +323,6 @@ body {line-height:1.5;}
 
 /*---------- Login area ------------- */
 #kunena .klogin {
-	min-height: 90px;
 }
 #kunena .klogin ul {
 	margin: 10px;
@@ -329,7 +333,6 @@ body {line-height:1.5;}
 #kunena ul.klogin-guest li {
 	display: inline;
 	margin-right: 10px;
-	line-height: 25px;
 }
 #kunena ul.klogin-guest li button{
 	margin-left: 10px;
@@ -411,6 +414,7 @@ body {line-height:1.5;}
 }
 #kunena ul.kbreadcrumb-path {
 	padding: 5px 10px;
+	border-radius:7px;
 }
 #kunena ul.kbreadcrumb-online {
 	padding-bottom: 10px;
@@ -1192,7 +1196,6 @@ body {line-height:1.5;}
 #kunena #ksection-modbox,
 #kunena #ktopics-modbox {
 	text-align: right;
-	margin-top: 0;
 }
 #kunena #ksection-modbox select,
 #kunena #ktopics-modbox select {
@@ -1809,9 +1812,6 @@ body {line-height:1.5;}
 	width: 49%;
 }
 #kunena #searchform .clrline {
-	padding: 20px 0;
-	margin: 0px -10px 15px -10px;
-	border-bottom: 1px solid;
 }
 #kunena #searchform .kpost-buttons {
 	margin: 0 -10px;
@@ -2138,4 +2138,36 @@ body {line-height:1.5;}
 	border: 1px solid;
 	margin: 15px;
 	border-radius: 15px;
+}
+#kunena input.ksmall {
+	width: 25%;
+}
+#kunena input.kmedium {
+	width: 45%;
+}
+#kunena input.klarge {
+	width: 95%;
+}
+#kunena textarea,
+#kunena textarea.kmedium {
+	font-size: 1em;
+	width: 95%;
+	height: 10em;
+}
+#kunena textarea.ksmall {
+	height: 5em;
+}
+#kunena textarea.klarge {
+	height: 20em;
+}
+#kunena .kactions {
+	background-color:#f3f3f3;	
+}
+#kunena div.kblock div.kactions {
+	padding: 5px 10px;
+	line-height: 13px;
+}
+#kunena div.kblock div.kactions a {
+	color: #FFF !important; 
+	background-color:transparent !important;
 }

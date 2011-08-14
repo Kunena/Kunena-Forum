@@ -23,63 +23,64 @@ body {line-height:1.5;}
 	margin: 0;
 	line-height: 1.333em;
 }
-#kunena h1,
-#kunena h2,
-#kunena h3,
-#kunena h4,
-#kunena h5,
-#kunena h6 {
+#kunena div h1,
+#kunena div h2,
+#kunena div h3,
+#kunena div h4,
+#kunena div h5,
+#kunena div h6 {
 	margin: 0;
 	width: auto;
 	text-transform: none;
 }
-#kunena h1 {
+#kunena div h1 {
 	line-height:22px;
 }
-#kunena h2 {
+#kunena div h2 {
 	line-height:20px;
 }
-#kunena h3 {
+#kunena div h3 {
 	line-height:18px;
 }
-#kunena h4 {
+#kunena div h4 {
 	line-height:14px;
 }
-#kunena h5,
-#kunena h6 {
+#kunena div h5,
+#kunena div h6 {
 	line-height:13px;
 }
-#kunena h1 img,
-#kunena h2 img,
-#kunena h3 img,
-#kunena h4 img,
-#kunena h5 img,
-#kunena h6 img {
+#kunena div h1 img,
+#kunena div h2 img,
+#kunena div h3 img,
+#kunena div h4 img,
+#kunena div h5 img,
+#kunena div h6 img {
 	margin:0;
 }
-#kunena table {
+#kunena div table {
 	border-collapse:separate;
 	border-spacing:0;
 }
-#kunena caption,
-#kunena th,
-#kunena td {
+#kunena div caption,
+#kunena div th,
+#kunena div td {
+	border: 0 solid;
 	text-align:left;
 	font-weight:normal;
 	float:none !important;
 }
-#kunena table,
-#kunena th,
-#kunena td {
+#kunena div table,
+#kunena div th,
+#kunena div td {
 	vertical-align:middle;
 }
-#kunena ul,
-#kunena ol {
+#kunena div ul,
+#kunena div ol {
 	background: inherit;
 	margin: 0;
 	padding: 0;
 }
-#kunena li {
+#kunena ul li {
 	background-image: none;
 	list-style-type: none;
 	margin: 0;

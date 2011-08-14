@@ -494,11 +494,8 @@ class KunenaViewTopic extends KunenaView {
 		$this->usersvoted = $this->get('PollUsers');
 		$this->voted = $this->get('MyVotes');
 
-		$this->users_voted_list = '';
+		$this->users_voted_list = array();
 		if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
-			$users_voted_list = array();
-			$users_voted_morelist = array();
-
 			$i = 0;
 			foreach($this->usersvoted as $userid=>$vote) {
 				if ( $i <= '4' ) $this->users_voted_list[] = CKunenaLink::GetProfileLink($userid);

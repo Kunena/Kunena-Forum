@@ -59,8 +59,8 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		return $allowed;
 	}
 
-	public function getGroupName($id){
-		return $this->joomlaAccess->getGroupName($id);
+	public function getGroupName($accesstype, $id){
+		return $this->joomlaAccess->getGroupName($accesstype, $id);
 	}
 
 	public function checkSubscribers($topic, &$userids) {

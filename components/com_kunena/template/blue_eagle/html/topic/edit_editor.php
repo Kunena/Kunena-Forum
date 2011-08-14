@@ -267,7 +267,7 @@ defined ( '_JEXEC' ) or die ();
 		<div class="clr"> </div>
 		<fieldset>
 			<legend><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend>
-			<input class="kinputbox" name="modified_reason" size="40" maxlength="200" type="text" />
+			<input class="kinputbox" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>" />
 		</fieldset>
 		<?php endif; ?>
 	</td>

@@ -46,8 +46,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'); ?></small></th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?></small></th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?></small></th>
-						<th class="center"><small><?php echo JText::_('COM_KUNENA_PUBLICACCESS'); ?></small></th>
-						<th class="center"><small><?php echo JText::_('COM_KUNENA_ADMINACCESS'); ?></small></th>
+						<th class="center"><small><?php echo JText::_('COM_KUNENA_ACCESS'); ?></small></th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_CHECKEDOUT'); ?></small></th>
 					</tr>
 				</thead>
@@ -126,8 +125,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				<?php endif; ?>
 
 				<td class="center"><?php echo JHTML::_('grid.published', $category, $i) ?></td>
-				<td width="" align="center"><?php echo $this->escape ( $category->pub_group ); ?></td>
-				<td width="" align="center"><?php echo $this->escape ( $category->admin_group ); ?></td>
+				<td width="" align="center"><?php echo $this->escape ( $category->accessname ); ?></td>
 				<td width="15%" align="center"><?php echo $this->escape ( $category->editor ); ?></td>
 			</tr>
 				<?php

@@ -471,6 +471,7 @@ class KunenaForumTopic extends JObject {
 	}
 
 	public function bind($data, $allow = array()) {
+		if (empty($data)) return;
 		if (!empty($allow)) $data = array_intersect_key($data, array_flip($allow));
 		$this->setProperties ( $data );
 	}

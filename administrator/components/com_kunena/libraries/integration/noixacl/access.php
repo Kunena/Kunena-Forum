@@ -107,8 +107,8 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		return $catlist;
 	}
 
-	public function getGroupName($id){
-		return JFactory::getACL ()->get_group_name($id);
+	public function getGroupName($accesstype, $id){
+		return JFactory::getACL ()->get_group_name($accesstype, $id);
 	}
 
 	public function checkSubscribers($topic, &$userids) {

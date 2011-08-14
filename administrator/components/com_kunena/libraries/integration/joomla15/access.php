@@ -63,18 +63,22 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 				$catlist[$category->id] = $category->id;
 			}
 			// Check against Joomla access level
-			elseif ($category->accesstype == 'joomla') {
+			elseif ($category->accesstype == 'joomla.level') {
+				// 0 = Public, 1 = Registered, 2 = Special
 				if ( $category->access <= $user->get('aid') ) {
 					$catlist[$category->id] = $category->id;
 				}
 			}
 			// Check against Joomla user group
 			elseif ($category->accesstype == 'none') {
+				// pub_access: 0 = Public, -1 = All registered, 1 = Nobody, >1 = Group ID
+				// admin_access: 0 = Nobody, >1 = Group ID
 				if ($category->pub_access == 0 ||
 					($user->id > 0 && (
-					($category->pub_access == - 1)
-					|| ($category->pub_access > 0 && self::_has_rights ( $usergroups, $category->pub_access, $category->pub_recurse ))
-					|| ($category->admin_access > 0 && self::_has_rights ( $usergroups, $category->admin_access, $category->admin_recurse ))))) {
+						($category->pub_access == - 1)
+						|| ($category->pub_access > 1 && self::_has_rights ( $usergroups, $category->pub_access, $category->pub_recurse ))
+						|| ($category->pub_access > 0 && $category->admin_access > 0 && $category->admin_access != $category->pub_access && self::_has_rights ( $usergroups, $category->admin_access, $category->admin_recurse )))
+					)) {
 					$catlist[$category->id] = $category->id;
 				}
 			}
@@ -82,14 +86,19 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		return $catlist;
 	}
 
-	public function getGroupName($id){
-		return JFactory::getACL ()->get_group_name($id);
+	public function getGroupName($accesstype, $id){
+		if ($accesstype == 'none') {
+			return JFactory::getACL ()->get_group_name($id);
+		} elseif ($accesstype == 'joomla.level') {
+			die('TODO KunenaIntegrationAccessJoomla15::getGroupName()');
+		}
+		return '';
 	}
 
 	public function checkSubscribers($topic, &$userids) {
-		$category = $topic->getCategory();
-		if (empty($userids) || $category->pub_access <= 0)
+		if (empty($userids)) {
 			return;
+		}
 
 		$userlist = implode(',', $userids);
 
@@ -100,16 +109,18 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		$query->where("u.block=0");
 		$query->where("u.id IN ({$userlist})");
 
-		if ($category->accesstype == 'joomla') {
+		$category = $topic->getCategory();
+		if ($category->accesstype == 'joomla.level') {
 			// Check against Joomla access level
 			if ( $category->access > 1 ) {
-				// Special users = not in registered group
+				// Special users: not in registered group
 				$query->where("u.gid!=18");
 			}
 		} elseif ($category->accesstype == 'none') {
 			// Check against Joomla user groups
 			$public = $this->_get_groups($category->pub_access, $category->pub_recurse);
-			$admin = $category->pub_access > 0 ? $this->_get_groups($category->admin_access, $category->admin_recurse) : array();
+			// Ignore admin_access if pub_access is Public (0) or All Registered (-1) or has the same group
+			$admin = $category->pub_access > 0 && $category->admin_access != $category->pub_access ? $this->_get_groups($category->admin_access, $category->admin_recurse) : array();
 			$groups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
 			if ($groups) {
 				$query->join('INNER', "#__core_acl_aro AS a ON u.id=a.value AND a.section_value='users'");
@@ -126,8 +137,10 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 	}
 
 	protected function _has_rights($usergroups, $groupid, $recurse) {
+		// Check the group itself
 		if (in_array($groupid, $usergroups))
 			return 1;
+		// Check the children
 		if ($usergroups && $recurse) {
 			$childs = $this->_get_groups($groupid, $recurse);
 			if (array_intersect($childs, $usergroups))
@@ -139,16 +152,17 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 	protected function _get_groups($groupid, $recurse) {
 		static $groups = array();
 
-		if (isset ($groups[$groupid]))
-			return $groups[$groupid];
-
-		if ($groupid > 0 && $recurse) {
-			$acl = JFactory::getACL ();
-			$groups[$groupid] = $acl->get_group_children ( $groupid, 'ARO', 'RECURSE' );
+		// Public and All Registered: Allow all users
+		if ($groupid <= 0) return array();
+		// If no recursion is needed, just return the group ID
+		if (!$recurse) return array($groupid);
+		// Otherwise return the group and all its children
+		if (!isset ($groups[$groupid])) {
+			// Cache query
+			$groups[$groupid] = (array) JFactory::getACL ()->get_group_children ( $groupid, 'ARO', 'RECURSE' );
 			$groups[$groupid][] = $groupid;
-			return $groups[$groupid];
 		}
-		return array($groupid);
+		return $groups[$groupid];
 	}
 
 	/**

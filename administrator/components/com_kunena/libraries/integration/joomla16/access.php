@@ -53,8 +53,8 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		$user = JFactory::getUser($user);
 
 		$accesslevels = (array) $user->authorisedLevels();
-		$groups_r = JAccess::getGroupsByUser($user->id, true);
-		$groups = JAccess::getGroupsByUser($user->id, false);
+		$groups_r = (array) JAccess::getGroupsByUser($user->id, true);
+		$groups = (array) JAccess::getGroupsByUser($user->id, false);
 
 		$catlist = array();
 		foreach ( $categories as $category ) {
@@ -63,20 +63,16 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 				$catlist[$category->id] = $category->id;
 			}
 			// Check against Joomla access level
-			elseif ($category->accesstype == 'joomla') {
+			elseif ($category->accesstype == 'joomla.level') {
 				if ( in_array($category->access, $accesslevels) ) {
 					$catlist[$category->id] = $category->id;
 				}
 			}
 			// Check against Joomla user group
 			elseif ($category->accesstype == 'none') {
-				$pub_access = (($category->pub_recurse && in_array($category->pub_access, $groups_r)) || in_array($category->pub_access, $groups));
-				$admin_access = (($category->admin_recurse && in_array($category->admin_access, $groups_r)) || in_array($category->admin_access, $groups));
-
-				if (($category->pub_access == 0)
-					|| ($category->pub_access == - 1 && $user->id > 0)
-					|| ( $pub_access )
-					|| ( $admin_access )) {
+				$pub_access = in_array($category->pub_access, $category->pub_recurse ? $groups_r : $groups);
+				$admin_access = in_array($category->admin_access, $category->admin_recurse ? $groups_r : $groups);
+				if ($pub_access || $admin_access) {
 					$catlist[$category->id] = $category->id;
 				}
 			}
@@ -84,35 +80,43 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		return $catlist;
 	}
 
-	public function getGroupName($id){
-		static $groups = false;
-		if ($groups == false) {
+	public function getGroupName($accesstype, $id){
+		static $groups = array();
+		if (!isset($groups[$accesstype])) {
 			$db = JFactory::getDBO ();
 			$query = $db->getQuery(true);
 			$query->select('id, title');
-			$query->from('#__usergroups');
-			$db->setQuery((string)$query);
-			$groups = $db->loadObjectList('id');
+			if ($accesstype == 'none') {
+				$query->from('#__usergroups');
+				$db->setQuery((string)$query);
+			} elseif ($accesstype == 'joomla.level') {
+				$query->from('#__viewlevels');
+				$db->setQuery((string)$query);
+			} else {
+				return '';
+			}
+			$groups[$accesstype] = $db->loadObjectList('id');
 		}
-		return isset($groups[$id]) ? $groups[$id] : '';
+		return isset($groups[$accesstype][$id]) ? $groups[$accesstype][$id]->title : '';
 	}
 
 	public function checkSubscribers($topic, &$userids) {
-		$category = $topic->getCategory();
-		if (empty($userids) || $category->pub_access <= 0)
+		if (empty($userids)) {
 			return;
+		}
 
 		$userlist = implode(',', $userids);
 
-		if ($category->accesstype == 'joomla') {
-			// TODO: Check against Joomla access level
+		$category = $topic->getCategory();
+		if ($category->accesstype == 'joomla.level') {
+			// Check against Joomla access levels
+			$groups = $this->getGroupsByViewLevel($category->access);
+			$userids = $this->getUsersByGroup($groups, true, $userids);
 		} elseif ($category->accesstype == 'none') {
 			// Check against Joomla user groups
 			$public = $this->getUsersByGroup($category->pub_access, $category->pub_recurse, $userids);
-			$admin = $category->pub_access > 0 && $category->admin_access ? $this->getUsersByGroup($category->admin_access, $category->admin_recurse, $userids) : array();
+			$admin = $category->admin_access && $category->admin_access != $category->pub_access ? $this->getUsersByGroup($category->admin_access, $category->admin_recurse, $userids) : array();
 			$userids = array_unique ( array_merge ( $public, $admin ) );
-		} else {
-			return;
 		}
 	}
 
@@ -122,20 +126,15 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 	 * @param	integer	$userId	Id of the user for which to get the list of authorised view levels.
 	 *
 	 * @return	array	List of view levels for which the user is authorised.
-	 * @since	1.6
 	 */
-	protected static function getGroupsByViewLevels($userId)
-	{
-		// Get all groups that the user is mapped to recursively.
-		$groups = self::getGroupsByUser($userId);
-
+	public function getGroupsByViewLevel($viewlevel) {
 		// Only load the view levels once.
 		if (empty(self::$viewLevels)) {
 			// Get a database object.
-			$db	= JFactory::getDBO();
+			$db = JFactory::getDBO();
 
 			// Build the base query.
-			$query	= $db->getQuery(true);
+			$query = $db->getQuery(true);
 			$query->select('id, rules');
 			$query->from('`#__viewlevels`');
 
@@ -147,30 +146,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 				self::$viewLevels[$level['id']] = (array) json_decode($level['rules']);
 			}
 		}
-
-		// Initialise the authorised array.
-		$authorised = array(1);
-
-		// FIXME: make this to work
-
-		// Find the authorized levels.
-		foreach (self::$viewLevels as $level => $rule)
-		{
-			foreach ($rule as $id)
-			{
-				if (($id < 0) && (($id * -1) == $userId)) {
-					$authorised[] = $level;
-					break;
-				}
-				// Check to see if the group is mapped to the level.
-				elseif (($id >= 0) && in_array($id, $groups)) {
-					$authorised[] = $level;
-					break;
-				}
-			}
-		}
-
-		return $authorised;
+		return isset(self::$viewLevels[$viewlevel]) ? self::$viewLevels[$viewlevel] : array();
 	}
 
 	/**
@@ -180,10 +156,8 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 	 * @param	boolean	$recursive	Recursively include all child groups (optional)
 	 *
 	 * @return	array
-	 * @since	Joomla 1.6
 	 */
-	protected static function getUsersByGroup($groupId, $recursive = false, $inUsers = array())
-	{
+	public function getUsersByGroup($groupId, $recursive = false, $inUsers = array()) {
 		// Get a database object.
 		$db = JFactory::getDbo();
 

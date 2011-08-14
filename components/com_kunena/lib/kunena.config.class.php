@@ -363,6 +363,14 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $pubprofile = 1;
 	// New for 1.6.5
 	var $thankyou_max = 10;
+	// New for 1.6.6
+	var $email_recipient_count = 0;
+	var $email_recipient_privacy = 'bcc';
+	var $email_visible_address = '';
+	var $captcha_post_limit = 0;
+	var $recaptcha_publickey = '';
+	var $recaptcha_privatekey = '';
+	var $recaptcha_theme = 'white';
 	// New for 2.0.0
 	var $spoiler_image = '';
 	var $keywords = 1;

@@ -47,7 +47,11 @@ function submitbutton(pressbutton)
 				<table class="kadmin-adminform">
 					<tr>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_PARENT'); ?></td>
-						<td><?php echo $this->options ['categories']; ?><br /><br /><?php echo JText::_('COM_KUNENA_PARENTDESC'); ?></td>
+						<td>
+							<?php echo $this->options ['categories']; ?>
+							<div class="clr"></div>
+							<?php echo JText::_('COM_KUNENA_PARENTDESC'); ?>
+						</td>
 					</tr>
 					<tr>
 						<td><?php echo JText::_('COM_KUNENA_NAMEADD'); ?></td>
@@ -68,53 +72,56 @@ function submitbutton(pressbutton)
 				</table>
 			</fieldset>
 			</dd>
+			<dt title="<?php echo JText::_('COM_KUNENA_PERMISSIONS'); ?>"><?php echo JText::_('COM_KUNENA_PERMISSIONS'); ?></dt>
+			<dd>
+				<fieldset>
+					<legend><?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></legend>
+					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+						<tr>
+							<td class="nowrap" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_TITLE'); ?></td>
+							<td valign="top" width="25%"><?php echo $this->options ['accesstypes']; ?></td>
+							<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
+						</tr>
+						<tr class="kaccess kaccess-joomla-level" style="<?php echo $row->accesstype == 'none' ? 'display:none' : '' ?>">
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSLEVEL_TITLE');?></td>
+							<td valign="top"><?php echo $this->options ['accesslevels']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSLEVEL_DESC') .'<br /><br />'. (version_compare(JVERSION, '1.6', '>') ? JText::_('COM_KUNENA_A_ACCESSLEVEL_DESC_J16') : JText::_('COM_KUNENA_A_ACCESSLEVEL_DESC_J15')); ?></td>
+						</tr>
+						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_TITLE'); ?></td>
+							<td valign="top"><?php echo $this->options ['pub_access']; ?></td>
+							<td><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_DESC') .'<br /><br />'. (version_compare(JVERSION, '1.6', '>') ? JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_DESC_J16') : JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_DESC_J15')); ?></td>
+						</tr>
+						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_CHILDS_TITLE'); ?></td>
+							<td valign="top"><?php echo $this->options ['pub_recurse']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_CHILDS_DESC'); ?></td>
+						</tr>
+						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_TITLE'); ?></td>
+							<td valign="top"><?php echo $this->options ['admin_access']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_DESC') .'<br /><br />'. (version_compare(JVERSION, '1.6', '>') ? JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_DESC_J16') : JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_DESC_J15')); ?></td>
+						</tr>
+						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_CHILDS_TITLE'); ?></td>
+							<td valign="top"><?php echo $this->options ['admin_recurse']; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_CHILDS_DESC'); ?></td>
+						</tr>
+					</table>
+				</fieldset>
+			</dd>
+
+			<?php if (!$this->category->id || !$this->category->isSection()): ?>
 			<dt title="<?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?>"><?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?></dt>
 			<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
 					<table class="kadmin-adminform">
-						<?php if (!$this->category->id || !$this->category->isSection()): ?>
 						<tr>
 							<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
  							<td><?php echo $this->options ['forumLocked']; ?></td>
 							<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
 						</tr>
-						<?php endif; ?>
-						<?php if ($this->category->accesstype != 'none') : ?>
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE'); ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($this->category->accesstype)); ?></td>
-							<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
-						</tr>
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESS'); ?></td>
-							<td valign="top"><?php echo $this->options ['access']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESS_DESC'); ?></td>
-						</tr>
-						<?php endif; ?>
-						<?php if ($this->me->isAdmin() && $this->category->accesstype == 'none') : ?>
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
-							<td valign="top"><?php echo $this->options ['pub_access']; ?></td>
-							<td><?php echo JText::_('COM_KUNENA_PUBACCDESC'); ?></td>
-						</tr>
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS'); ?></td>
-							<td valign="top"><?php echo $this->options ['pub_recurse']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPSDESC'); ?></td>
-						</tr>
-						<tr>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_ADMINLEVEL'); ?></td>
-							<td valign="top"><?php echo $this->options ['admin_access']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_ADMINLEVELDESC'); ?></td>
-						</tr>
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1'); ?></td>
-							<td valign="top"><?php echo $this->options ['admin_recurse']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1DESC'); ?></td>
-						</tr>
-						<?php endif; ?>
-						<?php if (!$this->category->id || !$this->category->isSection()): ?>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>
 							<td valign="top"><?php echo $this->options ['forumReview']; ?></td>
@@ -152,11 +159,8 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 						</tr>
 						*/ ?>
-						<?php endif; ?>
 					</table>
 				</fieldset>
-
-				<?php if (!$this->category->id || !$this->category->isSection()): ?>
 
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>

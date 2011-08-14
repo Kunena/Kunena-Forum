@@ -361,7 +361,7 @@ class KunenaTemplate extends JObject
 		return "{$base}{$path}/images/{$image}";
 	}
 
-	public function getTopicIcons($all = false) {
+	public function getTopicIcons($all = false, $checked = 0) {
 		if (empty($this->topicIcons)) {
 			$xmlfile = JPATH_ROOT.'/media/kunena/topicicons/default/topicicons.xml';
 			if (file_exists($xmlfile)) {
@@ -412,7 +412,8 @@ class KunenaTemplate extends JObject
 			$icons = array();
 			foreach ($this->topicIcons as $icon) {
 				if ($icon->published && is_numeric($icon->id)) {
-					$icons[$icon->id] = $icon;
+					$icons[$icon->id] = clone $icon;
+					$icons[$icon->id]->checked = ($checked == $icon->id);
 				}
 			}
 		}

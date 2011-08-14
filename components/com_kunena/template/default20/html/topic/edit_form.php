@@ -53,7 +53,7 @@ JHTML::_('behavior.tooltip');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="checkbox" value="1" name="anonymous" id="kanonymous" class="hasTip" title="Anonymous Post :: Check if you want post as Anonymous" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> />
+					<input type="checkbox" value="1" name="anonymous" id="kanonymous" class="hasTip" title="Anonymous Post :: Check if you want post as Anonymous" <?php if ($this->post_anonymous) echo 'checked="checked"'; ?> />
 					<div class="kform-note"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></div>
 				</div>
 			</li>
@@ -78,7 +78,8 @@ JHTML::_('behavior.tooltip');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->message->email) ?>" maxlength="35" class="kinputbox postinput required hasTip" size="35" name="password" id="kpassword" title="Name :: Enter Your Email" />
+					<div><input type="text" value="<?php echo $this->escape($this->message->email) ?>" maxlength="35" class="kinputbox postinput required hasTip" size="35" name="password" id="kpassword" title="Name :: Enter Your Email" /></div>
+					<div><?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?></div>
 				</div>
 			</li>
 			<?php endif; ?>
@@ -171,9 +172,21 @@ JHTML::_('behavior.tooltip');
 				</div>
 				<div class="kform-field">
 					<label for="ksubscribe-me" class="hasTip" title="<?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?> :: <?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?>">
-						<input type="checkbox" value="1" name="subscribe-me" id="ksubscribe-me" <?php if ($this->config->subscriptionschecked == 1) echo 'checked="checked"' ?> />
+						<input type="checkbox" value="1" name="subscribe-me" id="ksubscribe-me" <?php if ($this->subscriptionschecked == 1) echo 'checked="checked"' ?> />
 							<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
 					</label>
+				</div>
+			</li>
+			<?php endif; ?>
+			<?php if (!empty($this->captchaHtml)) : ?>
+			<li class="kpostmessage-row krow-even">
+				<div class="kform-label">
+					<label>
+						<?php echo JText::_('COM_KUNENA_CAPDESC'); ?>
+					</label>
+				</div>
+				<div class="kform-field">
+					<?php echo $this->captchaHtml ?>
 				</div>
 			</li>
 			<?php endif; ?>

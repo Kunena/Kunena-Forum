@@ -317,6 +317,20 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$topic_subscriptions[] = JHTML::_('select.option', 'every', JText::_('COM_KUNENA_OPTION_TOPIC_SUBSCRIPTIONS_EVERY'));
 		$lists ['topic_subscriptions'] = JHTML::_ ( 'select.genericlist', $topic_subscriptions, 'cfg_topic_subscriptions', 'class="inputbox" size="1"', 'value', 'text', $config->topic_subscriptions );
 
+		// Added new options into K1.6.6
+		$email_recipient_privacy = array();
+		$email_recipient_privacy[] = JHTML::_('select.option', 'to', JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_TO'));
+		$email_recipient_privacy[] = JHTML::_('select.option', 'cc', JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_CC'));
+		$email_recipient_privacy[] = JHTML::_('select.option', 'bcc', JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_OPTION_BCC'));
+		$lists ['email_recipient_privacy'] = JHTML::_ ( 'select.genericlist', $email_recipient_privacy, 'cfg_email_recipient_privacy', 'class="inputbox" size="1"', 'value', 'text', $config->email_recipient_privacy );
+
+		$recaptcha_theme = array();
+		$recaptcha_theme[] = JHTML::_('select.option', 'red', JText::_('COM_KUNENA_A_RECAPTCHA_THEME_OPTION_RED'));
+		$recaptcha_theme[] = JHTML::_('select.option', 'white', JText::_('COM_KUNENA_A_RECAPTCHA_THEME_OPTION_WHITE'));
+		$recaptcha_theme[] = JHTML::_('select.option', 'blackglass', JText::_('COM_KUNENA_A_RECAPTCHA_THEME_OPTION_BLACK'));
+		$recaptcha_theme[] = JHTML::_('select.option', 'clean', JText::_('COM_KUNENA_A_RECAPTCHA_THEME_OPTION_CLEAN'));
+		$lists ['recaptcha_theme'] = JHTML::_ ( 'select.genericlist', $recaptcha_theme, 'cfg_recaptcha_theme', 'class="inputbox" size="1"', 'value', 'text', $config->recaptcha_theme );
+
 		// Kunena 2.0.0
 		$lists ['keywords'] = JHTML::_('select.genericlist', $yesno, 'cfg_keywords', 'class="inputbox" size="1"', 'value', 'text', $config->keywords);
 		$lists ['userkeywords'] = JHTML::_('select.genericlist', $yesno, 'cfg_userkeywords', 'class="inputbox" size="1"', 'value', 'text', $config->userkeywords);

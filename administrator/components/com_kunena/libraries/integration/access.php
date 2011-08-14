@@ -76,9 +76,36 @@ abstract class KunenaAccess {
 	}
 
 	public function getAccessLevelsList($category) {
-		if ($category->accesstype == 'joomla')
+		if ($category->accesstype == 'none' || $category->accesstype == 'joomla.level')
 			return JHTML::_('list.accesslevel', $category);
 		return $category->access;
+	}
+
+	public function getAccessTypesList($category) {
+		static $enabled = false;
+		if ($category->accesstype == 'none' || $category->accesstype == 'joomla.level') {
+			if (!$enabled) {
+				$enabled = true;
+				JFactory::getDocument()->addScriptDeclaration("function kShowAccessType(htmlclass, el) {
+	var name = new String(el.getSelected().get('value'));
+	name = name.replace(/[^\\w\\d]+/, '-');
+	$$('.'+htmlclass).each(function(e){
+		e.setStyle('display', 'none');
+	});
+	$$('.'+htmlclass+'-'+name).each(function(e){
+		e.setStyle('display', '');
+	});
+}
+window.addEvent('domready', function(){
+	kShowAccessType('kaccess', document.id('accesstype'));
+});");
+			}
+			$accesstypes = array ();
+			$accesstypes [] = JHTML::_ ( 'select.option', 'joomla.level', JText::_('COM_KUNENA_INTEGRATION_JOOMLA_LEVEL') );
+			$accesstypes [] = JHTML::_ ( 'select.option', 'none', JText::_('COM_KUNENA_INTEGRATION_JOOMLA_GROUP') );
+			return JHTML::_ ( 'select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="2" onchange="javascript:kShowAccessType(\'kaccess\', document.id(this))"', 'value', 'text', $category->accesstype );
+		}
+		return JText::_('COM_KUNENA_INTEGRATION_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype)));
 	}
 
 	public function getAdmins($catid = 0) {
@@ -387,7 +414,7 @@ abstract class KunenaAccess {
 		return $userids;
 	}
 
-	abstract public function getGroupName($id);
+	abstract public function getGroupName($accesstype, $id);
 
 	abstract public function checkSubscribers($topic, &$userids);
 

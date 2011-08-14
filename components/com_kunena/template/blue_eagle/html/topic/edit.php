@@ -67,7 +67,7 @@ $this->displayLoginBox ();
 				<strong><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></strong>
 			</td>
 			<td class="kcol-mid">
-				<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> />
+				<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->post_anonymous) echo 'checked="checked"'; ?> />
 				<label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
 			</td>
 		</tr>
@@ -86,7 +86,11 @@ $this->displayLoginBox ();
 		<?php if ($this->config->askemail && !$this->my->id) : ?>
 		<tr class = "krow<?php echo 1+ $this->k^=1 ?>">
 			<td class = "kcol-first"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></strong></td>
-			<td class="kcol-mid"><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" /></td>
+			<td class="kcol-mid">
+				<input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" />
+				<br />
+				<?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?>
+			</td>
 		</tr>
 		<?php endif; ?>
 
@@ -171,25 +175,21 @@ $this->displayLoginBox ();
 				<strong><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></strong>
 			</td>
 			<td class="kcol-mid">
-				<input type="checkbox" name="subscribeMe" value="1" <?php if ($this->config->subscriptionschecked == 1) echo 'checked="checked"' ?> />
+				<input type="checkbox" name="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1) echo 'checked="checked"' ?> />
 				<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
 			</td>
 		</tr>
 		<?php endif; ?>
-		<?php
-		//Begin captcha
-		if ($this->hasCaptcha()) : ?>
+		<?php if (!empty($this->captchaHtml)) : ?>
 		<tr id="kpost-captcha" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></strong>
 			</td>
 			<td class="kcol-mid">
-				<?php $this->displayCaptcha() ?>
+				<?php echo $this->captchaHtml ?>
 			</td>
 		</tr>
-		<?php endif;
-		// Finish captcha
-		?>
+		<?php endif; ?>
 		<tr id="kpost-buttons" class="krow1">
 			<td id="kpost-buttons" colspan="2">
 				<input type="submit" name="ksubmit" class="kbutton"
@@ -199,15 +199,6 @@ $this->displayLoginBox ();
 				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CANCEL') . ' ');?>"
 				onclick="javascript:window.history.back();"
 				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
-			</td>
-		</tr>
-
-		<tr class="krow<?php echo 1 + $this->k^=1;?>">
-			<td colspan="2" class="kcol-first"><?php
-			if ($this->config->askemail) {
-				echo $this->config->showemail == '0' ? "<em>* - " . JText::_('COM_KUNENA_POST_EMAIL_NEVER') . "</em>" : "<em>* - " . JText::_('COM_KUNENA_POST_EMAIL_REGISTERED') . "</em>";
-			}
-			?>
 			</td>
 		</tr>
 	</tbody>

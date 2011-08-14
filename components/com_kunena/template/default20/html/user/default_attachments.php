@@ -11,14 +11,15 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
-if (version_compare(JVERSION, '1.5','=')) {
-	// FIXME: Isn't there a better way to load this file?
-	// I don't think so that this file can be loaded by an another way under Joomla! 1.5
-	$this->document->addScript(JURI::Root()."includes/js/joomla.javascript.js");
-} elseif (version_compare(JVERSION, '1.6','=')) {
-	JHtml::_('script','system/multiselect.js',false,true);
-} elseif (version_compare(JVERSION, '1.7','>'))  {
+if (version_compare(JVERSION, '1.7','>')) {
+	// Joomla 1.7+
 	JHtml::_('behavior.multiselect');
+} elseif (version_compare(JVERSION, '1.6','>')) {
+	// Joomla 1.6
+	JHtml::_('script','system/multiselect.js',false,true);
+} else {
+	// Joomla 1.5
+	$this->document->addScript(JURI::Root(true).'/includes/js/joomla.javascript.js');
 }
 ?>
 
@@ -31,10 +32,10 @@ if (version_compare(JVERSION, '1.5','=')) {
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" id="adminForm">
 				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="task" value="delfile" />
-
+				<ul>
 				<?php
 				if ( empty($this->items) ):
-					 echo JText::_('COM_KUNENA_USER_NO_ATTACHMENTS');
+					 echo '<li>'.JText::_('COM_KUNENA_USER_NO_ATTACHMENTS').'</li>';
 					else:
 				$i=0;
 				$y=1;
@@ -46,7 +47,7 @@ if (version_compare(JVERSION, '1.5','=')) {
 					if ($evenodd == 0)	$usrl_class="row1";
 					else $usrl_class="row2"; ?>
 
-					<li class="kposts-row ">
+					<li class="kposts-row">
 						<table summary="List of all forum categories with posts and replies of each">
 							<tbody>
 								<tr>
@@ -75,14 +76,14 @@ if (version_compare(JVERSION, '1.5','=')) {
 							</tbody>
 						</table>
 					</li>
-
+				</ul>
 					<?php $i++; $y++; endforeach; endif; ?>
 				<div id="ksection-modbox">
 					<input class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>" style="float:right;" />
-					<?php if (version_compare(JVERSION, '1.6','<')): ?>
-					<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" />
-					<?php else: ?>
+					<?php if (version_compare(JVERSION, '1.6','>')): ?>
 					<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+					<?php else: ?>
+					<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" />
 					<?php endif; ?>
 				</div>
 				<input type="hidden" name="boxchecked" value="0" />

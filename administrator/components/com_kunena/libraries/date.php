@@ -161,9 +161,11 @@ class KunenaDate extends JDate {
 			$my = JFactory::getUser();
 			if ($my->id) $offset = $my->getParam('timezone', $app->getCfg ( 'offset', 0 ));
 			else $offset = $app->getCfg ( 'offset', 0 );
+			if ($offset == 'utc') $offset = 0;
 		}
 		$now = JFactory::getDate ( 'now' );
-		if (is_numeric($offset)) {
+		if (version_compare(JVERSION, '1.6', '<') || is_numeric($offset)) {
+			// Joomla 1.5 and Kunena timezone
 			$this->setOffset($offset);
 			$now->setOffset($offset);
 		} else {

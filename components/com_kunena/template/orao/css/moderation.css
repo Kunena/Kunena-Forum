@@ -1,0 +1,154 @@
+@charset "utf-8";
+
+/*  Kunena 2.0 StyleSheet
+    --------------------------------------------------------------------
+	 Style name:	Orao
+	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
+    --------------------------------------------------------------------
+*/
+
+/* Topic review panel
+----------------------------------------*/
+
+#kunena #topicreview {
+	padding-right: 5px;
+	overflow: auto;
+	height: 300px;
+}
+
+#kunena #topicreview .postbody {
+	width: auto;
+	float: none;
+	margin: 0;
+	height: auto;
+}
+
+#kunena #topicreview .post {
+	height: auto;
+}
+
+#kunena #topicreview h2 {
+	border-bottom-width: 0;
+}
+
+#kunena .post-ignore .postbody {
+	display: none;
+}
+
+/*	BULK ACTION
+------------------------------------------------*/
+#kunena li.rowbulk {
+	padding:5px 0px 0px !important;
+	text-align: right;
+	margin: 0 !important
+}
+#kunena li.rowbulk select {
+	font-size: .917em !important;
+	text-decoration: none;
+	cursor: pointer;
+	line-height: 145%;
+	background-repeat: no-repeat;
+	background-position: 5px 50%;
+	border-width: 1px;
+	border-style: solid;
+	padding: 0px 5px 0px 10px;
+	font-weight: normal !important;
+}
+#kunena li.rowbulk dt {
+	float:right !important;
+	padding-right:0 !important;
+}
+
+#kunena div#kreport-container {
+	border-width: 1px;
+	border-style: solid;
+	height:1%;
+	overflow:auto;
+	padding:10px 10px 30px;	
+}
+
+#kunena form.kform-report,
+#kunena form.kform-report label,
+#kunena form.kform-report input,
+#kunena form.kform-report textarea {
+	clear:both;
+}
+#kunena form.kform-report label {
+	margin-top: 15px;
+}
+#kunena form.kform-report input,
+#kunena form.kform-report textarea {
+	border-width: 1px;
+	border-style: solid;
+}
+	
+#kunena div.kreportstatus {
+	text-align:center;
+	margin: 30px 0;
+}
+#kunena dd.moderation {
+	line-height: 2.5em;
+	float:right !important;
+	border-left:none !important;
+	padding: 0 10px 0 0;
+	width: 1%;
+}
+
+/*
+ * MODEARATION BAN
+ */
+
+#kunena li.banheader dt,
+#kunena li.banheader dd {
+	padding:2px 5px;
+}
+#kunena li.banbody dd {
+	border-left-style: solid;
+	border-left-width: 1px;	
+	padding:2px 5px 5px;
+}
+#kunena li.banbody:hover dd {
+	border-left-style: solid;
+	border-left-width: 1px;
+}
+#kunena li.banheader dt.nr,
+#kunena li.banbody dt.nr {
+	width:2%;
+	text-align: center;
+	font-weight: bold !important;
+}
+#kunena li.banheader dd.from,
+#kunena li.banbody dd.from {
+	width:14%;
+}
+#kunena li.banheader dd.start,
+#kunena li.banbody dd.start,
+#kunena li.banheader dd.end,
+#kunena li.banbody dd.end {
+	width:15%;
+}
+#kunena li.banheader dd.create,
+#kunena li.banbody dd.create {
+	width:20%;
+}
+#kunena li.banheader dd.modify,
+#kunena li.banbody dd.modify {
+	width:24%;
+}
+#kunena li.banbody dt.public,
+#kunena li.banbody dt.private,
+#kunena li.banbody dt.comment {
+	width: 20%
+}
+#kunena li.banbody dt.nohistory {
+	width: 95%
+}
+#kunena li.banbody dd.commenttime {
+	width: 15%
+}
+#kunena ul.addban dt {
+	width: 30% !important;
+}
+#kunena ul.addban textarea {
+	width: 300px;
+}

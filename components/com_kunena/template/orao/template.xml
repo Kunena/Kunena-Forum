@@ -99,7 +99,7 @@
 			<option value="purple">COM_KUNENA_TEMPLATE_PURPLE</option>
 			<option value="grey">COM_KUNENA_TEMPLATE_GREY</option>
 			<option value="green">COM_KUNENA_TEMPLATE_GREEN</option>
-			<option value="nopreset">COM_KUNENA_TEMPLATE_NO_PRESET</option>
+			<option value="nopresetstyle">COM_KUNENA_TEMPLATE_NO_PRESET</option>
 		</param>
 		<param name="headerBg" type="text" default="#888888" label="COM_KUNENA_TEMPLATE_HEADER_BG_COLOR" description="COM_KUNENA_TEMPLATE_HEADER_BG_COLOR_DESC" />
 		<param name="headerBorder" type="text" default="#222222" label="COM_KUNENA_TEMPLATE_HEADER_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_HEADER_BORDER_COLOR_DESC" />

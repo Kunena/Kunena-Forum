@@ -50,9 +50,9 @@ class KunenaTemplateOrao extends KunenaTemplate {
 		$lang =& JFactory::getLanguage();
 		$lang->load( 'com_kunena.tpl_'.$template->name, KPATH_SITE.DS.'template'.DS.$template->name.'/' );
 
-		//if ( KUNENA_JOOMLA_COMPAT >= '1.6' ) {
-			//$this->addStyleSheet ( 'css/j16plus.css' );
-		//}
+		if (version_compare(JVERSION, '1.6','>')) {
+			$this->addStyleSheet ( 'css/j16plus.css' );
+		}
 
 		include dirname(__FILE__).'/styles/preset.php';
 		include dirname(__FILE__).'/styles/style.php';

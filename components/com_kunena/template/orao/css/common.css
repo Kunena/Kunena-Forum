@@ -31,6 +31,8 @@
 }
 #kunena ul.kmessage-buttons {
 	overflow: auto;
+	margin:5px;
+	padding:0;
 }
 #kunena ul.kmessage-buttons li {
 	display: inline !important;

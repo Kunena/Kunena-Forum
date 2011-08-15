@@ -6,13 +6,16 @@
 	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
     --------------------------------------------------------------------
 */
+#kunena > a:hover, #kunena > a:visited, #kunena > a:visited {
+	background:transparent !important;
+}
 
 #kunena #ktab a {
 	color: #fff !important;
 	display: block;
 	padding: 0px 10px !important;
 	font-size: 1em; 
-	line-height: 1.8em;
+	line-height: 1.9em;
 	text-indent: 0;
 }
 #kunena #ktab ul.menu li.current.active a {
@@ -20,4 +23,7 @@
     padding: 0px 10px;
 	white-space:nowrap;
 	text-indent: 0;
+}
+#kunena label {
+    display: inline;
 }

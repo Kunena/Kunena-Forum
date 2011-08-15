@@ -23,8 +23,6 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 					</dl>
 				</li>
 			</ul>
-
-
 			<?php if ($this->canEdit) : ?>
 			<div class="tksection-desc">
 				<?php echo CKunenaLink::GetAnnouncementLink( 'edit', $this->announcement->id, JText::_('COM_KUNENA_ANN_EDIT'), JText::_('COM_KUNENA_ANN_EDIT')); ?> |
@@ -45,4 +43,4 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 		<span class="corners-bottom"><span></span></span>
 	</div>
 </div>
-		<?php echo $this->getModulePosition ( 'kunena_announcement' ) ?>
+<?php echo $this->getModulePosition ( 'kunena_announcement' ) ?>

@@ -69,11 +69,11 @@ $pm = $private->getUnreadCount($this->my->id);
 								<a class="tk-logoutlink" style="color:#fff;" href="#mb_logout" rel="lightbox[inline 360 100]"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?></a>
 							</span>
 							<?php endif ?>
-							<?php if (!empty($this->announcementsLink)) : ?>
+							<?php //if (!empty($this->announcementsLink)) : ?>
 							<span id="tk-ann" class="" title="Announcment:: ">
 								<a class="tk-logoutlink" style="color:#fff;" href="index.php?option=com_kunena&view=announcement&layout=list"><?php echo JText::_('Ann'); ?></a>
 							</span>
-							<?php endif ?>
+							<?php //endif ?>
 							<?php if ($this->params->get('searchLink') == '1') : ?>
 							<span id="tk-search" class="tk-searchlink" title="Search in Forum:: ">
 								<a class="tk-searchlink" style="color:#fff;" href="#mb_search" rel="lightbox[contact 250 80]"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></a>

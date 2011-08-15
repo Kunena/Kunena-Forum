@@ -793,18 +793,13 @@ window.addEvent('domready', function(){
 
 	window.addEvent('domready', function() {
 
-		  var status = {
-		    'true': 'open',
-		    'false': 'close'
-		  };
-
 		  var KCookie = new Hash.Cookie('kunena_settings', {duration: 3600});
 			$$('a.ktoggler').each(function(link){
 				// Auto-hide if the cookie is set.
 				if (KCookie.get('hide_'+link.getProperty('rel'))) {
-					//link.removeClass('close').addClass('open');
-					//link.set('title',kunena_toggler_open);
-					//document.id(link.getProperty('rel'))/*.hide()*/;
+					link.removeClass('close').addClass('open');
+					link.set('title',kunena_toggler_open);
+					document.id(link.getProperty('rel')).slide('out');
 				}
 				var myVerticalSlide = new Fx.Slide(document.id(link.getProperty('rel')), {
 				    duration: 1500,
@@ -845,7 +840,7 @@ window.addEvent('domready', function(){
 	}
 	
 	/* Tips 2 */
-	var MyTips = new Tips($$('.my-tips'), {
+	/*var MyTips = new Tips($$('.my-tips'), {
 		initialize:function(){
 			this.fx = new Fx.Style(this.toolTip, 'opacity', {duration: 500, wait: false}).set(0);
 		},
@@ -855,6 +850,6 @@ window.addEvent('domready', function(){
 		onHide: function(toolTip) {
 			this.fx.start(0);
 		}
-	});
+	});*/
 	
 });

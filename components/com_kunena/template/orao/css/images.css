@@ -475,7 +475,7 @@ div#mbCenter input#tk-submit-button.kbutton,
  */
 
 #kunena li.krsslink {
-	background: url("../images/icon-rss.png") 0 4px no-repeat;
+	background: url("../images/icons/icon-rss.png") 0 4px no-repeat;
 }
 #kunena li.kpm {
 	background: url("../images/icon-pm.png") 0 4px  no-repeat;
@@ -493,7 +493,7 @@ div#mbCenter input#tk-submit-button.kbutton,
 	background: url("../images/icon-attachment.png") no-repeat;
 }
 #kunena .kfeed-icon {
-	background: url("../images/icon-rss.png") 0 2px no-repeat;
+	/*background: url("../images/icons/icon-rss.png") 0 2px no-repeat;*/
 }
 #kunena .ksubscribe-icon {
 	background: url("../images/icon-favorite.png") 0 0 no-repeat;

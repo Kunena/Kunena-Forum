@@ -148,7 +148,10 @@ body {line-height:1.5;}
 	text-align:left;
 }
 #kunena label {
-	font-weight:bold;
+    display: block;
+    font-weight: bold;
+    margin: 4px 8px;
+    width: 95% !important;
 }
 #kunena label i {
 	font-weight:normal;
@@ -504,12 +507,12 @@ body {line-height:1.5;}
 	text-indent: -9999em;
 }
 #kunena .kfeed-icon {
-	display:inline-block;
+	/*display:inline-block;
 	width: 16px;
 	height: 16px;
 	margin-left: 5px;
 	text-indent: -9999em;
-	cursor:pointer;
+	cursor:pointer;*/
 }
 #kunena .ksubscribe-icon {
 	display:inline-block;
@@ -1206,7 +1209,7 @@ body {line-height:1.5;}
 
 /*---------- Profile ------------- */
 
-#kunena .kdetailsbox.kprofilebox,
+#kunena .kdetailsbox.kannouncement-details,
 #kunena #kmod-detailsbox.kmod-userbox {
 	padding: 10px 10px 30px;
 }

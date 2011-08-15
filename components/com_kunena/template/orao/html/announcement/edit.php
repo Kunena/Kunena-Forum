@@ -32,8 +32,7 @@ $document->addScriptDeclaration('// <![CDATA[
 					</dl>
 				</li>
 			</ul>
-
-			<div class="kdetailsbox kannouncement-details" id="kannouncement-detailsbox" style="padding:15px">
+			<div class="kdetailsbox kannouncement-details" id="kannouncement-detailsbox">
 				<div class="kactions"><?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></div>
 				<form class="form-validate" action="<?php echo CKunenaLink::GetAnnouncementURL('doedit'); ?>" method="post" name="editform" onsubmit="return myValidate(this);">
 					<?php echo JHTML::_( 'form.token' ); ?>

@@ -72,7 +72,7 @@ class KunenaAdminModelTemplates extends KunenaModel {
 		} else {
 			$content = null;
 		}
-		// FIXME:: JParameter doesn't exist anymore under Joomla! 1.6
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		$params = new JParameter($content, $xml, 'template');
 		return $params;
 	}

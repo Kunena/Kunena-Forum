@@ -24,7 +24,13 @@ class KunenaError {
 			@error_reporting(E_ALL);
 			set_error_handler('kunenaErrorHandler');
 			self::$handler = true;
-			JFactory::getDBO()->debug(1);
+			if (version_compare(JVERSION, '1.7', '>')) {
+				// Joomla 1.7+
+				JFactory::getDBO()->setDebug(true);
+			} else {
+				// Joomla 1.5 and 1.6
+				JFactory::getDBO()->debug(1);
+			}
 
 			self::$enabled++;
 		}

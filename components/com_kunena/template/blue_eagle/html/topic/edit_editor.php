@@ -100,10 +100,10 @@ defined ( '_JEXEC' ) or die ();
 					echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE'); ?>')" />
 
 				<img id="kbutton-poll-add"
-					src="<?php echo JURI::root(true); ?>/components/com_kunena/template/default/images/icons/poll_add_options.png"
+					src="<?php echo $this->template->getImagePath('icons/poll_add_options.png') ?>"
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>" />
 				<img id="kbutton-poll-rem"
-					src="<?php echo JURI::root(true); ?>/components/com_kunena/template/default/images/icons/poll_rem_options.png"
+					src="<?php echo $this->template->getImagePath('icons/poll_rem_options.png' ) ?>"
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
 
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
@@ -267,7 +267,7 @@ defined ( '_JEXEC' ) or die ();
 		<div class="clr"> </div>
 		<fieldset>
 			<legend><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend>
-			<input class="kinputbox" name="modified_reason" size="40" maxlength="200" type="text" />
+			<input class="kinputbox" name="modified_reason" size="40" maxlength="200" type="text" value="<?php echo $this->modified_reason; ?>" />
 		</fieldset>
 		<?php endif; ?>
 	</td>

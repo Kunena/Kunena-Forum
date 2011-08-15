@@ -103,7 +103,7 @@ class KunenaForumMessageThankyou extends JObject {
 	protected function _savethankyou($message) {
 		$db = JFactory::getDBO ();
 		$query = "UPDATE #__kunena_users
-				SET ty_received=ty_received+1 WHERE userid={$db->quote($message->userid)}";
+				SET thankyou=thankyou+1 WHERE userid={$db->quote($message->userid)}";
 		$db->setQuery ( $query );
 		$db->query ();
 

@@ -22,16 +22,18 @@ $document->addScriptDeclaration('// <![CDATA[
 }
 // ]]>');
 ?>
-		<div id="kannouncement">
-			<h2 class="kheader">
-				<a title="<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>" rel="kannouncement-detailsbox">
-					<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo $this->announcement->id ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD'); ?>
-				</a>
-			</h2>
-			<div class="kdetailsbox kannouncement-details" id="kannouncement-detailsbox" >
-				<div class="kactions"><?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></div>
-				<form class="form-validate" action="<?php echo CKunenaLink::GetAnnouncementURL('doedit'); ?>" method="post" name="editform" onsubmit="return myValidate(this);">
-					<?php echo JHTML::_( 'form.token' ); ?>
+	<div id="kannouncement">
+		<h2 class="kheader">
+			<a title="<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>" rel="kannouncement-detailsbox">
+				<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo $this->announcement->id ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD'); ?>
+			</a>
+		</h2>
+		<div class="kdetailsbox kannouncement-details" id="kannouncement-detailsbox" >
+			<form class="form-validate" action="<?php echo CKunenaLink::GetAnnouncementURL('doedit'); ?>" method="post" name="editform" onsubmit="return myValidate(this);">
+				<input type='hidden' name="do" value="doedit"/>
+				<input type='hidden' name="id" value="<?php echo intval($this->announcement->id) ;?>"/>
+				<?php echo JHTML::_( 'form.token' ); ?>
+					<div class="kactions"><?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></div>
 					<div>
 						<label>
 							<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>:
@@ -68,9 +70,7 @@ $document->addScriptDeclaration('// <![CDATA[
 							</select>
 						</label>
 					</div>
-					<input type='hidden' name="do" value="doedit"/>
-					<input type='hidden' name="id" value="<?php echo intval($this->announcement->id) ;?>"/>
 					<input name="submit" class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_ANN_SAVE'); ?>"/>
-				</form>
-			</div>
+			</form>
 		</div>
+	</div>

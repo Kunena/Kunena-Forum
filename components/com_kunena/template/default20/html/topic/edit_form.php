@@ -13,24 +13,24 @@ defined ( '_JEXEC' ) or die ();
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 ?>
-<form enctype="multipart/form-data" name="postform" method="post" id="postform" class="postform form-validate" action="#">
-	<?php if ($this->message->exists()) : ?>
-	<input type="hidden" name="task" value="edit" />
-	<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
-	<?php else: ?>
-	<input type="hidden" name="task" value="post" />
-	<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>" />
-	<?php endif; ?>
-	<?php if (empty($this->selectcatlist)) : ?>
-	<input type="hidden" name="catid" value="<?php echo intval($this->topic->category_id) ?>" />
-	<?php endif; ?>
-	<?php if ($this->catid && $this->catid != $this->message->catid) : ?>
-	<input type="hidden" name="return" value="<?php echo intval($this->catid) ?>" />
-	<?php endif; ?>
-	<?php echo JHTML::_( 'form.token' ); ?>
+<div class="ksection">
+	<h2 class="kheader"><span><?php echo $this->escape($this->title)?></span></h2>
 
-	<div class="ksection">
-		<h2 class="kheader"><span><?php echo $this->escape($this->title)?></span></h2>
+	<form enctype="multipart/form-data" name="postform" method="post" id="postform" class="postform form-validate" action="#">
+		<?php if ($this->message->exists()) : ?>
+		<input type="hidden" name="task" value="edit" />
+		<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
+		<?php else: ?>
+		<input type="hidden" name="task" value="post" />
+		<input type="hidden" name="parentid" value="<?php echo intval($this->message->parent) ?>" />
+		<?php endif; ?>
+		<?php if (empty($this->selectcatlist)) : ?>
+		<input type="hidden" name="catid" value="<?php echo intval($this->topic->category_id) ?>" />
+		<?php endif; ?>
+		<?php if ($this->catid && $this->catid != $this->message->catid) : ?>
+		<input type="hidden" name="return" value="<?php echo intval($this->catid) ?>" />
+		<?php endif; ?>
+		<?php echo JHTML::_( 'form.token' ); ?>
 
 		<ul class="kform kpostmessage clearfix">
 
@@ -196,8 +196,8 @@ JHTML::_('behavior.tooltip');
 			<button class="kbutton hasTip" type="submit" title="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT') ?>"><?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?></button>
 			<button class="kbutton hasTip" type="button" title="<?php echo JText::_('COM_KUNENA_GEN_CANCEL').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL') ?>" onclick="javascript:window.history.back();"><?php echo JText::_('COM_KUNENA_GEN_CANCEL') ?></button>
 		</div>
-
-	</div>
+	</form>
+</div>
 <?php
 if (!$this->message->name) {
 	echo '<script type="text/javascript">document.postform.authorname.focus();</script>';
@@ -207,5 +207,4 @@ if (!$this->message->name) {
 	echo '<script type="text/javascript">document.postform.message.focus();</script>';
 }
 ?>
-</form>
 <?php $this->displayThreadHistory (); ?>

@@ -18,69 +18,71 @@ body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, 
 article, aside, dialog, figure, footer, header, hgroup, nav, section {display:block;}
 body {line-height:1.5;}
 */
-#kunena {
+#kunena,
+#kunena > div,
+#kunena > div p {
 	padding: 0;
 	margin: 0;
 	line-height: 1.333em;
 }
-#kunena div h1,
-#kunena div h2,
-#kunena div h3,
-#kunena div h4,
-#kunena div h5,
-#kunena div h6 {
+#kunena > div h1,
+#kunena > div h2,
+#kunena > div h3,
+#kunena > div h4,
+#kunena > div h5,
+#kunena > div h6 {
 	margin: 0;
 	width: auto;
 	text-transform: none;
 }
-#kunena div h1 {
+#kunena > div h1 {
 	line-height:22px;
 }
-#kunena div h2 {
+#kunena > div h2 {
 	line-height:20px;
 }
-#kunena div h3 {
+#kunena > div h3 {
 	line-height:18px;
 }
-#kunena div h4 {
+#kunena > div h4 {
 	line-height:14px;
 }
-#kunena div h5,
-#kunena div h6 {
+#kunena > div h5,
+#kunena > div h6 {
 	line-height:13px;
 }
-#kunena div h1 img,
-#kunena div h2 img,
-#kunena div h3 img,
-#kunena div h4 img,
-#kunena div h5 img,
-#kunena div h6 img {
+#kunena > div h1 img,
+#kunena > div h2 img,
+#kunena > div h3 img,
+#kunena > div h4 img,
+#kunena > div h5 img,
+#kunena > div h6 img {
 	margin:0;
 }
-#kunena div table {
+#kunena > div table {
 	border-collapse:separate;
 	border-spacing:0;
 }
-#kunena div caption,
-#kunena div th,
-#kunena div td {
+#kunena > div caption,
+#kunena > div th,
+#kunena > div td {
 	border: 0 solid;
 	text-align:left;
 	font-weight:normal;
 	float:none !important;
 }
-#kunena div table,
-#kunena div th,
-#kunena div td {
+#kunena > div table,
+#kunena > div th,
+#kunena > div td {
 	vertical-align:middle;
 }
-#kunena div ul,
-#kunena div ol {
+#kunena > div ul,
+#kunena > div ol {
 	background: inherit;
 	margin: 0;
 	padding: 0;
 }
-#kunena ul li {
+#kunena ul > li {
 	background-image: none;
 	list-style-type: none;
 	margin: 0;
@@ -96,7 +98,7 @@ body {line-height:1.5;}
 #kunena q {
 	quotes:"" "";
 }
-#kunena a img {
+#kunena a {
 	border:none;
 }
 #kunena :focus {
@@ -1091,16 +1093,23 @@ body {line-height:1.5;}
 #kunena ul.kmessage-buttons li {
 	display: inline;
 }
-#kunena .kicon-button {
+#kunena span.kicon-button,
+#kunena .kicon-button span,
+#kunena a.kicon-button:link,
+#kunena a.kicon-button:visited,
+#kunena a.kicon-button:hover,
+#kunena a.kicon-button:active,
+#kunena a.kicon-button:focus {
 	cursor: pointer;
 	line-height: 13px;
 	display: inline-block;
-	background-repeat: repeat-x;
 	margin:0 5px;
-}
-#kunena .kicon-button,
-#kunena .kicon-button span {
+	background-color: transparent;
 	background-image: url("../images/default.png");
+	background-repeat: repeat-x;
+}
+#kunena a.kicon-button {
+	background-repeat: repeat-x;
 }
 #kunena .kicon-button span {
 	background-image: inherit;
@@ -1116,17 +1125,17 @@ body {line-height:1.5;}
 	background-repeat: no-repeat;
 	line-height: 16px;
 }
-#kunena .kbuttonuser {
-	background-position: 0 -360px;
+#kunena a.kbuttonuser {
+	background-position: 0 -360px !important;
 }
 #kunena .kbuttononline-yes,
-#kunena .kbuttonmod {
-	background-position: 0 -200px;
+#kunena a.kbuttonmod {
+	background-position: 0 -200px !important;
 }
 #kunena .kbuttononline-no,
-#kunena .kbuttongen,
-#kunena .kbuttoncomm {
-	background-position: 0 -480px;
+#kunena a.kbuttongen,
+#kunena a.kbuttoncomm {
+	background-position: 0 -480px !important;
 }
 #kunena .kbuttononline-yes span span,
 #kunena .kbuttonmod span span {
@@ -1147,8 +1156,7 @@ body {line-height:1.5;}
 }
 #kunena .kbuttonuser span.layout-flat span,
 #kunena .kbuttonuser span.layout-threaded span,
-#kunena .kbuttonuser span.layout-indented span
-{
+#kunena .kbuttonuser span.layout-indented span {
 	padding: 0 7px;
 }
 #kunena .kbuttononline-yes span.online-yes	{ background-position: 0 0px;	}

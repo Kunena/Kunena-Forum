@@ -1,0 +1,75 @@
+@charset "utf-8";
+
+/*  Kunena 2.0 StyleSheet
+    --------------------------------------------------------------------
+	 Style name:	Orao
+	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
+    --------------------------------------------------------------------
+*/
+
+#kunena .search-category {
+	font-weight: bold;
+	width:99%;
+	display:block;
+	padding: 2px 5px;
+	margin: 10px 0 5px 0;
+}
+
+#kunena li.search {
+	border-top-width: 1px;
+	border-top-style: solid;
+	padding:5px;
+}
+
+#kunena div.tk-search dt.tk-result-topic {
+	width:77% !important;
+	padding:5px !important;
+}
+#kunena div.tk-search dt.tk-result-topic span.tk-result-topic {
+	font-size:150%;
+}
+#kunena div.tk-search dt.tk-result-topic span.tk-result-date {
+	float: right;
+}
+#kunena div.tk-search dd.tk-search-users {
+	width:20% !important;
+	padding:5px;
+}
+#kunena div.tk-search li.tk-search-pagination {
+	background-image:none !important;
+	padding-left:10px;
+}
+#kunena div.tk-search li.tk-search-pagination span.tk-search-pag {
+	width:50%;
+	float:right;
+	text-align:left;
+	padding:5px 0px;
+}
+#kunena div.tk-search li.tk-search-pagination span.tk-search-result {
+	width:48%;
+	float:left;
+	text-align:left;
+	padding:7px 0px 5px;
+	font-weight:bold;
+}
+
+/*	
+*	ADVSEARCH
+*/
+#kunena div.tk-advsearch dd.tk-search-first,
+#kunena div.tk-advsearch-option dd.tk-search-first {
+	width:35%;
+}
+#kunena div.tk-advsearch dd.tk-search-last,
+#kunena div.tk-advsearch-option dd.tk-search-last {
+	width:30%;
+}
+#kunena div.tk-advsearch span.searchbutton {
+	padding-top:10px;
+}
+#kunena div.tk-advsearch-option li.header {
+	margin:3px 0;
+}
+#kunena div.tk-advsearch li.header {
+	margin-bottom:3px;
+}

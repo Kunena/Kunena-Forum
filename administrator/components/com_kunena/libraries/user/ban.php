@@ -328,7 +328,7 @@ class KunenaUserBan extends JObject
 			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_ADMIN', $userprofile->username ));
 			return false;
 		}
-		if ($userprofile->isModerator()) {
+		if ($userprofile->isModerator(false)) {
 			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_MODERATOR', $userprofile->username ));
 		}
 		return true;

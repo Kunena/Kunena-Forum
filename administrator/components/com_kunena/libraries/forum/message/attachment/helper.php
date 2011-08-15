@@ -201,9 +201,9 @@ class KunenaForumMessageAttachmentHelper {
 	}
 
 	public static function getByUserid($user, $params) {
-		if ( $params['filetype'] == 'files' ) $filetype = " AND filetype=''";
-		elseif ( $params['filetype'] == 'images' ) $filetype = " AND filetype!=''";
-		elseif ( empty ($params['filetype'])) $filetype = '';
+		if ( $params['file'] == '1' && $params['image'] != '1'  ) $filetype = " AND filetype=''";
+		elseif ( $params['image'] == '1' && $params['file'] != '1'  ) $filetype = " AND filetype!=''";
+		elseif ( $params['file'] == '1' && $params['image'] == '1' ) $filetype = '';
 		else return;
 
 		$orderby = '';

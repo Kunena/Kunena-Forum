@@ -51,13 +51,13 @@ if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.foru
 		$template->addStyleSheet ( 'css/kunena.default.css' );
 	}
 }
-$cssurl = JURI::root(true) . '/components/com_kunena/template/default/css';
+$cssurl = JURI::root(true) . '/components/com_kunena/template/blue_eagle/css';
 ?>
 <!--[if lte IE 7]>
 <link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css" />
 <![endif]-->
 <?php
-$mediaurl = JURI::root(true) . '/components/com_kunena/template/default/media';
+$mediaurl = JURI::root(true) . "/components/com_kunena/template/{$template->name}/media";
 
 $styles = <<<EOF
 	/* Kunena Custom CSS */

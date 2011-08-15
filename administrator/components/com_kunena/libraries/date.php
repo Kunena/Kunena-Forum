@@ -161,18 +161,21 @@ class KunenaDate extends JDate {
 			$my = JFactory::getUser();
 			if ($my->id) $offset = $my->getParam('timezone', $app->getCfg ( 'offset', 0 ));
 			else $offset = $app->getCfg ( 'offset', 0 );
+			if ($offset == 'utc') $offset = 0;
 		}
-		if (is_numeric($offset)) {
+		$now = JFactory::getDate ( 'now' );
+		if (version_compare(JVERSION, '1.6', '<') || is_numeric($offset)) {
+			// Joomla 1.5 and Kunena timezone
 			$this->setOffset($offset);
+			$now->setOffset($offset);
 		} else {
 			// Joomla 1.6 support
 			$offset = new DateTimeZone($offset);
 			$this->setTimezone($offset);
+			$now->setTimezone($offset);
 		}
 		// Today and Yesterday?
 		if (end($modearr) == 'today') {
-			$now = JFactory::getDate ( 'now' );
-			$now->setOffset($offset);
 			$now = @getdate ( $now->toUnix(true) );
 			$then = @getdate ( $this->toUnix(true) );
 

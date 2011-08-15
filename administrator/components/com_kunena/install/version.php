@@ -69,20 +69,17 @@ class KunenaVersion
 	 */
 	public function getDBVersion($prefix = 'kunena_')
 	{
-		if ($prefix)
-		{
-			$db = JFactory::getDBO();
-			// FIXME:
-			$db->debug(0);
+		$db = JFactory::getDBO();
+		$query = "SHOW TABLES LIKE {$db->quote($db->getPrefix().$prefix.'version')}";
+		$db->setQuery ( $query );
+		if ($db->loadResult ()) {
 			$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$prefix.'version')." ORDER BY `id` DESC", 0, 1);
 			$version = $db->loadObject();
 		}
-		if (!isset($version) || !is_object($version) || !isset($version->state))
-		{
+		if (!isset($version) || !is_object($version) || !isset($version->state)) {
+			$version = new stdClass();
 			$version->state = '';
-		}
-		else if (!empty($version->state))
-		{
+		} elseif (!empty($version->state)) {
 			if ($version->version != KunenaForum::version()) $version->state = '';
 		}
 		return $version;

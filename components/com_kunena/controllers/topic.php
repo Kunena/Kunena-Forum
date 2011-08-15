@@ -18,7 +18,7 @@ kimport ( 'kunena.forum.message.thankyou.helper' );
 kimport ( 'kunena.forum.topic.helper' );
 kimport ( 'kunena.forum.category.helper' );
 kimport ( 'kunena.forum.topic.poll.helper' );
-kimport ( 'kunena.captcha' );
+kimport ( 'kunena.spam.recaptcha' );
 
 require_once KPATH_SITE . '/lib/kunena.link.class.php';
 
@@ -39,34 +39,54 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function post() {
-		$this->id = JRequest::getInt('parentid', 0);
 		$app = JFactory::getApplication ();
+		$this->id = JRequest::getInt('parentid', 0);
+		$fields = array (
+			'catid' => $this->catid,
+			'name' => JRequest::getString ( 'authorname', $this->me->getName () ),
+			'email' => JRequest::getString ( 'email', null ),
+			'subject' => JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW ),
+			'message' => JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW ),
+			'icon_id' => JRequest::getInt ( 'topic_emoticon', 0 ),
+			'anonymous' => JRequest::getInt ( 'anonymous', 0 ),
+			'poll_title' => JRequest::getString ( 'poll_title', '' ),
+			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'),
+			'poll_time_to_live' => JRequest::getString ( 'poll_time_to_live', 0 ),
+			'tags' => JRequest::getString ( 'tags', null ),
+			'mytags' => JRequest::getString ( 'mytags', null ),
+			'subscribe' => JRequest::getInt ( 'subscribeMe', 0 )
+		);
+
 		if (! JRequest::checkToken ()) {
+			$app->setUserState('com_kunena.postfields', $fields);
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
-		if (! KunenaCaptcha::verify () ) {
-			$this->redirectBack ();
+		$captcha = KunenaSpamRecaptcha::getInstance();
+		if ($captcha->enabled()) {
+			$success = $captcha->verify();
+			if ( !$success ) {
+				$app->setUserState('com_kunena.postfields', $fields);
+				$app->enqueueMessage ( $captcha->getError(), 'error' );
+				$this->redirectBack ();
+			}
 		}
 
-		$fields = array (
-			'name' => JRequest::getString ( 'authorname', $this->me->getName () ),
-			'email' => JRequest::getString ( 'email', null ),
-			'subject' => JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW ),
-			'message' => JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW ));
-
 		if (!$this->id) {
+			// Create topic
 			$category = KunenaForumCategoryHelper::get($this->catid);
 			if (!$category->authorise('topic.create')) {
+				$app->setUserState('com_kunena.postfields', $fields);
 				$app->enqueueMessage ( $category->getError(), 'notice' );
 				$this->redirectBack ();
 			}
-			$fields['icon_id'] = JRequest::getInt ( 'topic_emoticon', 0 );
 			list ($topic, $message) = $category->newTopic($fields);
 		} else {
+			// Reply topic
 			$parent = KunenaForumMessageHelper::get($this->id);
 			if (!$parent->authorise('reply')) {
+				$app->setUserState('com_kunena.postfields', $fields);
 				$app->enqueueMessage ( $parent->getError(), 'notice' );
 				$this->redirectBack ();
 			}
@@ -83,14 +103,24 @@ class KunenaControllerTopic extends KunenaController {
 			$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} AND time>{$db->quote($timelimit)}" );
 			$count = $db->loadResult ();
 			if (KunenaError::checkDatabaseError() || $count) {
+				$app->setUserState('com_kunena.postfields', $fields);
 				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection) );
 				$this->redirectBack ();
 			}
 		}
 
 		// If requested: Make message to be anonymous
-		if (JRequest::getInt ( 'anonymous', 0 ) && $message->getCategory()->allow_anonymous) {
+		if ($fields['anonymous'] && $message->getCategory()->allow_anonymous) {
 			$message->makeAnonymous();
+		}
+
+		// If configured: Hold posts from guests
+		if ( !$this->me->userid && $this->config->hold_guest_posts) {
+			$message->hold = 1;
+		}
+		// If configured: Hold posts from users
+		if ( !$this->me->isModerator() && $this->me->posts < $this->config->hold_newusers_posts ) {
+			$message->hold = 1;
 		}
 
 		// Upload new attachments
@@ -115,6 +145,7 @@ class KunenaControllerTopic extends KunenaController {
 		$success = $message->save ();
 		if (! $success) {
 			$app->enqueueMessage ( $message->getError (), 'error' );
+			$app->setUserState('com_kunena.postfields', $fields);
 			$this->redirectBack ();
 		}
 		// Display possible warnings (upload failed etc)
@@ -123,15 +154,14 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Create Poll
-		$polltitle = JRequest::getString ( 'poll_title', '' );
-		$polloptions = JRequest::getVar('polloptionsID', array (), 'post', 'array');
-		//$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
-		if (! empty ( $polloptions ) && ! empty ( $polltitle )) {
+		$poll_title = $fields['poll_title'];
+		$poll_options = $fields['poll_options'];
+		if (! empty ( $poll_options ) && ! empty ( $poll_title )) {
 			if ($topic->authorise('poll.create', null, false)) {
 				$poll = $topic->getPoll();
-				$poll->title = $polltitle;
-				$poll->polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
-				$poll->setOptions($polloptions);
+				$poll->title = $poll_title;
+				$poll->polltimetolive = $fields['poll_time_to_live'];
+				$poll->setOptions($poll_options);
 				if (!$poll->save()) {
 					$app->enqueueMessage ( $poll->getError(), 'notice' );
 				} else {
@@ -145,14 +175,12 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Update Tags
-		$globalTags = JRequest::getString ( 'tags', null );
-		$userTags = JRequest::getString ( 'mytags', null );
-		$this->updateTags($message->thread, $globalTags, $userTags);
+		$this->updateTags($message->thread, $fields['tags'], $fields['mytags']);
 
 		$message->sendNotification();
 
 		//now try adding any new subscriptions if asked for by the poster
-		if (JRequest::getInt ( 'subscribeMe', 0 )) {
+		if ($fields['subscribe']) {
 			if ($topic->subscribe(1)) {
 				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
 
@@ -175,36 +203,52 @@ class KunenaControllerTopic extends KunenaController {
 	protected function edit() {
 		$this->id = JRequest::getInt('mesid', 0);
 		$app = JFactory::getApplication ();
-		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
-		}
 
 		$message = KunenaForumMessageHelper::get($this->id);
-		if (!$message->authorise('edit')) {
-			$app->enqueueMessage ( $message->getError(), 'notice' );
-			$this->redirectBack ();
-		}
+		$topic = $message->getTopic();
 		$fields = array (
 			'name' => JRequest::getString ( 'authorname', $message->name ),
 			'email' => JRequest::getString ( 'email', $message->email ),
 			'subject' => JRequest::getVar ( 'subject', $message->subject, 'POST', 'string', JREQUEST_ALLOWRAW ),
 			'message' => JRequest::getVar ( 'message', $message->message, 'POST', 'string', JREQUEST_ALLOWRAW ),
-			'modified_reason' => JRequest::getString ( 'modified_reason', $message->modified_reason ));
+			'modified_reason' => JRequest::getString ( 'modified_reason', $message->modified_reason ),
+			'icon_id' => JRequest::getInt ( 'topic_emoticon', $topic->icon_id ),
+			'anonymous' => JRequest::getInt ( 'anonymous', 0 ),
+			'poll_title' => JRequest::getString ( 'poll_title', null ),
+			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'),
+			'poll_time_to_live' => JRequest::getString ( 'poll_time_to_live', 0 ),
+			'tags' => JRequest::getString ( 'tags', null ),
+			'mytags' => JRequest::getString ( 'mytags', null ),
+			'attach_id' => JRequest::getVar ( 'attach-id', null, 'post', 'array' )
+		);
+
+		if (! JRequest::checkToken ()) {
+			$app->setUserState('com_kunena.postfields', $fields);
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		if (!$message->authorise('edit')) {
+			$app->setUserState('com_kunena.postfields', $fields);
+			$app->enqueueMessage ( $message->getError(), 'notice' );
+			$this->redirectBack ();
+		}
 
 		// Update message contents
 		$message->edit ( $fields );
 		// If requested: Make message to be anonymous
-		if (JRequest::getInt ( 'anonymous', 0 ) && $message->getCategory()->allow_anonymous) {
+		if ($fields['anonymous'] && $message->getCategory()->allow_anonymous) {
 			$message->makeAnonymous();
 		}
 
 		// Mark attachments to be deleted
-		$attachments = $message->getAttachments();
-		$attachkeeplist = JRequest::getVar ( 'attach-id', array (0), 'post', 'array' );
-		foreach ($attachments as $attachment) {
-			if (!in_array($attachment->id, $attachkeeplist)) {
-				$message->removeAttachment($attachment->id);
+		if ($fields['attach_id'] !== null) {
+			$attachments = $message->getAttachments();
+			$attachkeeplist = $fields['attach_id'];
+			foreach ($attachments as $attachment) {
+				if (!in_array($attachment->id, $attachkeeplist)) {
+					$message->removeAttachment($attachment->id);
+				}
 			}
 		}
 		// Upload new attachments
@@ -216,12 +260,12 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Check if we are editing first post and update topic if we are!
-		$topic = $message->getTopic();
 		if ($topic->first_post_id == $message->id) {
-			$topic->icon_id = JRequest::getInt ( 'topic_emoticon', $topic->icon_id );
-			$topic->subject = $fields ['subject'];
+			$topic->icon_id = $fields['icon_id'];
+			$topic->subject = $fields['subject'];
 			$success = $topic->save();
 			if (! $success) {
+				$app->setUserState('com_kunena.postfields', $fields);
 				$app->enqueueMessage ( $topic->getError (), 'error' );
 				$this->redirectBack ();
 			}
@@ -234,6 +278,7 @@ class KunenaControllerTopic extends KunenaController {
 		// Save message
 		$success = $message->save (true);
 		if (! $success) {
+			$app->setUserState('com_kunena.postfields', $fields);
 			$app->enqueueMessage ( $message->getError (), 'error' );
 			$this->redirectBack ();
 		}
@@ -242,54 +287,51 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( $warning, 'notice' );
 		}
 
-		// Poll
-		$polltitle = JRequest::getString ( 'poll_title', '' );
-		$polloptions = JRequest::getVar('polloptionsID', array (), 'post', 'array');
-		//$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
-
-		// Save changes into poll
-		$poll = $topic->getPoll();
-		if (! empty ( $polloptions ) && ! empty ( $polltitle )) {
-			$poll->title = $polltitle;
-			$poll->polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
-			$poll->setOptions($polloptions);
-			if (!$topic->poll_id) {
-				// Create a new poll
-				if (!$topic->authorise('poll.create')) {
+		$poll_title = $fields['poll_title'];
+		if ($poll_title !== null) {
+			// Save changes into poll
+			$poll_options = $fields['poll_options'];
+			$poll = $topic->getPoll();
+			if (! empty ( $poll_options ) && ! empty ( $poll_title )) {
+				$poll->title = $poll_title;
+				$poll->polltimetolive = $fields['poll_time_to_live'];
+				$poll->setOptions($poll_options);
+				if (!$topic->poll_id) {
+					// Create a new poll
+					if (!$topic->authorise('poll.create')) {
+						$app->enqueueMessage ( $topic->getError(), 'notice' );
+					} elseif (!$poll->save()) {
+						$app->enqueueMessage ( $poll->getError(), 'notice' );
+					} else {
+						$topic->poll_id = $poll->id;
+						$topic->save();
+						$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_CREATED' ) );
+					}
+				} else {
+					// Edit existing poll
+					if (!$topic->authorise('poll.edit')) {
+						$app->enqueueMessage ( $topic->getError(), 'notice' );
+					} elseif (!$poll->save()) {
+						$app->enqueueMessage ( $poll->getError(), 'notice' );
+					} else {
+						$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_EDITED' ) );
+					}
+				}
+			} elseif ($poll->exists()) {
+				// Delete poll
+				if (!$topic->authorise('poll.delete')) {
+					// Error: No permissions to delete poll
 					$app->enqueueMessage ( $topic->getError(), 'notice' );
-				} elseif (!$poll->save()) {
+				} elseif (!$poll->delete()) {
 					$app->enqueueMessage ( $poll->getError(), 'notice' );
 				} else {
-					$topic->poll_id = $poll->id;
-					$topic->save();
-					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_CREATED' ) );
+					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_DELETED' ) );
 				}
-			} else {
-				// Edit existing poll
-				if (!$topic->authorise('poll.edit')) {
-					$app->enqueueMessage ( $topic->getError(), 'notice' );
-				} elseif (!$poll->save()) {
-					$app->enqueueMessage ( $poll->getError(), 'notice' );
-				} else {
-					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_EDITED' ) );
-				}
-			}
-		} elseif ($poll->exists()) {
-			// Delete poll
-			if (!$topic->authorise('poll.delete')) {
-				// Error: No permissions to delete poll
-				$app->enqueueMessage ( $topic->getError(), 'notice' );
-			} elseif (!$poll->delete()) {
-				$app->enqueueMessage ( $poll->getError(), 'notice' );
-			} else {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_DELETED' ) );
 			}
 		}
 
 		// Update Tags
-		$globalTags = JRequest::getString ( 'tags', null );
-		$userTags = JRequest::getString ( 'mytags', null );
-		$this->updateTags($message->getTopic()->id, $globalTags, $userTags);
+		$this->updateTags($message->thread, $fields['tags'], $fields['mytags']);
 
 		$category = $message->getCategory();
 		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
@@ -768,6 +810,9 @@ class KunenaControllerTopic extends KunenaController {
 				}
 
 				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );
+				$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->return, $this->id, 0, NULL, $this->id, false ) );
+			} else {
+				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_NOT_SEND' ) );
 				$app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->return, $this->id, 0, NULL, $this->id, false ) );
 			}
 		}

@@ -608,10 +608,13 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE') ?></td>
-								<td align="left" valign="top"><?php echo $this->lists ['pubwrite'];
-						?></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE_DESC') ?>
-						</td>
+						<td align="left" valign="top"><?php echo $this->lists ['pubwrite'];?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_GUEST_POSTS') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['hold_guest_posts'] ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_GUEST_POSTS_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED') ?></td>
@@ -624,21 +627,19 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PUBPROFILE_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_REGISTERED_ONLY') ?>
-						</td>
-								<td align="left" valign="top" width="25%"><?php echo $this->lists ['regonly'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_REG_ONLY_DESC') ?>
-						</td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_REGISTERED_ONLY') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['regonly']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_REG_ONLY_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POSTS') ?></td>
+						<td align="left" valign="top"><input type="text" name="cfg_hold_newusers_posts" class="ksm-field" value="<?php echo $this->escape($this->config->hold_newusers_posts) ?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POSTS_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DELETEMESSAGE') ?></td>
-								<td align="left" valign="top"><?php echo $this->lists ['userdeletetmessage'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DELETEMESSAGE_DESC') ?>
-						</td>
+						<td align="left" valign="top"><?php echo $this->lists ['userdeletetmessage']; ?> </td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DELETEMESSAGE_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_MOD_SEE_DELETED') ?>

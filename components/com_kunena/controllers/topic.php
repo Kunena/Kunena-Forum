@@ -114,6 +114,15 @@ class KunenaControllerTopic extends KunenaController {
 			$message->makeAnonymous();
 		}
 
+		// If configured: Hold posts from guests
+		if ( !$this->me->userid && $this->config->hold_guest_posts) {
+			$message->hold = 1;
+		}
+		// If configured: Hold posts from users
+		if ( !$this->me->isModerator() && $this->me->posts < $this->config->hold_newusers_posts ) {
+			$message->hold = 1;
+		}
+
 		// Upload new attachments
 		foreach ($_FILES as $key=>$file) {
 			$intkey = 0;

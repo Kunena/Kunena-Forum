@@ -86,8 +86,7 @@
 	padding: 0px;
 	margin: 0;
 }
-#kunena li.rowfull dd,
-#kunena li.rowfull:hover dd {
+#kunena li.rowfull dd {
 	border-left-width: 1px;
 	border-left-style: solid;
 	margin: 3px 0 0;

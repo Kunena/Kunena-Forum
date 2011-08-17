@@ -74,7 +74,7 @@
 	background-position:left top;
 }
 #kunena ul.kpagination { 
-	padding:0 5px 0 0;
+	padding:0;
 	float: right;
 }
 #kunena .kpagination li {

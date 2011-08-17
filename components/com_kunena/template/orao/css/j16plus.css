@@ -10,6 +10,7 @@
 	background:transparent !important;
 	background-repeat: no-repeat;
 	background-color: transparent;
+	text-decoration: none;
 }
 #kunena dd.tk-topmenu-links a {
 	background-repeat: no-repeat;

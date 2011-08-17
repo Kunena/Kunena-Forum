@@ -87,12 +87,9 @@ defined ( '_JEXEC' ) or die ();
 								&nbsp;<?php echo JText::_('COM_KUNENA_GEN_HITS');?>: <b><?php echo $this->formatLargeNumber ( $this->topic->getHits() );?></b>
 							</span>
 						<?php endif;?>
-
-							<strong class="pagination">
-								<span>
-									<?php echo $this->topic->getPagination(0, $this->config->messages_per_page, 3)->getPagesLinks() ?>
-								</span>
-							</strong>
+							<span>
+								<?php echo $this->topic->getPagination(0, $this->config->messages_per_page, 3)->getPagesLinks() ?>
+							</span>
 						</span>
 						</dt>
 						<?php if ($this->params->get('countcolumnShow') != 0):?>

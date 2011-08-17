@@ -101,7 +101,7 @@ class KunenaTemplateOrao extends KunenaTemplate {
 	}
 
 	public function getPaginationItemActive(&$item) {
-		return '<li class=""><a title="'.$item->text.'" href="'.$item->link.'">'.$item->text.'</a></li>';
+		return '<li class="link"><a title="'.$item->text.'" href="'.$item->link.'">'.$item->text.'</a></li>';
 	}
 
 	public function getPaginationItemInactive(&$item) {

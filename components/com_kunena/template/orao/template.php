@@ -52,6 +52,7 @@ class KunenaTemplateOrao extends KunenaTemplate {
 
 		if (version_compare(JVERSION, '1.6','>')) {
 			$this->addStyleSheet ( 'css/j16plus.css' );
+			include dirname(__FILE__).'/styles/j17style.php';
 		}
 
 		include dirname(__FILE__).'/styles/preset.php';

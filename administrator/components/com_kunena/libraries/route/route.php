@@ -179,6 +179,8 @@ abstract class KunenaRoute {
 			if (!isset($current[$uri])) {
 				$current[$uri] = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )).$uri);
 				$current[$uri]->delVar ( 'Itemid' );
+				$current[$uri]->delVar ( 'defaultmenu' );
+				$current[$uri]->delVar ( 'language' );
 			}
 			$uri = $current[$uri];
 		} elseif (is_numeric($uri)) {
@@ -267,24 +269,29 @@ abstract class KunenaRoute {
 	protected static function build() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (self::$search === false) {
+			$language = JFactory::getDocument()->getLanguage();
 			$cache = JFactory::getCache('_system', 'output');
-			self::$search = unserialize($cache->get('search', 'com_kunena.route'));
+			self::$search = unserialize($cache->get('search', "com_kunena.route.{$language}"));
 			if (self::$search === false) {
 				self::$search['home'] = array();
 				foreach ( self::$menu as $item ) {
 					if (! is_object ( $item ))
 						continue;
-					$home = self::getHome($item);
-					// Follow links
+
+					// Do not add menu items for other languages
+					if (isset($item->language) && $item->language  != '*' && strtolower($item->language) != strtolower($language))
+						continue;
+
 					if ($item->type == 'menulink' && !empty($item->query['Itemid']) && !empty(self::$menu[$item->query['Itemid']])) {
+						// Follow links
 						$item = self::$menu[$item->query['Itemid']];
-					}
-					// Save Kunena menu items so that we can make fast searches
-					if ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view'])) {
+					} elseif ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view'])) {
+						// Save Kunena menu items so that we can make fast searches
+						$home = self::getHome($item);
 						self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
 					}
 				}
-				$cache->store(serialize(self::$search), 'search', 'com_kunena.route');
+				$cache->store(serialize(self::$search), 'search', "com_kunena.route.{$language}");
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -327,6 +334,11 @@ abstract class KunenaRoute {
 		//echo "$key "; print_r($candidates[$key]);
 		foreach ($candidates[$key] as $id) {
 			$item = self::$menu[$id];
+			$authorise = isset($item->parent_id) ? self::$menus->authorise($item->id) : !empty($item->published) && (!isset ( $item->access ) || $item->access <= $my->aid);
+			if (!$authorise) {
+				continue;
+			}
+
 			switch ($item->query['view']) {
 				case 'home':
 					$matchcount = 1;

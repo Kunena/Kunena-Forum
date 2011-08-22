@@ -60,7 +60,7 @@ PX		EM			PCT			PT
 #Kunena ul li,
 #Kunena ul li a {
 	font-size: 1em;
-	line-height: 1.333em;
+	line-height: auto;
 }
 #Kunena sup {
 	vertical-align: super;
@@ -1455,6 +1455,7 @@ PX		EM			PCT			PT
 }
 #Kunena div.kmsgbody div.kmsgtext {
 	word-wrap:break-word;
+	overflow: hidden;
 }
 #Kunena td.kmessage-right div.kmsgbody,
 #Kunena td.kmessage-left div.kmsgbody,

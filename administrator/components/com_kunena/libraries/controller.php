@@ -107,6 +107,15 @@ class KunenaController extends JController {
 				// FIXME:
 				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			}*/
+			// Joomla 1.6+ multi-language support
+			/* // FIXME:
+			if (isset($active->language) && $active->language != '*') {
+				$language = JFactory::getDocument()->getLanguage();
+				if (strtolower($active->language) != strtolower($language)) {
+					$this->redirect (KunenaRoute::_(null, false));
+				}
+			}
+			*/
 		}
 
 		// Get the document object.

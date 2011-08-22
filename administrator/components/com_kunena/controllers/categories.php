@@ -189,11 +189,11 @@ class KunenaAdminControllerCategories extends KunenaController {
 			$app->setUserState("com_kunena.user{$this->me->userid}_read", null);
 
 			if (! $success) {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $this->escape ( $category->getError () ) ), 'notice' );
+				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape ( $category->getError () ) ), 'notice' );
 			}
 			$category->checkin();
 		} else {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 		}
 
 		if ($success) {
@@ -240,7 +240,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_DELETE_FAILED', $this->escape ( $category->getError () ) ), 'notice' );
 				}
 			} else {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 			}
 		}
 
@@ -269,7 +269,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		} elseif (! $category->isCheckedOut ( $this->me->userid )) {
 			$category->checkin ();
 		} else {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 		}
 		$this->redirectBack();
 	}
@@ -304,10 +304,10 @@ class KunenaAdminControllerCategories extends KunenaController {
 				$category->set ( 'ordering', $order [$category->id] );
 				$success = $category->save ();
 				if (! $success) {
-					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $this->escape ( $category->getError () ) ), 'notice' );
+					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape ( $category->getError () ) ), 'notice' );
 				}
 			} else {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 			}
 		}
 
@@ -347,7 +347,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 			return;
 		}
 		if ($category->isCheckedOut ( $this->me->userid )) {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 			return;
 		}
 
@@ -389,10 +389,10 @@ class KunenaAdminControllerCategories extends KunenaController {
 					$count ++;
 					$name = $category->name;
 				} else {
-					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $this->escape ( $category->getError () ) ), 'notice' );
+					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape ( $category->getError () ) ), 'notice' );
 				}
 			} else {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 			}
 		}
 

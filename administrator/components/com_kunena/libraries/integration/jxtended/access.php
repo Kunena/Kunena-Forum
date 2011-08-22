@@ -12,20 +12,11 @@ defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_ADMIN . '/libraries/integration/joomla15/access.php';
 
+/**
+ * @deprecated in K2.0
+ */
 class KunenaAccessJXtended extends KunenaAccessJoomla15 {
 	public function __construct() {
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Do not use in Joomla 1.6+
-			return null;
-		}
-
-		$loader = JPATH_ADMINISTRATOR . '/components/com_artofuser/libraries/loader.php';
-		if (is_file($loader)) {
-			require_once $loader;
-		}
-		if (!function_exists('juimport') || !function_exists('jximport'))
-			return null;
-
-		$this->priority = 40;
+		$this->priority = -1;
 	}
 }

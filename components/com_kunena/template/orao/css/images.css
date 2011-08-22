@@ -197,16 +197,16 @@ div#kprofile-stats ul li span.rank-admin {
 ----------------------------------------*/
 
 #kunena .kkarma-minus {
-	background-image: url("../images/rate_bad.gif");
+	background-image: url("../images/bad-karma.gif");
 }
 #kunena .kkarma-minus:hover {
-	background-image: url("../images/rate_bad.gif");
+	background-image: url("../images/bad-karma.gif");
 }
 #kunena .kkarma-plus {
-	background-image: url("../images/rate_good.gif");
+	background-image: url("../images/good-karma.gif");
 }
 #kunena .kkarma-plus:hover {
-	background-image: url("../images/rate_good.gif");
+	background-image: url("../images/good-karma.gif");
 }
 
 #kunena div.status-left-yes {
@@ -381,7 +381,7 @@ div#mbCenter input#tk-submit-button.kbutton,
 	background-image: url("../images/treenodes.png");
 }
 
-#kunena .shadetabs li a { background-image: url("../images/profile-tabs.png"); }
+#kunena .shadetabs li a { background-image: url("../images/profile-tabs.png"); background-repeat:no-repeat;}
 
 #kunena .profile-info {
 	background-image:url(../images/members.png);

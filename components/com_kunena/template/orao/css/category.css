@@ -113,3 +113,7 @@
 #kunena dd.tk-selecttime form {
 	margin:0 !important;
 }
+#kunena span.tk-activity-count {
+	clear: left;
+	display: block;
+}

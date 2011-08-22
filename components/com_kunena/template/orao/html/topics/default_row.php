@@ -63,16 +63,19 @@ defined ( '_JEXEC' ) or die ();
 									<?php  echo $this->getImage ( 'icons/mytopic.png', JText::_('My Topic') ); ?>
 								</span>
 							<?php endif; ?>
+							<?php if ( $this->topic->poll_id ) : ?>
+								<span class="mytopicicons" title="<?php echo JText::_('This topic is a Poll')?>">
+									<?php echo $this->getImage ( 'icons/poll_16.png', JText::_('Poll') ); ?>
+								</span>
+							<?php endif ?>
 						</span>
 
 						<br />
 						<span class="tk-recent-info">
-						<?php if ($this->topic->attachments) {
-								echo $this->getIcon('attachicons', JText::_('COM_KUNENA_TOPIC_HAS_ATTACHMENTS'));
-							}
-							/*if (CKunenaPolls::get_poll_data($this->topic->poll->id) ) {
-								echo isset ( $kunena_icons ['pollicon'] ) ? '<img  class="pollicon" src="' . KUNENA_URLICONSPATH . $kunena_icons ['pollicon'] . '" border="0" alt="' . JText::_('COM_KUNENA_EDITOR_POLL') . '" />' : '<img class="pollicon" src="' . KUNENA_URLICONSPATH . 'pollicon.png"  alt="' . JText::_('COM_KUNENA_EDITOR_POLL') . '" title="' . JText::_('COM_KUNENA_EDITOR_POLL') . '" />';
-							}*/ ?>
+						<?php if ($this->topic->attachments) :?>
+							<?php echo $this->getIcon('attachicons', JText::_('COM_KUNENA_TOPIC_HAS_ATTACHMENTS'));?>
+						<?php endif ?>
+
 						<?php if (!empty($this->categoryLink)) : ?>
 							<span class="ktopic-category"> <?php echo JText::_('COM_KUNENA_TEMPLATE_IN') . ' ' . $this->categoryLink; ?>
 							</span><br />
@@ -87,12 +90,9 @@ defined ( '_JEXEC' ) or die ();
 								&nbsp;<?php echo JText::_('COM_KUNENA_GEN_HITS');?>: <b><?php echo $this->formatLargeNumber ( $this->topic->getHits() );?></b>
 							</span>
 						<?php endif;?>
-
-							<strong class="pagination">
-								<span>
-									<?php echo $this->topic->getPagination(0, $this->config->messages_per_page, 3)->getPagesLinks() ?>
-								</span>
-							</strong>
+							<span>
+								<?php echo $this->topic->getPagination(0, $this->config->messages_per_page, 3)->getPagesLinks() ?>
+							</span>
 						</span>
 						</dt>
 						<?php if ($this->params->get('countcolumnShow') != 0):?>

@@ -31,6 +31,8 @@
 }
 #kunena ul.kmessage-buttons {
 	overflow: auto;
+	margin:0px;
+	padding:0;
 }
 #kunena ul.kmessage-buttons li {
 	display: inline !important;
@@ -79,51 +81,6 @@
 #kunena div#smilie {
 	margin: 0;
 }
-
-/*					PAGINATION
--------------------------------------------------------*/
-
-#kunena strong.pagination {
-	background-repeat: no-repeat;
-	background-position: 0 50%;
-	display: inline;
-	width: auto !important;
-	height:1%;
-}
-#kunena strong.pagination li.page {
-	text-indent: -999em;
-	background-repeat:no-repeat;
-	background-color:transparent;
-	width:16px;
-}
-
-
-#kunena .pagination span a, 
-#kunena .pagination span a:link, 
-#kunena .pagination span a:visited {
-	border-width: 1px;
-	border-style: solid;
-	font-size: 90%;
-	font-weight:normal;
-	margin: 0 2px;
-	padding: 0 2px;
-	text-decoration:none;
-}
-
-#kunena .pagination span a:hover {
-	border-width: 1px;
-	border-style: solid;
-}
-
-#kunena .pagination strong {
-	font-size:80% !important;
-	font-weight:normal;
-	border-width: 0px;
-	border-style: solid;
-	margin:0 2px;
-	padding:0 2px;
-}
-
 /*---------- Pagination ------------- */
 
 #kunena ul.kpagination{ 
@@ -158,7 +115,7 @@
 }
 #kunena .kpagination a:hover{
 	border-style: solid;
-	border-width: 1px;
+	border-width: 0px;
 }
 /*
 			CREDITS

@@ -51,7 +51,7 @@ $styles .= <<<EOF
 #kunena .kuser-guest img { border-color: {$this->params->get('userGuest')} !important }
 EOF;
 }
-if ($this->params->get('showStyle') == 'nopreset') :
+if ($this->params->get('showStyle') == 'nopresetstyle') {
 $styles .= <<<EOF
 #mbImage div.tk-mb-header-pm,
 #mbImage div.tk-mb-header-pmread,
@@ -64,7 +64,7 @@ $styles .= <<<EOF
 	background: -moz-linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
 	background: linear-gradient({$this->params->get('headerBg')}, {$this->params->get('headerBg')});
 EOF;
-endif;
+}
 
 $styles .= <<<EOF
 #kunena div.kmsgimage img,

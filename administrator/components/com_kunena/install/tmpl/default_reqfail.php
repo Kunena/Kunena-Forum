@@ -31,7 +31,7 @@ defined ( '_JEXEC' ) or die ();
 		<td><?php echo JText::_('COM_KUNENA_INSTALL_REQ_JOOMLA') ?>:</td>
 		<td><font
 			color="<?php echo isset($this->requirements->fail['joomla'])?'red':'green'; ?>"><?php echo $this->requirements->joomla; ?></font></td>
-		<td>(<?php echo JText::_('COM_KUNENA_INSTALL_REQUIRED') ?> &gt;= <?php echo KUNENA_MIN_JOOMLA; ?>)</td>
+		<td>(<?php echo JText::_('COM_KUNENA_INSTALL_REQUIRED') ?> &gt;= <?php echo version_compare(JVERSION, '1.7', '>') ? KUNENA_MIN_JOOMLA17 : (version_compare(JVERSION, '1.6', '>') ? KUNENA_MIN_JOOMLA16 : KUNENA_MIN_JOOMLA15); ?>)</td>
 	</tr>
 	<tr>
 		<td><?php echo JText::_('COM_KUNENA_INSTALL_REQ_DOMDOCUMENT') ?>:</td>

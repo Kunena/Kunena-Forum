@@ -622,6 +622,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 
 		$bbcode->autolink_disable = 0;
 		$url = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode ( strip_tags ( $content ) );
+		// FIXME: add support for local (relative) URIs
 		if ($bbcode->IsValidURL ( $url )) {
 			if ($bbcode->debug)
 				echo "ISVALIDURL<br />";
@@ -926,7 +927,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
 			if (version_compare(JVERSION, '1.6','>')) {
 				// Joomla 1.6+
-				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid));
+				$article->slug = $article->alias ? ($article->id.':'.$article->alias) : $article->id;
+				$article->catslug = $article->category_alias ? ($article->catid.':'.$article->category_alias) : $article->catid;
+				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
 			} else {
 				// Joomla 1.5
 				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
@@ -1424,7 +1427,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				// If the image has not legal extension, return it as link or text
 				$fileurl = $bbcode->HTMLEncode ( $fileurl );
 				if ($config->bbcode_img_secure == 'link') {
-					if (! preg_match ( "`^(https?://)`", $fileurl )) {
+					if (! preg_match ( '`^(/|https?://)`', $fileurl )) {
 						$fileurl = 'http://' . $fileurl;
 					}
 					return "<a href=\"" . $fileurl . "\" rel=\"nofollow\" target=\"_blank\">" . $fileurl . '</a>';

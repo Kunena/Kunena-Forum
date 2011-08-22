@@ -10,11 +10,13 @@
 
 ## REQUIREMENTS
 
-*Kunena* 2.x requires (this section is work in progress until Kunena 2.0 has been released)
+*Kunena* 2.0 requires (this section is work in progress until Kunena 2.0 has been released)
 
-    Joomla 1.5.23+ or Joomla 1.6.3+
-    PHP 5.3+
-    MySQL 5.x+
+    Joomla! 1.5: version 1.5.23 or greater
+    Joomla! 1.6: version 1.6.4 or greater (>= 1.6.6 recommended)
+    Joomla! 1.7: version 1.7.0 or greater
+    PHP: version 5.2.4 or greater (>= 5.3.6 recommended)
+    MySQL: version 5.0.4 or greater (>= 5.1 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.
 
@@ -28,7 +30,7 @@ In addition we recommend the following PHP settings:
 
 *Kunena* requires the following Joomla settings:
 
-    * Mootools 1.2 compatible template
+    * Mootools 1.2 or 1.3 compatible template
     * Upgraded to latest versions all extensions that claim to integrate with Kunena 1.6
     * No plugins or modules that were developed for previous versions of Kunena or Fireboard
 
@@ -70,7 +72,7 @@ The *Kunena* projects thrives on contributions from the community. Our dedicated
 2. [Create a topic (unless there already is one)](http://www.kunena.org/forum/newtopic)
 3. [Checkout our GIT repository on github](https://github.com/Kunena)
 4. [Read our documentation](http://docs.kunena.org)
-5. [Read our developer wiki](https://github.com/Kunena/Kunena/wiki)
+5. [Read our developer wiki](https://github.com/Kunena/Kunena-2.0/wiki)
 6. Send us a pull request
 
 

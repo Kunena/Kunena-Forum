@@ -22,8 +22,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		$this->_config = KunenaFactory::getConfig ();
 	}
 
-	private function _getAUPversion(){
-		return AlphaUserPointsHelper::getAupVersion();
+	protected function _getAUPversion() {
+		if (method_exists('AlphaUserPointsHelper', 'getAupVersion')) {
+			return AlphaUserPointsHelper::getAupVersion();
+		}
+		return '1.5';
 	}
 
 	public function onAfterPost($message) {

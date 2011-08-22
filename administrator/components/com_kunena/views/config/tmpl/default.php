@@ -578,6 +578,11 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL'); ?></td>
+						<td align="left" valign="top"><?php echo $this->list ['mailfull']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL_DESC'); ?></td>
+					</tr>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['category_subscriptions']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS_DESC') ?></td>
@@ -695,15 +700,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MAIL_ADMIN_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL');
-						?></td>
-						<td align="left" valign="top"><?php echo $this->lists ['mailfull'];
-						?></td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL_DESC');
-						?>
 						</td>
 					</tr>
 				</table>

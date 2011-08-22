@@ -87,7 +87,8 @@ abstract class KunenaAccess {
 			if (!$enabled) {
 				$enabled = true;
 				JFactory::getDocument()->addScriptDeclaration("function kShowAccessType(htmlclass, el) {
-	var name = new String(el.getSelected().get('value'));
+	var selected = el.getChildren().filter(function(option){ return option.selected; });
+	var name = selected[0].value;
 	name = name.replace(/[^\\w\\d]+/, '-');
 	$$('.'+htmlclass).each(function(e){
 		e.setStyle('display', 'none');
@@ -97,13 +98,13 @@ abstract class KunenaAccess {
 	});
 }
 window.addEvent('domready', function(){
-	kShowAccessType('kaccess', document.id('accesstype'));
+	kShowAccessType('kaccess', $('accesstype'));
 });");
 			}
 			$accesstypes = array ();
 			$accesstypes [] = JHTML::_ ( 'select.option', 'joomla.level', JText::_('COM_KUNENA_INTEGRATION_JOOMLA_LEVEL') );
 			$accesstypes [] = JHTML::_ ( 'select.option', 'none', JText::_('COM_KUNENA_INTEGRATION_JOOMLA_GROUP') );
-			return JHTML::_ ( 'select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="2" onchange="javascript:kShowAccessType(\'kaccess\', document.id(this))"', 'value', 'text', $category->accesstype );
+			return JHTML::_ ( 'select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="2" onchange="javascript:kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype );
 		}
 		return JText::_('COM_KUNENA_INTEGRATION_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype)));
 	}
@@ -365,6 +366,8 @@ window.addEvent('domready', function(){
 
 	public function storeAdmins($list = array()) {
 		// TODO: add caching
+		$this->adminsByUserid = array();
+		$this->adminsByCatid = array();
 		foreach ( $list as $item ) {
 			$userid = intval ( $item->userid );
 			if (!$userid) continue;
@@ -377,6 +380,8 @@ window.addEvent('domready', function(){
 
 	public function storeModerators($list = array()) {
 		// TODO: add caching
+		$this->moderatorsByUserid = array();
+		$this->moderatorsByCatid = array();
 		foreach ( $list as $item ) {
 			$userid = intval ( $item->userid );
 			if (!$userid) continue;

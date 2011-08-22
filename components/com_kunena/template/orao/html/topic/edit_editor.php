@@ -186,7 +186,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php if ($this->message->exists()) : ?>
 					<fieldset>
 						<legend><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend>
-						<input class="kinputbox hasTip" name="modified_reason" size="95" maxlength="200" type="text" title="<?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?> :: Enter Reason for Editing" />
+						<input class="kinputbox hasTip" name="modified_reason" size="95" maxlength="200" type="text" title="<?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?> :: Enter Reason for Editing" value="<?php echo $this->modified_reason; ?>" />
 					</fieldset>
 					<?php endif ?>
 				</div>

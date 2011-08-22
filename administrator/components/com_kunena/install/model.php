@@ -10,9 +10,11 @@
 defined ( '_JEXEC' ) or die ();
 
 // Minimum version requirements
-DEFINE('KUNENA_MIN_PHP', '5.2.3');
+DEFINE('KUNENA_MIN_PHP', '5.2.4');
 DEFINE('KUNENA_MIN_MYSQL', '5.0.4');
-DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.22' );
+DEFINE ( 'KUNENA_MIN_JOOMLA15', '1.5.23' );
+DEFINE ( 'KUNENA_MIN_JOOMLA16', '1.6.4' );
+DEFINE ( 'KUNENA_MIN_JOOMLA17', '1.7.0' );
 
 jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.folder' );
@@ -1124,7 +1126,11 @@ class KunenaModelInstall extends JModel {
 			$req->fail ['mysql'] = true;
 		if (version_compare ( $req->php, KUNENA_MIN_PHP, "<" ))
 			$req->fail ['php'] = true;
-		if (version_compare ( $req->joomla, KUNENA_MIN_JOOMLA, "<" ))
+		if (version_compare ( $req->joomla, '1.7', ">" ) && version_compare ( $req->joomla, KUNENA_MIN_JOOMLA17, "<" ))
+			$req->fail ['joomla'] = true;
+		elseif (version_compare ( $req->joomla, '1.6', ">" ) && version_compare ( $req->joomla, KUNENA_MIN_JOOMLA16, "<" ))
+			$req->fail ['joomla'] = true;
+		elseif (version_compare ( $req->joomla, KUNENA_MIN_JOOMLA15, "<" ))
 			$req->fail ['joomla'] = true;
 		if(!class_exists('DOMDocument')){
 			$req->fail ['domdocument'] = true;

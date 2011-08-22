@@ -131,7 +131,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 						$category->accessname = JText::sprintf( $category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', JText::_( $groupname ));
 					}
 					$groupname = $acl->getGroupName($category->accesstype, $category->admin_access);
-					if ($groupname && $category->pub_access != $category->admin_access) {
+					if ($category->pub_access > 0 && $groupname && $category->pub_access != $category->admin_access) {
 						$$category->accessname .= ' / '.JText::sprintf( $category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', JText::_( $groupname ));
 					}
 				}

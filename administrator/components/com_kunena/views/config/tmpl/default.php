@@ -401,6 +401,16 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo $this->lists ['topic_layout']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_DESC') ?></td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" width="25%" valign="top"><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?>
+						</td>
+								<td align="left" width="25%" valign="top"><input type="text"
+							name="cfg_attachment_limit"
+							value="<?php echo $this->escape($this->config->attachment_limit);
+						?>" /></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>

@@ -86,8 +86,7 @@
 	padding: 0px;
 	margin: 0;
 }
-#kunena li.rowfull dd,
-#kunena li.rowfull:hover dd {
+#kunena li.rowfull dd {
 	border-left-width: 1px;
 	border-left-style: solid;
 	margin: 3px 0 0;
@@ -171,11 +170,10 @@
 #kunena li.header dd.lastpost {
 	width: 23%;
 	padding-left: 5px;
-	line-height: 1em;
 }
 #kunena li.header dd{
 	border-left:none;
-	line-height: 1em;
+	line-height: 1.2em;
 }
 #kunena dd.redirect {
 	font-size: 1.1em;

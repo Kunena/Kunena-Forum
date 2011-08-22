@@ -64,7 +64,7 @@ body {line-height:1.5;}
 }
 #kunena ul,
 #kunena ol {
-	background: inherit;
+	background: transparent;
 	margin: 0;
 	padding: 0;
 }

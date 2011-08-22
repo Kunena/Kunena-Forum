@@ -47,7 +47,7 @@ defined ( '_JEXEC' ) or die ();
 							</span>
 							<?php endif;*/ ?>
 							<?php if ($this->params->get('countcolumnShow') == 0):?>
-							<span class="ks">
+							<span class="tk-activity-count">
 								<?php echo JText::_('COM_KUNENA_GEN_TOPICS');?>: <b><?php echo $this->formatLargeNumber ( $this->category->getTopics() ) ?></b>
 								&nbsp;<?php echo JText::_('COM_KUNENA_GEN_REPLIES');?>: <b><?php echo $this->formatLargeNumber ( $this->category->getPosts() ) ?></b>
 							</span>

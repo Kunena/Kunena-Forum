@@ -10,11 +10,11 @@
 	<authorUrl>unknown</authorUrl>
 	<copyright>(C) 2010 unknown</copyright>
 	<license>GNU/GPL</license>
-	<description>French language file for Kunena Forum Component</description>
+	<description>Traduction française pour le composant Kunena Forum</description>
 
 	<files>
 		<filename>fr-FR.com_kunena.ini</filename>
-		<filename>fr-FR.com_kunena.tpl_default.ini</filename>
-		<filename>fr-FR.com_kunena.tpl_example.ini</filename>
+		<filename>fr-FR.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>fr-FR.com_kunena.tpl_orao.ini</filename>
 	</files>
 </install>

@@ -15,7 +15,6 @@
 	<files>
 		<filename>hu-HU.com_kunena.ini</filename>
 		<filename>hu-HU.com_kunena.tpl_blue_eagle.ini</filename>
-		<filename>hu-HU.com_kunena.tpl_example.ini</filename>
 		<!-- <filename>hu-HU.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

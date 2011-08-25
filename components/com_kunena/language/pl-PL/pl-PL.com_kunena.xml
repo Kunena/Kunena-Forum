@@ -24,7 +24,6 @@ W oparciu o tłumaczenie wersji 1.5 wykonanej przez 'Sogo' i Stefana 'zwiastuna'
 	<files>
 		<filename>pl-PL.com_kunena.ini</filename>
 		<filename>pl-PL.com_kunena.tpl_blue_eagle.ini</filename>
-		<filename>pl-PL.com_kunena.tpl_example.ini</filename>
 		<!-- <filename>pl-PL.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

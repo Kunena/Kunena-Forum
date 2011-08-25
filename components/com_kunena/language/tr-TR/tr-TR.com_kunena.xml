@@ -14,7 +14,8 @@
 
 	<files>
 		<filename>tr-TR.com_kunena.ini</filename>
-		<filename>tr-TR.com_kunena.tpl_default.ini</filename>
+		<filename>tr-TR.com_kunena.tpl_blue_eagle.ini</filename>
 		<filename>tr-TR.com_kunena.tpl_example.ini</filename>
+		<!-- <filename>tr-TR.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

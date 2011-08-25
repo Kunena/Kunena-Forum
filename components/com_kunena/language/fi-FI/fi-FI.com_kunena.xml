@@ -14,7 +14,8 @@
 
 	<files>
 		<filename>fi-FI.com_kunena.ini</filename>
-		<filename>fi-FI.com_kunena.tpl_default.ini</filename>
+		<filename>fi-FI.com_kunena.tpl_blue_eagle.ini</filename>
 		<filename>fi-FI.com_kunena.tpl_example.ini</filename>
+		<!-- <filename>fi-FI.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

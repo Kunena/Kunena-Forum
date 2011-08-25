@@ -37,7 +37,8 @@
 
 	<files>
 		<filename>el-GR.com_kunena.ini</filename>
-		<filename>el-GR.com_kunena.tpl_default.ini</filename>
+		<filename>el-GR.com_kunena.tpl_blue_eagle.ini</filename>
 		<filename>el-GR.com_kunena.tpl_example.ini</filename>
+		<!-- <filename>el-GR.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

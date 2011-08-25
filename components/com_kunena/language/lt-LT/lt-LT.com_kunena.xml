@@ -39,7 +39,7 @@
 	</description>
 	<files>
 		<filename>lt-LT.com_kunena.ini</filename>
-		<filename>lt-LT.com_kunena.tpl_default.ini</filename>
-		<filename>lt-LT.com_kunena.tpl_example.ini</filename>
+		<filename>lt-LT.com_kunena.tpl_blue_eagle.ini</filename>
+		<!-- <filename>lt-LT.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

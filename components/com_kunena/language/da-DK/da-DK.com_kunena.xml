@@ -13,7 +13,7 @@
 	<description>Danish language files for Kunena 1.6.3</description>
 	<files>
 		<filename>da-DK.com_kunena.ini</filename>
-		<filename>da-DK.com_kunena.tpl_default.ini</filename>
-		<filename>da-DK.com_kunena.tpl_example.ini</filename>
+		<filename>da-DK.com_kunena.tpl_blue_eagle.ini</filename>
+		<!-- <filename>da-DK.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

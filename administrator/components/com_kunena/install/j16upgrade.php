@@ -9,7 +9,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-define ( 'KPATH_ADMIN', dirname ( dirname ( __FILE__ ) ) );
+if (file_exists(JPATH_SITE.'/includes/version.php')) require_once JPATH_SITE.'/includes/version.php';
 
 /**
  * Kunena 1.6 migration class from Joomla 1.5 to Joomla 1.6
@@ -35,7 +35,9 @@ class jUpgradeComponentKunena extends jUpgrade {
 	 * @since	1.6.4
 	 */
 	protected function detectExtension() {
-		return true;
+		$this->api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		// Support only JUpgrade 1.2.2+
+		return method_exists($this, 'mapUserGroup');
 	}
 
 	/**
@@ -45,7 +47,8 @@ class jUpgradeComponentKunena extends jUpgrade {
 	 * @since	1.6.4
 	 */
 	protected function getCopyTables() {
-		require_once KPATH_ADMIN.'/install/schema.php';
+		require_once $this->api;
+		require_once KPATH_ADMIN . '/install/schema.php';
 		$schema = new KunenaModelSchema();
 		$tables = $schema->getSchemaTables('');
 		return array_values($tables);
@@ -65,8 +68,9 @@ class jUpgradeComponentKunena extends jUpgrade {
 	 * @since	1.6.4
 	 * @throws	Exception
 	 */
-	protected function migrateExtensionCustom()
-	{
+	protected function migrateExtensionCustom() {
+		require_once $this->api;
+
 		// Need to initialize application
 		jimport ('joomla.environment.uri');
 		$app = JFactory::getApplication('administrator');
@@ -138,6 +142,30 @@ class jUpgradeComponentKunena extends jUpgrade {
 				if (!$success) echo "ERROR";
 			}
 		}
+		// Delete old manifest file
+		jimport('joomla.filesystem.file');
+		if (file_exists(JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.j16.xml')) {
+			JFile::delete(JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.xml');
+			JFile::move(JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.j16.xml', JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.xml');
+		}
+
+		jimport('joomla.plugin.helper');
+
+		// Mark Kunena as discovered and install it
+		$component->client_id = 1;
+		$component->state = -1;
+		$component->store();
+		jimport('joomla.installer.installer');
+		$installer = JInstaller::getInstance();
+		$installer->discover_install($component->extension_id);
+		// Start Kunena installer
+		require_once dirname ( __FILE__ ) . '/model.php';
+		$kunena = new KunenaModelInstall();
+		// Install system plugin
+		$kunena->installSystemPlugin();
+		// Install English language
+		$kunena->installLanguage('en-GB', 'English');
+
 		return true;
 	}
 
@@ -164,14 +192,11 @@ class jUpgradeComponentKunena extends jUpgrade {
 		// Get data
 		$rows = parent::getSourceData('*');
 
-		// Set up the mapping table for the old groups to the new groups.
-		$map = $this->getUsergroupIdMap();
-
 		// Do some custom post processing on the list.
 		foreach ($rows as &$row) {
 			if (isset($row['accesstype']) || $row['accesstype'] == 'none' ) {
 				if ($row['admin_access'] != 0) {
-					$row['admin_access'] = $map[$row['admin_access']];
+					$row['admin_access'] = $this->mapUserGroup($row['admin_access']);
 				}
 				if ($row['pub_access'] == -1) {
 					// All registered
@@ -186,7 +211,7 @@ class jUpgradeComponentKunena extends jUpgrade {
 					$row['pub_access'] = 8;
 				} else {
 					// User groups
-					$row['pub_access'] = $map[$row['pub_access']];
+					$row['pub_access'] = $this->mapUserGroup($row['pub_access']);
 				}
 			}
 		}

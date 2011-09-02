@@ -927,8 +927,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
 			if (version_compare(JVERSION, '1.6','>')) {
 				// Joomla 1.6+
-				$article->slug = $article->alias ? ($article->id.':'.$article->alias) : $article->id;
-				$article->catslug = $article->category_alias ? ($article->catid.':'.$article->category_alias) : $article->catid;
+				$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
+				$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
 				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
 			} else {
 				// Joomla 1.5
@@ -1462,7 +1462,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 
 		// Need to check if we are nested inside a URL code
 		if ($bbcode->autolink_disable == 0 && $config->lightbox) {
-			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.($width ? ' width="'.$width.'"' : '').'" style="max-height:'.$config->imageheight.'px; " alt="" /></a></div>';
+			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.($width ? ' width="'.$width.'"' : '').' style="max-height:'.$config->imageheight.'px; " alt="" /></a></div>';
 		}
 		return '<div class="kmsgimage"><img src="' . $fileurl . ($width ? '" width="' . $width : '') .'" style="max-height:'.$config->imageheight.'px; " alt="" /></div>';
 	}

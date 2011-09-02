@@ -36,6 +36,6 @@
 		</files>
 	</administration>
 	<updateservers>
-		<server type="extension" priority="1" name="Kunena 2.0 Update Site">http://update.kunena.org/kunena20.xml</server>
+		<server type="collection" priority="1" name="Kunena 2.0 Update Site">http://update.kunena.org/2.0</server>
 	</updateservers>
 </extension>

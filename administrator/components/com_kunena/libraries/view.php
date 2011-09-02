@@ -45,6 +45,7 @@ class KunenaView extends JView {
 		if (JFactory::getApplication()->isAdmin()) {
 			$this->displayLayout();
 		} else {
+			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
 			include $this->template->getFile ('html/display.php');
 		}
 	}

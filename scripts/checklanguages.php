@@ -17,12 +17,16 @@ echo "\nStarting language file check.\n\n";
 $files = getTranslations('administrator/components/com_kunena/language');
 foreach ($files as $file) {
 	$contents = file_get_contents($file);
+	echo "$file:\n";
+	if (preg_match('/^[A-Z]+="[^"]".+$/u', $contents)) echo "ERROR!!!";
 	$contents = str_replace('_QQ_','"\""',$contents);
 	$strings = (array) parse_ini_string($contents, false, INI_SCANNER_RAW);
 }
 $files = getTranslations('components/com_kunena/language');
 foreach ($files as $file) {
 	$contents = file_get_contents($file);
+	echo "$file:\n";
+	if (preg_match('/^[A-Z]+="[^"]".+$/u', $contents)) echo "ERROR!!!";
 	$contents = str_replace('_QQ_','"\""',$contents);
 	$strings = (array) parse_ini_string($contents, false, INI_SCANNER_RAW);
 }

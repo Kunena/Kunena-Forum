@@ -9,6 +9,13 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+// Access check.
+if (version_compare(JVERSION, '1.6', '>')) {
+	if (!JFactory::getUser()->authorise('core.manage', 'com_kunena')) {
+		return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+	}
+}
+
 // Initialize Kunena (if Kunena System Plugin isn't enabled)
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 

@@ -21,6 +21,11 @@ class KunenaAdminViewCpanel extends KunenaView {
 		$this->config = KunenaFactory::getConfig ();
 		$this->versioncheck = $this->get('latestversion');
 
+		if (version_compare(JVERSION, '1.6', '>')) {
+			if (JFactory::getUser()->authorise('core.admin', 'com_kunena')) {
+				JToolBarHelper::preferences('com_kunena');
+			}
+		}
 		$this->display ();
 	}
 }

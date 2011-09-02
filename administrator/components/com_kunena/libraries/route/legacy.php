@@ -465,6 +465,11 @@ class KunenaRouteLegacy {
 				$uri->delVar('layout');
 				$uri->delVar('pid');
 				break;
+			case 'template' :
+				$changed = true;
+				$uri->setVar('view', 'misc');
+				$uri->setVar('task', 'template');
+				break;
 
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

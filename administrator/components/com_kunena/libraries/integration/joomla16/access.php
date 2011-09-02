@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 jimport ( 'joomla.access.access' );
 
 class KunenaAccessJoomla16 extends KunenaAccess {
-	protected $viewLevels = false;
+	protected static $viewLevels = false;
 
 	public function __construct() {
 		if (version_compare(JVERSION, '1.6','<')) {

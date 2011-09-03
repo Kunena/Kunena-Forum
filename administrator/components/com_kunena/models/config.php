@@ -186,7 +186,13 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['highlightcode'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $config->highlightcode );
 		// New for 1.5.8 -> SEF
 		$lists ['sef'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sef', 'class="inputbox" size="1"', 'value', 'text', $config->sef );
-		$lists ['sefcats'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $config->sefcats );
+		$id_topic_cat_list = array ();
+		$id_topic_cat_list[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_A_SEF_DEFAULT_DISPLAY_BEHAVIOUR'));
+		$id_topic_cat_list[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_A_SEF_NOT_DISPLAY_CAT_TOPIC_NAME'));
+		$id_topic_cat_list[] = JHTML::_('select.option', '2', JText::_('COM_KUNENA_A_SEF_NOT_DISPLAY_CAT_ID'));
+		$id_topic_cat_list[] = JHTML::_('select.option', '3', JText::_('COM_KUNENA_A_SEF_NOT_DISPLAY_CAT_NAME'));
+		$id_topic_cat_list[] = JHTML::_('select.option', '4', JText::_('COM_KUNENA_A_SEF_NOT_DISPLAY_TOPIC_NAME'));
+		$lists ['sefcats'] = JHTML::_ ( 'select.genericlist', $id_topic_cat_list, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $config->sefcats );
 		$lists ['sefutf8'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sefutf8', 'class="inputbox" size="1"', 'value', 'text', $config->sefutf8 );
 		// New for 1.6 -> Hide images and files for guests
 		$lists['showimgforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $config->showimgforguest);

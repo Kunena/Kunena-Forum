@@ -235,10 +235,10 @@ function KunenaBuildRoute(&$query) {
 			if (isset ( KunenaRouter::$catidcache [$catid] )) {
 				$catname = KunenaRouter::$catidcache [$catid];
 			}
-			if (empty ( $catname )) {
+			if (empty ( $catname ) || KunenaRoute::$config->sefcats=='3' || KunenaRoute::$config->sefcats=='1') {
 				// If category name is empty (or doesn't exist), use numeric catid
 				$segments [] = $catid;
-			} elseif (KunenaRoute::$config->sefcats && isset(KunenaRouter::$sefviews[$view]) && !KunenaRouter::isCategoryConflict($menuitem, $catid, $catname)) {
+			} elseif (KunenaRoute::$config->sefcats == '2' && isset(KunenaRouter::$sefviews[$view]) && !KunenaRouter::isCategoryConflict($menuitem, $catid, $catname)) {
 				// If there's no naming conflict, we can use category name
 				$segments [] = $catname;
 			} else {
@@ -258,7 +258,7 @@ function KunenaBuildRoute(&$query) {
 		$id = (int) $query ['id'];
 		if ($id) {
 			$subject = KunenaRouter::stringURLSafe ( KunenaForumTopicHelper::get($id)->subject );
-			if (empty ( $subject )) {
+			if (empty ( $subject ) || KunenaRoute::$config->sefcats=='4' || KunenaRoute::$config->sefcats=='1') {
 				$segments [] = $id;
 			} else {
 				$segments [] = "{$id}-{$subject}";
@@ -328,7 +328,7 @@ function KunenaParseRoute($segments) {
 	if (!$active && $segments[0] == 'kunena') array_shift ( $segments );
 
 	// Enable SEF category feature
-	$sefcats = KunenaRoute::$config->sefcats && isset(KunenaRouter::$sefviews[$vars['view']]) && empty($vars ['id']);
+	$sefcats = KunenaRoute::$config->sefcats=='2' && isset(KunenaRouter::$sefviews[$vars['view']]) && empty($vars ['id']);
 
 	// Handle all segments
 	while ( ($segment = array_shift ( $segments )) !== null ) {

@@ -285,7 +285,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $alphauserpointsnumchars = 0; // Integration feature for AlphaUserPoints component
 	// New 1.5.8 config variables
 	var $sef = 1;
-	var $sefcats = 0;
+	var $sefcats = 'id-name';
 	var $sefutf8 = 0;
 	// New for 1.6 -> Hide images and files for guests
 	var $showimgforguest = 1;
@@ -383,6 +383,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $hold_newusers_posts = 0;
 	var $hold_guest_posts = 0;
 	var $attachment_limit = 8;
+	var $seftopics = 'id-name';
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

@@ -37,12 +37,10 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 
 	public function loadModerators() {
 		$db = JFactory::getDBO ();
-		$query = "SELECT u.id AS userid, m.catid
-				FROM #__users AS u
-				INNER JOIN #__kunena_users AS ku ON u.id=ku.userid
-				LEFT JOIN #__kunena_moderation AS m ON u.id=m.userid
-				LEFT JOIN #__kunena_categories AS c ON m.catid=c.id
-				WHERE u.block='0' AND ku.moderator='1' AND (m.catid IS NULL OR c.moderated='1')";
+		$query = "SELECT uc.user_id AS userid, category_id AS catid
+			FROM #__kunena_user_categories AS uc
+			INNER JOIN #__users AS u ON u.id=uc.user_id AND u.block=0
+			WHERE uc.role=1";
 		$db->setQuery ( $query );
 		$list = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();

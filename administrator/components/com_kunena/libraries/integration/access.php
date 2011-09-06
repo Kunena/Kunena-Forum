@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 require_once KPATH_ADMIN . '/libraries/integration/integration.php';
 kimport ( 'kunena.error' );
 kimport ( 'kunena.forum.category.helper' );
+kimport ( 'kunena.forum.category.user.helper' );
 kimport ( 'kunena.forum.topic.helper' );
 kimport ( 'kunena.databasequery' );
 
@@ -175,9 +176,11 @@ window.addEvent('domready', function(){
 	 *
 	 * @example if ($category->authorise('admin')) $category->setModerator($user, true);
 	 **/
-	public function setModerator($category, $user, $status = true) {
+	public function setModerator($category, $user = null, $status = true) {
 		// Check if category exists
-		if (!$category->exists()) return false;
+		if ($category && !$category->exists()) return false;
+		$category_id = $category ? $category->id : 0;
+		$status = intval($status);
 
 		// Check if user exists
 		$user = KunenaUserHelper::get($user);
@@ -185,45 +188,21 @@ window.addEvent('domready', function(){
 			return false;
 		}
 
-		$catids = $this->getModeratorStatus ( $user );
-
-		// Do not touch global moderators
-		if (!empty($catids[0])) {
-			return true;
-		}
-
-		// If the user state remains the same, do nothing
-		if (!empty($catids[$category->id]) == $status) {
-			return true;
-		}
-
-		$db = JFactory::getDBO ();
 		$success = true;
-		if ($status) {
-			$query = "INSERT INTO #__kunena_moderation (catid, userid) VALUES ({$db->quote($category->id)}, {$db->quote($user->userid)})";
-			$db->setQuery ( $query );
-			$db->query ();
-			$success = !KunenaError::checkDatabaseError ();
-			// Finally set user to be a moderator
-			if ($success && $user->moderator == 0) {
-				$user->moderator = 1;
-				$success = $user->save();
-			}
-		} else {
-			$query = "DELETE FROM #__kunena_moderation WHERE catid={$db->Quote($category->id)} AND userid={$db->Quote($user->userid)}";
-			$db->setQuery ( $query );
-			$db->query ();
-			unset($catids[$category->id]);
-			$success = !KunenaError::checkDatabaseError ();
-			// Finally check if user looses his moderator status
-			if ($success && empty($catids)) {
-				$user->moderator = 0;
-				$success = $user->save();
-			}
+		$usercategory = KunenaForumCategoryUserHelper::get($category_id, $user->userid);
+		if (($usercategory->role == 0 && $status != 0) || ($usercategory->role == 1 && $status != 1)) {
+			$usercategory->role = $status;
+			$success = $usercategory->save();
 		}
-
 		// Clear moderator cache
 		$this->clearCache();
+
+		// Change user moderator status
+		if ($success && $user->moderator != $this->isModerator($user, 0)) {
+			$user->moderator = $this->isModerator($user, 0);
+			$success = $user->save();
+		}
+
 		return $success;
 	}
 

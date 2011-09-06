@@ -283,13 +283,23 @@ class KunenaForumCategory extends JObject {
 	}
 
 	/**
+	 * Change user status in category moderators
+	 *
+	 * @param $user
+	 * @example if ($category->authorise('admin')) $category->setModerator($user);
+	 **/
+	public function setModerator($user = null, $value = false) {
+		return KunenaFactory::getAccessControl()->setModerator($this, $user, $value);
+	}
+
+	/**
 	 * Add user to category moderators
 	 *
 	 * @param $user
 	 * @example if ($category->authorise('admin')) $category->addModerator($user);
 	 **/
-	public function addModerator($user) {
-		return KunenaFactory::getAccessControl()->setModerator($this, $user, true);
+	public function addModerator($user = null) {
+		return $this->setModerator($user, true);
 	}
 
 	/**
@@ -298,8 +308,8 @@ class KunenaForumCategory extends JObject {
 	 * @param $user
 	 * @example if ($category->authorise('admin')) $category->removeModerator($user);
 	 **/
-	public function removeModerator($user) {
-		return KunenaFactory::getAccessControl()->setModerator($this, $user, false);
+	public function removeModerator($user = null) {
+		return $this->setModerator($user, false);
 	}
 
 	/**
@@ -428,8 +438,6 @@ class KunenaForumCategory extends JObject {
 		$access->clearCache();
 
 		$db = JFactory::getDBO ();
-		// Delete moderators
-		$queries[] = "DELETE FROM #__kunena_moderation WHERE catid={$db->quote($this->id)}";
 		// Delete user topics
 		$queries[] = "DELETE FROM #__kunena_user_topics WHERE category_id={$db->quote($this->id)}";
 		// Delete user categories

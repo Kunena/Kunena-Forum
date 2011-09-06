@@ -24,7 +24,6 @@ class TableKunenaCategories extends KunenaTable
 	var $name = null;
 	var $icon_id = null;
 	var $locked = null;
-	var $moderated = null;
 	var $accesstype = null;
 	var $access = null;
 	var $pub_access = null;

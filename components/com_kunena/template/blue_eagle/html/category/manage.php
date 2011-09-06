@@ -59,7 +59,6 @@ $this->displayLoginBox ();
 					<?php echo JHTML::_('grid.order', $this->state->get('list.count.admin') ); ?></small>
 				</th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>
-				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_MODERATED'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_REVIEW'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?></small></th>
@@ -121,7 +120,7 @@ $this->displayLoginBox ();
 					<?php echo ($category->locked == 1 ? $img_yes : $img_no); ?>
 				</a>
 			</td>
-			<td colspan="4" class="kcenter"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
+			<td colspan="3" class="kcenter"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
 
 			<?php else: ?>
 
@@ -135,11 +134,6 @@ $this->displayLoginBox ();
 			<td class="kcenter">
 				<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->locked ? 'un':'').'lock'; ?>')">
 					<?php echo ($category->locked == 1 ? $img_yes : $img_no); ?>
-				</a>
-			</td>
-			<td class="kcenter">
-				<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo  ($category->moderated ? 'un':'').'moderate'; ?>')">
-					<?php echo ($category->moderated == 1 ? $img_yes : $img_no); ?>
 				</a>
 			</td>
 			<td class="kcenter">

@@ -40,16 +40,6 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$this->setVariable($cid, 'locked', 0);
 		$this->redirectBack();
 	}
-	function moderate() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$this->setVariable($cid, 'moderated', 1);
-		$this->redirectBack();
-	}
-	function unmoderate() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$this->setVariable($cid, 'moderated', 0);
-		$this->redirectBack();
-	}
 	function review() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'review', 1);

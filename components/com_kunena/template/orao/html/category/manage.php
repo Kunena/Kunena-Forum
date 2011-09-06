@@ -43,7 +43,6 @@ JHTML::_('behavior.tooltip');
 							<?php echo JHTML::_('kunenagrid.order', $this->state->get('list.count.admin') ) ?>
 						</th>
 						<th class="kgrid-lock"><?php echo JText::_('COM_KUNENA_LOCKED') ?></th>
-						<th class="kgrid-moderate"><?php echo JText::_('COM_KUNENA_MODERATED') ?></th>
 						<th class="kgrid-review"><?php echo JText::_('COM_KUNENA_REVIEW') ?></th>
 						<th class="kgrid-anonymous"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS') ?></th>
 						<th class="kgrid-polls"><?php echo JText::_('COM_KUNENA_ADMIN_POLLS') ?></th>
@@ -86,11 +85,10 @@ JHTML::_('behavior.tooltip');
 
 					<?php if ($category->isSection()): ?>
 
-					<td class="kgrid-section" colspan="4"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
+					<td class="kgrid-section" colspan="3"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
 
 					<?php else : // !isSection ?>
 
-					<td class="kgrid-moderate"><?php echo JHTML::_('kunenagrid.boolean', $i, $category->moderated, 'moderate', 'unmoderate') ?></td>
 					<td class="kgrid-review"><?php echo JHTML::_('kunenagrid.boolean', $i, $category->review, 'review', 'unreview') ?></td>
 					<td class="kgrid-anonymous"><?php echo JHTML::_('kunenagrid.boolean', $i, $category->allow_anonymous, 'allow_anonymous', 'deny_anonymous') ?></td>
 					<td class="kgrid-polls"><?php echo JHTML::_('kunenagrid.boolean', $i, $category->allow_polls, 'allow_polls', 'deny_polls') ?></td>

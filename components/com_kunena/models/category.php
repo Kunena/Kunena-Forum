@@ -85,6 +85,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 				$categories[0] = KunenaForumCategoryHelper::getChildren();
 			}
 
+
 		if ($flat) {
 			$allsubcats = $categories[0];
 		} else {
@@ -105,14 +106,12 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 
 				$last = $subcat->getLastPosted ();
 				if ($last->last_topic_id) {
+					// Get list of topics
 					$topiclist[$last->last_topic_id] = $last->last_topic_id;
-					// collect user ids for avatar prefetch when integrated
-					$userlist [(int)$last->last_post_userid] = (int)$last->last_post_userid;
-					$lastpostlist [(int)$subcat->id] = (int)$last->last_post_id;
-					$last->_last_post_location = $last->last_topic_posts;
 				}
 
 				if ($this->config->listcat_show_moderators) {
+					// Get list of moderators
 					$subcat->moderators = $subcat->getModerators ( false, false );
 					$userlist += $subcat->moderators;
 				}
@@ -122,7 +121,13 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			}
 			$categories [$subcat->parent_id] [] = $subcat;
 		}
-		KunenaForumTopicHelper::getTopics($topiclist);
+		// Prefetch topics
+		$topics = KunenaForumTopicHelper::getTopics($topiclist);
+		foreach ( $topics as $topic ) {
+			// Prefetch users
+			$userlist [$topic->last_post_userid] = $topic->last_post_userid;
+			$lastpostlist [$topic->id] = $last->last_post_id;
+		}
 
 		if ($this->me->ordering != 0) {
 			$topic_ordering = $this->me->ordering == 1 ? true : false;

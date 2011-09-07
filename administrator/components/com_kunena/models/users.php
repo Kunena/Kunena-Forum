@@ -154,16 +154,14 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$db = JFactory::getDBO ();
 		$user = $this->getUser();
 
-		$db->setQuery ( "SELECT catid FROM #__kunena_moderation WHERE userid='$user->userid'" );
-		$modCatList = $db->loadResultArray ();
-		if (KunenaError::checkDatabaseError()) return;
-		if ($user->moderator && empty($modCatList)) $modCatList[] = 0;
+		$modCatList = array_keys(KunenaFactory::getAccessControl()->getModeratorStatus($user));
+		if (empty($modCatList)) $modCatList[] = 0;
 
 		$categoryList = array(JHTML::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR')));
 		$params = array (
 			'sections' => false,
 			'action' => 'read');
-		$modCats = JHTML::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple"', 'value', 'text', $modCatList, 'kforums');
+		$modCats = JHTML::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
 
 		return $modCats;
 	}

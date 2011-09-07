@@ -177,15 +177,6 @@ function submitbutton(pressbutton)
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></legend>
-					<table class="kadmin-adminform">
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_MOD'); ?></td>
-							<td valign="top"><?php echo $this->options ['forumModerated']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_MODDESC'); ?></td>
-						</tr>
-					</table>
-
-					<?php if ($this->category->moderated) : ?>
 
 					<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
 
@@ -224,7 +215,6 @@ function submitbutton(pressbutton)
 						?>
 						</tbody>
 					</table>
-					<?php endif; ?>
 				</fieldset>
 				<?php endif; ?>
 			</dd>

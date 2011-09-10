@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+/*  Kunena 2.0 StyleSheet
+    --------------------------------------------------------------------
+	 Style name:	Orao
+	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
+    --------------------------------------------------------------------
+*/
+#kunena > a:hover, #kunena > a:visited, #kunena > a:visited {
+	background:transparent !important;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	text-decoration: none;
+}
+#kunena dd.tk-topmenu-links a {
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-color: transparent;
+}
+
+#kunena #ktab a {
+	color: #fff !important;
+	display: block;
+	padding: 0px 10px !important;
+	font-size: 1em; 
+	line-height: 1.9em;
+	text-indent: 0;
+}
+#kunena #ktab-flat a {
+    color: #FFFFFF !important;
+    display: block;
+    font-size: 0.933em;
+    line-height: 1.4em;
+    padding: 0 5px !important;
+}
+#kunena #ktab ul.menu li.current.active a {
+    color: #fff !important;
+    padding: 0px 10px;
+	white-space:nowrap;
+	text-indent: 0;
+}
+#kunena label {
+    display: inline;
+}
+#kunena div.kunena_flatmenu ul {
+    margin: 0;
+}

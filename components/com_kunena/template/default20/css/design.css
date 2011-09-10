@@ -46,11 +46,13 @@ table {border-collapse: collapse;}
 #kunena input.kinputbox, textarea.ktxtarea {
 	background-color: #FFFFFF;
 	border-color: #BFC3C6;
+	border-radius:6px;
 }
 #kunena .kheader {
 	background-color: var(styleForumHeadercolor);
 	color: #fff;
 	font-weight: bold;
+	border-radius: 5px 5px 0 0; 
 }
 #kunena .kheader a {
 	color: #fff;
@@ -68,6 +70,9 @@ table {border-collapse: collapse;}
 }
 #kunena .ksection .kheader-desc.ktoggle-close {
 	background-color: #999999;
+}
+#kunena .kannouncement {
+	width:100%;
 }
 #kunena li.kannounce-date {
 	font-style: italic;
@@ -94,14 +99,12 @@ table {border-collapse: collapse;}
 }
 #kunena .kbutton {
 	background-color: #5388B4;
-	border: 1px solid #CCCCCC;
+	border: 1px hidden #CCCCCC;
 	color: #FFFFFF;
 	font-size: 11px;
+	border-radius:4px;
 }
 #kunena .kbutton:hover {
-	background-color: #CCCCCC;
-	border: 1px solid #000000;
-	color: #000000;
 }
 #kunena .kattachment .kbutton {
 	color: #000000;
@@ -243,7 +246,7 @@ table {border-collapse: collapse;}
 #kunena #klatest-detailsbox .krow-odd td.ktopic-subs,
 #kunena #klatest-detailsbox .krow-even td.kcategory-subs,
 #kunena #klatest-detailsbox .krow-even td.ktopic-subs {
-	background-color: #F9F9F9;
+	background-color: transparent;
 }
 #kunena td.kcategory-topics span,
 #kunena td.kcategory-replies span,
@@ -488,7 +491,7 @@ table {border-collapse: collapse;}
 	color: #fff;
 }
 #kunena .kposthead {
-	background-color: #666;
+	background-color: #14537b;
 }
 #kunena .kposthead h3,
 #kunena .kposthead li,
@@ -553,11 +556,14 @@ table {border-collapse: collapse;}
 #kunena .kpost-body-attach {
 	border: 1px solid #BCBCBC;
 	background-color: #f9f9f9;
+	border-radius:6px;
 }
 #kunena .kattach-title {
 	font-size: 11px;
 	font-weight: bold;
-	background-color: #bcbcbc;
+	background-color: #14537b;
+	color:#FFF;
+	border-radius: 6px 6px 0 0;
 }
 #kunena .kattach-details span {
 	font-size: 11px;
@@ -749,8 +755,6 @@ table {border-collapse: collapse;}
 	color: #000000;
 }
 #kunena #searchform .clrline {
-	background-color: #FFFFFF;
-	border-color: #BFC3C6;
 }
 #kunena #searchform legend {
 	font-size: 1.1em;
@@ -896,4 +900,9 @@ table {border-collapse: collapse;}
 }
 #kunena .kcredits-language {
 	border-color: #BFC3C6;
+}
+
+#kunena .ksth {
+	background-color: #f3f3f3;
+	width:100%;
 }

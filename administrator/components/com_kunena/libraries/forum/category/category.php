@@ -79,7 +79,6 @@ class KunenaForumCategory extends JObject {
 	public function __construct($identifier = 0) {
 		// Always load the category -- if category does not exist: fill empty data
 		if($identifier !== false) $this->load ( $identifier );
-		$this->_me = KunenaUserHelper::getMyself();
 	}
 
 	/**
@@ -114,8 +113,8 @@ class KunenaForumCategory extends JObject {
 		return $this->parent_id == 0 || (!$this->numTopics && $this->locked && empty($this->_channels['none']));
 	}
 
-	public function getUrl() {
-		return "index.php?option=com_kunena&view=category&catid={$this->id}";
+	public function getUrl($firstpage = false) {
+		return "index.php?option=com_kunena&view=category&catid={$this->id}" . ($firstpage ? '&limitstart=0' : '');
 	}
 
 	public function getTopics() {
@@ -134,7 +133,7 @@ class KunenaForumCategory extends JObject {
 	}
 
 	public function getLastPostLocation($direction = 'asc', $hold = null) {
-		if (!$this->_me->isModerator($this->id)) return $direction = 'asc' ? $this->last_topic_posts-1 : 0;
+		if (!KunenaUserHelper::getMyself()->isModerator($this->id)) return $direction = 'asc' ? $this->last_topic_posts-1 : 0;
 		return KunenaForumMessageHelper::getLocation($this->last_post_id, $direction, $hold);
 	}
 
@@ -222,7 +221,7 @@ class KunenaForumCategory extends JObject {
 		if ($action == 'none') return true;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($user === null) {
-			$user = $this->_me;
+			$user = KunenaUserHelper::getMyself();
 		} elseif (!($user instanceof KunenaUser)) {
 			$user = KunenaUserHelper::get($user);
 		}
@@ -256,7 +255,7 @@ class KunenaForumCategory extends JObject {
 	}
 
 	/**
-	 * Get userids, who can administrate this category
+	 * Get users, who can administrate this category
 	 **/
 	public function getAdmins($includeGlobal = true) {
 		$access = KunenaFactory::getAccessControl();
@@ -267,7 +266,7 @@ class KunenaForumCategory extends JObject {
 	}
 
 	/**
-	 * Get userids, who can moderate this category
+	 * Get users, who can moderate this category
 	 **/
 	public function getModerators($includeGlobal = true, $objects = true) {
 		$access = KunenaFactory::getAccessControl();
@@ -284,63 +283,33 @@ class KunenaForumCategory extends JObject {
 	}
 
 	/**
-	 * Change user moderator status
+	 * Change user status in category moderators
+	 *
+	 * @param $user
+	 * @example if ($category->authorise('admin')) $category->setModerator($user);
 	 **/
-	public function setModerator($user, $status = 1) {
-		// Do not allow this action if current user isn't admin in this category
-		if (!$this->_me->isAdmin($this->id)) {
-			$this->setError ( JText::sprintf('COM_KUNENA_ERROR_NOT_CATEGORY_ADMIN', $this->name) );
-			return false;
-		}
+	public function setModerator($user = null, $value = false) {
+		return KunenaFactory::getAccessControl()->setModerator($this, $user, $value);
+	}
 
-		// Check if category exists
-		if (!$this->exists()) return false;
+	/**
+	 * Add user to category moderators
+	 *
+	 * @param $user
+	 * @example if ($category->authorise('admin')) $category->addModerator($user);
+	 **/
+	public function addModerator($user = null) {
+		return $this->setModerator($user, true);
+	}
 
-		// Check if user exists
-		$user = KunenaUserHelper::get($user);
-		if (!$user->exists()) {
-			return false;
-		}
-
-		$catids = KunenaFactory::getAccessControl ()->getAllowedCategories ( $user, 'moderate');
-
-		// Do not touch global moderators
-		if (!empty($catids[0]) && !$user->isAdmin($this->id)) {
-			return true;
-		}
-
-		// If the user state remains the same, do nothing
-		if (empty($catids[$this->catid]) == $status) {
-			return true;
-		}
-
-		$db = JFactory::getDBO ();
-		$success = true;
-		if ($status == 1) {
-			$query = "INSERT INTO #__kunena_moderation (catid, userid) VALUES  ({$db->quote($this->id)}, {$db->quote($user->userid)})";
-			$db->setQuery ( $query );
-			$db->query ();
-			// Finally set user to be a moderator
-			if (!KunenaError::checkDatabaseError () && $user->moderator == 0) {
-				$user->moderator = 1;
-				$success = $user->save();
-			}
-		} else {
-			$query = "DELETE FROM #__kunena_moderation WHERE catid={$db->Quote($this->id)} AND userid={$db->Quote($user->userid)}";
-			$db->setQuery ( $query );
-			$db->query ();
-			unset($catids[$this->id]);
-			// Finally check if user looses his moderator status
-			if (!KunenaError::checkDatabaseError () && empty($catids)) {
-				$user->moderator = 0;
-				$success = $user->save();
-			}
-		}
-
-		// Clear moderator cache
-		$access = KunenaFactory::getAccessControl();
-		$access->clearCache();
-		return $success;
+	/**
+	 * Remove user from category moderators
+	 *
+	 * @param $user
+	 * @example if ($category->authorise('admin')) $category->removeModerator($user);
+	 **/
+	public function removeModerator($user = null) {
+		return $this->setModerator($user, false);
 	}
 
 	/**
@@ -365,11 +334,12 @@ class KunenaForumCategory extends JObject {
 			$tabletype ['prefix'] = $prefix;
 		}
 
-		// Create the user table object
+		// Create the category table object
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
 	public function bind($data, $ignore = array()) {
+		if (empty($data)) return;
 		if (is_array($data['channels'])) $data['channels'] = implode(',', $data['channels']);
 		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties ( $data );
@@ -468,8 +438,6 @@ class KunenaForumCategory extends JObject {
 		$access->clearCache();
 
 		$db = JFactory::getDBO ();
-		// Delete moderators
-		$queries[] = "DELETE FROM #__kunena_moderation WHERE catid={$db->quote($this->id)}";
 		// Delete user topics
 		$queries[] = "DELETE FROM #__kunena_user_topics WHERE category_id={$db->quote($this->id)}";
 		// Delete user categories
@@ -497,6 +465,7 @@ class KunenaForumCategory extends JObject {
 		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount();
 
+		$this->id = null;
 		return $result;
 	}
 

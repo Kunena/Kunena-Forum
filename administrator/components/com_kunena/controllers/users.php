@@ -46,6 +46,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 	}
 
 	function save() {
+		kimport('kunena.forum.category.helper');
 		$db = JFactory::getDBO ();
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
@@ -72,27 +73,23 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$avatar = ",avatar=''";
 		}
 
-		$db->setQuery ( "UPDATE #__kunena_users SET signature={$db->quote($signature)}, view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' $avatar where userid='$uid'" );
+		$db->setQuery ( "UPDATE #__kunena_users SET signature={$db->quote($signature)}, view='$newview', ordering='$neworder', rank='$newrank' $avatar WHERE userid='$uid'" );
 		$db->query ();
 		if (KunenaError::checkDatabaseError()) return;
-
-		//delete all moderator traces before anyway
-		$db->setQuery ( "DELETE FROM #__kunena_moderation WHERE userid='$uid'" );
-		$db->query ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		//if there are moderatored forums, add them all
-		if ($moderator == 1) {
-			if (!empty ( $modCatids ) && !in_array(0, $modCatids)) {
-				foreach ( $modCatids as $c ) {
-					$db->setQuery ( "INSERT INTO #__kunena_moderation SET catid='$c', userid='$uid'" );
-					$db->query ();
-					if (KunenaError::checkDatabaseError()) return;
-				}
-			}
-		}
 
 		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY' ) );
+
+		// Update moderator rights
+		$me = KunenaFactory::getUser();
+		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
+		$user = KunenaFactory::getUser($uid);
+		foreach ($categories as $category) {
+			$category->setModerator($user, in_array($category->id, $modCatids));
+		}
+		// Global moderator is a special case
+		if ($me->isAdmin()) {
+			KunenaFactory::getAccessControl()->setModerator(0, $user, in_array(0, $modCatids));
+		}
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 

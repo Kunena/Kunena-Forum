@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE kinstall>
+<kinstall type="kunena-template" version="2.0">
+	<name>Orao - Kunena 2.0 Template</name>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<author>Kunena Team</author>
+	<authorEmail>team@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>Kunena Team</copyright>
+	<license>GNU/GPL</license>
+	<description>
+	<![CDATA[ <link rel="stylesheet" type="text/css" href="../components/com_kunena/template/orao/backend/backend.css" />
+			<script type="text/javascript" src="../components/com_kunena/template/orao/backend/backend.js"></script> 
+			<style type="text/css" media="all">
+			<!--
+			#wrap1 {padding:0px 0px 4px 0px;}
+			h1, h2 {clear:both;font-family: Arial;font-size:25px;margin:0px ;padding:0px 0px 0px 10px;color:#487748; font-weight: bold;}
+			.wrap2 {background:#fff;padding: 10px; font-family: Arial; font-size:13px; text-align: justify; color: #4d4d4d; line-height: 20px;}
+			.leftart {margin: 0px}
+			-->
+			</style>
+			<div id="wrap1">
+				<div class="wrap2">
+					<div class="leftart">
+					<p>Full control over the look of the Kunena forum is achieved through back-end options and parameters. <b>Check the Web Site often for updates.</b></p>
+					<b>Support:</b><br><ul>  
+					<li><a href="http://www.kunena.org/forum/" target="_blank">Support Forum</a></li>
+					<li><a href="http://www.kunena.org" target="_blank">Home Page</a></li></ul>
+					<p><b>Copyright:</b> <a target="_blank" href="http://www.kunena.org">Kunena.org</a></p>
+					</div>
+				</div>
+			</div>
+	]]>
+	</description>
+	<thumbnail>template_thumbnail.png</thumbnail>
+	<params>
+<param type="spacer" default="COM_KUNENA_TEMPLATE_GENERAL_CONFIGURATION" />
+		<param name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
+			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
+			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
+			<option value="right">COM_KUNENA_TEMPLATE_RIGHT</option>
+			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
+		</param>
+		<param name="buttonIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_BUTTON_SET" description="COM_KUNENA_TEMPLATE_BUTTON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+		</param>
+		<param name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET" description="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+		</param>
+		<param name="editorIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET" description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+		</param>
+		<param name="topmenuShow" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_TOPMENU" description="COM_KUNENA_TEMPLATE_SHOW_TOPMENU_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+
+<param type="spacer" default="COM_KUNENA_TEMPLATE_ADDITIONAL_CONFIGURATION" />
+		<param name="hotTopic" type="text" default="200" label="COM_KUNENA_TEMPLATE_HOT_TOPIC" description="COM_KUNENA_TEMPLATE_HOT_TOPIC_DESC" />
+		<param name="showWoisonlineavatar" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_AVATAR_WHOISONLINE" description="COM_KUNENA_TEMPLATE_SHOW_AVATAR_WHOISONLINE_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+		<param name="authorAvatar" class="tk_switch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_AVATAR_AUTHOR" description="COM_KUNENA_TEMPLATE_SHOW_AVATAR_AUTHOR_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+		<param name="showPathway" class="tk_switch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_PATHWAY" description="COM_KUNENA_TEMPLATE_SHOW_PATHWAY_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+		<param name="countcolumnShow" class="tk_switch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_COLUMN" description="COM_KUNENA_TEMPLATE_SHOW_COLUMN_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+		<param name="loginLogout" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_LOGIN_LINK" description="COM_KUNENA_TEMPLATE_SHOW_LOGIN_LINK_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+		<param name="searchLink" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_SEARCH_LINK" description="COM_KUNENA_TEMPLATE_SHOW_SEARCH_LINK_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+		<param name="numChildcolumn" type="list" default="" label="COM_KUNENA_TEMPLATE_SHOW_CHILD_CATEGORY" description="COM_KUNENA_TEMPLATE_SHOW_CHILD_CATEGORY_DESC">
+			<option value="0">COM_KUNENA_TEMPLATE_O_COLUMN</option>
+			<option value="1">COM_KUNENA_TEMPLATE_ONE_COLUMN</option>
+			<option value="2">COM_KUNENA_TEMPLATE_TWO_COLUMN</option>
+			<option value="3">COM_KUNENA_TEMPLATE_THREE_COLUMN</option>
+			<option value="4">COM_KUNENA_TEMPLATE_FOUR_COLUMN</option>
+		</param>
+		<param name="maxwidthPostimage" type="text" default="700" label="COM_KUNENA_TEMPLATE_IMAGES_WIDTH" description="COM_KUNENA_TEMPLATE_IMAGES_WIDTH_DESC" />
+
+<param type="spacer" default="COM_KUNENA_TEMPLATE_STYLE_CONFIGURATION" />
+
+		<param name="showStyle" type="list" default="green" label="COM_KUNENA_TEMPLATE_STYLE" description="COM_KUNENA_TEMPLATE_STYLE_DESC">
+			<option value="sky">COM_KUNENA_TEMPLATE_SKY</option>
+			<option value="orange">COM_KUNENA_TEMPLATE_ORANGE</option>
+			<option value="purple">COM_KUNENA_TEMPLATE_PURPLE</option>
+			<option value="grey">COM_KUNENA_TEMPLATE_GREY</option>
+			<option value="green">COM_KUNENA_TEMPLATE_GREEN</option>
+			<option value="nopresetstyle">COM_KUNENA_TEMPLATE_NO_PRESET</option>
+		</param>
+		<param name="headerBg" type="text" default="#888888" label="COM_KUNENA_TEMPLATE_HEADER_BG_COLOR" description="COM_KUNENA_TEMPLATE_HEADER_BG_COLOR_DESC" />
+		<param name="headerBorder" type="text" default="#222222" label="COM_KUNENA_TEMPLATE_HEADER_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_HEADER_BORDER_COLOR_DESC" />
+		<param name="tabshadowColor" type="text" default="#EEEEEE" label="COM_KUNENA_TEMPLATE_TAB_SHADOW_COLOR" description="COM_KUNENA_TEMPLATE_TAB_SHADOW_COLOR_DESC" />
+		<param name="subshadowColor" type="text" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_SUBMENU_SHADOW_COLOR" description="COM_KUNENA_TEMPLATE_SUBMENU_SHADOW_COLOR_DESC" />
+		<param name="buttonsBg" type="text" default="#444444" label="COM_KUNENA_TEMPLATE_BUTTONS_BG_COLOR" description="COM_KUNENA_TEMPLATE_BUTTONS_BG_COLOR_DESC" />
+		<param name="buttonsborderColor" type="text" default="#000000" label="COM_KUNENA_TEMPLATE_BUTTONS_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTONS_BORDER_COLOR_DESC" />
+		<param name="buttonstextColor" type="text" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_BUTTONS_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_BUTTONS_TEXT_COLOR_DESC" />
+		<param name="buttonstextshadowColor" type="text" default="#000000" label="COM_KUNENA_TEMPLATE_BUTTONS_TEXT_SHADOW" description="COM_KUNENA_TEMPLATE_BUTTONS_TEXT_SHADOW_DESC" />
+		<param name="stickyColor" type="text" default="" label="COM_KUNENA_TEMPLATE_STICKY_COLOR" description="COM_KUNENA_TEMPLATE_STICKY_COLOR_DESC" />
+		<param name="tabRadius" type="text" default="0" label="COM_KUNENA_TEMPLATE_MENU_TAB_RADIUS" description="COM_KUNENA_TEMPLATE_MENU_TAB_RADIUS_DESC_DESC" />
+
+<param type="spacer" default="COM_KUNENA_TEMPLATE_TOP_MENU_ICONS" />
+		<param name="topmenu1Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu1Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu2Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu2Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu3Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu3Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu4Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu4Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu5Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu5Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu6Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu6Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu7Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu7Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu8Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu8Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu9Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu9Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu10Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu10Itemid" type="text" default="" class="text_area group-end" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+		
+		<param name="topmenu11Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu11Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu12Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu12Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu13Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu13Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu14Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu14Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu15Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu15Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu16Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu16Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu17Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu17Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu18Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu18Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu19Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu19Itemid" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+		<param name="topmenu20Itemidimage" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="topmenu20Itemid" type="text" class="text_area" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
+
+<param type="spacer" default="COM_KUNENA_TEMPLATE_USERS_COLOR" />
+		<param name="avborderColor" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_AVATARS_BORDER" description="COM_KUNENA_TEMPLATE_AVATARS_BORDER_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+		<param name="userAdmin" type="text" default="#FF0000" label="COM_KUNENA_COLOR_ADMINISTRATOR" description="COM_KUNENA_TEMPLATE_USERS_COLOR_DESC" />
+		<param name="userGlmoderator" type="text" default="#008000" label="COM_KUNENA_COLOR_GLOBAL_MODERATOR" description="COM_KUNENA_TEMPLATE_USERS_COLOR_DESC" />
+		<param name="userModerator" type="text" default="#0000FF" label="COM_KUNENA_COLOR_MODERATOR" description="COM_KUNENA_TEMPLATE_USERS_COLOR_DESC" />
+		<param name="userUser" type="text" default="#5388B4" label="COM_KUNENA_COLOR_USER" description="COM_KUNENA_TEMPLATE_USERS_COLOR_DESC" />
+		<param name="userGuest" type="text" default="#666666" label="COM_KUNENA_COLOR_GUEST" description="COM_KUNENA_TEMPLATE_USERS_COLOR_DESC" />
+
+<param type="spacer" default="COM_KUNENA_TEMPLATE_SECTIONS_STYLE" />
+		<param name="section1icon" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="section1ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_SECTION_ID_DESC" />
+		<param name="section1bgColor" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+
+		<param name="section2icon" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="section2ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_SECTION_ID_DESC" />
+		<param name="section2bgColor" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+
+		<param name="section3icon" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="section3ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_SECTION_ID_DESC" />
+		<param name="section3bgColor" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+
+		<param name="section4icon" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="section4ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_SECTION_ID_DESC" />
+		<param name="section4bgColor" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+
+		<param name="section5icon" type="imagelist" directory="/media/kunena/icons" default="" label="COM_KUNENA_TEMPLATE_ICON" description="COM_KUNENA_TEMPLATE_ICON_DESC" /> 
+		<param name="section5ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_SECTION_ID_DESC" />
+		<param name="section5bgtColor" type="text" class="text_area" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+
+
+<param type="spacer" default="COM_KUNENA_TEMPLATE_CATEGORY_STYLE" />
+		<param name="category1ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_CAT_ID_DESC" />
+		<param name="category1Color" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="category2ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_CAT_ID_DESC" />
+		<param name="category2Color" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="category3ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_CAT_ID_DESC" />
+		<param name="category3Color" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="category4ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_CAT_ID_DESC" />
+		<param name="category4Color" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="category5ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_CAT_ID_DESC" />
+		<param name="category5Color" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="category6ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_CAT_ID_DESC" />
+		<param name="category6Color" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="category7ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_CAT_ID_DESC" />
+		<param name="category7Color" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="category8ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_CAT_ID_DESC" />
+		<param name="category8Color" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="category9ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_CAT_ID_DESC" />
+		<param name="category9Color" type="text" class="text_area group-end" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="category10ID" type="text" default="" label="COM_KUNENA_TEMPLATE_ID" description="COM_KUNENA_TEMPLATE_CAT_ID_DESC" />
+		<param name="category10Color" type="text" class="text_area" default="" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+
+<param type="spacer" default="COM_KUNENA_TEMPLATE_TOPICS_STATUS" />
+		<param name="solvedText" type="text" default="Solved" label="COM_KUNENA_TEMPLATE_TEXT" description="COM_KUNENA_TEMPLATE_TEXT_SOLVED_DESC" />
+		<param name="solvedColor" type="text" default="#008000" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="solvedTextcolor" type="text" class="text_area group-end" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_TEXT_COLOR_DESC" />
+
+		<param name="stickystatusText" type="text" default="Important" label="COM_KUNENA_TEMPLATE_TEXT" description="COM_KUNENA_TEMPLATE_TEXT_STICKY_DESC" />
+		<param name="stickystatusColor" type="text" default="#0000FF" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="stickystatusTextcolor" type="text" class="text_area group-end" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_TEXT_COLOR_DESC" />
+
+		<param name="closedText" type="text" default="Closed" label="COM_KUNENA_TEMPLATE_TEXT" description="COM_KUNENA_TEMPLATE_TEXT_LOCKED_DESC" />
+		<param name="closedColor" type="text" default="#FF0000" label="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR" description="COM_KUNENA_TEMPLATE_BACKGROUND_COLOR_DESC" />
+		<param name="closedTextcolor" type="text" class="text_area group-end" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_TEXT_COLOR_DESC" />
+
+		<param name="templatebyText" type="hidden" default="TemplateKunena.com" />
+		<param name="templatebyName" type="hidden" default="TemplateKunena.com" />
+		<param name="templatebyLink" type="hidden" default="http://www.templatekunena.com" />
+
+		<!-- Required avatar sizes -->
+		<param name="avatarSizeXThumb" type="hidden" default="36" />
+		<param name="avatarSizeYThumb" type="hidden" default="36" />
+		<param name="avatarSizeXWelcome" type="hidden" default="60" />
+		<param name="avatarSizeYWelcome" type="hidden" default="60" />
+		<param name="avatarSizeXList" type="hidden" default="36" />
+		<param name="avatarSizeYList" type="hidden" default="36" />
+		<param name="avatarSizeXPost" type="hidden" default="144" />
+		<param name="avatarSizeYPost" type="hidden" default="144" />
+		<param name="avatarSizeXProfile" type="hidden" default="200" />
+		<param name="avatarSizeYProfile" type="hidden" default="200" />
+	</params>
+</kinstall>

@@ -363,6 +363,14 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $pubprofile = 1;
 	// New for 1.6.5
 	var $thankyou_max = 10;
+	// New for 1.6.6
+	var $email_recipient_count = 0;
+	var $email_recipient_privacy = 'bcc';
+	var $email_visible_address = '';
+	var $captcha_post_limit = 0;
+	var $recaptcha_publickey = '';
+	var $recaptcha_privatekey = '';
+	var $recaptcha_theme = 'white';
 	// New for 2.0.0
 	var $spoiler_image = '';
 	var $keywords = 1;
@@ -372,6 +380,9 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $topic_layout = 'flat';
 	var $time_to_create_page = 1;
 	var $show_imgfiles_manage_profile = 1;
+	var $hold_newusers_posts = 0;
+	var $hold_guest_posts = 0;
+	var $attachment_limit = 8;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

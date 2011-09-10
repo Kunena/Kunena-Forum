@@ -68,6 +68,7 @@ class KunenaRouter {
 		'rss'=>1,
 		'post'=>1,
 		'report'=>1,
+		'template'=>1,
 
 		'announcement'=>1,
 		'article'=>1,

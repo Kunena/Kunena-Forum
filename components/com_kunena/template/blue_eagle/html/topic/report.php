@@ -36,7 +36,7 @@ $this->displayLoginBox ();
 					<label for="kreport-msg"><?php echo JText::_('COM_KUNENA_REPORT_MESSAGE') ?>:</label>
 					<textarea id="kreport-msg" name="text" cols="40" rows="10" class="inputbox"></textarea>
 					<input class="kbutton ks" type="submit" name="Submit" value="<?php echo JText::_('COM_KUNENA_REPORT_SEND') ?>"/>
-					<input class="kbutton ks" onclick="history.back()" type="button" name="button" value="<?php echo JText::_('COM_KUNENA_REPORT_BACK') ?>"/>
+					<input class="kbutton ks" onclick="history.back()" type="button" name="button" value="<?php echo JText::_('COM_KUNENA_BACK') ?>"/>
 				</form>
 			</div>
 		</div>

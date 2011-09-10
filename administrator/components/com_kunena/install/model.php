@@ -10,9 +10,11 @@
 defined ( '_JEXEC' ) or die ();
 
 // Minimum version requirements
-DEFINE('KUNENA_MIN_PHP', '5.2.3');
+DEFINE('KUNENA_MIN_PHP', '5.2.4');
 DEFINE('KUNENA_MIN_MYSQL', '5.0.4');
-DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.22' );
+DEFINE ( 'KUNENA_MIN_JOOMLA15', '1.5.23' );
+DEFINE ( 'KUNENA_MIN_JOOMLA16', '1.6.4' );
+DEFINE ( 'KUNENA_MIN_JOOMLA17', '1.7.0' );
 
 jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.folder' );
@@ -342,6 +344,24 @@ class KunenaModelInstall extends JModel {
 		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', 'System - Kunena'), $success);
 	}
 
+	public function deleteFiles($path, $ignore=array()) {
+		$ignore = array_merge($ignore, array('.svn', 'CVS','.DS_Store','__MACOSX'));
+		foreach (JFolder::files($path, '.', false, true, $ignore) as $file) {
+			if ( JFile::exists($file) ) {
+				JFile::delete($file);
+			}
+		}
+	}
+
+	public function deleteFolders($path, $ignore=array()) {
+		$ignore = array_merge($ignore, array('.svn', 'CVS','.DS_Store','__MACOSX'));
+		foreach (JFolder::folders($path, '.', false, true, $ignore) as $folder) {
+			if ( JFolder::exists($folder) ) {
+				JFolder::delete($folder);
+			}
+		}
+	}
+
 	public function stepPrepare() {
 		$results = array ();
 
@@ -382,30 +402,6 @@ class KunenaModelInstall extends JModel {
 		$this->checkTimeout(true);
 	}
 
-	public function deleteKunenaFiles() {
-		jimport('joomla.filesystem.folder');
-		jimport('joomla.filesystem.file');
-		if ( JFolder::exists(JPATH_ADMINISTRATOR . '/components/com_kunena') ) {
-			JFolder::delete(JPATH_ADMINISTRATOR . '/components/com_kunena');
-		}
-		if ( JFolder::exists(JPATH_ROOT . '/components/com_kunena/funcs') ) {
-			JFolder::delete(JPATH_ROOT . '/components/com_kunena/funcs');
-		}
-		if ( JFolder::exists(JPATH_ROOT . '/components/com_kunena/lib') ) {
-			JFolder::delete(JPATH_ROOT . '/components/com_kunena/lib');
-		}
-		if ( JFolder::exists(JPATH_ROOT . '/components/com_kunena/js') ) {
-			JFolder::delete(JPATH_ROOT . '/components/com_kunena/js');
-		}
-		if ( JFolder::exists(JPATH_ROOT . '/components/com_kunena/views') ) {
-			JFolder::delete(JPATH_ROOT . '/components/com_kunena/views');
-		}
-		$kunenafiles = JFolder::files(JPATH_ROOT . '/components/com_kunena', '', '', 'true');
-		foreach($kunenafiles as $file) {
-			JFile::delete($file);
-		}
-	}
-
 	public function stepLanguage() {
 		$lang = JFactory::getLanguage();
 		$languages = $lang->getKnownLanguages();
@@ -417,14 +413,12 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepExtract() {
-		if ( $action == 'upgrade' ) $this->deleteKunenaFiles();
-
 		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
-		if (!is_file("{$path}/fileformat")) {
+		if (KunenaForum::isSVN() || !is_file("{$path}/fileformat")) {
 			// SVN install
-			$dir = '/components/com_kunena/media/kunena';
-			if (is_dir(JPATH_ADMINISTRATOR.$dir)) {
-				JFolder::copy(JPATH_ADMINISTRATOR.$dir, KPATH_MEDIA, false, true);
+			$dir = JPATH_ADMINISTRATOR.'/components/com_kunena/media/kunena';
+			if (is_dir($dir)) {
+				JFolder::copy($dir, KPATH_MEDIA, false, true);
 			}
 			$this->setStep($this->getStep()+1);
 			return;
@@ -435,11 +429,24 @@ class KunenaModelInstall extends JModel {
 			array('name'=>'com_kunena-site', 'dest'=>KPATH_SITE),
 			array('name'=>'com_kunena-media', 'dest'=>KPATH_MEDIA)
 		);
+		static $ignore = array(
+			KPATH_ADMIN => array('index.html', 'kunena.xml', 'admin.kunena.php', 'api.php', 'archive', 'install', 'language'),
+			KPATH_SITE => array('index.html', 'kunena.php', 'router.php', 'COPYRIGHT.php', 'template', 'language')
+		);
 		$task = $this->getTask();
+
+		// Extract archive files
 		if (isset($files[$task])) {
 			$file = $files[$task];
 			if (file_exists ( "{$path}/{$file['name']}{$ext}" )) {
-				$this->extract ( $path, $file['name'] . $ext, $file['dest'], KunenaForum::isSVN() );
+				$dest = $file['dest'];
+				if (!empty($ignore[$dest])) {
+					// Delete all files and folders (cleanup)
+					$this->deleteFiles($dest, $ignore[$dest]);
+					$this->deleteFolders($dest, $ignore[$dest]);
+				}
+				// Copy new files into folder
+				$this->extract ( $path, $file['name'] . $ext, $dest, KunenaForum::isSVN() );
 			}
 			$this->setTask($task+1);
 		} else {
@@ -672,7 +679,13 @@ class KunenaModelInstall extends JModel {
 		}
 
 		// Allow queries to fail
-		$this->db->debug(0);
+		if (version_compare(JVERSION, '1.7', '>')) {
+			// Joomla 1.7+
+			$this->db->setDebug(false);
+		} else {
+			// Joomla 1.5 and 1.6
+			$this->db->debug(0);
+		}
 
 		$results = array();
 		foreach ($xml->upgrade[0] as $version) {
@@ -1113,7 +1126,11 @@ class KunenaModelInstall extends JModel {
 			$req->fail ['mysql'] = true;
 		if (version_compare ( $req->php, KUNENA_MIN_PHP, "<" ))
 			$req->fail ['php'] = true;
-		if (version_compare ( $req->joomla, KUNENA_MIN_JOOMLA, "<" ))
+		if (version_compare ( $req->joomla, '1.7', ">" ) && version_compare ( $req->joomla, KUNENA_MIN_JOOMLA17, "<" ))
+			$req->fail ['joomla'] = true;
+		elseif (version_compare ( $req->joomla, '1.6', ">" ) && version_compare ( $req->joomla, KUNENA_MIN_JOOMLA16, "<" ))
+			$req->fail ['joomla'] = true;
+		elseif (version_compare ( $req->joomla, KUNENA_MIN_JOOMLA15, "<" ))
 			$req->fail ['joomla'] = true;
 		if(!class_exists('DOMDocument')){
 			$req->fail ['domdocument'] = true;

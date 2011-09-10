@@ -49,3 +49,6 @@ class jUpgrade {};
 
 // PHP 5.3
 function parse_ini_string($str) {}
+
+// PHPUnit
+class PHP_CodeCoverage_Filter {}

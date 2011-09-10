@@ -1,0 +1,169 @@
+@charset "utf-8";
+
+/*  Kunena 2.0 StyleSheet
+    --------------------------------------------------------------------
+	 Style name:	Orao
+	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
+    --------------------------------------------------------------------
+*/
+
+#kunena .tk-topmenu-links a {
+	background-repeat: no-repeat;
+	background-position: 5px center;
+    display: block;
+    float: right;
+    /*line-height: 1.3em;*/
+    margin: 0px 5px 0 0 !important;
+    min-height: 16px;
+    position: relative;
+    right: 0px;
+    text-indent: 20px;
+    top: 10px;
+    padding: 2px 5px
+}
+
+#kunena div#ktab li span,
+#kunena div#ktab-flat li span {
+	background-repeat: no-repeat;
+	background-position: 0px center;
+}
+
+/* MENU
+----------------------------------------------------------------------------------------------- */
+
+#kunena #ktop {
+	margin:0px;
+	vertical-align: bottom;
+}
+
+#kunena #ktop span.ktoggler {
+	margin:-16px 0;
+	padding:1px 1px 0;
+}
+
+#kunena #ktopmenu {
+	margin:0;
+	display: inline;
+	position:relative;
+}
+
+#kunena #ktab {
+	margin:0 20px 0 0;
+	top: 0;
+}
+
+#kunena #ktab ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: inline-block;
+}
+
+#kunena #ktab ul ul {
+	margin: -2px 2px;
+	padding: 0;
+	list-style: none;
+	float: left;
+}
+
+#kunena #ktab li,
+#kunena #ktab div.moduletable ul.menu li {
+border:0 none;
+display:inline;
+float:left;
+margin:0px 1px 0 !important;
+padding:0px;
+}
+#kunena #ktab li:hover,
+#kunena #ktab li#current.active,
+#kunena #ktab div.moduletable ul.menu li:hover {
+	color: #000;
+}
+
+#kunena #ktab a {
+	margin:6px 3px;
+	padding:0 10px;
+	text-decoration: none;
+	display: block;
+	float: left;
+	font-size: 100% !important;
+	background-image:none;;
+}
+#kunena #ktab a:hover {
+	display: block;
+	float: left;
+}
+#kunena #ktab li:hover span,
+#kunena #ktab li#current.active span,
+#kunena #ktab div.moduletable ul.menu li:hover span {
+	color: #fff;
+	display: block;
+	margin: 0px;
+    padding: 7px 0 6px;
+	font-size: 12px; 
+	text-indent: 0;
+}
+#ktab div.moduletable {
+	background: none;
+	margin-bottom: 0;
+}
+
+#kunena #ktab a span {
+	display: block;
+	margin: 0px;
+    padding: 7px 0 6px;
+	font-size: 12px;
+	text-indent: 0;
+}
+
+#kunena div.tk-menu {
+	height:26px;
+	padding:0 5px !important;
+    position: relative;
+    margin-bottom: 15px !important;
+}
+#kunena div.tk-menu div.tk-menu-toggler {
+	float:right;
+	position:relative;
+	right:16px;
+	top:-20px;
+	width:1px;
+}
+#kunena ul.menu,
+#kunena ul.menu li,
+#kunena ul.menu li a {
+	list-style-type: none;
+	list-style-image: none;
+}
+/*		FLAT MENU		*/
+
+#kunena div#ktab-flat {
+	display:block;
+}
+#kunena div#ktab-flat .moduletable {
+	padding:3px 10px 0;
+	margin:-2px 0 0px;
+	overflow: hidden;
+}
+#kunena div#ktab-flat li {
+	float:left;
+	background:transparent !important;
+	margin:0;
+	padding:3px 5px;
+	list-style-type:none;
+	display:inline;
+}
+#kunena div#ktab-flat li a {
+	float:left;
+	color:#fff;
+	padding: 0;
+	background:transparent !important;
+	height: 17px;
+}
+#kunena div#ktab-flat li a span {
+	float:left;
+	line-height: 1.2em;
+    min-height: 16px;
+    padding: 1px 8px;
+    font-size: 12px;
+}

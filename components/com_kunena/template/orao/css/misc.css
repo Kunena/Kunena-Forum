@@ -1,0 +1,577 @@
+@charset "utf-8";
+
+/*  Kunena 2.0 StyleSheet
+    --------------------------------------------------------------------
+	 Style name:	Orao
+	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
+    --------------------------------------------------------------------
+*/
+#kunena li.kannounce-date,
+#kunena li.kreadmore {
+    float: right;
+    text-align: right;
+    width: 120px;
+}
+
+#kunena dd.tk-userlist-content {
+	width:100%;
+	border:0 !important;
+}
+#kunena div.tk-userlist-main {
+	background:#fff;
+}
+#kunena div.tk-userlist-body {
+	width:100%;
+}
+#kunena div.tk-userlist-wrapper {
+	background:#fff;
+}
+#kunena div.tk-userlist-user-body {
+	width:50%;
+	float:left;
+	display:block;
+	min-height:200px;
+	margin:2px 0;
+}
+#kunena div.tk-userlist-user {
+	display:block;
+	min-height:260px;
+	margin:0px 15px;
+	overflow:hidden;
+	padding:0;
+}
+#kunena div.tk-userlist-user-name {
+	width:100%;
+	display:block;
+	margin:5px 0;
+}
+#kunena div.tk-userlist-user-name h2 {
+	padding:5px;
+}
+#kunena div.tk-userlist-user-avatar {
+	width:45%;
+	float:left;
+	display:block;
+	margin:5px 0 0 0;
+	padding:0 0 6px 0
+}
+
+#kunena div.tk-userlist-user-avatar img {
+	padding: 5px;
+	width:144px;
+	height:144px;
+}
+#kunena span.tk-caption {
+	display:block;
+	font-weight:bold;
+	text-align:right;
+	float:right;
+	font-size: 10px;
+}
+#kunena span.tk-userlist-avatar-corner {
+	width:24px;
+	height:24px;
+	display:block;
+	position:relative;
+	top:0;
+	right:0;
+	margin:0 0 -24px -1px;
+}
+#kunena div.tk-userlist-user-data {
+	width:55%;
+	float:right;
+	display:block;
+	margin:0px;
+}
+#kunena div.tk-userlist-user-data-line {
+	display:block;
+	margin:0;
+}
+#kunena div.tk-userlist-user-data-line span.tk-label {
+	font-weight:bold;
+}
+#kunena div.tk-userlist-user-data-line span.tk-result {
+	padding-left:5px;
+}
+#kunena div.tk-userlist-user-data-line span.tk-result span.tk-social-buttons {
+	margin:0px!important;
+}
+#kunena dd.tk-userlist-content li.tk-pages-row,
+#kunena div.tk-search li.tk-pages-row {
+	min-height:35px;
+	line-height:34px;
+	text-align:center;
+}
+#kunena dd.tk-userlist-content div.tk-pagecount,
+#kunena div.tk-search div.tk-pagecount {
+	margin:5px;
+	padding-left:15px;
+	overflow: hidden;
+}
+#kunena div.tk-pagecount div.pagination {
+    height: 0;
+    line-height: 22px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+#kunena dd.tk-userlist-content .tk-userlist-limitbox {
+	float:right;
+	margin:0 10px 0 -100px;
+}
+#kunena dd.tk-userlist-content .tk-userlist-pagecount,
+#kunena div.tk-search .tk-userlist-pagecount {
+	float:left;
+	margin:0px;
+}
+#kunena div.tk-userlist-pag {
+	float:left;
+	margin:0px;
+}
+
+/* Userlist
+----------------------------------------*/
+/*
+#kunena div.tk-pagecount ul.pagination li {
+	display: inline !important;
+	float: left;
+}
+#kunena div.tk-userlist-top dl.tk-usersearch {
+	width:100%;
+	padding-left:0px;
+	min-height:0px!important;
+}
+#kunena div.tk-userlist-top dd {
+	width:100%;
+	padding-left:0px !important;
+}
+#kunena div.tk-userlist-top dd div {
+	padding:5px;
+}
+#kunena div.tk-userlist-top input.inputbox {
+	width:150px;
+}
+#kunena ul#userlist_tbody li.row {
+	height:45px;
+	padding: 5px 0 5px 0;
+}
+#kunena ul#userlist_tbody li.row dt {
+	width:18%;
+	padding-left:5px;
+}
+#kunena ul#userlist_tbody li.row dt span.tk-rank {
+	vertical-align:middle;
+	float:right;
+	text-align:right;
+}
+#kunena ul#userlist_tbody li.row dt span.tk-rank img {
+	float:right;
+	margin-top:5px;
+}
+#kunena ul#userlist_tbody li.row dt span.tk-avatar {
+	float:left;
+}
+#kunena ul#userlist_tbody li.row dt span.tk-avatar img {
+	margin: 0;
+}
+#kunena ul#userlist_tbody li.tk-pagecount {
+	height:25px;
+}
+#kunena ul#userlist_tbody li.tk-pagecount div.tk-pagecount {
+	text-align:right;
+	padding:5px;
+}
+#kunena div.tk-userlist-top dt {
+	width:97%;
+}
+
+#kunena div.tk-userlist dt.uslavatar {
+	width:18%;
+	padding-left:5px;
+	padding-right:10px !important;
+}
+#kunena div.tk-userlist dt.uslavataruser {
+	width:18%;
+	padding-left:0px !important;
+	padding-right:10px !important;
+}
+#kunena div.tk-userlist dt.uslavataruser {
+	width:18%;
+	padding-left:5px;
+	padding-right:10px !important;
+}
+#kunena dt.uslavataruser span {
+	padding-right:2px;
+}
+
+#kunena dd.uslname,
+#kunena dd.uslusername,
+#kunena dd.uslposts,
+#kunena dd.uslhits,
+#kunena dd.uslkarma,
+#kunena dd.uslemail,
+#kunena dd.uslusertype,
+#kunena dd.usllastvisit,
+#kunena dd.usljoin {
+	white-space: nowrap;
+	line-height: 3.5em;
+	text-align: center;
+}
+
+#kunena dd.usljoin {
+	text-align: left;
+}
+
+#kunena dd.usllastvisit {
+	text-align: left;
+	padding: 0 0 0 5px;
+}
+
+#kunena dd.uslname {
+	white-space: nowrap;
+	min-width:13%;
+}
+
+#kunena dd.uslusername {
+	min-width:10%;
+}
+
+#kunena dd.uslposts {
+	min-width:5%;
+}
+
+#kunena dd.uslhits {
+	min-width:5%;
+}
+
+#kunena dd.uslkarma {
+	min-width:5%;
+}
+
+#kunena dd.uslemail {
+	min-width:6%;
+	overflow: hidden;
+	vertical-align: middle;
+	margin-bottom: -10px;
+}
+
+#kunena dd.uslemail input {
+	vertical-align: middle;
+}
+
+#kunena dd.uslusertype {
+	min-width:10%;
+}
+
+#kunena dd.usllastvisit {
+	min-width:10%;
+}
+
+#kunena dd.usljoin {
+	padding-left:5px;
+	min-width:12%;
+}
+
+#kunena dl.icon-search {
+	background-position: 10px 50%;
+	background-repeat: no-repeat;
+}
+
+#kunena dl.icon-search dt {
+	padding-left: 45px;
+	background-repeat: no-repeat;
+	background-position: 5px 95%;
+	width: 15% !important;
+	text-align: right;
+	padding:0 5px 5px 5px;
+}
+
+#kunena dl.icon-search dd {
+	padding: 0 5px 5px 5px;
+}
+*/
+/* STATISTICS 
+----------------------------------------------------------------------------------------------- */
+
+#kunena li.header dl.frontstats {
+	min-height: 20px;
+	background-position: 2px center;
+	background-repeat: no-repeat;
+}
+#kunena dd.tk-usersactivity-total,
+#kunena dd.tk-users-total,
+#kunena ul#frontstats-body dd.first,
+#kunena ul#morestats_tbody dd.first {
+	width: 33%;
+}
+#kunena ul#frontstats-body dd.first {
+	margin-left: 0 !important;
+}
+
+#kunena ul#frontstats-body dd.tk-users-total ul,
+#kunena div#morestats_tbody dd.tk-users-total ul {
+	text-align: left;
+}
+#kunena ul.tk-stats-body {
+	padding-left: 0px !important;
+}
+#kunena ul.tk-stats-body li.row {
+	height:20px;
+}
+#kunena ul.tk-stats-body li.row dt {
+	padding-left: 7px !important;
+	width:48%;
+	line-height:1.5em;
+}
+#kunena ul.tk-stats-body li.row dd.tk-stats-bar {
+	width:48%;
+	line-height:1.5em;
+	padding: 0 5px;
+}
+#kunena ul.tk-stats-body li.row dd.posts {
+	line-height:1.5em;
+	padding: 0 5px;
+	text-align:center;
+}
+/* POLL 
+----------------------------------------------------------------------------------------------- */
+#kunena ul.tk-poll-body li.row {
+	height:20px;
+	margin-right:5px;
+}
+#kunena ul.tk-poll-body li.row dd.tk-poll-bar {
+	width:30%;
+	line-height:1.5em;
+	padding: 0 5px;
+}
+#kunena ul.tk-poll-body li.row dt {
+	padding-left: 7px !important;
+	width:45%;
+	line-height:1.5em;
+}
+#kunena ul.tk-poll-body li.row dd.posts {
+	line-height:1.5em;
+	padding: 0 5px;
+	text-align:center;
+	width: 10%;
+}
+
+/* WHO'S ONLINE 
+----------------------------------------------------------------------------------------------- */
+
+#kunena div.who-hidenusers {
+	padding: 3px;
+	width: 98.5%;
+}
+
+#kunena li.header dl.whoisonline {
+	min-height: 20px;
+}
+
+#kunena .kgrouplist {
+	padding: 5px;
+}
+
+#kunena .wholegend {
+	width: 99%;
+	border-top-width: 1px;
+	border-top-style: dotted;
+	padding-top: 5px;
+}
+
+#kunena .whoonline {
+	width: 99%;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	padding-bottom: 5px;
+}
+
+#kunena img.usl_avatar {
+	margin: 4px 0;
+	padding:3px;
+	border-width: 1px;
+	border-style: solid;
+	max-width:40px;
+}
+#kunena .online_hor {
+	float:left;
+	margin:0 2px 2px 0;
+	overflow:hidden;
+	padding:2px;
+}
+#kunena .online_avatar  {
+	float:left;
+}
+#kunena img.klist-avatar {
+	padding: 1px;
+	margin: 0;
+}
+#kunena .online_username  {
+	text-align:center;
+	clear:left;
+}
+
+/*
+POLLS
+-------------------------------------------------------------------- */
+/*
+#kunena div#poll_text_help {
+	font-weight:bold;
+}
+#kunena div#kpoll_hide_not_allowed {
+	clear: left;
+}*/
+/* Top Profile Box
+----------------------------------------*/
+/*
+#kunena li.header dl.frontstats {
+	vertical-align: middle;
+	min-height: 16px;
+}
+
+
+#kunena #profilebox span.avatar img {
+	padding:3px;
+	margin:4px 0;
+	max-width: 60px;
+	border-width: 1px;
+	border-style: solid;
+}
+
+#kunena #profilebox dt {
+	width: 72px;
+}
+
+#kunena #profilebox dt span {
+	float: left;
+	padding:1px;
+}
+#kunena #profilebox dd.cnt {
+	padding: 0px 5px 0 5px;
+}
+#kunena #profilebox dd.rt {
+	width: 49%;
+	padding: 5px 5px 0 5px;
+}
+
+#kunena ul#profilebox ul {
+	padding-left: 0px;
+	padding-right:5px;
+	line-height: 1.5em;
+}
+
+#kunena dd.cnt ul {
+	padding-left: 0px;
+	padding-right:5px;
+	line-height: 1.5em;
+}
+#kunena div#profilebox {
+	min-height: 20px;
+	margin-top: -9px;
+}*/
+
+
+/*
+ANNOUNCMENT
+-------------------------------------------------------------------- */
+#kunena div#kannouncement textarea.ksmall {
+	width: 100%;
+	height: 200px;
+}
+#kunena div#kannouncement textarea.klarge {
+	width: 100%;
+	height: 400px;
+}
+#kunena div#kannouncement div.kanndesc,
+#kunena div#kannouncement div.kcontainer {
+	width: 95%;
+}
+#kunena div#kannouncement div.kheader {
+	padding: 3px 3px 0 10px;
+	margin: 10px 0 0 0;
+	width: 50%;
+}
+#kunena div#kannouncement div.koption,
+#kunena div#kannouncement div.kactions {
+	padding: 2px 8px;
+	margin: 0 0 5px 0;
+	/*width: 50%;*/
+}
+
+#kunena li.tk-ann-show-body {
+	line-height: 1.2em;
+	min-height: 20px;
+}
+#kunena li.tk-ann-show-header dt,
+#kunena li.tk-ann-show-body dt {
+	width:1% !important;
+	padding: 1px 5px;
+	text-align: center;
+}
+#kunena li.tk-ann-show-header dd.tk-ann-date,
+#kunena li.tk-ann-show-body dd.tk-ann-date {
+	width:10%;
+	padding: 1px 5px;
+}
+#kunena li.tk-ann-show-header dd.tk-ann-title,
+#kunena li.tk-ann-show-body dd.tk-ann-title {
+	width:50%;
+	padding: 1px 5px;
+	overflow: hidden;
+}
+#kunena li.tk-ann-show-header dd.tk-ann-publish,
+#kunena li.tk-ann-show-body dd.tk-ann-publish {
+	width:10%;
+	padding: 1px 5px;
+	text-align: center;
+}
+#kunena li.tk-ann-show-header dd.tk-ann-edit,
+#kunena li.tk-ann-show-body dd.tk-ann-edit {
+	width:10%;
+	padding: 1px 5px;
+	text-align: center;
+}
+#kunena li.tk-ann-show-header dd.tk-ann-delete,
+#kunena li.tk-ann-show-body dd.tk-ann-delete {
+	width:10%;
+	padding: 1px 5px;
+	text-align: center;
+}
+#kunena dd.tk-usersactivity-total,
+#kunena dd.tk-users-total {
+	background-position: 10px 5px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+#kunena .tk-widget-content {
+	font-size: 11px;
+    color: #222222;
+}
+.tk-progressbar {
+    min-width: 120px;
+    text-align: left;
+    font-weight: normal;
+    height: 16px;
+    line-height: 15px;
+    position: relative;
+    width: 100%;
+}
+.tk-progressbar span {
+    padding-left: 10px;
+}
+.tk-progressbar-value, .ui-progressbar-value  {
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+}
+.tk-progressbar .tk-progressbar-value {
+    height: 100%;
+    margin: 0px;
+}
+.tk-widget-header {
+    border: 0px;
+    color: #EEEEEE;
+    font-weight: normal;
+}

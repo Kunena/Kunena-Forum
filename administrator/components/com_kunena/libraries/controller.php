@@ -107,6 +107,15 @@ class KunenaController extends JController {
 				// FIXME:
 				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			}*/
+			// Joomla 1.6+ multi-language support
+			/* // FIXME:
+			if (isset($active->language) && $active->language != '*') {
+				$language = JFactory::getDocument()->getLanguage();
+				if (strtolower($active->language) != strtolower($language)) {
+					$this->redirect (KunenaRoute::_(null, false));
+				}
+			}
+			*/
 		}
 
 		// Get the document object.
@@ -124,9 +133,15 @@ class KunenaController extends JController {
 				$common = $this->getView ( 'common', $vFormat );
 				$common->setModel ( $this->getModel ( 'common' ), true );
 				$view->common = $common;
-				$templatepath = KPATH_SITE."/{$view->template->getPath()}/html/";
-				$view->addTemplatePath($templatepath.$vName);
-				$view->common->addTemplatePath($templatepath.'common');
+
+				$defaultpath = KPATH_SITE."/{$view->template->getPath(true)}/html";
+				$templatepath = KPATH_SITE."/{$view->template->getPath()}/html";
+				if ($templatepath != $defaultpath) {
+					$view->addTemplatePath("{$defaultpath}/{$vName}" );
+					$view->common->addTemplatePath("{$defaultpath}/common");
+				}
+				$view->addTemplatePath("{$templatepath}/{$vName}" );
+				$view->common->addTemplatePath("{$templatepath}/common");
 			}
 
 			// Do any specific processing for the view.

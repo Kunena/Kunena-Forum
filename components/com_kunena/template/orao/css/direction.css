@@ -1,0 +1,229 @@
+@charset "utf-8";
+
+/*  Kunena 2.0 StyleSheet
+    --------------------------------------------------------------------
+	 Style name:	Orao
+	 Copyright 2011 TemplateKunena.com ( http://www.templatekunena.com/ )
+    --------------------------------------------------------------------
+*/
+
+#kunena .fltlft {float:left;}
+#kunena .fltrt {float:right; }
+#kunena .right {text-align:right;}
+#kunena .left {text-align:left;}
+#kunena div#smilie {
+	clear: left;
+}
+
+#kunena span.kcategory-smicon a,
+#kunena span.kcategory-smicon-new a {
+	padding-left: 20px !important;
+}
+#kunena dl.caticon-stats ul {
+	padding-left: 50px;
+	padding-right:5px;
+}
+#kunena span.tkchild-name {
+	padding: 0px 5px 0px 0px;
+	float: left;
+}
+#kunena span.tkchild-name {
+	float: left;
+}
+#kunena span.tkchild-column-0 { float:left;}
+#kunena span.tkchild-column-1 { clear: left;}
+
+#kunena div.tk-cat-clear ul.topiclist dl.icon dd.markread {
+	padding-left:5px !important;
+	padding-top: 0px;
+}
+#kunena span.tkchild-count {
+	padding-left:2px;
+}
+#kunena span.tk-latestpost {
+	background-position: left center;
+	padding-left:16px;
+}
+#kunena .krss-icon {
+    float: right;
+    margin-right: 3px;
+}
+#kunena .kmarkread-icon {
+    float: right;
+    margin-right: 3px;
+}
+#kunena .ksubs-icon {
+    float: right;
+    margin-right: 3px;
+}
+#kunena span.tkchild-title {
+	padding:0 0 0 5px;
+}
+#kunena span.tkchild-name {
+	padding: 0px 5px 0px 0px;
+}
+#kunena div.forumlist li.tk-modbox {
+    text-align: right;
+}
+#kunena strong.pagination {
+	margin:0px 0 0 10px;
+	*margin: -18px -5px 0 0;
+	padding:1px 0 1px 15px;
+}
+#kunena strong.pagination li.page {
+	background-position:left top;
+}
+#kunena ul.kpagination { 
+	padding:0;
+	float: right;
+}
+#kunena .kpagination li {
+	margin-right:2px !important;
+	float:left;
+}
+#kunena .kpagination a {
+	margin-right:2px !important;
+}
+#kunena .kpagination li.page {
+	margin-right:2px !important;
+	padding:4px 4px 3px 0;
+}
+#kunena .kpagination a:link,
+#kunena .kpagination a:visited {
+	margin:0 0 1px;
+}
+#kunena table#kforumcredits {
+	background-position: left top;
+}
+#kunena .kcredits_more {
+	padding: 10px 0 10px 20px;
+}
+#kunena .kcredits {
+	text-align: center;
+	padding: 0 100px 2px;
+}
+
+#kunena .kfooter {
+	padding: 0 100px 2px;
+}
+
+#kunena img.rsslink {
+	float:right;
+	margin-right: 3px;
+}
+ul.autocompleter-choices {
+	text-align:left;
+}
+ul.autocompleter-choices li {
+	padding:0.2em 1.5em 0.2em 1em;
+}
+.kcaptcha {
+	text-align: left;
+}
+#kunena #kprofilebox_toggle {
+	margin-right: 1px;
+}
+#kunena dd.tk-toggler {
+	float: right !important;
+	right: -5px;
+}
+#kunena span.krss {
+	background-position:left center;
+}
+#kunena span.kicon {
+	float: right;
+	clear: right;
+}
+#kunena li.rowfull dd.first {
+	margin-left:45px;
+	border-left:none;
+}
+#kunena li.rowfull:hover dd.first {
+	margin-left:45px;
+	border-left:none;
+}
+#kunena div.khide {
+	padding: 10px 10px 10px 25px;
+}
+
+#kunena dd.tk-banner {
+	text-align: center;
+}
+
+div#mbCenter a.tk-mb-inboxlink {
+	padding-left:25px !important;
+}
+#kunena span.tk-register-agree a {
+	float:left;
+}
+#kunena span.tk-register-cancel a {
+	float:left;
+}
+#kunena .kpost-buttons .kbutton {
+    padding: 2px 5px 2px 20px;
+}
+#kunena a.grid_true,
+#kunena a.grid_unpublish {
+	background-position: left center;
+}
+#kunena a.grid_false,
+#kunena a.grid_publish {
+	background-position: left center;
+}
+#kunena a.move_up {
+	background-position: left center;
+}
+#kunena a.move_down {
+	background-position: left center;
+}
+#kunena .kgrid-lock a.grid_true {
+	background-position: left center;
+}
+#kunena span.kforumbottom {
+	margin-right: 0 !important;
+}
+#kunena span.kforumtop {
+	margin-right: 0 !important;
+}
+#kunena li.rowfull dd.pollfirst,
+#kunena li.rowfull dd.annfirst {
+	border-left:none;
+}
+#kunena td.kcategory-icon {
+	border-right: 1px solid #ccc;
+}
+#kunena .ktopic-actions {
+	float:left;
+}
+ul.autocompleter-choices {
+	border-left-color: #c3c3c3;
+	border-right-color: #c3c3c3;
+}
+#kprofile-tabs dl.tabs dt {
+	border-left-color: #BFC3C6;
+	border-right-color: #BFC3C6;
+}
+#kunena dl.tabs dt {
+	border-left-color: #BFC3C6;
+	border-right-color: #BFC3C6;
+}
+#kunena div.msgcontent div.highlight pre.php {
+	border-left-color: #CCCCCC;
+}
+#kunena div.msgcontent div.highlight pre.css {
+	border-left-color: #6495ED;
+}
+#kunena div.postbody div.highlight pre.ini {
+	border-left-color: #FFB295;
+}
+#kunena div.postbody div.highlight pre.html4strict {
+	border-left-color: #CE9CE7;
+}
+#kunena div.postbody div.highlight pre.xml {
+	border-left-color: #8FBC8F;
+}
+
+
+
+
+

@@ -622,6 +622,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 
 		$bbcode->autolink_disable = 0;
 		$url = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode ( strip_tags ( $content ) );
+		// FIXME: add support for local (relative) URIs
 		if ($bbcode->IsValidURL ( $url )) {
 			if ($bbcode->debug)
 				echo "ISVALIDURL<br />";
@@ -750,7 +751,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		}
 		$spoilerid ++;
 		$randomid = 'spoiler_' . rand ();
-		return '<div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" class = "kspoiler" ><img id="' . $randomid . '_img"' . ' src="' . JURI::root(true) . '/components/com_kunena/template/default/images/emoticons/pinch.png" border="0" alt=":pinch:" /> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $content . '</span></div>';
+		return '<div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" class = "kspoiler" ><img id="' . $randomid . '_img"' . ' src="'.$spoiler_image2.'" border="0" alt=":pinch:" /> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $content . '</span></div>';
 	}
 
 	function DoHide($bbcode, $action, $name, $default, $params, $content) {
@@ -926,7 +927,9 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
 			if (version_compare(JVERSION, '1.6','>')) {
 				// Joomla 1.6+
-				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid));
+				$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
+				$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
+				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
 			} else {
 				// Joomla 1.5
 				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
@@ -1424,7 +1427,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				// If the image has not legal extension, return it as link or text
 				$fileurl = $bbcode->HTMLEncode ( $fileurl );
 				if ($config->bbcode_img_secure == 'link') {
-					if (! preg_match ( "`^(https?://)`", $fileurl )) {
+					if (! preg_match ( '`^(/|https?://)`', $fileurl )) {
 						$fileurl = 'http://' . $fileurl;
 					}
 					return "<a href=\"" . $fileurl . "\" rel=\"nofollow\" target=\"_blank\">" . $fileurl . '</a>';
@@ -1459,7 +1462,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 
 		// Need to check if we are nested inside a URL code
 		if ($bbcode->autolink_disable == 0 && $config->lightbox) {
-			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.($width ? ' width="'.$width.'"' : '').'" style="max-height:'.$config->imageheight.'px; " alt="" /></a></div>';
+			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.($width ? ' width="'.$width.'"' : '').' style="max-height:'.$config->imageheight.'px; " alt="" /></a></div>';
 		}
 		return '<div class="kmsgimage"><img src="' . $fileurl . ($width ? '" width="' . $width : '') .'" style="max-height:'.$config->imageheight.'px; " alt="" /></div>';
 	}

@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 jimport('joomla.html.parameter');
 jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
+jimport('joomla.filesystem.path');
 
 class KunenaParameter extends JParameter {
 	public function getXml() {
@@ -39,6 +40,16 @@ class KunenaTemplate extends JObject
 	protected $css_compile = true;
 	protected $smileyPath = array();
 	protected $rankPath = array();
+	protected $userClasses = array(
+		'kuser-',
+		'admin'=>'kuser-admin',
+		'globalmod'=>'kuser-globalmod',
+		'moderator'=>'kuser-moderator',
+		'user'=>'kuser-user',
+		'guest'=>'kuser-guest',
+		'banned'=>'kuser-banned',
+		'blocked'=>'kuser-blocked'
+	);
 	public $topicIcons = array();
 
 	protected $stylesheets = array();
@@ -53,9 +64,9 @@ class KunenaTemplate extends JObject
 	*/
 	public function __construct($name=null) {
 		if (!$name) {
-			$config = KunenaFactory::getConfig();
-			$name = $config->template;
+			$name = KunenaFactory::getConfig()->template;
 		}
+		$name = JPath::clean($name);
 		$xml = KPATH_SITE . "/template/{$name}/template.xml";
 		if (!is_readable ( $xml )) {
 			$name = 'blue_eagle';
@@ -84,6 +95,10 @@ class KunenaTemplate extends JObject
 
 	public function initialize() {}
 
+	public function getUserClasses() {
+		return $this->userClasses;
+	}
+
 	public function getButton($name, $text) {
 		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
 	}
@@ -94,10 +109,6 @@ class KunenaTemplate extends JObject
 
 	public function getImage($image, $alt='') {
 		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
-	}
-
-	public function getImageURL($image) {
-		return JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE.'/'.$this->getPath().'/images/'.$image;
 	}
 
 	public function getPaginationListFooter($list) {
@@ -169,7 +180,6 @@ class KunenaTemplate extends JObject
 
 	public function getStyleVariables() {
 		if ($this->compiled_style_variables === null) {
-			// FIXME: add Joomla 1.6 support
 			$xml = $this->params->getXml();
 			$variables = array();
 			foreach ($this->style_variables as $name=>$value)  {
@@ -352,7 +362,7 @@ class KunenaTemplate extends JObject
 		return "{$base}{$path}/images/{$image}";
 	}
 
-	public function getTopicIcons($all = false) {
+	public function getTopicIcons($all = false, $checked = 0) {
 		if (empty($this->topicIcons)) {
 			$xmlfile = JPATH_ROOT.'/media/kunena/topicicons/default/topicicons.xml';
 			if (file_exists($xmlfile)) {
@@ -403,7 +413,8 @@ class KunenaTemplate extends JObject
 			$icons = array();
 			foreach ($this->topicIcons as $icon) {
 				if ($icon->published && is_numeric($icon->id)) {
-					$icons[$icon->id] = $icon;
+					$icons[$icon->id] = clone $icon;
+					$icons[$icon->id]->checked = ($checked == $icon->id);
 				}
 			}
 		}
@@ -506,8 +517,7 @@ class KunenaTemplate extends JObject
 	 */
 	static public function getInstance($name=null) {
 		if (!$name) {
-			$config = KunenaFactory::getConfig();
-			$name = $config->template;
+			$name = JRequest::getString ( 'kunena_template', KunenaFactory::getConfig()->template, 'COOKIE' );
 		}
 		if (empty(self::$_instances[$name])) {
 			// Find overridden template class

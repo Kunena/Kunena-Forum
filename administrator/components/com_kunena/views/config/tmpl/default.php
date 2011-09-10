@@ -401,6 +401,16 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo $this->lists ['topic_layout']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_TOPIC_LAYOUT_DESC') ?></td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" width="25%" valign="top"><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT') ?>
+						</td>
+								<td align="left" width="25%" valign="top"><input type="text"
+							name="cfg_attachment_limit"
+							value="<?php echo $this->escape($this->config->attachment_limit);
+						?>" /></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>
@@ -488,6 +498,11 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_THANKYOU_DESC') ?></td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
+						<td align="left" valign="top"><input type="text" name="cfg_thankyou_max" class="ksm-field" value="<?php echo $this->escape($this->config->thankyou_max); ?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
+					</tr>
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_USER_EDIT') ?></td>
 								<td align="left" valign="top"><?php echo $this->lists ['useredit'];
@@ -523,40 +538,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_USER_MARKUP_DESC') ?>
 						</td>
 					</tr>
-							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $this->lists ['allowsubscriptions'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS') ?>
-						</td>
-							<td align="left" valign="top"><?php echo $this->lists ['category_subscriptions']; ?>
-						</td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TOPIC_SUBSCRIPTIONS') ?>
-						</td>
-							<td align="left" valign="top"><?php echo $this->lists ['topic_subscriptions']; ?>
-						</td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TOPIC_SUBSCRIPTIONS_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONSCHECKED') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $this->lists ['subscriptionschecked'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONSCHECKED_DESC') ?>
-						</td>
-					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FAVORITES') ?></td>
 								<td align="left" valign="top"><?php echo $this->lists ['allowfavorites'];
@@ -582,21 +563,54 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?></td>
-						<td align="left" valign="top">
-							<input type="text" name="cfg_thankyou_max" class="ksm-field" value="<?php echo $this->escape($this->config->thankyou_max) ?>" />
-						</td>
-						<td align="left" valign="top">
-							<?php echo JText::_('COM_KUNENA_A_DISPLAY_THANKYOU_NUMBERS') ?>
-						</td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['show_imgfiles_manage_profile'] ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE_DESC') ?></td>
+					</tr>
+				</table>
+			</fieldset>
+			<fieldset>
+				<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['allowsubscriptions']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE') ?></td>
-							<td align="left" valign="top"><?php echo $this->lists ['show_imgfiles_manage_profile'] ?>
-							</td>
-						<td>
-							<?php echo JText::_('COM_KUNENA_A_DISPLAY_IMGFILES_TAB_MANAGEMENT_PROFILE_DESC') ?>
-						</td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL'); ?></td>
+						<td align="left" valign="top"><?php echo $this->list ['mailfull']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL_DESC'); ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['category_subscriptions']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_SUBSCRIPTIONS_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TOPIC_SUBSCRIPTIONS') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['topic_subscriptions']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TOPIC_SUBSCRIPTIONS_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONSCHECKED') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['subscriptionschecked']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONSCHECKED_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT') ?></td>
+						<td align="left" valign="top"><?php echo JHTML::_('select.integerlist',0, 100, 5, 'cfg_email_recipient_count', null, $this->escape($this->config->email_recipient_count)); ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['email_recipient_privacy']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_PRIVACY_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS') ?></td>
+						<td align="left" valign="top"><input type="text" name="cfg_email_visible_address" value="<?php echo $this->escape($this->config->email_visible_address); ?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_VISIBLE_ADDRESS_DESC') ?></td>
 					</tr>
 				</table>
 			</fieldset>
@@ -609,10 +623,13 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE') ?></td>
-								<td align="left" valign="top"><?php echo $this->lists ['pubwrite'];
-						?></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE_DESC') ?>
-						</td>
+						<td align="left" valign="top"><?php echo $this->lists ['pubwrite'];?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_GUEST_POSTS') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['hold_guest_posts'] ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_GUEST_POSTS_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED') ?></td>
@@ -625,21 +642,19 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PUBPROFILE_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_REGISTERED_ONLY') ?>
-						</td>
-								<td align="left" valign="top" width="25%"><?php echo $this->lists ['regonly'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_REG_ONLY_DESC') ?>
-						</td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_REGISTERED_ONLY') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['regonly']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_REG_ONLY_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POSTS') ?></td>
+						<td align="left" valign="top"><input type="text" name="cfg_hold_newusers_posts" class="ksm-field" value="<?php echo $this->escape($this->config->hold_newusers_posts) ?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HOLD_NEWUSERS_POSTS_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DELETEMESSAGE') ?></td>
-								<td align="left" valign="top"><?php echo $this->lists ['userdeletetmessage'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DELETEMESSAGE_DESC') ?>
-						</td>
+						<td align="left" valign="top"><?php echo $this->lists ['userdeletetmessage']; ?> </td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DELETEMESSAGE_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_MOD_SEE_DELETED') ?>
@@ -687,21 +702,36 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MAIL_ADMIN_DESC') ?>
 						</td>
 					</tr>
+				</table>
+			</fieldset>
+			<fieldset>
+					<legend><?php echo JText::_('COM_KUNENA_A_CAPTCHA_CONFIGURATION'); ?></legend>
+					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CAPTCHA_ON') ?></td>
-								<td align="left" valign="top"><?php echo $this->lists ['captcha'];
-						?></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CAPTCHA_DESC') ?>
+						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_CAPTCHA_GUESTS') ?></td>
+						<td align="left" valign="top" width="25%"><?php echo $this->lists ['captcha']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CAPTCHA_GUESTS_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT') ?></td>
+						<td align="left" valign="top"><input type="text" name="cfg_captcha_post_limit" class="ksm-field" value="<?php echo $this->escape($this->config->captcha_post_limit);?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CAPTCHA_POST_LIMIT_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PUBLICKEY') ?></td>
+						<td align="left" valign="top"><input type="text" name="cfg_recaptcha_publickey" class="ksm-field-large" value="<?php echo $this->escape($this->config->recaptcha_publickey);?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PUBLICKEY_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL');
-						?></td>
-						<td align="left" valign="top"><?php echo $this->lists ['mailfull'];
-						?></td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL_DESC');
-						?>
-						</td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PRIVATEKEY') ?></td>
+						<td align="left" valign="top"><input type="text" name="cfg_recaptcha_privatekey" class="ksm-field-large" value="<?php echo $this->escape($this->config->recaptcha_privatekey); ?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_PRIVATEKEY_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_THEME') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['recaptcha_theme'];?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RECAPTCHA_THEME_DESC') ?></td>
 					</tr>
 				</table>
 			</fieldset>

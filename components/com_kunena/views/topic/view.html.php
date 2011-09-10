@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 kimport ( 'kunena.view' );
 kimport ( 'kunena.forum.message.attachment.helper' );
 kimport ( 'kunena.forum.topic.poll.helper' );
-kimport ( 'kunena.captcha' );
+kimport ( 'kunena.spam.recaptcha' );
 kimport ( 'kunena.html.parser' );
 kimport ( 'kunena.html.pagination' );
 
@@ -101,6 +101,10 @@ class KunenaViewTopic extends KunenaView {
 
 		$this->buttons();
 
+		// Get captcha & quick reply
+		$this->captcha = KunenaSpamRecaptcha::getInstance();
+		$this->quickreply = ($this->topic->authorise('reply',null, false) && $this->me->exists() && !$this->captcha->enabled());
+
 		//meta description and keywords
 		// TODO: use real keywords, too
 		$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . JFactory::getapplication()->getCfg ( 'sitename' ) );
@@ -149,13 +153,25 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	protected function DisplayCreate($tpl = null) {
+		$captcha = KunenaSpamRecaptcha::getInstance();
+		if ($captcha->enabled()) {
+			$this->captchaHtml = $captcha->getHtml();
+			if ( !$this->captchaHtml ) {
+				$app = JFactory::getApplication();
+				$app->enqueueMessage ( $captcha->getError(), 'error' );
+				$this->redirectBack ();
+			}
+		}
+
+		$saved = $this->app->getUserState('com_kunena.postfields');
+
 		$this->setLayout('edit');
 		$this->catid = $this->state->get('item.catid');
 		$this->my = JFactory::getUser();
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
 		if ($this->config->topicicons) {
-			$this->topicIcons = $this->template->getTopicIcons();
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 
 		$categories = KunenaForumCategoryHelper::getCategories();
@@ -183,7 +199,7 @@ class KunenaViewTopic extends KunenaView {
 		$cat_params['action'] = 'topic.create';
 
 		$this->category = KunenaForumCategoryHelper::get($this->catid);
-		list ($this->topic, $this->message) = $this->category->newTopic();
+		list ($this->topic, $this->message) = $this->category->newTopic($saved);
 
 		if (!$this->topic->category_id) {
 			$msg = JText::sprintf ( 'COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->topic->getError());
@@ -192,7 +208,7 @@ class KunenaViewTopic extends KunenaView {
 			return false;
 		}
 
-		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', $this->catid, null, $cat_params, 'class="inputbox"', 'value', 'text', $this->topic->category_id, 'postcatid');
+		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', $this->catid, null, $cat_params, 'class="inputbox"', 'value', 'text', $saved ? $saved['catid'] : $this->topic->category_id, 'postcatid');
 
 		$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
 		$this->action = 'post';
@@ -201,10 +217,26 @@ class KunenaViewTopic extends KunenaView {
 
 		if ($arraypollcatid) $this->poll = $this->topic->getPoll();
 
+		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
+		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$this->app->setUserState('com_kunena.postfields', null);
+
 		$this->display($tpl);
 	}
 
 	protected function DisplayReply($tpl = null) {
+		$captcha = KunenaSpamRecaptcha::getInstance();
+		if ($captcha->enabled()) {
+			$this->captchaHtml = $captcha->getHtml();
+			if ( !$this->captchaHtml ) {
+				$app = JFactory::getApplication();
+				$app->enqueueMessage ( $captcha->getError(), 'error' );
+				$this->redirectBack ();
+			}
+		}
+
+		$saved = $this->app->getUserState('com_kunena.postfields');
+
 		$this->setLayout('edit');
 		$this->catid = $this->state->get('item.catid');
 		$this->my = JFactory::getUser();
@@ -227,13 +259,17 @@ class KunenaViewTopic extends KunenaView {
 		$quote = JRequest::getBool ( 'quote', false );
 		$this->category = $this->topic->getCategory();
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
-			$this->topicIcons = $this->template->getTopicIcons();
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
-		list ($this->topic, $this->message) = $parent->newReply($quote);
+		list ($this->topic, $this->message) = $parent->newReply($quote, $saved);
 		$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->topic->subject;
 		$this->action = 'post';
 
 		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+
+		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
+		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->display($tpl);
 	}
@@ -246,6 +282,8 @@ class KunenaViewTopic extends KunenaView {
 		$mesid = $this->state->get('item.mesid');
 		$document = JFactory::getDocument();
 
+		$saved = $this->app->getUserState('com_kunena.postfields');
+
 		$this->message = KunenaForumMessageHelper::get($mesid);
 		if (!$this->message->authorise('edit')) {
 			$app = JFactory::getApplication();
@@ -255,12 +293,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->topic = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
-			$this->topicIcons = $this->template->getTopicIcons();
-			if (isset($this->topicIcons[$this->topic->icon_id])) {
-				$this->topicIcons[$this->topic->icon_id]->checked = 1;
-			} else {
-				$this->topicIcons[0]->checked = 1;
-			}
+			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 		$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->topic->subject;
 		$this->action = 'edit';
@@ -274,6 +307,15 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		$this->allowedExtensions = KunenaForumMessageAttachmentHelper::getExtensions($this->category);
+
+		if ($saved) {
+			// Update message contents
+			$this->message->edit ( $saved );
+		}
+		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
+		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$this->modified_reason = $saved ? $saved['modified_reason'] : '';
+		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->display($tpl);
 	}
@@ -452,11 +494,8 @@ class KunenaViewTopic extends KunenaView {
 		$this->usersvoted = $this->get('PollUsers');
 		$this->voted = $this->get('MyVotes');
 
-		$this->users_voted_list = '';
+		$this->users_voted_list = array();
 		if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
-			$users_voted_list = array();
-			$users_voted_morelist = array();
-
 			$i = 0;
 			foreach($this->usersvoted as $userid=>$vote) {
 				if ( $i <= '4' ) $this->users_voted_list[] = CKunenaLink::GetProfileLink($userid);
@@ -624,7 +663,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->message_quickreply = $this->message_reply = $this->message_quote = '';
 		if ($this->topic->authorise('reply')) {
 			//user is allowed to reply/quote
-			if ($me->userid) {
+			if ($this->quickreply) {
 				$this->message_quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->message->id, $this->getButton ( 'reply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY') ), 'nofollow', 'kicon-button kbuttoncomm btn-left kqreply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY_LONG'), ' id="kreply'.$this->message->id.'"' );
 			}
 			$this->message_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->message->id, $this->getButton ( 'reply', JText::_('COM_KUNENA_BUTTON_REPLY') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_REPLY_LONG') );
@@ -782,14 +821,6 @@ class KunenaViewTopic extends KunenaView {
 		KunenaUserHelper::loadUsers($userlist);
 
 		echo $this->loadTemplate ( 'history' );
-	}
-
-	public function hasCaptcha() {
-		return KunenaCaptcha::enabled();
-	}
-
-	public function displayCaptcha() {
-		return KunenaCaptcha::display();
 	}
 
 	function redirectBack() {

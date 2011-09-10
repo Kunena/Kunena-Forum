@@ -62,8 +62,8 @@ class plgSystemKunena extends JPlugin {
 		if ($isnew) {
 			$subscribedCategories = '1,2,3,4,5,6,7,8,9,10';
 			$db = Jfactory::getDBO();
-			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id)
-				SELECT {$user->userid} AS user_id, c.id as category_id
+			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)
+				SELECT {$user->userid} AS user_id, c.id as category_id, 1
 				FROM #__kunena_categories AS c
 				LEFT JOIN #__kunena_user_categories AS s ON c.id=s.category_id AND s.user_id={$user->userid}
 				WHERE c.parent>0 AND c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
@@ -72,8 +72,8 @@ class plgSystemKunena extends JPlugin {
 			KunenaError::checkDatabaseError();
 
 			// Here's also query to subscribe all users (including blocked) to all existing cats:
-			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id)
-				SELECT u.id AS user_id, c.id AS category_id
+			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)
+				SELECT u.id AS user_id, c.id AS category_id, 1
 				FROM #__users AS u
 				JOIN #__kunena_categories AS c ON c.parent>0
 				LEFT JOIN #__kunena_user_categories AS s ON u.id=s.user_id

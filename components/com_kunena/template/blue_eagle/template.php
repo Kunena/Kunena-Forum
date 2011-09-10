@@ -12,6 +12,16 @@ defined( '_JEXEC' ) or die();
 class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 	protected $default = 'blue_eagle';
 	protected $css_compile = false;
+	protected $userClasses = array(
+		'kwho-',
+		'admin'=>'kwho-admin',
+		'globalmod'=>'kwho-globalmoderator',
+		'moderator'=>'kwho-moderator',
+		'user'=>'kwho-user',
+		'guest'=>'kwho-guest',
+		'banned'=>'kwho-banned',
+		'blocked'=>'kwho-blocked'
+	);
 	public $categoryIcons = array('kreadforum', 'kunreadforum');
 
 	public function initialize() {

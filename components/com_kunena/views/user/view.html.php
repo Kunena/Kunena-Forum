@@ -353,7 +353,7 @@ class KunenaViewUser extends KunenaView {
 				$str .=  " selected=\"selected\"";
 			}
 
-			$str .=  ">{$this->escape(JString::ucwords(JString::str_ireplace('/', ' / ', $val)))}</option>\n";
+			$str .=  ">{$this->escape(JString::ucwords(str_replace('/', ' / ', $val)))}</option>\n";
 		}
 
 		$str .=  "</select>\n";
@@ -495,29 +495,33 @@ class KunenaViewUser extends KunenaView {
 		kimport('kunena.forum.message.attachment.helper');
 		$this->me = KunenaFactory::getUser ();
 		$this->config = KunenaFactory::getConfig();
-
 		if ( $this->config->show_imgfiles_manage_profile ) {
-			$filetype = 'none';
-			if ( $this->config->image_upload=='all' && $this->config->file_upload==''  ) $filetype = 'images';
-			elseif ( $this->config->image_upload=='' && $this->config->file_upload=='all' ) $filetype = 'files';
-			elseif ( $this->config->image_upload=='' && $this->config->file_upload=='' ) $filetype = 'none';
-			else $filetype = 'none';
+			$file = null;
+			$image = null;
+
+			if ( $this->config->image_upload=='all' && empty($this->config->file_upload)  ) $image = 1;
+			elseif (  $this->config->file_upload=='all' && empty($this->config->image_upload) ) $file = 1;
+			elseif ( $this->config->image_upload=='all' && $this->config->file_upload=='all' ) { $file = 1; $image = 1; }
+
+			if ( $this->me->userid != 0 ) {
+				if ( $this->config->image_upload=='user' && empty($this->config->file_upload)  ) $image = 1;
+				elseif (  $this->config->file_upload=='user' && empty($this->config->image_upload) ) $file = 1;
+				elseif ( $this->config->image_upload=='user' && $this->config->file_upload=='user' ) { $file = 1; $image = 1; }
+			}
 
 			if ( $this->me->isModerator() && ($this->config->image_upload=='moderator' || $this->config->file_upload=='moderator')  ) {
-				if (  $this->config->image_upload=='moderator' && $this->config->file_upload==''  ) $filetype = 'images';
-				elseif ( $this->config->image_upload=='' && $this->config->file_upload=='moderator' ) $filetype = 'files';
-				elseif ( $this->config->image_upload=='' && $this->config->file_upload=='' ) $filetype = 'none';
-				else $filetype = 'none';
+				if (  $this->config->image_upload=='moderator' && empty($this->config->file_upload)  ) $filetype = 'images';
+				elseif ( empty($this->config->image_upload) && $this->config->file_upload=='moderator' ) $filetype = 'files';
+				elseif ( $this->config->image_upload=='moderator' && $this->config->file_upload=='moderator' ) { $file = 1; $image = 1; }
 			}
 
 			if ( $this->me->isAdmin() &&  ($this->config->image_upload=='admin' || $this->config->file_upload=='admin') ) {
-				if ( $this->config->image_upload=='admin' && $this->config->file_upload==''  ) $filetype = 'images';
-				elseif ( $this->config->image_upload=='' && $this->config->file_upload=='admin' ) $filetype = 'files';
-				elseif ( $this->config->image_upload=='' && $this->config->file_upload=='' ) $filetype = 'none';
-					else $filetype = 'none';
+				if ( $this->config->image_upload=='admin' && empty($this->config->file_upload)  ) $filetype = 'images';
+				elseif ( empty($this->config->image_upload) && $this->config->file_upload=='admin' ) $filetype = 'files';
+				elseif ( $this->config->image_upload=='admin' && $this->config->file_upload=='admin' ) { $file = 1; $image = 1; }
 			}
 
-			$params = array('filetype' => $filetype, 'orderby' => 'ASC', 'limit' => '6');
+			$params = array('file' => $file, 'image' => $image, 'orderby' => 'ASC', 'limit' => '6');
 			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->me, $params);
 
 			if ($this->userattachs) {

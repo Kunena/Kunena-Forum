@@ -14,7 +14,7 @@
 
 	<files>
 		<filename>id-ID.com_kunena.ini</filename>
-		<filename>id-ID.com_kunena.tpl_default.ini</filename>
-		<filename>id-ID.com_kunena.tpl_example.ini</filename>
+		<filename>id-ID.com_kunena.tpl_blue_eagle.ini</filename>
+		<!-- <filename>id-ID.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

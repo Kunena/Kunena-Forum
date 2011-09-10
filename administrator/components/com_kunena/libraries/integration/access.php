@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 require_once KPATH_ADMIN . '/libraries/integration/integration.php';
 kimport ( 'kunena.error' );
 kimport ( 'kunena.forum.category.helper' );
+kimport ( 'kunena.forum.category.user.helper' );
 kimport ( 'kunena.forum.topic.helper' );
 kimport ( 'kunena.databasequery' );
 
@@ -76,9 +77,37 @@ abstract class KunenaAccess {
 	}
 
 	public function getAccessLevelsList($category) {
-		if ($category->accesstype == 'joomla')
+		if ($category->accesstype == 'none' || $category->accesstype == 'joomla.level')
 			return JHTML::_('list.accesslevel', $category);
 		return $category->access;
+	}
+
+	public function getAccessTypesList($category) {
+		static $enabled = false;
+		if ($category->accesstype == 'none' || $category->accesstype == 'joomla.level') {
+			if (!$enabled) {
+				$enabled = true;
+				JFactory::getDocument()->addScriptDeclaration("function kShowAccessType(htmlclass, el) {
+	var selected = el.getChildren().filter(function(option){ return option.selected; });
+	var name = selected[0].value;
+	name = name.replace(/[^\\w\\d]+/, '-');
+	$$('.'+htmlclass).each(function(e){
+		e.setStyle('display', 'none');
+	});
+	$$('.'+htmlclass+'-'+name).each(function(e){
+		e.setStyle('display', '');
+	});
+}
+window.addEvent('domready', function(){
+	kShowAccessType('kaccess', $('accesstype'));
+});");
+			}
+			$accesstypes = array ();
+			$accesstypes [] = JHTML::_ ( 'select.option', 'joomla.level', JText::_('COM_KUNENA_INTEGRATION_JOOMLA_LEVEL') );
+			$accesstypes [] = JHTML::_ ( 'select.option', 'none', JText::_('COM_KUNENA_INTEGRATION_JOOMLA_GROUP') );
+			return JHTML::_ ( 'select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="2" onchange="javascript:kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype );
+		}
+		return JText::_('COM_KUNENA_INTEGRATION_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype)));
 	}
 
 	public function getAdmins($catid = 0) {
@@ -87,6 +116,16 @@ abstract class KunenaAccess {
 
 	public function getModerators($catid = 0) {
 		return !empty(self::$moderatorsByCatid[$catid]) ? self::$moderatorsByCatid[$catid] : array();
+	}
+
+	public function getAdminStatus($user = null) {
+		$user = KunenaFactory::getUser($user);
+		return !empty(self::$adminsByUserid[$user->userid]) ? self::$adminsByUserid[$user->userid] : array();
+	}
+
+	public function getModeratorStatus($user = null) {
+		$user = KunenaFactory::getUser($user);
+		return !empty(self::$moderatorsByUserid[$user->userid]) ? self::$moderatorsByUserid[$user->userid] : array();
 	}
 
 	public function isAdmin($user = null, $catid = 0) {
@@ -130,6 +169,41 @@ abstract class KunenaAccess {
 			if (!empty(self::$moderatorsByUserid[$user->userid][$catid])) return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Assign user as moderator or resign him
+	 *
+	 * @example if ($category->authorise('admin')) $category->setModerator($user, true);
+	 **/
+	public function setModerator($category, $user = null, $status = true) {
+		// Check if category exists
+		if ($category && !$category->exists()) return false;
+		$category_id = $category ? $category->id : 0;
+		$status = intval($status);
+
+		// Check if user exists
+		$user = KunenaUserHelper::get($user);
+		if (!$user->exists()) {
+			return false;
+		}
+
+		$success = true;
+		$usercategory = KunenaForumCategoryUserHelper::get($category_id, $user->userid);
+		if (($usercategory->role == 0 && $status != 0) || ($usercategory->role == 1 && $status != 1)) {
+			$usercategory->role = $status;
+			$success = $usercategory->save();
+		}
+		// Clear moderator cache
+		$this->clearCache();
+
+		// Change user moderator status
+		if ($success && $user->moderator != $this->isModerator($user, 0)) {
+			$user->moderator = $this->isModerator($user, 0);
+			$success = $user->save();
+		}
+
+		return $success;
 	}
 
 	public function getAllowedCategories($user = null, $rule = 'read') {
@@ -271,6 +345,8 @@ abstract class KunenaAccess {
 
 	public function storeAdmins($list = array()) {
 		// TODO: add caching
+		$this->adminsByUserid = array();
+		$this->adminsByCatid = array();
 		foreach ( $list as $item ) {
 			$userid = intval ( $item->userid );
 			if (!$userid) continue;
@@ -283,6 +359,8 @@ abstract class KunenaAccess {
 
 	public function storeModerators($list = array()) {
 		// TODO: add caching
+		$this->moderatorsByUserid = array();
+		$this->moderatorsByCatid = array();
 		foreach ( $list as $item ) {
 			$userid = intval ( $item->userid );
 			if (!$userid) continue;
@@ -320,7 +398,7 @@ abstract class KunenaAccess {
 		return $userids;
 	}
 
-	abstract public function getGroupName($id);
+	abstract public function getGroupName($accesstype, $id);
 
 	abstract public function checkSubscribers($topic, &$userids);
 

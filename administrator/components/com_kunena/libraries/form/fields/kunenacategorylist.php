@@ -39,6 +39,6 @@ class JFormFieldKunenaCategoryList extends JFormField {
 			$attribs .= ' multiple="multiple"';
 		}
 
-		return JHTML::_('kunenaforum.categorylist', $this->name, 0, (array) $this->element, $this->element, $attribs, 'value', 'text', $this->value);
+		return JHTML::_('kunenaforum.categorylist', $this->name, 0, '', $this->element, $attribs, 'value', 'text', $this->value);
 	}
 }

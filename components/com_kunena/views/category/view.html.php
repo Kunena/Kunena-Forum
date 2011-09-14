@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.view' );
-kimport ( 'kunena.html.parser' );
-kimport ( 'kunena.html.pagination' );
-
 /**
  * Category View
  */

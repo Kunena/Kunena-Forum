@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.model' );
-kimport ( 'kunena.html.pagination' );
-
 /**
  * User Model for Kunena
  *

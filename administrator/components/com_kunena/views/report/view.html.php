@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.view' );
-
 /**
  * Kunena report view for Kunena backend
  */

@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.forum.topic.helper' );
-
 /**
  * Kunena Topics Controller
  *
@@ -186,8 +182,6 @@ class KunenaControllerTopics extends KunenaController {
 	}
 
 	public function approve_posts() {
-		kimport('kunena.forum.message.helper');
-
 		$app = JFactory::getApplication ();
 		if (!JRequest::checkToken()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -213,8 +207,6 @@ class KunenaControllerTopics extends KunenaController {
 	}
 
 	public function delete_posts() {
-		kimport('kunena.forum.message.helper');
-
 		$app = JFactory::getApplication ();
 		if (!JRequest::checkToken()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -239,8 +231,6 @@ class KunenaControllerTopics extends KunenaController {
 	}
 
 	function restore_posts() {
-		kimport('kunena.forum.message.helper');
-
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -265,8 +255,6 @@ class KunenaControllerTopics extends KunenaController {
 	}
 
 	function permdel_posts() {
-		kimport('kunena.forum.message.helper');
-
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );

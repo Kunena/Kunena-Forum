@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.forum.message.attachment.helper' );
-
 /**
  * Kunena Prune Controller
  *

@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.error' );
-kimport ( 'kunena.forum.category.helper' );
-
 require_once KPATH_ADMIN . '/controllers/categories.php';
 
 /**

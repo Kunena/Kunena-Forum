@@ -11,7 +11,6 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.controller' );
 jimport ( 'joomla.application.component.helper' );
-kimport ( 'kunena.profiler' );
 
 /**
  * Base controller class for Kunena.

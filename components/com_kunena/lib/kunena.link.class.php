@@ -13,10 +13,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.bestofjoomla.com
  **/
-
-// Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
-kimport ('kunena.route');
 
 class CKunenaLink {
 	//
@@ -180,7 +177,6 @@ class CKunenaLink {
 	}
 
 	function GetReportMessageLink($catid, $id, $name, $rel = 'nofollow', $class = '', $title = '') {
-		kimport ('kunena.forum.message.helper');
 		$message = KunenaForumMessageHelper::get($id);
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=report&catid={$catid}&id={$message->thread}&mesid={$message->id}", $name, $title, $rel, $class );
 	}
@@ -209,7 +205,6 @@ class CKunenaLink {
 	function GetMyProfileURL($userid = 0, $task = '', $xhtml = true, $extra = '') {
 		if (!$task) {
 			// Workaround for menu redirect: be more verbose
-			kimport('kunena.integration');
 			$profileIntegration = KunenaIntegration::detectIntegration('profile', true);
 			if ($profileIntegration != 'kunena') $task='summary';
 		}
@@ -372,7 +367,6 @@ class CKunenaLink {
 	}
 
 	function GetLatestPageAutoRedirectURL($pid, $limit = 0, $catid = 0, $xhtml = false) {
-		kimport ('kunena.error');
 		$config = KunenaFactory::getConfig ();
 		$myprofile = KunenaFactory::getUser ();
 		if ($myprofile->ordering != '0') {
@@ -405,7 +399,6 @@ class CKunenaLink {
 	}
 
 	function GetMessageURL($pid, $catid=0, $limit = 0, $xhtml = true) {
-		kimport ('kunena.error');
 		$config = KunenaFactory::getConfig ();
 		$myprofile = KunenaFactory::getUser ();
 		if ($myprofile->ordering != '0') {

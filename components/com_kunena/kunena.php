@@ -13,9 +13,6 @@ defined ( '_JEXEC' ) or die ();
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 require_once KPATH_SITE . '/router.php';
 
-kimport ('kunena.user.helper');
-kimport ('kunena.profiler');
-
 // Display time it took to create the entire page in the footer
 $kunena_profiler = KunenaProfiler::instance('Kunena');
 $kunena_profiler->start('Total Time');
@@ -24,7 +21,6 @@ KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 KunenaFactory::loadLanguage();
 
 // Initialize error handlers
-kimport ( 'kunena.error' );
 KunenaError::initialize ();
 
 // Initialize session
@@ -47,7 +43,6 @@ $task = JRequest::getCmd ( 'task' );
 
 if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
 	// Load and execute controller
-	kimport ( 'kunena.controller' );
 	$controller = KunenaController::getInstance ();
 	KunenaRoute::cacheLoad ();
 	$controller->execute ( $task );
@@ -55,7 +50,6 @@ if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {
 	$controller->redirect ();
 } else {
 	// Legacy support
-	kimport ('kunena.route.legacy');
 	$uri = KunenaRoute::current(true);
 	if ($uri) {
 		// FIXME: using wrong Itemid

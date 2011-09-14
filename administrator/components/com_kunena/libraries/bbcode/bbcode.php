@@ -20,7 +20,7 @@ require_once KPATH_ADMIN . '/libraries/external/nbbc/nbbc.php';
  *
  * @version		2.0
  */
-class KunenaBBCode extends BBCode {
+class KunenaBbcode extends BBCode {
 	public $autolink_disable = false;
 
 	/**
@@ -30,7 +30,7 @@ class KunenaBBCode extends BBCode {
 	 */
 	function __construct() {
 		parent::__construct ();
-		$this->defaults = new KunenaBBCodeLibrary;
+		$this->defaults = new KunenaBbcodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
@@ -49,13 +49,13 @@ class KunenaBBCode extends BBCode {
 	public function &getInstance() {
 		static $instance = false;
 		if (! $instance) {
-			$instance = new KunenaBBCode ();
+			$instance = new KunenaBbcode ();
 		}
 		return $instance;
 	}
 }
 
-class KunenaBBCodeLibrary extends BBCodeLibrary {
+class KunenaBbcodeLibrary extends BBCodeLibrary {
 	var $default_smileys = array();
 	var $default_tag_rules = array(
 			'b' => array(

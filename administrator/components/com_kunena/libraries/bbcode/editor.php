@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.bbcode');
-
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
 
@@ -20,7 +18,7 @@ kimport ('kunena.bbcode');
  *
  * @version		2.0
  */
-class KunenaBBCodeEditor {
+class KunenaBbcodeEditor {
 	function __construct($config = array()) {
 		$this->config = $config;
 	}
@@ -28,7 +26,7 @@ class KunenaBBCodeEditor {
 	public function &getInstance($config = array()) {
 		static $instance = false;
 		if (! $instance) {
-			$instance = new KunenaBBCodeEditor ($config);
+			$instance = new KunenaBbcodeEditor ($config);
 		}
 		return $instance;
 	}

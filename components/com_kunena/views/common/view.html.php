@@ -11,9 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.cache.handler.output' );
-kimport ( 'kunena.view' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.forum.statistics' );
 
 /**
  * Common view
@@ -288,7 +285,6 @@ class KunenaViewCommon extends KunenaView {
 		$catid = 0;
 		if (KunenaFactory::getConfig ()->enablerss) {
 			if ($catid > 0) {
-				kimport ( 'kunena.forum.category.helper' );
 				$category = KunenaForumCategoryHelper::get ( $catid );
 				if ($category->pub_access == 0 && $category->parent)
 					$rss_params = '&catid=' . ( int ) $catid;

@@ -11,8 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.environment.uri' );
-kimport ('kunena.route.legacy');
-kimport ('kunena.user.herlper');
 jimport('joomla.html.parameter');
 
 KunenaRoute::initialize();

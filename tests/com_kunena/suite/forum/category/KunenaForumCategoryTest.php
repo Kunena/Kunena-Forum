@@ -19,7 +19,6 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 	 */
 	public static function setUpBeforeClass() {
 		jimport('joomla.plugin.helper');
-		kimport('kunena.forum.category');
 	}
 
 	/**

@@ -14,12 +14,6 @@ require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 jimport('joomla.filter.output');
 jimport('joomla.error.profiler');
 
-kimport('kunena.route');
-kimport('kunena.error');
-kimport('kunena.forum.category.helper');
-kimport('kunena.forum.topic.helper');
-kimport('kunena.user.helper');
-
 class KunenaRouter {
 	static $config = null;
 

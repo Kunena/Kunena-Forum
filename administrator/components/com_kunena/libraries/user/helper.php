@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport('kunena.error');
-kimport('kunena.user');
-
 KunenaUserHelper::initialize();
 
 /**

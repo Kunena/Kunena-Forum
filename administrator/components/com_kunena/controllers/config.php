@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.error' );
-
 /**
  * Kunena Backend Config Controller
  *

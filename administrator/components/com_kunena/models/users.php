@@ -11,8 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
-kimport('kunena.model');
-kimport ( 'kunena.error' );
 jimport( 'joomla.html.pagination' );
 
 /**
@@ -93,7 +91,6 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 	public function getUser() {
 		$app = JFactory::getApplication ();
-		kimport('kunena.user.helper');
 
 		$userid = $app->getUserState ( 'kunena.user.userid');
 
@@ -203,7 +200,6 @@ class KunenaAdminModelUsers extends KunenaModel {
 	}
 
 	public function getMoveuser() {
-		kimport('kunena.user.helper');
 		$db = JFactory::getDBO ();
 
 		$app = JFactory::getApplication ();

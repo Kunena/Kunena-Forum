@@ -11,7 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport('joomla.html.html');
-kimport('kunena.forum.category.helper');
 
 abstract class JHTMLKunenaForum {
 	function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false) {

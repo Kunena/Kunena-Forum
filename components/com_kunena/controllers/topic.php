@@ -10,16 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.error' );
-kimport ( 'kunena.html.parser' );
-kimport ( 'kunena.forum.message.helper' );
-kimport ( 'kunena.forum.message.thankyou.helper' );
-kimport ( 'kunena.forum.topic.helper' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.forum.topic.poll.helper' );
-kimport ( 'kunena.spam.recaptcha' );
-
 require_once KPATH_SITE . '/lib/kunena.link.class.php';
 
 /**

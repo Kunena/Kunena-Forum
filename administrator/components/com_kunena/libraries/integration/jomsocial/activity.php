@@ -29,7 +29,6 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 		$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->catid, $message->thread, 0 );
 
-		kimport('kunena.html.parser');
 		$content = KunenaHtmlParser::plainBBCode($message->message, $this->_config->activity_limit);
 
 		// Add readmore link
@@ -59,7 +58,6 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 		$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->catid, $message->thread, 0 );
 
-		kimport('kunena.html.parser');
 		$content = KunenaHtmlParser::plainBBCode($message->message, $this->_config->activity_limit);
 
 		// Add readmore link

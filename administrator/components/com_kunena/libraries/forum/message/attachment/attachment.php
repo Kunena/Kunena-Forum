@@ -10,11 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.user.helper');
-kimport ('kunena.forum.message.helper');
-kimport ('kunena.forum.message.attachment.helper');
-
 /**
  * Kunena Forum Message Attachment Class
  */

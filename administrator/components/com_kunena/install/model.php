@@ -467,7 +467,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepDatabase() {
-		kimport ('kunena.factory');
 		$task = $this->getTask();
 		switch ($task) {
 			case 0:
@@ -513,7 +512,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepFinish() {
-		kimport ('kunena.factory');
 		$entryfiles = array(
 			array(KPATH_ADMIN, 'api', 'php'),
 			array(KPATH_ADMIN, 'admin.kunena', 'php'),
@@ -631,7 +629,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function migrateConfig() {
-		kimport('kunena.factory');
 		$config = KunenaFactory::getConfig();
 		$version = $this->getVersion();
 		if (version_compare ( $version->version, '1.0.4', "<=" ) ) {
@@ -1071,27 +1068,23 @@ class KunenaModelInstall extends JModel {
 			switch ($state->step) {
 				case 0:
 					// Update topic statistics
-					kimport('kunena.forum.topic.helper');
 					KunenaForumTopicHelper::recount(false, $state->start, $state->start+$count);
 					$state->start += $count;
 					$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_RECOUNT_TOPICS', min($state->start, $state->maxId), $state->maxId), true, '', 'recount' );
 					break;
 				case 1:
 					// Update usertopic statistics
-					kimport('kunena.forum.topic.user.helper');
 					KunenaForumTopicUserHelper::recount(false, $state->start, $state->start+$count);
 					$state->start += $count;
 					$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_RECOUNT_USERTOPICS', min($state->start, $state->maxId), $state->maxId), true, '', 'recount' );
 					break;
 				case 2:
 					// Update user statistics
-					kimport('kunena.user.helper');
 					KunenaUserHelper::recount();
 					$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_RECOUNT_USER'), true, '', 'recount' );
 					break;
 				case 3:
 					// Update category statistics
-					kimport('kunena.forum.category.helper');
 					KunenaForumCategoryHelper::recount();
 					$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_RECOUNT_CATEGORY'), true, '', 'recount' );
 					break;
@@ -1499,7 +1492,6 @@ class KunenaModelInstall extends JModel {
 				'link'=>'index.php?option=com_kunena&view=search', 'access'=>0, 'params'=>array()),
 		);
 
-		kimport ('kunena.factory');
 		$config = KunenaFactory::getConfig();
 		if (!empty($config->rules_cid)) {
 			$submenu['rules']['params']['body'] = "[article=full]{$config->rules_cid}[/article]";
@@ -1521,7 +1513,6 @@ class KunenaModelInstall extends JModel {
 	function createMenuJ15($menu, $submenu) {
 		jimport( 'joomla.utilities.string' );
 		jimport( 'joomla.application.component.helper' );
-		kimport('kunena.factory');
 
 		$config = KunenaFactory::getConfig();
 
@@ -1675,7 +1666,6 @@ class KunenaModelInstall extends JModel {
 	function createMenuJ16($menu, $submenu) {
 		jimport ( 'joomla.utilities.string' );
 		jimport ( 'joomla.application.component.helper' );
-		kimport('kunena.factory');
 
 		$config = KunenaFactory::getConfig ();
 

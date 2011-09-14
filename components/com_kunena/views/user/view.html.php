@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.view' );
-
 // FIXME: convert to full MVC
 
 /**
@@ -55,7 +53,6 @@ class KunenaViewUser extends KunenaView {
 	protected function displayCommon($tpl = null) {
 		$userid = JRequest::getInt('userid');
 
-		kimport('kunena.html.parser');
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->config = KunenaFactory::getConfig ();
@@ -142,7 +139,6 @@ class KunenaViewUser extends KunenaView {
 		$avatar = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
 
-		kimport('kunena.user.ban');
 		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
 		$this->canBan = $this->banInfo->canBan();
 		if ( $this->config->showbannedreason ) $this->banReason = $this->banInfo->reason_public;
@@ -197,7 +193,7 @@ class KunenaViewUser extends KunenaView {
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
-	function displayGotThankYou() {
+	function displayGotThankyou() {
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
@@ -212,7 +208,7 @@ class KunenaViewUser extends KunenaView {
 		KunenaForum::display('topics', 'posts', 'embed', $params);
 	}
 
-	function displaySaidThankYou() {
+	function displaySaidThankyou() {
 		$params = array(
 			'topics_categories' => 0,
 			'topics_catselection' => 1,
@@ -271,19 +267,16 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayBanUser() {
-		kimport('kunena.user.ban');
 		$this->baninfo = KunenaUserBan::getInstanceByUserid($this->profile->userid, true);
 		echo $this->loadTemplate('ban');
 	}
 
 	function displayBanHistory() {
-		kimport('kunena.user.ban');
 		$this->banhistory = KunenaUserBan::getUserHistory($this->profile->userid);
 		echo $this->loadTemplate('history');
 	}
 
 	function displayBanManager() {
-		kimport('kunena.user.ban');
 		$this->bannedusers = KunenaUserBan::getBannedUsers();
 		echo $this->loadTemplate('banmanager');
 	}
@@ -492,7 +485,6 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function canManageAttachments () {
-		kimport('kunena.forum.message.attachment.helper');
 		$this->me = KunenaFactory::getUser ();
 		$this->config = KunenaFactory::getConfig();
 		if ( $this->config->show_imgfiles_manage_profile ) {

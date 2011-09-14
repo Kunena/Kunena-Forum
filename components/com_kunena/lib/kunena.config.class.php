@@ -17,8 +17,6 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.error' );
-
 abstract class CKunenaConfigBase {
 	public function __construct() {
 		$this->_db = JFactory::getDBO ();

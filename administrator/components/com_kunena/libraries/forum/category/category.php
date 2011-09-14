@@ -10,15 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.date');
-kimport ('kunena.user');
-kimport ('kunena.user.helper');
-kimport ('kunena.user.ban');
-kimport ('kunena.forum.category.helper');
-kimport ('kunena.forum.message.helper');
-kimport ('kunena.forum.attachment.helper');
-
 /**
  * Kunena Forum Category Class
  */
@@ -186,9 +177,6 @@ class KunenaForumCategory extends JObject {
 	}
 
 	public function newTopic($fields=array(), $user=null) {
-		kimport ('kunena.forum.topic');
-		kimport ('kunena.forum.message');
-
 		$catid = $this->getNewTopicCategory()->id;
 		$user = KunenaUserHelper::get($user);
 		$message = new KunenaForumMessage();

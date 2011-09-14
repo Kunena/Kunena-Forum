@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport('kunena.error');
-kimport ('kunena.date');
-kimport('kunena.user.helper');
 jimport ( 'joomla.utilities.date' );
 jimport ( 'joomla.filesystem.file' );
 

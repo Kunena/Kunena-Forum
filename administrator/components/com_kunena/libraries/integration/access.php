@@ -11,11 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_ADMIN . '/libraries/integration/integration.php';
-kimport ( 'kunena.error' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.forum.category.user.helper' );
-kimport ( 'kunena.forum.topic.helper' );
-kimport ( 'kunena.databasequery' );
 
 abstract class KunenaAccess {
 	public $priority = 0;

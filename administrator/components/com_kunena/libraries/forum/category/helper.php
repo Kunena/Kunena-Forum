@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.user');
-kimport ('kunena.forum.category');
-
 /**
  * Kunena Forum Category Helper Class
  */
@@ -280,8 +276,7 @@ class KunenaForumCategoryHelper {
 	}
 
 	static public function &getIndentation($categories) {
-		kimport('kunena.tree');
-		$tree = new Kunenatree($categories);
+		$tree = new KunenaTree($categories);
 		return $tree->getIndentation();
 	}
 

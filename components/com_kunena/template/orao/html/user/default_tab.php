@@ -138,8 +138,8 @@ defined ( '_JEXEC' ) or die ();
 </div>
 <?php if($this->config->showthankyou && $this->my->id != 0) : ?>
 <div id="tcontent-thankyou" class="tabcontent">
-<?php $this->displayGotThankYou(); ?>
-<?php $this->displaySaidThankYou(); ?>
+<?php $this->displayGotThankyou(); ?>
+<?php $this->displaySaidThankyou(); ?>
 </div>
 <?php endif;?>
 <?php if ($this->my->id == $this->user->id): ?>

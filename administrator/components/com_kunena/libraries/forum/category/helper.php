@@ -39,12 +39,12 @@ class KunenaForumCategoryHelper {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return $identifier;
 		}
-		$id = intval ( $identifier );
-		if ($id < 1) {
+		if (!is_numeric($identifier)) {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return new KunenaForumCategory ();
 		}
 
+		$id = intval ( $identifier );
 		if ($reload || empty ( self::$_instances [$id] )) {
 			self::$_instances [$id] = new KunenaForumCategory ( $id );
 		}

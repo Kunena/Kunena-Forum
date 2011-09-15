@@ -57,7 +57,7 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 	public function testCreate(KunenaForumCategory $category) {
 		$category->name = 'Test Section';
 		$category->parent_id = 0;
-		$category->save();
+		$this->assertTrue($category->save());
 		$this->assertTrue($category->exists());
 		$this->assertGreaterThan(1, $category->id);
 		$category2 = KunenaForumCategory::getInstance($category->id);
@@ -65,6 +65,19 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 		//$this->assertSame($category, $category2);
 		$this->assertSame($category->id, $category2->id);
 		$this->assertSame($category->name, $category2->name);
+		return $category2;
+	}
+
+	/**
+	 * Test get instance
+	 *
+	 * @param KunenaForumCategory $category
+	 * @return KunenaForumCategory
+	 * @depends testCreate
+	 */
+	public function testGetInstance(KunenaForumCategory $category) {
+		$category2 = KunenaForumCategory::getInstance($category->id);
+		$this->assertSame($category, $category2);
 		return $category;
 	}
 
@@ -76,18 +89,18 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 	 * @depends testCreate
 	 */
 	public function testAddModerator(KunenaForumCategory $category) {
-		$user = KunenaFactory::getUser('admin');
+		$admin = KunenaFactory::getUser('admin');
 		$access = KunenaFactory::getAccessControl ();
 
 		$this->assertFalse($category->addModerator(0), "Guests cannot become moderators");
 		$this->assertFalse($category->addModerator(1, "Non-existing users cannot become moderators"));
-		$this->assertTrue($category->addModerator($user), "Administrator can become moderator ({$category->getError()})");
-		$this->assertTrue((bool)$user->moderator, "Oops, user didn't become moderator!");
-		$mod = $access->getModeratorStatus ($user);
+		$this->assertTrue($category->addModerator($admin), "Administrator can become moderator ({$category->getError()})");
+		$this->assertTrue((bool)$admin->moderator, "Oops, user didn't become moderator!");
+		$mod = $access->getModeratorStatus ($admin);
 		$this->assertTrue(!empty($mod[$category->id]), "Oops, user didn't become category moderator!");
 
 		$newcategory = new KunenaForumCategory();
-		$this->assertFalse($newcategory->addModerator($user), "Non-existing categories cannot have moderators");
+		$this->assertFalse($newcategory->addModerator($admin), "Non-existing categories cannot have moderators");
 
 		return $category;
 	}
@@ -100,12 +113,12 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 	 * @depends testAddModerator
 	 */
 	public function testRemoveModerator(KunenaForumCategory $category) {
-		$user = KunenaFactory::getUser('admin');
+		$admin = KunenaFactory::getUser('admin');
 		$access = KunenaFactory::getAccessControl ();
 
-		$this->assertTrue($category->removeModerator($user), "Administrator can loose moderator status ({$category->getError()})");
-		$this->assertFalse((bool)$user->moderator, "Oops, user is still moderator!");
-		$mod = $access->getModeratorStatus ($user);
+		$this->assertTrue($category->removeModerator($admin), "Administrator can loose moderator status ({$category->getError()})");
+		$this->assertFalse((bool)$admin->moderator, "Oops, user is still moderator!");
+		$mod = $access->getModeratorStatus ($admin);
 		$this->assertTrue(empty($mod[$category->id]), "Oops, user is still category moderator!");
 
 		return $category;
@@ -118,7 +131,7 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 	 * @depends testRemoveModerator
 	 */
 	public function testDelete(KunenaForumCategory $category) {
-		$category->delete();
+		$this->assertTrue($category->delete(), $category->getError());
 		$this->assertFalse($category->exists());
 		$this->assertNull($category->id);
 	}

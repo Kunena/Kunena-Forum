@@ -11,9 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
-kimport('kunena.forum.category.helper');
-kimport('kunena.model');
-kimport('kunena.user.helper');
 jimport( 'joomla.html.pagination' );
 
 /**

@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.user.helper' );
-
 /**
  * Kunena Categories Controller
  *

@@ -9,8 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.date');
-
 class KunenaSession extends JObject
 {
 	protected $_exists = false;

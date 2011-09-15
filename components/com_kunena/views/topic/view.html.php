@@ -10,13 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.view' );
-kimport ( 'kunena.forum.message.attachment.helper' );
-kimport ( 'kunena.forum.topic.poll.helper' );
-kimport ( 'kunena.spam.recaptcha' );
-kimport ( 'kunena.html.parser' );
-kimport ( 'kunena.html.pagination' );
-
 /**
  * Topic View
  */

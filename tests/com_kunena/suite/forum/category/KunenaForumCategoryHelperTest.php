@@ -18,7 +18,6 @@ class KunenaForumCategoryHelperTest extends PHPUnit_Framework_TestCase {
 	 * Sets up the fixture.
 	 */
 	protected function setUp() {
-		kimport('kunena.forum.category.helper');
 	}
 
 	public function testGetAllCategories() {

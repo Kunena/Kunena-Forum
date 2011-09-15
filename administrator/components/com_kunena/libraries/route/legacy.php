@@ -11,7 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_SITE . '/router.php';
-kimport ( 'kunena.forum.message.helper' );
 
 class KunenaRouteLegacy {
 	function convert($uri) {

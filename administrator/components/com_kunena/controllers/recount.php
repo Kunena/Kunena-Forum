@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport('kunena.user.helper');
-kimport('kunena.forum.category.helper');
-
 /**
  * Kunena Recount Controller
  *
@@ -45,27 +41,23 @@ class KunenaAdminControllerRecount extends KunenaController {
 			switch ($state->step) {
 				case 0:
 					// Update topic statistics
-					kimport('kunena.forum.topic.helper');
 					KunenaForumTopicHelper::recount(false, $state->start, $state->start+$count);
 					$state->start += $count;
 					//$app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_TOPICS', min($state->start, $state->maxId), $state->maxId) );
 					break;
 				case 1:
 					// Update usertopic statistics
-					kimport('kunena.forum.topic.user.helper');
 					KunenaForumTopicUserHelper::recount(false, $state->start, $state->start+$count);
 					$state->start += $count;
 					//$app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERTOPICS', min($state->start, $state->maxId), $state->maxId) );
 					break;
 				case 2:
 					// Update user statistics
-					kimport('kunena.user.helper');
 					KunenaUserHelper::recount();
 					//$app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USER') );
 					break;
 				case 3:
 					// Update category statistics
-					kimport('kunena.forum.category.helper');
 					KunenaForumCategoryHelper::recount();
 					//$app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORY') );
 					break;

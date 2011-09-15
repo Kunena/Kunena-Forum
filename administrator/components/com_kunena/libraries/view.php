@@ -10,10 +10,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.view' );
-kimport ( 'kunena.html.parser' );
-kimport ('kunena.date');
-kimport ('kunena.user.helper');
-kimport ('kunena.profiler');
 
 /**
  * Kunena View Class

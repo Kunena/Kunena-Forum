@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-
 /**
  * Kunena Attachments Controller
  *
@@ -42,7 +40,6 @@ class KunenaAdminControllerAttachments extends KunenaController {
 		}
 
 		foreach( $cids as $id ) {
-			kimport ('kunena.forum.message.attachment.helper');
 			$attachment = KunenaForumMessageAttachmentHelper::get($id);
 			$attachment->delete();
 		}

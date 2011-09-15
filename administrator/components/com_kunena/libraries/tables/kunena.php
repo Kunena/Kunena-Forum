@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport('kunena.databasequery');
-
 abstract class KunenaTable extends JTable {
 	protected $_exists = false;
 

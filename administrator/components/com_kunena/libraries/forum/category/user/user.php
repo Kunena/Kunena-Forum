@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.user');
-kimport ('kunena.forum.category.helper');
-kimport ('kunena.forum.category.user.helper');
-
 /**
  * Kunena Forum Category User Class
  */

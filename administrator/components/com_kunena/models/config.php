@@ -11,8 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
-kimport('kunena.model');
-kimport ('kunena.date');
 
 /**
  * Config Model for Kunena
@@ -219,7 +217,6 @@ class KunenaAdminModelConfig extends KunenaModel {
 		// New for 1.6 -> Thank you button
 		$lists ['showthankyou'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showthankyou', 'class="inputbox" size="1"', 'value', 'text', $config->showthankyou );
 
-		kimport('kunena.integration');
 		$lists['integration_access'] = KunenaIntegration::getConfigOptions('access');
 		$lists['integration_activity'] = KunenaIntegration::getConfigOptions('activity');
 		$lists['integration_avatar'] = KunenaIntegration::getConfigOptions('avatar');

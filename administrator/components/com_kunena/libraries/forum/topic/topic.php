@@ -10,19 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.databasequery');
-kimport ('kunena.error');
-kimport ('kunena.user');
-kimport ('kunena.user.helper');
-kimport ('kunena.forum.category.helper');
-kimport ('kunena.forum.topic.helper');
-kimport ('kunena.forum.topic.user.helper');
-kimport ('kunena.forum.topic.poll.helper');
-kimport ('kunena.forum.message');
-kimport ('kunena.forum.message.helper');
-kimport ('kunena.forum.message.attachment.helper');
-kimport ('kunena.keyword.helper');
-
 /**
  * Kunena Forum Topic Class
  */
@@ -222,7 +209,6 @@ class KunenaForumTopic extends JObject {
 
 	public function getPagination($limitstart=0, $limit=6, $display=4, $prefix='') {
 		if (!$this->_pagination) {
-			kimport ('kunena.html.pagination');
 			$this->_pagination = new KunenaHtmlPagination($this->posts, $limitstart, $limit, $prefix);
 			$this->_pagination->setDisplay($display, "index.php?option=com_kunena&view=topic&catid={$this->category_id}&id={$this->id}");
 		}

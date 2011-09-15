@@ -11,7 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
-kimport('kunena.model');
 
 /**
  * Recount Model for Kunena

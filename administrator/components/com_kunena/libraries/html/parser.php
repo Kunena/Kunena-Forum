@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport('kunena.bbcode');
-kimport('kunena.template');
-
 abstract class KunenaHtmlParser {
 	static $emoticons = null;
 
@@ -60,7 +57,7 @@ abstract class KunenaHtmlParser {
 	function parseBBCode($txt, $parent=null, $len=0) {
 		if (!$txt) return;
 
-		$bbcode = KunenaBBcode::getInstance();
+		$bbcode = KunenaBbcode::getInstance();
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(false);
@@ -84,7 +81,7 @@ abstract class KunenaHtmlParser {
 		$txt = preg_replace ( '/\[attachment(.*?)\](.*?)\[\/attachment\]/s', '', $txt );
 		$txt = preg_replace ( '/\[code\](.*?)\[\/code]/s', '', $txt );
 
-		$bbcode = KunenaBBCode::getInstance();
+		$bbcode = KunenaBbcode::getInstance();
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetDetectURLs(true);
@@ -98,7 +95,7 @@ abstract class KunenaHtmlParser {
 	function stripBBCode($txt, $len=0) {
 		if (!$txt) return;
 
-		$bbcode = KunenaBBCode::getInstance();
+		$bbcode = KunenaBbcode::getInstance();
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetDetectURLs(true);

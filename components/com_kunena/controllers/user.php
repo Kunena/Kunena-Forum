@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.user.helper' );
-
 require_once KPATH_SITE . '/lib/kunena.link.class.php';
 
 /**
@@ -109,7 +105,6 @@ class KunenaControllerUser extends KunenaController {
 		$reason_public = JRequest::getString ( 'reason_public', '' );
 		$comment = JRequest::getString ( 'comment', '' );
 
-		kimport ( 'kunena.user.ban' );
 		$ban = KunenaUserBan::getInstanceByUserid ( $user->userid, true );
 		if (! $ban->id) {
 			$ban->ban ( $user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
@@ -468,7 +463,6 @@ class KunenaControllerUser extends KunenaController {
 		$number = count($cids);
 
 		foreach( $cids as $id ) {
-			kimport ('kunena.forum.message.attachment.helper');
 			$attachment = KunenaForumMessageAttachmentHelper::get($id);
 			$attachment->delete();
 		}

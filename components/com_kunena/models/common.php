@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.model' );
-
 /**
  * Common Model for Kunena
  *

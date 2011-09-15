@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.view' );
-kimport ( 'kunena.template' );
 require_once KPATH_SITE.'/lib/kunena.link.class.php';
 
 /**

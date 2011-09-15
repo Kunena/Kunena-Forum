@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 require_once (dirname ( __FILE__ ) . '/kunena.php');
-kimport('kunena.forum.category.helper');
+
 /**
  * Kunena Topics
  * Provides access to the #__kunena_topics table

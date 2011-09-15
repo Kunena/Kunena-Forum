@@ -12,14 +12,6 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ('joomla.user.helper');
 jimport ('joomla.mail.helper');
-kimport ('kunena.error');
-kimport ('kunena.user.helper');
-kimport ('kunena.forum.category.helper');
-kimport ('kunena.forum.topic.helper');
-kimport ('kunena.forum.message.helper');
-kimport ('kunena.forum.message.attachment');
-kimport ('kunena.forum.message.attachment.helper');
-kimport ('kunena.forum.message.thankyou.helper');
 
 /**
  * Kunena Forum Message Class
@@ -121,7 +113,6 @@ class KunenaForumMessage extends JObject {
 			$mailadmins = 0;
 		}
 
-		kimport ('kunena.html.parser');
 		$once = false;
 		if ($mailsubs) {
 			if (!$this->parent) {

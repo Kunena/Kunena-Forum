@@ -13,7 +13,6 @@ defined ( '_JEXEC' ) or die ();
 jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.folder' );
 jimport ( 'joomla.filesystem.file' );
-kimport('kunena.model');
 
 /**
  * Reportconfiguration Model for Kunena
@@ -186,7 +185,6 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function _getKunenaConfiguration() {
-		kimport('kunena.error');
 		$kunena_db = JFactory::getDBO ();
 		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."kunena_config'" );
 		$table_config = $kunena_db->loadResult ();
@@ -218,7 +216,6 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function _getJoomlaTemplate() {
-		kimport('kunena.error');
 		$db = JFactory::getDBO ();
 
 		// Get Joomla! frontend assigned template
@@ -253,7 +250,6 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function _getJoomlaMenuDetails() {
-		kimport('kunena.error');
 		$kunena_db = JFactory::getDBO ();
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
@@ -320,7 +316,6 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function _getTablesCollation() {
-		kimport('kunena.error');
 		$kunena_db = JFactory::getDBO ();
 
 		// Check each table in the database if the collation is on utf8

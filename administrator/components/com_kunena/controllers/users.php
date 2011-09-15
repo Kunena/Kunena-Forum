@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-
 /**
  * Kunena Users Controller
  *
@@ -46,7 +44,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 	}
 
 	function save() {
-		kimport('kunena.forum.category.helper');
 		$db = JFactory::getDBO ();
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
@@ -204,7 +201,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 	function delete() {
 		$app = JFactory::getApplication ();
-		kimport('kunena.user.helper');
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -228,7 +224,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 	function ban() {
 		$app = JFactory::getApplication ();
-		kimport('kunena.user.ban');
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -266,7 +261,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 	function unban() {
 		$app = JFactory::getApplication ();
-		kimport('kunena.user.ban');
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -304,7 +298,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 	function block() {
 		$app = JFactory::getApplication ();
-		kimport('kunena.user.ban');
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -343,7 +336,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 	function unblock() {
 		$app = JFactory::getApplication ();
-		kimport('kunena.user.ban');
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );

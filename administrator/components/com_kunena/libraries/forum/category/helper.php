@@ -128,11 +128,10 @@ class KunenaForumCategoryHelper {
 		}
 
 		if ($ids === false) {
-			if ($authorise != 'none') {
-				$ids = self::$_instances;
-			} else {
+			$ids = self::$_instances;
+			if ($authorise == 'none') {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-				return self::$_instances;
+				return $ids;
 			}
 		} elseif (is_array ($ids) ) {
 			$ids = array_flip($ids);

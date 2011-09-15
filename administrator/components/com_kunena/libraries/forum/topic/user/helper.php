@@ -47,12 +47,15 @@ class KunenaForumTopicUserHelper {
 	static public function getTopics($ids = false, $user=null) {
 		$user = KunenaUserHelper::get($user);
 		if ($ids === false) {
-			return self::$_instances[$user->userid];
-		} elseif (is_array ($ids) ) {
-			$ids = array_unique($ids);
-		} else {
+			return isset(self::$_instances[$user->userid]) ? self::$_instances[$user->userid] : array();
+		} elseif (!is_array ($ids) ) {
 			$ids = array($ids);
 		}
+		// Convert topic objects into ids
+		foreach ($ids as $i=>$id) {
+			if ($id instanceof KunenaForumTopic) $ids[$i] = $id->id;
+		}
+		$ids = array_unique($ids);
 		self::loadTopics($ids, $user);
 
 		$list = array ();

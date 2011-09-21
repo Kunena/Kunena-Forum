@@ -65,7 +65,7 @@ class KunenaForumTopic extends JObject {
 	 *
 	 * @access	protected
 	 */
-	public function __construct($identifier = 0) {
+	public function __construct($identifier = null) {
 		// Always load the topic -- if topic does not exist: fill empty data
 		$this->_db = JFactory::getDBO ();
 		if ($identifier !== false) $this->load ( $identifier );
@@ -215,6 +215,10 @@ class KunenaForumTopic extends JObject {
 		return $this->_pagination;
 	}
 
+	public function getUserInfo($user = null) {
+		return KunenaForumTopicUserHelper::get($this->id, $user);
+	}
+
 	public function getFirstPostAuthor() {
 		return KunenaUserHelper::get($this->first_post_userid);
 	}
@@ -275,7 +279,7 @@ class KunenaForumTopic extends JObject {
 		$message->name = $user->getName('');
 		$message->userid = $user->userid;
 		$message->subject = $this->subject;
-		$message->ip = $_SERVER ["REMOTE_ADDR"];
+		$message->ip = !empty($_SERVER ["REMOTE_ADDR"]) ? $_SERVER ["REMOTE_ADDR"] : '';
 		if ($this->hold) {
 			// If topic was unapproved or deleted, use the same state for the new message
 			$message->hold = $this->hold;
@@ -470,13 +474,16 @@ class KunenaForumTopic extends JObject {
 	 * @return	boolean			True on success
 	 * @since 1.6
 	 */
-	public function load($id) {
+	public function load($id = null) {
+		if ($id !== null) $this->id = intval($id);
+		
 		// Create the table object
 		$table = $this->getTable ();
 
 		// Load the KunenaTable object based on id
-		$this->_exists = $table->load ( $id );
-
+		if ($this->id) $this->_exists = $table->load ( $this->id );
+		$table->id = $this->id;
+		
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
 		$this->_hold = $this->hold === null ? 1 : $this->hold;
@@ -565,6 +572,7 @@ class KunenaForumTopic extends JObject {
 			if ($shadow || $ids) {
 				// Create new topic for the moved messages
 				$target = clone $this;
+				$target->exists(false);
 				$target->id = 0;
 			} else {
 				// If we just move into another category, we can keep using the old topic
@@ -585,11 +593,7 @@ class KunenaForumTopic extends JObject {
 
 		// We will soon need target topic id, so save if it doesn't exist
 		if (!$target->exists()) {
-			// FIXME: check if we can break binding: topic->id == message->id
-			$this->setError(JText::_('COM_KUNENA_MODERATION_ERROR_WRONG_TARGET'));
-			return false;
-
-			if (!$target->save()) {
+			if (!$target->save(false, false)) {
 				$this->setError($target->getError());
 				return false;
 			}
@@ -616,6 +620,21 @@ class KunenaForumTopic extends JObject {
 				$this->setError($this->_db->getError());
 				return false;
 			}
+			// Make sure that all messages in topic have unique time (deterministic without ORDER BY time, id)
+			$query = "SET @ktime:=0";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			if ($this->_db->getErrorNum () ) {
+				$this->setError($this->_db->getError());
+				return false;
+			}
+			$query = "UPDATE #__kunena_messages SET time=IF(time<=@ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread={$target->id} ORDER BY time ASC, id ASC";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			if ($this->_db->getErrorNum () ) {
+				$this->setError($this->_db->getError());
+				return false;
+			}
 		}
 
 		// If all messages were moved into another topic, we need to move poll as well
@@ -633,17 +652,21 @@ class KunenaForumTopic extends JObject {
 			}
 		}
 
-		if (isset($categoryTarget)) {
-			// Move topic into another category
+		if (!$ids && $target != $this) {
+			// Leave shadow from old topic
+			$this->moved_id = $target->id;
+			if (!$shadow) {
+				// Mark shadow topic as deleted
+				$this->hold=2;
+			}
+		}
+		// Note: We already saved possible target earlier, now save only $this
+		if (!$this->save(false, false)) {
+			return false;
+		}
 
-			if ($target != $this) {
-				// Leave shadow
-				$this->moved_id = $target->id;
-			}
-			// Note: We already saved possible target earlier
-			if (!$this->save()) {
-				return false;
-			}
+		if (!$ids && !empty($categoryTarget)) {
+			// Move topic into another category
 
 			// Update user topic information (topic, category)
 			KunenaForumTopicUserHelper::move($this, $target);
@@ -652,48 +675,36 @@ class KunenaForumTopic extends JObject {
 			// Add topic and posts into the new category
 			$categoryTarget->update($target, 1, $this->posts);
 
-		} else {
+		} elseif (!$ids) {
 			// Moving topic into another topic
 
-			if (!$ids) {
-				// Create shadow topic from $this
-				$this->moved_id = $target->id;
-				if (!$shadow) {
-					// Mark shadow topic as deleted
-					$this->hold=2;
-				}
-				// Save shadow topic
-				if (!$this->save()) {
-					return false;
-				}
-
-				// Add new posts, hits and attachments into the target topic
-				$target->posts += $this->posts;
-				$target->hits += $this->hits;
-				$target->attachments += $this->attachments;
-				// Update first and last post information into the target topic
-				$target->updatePostInfo($this->first_post_id, $this->first_post_time, $this->first_post_userid,
-					$this->first_post_message, $this->first_post_guest_name);
-				$target->updatePostInfo($this->last_post_id, $this->last_post_time, $this->last_post_userid,
-					$this->last_post_message, $this->last_post_guest_name);
-				// Save target topic
-				if (!$target->save()) {
-					return false;
-				}
-
-				// Update user topic information (topic, category)
-				KunenaForumTopicUserHelper::merge($this, $target);
-				// Remove topic and posts from the old category
-				$this->getCategory()->update($this, -1, -$this->posts);
-				// Add posts into the new category
-				$target->getCategory()->update($target, 0, $this->posts);
-
-			} else {
-				// Both topics have changed and we have no idea how much: force full recount
-				// TODO: we can do this faster..
-				$this->recount();
-				$target->recount();
+			// Add new posts, hits and attachments into the target topic
+			$target->posts += $this->posts;
+			$target->hits += $this->hits;
+			$target->attachments += $this->attachments;
+			// Update first and last post information into the target topic
+			$target->updatePostInfo($this->first_post_id, $this->first_post_time, $this->first_post_userid,
+				$this->first_post_message, $this->first_post_guest_name);
+			$target->updatePostInfo($this->last_post_id, $this->last_post_time, $this->last_post_userid,
+				$this->last_post_message, $this->last_post_guest_name);
+			// Save target topic
+			if (!$target->save(false, false)) {
+				$this->setError($target->getError());
+				return false;
 			}
+
+			// Update user topic information (topic, category)
+			KunenaForumTopicUserHelper::merge($this, $target);
+			// Remove topic and posts from the old category
+			$this->getCategory()->update($this, -1, -$this->posts);
+			// Add posts into the new category
+			$target->getCategory()->update($target, 0, $this->posts);
+
+		} else {
+			// Both topics have changed and we have no idea how much: force full recount
+			// TODO: we can do this faster..
+			$this->recount();
+			$target->recount();
 		}
 
 		return true;
@@ -707,15 +718,10 @@ class KunenaForumTopic extends JObject {
 	 * @return	boolean True on success
 	 * @since 1.6
 	 */
-	public function save($updateOnly = false) {
+	public function save($updateOnly = false, $cascade = true) {
 		//are we creating a new topic
 		$isnew = ! $this->_exists;
 
-		// If we aren't allowed to create new topic return
-		if (!$this->id) {
-			$this->setError ( JText::_('COM_KUNENA_LIB_TOPIC_ERROR_NO_ID') );
-			return false;
-		}
 		// If we aren't allowed to create new topic return
 		if ($isnew && $updateOnly) {
 			$this->setError ( JText::_('COM_KUNENA_LIB_TOPIC_ERROR_UPDATE_ONLY') );
@@ -746,10 +752,13 @@ class KunenaForumTopic extends JObject {
 		if ($isnew) {
 			$this->load ( $table->id );
 		}
+		$this->_posts = $this->posts;
 
-		$category = $this->getCategory();
-		if (! $category->update($this, $topicDelta, $postDelta)) {
-			$this->setError ( $category->getError () );
+		if ($cascade) {
+			$category = $this->getCategory();
+			if (! $category->update($this, $topicDelta, $postDelta)) {
+				$this->setError ( $category->getError () );
+			}
 		}
 
 		return true;
@@ -848,7 +857,7 @@ class KunenaForumTopic extends JObject {
 			$this->last_post_guest_name = '';
 			return;
 		}
-		if (!$this->first_post_time || $this->first_post_time >= $time) {
+		if (!$this->first_post_time || ($this->first_post_time > $time || ($this->first_post_time == $time && $this->first_post_id >= $id))) {
 			$this->first_post_id = $id;
 			$this->first_post_time = $time;
 			$this->first_post_userid = $userid;
@@ -856,7 +865,7 @@ class KunenaForumTopic extends JObject {
 			$this->first_post_guest_name = $name;
 
 		}
-		if ($this->last_post_time <= $time) {
+		if ($this->last_post_time < $time || ($this->last_post_time == $time && $this->last_post_id <= $id)) {
 			$this->last_post_id = $id;
 			$this->last_post_time = $time;
 			$this->last_post_userid = $userid;
@@ -885,7 +894,7 @@ class KunenaForumTopic extends JObject {
 				// If message got deleted and was cached, we need to find new first post
 				$db = JFactory::getDBO ();
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
-					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time ASC";
+					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time ASC, m.id ASC";
 				$db->setQuery ( $query, 0, 1 );
 				$first = $db->loadObject ();
 				KunenaError::checkDatabaseError ();
@@ -901,7 +910,7 @@ class KunenaForumTopic extends JObject {
 				// If topic got deleted and was cached, we need to find new last post
 				$db = JFactory::getDBO ();
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
-					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time DESC";
+					WHERE m.thread={$db->quote($this->id)} AND m.hold={$this->hold} ORDER BY m.time DESC, m.id DESC";
 				$db->setQuery ( $query, 0, 1 );
 				$last = $db->loadObject ();
 				KunenaError::checkDatabaseError ();
@@ -938,7 +947,8 @@ class KunenaForumTopic extends JObject {
 			}
 		} else {
 			KunenaForumTopicUserHelper::recount($this->id);
-			KunenaUserHelper::recount($this->id);
+			// FIXME: optimize
+			KunenaUserHelper::recount();
 		}
 
 		return true;

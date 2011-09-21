@@ -335,7 +335,7 @@ class KunenaForumTopicHelper {
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumTopic ();
+				$instance = new KunenaForumTopic (false);
 				$instance->bind ( $results[$id] );
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;

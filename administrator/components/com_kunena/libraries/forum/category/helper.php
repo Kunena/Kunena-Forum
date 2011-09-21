@@ -53,6 +53,23 @@ class KunenaForumCategoryHelper {
 		return self::$_instances [$id];
 	}
 
+	static public function register($instance) {
+		if (self::$_instances === false) {
+			self::loadCategories();
+		}
+		if ($instance->exists()) {
+			$instance->level = isset(self::$_instances [$instance->parent_id]) ? self::$_instances [$instance->parent_id]->level+1 : 0;
+			self::$_instances [$instance->id] = $instance;
+			if (!isset(self::$_tree [(int)$instance->id])) {
+				self::$_tree [$instance->id] = array();
+				self::$_tree [$instance->parent_id][$instance->id] = &self::$_tree [$instance->id];
+			}
+		} else {
+			unset(self::$_instances [$instance->id]);
+			unset(self::$_tree [$instance->id], self::$_tree [$instance->parent_id][$instance->id]);
+		}
+	}
+
 	static public function getSubscriptions($user = null) {
 		$user = KunenaUserHelper::get($user);
 		$db = JFactory::getDBO ();
@@ -128,11 +145,10 @@ class KunenaForumCategoryHelper {
 		}
 
 		if ($ids === false) {
-			if ($authorise != 'none') {
-				$ids = self::$_instances;
-			} else {
+			$ids = self::$_instances;
+			if ($authorise == 'none') {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-				return self::$_instances;
+				return $ids;
 			}
 		} elseif (is_array ($ids) ) {
 			$ids = array_flip($ids);
@@ -280,15 +296,17 @@ class KunenaForumCategoryHelper {
 		return $tree->getIndentation();
 	}
 
-	static public function recount() {
+	static public function recount($categories = '') {
 		$db = JFactory::getDBO ();
+		if (is_array($categories)) $categories = implode(',', $categories);
+		$categories = !empty($categories) ? "AND category_id IN ({$categories})" : '';
 
 		// Update category post count and last post info on categories which have published topics
 		$query = "UPDATE #__kunena_categories AS c
 			INNER JOIN (
 				SELECT category_id AS id, COUNT(*) AS numTopics, SUM(posts) AS numPosts, MAX(id) AS last_topic_id
 				FROM #__kunena_topics
-				WHERE hold=0 AND moved_id=0
+				WHERE hold=0 AND moved_id=0 {$categories}
 				GROUP BY category_id
 			) AS r ON r.id=c.id
 			INNER JOIN #__kunena_topics AS tt ON tt.id=r.last_topic_id
@@ -296,6 +314,7 @@ class KunenaForumCategoryHelper {
 				c.numPosts = r.numPosts,
 				c.last_topic_id=r.last_topic_id,
 				c.last_topic_subject = tt.subject,
+				c.last_topic_posts=tt.posts,
 				c.last_post_id = tt.last_post_id,
 				c.last_post_time = tt.last_post_time,
 				c.last_post_userid = tt.last_post_userid,
@@ -314,6 +333,7 @@ class KunenaForumCategoryHelper {
 				c.numPosts=0,
 				c.last_topic_id=0,
 				c.last_topic_subject='',
+				c.last_topic_posts=0,
 				c.last_post_id=0,
 				c.last_post_time=0,
 				c.last_post_userid=0,

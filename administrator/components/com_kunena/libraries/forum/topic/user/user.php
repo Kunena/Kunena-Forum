@@ -22,7 +22,7 @@ class KunenaForumTopicUser extends JObject {
 	 *
 	 * @access	protected
 	 */
-	public function __construct($topic = 0, $user = null) {
+	public function __construct($topic = null, $user = null) {
 		$topic = KunenaForumTopicHelper::get($topic);
 
 		// Always fill empty data
@@ -34,9 +34,8 @@ class KunenaForumTopicUser extends JObject {
 		// Lets bind the data
 		$this->setProperties ( $table->getProperties () );
 		$this->_exists = false;
-		$this->topic_id = $topic->id;
-		$this->category_id = $topic->category_id;
-
+		$this->topic_id = $topic->exists() ? $topic->id : null;
+		$this->category_id = $topic->exists() ? $topic->category_id : null;
 		$this->user_id = KunenaUserHelper::get($user)->userid;
 	}
 
@@ -85,6 +84,11 @@ class KunenaForumTopicUser extends JObject {
 		$this->setProperties ( $data );
 	}
 
+	public function reset() {
+		$this->topic_id = 0;
+		$this->load();
+	}
+
 	/**
 	 * Method to load a KunenaForumTopicUser object by id
 	 *
@@ -93,9 +97,12 @@ class KunenaForumTopicUser extends JObject {
 	 * @return	boolean			True on success
 	 * @since 1.6
 	 */
-	public function load($id = null, $user = null) {
-		if ($id === null) {
-			$id = $this->topic_id;
+	public function load($topic_id = null, $user = null) {
+		if ($topic_id === null) {
+			$topic_id = $this->topic_id;
+		}
+		if ($user === null && $this->user_id !== null) {
+			$user = $this->user_id;
 		}
 		$user = KunenaUserHelper::get($user);
 
@@ -103,7 +110,8 @@ class KunenaForumTopicUser extends JObject {
 		$table = $this->getTable ();
 
 		// Load the KunenaTable object based on id
-		$this->_exists = $table->load ( array($user->userid, $id) );
+		if ($topic_id) $this->_exists = $table->load ( array('user_id'=>$user->userid, 'topic_id'=>$topic_id) );
+		else $this->_exists = false;
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
@@ -166,7 +174,7 @@ class KunenaForumTopicUser extends JObject {
 		// Create the table object
 		$table = $this->getTable ();
 
-		$result = $table->delete ( $this->id );
+		$result = $table->delete ( array('topic_id'=>$this->topic_id, 'user_id'=>$this->user_id) );
 		if (! $result) {
 			$this->setError ( $table->getError () );
 		}

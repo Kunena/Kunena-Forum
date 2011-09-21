@@ -14,6 +14,9 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Category Class
  */
 class KunenaForumCategory extends JObject {
+	public $id = null;
+	public $level = 0;
+
 	protected $_exists = false;
 	protected $_channels = false;
 	protected $_topics = false;
@@ -22,7 +25,6 @@ class KunenaForumCategory extends JObject {
 	protected $_authcache = array();
 	protected $_authfcache = array();
 	protected $_new = 0;
-	public $level = 0;
 	protected static $actions = array(
 			'none'=>array(),
 			'read'=>array('Read'),
@@ -65,41 +67,66 @@ class KunenaForumCategory extends JObject {
 	/**
 	 * Constructor
 	 *
-	 * @access	protected
+	 * @internal
 	 */
-	public function __construct($identifier = 0) {
-		// Always load the category -- if category does not exist: fill empty data
+	public function __construct($identifier = null) {
 		if($identifier !== false) $this->load ( $identifier );
 	}
 
 	/**
-	 * Returns the global KunenaForumCategory object, only creating it if it doesn't already exist.
+	 * Returns the global KunenaForumCategory object.
 	 *
 	 * @access	public
-	 * @param	int	$id		The category to load - Can be only an integer.
-	 * @return	KunenaForumCategory	The Category object.
+	 * @param	int $id The category id to load.
+	 * @return	KunenaForumCategory
 	 * @since	1.6
 	 */
 	static public function getInstance($identifier = null, $reload = false) {
 		return KunenaForumCategoryHelper::get($identifier, $reload);
 	}
 
-	public function getChildren($levels = 0) {
-		return KunenaForumCategoryHelper::getChildren($this->id, $levels);
-	}
-
-	public function getUser($user = null) {
-		return KunenaForumCategoryUserHelper::get($this->id, $user);
-	}
-
-	function exists($exists = null) {
+	/**
+	 * Returns true if category exists in the database.
+	 *
+	 * @param mixed $exists Internal parameter to change state.
+	 * @return bool True if category exists.
+	 */
+	public function exists($exists = null) {
 		$return = $this->_exists;
 		if ($exists !== null) $this->_exists = $exists;
 		return $return;
 	}
 
-	public function getNewCount($count=false) {
-		if ($count !== false) $this->_new = $count;
+	/**
+	 * Returns list of children from this category.
+	 *
+	 * @param int $levels How many levels to search
+	 * @return array List of KunenaForumCategory objects.
+	 */
+	public function getChildren($levels = 0) {
+		return KunenaForumCategoryHelper::getChildren($this->id, $levels);
+	}
+
+	/**
+	 * Returns object containing user information from this category.
+	 *
+	 * @param mixed $user
+	 * @return KunenaForumCategoryUser
+	 */
+	public function getUserInfo($user = null) {
+		return KunenaForumCategoryUserHelper::get($this->id, $user);
+	}
+
+	/**
+	 * Returns new topics count from this category for current user.
+	 *
+	 * @todo Currently new topics needs to be calculated manually, make it automatic.
+	 *
+	 * @param mixed $count Internal parameter to set new count.
+	 * @return bool New topics count.
+	 */
+	public function getNewCount($count = null) {
+		if ($count !== null) $this->_new = $count;
 		return $this->_new;
 	}
 
@@ -187,7 +214,7 @@ class KunenaForumCategory extends JObject {
 		$message->catid = $catid;
 		$message->name = $user->getName('');
 		$message->userid = $user->userid;
-		$message->ip = $_SERVER ["REMOTE_ADDR"];
+		$message->ip = !empty($_SERVER ['REMOTE_ADDR']) ? $_SERVER ['REMOTE_ADDR'] : '';
 		$message->hold = $this->review ? (int)!$this->authorise ('moderate', $user, true) : 0;
 		$message->bind($fields, array ('name', 'email', 'subject', 'message'));
 
@@ -342,18 +369,24 @@ class KunenaForumCategory extends JObject {
 	 *
 	 * @access	public
 	 * @param	mixed	$identifier The category id of the user to load
-	 * @return	boolean			True on success
+	 * @return	boolean	True if category exists
 	 * @since 1.6
 	 */
-	public function load($id) {
+	public function load($id = null) {
+		if ($id !== null) $this->id = intval($id);
+
 		// Create the user table object
 		$table = $this->getTable ();
 
 		// Load the KunenaTableCategories object based on the id
-		if ($id) $this->_exists = $table->load ( $id );
+		if ($this->id) $this->_exists = $table->load ( $this->id );
+		$table->id = $this->id;
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
+
+		// Register category if it exists
+		if ($this->_exists) KunenaForumCategoryHelper::register($this);
 		return $this->_exists;
 	}
 
@@ -406,6 +439,57 @@ class KunenaForumCategory extends JObject {
 	}
 
 	/**
+	 * Method to purge old topics from the category
+	 *
+	 * @access	public
+	 * @return	boolean	True on success
+	 * @since 1.6
+	 */
+	public function purge($time, $limit = 1000) {
+		if (!$this->exists()) {
+			return true;
+		}
+
+		$db = JFactory::getDBO ();
+		$query ="SELECT id FROM #__kunena_topics WHERE last_post_time < {$time} ORDER BY last_post_time ASC";
+		$db->setQuery($query, 0, $limit);
+		$ids = $db->loadResultArray();
+		KunenaError::checkDatabaseError ();
+		if (empty($ids)) return true;
+
+		$idlist = implode(',', $ids);
+		// Delete user topics
+		$queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id IN ({$idlist})";
+		// Delete user read
+		$queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id IN ({$idlist})";
+		// Delete thank yous
+		$queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.thread IN ({$idlist})";
+		// Delete poll users
+		$queries[] = "DELETE p FROM #__kunena_polls_users AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.topic_id IN ({$idlist}) AND tt.moved_id=0";
+		// Delete poll options
+		$queries[] = "DELETE p FROM #__kunena_polls_options AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.topic_id IN ({$idlist}) AND tt.moved_id=0";
+		// Delete polls
+		$queries[] = "DELETE p FROM #__kunena_polls AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.id WHERE tt.topic_id IN ({$idlist}) AND tt.moved_id=0";
+		// Delete messages
+		$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.thread IN ({$idlist})";
+		// TODO: delete attachments
+		// TODO: delete keywords
+		// Delete topics
+		$queries[] = "DELETE FROM #__kunena_topics WHERE id IN ({$idlist})";
+
+		foreach ($queries as $query) {
+			$db->setQuery($query);
+			$db->query();
+			KunenaError::checkDatabaseError ();
+		}
+
+		KunenaUserHelper::recount();
+		KunenaForumCategoryHelper::recount($this->id);
+
+		return true;
+	}
+
+	/**
 	 * Method to delete the KunenaForumCategory object from the database
 	 *
 	 * @access	public
@@ -447,6 +531,9 @@ class KunenaForumCategory extends JObject {
 		// Delete messages
 		$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.catid={$db->quote($this->id)}";
 		// TODO: delete attachments
+		// TODO: delete keywords
+		// Delete topics
+		$queries[] = "DELETE FROM #__kunena_topics WHERE category_id={$db->quote($this->id)}";
 
 		foreach ($queries as $query) {
 			$db->setQuery($query);
@@ -455,9 +542,9 @@ class KunenaForumCategory extends JObject {
 		}
 
 		KunenaUserHelper::recount();
-		KunenaForumCategoryHelper::recount();
 
 		$this->id = null;
+		KunenaForumCategoryHelper::register($this);
 		return $result;
 	}
 
@@ -534,7 +621,7 @@ class KunenaForumCategory extends JObject {
 	}
 
 	public function update($topic, $topicdelta=0, $postdelta=0) {
-		if ($topic->moved_id) return false;
+		if (!$topic->id) return false;
 
 		$update = false;
 		if ($topicdelta || $postdelta) {
@@ -543,23 +630,22 @@ class KunenaForumCategory extends JObject {
 			$this->numPosts += (int)$postdelta;
 			$update = true;
 		}
-		if ($topic->exists() && $topic->hold==0 && $topic->category_id == $this->id) {
-			// If topic exists and has new post, we need to update cache
-			if ($this->last_post_time < $topic->last_post_time) {
-				$this->last_topic_id = $topic->id;
-				$this->last_topic_posts = $topic->posts;
-				$this->last_topic_subject = $topic->subject;
-				$this->last_post_id = $topic->last_post_id;
-				$this->last_post_time = $topic->last_post_time;
-				$this->last_post_userid = $topic->last_post_userid;
-				$this->last_post_message = $topic->last_post_message;
-				$this->last_post_guest_name = $topic->last_post_guest_name;
-				$update = true;
-			}
+		if ($topic->exists() && $topic->hold==0 && $topic->moved_id==0 && $topic->category_id==$this->id
+			&& ($this->last_post_time<$topic->last_post_time || ($this->last_post_time==$topic->last_post_time && $this->last_post_id <= $topic->last_post_id))) {
+			// If topic has new post or last topic changed, we need to update cache
+			$this->last_topic_id = $topic->id;
+			$this->last_topic_posts = $topic->posts;
+			$this->last_topic_subject = $topic->subject;
+			$this->last_post_id = $topic->last_post_id;
+			$this->last_post_time = $topic->last_post_time;
+			$this->last_post_userid = $topic->last_post_userid;
+			$this->last_post_message = $topic->last_post_message;
+			$this->last_post_guest_name = $topic->last_post_guest_name;
+			$update = true;
 		} elseif ($this->last_topic_id == $topic->id) {
-			// If last topic got moved or deleted, we need to find last post
+			// If last topic/post got moved or deleted, we need to find last post
 			$db = JFactory::getDBO ();
-			$query = "SELECT * FROM #__kunena_topics WHERE category_id={$db->quote($this->id)} AND hold=0 AND moved_id=0 ORDER BY last_post_time DESC";
+			$query = "SELECT * FROM #__kunena_topics WHERE category_id={$db->quote($this->id)} AND hold=0 AND moved_id=0 ORDER BY last_post_time DESC, last_post_id DESC";
 			$db->setQuery ( $query, 0, 1 );
 			$topic = $db->loadObject ();
 			KunenaError::checkDatabaseError ();

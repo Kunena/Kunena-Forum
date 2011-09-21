@@ -1,0 +1,4 @@
+.buildpath
+.project
+.settings
+components/com_kunena/template/**/params.ini

@@ -15,11 +15,8 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaForumCategoryHelperTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * Sets up the fixture.
+	 * Test getCategories()
 	 */
-	protected function setUp() {
-	}
-
 	public function testGetAllCategories() {
 		$categories = KunenaForumCategoryHelper::getCategories();
 		$this->assertInternalType('array', $categories);

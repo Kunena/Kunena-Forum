@@ -183,7 +183,7 @@ window.addEvent('domready', function(){
 			return false;
 		}
 		$success = true;
-		$usercategory = $category->getUser($user);
+		$usercategory = $category->getUserInfo($user);
 		if (($usercategory->role == 0 && $status) || ($usercategory->role == 1 && !$status)) {
 			$usercategory->role = $status;
 			$success = $usercategory->save();

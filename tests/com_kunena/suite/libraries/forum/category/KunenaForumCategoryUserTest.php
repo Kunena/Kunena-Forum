@@ -15,19 +15,6 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaForumCategoryUserTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * Sets up the fixture.
-	 */
-	public static function setUpBeforeClass() {
-		jimport('joomla.plugin.helper');
-	}
-
-	/**
-	 * Tears down the fixture.
-	 */
-	public static function tearDownAfterClass() {
-	}
-
-	/**
 	 * Test new KunenaForumCategoryUser()
 	 */
 	public function testNew() {
@@ -60,9 +47,7 @@ class KunenaForumCategoryUserTest extends PHPUnit_Framework_TestCase {
 		// Check that object was saved to database
 		$categoryuser2 = new KunenaForumCategoryUser();
 		$this->assertTrue($categoryuser2->load($categoryuser->category_id, $categoryuser->user_id));
-		$this->assertEquals($categoryuser->category_id, $categoryuser2->category_id);
-		$this->assertEquals($categoryuser->user_id, $categoryuser2->user_id);
-		$this->assertEquals($categoryuser->role, $categoryuser2->role);
+		$this->assertEquals($categoryuser, $categoryuser2);
 
 		// Check that instance remains the same
 		$categoryuser2 = KunenaForumCategoryUser::getInstance(0, $admin->userid);
@@ -126,14 +111,11 @@ class KunenaForumCategoryUserTest extends PHPUnit_Framework_TestCase {
 		$categoryuser2 = new KunenaForumCategoryUser();
 		$this->assertTrue($categoryuser2->load($categoryuser->category_id, $categoryuser->user_id));
 		$this->assertTrue($categoryuser2->exists());
-		$this->assertEquals($categoryuser->category_id, $categoryuser2->category_id);
-		$this->assertEquals($categoryuser->user_id, $categoryuser2->user_id);
-		$this->assertEquals($categoryuser->role, $categoryuser2->role);
-		$this->assertEquals($categoryuser->subscribed, $categoryuser2->subscribed);
+		$this->assertEquals($categoryuser, $categoryuser2);
 	}
 
 	/**
-	 * Test category user deletion
+	 * Test delete()
 	 *
 	 * @param KunenaForumCategoryUser $categoryuser
 	 * @depends testGetInstance

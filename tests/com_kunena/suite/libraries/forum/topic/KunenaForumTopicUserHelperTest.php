@@ -15,27 +15,14 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaForumTopicUserHelperTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * Sets up the fixture.
-	 */
-	public static function setUpBeforeClass() {
-		jimport('joomla.plugin.helper');
-	}
-
-	/**
-	 * Tears down the fixture.
-	 */
-	public static function tearDownAfterClass() {
-	}
-
-	/**
 	 * Test get()
 	 */
-	public function testGetInstance() {
+	public function testGet() {
 		$admin = KunenaFactory::getUser('admin');
 
-		$topicuser = KunenaForumTopicUserHelper::get(0, $admin->userid);
-		$this->assertEquals(0, $topicuser->topic_id);
-		$this->assertEquals($admin->userid, $topicuser->user_id);
+		$topicuser = KunenaForumTopicUserHelper::get();
+		$this->assertEquals(null, $topicuser->topic_id);
+		$this->assertEquals(0, $topicuser->user_id);
 	}
 
 	/**

@@ -14,28 +14,18 @@ defined ( '_JEXEC' ) or die ();
  * Test class for KunenaForumTopicUser.
  */
 class KunenaForumTopicUserTest extends PHPUnit_Framework_TestCase {
-	/**
-	 * Sets up the fixture.
-	 */
-	public static function setUpBeforeClass() {
-		jimport('joomla.plugin.helper');
-	}
-
-	/**
-	 * Tears down the fixture.
-	 */
-	public static function tearDownAfterClass() {
-	}
-
+	static public $topic = null;
 	/**
 	 * Test new KunenaForumTopicUser()
 	 */
 	public function testNew() {
 		$admin = KunenaFactory::getUser('admin');
-		$topicuser = new KunenaForumTopicUser(2, $admin);
+		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics(false, 0, 1);
+		self::$topic = reset($topics);
+		$topicuser = new KunenaForumTopicUser(self::$topic->id, $admin);
 		$this->assertInstanceOf('KunenaForumTopicUser', $topicuser);
 		$this->assertFalse($topicuser->exists());
-		$this->assertEquals(2, $topicuser->topic_id);
+		$this->assertEquals(self::$topic->id, $topicuser->topic_id);
 		$this->assertEquals($admin->userid, $topicuser->user_id);
 	}
 
@@ -46,26 +36,24 @@ class KunenaForumTopicUserTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCreate() {
 		$admin = KunenaFactory::getUser('admin');
-		$topicuser = KunenaForumTopicUser::getInstance(2, $admin->userid);
-		$this->assertEquals(2, $topicuser->topic_id);
+		$topicuser = KunenaForumTopicUser::getInstance(self::$topic->id, $admin->userid);
+		$this->assertEquals(self::$topic->id, $topicuser->topic_id);
 		$this->assertEquals($admin->userid, $topicuser->user_id);
 
 		$topicuser->favorite = 1;
 		$this->assertTrue($topicuser->save());
 		$this->assertTrue($topicuser->exists());
-		$this->assertEquals(2, $topicuser->topic_id);
+		$this->assertEquals(self::$topic->id, $topicuser->topic_id);
 		$this->assertEquals($admin->userid, $topicuser->user_id);
 		$this->assertEquals(1, $topicuser->favorite);
 
 		// Check that object was saved to database
 		$topicuser2 = new KunenaForumTopicUser();
 		$this->assertTrue($topicuser2->load($topicuser->topic_id, $topicuser->user_id));
-		$this->assertEquals($topicuser->topic_id, $topicuser2->topic_id);
-		$this->assertEquals($topicuser->user_id, $topicuser2->user_id);
-		$this->assertEquals($topicuser->favorite, $topicuser2->favorite);
+		$this->assertEquals($topicuser, $topicuser2);
 
 		// Check that instance remains the same
-		$topicuser2 = KunenaForumTopicUser::getInstance(2, $admin->userid);
+		$topicuser2 = KunenaForumTopicUser::getInstance(self::$topic->id, $admin->userid);
 		return $topicuser2;
 	}
 
@@ -80,8 +68,8 @@ class KunenaForumTopicUserTest extends PHPUnit_Framework_TestCase {
 		$admin = KunenaFactory::getUser('admin');
 		$topicuser = new KunenaForumTopicUser();
 		$this->assertFalse($topicuser->load());
-		$this->assertFalse($topicuser->load(2,0));
-		$this->assertTrue($topicuser->load(2, $admin));
+		$this->assertFalse($topicuser->load(self::$topic->id,0));
+		$this->assertTrue($topicuser->load(self::$topic->id, $admin));
 		$this->assertTrue($topicuser->load());
 	}
 
@@ -125,13 +113,11 @@ class KunenaForumTopicUserTest extends PHPUnit_Framework_TestCase {
 		$topicuser2 = new KunenaForumTopicUser();
 		$this->assertTrue($topicuser2->load($topicuser->topic_id, $topicuser->user_id));
 		$this->assertTrue($topicuser2->exists());
-		$this->assertEquals($topicuser->topic_id, $topicuser2->topic_id);
-		$this->assertEquals($topicuser->user_id, $topicuser2->user_id);
-		$this->assertEquals($topicuser->favorite, $topicuser2->favorite);
+		$this->assertEquals($topicuser, $topicuser2);
 	}
 
 	/**
-	 * Test topic user deletion
+	 * Test delete()
 	 *
 	 * @param KunenaForumTopicUser $topicuser
 	 * @depends testGetInstance
@@ -139,5 +125,6 @@ class KunenaForumTopicUserTest extends PHPUnit_Framework_TestCase {
 	public function testDelete(KunenaForumTopicUser $topicuser) {
 		$this->assertTrue($topicuser->delete());
 		$this->assertFalse($topicuser->exists());
+		self::$topic == null;
 	}
 }

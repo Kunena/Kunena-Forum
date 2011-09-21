@@ -15,22 +15,9 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaForumCategoryUserHelperTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * Sets up the fixture.
-	 */
-	public static function setUpBeforeClass() {
-		jimport('joomla.plugin.helper');
-	}
-
-	/**
-	 * Tears down the fixture.
-	 */
-	public static function tearDownAfterClass() {
-	}
-
-	/**
 	 * Test get()
 	 */
-	public function testGetInstance() {
+	public function testGet() {
 		$admin = KunenaFactory::getUser('admin');
 
 		$categoryuser = KunenaForumCategoryUserHelper::get(0, $admin->userid);

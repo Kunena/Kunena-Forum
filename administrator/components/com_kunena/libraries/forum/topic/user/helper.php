@@ -16,6 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaForumTopicUserHelper {
 	// Global for every instance
 	protected static $_instances = array();
+	protected static $_topics = array();
 
 	private function __construct() {}
 
@@ -35,10 +36,10 @@ class KunenaForumTopicUserHelper {
 		$user = KunenaUserHelper::get($user);
 
 		if ($topic < 1)
-			return new KunenaForumTopicUser (0, $user);
+			return new KunenaForumTopicUser (null, $user);
 
 		if ($reload || empty ( self::$_instances [$user->userid][$topic] )) {
-			self::$_instances [$user->userid][$topic] = array_pop(KunenaForumTopicUserHelper::getTopics ( $topic, $user ));
+			self::$_instances [$user->userid][$topic] = self::$_topics [$topic][$user->userid] = array_pop(KunenaForumTopicUserHelper::getTopics ( $topic, $user ));
 		}
 
 		return self::$_instances [$user->userid][$topic];
@@ -69,12 +70,26 @@ class KunenaForumTopicUserHelper {
 	}
 
 	static function move($old, $new) {
+		// Update database
 		$db = JFactory::getDBO ();
 		$query ="UPDATE #__kunena_user_topics SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return false;
+
+		// Update internal state
+		if (isset(self::$_topics [$old->id])) {
+			if ($new->id != $old->id) {
+				self::$_topics [$new->id] = self::$_topics [$old->id];
+				unset(self::$_topics [$old->id]);
+			}
+			foreach (self::$_topics [$new->id] as &$instance) {
+				$instance->topic_id = $new->id;
+				$instance->category_id = $new->category_id;
+			}
+		}
+
 		return true;
 	}
 
@@ -82,8 +97,8 @@ class KunenaForumTopicUserHelper {
 		$db = JFactory::getDBO ();
 
 		// Move all user topics which do not exist in new topic
-		$queries[] = "UPDATE jos_kunena_user_topics AS ut
-			INNER JOIN jos_kunena_user_topics AS o ON o.user_id = ut.user_id
+		$queries[] = "UPDATE #__kunena_user_topics AS ut
+			INNER JOIN #__kunena_user_topics AS o ON o.user_id = ut.user_id
 			SET ut.topic_id={$db->quote($new->id)}, ut.category_id={$db->quote($new->category_id)}
 			WHERE o.topic_id={$db->quote($old->id)} AND ut.topic_id IS NULL";
 
@@ -107,6 +122,11 @@ class KunenaForumTopicUserHelper {
 			if (KunenaError::checkDatabaseError ())
 				return false;
 		}
+
+		// Update internal state
+		self::reloadTopic($old->id);
+		self::reloadTopic($new->id);
+
 		return true;
 	}
 
@@ -153,7 +173,7 @@ class KunenaForumTopicUserHelper {
 		$rows += $db->getAffectedRows ();
 
 		// Delete entries that have default values
-		$query ="DELETE ut FROM #__kunena_user_topics AS ut WHERE ut.posts=0 AND ut.favorite=0 AND ut.subscribed=0 {$where2}";
+		$query ="DELETE ut FROM #__kunena_user_topics AS ut WHERE ut.posts=0 AND ut.owner=0 AND ut.favorite=0 AND ut.subscribed=0 AND ut.params='' {$where2}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
@@ -184,9 +204,30 @@ class KunenaForumTopicUserHelper {
 				$instance = new KunenaForumTopicUser ();
 				$instance->bind ( $results[$id] );
 				$instance->exists(true);
-				self::$_instances [$user->userid][$id] = $instance;
+				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = $instance;
 			} else {
-				self::$_instances [$user->userid][$id] = new KunenaForumTopicUser ($id, $user->userid);
+				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new KunenaForumTopicUser ($id, $user->userid);
+			}
+		}
+		unset ($results);
+	}
+
+	static protected function reloadTopic($id) {
+		if (empty(self::$_topics [$id])) return;
+
+		$idlist = implode(',', array_keys(self::$_topics [$id]));
+		$db = JFactory::getDBO ();
+		$query = "SELECT * FROM #__kunena_user_topics WHERE user_id IN ({$idlist}) AND topic_id={$id}";
+		$db->setQuery ( $query );
+		$results = (array) $db->loadAssocList ('user_id');
+		KunenaError::checkDatabaseError ();
+
+		foreach ( self::$_topics [$id] as $instance ) {
+			if (isset($results[$instance->user_id])) {
+				$instance->bind ( $results[$instance->user_id] );
+				$instance->exists(true);
+			} else {
+				$instance->reset();
 			}
 		}
 		unset ($results);

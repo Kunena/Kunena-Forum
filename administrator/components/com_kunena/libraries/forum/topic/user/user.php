@@ -34,9 +34,8 @@ class KunenaForumTopicUser extends JObject {
 		// Lets bind the data
 		$this->setProperties ( $table->getProperties () );
 		$this->_exists = false;
-		$this->topic_id = $topic->id;
-		$this->category_id = $topic->category_id;
-
+		$this->topic_id = $topic->exists() ? $topic->id : null;
+		$this->category_id = $topic->exists() ? $topic->category_id : null;
 		$this->user_id = KunenaUserHelper::get($user)->userid;
 	}
 
@@ -85,6 +84,11 @@ class KunenaForumTopicUser extends JObject {
 		$this->setProperties ( $data );
 	}
 
+	public function reset() {
+		$this->topic_id = 0;
+		$this->load();
+	}
+
 	/**
 	 * Method to load a KunenaForumTopicUser object by id
 	 *
@@ -106,7 +110,8 @@ class KunenaForumTopicUser extends JObject {
 		$table = $this->getTable ();
 
 		// Load the KunenaTable object based on id
-		$this->_exists = $table->load ( array('user_id'=>$user->userid, 'topic_id'=>$topic_id) );
+		if ($topic_id) $this->_exists = $table->load ( array('user_id'=>$user->userid, 'topic_id'=>$topic_id) );
+		else $this->_exists = false;
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );

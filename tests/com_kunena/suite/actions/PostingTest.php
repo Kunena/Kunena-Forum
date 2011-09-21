@@ -192,7 +192,7 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($last, $topic->last_post_id, 'Check last post in topic');
 		$this->assertEquals(intval($count->posts), $topic->posts, 'Check that topic post count is right');
 		$this->assertEquals(0, intval($count->checkcat), 'Check that category id is corrent in all messages');
-		$this->assertEquals(intval($count->userposts), $topic->getUser($user->userid)->posts, 'Check that user topic post count is right');
+		$this->assertEquals(intval($count->userposts), $topic->getUserInfo($user->userid)->posts, 'Check that user topic post count is right');
 	}
 
 	protected function checkUser($user) {

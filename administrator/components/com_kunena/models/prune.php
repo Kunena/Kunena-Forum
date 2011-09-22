@@ -39,4 +39,14 @@ class KunenaAdminModelPrune extends KunenaModel {
 
 		return JHTML::_('select.genericlist', $trashdelete, 'trashdelete', 'class="inputbox" size="1"', 'value', 'text', 0);
 	}
+
+	function getControlOptions() {
+		$contoloptions = array();
+		$contoloptions [] = JHTML::_ ( 'select.option', 'noreplies', JText::_('COM_KUNENA_A_PRUNE_NO_REPLIES') );
+		$contoloptions [] = JHTML::_ ( 'select.option', 'unapproved', JText::_('COM_KUNENA_A_PRUNE_UNAPPROVED') );
+		$contoloptions [] = JHTML::_ ( 'select.option', 'locked', JText::_('COM_KUNENA_A_PRUNE_LOCKED') );
+		$contoloptions [] = JHTML::_ ( 'select.option', 'deleted', JText::_('COM_KUNENA_A_PRUNE_DELETED') );
+
+		return JHTML::_('select.genericlist', $contoloptions, 'controloptions', 'class="inputbox" size="1"', 'value', 'text', 0);
+	}
 }

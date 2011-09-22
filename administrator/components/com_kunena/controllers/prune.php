@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ( 'kunena.controller' );
+kimport ( 'kunena.forum.category.helper' );
 kimport ( 'kunena.forum.message.attachment.helper' );
 
 /**
@@ -46,10 +47,28 @@ class KunenaAdminControllerPrune extends KunenaController {
 
 		$trashdelete = JRequest::getInt( 'trashdelete', 0);
 
+		$where = array();
+		$where[] = 'AND tt.last_post_time>'.$prune_date.' AND ordering=0';
+
+		$hold='0';
+		$trashdelete = JRequest::getString( 'controloptions', 0);
+		if ( $trashdelete == 'noreplies' ) {
+			$where[] = 'AND tt.posts=1';
+		} elseif( $trashdelete == 'locked' ) {
+			$where[] = 'AND tt.locked>0';
+		} elseif( $trashdelete == 'deleted' ) {
+			$hold = '2';
+		} elseif( $trashdelete == 'unapproved' ) {
+			$hold = '1';
+		}
+
+		$where = implode(' ', $where);
+
 		// Get up to 100 oldest topics to be deleted
 		$params = array(
 			'orderby'=>'tt.last_post_time ASC',
-			'where'=>"AND tt.last_post_time<{$prune_date} AND ordering=0",
+			'hold' => $hold,
+			'where'=> $where,
 		);
 		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics($category->id, 0, 100, $params);
 		$deleted = 0;

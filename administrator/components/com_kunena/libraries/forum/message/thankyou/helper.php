@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.error' );
-kimport ( 'kunena.forum.message.thankyou' );
-
 /**
  * Kunena Forum Message Thank You Helper Class
  * @since 2.0

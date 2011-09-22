@@ -12,14 +12,6 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ('joomla.user.helper');
 jimport ('joomla.mail.helper');
-kimport ('kunena.error');
-kimport ('kunena.user.helper');
-kimport ('kunena.forum.category.helper');
-kimport ('kunena.forum.topic.helper');
-kimport ('kunena.forum.message.helper');
-kimport ('kunena.forum.message.attachment');
-kimport ('kunena.forum.message.attachment.helper');
-kimport ('kunena.forum.message.thankyou.helper');
 
 /**
  * Kunena Forum Message Class
@@ -121,7 +113,6 @@ class KunenaForumMessage extends JObject {
 			$mailadmins = 0;
 		}
 
-		kimport ('kunena.html.parser');
 		$once = false;
 		if ($mailsubs) {
 			if (!$this->parent) {
@@ -436,7 +427,6 @@ class KunenaForumMessage extends JObject {
 		//are we creating a new message
 		$isnew = ! $this->_exists;
 
-		// If we aren't allowed to create new message return
 		if ($isnew && $updateOnly) {
 			$this->setError ( JText::_('COM_KUNENA_LIB_MESSAGE_ERROR_UPDATE_ONLY') );
 			return false;
@@ -471,8 +461,13 @@ class KunenaForumMessage extends JObject {
 
 		$update = 0;
 		if (!$this->thread) {
-			// Update missing topic information
-			$this->_thread = $this->thread = $this->id;
+			// Create topic
+			$topic = $this->getTopic();
+			if (!$topic->exists() && !$topic->save()) {
+				$this->setError ( $topic->getError () );
+				return false;
+			}
+			$this->_thread = $this->thread = $topic->id;
 			++$update;
 		}
 
@@ -702,8 +697,21 @@ class KunenaForumMessage extends JObject {
 			return false;
 		}
 
-		if (!$this->time) {
-			$this->time = JFactory::getDate()->toUnix();
+		// Do not allow no posting date or dates from the future
+		$now = JFactory::getDate()->toUnix();
+		if (!$this->time || $this->time > $now) {
+			$this->time = $now;
+		}
+		// Do not allow indentical posting times inside topic (simplifies logic)
+		$topic = $this->getTopic();
+		if (!$this->exists() && $topic->exists() && $this->time <= $topic->last_post_time) {
+			$this->time = $topic->last_post_time + 1;
+		}
+		if ($this->modified_time > $now) {
+			$this->modified_time = $now;
+		}
+		if ($this->modified_time && $this->modified_time < $this->time) {
+			$this->modified_time = $this->time;
 		}
 		if ($this->hold < 0 || $this->hold > 3) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_MESSAGE_ERROR_HOLD_INVALID' ) );

@@ -20,7 +20,6 @@ if (version_compare(JVERSION, '1.6', '>')) {
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 // Initialize error handlers
-kimport ( 'kunena.error' );
 KunenaError::initialize ();
 
 // Get view and task
@@ -42,7 +41,6 @@ if ($view != 'install' && !$kversion->checkVersion()) {
 
 } else {
 	// Kunena has been successfully installed: Load our main controller
-	kimport ('kunena.controller');
 	$controller = KunenaController::getInstance();
 }
 $controller->execute( $task );

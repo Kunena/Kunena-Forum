@@ -10,13 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport('kunena.user.helper');
-kimport('kunena.forum.category.helper');
-kimport('kunena.forum.topic.helper');
-kimport('kunena.forum.message.helper');
-kimport ( 'kunena.error' );
-
 /**
  * Kunena Trash Controller
  *

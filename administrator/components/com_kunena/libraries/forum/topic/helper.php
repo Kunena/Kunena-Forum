@@ -10,12 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.user');
-kimport ('kunena.forum.category.helper');
-kimport ('kunena.forum.topic');
-kimport ('kunena.forum.topic.user.helper');
-kimport ('kunena.keyword.helper');
 
 /**
  * Kunena Forum Topic Helper Class
@@ -341,7 +335,7 @@ class KunenaForumTopicHelper {
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumTopic ();
+				$instance = new KunenaForumTopic (false);
 				$instance->bind ( $results[$id] );
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;

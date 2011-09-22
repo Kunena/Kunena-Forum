@@ -10,11 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.databasequery');
-kimport ('kunena.forum.message');
-kimport ('kunena.forum.topic.helper');
-
 /**
  * Kunena Forum Message Helper Class
  */
@@ -243,8 +238,8 @@ class KunenaForumMessageHelper {
 		$idlist = implode ( ',', $ids );
 		$db = JFactory::getDBO ();
 		$db->setQuery ( "SELECT m.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
-				SUM(mm.id<m.id) AS before_count,
-				SUM(mm.id>m.id) AS after_count
+				SUM(mm.time<m.time) AS before_count,
+				SUM(mm.time>m.time) AS after_count
 			FROM #__kunena_messages AS m
 			INNER JOIN #__kunena_messages AS mm ON m.thread=mm.thread
 			WHERE m.id IN ({$idlist})

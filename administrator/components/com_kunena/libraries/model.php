@@ -10,7 +10,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
-kimport('kunena.forum.category.helper');
 
 /**
  * Model for Kunena

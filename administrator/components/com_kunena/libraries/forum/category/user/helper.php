@@ -10,12 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.user');
-kimport ('kunena.user.helper');
-kimport ('kunena.forum.category.user');
-kimport ('kunena.forum.category.helper');
-
 /**
  * Kunena Forum Category User Helper Class
  */
@@ -53,12 +47,16 @@ class KunenaForumCategoryUserHelper {
 	static public function getCategories($ids = false, $user=null) {
 		$user = KunenaUserHelper::get($user);
 		if ($ids === false) {
-			return isset(self::$_instances[$user->userid]) ? self::$_instances[$user->userid] : self::getCategories(array_keys(KunenaForumCategoryHelper::getCategories()), $user);
-		} elseif (is_array ($ids) ) {
-			$ids = array_unique($ids);
-		} else {
+			// Get categories which are seen by current user
+			$ids = KunenaForumCategoryHelper::getCategories();
+		} elseif (!is_array ($ids) ) {
 			$ids = array($ids);
 		}
+		// Convert category objects into ids
+		foreach ($ids as $i=>$id) {
+			if ($id instanceof KunenaForumCategory) $ids[$i] = $id->id;
+		}
+		$ids = array_unique($ids);
 		self::loadCategories($ids, $user);
 
 		$list = array ();
@@ -95,7 +93,7 @@ class KunenaForumCategoryUserHelper {
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = $instance;
 			} else {
-				self::$_instances [$user->userid][$id] = new KunenaForumCategoryUser ($id, $user->userid);
+				self::$_instances [$user->userid][$id] = new KunenaForumCategoryUser ($id, $user);
 			}
 		}
 		unset ($results);

@@ -21,8 +21,12 @@ jimport('joomla.log.log');
 jimport('joomla.environment.request');
 jimport('joomla.session.session');
 
+// We need also these:
+jimport('joomla.plugin.helper');
+
 $_SERVER['HTTP_HOST'] = 'http://localhost';
 $_SERVER['REQUEST_URI'] = '/index.php';
+//$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 
 $app = JFactory::getApplication('site');
 
@@ -45,3 +49,4 @@ JError::setErrorHandling(E_ERROR, 'ignore');
 
 // Load Kunena API
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+KunenaFactory::loadLanguage();

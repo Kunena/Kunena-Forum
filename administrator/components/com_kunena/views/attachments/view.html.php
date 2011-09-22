@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.view' );
-kimport ('kunena.forum.message.attachment.helper');
-
 /**
  * Attachments view for Kunena backend
  */

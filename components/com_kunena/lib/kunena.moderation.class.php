@@ -36,7 +36,6 @@ class CKunenaModeration {
 	protected $_config = null;
 
 	protected function __construct($db, $config) {
-		kimport('kunena.forum.category.helper');
 		$this->_db = $db;
 		$this->_my = &JFactory::getUser ();
 		$this->_me = KunenaFactory::getUser ();
@@ -252,7 +251,6 @@ class CKunenaModeration {
 		$this->_Log ( 'Move', $MessageID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode );
 
 		// Last but not least update forum stats
-		kimport('kunena.forum.category.helper');
 		KunenaForumCategoryHelper::recount ();
 
 		return true;
@@ -411,7 +409,6 @@ class CKunenaModeration {
 		$this->_Log ( 'Delete', $MessageID, 0, '', 0, $mode );
 
 		// Last but not least update forum stats
-		kimport('kunena.forum.category.helper');
 		KunenaForumCategoryHelper::recount ();
 
 		return true;

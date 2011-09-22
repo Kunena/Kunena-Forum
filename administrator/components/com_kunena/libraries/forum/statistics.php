@@ -123,7 +123,6 @@ class KunenaForumStatistics {
 	public function loadCategoryCount() {
 		if ($this->sectionCount === null) {
 			$this->sectionCount = $this->categoryCount = 0;
-			kimport('kunena.forum.category.helper');
 			$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 			foreach ($categories as $category) {
 				if (!$category->published) continue;

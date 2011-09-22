@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.error' );
-
 /**
  * Kunena Smileys Controller
  *
@@ -82,7 +79,6 @@ class KunenaAdminControllerSmilies extends KunenaController {
 	}
 
 	function smileyupload() {
-		kimport('kunena.upload.helper');
 		$app = JFactory::getApplication ();
 
 		if (!JRequest::checkToken()) {

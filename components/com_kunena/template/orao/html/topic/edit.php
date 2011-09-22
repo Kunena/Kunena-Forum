@@ -17,8 +17,7 @@ JHTML::_('behavior.keepalive');
 
 $this->document->addScriptDeclaration('config_attachment_limit = '.$this->config->attachment_limit );
 
-kimport ('kunena.bbcode.editor');
-$editor = KunenaBBCodeEditor::getInstance();
+$editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize();
 
 include_once (KPATH_SITE.'/lib/kunena.bbcode.js.php');

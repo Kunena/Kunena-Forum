@@ -11,9 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
-kimport('kunena.model');
-kimport ( 'kunena.error' );
-kimport ( 'kunena.html.pagination' );
 
 /**
  * Topicicons Model for Kunena

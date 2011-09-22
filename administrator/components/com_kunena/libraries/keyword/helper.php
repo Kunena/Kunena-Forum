@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.keyword');
-kimport ('kunena.user.helper');
-
 /**
  * Kunena Keyword Helper Class
  */

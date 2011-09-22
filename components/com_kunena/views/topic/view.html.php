@@ -10,13 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.view' );
-kimport ( 'kunena.forum.message.attachment.helper' );
-kimport ( 'kunena.forum.topic.poll.helper' );
-kimport ( 'kunena.spam.recaptcha' );
-kimport ( 'kunena.html.parser' );
-kimport ( 'kunena.html.pagination' );
-
 /**
  * Topic View
  */
@@ -418,7 +411,7 @@ class KunenaViewTopic extends KunenaView {
 			// Get thread and reply count from current message:
 			$query = "SELECT COUNT(mm.id) AS replies FROM #__kunena_messages AS m
 				INNER JOIN #__kunena_messages AS t ON m.thread=t.id
-				LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.id > m.id
+				LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.time > m.time
 				WHERE m.id={$db->Quote($this->mesid)}";
 			$db->setQuery ( $query, 0, 1 );
 			$this->replies = $db->loadResult ();

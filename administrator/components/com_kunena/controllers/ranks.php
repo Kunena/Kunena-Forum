@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.error' );
-
 /**
  * Kunena Ranks Controller
  *
@@ -86,7 +83,6 @@ class KunenaAdminControllerRanks extends KunenaController {
 	}
 
 	function rankupload() {
-		kimport('kunena.upload.helper');
 		$app = JFactory::getApplication ();
 
 		if (!JRequest::checkToken()) {

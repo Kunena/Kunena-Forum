@@ -11,11 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_ADMIN . '/libraries/integration/integration.php';
-kimport ( 'kunena.error' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.forum.category.user.helper' );
-kimport ( 'kunena.forum.topic.helper' );
-kimport ( 'kunena.databasequery' );
 
 abstract class KunenaAccess {
 	public $priority = 0;
@@ -158,7 +153,7 @@ window.addEvent('domready', function(){
 		// Administrators are always moderators
 		if ($this->isAdmin($user, $catid)) return true;
 
-		if (isset(self::$moderatorsByUserid[$user->userid])) {
+		if (!empty(self::$moderatorsByUserid[$user->userid])) {
 			// Is user a global moderator?
 			if (!empty(self::$moderatorsByUserid[$user->userid][0])) return true;
 			// Were we looking only for global moderator?
@@ -187,22 +182,22 @@ window.addEvent('domready', function(){
 		if (!$user->exists()) {
 			return false;
 		}
-
 		$success = true;
-		$usercategory = KunenaForumCategoryUserHelper::get($category_id, $user->userid);
-		if (($usercategory->role == 0 && $status != 0) || ($usercategory->role == 1 && $status != 1)) {
+		$usercategory = $category->getUserInfo($user);
+		if (($usercategory->role == 0 && $status) || ($usercategory->role == 1 && !$status)) {
 			$usercategory->role = $status;
 			$success = $usercategory->save();
-		}
-		// Clear moderator cache
-		$this->clearCache();
 
-		// Change user moderator status
-		if ($success && $user->moderator != $this->isModerator($user, 0)) {
-			$user->moderator = $this->isModerator($user, 0);
-			$success = $user->save();
-		}
+			// Clear moderator cache
+			$this->clearCache();
 
+			// Change user moderator status
+			$moderator = $this->getModeratorStatus($user);
+			if ($user->moderator != !empty($moderator)) {
+				$user->moderator = intval(!empty($moderator));
+				$success = $user->save();
+			}
+		}
 		return $success;
 	}
 

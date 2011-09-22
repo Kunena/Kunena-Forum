@@ -9,8 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.factory');
-
 // Kunena 1.6.0: Convert deprecated configuration options
 function kunena_upgrade_160_configuration($parent) {
 	$config = KunenaFactory::getConfig ();

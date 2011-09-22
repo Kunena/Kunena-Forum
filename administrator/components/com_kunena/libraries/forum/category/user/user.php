@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.user');
-kimport ('kunena.forum.category.helper');
-kimport ('kunena.forum.category.user.helper');
-
 /**
  * Kunena Forum Category User Class
  */
@@ -93,9 +89,12 @@ class KunenaForumCategoryUser extends JObject {
 	 * @return	boolean			True on success
 	 * @since 1.6
 	 */
-	public function load($id = null, $user = null) {
-		if ($id === null) {
-			$id = $this->category_id;
+	public function load($category_id = null, $user = null) {
+		if ($category_id === null) {
+			$category_id = $this->category_id;
+		}
+		if ($user === null && $this->user_id !== null) {
+			$user = $this->user_id;
 		}
 		$user = KunenaUserHelper::get($user);
 
@@ -103,7 +102,7 @@ class KunenaForumCategoryUser extends JObject {
 		$table = $this->getTable ();
 
 		// Load the KunenaTable object based on id
-		$this->_exists = $table->load ( array($user->userid, $id) );
+		$this->_exists = $table->load ( array('user_id'=>$user->userid, 'category_id'=>$category_id) );
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
@@ -166,7 +165,7 @@ class KunenaForumCategoryUser extends JObject {
 		// Create the table object
 		$table = $this->getTable ();
 
-		$result = $table->delete ( $this->id );
+		$result = $table->delete ( array('category_id'=>$this->category_id, 'user_id'=>$this->user_id) );
 		if (! $result) {
 			$this->setError ( $table->getError () );
 		}

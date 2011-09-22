@@ -33,6 +33,10 @@ define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
 define ( 'KURL_SITE', JURI::Root () . KPATH_COMPONENT_RELATIVE . '/' );
 define ( 'KURL_MEDIA', JURI::Root () . 'media/' . KUNENA_NAME . '/' );
 
+// Register Joomla and Kunena autoloader
+if (function_exists('__autoload')) spl_autoload_register('__autoload');
+spl_autoload_register('KunenaAutoload');
+
 // Give access to all Kunena tables
 jimport('joomla.database.table');
 JTable::addIncludePath(KPATH_ADMIN.'/libraries/tables');
@@ -40,40 +44,31 @@ JTable::addIncludePath(KPATH_ADMIN.'/libraries/tables');
 jimport('joomla.html.html');
 JHTML::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
 
-kimport('kunena.forum');
-kimport('kunena.factory');
-kimport('kunena.route');
-
-KUNENA_PROFILER ? kimport('kunena.profiler') : null;
-
 /**
  * Intelligent library importer.
  *
  * @param	string	A dot syntax path.
  * @return	boolean	True on success
  * @since	1.6
+ * @deprecated 2.0
  */
-function kimport($path)
-{
-	static $paths = array();
-	if (isset($paths[$path])) return true;
+function kimport($path) {}
 
-	$res = false;
-	if (substr($path, 0, 7) == 'kunena.') {
-		$file = KPATH_ADMIN . '/libraries/' . str_replace( '.', '/', substr($path, 7));
-		if (is_dir($file)) {
-			$parts = explode( '/', $file );
-			$file .= '/'.array_pop( $parts );
-		}
-		$file .= '.php';
-		$class = str_replace( '.', '', $path);
-		if (file_exists($file) && !class_exists($class)) {
-			JLoader::register($class, $file);
-			$paths[$path] = 1;
-			$res = true;
-		}
+/**
+ * Kunena auto loader
+ *
+ * @param string $class Class to be registered (case sensitive)
+ */
+function KunenaAutoload($class) {
+	if (substr($class, 0, 6) != 'Kunena') return;
+	$file = KPATH_ADMIN . '/libraries/' . strtolower(preg_replace( '/([A-Z])/', '/\\1', substr($class, 6)));
+	if (is_dir($file)) {
+		$file .= '/'.array_pop( explode( '/', $file ) );
 	}
-	return $res;
+	$file .= '.php';
+	if (file_exists($file)) {
+		require_once $file;
+	}
 }
 
 // Kunena has been initialized

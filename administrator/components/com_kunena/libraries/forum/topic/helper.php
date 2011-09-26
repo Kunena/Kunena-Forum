@@ -35,8 +35,11 @@ class KunenaForumTopicHelper {
 		if ($id < 1)
 			return new KunenaForumTopic ();
 
-		if ($reload || empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumTopic ( $id );
+	if (empty ( self::$_instances [$id] )) {
+			self::$_instances [$id] = new KunenaForumTopic ( array('id'=>$id) );
+			self::$_instances [$id]->load();
+		} elseif ($reload) {
+			self::$_instances [$id]->load();
 		}
 
 		return self::$_instances [$id];
@@ -200,8 +203,7 @@ class KunenaForumTopicHelper {
 
 		$topics = array();
 		foreach ( $results as $id=>$result ) {
-			$instance = new KunenaForumTopic ();
-			$instance->bind ( $result );
+			$instance = new KunenaForumTopic ($result);
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;
 			$topics[$id] = $instance;
@@ -335,8 +337,7 @@ class KunenaForumTopicHelper {
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumTopic (false);
-				$instance->bind ( $results[$id] );
+				$instance = new KunenaForumTopic ($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;
 			} else {

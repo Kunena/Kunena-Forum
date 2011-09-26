@@ -266,7 +266,7 @@ class KunenaControllerTopic extends KunenaController {
 		$activity->onBeforeEdit($message);
 
 		// Save message
-		$success = $message->save (true);
+		$success = $message->save ();
 		if (! $success) {
 			$app->setUserState('com_kunena.postfields', $fields);
 			$app->enqueueMessage ( $message->getError (), 'error' );

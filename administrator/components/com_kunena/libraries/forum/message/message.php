@@ -16,8 +16,10 @@ jimport ('joomla.mail.helper');
 /**
  * Kunena Forum Message Class
  */
-class KunenaForumMessage extends JObject {
-	protected $_exists = false;
+class KunenaForumMessage extends KunenaDatabaseObject {
+	public $id = null;
+
+	protected $_table = 'KunenaMessages';
 	protected $_db = null;
 	protected $_attachments_add = array();
 	protected $_attachments_del = array();
@@ -30,10 +32,9 @@ class KunenaForumMessage extends JObject {
 	 *
 	 * @access	protected
 	 */
-	public function __construct($identifier = 0) {
-		// Always load the message -- if message does not exist: fill empty data
+	public function __construct($properties = null) {
 		$this->_db = JFactory::getDBO ();
-		if($identifier !== false) $this->load ( $identifier );
+		parent::__construct($properties);
 	}
 
 	/**
@@ -46,12 +47,6 @@ class KunenaForumMessage extends JObject {
 	 */
 	static public function getInstance($identifier = null, $reload = false) {
 		return KunenaForumMessageHelper::get($identifier, $reload);
-	}
-
-	function exists($exists = null) {
-		$return = $this->_exists;
-		if ($exists !== null) $this->_exists = $exists;
-		return $return;
 	}
 
 	public function isNew() {
@@ -94,7 +89,7 @@ class KunenaForumMessage extends JObject {
 			$text = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->message );
 			$message->message = "[quote=\"{$user->getName($this->name)}\" post={$this->id}]" .  $text . "[/quote]";
 		} elseif (is_array($fields)) {
-			$message->bind($fields, array ('name', 'email', 'subject', 'message' ));
+			$message->bind($fields, array ('name', 'email', 'subject', 'message' ), true);
 		}
 		return array($topic, $message);
 	}
@@ -274,7 +269,7 @@ class KunenaForumMessage extends JObject {
 	public function edit($fields = array(), $user=null) {
 		$user = KunenaUserHelper::get($user);
 
-		$this->bind($fields, array ('name', 'email', 'subject', 'message', 'modified_reason' ));
+		$this->bind($fields, array ('name', 'email', 'subject', 'message', 'modified_reason' ), true);
 
 		// Update rest of the information
 		$category = $this->getCategory();
@@ -362,104 +357,26 @@ class KunenaForumMessage extends JObject {
 	}
 
 	/**
-	 * Method to get the messages table object
-	 *
-	 * This function uses a static variable to store the table name of the user table to
-	 * it instantiates. You can call this function statically to set the table name if
-	 * needed.
-	 *
-	 * @access	public
-	 * @param	string	The messages table name to be used
-	 * @param	string	The messages table prefix to be used
-	 * @return	object	The messages table object
-	 * @since	1.6
-	 */
-	public function getTable($type = 'KunenaMessages', $prefix = 'Table') {
-		static $tabletype = null;
-
-		//Set a custom table type is defined
-		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix']) {
-			$tabletype ['name'] = $type;
-			$tabletype ['prefix'] = $prefix;
-		}
-
-		// Create the user table object
-		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
-	}
-
-	public function bind($data, $allow = array()) {
-		if (empty($data)) return;
-		if (!empty($allow)) $data = array_intersect_key($data, array_flip($allow));
-		$this->setProperties ( $data );
-	}
-
-	/**
 	 * Method to load a KunenaForumMessage object by id
 	 *
-	 * @access	public
 	 * @param	mixed	$id The message id to be loaded
 	 * @return	boolean			True on success
-	 * @since 1.6
 	 */
-	public function load($id) {
-		// Create the table object
-		$table = $this->getTable ();
-
-		// Load the KunenaTable object based on id
-		$this->_exists = $table->load ( $id );
-
-		// Assuming all is well at this point lets bind the data
-		$this->setProperties ( $table->getProperties () );
-		$this->_hold = $this->hold === null ? 1 : $this->hold;
+	public function load($id = null) {
+		$exists = parent::load($id);
+		$this->_hold = $exists ? $this->hold : 1;
 		$this->_thread = $this->thread;
-		return $this->_exists;
+		return $exists;
 	}
 
 	/**
 	 * Method to save the KunenaForumMessage object to the database
 	 *
-	 * @access	public
-	 * @param	boolean $updateOnly Save the object only if not a new message
 	 * @return	boolean True on success
-	 * @since 1.6
 	 */
-	public function save($updateOnly = false) {
-		//are we creating a new message
-		$isnew = ! $this->_exists;
+	public function save() {
+		$isNew = ! $this->_exists;
 
-		if ($isnew && $updateOnly) {
-			$this->setError ( JText::_('COM_KUNENA_LIB_MESSAGE_ERROR_UPDATE_ONLY') );
-			return false;
-		}
-
-		if (! $this->check ()) {
-			return false;
-		}
-
-		// Create the messages table object
-		$table = $this->getTable ();
-		$table->bind ( $this->getProperties () );
-		$table->exists ( $this->_exists );
-
-		// Check the object.
-		if (! $table->check ()) {
-			$this->setError ( $table->getError () );
-			return false;
-		}
-
-		// Store the message data in the database
-		if (!$table->store ()) {
-			$this->setError ( $table->getError () );
-			return false;
-		}
-
-		// Load KunenaForumMessage object in case we created a new message.
-		if ($isnew) {
-			$this->load ( $table->id );
-			$this->_hold = 1;
-		}
-
-		$update = 0;
 		if (!$this->thread) {
 			// Create topic
 			$topic = $this->getTopic();
@@ -468,15 +385,25 @@ class KunenaForumMessage extends JObject {
 				return false;
 			}
 			$this->_thread = $this->thread = $topic->id;
-			++$update;
+		}
+
+		// Create message
+		if (! parent::save ()) {
+			return false;
+		}
+
+		if ($isNew) {
+			$this->_hold = 1;
 		}
 
 		// Update attachments and message text
-		$update += $this->updateAttachments();
+		$update = $this->updateAttachments();
 
 		// Did we change anything?
 		if ($update) {
+			$table = $this->getTable ();
 			$table->bind ( $this->getProperties () );
+			$table->exists(true);
 			if (! $table->store ()) {
 				$this->setError ( $table->getError () );
 				return false;
@@ -486,9 +413,6 @@ class KunenaForumMessage extends JObject {
 		// Cascade changes to other tables
 		$this->update();
 
-		$dispatcher = JDispatcher::getInstance();
-		JPluginHelper::importPlugin('finder');
-		$dispatcher->trigger('onAfterSaveKunenaPost', array($this->id));
 		return true;
 	}
 
@@ -504,15 +428,9 @@ class KunenaForumMessage extends JObject {
 			return true;
 		}
 
-		// Create the table object
-		$table = $this->getTable ();
-
-		$result = $table->delete ( $this->id );
-		if (! $result) {
-			$this->setError ( $table->getError () );
+		if (!parent::delete()) {
 			return false;
 		}
-		$this->_exists = false;
 		$this->hold = 1;
 
 		$attachments = $this->getAttachments();
@@ -537,7 +455,101 @@ class KunenaForumMessage extends JObject {
 			KunenaError::checkDatabaseError ();
 		}
 
-		return $result;
+		return true;
+	}
+
+	public function check() {
+		$author = KunenaUserHelper::get($this->userid);
+
+		// Check username
+		if (! $this->userid) {
+			$this->name = trim($this->name);
+			// Unregistered or anonymous users: Do not allow existing username
+			$nicktaken = JUserHelper::getUserId ( $this->name );
+			if (empty ( $this->name ) || $nicktaken) {
+				$this->name = JText::_ ( 'COM_KUNENA_USERNAME_ANONYMOUS' );
+			}
+		} else {
+			$this->name = $author->getName();
+		}
+
+		// Check email address
+		$this->email = trim($this->email);
+		if ($this->email) {
+			// Email address must be valid
+			if (! JMailHelper::isEmailAddress ( $this->email )) {
+				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_INVALID' ) );
+				return false;
+			}
+		} else if (! KunenaFactory::getUser()->userid && KunenaFactory::getConfig()->askemail) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY' ) );
+			return false;
+		}
+
+		// Do not allow no posting date or dates from the future
+		$now = JFactory::getDate()->toUnix();
+		if (!$this->time || $this->time > $now) {
+			$this->time = $now;
+		}
+		// Do not allow indentical posting times inside topic (simplifies logic)
+		$topic = $this->getTopic();
+		if (!$this->exists() && $topic->exists() && $this->time <= $topic->last_post_time) {
+			$this->time = $topic->last_post_time + 1;
+		}
+		if ($this->modified_time > $now) {
+			$this->modified_time = $now;
+		}
+		if ($this->modified_time && $this->modified_time < $this->time) {
+			$this->modified_time = $this->time;
+		}
+		if ($this->hold < 0 || $this->hold > 3) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_MESSAGE_ERROR_HOLD_INVALID' ) );
+			return false;
+		}
+		if ($this->modified_by !== null) {
+			if (!$this->modified_by) {
+				$this->modified_time = 0;
+				$this->modified_reason = '';
+			} elseif (!$this->modified_time) {
+				$this->modified_time = JFactory::getDate()->toUnix();
+			}
+		}
+
+		// Flood protection
+		$config = KunenaFactory::getConfig();
+		if ($config->floodprotection && ! $this->getCategory()->authorise('moderate') ) {
+			$this->_db->setQuery ( "SELECT MAX(time) FROM #__kunena_messages WHERE ip={$this->_db->quote($this->ip)}" );
+			$lastPostTime = $this->_db->loadResult ();
+			if ($this->_db->getErrorNum()) {
+				$this->setError ( $this->_db->getErrorMsg() );
+				return false;
+			}
+			if ($lastPostTime + $config->floodprotection > JFactory::getDate()->toUnix()) {
+				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_MESSAGE_ERROR_FLOOD', (int)$config->floodprotection ) );
+				return false;
+			}
+		}
+
+		if (!$this->exists()) {
+			// Ignore identical messages (posted within 5 minutes)
+			$duplicatetimewindow = JFactory::getDate ()->toUnix() - 5 * 60;
+			$this->_db->setQuery ( "SELECT m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
+				WHERE m.userid={$this->_db->quote($this->userid)}
+				AND m.ip={$this->_db->quote($this->ip)}
+				AND t.message={$this->_db->quote($this->message)}
+				AND m.time>={$this->_db->quote($duplicatetimewindow)}" );
+			$id = $this->_db->loadResult ();
+			if ($this->_db->getErrorNum()) {
+				$this->setError ( $this->_db->getErrorMsg() );
+				return false;
+			}
+			if ($id) {
+				$this->setError ( JText::_ ( 'COM_KUNENA_POST_DUPLICATE_IGNORED' ) );
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	// Internal functions
@@ -665,101 +677,6 @@ class KunenaForumMessage extends JObject {
 			$this->setError (JText::_ ( 'COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER' ) );
 			return false;
 		}
-		return true;
-	}
-
-
-	protected function check() {
-		$author = KunenaUserHelper::get($this->userid);
-
-		// Check username
-		if (! $this->userid) {
-			$this->name = trim($this->name);
-			// Unregistered or anonymous users: Do not allow existing username
-			$nicktaken = JUserHelper::getUserId ( $this->name );
-			if (empty ( $this->name ) || $nicktaken) {
-				$this->name = JText::_ ( 'COM_KUNENA_USERNAME_ANONYMOUS' );
-			}
-		} else {
-			$this->name = $author->getName();
-		}
-
-		// Check email address
-		$this->email = trim($this->email);
-		if ($this->email) {
-			// Email address must be valid
-			if (! JMailHelper::isEmailAddress ( $this->email )) {
-				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_INVALID' ) );
-				return false;
-			}
-		} else if (! KunenaFactory::getUser()->userid && KunenaFactory::getConfig()->askemail) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY' ) );
-			return false;
-		}
-
-		// Do not allow no posting date or dates from the future
-		$now = JFactory::getDate()->toUnix();
-		if (!$this->time || $this->time > $now) {
-			$this->time = $now;
-		}
-		// Do not allow indentical posting times inside topic (simplifies logic)
-		$topic = $this->getTopic();
-		if (!$this->exists() && $topic->exists() && $this->time <= $topic->last_post_time) {
-			$this->time = $topic->last_post_time + 1;
-		}
-		if ($this->modified_time > $now) {
-			$this->modified_time = $now;
-		}
-		if ($this->modified_time && $this->modified_time < $this->time) {
-			$this->modified_time = $this->time;
-		}
-		if ($this->hold < 0 || $this->hold > 3) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_MESSAGE_ERROR_HOLD_INVALID' ) );
-			return false;
-		}
-		if ($this->modified_by !== null) {
-			if (!$this->modified_by) {
-				$this->modified_time = 0;
-				$this->modified_reason = '';
-			} elseif (!$this->modified_time) {
-				$this->modified_time = JFactory::getDate()->toUnix();
-			}
-		}
-
-		// Flood protection
-		$config = KunenaFactory::getConfig();
-		if ($config->floodprotection && ! $this->getCategory()->authorise('moderate') ) {
-			$this->_db->setQuery ( "SELECT MAX(time) FROM #__kunena_messages WHERE ip={$this->_db->quote($this->ip)}" );
-			$lastPostTime = $this->_db->loadResult ();
-			if ($this->_db->getErrorNum()) {
-				$this->setError ( $this->_db->getErrorMsg() );
-				return false;
-			}
-			if ($lastPostTime + $config->floodprotection > JFactory::getDate()->toUnix()) {
-				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_MESSAGE_ERROR_FLOOD', (int)$config->floodprotection ) );
-				return false;
-			}
-		}
-
-		if (!$this->exists()) {
-			// Ignore identical messages (posted within 5 minutes)
-			$duplicatetimewindow = JFactory::getDate ()->toUnix() - 5 * 60;
-			$this->_db->setQuery ( "SELECT m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
-				WHERE m.userid={$this->_db->quote($this->userid)}
-				AND m.ip={$this->_db->quote($this->ip)}
-				AND t.message={$this->_db->quote($this->message)}
-				AND m.time>={$this->_db->quote($duplicatetimewindow)}" );
-			$id = $this->_db->loadResult ();
-			if ($this->_db->getErrorNum()) {
-				$this->setError ( $this->_db->getErrorMsg() );
-				return false;
-			}
-			if ($id) {
-				$this->setError ( JText::_ ( 'COM_KUNENA_POST_DUPLICATE_IGNORED' ) );
-				return false;
-			}
-		}
-
 		return true;
 	}
 

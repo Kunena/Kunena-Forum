@@ -225,7 +225,7 @@ abstract class KunenaTable extends JTable {
 				}
 			}
 		} elseif (!is_array($keys)) {
-			// Load by primary key.
+			// Delete by primary key.
 			$keys = array($this->_tbl_key => $keys);
 		}
 

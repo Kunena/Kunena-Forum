@@ -186,7 +186,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return new KunenaForumCategory();
 	}
 
-	public function newTopic($fields=array(), $user=null) {
+	public function newTopic(array $fields=null, $user=null) {
 		$catid = $this->getNewTopicCategory()->id;
 		$user = KunenaUserHelper::get($user);
 		$message = new KunenaForumMessage();
@@ -195,12 +195,12 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$message->userid = $user->userid;
 		$message->ip = !empty($_SERVER ['REMOTE_ADDR']) ? $_SERVER ['REMOTE_ADDR'] : '';
 		$message->hold = $this->review ? (int)!$this->authorise ('moderate', $user, true) : 0;
-		$message->bind($fields, array ('name', 'email', 'subject', 'message'));
+		$message->bind($fields, array ('name', 'email', 'subject', 'message'), true);
 
 		$topic = new KunenaForumTopic();
 		$topic->category_id = $catid;
 		$topic->hold = $message->hold;
-		$topic->bind($fields, array ('subject','icon_id'));
+		$topic->bind($fields, array ('subject','icon_id'), true);
 
 		$message->setTopic($topic);
 		return array($topic, $message);
@@ -314,9 +314,9 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 * (non-PHPdoc)
 	 * @see KunenaDatabaseObject::bind()
 	 */
-	public function bind(array $src, array $fields = array(), $ignore = true) {
+	public function bind(array $src = null, array $fields = null, $include = false) {
 		if (isset($src['channels']) && is_array($src['channels'])) $src['channels'] = implode(',', $src['channels']);
-		return parent::bind($src, $fields, $ignore);
+		return parent::bind($src, $fields, $include);
 	}
 
 	/**

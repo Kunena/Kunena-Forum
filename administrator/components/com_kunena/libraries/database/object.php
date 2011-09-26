@@ -49,15 +49,15 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @param   array    $src     An associative array or object to bind to the JTable instance.
 	 * @param   array    $fields  An optional array list of properties to ignore / include only while binding.
-	 * @param   boolean  $ignore  True to ignore fields, false to include only listed fields.
+	 * @param   boolean  $include  True to include only listed fields, false to ignore listed fields.
 	 *
 	 * @return  boolean  True on success.
 	 */
-	public function bind(array $src, array $fields = array(), $ignore = true) {
+	public function bind(array $src = null, array $fields = null, $include = false) {
 		if (empty($src)) return false;
 
 		if (!empty($fields)) {
-			$src = $ignore ? array_diff_key($src, array_flip($fields)): array_intersect_key($src, array_flip($fields));
+			$src = $include ? array_intersect_key($src, array_flip($fields)) : array_diff_key($src, array_flip($fields));
 		}
 		$this->setProperties ( $src );
 		return true;
@@ -207,7 +207,7 @@ abstract class KunenaDatabaseObject extends JObject {
 	 * @return  KunenaDatabaseObject
 	 * @internal
 	 */
-	public function __construct($properties = null)
+	public function __construct(array $properties = null)
 	{
 		if (!$this->_name) $this->_name = get_class ($this);
 		if ($properties) {

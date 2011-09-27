@@ -31,9 +31,9 @@ class KunenaActivityJomSocial extends KunenaActivity {
 
 		$content = KunenaHtmlParser::plainBBCode($message->message, $this->_config->activity_limit);
 
-		// Add readmore link
-		$content .= '<br /><a href="'.
-				CKunenaLink::GetMessageURL($message->id, $message->catid).
+		// Add readmore permalink
+		$content .= '<br /><a rel="nofollow" href="'.
+				KunenaRoute::_($message->getUrl(true)).
 				'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 
 		$act = new stdClass ();
@@ -60,9 +60,9 @@ class KunenaActivityJomSocial extends KunenaActivity {
 
 		$content = KunenaHtmlParser::plainBBCode($message->message, $this->_config->activity_limit);
 
-		// Add readmore link
-		$content .= '<br /><a href="'.
-				CKunenaLink::GetMessageURL($message->id, $message->catid).
+		// Add readmore permalink
+		$content .= '<br /><a rel="nofollow" href="'.
+				KunenaRoute::_($message->getUrl(true)).
 				'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 
 		$act = new stdClass ();

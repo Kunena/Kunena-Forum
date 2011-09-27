@@ -17,7 +17,7 @@ jimport ('joomla.mail.helper');
  * Kunena Forum Message Class
  */
 class KunenaForumMessage extends KunenaDatabaseObject {
-	public $id = null;
+	public $id = 0;
 
 	protected $_table = 'KunenaMessages';
 	protected $_db = null;
@@ -61,6 +61,16 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		if ($readtopics === false)
 			$readtopics = explode(',', $session->readtopics);
 		return $this->time > $session->lasttime && !in_array($this->thread, $readtopics);
+	}
+
+	public function getUrl($permalink=false, $catid=null) {
+		$catid = $catid ? $catid : $this->catid;
+		if ($permalink) {
+			return "index.php?option=com_kunena&view=category&catid={$catid}&id={$this->thread}&mesid={$this->id}";
+		} else {
+			// FIXME: not implemented
+			$location = $this->getTopic()->getPostLocation($this->id, 'asc');
+		}
 	}
 
 	public function newReply($fields=array(), $user=null) {
@@ -127,7 +137,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 
 		if (!$url) {
-			$url = JURI::root().trim(CKunenaLink::GetMessageURL($this->id, $this->catid, 0, false), '/');
+			$url = JURI::root().trim(KunenaRoute::_($this->getUrl(true)), '/');
 		}
 		//get all subscribers, moderators and admins who will get the email
 		$me = KunenaUserHelper::get();

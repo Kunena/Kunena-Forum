@@ -43,15 +43,21 @@ class KunenaViewTopic extends KunenaView {
 		} elseif (! $this->topic->authorise('read')) {
 			// User is not allowed to see the topic
 			$this->setError($this->topic->getError());
-		} elseif ($this->state->get('item.id') != $this->topic->id || ($this->category->id != $this->topic->category_id && !isset($channels[$this->topic->category_id]))) {
+		} elseif ($this->state->get('item.id') != $this->topic->id || ($this->category->id != $this->topic->category_id && !isset($channels[$this->topic->category_id])) || ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid'))) {
 			// Topic has been moved or it doesn't belong to the current category
 			$db = JFactory::getDBO();
-			$query = "SELECT COUNT(*) FROM #__kunena_messages WHERE thread={$db->Quote($this->topic->id)} AND hold IN ({$this->state->get('hold')}) AND id<={$db->Quote($this->state->get('item.id'))}";
-			$db->setQuery ( $query );
-			$replyCount = $db->loadResult ();
-			if (KunenaError::checkDatabaseError()) return;
+			$mesid = $this->state->get('item.mesid');
+			if ($mesid) {
+				$query = "SELECT COUNT(*) FROM #__kunena_messages WHERE thread={$db->Quote($this->topic->id)} AND hold IN ({$this->state->get('hold')}) AND id<={$db->Quote($mesid)}";
+				$db->setQuery ( $query );
+				$replyCount = $db->loadResult ();
+				if (KunenaError::checkDatabaseError()) return;
+			} else {
+				$mesid = $this->topic->first_post_id;
+				$replyCount = 0;
+			}
 			$app = JFactory::getApplication();
-			$app->redirect(CKunenaLink::GetThreadPageURL ( 'view', $this->topic->category_id, $this->topic->id, $replyCount, $this->state->get('list.limit'), $this->state->get('item.id'), false ));
+			$app->redirect(CKunenaLink::GetThreadPageURL ( 'view', $this->topic->category_id, $this->topic->id, $replyCount, $this->state->get('list.limit'), $mesid, false ));
 		}
 
 		$errors = $this->getErrors();

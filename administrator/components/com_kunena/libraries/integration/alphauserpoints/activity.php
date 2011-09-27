@@ -34,7 +34,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		$category = $message->getCategory();
 		if ($category->pub_access == 0 || $category->pub_access == - 1) {
 			require_once KPATH_SITE.'/lib/kunena.link.class.php';
-			$datareference = '<a href="' . CKunenaLink::GetMessageURL ( $message->id, $message->catid ) . '">' . $message->subject . '</a>';
+			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getUrl(true)) . '">' . $message->subject . '</a>';
 			if ( $this->_getAUPversion() < '1.5.12' ) {
 				$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( 'plgaup_newtopic_kunena' );
 				if ($ruleEnabled) {
@@ -58,7 +58,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		$category = $message->getCategory();
 		if ($category->pub_access == 0 || $category->pub_access == - 1) {
 			require_once KPATH_SITE.'/lib/kunena.link.class.php';
-			$datareference = '<a href="' . CKunenaLink::GetMessageURL ( $message->id, $message->catid ) . '">' . $message->subject . '</a>';
+			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getUrl(true)) . '">' . $message->subject . '</a>';
 			if ($this->_config->alphauserpointsnumchars > 0) {
 				// use if limit chars for a response
 				if (JString::strlen ( $message->message ) > $this->_config->alphauserpointsnumchars) {

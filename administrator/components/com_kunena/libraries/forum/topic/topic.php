@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Topic Class
  */
 class KunenaForumTopic extends KunenaDatabaseObject {
-	public $id = null;
+	public $id = 0;
 	public $unread = 0;
 	public $lastread = 0;
 

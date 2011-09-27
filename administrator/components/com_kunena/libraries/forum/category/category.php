@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Category Class
  */
 class KunenaForumCategory extends KunenaDatabaseObject {
-	public $id = null;
+	public $id = 0;
 	public $level = 0;
 
 	protected $_channels = false;

@@ -322,7 +322,8 @@ class KunenaForumTopicHelper {
 
 	static protected function loadTopics($ids) {
 		foreach ($ids as $i=>$id) {
-			if (isset(self::$_instances [$id]) || !is_numeric($id))
+			$id = intval($id);
+			if (!$id || isset(self::$_instances [$id]))
 				unset($ids[$i]);
 		}
 		if (empty($ids))

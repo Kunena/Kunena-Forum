@@ -287,7 +287,8 @@ class KunenaForumMessageHelper {
 
 	static protected function loadMessages($ids) {
 		foreach ($ids as $i=>$id) {
-			if (isset(self::$_instances [$id]))
+			$id = intval($id);
+			if (!$id || isset(self::$_instances [$id]))
 				unset($ids[$i]);
 		}
 		if (empty($ids))

@@ -328,7 +328,7 @@ class KunenaControllerTopic extends KunenaController {
 		if ($category->review && !$category->isModerator()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
 		}
-		$app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->return, 0, false ) );
+		$app->redirect ( CKunenaLink::GetMessageURL ( $message->id, $this->return, 0, false ) );
 	}
 
 	public function thankyou() {
@@ -560,13 +560,13 @@ class KunenaControllerTopic extends KunenaController {
 			$target = KunenaForumMessageHelper::get($this->mesid);
 			$hold = KunenaForum::DELETED;
 			$msg = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
-			$url = CKunenaLink::GetMessageURL ( $this->id, $this->return, 0, false );
+			$url = CKunenaLink::GetMessageURL ( $target->id, $this->return, 0, false );
 		} else {
 			// Delete topic
 			$target = KunenaForumTopicHelper::get($this->id);
 			$hold = KunenaForum::TOPIC_DELETED;
 			$msg = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' );
-			$url = CKunenaLink::GetCategoryURL ( 'showcat', $this->return, false );
+			$url = KunenaRoute::_ (KunenaForumCategory::getInstance($this->return)->getUrl(), false);
 		}
 		if ($target->authorise('delete') && $target->publish($hold)) {
 			$app->enqueueMessage ( $msg );
@@ -611,12 +611,12 @@ class KunenaControllerTopic extends KunenaController {
 			// Delete message
 			$target = KunenaForumMessageHelper::get($this->mesid);
 			$msg = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
-			$url = CKunenaLink::GetMessageURL ( $this->id, $this->return, 0, false );
+			$url = CKunenaLink::GetMessageURL ( $this->mesid, $this->return, 0, false );
 		} else {
 			// Delete topic
 			$target = KunenaForumTopicHelper::get($this->id);
 			$msg = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' );
-			$url = CKunenaLink::GetCategoryURL ( 'showcat', $this->return, false );
+			$url = KunenaRoute::_ (KunenaForumCategory::getInstance($this->return)->getUrl(), false);
 		}
 		if ($target->authorise('permdelete') && $target->delete()) {
 			$app->enqueueMessage ( $msg );

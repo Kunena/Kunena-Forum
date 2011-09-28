@@ -161,7 +161,7 @@ $this->displayLoginBox ();
 			<tr>
 				<td colspan="2" class="kcenter">
 					<input class="kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?>"/>
-					<input class="kbutton ks" type="reset" value="<?php echo JText::_('COM_KUNENA_SEARCH_CANCEL'); ?>" onclick="window.location='<?php echo CKunenaLink::GetKunenaURL();?>';"/>
+					<input class="kbutton ks" type="reset" value="<?php echo JText::_('COM_KUNENA_SEARCH_CANCEL'); ?>" onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';"/>
 				</td>
 			</tr>
 		</tbody>

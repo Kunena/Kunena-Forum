@@ -108,7 +108,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 
 					<div class="kpost-buttons">
 						<button title="Click here to search" type="submit" class="kbutton"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></button>
-						<button onclick="window.location='<?php echo CKunenaLink::GetKunenaURL();?>';" title="Click here to cancel" type="button" class="kbutton"><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL'); ?></button>
+						<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton"><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL'); ?></button>
 					</div>
 				</form>
 

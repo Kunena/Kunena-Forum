@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php if ($this->message->id == $this->state->get('item.mesid')) : ?>
 		<?php echo $this->escape($this->message->subject) ?>
 		<?php else : ?>
-		<?php echo CKunenaLink::GetThreadLayoutLink(null, $this->message->catid, $this->message->thread, $this->message->id, $this->escape($this->message->subject), $this->state->get('list.start'), $this->state->get('list.limit')) ?>
+		<?php echo $this->getTopicLink($this->topic, $this->message) ?>
 		<?php endif; ?>
 	</td>
 	<td class="kcol-mid kprofile kprofile-list"><?php echo CKunenaLink::GetProfileLink($this->profile->userid, $this->message->name) ?></td>

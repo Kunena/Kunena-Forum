@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 									<div class="kmsgbody">
 										<div class="kmsgtitle kresult-title">
 											<span class="kmsgtitle">
-												<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($this->category->id), intval($this->topic->id), NULL, NULL, $this->subjectHtml, intval($this->message->id) )?>
+												<?php echo $this->getTopicLink($this->topic, $this->message, $this->subjectHtml); ?>
 											</span>
 										</div>
 										<div class="kmsgtext resultmsg">

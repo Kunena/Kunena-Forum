@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Topic Class
  */
 class KunenaForumTopic extends KunenaDatabaseObject {
-	public $id = 0;
+	public $id = null;
 	public $unread = 0;
 	public $lastread = 0;
 
@@ -245,7 +245,54 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold);
 	}
 
-	public function getPostLocation($mesid, $direction = 'asc', $hold=null) {
+	public function getUrl($category = null, $xhtml = true, $action = null) {
+		$category = $category ? KunenaForumCategoryHelper::get($category) : $this->getCategory();
+		if (!$this->exists() || !$category->exists()) return null;
+		if ($action instanceof KunenaForumMessage) {
+			$message = $action;
+			$action = 'post'.$message->id;
+		}
+		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}");
+		if ($uri->getVar('action') !== null) {
+			$uri->delVar('action');
+			$mesid = 0;
+			$limit = max(1, intval(KunenaFactory::getConfig()->messages_per_page));
+			if (isset($message)) {
+				$mesid = $message->id;
+			} elseif ((string)$action === (string)(int)$action) {
+				if ($action > 0) $uri->setVar('limitstart', $action * $limit);
+			} else {
+				switch ($action) {
+					case 'first':
+						$mesid = $this->first_post_id;
+						break;
+					case 'last':
+						$mesid = $this->last_post_id;
+						break;
+					case 'unread':
+						$mesid = $this->lastread ? $this->lastread : $this->last_post_id;
+						break;
+				}
+			}
+			if ($mesid) {
+				if (KunenaUserHelper::getMyself()->getTopicLayout() != 'threaded') {
+					$uri->setFragment($mesid);
+					$limitstart = intval($this->getPostLocation($mesid) / $limit) * $limit;
+					if ($limitstart) $uri->setVar('limitstart', $limitstart);
+				} else {
+					$uri->setVar('mesid', $mesid);
+				}
+			}
+		}
+		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+	}
+
+	public function getPermaUrl($category = null, $xhtml = true, $action = null) {
+		$this->getUrl($category, $xhtml, $action);
+	}
+
+	public function getPostLocation($mesid, $direction = null, $hold = null) {
+		if (is_null($direction)) $direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		if (!isset($this->lastread)) {
 			$this->lastread = $this->last_post_id;
 			$this->unread = 0;
@@ -258,7 +305,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		}
 		if ($mesid == 'first') $direction == 'asc' ? 0 : 'both';
 		if ($mesid == 'last') $direction == 'asc' ? 'both' : 0;
-		if (!$direction) return 0;
 		return KunenaForumMessageHelper::getLocation($mesid, $direction, $hold);
 	}
 

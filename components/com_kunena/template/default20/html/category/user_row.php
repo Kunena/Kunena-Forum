@@ -17,7 +17,7 @@ defined ( '_JEXEC' ) or die ();
 									<td class="kcategory-body">
 										<ul>
 											<li class="kpost-title">
-												<h3><?php echo CKunenaLink::GetCategoryPageLink('showcat', intval($this->category->id), 1, $this->escape($this->category->name), 'follow' ) ?></h3>
+												<h3><?php echo $this->getCategoryLink($this->category) ?></h3>
 												<div class="clr"></div>
 											</li>
 										</ul>
@@ -32,8 +32,8 @@ defined ( '_JEXEC' ) or die ();
 										<span class="kcategory-views"> <?php echo JText::_('COM_KUNENA_MY_POSTS'); ?> </span>
 									</td>
 									<?php
-									$last = $this->category->getLastPosted();
-									if ($last->last_topic_id) : ?>
+									$last = $this->category->getLastTopic();
+									if ($last->exists()) : ?>
 									<td class="kcategory-topic">
 										<ul>
 										<?php
@@ -44,7 +44,7 @@ defined ( '_JEXEC' ) or die ();
 										<?php endif; ?>
 										<?php endif; ?>
 										<li class="ktopic-title">
-										<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($last->id), intval($last->last_topic_id), intval($last->getLastPostLocation()), intval($this->config->messages_per_page), KunenaHtmlParser::parseText($last->last_topic_subject, 30), intval($last->last_post_id) );?>
+										<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. $this->getLastPostLink($this->category) ?>
 										</li>
 
 										<li class="ktopic-details">

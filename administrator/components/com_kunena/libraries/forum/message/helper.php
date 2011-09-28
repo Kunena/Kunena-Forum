@@ -197,9 +197,10 @@ class KunenaForumMessageHelper {
 		return array($total, $messages);
 	}
 
-	public function getLocation($mesid, $direction = 'asc', $hold=null) {
+	public function getLocation($mesid, $direction = null, $hold = null) {
+		if (is_null($direction)) $direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		if (!$hold) {
-			$me = KunenaFactory::getUser();
+			$me = KunenaUserHelper::getMyself();
 			$access = KunenaFactory::getAccessControl();
 			$hold = $access->getAllowedHold($me->userid, $mesid, false);
 		}

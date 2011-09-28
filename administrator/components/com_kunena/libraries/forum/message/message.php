@@ -17,7 +17,7 @@ jimport ('joomla.mail.helper');
  * Kunena Forum Message Class
  */
 class KunenaForumMessage extends KunenaDatabaseObject {
-	public $id = 0;
+	public $id = null;
 
 	protected $_table = 'KunenaMessages';
 	protected $_db = null;
@@ -63,14 +63,15 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return $this->time > $session->lasttime && !in_array($this->thread, $readtopics);
 	}
 
-	public function getUrl($permalink=false, $catid=null) {
-		$catid = $catid ? $catid : $this->catid;
-		if ($permalink) {
-			return "index.php?option=com_kunena&view=category&catid={$catid}&id={$this->thread}&mesid={$this->id}";
-		} else {
-			// FIXME: not implemented
-			$location = $this->getTopic()->getPostLocation($this->id, 'asc');
-		}
+	public function getUrl($category = null, $xhtml = true) {
+		return $this->getTopic()->getUrl($category, $xhtml, $this);
+	}
+
+	public function getPermaUrl($category = null, $xhtml = true) {
+		$category = $category ? KunenaForumCategoryHelper::get($category) : $this->getCategory();
+		if (!$this->exists() || !$category->exists()) return null;
+		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
+		return $xhtml=='object' ? $uri : KunenaRoute::_($uri, $xhtml);
 	}
 
 	public function newReply($fields=array(), $user=null) {
@@ -137,7 +138,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 
 		if (!$url) {
-			$url = JURI::root().trim(KunenaRoute::_($this->getUrl(true)), '/');
+			$url = JURI::root().trim($this->getPermaUrl(null, true), '/');
 		}
 		//get all subscribers, moderators and admins who will get the email
 		$me = KunenaUserHelper::get();
@@ -491,7 +492,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_INVALID' ) );
 				return false;
 			}
-		} else if (! KunenaFactory::getUser()->userid && KunenaFactory::getConfig()->askemail) {
+		} else if (! KunenaUserHelper::getMyself()->exists() && KunenaFactory::getConfig()->askemail) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_MESSAGE_ERROR_EMAIL_EMPTY' ) );
 			return false;
 		}

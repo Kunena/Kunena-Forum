@@ -199,6 +199,21 @@ class KunenaUser extends JObject {
 		return $this->_allowed[$rule];
 	}
 
+	public function getMessageOrdering() {
+		static $ordering = null;
+		if (is_null($ordering)) {
+			if ($this->ordering != '0') {
+				$ordering = $this->ordering == '1' ? 'desc' : 'asc';
+			} else {
+				$ordering = KunenaFactory::getConfig()->default_sort == 'asc' ? 'asc' : 'desc';
+			}
+			if ($ordering != 'asc') {
+				$ordering = 'desc';
+			}
+		}
+		return $ordering;
+	}
+
 	public function isAdmin($catid = 0) {
 		$acl = KunenaFactory::getAccessControl ();
 		return $acl->isAdmin ( $this, $catid );

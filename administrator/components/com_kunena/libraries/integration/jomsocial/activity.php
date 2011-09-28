@@ -25,22 +25,18 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.new' );
 
-		//activity stream  - new post
-		require_once KPATH_SITE.'/lib/kunena.link.class.php';
-		$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->catid, $message->thread, 0 );
-
 		$content = KunenaHtmlParser::plainBBCode($message->message, $this->_config->activity_limit);
 
 		// Add readmore permalink
 		$content .= '<br /><a rel="nofollow" href="'.
-				KunenaRoute::_($message->getUrl(true)).
+				KunenaRoute::_($message->getPermaUrl()).
 				'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
-		$act->title = JText::_ ( '{actor} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1' ) . ' <a href="' . $JSPostLink . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2' ) );
+		$act->title = JText::_ ( '{actor} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1' ) . ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2' ) );
 		$act->content = $content;
 		$act->app = 'kunena.post';
 		$act->cid = $message->thread;
@@ -54,22 +50,18 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.reply' );
 
-		//activity stream - reply post
-		require_once KPATH_SITE.'/lib/kunena.link.class.php';
-		$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->catid, $message->thread, 0 );
-
 		$content = KunenaHtmlParser::plainBBCode($message->message, $this->_config->activity_limit);
 
 		// Add readmore permalink
 		$content .= '<br /><a rel="nofollow" href="'.
-				KunenaRoute::_($message->getUrl(true)).
+				KunenaRoute::_($message->getPermaUrl()).
 				'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
-		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1' ) . ' <a href="' . $JSPostLink . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
+		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1' ) . ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
 		$act->content = $content;
 		$act->app = 'kunena.post';
 		$act->cid = $message->thread;
@@ -83,15 +75,11 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $thankyoutargetid );
 
-		//activity stream - reply post
-		require_once KPATH_SITE.'/lib/kunena.link.class.php';
-		$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->catid, $message->thread, 0 );
-
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
 		$act->actor = JFactory::getUser()->id;
 		$act->target = $thankyoutargetid;
-		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_( 'COM_KUNENA_JS_ACTIVITYSTREAM_THANKYOU' ).' <a href="' . $JSPostLink . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
+		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_( 'COM_KUNENA_JS_ACTIVITYSTREAM_THANKYOU' ).' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
 		$act->content = NULL;
 		$act->app = 'kunena.thankyou';
 		$act->cid = $thankyoutargetid;

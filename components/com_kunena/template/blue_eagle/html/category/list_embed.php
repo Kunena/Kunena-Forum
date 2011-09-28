@@ -114,8 +114,8 @@ foreach ( $this->sections as $section ) :
 			<!-- /Number of Replies -->
 			</td>
 
-			<?php $last = $category->getLastPosted();
-			if ($last->last_topic_id) { ?>
+			<?php $last = $category->getLastTopic();
+			if ($last->exists()) { ?>
 			<td class="kcol-mid kcol-kcatlastpost">
 			<?php if ($this->config->avataroncat > 0) : ?>
 			<!-- Avatar -->
@@ -128,8 +128,7 @@ foreach ( $this->sections as $section ) :
 			<!-- /Avatar -->
 			<?php endif; ?>
 			<div class="klatest-subject ks">
-				<?php //echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($last->id), intval($last->last_topic_id), intval($last->getLastPostLocation()), intval($this->config->messages_per_page), KunenaHtmlParser::parseText($last->last_topic_subject, 30), intval($last->last_post_id) );?>
-				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. $this->getLastPostLink($last);?>
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. $this->getLastPostLink($category) ?>
 			</div>
 
 			<div class="klatest-subject-by ks">

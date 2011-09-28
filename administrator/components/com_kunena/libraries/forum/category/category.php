@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Category Class
  */
 class KunenaForumCategory extends KunenaDatabaseObject {
-	public $id = 0;
+	public $id = null;
 	public $level = 0;
 
 	protected $_channels = false;
@@ -114,8 +114,13 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return $this->parent_id == 0 || (!$this->numTopics && $this->locked && empty($this->_channels['none']));
 	}
 
-	public function getUrl($firstpage = false) {
-		return "index.php?option=com_kunena&view=category&catid={$this->id}" . ($firstpage ? '&limitstart=0' : '');
+	public function getUrl($category = null, $xhtml = true, $action = null) {
+		if (!$category) $category = $this;
+		$uri = JURI::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
+		if ((string)$action === (string)(int)$action) {
+			$uri->setVar('limitstart', $action);
+		}
+		return $xhtml=='object' ? $uri : KunenaRoute::_($uri, $xhtml);
 	}
 
 	public function getTopics() {
@@ -128,9 +133,13 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return $this->_posts;
 	}
 
-	public function getLastPosted() {
+	public function getLastCategory() {
 		$this->buildInfo();
 		return KunenaForumCategoryHelper::get($this->_lastid);
+	}
+
+	public function getLastTopic() {
+		return KunenaForumTopicHelper::get($this->getLastCategory()->last_topic_id);
 	}
 
 	public function getLastPostLocation($direction = 'asc', $hold = null) {

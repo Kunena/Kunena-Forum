@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 								<?php if ( $this->quickreply ) : ?>
 								<li id="kreply<?php echo intval($this->message->id) ?>_form" class="kreply-form" style="display: none">
 									<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="postform" enctype="multipart/form-data">
-										<?php if (KunenaFactory::getUser()->exists() && $this->category->allow_anonymous): ?>
+										<?php if (KunenaUserHelper::getMyself()->exists() && $this->category->allow_anonymous): ?>
 											<input type="text" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->profile->getName()) ?>" /><br />
 											<input type="checkbox" id="kanonymous<?php echo intval($this->message->id) ?>" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous<?php echo intval($this->message->id) ?>"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC') ?></label><br />
 										<?php else: ?>

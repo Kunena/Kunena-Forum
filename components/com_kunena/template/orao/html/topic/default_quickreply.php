@@ -28,7 +28,7 @@ defined ( '_JEXEC' ) or die ();
 							<div class="" style="display: block !important;">
 								<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="postform" enctype="multipart/form-data">
 								<ul>
-									<?php if (KunenaFactory::getUser()->exists() && $this->category->allow_anonymous): ?>
+									<?php if (KunenaUserHelper::getMyself()->exists() && $this->category->allow_anonymous): ?>
 									<li>
 										<?php // FIXME : Language string ?>
 										<span class="tk-quick-title"><?php echo JText::_('Author Name') ?></span>

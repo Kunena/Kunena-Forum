@@ -63,7 +63,7 @@ class KunenaSpamRecaptcha {
 	}
 
 	public function enabled() {
-		$me = KunenaFactory::getUser();
+		$me = KunenaUserHelper::getMyself();
 		$config = KunenaFactory::getConfig();
 		// Enabled if guest captcha is enabled and user is not logged in
 		if ($config->captcha && !$me->exists())

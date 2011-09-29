@@ -58,6 +58,7 @@ $this->displayBreadcrumb ();
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="ktopicsform">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHTML::_( 'form.token' ); ?>
+
 <div class="kblock kflat">
 	<div class="kheader">
 		<?php if (!empty($this->topicActions)) : ?>
@@ -123,10 +124,11 @@ $this->displayBreadcrumb ();
 		<?php if (!empty ( $this->moderators ) ) : ?>
 		<div class="klist-moderators">
 			<?php
-			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
-			foreach ( $this->moderators as $userid ) {
-				echo CKunenaLink::GetProfileLink ( $userid ) . '&nbsp; ';
-			}
+				$modslist = array();
+				foreach ( $this->moderators as $moderator ) {
+					$modslist[] = $moderator->getLink();
+				}
+				echo JText::_('COM_KUNENA_GEN_MODERATORS') . ': ' . implode(', ', $modslist);
 			?>
 		</div>
 		<?php endif; ?>

@@ -17,14 +17,14 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->message->id == $this->state->get('item.mesid')) : ?>
 			<?php echo $this->escape($this->message->subject) ?>
 			<?php else : ?>
-			<?php echo CKunenaLink::GetThreadLayoutLink(null, $this->message->catid, $this->message->thread, $this->message->id, $this->escape($this->message->subject), $this->state->get('list.start'), $this->state->get('list.limit')) ?>
+			<?php echo $this->getTopicLink($this->topic, $this->message) ?>
 			<?php endif; ?>
 		</dt>
 		<dd class="tk-poll-bar" style="text-align:left; width:13%">
 		<?php //$avatar = $this->profile->getAvatarImage ('kavatar', 'list'); if ($avatar) : ?>
 		<?php //echo $this->profile->getLink($avatar); ?>
 		<?php //endif?>
-			<?php echo CKunenaLink::GetProfileLink($this->profile->userid, $this->message->name) ?>
+			<?php echo $this->message->getAuthor()->getLink() ?>
 		</dd>
 		<dd class="posts" style="text-align:left; width:17%" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
 			<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>

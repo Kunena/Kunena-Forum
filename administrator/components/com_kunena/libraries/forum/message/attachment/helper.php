@@ -249,7 +249,8 @@ class KunenaForumMessageAttachmentHelper {
 
 	static protected function loadByMessage($ids) {
 		foreach ($ids as $i=>$id) {
-			if (isset(self::$_messages [$id]))
+			$id = intval($id);
+			if (!$id || isset(self::$_messages [$id]))
 				unset($ids[$i]);
 		}
 		if (empty($ids))

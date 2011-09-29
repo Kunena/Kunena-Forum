@@ -22,8 +22,8 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
+		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->config = KunenaFactory::getConfig();
 
 		$this->URL = KunenaRoute::_();
@@ -79,8 +79,8 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
+		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->config = KunenaFactory::getConfig();
 
 		$this->URL = KunenaRoute::_();
@@ -128,8 +128,8 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'postActions', $this->get ( 'PostActions' ) );
 		$this->actionMove = false;
-		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
+		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->config = KunenaFactory::getConfig();
 
 		$this->URL = KunenaRoute::_();

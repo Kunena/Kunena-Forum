@@ -164,26 +164,17 @@ class KunenaForumStatistics {
 	public function loadTopTopics($limit=0) {
 		$limit = $limit ? $limit : $this->_config->popsubjectcount;
 		if (count($this->topTopics) < $limit) {
-			$categories = implode(',', array_keys(KunenaForumCategoryHelper::getCategories()));
-			$query = "SELECT id, category_id AS catid, subject, posts AS count
-				FROM #__kunena_topics
-				WHERE moved_id=0 AND hold=0 AND category_id IN ({$categories})
-				ORDER BY count DESC";
-			$this->_db->setQuery ( $query, 0, $limit );
-			$this->topTopics = (array) $this->_db->loadObjectList ();
-			KunenaError::checkDatabaseError();
+			$params = array('orderby'=>'posts DESC');
+			list($total, $this->topTopics) = KunenaForumTopicHelper::getLatestTopics(false, 0, $limit, $params);
 			$top = reset($this->topTopics);
-			if (empty($top->count)) {
-				$this->topTopics = array();
-				return;
-			}
 			foreach ($this->topTopics as $item) {
-				$item->link = CKunenaLink::GetThreadLink( 'view', $item->catid, $item->id, KunenaHtmlParser::parseText ($item->subject), '' );
-				$item->percent = round(100 * $item->count / $top->count);
+				$item->count = $item->posts;
+				$item->link = JHTML::_('kunenaforum.link', $item->getUrl(), KunenaHtmlParser::parseText ($item->subject));
+				$item->percent = round(100 * $item->count / $top->posts);
 			}
 			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_STAT_POPULAR_USER_KGSG');
 			$top->titleName = JText::_('COM_KUNENA_GEN_SUBJECT');
-			$top->titleCount =  JText::_('COM_KUNENA_USRL_HITS');
+			$top->titleCount =  JText::_('COM_KUNENA_USRL_POSTS');
 		}
 		return array_slice($this->topTopics, 0, $limit);
 	}
@@ -231,22 +222,20 @@ class KunenaForumStatistics {
 	public function loadTopPolls($limit=0) {
 		$limit = $limit ? $limit : $this->_config->poppollscount;
 		if (count($this->topPolls) < $limit) {
-			$query = "SELECT m.*, poll.*, SUM(opt.votes) AS count
+			$query = "SELECT poll.threadid AS id, SUM(opt.votes) AS count
 					FROM #__kunena_polls_options AS opt
 					INNER JOIN #__kunena_polls AS poll ON poll.id=opt.pollid
-					LEFT JOIN #__kunena_messages AS m ON poll.threadid=m.id
 					GROUP BY pollid
+					HAVING count > 0
 					ORDER BY count DESC";
 			$this->_db->setQuery($query, 0, $limit);
-			$this->topPolls = $this->_db->loadObjectList();
+			$polls = (array) $this->_db->loadObjectList('id');
 			KunenaError::checkDatabaseError();
+			$this->topPolls = KunenaForumTopicHelper::getTopics(array_keys($polls));
 			$top = reset($this->topPolls);
-			if (empty($top->count)){
-				$this->topPolls = array();
-				return;
-			}
 			foreach ($this->topPolls as $item) {
-				$item->link = CKunenaLink::GetThreadLink( 'view', $item->catid, $item->id, KunenaHtmlParser::parseText ($item->subject), '' );
+				$item->count = $polls[$item->id]->count;
+				$item->link = JHTML::_('kunenaforum.link', $item->getUrl(), KunenaHtmlParser::parseText ($item->subject));
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_STAT_POPULAR_POLLS_KGSG');

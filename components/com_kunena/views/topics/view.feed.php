@@ -32,7 +32,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->params = $this->state->get('params');
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->template = KunenaTemplate::getInstance();
 
 		// TODO: if start != 0, add information from it into description
@@ -81,7 +81,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->layout = 'user';
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->template = KunenaTemplate::getInstance();
 
 		// TODO: if start != 0, add information from it into description
@@ -125,7 +125,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->template = KunenaTemplate::getInstance();
 
 		// TODO: if start != 0, add information from it into description
@@ -167,24 +167,24 @@ class KunenaViewTopics extends KunenaView {
 		foreach ( $this->topics as $topic ) {
 			if ($firstpost) {
 				$id = $topic->first_post_id;
-				$page = 0;
+				$page = 'first';
 				$description = $topic->first_post_message;
 				$date = new JDate($topic->first_post_time);
 				$userid = $topic->first_post_userid;
 				$username = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
 			} else {
 				$id = $topic->last_post_id;
-				$page = ceil ( $topic->posts / $this->config->messages_per_page );
+				$page = 'last';
 				$description = $topic->last_post_message;
 				$date = new JDate($topic->last_post_time);
 				$userid = $topic->last_post_userid;
 				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
 			}
 			$title = $topic->subject;
-			$url = CKunenaLink::GetThreadPageURL('view', $topic->category_id, $topic->id, $page, $this->config->messages_per_page, $id, true );
-			$category = $topic->getCategory()->name;
+			$category = $topic->getCategory();
+			$url = $topic->getUrl($category, true, $page);
 
-			$this->createItem($title, $url, $description, $category, $date, $userid, $username);
+			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
 		}
 	}
 
@@ -197,15 +197,14 @@ class KunenaViewTopics extends KunenaView {
 			}
 			$topic = $this->topics[$message->thread];
 			$title = $message->subject;
-			// TODO: link must point into right page
-			$url = CKunenaLink::GetThreadPageURL('view', $message->catid, $message->thread, 0, $this->config->messages_per_page, 0, true );
+			$category = $topic->getCategory();
+			$url = $message->getUrl($category);
 			$description = $message->message;
-			$category = $topic->getCategory()->name;
 			$date = new JDate($message->time);
 			$userid = $message->userid;
 			$username = KunenaFactory::getUser($userid)->getName($message->name);
 
-			$this->createItem($title, $url, $description, $category, $date, $userid, $username);
+			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
 		}
 	}
 

@@ -14,7 +14,15 @@ defined ( '_JEXEC' ) or die ();
 				<div class="tk-mb-header-login" style="display:none;">
 					<span class="tk-mb-first"><?php echo JText::_('COM_KUNENA_TEMPLATE_MEMB_LOGIN');  ?></span>
 				</div>
-			<form action="index.php" method="post" name="login">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">
+			<input type="hidden" name="option" value="<?php echo $this->login['option']; ?>" />
+			<?php if (!empty($this->login['view'])) : ?>
+			<input type="hidden" name="view" value="<?php echo $this->login['view']; ?>" />
+			<?php endif; ?>
+			<input type="hidden" name="task" value="<?php echo $this->login['task']; ?>" />
+			<input type="hidden" name="<?php echo $this->login['field_return']; ?>" value="[K=RETURN_URL]" />
+			[K=TOKEN]
+
 			<ul class="topiclist forums">
 				<li class="rowfull">
 					<dl class="icon profilebox">
@@ -27,13 +35,6 @@ defined ( '_JEXEC' ) or die ();
 								</li>
 								<li>
 									<input type="password" name="<?php echo $this->login['field_password']; ?>" class="inputbox tk-password" size="25" alt="password" value="" />
-							<input type="hidden" name="option" value="<?php echo $this->login['option']; ?>" />
-							<?php if (!empty($this->login['view'])) : ?>
-							<input type="hidden" name="view" value="<?php echo $this->login['view']; ?>" />
-							<?php endif; ?>
-							<input type="hidden" name="task" value="<?php echo $this->login['task']; ?>" />
-							<input type="hidden" name="<?php echo $this->login['field_return']; ?>" value="[K=RETURN_URL]" />
-							[K=TOKEN]
 								</li>
 								<li>
 							<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>

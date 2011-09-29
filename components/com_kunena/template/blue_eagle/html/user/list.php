@@ -42,11 +42,13 @@ $this->displayLoginBox ();
 	<div class="kcontainer" id="searchuser_tbody">
 		<div class="kbody">
 			<div class="search-user">
-				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>">
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" name="usrlform" method="post">
+					<input type="hidden" name="view" value="user" />
+					<?php echo JHTML::_( 'form.token' ); ?>
+
 					<input id="kusersearch" type="text" name="search" class="inputbox"
 						value="<?php echo $this->escape($this->state->get('list.search', JText::_('COM_KUNENA_USRL_SEARCH'))); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';" onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';" />
 					<input type="image" src="<?php echo $this->template->getImagePath('usl_search_icon.png') ?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;" />
-					<?php echo JHTML::_( 'form.token' ); ?>
 				</form>
 			</div>
 			<div class="userlist-jump">
@@ -62,10 +64,12 @@ $this->displayLoginBox ();
 	</div>
 	<div class="kcontainer" id="userlist-tbody">
 		<div class="kbody">
-			<form action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>" method="post" name="adminForm">
-				<input type="hidden" name="view" value="users">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" method="post" name="adminForm">
+				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.order'); ?>" />
 				<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.order_dir'); ?>" />
+				<?php echo JHTML::_( 'form.token' ); ?>
+
 				<table>
 					<tr class="ksth userlist">
 						<th class="frst"> # </th>
@@ -149,15 +153,15 @@ $this->displayLoginBox ();
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_avatar) : ?>
-						<td class="kcol-mid"><?php echo !empty($uslavatar) ? CKunenaLink::GetProfileLink(intval($user->id), $uslavatar) : '&nbsp;' ?></td>
+						<td class="kcol-mid"><?php echo !empty($uslavatar) ? $profile->getLink($uslavatar) : '&nbsp;' ?></td>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_name) : ?>
-						<td class="kcol-mid"><?php echo CKunenaLink::GetProfileLink(intval($user->id), $this->escape($user->name)); ?></td>
+						<td class="kcol-mid"><?php echo $profile->getLink($this->escape($user->name)); ?></td>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_username) : ?>
-						<td class="kcol-mid"><?php echo CKunenaLink::GetProfileLink(intval($user->id), $this->escape($user->username)); ?></td>
+						<td class="kcol-mid"><?php echo $profile->getLink($this->escape($user->username)); ?></td>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_posts) : ?>
@@ -191,7 +195,10 @@ $this->displayLoginBox ();
 					<?php endforeach; ?>
 				</table>
 			</form>
-			<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>" onsubmit="return false;">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" name="usrlform" method="post" onsubmit="return false;">
+				<input type="hidden" name="view" value="user" />
+				<?php echo JHTML::_( 'form.token' ); ?>
+
 				<table class="kblocktable" id="kuserlist-bottom">
 					<tr>
 						<td>

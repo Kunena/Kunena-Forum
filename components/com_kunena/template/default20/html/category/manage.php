@@ -13,13 +13,15 @@ defined ( '_JEXEC' ) or die ();
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 ?>
-<form enctype="multipart/form-data" name="adminForm" method="post" id="kcategoryform" class="adminForm form-validate" action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" enctype="multipart/form-data" name="adminForm" method="post" id="kcategoryform" class="adminForm form-validate">
+	<input type="hidden" name="view" value="category" />
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering') ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction') ?>" />
 	<input type="hidden" name="limitstart" value="<?php echo $this->navigation->limitstart ?>" />
 	<input type="hidden" name="boxchecked" value="0" />
 	<?php echo JHTML::_( 'form.token' ); ?>
+
 	<div class="ksection">
 		<h2 class="kheader"><a rel="ksection-categories" title="<?php echo $this->header ?>"><?php echo $this->header ?></a></h2>
 			<table class="kgrid kgrid-categories" id="kcategories-manager">

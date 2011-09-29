@@ -18,7 +18,11 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-prune"><?php echo JText::_('COM_KUNENA_A_PRUNE'); ?></div>
-		<form action="index.php" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<input type="hidden" name="view" value="prune" />
+		<input type="hidden" name="task" value="doprune" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+
 		<table class="adminform" cellpadding="4" cellspacing="0" border="0" width="100%">
 			<tr>
 				<td colspan="2"><?php echo JText::_('COM_KUNENA_A_PRUNE_DESC') ?></td>
@@ -36,10 +40,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				<td><input type="text" name="prune_days" value="30" /><?php echo "&nbsp;". JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></td>
 			</tr>
 		</table>
-		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="prune" />
-		<input type="hidden" name="task" value="doprune" />
-		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>
 	<div class="kadmin-footer">

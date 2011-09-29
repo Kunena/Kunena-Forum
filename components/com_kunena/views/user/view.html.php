@@ -23,7 +23,7 @@ class KunenaViewUser extends KunenaView {
 
 	function displayEdit($tpl = null) {
 		$userid = JRequest::getInt('userid');
-		$this->me = KunenaFactory::getUser ();
+		$this->me = KunenaUserHelper::getMyself();
 		if ($userid && $this->me->userid != $userid) {
 			$user = KunenaFactory::getUser( $userid );
 			$this->_app->enqueueMessage ( JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $user->getName()), 'notice' );
@@ -38,7 +38,7 @@ class KunenaViewUser extends KunenaView {
 		$this->total = $this->get ( 'Total' );
 		$this->count = $this->get ( 'Count' );
 		$this->users = $this->get ( 'Items' );
-		$this->me = KunenaFactory::getUser ();
+		$this->me = KunenaUserHelper::getMyself();
 		// TODO: Deprecated:
 		$this->pageNav = $this->getPagination(7);
 		parent::display($tpl);
@@ -57,7 +57,7 @@ class KunenaViewUser extends KunenaView {
 		$this->_app = JFactory::getApplication ();
 		$this->config = KunenaFactory::getConfig ();
 		$this->my = JFactory::getUser ();
-		$this->me = KunenaFactory::getUser ();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->do = JRequest::getWord('layout');
 
 		if (!$userid) {
@@ -485,7 +485,7 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function canManageAttachments () {
-		$this->me = KunenaFactory::getUser ();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		if ( $this->config->show_imgfiles_manage_profile ) {
 			$file = null;

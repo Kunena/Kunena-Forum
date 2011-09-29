@@ -34,10 +34,9 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 
 			<div class="kdetailsbox kadvsearch" id="kadvsearch-detailsbox">
 
-				<form name="adminForm" id="searchform" method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search') ?>">
-					<input type="hidden" value="com_kunena" name="option" />
-					<input type="hidden" value="search" name="view" />
-					<input type="hidden" value="results" name="task" />
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="adminForm" id="searchform" method="post">
+					<input type="hidden" name="view" value="search" />
+					<input type="hidden" name="task" value="results" />
 					<?php echo JHTML::_( 'form.token' ); ?>
 
 					<div class="ksearchform-leftcol">
@@ -119,7 +118,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 					<?php // FIXME : Missing translation (title) ?>
 						<button title="Click here to search" type="submit" class="tk-submit-button"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></button>
 					<?php // FIXME : Missing translation (title) ?>
-						<button onclick="window.location='<?php echo CKunenaLink::GetKunenaURL();?>';" title="Click here to cancel" type="button" class="tk-cancel-button"><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL'); ?></button>
+						<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="tk-cancel-button"><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL'); ?></button>
 					</div>
 				</form>
 

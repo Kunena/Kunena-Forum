@@ -24,7 +24,8 @@ JHTML::_('behavior.tooltip');
 				</li>
 			</ul>
 
-<form enctype="multipart/form-data" name="adminForm" method="post" id="categoryform" class="adminForm form-validate" action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" enctype="multipart/form-data" name="adminForm" method="post" id="categoryform" class="adminForm form-validate">
+	<input type="hidden" name="view" value="category" />
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="catid" value="<?php echo $this->category->id ?>" />
 	<?php echo JHTML::_( 'form.token' ); ?>

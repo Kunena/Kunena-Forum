@@ -15,9 +15,12 @@ defined ( '_JEXEC' ) or die ();
 			<a href="<?php echo $this->sectionRssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?>"><span class="krss-icon"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?></span></a>
 			<?php endif ?>
 			<?php if (!empty($this->sectionMarkReadURL)) : ?>
-			<form action="<?php echo $this->sectionMarkReadURL ?>" name="kunenaMarkAllRead" method="post">
-				<input type="submit" class="kheader-link" value="<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?>" />
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="kunenaMarkAllRead" method="post">
+				<input type="hidden" name="view" value="category" />
+				<input type="hidden" name="task" value="markread" />
 				<?php echo JHTML::_( 'form.token' ); ?>
+
+				<input type="submit" class="kheader-link" value="<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?>" />
 			</form>
 			<?php endif ?>
 			<a href="<?php echo $this->sectionURL ?>" class="ksection-headericon"><?php echo $this->getImage('icon-section.png') ?></a>

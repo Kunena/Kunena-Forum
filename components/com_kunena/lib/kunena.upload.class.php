@@ -50,7 +50,7 @@ class CKunenaUpload {
 		$this->_config = KunenaFactory::getConfig ();
 		$this->_isimage = false;
 		$this->_isfile = false;
-		$me = KunenaFactory::getUser ();
+		$me = KunenaUserHelper::getMyself();
 		if (($me->isModerator()) || ($this->_my->id && $this->_config->allowimageregupload) || (!$this->_my->id && $this->_config->allowimageupload)) {
 			$this->validImageExts = explode ( ',', $this->_config->imagetypes );
 		}

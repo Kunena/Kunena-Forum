@@ -130,7 +130,7 @@ window.addEvent('domready', function(){
 		if (!$user->exists()) return false;
 
 		// In backend every logged in user has global admin rights (for now)
-		if (JFactory::getApplication()->isAdmin() && $user->userid == KunenaFactory::getUser()->userid)
+		if (JFactory::getApplication()->isAdmin() && $user->userid == KunenaUserHelper::getMyself()->userid)
 			return true;
 
 		// If $catid is not numeric: Is user administrator in ANY category?

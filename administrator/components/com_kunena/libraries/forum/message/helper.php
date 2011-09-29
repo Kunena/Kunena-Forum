@@ -36,8 +36,11 @@ class KunenaForumMessageHelper {
 		if ($id < 1)
 			return new KunenaForumMessage ();
 
-		if ($reload || empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumMessage ( $id );
+		if (empty ( self::$_instances [$id] )) {
+			self::$_instances [$id] = new KunenaForumMessage ( array('id'=>$id) );
+			self::$_instances [$id]->load();
+		} elseif ($reload) {
+			self::$_instances [$id]->load();
 		}
 
 		return self::$_instances [$id];
@@ -180,13 +183,12 @@ class KunenaForumMessageHelper {
 			$limitstart = intval($total / $limit) * $limit;
 
 		$db->setQuery ( $rquery, $limitstart, $limit );
-		$results = $db->loadObjectList ();
+		$results = $db->loadAssocList ();
 		if (KunenaError::checkDatabaseError()) return array(0, array());
 
 		$messages = array();
 		foreach ( $results as $result ) {
-			$instance = new KunenaForumMessage (false);
-			$instance->setProperties ( $result );
+			$instance = new KunenaForumMessage ($result);
 			$instance->exists(true);
 			self::$_instances [$instance->id] = $instance;
 			$messages[$instance->id] = $instance;
@@ -195,9 +197,10 @@ class KunenaForumMessageHelper {
 		return array($total, $messages);
 	}
 
-	public function getLocation($mesid, $direction = 'asc', $hold=null) {
+	public function getLocation($mesid, $direction = null, $hold = null) {
+		if (is_null($direction)) $direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		if (!$hold) {
-			$me = KunenaFactory::getUser();
+			$me = KunenaUserHelper::getMyself();
 			$access = KunenaFactory::getAccessControl();
 			$hold = $access->getAllowedHold($me->userid, $mesid, false);
 		}
@@ -285,7 +288,8 @@ class KunenaForumMessageHelper {
 
 	static protected function loadMessages($ids) {
 		foreach ($ids as $i=>$id) {
-			if (isset(self::$_instances [$id]))
+			$id = intval($id);
+			if (!$id || isset(self::$_instances [$id]))
 				unset($ids[$i]);
 		}
 		if (empty($ids))
@@ -300,8 +304,7 @@ class KunenaForumMessageHelper {
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumMessage (false);
-				$instance->setProperties ( $results[$id] );
+				$instance = new KunenaForumMessage ($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;
 			} else {
@@ -323,8 +326,7 @@ class KunenaForumMessageHelper {
 
 		$list = array();
 		foreach ( $results as $id=>$result ) {
-			$instance = new KunenaForumMessage (false);
-			$instance->setProperties ( $result );
+			$instance = new KunenaForumMessage ($result);
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;
 			$list[$orderbyid ? $id : $start++] = $instance;

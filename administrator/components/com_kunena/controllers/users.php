@@ -77,7 +77,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_PROFILE_SAVED_SUCCESSFULLY' ) );
 
 		// Update moderator rights
-		$me = KunenaFactory::getUser();
+		$me = KunenaUserHelper::getMyself();
 		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
 		$user = KunenaFactory::getUser($uid);
 		foreach ($categories as $category) {
@@ -146,10 +146,6 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
-
-		$path = KPATH_SITE.'/lib/kunena.moderation.class.php';
-		require_once ($path);
-		$kunena_mod = CKunenaModeration::getInstance();
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 

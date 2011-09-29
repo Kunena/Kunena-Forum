@@ -28,7 +28,7 @@ class CKunenaModerationTools {
 	public function __construct() {
 		$this->_db		= JFactory::getDBO ();
 		$this->_my		= JFactory::getUser ();
-		$this->_me		= KunenaFactory::getUser ();
+		$this->_me		= KunenaUserHelper::getMyself ();
 		$this->_config	= KunenaFactory::getConfig ();
 
 		$this->_ResetErrorMessage ();

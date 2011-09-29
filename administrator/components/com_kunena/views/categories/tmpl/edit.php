@@ -36,6 +36,10 @@ function submitbutton(pressbutton)
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN') ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<input type="hidden" name="view" value="categories" />
+		<input type="hidden" name="task" value="save" />
+		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
+		<?php echo JHTML::_( 'form.token' ); ?>
 
 		<?php jimport('joomla.html.pane');
 		$myTabs = JPane::getInstance('tabs', array('startOffset'=>0)); ?>
@@ -219,11 +223,6 @@ function submitbutton(pressbutton)
 				<?php endif; ?>
 			</dd>
 		</dl>
-		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="categories" />
-		<input type="hidden" name="task" value="save" />
-		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>
 	<div class="kadmin-footer">

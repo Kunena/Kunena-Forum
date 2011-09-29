@@ -55,7 +55,7 @@ $this->cache = false;
 			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat');?>
 			</span>
-			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->topic->first_post_userid, $this->escape($this->topic->first_post_guest_name) ); ?></span>
+			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
 		</div>
 
 		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
@@ -87,13 +87,13 @@ $this->cache = false;
 		<div class="klatest-post-info">
 			<?php if ($this->topic->ordering) echo $this->getIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') ); ?>
 			<?php if (!empty($this->topic->avatar)) : ?>
-			<span class="ktopic-latest-post-avatar"> <?php echo CKunenaLink::GetProfileLink ( $this->topic->last_post_userid, $this->topic->avatar ) ?></span>
+			<span class="ktopic-latest-post-avatar"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
 			<?php endif; ?>
 
 			<span class="ktopic-latest-post">
 			<?php
 				echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST') );
-				echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->topic->last_post_userid, $this->escape($this->topic->last_post_guest_name), '', 'nofollow' );
+				echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();
 			?>
 			</span>
 

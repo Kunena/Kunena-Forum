@@ -24,6 +24,12 @@ $document->addScriptDeclaration('function update_topicicon(newimage)
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-topicicons"><?php if ( !$this->state->get('item.id') ): ?><?php echo JText::_('COM_KUNENA_A_NEW_TOPICICON'); ?><?php else: ?><?php echo JText::_('COM_KUNENA_A_EDIT_TOPICICON'); ?><?php endif; ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+			<input type="hidden" name="view" value="topicicons" />
+			<input type="hidden" name="task" value="save" />
+			<input type="hidden" name="boxchecked" value="0" />
+			<?php if ( $this->state->get('item.id') ): ?><input type="hidden" name="topiciconid" value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
+			<?php echo JHTML::_( 'form.token' ); ?>
+
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr align="center">
 					<td width="100"><?php
@@ -57,12 +63,6 @@ $document->addScriptDeclaration('function update_topicicon(newimage)
 					<td colspan="2" align="center"> </td>
 				</tr>
 			</table>
-			<input type="hidden" name="option" value="com_kunena" />
-			<input type="hidden" name="view" value="topicicons" />
-			<input type="hidden" name="task" value="save" />
-			<input type="hidden" name="boxchecked" value="0" />
-			<?php if ( $this->state->get('item.id') ): ?><input type="hidden" name="topiciconid" value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
-			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>
 	<div class="kadmin-footer">

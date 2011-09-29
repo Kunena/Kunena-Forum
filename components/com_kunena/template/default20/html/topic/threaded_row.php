@@ -19,7 +19,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php echo $this->getTopicLink($this->topic, $this->message) ?>
 		<?php endif; ?>
 	</td>
-	<td class="kcol-mid kprofile kprofile-list"><?php echo CKunenaLink::GetProfileLink($this->profile->userid, $this->message->name) ?></td>
+	<td class="kcol-mid kprofile kprofile-list"><?php echo $this->message->getAuthor()->getLink() ?></td>
 	<td class="kcol-last kmsgdate kmsgdate-list" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
 		<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 	</td>

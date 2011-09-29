@@ -12,13 +12,14 @@ defined ( '_JEXEC' ) or die ();
 ?>
 		<div class="ksection kreport">
 			<h2 class="kheader"><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></h2>
-			<form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" class="kform kform-report">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="kform kform-report">
 				<input type="hidden" name="view" value="topic" />
 				<input type="hidden" name="task" value="report" />
 				<input type="hidden" name="catid" value="<?php echo intval($this->catid); ?>"/>
 				<input type="hidden" name="id" value="<?php echo intval($this->id); ?>"/>
 				<input type="hidden" name="mesid" value="<?php echo intval($this->mesid); ?>"/>
 				<?php echo JHTML::_( 'form.token' ); ?>
+
 				<div class=kdetailsbox>
 					<ul class="kform clearfix">
 						<li class="krow-odd">

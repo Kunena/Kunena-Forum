@@ -29,6 +29,12 @@ JHTML::_('behavior.formvalidation')
 						<dt></dt>
 						<dd class="first" style="width:65%;padding-bottom: 15px !important;">
 				<form action="<?php echo JRoute::_( 'index.php?option=com_user' ); ?>" method="post" id="josForm" name="josForm" class="form-validate">
+					<input type="hidden" name="option" value="com_user" />
+					<input type="hidden" name="task" value="register_save" />
+					<input type="hidden" name="id" value="0" />
+					<input type="hidden" name="gid" value="0" />
+					<?php echo JHTML::_( 'form.token' ); ?>
+
 			<div class="tk-reg">
 					<div class="tk-reg_ins">
 						<label id="namemsg" for="name">
@@ -64,10 +70,6 @@ JHTML::_('behavior.formvalidation')
 					<input class="tk-submit-button validate" type="submit" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_REGISTER'); ?>" />
 					<input class="tk-reset-button" type="reset" value="<?php echo JText::_('COM_KUNENA_RESET'); ?>" />
 					<input class="tk-cancel-button" type="button" value="<?php echo JText::_('COM_KUNENA_CANCEL'); ?>" onclick="javascript:register.sweepToggle('contract')" />
-					<input type="hidden" name="task" value="register_save" />
-					<input type="hidden" name="id" value="0" />
-					<input type="hidden" name="gid" value="0" />
-					<?php echo JHTML::_( 'form.token' ); ?>
 				</form>
 						</dd>
 						<dd style="float:left;width:23%;text-align: justify;padding: 0 20px;margin-top:10px; border:0;">

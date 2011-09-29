@@ -87,7 +87,7 @@ foreach ( $this->sections as $section ) :
 				// get the Moderator list for display
 				$modslist = array();
 				foreach ( $category->moderators as $moderator ) {
-					$modslist[] = CKunenaLink::GetProfileLink ( $moderator );
+					$modslist[] = $moderator->getLink();
 				}
 				echo JText::_('COM_KUNENA_GEN_MODERATORS') . ': ' . implode(', ', $modslist);
 		?>
@@ -123,7 +123,7 @@ foreach ( $this->sections as $section ) :
 				$profile = KunenaFactory::getUser((int)$last->last_post_userid);
 				$useravatar = $profile->getAvatarImage('klist-avatar', 'list');
 				if ($useravatar) : ?>
-					<span class="klatest-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $useravatar ); ?></span>
+					<span class="klatest-avatar"> <?php echo $last->getLastPostAuthor()->getLink( $useravatar ); ?></span>
 				<?php endif; ?>
 			<!-- /Avatar -->
 			<?php endif; ?>
@@ -134,7 +134,7 @@ foreach ( $this->sections as $section ) :
 			<div class="klatest-subject-by ks">
 			<?php
 					echo JText::_('COM_KUNENA_BY') . ' ';
-					echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $this->escape($last->last_post_guest_name) );
+					echo $last->getLastPostAuthor()->getLink();
 					echo '<br /><span class="nowrap" title="' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat_hover') . '">' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat') . '</span>';
 					?>
 			</div>

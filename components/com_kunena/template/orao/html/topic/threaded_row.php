@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php //$avatar = $this->profile->getAvatarImage ('kavatar', 'list'); if ($avatar) : ?>
 		<?php //echo $this->profile->getLink($avatar); ?>
 		<?php //endif?>
-			<?php echo CKunenaLink::GetProfileLink($this->profile->userid, $this->message->name) ?>
+			<?php echo $this->message->getAuthor()->getLink() ?>
 		</dd>
 		<dd class="posts" style="text-align:left; width:17%" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
 			<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>

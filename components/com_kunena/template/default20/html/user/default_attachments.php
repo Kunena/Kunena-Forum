@@ -29,9 +29,12 @@ if (version_compare(JVERSION, '1.7','>')) {
 </div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" id="adminForm">
-				<input type="hidden" name="view" value="user">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="delfile" />
+				<input type="hidden" name="boxchecked" value="0" />
+				<?php echo JHTML::_( 'form.token' ); ?>
+
 				<ul>
 				<?php
 				if ( empty($this->items) ):
@@ -86,8 +89,6 @@ if (version_compare(JVERSION, '1.7','>')) {
 					<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" />
 					<?php endif; ?>
 				</div>
-				<input type="hidden" name="boxchecked" value="0" />
-				<?php echo JHTML::_( 'form.token' ); ?>
 			</form>
 		</div>
 	</div>

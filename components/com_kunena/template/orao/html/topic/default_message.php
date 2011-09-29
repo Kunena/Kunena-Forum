@@ -73,7 +73,7 @@ $this->params = $template->params;
 				<?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
 				<ul>
 					<li class="kpost-body-lastedit">
-						<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ": [K=DATE:{$this->message->modified_time}] " . JText::_('COM_KUNENA_BY') . ' ' . CKunenaLink::getProfileLink( $this->message->modified_by ) . '.'; ?>
+						<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ": [K=DATE:{$this->message->modified_time}] " . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
 					</li>
 				<?php if ($this->message->modified_reason) : ?>
 					<li class="kpost-body-editreason">

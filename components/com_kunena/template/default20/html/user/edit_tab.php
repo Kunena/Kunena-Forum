@@ -18,6 +18,7 @@ $this->document->addScriptDeclaration ( "// <![CDATA[
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="save" />
 				<?php echo JHTML::_( 'form.token' ); ?>
+
 					<dl class="tabs">
 						<dt class="open"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER') ?></dt>
 						<dd style="display: none;">

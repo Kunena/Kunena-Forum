@@ -16,7 +16,15 @@ defined ( '_JEXEC' ) or die ();
 				<li class="klogin-welcome kguest"><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME') ?>, <?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST') ?></li>
 				<?php if ($this->login) : ?>
 				<li class="klogin-form">
-					<form action="" method="post" class="kform">
+					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="kform">
+						<input type="hidden" name="option" value="<?php echo $this->login['option']; ?>" />
+						<?php if (!empty($this->login['view'])) : ?>
+						<input type="hidden" name="view" value="<?php echo $this->login['view']; ?>" />
+						<?php endif; ?>
+						<input type="hidden" name="task" value="<?php echo $this->login['task']; ?>" />
+						<input type="hidden" name="<?php echo $this->login['field_return']; ?>" value="[K=RETURN_URL]" />
+						[K=TOKEN]
+
 						<fieldset>
 							<legend class="klegend"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></legend>
 							<label for="kusername"><?php echo JText::_('COM_KUNENA_LOGIN_USERNAME') ?></label>
@@ -26,13 +34,6 @@ defined ( '_JEXEC' ) or die ();
 							<label for="kremember"><?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME') ?></label>
 							<input type="checkbox" id="kremember" class="kcheckbox" name="remember" value="yes" />
 							<button type="submit" value="Log in" class="kbutton"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></button>
-							<input type="hidden" name="option" value="<?php echo $this->login['option']; ?>" />
-							<?php if (!empty($this->login['view'])) : ?>
-							<input type="hidden" name="view" value="<?php echo $this->login['view']; ?>" />
-							<?php endif; ?>
-							<input type="hidden" name="task" value="<?php echo $this->login['task']; ?>" />
-							<input type="hidden" name="<?php echo $this->login['field_return']; ?>" value="[K=RETURN_URL]" />
-							[K=TOKEN]
 						</fieldset>
 					</form>
 				</li>

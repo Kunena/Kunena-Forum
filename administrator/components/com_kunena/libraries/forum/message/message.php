@@ -239,6 +239,10 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return KunenaUserHelper::getAuthor($this->userid, $this->name);
 	}
 
+	public function getModifier() {
+		return KunenaUserHelper::get($this->modified_by);
+	}
+
 	public function authorise($action='read', $user=null, $silent=false) {
 		static $actions  = array(
 			'none'=>array(),

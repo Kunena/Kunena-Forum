@@ -215,11 +215,11 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	public function getFirstPostAuthor() {
-		return KunenaUserHelper::get($this->first_post_userid);
+		return KunenaUserHelper::getAuthor($this->first_post_userid, $this->first_post_guest_name);
 	}
 
 	public function getLastPostAuthor() {
-		return KunenaUserHelper::get($this->last_post_userid);
+		return KunenaUserHelper::getAuthor($this->last_post_userid, $this->last_post_guest_name);
 	}
 
 	public function getFirstPostTime() {

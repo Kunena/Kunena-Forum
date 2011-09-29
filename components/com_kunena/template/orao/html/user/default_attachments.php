@@ -35,9 +35,12 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 	<div class="kcontainer">
 		<div class="kbody">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" id="adminForm">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
 				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="task" value="delfile" />
+				<input type="hidden" name="boxchecked" value="0" />
+				<?php echo JHTML::_( 'form.token' ); ?>
+
 				<table width="100%">
 					<tr class="ksth">
 						<th class="frst"> # </th>
@@ -88,8 +91,6 @@ if (version_compare(JVERSION, '1.7','>')) {
 					<?php $i++; $y++; endforeach; ?>
 				</table>
 				<input class="tk-submit-button" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>" style="float:right;" />
-				<input type="hidden" name="boxchecked" value="0" />
-				<?php echo JHTML::_( 'form.token' ); ?>
 			</form>
 		</div>
 	</div>

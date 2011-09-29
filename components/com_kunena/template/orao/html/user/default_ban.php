@@ -26,10 +26,12 @@ JHTML::_('behavior.tooltip');
 				</li>
 			</ul>
 
-								<form action="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=user") ?>" id="kform-ban" name="kformban" method="post">
+								<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kform-ban" name="kformban" method="post">
+									<input type="hidden" name="view" value="user" />
 									<input type="hidden" name="task" value="ban" />
 									<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
 									<?php echo JHTML::_( 'form.token' ); ?>
+
 									<ul class="kform kmoderate-user clearfix">
 										<li class="kedit-user-information-row krow-<?php echo $this->row(true) ?>">
 											<div class="kform-label">

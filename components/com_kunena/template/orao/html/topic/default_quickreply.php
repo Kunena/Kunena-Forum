@@ -27,6 +27,12 @@ defined ( '_JEXEC' ) or die ();
 						<dd class="first tk-quick-reply">
 							<div class="" style="display: block !important;">
 								<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="postform" enctype="multipart/form-data">
+									<input type="hidden" name="view" value="topic" />
+									<input type="hidden" name="task" value="post" />
+									<input type="hidden" name="parentid" value="<?php echo intval($this->message->id) ?>" />
+									<input type="hidden" name="catid" value="<?php echo intval($this->category->id) ?>" />
+									<?php echo JHTML::_( 'form.token' ) ?>
+
 								<ul>
 									<?php if (KunenaUserHelper::getMyself()->exists() && $this->category->allow_anonymous): ?>
 									<li>
@@ -45,11 +51,6 @@ defined ( '_JEXEC' ) or die ();
 									<li>
 										<span class="tk-quick-title"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ?></span>
 										<span class="tk-quick-form">
-										<input type="hidden" name="view" value="topic" />
-										<input type="hidden" name="task" value="post" />
-										<input type="hidden" name="parentid" value="<?php echo intval($this->message->id) ?>" />
-										<input type="hidden" name="catid" value="<?php echo intval($this->category->id) ?>" />
-										<?php echo JHTML::_( 'form.token' ) ?>
 											<input type="text" name="subject" size="55" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo  $this->escape($this->message->subject) ?>" /><br />
 										</span>
 									</li>

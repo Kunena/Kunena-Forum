@@ -25,10 +25,9 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 			<h2 class="kheader"><a title="Advanced Search" rel="kadvsearch-detailsbox"><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH') ?></a></h2>
 			<div class="kdetailsbox kadvsearch" id="kadvsearch-detailsbox">
 
-				<form name="adminForm" id="searchform" method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search') ?>">
-					<input type="hidden" value="com_kunena" name="option" />
-					<input type="hidden" value="search" name="view" />
-					<input type="hidden" value="results" name="task" />
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="adminForm" id="searchform" method="post">
+					<input type="hidden" name="view" value="search" />
+					<input type="hidden" name="task" value="results" />
 					<?php echo JHTML::_( 'form.token' ); ?>
 
 					<div class="ksearchform-leftcol">

@@ -40,7 +40,7 @@ defined ( '_JEXEC' ) or die ();
 										if ($this->config->avataroncat > 0) :
 											$useravatar = KunenaFactory::getUser((int)$last->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 											if ($useravatar) : ?>
-										<li class="klatest-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $useravatar ); ?></li>
+										<li class="klatest-avatar"> <?php echo $last->getLastPostauthor()->getLink( $useravatar ); ?></li>
 										<?php endif; ?>
 										<?php endif; ?>
 										<li class="ktopic-title">
@@ -50,7 +50,7 @@ defined ( '_JEXEC' ) or die ();
 										<li class="ktopic-details">
 										<?php
 											echo JText::_('COM_KUNENA_BY') . ' ';
-											echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $this->escape($last->last_post_guest_name) );
+											echo $last->getLastPostauthor()->getLink();
 											echo KunenaDate::getInstance($last->last_post_time)->toSpan('config_post_dateformat','config_post_dateformat_hover');
 										?>
 										</li>

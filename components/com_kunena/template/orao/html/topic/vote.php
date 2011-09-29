@@ -23,12 +23,13 @@ defined ( '_JEXEC' ) or die ();
 			<div class="kdetailsbox">
 				<div class="kpolldesc">
 				<div id="kpoll-text-help"></div>
-				<form id="kpoll-form-vote" method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>">
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kpoll-form-vote" method="post">
 					<input type="hidden" name="view" value="topic" />
 					<input type="hidden" name="task" value="vote" />
 					<input type="hidden" name="catid" value="<?php echo $this->topic->category_id ?>" />
 					<input type="hidden" name="id" value="<?php echo $this->topic->id ?>" />
 					<?php echo JHTML::_( 'form.token' ); ?>
+
 					<fieldset>
 						<legend><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
 						<ul>

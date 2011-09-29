@@ -54,7 +54,7 @@ $this->displayLoginBox ();
 							<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>
 						</span>
 						<span class="kmessage-by">
-							<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($this->message->userid), $this->escape($this->message->name) ); ?>
+							<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->message->getAuthor()->getLink() ?>
 						</span>
 					</div>
 					<div class="kmessage-avatar"><?php echo $this->user->getAvatarImage('', 'list'); ?></div>

@@ -204,7 +204,7 @@ JHTML::_('behavior.tooltip');
 				</div>
 			</li>
 
-			<?php if ($this->me->isModerator ( $this->message->catid ) ) : ?>
+			<?php if ($this->config->keywords && $this->me->isModerator ( $this->message->catid ) ) : ?>
 			<li class="kpostmessage-row krow-even">
 				<div class="kform-label">
 					<label for="ktags">
@@ -217,7 +217,7 @@ JHTML::_('behavior.tooltip');
 			</li>
 			<?php endif; ?>
 
-			<?php if ($this->my->id) : ?>
+			<?php if ($this->config->userkeywords && $this->my->id) : ?>
 			<li class="kpostmessage-row krow-even">
 				<div class="kform-label">
 					<label for="kmytags">

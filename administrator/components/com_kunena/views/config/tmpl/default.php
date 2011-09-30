@@ -579,7 +579,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL'); ?></td>
-						<td align="left" valign="top"><?php echo $this->list ['mailfull']; ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['mailfull']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL_DESC'); ?></td>
 					</tr>
 					<tr align="center" valign="middle">

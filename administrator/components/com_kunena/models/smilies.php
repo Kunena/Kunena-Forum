@@ -63,23 +63,22 @@ class KunenaAdminModelSmilies extends KunenaModel {
 	public function getSmiley() {
 		$db = JFactory::getDBO ();
 
-   	 	if ( $this->getState('item.id') ) {
-      		$db->setQuery ( "SELECT * FROM #__kunena_smileys WHERE id = '{$this->getState('item.id')}'" );
-		 	$rankselected = $db->loadObject ();
-		  	if (KunenaError::checkDatabaseError()) return;
+		if ($this->getState ( 'item.id' )) {
+			$db->setQuery ( "SELECT * FROM #__kunena_smileys WHERE id = '{$this->getState('item.id')}'" );
+			$selected = $db->loadObject ();
+			if (KunenaError::checkDatabaseError ())
+				return;
 
-	 	   	return $rankselected;
+			return $selected;
 		}
-		return;
+		return null;
 	}
 
 	public function getSmileyspaths() {
 		$template = KunenaFactory::getTemplate();
 
-		$smileyselected = '';
 		if ( $this->getState('item.id') ) {
-			$smileyselected = $this->getSmiley();
-			$smileyselected = $smileyselected->smiley_id;
+			$selected = $this->getSmiley();
 		}
 
 		$smileypath = $template->getSmileyPath();
@@ -90,7 +89,7 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		foreach ( $smiley_images as $id => $row ) {
 			$smiley_list[] = JHTML::_ ( 'select.option', $smiley_images [$id], $smiley_images [$id] );
 		}
-		$list = JHTML::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', isset($smileyselected) ? $smileyselected : '' );
+		$list = JHTML::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected) ? $selected->location : '' );
 
 		return $list;
 	}

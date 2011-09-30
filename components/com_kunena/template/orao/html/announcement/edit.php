@@ -36,7 +36,7 @@ $document->addScriptDeclaration('// <![CDATA[
 				<div class="kactions"><?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></div>
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" class="form-validate" method="post" name="editform" onsubmit="return myValidate(this);">
 					<input type="hidden" name="view" value="announcement" />
-					<input type='hidden' name="task" value="doedit"/>
+					<input type='hidden' name="task" value="edit"/>
 					<input type='hidden' name="id" value="<?php echo intval($this->announcement->id) ;?>"/>
 					<?php echo JHTML::_( 'form.token' ); ?>
 

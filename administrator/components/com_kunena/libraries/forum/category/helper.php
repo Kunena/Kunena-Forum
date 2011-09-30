@@ -45,8 +45,11 @@ class KunenaForumCategoryHelper {
 		}
 
 		$id = intval ( $identifier );
-		if ($reload || empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumCategory ( $id );
+		if (empty ( self::$_instances [$id] )) {
+			self::$_instances [$id] = new KunenaForumCategory (array('id'=>$id));
+			self::$_instances [$id]->load();
+		} elseif ($reload) {
+			self::$_instances [$id]->load();
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -366,8 +369,7 @@ class KunenaForumCategoryHelper {
 
 		self::$_instances = array();
 		foreach ( $results as $category ) {
-			$instance = new KunenaForumCategory (false);
-			$instance->setProperties ( $category );
+			$instance = new KunenaForumCategory ($category);
 			$instance->exists (true);
 			self::$_instances [$instance->id] = $instance;
 

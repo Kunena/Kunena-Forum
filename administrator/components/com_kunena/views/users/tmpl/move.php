@@ -24,15 +24,15 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						<td>
 						<strong><?php echo JText::_('COM_KUNENA_CATEGORY_TARGET'); ?></strong>
 						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
-						<?php
-							echo $this->catslist;
-						?>
-						<input type="hidden" name="option" value="com_kunena" />
-						<input type="hidden" name="view" value="users" />
-						<input type="hidden" name="task" value="" />
-						<input type="hidden" name="boxchecked" value="1" />
-						<input type="hidden" name="uid[]" value="<?php echo $this->userid; ?>" />
-						<?php echo JHTML::_( 'form.token' ); ?>
+							<input type="hidden" name="view" value="users" />
+							<input type="hidden" name="task" value="" />
+							<input type="hidden" name="boxchecked" value="1" />
+							<input type="hidden" name="uid[]" value="<?php echo $this->userid; ?>" />
+							<?php echo JHTML::_( 'form.token' ); ?>
+
+							<?php
+								echo $this->catslist;
+							?>
 						</form>
 						</td>
 						<td><strong><?php echo JText::_('COM_KUNENA_MOVEUSERMESSAGES_USERS_CURRENT'); ?></strong>

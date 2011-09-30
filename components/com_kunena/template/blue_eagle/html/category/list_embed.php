@@ -22,7 +22,7 @@ foreach ( $this->sections as $section ) :
 		<?php if (count($this->sections) > 1) : ?>
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="catid_<?php echo intval($section->id) ?>"></a></span>
 		<?php endif; ?>
-		<h2><span><?php echo CKunenaLink::GetCategoryLink ( 'listcat', intval($section->id), $this->escape($section->name), 'follow' ); ?></span></h2>
+		<h2><span><?php echo $this->GetCategoryLink ( $section, $this->escape($section->name) ); ?></span></h2>
 		<?php if (!empty($section->description)) : ?>
 		<div class="ktitle-desc km">
 			<?php echo KunenaHtmlParser::parseBBCode ( $section->description ); ?>
@@ -40,15 +40,13 @@ foreach ( $this->sections as $section ) :
 		<tr class="k<?php echo $tabclass [$k ^= 1], isset ( $category->class_sfx ) ? ' k' . $this->escape($tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
 			id="kcat<?php echo intval($category->id) ?>">
 			<td class="kcol-first kcol-category-icon">
-				<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '')
-				//CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->getCategoryIcon($category) ) ?>
+				<?php echo $this->getCategoryLink($category, $this->getCategoryIcon($category), '') ?>
 			</td>
 
 			<td class="kcol-mid kcol-kcattitle">
 			<div class="kthead-title kl">
 			<?php
 				// Show new posts, locked, review
-				//echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->escape($category->name ) );
 				echo $this->getCategoryLink($category);
 				if ($category->getNewCount()) {
 					echo '<sup class="knewchar">(' . $category->getNewCount() . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
@@ -75,7 +73,6 @@ foreach ( $this->sections as $section ) :
 			<div class="kcc-subcat km">
 			<?php
 				echo $this->getCategoryIcon($childforum, true);
-				//echo CKunenaLink::GetCategoryLink ( 'showcat', intval($childforum->id), $this->escape($childforum->name), '','', KunenaHtmlParser::stripBBCode ( $childforum->description ) );
 				echo $this->getCategoryLink($childforum);
 				echo '<span class="kchildcount ks">(' . $childforum->getTopics() . "/" . $childforum->getPosts() . ')</span>';
 			?>
@@ -90,7 +87,7 @@ foreach ( $this->sections as $section ) :
 				// get the Moderator list for display
 				$modslist = array();
 				foreach ( $category->moderators as $moderator ) {
-					$modslist[] = CKunenaLink::GetProfileLink ( $moderator );
+					$modslist[] = $moderator->getLink();
 				}
 				echo JText::_('COM_KUNENA_GEN_MODERATORS') . ': ' . implode(', ', $modslist);
 		?>
@@ -117,8 +114,8 @@ foreach ( $this->sections as $section ) :
 			<!-- /Number of Replies -->
 			</td>
 
-			<?php $last = $category->getLastPosted();
-			if ($last->last_topic_id) { ?>
+			<?php $last = $category->getLastTopic();
+			if ($last->exists()) { ?>
 			<td class="kcol-mid kcol-kcatlastpost">
 			<?php if ($this->config->avataroncat > 0) : ?>
 			<!-- Avatar -->
@@ -126,19 +123,18 @@ foreach ( $this->sections as $section ) :
 				$profile = KunenaFactory::getUser((int)$last->last_post_userid);
 				$useravatar = $profile->getAvatarImage('klist-avatar', 'list');
 				if ($useravatar) : ?>
-					<span class="klatest-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $useravatar ); ?></span>
+					<span class="klatest-avatar"> <?php echo $last->getLastPostAuthor()->getLink( $useravatar ); ?></span>
 				<?php endif; ?>
 			<!-- /Avatar -->
 			<?php endif; ?>
 			<div class="klatest-subject ks">
-				<?php //echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($last->id), intval($last->last_topic_id), intval($last->getLastPostLocation()), intval($this->config->messages_per_page), KunenaHtmlParser::parseText($last->last_topic_subject, 30), intval($last->last_post_id) );?>
-				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. $this->getLastPostLink($last);?>
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. $this->getLastPostLink($category) ?>
 			</div>
 
 			<div class="klatest-subject-by ks">
 			<?php
 					echo JText::_('COM_KUNENA_BY') . ' ';
-					echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $this->escape($last->last_post_guest_name) );
+					echo $last->getLastPostAuthor()->getLink();
 					echo '<br /><span class="nowrap" title="' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat_hover') . '">' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat') . '</span>';
 					?>
 			</div>

@@ -19,6 +19,13 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_CSS_TEMPLATE'); ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<input type="hidden" name="view" value="templates" />
+		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="id" value="<?php echo $this->templatename; ?>" />
+		<input type="hidden" name="cid[]" value="<?php echo $this->templatename; ?>" />
+		<input type="hidden" name="filename" value="<?php echo $this->filename; ?>" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+
 		<?php if($this->ftp): ?>
 		<fieldset title="<?php echo JText::_('DESCFTPTITLE'); ?>">
 			<legend><?php echo JText::_('DESCFTPTITLE'); ?></legend>
@@ -50,13 +57,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<td><textarea style="width:100%;height:500px" cols="110" rows="25" name="filecontent" class="inputbox"><?php echo $this->content; ?></textarea></td>
 		</tr>
 		</table>
-		<input type="hidden" name="id" value="<?php echo $this->templatename; ?>" />
-		<input type="hidden" name="cid[]" value="<?php echo $this->templatename; ?>" />
-		<input type="hidden" name="filename" value="<?php echo $this->filename; ?>" />
-		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="templates" />
-		<input type="hidden" name="task" value="" />
-		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>
 	<div class="kadmin-footer">

@@ -16,7 +16,7 @@ class KunenaError {
 	function initialize() {
 		if (!self::$enabled) {
 			$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
-			$admin = JFactory::getApplication()->isAdmin() || KunenaFactory::getUser()->isAdmin();
+			$admin = JFactory::getApplication()->isAdmin() || KunenaUserHelper::getMyself()->isAdmin();
 			register_shutdown_function('kunenaShutdownHandler', $debug || $admin || KUNENA_PROFILER);
 			if (!$debug) return;
 

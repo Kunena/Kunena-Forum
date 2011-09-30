@@ -15,10 +15,10 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewSearch extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$app = JFactory::getApplication ();
 
-		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 
 		$searchdatelist	= array();
 		$searchdatelist[] 	= JHTML::_('select.option',  'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT') );

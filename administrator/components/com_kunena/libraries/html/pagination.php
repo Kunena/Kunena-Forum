@@ -36,7 +36,7 @@ class KunenaHtmlPagination extends JPagination
 	 * @since	Joomla 1.6
 	 */
 	protected $_additionalUrlParams = array();
-	protected $_uri = '';
+	protected $_uri = null;
 
 	function __construct($total, $limitstart, $limit, $prefix = '') {
 		// If out of range, use last page

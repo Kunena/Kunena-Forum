@@ -20,7 +20,7 @@ defined ( '_JEXEC' ) or die ();
 							<?php echo JText::_('COM_KUNENA_PROFILEBOX_SHOW_LATEST_POSTS'); ?>
 						</dt>
 						<dd class="tk-selecttime">
-						<form name="kfilter" method="post" action="<?php echo $this->URL ?>">
+						<form action="<?php echo $this->URL ?>" name="kfilter" method="post">
 						<?php
 						// make the select list for time selection
 						$timesel[] = JHTML::_('select.option', -1, JText::_('COM_KUNENA_SHOW_ALL'));

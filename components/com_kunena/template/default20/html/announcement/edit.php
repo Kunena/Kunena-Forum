@@ -29,10 +29,12 @@ $document->addScriptDeclaration('// <![CDATA[
 			</a>
 		</h2>
 		<div class="kdetailsbox kannouncement-details" id="kannouncement-detailsbox" >
-			<form class="form-validate" action="<?php echo CKunenaLink::GetAnnouncementURL('doedit'); ?>" method="post" name="editform" onsubmit="return myValidate(this);">
-				<input type='hidden' name="do" value="doedit"/>
-				<input type='hidden' name="id" value="<?php echo intval($this->announcement->id) ;?>"/>
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" class="form-validate" method="post" name="editform" onsubmit="return myValidate(this);">
+				<input type="hidden" name="view" value="announcement" />
+				<input type='hidden' name="task" value="doedit" />
+				<input type='hidden' name="id" value="<?php echo intval($this->announcement->id) ;?>" />
 				<?php echo JHTML::_( 'form.token' ); ?>
+
 					<div class="kactions"><?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></div>
 					<div>
 						<label>
@@ -70,7 +72,7 @@ $document->addScriptDeclaration('// <![CDATA[
 							</select>
 						</label>
 					</div>
-					<input name="submit" class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_ANN_SAVE'); ?>"/>
+				<input name="submit" class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_ANN_SAVE'); ?>"/>
 			</form>
 		</div>
 	</div>

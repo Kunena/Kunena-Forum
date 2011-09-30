@@ -38,7 +38,7 @@ class CKunenaModeration {
 	protected function __construct($db, $config) {
 		$this->_db = $db;
 		$this->_my = &JFactory::getUser ();
-		$this->_me = KunenaFactory::getUser ();
+		$this->_me = KunenaUserHelper::getMyself();
 		$this->_session = KunenaFactory::getSession ();
 		// FIXME:
 		$this->_allowed = array();

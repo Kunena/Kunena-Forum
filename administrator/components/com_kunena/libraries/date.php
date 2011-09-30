@@ -85,10 +85,12 @@ class KunenaDate extends JDate {
 		}
 		//years
 		$diff ['year'] = $d1 ['year'] - $d2 ['year'];
+
 		return array_reverse($diff);
 	}
 
 	public function toTimeAgo() {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$chunks = array (
 			'year' => array (JText::_('COM_KUNENA_DATE_YEAR'), JText::_('COM_KUNENA_DATE_YEARS') ),
 			'month' => array (JText::_('COM_KUNENA_DATE_MONTH'), JText::_('COM_KUNENA_DATE_MONTHS') ),
@@ -109,7 +111,9 @@ class KunenaDate extends JDate {
 		if (!$output) {
 			$output .= '0 '.JText::_('COM_KUNENA_DATE_MINUTES');
 		}
-		return str_replace ( '%time%', trim($output), JText::_('COM_KUNENA_TIME_SINCE') );
+		$output = str_replace ( '%time%', trim($output), JText::_('COM_KUNENA_TIME_SINCE') );
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $output;
 	}
 
 	public function toTimezone() {

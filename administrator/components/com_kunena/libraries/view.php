@@ -194,75 +194,32 @@ class KunenaView extends JView {
 		return $output;
 	}
 
-	public function getCategoryLink($category, $content = null, $title = null) {
+	public function getCategoryLink($category, $content = null, $title = null, $class = null) {
 		if (!$content) $content = $this->escape($category->name);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
-		return JHTML::_('kunenaforum.link', $category->getUrl(), $content, $title, '', 'follow');
+		return JHTML::_('kunenaforum.link', $category->getUrl(null, 'object'), $content, $title, $class, 'follow');
 	}
 
-	public function getTopicUrl($topic, $action = null, $object=false) {
-		if ($action instanceof StdClass || $action instanceof KunenaForumMessage) {
-			$message = $action;
-			$action = 'm'.$message->id;
-		}
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&id={$topic->id}&action={$action}");
-		if ($uri->getVar('action') !== null) {
-			$uri->delVar('action');
-			$uri->setVar('catid', isset($this->category) ? $this->category->id : $topic->catid);
-			$limit = max(1, $this->config->messages_per_page);
-			$mesid = 0;
-			if (is_numeric($action)) {
-				if ($action) $uri->setVar('limitstart', $action * $limit);
-			} elseif (isset($message)) {
-				$mesid = $message->id;
-				$position = $topic->getPostLocation($mesid, $this->message_ordering);
+	public function getTopicLink($topic, $action = null, $content = null, $title = null, $class = null, $category = NULL) {
+		$uri = $topic->getUrl($category ? $category : $this->category, 'object', $action);
+		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
+		if ($title === null) {
+			if ($action instanceof KunenaForumMessage) {
+				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
 			} else {
 				switch ($action) {
 					case 'first':
-						$mesid = $topic->first_post_id;
-						$position = $topic->getPostLocation($mesid, $this->message_ordering);
+						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
 						break;
 					case 'last':
-						$mesid = $topic->last_post_id;
-						$position = $topic->getPostLocation($mesid, $this->message_ordering);
+						$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
 						break;
 					case 'unread':
-						$mesid = $topic->lastread ? $topic->lastread : $topic->last_post_id;
-						$position = $topic->getPostLocation($mesid, $this->message_ordering);
+						$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
 						break;
+					default:
+						$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
 				}
-			}
-			if ($mesid) {
-				if (KunenaUserHelper::get()->getTopicLayout() != 'threaded') {
-					$uri->setFragment($mesid);
-				} else {
-					$uri->setVar('mesid', $mesid);
-				}
-			}
-			if (isset($position)) {
-				$limitstart = intval($position / $limit) * $limit;
-				if ($limitstart) $uri->setVar('limitstart', $limitstart);
-			}
-		}
-		return $object ? $uri : KunenaRoute::_($uri);
-	}
-
-	public function getTopicLink($topic, $action = null, $content = null, $title = null, $class = null) {
-		$uri = $this->getTopicUrl($topic, $action, true);
-		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
-		if ($title === null) {
-			switch ($action) {
-				case 'first':
-					$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
-					break;
-				case 'last':
-					$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
-					break;
-				case 'unread':
-					$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
-					break;
-				default:
-					$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
 			}
 		}
 		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');

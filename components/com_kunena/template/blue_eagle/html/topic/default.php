@@ -61,8 +61,8 @@ $this->displayLoginBox ();
 				<?php
 				echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 				$modlinks = array();
-				foreach ( $this->moderators as $userid ) {
-					$modlinks[] = CKunenaLink::GetProfileLink ( $userid );
+				foreach ( $this->moderators as $moderator) {
+					$modlinks[] = $moderator->getLink ();
 				}
 				echo implode(', ', $modlinks);
 				?>

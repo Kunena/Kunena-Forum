@@ -24,17 +24,18 @@ defined ( '_JEXEC' ) or die ();
 				<li class="klogin-lastvisit"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_LASTVISIT', $this->lastvisitDate->toSpan('date_today', 'ago')) ?></li>
 				<?php if ($this->logout) : ?>
 				<li class="klogout-form">
-					<form action="#" method="post" class="kform klogout">
+					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="kform klogout">
+						<input type="hidden" name="option" value="<?php echo $this->logout['option'] ?>" />
+						<?php if (!empty($this->logout['view'])) : ?>
+						<input type="hidden" name="view" value="<?php echo $this->logout['view'] ?>" />
+						<?php endif ?>
+						<input type="hidden" name="task" value="<?php echo $this->logout['task'] ?>" />
+						<input type="hidden" name="<?php echo $this->logout['field_return'] ?>" value="[K=RETURN_URL]" />
+						[K=TOKEN]
+
 						<fieldset>
 							<legend class="klegend klogout"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_LONG') ?></legend>
 							<button type="submit" value="Log out" class="kbutton"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?></button>
-							<input type="hidden" name="option" value="<?php echo $this->logout['option'] ?>" />
-							<?php if (!empty($this->logout['view'])) : ?>
-							<input type="hidden" name="view" value="<?php echo $this->logout['view'] ?>" />
-							<?php endif ?>
-							<input type="hidden" name="task" value="<?php echo $this->logout['task'] ?>" />
-							<input type="hidden" name="<?php echo $this->logout['field_return'] ?>" value="[K=RETURN_URL]" />
-							[K=TOKEN]
 						</fieldset>
 					</form>
 				</li>

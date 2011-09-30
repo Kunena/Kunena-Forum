@@ -72,7 +72,7 @@ $this->cache = false;
 				if ($useravatar) :
 			?>
 			<span class="ktopic-latest-post-avatar">
-			<?php echo CKunenaLink::GetProfileLink ( intval($this->message->userid), $useravatar ) ?>
+			<?php echo $this->message->getAuthor()->getLink( $useravatar ) ?>
 			</span>
 			<?php
 				endif;
@@ -86,7 +86,7 @@ $this->cache = false;
 
 			<?php if ($this->message->userid) : ?>
 			<br />
-			<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($this->message->userid), $this->escape($this->message->name) ); ?></span>
+			<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->message->getAuthor()->getLink(); ?></span>
 			<?php endif; ?>
 			<!-- /By -->
 		</div>

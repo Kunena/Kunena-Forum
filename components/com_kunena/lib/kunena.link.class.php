@@ -27,34 +27,14 @@ class CKunenaLink {
 	// Basic universal href link
 	//
 	function GetSefHrefLink($link, $name, $title = '', $rel = 'nofollow', $class = '', $anker = '', $attr = '') {
-		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="' . KunenaRoute::_ ( $link ) . ($anker ? ('#' . $anker) : '') . '" title="' . $title . '"' . ($rel ? ' rel="' . $rel . '"' : '') . ($attr ? ' ' . $attr : '') . '>' . $name . '</a>';
-	}
-
-	// Simple link is a barebones href link used for e.g. Jscript links
-	function GetSimpleLink($id, $name = '', $class = '', $attr = '') {
-		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . ' href="' . $id . '" ' . ($attr ? ' ' . $attr : '') . '>' . $name . '</a>';
+		$uri = $link instanceof JURI ? $link : JURI::getInstance($link);
+		if ($anker) $uri->setFragment($anker);
+		return JHTML::_('kunenaforum.link', $uri, $name, $title, $class, $rel, $attr);
 	}
 
 	//
 	// Central Consolidation of all internal href links
 	//
-
-
-	function GetCreditsLink() {
-		return self::GetHrefLink ( 'http://www.kunena.org', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"' );
-	}
-
-	function GetTeamCreditsLink($catid, $name = '') {
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=credits&catid={$catid}", $name, '', 'follow' );
-	}
-
-	function GetKunenaLink($name, $rel = 'follow') {
-		return self::GetHrefLink ( self::GetKunenaURL(), $name, '', $rel );
-	}
-
-	function GetKunenaURL($xhtml = true) {
-		return KunenaRoute::_ ( 'index.php?option=com_kunena', $xhtml );
-	}
 
 	function GetAttachmentLink($folder,$filename,$name,$title = '', $rel = 'nofollow') {
 		return self::GetHrefLink ( JURI::ROOT()."{$folder}/{$filename}", $name, $title, $rel );
@@ -68,63 +48,13 @@ class CKunenaLink {
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
 	}
 
-	function GetCategoryLink($view, $catid, $catname, $rel = 'follow', $class = '', $title = '') {
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view={$view}&catid={$catid}", $catname, $title, $rel, $class );
-	}
-
 	function GetCategoryActionLink($task, $catid, $catname, $rel = 'follow', $class = '', $title = '', $extra = '') {
 		$token = '&' . JUtility::getToken() . '=1';
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=category&task={$task}&catid={$catid}{$extra}{$token}", $catname, $title, $rel, $class );
 	}
 
-	function GetCategoryURL($view, $catid = '', $xhtml = true) {
-		if ($catid != '')
-			$catid = "&catid={$catid}";
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$catid}", $xhtml );
-	}
-
-	function GetCategoryPageLink($view, $catid, $page, $pagename, $rel = 'follow', $class = '') {
-		if ($page == 1 || ! is_numeric ( $page )) {
-			// page 1 is identical to a link to the regular category link
-			$pagelink = self::GetCategoryLink ( $view, $catid, $pagename, $rel, $class );
-		} else {
-			$pagelink = self::GetSefHrefLink ( "index.php?option=com_kunena&view={$view}&catid={$catid}&page={$page}", $pagename, '', $rel, $class );
-		}
-		return $pagelink;
-	}
-
-	function GetReviewLink($name, $rel = 'nofollow', $class = '') {
-		return self::GetSefHrefLink ( 'index.php?option=com_kunena&view=review', $name, '', $rel, $class );
-	}
-
-	function GetReviewURL($xhtml = true) {
-		return KunenaRoute::_ ( 'index.php?option=com_kunena&view=review', $xhtml );
-	}
-
 	function GetCategoryReviewListLink($catid, $catname, $rel = 'nofollow', $class = '') {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=review&action=list&catid={$catid}", $catname, '', $rel, $class );
-	}
-
-	function GetThreadLink($view, $catid, $id, $threadname, $title, $rel = 'follow', $class = '') {
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}", $threadname, $title, $rel, $class );
-	}
-
-	function GetThreadLayoutLink($layout, $catid, $threadid, $mesid, $threadname, $limitstart=0, $limit=0, $title='', $rel = 'nofollow', $class = '') {
-		$anker = '';
-		$query = array();
-		if ($mesid) {
-			if (!$layout) $l = KunenaUserHelper::get()->getTopicLayout();
-			else $l = $layout;
-			if ($l == 'threaded') $query[] = "&mesid={$mesid}";
-			else $anker = $mesid;
-		}
-		if ($layout) $query[] = "&layout={$layout}";
-		if ($limitstart) {
-			$query[] = "&limitstart={$limitstart}";
-			$query[] = "&limit={$limit}";
-		}
-		$query = implode('', $query);
-		return CKunenaLink::GetSefHrefLink ( 'index.php?option=com_kunena&func=view&catid=' . $catid . '&id=' . $threadid . $query, $threadname, $title, $rel, $class, $anker );
 	}
 
 	function GetUserLayoutLink($layout, $text, $title='', $rel = 'nofollow', $class = '') {
@@ -132,48 +62,9 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( "index.php?option=com_kunena&view=user&task=change&topic_layout={$layout}{$token}", $text, $title, 'nofollow', $class );
 	}
 
-	function GetThreadPageLink($view, $catid, $id, $limitstart, $limit, $name, $anker = '', $rel = 'follow', $class = '') {
-		$kunena_config = KunenaFactory::getConfig ();
-		$pagelink = CKunenaLink::GetHrefLink ( self::GetThreadPageURL($view, $catid, $id, $limitstart, $limit, $anker), $name, '', $rel, $class );
-		return $pagelink;
-	}
-
-	function GetThreadPageSpecialLink($func, $catid, $threadid, $page, $limit, $name, $anker = '', $rel = 'follow', $class = '', $title='') {
-		$kunena_config = KunenaFactory::getConfig ();
-		if ($page == 1 || ! is_numeric ( $page ) || ! is_numeric ( $limit )) {
-			// page 1 is identical to a link to the top of the thread
-			$pagelink = CKunenaLink::GetSefHrefLink ( 'index.php?option=com_kunena&func=' . $func . '&catid=' . $catid . '&id=' . $threadid, $name, $title, $rel, $class, $anker );
-		} else {
-			$pagelink = CKunenaLink::GetSefHrefLink ( 'index.php?option=com_kunena&func=' . $func . '&catid=' . $catid . '&id=' . $threadid . '&limit=' . $limit . '&limitstart=' . (($page - 1) * $limit), $name, $title, $rel, $class, $anker );
-		}
-
-		return $pagelink;
-	}
-
-	function GetThreadPageURL($view, $catid, $id, $limitstart, $limit = '', $anker = '', $xhtml = true) {
-		$layout = KunenaUserHelper::get()->getTopicLayout();
-		$query = '';
-		if ($layout == 'threaded' && $anker>0) {
-			$query = "&mesid={$anker}";
-			$anker = '';
-		}
-		if ($limit < 1) $limit = KunenaFactory::getConfig()->messages_per_page;
-		if (!$limitstart) {
-			$pageURL = "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}{$query}";
-		} else {
-			$limitstart -= $limitstart % $limit;
-			$pageURL = "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}{$query}&limitstart={$limitstart}&limit={$limit}";
-		}
-		return KunenaRoute::_ ( $pageURL, $xhtml ) . ($anker ? ('#' . $anker) : '');
-	}
-
 	function GetSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '') {
 		jimport ( 'joomla.environment.request' );
 		return self::GetHrefLink ( htmlspecialchars(JRequest::getURI (), ENT_COMPAT, 'UTF-8'), $name, '', $rel, $class, $anker );
-	}
-
-	function GetReportURL($xhtml = true) {
-		return KunenaRoute::_ ( 'index.php?option=com_kunena&view=report', $xhtml );
 	}
 
 	function GetReportMessageLink($catid, $id, $name, $rel = 'nofollow', $class = '', $title = '') {
@@ -260,18 +151,6 @@ class CKunenaLink {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=latest{$do}", $name, '', $rel );
 	}
 
-	// Function required to support default template
-	function GetLatestPageLink($view, $page, $rel = 'follow', $class = '', $sel = '') {
-		$sel = $sel ? '&sel=' . $sel : '';
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view={$view}&page={$page}{$sel}", $page, '', $rel, $class );
-	}
-
-	function GetPostURL($catid = '', $xhtml = true) {
-		if ($catid != '')
-			$catid = "&catid={$catid}";
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=post{$catid}", $xhtml );
-	}
-
 	function GetPostNewTopicLink($catid, $name, $rel = 'nofollow', $class = '', $title = '') {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=post&do=new&catid={$catid}", $name, $title, $rel, $class );
 	}
@@ -295,10 +174,6 @@ class CKunenaLink {
 	function GetThankyouLink( $task, $catid, $pid, $targetuserid, $name, $title, $class) {
 		$token = '&'.JUtility::getToken().'=1';
 		return self::GetSefHrefLink ("index.php?option=com_kunena&view=thankyou&task={$task}&catid={$catid}&pid={$pid}{$token}", $name, $title, 'nofollow', $class);
-	}
-
-	function GetSearchLink($view, $searchword, $limitstart, $limit, $name, $params = '', $rel = 'nofollow') {
-		return self::GetHrefLink ( self::GetSearchURL($view, $searchword, $limitstart, $limit, $params), $name, '', $rel );
 	}
 
 	function GetSearchURL($view, $searchword='', $limitstart=0, $limit=0, $params = '', $xhtml=true) {
@@ -341,85 +216,11 @@ class CKunenaLink {
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view=polls&do={$do}{$catidstr}" );
 	}
 
-	function GetJsonURL($action='', $do = '', $xhtml = false) {
-		if ($action) $action = "&action=$action";
-		if ($do) $do = "&do=$do";
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=json{$action}{$do}", $xhtml );
-	}
-
-	function GetMarkThisReadLink($catid, $name, $rel = 'nofollow', $title = '') {
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=markThisRead&catid={$catid}", $name, $title, $rel );
-	}
-
 	function GetStatsLink($name, $class = '', $rel = 'follow') {
 		return self::GetHrefLink ( self::GetStatsURL(), $name, '', $rel, $class );
 	}
 
 	function GetStatsURL() {
 		return KunenaRoute::_ ( 'index.php?option=com_kunena&view=stats' );
-	}
-
-	//
-	//Some URL functions for the discuss bot
-	//
-	function GetContentView($id, $Itemid) {
-		return JRoute::_ ( "index.php?option=com_content&task=view&id={$id}&Itemid={$Itemid}" );
-	}
-
-	function GetLatestPageAutoRedirectURL($pid, $limit = 0, $catid = 0, $xhtml = false) {
-		$config = KunenaFactory::getConfig ();
-		$myprofile = KunenaFactory::getUser ();
-		if ($myprofile->ordering != '0') {
-			$topic_ordering = $myprofile->ordering == '1' ? true : false;
-		} else {
-			$topic_ordering = $config->default_sort == 'asc' ? false : true;
-		}
-		if (!$limit) $limit = $config->messages_per_page;
-		$db = JFactory::getDBO ();
-		// First determine the thread, latest post and number of posts for the post supplied
-		$where = '';
-		if ($catid > 0)
-			$where .= " AND a.catid = {$db->Quote($catid)} ";
-		$db->setQuery ( "SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
-                             FROM #__kunena_messages AS a,
-                                (SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id={$db->Quote($pid)}) AS b
-                             WHERE a.thread = b.thread AND a.hold='0' {$where}
-                             GROUP BY a.thread" );
-		$result = $db->loadObject ();
-		if (KunenaError::checkDatabaseError()) return;
-		if (! is_object ( $result ))
-			return KunenaRoute::_ ( "index.php?option=com_kunena&view=showcat&catid={$catid}" , $xhtml );
-
-		// Now Calculate the number of pages for this particular thread
-		if($topic_ordering) $threadPages = 1;
-		else $threadPages = ceil ( $result->totalmessages / $limit );
-
-		// Finally build output block
-		return self::GetThreadPageURL ( 'view', $catid, $result->thread, $result->totalmessages, $limit, $result->latest_id, $xhtml );
-	}
-
-	function GetMessageURL($pid, $catid=0, $limit = 0, $xhtml = true) {
-		$config = KunenaFactory::getConfig ();
-		$myprofile = KunenaFactory::getUser ();
-		if ($myprofile->ordering != '0') {
-			$topic_ordering = $myprofile->ordering == '1' ? '>=' : '<=';
-		} else {
-			$topic_ordering = $config->default_sort == 'asc' ? '<=' : '>=';
-		}
-		$maxmin = $topic_ordering == '<=' ? 'MAX' : 'MIN';
-		if ($limit < 1) $limit = $config->messages_per_page;
-		$access = KunenaFactory::getAccessControl();
-		$hold = $access->getAllowedHold($myprofile, $catid);
-		$db = JFactory::getDBO ();
-		// First determine the thread, latest post and number of posts for the post supplied
-		$db->setQuery ( "SELECT a.thread AS thread, {$maxmin}(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
-                             FROM #__kunena_messages AS a, (SELECT thread FROM #__kunena_messages WHERE id={$db->Quote($pid)}) AS b
-                             WHERE a.thread = b.thread AND a.hold IN ({$hold}) AND a.id {$topic_ordering} {$db->Quote($pid)}
-                             GROUP BY a.thread" );
-		$result = $db->loadObject ();
-		if (KunenaError::checkDatabaseError()) return;
-		if (! is_object ( $result ))
-			return KunenaRoute::_ ( "index.php?option=com_kunena&view=showcat&catid={$catid}", $xhtml );
-		return self::GetThreadPageURL ( 'view', $catid, $result->thread, $result->totalmessages, $limit, $result->latest_id, $xhtml );
 	}
 }

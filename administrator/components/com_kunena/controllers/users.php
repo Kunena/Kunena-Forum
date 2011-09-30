@@ -60,7 +60,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 		$avatar = JRequest::getVar ( 'avatar' );
 		$deleteAvatar = JRequest::getVar ( 'deleteAvatar' );
 		$neworder = JRequest::getInt ( 'neworder' );
-		$modCatids = JRequest::getVar ( 'catid', array () );
+		$modCatids = $moderator ? JRequest::getVar ( 'catid', array () ) : array();
 
 		if ($deleteSig == 1) {
 			$signature = "";

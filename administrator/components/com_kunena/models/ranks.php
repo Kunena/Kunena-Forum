@@ -65,21 +65,19 @@ class KunenaAdminModelRanks extends KunenaModel {
 
 		if ( $this->getState('item.id') ) {
 			$db->setQuery ( "SELECT * FROM #__kunena_ranks WHERE rank_id = '{$this->getState('item.id')}'" );
-			$rankselected = $db->loadObject ();
+			$selected = $db->loadObject ();
 			if (KunenaError::checkDatabaseError()) return;
 
-			return $rankselected;
+			return $selected;
 		}
-		return;
+		return null;
 	}
 
 	public function getRankspaths() {
 		$template = KunenaFactory::getTemplate();
 
-		$rankselected = '';
 		if ( $this->getState('item.id') ) {
-			$rankselected = $this->getRank();
-			$rankselected = $rankselected->rank_id;
+			$selected = $this->getRank();
 		}
 
 		$rankpath = $template->getRankPath();
@@ -90,7 +88,7 @@ class KunenaAdminModelRanks extends KunenaModel {
 		foreach ( $rank_images as $id => $row ) {
 			$rank_list[] = JHTML::_ ( 'select.option', $rank_images [$id], $rank_images [$id] );
 		}
-		$list = JHTML::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($rankselected) ? $rankselected : '' );
+		$list = JHTML::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected) ? $selected->rank_image : '' );
 
 		return $list;
 	}

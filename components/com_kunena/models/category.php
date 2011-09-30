@@ -35,7 +35,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 
 		$app = JFactory::getApplication ();
 		$this->config = KunenaFactory::getConfig ();
-		$this->me = KunenaUserHelper::get();
+		$this->me = KunenaUserHelper::getMyself();
 
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
@@ -99,7 +99,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		foreach ( $allsubcats as $subcat ) {
 			if ($flat || isset ( $categories [0] [$subcat->parent_id] )) {
 
-				$last = $subcat->getLastPosted ();
+				$last = $subcat->getLastCategory ();
 				if ($last->last_topic_id) {
 					// Get list of topics
 					$topiclist[$last->last_topic_id] = $last->last_topic_id;
@@ -121,7 +121,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		foreach ( $topics as $topic ) {
 			// Prefetch users
 			$userlist [$topic->last_post_userid] = $topic->last_post_userid;
-			$lastpostlist [$topic->id] = $last->last_post_id;
+			$lastpostlist [$topic->id] = $topic->last_post_id;
 		}
 
 		if ($this->me->ordering != 0) {
@@ -169,17 +169,6 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 
 	public function getCategory() {
 		return KunenaForumCategoryHelper::get($this->getState ( 'item.id'));
-	}
-
-	public function getMessageOrdering() {
-		if ($this->me->ordering != '0') {
-			$ordering = $this->me->ordering == '1' ? 'desc' : 'asc';
-		} else {
-			$ordering = $this->config->default_sort == 'asc' ? 'asc' : 'desc';
-		}
-		if ($ordering != 'asc')
-			$ordering = 'desc';
-		return $ordering;
 	}
 
 	public function getTopics() {

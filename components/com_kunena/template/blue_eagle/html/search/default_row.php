@@ -29,14 +29,14 @@ defined ( '_JEXEC' ) or die ();
 									<div class="kmsgbody">
 										<div class="kmsgtitle kresult-title">
 											<span class="kmsgtitle">
-												<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($this->category->id), intval($this->topic->id), NULL, NULL, $this->subjectHtml, intval($this->message->id) )?>
+												<?php echo $this->getTopicLink($this->topic, $this->message, $this->subjectHtml); ?>
 											</span>
 										</div>
 										<div class="kmsgtext resultmsg">
 											<?php echo $this->messageHtml ?>
 										</div>
 										<div class="resultcat">
-											<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', intval($this->category->id), $this->escape($this->category->name), $rel = 'follow', $class = '', $title = '' )?>
+											<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->category, $this->escape($this->category->name))?>
 										</div>
 									</div>
 								</td>

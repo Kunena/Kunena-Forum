@@ -298,7 +298,7 @@ class KunenaViewCommon extends KunenaView {
 			}
 		}
 		$template = KunenaFactory::getTemplate ();
-		$credits = CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
+		$credits = $this->getTeamCreditsLink ( JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . $this->getCreditsLink ();
 		if ($template->params->get('templatebyText') !='') {
 			$credits .= ' :: <a href ="'. $template->params->get('templatebyLink').'" rel="follow">' . $template->params->get('templatebyText') .' '. $template->params->get('templatebyName') .'</a>';
 		}
@@ -308,5 +308,13 @@ class KunenaViewCommon extends KunenaView {
 			return $result;
 		}
 		echo $result;
+	}
+
+	function getCreditsLink() {
+		return CKunenaLink::GetHrefLink ( 'http://www.kunena.org', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"' );
+	}
+
+	function getTeamCreditsLink($name = '') {
+		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=credits", $name, '', '', 'follow');
 	}
 }

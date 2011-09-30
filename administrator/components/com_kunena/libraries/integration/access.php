@@ -130,7 +130,7 @@ window.addEvent('domready', function(){
 		if (!$user->exists()) return false;
 
 		// In backend every logged in user has global admin rights (for now)
-		if (JFactory::getApplication()->isAdmin() && $user->userid == KunenaFactory::getUser()->userid)
+		if (JFactory::getApplication()->isAdmin() && $user->userid == KunenaUserHelper::getMyself()->userid)
 			return true;
 
 		// If $catid is not numeric: Is user administrator in ANY category?
@@ -183,7 +183,7 @@ window.addEvent('domready', function(){
 			return false;
 		}
 		$success = true;
-		$usercategory = $category->getUserInfo($user);
+		$usercategory = KunenaForumCategoryUserHelper::get($category_id, $user);
 		if (($usercategory->role == 0 && $status) || ($usercategory->role == 1 && !$status)) {
 			$usercategory->role = $status;
 			$success = $usercategory->save();

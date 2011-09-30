@@ -11,9 +11,9 @@ defined ( '_JEXEC' ) or die ();
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="kuserform" class="form-validate" enctype="multipart/form-data">
-				<input type="hidden" name="view" value="user" />
-				<input type="hidden" name="task" value="save" />
-				<?php echo JHTML::_( 'form.token' ); ?>
+	<input type="hidden" name="view" value="user" />
+	<input type="hidden" name="task" value="save" />
+	<?php echo JHTML::_( 'form.token' ); ?>
 
 <ul id="profile-edit" class="shadetabs">
 <li class="tk-profiletab-edit-user tk-tip" title=" ::<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER'); ?>">

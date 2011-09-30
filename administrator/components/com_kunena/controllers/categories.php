@@ -157,7 +157,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 				if (!$category->exists() || intval ($post ['parent_id']) != $category->parent_id) {
 					// If category didn't exist or is moved, copy access and class_sfx from parent
 					$parent = KunenaForumCategoryHelper::get (intval ( $post ['parent_id']));
-					$category->bind(array_intersect_key($parent->getProperties(), array_flip($access)));
+					$category->bind($parent->getProperties(), $access, true);
 				}
 				$ignore = array_merge($ignore, $access);
 			}

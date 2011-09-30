@@ -29,7 +29,8 @@ class KunenaViewCategory extends KunenaView {
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
 
-		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->me = KunenaUserHelper::getMyself();
+		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
@@ -94,7 +95,8 @@ class KunenaViewCategory extends KunenaView {
 		if ($this->category->id && ! $this->category->authorise('read')) {
 			$this->setError($this->category->getError());
 		}
-		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->me = KunenaUserHelper::getMyself();
+		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
@@ -196,34 +198,14 @@ class KunenaViewCategory extends KunenaView {
 		$this->display ();
 	}
 
-	function getLastPostUrl($category) {
-		$lastPost = $category->getLastPosted();
-		$channels = $category->getChannels();
-		if (isset($channels[$lastPost->id])) $catid = $category->id;
-		else $catid = $lastPost->id;
-
-		$limit = $this->config->messages_per_page;
-		$limitstart = intval($lastPost->getLastPostLocation() / $limit) * $limit;
-		$anker = '';
-		$query = array();
-		$mesid = $lastPost->last_post_id;
-		if ($mesid) {
-			$layout = $this->me->getTopicLayout();
-			if ($layout == 'threaded') $query[] = "&mesid={$mesid}";
-			else $anker = '#'.$mesid;
-		}
-		if ($limitstart) {
-			$query[] = "&limitstart={$limitstart}";
-			$query[] = "&limit={$limit}";
-		}
-		$query = implode('', $query);
-		return "index.php?option=com_kunena&view=topic&catid={$catid}&id={$lastPost->last_topic_id}{$query}{$anker}";
-	}
-
 	function getLastPostLink($category, $content = null, $title = null, $class = null) {
-		$uri = $this->getLastPostUrl($category);
-		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastPosted()->last_topic_subject, 20);
-		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastPosted()->last_topic_subject));
+		$lastTopic = $category->getLastTopic();
+		$channels = $category->getChannels();
+		if (!isset($channels[$lastTopic->category_id])) $category = $lastTopic->getCategory();
+		$uri = $lastTopic->getUrl($category, 'object', 'last');
+
+		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, 20);
+		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
 		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
@@ -288,7 +270,7 @@ class KunenaViewCategory extends KunenaView {
 
 		$usertype = $this->me->getType($this->category->id, true);
 		$catid = $category->id;
-		$lastPost = $category->getLastPosted();
+		$lastPost = $category->getLastTopic();
 
 		// TODO: add context (options, template) to caching
 		$this->cache = true;
@@ -302,11 +284,11 @@ class KunenaViewCategory extends KunenaView {
 			$this->categoryRssURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&format=feed") : '';
 			$this->moderators = $this->config->listcat_show_moderators ? $category->getModerators(false) : array();
 			$this->subcategories = empty($this->categories [$catid]) ? array() : $this->categories [$catid];
-			$this->lastPost = $lastPost->last_post_id > 0;
+			$this->lastPost = $lastPost->exists();
 			if ($this->lastPost) {
 				$this->lastUser = KunenaFactory::getUser((int) $lastPost->last_post_userid);
-				$this->lastUserName = $lastPost->last_post_guest_name;
-				$this->lastPostSubject = $lastPost->last_topic_subject;
+				$this->lastUserName = $lastPost->last_post_guest_name ? $lastPost->last_post_guest_name : $this->lastUser->getName();
+				$this->lastPostSubject = $lastPost->subject;
 				$this->lastPostTime = $lastPost->last_post_time;
 			}
 			$contents = $this->loadTemplate('category');

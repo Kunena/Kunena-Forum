@@ -29,7 +29,7 @@ JHTML::_('behavior.tooltip');
 			</div>
 
 			<div class="kdetailsbox kmod-detailsbox" id="kmod-detailsbox" >
-			<form name="myform" method="post" action="#">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="myform" method="post">
 				<ul class="kmod-postlist">
 					<li>
 						<div class="kmod-container">

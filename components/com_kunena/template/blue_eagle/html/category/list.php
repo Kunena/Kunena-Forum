@@ -23,11 +23,12 @@ $this->displayBreadcrumb ();
 		<div class="fltlft">
 			<div class="fltlft">
 			<?php if (!empty($this->markAllReadURL)) : ?>
-			<form action="<?php echo $this->markAllReadURL ?>" name="markAllForumsRead" method="post">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="markAllForumsRead" method="post">
 				<input type="hidden" name="view" value="category" />
 				<input type="hidden" name="task" value="markread" />
-				<input type="submit" class="kbutton button ks" value="<?php echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ'); ?>" />
 				<?php echo JHTML::_( 'form.token' ); ?>
+
+				<input type="submit" class="kbutton button ks" value="<?php echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ'); ?>" />
 			</form>
 			</div>
 			<div class="kmessage-buttons-row">

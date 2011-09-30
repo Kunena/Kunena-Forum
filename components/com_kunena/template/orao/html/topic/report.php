@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 				</li>
 			</ul>
 
-		<form method="post" action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" class="kform kform-report">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="kform kform-report">
 			<input type="hidden" name="view" value="topic" />
 			<input type="hidden" name="task" value="report" />
 			<input type="hidden" name="catid" value="<?php echo intval($this->catid); ?>"/>

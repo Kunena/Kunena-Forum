@@ -73,7 +73,8 @@ class KunenaForumCategoryUserHelper {
 
 	static protected function loadCategories($ids, $user) {
 		foreach ($ids as $i=>$id) {
-			if (isset(self::$_instances [$user->userid][$id]))
+			$iid = intval($id);
+			if ($iid != $id || isset(self::$_instances [$user->userid][$id]))
 				unset($ids[$i]);
 		}
 		if (empty($ids))

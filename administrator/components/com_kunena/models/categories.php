@@ -66,7 +66,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 
 	public function getAdminCategories() {
 		if ( $this->_admincategories === false ) {
-			$me = KunenaFactory::getUser();
+			$me = KunenaUserHelper::getMyself();
 			$params = array (
 				'ordering'=>$this->getState ( 'list.ordering' ),
 				'direction'=>$this->getState ( 'list.direction' ) == 'asc' ? 1 : -1,
@@ -162,7 +162,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 	public function getAdminCategory() {
 		$parent_id = $this->getState ( 'item.parent_id' );
 		$catid = $this->getState ( 'item.id' );
-		$me = KunenaFactory::getUser();
+		$me = KunenaUserHelper::getMyself();
 		if (!$me->isAdmin(null) && !$me->isAdmin($catid)) {
 			return false;
 		}

@@ -22,7 +22,10 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-config"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
 		<div id="kadmin-configtabs">
-		<form action="index.php" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+			<input type="hidden" name="view" value="config" />
+			<input type="hidden" name="task" value="" />
+			<?php echo JHTML::_( 'form.token' ); ?>
 
 		<dl class="tabs" id="pane">
 
@@ -1459,10 +1462,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</tr>
 					</table>
 				</fieldset>
-				<input type="hidden" name="option" value="com_kunena" />
-				<input type="hidden" name="view" value="config" />
-				<input type="hidden" name="task" value="" />
-				<?php echo JHTML::_( 'form.token' ); ?>
 				</dd>
 			</dl>
 			</form>

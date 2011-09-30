@@ -52,7 +52,7 @@ class KunenaModelAnnouncement extends KunenaModel {
 	}
 
 	function getCanEdit() {
-		$me = KunenaFactory::getUser ();
+		$me = KunenaUserHelper::getMyself();
 
 		// User needs to be global moderator to edit announcements
 		if ($me->exists() && $me->isModerator('global')) {

@@ -38,7 +38,7 @@ $pm = $private->getUnreadCount($this->my->id);
 							<?php if ($this->my->id == 0) : ?>
 								<?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <b><?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST'); ?></b>
 							<?php else : ?>
-								<?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <b><?php echo CKunenaLink::GetProfileLink ( intval($this->my->id), $this->escape($this->my->name) ); ;?></b>
+								<?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <b><?php echo $this->me->getLink() ?></b>
 							<?php endif;?>
 						</dd>
 						<?php } ?>

@@ -59,6 +59,7 @@ abstract class KunenaRoute {
 	public static function _($uri = null, $xhtml = true, $ssl=0) {
 		if (self::$adminApp) {
 			// Use default routing in administration
+			if ($uri instanceof JURI) $uri = $uri->toString ();
 			return JRoute::_($uri, $xhtml, $ssl);
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

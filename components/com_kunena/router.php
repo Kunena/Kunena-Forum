@@ -336,8 +336,8 @@ function KunenaParseRoute($segments) {
 				$var = 'userid';
 			} else {
 				// Numeric variable is always catid or id
-				if (empty($vars ['catid'])
-					|| (empty($vars ['id']) && KunenaForumCategoryHelper::get($value)->exists() && KunenaForumTopicHelper::get($value)->category_id != $vars ['catid'])) {
+				if (empty($vars ['catid'])) {
+					//|| (empty($vars ['id']) && KunenaForumCategoryHelper::get($value)->exists() && KunenaForumTopicHelper::get($value)->category_id != $vars ['catid'])) {
 					// First numbers are always categories
 					// FIXME: what if $topic->catid == catid
 					$var = 'catid';

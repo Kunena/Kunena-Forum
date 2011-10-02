@@ -16,7 +16,7 @@ $tabclass = array ("row1", "row2" );
 <tr class="k<?php echo $tabclass [$k^=1] ?>">
 	<td class="kcol-mid kcol-ktopictitle">
 		<div class="ktopic-title-cover">
-		<?php echo CKunenaLink::GetCategoryPageLink('showcat', intval($this->category->id), 1, $this->escape($this->category->name), 'follow', 'ktopic-title km' ) ?>
+		<?php echo $this->getCategoryLink($this->category, null, null, 'ktopic-title km') ?>
 		</div>
 	</td>
 
@@ -35,8 +35,8 @@ $tabclass = array ("row1", "row2" );
 	</td>
 
 	<?php
-	$last = $this->category->getLastPosted();
-	if ($last->last_topic_id) { ?>
+	$last = $this->category->getLastTopic();
+	if ($last->exists()) { ?>
 	<td class="kcol-mid kcol-kcatlastpost">
 	<?php if ($this->config->avataroncat > 0) : ?>
 	<!-- Avatar -->
@@ -44,18 +44,18 @@ $tabclass = array ("row1", "row2" );
 		$profile = KunenaFactory::getUser((int)$last->last_post_userid);
 		$useravatar = $profile->getAvatarImage('klist-avatar', 'list');
 		if ($useravatar) : ?>
-			<span class="klatest-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $useravatar ); ?></span>
+			<span class="klatest-avatar"> <?php echo $last->getLastPostAuthor()->getLink( $useravatar ); ?></span>
 		<?php endif; ?>
 	<!-- /Avatar -->
 	<?php endif; ?>
 	<div class="klatest-subject ks">
-		<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($last->id), intval($last->last_topic_id), intval($last->getLastPostLocation()), intval($this->config->messages_per_page), KunenaHtmlParser::parseText($last->last_topic_subject, 30), intval($last->last_post_id) );?>
+		<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. $this->getTopicLink($last, 'last', KunenaHtmlParser::parseText($last->subject, 30)) ?>
 	</div>
 
 	<div class="klatest-subject-by ks">
 	<?php
 			echo JText::_('COM_KUNENA_BY') . ' ';
-			echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $this->escape($last->last_post_guest_name) );
+			echo $last->getLastPostAuthor()->getLink();
 			echo '<br /><span class="nowrap" title="' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat_hover') . '">' . KunenaDate::getInstance($last->last_post_time)->toKunena('config_post_dateformat') . '</span>';
 			?>
 	</div>

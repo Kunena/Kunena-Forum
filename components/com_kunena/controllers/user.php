@@ -29,7 +29,7 @@ class KunenaControllerUser extends KunenaController {
 		if ($redirect) {
 			$profileIntegration = KunenaFactory::getProfile();
 			if (!($profileIntegration instanceof KunenaProfileKunena)) {
-				$url = CKunenaLink::GetProfileURL(KunenaFactory::getUser()->userid, false);
+				$url = CKunenaLink::GetProfileURL(KunenaUserHelper::getMyself()->userid, false);
 				if ($url) {
 					$this->setRedirect($url);
 					return;
@@ -47,7 +47,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$layout = JRequest::getString ( 'topic_layout', 'default' );
-		KunenaFactory::getUser()->setTopicLayout ( $layout );
+		KunenaUserHelper::getMyself()->setTopicLayout ( $layout );
 		$this->redirectBack ();
 	}
 
@@ -77,7 +77,7 @@ class KunenaControllerUser extends KunenaController {
 
 		$this->saveUser();
 
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->saveProfile();
 		$this->saveAvatar();
 		$this->saveSettings();
@@ -252,7 +252,7 @@ class KunenaControllerUser extends KunenaController {
 		$catid = JRequest::getInt ( 'catid', 0 );
 
 		$config = KunenaFactory::getConfig();
-		$me = KunenaFactory::getUser();
+		$me = KunenaUserHelper::getMyself();
 		$target = KunenaFactory::getUser($userid);
 
 		if (!$config->showkarma || !$me->exists() || !$target->exists() || $karmaDelta == 0) {

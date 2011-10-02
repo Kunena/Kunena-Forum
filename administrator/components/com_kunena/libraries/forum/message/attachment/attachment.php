@@ -107,7 +107,7 @@ class KunenaForumMessageAttachment extends JObject {
 					$this->_textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
 			}
 			$this->_disabled = false;
-			if (! KunenaFactory::getUser()->exists()) {
+			if (! KunenaUserHelper::getMyself()->exists()) {
 				if ($this->_shorttype == 'image' && ! $config->showimgforguest) {
 					$this->_disabled = true;
 					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG' );

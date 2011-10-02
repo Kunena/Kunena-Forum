@@ -21,6 +21,11 @@ JHTML::_('behavior.tooltip');
 	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_TEMPLATE'); ?> - <?php echo JText::_($this->details->name); ?></div>
 		<div style="border: 1px solid #ccc; padding: 10px 0 0;">
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<input type="hidden" name="view" value="templates" />
+		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
+		<?php echo JHTML::_( 'form.token' ); ?>
+
 		<div class="col width-50">
 			<fieldset class="adminform">
 				<legend><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DETAILS' ); ?></legend>
@@ -69,11 +74,6 @@ JHTML::_('behavior.tooltip');
 			</fieldset>
 		</div>
 		<div class="clr"></div>
-		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="templates" />
-		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
-		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</div>
 	</div>

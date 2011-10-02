@@ -16,7 +16,8 @@ JHTML::_('behavior.tooltip');
 		<div id="kmodtopic" class="ksection">
 			<h2 class="kheader"><a rel="kmod-detailsbox">Moderate Topic</a></h2>
 			<p class="kheader-desc">Category: <strong>Welcome Mat</strong></p>
-			<div class="kdetailsbox kmod-detailsbox" id="kmod-detailsbox" ><form name="myform" method="post" action="#">
+			<div class="kdetailsbox kmod-detailsbox" id="kmod-detailsbox" >
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="myform" method="post">
 				<ul class="kmod-postlist">
 					<li>
 						<ul class="kposthead">
@@ -93,5 +94,6 @@ JHTML::_('behavior.tooltip');
 				</div>
 
 				<div class="clr"></div>
-			</form></div>
+			</form>
+			</div>
 		</div>

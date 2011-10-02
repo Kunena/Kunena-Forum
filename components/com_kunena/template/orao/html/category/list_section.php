@@ -35,9 +35,12 @@ defined ( '_JEXEC' ) or die ();
 							<?php endif ?>
 						<?php if (!empty($this->sectionMarkReadURL)) : ?>
 						<?php /*?>
-						<form action="<?php echo $this->sectionMarkReadURL ?>" name="kunenaMarkAllRead" method="post">
-							<input type="submit" class="kheader-link" value="<?php //echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?>" />
+						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="kunenaMarkAllRead" method="post">
+							<input type="hidden" name="view" value="category" />
+							<input type="hidden" name="task" value="markread" />
 							<?php echo JHTML::_( 'form.token' ); ?>
+
+							<input type="submit" class="kheader-link" value="<?php //echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?>" />
 						</form><?php */?>
 							<a href="" title="<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?>">
 								<span class="kmarkread-icon"></span>

@@ -27,7 +27,7 @@ class KunenaViewTopic extends KunenaView {
 	var $cache = true;
 
 	function displayDefault($tpl = null) {
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->layout = $this->state->get('layout');
 		if ($this->layout == 'flat') $this->layout = 'default';
 		$this->setLayout($this->layout);
@@ -43,15 +43,15 @@ class KunenaViewTopic extends KunenaView {
 		} elseif (! $this->topic->authorise('read')) {
 			// User is not allowed to see the topic
 			$this->setError($this->topic->getError());
-		} elseif ($this->state->get('item.id') != $this->topic->id || ($this->category->id != $this->topic->category_id && !isset($channels[$this->topic->category_id]))) {
+		} elseif ($this->state->get('item.id') != $this->topic->id || ($this->category->id != $this->topic->category_id && !isset($channels[$this->topic->category_id])) || ($this->state->get('layout') != 'threaded' && $this->state->get('item.mesid'))) {
 			// Topic has been moved or it doesn't belong to the current category
 			$db = JFactory::getDBO();
-			$query = "SELECT COUNT(*) FROM #__kunena_messages WHERE thread={$db->Quote($this->topic->id)} AND hold IN ({$this->state->get('hold')}) AND id<={$db->Quote($this->state->get('item.id'))}";
-			$db->setQuery ( $query );
-			$replyCount = $db->loadResult ();
-			if (KunenaError::checkDatabaseError()) return;
-			$app = JFactory::getApplication();
-			$app->redirect(CKunenaLink::GetThreadPageURL ( 'view', $this->topic->category_id, $this->topic->id, $replyCount, $this->state->get('list.limit'), $this->state->get('item.id'), false ));
+			$mesid = $this->state->get('item.mesid');
+			if (!$mesid) {
+				$mesid = $this->topic->first_post_id;
+			}
+			$message = KunenaForumMessageHelper::get($mesid);
+			if ($message->exists()) JFactory::getApplication()->redirect($message->getUrl(null, false));
 		}
 
 		$errors = $this->getErrors();
@@ -63,17 +63,16 @@ class KunenaViewTopic extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 
 		// If page does not exist, redirect to the last page
-/*		if ($this->total <= $this->state->get('list.start')) {
-			$app = JFactory::getApplication();
-			$app->redirect(CKunenaLink::GetThreadPageURL('view', $this->topic->category_id, $this->topic->id, $this->total, $this->state->get('list.start'), '', false));
+		if ($this->total <= $this->state->get('list.start')) {
+			JFactory::getApplication()->redirect($this->topic->getUrl(null, false, (int)($this->total / $this->state->get('list.limit'))));
 		}
-*/
+
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
 		$this->assignRef ( 'usertopic',$this->topic->getUserTopic());
 		$this->headerText =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$this->pagination = $this->getPagination ( 5 );
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 
 		// Mark topic read
@@ -129,19 +128,19 @@ class KunenaViewTopic extends KunenaView {
 
 	function displayFlat($tpl = null) {
 		$this->state->set('layout', 'default');
-		KunenaFactory::getUser()->setTopicLayout ( 'flat' );
+		KunenaUserHelper::getMyself()->setTopicLayout ( 'flat' );
 		$this->displayDefault($tpl);
 	}
 
 	function displayThreaded($tpl = null) {
 		$this->state->set('layout', 'threaded');
-		KunenaFactory::getUser()->setTopicLayout ( 'threaded' );
+		KunenaUserHelper::getMyself()->setTopicLayout ( 'threaded' );
 		$this->displayDefault($tpl);
 	}
 
 	function displayIndented($tpl = null) {
 		$this->state->set('layout', 'indented');
-		KunenaFactory::getUser()->setTopicLayout ( 'indented' );
+		KunenaUserHelper::getMyself()->setTopicLayout ( 'indented' );
 		$this->displayDefault($tpl);
 	}
 
@@ -161,7 +160,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->setLayout('edit');
 		$this->catid = $this->state->get('item.catid');
 		$this->my = JFactory::getUser();
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		if ($this->config->topicicons) {
 			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
@@ -233,7 +232,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->setLayout('edit');
 		$this->catid = $this->state->get('item.catid');
 		$this->my = JFactory::getUser();
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$mesid = $this->state->get('item.mesid');
 		if (!$mesid) {
@@ -270,7 +269,7 @@ class KunenaViewTopic extends KunenaView {
 	protected function displayEdit($tpl = null) {
 		$this->catid = $this->state->get('item.catid');
 		$this->my = JFactory::getUser();
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$mesid = $this->state->get('item.mesid');
 		$document = JFactory::getDocument();
@@ -337,7 +336,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->mesid = $this->state->get('item.mesid');
 		$app = JFactory::getApplication();
 		$config = KunenaFactory::getConfig ();
-		$me = KunenaFactory::getUser ();
+		$me = KunenaUserHelper::getMyself();
 
 		if (!$me->exists() || $config->reportmsg == 0) {
 			// Deny access if report feature has been disabled or user is guest
@@ -543,7 +542,7 @@ class KunenaViewTopic extends KunenaView {
 			$integration->trigger ( 'profileIntegration', $triggerParams );
 
 			//karma points and buttons
-			$me = KunenaFactory::getUser ();
+			$me = KunenaUserHelper::getMyself();
 			$this->userkarma_title = $this->userkarma_minus = $this->userkarma_plus = '';
 			if ($this->config->showkarma && $this->profile->userid) {
 				$this->userkarma_title = JText::_ ( 'COM_KUNENA_KARMA' ) . ": " . $this->profile->karma;
@@ -628,7 +627,7 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->getMessageActions();
 	}
 	function getMessageActions() {
-		$me = KunenaFactory::getUser();
+		$me = KunenaUserHelper::getMyself();
 		$catid = $this->state->get('item.catid');
 
 		//Thankyou info and buttons
@@ -649,7 +648,7 @@ class KunenaViewTopic extends KunenaView {
 			}
 
 		}
-		if ($this->config->reportmsg && KunenaFactory::getUser()->exists()) {
+		if ($this->config->reportmsg && KunenaUserHelper::getMyself()->exists()) {
 			$this->message_report = CKunenaLink::GetReportMessageLink ( $catid, $this->message->id, $this->getButton ( 'report', JText::_('COM_KUNENA_BUTTON_REPORT') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_REPORT') );
 		}
 
@@ -786,12 +785,13 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function getPagination($maxpages) {
+		$uri = KunenaRoute::normalize(null, true);
+		$uri->delVar('mesid');
 		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
-		$pagination->setDisplay($maxpages);
+		$pagination->setDisplay($maxpages, $uri);
 		return $pagination->getPagesLinks();
 	}
 	// Helper functions
-
 
 	function hasThreadHistory() {
 		if (! $this->config->showhistory || !$this->topic->exists())

@@ -13,11 +13,10 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Category Class
  */
-class KunenaForumCategory extends JObject {
+class KunenaForumCategory extends KunenaDatabaseObject {
 	public $id = null;
 	public $level = 0;
 
-	protected $_exists = false;
 	protected $_channels = false;
 	protected $_topics = false;
 	protected $_posts = false;
@@ -25,6 +24,7 @@ class KunenaForumCategory extends JObject {
 	protected $_authcache = array();
 	protected $_authfcache = array();
 	protected $_new = 0;
+	protected $_table = 'KunenaCategories';
 	protected static $actions = array(
 			'none'=>array(),
 			'read'=>array('Read'),
@@ -65,43 +65,22 @@ class KunenaForumCategory extends JObject {
 		);
 
 	/**
-	 * Constructor
-	 *
-	 * @internal
-	 */
-	public function __construct($identifier = null) {
-		if($identifier !== false) $this->load ( $identifier );
-	}
-
-	/**
 	 * Returns the global KunenaForumCategory object.
 	 *
-	 * @access	public
-	 * @param	int $id The category id to load.
-	 * @return	KunenaForumCategory
-	 * @since	1.6
+	 * @param   int  $id  The category id to load.
+	 *
+	 * @return  KunenaForumCategory
 	 */
 	static public function getInstance($identifier = null, $reload = false) {
 		return KunenaForumCategoryHelper::get($identifier, $reload);
 	}
 
 	/**
-	 * Returns true if category exists in the database.
-	 *
-	 * @param mixed $exists Internal parameter to change state.
-	 * @return bool True if category exists.
-	 */
-	public function exists($exists = null) {
-		$return = $this->_exists;
-		if ($exists !== null) $this->_exists = $exists;
-		return $return;
-	}
-
-	/**
 	 * Returns list of children from this category.
 	 *
-	 * @param int $levels How many levels to search
-	 * @return array List of KunenaForumCategory objects.
+	 * @param   int    $levels  How many levels to search.
+	 *
+	 * @return  array  List of KunenaForumCategory objects.
 	 */
 	public function getChildren($levels = 0) {
 		return KunenaForumCategoryHelper::getChildren($this->id, $levels);
@@ -135,8 +114,13 @@ class KunenaForumCategory extends JObject {
 		return $this->parent_id == 0 || (!$this->numTopics && $this->locked && empty($this->_channels['none']));
 	}
 
-	public function getUrl($firstpage = false) {
-		return "index.php?option=com_kunena&view=category&catid={$this->id}" . ($firstpage ? '&limitstart=0' : '');
+	public function getUrl($category = null, $xhtml = true, $action = null) {
+		if (!$category) $category = $this;
+		$uri = JURI::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
+		if ((string)$action === (string)(int)$action) {
+			$uri->setVar('limitstart', $action);
+		}
+		return $xhtml=='object' ? $uri : KunenaRoute::_($uri, $xhtml);
 	}
 
 	public function getTopics() {
@@ -149,9 +133,13 @@ class KunenaForumCategory extends JObject {
 		return $this->_posts;
 	}
 
-	public function getLastPosted() {
+	public function getLastCategory() {
 		$this->buildInfo();
 		return KunenaForumCategoryHelper::get($this->_lastid);
+	}
+
+	public function getLastTopic() {
+		return KunenaForumTopicHelper::get($this->getLastCategory()->last_topic_id);
 	}
 
 	public function getLastPostLocation($direction = 'asc', $hold = null) {
@@ -207,7 +195,7 @@ class KunenaForumCategory extends JObject {
 		return new KunenaForumCategory();
 	}
 
-	public function newTopic($fields=array(), $user=null) {
+	public function newTopic(array $fields=null, $user=null) {
 		$catid = $this->getNewTopicCategory()->id;
 		$user = KunenaUserHelper::get($user);
 		$message = new KunenaForumMessage();
@@ -216,12 +204,12 @@ class KunenaForumCategory extends JObject {
 		$message->userid = $user->userid;
 		$message->ip = !empty($_SERVER ['REMOTE_ADDR']) ? $_SERVER ['REMOTE_ADDR'] : '';
 		$message->hold = $this->review ? (int)!$this->authorise ('moderate', $user, true) : 0;
-		$message->bind($fields, array ('name', 'email', 'subject', 'message'));
+		$message->bind($fields, array ('name', 'email', 'subject', 'message'), true);
 
 		$topic = new KunenaForumTopic();
 		$topic->category_id = $catid;
 		$topic->hold = $message->hold;
-		$topic->bind($fields, array ('subject','icon_id'));
+		$topic->bind($fields, array ('subject','icon_id'), true);
 
 		$message->setTopic($topic);
 		return array($topic, $message);
@@ -332,110 +320,44 @@ class KunenaForumCategory extends JObject {
 	}
 
 	/**
-	 * Method to get the category table object
-	 *
-	 * This function uses a static variable to store the table name of the user table to
-	 * it instantiates. You can call this function statically to set the table name if
-	 * needed.
-	 *
-	 * @access	public
-	 * @param	string	The category table name to be used
-	 * @param	string	The category table prefix to be used
-	 * @return	object	The category table object
-	 * @since	1.6
+	 * (non-PHPdoc)
+	 * @see KunenaDatabaseObject::bind()
 	 */
-	public function getTable($type = 'KunenaCategories', $prefix = 'Table') {
-		static $tabletype = null;
-
-		//Set a custom table type is defined
-		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix']) {
-			$tabletype ['name'] = $type;
-			$tabletype ['prefix'] = $prefix;
-		}
-
-		// Create the category table object
-		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
-	}
-
-	public function bind($data, $ignore = array()) {
-		if (empty($data)) return;
-		if (is_array($data['channels'])) $data['channels'] = implode(',', $data['channels']);
-		$data = array_diff_key($data, array_flip($ignore));
-		$this->setProperties ( $data );
+	public function bind(array $src = null, array $fields = null, $include = false) {
+		if (isset($src['channels']) && is_array($src['channels'])) $src['channels'] = implode(',', $src['channels']);
+		return parent::bind($src, $fields, $include);
 	}
 
 	/**
-	 * Method to load a KunenaForumCategory object by catid
-	 *
-	 * @access	public
-	 * @param	mixed	$identifier The category id of the user to load
-	 * @return	boolean	True if category exists
-	 * @since 1.6
+	 * (non-PHPdoc)
+	 * @see KunenaDatabaseObject::load()
 	 */
 	public function load($id = null) {
-		if ($id !== null) $this->id = intval($id);
-
-		// Create the user table object
-		$table = $this->getTable ();
-
-		// Load the KunenaTableCategories object based on the id
-		if ($this->id) $this->_exists = $table->load ( $this->id );
-		$table->id = $this->id;
-
-		// Assuming all is well at this point lets bind the data
-		$this->setProperties ( $table->getProperties () );
+		$exists = parent::load($id);
 
 		// Register category if it exists
-		if ($this->_exists) KunenaForumCategoryHelper::register($this);
-		return $this->_exists;
+		if ($exists) KunenaForumCategoryHelper::register($this);
+		return $exists;
 	}
 
 	/**
-	 * Method to save the KunenaForumCategory object to the database
-	 *
-	 * @access	public
-	 * @param	boolean $updateOnly Save the object only if not a new category
-	 * @return	boolean True on success
-	 * @since 1.6
+	 * (non-PHPdoc)
+	 * @see KunenaDatabaseObject::saveInternal()
 	 */
-	public function save($updateOnly = false) {
-		// Create the user table object
+	protected function saveInternal() {
+		// Reorder categories
 		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
-
-		// Check and store the object.
-		if (! $table->check ()) {
-			$this->setError ( $table->getError () );
-			return false;
-		}
-
-		//are we creating a new user
-		$isnew = ! $this->_exists;
-
-		// If we aren't allowed to create new users return
-		if ($isnew && $updateOnly) {
-			return true;
-		}
-
-		//Store the user data in the database
-		if (! $result = $table->store ()) {
-			$this->setError ( $table->getError () );
-		}
 		$table->reorder ();
 
+		// Clear cache
 		$access = KunenaFactory::getAccessControl();
 		$access->clearCache();
-
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$cache->clean('categories');
 
-		// Set the id for the KunenaUser object in case we created a new category.
-		if ($result && $isnew) {
-			$this->load ( $table->get ( 'id' ) );
-		}
-
-		return $result;
+		return true;
 	}
 
 	/**
@@ -494,21 +416,15 @@ class KunenaForumCategory extends JObject {
 	 *
 	 * @access	public
 	 * @return	boolean	True on success
-	 * @since 1.6
 	 */
 	public function delete() {
 		if (!$this->exists()) {
 			return true;
 		}
 
-		// Create the user table object
-		$table = &$this->getTable ();
-
-		$result = $table->delete ( $this->id );
-		if (! $result) {
-			$this->setError ( $table->getError () );
+		if (!parent::delete()) {
+			return false;
 		}
-		$this->_exists = false;
 
 		$access = KunenaFactory::getAccessControl();
 		$access->clearCache();
@@ -545,7 +461,7 @@ class KunenaForumCategory extends JObject {
 
 		$this->id = null;
 		KunenaForumCategoryHelper::register($this);
-		return $result;
+		return true;
 	}
 
 	/**

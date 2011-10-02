@@ -45,17 +45,17 @@ class KunenaViewCategory extends KunenaView {
 
 		foreach ( $this->topics as $topic ) {
 			$id = $topic->last_post_id;
-			$page = ceil ( $topic->posts / $this->config->messages_per_page );
+			$page = intval ( $topic->posts / $this->config->messages_per_page );
 			$description = $topic->last_post_message;
 			$date = new JDate($topic->last_post_time);
 			$userid = $topic->last_post_userid;
 			$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
 
 			$title = $topic->subject;
-			$url = CKunenaLink::GetThreadPageURL('view', $topic->category_id, $topic->id, $page, $this->config->messages_per_page, $id, true );
-			$category = $topic->getCategory()->name;
+			$category = $topic->getCategory();
+			$url = $topic->getUrl($category, true, 'last');
 
-			$this->createItem($title, $url, $description, $category, $date, $userid, $username);
+			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
 		}
 	}
 

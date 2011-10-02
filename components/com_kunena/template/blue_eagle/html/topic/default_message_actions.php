@@ -26,11 +26,11 @@ if ($this->message->modified_time) {
 <div class="kmessage-editmarkup-cover">
 	<?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
 	<span class="kmessage-editmarkup" <?php echo $datehover ?>>
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . CKunenaLink::getProfileLink( $this->message->modified_by ) . '.'; ?>
+		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
 		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
 	</span>
 	<?php endif ?>
-	<?php if ($this->config->reportmsg && KunenaFactory::getUser()->exists()) :?>
+	<?php if ($this->config->reportmsg && KunenaUserHelper::getMyself()->exists()) :?>
 	<span class="kmessage-informmarkup"><?php echo CKunenaLink::GetReportMessageLink ( intval($this->category->id), intval($this->message->id), JText::_('COM_KUNENA_REPORT') ) ?></span>
 	<?php endif ?>
 	<?php if (!empty ( $this->ipLink )) : ?>

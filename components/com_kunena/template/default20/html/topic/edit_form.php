@@ -16,7 +16,8 @@ JHTML::_('behavior.tooltip');
 <div class="ksection">
 	<h2 class="kheader"><span><?php echo $this->escape($this->title)?></span></h2>
 
-	<form enctype="multipart/form-data" name="postform" method="post" id="postform" class="postform form-validate" action="#">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" enctype="multipart/form-data" name="postform" method="post" id="postform" class="postform form-validate">
+		<input type="hidden" name="view" value="topic" />
 		<?php if ($this->message->exists()) : ?>
 		<input type="hidden" name="task" value="edit" />
 		<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />

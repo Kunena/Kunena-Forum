@@ -18,7 +18,12 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></div>
-		<form enctype="multipart/form-data" action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" enctype="multipart/form-data" name="adminForm">
+			<input type="hidden" name="view" value="templates" />
+			<input type="hidden" name="task" value="install" />
+			<input type="hidden" name="boxchecked" value="0" />
+			<?php echo JHTML::_( 'form.token' ); ?>
+
 			<table class="adminform">
 				<tr>
 					<th colspan="2"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD' ); ?></th>
@@ -33,11 +38,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					</td>
 				</tr>
 			</table>
-			<input type="hidden" name="option" value="com_kunena" />
-			<input type="hidden" name="view" value="templates" />
-			<input type="hidden" name="task" value="install" />
-			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>
 	<div class="kadmin-footer">

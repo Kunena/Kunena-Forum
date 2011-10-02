@@ -20,6 +20,11 @@ JHTML::_('behavior.tooltip');
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+			<input type="hidden" name="view" value="templates" />
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="boxchecked" value="0" />
+			<?php echo JHTML::_( 'form.token' ); ?>
+
 			<table class="adminlist">
 			<thead>
 				<tr>
@@ -94,11 +99,6 @@ JHTML::_('behavior.tooltip');
 				} ?>
 			</tbody>
 			</table>
-			<input type="hidden" name="option" value="com_kunena" />
-			<input type="hidden" name="view" value="templates" />
-			<input type="hidden" name="task" value="" />
-			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>
 	<div class="kadmin-footer">

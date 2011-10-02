@@ -28,12 +28,11 @@ defined ( '_JEXEC' ) or die ();
 					<?php if (!empty($this->announcementsLink)) : ?><li><?php echo $this->announcementsLink ?></li><?php endif ?>
 				</ul>
 				<ul class="kprofilebox-welcome">
-					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( intval($this->me->userid) ); ;?></strong></li>
+					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo $this->me->getLink() ?></strong></li>
 					<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo KunenaDate::getInstance($this->me->lastvisitDate)->toKunena('ago'); ?>"><?php echo KunenaDate::getInstance($this->me->lastvisitDate)->toKunena('date_today'); ?></span></li>
 					<?php if ($this->logout) : ?>
 					<li>
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">
-						<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>" />
 						<input type="hidden" name="option" value="<?php echo $this->logout['option']; ?>" />
 						<?php if (!empty($this->logout['view'])) : ?>
 						<input type="hidden" name="view" value="<?php echo $this->logout['view']; ?>" />
@@ -41,6 +40,8 @@ defined ( '_JEXEC' ) or die ();
 						<input type="hidden" name="task" value="<?php echo $this->logout['task']; ?>" />
 						<input type="hidden" name="<?php echo $this->logout['field_return']; ?>" value="[K=RETURN_URL]" />
 						[K=TOKEN]
+
+						<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>" />
 					</form>
 					</li>
 					<?php endif; ?>

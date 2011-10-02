@@ -84,7 +84,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 		}
 
 		$db = JFactory::getDBO();
-		$me = KunenaFactory::getUser();
+		$me = KunenaUserHelper::getMyself();
 		if ($me->exists()) {
 			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)
 				VALUES ({$db->quote($me->userid)},{$db->quote($category->id)},1)
@@ -114,7 +114,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 		}
 
 		$db = JFactory::getDBO();
-		$me = KunenaFactory::getUser();
+		$me = KunenaUserHelper::getMyself();
 		if ($me->exists()) {
 			$query = "UPDATE #__kunena_user_categories SET subscribed=0
 				WHERE user_id={$db->quote($me->userid)} AND category_id={$db->quote($category->id)}";

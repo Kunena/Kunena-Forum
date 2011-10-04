@@ -41,6 +41,7 @@ class KunenaAdminModelPrune extends KunenaModel {
 
 	function getControlOptions() {
 		$contoloptions = array();
+		$contoloptions [] = JHTML::_ ( 'select.option', 'nooptions', JText::_('COM_KUNENA_A_PRUNE_NO_OPTIONS') );
 		$contoloptions [] = JHTML::_ ( 'select.option', 'noreplies', JText::_('COM_KUNENA_A_PRUNE_NO_REPLIES') );
 		$contoloptions [] = JHTML::_ ( 'select.option', 'unapproved', JText::_('COM_KUNENA_A_PRUNE_UNAPPROVED') );
 		$contoloptions [] = JHTML::_ ( 'select.option', 'locked', JText::_('COM_KUNENA_A_PRUNE_LOCKED') );

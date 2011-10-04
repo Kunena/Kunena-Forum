@@ -367,13 +367,18 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 * @return	boolean	True on success
 	 * @since 1.6
 	 */
-	public function purge($time, $limit = 1000) {
+	public function purge($time, $limit = 1000, $params=array()) {
 		if (!$this->exists()) {
 			return true;
 		}
 
+		$hold = isset($params['hold']) ? (int) $params['hold'] : 0;
+		$where = isset($params['where']) ? (string) $params['where'] : '';
+
+		$where = "tt.hold IN ({$hold}) {$where}";
+
 		$db = JFactory::getDBO ();
-		$query ="SELECT id FROM #__kunena_topics WHERE last_post_time < {$time} ORDER BY last_post_time ASC";
+		$query ="SELECT id FROM #__kunena_topics AS tt WHERE {$where} ORDER BY tt.last_post_time ASC";
 		$db->setQuery($query, 0, $limit);
 		$ids = $db->loadResultArray();
 		KunenaError::checkDatabaseError ();
@@ -387,11 +392,11 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		// Delete thank yous
 		$queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.thread IN ({$idlist})";
 		// Delete poll users
-		$queries[] = "DELETE p FROM #__kunena_polls_users AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.topic_id IN ({$idlist}) AND tt.moved_id=0";
+		$queries[] = "DELETE p FROM #__kunena_polls_users AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.id IN ({$idlist}) AND tt.moved_id=0";
 		// Delete poll options
-		$queries[] = "DELETE p FROM #__kunena_polls_options AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.topic_id IN ({$idlist}) AND tt.moved_id=0";
+		$queries[] = "DELETE p FROM #__kunena_polls_options AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.id IN ({$idlist}) AND tt.moved_id=0";
 		// Delete polls
-		$queries[] = "DELETE p FROM #__kunena_polls AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.id WHERE tt.topic_id IN ({$idlist}) AND tt.moved_id=0";
+		$queries[] = "DELETE p FROM #__kunena_polls AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.id WHERE tt.id IN ({$idlist}) AND tt.moved_id=0";
 		// Delete messages
 		$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.thread IN ({$idlist})";
 		// TODO: delete attachments
@@ -407,6 +412,31 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount($this->id);
+
+		return true;
+	}
+
+	/**
+	 * Method to put in trash items
+	 *
+	 * @access	public
+	 * @return	boolean	True on success
+	 * @since 1.6
+	 */
+	public function trash($cat, $time, $params, $limit = 1000) {
+		if (!$this->exists()) {
+			return true;
+		}
+
+		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics($cat, 0, 100, $params);
+
+    foreach ( $topics as $topic ) {
+			$topic->trash();
+		}
+
+		KunenaUserHelper::recount();
+		KunenaForumCategoryHelper::recount();
+		KunenaForumMessageAttachmentHelper::cleanup();
 
 		return true;
 	}

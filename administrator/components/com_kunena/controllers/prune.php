@@ -34,6 +34,8 @@ class KunenaAdminControllerPrune extends KunenaController {
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
+
+		// TODO: need to load more than one category, because the user can select more than one category
 		$category = KunenaForumCategoryHelper::get(JRequest::getInt ( 'prune_forum', 0 ));
 		if (!$category->authorise('admin')) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CHOOSEFORUMTOPRUNE' ), 'error' );
@@ -48,7 +50,7 @@ class KunenaAdminControllerPrune extends KunenaController {
 		$trashdelete = JRequest::getInt( 'trashdelete', 0);
 
 		$where = array();
-		$where[] = 'AND tt.last_post_time>'.$prune_date.' AND ordering=0';
+		$where[] = ' AND tt.last_post_time > '.$prune_date;
 
 		$hold='0';
 		$trashdelete = JRequest::getString( 'controloptions', 0);
@@ -66,20 +68,13 @@ class KunenaAdminControllerPrune extends KunenaController {
 
 		// Get up to 100 oldest topics to be deleted
 		$params = array(
-			'orderby'=>'tt.last_post_time ASC',
 			'hold' => $hold,
 			'where'=> $where,
 		);
-		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics($category->id, 0, 100, $params);
-		$deleted = 0;
-		foreach ( $topics as $topic ) {
-			$deleted++;
-			if ( $trashdelete ) $topic->delete(false);
-			else $topic->trash();
-		}
-		KunenaUserHelper::recount();
-		KunenaForumCategoryHelper::recount();
-		KunenaForumMessageAttachmentHelper::cleanup();
+
+		if ( $trashdelete ) $category->purge($prune_date, '', $params);
+		else $category->trash(JRequest::getInt ( 'prune_forum', 0 ), $prune_date, $params, '');
+
 		if ( $trashdelete ) $app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$deleted}/{$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
 		else $app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$deleted}/{$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));

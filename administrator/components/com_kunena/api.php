@@ -61,7 +61,7 @@ function kimport($path) {}
  */
 function KunenaAutoload($class) {
 	if (substr($class, 0, 6) != 'Kunena') return;
-	$file = KPATH_ADMIN . '/libraries/' . strtolower(preg_replace( '/([A-Z])/', '/\\1', substr($class, 6)));
+	$file = KPATH_ADMIN . '/libraries' . strtolower(preg_replace( '/([A-Z])/', '/\\1', substr($class, 6)));
 	if (is_dir($file)) {
 		$file .= '/'.array_pop( explode( '/', $file ) );
 	}

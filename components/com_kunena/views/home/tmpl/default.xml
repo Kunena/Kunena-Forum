@@ -18,11 +18,9 @@
 		</url>
 		<!-- Add fields to the parameters object for the layout. -->
 		<params addpath="/administrator/components/com_kunena/libraries/form/elements">
-			<param name="catids"
-				type="kunenacategorylist"
-				label="COM_KUNENA_MENU_ALLOWEDCAT"
-				description="COM_KUNENA_MENU_ALLOWEDCAT_DESC"
-				default="0" multiple="1" size="8" sections="1" toplevel="COM_KUNENA_A_ALL_CATEGORIES" />
+			<param name="catids" type="kunenacategorylist" label="COM_KUNENA_MENU_ALLOWEDCAT" description="COM_KUNENA_MENU_ALLOWEDCAT_DESC" default="0" multiple="1" size="10" sections="1">
+				<option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
+			</param>
 		</params>
 	</state>
 
@@ -41,11 +39,9 @@
 	<fields name="params" addfieldpath="/administrator/components/com_kunena/libraries/form/fields">
 		<!-- Basic options. -->
 		<fieldset name="basic" label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
-			<field name="catids"
-				type="kunenacategorylist"
-				label="COM_KUNENA_MENU_ALLOWEDCAT"
-				description="COM_KUNENA_MENU_ALLOWEDCAT_DESC"
-				default="0" multiple="1" size="8" sections="1" toplevel="COM_KUNENA_A_ALL_CATEGORIES" />
+			<field name="catids" type="kunenacategorylist" label="COM_KUNENA_MENU_ALLOWEDCAT" description="COM_KUNENA_MENU_ALLOWEDCAT_DESC" default="0" multiple="1" size="10" sections="1">
+				<option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
+			</field>
 		</fieldset>
 	</fields>
 </metadata>

@@ -38,7 +38,10 @@ class KunenaProfiler extends JProfiler {
 
 	public function stop($name) {
 		$item = array_pop($this->_heap);
-		if (!$item || $item->name != $name) trigger_error(__CLASS__.'::'.__FUNCTION__."('$name') is missing start()");
+		if (!$item || $item->name != $name) {
+//			print_r($this->_heap);
+			trigger_error(__CLASS__.'::'.__FUNCTION__."('$name') is missing start()");
+		}
 		$delta = $item->stop($this->getmicrotime());
 		if (end($this->_heap)) {
 			$this->_heap[key($this->_heap)]->external($delta);

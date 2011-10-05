@@ -120,7 +120,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if ((string)$action === (string)(int)$action) {
 			$uri->setVar('limitstart', $action);
 		}
-		return $xhtml=='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
 	}
 
 	public function getTopics() {

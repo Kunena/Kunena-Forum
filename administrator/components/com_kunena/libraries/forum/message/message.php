@@ -71,7 +71,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$category = $category ? KunenaForumCategoryHelper::get($category) : $this->getCategory();
 		if (!$this->exists() || !$category->exists()) return null;
 		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
-		return $xhtml=='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
 	}
 
 	public function newReply($fields=array(), $user=null) {
@@ -138,7 +138,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 
 		if (!$url) {
-			$url = JURI::root().trim($this->getPermaUrl(null, true), '/');
+			$url = JURI::root().trim($this->getPermaUrl(null), '/');
 		}
 		//get all subscribers, moderators and admins who will get the email
 		$me = KunenaUserHelper::get();

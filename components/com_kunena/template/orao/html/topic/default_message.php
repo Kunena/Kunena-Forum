@@ -35,7 +35,7 @@ $this->params = $template->params;
 						</span>
 						</dt>
 						<dd class="topics" style="float:right;">
-							<span class="tk-view-msgid"><a name="<?php echo intval($this->id); ?>"></a><?php echo $this->numLink ?></span>
+							<span class="tk-view-msgid"><a name="<?php echo intval($this->message->id); ?>"></a><?php echo $this->numLink ?></span>
 						</dd>
 					</dl>
 				</li>

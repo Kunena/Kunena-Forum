@@ -78,7 +78,6 @@ body {line-height:1.5;}
 }
 #kunena > div ul,
 #kunena > div ol {
-	background: inherit;
 	margin: 0;
 	padding: 0;
 }
@@ -158,7 +157,7 @@ body {line-height:1.5;}
 #kunena #ktopics-modbox {
 	width: 100%;
 	margin: 10px auto;
-	border: 1px solid #bcbcbc;
+	border: 1px solid #e3e0e0;
 	padding: 0px;
 	clear:both;
 	text-align:left;
@@ -275,7 +274,7 @@ body {line-height:1.5;}
 	display: inline;
 	height: 30px;
 	float:left;
-	margin: 0 5px 0 0 !important;
+	margin: 0 2px 0 0 !important;
 	padding: 0;
 	line-height: 30px;
 	border-radius:5px 5px 0 0;
@@ -299,7 +298,6 @@ body {line-height:1.5;}
 #kunena .kpostcategory-row,
 #kunena .kpostmessage-row,
 #kunena .keditprofile-row {
-	border-bottom: 1px solid;
 	zoom: 1;
 	overflow: hidden;
 	position: relative;
@@ -447,12 +445,12 @@ body {line-height:1.5;}
 }
 #kunena a.ksection-headericon {
 	display: block;
-	height: 24px;
-	width: 24px;
+	height: 16px;
+	width: 16px;
 	float: left;
 	margin-right: 10px;
 	margin-left: 10px;
-	margin-top: 3px;
+	margin-top: 7px;
 }
 #kunena .ksection .krss-icon,
 #kunena #kannounce .krss-icon {
@@ -750,7 +748,7 @@ body {line-height:1.5;}
 #kunena .ktopics-row table td.ktopic-lastpost,
 #kunena .ktags-row table td.ktag-lastpost,
 #kunena .kposts-row table td.kposts-lastpost {
-	width: 160px;
+	width: 180px;
 	padding: 15px 10px;
 }
 #kunena li.kcategory-smavatar,
@@ -971,7 +969,7 @@ body {line-height:1.5;}
 	display: block;
 	float:left;
 	padding: 10px;
-	width: 35px;
+	width: 48px;
 }
 #kunena div.kwhosonline-users {
 	padding: 10px;
@@ -984,8 +982,8 @@ body {line-height:1.5;}
 }
 #kunena span.kwho-smicon {
 	display:block;
-	height: 32px;
-	width: 32px;
+	height: 48px;
+	width: 48px;
 	background: url("../images/icon-whosonline.png") no-repeat;
 }
 #kunena .kwhosonline-subtitle {
@@ -2179,4 +2177,9 @@ body {line-height:1.5;}
 #kunena div.kblock div.kactions a {
 	color: #FFF !important; 
 	background-color:transparent !important;
+}
+#kunena .ksetting-icon {
+    float: right;
+    margin-right: 3px;
+	background: url("../images/tools_16.png") no-repeat scroll 0 0 transparent;
 }

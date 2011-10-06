@@ -49,7 +49,20 @@ table {border-collapse: collapse;}
 	border-radius:6px;
 }
 #kunena .kheader {
-	background-color: var(styleForumHeadercolor);
+	
+	background: #599bdc; /* Old browsers */
+
+background: -moz-linear-gradient(top, #599bdc 0%, #3072b3 100%); /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#599bdc), color-stop(100%,#3072b3)); /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top, #599bdc 0%,#3072b3 100%); /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top, #599bdc 0%,#3072b3 100%); /* Opera11.10+ */
+
+background: -ms-linear-gradient(top, #599bdc 0%,#3072b3 100%); /* IE10+ */
+
+background: linear-gradient(top, #599bdc 0%,#3072b3 100%); /* W3C */ 
 	color: #fff;
 	font-weight: bold;
 	border-radius: 5px 5px 0 0; 
@@ -64,8 +77,53 @@ table {border-collapse: collapse;}
 #kunena .kheader a:hover {
 	text-decoration: underline;
 }
+#kunena .krow-odd:hover {
+	background: #f4f4f4!important; /* Old browsers */
+
+background: -moz-linear-gradient(top, #f4f4f4 0%, #ececec 100%)!important; /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#ececec))!important; /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* Opera11.10+ */
+
+background: -ms-linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* IE10+ */
+
+background: linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* W3C */
+}
+#kunena .krow-even:hover {
+	background: #f4f4f4!important; /* Old browsers */
+
+background: -moz-linear-gradient(top, #f4f4f4 0%, #ececec 100%)!important; /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#ececec))!important; /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* Opera11.10+ */
+
+background: -ms-linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* IE10+ */
+
+background: linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* W3C */
+}
+#kunena .kcategories-row:hover {
+	background: #f4f4f4!important; /* Old browsers */
+
+background: -moz-linear-gradient(top, #f4f4f4 0%, #ececec 100%)!important; /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#ececec))!important; /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* Opera11.10+ */
+
+background: -ms-linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* IE10+ */
+
+background: linear-gradient(top, #f4f4f4 0%,#ececec 100%)!important; /* W3C */
+}
 #kunena .ksection .kheader-desc {
-	background: var(styleForumHeadercolor);
+	background:#3072B3;
 	color: #fff;
 }
 #kunena .ksection .kheader-desc.ktoggle-close {
@@ -98,13 +156,43 @@ table {border-collapse: collapse;}
 	border-left-color: #BFC3C6;
 }
 #kunena .kbutton {
-	background-color: #5388B4;
-	border: 1px hidden #CCCCCC;
-	color: #FFFFFF;
-	font-size: 11px;
-	border-radius:4px;
+	background: -moz-linear-gradient(center top , #F4F4F4, #ECECEC) repeat scroll 0 0 transparent;
+    border: 1px solid #D4D4D4;
+    border-radius: 3px 3px 3px 3px;
+    color: #333333;
+    cursor: pointer;
+    display: inline-block;
+    font-family: helvetica,arial,freesans,clean,sans-serif;
+    overflow: visible;
+    position: relative;
+    text-shadow: 1px 1px 0 #FFFFFF;
+    white-space: nowrap;
+	
 }
 #kunena .kbutton:hover {
+	background: #599bdc; /* Old browsers */
+
+background: -moz-linear-gradient(top, #599bdc 0%, #3072b3 100%); /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#599bdc), color-stop(100%,#3072b3)); /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top, #599bdc 0%,#3072b3 100%); /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top, #599bdc 0%,#3072b3 100%); /* Opera11.10+ */
+
+background: -ms-linear-gradient(top, #599bdc 0%,#3072b3 100%); /* IE10+ */
+
+background: linear-gradient(top, #599bdc 0%,#3072b3 100%); /* W3C */  
+    background-color: #f4f4f4; 
+    border-color: #518CC6 #518CC6 #2A65A0;
+    color: #FFFFFF;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+	display: inline-block;
+    font-family: helvetica,arial,freesans,clean,sans-serif;
+    overflow: visible;
+    position: relative;
+	
 }
 #kunena .kattachment .kbutton {
 	color: #000000;
@@ -123,15 +211,40 @@ table {border-collapse: collapse;}
 /*---------- Top Menu ------------- */
 
 #kunena .kmenu {
-	border-bottom: 3px solid var(styleTopBordercolor);
+	border-bottom: 3px solid #3072B3 !important;
+	
 }
 #kunena .kmenu ul.menu li {
-	background: var(styleInactiveTabcolor) !important;
-	font-size: 13px;
+background: #f4f4f4; /* Old browsers */
+
+background: -moz-linear-gradient(top, #f4f4f4 0%, #ececec 100%); /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#ececec)); /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* Opera11.10+ */
+
+background: -ms-linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* IE10+ */
+
+background: linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* W3C */	
+font-size: 13px;
 }
 #kunena .kmenu ul.menu li:hover,
 #kunena .kmenu ul.menu li.active {
-	background: var(styleActiveTabcolor) !important;
+	background: #599bdc !important; /* Old browsers */
+
+background: -moz-linear-gradient(top, #599bdc 0%, #3072b3 100%) !important; /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#599bdc), color-stop(100%,#3072b3))!important; /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top, #599bdc 0%,#3072b3 100%)!important; /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top, #599bdc 0%,#3072b3 100%)!important; /* Opera11.10+ */
+
+background: -ms-linear-gradient(top, #599bdc 0%,#3072b3 100%)!important; /* IE10+ */
+
+background: linear-gradient(top, #599bdc 0%,#3072b3 100%)!important; /* W3C */ 
 }
 #kunena .kmenu ul.menu li a {
 	color: var(styleInactiveFontcolor);
@@ -142,19 +255,42 @@ table {border-collapse: collapse;}
 	color: var(styleActiveFontcolor);
 }
 #kunena .klogin {
-	background-color: #f3f3f3;
+	background: #f4f4f4; /* Old browsers */
+
+background: -moz-linear-gradient(top, #f4f4f4 0%, #ececec 100%); /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#ececec)); /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* Opera11.10+ */
+
+background: -ms-linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* IE10+ */
+
+background: linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* W3C */
 }
 #kunena ul.klogin-userlinks {
 	font-size: 11px;
 }
 #kunena li.klogin-avatar img {
-	border: 1px solid #ccc;
 }
 
 /*---------- Breadcrumbs ------------- */
 
 #kunena .kbreadcrumb {
-	background-color: #f3f3f3;
+	background: #f4f4f4; /* Old browsers */
+
+background: -moz-linear-gradient(top, #f4f4f4 0%, #ececec 100%); /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#ececec)); /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* Opera11.10+ */
+
+background: -ms-linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* IE10+ */
+
+background: linear-gradient(top, #f4f4f4 0%,#ececec 100%); /* W3C */
 }
 #kunena li.kbreadcumb-viewing,
 #kunena li.kbreadcumb-total {
@@ -167,7 +303,7 @@ table {border-collapse: collapse;}
 #kunena .ktopics-row table,
 #kunena .ktags-row table,
 #kunena .kcategory-row table {
-	border-top: 1px solid #ccc;
+	border-top: 1px solid #f4f4f4;
 }
 #kunena .kcategories-row table caption,
 #kunena .kposts-row table caption,
@@ -176,7 +312,7 @@ table {border-collapse: collapse;}
 	font-size: .001em;
 }
 #kunena td.kcategory-icon {
-	border-right: 1px solid #ccc;
+	border-right: 1px solid #f4f4f4;
 }
 #kunena .ktopic-title h3,
 #kunena .kpost-title h3,
@@ -229,7 +365,7 @@ table {border-collapse: collapse;}
 #kunena td.kcategory-posts,
 #kunena td.kposts-replies,
 #kunena td.kposts-views {
-	border-left: 1px solid #ccc;
+	border-left: 1px solid #f4f4f4;
 	color: #999;
 	font-size: 20px;
 	line-height: 22px;
@@ -268,17 +404,16 @@ table {border-collapse: collapse;}
 #kunena .kposts-row table td.kpost-author,
 #kunena .ktopics-row table td.ktopic-lastpost,
 #kunena .ktags-row table td.ktag-lastpost {
-	border-left: 1px solid #ccc;
+	border-left: 1px solid #f4f4f4;
 }
 #kunena li.kcategory-smavatar img,
 #kunena li.kpost-smavatar img,
 #kunena li.ktopic-smavatar img,
 #kunena li.ktag-smavatar img,
 #kunena li.kposts-smavatar img {
-	border: 1px solid #ccc;	
+	border: 1px solid #f4f4f4;	
 }
 #kunena .krow-odd {
-	background-color: #f3f3f3;
 }
 #kunena .krow-sticky {
 	background-color: #FFFFCC;
@@ -287,10 +422,10 @@ table {border-collapse: collapse;}
 	/* background-color: red; */
 }
 #kunena .kwhosonline-users {
-	border-left: 1px solid #CCC;
+	border-left: 1px solid #f4f4f4;
 	}
 #kunena .kwhosonline-subtitle {
-	border-bottom: 1px solid #CCC;
+	border-bottom: 1px solid #f4f4f4;
 }
 #kunena .kwhosonline-legend ul li {
 	font-size: 11px;
@@ -307,7 +442,7 @@ table {border-collapse: collapse;}
 	color: #000;
 }
 #kunena .kstatistics-totals {
-	border-left: 1px solid #CCC;
+	border-left: 1px solid #f4f4f4;
 }
 #kunena .kstatistics-totals ul li span,
 #kunena .kstatistics-totals-links ul li span {
@@ -321,7 +456,19 @@ table {border-collapse: collapse;}
 #kunena input.kheader-link {
 	color: #FFF;
 	border: 0 none;
-	background: #5388B4;
+	background: #4f91d2;
+
+background: -moz-linear-gradient(top, #4f91d2 0%, #3c7ebf 100%); /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4f91d2), color-stop(100%,#3c7ebf)); /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top, #4f91d2 0%,#3c7ebf 100%); /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top, #4f91d2 0%,#3c7ebf 100%); /* Opera11.10+ */
+
+background: -ms-linear-gradient(top, #4f91d2 0%,#3c7ebf 100%); /* IE10+ */
+
+background: linear-gradient(top, #4f91d2 0%,#3c7ebf 100%); /* W3C */ 
 	padding: 0;
 	line-height: 12px;
 	text-decoration: underline;
@@ -333,7 +480,7 @@ table {border-collapse: collapse;}
 	background-color: #999999;
 }
 #kunena h2.ktoggle-close a {
-	color: #ccc;
+	color: #f4f4f4;
 }
 #kunena .kfilter-button {
 	border: 1px solid #666;
@@ -356,14 +503,14 @@ table {border-collapse: collapse;}
 	font-size: 11px;
 }
 #kunena td.kcategory-subcats {
-	border-top: 1px solid #ccc;
+	border-top: 1px solid #f4f4f4;
 }
 #kunena .ksubscriptions-category li.kcategory-mods,
 #kunena .kusercats li.kcategory-mods {
 	border-bottom: 0px;
 }
 #kunena td.ktopic-icon {
-	border-right: 1px solid #ccc;
+	border-right: 1px solid #f4f4f4;
 }
 #kunena .kcategory-lastpost li a,
 #kunena .kpost-author li,
@@ -607,7 +754,7 @@ table {border-collapse: collapse;}
 #kunena .kpage span,
 #kunena .kpage a:hover {
 	color: #fff;
-	border: 1px solid #ccc;
+	border: 1px solid #f4f4f4;
 	background-color: #5388B4;
 }
 #kunena .kpagination-topic .kpage li {
@@ -767,13 +914,13 @@ table {border-collapse: collapse;}
 /*---------- Manage Categories ------------- */
 
 #kunena .kcategories .kcategory-row td {
-	border-right-color: #CCCCCC;
+	border-right-color: #f4f4f4CCC;
 }
 #kunena .kcategories .kcategory-title h3 {
 	color: #0066CC;
 }
 /*.kcategories .kcategory-row {
-	border-top-color: #CCCCCC;
+	border-top-color: #f4f4f4CCC;
 }*/
 #kunena .kcategory-row th {
 	background: #666;
@@ -792,7 +939,7 @@ table {border-collapse: collapse;}
 
 #kunena .kposts-body,
 #kunena .kposts-message {
-	border-color: #CCCCCC;
+	border-color: #f4f4f4CCC;
 }
 
 /*---------- Tooltips ------------- */
@@ -845,7 +992,7 @@ table {border-collapse: collapse;}
 /*---------- Manage Subscriptions ------------- */
 
 #kunena .kcategory-moderation {
-	border-left-color: #CCCCCC;
+	border-left-color: #f4f4f4CCC;
 }
 
 /*---------- Display Tags ------------- */
@@ -905,4 +1052,10 @@ table {border-collapse: collapse;}
 #kunena .ksth {
 	background-color: #f3f3f3;
 	width:100%;
+}
+#kunena .ksetting-icon {
+    display: block;
+    height: 12px;
+    margin-top: 2px;
+    width: 12px;
 }

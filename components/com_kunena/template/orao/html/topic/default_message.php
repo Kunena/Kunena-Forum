@@ -117,5 +117,5 @@ $this->params = $template->params;
 <?php if ($this->isModulePosition('kunena_msg_' . $this->mmm)) : ?><li class="kmodules"><?php $this->getModulePosition('kunena_msg_' . $this->mmm) ?></li><?php endif ?>
 
 <?php if ( $this->topic->authorise('reply') ) : ?>
-<?php echo $this->loadTemplate("quickreply");?>
+<?php echo $this->loadTemplateFile("quickreply");?>
 <?php endif ?>

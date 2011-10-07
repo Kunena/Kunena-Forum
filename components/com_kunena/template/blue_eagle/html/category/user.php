@@ -32,7 +32,7 @@ $this->displayLoginBox ();
 			<?php
 			else :
 				foreach ($this->categories as $this->category) {
-					echo $this->loadTemplate('row');
+					echo $this->loadTemplateFile('row');
 				}
 			endif;
 			?>

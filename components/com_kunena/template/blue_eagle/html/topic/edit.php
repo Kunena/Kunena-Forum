@@ -122,7 +122,7 @@ $this->displayLoginBox ();
 
 		<?php
 		// Show bbcode editor
-		echo $this->loadTemplate('editor');
+		echo $this->loadTemplateFile('editor');
 		?>
 
 		<?php if ($this->allowedExtensions) : ?>

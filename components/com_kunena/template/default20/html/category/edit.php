@@ -223,7 +223,7 @@ JHTML::_('behavior.tooltip');
 					<?php
 					foreach ( $this->moderators as $this->user ) {
 						$this->action = '<label class="kuserlist-checkbox">'.JText::_('COM_KUNENA_THIS_MODERATOR_REMOVE').'<input type="checkbox" value="1" name="rmmod['.$this->user->userid.']" /></label>';
-						echo $this->loadTemplate('moderator');
+						echo $this->loadTemplateFile('moderator');
 					}
 					?>
 					<?php endif ?>

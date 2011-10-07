@@ -496,8 +496,8 @@ class KunenaViewTopic extends KunenaView {
 			}
 		}
 
-		if ($this->voted) echo $this->loadTemplate("pollresults");
-		else echo $this->loadTemplate("poll");
+		if ($this->voted) echo $this->loadTemplateFile("pollresults");
+		else echo $this->loadTemplateFile("poll");
 	}
 
 	function displayTopicActions($location=0) {
@@ -524,7 +524,7 @@ class KunenaViewTopic extends KunenaView {
 		$location ^= 1;
 		$this->goto = '<a name="forum'.$locations[$location].'"></a>';
 		$this->goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$location], $this->getIcon ( 'kforum'.$locations[$location], JText::_('COM_KUNENA_GEN_GOTO'.$locations[$location] ) ), 'nofollow', 'kbuttongoto');
-		echo $this->loadTemplate('actions');
+		echo $this->loadTemplateFile('actions');
 	}
 
 	function displayMessageProfile() {
@@ -610,7 +610,7 @@ class KunenaViewTopic extends KunenaView {
 					}
 					$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
 
-					$contents = $this->loadTemplate('profile');
+					$contents = $this->loadTemplateFile('profile');
 					if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 				}
 				$profiles [$key] = $contents;
@@ -620,7 +620,7 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function displayMessageContents() {
-		echo $this->loadTemplate("message");
+		echo $this->loadTemplateFile("message");
 	}
 
 	function displayMessageActions() {
@@ -694,7 +694,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->message->id, $this->getButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 			}
 		}
-		return $this->loadTemplate("message_actions");
+		return $this->loadTemplateFile("message_actions");
 	}
 
 	function displayMessage($id, $message, $template=null) {
@@ -747,7 +747,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->msgsuffix = '-new';
 			}
 
-			$contents = $this->loadTemplate($template);
+			$contents = $this->loadTemplateFile($template);
 			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
 			if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 		} elseif ($usertype == 'guest') {
@@ -813,7 +813,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 		KunenaUserHelper::loadUsers($userlist);
 
-		echo $this->loadTemplate ( 'history' );
+		echo $this->loadTemplateFile ( 'history' );
 	}
 
 	function redirectBack() {
@@ -835,7 +835,7 @@ class KunenaViewTopic extends KunenaView {
 	function displayAttachments($message=null) {
 		if ($message instanceof KunenaForumMessage) {
 			$this->attachments = $message->getAttachments();
-			if (!empty($this->attachments)) echo $this->loadTemplate ( 'attachments' );
+			if (!empty($this->attachments)) echo $this->loadTemplateFile ( 'attachments' );
 		} else {
 			echo JText::_('COM_KUNENA_ATTACHMENTS_ERROR_NO_MESSAGE');
 		}

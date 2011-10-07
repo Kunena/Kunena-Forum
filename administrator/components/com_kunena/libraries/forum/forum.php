@@ -34,7 +34,7 @@ class KunenaForum {
 
 	public static function isCompatible($version) {
 		// If requested version is smaller than 2.0.0-DEV, it's not compatible
-		if (version_compare($version, '2.0.0-DEV', '<')) {
+		if (version_compare($version, '2.0', '<')) {
 			return false;
 		}
 		// Check if future version is needed (remove SVN from the check)
@@ -49,6 +49,13 @@ class KunenaForum {
 			self::buildVersion();
 		}
 		return self::$version;
+	}
+
+	public static function versionMajor() {
+		if (self::$version_major === false) {
+			self::buildVersion();
+		}
+		return self::$version_major;
 	}
 
 	public static function versionDate() {
@@ -92,6 +99,7 @@ class KunenaForum {
 		} else {
 			self::$version = strtoupper ( '@kunenaversion@' );
 		}
+		self::$version_major = substr(self::$version, 0, 3);
 		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toMySQL() : '@kunenaversiondate@';
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'SVN Revision' : '@kunenaversionname@';
 	}

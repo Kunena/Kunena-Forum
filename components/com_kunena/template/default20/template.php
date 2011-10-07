@@ -20,15 +20,15 @@ class KunenaTemplateDefault20 extends KunenaTemplate {
 		// New Kunena JS for default template
 		$this->addScript ( 'js/default.js' );
 
+		// Load all css files (they are combined into one)
+		$this->addStyleSheet ( 'css/global.css' );
+		$this->addStyleSheet ( 'css/design.css' );
+
 		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 			// Load mediaxboxadvanced library if enabled in configuration
 			$this->addScript( 'js/mediaboxAdv.js' );
 			$this->addStyleSheet ( 'css/mediaboxAdv.css');
 		}
-
-		// Load css from default template
-		$this->addStyleSheet ( 'css/global.css' );
-		$this->addStyleSheet ( 'css/design.css' );
 	}
 
 	public function getButton($name, $text) {

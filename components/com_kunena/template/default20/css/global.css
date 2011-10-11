@@ -285,6 +285,7 @@ body {line-height:1.5;}
 	background: none;
 	margin: 0 10px;
 	padding: 0 10px;
+	border-bottom-width: 0 !important;
 }
 #kunena .kmenu ul.menu li.active a span,
 #kunena .kmenu ul.menu li a span {
@@ -292,6 +293,9 @@ body {line-height:1.5;}
 	background: none;
 	margin: 0;
 	padding: 0;
+}
+#kunena ul.menu li {
+	border-bottom-width:0 !important;
 }
 /*----------  Forms  ------------- */
 
@@ -355,7 +359,7 @@ body {line-height:1.5;}
 	float:left;
 }
 #kunena li.klogin-avatar img {
-	padding: 1px;
+	padding: 0;
 }
 #kunena li.klogin-welcome,
 #kunena li.klogin-lastvisit,
@@ -374,7 +378,7 @@ body {line-height:1.5;}
 }
 #kunena .klogin-form input.kinputbox, 
 #kunena .klogin-form textarea.ktxtarea {
-	width: auto;
+	width: 150px;
 }
 #kunena li.kmarkall {
 	margin-top: 0px;
@@ -690,7 +694,7 @@ body {line-height:1.5;}
 }
 #kunena td.ktopic-icon,
 #kunena td.kpost-icon {
-	border-right: 1px solid #ccc;
+	border-right: 1px solid #F4F4F4;
 }
 #kunena td.ktopic-icon span,
 #kunena td.kpost-icon span {
@@ -741,7 +745,7 @@ body {line-height:1.5;}
 #kunena td.kposts-post-checkbox,
 #kunena td.kcategory-moderation {
 	width: 25px;
-	border-left: 1px solid #ccc;
+	border-left: 1px solid #F4F4F4;
 }
 #kunena .kcategories-row table td.kcategory-lastpost,
 #kunena .kposts-row table td.kpost-author,
@@ -766,7 +770,7 @@ body {line-height:1.5;}
 #kunena li.kposts-smavatar img {
 	width: 32px;
 	height: 32px;
-	padding: 1px;
+	padding: 0;
 }
 #kunena .kcategory-lastpost li a,
 #kunena .kpost-author li,
@@ -897,8 +901,8 @@ body {line-height:1.5;}
 	text-decoration: none;
 }
 #kunena .kpost-user-avatar img {
-	margin: 5px 0;
-	padding: 1px;
+	margin: 0;
+	padding: 0;
 }
 
 /* Post body */
@@ -972,10 +976,9 @@ body {line-height:1.5;}
 	width: 48px;
 }
 #kunena div.kwhosonline-users {
-	padding: 10px;
+	padding: 10px 0 10px 10px;
 	display: block;
 	float:left;
-	width: 88%;
 }
 #kunena .ksection-icon span {
 	margin: 15px auto;
@@ -1029,7 +1032,7 @@ body {line-height:1.5;}
 	clear:left;
 }
 #kunena .kstatistics-totals {
-	padding: 10px;
+	padding: 10px 0 10px 10px;
 	line-height: 20px;
 	min-height: 80px;
 	width: 27%;
@@ -1268,7 +1271,7 @@ body {line-height:1.5;}
 #kunena .kcatsub-avatar img {
 	max-width: 32px;
 	max-height: 32px;
-	border: 1px solid #ccc;
+	border: 1px solid #F4F4F4;
 	margin: 5px 10px;
 }
 
@@ -1280,7 +1283,7 @@ body {line-height:1.5;}
 #kunena .kuserlist-user {
 	width: 43%;
 	float:left;
-	border: 1px solid #ccc;
+	border: 1px solid #F4F4F4;
 	margin: 15px;
 	padding: 15px;
 }
@@ -1306,7 +1309,7 @@ body {line-height:1.5;}
 	max-width: 96px;
 	max-height: 96px;
 	padding: 1px;
-	border: 1px solid #ccc;
+	border: 1px solid #F4F4F4;
 }
 #kunena .kdetails-status {
 	display:block;

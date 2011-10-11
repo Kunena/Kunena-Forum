@@ -196,7 +196,7 @@ table {border-collapse: collapse;}
 }
 #kunena .kmenu ul.menu li:hover,
 #kunena .kmenu ul.menu li.active {
-	background: #599bdc !important; /* Old browsers */
+	background: #599bdc; /* Old browsers */
 	background: -moz-linear-gradient(top, #599bdc 0%, #3072b3 100%) !important; /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#599bdc), color-stop(100%,#3072b3))!important; /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top, #599bdc 0%,#3072b3 100%)!important; /* Chrome10+,Safari5.1+ */
@@ -225,6 +225,9 @@ table {border-collapse: collapse;}
 	font-size: 11px;
 }
 #kunena li.klogin-avatar img {
+}
+#kunena .klogin-guest li {
+	line-height: inherit !important; 
 }
 
 /*---------- Breadcrumbs ------------- */
@@ -1002,3 +1005,8 @@ table {border-collapse: collapse;}
 #kunena a:link {
     color: var(styleActiveLinkcolor);
 }
+/* J1.6 hacks: Templates */
+#kunena a:hover, #main a:active, #main a:focus {
+	background:none !important;
+}
+/* End J1.6 hacks */

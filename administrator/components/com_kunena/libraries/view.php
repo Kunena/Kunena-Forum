@@ -37,6 +37,7 @@ class KunenaView extends JView {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$this->template->initialize();
+		$this->template->createStyleSheets();
 
 		if (JFactory::getApplication()->isAdmin()) {
 			$this->displayLayout();

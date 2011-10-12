@@ -229,18 +229,18 @@ class KunenaViewCommon extends KunenaView {
 
 			$this->assign ( 'moduleHtml', $this->getModulePosition('kunena_profilebox'));
 
-			$login = KunenaFactory::getLogin();
+			$login = KunenaLogin::getInstance();
 			if ($my->get ( 'guest' )) {
 				$this->setLayout('login');
 				if ($login) {
-					$this->assignRef ( 'login', $login->getLoginFormFields() );
+					$this->assignRef ( 'login', $login );
 					$this->assignRef ( 'register', $login->getRegistrationURL() );
 					$this->assignRef ( 'lostpassword', $login->getResetURL() );
 					$this->assignRef ( 'lostusername', $login->getRemindURL() );
 				}
 			} else {
 				$this->setLayout('logout');
-				if ($login) $this->assignRef ( 'logout', $login->getLogoutFormFields() );
+				if ($login) $this->assignRef ( 'logout', $login );
 				$this->lastvisitDate = KunenaDate::getInstance($this->me->lastvisitDate);
 
 				// Private messages

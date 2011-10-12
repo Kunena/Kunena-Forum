@@ -15,12 +15,8 @@ defined ( '_JEXEC' ) or die ();
 					<span class="tk-mb-first"><?php echo JText::_('COM_KUNENA_TEMPLATE_MEMB_LOGIN');  ?></span>
 				</div>
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">
-			<input type="hidden" name="option" value="<?php echo $this->login['option']; ?>" />
-			<?php if (!empty($this->login['view'])) : ?>
-			<input type="hidden" name="view" value="<?php echo $this->login['view']; ?>" />
-			<?php endif; ?>
-			<input type="hidden" name="task" value="<?php echo $this->login['task']; ?>" />
-			<input type="hidden" name="<?php echo $this->login['field_return']; ?>" value="[K=RETURN_URL]" />
+			<input type="hidden" name="view" value="user" />
+			<input type="hidden" name="task" value="login" />
 			[K=TOKEN]
 
 			<ul class="topiclist forums">
@@ -31,10 +27,10 @@ defined ( '_JEXEC' ) or die ();
 						<dd class="first tk-welcome">
 							<ul>
 								<li>
-									<input type="text" name="<?php echo $this->login['field_username']; ?>" class="inputbox tk-username" alt="username" size="25" value="" />
+									<input type="text" name="username" class="inputbox tk-username" alt="username" size="25" value="" />
 								</li>
 								<li>
-									<input type="password" name="<?php echo $this->login['field_password']; ?>" class="inputbox tk-password" size="25" alt="password" value="" />
+									<input type="password" name="password" class="inputbox tk-password" size="25" alt="password" value="" />
 								</li>
 								<li>
 							<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>

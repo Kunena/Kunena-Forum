@@ -21,7 +21,7 @@ class plgKunenaJoomla extends JPlugin {
 		}
 
 		parent::__construct ( $subject, $config );
-		$this->loadLanguage ( 'plg_kunena_joomla', JPATH_ADMINISTRATOR );
+		$this->loadLanguage ( 'plg_kunena_joomla.sys', JPATH_ADMINISTRATOR );
 
 		$this->path = dirname ( __FILE__ );
 	}

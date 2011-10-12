@@ -40,7 +40,7 @@ class plgKunenaComprofiler extends JPlugin {
 			return;
 		}
 		parent::__construct ( $subject, $config );
-		$this->loadLanguage ( 'plg_kunena_comprofiler', JPATH_ADMINISTRATOR );
+		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR );
 
 		$this->path = dirname ( __FILE__ ) . '/comprofiler';
 	}

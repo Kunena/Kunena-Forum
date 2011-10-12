@@ -21,7 +21,7 @@ class plgKunenaCommunity extends JPlugin {
 		include_once ($path);
 
 		parent::__construct ( $subject, $config );
-		$this->loadLanguage ( 'plg_kunena_community', JPATH_ADMINISTRATOR );
+		$this->loadLanguage ( 'plg_kunena_community.sys', JPATH_ADMINISTRATOR );
 
 		$this->path = dirname ( __FILE__ ) . '/community';
 	}

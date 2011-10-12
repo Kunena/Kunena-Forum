@@ -14,11 +14,6 @@ JHTML::_ ( 'behavior.mootools' );
 $this->document->addScript ( 'includes/js/joomla.javascript.js' );
 $this->addStyleSheet ( 'css/kunena.manage.css' );
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <div class="kblock kmanage">
 	<div class="kheader">
 		<h2><?php echo $this->header; ?></h2>
@@ -173,6 +168,4 @@ $this->displayLoginBox ();
 </form>
 </div>
 </div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

@@ -20,11 +20,6 @@ document.addEvent('domready', function() {
 }
 $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <div class="kblock kadvsearch">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler <?php echo $this->search_class; ?>" title="<?php echo $this->search_title ?>" rel="advsearch"></a></span>
@@ -222,5 +217,3 @@ $this->displayLoginBox ();
 </div>
 </div>
 <?php endif; ?>
-<?php $this->displayFooter (); ?>
-</div>

@@ -9,11 +9,7 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
+
 $this->displayAnnouncement ();
 $this->getModulePosition ( 'kunena_announcement' );
 ?>
@@ -49,6 +45,4 @@ $this->getModulePosition ( 'kunena_announcement' );
 <?php
 $this->displayWhoIsOnline ();
 $this->displayStatistics ();
-$this->displayFooter ();
 ?>
-</div>

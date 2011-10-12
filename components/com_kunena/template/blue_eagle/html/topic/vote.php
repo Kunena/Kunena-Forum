@@ -9,12 +9,5 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
+
 include dirname ( __FILE__ ) . '/vote_embed.php';
-$this->displayFooter ();
-?>
-</div>

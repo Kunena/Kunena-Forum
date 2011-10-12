@@ -14,11 +14,6 @@ $this->document->addScriptDeclaration("// <![CDATA[
 kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw")."';
 // ]]>");
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <div class="kblock">
 	<div class="kheader">
 		<h2><span><?php echo !isset($this->message) ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?></span></h2>
@@ -113,6 +108,4 @@ $this->displayLoginBox ();
 			</form>
 		</div>
 	</div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

@@ -10,11 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <script language="javascript" type="text/javascript">
 function submitbutton(pressbutton)
 {
@@ -212,6 +207,4 @@ function submitbutton(pressbutton)
 		</form>
 		</div>
 	</div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

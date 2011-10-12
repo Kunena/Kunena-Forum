@@ -80,6 +80,31 @@ function submitbutton(pressbutton)
 				</table>
 			</fieldset>
 			</dd>
+			<?php if ($this->me->isAdmin()) : ?>
+			<dt title="<?php echo JText::_('COM_KUNENA_PERMISSIONS'); ?>"><?php echo JText::_('COM_KUNENA_PERMISSIONS'); ?></dt>
+			<dd>
+				<fieldset>
+					<legend><?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></legend>
+					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+						<tr>
+							<td class="nowrap" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_TITLE'); ?></td>
+							<td valign="top" width="25%"><?php echo $this->options ['accesstypes']; ?></td>
+							<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
+						</tr>
+						<?php
+						foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) :
+							foreach ($accesslist as $accessinput) :
+						?>
+						<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $row->accesstype != $accesstype ? 'display:none' : '' ?>">
+							<td class="nowrap" valign="top"><?php echo $accessinput['title'] ?></td>
+							<td valign="top"><?php echo $accessinput['input'] ?></td>
+							<td valign="top"><?php echo $accessinput['desc'] ?></td>
+						</tr>
+						<?php endforeach; endforeach ?>
+					</table>
+				</fieldset>
+			</dd>
+			<?php endif ?>
 			<dt title="<?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?>"><?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?></dt>
 			<dd>
 				<fieldset>
@@ -90,40 +115,6 @@ function submitbutton(pressbutton)
  							<td><?php echo $this->options ['forumLocked']; ?></td>
 							<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
 						</tr>
-						<?php if ($this->category->accesstype != 'none') : ?>
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE'); ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($this->category->accesstype)); ?></td>
-							<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
-						</tr>
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESS'); ?></td>
-							<td valign="top"><?php echo $this->options ['access']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESS_DESC'); ?></td>
-						</tr>
-						<?php endif; ?>
-						<?php if ($this->me->isAdmin() && $this->category->accesstype == 'none') : ?>
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
-							<td valign="top"><?php echo $this->options ['pub_access']; ?></td>
-							<td><?php echo JText::_('COM_KUNENA_PUBACCDESC'); ?></td>
-						</tr>
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS'); ?></td>
-							<td valign="top"><?php echo $this->options ['pub_recurse']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPSDESC'); ?></td>
-						</tr>
-						<tr>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_ADMINLEVEL'); ?></td>
-							<td valign="top"><?php echo $this->options ['admin_access']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_ADMINLEVELDESC'); ?></td>
-						</tr>
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1'); ?></td>
-							<td valign="top"><?php echo $this->options ['admin_recurse']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1DESC'); ?></td>
-						</tr>
-						<?php endif; ?>
 						<?php if (!$this->category->id || !$this->category->isSection()): ?>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>
@@ -176,15 +167,6 @@ function submitbutton(pressbutton)
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></legend>
-					<table class="kadmin-adminform">
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_MOD'); ?></td>
-							<td valign="top"><?php echo $this->options ['forumModerated']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_MODDESC'); ?></td>
-						</tr>
-					</table>
-
-					<?php if ($this->category->moderated) : ?>
 
 					<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
 
@@ -223,7 +205,6 @@ function submitbutton(pressbutton)
 						?>
 						</tbody>
 					</table>
-					<?php endif; ?>
 				</fieldset>
 				<?php endif; ?>
 			</dd>

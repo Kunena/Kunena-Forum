@@ -65,7 +65,6 @@ $this->displayLoginBox ();
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_PUBLICACCESS'); ?></small></th>
-				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_ADMINACCESS'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_CHECKEDOUT'); ?></small></th>
 			</tr>
 		</thead>
@@ -158,12 +157,9 @@ $this->displayLoginBox ();
 			<?php if (!$category->authorise('admin')): ?>
 			<td></td>
 			<td></td>
-			<td></td>
-			<td></td>
 			<?php else: ?>
 			<td class="kcenter"><?php echo JHTML::_('grid.published', $category, $i) ?></td>
-			<td width="" class="kcenter"><?php echo $this->escape ( $category->pub_group ); ?></td>
-			<td width="" class="kcenter"><?php echo $this->escape ( $category->admin_group ); ?></td>
+			<td class="kcenter"><?php echo $this->escape ( $category->accessname ); ?></td>
 			<td width="15%" class="kcenter"><?php echo $this->escape ( $category->editor ); ?></td>
 
 			<?php endif; ?>

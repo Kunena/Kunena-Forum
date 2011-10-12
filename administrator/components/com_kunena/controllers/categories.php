@@ -132,6 +132,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 		}
 
 		$post = JRequest::get('post', JREQUEST_ALLOWRAW);
+		$accesstype = JRequest::getCmd('accesstype', 'none');
+		$post['access'] = JRequest::getInt("access-{$accesstype}", JRequest::getInt('access', 0));
 		$success = false;
 
 		$category = KunenaForumCategoryHelper::get ( intval ( $post ['catid'] ) );

@@ -135,7 +135,7 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAddModerator(KunenaForumCategory $category) {
 		$admin = KunenaFactory::getUser('admin');
-		$access = KunenaFactory::getAccessControl ();
+		$access = KunenaAccess::getInstance();
 
 		$this->assertFalse($category->addModerator(0), "Check that guests cannot become moderators");
 		$this->assertFalse($category->addModerator(1, "Check that non-existing users cannot become moderators"));
@@ -159,7 +159,7 @@ class KunenaForumCategoryTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testRemoveModerator(KunenaForumCategory $category) {
 		$admin = KunenaFactory::getUser('admin');
-		$access = KunenaFactory::getAccessControl ();
+		$access = KunenaAccess::getInstance();
 
 		$this->assertTrue($category->removeModerator($admin), "Check that administrator can loose moderator status ({$category->getError()})");
 		$this->assertFalse((bool)$admin->moderator, "Check that user is not moderator");

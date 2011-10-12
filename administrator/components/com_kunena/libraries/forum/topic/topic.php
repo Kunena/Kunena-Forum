@@ -973,7 +973,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
 		if ($this->hold > 1 || ($this->hold && !$this->getUserTopic($user)->owner)) {
-			$access = KunenaFactory::getAccessControl();
+			$access = KunenaAccess::getInstance();
 			$hold = $access->getAllowedHold($user->userid, $this->category_id, false);
 			if (!in_array($this->hold, $hold)) {
 				return JText::_ ( 'COM_KUNENA_NO_ACCESS' );

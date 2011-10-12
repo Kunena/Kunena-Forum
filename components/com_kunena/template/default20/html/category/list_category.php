@@ -9,7 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-KUNENA_PROFILER ? KunenaProfiler::instance()->start('CATEGORY') : null;
 ?>
 				<ul class="kcategory">
 					<li class="kcategories-row krow-[K=ROW]">
@@ -59,18 +58,8 @@ KUNENA_PROFILER ? KunenaProfiler::instance()->start('CATEGORY') : null;
 									<td class="kcategory-lastpost">
 										<ul>
 										<?php if ($this->lastPost) : ?>
-<?php
-KUNENA_PROFILER ? KunenaProfiler::instance()->start('CATEGORY AVATAR') : null;
-?>
 											<li class="kcategory-smavatar"><?php echo $this->lastUser->getLink($this->lastUser->getAvatarImage('klist-avatar', 'list')) ?></li>
-<?php
-KUNENA_PROFILER ? KunenaProfiler::instance()->stop('CATEGORY AVATAR') : null;
-KUNENA_PROFILER ? KunenaProfiler::instance()->start('CATEGORY POST') : null;
-?>
 											<li class="kcategory-smdetails klastpost"><?php echo $this->getLastPostLink($this->category) ?></li>
-<?php
-KUNENA_PROFILER ? KunenaProfiler::instance()->stop('CATEGORY POST') : null;
-?>
 											<li class="kcategory-smdetails kauthor"><?php echo JText::_('COM_KUNENA_BY').' '.$this->lastUser->getLink($this->lastUserName) ?></li>
 											<li class="kcategory-smdetails kdate"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->lastPostTime}]") ?></li>
 										<?php else : ?>
@@ -97,5 +86,3 @@ KUNENA_PROFILER ? KunenaProfiler::instance()->stop('CATEGORY POST') : null;
 						</table>
 					</li>
 				</ul>
-<?php
-KUNENA_PROFILER ? KunenaProfiler::instance()->stop('CATEGORY') : null;

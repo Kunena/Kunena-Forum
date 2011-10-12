@@ -64,8 +64,11 @@ abstract class JHTMLKunenaForum {
 			if (empty($selected) && !$disabled) {
 				$selected[] = 0;
 			}
+			$toplevel = 1;
+		} else {
+			$toplevel = -KunenaForumCategoryHelper::get($parent)->level;
 		}
-		$toplevel = intval(!empty($topleveltxt)) - $category->level;
+
 		foreach ( $categories as $category ) {
 			$disabled = !$category->authorise ($action) || (! $sections && $category->isSection());
 			if (empty($selected) && !$disabled) {

@@ -15,6 +15,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaForum {
 	protected static $version = false;
+	protected static $version_major = false;
 	protected static $version_date = false;
 	protected static $version_name = false;
 
@@ -22,6 +23,9 @@ class KunenaForum {
 	const UNAPPROVED = 1;
 	const DELETED = 2;
 	const TOPIC_DELETED = 3;
+
+	const MODERATOR = 1;
+	const ADMINISTRATOR = 2;
 
 	private function __construct() {}
 

@@ -123,6 +123,10 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
 	}
 
+	public function getCategory() {
+		return $this;
+	}
+
 	public function getTopics() {
 		$this->buildInfo();
 		return $this->_topics;
@@ -265,7 +269,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 * Get users, who can administrate this category
 	 **/
 	public function getAdmins($includeGlobal = true) {
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$userlist = array();
 		if (!empty($this->catid)) $userlist = $access->getAdmins($this->catid);
 		if ($includeGlobal) $userlist += $access->getAdmins();
@@ -276,7 +280,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 * Get users, who can moderate this category
 	 **/
 	public function getModerators($includeGlobal = true, $objects = true) {
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$userlist = array();
 		if (!empty($this->id)) {
 			$userlist += $access->getModerators($this->id);
@@ -296,7 +300,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 * @example if ($category->authorise('admin')) $category->setModerator($user);
 	 **/
 	public function setModerator($user = null, $value = false) {
-		return KunenaFactory::getAccessControl()->setModerator($this, $user, $value);
+		return KunenaAccess::getInstance()->setModerator($this, $user, $value);
 	}
 
 	/**
@@ -352,7 +356,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$table->reorder ();
 
 		// Clear cache
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$access->clearCache();
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$cache->clean('categories');
@@ -426,7 +430,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			return false;
 		}
 
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$access->clearCache();
 
 		$db = JFactory::getDBO ();
@@ -617,7 +621,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	protected function authoriseRead($user) {
 		static $catids = false;
 		if ($catids === false) {
-			$catids = KunenaFactory::getAccessControl ()->getAllowedCategories ( $user, 'read' );
+			$catids = KunenaAccess::getInstance()->getAllowedCategories ( $user );
 		}
 
 		// Checks if user can read category

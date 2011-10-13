@@ -9,12 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
 ?>
 <div class="kblock kcredits">
 	<div class="kheader">
@@ -58,6 +52,4 @@ $this->displayLoginBox ();
 			<!-- /Version Info -->
 		</div>
 	</div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

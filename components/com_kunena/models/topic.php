@@ -47,7 +47,7 @@ class KunenaModelTopic extends KunenaModel {
 		$id = $this->getInt ( 'mesid', 0 );
 		$this->setState ( 'item.mesid', $id );
 
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$value = $access->getAllowedHold($this->me, $catid);
 		$this->setState ( 'hold', $value );
 

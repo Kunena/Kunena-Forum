@@ -9,11 +9,7 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
+
 $this->displayAnnouncement ();
 $this->displayBreadcrumb ();
 ?>
@@ -44,12 +40,10 @@ $this->displayBreadcrumb ();
 
 <?php
 if (count ( $this->categories )) {
-	echo $this->loadTemplate('embed');
+	echo $this->loadTemplateFile('embed');
 } else {
 	$this->displayInfoMessage ();
 }
 $this->displayWhoIsOnline();
 $this->displayStatistics();
-$this->displayFooter ();
 ?>
-</div>

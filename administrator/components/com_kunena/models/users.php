@@ -151,7 +151,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$db = JFactory::getDBO ();
 		$user = $this->getUser();
 
-		$modCatList = array_keys(KunenaFactory::getAccessControl()->getModeratorStatus($user));
+		$modCatList = array_keys(KunenaAccess::getInstance()->getModeratorStatus($user));
 		if (empty($modCatList)) $modCatList[] = 0;
 
 		$categoryList = array(JHTML::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR')));

@@ -31,6 +31,13 @@ class KunenaTemplateDefault20 extends KunenaTemplate {
 		}
 	}
 
+	public function initializeBackend() {
+		$this->loadMootools();
+		$this->addScript ( 'backend/backend.js' );
+
+		$this->addStyleSheet ( 'backend/backend.css', false );
+	}
+
 	public function getButton($name, $text) {
 		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
 	}

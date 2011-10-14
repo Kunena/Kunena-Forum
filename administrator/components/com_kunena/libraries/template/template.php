@@ -313,7 +313,7 @@ class KunenaTemplate extends JObject
 				'ConvertRgbColors' => true,
 				'ConvertNamedColors' => true,
 				'CompressColorValues' => true,
-				'CompressUnitValues' => true,
+				'CompressUnitValues' => false, // There seems to be a bug with background-position: 0 0 -> 0 50%
 				'CompressExpressionValues' => true
 			);
 			$buffer = CssMin::minify($buffer, $filters, $plugins);

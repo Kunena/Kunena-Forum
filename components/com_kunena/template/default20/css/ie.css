@@ -28,3 +28,7 @@
 .kavatar-lg img {
 	margin-top: expression((100-parseInt(offsetHeight)/2)<0 ? '0' : 100-(parseInt(offsetHeight)/2) +'px');
 }
+#kunena .kheader {
+	background: var(styleForumHeadercolor) !important; /* Old browsers */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(styleForumHeadercolor)', endColorstr='var(styleForumHeadercolorGradient)',GradientType=0 )!important; /* IE6-9 */
+}

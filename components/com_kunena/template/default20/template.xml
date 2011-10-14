@@ -2,8 +2,8 @@
 <!DOCTYPE kinstall>
 <kinstall type="kunena-template" version="2.0">
 	<name>New Tableless</name>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<version>@kunenaversion@</version>
+	<creationDate>2011-10-07</creationDate>
+	<version>2.0.0-DEV2</version>
 	<author>Kunena Team</author>
 	<authorEmail>team@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
@@ -31,7 +31,14 @@
 		<param name="editorIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET" description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</param>
-		<param name="styleForumHeadercolor" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_FORUM_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="styleForumHeadercolor" type="text" default="#599bdc" label="COM_KUNENA_TEMPLATE_FORUM_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="styleForumHeadercolorGradient" type="text" default="#3072b3" label="COM_KUNENA_TEMPLATE_FORUM_HEADER_GRADIENT_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_GRADIENT_BACKGROUND_COLOR_DESC" />
+		<param name="styleForumRowOddcolor" type="text" default="#f4f4f4" label="COM_KUNENA_TEMPLATE_FORUM_ROW_ODD_BACKGROUND" description="COM_KUNENA_TEMPLATE_FORUM_ROW_ODD_BACKGROUND_DESC" />
+		<param name="styleForumRowOddcolor2" type="text" default="#ececec" label="COM_KUNENA_TEMPLATE_FORUM_ROW_ODD_BACKGROUND2" description="COM_KUNENA_TEMPLATE_FORUM_ROW_ODD_BACKGROUND2_DESC" />
+		<param name="styleForumRowEvencolor" type="text" default="#f4f4f4" label="COM_KUNENA_TEMPLATE_FORUM_ROW_EVEN" description="COM_KUNENA_TEMPLATE_FORUM_ROW_EVEN_DESC" />
+		<param name="styleForumRowEvencolor2" type="text" default="#ececec" label="COM_KUNENA_TEMPLATE_FORUM_ROW_EVEN2" description="COM_KUNENA_TEMPLATE_FORUM_ROW_EVEN2_DESC" />
+		<param name="styleForumcategoriesRowcolor" type="text" default="#f4f4f4" label="COM_KUNENA_TEMPLATE_FORUM_CATEGORIES_ROW" description="COM_KUNENA_TEMPLATE_FORUM_CATEGORIES_ROW_DESC" />
+		<param name="styleForumcategoriesRowcolor2" type="text" default="#f4f4f4" label="COM_KUNENA_TEMPLATE_FORUM_CATEGORIES_ROW2" description="COM_KUNENA_TEMPLATE_FORUM_CATEGORIES_ROW2_DESC" />
 		<!--
 		<param name="styleAnnouncementHeadercolor" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
 		<param name="styleAnnouncementBoxbgcolor" type="text" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_BOX_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
@@ -44,6 +51,8 @@
 		<param name="styleTopBordercolor" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_TOP_BORDER_COLOR_DESC" />
 		<param name="styleInactiveFontcolor" type="text" default="#000000" label="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_INACTIVE_FONT_COLOR_DESC" />
 		<param name="styleActiveFontcolor" type="text" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
+		<param name="styleForumHeadercolorText" type="text" default="#FFFFFF" label="COM_KUNENA_TEMPLATE_HEADER_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
+		<param name="styleActiveLinkcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
 		
 		<!--
 		<param name="styleAllButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_COLOR_DESC" />

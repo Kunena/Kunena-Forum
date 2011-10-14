@@ -142,7 +142,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 		//get all subscribers, moderators and admins who will get the email
 		$me = KunenaUserHelper::get();
-		$acl = KunenaFactory::getAccessControl();
+		$acl = KunenaAccess::getInstance();
 		$emailToList = $acl->getSubscribers($this->catid, $this->thread, $mailsubs, $mailmods, $mailadmins, $me->userid);
 
 		$topic = $this->getTopic();
@@ -611,7 +611,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	protected function authoriseRead($user) {
 		// Check that user has the right to see the post (user can see his own unapproved posts)
 		if ($this->hold > 1 || ($this->hold == 1 && $this->userid != $user->userid)) {
-			$access = KunenaFactory::getAccessControl();
+			$access = KunenaAccess::getInstance();
 			$hold = $access->getAllowedHold($user->userid, $this->catid, false);
 			if (!in_array($this->hold, $hold)) {
 				$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );

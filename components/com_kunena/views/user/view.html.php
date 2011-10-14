@@ -268,31 +268,31 @@ class KunenaViewUser extends KunenaView {
 
 	function displayBanUser() {
 		$this->baninfo = KunenaUserBan::getInstanceByUserid($this->profile->userid, true);
-		echo $this->loadTemplate('ban');
+		echo $this->loadTemplateFile('ban');
 	}
 
 	function displayBanHistory() {
 		$this->banhistory = KunenaUserBan::getUserHistory($this->profile->userid);
-		echo $this->loadTemplate('history');
+		echo $this->loadTemplateFile('history');
 	}
 
 	function displayBanManager() {
 		$this->bannedusers = KunenaUserBan::getBannedUsers();
-		echo $this->loadTemplate('banmanager');
+		echo $this->loadTemplateFile('banmanager');
 	}
 
 	function displaySummary() {
-		echo $this->loadTemplate('summary');
+		echo $this->loadTemplateFile('summary');
 	}
 
 	function displayTab() {
 		switch ($this->do) {
 			case 'edit':
 				$user = JFactory::getUser();
-				if ($user->id == $this->user->id) echo $this->loadTemplate('tab');
+				if ($user->id == $this->user->id) echo $this->loadTemplateFile('tab');
 				break;
 			default:
-				echo $this->loadTemplate('tab');
+				echo $this->loadTemplateFile('tab');
 		}
 	}
 
@@ -390,7 +390,7 @@ class KunenaViewUser extends KunenaView {
 				$i++;
 			}
 		}
-		echo $this->loadTemplate('user');
+		echo $this->loadTemplateFile('user');
 	}
 
 	function displayEditProfile() {
@@ -407,7 +407,7 @@ class KunenaViewUser extends KunenaView {
 		$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
 			'friendfeed', 'digg', 'yim', 'aim', 'gtalk', 'icq', 'msn', 'blogspot', 'flickr', 'bebo');
 
-		echo $this->loadTemplate('profile');
+		echo $this->loadTemplateFile('profile');
 	}
 
 	function displayEditAvatar() {
@@ -422,7 +422,7 @@ class KunenaViewUser extends KunenaView {
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 
 		$this->row(true);
-		echo $this->loadTemplate('avatar');
+		echo $this->loadTemplateFile('avatar');
 	}
 
 	function displayEditSettings() {
@@ -455,11 +455,11 @@ class KunenaViewUser extends KunenaView {
 		$this->settings[] = $item;
 
 		$this->row(true);
-		echo $this->loadTemplate('settings');
+		echo $this->loadTemplateFile('settings');
 	}
 
 	function displayUserList() {
-		echo $this->loadTemplate('list');
+		echo $this->loadTemplateFile('list');
 	}
 
 	function displayUserRow($user) {
@@ -469,7 +469,7 @@ class KunenaViewUser extends KunenaView {
 		}
 		$this->rank_image = $this->user->getRank (0, 'image');
 		$this->rank_title = $this->user->getRank (0, 'title');
-		echo $this->loadTemplate('row');
+		echo $this->loadTemplateFile('row');
 	}
 
 	function getLastvisitdate($date) {
@@ -527,6 +527,6 @@ class KunenaViewUser extends KunenaView {
 		$this->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 		$this->items = $this->userattachs;
 
-		echo $this->loadTemplate('attachments');
+		echo $this->loadTemplateFile('attachments');
 	}
 }

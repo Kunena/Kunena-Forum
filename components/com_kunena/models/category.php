@@ -180,7 +180,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 
 			$topic_ordering = $this->getCategory()->topic_ordering;
 
-			$access = KunenaFactory::getAccessControl();
+			$access = KunenaAccess::getInstance();
 			$hold = $format == 'feed' ? 0 : $access->getAllowedHold($this->me, $catid);
 			$moved = $format == 'feed' ? 0 : 1;
 			$params = array(

@@ -16,11 +16,6 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
 ?>
 
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <?php $this->displayBreadcrumb () ?>
 
 <?php if ($this->category->headerdesc) : ?>
@@ -71,5 +66,3 @@ $this->displayLoginBox ();
 	</div>
 </div>
 <!-- F: List Actions Bottom -->
-<?php $this->displayFooter (); ?>
-</div>

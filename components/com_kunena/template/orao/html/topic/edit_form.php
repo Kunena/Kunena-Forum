@@ -180,7 +180,7 @@ JHTML::_('behavior.tooltip');
 			</li>
 			<?php endif ?>
 
-			<?php echo $this->loadTemplate('editor'); ?>
+			<?php echo $this->loadTemplateFile('editor'); ?>
 
 			<li class="kpostmessage-row krow-odd">
 				<div class="kform-label">

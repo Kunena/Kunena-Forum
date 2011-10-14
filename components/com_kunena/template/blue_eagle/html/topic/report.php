@@ -11,11 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <div class="kblock kreport">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></span></h2>
@@ -41,6 +36,4 @@ $this->displayLoginBox ();
 			</div>
 		</div>
 	</div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

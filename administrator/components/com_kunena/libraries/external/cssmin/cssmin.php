@@ -3015,6 +3015,7 @@ class CssConvertLevel3PropertiesMinifierFilter extends aCssMinifierFilter
 		"backface-visibility"			=> array(null, "-webkit-backface-visibility", null, null),
 		"background-clip"				=> array(null, "-webkit-background-clip", null, null),
 		"background-composite"			=> array(null, "-webkit-background-composite", null, null),
+		"background-image"				=> array(__CLASS__, "background"),
 		"background-inline-policy"		=> array("-moz-background-inline-policy", null, null, null),
 		"background-origin"				=> array(null, "-webkit-background-origin", null, null),
 		"background-position-x"			=> array(null, null, null, "-ms-background-position-x"),
@@ -3095,7 +3096,6 @@ class CssConvertLevel3PropertiesMinifierFilter extends aCssMinifierFilter
 		"layout-grid-line"				=> array(null, null, null, "-ms-layout-grid-line"),
 		"layout-grid-mode"				=> array(null, null, null, "-ms-layout-grid-mode"),
 		"layout-grid-type"				=> array(null, null, null, "-ms-layout-grid-type"),
-		"linear-gradient"				=> array("-moz-linear-gradient", "-webkit-linear-gradient", "-o-linear-gradient", "-ms-linear-gradient"),
 		"line-break"					=> array(null, "-webkit-line-break", null, "-ms-line-break"),
 		"line-clamp"					=> array(null, "-webkit-line-clamp", null, null),
 		"line-grid-mode"				=> array(null, null, null, "-ms-line-grid-mode"),
@@ -3245,7 +3245,7 @@ class CssConvertLevel3PropertiesMinifierFilter extends aCssMinifierFilter
 						}
 					if (count($result) > 0)
 						{
-						array_splice($tokens, $i + 1, 0, $result);
+						array_splice($tokens, $i, 0, $result);
 						$i += count($result);
 						$l += count($result);
 						}
@@ -3253,6 +3253,30 @@ class CssConvertLevel3PropertiesMinifierFilter extends aCssMinifierFilter
 				}
 			}
 		return $r;
+		}
+	/**
+	 * Transforms "background-image: linear-gradient" into browser specific counterparts.
+	 *
+	 * @param aCssToken $token
+	 * @return array
+	 */
+	private static function background($token)
+		{
+		if (strstr(strtolower($token->Value), "linear-gradient"))
+			{
+			$r = array
+				(
+				new CssRulesetDeclarationToken("background-image", str_ireplace('linear-gradient', '-moz-linear-gradient', $token->Value), $token->MediaTypes, $token->IsImportant),
+				new CssRulesetDeclarationToken("background-image", str_ireplace('linear-gradient', '-webkit-linear-gradient', $token->Value), $token->MediaTypes, $token->IsImportant),
+				new CssRulesetDeclarationToken("background-image", str_ireplace('linear-gradient', '-o-linear-gradient', $token->Value), $token->MediaTypes, $token->IsImportant),
+				new CssRulesetDeclarationToken("background-image", str_ireplace('linear-gradient', '-ms-linear-gradient', $token->Value), $token->MediaTypes, $token->IsImportant),
+				);
+			return $r;
+			}
+		else
+			{
+			return array();
+			}
 		}
 	/**
 	 * Transforms the Internet Explorer specific declaration property "filter" to Internet Explorer 8+ compatible

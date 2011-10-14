@@ -61,7 +61,7 @@ JHTML::_('behavior.tooltip');
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td class="kparameters">
 						<?php
 							if (!is_null($this->params)) {
 								echo $this->params->render();

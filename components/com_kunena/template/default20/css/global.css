@@ -376,7 +376,7 @@ body {line-height:1.5;}
 #kunena li.klogin-lastvisit {
 	font-size: 11px;
 }
-#kunena .klogin-form input.kinputbox, 
+#kunena .klogin-form input.kinputbox,
 #kunena .klogin-form textarea.ktxtarea {
 	width: 150px;
 }
@@ -2178,11 +2178,11 @@ body {line-height:1.5;}
 	line-height: 13px;
 }
 #kunena div.kblock div.kactions a {
-	color: #FFF !important; 
+	color: #FFF !important;
 	background-color:transparent !important;
 }
 #kunena .ksetting-icon {
-    float: right;
-    margin-right: 3px;
+	float: right;
+	margin-right: 3px;
 	background: url("../images/tools_16.png") no-repeat scroll 0 0 transparent;
 }

@@ -25,6 +25,14 @@ class TableKunenaUsers extends KunenaTable
 	**/
 	var $userid = null;
 
+	// From Joomla
+	var $name = null;
+	var $username = null;
+	var $email = null;
+	var $blocked = null;
+	var $registerDate = null;
+	var $lastvisitDate = null;
+
 	var $view = null;
 
 	/**

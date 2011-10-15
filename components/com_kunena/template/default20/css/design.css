@@ -86,6 +86,13 @@ table {border-collapse: collapse;}
 #kunena .kannouncement {
 	width:100%;
 }
+#kunena .kannounce-desc {
+    padding:5px 5px 0 0;	
+}
+#kunena .kactions {
+    padding:5px 5px 5px 10px;	
+}
+
 #kunena li.kannounce-date {
 	font-style: italic;
 }
@@ -939,9 +946,8 @@ table {border-collapse: collapse;}
 #kunena .kcredits-language {
 	border-color: #BFC3C6;
 }
-
 #kunena .ksth {
-	background-color: #f3f3f3;
+	background-color: #BFC3C6;
 	width:100%;
 }
 #kunena .ksetting-icon {
@@ -952,4 +958,16 @@ table {border-collapse: collapse;}
 }
 #kunena a:link {
 	color: var(styleActiveLinkcolor);
+}
+#kunena .kmsgtext-article {
+	padding:5px;
+}
+#kunena .kannouncement-box {
+	padding:5px 10px 15px 15px;
+}
+#kunena .kannouncement-longbox {
+	padding:5px 10px 15px 15px;
+}
+#kunena .kannouncement-datebox {
+	padding:5px 10px 15px 15px;
 }

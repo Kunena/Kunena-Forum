@@ -29,6 +29,7 @@ class KunenaTemplateDefault20 extends KunenaTemplate {
 			$this->addScript( 'js/mediaboxAdv.js' );
 			$this->addStyleSheet ( 'css/mediaboxAdv.css');
 		}
+		parent::initialize();
 	}
 
 	public function initializeBackend() {
@@ -36,6 +37,8 @@ class KunenaTemplateDefault20 extends KunenaTemplate {
 		$this->addScript ( 'backend/backend.js' );
 
 		$this->addStyleSheet ( 'backend/backend.css', false );
+
+		parent::initializeBackend();
 	}
 
 	public function getButton($name, $text) {

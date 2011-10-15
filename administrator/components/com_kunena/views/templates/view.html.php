@@ -34,16 +34,6 @@ class KunenaAdminViewTemplates extends KunenaView {
 		$this->templatename = $app->getUserState ( 'kunena.edit.template');
 		$template = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
-		$template->createStyleSheets();
-
-		// Loading language strings for default template and override with current template
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena.tpl_default', JPATH_SITE);
-		if ($this->templatename != 'default') {
-			if (!$lang->load('com_kunena.tpl_'.$this->templatename, JPATH_SITE)) {
-				$lang->load('com_kunena.tpl_'.$this->templatename, KPATH_SITE.'/template/'.$this->templatename);
-			}
-		}
 		$this->display();
 	}
 

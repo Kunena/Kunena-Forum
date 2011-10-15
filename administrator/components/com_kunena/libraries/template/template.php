@@ -93,8 +93,28 @@ class KunenaTemplate extends JObject
 		}
 	}
 
-	public function initialize() {}
-	public function initializeBackend() {}
+	public function loadLanguage() {
+		// Loading language strings for default template and override with current template
+		$lang = JFactory::getLanguage();
+		if (!$lang->load('com_kunena.tpl_'.$this->default, JPATH_SITE)) {
+			$lang->load('com_kunena.tpl_'.$this->default, KPATH_SITE.'/template/'.$this->default);
+		}
+		if ($this->name != $this->default) {
+			if (!$lang->load('com_kunena.tpl_'.$this->name, JPATH_SITE)) {
+				$lang->load('com_kunena.tpl_'.$this->name, KPATH_SITE.'/template/'.$this->name);
+			}
+		}
+	}
+
+	public function initialize() {
+		$this->createStyleSheets();
+		$this->loadLanguage();
+	}
+
+	public function initializeBackend() {
+		$this->createStyleSheets();
+		$this->loadLanguage();
+	}
 
 	public function getUserClasses() {
 		return $this->userClasses;

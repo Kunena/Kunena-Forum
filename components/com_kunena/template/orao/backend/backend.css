@@ -1,17 +1,17 @@
-.tk_opt{
+.ksection {
 	border:1px solid #d1d1d1;
 	border-bottom:1px solid #e1e1e1;
 	height:43px;
-	background:url('images.png') repeat-x 0 0;
+	background:url('../backend/images.png') repeat-x 0 0;
 	cursor:pointer;
 }
 
-.tk_opt:hover div{
-	background:url('images.png') no-repeat ;
+.ksection:hover div {
+	background:url('../backend/images.png') no-repeat ;
 }
-.tk_opt span.tk_text{
+.ksection span.ktext {
 	display:block;
-	background:url('images.png') repeat-x 0 -43px;
+	background:url('../backend/images.png') repeat-x 0 -43px;
 	margin:7px 0 7px 10px;
 	padding:0 0 0 14px;
 	float:left;
@@ -25,13 +25,11 @@
 	font-weight:bold;
 	text-transform:uppercase;
 	text-shadow: 1px 1px #000;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
 	border-radius: 5px;
 }
-.tk_opt span.tk_btn{
+.ksection span.kbutton {
 	display:block;
-	background:url('images.png') repeat-x 0 -82px;
+	background:url('../backend/images.png') repeat-x 0 -82px;
 	margin:16px 16px 0 0;
 	float:right;
 	width: 14px;
@@ -39,24 +37,22 @@
 	text-indent:-999em;
 }
 
-.tk_opt.active span.tk_btn{
+.ksection.active span.kbutton {
 	background-position:0 -72px;
 }
-.tk_opt:hover span.tk_btn{
+.ksection:hover span.kbutton {
 	background-position:14px -82px;
 }
-.tk_opt.active:hover span.tk_btn{
+.ksection.active:hover span.kbutton {
 	background-position:14px -72px;
 }
-.tk_opts{
+.koptions {
 	border-left:1px solid #d1d1d1;
 	border-right:1px solid #d1d1d1;
 }
 td.paramlist_value input.text_area {
 	width:150px;
-	background: url(gradient-2.png) repeat-x top;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	background: url(../backend/gradient-2.png) repeat-x top;
 	border-radius: 3px;
 	padding:4px;
 	border:1px solid #ddd;
@@ -68,8 +64,7 @@ td.paramlist_value input.text_area {
 }
 td.paramlist_value select.inputbox {
 	/*width:70px;*/
-	background: url(gradient.png) repeat-x top;
-	-moz-border-radius:3px;
+	background: url(../backend/gradient.png) repeat-x top;
 	padding:3px;
 	border:1px solid #ddd;
 	color:#555555;
@@ -81,20 +76,20 @@ td.paramlist_value select.inputbox {
 td.key {
 	padding:5px !important;
 }
-div.tk_desc {
+div.kdescription {
 	padding:5px;
 	background:#f8f8f8;
 }
 /*
 .paramlist_value .inputbox,
-.paramlist_value input.text_area{
+.paramlist_value input.text_area {
 	width:260px;
 	height:24px;
 	border:1px solid #d1d1d1;
 	font-size:14px;
-	padding:5px 0 0 5px;	
+	padding:5px 0 0 5px
 }
-.paramlist_value .inputbox{
+.paramlist_value .inputbox {
 	height:30px;
 	padding:5px;
 }
@@ -102,23 +97,23 @@ div.tk_desc {
 	font-size:13px;
 }
 */
-#tk_social_icons .paramlist_value .text_area{
+#ksocial_icons .paramlist_value .text_area {
 	margin:-4px 0 0 5px;
 	padding-top:6px;
 }
-#tk_social_icons .paramlist_value .inputbox{
+#ksocial_icons .paramlist_value .inputbox {
 	width:100px;
 	height:32px;
 }
 .switcher-on,
-.switcher-off{
+.switcher-off {
 	width:94px;
 	height:27px;
-	background:transparent url('on-off.png') no-repeat 0 0;
+	background:transparent url('../backend/on-off.png') no-repeat 0 0;
 	cursor:pointer;
 }
 
-.switcher-off{
+.switcher-off {
 	background-position:-94px 0;
 }
 .paramlist_key {
@@ -129,7 +124,7 @@ div.tk_desc {
 	border-right: 1px solid #eee !important;
 	border-bottom: 1px solid #eee !important;
 }
-.tk_divider{
+.tk_divider {
 	border:0px solid #d1d1d1;
 	border-bottom:0px solid #e1e1e1;
 	height:5px;
@@ -144,22 +139,20 @@ div.tk_desc {
 	border: 1px solid #333 !important;
 	padding: 5px 10px !important;
 	max-width: 200px !important;
-	/*-moz-box-shadow: 0px 0px 2px #000;*/
-	-moz-border-radius: 5px 5px 5px 5px;
 }
 
 .tool-title {
-   padding: 0;
-   margin: 0;
-   font-size: 100%;
-   font-weight: bold;
-   margin-top: -15px;
-   padding: 15px 10px 5px 0 !important;
-   /*background: url(../images/selector-arrow.png) no-repeat;*/
-   background: none !important;
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	font-weight: bold;
+	margin-top: -15px;
+	padding: 15px 10px 5px 0 !important;
+	/*background: url(../images/selector-arrow.png) no-repeat;*/
+	background: none !important;
 }
 
 .tool-text {
-   font-size: 100%;
-   margin: 0;
+	font-size: 100%;
+	margin: 0;
 }

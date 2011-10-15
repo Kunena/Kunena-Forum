@@ -63,6 +63,17 @@ class KunenaTemplateOrao extends KunenaTemplate {
 			var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
 			var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 		// ]]>');
+
+		parent::initialize();
+	}
+
+	public function initializeBackend() {
+		$this->loadMootools();
+		$this->addScript ( 'backend/backend.js' );
+
+		$this->addStyleSheet ( 'backend/backend.css', false );
+
+		parent::initializeBackend();
 	}
 
 	public function getButton($name, $text) {

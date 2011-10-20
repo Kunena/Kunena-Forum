@@ -86,31 +86,16 @@ function submitbutton(pressbutton)
 							<td valign="top" width="25%"><?php echo $this->options ['accesstypes']; ?></td>
 							<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
 						</tr>
-						<tr class="kaccess kaccess-joomla-level" style="<?php echo $row->accesstype == 'none' ? 'display:none' : '' ?>">
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSLEVEL_TITLE');?></td>
-							<td valign="top"><?php echo $this->options ['accesslevels']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSLEVEL_DESC') .'<br /><br />'. (version_compare(JVERSION, '1.6', '>') ? JText::_('COM_KUNENA_A_ACCESSLEVEL_DESC_J16') : JText::_('COM_KUNENA_A_ACCESSLEVEL_DESC_J15')); ?></td>
+						<?php
+						foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) :
+							foreach ($accesslist as $accessinput) :
+						?>
+						<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $row->accesstype != $accesstype ? 'display:none' : '' ?>">
+							<td class="nowrap" valign="top"><?php echo $accessinput['title'] ?></td>
+							<td valign="top"><?php echo $accessinput['input'] ?></td>
+							<td valign="top"><?php echo $accessinput['desc'] ?></td>
 						</tr>
-						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_TITLE'); ?></td>
-							<td valign="top"><?php echo $this->options ['pub_access']; ?></td>
-							<td><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_DESC') .'<br /><br />'. (version_compare(JVERSION, '1.6', '>') ? JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_DESC_J16') : JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_DESC_J15')); ?></td>
-						</tr>
-						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_CHILDS_TITLE'); ?></td>
-							<td valign="top"><?php echo $this->options ['pub_recurse']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_CHILDS_DESC'); ?></td>
-						</tr>
-						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_TITLE'); ?></td>
-							<td valign="top"><?php echo $this->options ['admin_access']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_DESC') .'<br /><br />'. (version_compare(JVERSION, '1.6', '>') ? JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_DESC_J16') : JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_DESC_J15')); ?></td>
-						</tr>
-						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_CHILDS_TITLE'); ?></td>
-							<td valign="top"><?php echo $this->options ['admin_recurse']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_CHILDS_DESC'); ?></td>
-						</tr>
+						<?php endforeach; endforeach ?>
 					</table>
 				</fieldset>
 			</dd>

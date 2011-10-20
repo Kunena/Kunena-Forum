@@ -14,11 +14,6 @@ $document=JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 //FIXME: announcement show only 5 ann. in table
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <div class="kblock">
 	<div class="kheader">
 		<h2>
@@ -82,6 +77,4 @@ $this->displayLoginBox ();
 </table>
 		</div>
 	</div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

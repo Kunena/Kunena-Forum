@@ -151,7 +151,7 @@ class KunenaUser extends JObject {
 			$this->setError ( $table->getError () );
 		}
 
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$access->clearCache();
 
 		// Set the id for the KunenaUser object in case we created a new user.
@@ -179,7 +179,7 @@ class KunenaUser extends JObject {
 			$this->setError ( $table->getError () );
 		}
 
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$access->clearCache();
 
 		return $result;
@@ -192,7 +192,7 @@ class KunenaUser extends JObject {
 
 	public function getAllowedCategories($rule = 'read') {
 		if (!isset($this->_allowed[$rule])) {
-			$acl = KunenaFactory::getAccessControl ();
+			$acl = KunenaAccess::getInstance();
 			$allowed = $acl->getAllowedCategories ( $this->userid, $rule );
 			$this->_allowed[$rule] = $allowed;
 		}
@@ -215,12 +215,12 @@ class KunenaUser extends JObject {
 	}
 
 	public function isAdmin($catid = 0) {
-		$acl = KunenaFactory::getAccessControl ();
+		$acl = KunenaAccess::getInstance();
 		return $acl->isAdmin ( $this, $catid );
 	}
 
 	public function isModerator($catid = 0) {
-		$acl = KunenaFactory::getAccessControl ();
+		$acl = KunenaAccess::getInstance();
 		return $acl->isModerator ( $this, $catid );
 	}
 

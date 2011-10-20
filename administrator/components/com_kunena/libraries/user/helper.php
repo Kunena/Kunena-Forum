@@ -60,6 +60,7 @@ class KunenaUserHelper {
 
 		// Always return fresh user if id is anonymous/not found
 		if ($id === 0) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return new KunenaUser ( $id );
 		}
 		else if ($reload || empty ( self::$_instances [$id] )) {

@@ -35,7 +35,7 @@ $this->params = $template->params;
 						</span>
 						</dt>
 						<dd class="topics" style="float:right;">
-							<span class="tk-view-msgid"><a name="<?php echo intval($this->id); ?>"></a><?php echo $this->numLink ?></span>
+							<span class="tk-view-msgid"><a name="<?php echo intval($this->message->id); ?>"></a><?php echo $this->numLink ?></span>
 						</dd>
 					</dl>
 				</li>
@@ -117,5 +117,5 @@ $this->params = $template->params;
 <?php if ($this->isModulePosition('kunena_msg_' . $this->mmm)) : ?><li class="kmodules"><?php $this->getModulePosition('kunena_msg_' . $this->mmm) ?></li><?php endif ?>
 
 <?php if ( $this->topic->authorise('reply') ) : ?>
-<?php echo $this->loadTemplate("quickreply");?>
+<?php echo $this->loadTemplateFile("quickreply");?>
 <?php endif ?>

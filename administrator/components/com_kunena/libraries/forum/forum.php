@@ -15,6 +15,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaForum {
 	protected static $version = false;
+	protected static $version_major = false;
 	protected static $version_date = false;
 	protected static $version_name = false;
 
@@ -22,6 +23,9 @@ class KunenaForum {
 	const UNAPPROVED = 1;
 	const DELETED = 2;
 	const TOPIC_DELETED = 3;
+
+	const MODERATOR = 1;
+	const ADMINISTRATOR = 2;
 
 	private function __construct() {}
 
@@ -34,7 +38,7 @@ class KunenaForum {
 
 	public static function isCompatible($version) {
 		// If requested version is smaller than 2.0.0-DEV, it's not compatible
-		if (version_compare($version, '2.0.0-DEV', '<')) {
+		if (version_compare($version, '2.0', '<')) {
 			return false;
 		}
 		// Check if future version is needed (remove SVN from the check)
@@ -49,6 +53,13 @@ class KunenaForum {
 			self::buildVersion();
 		}
 		return self::$version;
+	}
+
+	public static function versionMajor() {
+		if (self::$version_major === false) {
+			self::buildVersion();
+		}
+		return self::$version_major;
 	}
 
 	public static function versionDate() {
@@ -92,6 +103,7 @@ class KunenaForum {
 		} else {
 			self::$version = strtoupper ( '@kunenaversion@' );
 		}
+		self::$version_major = substr(self::$version, 0, 3);
 		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toMySQL() : '@kunenaversiondate@';
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'SVN Revision' : '@kunenaversionname@';
 	}

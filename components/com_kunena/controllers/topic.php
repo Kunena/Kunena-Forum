@@ -766,7 +766,7 @@ class KunenaControllerTopic extends KunenaController {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_FORG0T_SUB_MES' ) );
 			$this->redirectBack ();
 		} else {
-			$acl = KunenaFactory::getAccessControl();
+			$acl = KunenaAccess::getInstance();
 			$emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false, $me->userid);
 
 			if (!empty ( $emailToList )) {

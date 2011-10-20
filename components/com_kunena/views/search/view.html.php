@@ -86,7 +86,7 @@ class KunenaViewSearch extends KunenaView {
 
 	function displaySearchResults() {
 		if($this->results) {
-			echo $this->loadTemplate('results');
+			echo $this->loadTemplateFile('results');
 		}
 	}
 
@@ -111,7 +111,7 @@ class KunenaViewSearch extends KunenaView {
 			$this->subjectHtml = $ressubject;
 			$this->messageHtml = $resmessage;
 
-			$contents = $this->loadTemplate('row');
+			$contents = $this->loadTemplateFile('row');
 			$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 			echo $contents;
 		}

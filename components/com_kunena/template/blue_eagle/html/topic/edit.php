@@ -26,11 +26,7 @@ $this->setTitle ( $this->title );
 
 $this->k=0;
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
+
 <?php $this->displayBreadcrumb (); ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="postform form-validate" id="postform" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
@@ -122,7 +118,7 @@ $this->displayLoginBox ();
 
 		<?php
 		// Show bbcode editor
-		echo $this->loadTemplate('editor');
+		echo $this->loadTemplateFile('editor');
 		?>
 
 		<?php if ($this->allowedExtensions) : ?>
@@ -219,5 +215,3 @@ if (!$this->message->name) {
 </form><?php if ($this->hasThreadHistory ()) : ?>
 <?php $this->displayThreadHistory (); ?>
 <?php endif; ?>
-<?php $this->displayFooter (); ?>
-</div>

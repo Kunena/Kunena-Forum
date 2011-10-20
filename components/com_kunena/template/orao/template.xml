@@ -10,8 +10,7 @@
 	<copyright>Kunena Team</copyright>
 	<license>GNU/GPL</license>
 	<description>
-	<![CDATA[ <link rel="stylesheet" type="text/css" href="../components/com_kunena/template/orao/backend/backend.css" />
-			<script type="text/javascript" src="../components/com_kunena/template/orao/backend/backend.js"></script> 
+	<![CDATA[
 			<style type="text/css" media="all">
 			<!--
 			#wrap1 {padding:0px 0px 4px 0px;}
@@ -51,34 +50,34 @@
 		<param name="editorIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET" description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</param>
-		<param name="topmenuShow" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_TOPMENU" description="COM_KUNENA_TEMPLATE_SHOW_TOPMENU_DESC">
+		<param name="topmenuShow" class="kswitch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_TOPMENU" description="COM_KUNENA_TEMPLATE_SHOW_TOPMENU_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
 
 <param type="spacer" default="COM_KUNENA_TEMPLATE_ADDITIONAL_CONFIGURATION" />
 		<param name="hotTopic" type="text" default="200" label="COM_KUNENA_TEMPLATE_HOT_TOPIC" description="COM_KUNENA_TEMPLATE_HOT_TOPIC_DESC" />
-		<param name="showWoisonlineavatar" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_AVATAR_WHOISONLINE" description="COM_KUNENA_TEMPLATE_SHOW_AVATAR_WHOISONLINE_DESC">
+		<param name="showWoisonlineavatar" class="kswitch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_AVATAR_WHOISONLINE" description="COM_KUNENA_TEMPLATE_SHOW_AVATAR_WHOISONLINE_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
-		<param name="authorAvatar" class="tk_switch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_AVATAR_AUTHOR" description="COM_KUNENA_TEMPLATE_SHOW_AVATAR_AUTHOR_DESC">
+		<param name="authorAvatar" class="kswitch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_AVATAR_AUTHOR" description="COM_KUNENA_TEMPLATE_SHOW_AVATAR_AUTHOR_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
-		<param name="showPathway" class="tk_switch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_PATHWAY" description="COM_KUNENA_TEMPLATE_SHOW_PATHWAY_DESC">
+		<param name="showPathway" class="kswitch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_PATHWAY" description="COM_KUNENA_TEMPLATE_SHOW_PATHWAY_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
-		<param name="countcolumnShow" class="tk_switch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_COLUMN" description="COM_KUNENA_TEMPLATE_SHOW_COLUMN_DESC">
+		<param name="countcolumnShow" class="kswitch" type="list" default="0" label="COM_KUNENA_TEMPLATE_SHOW_COLUMN" description="COM_KUNENA_TEMPLATE_SHOW_COLUMN_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
-		<param name="loginLogout" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_LOGIN_LINK" description="COM_KUNENA_TEMPLATE_SHOW_LOGIN_LINK_DESC">
+		<param name="loginLogout" class="kswitch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_LOGIN_LINK" description="COM_KUNENA_TEMPLATE_SHOW_LOGIN_LINK_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
-		<param name="searchLink" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_SEARCH_LINK" description="COM_KUNENA_TEMPLATE_SHOW_SEARCH_LINK_DESC">
+		<param name="searchLink" class="kswitch" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_SEARCH_LINK" description="COM_KUNENA_TEMPLATE_SHOW_SEARCH_LINK_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>
@@ -174,7 +173,7 @@
 		<param name="topmenu20Itemid" type="text" class="text_area" default="" label="COM_KUNENA_TEMPLATE_ITEM_ID" description="COM_KUNENA_TEMPLATE_ITEM_ID_DESC" />
 
 <param type="spacer" default="COM_KUNENA_TEMPLATE_USERS_COLOR" />
-		<param name="avborderColor" class="tk_switch" type="list" default="1" label="COM_KUNENA_TEMPLATE_AVATARS_BORDER" description="COM_KUNENA_TEMPLATE_AVATARS_BORDER_DESC">
+		<param name="avborderColor" class="kswitch" type="list" default="1" label="COM_KUNENA_TEMPLATE_AVATARS_BORDER" description="COM_KUNENA_TEMPLATE_AVATARS_BORDER_DESC">
 			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
 			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
 		</param>

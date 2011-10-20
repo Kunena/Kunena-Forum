@@ -25,13 +25,7 @@ class KunenaTemplateOrao extends KunenaTemplate {
 		$this->addScript ( 'js/tabcontent.js' );
 		$this->addScript ( 'js/switchcontent.js' );
 
-		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
-			$this->addScript( 'js/mediaboxAdv.js' );
-			$this->addStyleSheet ( 'css/mediaboxAdv.css');
-		}
-
 		$this->addStyleSheet ( 'css/global.css' );
-
 		$this->addStyleSheet ( 'css/common.css' );
 		$this->addStyleSheet ( 'css/images.css' );
 		$this->addStyleSheet ( 'css/colours.css' );
@@ -46,6 +40,11 @@ class KunenaTemplateOrao extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/topics.css' );
 		$this->addStyleSheet ( 'css/user.css' );
 		$this->addStyleSheet ( 'css/direction.css', $rtl );
+
+		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
+			$this->addScript( 'js/mediaboxAdv.js' );
+			$this->addStyleSheet ( 'css/mediaboxAdv.css');
+		}
 
 		$lang =& JFactory::getLanguage();
 		$lang->load( 'com_kunena.tpl_'.$template->name, KPATH_SITE.DS.'template'.DS.$template->name.'/' );
@@ -64,6 +63,17 @@ class KunenaTemplateOrao extends KunenaTemplate {
 			var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
 			var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 		// ]]>');
+
+		parent::initialize();
+	}
+
+	public function initializeBackend() {
+		$this->loadMootools();
+		$this->addScript ( 'backend/backend.js' );
+
+		$this->addStyleSheet ( 'backend/backend.css', false );
+
+		parent::initializeBackend();
 	}
 
 	public function getButton($name, $text) {

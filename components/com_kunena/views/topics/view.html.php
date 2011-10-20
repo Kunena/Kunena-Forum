@@ -215,7 +215,7 @@ class KunenaViewTopics extends KunenaView {
 				} else {
 					$this->spacing = 0;
 				}
-				$contents = $this->loadTemplate('row');
+				$contents = $this->loadTemplateFile('row');
 				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
@@ -271,7 +271,7 @@ class KunenaViewTopics extends KunenaView {
 				if ($this->config->avataroncat) {
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 				}
-				$contents = $this->loadTemplate('row');
+				$contents = $this->loadTemplateFile('row');
 				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}

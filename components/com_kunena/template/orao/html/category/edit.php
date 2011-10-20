@@ -76,63 +76,35 @@ JHTML::_('behavior.tooltip');
 			</li>
 		</ul>
 
+		<?php if ($this->me->isAdmin()) : ?>
 		<ul class="kposthead clearfix">
 			<li><h3><?php echo JText::_('COM_KUNENA_ACCESS') ?></h3></li>
 		</ul>
 
 		<ul class="kform kpostcategory clearfix">
-			<?php if ($this->category->accesstype != 'none') : ?>
 			<li class="kpostcategory-row krow-odd">
 				<div class="kform-label">
-					<label for="locked"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE') ?></label>
+					<label for="accesstype"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE') ?></label>
 				</div>
 				<div class="kform-field">
-					<?php echo JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($this->category->accesstype)); ?>
+					<?php echo $this->options ['accesstypes'] ?>
 				</div>
 			</li>
-			<li class="kpostcategory-row krow-even">
+			<?php
+			foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) :
+				foreach ($accesslist as $accessinput) :
+			?>
+			<li class="kpostcategory-row krow-even kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $row->accesstype != $accesstype ? 'display:none' : '' ?>">
 				<div class="kform-label">
-					<label for="locked"><?php echo JText::_('COM_KUNENA_A_ACCESS') ?></label>
+					<label for="locked"><?php echo $accessinput['title'] ?></label>
 				</div>
 				<div class="kform-field">
-					<?php echo $this->options ['access']; ?>
+					<?php echo $accessinput['input'] ?>
 				</div>
 			</li>
-			<?php elseif ($this->me->isAdmin() && $this->category->accesstype == 'none') : ?>
-			<li class="kpostcategory-row krow-odd">
-				<div class="kform-label">
-					<label for="pub_access"><?php echo JText::_('COM_KUNENA_PUBACC') ?></label>
-				</div>
-				<div class="kform-field">
-					<?php echo $this->options ['pub_access'] ?>
-				</div>
-			</li>
-			<li class="kpostcategory-row krow-even">
-				<div class="kform-label">
-					<label for="pub_recurse"><?php echo JText::_('COM_KUNENA_CGROUPS') ?></label>
-				</div>
-				<div class="kform-field">
-					<?php echo $this->options ['pub_recurse'] ?>
-				</div>
-			</li>
-			<li class="kpostcategory-row krow-odd">
-				<div class="kform-label">
-					<label for="admin_access"><?php echo JText::_('COM_KUNENA_ADMINLEVEL') ?></label>
-				</div>
-				<div class="kform-field">
-					<?php echo $this->options ['admin_access'] ?>
-				</div>
-			</li>
-			<li class="kpostcategory-row krow-even">
-				<div class="kform-label">
-					<label for="admin_recurse"><?php echo JText::_('COM_KUNENA_CGROUPS') ?></label>
-				</div>
-				<div class="kform-field">
-					<?php echo $this->options ['admin_recurse']; ?>
-				</div>
-			</li>
-			<?php endif ?>
+			<?php endforeach; endforeach ?>
 		</ul>
+		<?php endif ?>
 
 		<ul class="kposthead clearfix">
 			<li><h3><?php echo JText::_('COM_KUNENA_SETTINGS') ?></h3></li>
@@ -232,7 +204,7 @@ JHTML::_('behavior.tooltip');
 					<?php
 					foreach ( $this->moderators as $this->user ) {
 						$this->action = '<label class="kuserlist-checkbox">'.JText::_('COM_KUNENA_THIS_MODERATOR_REMOVE').'<input type="checkbox" value="1" name="rmmod['.$this->user->userid.']" /></label>';
-						echo $this->loadTemplate('moderator');
+						echo $this->loadTemplateFile('moderator');
 					}
 					?>
 					<?php endif ?>

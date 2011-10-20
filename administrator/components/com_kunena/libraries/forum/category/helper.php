@@ -161,7 +161,7 @@ class KunenaForumCategoryHelper {
 
 		$list = array ();
 		if (!$reverse) {
-			$allowed = $authorise != 'none' ? array_intersect_key($ids, KunenaFactory::getAccessControl ()->getAllowedCategories ( null, 'read' )) : $ids;
+			$allowed = $authorise != 'none' ? array_intersect_key($ids, KunenaAccess::getInstance()->getAllowedCategories ( null )) : $ids;
 			$list = array_intersect_key(self::$_instances, $allowed);
 			if ($authorise != 'none' && $authorise != 'read') {
 				foreach ( $list as $category ) {
@@ -171,7 +171,7 @@ class KunenaForumCategoryHelper {
 				}
 			}
 		} else {
-			$allowed = $authorise != 'none' ? array_intersect_key(self::$_instances, KunenaFactory::getAccessControl ()->getAllowedCategories ( null, 'read' )) : self::$_instances;
+			$allowed = $authorise != 'none' ? array_intersect_key(self::$_instances, KunenaAccess::getInstance()->getAllowedCategories ( null )) : self::$_instances;
 			$list = array_diff_key($allowed, $ids);
 			if ($authorise != 'none' && $authorise != 'read') {
 				foreach ( $list as $category ) {

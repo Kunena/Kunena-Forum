@@ -259,12 +259,13 @@ class KunenaViewCategory extends KunenaView {
 		$this->sectionURL = KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$this->section->id}");
 		$this->sectionRssURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$this->section->id}&format=feed") : '';
 		$this->sectionMarkReadURL = $this->me->exists() ? KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->section->id}") : '';
-		echo $this->loadTemplate('section');
+		echo $this->loadTemplateFile('section');
 		$this->rowno = 0;
 		$this->category = $this->parentcategory;
 	}
 
 	function displayCategory($category) {
+		KUNENA_PROFILER ? $this->profiler->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$this->rowno++;
 		$this->category = $category;
 
@@ -291,7 +292,7 @@ class KunenaViewCategory extends KunenaView {
 				$this->lastPostSubject = $lastPost->subject;
 				$this->lastPostTime = $lastPost->last_post_time;
 			}
-			$contents = $this->loadTemplate('category');
+			$contents = $this->loadTemplateFile('category');
 			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillCategoryInfo'), $contents);
 			if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 		} elseif ($usertype == 'guest') {
@@ -299,6 +300,7 @@ class KunenaViewCategory extends KunenaView {
 			return;
 		}
 		$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillCategoryInfo'), $contents);
+		KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		echo $contents;
 	}
 
@@ -323,7 +325,7 @@ class KunenaViewCategory extends KunenaView {
 	function displayCategories() {
 		if ($this->sections) {
 			$this->subcategories = true;
-			echo $this->loadTemplate('subcategories');
+			echo $this->loadTemplateFile('subcategories');
 		}
 	}
 
@@ -366,7 +368,7 @@ class KunenaViewCategory extends KunenaView {
 				} else {
 					$this->spacing = 0;
 				}
-				$contents = $this->loadTemplate('row');
+				$contents = $this->loadTemplateFile('row');
 				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}

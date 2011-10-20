@@ -64,7 +64,7 @@ class KunenaError {
 		if ($db->getErrorNum ()) {
 			$app = JFactory::getApplication();
 			$my = JFactory::getUser();
-			$acl = KunenaFactory::getAccessControl();
+			$acl = KunenaAccess::getInstance();
 			if ($acl->isAdmin ($my)) {
 				if ($app->isAdmin())
 					$app->enqueueMessage ( $db->getErrorMsg (), 'error' );
@@ -83,7 +83,7 @@ class KunenaError {
 		if ($db->getErrorNum ()) {
 			$app = JFactory::getApplication();
 			$my = JFactory::getUser();
-			$acl = KunenaFactory::getAccessControl();
+			$acl = KunenaAccess::getInstance();
 			if ($acl->isAdmin ($my)) {
 				return $db->getErrorMsg();
 			} else {

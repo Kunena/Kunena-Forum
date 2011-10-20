@@ -65,7 +65,7 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 		$section->published = 1;
 		$this->assertTrue($section->save(), $section->getError());
 		$this->checkCategory($section);
-		for ($i=1; $i<=3; $i++) {
+		for ($i=1; $i<=10; $i++) {
 			$category = new KunenaForumCategory();
 			$category->name = "Category $i";
 			$category->parent_id = $section->id;
@@ -81,8 +81,8 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 	 * @depends testCreateCategories
 	 */
 	public function testPosting() {
-		$category = self::$category[1];
 		for ($i=1; $i<=10; $i++) {
+			$category = self::$category[$i];
 			$fields = array('subject'=>"Topic $i", 'message'=>"Message $i");
 			list(self::$topic[$i], self::$message[$i][0]) = $category->newTopic($fields, 42);
 			$this->assertTrue(self::$message[$i][0]->save(), self::$message[$i][0]->getError());

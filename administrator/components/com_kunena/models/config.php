@@ -217,10 +217,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		// New for 1.6 -> Thank you button
 		$lists ['showthankyou'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showthankyou', 'class="inputbox" size="1"', 'value', 'text', $config->showthankyou );
 
-		$lists['integration_access'] = KunenaIntegration::getConfigOptions('access');
 		$lists['integration_activity'] = KunenaIntegration::getConfigOptions('activity');
 		$lists['integration_avatar'] = KunenaIntegration::getConfigOptions('avatar');
-		$lists['integration_login'] = KunenaIntegration::getConfigOptions('login');
 		$lists['integration_profile'] = KunenaIntegration::getConfigOptions('profile');
 		$lists['integration_private'] = KunenaIntegration::getConfigOptions('private');
 

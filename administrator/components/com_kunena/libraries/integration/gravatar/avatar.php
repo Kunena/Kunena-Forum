@@ -13,27 +13,20 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaAvatarGravatar extends KunenaAvatar
 {
-	protected $integration = null;
-
 	public function __construct() {
-		$this->priority = 50;
+		require_once dirname ( __FILE__ ) . '/gravatar.php';
+		$this->priority = 30;
 	}
 
-	public function getEditURL()
-	{
-		trigger_error(__CLASS__.'::'.__FUNCTION__.'() not implemented');
+	public function getEditURL() {
+		return KunenaRoute::_('index.php?option=com_kunena&view=user&layout=edit');
 	}
 
-	protected function _getURL($user, $sizex, $sizey)
-	{
-		jimport( 'joomla.environment.browser' );
-		$browser = JBrowser::getInstance();
-		$protocol = $browser->isSSLConnection() ? "https" : "http";
-
-		$size_pixels = min($sizex,$sizey);
-
-		$avatar = $protocol.'://www.gravatar.com/avatar/'.md5($user->email).'?s='.$size_pixels;
-
-		return $avatar;
+	protected function _getURL($user, $sizex, $sizey) {
+		$user = KunenaFactory::getUser($user);
+		$gravatar = new KunenaGravatar($user->email);
+		$gravatar->size = min($sizex, $sizey);
+		$gravatar->rating = "G";
+		return $gravatar;
 	}
 }

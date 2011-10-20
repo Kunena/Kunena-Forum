@@ -582,7 +582,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL'); ?></td>
-						<td align="left" valign="top"><?php echo $this->list ['mailfull']; ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['mailfull']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL_DESC'); ?></td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -1090,11 +1090,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_PROFILE_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_LOGIN') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_login']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_LOGIN_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_PRIVATE') ?></td>
 							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_private']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_PRIVATE_DESC') ?></td>
@@ -1109,11 +1104,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<td align="left" valign="top"><input type="text" name="cfg_activity_limit" class="ksm-field"
 								value="<?php echo $this->escape($this->config->activity_limit);?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACCESS') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_access']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACCESS_DESC') ?></td>
 						</tr>
 					</table>
 				</fieldset>

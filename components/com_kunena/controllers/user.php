@@ -216,14 +216,12 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$username = JRequest::getString ( 'username', '', 'POST' );
-		$password = JRequest::getString ( 'passwd', '', 'POST' );
+		$password = JRequest::getString ( 'password', '', 'POST' );
 		$remember = JRequest::getInt ( 'remember', 0, 'POST');
-		$return = JRequest::getString ( 'return', '', 'POST' );
 
-		$login = KunenaFactory::getLogin();
-		$result = $login->loginUser($username, $password, $remember, $return);
-		if ($result) $app->enqueueMessage ( $result, 'notice' );
-		$app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ) );
+		$login = KunenaLogin::getInstance();
+		$login->loginUser($username, $password, $remember);
+		$this->redirectBack ();
 	}
 
 	function logout() {
@@ -232,11 +230,9 @@ class KunenaControllerUser extends KunenaController {
 			$app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
 		}
 
-		$return = JRequest::getString ( 'return', '', 'POST' );
-		$login = KunenaFactory::getLogin();
-		$result = $login->logoutUser($return);
-		if ($result) $app->enqueueMessage ( $result, 'notice' );
-		$app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ) );
+		$login = KunenaLogin::getInstance();
+		$login->logoutUser();
+		$this->redirectBack ();
 	}
 
 	// Internal functions:

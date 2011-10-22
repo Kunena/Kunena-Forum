@@ -49,4 +49,12 @@ class KunenaAdminModelPrune extends KunenaModel {
 
 		return JHTML::_('select.genericlist', $contoloptions, 'controloptions', 'class="inputbox" size="1"', 'value', 'text', 0);
 	}
+
+	function getDeleteStickies() {
+		$optionsticky = array();
+		$optionsticky [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_A_YES') );
+		$optionsticky [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_A_NO') );
+
+		return JHTML::_('select.genericlist', $optionsticky, 'stickydelete', 'class="inputbox" size="1"', 'value', 'text', 0);
+	}
 }

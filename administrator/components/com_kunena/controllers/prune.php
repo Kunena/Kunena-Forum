@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.forum.message.attachment.helper' );
-
 /**
  * Kunena Prune Controller
  *
@@ -47,10 +43,15 @@ class KunenaAdminControllerPrune extends KunenaController {
 		$prune_days = JRequest::getInt ( 'prune_days', 36500 );
 		$prune_date = JFactory::getDate()->toUnix() - ($prune_days * 86400);
 
+		// delete too sticky
+		$stickydelete = JRequest::getInt( 'stickydelete', 0);
+		if ( $stickydelete ) $sticky = ' AND ordering=0';
+		else $sticky = '';
+
 		$trashdelete = JRequest::getInt( 'trashdelete', 0);
 
 		$where = array();
-		$where[] = ' AND tt.last_post_time > '.$prune_date;
+		$where[] = ' AND tt.last_post_time < '.$prune_date.$sticky;
 
 		$hold='0';
 		$trashdelete = JRequest::getString( 'controloptions', 0);

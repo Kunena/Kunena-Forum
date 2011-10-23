@@ -367,7 +367,10 @@ class KunenaViewUser extends KunenaView {
 				jimport( 'joomla.form.form' );
 				JForm::addFormPath(JPATH_ROOT.'/components/com_users/models/forms');
 				JForm::addFieldPath(JPATH_ROOT.'/components/com_users/models/fields');
-				$form = JForm::getInstance('com_users.profile', 'frontend');
+				JPluginHelper::importPlugin('user');
+				$form = JForm::getInstance('com_users.profile','frontend');
+				$dispatcher = JDispatcher::getInstance();
+				$dispatcher->trigger('onContentPrepareForm', array($form, $data));
 				$registry = new JRegistry($this->user->params);
 				$data = new StdClass();
 				$data->params = $registry->toArray();

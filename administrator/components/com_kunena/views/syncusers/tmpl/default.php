@@ -25,7 +25,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_SYNC_USERS_OPTIONS'); ?></legend>
-					<table cellpadding="4" class="kadmin-adminform" cellspacing="0" border="0" width="100%">
+					<table class="kadmin-adminform">
 						<tr>
 							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_CACHE'); ?></td>
 							<td><input type="checkbox" name="usercache" value="1" checked="checked" /></td>

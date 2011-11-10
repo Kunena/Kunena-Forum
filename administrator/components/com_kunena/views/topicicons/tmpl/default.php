@@ -34,7 +34,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<?php echo JHTML::_( 'form.token' ); ?>
 
 			<?php echo $this->iconsetlist; ?>
-			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
+			<table class="adminlist">
 			<thead>
 				<tr>
 					<th width="5" align="center">#</th>

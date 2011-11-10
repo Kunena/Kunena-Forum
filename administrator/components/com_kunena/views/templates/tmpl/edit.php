@@ -63,7 +63,7 @@ JHTML::_('behavior.tooltip');
 				<tr>
 					<td class="kparameters">
 						<?php if (!is_null($this->params)) : ?>
-						<table width="100%" class="paramlist admintable" cellspacing="1">
+						<table class="paramlist admintable">
 							<?php foreach ($this->params->getParams() as $item): ?>
 							<tr>
 								<?php if ($item[0]) : ?>

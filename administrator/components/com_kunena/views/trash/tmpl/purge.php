@@ -24,8 +24,8 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<input type="hidden" name="md5" value="<?php echo $this->md5Calculated ?>" />
 			<?php echo JHTML::_( 'form.token' ); ?>
 
-			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%"></table>
-			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
+			<table class="adminheading"></table>
+			<table class="adminlist">
 				<tr>
 					<td><strong><?php echo JText::_('COM_KUNENA_NUMBER_ITEMS'); ?>:</strong>
 						<br />

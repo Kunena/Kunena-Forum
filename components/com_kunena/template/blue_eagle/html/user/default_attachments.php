@@ -35,7 +35,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 				<input type="hidden" name="boxchecked" value="0" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 
-				<table width="100%">
+				<table>
 					<tr class="ksth">
 						<th class="frst"> # </th>
 						<th width="5">

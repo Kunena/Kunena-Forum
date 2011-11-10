@@ -30,7 +30,7 @@ $document->addScriptDeclaration('function update_topicicon(newimage)
 			<?php if ( $this->state->get('item.id') ): ?><input type="hidden" name="topiciconid" value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
 			<?php echo JHTML::_( 'form.token' ); ?>
 
-			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
+			<table class="adminform">
 				<tr align="center">
 					<td width="100"><?php
 					echo JText::_('COM_KUNENA_EMOTICONS_CODE');

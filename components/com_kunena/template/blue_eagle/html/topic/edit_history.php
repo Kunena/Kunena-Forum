@@ -30,7 +30,7 @@ $k = 0;
 							<span class="kmsgdate khistory-msgdate" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
 								<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 							</span>
-							<a name="<?php echo intval($this->message->id) ?>"></a>
+							<a id="<?php echo intval($this->message->id) ?>"></a>
 							<?php echo $this->getNumLink($this->message->id,$this->replycount--) ?>
 						</th>
 					</tr>

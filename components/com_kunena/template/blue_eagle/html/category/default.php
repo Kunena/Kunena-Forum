@@ -39,7 +39,7 @@ $this->displayBreadcrumb ();
 <table class="klist-actions">
 	<tr>
 		<td class="klist-actions-goto">
-			<a name="forumtop"> </a>
+			<a id="forumtop"> </a>
 			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', $this->getIcon ( 'kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
 		</td>
 		<?php if (!empty ( $this->newTopicHtml ) || !empty ( $this->markReadHtml ) || !empty ( $this->subscribeCatHtml )) : ?>
@@ -101,7 +101,7 @@ $this->displayBreadcrumb ();
 <table class="klist-actions-bottom" >
 	<tr>
 		<td class="klist-actions-goto">
-			<a name="forumbottom"> </a>
+			<a id="forumbottom"> </a>
 			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', $this->getIcon ( 'kforumtop', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
 		</td>
 		<?php if (!empty ( $this->newTopicHtml ) || !empty ( $this->markReadHtml ) || !empty ( $this->subscribeCatHtml )) : ?>

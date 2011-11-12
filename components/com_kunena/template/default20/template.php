@@ -20,9 +20,11 @@ class KunenaTemplateDefault20 extends KunenaTemplate {
 		// New Kunena JS for default template
 		$this->addScript ( 'js/default.js' );
 
+		JFactory::getDocument()->addStyleSheet('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css');
 		// Load all css files (they are combined into one)
 		$this->addStyleSheet ( 'css/global.css' );
 		$this->addStyleSheet ( 'css/design.css' );
+		$this->addStyleSheet ( 'css/plupload.css' );
 
 		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 			// Load mediaxboxadvanced library if enabled in configuration

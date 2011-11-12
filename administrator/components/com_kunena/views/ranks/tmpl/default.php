@@ -31,7 +31,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 			<?php echo JHTML::_( 'form.token' ); ?>
 
-			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
+			<table class="adminlist">
 			<thead>
 				<tr>
 					<th width="5" align="center">#</th>

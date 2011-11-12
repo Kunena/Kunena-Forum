@@ -368,12 +368,12 @@ class KunenaViewUser extends KunenaView {
 				JForm::addFormPath(JPATH_ROOT.'/components/com_users/models/forms');
 				JForm::addFieldPath(JPATH_ROOT.'/components/com_users/models/fields');
 				JPluginHelper::importPlugin('user');
-				$form = JForm::getInstance('com_users.profile','frontend');
-				$dispatcher = JDispatcher::getInstance();
-				$dispatcher->trigger('onContentPrepareForm', array($form, $data));
 				$registry = new JRegistry($this->user->params);
+				$form = JForm::getInstance('com_users.profile','frontend');
 				$data = new StdClass();
 				$data->params = $registry->toArray();
+				$dispatcher = JDispatcher::getInstance();
+				$dispatcher->trigger('onContentPrepareForm', array($form, $data));
 				$form->bind($data);
 				// this get only the fields for user settings (template, editor, language...)
 				$this->userparameters = $form->getFieldset('params');

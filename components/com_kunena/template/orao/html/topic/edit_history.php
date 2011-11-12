@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 						</dt>
 						<dd class="topics" style="float:right;">
 						<?php // FIXME : Missing translations ?>
-							<span style="white-space:nowrap;" class="tk-view-msgid"><a name="<?php echo intval($this->message->id) ?>"></a><?php echo $this->getNumLink($this->message->id,$this->replycount--) ?></span>
+							<span style="white-space:nowrap;" class="tk-view-msgid"><a id="<?php echo intval($this->message->id) ?>"></a><?php echo $this->getNumLink($this->message->id,$this->replycount--) ?></span>
 						</dd>
 					</dl>
 				</li>

@@ -25,7 +25,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 		<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>" />
 		<input type="hidden" name="boxchecked" value="0" />
 
-		<table cellpadding="1" cellspacing="1" border="0" width="100%">
+		<table>
 		<tr>
 			<td width="220"><span class="componentheading">&nbsp;</span></td>
 		</tr>

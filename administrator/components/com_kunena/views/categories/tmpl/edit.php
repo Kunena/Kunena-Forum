@@ -13,8 +13,7 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
-?>
-<script language="javascript" type="text/javascript">
+$document->addScriptDeclaration("
 function submitbutton(pressbutton)
 {
 	var form = document.adminForm;
@@ -23,14 +22,15 @@ function submitbutton(pressbutton)
 		return;
 	}
 	// do field validation
-	if (typeof form.onsubmit == "function") form.onsubmit();
-	if (form.name.value == "") {
-		alert("<?php echo JText::_('COM_KUNENA_ERROR1'); ?>");
+	if (typeof form.onsubmit == 'function') form.onsubmit();
+	if (form.name.value == '') {
+		alert('<?php echo JText::_('COM_KUNENA_ERROR1'); ?>');
 	} else {
 		submitform(pressbutton);
 	}
 }
-</script>
+");
+?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
@@ -80,7 +80,7 @@ function submitbutton(pressbutton)
 			<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<table class="kadmin-adminform">
 						<tr>
 							<td class="nowrap" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_TITLE'); ?></td>
 							<td valign="top" width="25%"><?php echo $this->options ['accesstypes']; ?></td>

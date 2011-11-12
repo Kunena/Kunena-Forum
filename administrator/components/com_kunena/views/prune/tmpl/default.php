@@ -23,7 +23,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 		<input type="hidden" name="task" value="doprune" />
 		<?php echo JHTML::_( 'form.token' ); ?>
 
-		<table class="adminform" cellpadding="4" cellspacing="0" border="0" width="100%">
+		<table class="adminform">
 			<tr>
 				<td colspan="2"><?php echo JText::_('COM_KUNENA_A_PRUNE_DESC') ?></td>
 			</tr>

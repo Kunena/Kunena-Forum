@@ -171,7 +171,7 @@ class KunenaKeywordHelper {
 
 	static protected function loadTopics($ids, $userid, $reload=false) {
 		foreach ($ids as $i=>$id) {
-			if (!$reload && $id && isset(self::$_topics [$id][$userid])) {
+			if (!$id || (!$reload && isset(self::$_topics [$id][$userid]))) {
 				unset($ids[$i]);
 			} else {
 				self::$_topics [$id][$userid] = array();

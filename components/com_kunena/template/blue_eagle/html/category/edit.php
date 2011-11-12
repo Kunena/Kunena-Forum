@@ -9,8 +9,7 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-?>
-<script language="javascript" type="text/javascript">
+JFactory::getDocument()->addScriptDeclaration("
 function submitbutton(pressbutton)
 {
 	var form = document.adminForm;
@@ -19,14 +18,15 @@ function submitbutton(pressbutton)
 		return;
 	}
 	// do field validation
-	if (typeof form.onsubmit == "function") form.onsubmit();
-	if (form.name.value == "") {
-		alert("<?php echo JText::_('COM_KUNENA_ERROR1'); ?>");
+	if (typeof form.onsubmit == 'function') form.onsubmit();
+	if (form.name.value == '') {
+		alert('<?php echo JText::_('COM_KUNENA_ERROR1'); ?>');
 	} else {
 		submitform(pressbutton);
 	}
 }
-</script>
+");
+?>
 <div class="kblock kmanage">
 	<div class="kheader">
 		<h2><?php echo $this->header; ?></h2>
@@ -80,7 +80,7 @@ function submitbutton(pressbutton)
 			<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<table class="kadmin-adminform">
 						<tr>
 							<td class="nowrap" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_TITLE'); ?></td>
 							<td valign="top" width="25%"><?php echo $this->options ['accesstypes']; ?></td>

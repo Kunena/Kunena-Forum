@@ -28,6 +28,11 @@ class KunenaControllerTopic extends KunenaController {
 		$this->me = KunenaUserHelper::getMyself();
 	}
 
+	public function upload() {
+		$upload = KunenaUpload::getInstance();
+		$upload->ajaxUpload();
+	}
+
 	public function post() {
 		$app = JFactory::getApplication ();
 		$this->id = JRequest::getInt('parentid', 0);

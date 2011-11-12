@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 					<li class="kposts-row krow-[K=ROW] krow-[K=NEW]">
-						<a name="<?php echo intval($this->message->id) ?>"></a>
+						<a id="<?php echo intval($this->message->id) ?>"></a>
 						<ul class="kposthead">
 							<li class="kposthead-replytitle"><h3>RE: <?php echo $this->escape($this->message->subject) ?></h3></li>
 							<li class="kposthead-postid" ><?php echo $this->numLink ?></li>

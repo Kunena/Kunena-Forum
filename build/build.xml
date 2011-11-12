@@ -169,6 +169,7 @@
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/site" todir="${tmp_dir}/site">
 			<include name="**/*.js" />
 			<include name="**/*.css" />
+			<exclude name="**/plupload.js" />
 		</yui-compressor>
 	</target>
 	

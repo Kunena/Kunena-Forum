@@ -32,9 +32,10 @@ abstract class JHtmlKunenaFile
 	public static function uploader($name = 'file') {
 		// Load the behavior.
 		self::behavior();
+		$config = KunenaFactory::getConfig();
+		$fileSize = max($config->imagesize, $config->filesize);
 
 		$uploadUri = KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&'.JUtility::getToken().'=1');
-		$baseUri = JURI::root(true).'/media/kunena/js/plupload';
 		$textRemove = JText::_('COM_KUNENA_GEN_REMOVE_FILE');
 		$textInsert = JText::_('COM_KUNENA_EDITOR_INSERT');
 
@@ -42,10 +43,9 @@ abstract class JHtmlKunenaFile
 window.addEvent('domready', function() {
 	var uploader = new Kunena.Uploader('{$name}', {
 		url: '{$uploadUri}',
-		max_file_size : '10mb',
-		chunk_size : '1mb',
-		unique_names : true,
-		resize : {width : 320, height : 240, quality : 90},
+		max_file_size : '{$fileSize}kb',
+		chunk_size : '512kb',
+		resize : {width : {$config->imagewidth}, height : {$config->imageheight}, quality : {$config->imagequality}},
 	});
 });
 JS;

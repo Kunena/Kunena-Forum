@@ -1,3 +1,12 @@
+/**
+ * Kunena Component
+ * @package Kunena.Template.Default
+ *
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+
 var Kunena = new Class({
 
 	initialize: function() {
@@ -9,9 +18,7 @@ Kunena.Uploader = new Class({
 
 	options: {
 		runtimes : 'gears,html5,flash,silverlight,browserplus',
-
-		browse_button_hover: 'ui-state-hover',
-		browse_button_active: 'ui-state-active',
+		url: '',
 
 		// widget specific
 		dragdrop : true,
@@ -32,8 +39,8 @@ Kunena.Uploader = new Class({
 	initialize: function(name, options) {
 		var self = this, id, uploader;
 
-		this.options = Object.merge(options, this.options);
-		if (this.options.autostart === true) this.options.buttons.start = false;
+		//this.options = Object.merge(this.options, options); // MooTools 1.3
+		this.options = $merge(this.options, options);
 
 		this.element = document.id(name);
 
@@ -48,29 +55,28 @@ Kunena.Uploader = new Class({
 		this._render(name);
 
 		// container, just in case
-		this.container = this.element.getElement('.plupload_container').set('id', id + '_container');
+		this.container = this.element.getElement('.upload-container').set('id', id + '_container');
 
 		// list of files, may become sortable
-		this.filelist = this.container.getElement('.plupload_filelist_content').set({
+		this.filelist = this.container.getElement('.upload-filelist-files').set({
 			id: id + '_filelist',
 			unselectable: 'on'
 		});
 
 		// buttons
-		this.browse_button = this.container.getElement('.plupload_add').set('id', id + '_browse');
-		this.start_button = this.container.getElement('.plupload_start').set('id', id + '_start');
-		this.stop_button = this.container.getElement('.plupload_stop').set('id', id + '_stop');
-
-		if (this.options.buttons.start === false) this.start_button.addClass('plupload_hidden');
+		this.browse_button = this.container.getElement('.upload-button-add').set('id', id + '_browse');
+		this.start_button = this.container.getElement('.upload-button-start').set('id', id + '_start');
+		this.stop_button = this.container.getElement('.upload-button-stop').set('id', id + '_stop');
 
 		// counter
-		this.counter = this.element.getElement('.plupload_count').set({
+		this.counter = this.element.getElement('.upload-count').set({
 			id: id + '_count',
 			name: id + '_count'
 		});
 
 		// initialize uploader instance
-		uploader = this.uploader = new plupload.Uploader(Object.merge({
+//		uploader = this.uploader = new plupload.Uploader(Object.merge({ // MooTools 1.3
+		uploader = this.uploader = new plupload.Uploader($merge({
 			container: id,
 			browse_button: id + '_browse'
 		}, this.options));
@@ -83,15 +89,13 @@ Kunena.Uploader = new Class({
 			self.container.set('title', 'Using runtime: ' + (self.runtime = res.runtime));
 
 			self.start_button.addEvent('click', function(e) {
-				//if (!$(this).button('option', 'disabled')) {
-					self.start();
-				//}
-				//e.preventDefault();
+				self.start();
+				e.preventDefault();
 			});
 
 			self.stop_button.addEvent('click', function(e) {
 				self.stop();
-				//e.preventDefault();
+				e.preventDefault();
 			});
 		});
 
@@ -117,19 +121,17 @@ Kunena.Uploader = new Class({
 		}
 
 		uploader.bind('FilesAdded', function(up, files) {
-			//self._trigger('selected', null, { up: up, files: files } );
-
 			if (self.options.autostart) {
 				self.start();
 			}
 		});
 
 		uploader.bind('FilesRemoved', function(up, files) {
-			//self._trigger('removed', null, { up: up, files: files } );
 		});
 
 		uploader.bind('QueueChanged', function() {
 			self._updateFileList();
+			self._handleState();
 		});
 
 		uploader.bind('StateChanged', function() {
@@ -140,29 +142,29 @@ Kunena.Uploader = new Class({
 			self._handleFileStatus(file);
 		});
 
-		uploader.bind('FileUploaded', function(up, file) {
-			self._handleFileStatus(file);
+		uploader.bind('ChunkUploaded', function(up, file, result) {
+			self._handleErrors(file, result);
+		});
 
-			//self._trigger('uploaded', null, { up: up, file: file } );
+		uploader.bind('FileUploaded', function(up, file, result) {
+			self._handleErrors(file, result);
+			self._handleFileStatus(file);
 		});
 
 		uploader.bind('UploadProgress', function(up, file) {
 			// Set file specific progress
-			self.element.getElement('#' + file.id + ' .plupload_file_status').set('html', file.percent + '%');
+			self.element.getElement('#' + file.id + ' .upload-file-status').set('html', file.percent + '%');
 
 			self._handleFileStatus(file);
 			self._updateTotalProgress();
-
-			//self._trigger('progress', null, { up: up, file: file } );
 		});
 
 		uploader.bind('UploadComplete', function(up, files) {
-			//self._trigger('complete', null, { up: up, files: files } );
 		});
 
 		uploader.bind('Error', function(up, err) {
 			var file = err.file, message, details;
-
+			
 			if (file) {
 				message = '<strong>' + err.message + '</strong>';
 				details = err.details;
@@ -216,19 +218,16 @@ Kunena.Uploader = new Class({
 				}
 
 				self.notify('error', message);
-				//self._trigger('error', null, { up: up, file: file, error: message } );
 			}
 		});
 	},
 
 	start: function() {
 		this.uploader.start();
-		//this._trigger('start', null);
 	},
 
 	stop: function() {
 		this.uploader.stop();
-		//this._trigger('stop', null);
 	},
 
 	getFile: function(id) {
@@ -263,98 +262,87 @@ Kunena.Uploader = new Class({
 
 	notify: function(type, message) {
 		var popup = new Element('div', {
-			'class': 'plupload_message', 
-			'html': '<div class="plupload_message"><span class="plupload_message_close ui-icon ui-icon-circle-close" title="'+'Close'+'"></span>'+
-					'<p><span class="ui-icon"></span>' + message + '</p></div>'
+			'html': '<div class="upload-icon upload-close" title="'+'Close'+'"></div>' +
+					'<p><span class="upload-icon"></span>'+message+'</p>'
 		});
 
-		popup.addClass('ui-state-' + (type === 'error' ? 'error' : 'highlight'));
-		popup.getElements('p .ui-icon').addClass('ui-icon-' + (type === 'error' ? 'alert' : 'info'));
-		popup.getElements('.plupload_message_close').addEvent('click', (function() {
+		popup.addClass('upload-' + (type === 'error' ? 'error' : 'highlight'));
+		popup.getElements('p .upload-icon').addClass('upload-' + (type === 'error' ? 'alert' : 'info'));
+		popup.getElements('.upload-close').addEvent('click', (function(e) {
 			popup.destroy();
+			e.preventDefault();
 		}));
 
-		this.container.getElement('.plupload_header_content').grab(popup);
+		this.container.grab(popup, 'top');
 	},
 
 	_render: function(name) {
-		document.id(name).set('html',
-				'<div class="plupload_wrapper">' +
-				'<div class="ui-widget-content plupload_container">' +
-				'<div class="plupload">' +
-				'<div class="ui-state-default ui-widget-header plupload_header">' +
-				'<div class="plupload_header_content">' +
-				'<div class="plupload_header_title">' + 'Select files' + '</div>' +
-				'<div class="plupload_header_text">' + 'Add files to the upload queue and click the start button.' + '</div>' +
-				'</div>' +
-				'</div>' +
+		document.id(name).set('html', 
+			'<div class="upload-container">' +
 
-				'<div class="plupload_content">' +
-				'<table class="plupload_filelist">' +
-				'<tr class="ui-widget-header plupload_filelist_header">' +
-				'<td class="plupload_cell plupload_file_name">' + 'Filename' + '</td>' +
-				'<td class="plupload_cell plupload_file_status">' + 'Status' + '</td>' +
-				'<td class="plupload_cell plupload_file_size">' + 'Size' + '</td>' +
-				'<td class="plupload_cell plupload_file_action">&nbsp;</td>' +
-				'</tr>' +
-				'</table>' +
+			'<div class="upload-filelist-container">' +
 
-				'<div class="plupload_scroll">' +
-				'<table class="plupload_filelist_content"></table>' +
-				'</div>' +
+			'<table class="upload-filelist">' +
+			'<tr class="upload-filelist-header">' +
+			'<th class="upload-file-name">'+'File Name'+'</th>' +
+			'<th class="upload-file-status">'+'Status'+'</th>' +
+			'<th class="upload-file-size">'+'Size'+'</th>' +
+			'<th class="upload-file-action">&nbsp;</th>' +
+			'</tr>' +
+			'</table>' +
 
-				'<table class="plupload_filelist">' +
-				'<tr class="ui-widget-header ui-widget-content plupload_filelist_footer">' +
-				'<td class="plupload_cell plupload_file_name">' +
+			'<div class="upload-scroll">' +
 
-				'<div class="plupload_buttons"><!-- Visible -->' +
-				'<a class="plupload_button plupload_add">' + 'Add Files' + '</a>&nbsp;' +
-				'<a class="plupload_button plupload_start">' + 'Start Upload' + '</a>&nbsp;' +
-				'<a class="plupload_button plupload_stop plupload_hidden">'+ 'Stop Upload' + '</a>&nbsp;' +
-				'</div>' +
+			'<table class="upload-filelist-files"></table>' +
 
-				'<div class="plupload_cell plupload_upload_status"></div>' +
+			'</div>' +
+			'<div class="upload-status">' +
 
-				'<div class="plupload_clearer">&nbsp;</div>' +
+			'<table class="upload-filelist">' +
+			'<tr class="upload-filelist-footer">' +
+			'<td class="upload-file-name">' +
+			'<div class="upload-upload-status"></div>' +
+			'</td>' +
+			'<td class="upload-file-status"><span class="upload-total-status">0%</span></td>' +
+			'<td class="upload-file-size"><span class="upload-total-file-size">'+'0kb'+'</span></td>' +
+			'<td class="upload-file-action"></td>' +
+			'</tr>' +
+			'</table>' +
 
-				'</div>' +
-				'</td>' +
-				'<td class="plupload_file_status"><span class="plupload_total_status">0%</span></td>' +
-				'<td class="plupload_file_size"><span class="plupload_total_file_size">0 kb</span></td>' +
-				'<td class="plupload_file_action"></td>' +
-				'</tr>' +
-				'</table>' +
-				'</div>' +
-				'</div>' +
-				'</div>' +
-				'<input class="plupload_count" value="0" type="hidden">' +
-				'</div>'
-				);
+			'</div>' +
+			'<div class="upload-buttons">' +
+			'<a class="button upload-button-add">'+'Add Files'+'</a>&nbsp;' +
+			'<a class="button upload-button-start upload-hidden">'+'Start Upload'+'</a>&nbsp;' +
+			'<a class="button upload-button-stop upload-hidden">'+'Stop Upload'+'</a>&nbsp;' +
+			'</div>' +
+			'</div>' +
+			'</div>' +
+			'<input class="upload-count" value="0" type="hidden">' +
+			'</div>');
+	},
+
+	_handleErrors: function(file, result) {
+		var self = this, uploader = this.uploader;
+		var response = JSON.decode(result.response, true);
+		if (!response || !response.success) {
+			file.status = plupload.FAILED;
+
+			self.notify('error', (response && response.error ? response.error : 'Unknown response error!') + '<br />File: '+file.name);
+		}
 	},
 
 	_handleState: function() {
 		var self = this, uploader = this.uploader;
 
 		if (uploader.state === plupload.STARTED) {
-
-			self.start_button.addClass('plupload_hidden');
-			if (this.options.buttons.stop === true) self.stop_button.removeClass('plupload_hidden');
-
-			self.element.getElement('.plupload_upload_status').set('text',
-				'Uploaded %d/%d files'.replace('%d/%d', uploader.total.uploaded+'/'+uploader.files.length)
-			);
-
-			self.element.getElement('.plupload_header_content').addClass('plupload_header_content_bw');
-
+			
+			self.start_button.addClass('upload-hidden');
+			if (this.options.buttons.stop === true) self.stop_button.removeClass('upload-hidden');
+			
 		} else {
-
-			self.stop_button.addClass('plupload_hidden');
-			if (this.options.buttons.start === true) self.start_button.removeClass('plupload_hidden');
-
-			if (self.options.multiple_queues) {
-				self.element.getElement('.plupload_header_content').removeClass('plupload_header_content_bw');
-			}
-
+			
+			self.stop_button.addClass('upload-hidden');
+			if (this.options.buttons.start === true && uploader.total.queued > 0) self.start_button.removeClass('upload-hidden');
 			self._updateFileList();
 		}
 	},
@@ -364,39 +352,43 @@ Kunena.Uploader = new Class({
 
 		switch (file.status) {
 			case plupload.DONE: 
-				actionClass = 'plupload_done';
-				iconClass = 'ui-icon ui-icon-circle-check';
+				actionClass = 'upload-file upload-done';
+				iconClass = 'upload-icon upload-check';
 				break;
 			
 			case plupload.FAILED:
-				actionClass = 'ui-state-error plupload_failed';
-				iconClass = 'ui-icon ui-icon-alert';
+				actionClass = 'upload-file upload-failed';
+				iconClass = 'upload-icon upload-alert';
 				break;
 
 			case plupload.QUEUED:
-				actionClass = 'plupload_delete';
-				iconClass = 'ui-icon ui-icon-circle-minus';
+				actionClass = 'upload-file upload-delete';
+				iconClass = 'upload-icon upload-minus';
 				break;
 
 			case plupload.UPLOADING:
-				actionClass = 'ui-state-highlight plupload_uploading';
-				iconClass = 'ui-icon ui-icon-circle-arrow-w';
+				actionClass = 'upload-file upload-uploading';
+				iconClass = 'upload-icon upload-arrow';
 				break;
 		}
-		actionClass += ' ui-state-default plupload_file';
 
 		var entry = document.id(file.id);
-		if (entry) entry.set('class', actionClass).getElements('.ui-icon').set('class', iconClass);
+		if (entry) entry.set('class', actionClass).getElements('.upload-icon').set('class', iconClass);
 	},
 
 	_updateTotalProgress: function() {
 		var uploader = this.uploader;
 
-		this.element.getElement('.plupload_total_status').set('html', uploader.total.percent + '%');
+		this.element.getElement('.upload-total-status').set('html', uploader.total.percent + '%');
 
-		this.element.getElement('.plupload_upload_status').set('text',
+		this.element.getElement('.upload-upload-status').set('text',
 			'Uploaded %d/%d files'.replace('%d/%d', uploader.total.uploaded+'/'+uploader.files.length)
 		);
+		if (uploader.total.queued === 0) {
+			this.browse_button.set('text', 'Add Files');
+		} else {
+			this.browse_button.set('text', '%d files queued'.replace('%d', uploader.total.queued));
+		}
 	},
 
 	_updateFileList: function() {
@@ -423,61 +415,47 @@ Kunena.Uploader = new Class({
 			}
 
 			var html = new Element('tr', {
-				class: 'ui-state-default plupload_file', 
+				class: 'upload_file', 
 				id: file.id, 
-				html: '<td class="plupload_cell plupload_file_name"><span>' + file.name + '</span></td>' +
-				'<td class="plupload_cell plupload_file_status">' + file.percent + '%</td>' +
-				'<td class="plupload_cell plupload_file_size">' + plupload.formatSize(file.size) + '</td>' +
-				'<td class="plupload_cell plupload_file_action"><div class="ui-icon"></div>' + fields + '</td>'
+				html: '<td class="upload-file-name"><span>' + file.name + '</span></td>' +
+				'<td class="upload-file-status">' + file.percent + '%</td>' +
+				'<td class="upload-file-size">' + plupload.formatSize(file.size) + '</td>' +
+				'<td class="upload-file-action"><div class="upload-icon" title="'+'Remove File'+'"></div>' + fields + '</td>'
 				}
 			);
 			filelist.grab(html);
 
 			self._handleFileStatus(file);
 
-			$$('#' + file.id + ' .ui-icon').addEvent('click', function(e) {
+			$$('#' + file.id + ' .upload-icon').addEvent('click', function(e) {
 				document.id(file.id).destroy();
 				uploader.removeFile(file);
-
-				//e.preventDefault();
+				self._handleState();
+				if (file.status == plupload.UPLOADING) {
+					self.stop();
+					self.start();
+				}
+				e.preventDefault();
 			});
-
-			//self._trigger('updatelist', null, filelist);
 		});
 
-		self.element.getElement('.plupload_total_file_size').set('html',plupload.formatSize(uploader.total.size));
+		self.element.getElement('.upload-total-file-size').set('html',plupload.formatSize(uploader.total.size));
 
-		if (uploader.total.queued === 0) {
-			self.browse_button.set('text', 'Add Files');
-		} else {
-			self.browse_button.set('text', '%d files queued'.replace('%d', uploader.total.queued));
+		if (uploader.features.dragdrop && uploader.settings.dragdrop) {
+			// Re-add drag message if needed
+			var drag = new Element('tr', {
+				html: '<td colspan="4" class="upload-droptext">' + "Drag files here." + '</td>'
+				}
+			);
+			this.filelist.grab(drag);
 		}
-
-		if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
-			//self.start_button.button('disable');
-		} else {
-			//self.start_button.button('enable');
-		}
-
 		self._updateTotalProgress();
-
-		if (!uploader.files.length && uploader.features.dragdrop && uploader.settings.dragdrop) {
-			// Re-add drag message if there are no files
-			this.filelist.set('html','<tr><td class="plupload_droptext">' + "Drag files here." + '</td></tr>');
-		}
 	},
 	
 	_enableDragAndDrop: function() {
-		this.filelist.set('html','<tr><td class="plupload_droptext">' + "Drag files here." + '</td></tr>');
+		this._updateFileList();
 		this.filelist.getParent().set('id', this.id + '_dropbox');
 		this.uploader.settings.drop_element = this.options.drop_element = this.id + '_dropbox';
-	}
-
-});
-
-Kunena.Uploader.File = new Class({
-
-	initialize: function() {
 	}
 
 });

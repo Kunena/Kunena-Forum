@@ -2,139 +2,166 @@
    Plupload
 ------------------------------------------------------------------- */
 
-.plupload_button {cursor: pointer;}
-
-.plupload_wrapper {
-	width: 95%;
+#kuploader {
+	position: relative;
+	width:500px;
 }
-
-.plupload .plupload_container input {width: 98%;}
-.plupload .plupload_filelist_footer {border-width: 1px 0 0 0}
-.plupload .plupload_filelist_header {border-width: 0 0 1px 0}
-div.plupload .plupload_file {border-width: 0 0 1px 0}
-div.plupload div.plupload_header {border-width: 0 0 1px 0; position: relative;}
-
-.plupload_file .ui-icon {
-	cursor:pointer;
+#kuploader table {
+	width:99%;
+	border-collapse:collapse;
 }
-
-.plupload_header_content {
-	background-image: url('../images/plupload/plupload.png');
-	background-repeat: no-repeat;
-	background-position: 8px center;
-	min-height: 56px;
-	padding-left: 60px;
-	position:relative;
+#kuploader table th{
+	width:30px;
+	padding:5px;
+	border-radius: 5px 5px 0 0;
+	color: #333333;
+	border: 1px solid #D4D4D4;
+	background: #F4F4F4 repeat scroll 0 0 transparent;
+	font-size:13px;
 }
-.plupload_header_content_bw {background-image: url('../images/plupload/plupload-bw.png');}
-.plupload_header_title {
-	font: normal 18px sans-serif;
-	padding: 6px 0 3px;
+#kuploader table td {
+	width:30px;
+	padding:5px;
+	background:transperant;
+	text-align:center;
 }
-.plupload_header_text {font: normal 12px sans-serif;}
-
-.plupload_filelist,
-.plupload_filelist_content {
-	border-collapse: collapse;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	-moz-user-select:none;
-	-webkit-user-select:none;
-	user-select:none;
+#kuploader table .upload-done td {
+	color:#007236;
+	background:#e4fddf;
 }
-
-.plupload_cell {padding: 8px 6px;}
-
-.plupload_file {
-	border-left: none;
-	border-right: none;
+#kuploader table .upload-failed td {
+	color:#CD0A0A;
+	background:#FEF1EC;
 }
-
-.plupload .ui-sortable-helper,
-.plupload .ui-sortable .plupload_file {
-	cursor:move;
+#kuploader table .upload-uploading td {
+	color:#1b93be;
+	background:#cdf3ff;
+	font-weight:bold;
 }
-
-.plupload_file_size, .plupload_file_status {text-align: right;}
-.plupload_file_size, .plupload_file_status {width: 52px;}
-.plupload_file_action {width: 16px;}
-.plupload_file_name {
-	overflow: hidden;
-	padding-left: 10px;
+#kuploader table .upload-file-name {
+	width:150px;
+	text-align:left;
+	border-left: 1px solid #D4D4D4;
 }
-
-.plupload_file_rename {
-	width:95%;
+#kuploader table .upload-file-action {
+	width:20px;
+	border-right: 1px solid #D4D4D4;
 }
-
-.plupload_progress {width: 60px;}
-.plupload_progress_container {padding: 1px;}
-
-
-/* Floats */
-
-.plupload_right {float: right;}
-.plupload_left {float: left;}
-.plupload_clear,.plupload_clearer {clear: both;}
-.plupload_clearer, .plupload_progress_bar {
-	display: block;
-	font-size: 0;
-	line-height: 0;
+#kuploader .upload-buttons {
+	margin-top:8px;
+	margin-left:70px;
 }
-.plupload_clearer {height: 0;}
-
-/* Misc */
-.plupload_hidden {display: none;}
-.plupload_droptext {
-	background: transparent;
+#kuploader .upload-droptext {
+	padding:25px;
+	border-top:1px solid #D4D4D4;
+	border-left:1px solid #D4D4D4;
+	border-right:1px solid #D4D4D4;
+}
+#kuploader p,
+#kuploader td,
+#kuploader th {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+#kuploader p.upload-desc {
+	padding-bottom:10px;
+}
+#kuploader th.upload-file-name {
+	text-align:left;
+}
+#kuploader .upload-status table {
+	border:1px solid #D4D4D4;
+}
+#kuploader .upload-upload-status {
+	font-weight:bold;
+}
+#kuploader .upload-filelist td {
+	border-radius: 0 0 .5em .5em;
+	color: #333333;
+	border-bottom:1px solid #D4D4D4;
+	border-left:1px solid #D4D4D4;
+	border-right:1px solid #D4D4D4;
+	background: #F4F4F4 repeat scroll 0 0 transparent;
+}
+#kuploader .upload-notify {
+	margin: 0 5px 5px 0;
+}
+#kuploader .upload-info,
+#kuploader .upload-error {
+	background: #FEF1EC;
+	border: 1px solid #CD0A0A;
+	color: #CD0A0A;
+}
+#kuploader .upload-icon {
+	cursor: pointer;
+	display:inline-block;
+	height: 16px;
+	width: 16px;
+	margin:0 auto;
+}
+#kuploader .upload-notify p {
+	margin: 4px;
+}
+#kuploader .upload-notify p .upload-icon {
+	margin: 0 5px -2px 0;
+	cursor: text;
+}
+#kuploader .upload-close {
+	float:right;
+}
+#kuploader .upload-check {
+	background:url("../images/plupload/icon-16-done.png");
+}
+#kuploader .upload-alert {
+	background:url("../images/plupload/icon-16-fail.png");
+}
+#kuploader .upload-info,
+#kuploader .upload-arrow {
+	background:url("../images/plupload/icon-16-upload.png");
+}
+#kuploader .upload-close {
+	margin: 5px;
+	background:url("../images/plupload/icon-16-close.png");
+}
+#kuploader .upload-minus {
+	background:url("../images/plupload/icon-16-queue.png");
+}
+#kuploader .button {
+	display: inline-block;
+	zoom: 1;
+	vertical-align: baseline;
+	margin: 0 2px;
+	outline: none;
+	cursor: pointer;
 	text-align: center;
-	vertical-align: middle;
-	text-align: center !important;
-	border: 0;
-	line-height: 60px;
+	text-decoration: none;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	padding: .5em 2em .55em;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	border-radius: .5em;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	font-size: 12px;
+	padding: .4em 1.5em .42em;
+	color: #333333;
+	border: 1px solid #D4D4D4;
+	background: #F4F4F4 repeat scroll 0 0 transparent;
 }
-
-.plupload_buttons, .plupload_upload_status {float: left}
-
-.plupload_message {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	height: 100%;
-	width: 100%;
+#kuploader .button:hover {
+	background: #599bdc;
+	background-image: linear-gradient(top, #599bdc 0%,#3072b3 100%);
+	border-color: #518CC6 #518CC6 #2A65A0;
+	color: #FFFFFF;
+	text-decoration: none;
+	text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+	display: inline-block;
+	font-family: helvetica,arial,freesans,clean,sans-serif;
+	overflow: visible;
+	position: relative;
 }
-
-.plupload_message p {
-	padding:0.7em;
-	margin:0;
+#kuploader .button:active {
+	color: #afafaf;
+	background-image: linear-gradient(left top, left bottom, #575757 0%, #888 100%);
 }
-
-.plupload_message strong {
-	font-weight: bold;
-}
-
-plupload_message i {
-	font-style: italic;
-}
-
-.plupload_message p span.ui-icon {
-	float: left;
-	margin-right: 0.3em;
-}
-
-.plupload_header_content .ui-state-error,
-.plupload_header_content .ui-state-highlight {
-	border:none;
-}
-
-.plupload_message_close {
-	position:absolute;
-	top:5px;
-	right:5px;
-	cursor:pointer;	
-}
-
-.plupload .ui-sortable-placeholder {
-	height:35px;
+#kuploader .upload-hidden {
+	display: none;
 }

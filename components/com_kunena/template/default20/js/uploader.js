@@ -415,9 +415,9 @@ Kunena.Uploader = new Class({
 			}
 
 			var html = new Element('tr', {
-				class: 'upload_file', 
-				id: file.id, 
-				html: '<td class="upload-file-name"><span>' + file.name + '</span></td>' +
+				'class': 'upload_file',
+				'id': file.id, 
+				'html': '<td class="upload-file-name"><span>' + file.name + '</span></td>' +
 				'<td class="upload-file-status">' + file.percent + '%</td>' +
 				'<td class="upload-file-size">' + plupload.formatSize(file.size) + '</td>' +
 				'<td class="upload-file-action"><div class="upload-icon" title="'+'Remove File'+'"></div>' + fields + '</td>'

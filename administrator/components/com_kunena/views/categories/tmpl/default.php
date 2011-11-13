@@ -72,8 +72,8 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			$k = 0;
 			$i = 0;
 			$n = count($this->categories);
-			$img_yes = '<img src="images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
-			$img_no = '<img src="images/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
+			$img_yes = '<img src="'.JURI::root().'administrator/components/com_kunena/images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
+			$img_no = '<img src="'.JURI::root().'administrator/components/com_kunena/images/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
 			foreach($this->categories as $category) {
 		?>
 			<tr <?php echo 'class = "row' . $k . '"';?>>

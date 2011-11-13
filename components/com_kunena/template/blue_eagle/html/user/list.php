@@ -29,11 +29,7 @@ document.addEvent('domready', function() {
 // ]]>");
 }
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
+
 <div class="kblock">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="searchuser_tbody"></a></span>
@@ -48,7 +44,7 @@ $this->displayLoginBox ();
 
 					<input id="kusersearch" type="text" name="search" class="inputbox"
 						value="<?php echo $this->escape($this->state->get('list.search', JText::_('COM_KUNENA_USRL_SEARCH'))); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';" onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';" />
-					<input type="image" src="<?php echo $this->template->getImagePath('usl_search_icon.png') ?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;" />
+					<input type="image" src="<?php echo $this->template->getImagePath('usl_search_icon.png') ?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" style="border: 0px;" />
 				</form>
 			</div>
 			<div class="userlist-jump">
@@ -216,5 +212,3 @@ $this->displayLoginBox ();
 </div>
 
 <?php $this->displayWhoIsOnline(); ?>
-<?php $this->displayFooter (); ?>
-</div>

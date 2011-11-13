@@ -1,0 +1,167 @@
+/*
+   Plupload
+------------------------------------------------------------------- */
+
+#kuploader {
+	position: relative;
+	width:500px;
+}
+#kuploader table {
+	width:99%;
+	border-collapse:collapse;
+}
+#kuploader table th{
+	width:30px;
+	padding:5px;
+	border-radius: 5px 5px 0 0;
+	color: #333333;
+	border: 1px solid #D4D4D4;
+	background: #F4F4F4 repeat scroll 0 0 transparent;
+	font-size:13px;
+}
+#kuploader table td {
+	width:30px;
+	padding:5px;
+	background:transperant;
+	text-align:center;
+}
+#kuploader table .upload-done td {
+	color:#007236;
+	background:#e4fddf;
+}
+#kuploader table .upload-failed td {
+	color:#CD0A0A;
+	background:#FEF1EC;
+}
+#kuploader table .upload-uploading td {
+	color:#1b93be;
+	background:#cdf3ff;
+	font-weight:bold;
+}
+#kuploader table .upload-file-name {
+	width:150px;
+	text-align:left;
+	border-left: 1px solid #D4D4D4;
+}
+#kuploader table .upload-file-action {
+	width:20px;
+	border-right: 1px solid #D4D4D4;
+}
+#kuploader .upload-buttons {
+	margin-top:8px;
+	margin-left:70px;
+}
+#kuploader .upload-droptext {
+	padding:25px;
+	border-top:1px solid #D4D4D4;
+	border-left:1px solid #D4D4D4;
+	border-right:1px solid #D4D4D4;
+}
+#kuploader p,
+#kuploader td,
+#kuploader th {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+#kuploader p.upload-desc {
+	padding-bottom:10px;
+}
+#kuploader th.upload-file-name {
+	text-align:left;
+}
+#kuploader .upload-status table {
+	border:1px solid #D4D4D4;
+}
+#kuploader .upload-upload-status {
+	font-weight:bold;
+}
+#kuploader .upload-filelist td {
+	border-radius: 0 0 .5em .5em;
+	color: #333333;
+	border-bottom:1px solid #D4D4D4;
+	border-left:1px solid #D4D4D4;
+	border-right:1px solid #D4D4D4;
+	background: #F4F4F4 repeat scroll 0 0 transparent;
+}
+#kuploader .upload-notify {
+	margin: 0 5px 5px 0;
+}
+#kuploader .upload-info,
+#kuploader .upload-error {
+	background: #FEF1EC;
+	border: 1px solid #CD0A0A;
+	color: #CD0A0A;
+}
+#kuploader .upload-icon {
+	cursor: pointer;
+	display:inline-block;
+	height: 16px;
+	width: 16px;
+	margin:0 auto;
+}
+#kuploader .upload-notify p {
+	margin: 4px;
+}
+#kuploader .upload-notify p .upload-icon {
+	margin: 0 5px -2px 0;
+	cursor: text;
+}
+#kuploader .upload-close {
+	float:right;
+}
+#kuploader .upload-check {
+	background:url("../images/plupload/icon-16-done.png");
+}
+#kuploader .upload-alert {
+	background:url("../images/plupload/icon-16-fail.png");
+}
+#kuploader .upload-info,
+#kuploader .upload-arrow {
+	background:url("../images/plupload/icon-16-upload.png");
+}
+#kuploader .upload-close {
+	margin: 5px;
+	background:url("../images/plupload/icon-16-close.png");
+}
+#kuploader .upload-minus {
+	background:url("../images/plupload/icon-16-queue.png");
+}
+#kuploader .button {
+	display: inline-block;
+	zoom: 1;
+	vertical-align: baseline;
+	margin: 0 2px;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	padding: .5em 2em .55em;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	border-radius: .5em;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	font-size: 12px;
+	padding: .4em 1.5em .42em;
+	color: #333333;
+	border: 1px solid #D4D4D4;
+	background: #F4F4F4 repeat scroll 0 0 transparent;
+}
+#kuploader .button:hover {
+	background: #599bdc;
+	background-image: linear-gradient(top, #599bdc 0%,#3072b3 100%);
+	border-color: #518CC6 #518CC6 #2A65A0;
+	color: #FFFFFF;
+	text-decoration: none;
+	text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+	display: inline-block;
+	font-family: helvetica,arial,freesans,clean,sans-serif;
+	overflow: visible;
+	position: relative;
+}
+#kuploader .button:active {
+	color: #afafaf;
+	background-image: linear-gradient(left top, left bottom, #575757 0%, #888 100%);
+}
+#kuploader .upload-hidden {
+	display: none;
+}

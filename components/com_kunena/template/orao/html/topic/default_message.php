@@ -35,26 +35,27 @@ $this->params = $template->params;
 						</span>
 						</dt>
 						<dd class="topics" style="float:right;">
-							<span class="tk-view-msgid"><a name="<?php echo intval($this->id); ?>"></a><?php echo $this->numLink ?></span>
+							<span class="tk-view-msgid"><a id="<?php echo intval($this->message->id); ?>"></a><?php echo $this->numLink ?></span>
 						</dd>
 					</dl>
 				</li>
 			</ul>
 			<?php if ($this->message->id == $this->message->thread) { ?>
-			<?php // FIXME : Missing translations ?>
-			<ul class="ktopic-taglist">
-				<?php if (empty($this->keywords)) : ?>
-				<li class="ktopic-taglist-title">Topic Tags:</li>
-				<li><a href="#">templates</a></li>
-				<li><a href="#">design</a></li>
-				<li><a href="#">css</a></li>
-				<li><a href="#">colors</a></li>
-				<li><a href="#">help</a></li>
-				<?php else: ?>
-				<li class="ktopic-taglist-title">No Tags</li>
+				<?php if ( $this->config->keywords ) : ?>
+				<ul class="ktopic-taglist">
+					<?php if (empty($this->keywords)) : ?>
+					<li class="ktopic-taglist-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', count($this->keywords)) ?></li>
+					<li><a href="#">templates</a></li>
+					<li><a href="#">design</a></li>
+					<li><a href="#">css</a></li>
+					<li><a href="#">colors</a></li>
+					<li><a href="#">help</a></li>
+					<?php else: ?>
+					<li class="ktopic-taglist-title"><?php echo JText::_('COM_KUNENA_TOPIC_NO_TAGS') ?></li>
+					<?php endif ?>
+					<?php if ( $this->me->userid == $this->topic->first_post_userid || intval($this->me->isModerator('global')) ): ?><li class="ktopic-taglist-edit"><a href="#" id="edit_keywords"><?php echo JText::_('COM_KUNENA_TOPIC_TAGS_ADD_EDIT') ?></a></li><?php endif ?>
+				</ul>
 				<?php endif ?>
-				<li class="ktopic-taglist-edit"><a href="#">Add/edit tags</a></li>
-			</ul>
 			<?php }?>
 		<div id="profilebox-post" class="postprofile-left">
 			[K=MESSAGE_PROFILE]
@@ -117,5 +118,5 @@ $this->params = $template->params;
 <?php if ($this->isModulePosition('kunena_msg_' . $this->mmm)) : ?><li class="kmodules"><?php $this->getModulePosition('kunena_msg_' . $this->mmm) ?></li><?php endif ?>
 
 <?php if ( $this->topic->authorise('reply') ) : ?>
-<?php echo $this->loadTemplate("quickreply");?>
+<?php echo $this->loadTemplateFile("quickreply");?>
 <?php endif ?>

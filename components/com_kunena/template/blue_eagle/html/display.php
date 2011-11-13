@@ -8,6 +8,15 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+?>
+<div id="Kunena">
+<?php
+$this->displayMenu ();
+$this->displayLoginBox ();
 
 // Display current view/layout
 $this->displayLayout();
+
+$this->displayFooter ();
+?>
+</div>

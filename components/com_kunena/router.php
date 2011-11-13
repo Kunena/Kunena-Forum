@@ -171,7 +171,7 @@ function KunenaBuildRoute(&$query) {
 
 	// If Kunena SEF is not enabled, do nothing
 	if (! KunenaRoute::$config->sef) {
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__FUNCTION__.'()') : null;
 		return $segments;
 	}
 
@@ -191,7 +191,7 @@ function KunenaBuildRoute(&$query) {
 
 	// Safety check: we need view in order to create SEF URLs
 	if (!isset ( $menuitem->query ['view'] ) && empty ( $query ['view'] )) {
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__FUNCTION__.'()') : null;
 		return $segments;
 	}
 

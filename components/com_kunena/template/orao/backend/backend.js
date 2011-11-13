@@ -1,31 +1,23 @@
 window.addEvent("domready",function(){
-	var tabs = [];
-	var options = [];
-	var opt_iterator = -1;
-	var base_table = $ES('.adminform .admintable',$$('#element-box .m')[0])[2];
+	var tbody = null;
+	var base_table = $$('.kparameters')[0];
 
-	$$('.paramlist_value').each(function(el){
-		if(!$E('input', el) && !$E('select', el) && !$E('textarea', el)){
-			opt_iterator++;
-			var div_gen = new Element('div',{"class":"tk_opt"});
-			div_gen.innerHTML = '<span class="tk_text">'+el.innerHTML+'</span><span class="tk_btn">Toggle</span>';
-			div_gen.injectBefore(base_table);
-			tabs.push(div_gen);
-			options[opt_iterator] = [];
-		}else options[opt_iterator].push(el.getParent());
+	$$('.paramlist tr').each(function(el) {
+		if(!el.getElement('input') && !el.getElement('select') && !el.getElement('textarea')){
+			var div = new Element('div',{"class":"ksection"});
+			div.set('html', '<span class="ktext">'+el.getElement('.paramlist_value').get('html')+'</span><span class="kbutton">Toggle</span>');
+			div.inject(base_table,'before');
+			var div = new Element('div',{"class":"koptions"});
+			div.set('html', '<table cellspacing="1" width="100%" class="paramlist admintable"><tbody></tbody></table>');
+			tbody = div.getElement('tbody');
+			div.inject(base_table,'before');
+		} else if (tbody) {
+			el.clone().inject(tbody);
+		}
 	});
-
-	options.each(function(el,i){
-			var div = new Element('div',{"class":"tk_opts"});
-			div.innerHTML = '<td colspan="2"><div class="tk_desc"></div><table cellspacing="1" width="100%" class="paramlist admintable"><tbody></tbody></table></td>';
-			div.injectAfter(tabs[i]);
-			div_body = div.getElementsBySelector('tbody')[0];
-			options[i].each(function(elm,j){ elm.injectInside(div_body); });
-	});
-
-	base_table.remove();
+	base_table.dispose();
 	
-	$$('.tk_switch').each(function(el){
+	$$('.kswitch').each(function(el){
 		el.setStyle('display','none');
 		var style = (el.value == 1) ? 'on' : 'off';
 		var switcher = new Element('div',{'class' : 'switcher-'+style});
@@ -47,9 +39,9 @@ window.addEvent("domready",function(){
 		new_tr.innerHTML = '<td width="" style="height:5px;background:#eee !important;padding:0 !important;" class="paramlist_key"></td><td class="paramlist_value" style="height:5px;background:#eee;padding:0 !important;"></td>';
 	});
 
-	new Accordion($$('.tk_opt'),$$('.tk_opts'),{
-		onActive:function(toggler){ toggler.setProperty("class","tk_opt active"); },
-		onBackground:function(toggler){ toggler.setProperty("class","tk_opt"); },
+	new Accordion($$('.ksection'),$$('.koptions'),{
+		onActive:function(toggler){ toggler.setProperty("class","ksection active"); },
+		onBackground:function(toggler){ toggler.setProperty("class","ksection"); },
 		alwaysHide: true
 	});
 });

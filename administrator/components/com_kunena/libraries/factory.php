@@ -64,18 +64,6 @@ abstract class KunenaFactory {
 	}
 
 	/**
-	 * Get Kunena login object
-	 *
-	 * Returns the global {@link KunenaLogin} object, only creating it if it doesn't already exist.
-	 *
-	 * @return object KunenaLogin
-	 */
-	public static function getLogin() {
-		require_once KPATH_ADMIN . '/libraries/integration/login.php';
-		return KunenaLogin::getInstance();
-	}
-
-	/**
 	 * Get Kunena avatar integration object
 	 *
 	 * Returns the global {@link KunenaAvatar} object, only creating it if it doesn't already exist.
@@ -121,18 +109,6 @@ abstract class KunenaFactory {
 	public static function getProfile() {
 		require_once KPATH_ADMIN . '/libraries/integration/profile.php';
 		return KunenaProfile::getInstance();
-	}
-
-	/**
-	 * Get Kunena access control object
-	 *
-	 * Returns the global {@link KunenaAccess} object, only creating it if it doesn't already exist.
-	 *
-	 * @return object KunenaAccess
-	 */
-	public static function getAccessControl() {
-		require_once KPATH_ADMIN . '/libraries/integration/access.php';
-		return KunenaAccess::getInstance();
 	}
 
 	/**

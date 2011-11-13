@@ -85,7 +85,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 		}
 		// Global moderator is a special case
 		if ($me->isAdmin()) {
-			KunenaFactory::getAccessControl()->setModerator(0, $user, in_array(0, $modCatids));
+			KunenaAccess::getInstance()->setModerator(0, $user, in_array(0, $modCatids));
 		}
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}

@@ -61,12 +61,30 @@ JHTML::_('behavior.tooltip');
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td class="kparameters">
+						<?php if (!is_null($this->params)) : ?>
+						<table class="paramlist admintable">
+							<?php foreach ($this->params->getParams() as $item): ?>
+							<tr>
+								<?php if ($item[0]) : ?>
+								<td width="40%" class="paramlist_key">
+									<?php echo $item[0] ?>
+								</td>
+								<td class="paramlist_value">
+									<?php echo $item[1] ?>
+								</td>
+								<?php else : ?>
+								<td class="paramlist_value" colspan="2">
+									<?php echo $item[1] ?>
+								</td>
+								<?php endif ?>
+							</tr>
+							<?php endforeach ?>
+						</table>
 						<?php
-							if (!is_null($this->params)) {
-								echo $this->params->render();
-							} else {
-								echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>'; }
+							else :
+								echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>';
+							endif;
 						?>
 					</td>
 				</tr>

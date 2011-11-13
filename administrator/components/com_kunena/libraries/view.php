@@ -226,13 +226,11 @@ class KunenaView extends JView {
 	}
 
 	public function addStyleSheet($filename) {
-		$template = KunenaFactory::getTemplate();
-		return $template->addStyleSheet ( $filename );
+		return KunenaFactory::getTemplate()->addStyleSheet ( $filename );
 	}
 
 	public function addScript($filename) {
-		$template = KunenaFactory::getTemplate();
-		return $template->addScript ( $filename );
+		return KunenaFactory::getTemplate()->addScript ( $filename );
 	}
 
 	function displayNoAccess($errors = array()) {
@@ -296,6 +294,81 @@ class KunenaView extends JView {
 	function row($start=false) {
 		if ($start) $this->_row = 0;
 		return ++$this->_row & 1 ? 'odd' : 'even';
+	}
+
+	/**
+	 * Load a template file -- first look in the templates folder for an override
+	 *
+	 * @param   string   The name of the template source file ...
+	 * 					automatically searches the template paths and compiles as needed.
+	 * @return  string   The output of the the template script.
+	 */
+	public function loadTemplateFile($tpl = null)
+	{
+		KUNENA_PROFILER ? $this->profiler->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		static $files = array();
+
+		// Create the template file name based on the layout
+		$layout = $this->getLayout();
+		$file = isset($tpl) ? $layout.'_'.$tpl : $layout;
+
+		if (!isset($files[$file])) {
+			$template = JFactory::getApplication()->getTemplate();
+			$layoutTemplate = 'foo'; //$this->getLayoutTemplate();
+
+			// Clean the file name
+			$file = preg_replace('/[^A-Z0-9_\.-]/i', '', $file);
+			$tpl  = isset($tpl)? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
+
+			// Change the template folder if alternative layout is in different template
+			if (isset($layoutTemplate) && $layoutTemplate != '_' && $layoutTemplate != $template)
+			{
+				$path = str_replace($template, $layoutTemplate, $this->_path['template']);
+			} else {
+				$path = $this->_path['template'];
+			}
+
+			// Load the template script
+			jimport('joomla.filesystem.path');
+			$filetofind	= $this->_createFileName('template', array('name' => $file));
+			$files[$file] = JPath::find($path, $filetofind);
+
+			// If alternate layout can't be found, fall back to default layout
+			if ($files[$file] == false)
+			{
+				$filetofind = $this->_createFileName('', array('name' => 'default' . (isset($tpl) ? '_' . $tpl : $tpl)));
+				$files[$file] = JPath::find($this->_path['template'], $filetofind);
+			}
+		}
+		$this->_template = $files[$file];
+
+		if ($this->_template != false)
+		{
+			// Unset so as not to introduce into template scope
+			unset($tpl);
+			unset($file);
+
+			// Never allow a 'this' property
+			if (isset($this->this)) {
+				unset($this->this);
+			}
+
+			// Start capturing output into a buffer
+			ob_start();
+			// Include the requested template filename in the local scope
+			// (this will execute the view logic).
+			include $this->_template;
+
+			// Done with the requested template; get the buffer and
+			// clear it.
+			$output = ob_get_contents();
+			ob_end_clean();
+		} else {
+			$output = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
+		}
+		KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $output;
 	}
 
 	// Caching

@@ -84,7 +84,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 			$this->setState ( 'list.total', count($categories) );
 			$this->_admincategories = array_slice ( $categories, $this->getState ( 'list.start' ), $this->getState ( 'list.limit' ) );
 			$admin = 0;
-			$acl = KunenaFactory::getAccessControl();
+			$acl = KunenaAccess::getInstance();
 			foreach ($this->_admincategories as $category) {
 				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
 				if (empty($siblings)) {
@@ -106,7 +106,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 						$category->accessname = JText::_('COM_KUNENA_INTEGRATION_JOOMLA_LEVEL').': '.($groupname ? JText::_($groupname) : JText::_('COM_KUNENA_NOBODY'));
 					}
 				} elseif ($category->accesstype != 'none') {
-					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype))).': '.$category->access;
+					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype))).': '.$acl->getGroupName($category->accesstype, $category->access);
 				} elseif (version_compare(JVERSION, '1.6','>')) {
 					// Joomla 1.6+
 					$groupname = $acl->getGroupName($category->accesstype, $category->pub_access);
@@ -219,38 +219,6 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$yesno [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_ANN_NO' ) );
 		$yesno [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_ANN_YES' ) );
 
-		//create custom group levels to include into the public group selectList
-		$pub_groups = array ();
-		$adm_groups = array ();
-		$pub_groups [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_NOBODY' ) );
-		$pub_groups [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_EVERYBODY' ) );
-		$pub_groups [] = JHTML::_ ( 'select.option', - 1, JText::_ ( 'COM_KUNENA_ALLREGISTERED' ) );
-
-		// Create the access control lists
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6
-			$accessLists ['pub_access'] = JHTML::_ ( 'access.usergroup', 'pub_access', $category->pub_access, 'class="inputbox" size="10"', false);
-			$accessLists ['admin_access'] = JHTML::_ ( 'access.usergroup', 'admin_access', $category->admin_access, 'class="inputbox" size="10"', false);
-		} else {
-			// Joomla 1.5
-			$pub_groups = array ();
-			$pub_groups [] = JHTML::_ ( 'select.option', 1, JText::_('COM_KUNENA_NOBODY') );
-			$pub_groups [] = JHTML::_ ( 'select.option', 0, JText::_('COM_KUNENA_PUBLIC') );
-			$pub_groups [] = JHTML::_ ( 'select.option', - 1, JText::_('COM_KUNENA_ALLREGISTERED') );
-			$adm_groups = array ();
-			$adm_groups [] = JHTML::_ ( 'select.option', 0, JText::_('COM_KUNENA_NOBODY') );
-			$acl = JFactory::getACL ();
-			$joomlagroups = $acl->get_group_children_tree ( null, 'USERS', false );
-			foreach ($joomlagroups as &$group) {
-				$group->text = preg_replace('/(^&nbsp; |\.&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)/', '- ', $group->text);
-			}
-			$pub_groups = array_merge ( $pub_groups, $joomlagroups );
-			$adm_groups = array_merge ( $adm_groups, $joomlagroups );
-			// Create the access control lists for Joomla 1.5
-			$accessLists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="10"', 'value', 'text', $category->pub_access );
-			$accessLists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="10"', 'value', 'text', $category->admin_access );
-		}
-
 		// Anonymous posts default
 		$post_anonymous = array ();
 		$post_anonymous [] = JHTML::_ ( 'select.option', '0', JText::_ ( 'COM_KUNENA_CATEGORY_ANONYMOUS_X_REG' ) );
@@ -278,16 +246,11 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$topic_ordering_options[] = JHTML::_ ( 'select.option', 'alpha', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA' ) );
 
 		$lists = array ();
-		$lists ['accesstypes'] = KunenaFactory::getAccessControl()->getAccessTypesList($category);
-		$lists ['accesslevels'] = KunenaFactory::getAccessControl()->getAccessLevelsList($category);
-		$lists ['access'] = KunenaFactory::getAccessControl()->getAccessLevelsList($category);
-		$lists ['pub_access'] = $accessLists ['pub_access'];
-		$lists ['admin_access'] = $accessLists ['admin_access'];
+		$lists ['accesstypes'] = KunenaAccess::getInstance()->getAccessTypesList($category);
+		$lists ['accesslists'] = KunenaAccess::getInstance()->getAccessOptions($category);
 		$lists ['categories'] = JHTML::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
 		$lists ['channels'] = JHTML::_('kunenaforum.categorylist', 'channels[]', 0, $channels_options, $channels_params, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
 		$lists ['published'] = JHTML::_ ( 'select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published );
-		$lists ['pub_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->pub_recurse );
-		$lists ['admin_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->admin_recurse );
 		$lists ['forumLocked'] = JHTML::_ ( 'select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $category->locked );
 		$lists ['forumReview'] = JHTML::_ ( 'select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $category->review );
 		$lists ['allow_polls'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $category->allow_polls );

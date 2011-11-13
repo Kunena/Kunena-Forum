@@ -12,4 +12,4 @@ defined ( '_JEXEC' ) or die ();
 
 $this->cache = false;
 $direction = $this->state->get('profile.direction');
-echo $this->loadTemplate("profile_{$direction}");
+echo $this->loadTemplateFile("profile_{$direction}");

@@ -88,12 +88,7 @@ JHTML::_('behavior.tooltip');
 					<?php endif // isSection ?>
 
 					<td class="kgrid-publish"><?php echo JHTML::_('kunenagrid.published', $i, $category) ?></td>
-					<td class="kgrid-access">
-						<ul>
-						<?php echo $category->pub_group ? '<li>'.$this->escape ( $category->pub_group ).'</li>' : '' ?>
-						<?php echo $category->admin_group ? '<li>'.$this->escape ( $category->admin_group ).'</li>' : '' ?>
-						</ul>
-					</td>
+					<td class="kgrid-access"><?php echo $this->escape ( $category->accessname ) ?></td>
 					<td class="kgrid-checkbox"><?php echo JHTML::_('kunenagrid.checkedOut', $category, $i, 'id') ?></td>
 
 					<?php endif // authorise ?>

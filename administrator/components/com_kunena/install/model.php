@@ -286,25 +286,46 @@ class KunenaModelInstall extends JModel {
 		return true;
 	}
 
-	function installPlugin($path, $file, $name) {
-		$success = false;
+	function installPlugin($path, $group, $name, $publish) {
 		$dest = JPATH_ROOT.'/tmp/kinstall_plugin';
-
-		$query = "SELECT * FROM #__plugins WHERE element='$name'";
-		$this->db->setQuery ( $query );
-		$plugin = $this->db->loadObject ();
-		if (is_object($plugin)) {
-			$installer = new JInstaller ( );
-			$installer->uninstall ( 'plugin', $plugin->id );
+		if (is_file(KPATH_ADMIN .'/'. $path)) {
+			// Extract file
+			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
+		} else {
+			// Copy path
+			$success = JFolder::copy(KPATH_ADMIN .'/'. $path, $dest);
 		}
-		$this->extract ( $path, $file, $dest );
-		$installer = new JInstaller ( );
-		if ($installer->install ( $dest )) {
-			// TODO: fix this when needed again
-			$success = $this->publishPlugin('', $name);
+		// We need to have only one manifest which is named as kunena.xml
+		if ($success && version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
+			if (is_file("{$dest}/{$name}.j15.xml")) {
+				JFile::delete("{$dest}/{$name}.j15.xml");
+			}
+			if (is_file("{$dest}/{$name}.j16.xml")) {
+				$success = JFile::move("{$dest}/{$name}.j16.xml", "{$dest}/{$name}.xml");
+			}
+		} else {
+			// Joomla 1.5
+			if (is_file("{$dest}/{$name}.j16.xml")) {
+				JFile::delete("{$dest}/{$name}.j16.xml");
+			}
+			if (is_file("{$dest}/{$name}.j15.xml")) {
+				$success = JFile::move("{$dest}/{$name}.j15.xml", "{$dest}/{$name}.xml");
+			}
+		}
+		// Only install plugin if it can be used in current Joomla version (manifest exists)
+		if (is_file("{$dest}/{$name}.xml")) {
+			$installer = new JInstaller ( );
+			$success = $installer->install ( $dest );
+			if ($success && $publish) {
+				$success = $this->publishPlugin($group, $name);
+			}
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', ucfirst($group).' - '.ucfirst($name)), $success);
+		} elseif (!$success) {
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', ucfirst($group).' - '.ucfirst($name)), $success);
 		}
 		JFolder::delete($dest);
-		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', $name), $success);
+		return $success;
 	}
 
 	function uninstallPlugin($folder, $name) {
@@ -321,27 +342,6 @@ class KunenaModelInstall extends JModel {
 			$installer = new JInstaller ( );
 			$installer->uninstall ( 'plugin', $pluginid );
 		}
-	}
-
-	function installSystemPlugin() {
-		$src = KPATH_ADMIN . '/install/system';
-		$dest = JPATH_ROOT.'/tmp/kinstall_plugin';
-		JFolder::copy($src, $dest);
-		// We need to have only one manifest which is named as kunena.xml
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			JFile::delete($dest.'/kunena.xml');
-			JFile::move($dest.'/kunena.j16.xml', $dest.'/kunena.xml');
-		} else {
-			// Joomla 1.5
-			JFile::delete($dest.'/kunena.j16.xml');
-		}
-		$installer = new JInstaller ( );
-		if ($installer->install ( $dest )) {
-			$success = $this->publishPlugin('system', 'kunena');
-		}
-		JFolder::delete($dest);
-		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', 'System - Kunena'), $success);
 	}
 
 	public function deleteFiles($path, $ignore=array()) {
@@ -458,9 +458,11 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepPlugins() {
-		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
-
-		$this->installSystemPlugin();
+		$this->installPlugin('install/plugins/plg_system_kunena', 'system', 'kunena', true);
+		$this->installPlugin('install/plugins/plg_kunena_joomla15', 'kunena', 'joomla', true);
+		$this->installPlugin('install/plugins/plg_kunena_joomla16', 'kunena', 'joomla', true);
+		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false);
+		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false);
 
 		if (! $this->getError ())
 			$this->setStep ( $this->getStep()+1 );

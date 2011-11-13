@@ -71,7 +71,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$category = $category ? KunenaForumCategoryHelper::get($category) : $this->getCategory();
 		if (!$this->exists() || !$category->exists()) return null;
 		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
-		return $xhtml=='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
 	}
 
 	public function newReply($fields=array(), $user=null) {
@@ -138,11 +138,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 
 		if (!$url) {
-			$url = JURI::root().trim($this->getPermaUrl(null, true), '/');
+			$url = JURI::root().trim($this->getPermaUrl(null), '/');
 		}
 		//get all subscribers, moderators and admins who will get the email
 		$me = KunenaUserHelper::get();
-		$acl = KunenaFactory::getAccessControl();
+		$acl = KunenaAccess::getInstance();
 		$emailToList = $acl->getSubscribers($this->catid, $this->thread, $mailsubs, $mailmods, $mailadmins, $me->userid);
 
 		$topic = $this->getTopic();
@@ -611,7 +611,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	protected function authoriseRead($user) {
 		// Check that user has the right to see the post (user can see his own unapproved posts)
 		if ($this->hold > 1 || ($this->hold == 1 && $this->userid != $user->userid)) {
-			$access = KunenaFactory::getAccessControl();
+			$access = KunenaAccess::getInstance();
 			$hold = $access->getAllowedHold($user->userid, $this->catid, false);
 			if (!in_array($this->hold, $hold)) {
 				$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );

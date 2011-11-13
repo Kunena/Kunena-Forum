@@ -78,7 +78,6 @@ body {line-height:1.5;}
 }
 #kunena > div ul,
 #kunena > div ol {
-	background: inherit;
 	margin: 0;
 	padding: 0;
 }
@@ -158,7 +157,7 @@ body {line-height:1.5;}
 #kunena #ktopics-modbox {
 	width: 100%;
 	margin: 10px auto;
-	border: 1px solid #bcbcbc;
+	border: 1px solid #e3e0e0;
 	padding: 0px;
 	clear:both;
 	text-align:left;
@@ -275,7 +274,7 @@ body {line-height:1.5;}
 	display: inline;
 	height: 30px;
 	float:left;
-	margin: 0 5px 0 0 !important;
+	margin: 0 2px 0 0 !important;
 	padding: 0;
 	line-height: 30px;
 	border-radius:5px 5px 0 0;
@@ -286,6 +285,7 @@ body {line-height:1.5;}
 	background: none;
 	margin: 0 10px;
 	padding: 0 10px;
+	border-bottom-width: 0 !important;
 }
 #kunena .kmenu ul.menu li.active a span,
 #kunena .kmenu ul.menu li a span {
@@ -294,12 +294,14 @@ body {line-height:1.5;}
 	margin: 0;
 	padding: 0;
 }
+#kunena ul.menu li {
+	border-bottom-width:0 !important;
+}
 /*----------  Forms  ------------- */
 
 #kunena .kpostcategory-row,
 #kunena .kpostmessage-row,
 #kunena .keditprofile-row {
-	border-bottom: 1px solid;
 	zoom: 1;
 	overflow: hidden;
 	position: relative;
@@ -357,7 +359,7 @@ body {line-height:1.5;}
 	float:left;
 }
 #kunena li.klogin-avatar img {
-	padding: 1px;
+	padding: 0;
 }
 #kunena li.klogin-welcome,
 #kunena li.klogin-lastvisit,
@@ -374,9 +376,9 @@ body {line-height:1.5;}
 #kunena li.klogin-lastvisit {
 	font-size: 11px;
 }
-#kunena .klogin-form input.kinputbox, 
+#kunena .klogin-form input.kinputbox,
 #kunena .klogin-form textarea.ktxtarea {
-	width: auto;
+	width: 150px;
 }
 #kunena li.kmarkall {
 	margin-top: 0px;
@@ -447,12 +449,12 @@ body {line-height:1.5;}
 }
 #kunena a.ksection-headericon {
 	display: block;
-	height: 24px;
-	width: 24px;
+	height: 16px;
+	width: 16px;
 	float: left;
 	margin-right: 10px;
 	margin-left: 10px;
-	margin-top: 3px;
+	margin-top: 7px;
 }
 #kunena .ksection .krss-icon,
 #kunena #kannounce .krss-icon {
@@ -692,7 +694,7 @@ body {line-height:1.5;}
 }
 #kunena td.ktopic-icon,
 #kunena td.kpost-icon {
-	border-right: 1px solid #ccc;
+	border-right: 1px solid #F4F4F4;
 }
 #kunena td.ktopic-icon span,
 #kunena td.kpost-icon span {
@@ -743,14 +745,14 @@ body {line-height:1.5;}
 #kunena td.kposts-post-checkbox,
 #kunena td.kcategory-moderation {
 	width: 25px;
-	border-left: 1px solid #ccc;
+	border-left: 1px solid #F4F4F4;
 }
 #kunena .kcategories-row table td.kcategory-lastpost,
 #kunena .kposts-row table td.kpost-author,
 #kunena .ktopics-row table td.ktopic-lastpost,
 #kunena .ktags-row table td.ktag-lastpost,
 #kunena .kposts-row table td.kposts-lastpost {
-	width: 160px;
+	width: 180px;
 	padding: 15px 10px;
 }
 #kunena li.kcategory-smavatar,
@@ -768,7 +770,7 @@ body {line-height:1.5;}
 #kunena li.kposts-smavatar img {
 	width: 32px;
 	height: 32px;
-	padding: 1px;
+	padding: 0;
 }
 #kunena .kcategory-lastpost li a,
 #kunena .kpost-author li,
@@ -899,8 +901,8 @@ body {line-height:1.5;}
 	text-decoration: none;
 }
 #kunena .kpost-user-avatar img {
-	margin: 5px 0;
-	padding: 1px;
+	margin: 0;
+	padding: 0;
 }
 
 /* Post body */
@@ -971,21 +973,20 @@ body {line-height:1.5;}
 	display: block;
 	float:left;
 	padding: 10px;
-	width: 35px;
+	width: 48px;
 }
 #kunena div.kwhosonline-users {
-	padding: 10px;
+	padding: 10px 0 10px 10px;
 	display: block;
 	float:left;
-	width: 88%;
 }
 #kunena .ksection-icon span {
 	margin: 15px auto;
 }
 #kunena span.kwho-smicon {
 	display:block;
-	height: 32px;
-	width: 32px;
+	height: 48px;
+	width: 48px;
 	background: url("../images/icon-whosonline.png") no-repeat;
 }
 #kunena .kwhosonline-subtitle {
@@ -1031,7 +1032,7 @@ body {line-height:1.5;}
 	clear:left;
 }
 #kunena .kstatistics-totals {
-	padding: 10px;
+	padding: 10px 0 10px 10px;
 	line-height: 20px;
 	min-height: 80px;
 	width: 27%;
@@ -1270,7 +1271,7 @@ body {line-height:1.5;}
 #kunena .kcatsub-avatar img {
 	max-width: 32px;
 	max-height: 32px;
-	border: 1px solid #ccc;
+	border: 1px solid #F4F4F4;
 	margin: 5px 10px;
 }
 
@@ -1282,7 +1283,7 @@ body {line-height:1.5;}
 #kunena .kuserlist-user {
 	width: 43%;
 	float:left;
-	border: 1px solid #ccc;
+	border: 1px solid #F4F4F4;
 	margin: 15px;
 	padding: 15px;
 }
@@ -1308,7 +1309,7 @@ body {line-height:1.5;}
 	max-width: 96px;
 	max-height: 96px;
 	padding: 1px;
-	border: 1px solid #ccc;
+	border: 1px solid #F4F4F4;
 }
 #kunena .kdetails-status {
 	display:block;
@@ -2177,6 +2178,11 @@ body {line-height:1.5;}
 	line-height: 13px;
 }
 #kunena div.kblock div.kactions a {
-	color: #FFF !important; 
+	color: #FFF !important;
 	background-color:transparent !important;
+}
+#kunena .ksetting-icon {
+	float: right;
+	margin-right: 3px;
+	background: url("../images/tools_16.png") no-repeat scroll 0 0 transparent;
 }

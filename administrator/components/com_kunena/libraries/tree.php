@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Tree Class
  */
-class KunenaTree {
+class KunenaTree implements Iterator {
 	protected $_instances = array();
 	protected $_tree = array ();
 	protected $_parents = array();
@@ -20,31 +20,67 @@ class KunenaTree {
 	protected $_id = null;
 	protected $_parent = null;
 	protected $_level = null;
-//	protected $_count = null;
+	protected $heap = null;
+	//	protected $_count = null;
 
 	public function __construct(&$items, $id = 'id', $parent = 'parent_id', $level = 'level') {
 		$this->_tree[0] = array();
-		$this->_levels[0] = 0;
 		$this->_id = $id;
 		$this->_parent = $parent;
 		$this->_level = $level;
+		$this->add($items);
+		$this->rewind();
+	}
 
+	public function rewind() {
+		$this->heap = array(0);
+		if (!isset($this->_instances[0])) $this->next();
+	}
+
+	public function current() {
+		$id = reset($this->heap);
+		return $this->_instances[$id];
+	}
+
+	public function key() {
+		return reset($this->heap);
+	}
+
+	public function next() {
+		$id = array_shift($this->heap);
+		if ($id === false) return;
+		// Add children into the beginning of the array
+		$this->heap = array_merge(array_keys($this->_tree[$id]), $this->heap);
+		// Skip missing items
+		$id = reset($this->heap);
+		if ($id !== false && !isset($this->_instances[$id])) {
+			$this->next();
+		}
+	}
+
+	public function valid() {
+		return !empty($this->heap);
+	}
+
+	public function add(&$items) {
 		// Prepare tree
 		foreach ( $items as $item ) {
-			$itemid = $item->$id;
-			$itemparent = $item->$parent;
+			$itemid = $item->{$this->_id};
+			$itemparent = $item->{$this->_parent};
 			$this->_instances[$itemid] = $item;
 			$this->_parents[$itemid] = $itemparent;
 			$this->_tree [$itemid] = array();
 			$item->indent = array('gap', 'leaf');
-			if (isset($item->$level)) {
-				$this->_levels [$itemid] = $item->$level;
+			if (isset($item->{$this->_level})) {
+				$this->_levels [$itemid] = $item->{$this->_level};
+			} else {
+				$item->{$this->_level} = isset($this->_levels [$itemparent]) ? $this->_levels [$itemparent]+1 : 0;;
 			}
 		}
 		// Build tree (take ordering from the original array)
 		foreach ( $items as $item ) {
-			$itemid = $item->$id;
-			$itemparent = $item->$parent;
+			$itemid = $item->{$this->_id};
+			$itemparent = $item->{$this->_parent};
 			if ($itemparent && !isset($this->_tree [$itemparent])) {
 				$this->_parents[$itemparent] = -1;
 				$this->_tree [$itemparent] = array();
@@ -56,9 +92,12 @@ class KunenaTree {
 		if (empty($this->_levels)) {
 			$heap = array(0);
 			while (($parent = array_shift($heap)) !== null) {
+				$heap = array_merge($heap, array_keys($this->_tree[$parent]));
 				foreach ($this->_tree [$parent] as $id=>$children) {
-					if (!empty($children)) array_push($heap, $id);
-					$this->_levels [$id] = $parent ? $this->_levels [$parent]+1 : 0;
+					if (isset($this->_instances [$id])) {
+						$level = isset($this->_levels [$parent]) ? $this->_levels [$parent]+1 : 0;
+						$this->_levels [$id] = $this->_instances[$id]->{$this->_level} = $level;
+					}
 				}
 			}
 		}

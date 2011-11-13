@@ -33,12 +33,8 @@ defined ( '_JEXEC' ) or die ();
 					<?php if ($this->logout) : ?>
 					<li>
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">
-						<input type="hidden" name="option" value="<?php echo $this->logout['option']; ?>" />
-						<?php if (!empty($this->logout['view'])) : ?>
-						<input type="hidden" name="view" value="<?php echo $this->logout['view']; ?>" />
-						<?php endif; ?>
-						<input type="hidden" name="task" value="<?php echo $this->logout['task']; ?>" />
-						<input type="hidden" name="<?php echo $this->logout['field_return']; ?>" value="[K=RETURN_URL]" />
+						<input type="hidden" name="view" value="user" />
+						<input type="hidden" name="task" value="logout" />
 						[K=TOKEN]
 
 						<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>" />

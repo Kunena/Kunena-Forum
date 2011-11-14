@@ -293,15 +293,13 @@ class KunenaUser extends JObject {
 			'user'=>'COM_KUNENA_VIEW_USER',
 			'guest'=>'COM_KUNENA_VIEW_VISITOR',
 			'banned'=>'COM_KUNENA_VIEW_BANNED',
-			'blocked'=>'COM_KUNENA_VIEW_BLOCKED'
+			'blocked'=>'COM_KUNENA_VIEW_BANNED'
 		);
 		if (!$this->_type) {
 			if ($this->userid == 0) {
 				$this->_type = 'guest';
 			} elseif ($this->isBanned ()) {
 				$this->_type = 'banned';
-			} elseif ($this->isBlocked ()) {
-				$this->_type = 'blocked';
 			} elseif ($this->isAdmin ( $catid )) {
 				$this->_type = 'admin';
 			} elseif ($this->isModerator ( null )) {

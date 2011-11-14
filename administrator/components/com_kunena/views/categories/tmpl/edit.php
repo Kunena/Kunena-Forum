@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
+$errormsg = JText::_('COM_KUNENA_ERROR1');
 $document->addScriptDeclaration("
 function submitbutton(pressbutton)
 {
@@ -24,7 +25,7 @@ function submitbutton(pressbutton)
 	// do field validation
 	if (typeof form.onsubmit == 'function') form.onsubmit();
 	if (form.name.value == '') {
-		alert('<?php echo JText::_('COM_KUNENA_ERROR1'); ?>');
+		alert('{$errormsg}');
 	} else {
 		submitform(pressbutton);
 	}

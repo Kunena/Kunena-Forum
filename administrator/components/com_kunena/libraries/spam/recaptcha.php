@@ -161,7 +161,7 @@ class KunenaSpamRecaptcha {
 		);
 
 		if (!$response) {
-			$response = "false\nrecaptcha-not-reachable";
+			$response[1] = "false\nrecaptcha-not-reachable";
 		}
 		$answers = preg_split('/[\s,]+/', $response[1]);
 		if (empty($answers[0]) || trim ($answers [0]) != 'true') {

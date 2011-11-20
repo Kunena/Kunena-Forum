@@ -189,6 +189,7 @@ class KunenaAccessJoomla {
 			$groups = $this->getGroupsByViewLevel($category->access);
 			$allow = $this->getUsersByGroup($groups, true, $userids);
 		} elseif ($category->accesstype == 'none') {
+			if ($category->pub_access <= 0) return;
 			// Check against Joomla user groups
 			$public = $this->getUsersByGroup($category->pub_access, $category->pub_recurse, $userids);
 			$admin = $category->admin_access && $category->admin_access != $category->pub_access ? $this->getUsersByGroup($category->admin_access, $category->admin_recurse, $userids) : array();

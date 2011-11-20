@@ -572,6 +572,9 @@ function newAttachment() {
 	input.addEvent('change', function() {
 		this.removeEvents('change');
 		var __filename = this.get('value');
+		if (__filename.lastIndexOf('\\') > -1) {
+			__filename = __filename.substring(1 + __filename.lastIndexOf('\\'));
+		}
 		this.addEvent('change', function() {
 			__file.getElement('input.kfile-input-textbox').set('value', __filename);
 		});

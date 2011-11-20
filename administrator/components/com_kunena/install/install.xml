@@ -90,7 +90,6 @@
 		<field name="showhistory" type="int(11)" null="1" />
 		<field name="historylimit" type="int(11)" null="1" />
 		<field name="shownew" type="int(11)" null="1" />
-		<field name="jmambot" type="int(11)" null="1" />
 		<field name="disemoticons" type="int(11)" null="1" />
 		<field name="template" type="text" null="1" />
 		<field name="showannouncement" type="int(11)" null="1" />

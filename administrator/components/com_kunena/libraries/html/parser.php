@@ -109,24 +109,18 @@ abstract class KunenaHtmlParser {
 	function &prepareContent(&$content)
 	{
 		$config = KunenaFactory::getConfig();
-
-		if ($config->jmambot) {
-			$row = new stdClass();
-			$row->text =& $content;
-			$params = new JParameter( '' );
-			$params->set('ksource', 'kunena');
-
-			$dispatcher = JDispatcher::getInstance();
-			JPluginHelper::importPlugin('content');
-			if (version_compare(JVERSION, '1.6','>')) {
-				// Joomla 1.6+
-				$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
-			} else {
-				// Joomla 1.5
-				$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
-			}
-			$content = $row->text;
-		}
+		
+		$row = new stdClass();
+		$row->text =& $content;
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+		
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('content');
+		$results = $dispatcher->trigger('onKunenaContentPrepare', array ('text', &$row, &$params, 0));
+		
+		$content = $row->text;
+		
 		return $content;
 	}
 

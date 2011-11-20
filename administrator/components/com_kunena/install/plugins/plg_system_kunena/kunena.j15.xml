@@ -14,5 +14,9 @@
 		<filename plugin="kunena">kunena.php</filename>
 	</files>
 	<params>
+		<param name="jcontentplugins" type="radio" default="0" label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS" description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
 	</params>
 </install>

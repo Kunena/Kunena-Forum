@@ -211,14 +211,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SHOWNEW_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_PLUGINS_SUPPORT') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $this->lists ['jmambot'];
-						?></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_PLUGINS_SUPPORT_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT') ?>
 						</td>
 								<td align="left" valign="top"><?php echo $this->lists ['showannouncement'];

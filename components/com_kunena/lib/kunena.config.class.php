@@ -172,7 +172,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $showhistory = 1;
 	var $historylimit = 6;
 	var $shownew = 1;
-	var $jmambot = 0;
 	var $disemoticons = 0;
 	var $template = 'blue_eagle';
 	var $showannouncement = 1;

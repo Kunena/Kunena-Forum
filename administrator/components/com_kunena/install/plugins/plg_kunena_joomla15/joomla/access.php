@@ -224,10 +224,12 @@ class KunenaAccessJoomla {
 				$query->where("u.gid!=18");
 			}
 		} elseif ($category->accesstype == 'none') {
+			// All users are allowed to see Public (0) or All Registered (-1) categories
+			if ($category->pub_access <= 0) return;
 			// Check against Joomla user groups
 			$public = $this->_get_groups($category->pub_access, $category->pub_recurse);
-			// Ignore admin_access if pub_access is Public (0) or All Registered (-1) or has the same group
-			$admin = $category->pub_access > 0 && $category->admin_access != $category->pub_access ? $this->_get_groups($category->admin_access, $category->admin_recurse) : array();
+			// Ignore admin_access if pub_access has the same group
+			$admin = $category->admin_access != $category->pub_access ? $this->_get_groups($category->admin_access, $category->admin_recurse) : array();
 			$groups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
 			if ($groups) {
 				$query->join('INNER', "#__core_acl_aro AS a ON u.id=a.value AND a.section_value='users'");

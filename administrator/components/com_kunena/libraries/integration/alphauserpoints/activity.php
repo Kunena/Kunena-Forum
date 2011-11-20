@@ -31,68 +31,32 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 
 	public function onAfterPost($message) {
 		// Check for permisions of the current category - activity only if public or registered
-		$category = $message->getCategory();
-		if ($category->pub_access == 0 || $category->pub_access == - 1) {
-			require_once KPATH_SITE.'/lib/kunena.link.class.php';
+		if ( $this->_checkPermissions($message) ) {
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
-			if ( $this->_getAUPversion() < '1.5.12' ) {
-				$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( 'plgaup_newtopic_kunena' );
-				if ($ruleEnabled) {
-					AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $message->id, $datareference );
-				} else {
-					return;
-				}
-			} elseif ( $this->_getAUPversion() >= '1.5.12' ) {
-				$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( 'plgaup_kunena_topic_create' );
-				if ($ruleEnabled) {
-					AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_create', '', $message->id, $datareference );
-				} else {
-					return;
-				}
+			$referreid = AlphaUserPointsHelper::getReferreid( $message->userid );
+			if ( $this->_checkRuleEnabled( 'plgaup_kunena_topic_create' ) ) {
+				// AUP >= 1.5.12
+				AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_create', $referreid, $message->id, $datareference );
+			} elseif ( $this->_checkRuleEnabled( 'plgaup_newtopic_kunena' ) ) {
+				// AUP <= 1.5.11
+				AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', $referreid, $message->id, $datareference );
 			}
 		}
+		return true;
 	}
 
 	public function onAfterReply($message) {
 		// Check for permisions of the current category - activity only if public or registered
-		$category = $message->getCategory();
-		if ($category->pub_access == 0 || $category->pub_access == - 1) {
-			require_once KPATH_SITE.'/lib/kunena.link.class.php';
+		if ( $this->_checkPermissions($message) ) {
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
-			if ($this->_config->alphauserpointsnumchars > 0) {
-				// use if limit chars for a response
-				if (JString::strlen ( $message->message ) > $this->_config->alphauserpointsnumchars) {
-					if ( $this->_getAUPversion() < '1.5.12' ) {
-						$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( 'plgaup_reply_kunena' );
-						if ($ruleEnabled) {
-							AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->id, $datareference );
-						} else {
-							return;
-						}
-					} elseif ( $this->_getAUPversion() >= '1.5.12' ) {
-						$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( 'plgaup_kunena_topic_reply' );
-						if ($ruleEnabled) {
-							AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_reply', '', $message->id, $datareference );
-						} else {
-							return;
-						}
-					}
-				}
-			} else {
-				if ( $this->_getAUPversion() < '1.5.12' ) {
-					$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( 'plgaup_reply_kunena' );
-					if ($ruleEnabled) {
-						AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->id, $datareference );
-					} else {
-						return;
-					}
-				} elseif ( $this->_getAUPversion() >= '1.5.12' ) {
-					$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( 'plgaup_kunena_topic_reply' );
-					if ($ruleEnabled) {
-						AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_reply', '', $message->id, $datareference );
-					} else {
-						return;
-					}
+			$referreid = AlphaUserPointsHelper::getReferreid( $message->userid );
+			if ($this->_config->alphauserpointsnumchars == 0 || JString::strlen ( $message->message ) > $this->_config->alphauserpointsnumchars) {
+				if ( $this->_checkRuleEnabled( 'plgaup_kunena_topic_reply' ) ) {
+					// AUP >= 1.5.12
+					AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_reply', $referreid, $message->id, $datareference );
+				} elseif ( $this->_checkRuleEnabled( 'plgaup_reply_kunena' ) ) {
+					// AUP <= 1.5.11
+					AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', $referreid, $message->id, $datareference );
 				}
 			}
 		}
@@ -100,24 +64,15 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 
 	public function onAfterDelete($message) {
 		// Check for permisions of the current category - activity only if public or registered
-		$category = $message->getCategory();
-		if ($category->pub_access == 0 || $category->pub_access == - 1) {
+		if ( $this->_checkPermissions($message) ) {
 			$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $message->userid );
 			if ( $aupid ) {
-				if ( $this->_getAUPversion() < '1.5.12' ) {
-					$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( 'plgaup_delete_post_kunena' );
-					if ($ruleEnabled) {
-						AlphaUserPointsHelper::newpoints( 'plgaup_delete_post_kunena', $aupid);
-					} else {
-						return;
-					}
-				} elseif ( $this->_getAUPversion() >= '1.5.12' ) {
-					$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( 'plgaup_kunena_message_delete' );
-					if ($ruleEnabled) {
-						AlphaUserPointsHelper::newpoints( 'plgaup_kunena_message_delete', $aupid);
-					} else {
-						return;
-					}
+				if ( $this->_checkRuleEnabled( 'plgaup_kunena_message_delete' ) ) {
+					// AUP >= 1.5.12
+					AlphaUserPointsHelper::newpoints( 'plgaup_kunena_message_delete', $aupid);
+				} elseif ( $this->_checkRuleEnabled( 'plgaup_delete_post_kunena' ) ) {
+					// AUP <= 1.5.11
+					AlphaUserPointsHelper::newpoints( 'plgaup_delete_post_kunena', $aupid);
 				}
 			}
 		}
@@ -126,24 +81,19 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 	public function onAfterThankyou($target, $actor, $message) {
 		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_GOT' ).': ' . KunenaFactory::getUser($target)->username );
 		$infoRootUser = ( JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . KunenaFactory::getUser($actor)->username );
-		$category = $message->getCategory();
-		if ($category->pub_access == 0 || $category->pub_access == - 1) {
+		if ( $this->_checkPermissions($message) ) {
 			$auptarget = AlphaUserPointsHelper::getAnyUserReferreID( $target );
 			$aupactor = AlphaUserPointsHelper::getAnyUserReferreID( $actor );
 
 			if ( $this->_getAUPversion() < '1.5.12' ) {
 				$ruleName = 'plgaup_thankyou_kunena';
-				$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( $ruleName );
-				$usertargetpoints = intval($ruleEnabled[0]->content_items);
 			} elseif ( $this->_getAUPversion() >= '1.5.12' ) {
 				$ruleName = 'plgaup_kunena_message_thankyou';
-				$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( $ruleName );
-				$usertargetpoints = intval($ruleEnabled[0]->content_items);
-			} else {
-				return;
 			}
 
-			if ( $usertargetpoints && $ruleEnabled ) {
+			$usertargetpoints = intval($this->_getPointsOnThankyou($ruleName));
+
+			if ( $usertargetpoints && $this->_checkRuleEnabled($ruleName) ) {
 				// for target user
 				if ($auptarget) AlphaUserPointsHelper::newpoints($ruleName , $auptarget, '', $infoTargetUser, $usertargetpoints);
 				// for who has gived the thank you
@@ -182,5 +132,52 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		$userpoints = $_db->loadResult ();
 		KunenaError::checkDatabaseError ();
 		return $userpoints;
+	}
+
+	private function _checkPermissions($message) {
+		$category = $message->getCategory();
+		$accesstype = $category->accesstype;
+		if ($accesstype != 'none' && $accesstype != 'joomla.level') {
+			return false;
+		}
+		if (version_compare(JVERSION, '1.6','>')) {
+			// FIXME: Joomla 1.6 can mix up groups and access levels
+			if ($accesstype == 'joomla.level' && $category->access <= 2) {
+				return true;
+			} elseif ($category->pub_access == 1 || $category->pub_access == 2) {
+				return true;
+			} elseif ($category->admin_access == 1 || $category->admin_access == 2) {
+				return true;
+			}
+			return false;
+		} else {
+			// Joomla access levels: 0 = public,  1 = registered
+			// Joomla user groups:  29 = public, 18 = registered
+			if ($accesstype == 'joomla.level' && $category->access <= 1) {
+				return true;
+			} elseif ($category->pub_access == 0 || $category->pub_access == - 1 || $category->pub_access == 18 || $category->pub_access == 29) {
+				return true;
+			} elseif ($category->admin_access == 18 || $category->admin_access == 29) {
+				return true;
+			}
+			return false;
+		}
+	}
+
+	private function _checkRuleEnabled($ruleName) {
+		$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled($ruleName);
+		return (bool) $ruleEnabled[0]->published;
+	}
+
+	private function _getPointsOnThankyou($ruleName) {
+		$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled($ruleName);
+		if ($ruleEnabled[0]->published) {
+			if ( $this->_getAUPversion() < '1.6.0' ) {
+				return $ruleEnabled[0]->content_items;
+			} elseif ( $this->_getAUPversion() >= '1.6.0' ) {
+				return $ruleEnabled[0]->points2;
+			}
+		}
+		return;
 	}
 }

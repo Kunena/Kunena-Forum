@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.cache.handler.output' );
+jimport ( 'joomla.document.html.html' );
 
 /**
  * Common view

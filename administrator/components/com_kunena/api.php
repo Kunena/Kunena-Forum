@@ -68,7 +68,9 @@ function KunenaAutoload($class) {
 	$file .= '.php';
 	if (file_exists($file)) {
 		require_once $file;
+		return true;
 	}
+	return false;
 }
 
 // Kunena has been initialized

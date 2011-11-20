@@ -116,7 +116,7 @@ abstract class KunenaHtmlParser {
 		$params->set('ksource', 'kunena');
 		
 		$dispatcher = JDispatcher::getInstance();
-		JPluginHelper::importPlugin('content');
+		JPluginHelper::importPlugin('kunena');
 		$results = $dispatcher->trigger('onKunenaContentPrepare', array ('text', &$row, &$params, 0));
 		
 		$content = $row->text;

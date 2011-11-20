@@ -688,6 +688,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	protected function authoriseDelete($user) {
+		// FIXME: check also $config->userdeletetmessage parameter
 		if (!$user->isModerator($this->catid) && $this->getTopic()->last_post_id != $this->id) {
 			$this->setError (JText::_ ( 'COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER' ) );
 			return false;

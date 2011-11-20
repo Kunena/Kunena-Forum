@@ -176,7 +176,19 @@ abstract class KunenaRoute {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!$uri || (is_string($uri) && $uri[0] == '&')) {
 			if (!isset($current[$uri])) {
-				$current[$uri] = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )).$uri);
+				$get = array();
+				// Make sure that request URI is not broken
+				foreach (JRequest::get( 'get' ) as $key=>$value) {
+					if (preg_match('/[^a-z]/', $key)) continue;
+					if ($key == 'q' || $key == 'searchuser') {
+						// Allow all values
+					} elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
+						// Illegal value
+						continue;
+					}
+					$get[$key] = $value;
+				}
+				$current[$uri] = JURI::getInstance('index.php?'.http_build_query($get).$uri);
 				$current[$uri]->delVar ( 'Itemid' );
 				$current[$uri]->delVar ( 'defaultmenu' );
 				$current[$uri]->delVar ( 'language' );

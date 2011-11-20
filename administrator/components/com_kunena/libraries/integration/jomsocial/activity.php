@@ -42,6 +42,8 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		$act->cid = $message->thread;
 		$act->access = $this->getAccess($message->getCategory());
 
+		// Do not add private activities
+		if ($act->access > 20) return;
 		CFactory::load ( 'libraries', 'activities' );
 		CActivityStream::add ( $act );
 	}
@@ -67,6 +69,8 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		$act->cid = $message->thread;
 		$act->access = $this->getAccess($message->getCategory());
 
+		// Do not add private activities
+		if ($act->access > 20) return;
 		CFactory::load ( 'libraries', 'activities' );
 		CActivityStream::add ( $act );
 	}
@@ -85,40 +89,51 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		$act->cid = $thankyoutargetid;
 		$act->access = $this->getAccess($message->getCategory());
 
+		// Do not add private activities
+		if ($act->access > 20) return;
 		CFactory::load ( 'libraries', 'activities' );
 		CActivityStream::add ( $act );
 	}
 
 	protected function getAccess($category) {
 		// Activity access level: 0 = public, 20 = registered, 30 = friend, 40 = private
-
-		// TODO: add support for custom access types
-		if ($category->accesstype != 'none') return 40;
-
+		$accesstype = $category->accesstype;
+		if ($accesstype != 'none' && $accesstype != 'joomla.level') {
+			// Private
+			return 40;
+		}
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
-			if ($category->pub_access == 1) {
+			// FIXME: Joomla 1.6 can mix up groups and access levels
+			if (($accesstype == 'joomla.level' && $category->access == 1)
+					|| ($accesstype == 'none' && ($category->pub_access == 1 || $category->admin_access == 1))) {
 				// Public
-				return 0;
-			} elseif ($category->pub_access == 2) {
+				$access = 0;
+			} elseif (($accesstype == 'joomla.level' && $category->access == 2)
+					|| ($accesstype == 'none' && ($category->pub_access == 2 || $category->admin_access == 2))) {
 				// Registered
-				return 20;
+				$access = 20;
 			} else {
 				// Other groups (=private)
-				return 40;
+				$access = 40;
 			}
 		} else {
 			// Joomla 1.5
-			if ($category->pub_access == 0) {
+			// Joomla access levels: 0 = public,  1 = registered
+			// Joomla user groups:  29 = public, 18 = registered
+			if (($accesstype == 'joomla.level' && $category->access == 0)
+					|| ($accesstype == 'none' && ($category->pub_access == 0 || $category->pub_access == 29 || $category->admin_access == 29))) {
 				// Public
-				return 0;
-			} elseif ($category->pub_access == -1 || $category->pub_access == 18) {
+				$access = 0;
+			} elseif (($accesstype == 'joomla.level' && $category->access == 1)
+					|| ($accesstype == 'none' && ($category->pub_access == -1 || $category->pub_access == 18 || $category->admin_access == 18))) {
 				// Registered
-				return 20;
+				$access = 20;
 			} else {
 				// Other groups (=private)
-				return 40;
+				$access = 40;
 			}
 		}
+		return $access;
 	}
 }

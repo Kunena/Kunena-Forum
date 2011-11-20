@@ -184,8 +184,8 @@ class KunenaForumTopicPoll extends JObject {
 
 		if ($votes->new) {
 			// No votes
-			$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote)
-				VALUES({$this->_db->Quote($this->id)},{$this->_db->Quote($votes->userid)},{$this->_db->Quote($votes->votes)},{$this->_db->Quote($votes->lastvote)});";
+			$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote,lasttime)
+				VALUES({$this->_db->Quote($this->id)},{$this->_db->Quote($votes->userid)},{$this->_db->Quote($votes->votes)},{$this->_db->Quote($votes->lastvote)},{$this->_db->Quote($votes->lasttime)});";
 			$this->_db->setQuery($query);
 			$this->_db->query();
 			if (KunenaError::checkDatabaseError()) {
@@ -196,7 +196,7 @@ class KunenaForumTopicPoll extends JObject {
 		} else {
 			// Already voted
 			$query = "UPDATE #__kunena_polls_users
-				SET votes={$this->_db->Quote($votes->votes)},lastvote={$this->_db->Quote($votes->lastvote)}
+				SET votes={$this->_db->Quote($votes->votes)},lastvote={$this->_db->Quote($votes->lastvote)},lasttime={$this->_db->Quote($votes->lasttime)}
 				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($votes->userid)};";
 			$this->_db->setQuery($query);
 			$this->_db->query();

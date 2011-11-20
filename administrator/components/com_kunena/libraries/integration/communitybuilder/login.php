@@ -89,8 +89,8 @@ class KunenaLoginCommunityBuilder extends KunenaLogin {
 	}
 
 	public function getRegistrationURL() {
-		$usersConfig = JComponentHelper::getParams ( 'com_users' );
-		if ($usersConfig->get ( 'allowUserRegistration' ))
+		global $ueConfig;
+		if ($ueConfig['reg_admin_allowcbregistration'] == 1  || JComponentHelper::getParams ( 'com_users' )->get ( 'allowUserRegistration' ))
 			return cbSef ( 'index.php?option=com_comprofiler&task=registers' );
 	}
 

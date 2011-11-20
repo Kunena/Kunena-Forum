@@ -963,7 +963,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$params->set('ksource', 'kunena');
 				JPluginHelper::importPlugin('content');
 				$dispatcher = JDispatcher::getInstance();
-				$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
+				if (version_compare(JVERSION, '1.6','>')) {
+					// Joomla 1.6+
+					$results = $dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
+				} else {
+					// Joomla 1.5
+					$results = $dispatcher->trigger('onPrepareContent', array (&$article, &$params, 0));
+				}
 				$html = $article->text;
 			}
 		}

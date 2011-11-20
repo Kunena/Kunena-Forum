@@ -9,7 +9,7 @@
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>www.kunena.org</copyright>
 	<license>GNU/GPL</license>
-	<description>Kunena System Plugin -- Please do not unpublish or uninstall</description>
+	<description>PLG_SYSTEM_KUNENA_DESC</description>
 	<files>
 		<filename plugin="kunena">kunena.php</filename>
 	</files>

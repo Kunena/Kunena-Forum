@@ -56,11 +56,9 @@ class plgSystemKunena extends JPlugin {
 				// Joomla 1.5
 				$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
 			}
-			
-			$content = $row->text;
 		}
 		
-		return $content;
+		return $row->text;
 	}
 
 	// Joomla 1.5 support

@@ -31,8 +31,17 @@ class plgSystemKunena extends JPlugin {
 			// Joomla 1.5: Fix bugs and bad performance
 			$lang = JFactory::getLanguage();
 			if (JFactory::getApplication()->isAdmin()) {
+				// Load the missing language files in administration
 				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR);
+				if (JRequest::getCmd('option')=='com_plugins' && JRequest::getCmd('view')=='plugin' && JRequest::getCmd('task')=='edit') {
+					// Support for J!1.7 .sys language files
+					$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
+					$row = JTable::getInstance('plugin');
+					$row->load( (int) $cid[0] );
+					$lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', JPATH_ADMINISTRATOR );
+				}
 			} else {
+				// Never load language file
 				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang)."/{$lang->_lang}.com_kunena.ini";
 				$lang->_paths['com_kunena'][$filename] = 1;
 			}
@@ -45,10 +54,10 @@ class plgSystemKunena extends JPlugin {
 	public function onKunenaContentPrepare($context, &$row, &$params, $page = 0) {
 		$jcontentplugins = $this->params->get('jcontentplugins', false);
 		if ( $jcontentplugins ) {
-		
+
 			$dispatcher = JDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
-			
+
 			if (version_compare(JVERSION, '1.6','>')) {
 				// Joomla 1.6+
 				$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
@@ -57,7 +66,7 @@ class plgSystemKunena extends JPlugin {
 				$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
 			}
 		}
-		
+
 		return $row->text;
 	}
 

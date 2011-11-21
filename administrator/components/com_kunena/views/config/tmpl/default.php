@@ -1066,52 +1066,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 				</table>
 			</fieldset>
 			</dd>
-			<dt title="<?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?>"><?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?></dt>
-			<dd>
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_INTEGRATION_TITLE') ?></legend>
-					<table class="kadmin-adminform">
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_AVATAR') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_avatar']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_AVATAR_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_PROFILE') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_profile']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_PROFILE_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_PRIVATE') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_private']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_PRIVATE_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_activity']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT') ?></td>
-							<td align="left" valign="top"><input type="text" name="cfg_activity_limit" class="ksm-field"
-								value="<?php echo $this->escape($this->config->activity_limit);?>" /></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT_DESC') ?></td>
-						</tr>
-					</table>
-				</fieldset>
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_AUP_ALPHAUSERPOINTS'); ?></legend>
-					<table class="kadmin-adminform">
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY'); ?></td>
-							<td align="left" valign="top" width="25%"><input type="text"
-								name="cfg_alphauserpointsnumchars"
-								value="<?php echo $this->escape($this->config->alphauserpointsnumchars); ?>" /></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY_DESC'); ?></td>
-						</tr>
-					</table>
-				</fieldset>
-				</dd>
 				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_RSS') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_RSS') ?></dt>
 				<dd>
 				<fieldset>

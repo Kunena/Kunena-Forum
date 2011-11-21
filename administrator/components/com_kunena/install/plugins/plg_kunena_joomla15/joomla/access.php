@@ -1,7 +1,7 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Integration
+ * Kunena Plugin
+ * @package Kunena.Plugins
  * @subpackage Joomla15
  *
  * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
@@ -14,6 +14,12 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Access Control for Joomla 1.5
  */
 class KunenaAccessJoomla {
+	protected $params = null;
+
+	public function __construct($params) {
+		$this->params = $params;
+	}
+
 	/**
 	 * Get list of supported access types.
 	 *

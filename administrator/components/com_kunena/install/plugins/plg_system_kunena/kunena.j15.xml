@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
 <install version="1.5" type="plugin" group="system" method="upgrade">
-	<name>System - Kunena</name>
+	<name>System - Kunena Forum</name>
 	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
@@ -9,7 +9,7 @@
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>www.kunena.org</copyright>
 	<license>GNU/GPL</license>
-	<description>Kunena System Plugin -- Please do not unpublish or uninstall</description>
+	<description>PLG_SYSTEM_KUNENA_DESC</description>
 	<files>
 		<filename plugin="kunena">kunena.php</filename>
 	</files>

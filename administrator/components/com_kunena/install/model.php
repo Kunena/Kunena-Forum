@@ -459,10 +459,14 @@ class KunenaModelInstall extends JModel {
 
 	public function stepPlugins() {
 		$this->installPlugin('install/plugins/plg_system_kunena', 'system', 'kunena', true);
+		$this->installPlugin('install/plugins/plg_kunena_kunena', 'kunena', 'kunena', true);
 		$this->installPlugin('install/plugins/plg_kunena_joomla15', 'kunena', 'joomla', true);
 		$this->installPlugin('install/plugins/plg_kunena_joomla16', 'kunena', 'joomla', true);
+		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false);
 		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false);
 		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false);
+		$this->installPlugin('install/plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false);
+		$this->installPlugin('install/plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false);
 
 		if (! $this->getError ())
 			$this->setStep ( $this->getStep()+1 );

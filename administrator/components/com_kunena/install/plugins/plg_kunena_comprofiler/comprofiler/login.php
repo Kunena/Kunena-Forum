@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration.CommunityBuilder
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage Comprofiler
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -11,15 +11,10 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaLoginComprofiler {
-	protected $joomlalogin = null;
-	protected $integration = null;
+	protected $params = null;
 
-	public function __construct() {
-		$this->integration = KunenaIntegration::getInstance ('communitybuilder');
-		if (! $this->integration || ! $this->integration->isLoaded())
-			return;
-		$this->joomlalogin = KunenaLogin::getInstance('joomla');
-		$this->priority = 50;
+	public function __construct($params) {
+		$this->params = $params;
 	}
 
 	public function loginUser($username, $password, $rememberme, $return) {

@@ -1,7 +1,7 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Integration
+ * Kunena Plugin
+ * @package Kunena.Plugins
  * @subpackage Joomla16
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
@@ -11,6 +11,11 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaLoginJoomla {
+	protected $params = null;
+
+	public function __construct($params) {
+		$this->params = $params;
+	}
 
 	public function loginUser($username, $password, $rememberme) {
 		$credentials = array('username' => $username, 'password' => $password);

@@ -9,10 +9,36 @@
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>www.kunena.org</copyright>
 	<license>GNU/GPL</license>
-	<description>Kunena Integration Plugin for CommunityBuilder.</description>
+	<description>PLG_KUNENA_COMPROFILER_DESCRIPTION</description>
 	<files>
 		<filename plugin="comprofiler">comprofiler.php</filename>
 		<filename>index.html</filename>
 		<folder>comprofiler</folder>
 	</files>
+	<params>
+		<param name="access" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_ACCESS" description="PLG_KUNENA_COMPROFILER_ACCESS_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+		<param name="login" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_LOGIN" description="PLG_KUNENA_COMPROFILER_LOGIN_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+		<param name="activity" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_ACTIVITY" description="PLG_KUNENA_COMPROFILER_ACTIVITY_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+		<param name="avatar" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_AVATAR" description="PLG_KUNENA_COMPROFILER_AVATAR_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+		<param name="profile" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_PROFILE" description="PLG_KUNENA_COMPROFILER_PROFILE_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+		<param name="private" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_PRIVATE" description="PLG_KUNENA_COMPROFILER_PRIVATE_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+	</params>
 </install>

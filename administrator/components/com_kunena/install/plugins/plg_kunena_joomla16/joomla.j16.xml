@@ -16,4 +16,18 @@
 		<filename>login.php</filename>
 		<filename>index.html</filename>
 	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="access" type="radio" default="1" label="PLG_KUNENA_JOOMLA_ACCESS" description="PLG_KUNENA_JOOMLA_ACCESS_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+				<field name="login" type="radio" default="1" label="PLG_KUNENA_JOOMLA_LOGIN" description="PLG_KUNENA_JOOMLA_LOGIN_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </extension>

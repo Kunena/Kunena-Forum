@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena System Plugin
- * @package Kunena.Integration
- * @subpackage Joomla16
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage UddeIM
  *
  * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -38,7 +38,6 @@ class plgKunenaUddeIM extends JPlugin {
 		if (!$this->params->get('private', 1)) return;
 
 		require_once "{$this->path}/private.php";
-		return new KunenaPrivateUddeIM();
+		return new KunenaPrivateUddeIM($this->params);
 	}
-
 }

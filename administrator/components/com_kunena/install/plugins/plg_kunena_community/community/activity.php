@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration.JomSocial
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage Community
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,17 +10,22 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class KunenaActivityCommunity extends KunenaActivity {
+jimport('joomla.utilities.string');
 
-	public function __construct() {
-		$this->_config = KunenaFactory::getConfig ();
+class KunenaActivityCommunity extends KunenaActivity {
+	protected $params = null;
+
+	public function __construct($params) {
+		$this->params = $params;
 	}
 
 	public function onAfterPost($message) {
-		CFactory::load ( 'libraries', 'userpoints' );
-		CUserPoints::assignPoint ( 'com_kunena.thread.new' );
+		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+			CFactory::load ( 'libraries', 'userpoints' );
+			CUserPoints::assignPoint ( 'com_kunena.thread.new' );
+		}
 
-		$content = KunenaHtmlParser::plainBBCode($message->message, $this->_config->activity_limit);
+		$content = KunenaHtmlParser::plainBBCode($message->message, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
 		$content .= '<br /><a rel="nofollow" href="'.
@@ -44,10 +49,12 @@ class KunenaActivityCommunity extends KunenaActivity {
 	}
 
 	public function onAfterReply($message) {
-		CFactory::load ( 'libraries', 'userpoints' );
-		CUserPoints::assignPoint ( 'com_kunena.thread.reply' );
+		if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+			CFactory::load ( 'libraries', 'userpoints' );
+			CUserPoints::assignPoint ( 'com_kunena.thread.reply' );
+		}
 
-		$content = KunenaHtmlParser::plainBBCode($message->message, $this->_config->activity_limit);
+		$content = KunenaHtmlParser::plainBBCode($message->message, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
 		$content .= '<br /><a rel="nofollow" href="'.

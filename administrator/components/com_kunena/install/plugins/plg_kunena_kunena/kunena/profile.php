@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration.Kunena
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage Kunena
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,8 +10,13 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class KunenaProfileKunena extends KunenaProfile
-{
+class KunenaProfileKunena extends KunenaProfile {
+	protected $params = null;
+
+	public function __construct($params) {
+		$this->params = $params;
+	}
+
 	public function getUserListURL($action='', $xhtml = true)
 	{
 		$config = KunenaFactory::getConfig ();

@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration.JomSocial
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage Community
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,8 +10,13 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class KunenaAvatarCommunity extends KunenaAvatar
-{
+class KunenaAvatarCommunity extends KunenaAvatar {
+	protected $params = null;
+
+	public function __construct($params) {
+		$this->params = $params;
+	}
+
 	public function load($userlist)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

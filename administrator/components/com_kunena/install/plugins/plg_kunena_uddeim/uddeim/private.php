@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration.UddeIM
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage UddeIM
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,11 +10,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class KunenaPrivateUddeIM extends KunenaPrivate
-{
+class KunenaPrivateUddeIM extends KunenaPrivate {
 	protected $uddeim = null;
+	protected $params = null;
 
-	public function __construct() {
+	public function __construct($params) {
+		$this->params = $params;
 		$this->uddeim = new uddeIMAPI();
 		if ($this->uddeim->version() < 1) return;
 	}

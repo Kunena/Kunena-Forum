@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration.JomSocial
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage Community
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -14,6 +14,11 @@ class KunenaAccessCommunity {
 	protected $categories = false;
 	protected $groups = false;
 	protected $tree = array();
+	protected $params = null;
+
+	public function __construct($params) {
+		$this->params = $params;
+	}
 
 	/**
 	 * Get list of supported access types.

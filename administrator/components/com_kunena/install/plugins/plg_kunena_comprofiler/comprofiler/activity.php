@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration.CommunityBuilder
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage Comprofiler
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -11,6 +11,11 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaActivityComprofiler extends KunenaActivity {
+	protected $params = null;
+
+	public function __construct($params) {
+		$this->params = $params;
+	}
 
 	public function getUserPoints($userid) {
 		$points = null;

@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration.Gravatar
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage Gravatar
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -11,9 +11,11 @@
 
 defined ( '_JEXEC' ) or die ();
 
-class KunenaAvatarGravatar extends KunenaAvatar
-{
-	public function __construct() {
+class KunenaAvatarGravatar extends KunenaAvatar {
+	protected $params = null;
+
+	public function __construct($params) {
+		$this->params = $params;
 		require_once dirname ( __FILE__ ) . '/gravatar.php';
 	}
 

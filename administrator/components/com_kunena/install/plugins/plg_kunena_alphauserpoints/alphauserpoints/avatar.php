@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration.AlphaUserPoints
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage AlphaUserPoints
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,8 +10,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class KunenaAvatarAlphaUserPoints extends KunenaAvatar
-{
+class KunenaAvatarAlphaUserPoints extends KunenaAvatar {
+	protected $params = null;
+
+	public function __construct($params) {
+		$this->params = $params;
+	}
 
 	public function getEditURL()
 	{

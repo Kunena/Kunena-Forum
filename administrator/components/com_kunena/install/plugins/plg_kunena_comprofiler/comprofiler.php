@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena System Plugin
- * @package Kunena.Integration
- * @subpackage Joomla16
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage Comprofiler
  *
  * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -56,7 +56,7 @@ class plgKunenaComprofiler extends JPlugin {
 		if (!$this->params->get('access', 1)) return;
 
 		require_once "{$this->path}/access.php";
-		return new KunenaAccessComprofiler();
+		return new KunenaAccessComprofiler($this->params);
 	}
 
 	/*
@@ -68,7 +68,7 @@ class plgKunenaComprofiler extends JPlugin {
 		if (!$this->params->get('login', 1)) return;
 
 		require_once "{$this->path}/login.php";
-		return new KunenaLoginComprofiler();
+		return new KunenaLoginComprofiler($this->params);
 	}
 
 	/*
@@ -80,7 +80,7 @@ class plgKunenaComprofiler extends JPlugin {
 		if (!$this->params->get('avatar', 1)) return;
 
 		require_once "{$this->path}/avatar.php";
-		return new KunenaAvatarComprofiler();
+		return new KunenaAvatarComprofiler($this->params);
 	}
 
 	/*
@@ -92,7 +92,7 @@ class plgKunenaComprofiler extends JPlugin {
 		if (!$this->params->get('profile', 1)) return;
 
 		require_once "{$this->path}/profile.php";
-		return new KunenaProfileComprofiler();
+		return new KunenaProfileComprofiler($this->params);
 	}
 
 	/*
@@ -104,7 +104,7 @@ class plgKunenaComprofiler extends JPlugin {
 		if (!$this->params->get('private', 1)) return;
 
 		require_once "{$this->path}/private.php";
-		return new KunenaPrivateComprofiler();
+		return new KunenaPrivateComprofiler($this->params);
 	}
 
 	/*
@@ -116,6 +116,6 @@ class plgKunenaComprofiler extends JPlugin {
 		if (!$this->params->get('activity', 1)) return;
 
 		require_once "{$this->path}/activity.php";
-		return new KunenaActivityComprofiler();
+		return new KunenaActivityComprofiler($this->params);
 	}
 }

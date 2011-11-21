@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Framework
- * @subpackage Integration.AlphaUserPoints
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage AlphaUserPoints
  *
  * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,9 +10,13 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+jimport('joomla.utilities.string');
+
 class KunenaActivityAlphaUserPoints extends KunenaActivity {
-	public function __construct() {
-		$this->_config = KunenaFactory::getConfig ();
+	protected $params = null;
+
+	public function __construct($params) {
+		$this->params = $params;
 	}
 
 	protected function _getAUPversion() {
@@ -27,12 +31,14 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		if ( $this->_checkPermissions($message) ) {
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
 			$referreid = AlphaUserPointsHelper::getReferreid( $message->userid );
-			if ( $this->_checkRuleEnabled( 'plgaup_kunena_topic_create' ) ) {
-				// AUP >= 1.5.12
-				AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_create', $referreid, $message->id, $datareference );
-			} elseif ( $this->_checkRuleEnabled( 'plgaup_newtopic_kunena' ) ) {
-				// AUP <= 1.5.11
-				AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', $referreid, $message->id, $datareference );
+			if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
+				if ( $this->_checkRuleEnabled( 'plgaup_kunena_topic_create' ) ) {
+					// AUP >= 1.5.12
+					AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_create', $referreid, $message->id, $datareference );
+				} elseif ( $this->_checkRuleEnabled( 'plgaup_newtopic_kunena' ) ) {
+					// AUP <= 1.5.11
+					AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', $referreid, $message->id, $datareference );
+				}
 			}
 		}
 		return true;
@@ -43,7 +49,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		if ( $this->_checkPermissions($message) ) {
 			$datareference = '<a rel="nofollow" href="' . KunenaRoute::_($message->getPermaUrl()) . '">' . $message->subject . '</a>';
 			$referreid = AlphaUserPointsHelper::getReferreid( $message->userid );
-			if ($this->_config->alphauserpointsnumchars == 0 || JString::strlen ( $message->message ) > $this->_config->alphauserpointsnumchars) {
+			if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 				if ( $this->_checkRuleEnabled( 'plgaup_kunena_topic_reply' ) ) {
 					// AUP >= 1.5.12
 					AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_reply', $referreid, $message->id, $datareference );

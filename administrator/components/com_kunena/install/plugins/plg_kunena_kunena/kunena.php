@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena System Plugin
- * @package Kunena.Integration
- * @subpackage Joomla16
+ * Kunena Plugin
+ * @package Kunena.Plugins
+ * @subpackage Kunena
  *
  * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -30,7 +30,7 @@ class plgKunenaKunena extends JPlugin {
 		if (!$this->params->get('avatar', 1)) return;
 
 		require_once "{$this->path}/avatar.php";
-		return new KunenaAvatarKunena();
+		return new KunenaAvatarKunena($this->params);
 	}
 
 	/*
@@ -42,6 +42,6 @@ class plgKunenaKunena extends JPlugin {
 		if (!$this->params->get('profile', 1)) return;
 
 		require_once "{$this->path}/profile.php";
-		return new KunenaProfileKunena();
+		return new KunenaProfileKunena($this->params);
 	}
 }

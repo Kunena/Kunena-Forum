@@ -27,6 +27,8 @@ class plgKunenaComprofiler extends JPlugin {
 		cbimport ( 'cb.field' );
 		global $ueConfig;
 
+		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR );
+
 		$app = JFactory::getApplication ();
 		if (! isset ( $ueConfig ['version'] )) {
 			$app->enqueueMessage ( COM_KUNENA_INTEGRATION_CB_WARN_GENERAL, 'notice' );
@@ -40,9 +42,9 @@ class plgKunenaComprofiler extends JPlugin {
 			return;
 		}
 		parent::__construct ( $subject, $config );
-		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR );
 
 		$this->path = dirname ( __FILE__ ) . '/comprofiler';
+		require_once "{$this->path}/integration.php";
 	}
 
 	/*
@@ -63,5 +65,45 @@ class plgKunenaComprofiler extends JPlugin {
 	public function onKunenaGetLogin() {
 		require_once "{$this->path}/login.php";
 		return new KunenaLoginComprofiler();
+	}
+
+	/*
+	 * Get Kunena avatar integration object.
+	 *
+	 * @return KunenaAvatar
+	 */
+	public function onKunenaGetAvatar() {
+		require_once "{$this->path}/avatar.php";
+		return new KunenaAvatarComprofiler();
+	}
+
+	/*
+	 * Get Kunena profile integration object.
+	 *
+	 * @return KunenaProfile
+	 */
+	public function onKunenaGetProfile() {
+		require_once "{$this->path}/profile.php";
+		return new KunenaProfileComprofiler();
+	}
+
+	/*
+	 * Get Kunena private message integration object.
+	 *
+	 * @return KunenaPrivate
+	 */
+	public function onKunenaGetPrivate() {
+		require_once "{$this->path}/private.php";
+		return new KunenaPrivateComprofiler();
+	}
+
+	/*
+	 * Get Kunena activity stream integration object.
+	 *
+	 * @return KunenaActivity
+	 */
+	public function onKunenaGetActivity() {
+		require_once "{$this->path}/activity.php";
+		return new KunenaActivityComprofiler();
 	}
 }

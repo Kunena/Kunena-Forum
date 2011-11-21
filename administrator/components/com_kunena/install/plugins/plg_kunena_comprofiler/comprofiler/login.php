@@ -11,16 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaLoginComprofiler {
-	protected $joomlalogin = null;
-	protected $integration = null;
-
-	public function __construct() {
-		$this->integration = KunenaIntegration::getInstance ('communitybuilder');
-		if (! $this->integration || ! $this->integration->isLoaded())
-			return;
-		$this->joomlalogin = KunenaLogin::getInstance('joomla');
-		$this->priority = 50;
-	}
 
 	public function loginUser($username, $password, $rememberme, $return) {
 		cbimport ( 'cb.authentication' );

@@ -11,30 +11,17 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaAccessComprofiler {
-	protected $joomlaAccess = null;
-	protected $integration = null;
-
-	public function __construct() {
-		$this->integration = KunenaIntegration::getInstance ('communitybuilder');
-		if (! $this->integration || ! $this->integration->isLoaded())
-			return;
-		$this->joomlaAccess = KunenaIntegration::initialize ( 'access', 'joomla');
-		$this->priority = 50;
-	}
-
 	public function loadAdmins() {
-		$list = $this->joomlaAccess->loadAdmins();
-		// TODO: add support into CB
+		$list = array();
 		$params = array ('list'=>&$list);
-		$this->integration->trigger ( 'loadAdmins', $params );
+		KunenaIntegrationComprofiler::trigger ( 'loadAdmins', $params );
 		return $this->storeAdmins($list);
 	}
 
 	public function loadModerators() {
-		$list = $this->joomlaAccess->loadModerators();
-		// TODO: add support into CB
+		$list = array();
 		$params = array ('list'=>&$list);
-		$this->integration->trigger ( 'loadModerators', $params );
+		KunenaIntegrationComprofiler::trigger ( 'loadModerators', $params );
 		return $this->storeModerators($list);
 	}
 
@@ -42,7 +29,7 @@ class KunenaAccessComprofiler {
 		$allowed = $this->joomlaAccess->getAllowedCategories($userid, $categories);
 		$allowed = implode(',', $allowed);
 		$params = array ($userid, &$allowed);
-		$this->integration->trigger ( 'getAllowedForumsRead', $params );
+		KunenaIntegrationComprofiler::trigger ( 'getAllowedForumsRead', $params );
 		return explode(',', $allowed);
 	}
 
@@ -55,7 +42,7 @@ class KunenaAccessComprofiler {
 		if ($category->accesstype == 'communitybuilder') {
 			// TODO: add support into CB
 			$params = array ($category, &$userids);
-			$this->integration->trigger ( 'checkSubscribers', $params );
+			KunenaIntegrationComprofiler::trigger ( 'checkSubscribers', $params );
 		} else {
 			$this->joomlaAccess->checkSubscribers($topic, $userids);
 		}

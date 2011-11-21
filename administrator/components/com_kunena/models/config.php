@@ -216,11 +216,6 @@ class KunenaAdminModelConfig extends KunenaModel {
 		// New for 1.6 -> Thank you button
 		$lists ['showthankyou'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showthankyou', 'class="inputbox" size="1"', 'value', 'text', $config->showthankyou );
 
-		$lists['integration_activity'] = KunenaIntegration::getConfigOptions('activity');
-		$lists['integration_avatar'] = KunenaIntegration::getConfigOptions('avatar');
-		$lists['integration_profile'] = KunenaIntegration::getConfigOptions('profile');
-		$lists['integration_private'] = KunenaIntegration::getConfigOptions('private');
-
 		$listUserDeleteMessage = array();
 		$listUserDeleteMessage[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_A_DELETEMESSAGE_NOT_ALLOWED'));
 		$listUserDeleteMessage[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_A_DELETEMESSAGE_ALLOWED_IF_REPLIES'));

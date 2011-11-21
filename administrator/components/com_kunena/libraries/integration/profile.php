@@ -10,37 +10,39 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once KPATH_ADMIN . '/libraries/integration/integration.php';
-
-abstract class KunenaProfile
+class KunenaProfile
 {
-	public $priority = 0;
-
 	protected static $instance = false;
-
-	abstract public function __construct();
 
 	static public function getInstance($integration = null) {
 		if (self::$instance === false) {
-			$config = KunenaFactory::getConfig ();
-			if (! $integration)
-				$integration = $config->integration_profile;
-			self::$instance = KunenaIntegration::initialize ( 'profile', $integration );
+			JPluginHelper::importPlugin('kunena');
+			$dispatcher = JDispatcher::getInstance();
+			$classes = $dispatcher->trigger('onKunenaGetProfile');
+			foreach ($classes as $class) {
+				if (!is_object($class)) continue;
+				self::$instance = $class;
+				break;
+			}
+			if (!self::$instance) {
+				self::$instance = new KunenaProfile();
+			}
 		}
 		return self::$instance;
 	}
-
-	public function open() {}
-	public function close() {}
-	public function trigger($event, &$params) {}
 
 	public function getTopHits($limit=0) {
 		if (!$limit) $limit = KunenaFactory::getConfig ()->popusercount;
 		return $this->_getTopHits($limit);
 	}
 
-	abstract public function getUserListURL($action='', $xhtml = true);
-	abstract public function getProfileURL($user, $task='', $xhtml = true);
-	abstract public function showProfile($userid, &$msg_params);
+	// TODO: remove these when we have right event
+	public function open() {}
+	public function close() {}
+	public function trigger() {}
+
+	public function getUserListURL($action='', $xhtml = true) {}
+	public function getProfileURL($user, $task='', $xhtml = true) {}
+	public function showProfile($userid, &$msg_params) {}
 	protected function _getTopHits($limit=0) {}
 }

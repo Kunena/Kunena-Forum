@@ -1,0 +1,42 @@
+<?php
+/**
+ * Kunena System Plugin
+ * @package Kunena.Integration
+ * @subpackage Joomla16
+ *
+ * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined ( '_JEXEC' ) or die ();
+
+class plgKunenaUddeIM extends JPlugin {
+	public function __construct(&$subject, $config) {
+		// Do not load if Kunena version is not supported or Kunena is offline
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
+
+		$path = JPATH_SITE."/components/com_uddeim/uddeim.api.php";
+		if (!is_file ( $path )) return;
+
+		include_once ($path);
+
+		$uddeim = new uddeIMAPI();
+		if ($uddeim->version() < 1) return;
+
+		parent::__construct ( $subject, $config );
+		$this->loadLanguage ( 'plg_kunena_uddeim.sys', JPATH_ADMINISTRATOR );
+
+		$this->path = dirname ( __FILE__ ) . '/uddeim';
+	}
+
+	/*
+	 * Get Kunena private message integration object.
+	 *
+	 * @return KunenaPrivate
+	 */
+	public function onKunenaGetPrivate() {
+		require_once "{$this->path}/private.php";
+		return new KunenaPrivateUddeIM();
+	}
+
+}

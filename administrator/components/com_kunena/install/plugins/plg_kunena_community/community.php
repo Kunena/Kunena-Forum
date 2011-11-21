@@ -45,4 +45,44 @@ class plgKunenaCommunity extends JPlugin {
 		require_once "{$this->path}/login.php";
 		return new KunenaLoginCommunity();
 	}
+
+	/*
+	 * Get Kunena avatar integration object.
+	 *
+	 * @return KunenaAvatar
+	 */
+	public function onKunenaGetAvatar() {
+		require_once "{$this->path}/avatar.php";
+		return new KunenaAvatarCommunity();
+	}
+
+	/*
+	 * Get Kunena profile integration object.
+	 *
+	 * @return KunenaProfile
+	 */
+	public function onKunenaGetProfile() {
+		require_once "{$this->path}/profile.php";
+		return new KunenaProfileCommunity();
+	}
+
+	/*
+	 * Get Kunena private message integration object.
+	 *
+	 * @return KunenaPrivate
+	 */
+	public function onKunenaGetPrivate() {
+		require_once "{$this->path}/private.php";
+		return new KunenaPrivateCommunity();
+	}
+
+	/*
+	 * Get Kunena activity stream integration object.
+	 *
+	 * @return KunenaActivity
+	 */
+	public function onKunenaGetActivity() {
+		require_once "{$this->path}/activity.php";
+		return new KunenaActivityCommunity();
+	}
 }

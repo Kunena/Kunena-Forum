@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<install version="1.5" type="plugin" group="kunena" method="upgrade">
+	<name>Kunena - UddeIM Integration</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>www.kunena.org</copyright>
+	<license>GNU/GPL</license>
+	<description>Kunena Integration Plugin for UddeIM.</description>
+	<files>
+		<filename plugin="uddeim">uddeim.php</filename>
+		<filename>index.html</filename>
+		<folder>uddeim</folder>
+	</files>
+</install>

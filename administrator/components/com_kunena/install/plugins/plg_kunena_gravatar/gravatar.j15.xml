@@ -9,10 +9,16 @@
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>www.kunena.org</copyright>
 	<license>GNU/GPL</license>
-	<description>Kunena Integration Plugin for Gravatars.</description>
+	<description>PLG_KUNENA_GRAVATAR_DESCRIPTION</description>
 	<files>
 		<filename plugin="gravatar">gravatar.php</filename>
 		<filename>index.html</filename>
 		<folder>gravatar</folder>
 	</files>
+	<params>
+		<param name="avatar" type="radio" default="1" label="PLG_KUNENA_GRAVATAR_AVATAR" description="PLG_KUNENA_GRAVATAR_AVATAR_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+	</params>
 </install>

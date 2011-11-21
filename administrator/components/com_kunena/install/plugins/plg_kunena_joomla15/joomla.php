@@ -32,6 +32,8 @@ class plgKunenaJoomla extends JPlugin {
 	 * @return KunenaAccess
 	 */
 	public function onKunenaGetAccessControl() {
+		if (!$this->params->get('access', 1)) return;
+
 		require_once "{$this->path}/access.php";
 		return new KunenaAccessJoomla();
 	}
@@ -42,6 +44,8 @@ class plgKunenaJoomla extends JPlugin {
 	 * @return KunenaLogin
 	 */
 	public function onKunenaGetLogin() {
+		if (!$this->params->get('login', 1)) return;
+
 		require_once "{$this->path}/login.php";
 		return new KunenaLoginJoomla();
 	}

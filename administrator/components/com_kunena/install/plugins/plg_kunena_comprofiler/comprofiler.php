@@ -53,6 +53,8 @@ class plgKunenaComprofiler extends JPlugin {
 	 * @return KunenaAccess
 	 */
 	public function onKunenaGetAccessControl() {
+		if (!$this->params->get('access', 1)) return;
+
 		require_once "{$this->path}/access.php";
 		return new KunenaAccessComprofiler();
 	}
@@ -63,6 +65,8 @@ class plgKunenaComprofiler extends JPlugin {
 	 * @return KunenaLogin
 	 */
 	public function onKunenaGetLogin() {
+		if (!$this->params->get('login', 1)) return;
+
 		require_once "{$this->path}/login.php";
 		return new KunenaLoginComprofiler();
 	}
@@ -73,6 +77,8 @@ class plgKunenaComprofiler extends JPlugin {
 	 * @return KunenaAvatar
 	 */
 	public function onKunenaGetAvatar() {
+		if (!$this->params->get('avatar', 1)) return;
+
 		require_once "{$this->path}/avatar.php";
 		return new KunenaAvatarComprofiler();
 	}
@@ -83,6 +89,8 @@ class plgKunenaComprofiler extends JPlugin {
 	 * @return KunenaProfile
 	 */
 	public function onKunenaGetProfile() {
+		if (!$this->params->get('profile', 1)) return;
+
 		require_once "{$this->path}/profile.php";
 		return new KunenaProfileComprofiler();
 	}
@@ -93,6 +101,8 @@ class plgKunenaComprofiler extends JPlugin {
 	 * @return KunenaPrivate
 	 */
 	public function onKunenaGetPrivate() {
+		if (!$this->params->get('private', 1)) return;
+
 		require_once "{$this->path}/private.php";
 		return new KunenaPrivateComprofiler();
 	}
@@ -103,6 +113,8 @@ class plgKunenaComprofiler extends JPlugin {
 	 * @return KunenaActivity
 	 */
 	public function onKunenaGetActivity() {
+		if (!$this->params->get('activity', 1)) return;
+
 		require_once "{$this->path}/activity.php";
 		return new KunenaActivityComprofiler();
 	}

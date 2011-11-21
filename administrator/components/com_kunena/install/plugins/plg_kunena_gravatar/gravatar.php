@@ -27,6 +27,8 @@ class plgKunenaGravatar extends JPlugin {
 	 * @return KunenaAvatar
 	 */
 	public function onKunenaGetAvatar() {
+		if (!$this->params->get('avatar', 1)) return;
+
 		require_once "{$this->path}/avatar.php";
 		return new KunenaAvatarGravatar();
 	}

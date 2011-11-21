@@ -15,4 +15,22 @@
 		<filename>index.html</filename>
 		<folder>alphauserpoints</folder>
 	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="activity" type="radio" default="1" label="PLG_KUNENA_ALPHAUSERPOINTS_ACTIVITY" description="PLG_KUNENA_ALPHAUSERPOINTS_ACTIVITY_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_ALPHAUSERPOINTS_AVATAR" description="PLG_KUNENA_ALPHAUSERPOINTS_AVATAR_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+				<field name="profile" type="radio" default="1" label="PLG_KUNENA_ALPHAUSERPOINTS_PROFILE" description="PLG_KUNENA_ALPHAUSERPOINTS_PROFILE_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </extension>

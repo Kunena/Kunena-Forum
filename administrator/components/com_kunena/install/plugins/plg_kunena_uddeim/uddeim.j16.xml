@@ -15,4 +15,14 @@
 		<filename>index.html</filename>
 		<folder>uddeim</folder>
 	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="private" type="radio" default="1" label="PLG_KUNENA_UDDEIM_PRIVATE" description="PLG_KUNENA_UDDEIM_PRIVATE_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </extension>

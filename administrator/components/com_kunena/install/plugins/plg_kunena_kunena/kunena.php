@@ -27,6 +27,8 @@ class plgKunenaKunena extends JPlugin {
 	 * @return KunenaAvatar
 	 */
 	public function onKunenaGetAvatar() {
+		if (!$this->params->get('avatar', 1)) return;
+
 		require_once "{$this->path}/avatar.php";
 		return new KunenaAvatarKunena();
 	}
@@ -37,6 +39,8 @@ class plgKunenaKunena extends JPlugin {
 	 * @return KunenaProfile
 	 */
 	public function onKunenaGetProfile() {
+		if (!$this->params->get('profile', 1)) return;
+
 		require_once "{$this->path}/profile.php";
 		return new KunenaProfileKunena();
 	}

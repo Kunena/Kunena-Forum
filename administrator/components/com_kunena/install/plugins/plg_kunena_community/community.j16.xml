@@ -15,4 +15,34 @@
 		<filename>index.html</filename>
 		<folder>community</folder>
 	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="access" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_ACCESS" description="PLG_KUNENA_COMMUNITY_ACCESS_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+				<field name="login" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_LOGIN" description="PLG_KUNENA_COMMUNITY_LOGIN_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+				<field name="activity" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_ACTIVITY" description="PLG_KUNENA_COMMUNITY_ACTIVITY_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_AVATAR" description="PLG_KUNENA_COMMUNITY_AVATAR_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+				<field name="profile" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_PROFILE" description="PLG_KUNENA_COMMUNITY_PROFILE_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+				<field name="private" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_PRIVATE" description="PLG_KUNENA_COMMUNITY_PRIVATE_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </extension>

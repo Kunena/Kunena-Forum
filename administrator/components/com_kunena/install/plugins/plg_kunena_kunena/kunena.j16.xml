@@ -15,4 +15,18 @@
 		<filename>index.html</filename>
 		<folder>kunena</folder>
 	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_KUNENA_AVATAR" description="PLG_KUNENA_KUNENA_AVATAR_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+				<field name="profile" type="radio" default="1" label="PLG_KUNENA_KUNENA_PROFILE" description="PLG_KUNENA_KUNENA_PROFILE_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </extension>

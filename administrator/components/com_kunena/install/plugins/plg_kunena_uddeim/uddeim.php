@@ -35,6 +35,8 @@ class plgKunenaUddeIM extends JPlugin {
 	 * @return KunenaPrivate
 	 */
 	public function onKunenaGetPrivate() {
+		if (!$this->params->get('private', 1)) return;
+
 		require_once "{$this->path}/private.php";
 		return new KunenaPrivateUddeIM();
 	}

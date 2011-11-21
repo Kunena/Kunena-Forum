@@ -9,10 +9,24 @@
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>www.kunena.org</copyright>
 	<license>GNU/GPL</license>
-	<description>Kunena Integration Plugin for AlphaUserPoints.</description>
+	<description>PLG_KUNENA_ALPHAUSERPOINTS_DESCRIPTION</description>
 	<files>
 		<filename plugin="alphauserpoints">alphauserpoints.php</filename>
 		<filename>index.html</filename>
 		<folder>alphauserpoints</folder>
 	</files>
+	<params>
+		<param name="activity" type="radio" default="1" label="PLG_KUNENA_ALPHAUSERPOINTS_ACTIVITY" description="PLG_KUNENA_ALPHAUSERPOINTS_ACTIVITY_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+		<param name="avatar" type="radio" default="1" label="PLG_KUNENA_ALPHAUSERPOINTS_AVATAR" description="PLG_KUNENA_ALPHAUSERPOINTS_AVATAR_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+		<param name="profile" type="radio" default="1" label="PLG_KUNENA_ALPHAUSERPOINTS_PROFILE" description="PLG_KUNENA_ALPHAUSERPOINTS_PROFILE_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+	</params>
 </install>

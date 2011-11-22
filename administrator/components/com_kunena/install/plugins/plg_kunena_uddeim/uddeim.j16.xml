@@ -19,8 +19,8 @@
 		<fields name="params">
 			<fieldset name="basic">
 				<field name="private" type="radio" default="1" label="PLG_KUNENA_UDDEIM_PRIVATE" description="PLG_KUNENA_UDDEIM_PRIVATE_DESC">
-					<option value="0">NO</option>
-					<option value="1">YES</option>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 			</fieldset>
 		</fields>

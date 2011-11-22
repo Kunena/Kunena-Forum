@@ -101,10 +101,19 @@ class KunenaAccess {
 	 */
 	public function getAccessOptions($category) {
 		$list = array();
-		foreach ($this->accesstypes['all'] as $access) {
+		foreach ($this->accesstypes['all'] as $type=>$access) {
 			if (method_exists($access, 'getAccessOptions')) {
 				$list += $access->getAccessOptions(null, $category);
 			}
+		}
+		// User has disabled access control
+		$key = preg_replace('/[^\w\d]/', '-', $category->accesstype);
+		if (!isset($list [$key])) {
+			$list [$key]['access'] = array(
+				'title' => JText::_('COM_KUNENA_ACCESS_UNKNOWN'),
+				'desc' => JText::sprintf('COM_KUNENA_ACCESS_UNKNOWN_DESC', $category->accesstype),
+				'input' => $category->access
+			);
 		}
 		return $list;
 	}
@@ -132,6 +141,7 @@ window.addEvent('domready', function(){
 });");
 		}
 
+		$exists = 0;
 		$accesstypes = array ();
 		foreach ($this->accesstypes as $type=>$list) {
 			if ($type == 'all') continue;
@@ -140,11 +150,17 @@ window.addEvent('domready', function(){
 					// TODO: change none type ->
 					$string = JText::_('COM_KUNENA_INTEGRATION_'.preg_replace('/[^\w\d]/', '_', $type=='none' ? 'joomla.group' : $type));
 					$accesstypes [$string] = JHTML::_ ( 'select.option', $type, $string );
+					$exists |= $type == $category->accesstype;
 					break;
 				}
 			}
 		}
 		ksort($accesstypes);
+		// User has disabled access control
+		if (!$exists) {
+			$string = JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $category->accesstype);
+			$accesstypes [$string] = JHTML::_ ( 'select.option', $category->accesstype, $string );
+		}
 		return JHTML::_ ( 'select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="2" onchange="javascript:kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype );
 	}
 
@@ -156,6 +172,8 @@ window.addEvent('domready', function(){
 	 * @param mixed		Group id.
 	 */
 	public function getGroupName($accesstype, $id) {
+		// TODO: unknown type, maybe we should output something?
+		if (!isset($this->accesstypes[$accesstype])) return JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
 		foreach ($this->accesstypes[$accesstype] as $access) {
 			if (method_exists($access, 'getGroupName')) {
 				return $access->getGroupName($accesstype, $id);

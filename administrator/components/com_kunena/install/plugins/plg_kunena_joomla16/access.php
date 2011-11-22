@@ -74,7 +74,7 @@ class KunenaAccessJoomla {
 			$html ['joomla-level']['access'] = array(
 				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_TITLE'),
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC') .'<br /><br />'. JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC_J16'),
-				'input' => JHTML::_('list.accesslevel', $accesstype == $category->accesstype ? $category : null)
+				'input' => JHtml::_('access.assetgrouplist', 'access', $category->accesstype == 'joomla.level' ? $category->access : 1)
 			);
 		}
 		if (!$accesstype || $accesstype == 'none') {

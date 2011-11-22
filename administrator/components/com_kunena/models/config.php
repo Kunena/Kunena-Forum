@@ -183,7 +183,18 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['highlightcode'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $config->highlightcode );
 		// New for 1.5.8 -> SEF
 		$lists ['sef'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sef', 'class="inputbox" size="1"', 'value', 'text', $config->sef );
-		$lists ['sefcats'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $config->sefcats );
+		$id_cat_list = array ();
+		$id_cat_list[] = JHTML::_('select.option', 'name', JText::_('COM_KUNENA_A_SEF_DISPLAY_CAT_NAME'));
+		$id_cat_list[] = JHTML::_('select.option', 'id', JText::_('COM_KUNENA_A_SEF_DISPLAY_CAT_ID'));
+		$id_cat_list[] = JHTML::_('select.option', 'name-id', JText::_('COM_KUNENA_A_SEF_DISPLAY_CAT_NAME_ID'));
+		$id_cat_list[] = JHTML::_('select.option', 'id-name', JText::_('COM_KUNENA_A_SEF_DISPLAY_CAT_ID_NAME'));
+		$lists ['sefcats'] = JHTML::_ ( 'select.genericlist', $id_cat_list, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $config->sefcats );
+		$id_topic_list = array ();
+		$id_topic_list[] = JHTML::_('select.option', 'name', JText::_('COM_KUNENA_A_SEF_DISPLAY_TOPIC_NAME'));
+		$id_topic_list[] = JHTML::_('select.option', 'id', JText::_('COM_KUNENA_A_SEF_DISPLAY_TOPIC_ID'));
+		$id_topic_list[] = JHTML::_('select.option', 'id-name', JText::_('COM_KUNENA_A_SEF_DISPLAY_TOPIC_ID_NAME'));
+		$id_topic_list[] = JHTML::_('select.option', 'name-id', JText::_('COM_KUNENA_A_SEF_DISPLAY_TOPIC_NAME_ID'));
+		$lists ['seftopics'] = JHTML::_ ( 'select.genericlist', $id_topic_list, 'cfg_seftopics', 'class="inputbox" size="1"', 'value', 'text', $config->seftopics );
 		$lists ['sefutf8'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sefutf8', 'class="inputbox" size="1"', 'value', 'text', $config->sefutf8 );
 		// New for 1.6 -> Hide images and files for guests
 		$lists['showimgforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $config->showimgforguest);

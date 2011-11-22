@@ -18,6 +18,8 @@ class KunenaAdminViewPrune extends KunenaView {
 		$this->setToolBarDefault();
 		$this->forumList = $this->get('Forumlist');
 		$this->listtrashdelete = $this->get('Listtrashdelete');
+		$this->controloptions = $this->get('ControlOptions');
+		$this->optionsdeletestickies = $this->get('DeleteStickies');
 
 		$this->display ();
 	}

@@ -111,7 +111,7 @@ class KunenaAccess {
 		if (!isset($list [$key])) {
 			$list [$key]['access'] = array(
 				'title' => JText::_('COM_KUNENA_ACCESS_UNKNOWN'),
-				'desc' => JText::_('COM_KUNENA_ACCESS_UNKNOWN_DESC'),
+				'desc' => JText::sprintf('COM_KUNENA_ACCESS_UNKNOWN_DESC', $category->accesstype),
 				'input' => $category->access
 			);
 		}

@@ -126,6 +126,8 @@ class KunenaForum {
 	public static function enabled() {
 		return false;
 	}
+
+	public function display($viewName, $layout='default', $template=null, $params = array()) {}
 }
 
 // Kunena has been initialized

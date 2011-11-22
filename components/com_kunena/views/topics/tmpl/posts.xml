@@ -11,11 +11,11 @@
 		<description>COM_KUNENA_MENU_TOPICS_POSTS_DESC_LONG</description>
 		<url>
 			<param name="mode" type="list" default="recent" label="COM_KUNENA_MENU_SELECTEDVIEW">
-				<option value="recent">COM_KUNENA_MENU_RECENT_POSTS</option>
-				<option value="thankyou">COM_KUNENA_MENU_THANKYOU_POSTS</option>
-				<option value="mythanks">COM_KUNENA_MENU_MYTHANKS_POSTS</option>
-				<option value="unapproved">COM_KUNENA_MENU_UNAPROVED_POSTS</option>
-				<option value="deleted">COM_KUNENA_MENU_DELETED_POSTS</option>
+				<option value="recent">COM_KUNENA_POSTS_MODE_OPTION_RECENT</option>
+				<option value="thankyou">COM_KUNENA_POSTS_MODE_OPTION_THANKYOU</option>
+				<option value="mythanks">COM_KUNENA_POSTS_MODE_OPTION_MYTHANKS</option>
+				<option value="unapproved">COM_KUNENA_POSTS_MODE_OPTION_UNAPROVED</option>
+				<option value="deleted">COM_KUNENA_POSTS_MODE_OPTION_DELETED</option>
 			</param>
 			<param name="userid" type="text" default="" label="COM_KUNENA_MENU_USER"/>
 		</url>
@@ -45,14 +45,14 @@
 	
 	<!-- Joomla 1.6 Support -->
 	<!-- Add fields to the request variables for the layout. -->
-	<fields>
+	<fields name="request">
 		<fieldset name="request">
 			<field name="mode" type="list" default="recent" label="COM_KUNENA_MENU_SELECTEDVIEW">
-				<option value="recent">COM_KUNENA_MENU_RECENT_POSTS</option>
-				<option value="thankyou">COM_KUNENA_MENU_THANKYOU_POSTS</option>
-				<option value="mythanks">COM_KUNENA_MENU_MYTHANKS_POSTS</option>
-				<option value="unapproved">COM_KUNENA_MENU_UNAPROVED_POSTS</option>
-				<option value="deleted">COM_KUNENA_MENU_DELETED_POSTS</option>
+				<option value="recent">COM_KUNENA_POSTS_MODE_OPTION_RECENT</option>
+				<option value="thankyou">COM_KUNENA_POSTS_MODE_OPTION_THANKYOU</option>
+				<option value="mythanks">COM_KUNENA_POSTS_MODE_OPTION_MYTHANKS</option>
+				<option value="unapproved">COM_KUNENA_POSTS_MODE_OPTION_UNAPROVED</option>
+				<option value="deleted">COM_KUNENA_POSTS_MODE_OPTION_DELETED</option>
 			</field>
 			<field name="userid" type="text" default="" label="COM_KUNENA_MENU_USER"/>
 		</fieldset>

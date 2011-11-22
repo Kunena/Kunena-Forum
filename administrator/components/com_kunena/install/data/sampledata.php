@@ -115,10 +115,10 @@ function installSampleData()
 	if (version_compare(JVERSION, '1.6','>')) {
 		// Joomla 1.6+
 		$query="INSERT INTO `#__kunena_categories`
-		(`id`, `parent_id`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`) VALUES
-		(1, 0, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE')).", 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0),
-		(2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE')).", 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).",1 ,1, 0),
-		(3, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE')).", 1, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).",0 ,0, 1);";
+		(`id`, `parent_id`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`, `last_topic_id`, `last_topic_subject`, `last_topic_posts`, `last_post_id`, `last_post_time`, `last_post_userid`, `last_post_message`, `last_post_guest_name`) VALUES
+		(1, 0, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE')).", 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0, 0, '', 0, 0, 0, 0, '', ''),
+		(2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE')).", 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).",1 ,1, 0, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_SUBJECT')).", 1, 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT')).", 'Kunena'),
+		(3, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE')).", 1, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).",0 ,0, 1, 0, '', 0, 0, 0, 0, '', '');";
 	} else {
 		// Joomla 1.5
 		$query="INSERT INTO `#__kunena_categories`
@@ -141,6 +141,12 @@ function installSampleData()
 	(1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT')).");";
 
 	$queries[] = array ('kunena_messages_text', $query);
+
+	$query="INSERT INTO `#__kunena_topics`
+	(`id`, `category_id`, `subject`, `posts`, `first_post_id`, `first_post_time`, `first_post_userid`, `first_post_message`, `first_post_guest_name`, `last_post_id`, `last_post_time`, `last_post_userid`, `last_post_message`, `last_post_guest_name`) VALUES
+	(1, 2, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_SUBJECT')).", 1, 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT')).", 'Kunena', 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT')).", 'Kunena');";
+
+	$queries[] = array ('kunena_topics', $query);
 
 	$counter = 0;
 	foreach ($queries as $query)

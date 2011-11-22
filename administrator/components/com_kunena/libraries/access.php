@@ -156,6 +156,7 @@ window.addEvent('domready', function(){
 	 * @param mixed		Group id.
 	 */
 	public function getGroupName($accesstype, $id) {
+		if (!isset($this->accesstypes[$accesstype])) return;
 		foreach ($this->accesstypes[$accesstype] as $access) {
 			if (method_exists($access, 'getGroupName')) {
 				return $access->getGroupName($accesstype, $id);

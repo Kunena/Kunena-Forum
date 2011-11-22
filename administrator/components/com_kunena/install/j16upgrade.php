@@ -116,7 +116,7 @@ class jUpgradeComponentKunena extends jUpgrade {
 			if (!isset($menuitem->query['view'])) continue;
 			$update = false;
 			switch ($menuitem->query['view']) {
-				case 'entrypage':
+				case 'home':
 					// Update default menu item
 					if (!empty($menuitem->query['defaultmenu'])) {
 						$menuitem->query['defaultmenu'] = $menumap[$menuitem->query['defaultmenu']]->new;
@@ -142,11 +142,18 @@ class jUpgradeComponentKunena extends jUpgrade {
 				if (!$success) echo "ERROR";
 			}
 		}
-		// Delete old manifest file
+		// Replace Joomla! 1.5 manifest file with Joomla! 1.6+ version
 		jimport('joomla.filesystem.file');
-		if (file_exists(JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.j16.xml')) {
-			JFile::delete(JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.xml');
-			JFile::move(JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.j16.xml', JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.xml');
+		$manifest16 = JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.j16.xml';
+		$manifest15 = JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.xml';
+		if (file_exists($manifest16)) {
+			$content = file_get_contents($manifest16);
+			// Take care of SVN install
+			$content = preg_replace('/@kunenaversion@/', preg_replace('/-SVN/i', '', KunenaForum::version()), $content);
+			$content = preg_replace('/@kunenaversiondate@/', KunenaForum::versionDate(), $content);
+			$content = preg_replace('/@kunenaversionname@/', KunenaForum::versionName(), $content);
+			JFile::write($manifest15, $content);
+			JFile::delete($manifest16);
 		}
 
 		jimport('joomla.plugin.helper');
@@ -161,8 +168,8 @@ class jUpgradeComponentKunena extends jUpgrade {
 		// Start Kunena installer
 		require_once dirname ( __FILE__ ) . '/model.php';
 		$kunena = new KunenaModelInstall();
-		// Install system plugin
-		$kunena->installSystemPlugin();
+		// Install all plugins
+		$kunena->stepPlugins();
 		// Install English language
 		$kunena->installLanguage('en-GB', 'English');
 
@@ -213,6 +220,9 @@ class jUpgradeComponentKunena extends jUpgrade {
 					// User groups
 					$row['pub_access'] = $this->mapUserGroup($row['pub_access']);
 				}
+			} elseif ($row['accesstype'] == 'joomla.level') {
+				// Convert Joomla access levels
+				$row['access']++;
 			}
 		}
 		$this->setDestinationData($rows);

@@ -11,13 +11,13 @@
 		<description>COM_KUNENA_MENU_TOPICS_DEFAULT_DESC_LONG</description>
 		<url>
 			<param name="mode" type="list" default="replies" label="COM_KUNENA_MENU_SELECTEDVIEW">
-				<option value="replies">COM_KUNENA_MENU_REPLIES</option>
-				<option value="topics">COM_KUNENA_MENU_TOPICS</option>
-				<option value="noreplies">COM_KUNENA_MENU_NOREPLIES</option>
-				<option value="sticky">COM_KUNENA_MENU_STICKY</option>
-				<option value="locked">COM_KUNENA_MENU_LOCKED</option>
-				<option value="unapproved">COM_KUNENA_MENU_UNAPROVED</option>
-				<option value="deleted">COM_KUNENA_MENU_DELETED</option>
+				<option value="replies">COM_KUNENA_TOPICS_MODE_OPTION_REPLIES</option>
+				<option value="topics">COM_KUNENA_TOPICS_MODE_OPTION_TOPICS</option>
+				<option value="noreplies">COM_KUNENA_TOPICS_MODE_OPTION_NOREPLIES</option>
+				<option value="sticky">COM_KUNENA_TOPICS_MODE_OPTION_STICKY</option>
+				<option value="locked">COM_KUNENA_TOPICS_MODE_OPTION_LOCKED</option>
+				<option value="unapproved">COM_KUNENA_TOPICS_MODE_OPTION_UNAPROVED</option>
+				<option value="deleted">COM_KUNENA_TOPICS_MODE_OPTION_DELETED</option>
 			</param>
 		</url>
 		<params addpath="/administrator/components/com_kunena/libraries/form/elements">
@@ -48,13 +48,13 @@
 	<fields name="request">
 		<fieldset name="request">
 			<field name="mode" type="list" default="replies" label="COM_KUNENA_MENU_SELECTEDVIEW">
-				<option value="replies">COM_KUNENA_MENU_REPLIES</option>
-				<option value="topics">COM_KUNENA_MENU_TOPICS</option>
-				<option value="noreplies">COM_KUNENA_MENU_NOREPLIES</option>
-				<option value="sticky">COM_KUNENA_MENU_STICKY</option>
-				<option value="locked">COM_KUNENA_MENU_LOCKED</option>
-				<option value="unapproved">COM_KUNENA_MENU_UNAPROVED</option>
-				<option value="deleted">COM_KUNENA_MENU_DELETED</option>
+				<option value="replies">COM_KUNENA_TOPICS_MODE_OPTION_REPLIES</option>
+				<option value="topics">COM_KUNENA_TOPICS_MODE_OPTION_TOPICS</option>
+				<option value="noreplies">COM_KUNENA_TOPICS_MODE_OPTION_NOREPLIES</option>
+				<option value="sticky">COM_KUNENA_TOPICS_MODE_OPTION_STICKY</option>
+				<option value="locked">COM_KUNENA_TOPICS_MODE_OPTION_LOCKED</option>
+				<option value="unapproved">COM_KUNENA_TOPICS_MODE_OPTION_UNAPROVED</option>
+				<option value="deleted">COM_KUNENA_TOPICS_MODE_OPTION_DELETED</option>
 			</field>
 		</fieldset>
 	</fields>

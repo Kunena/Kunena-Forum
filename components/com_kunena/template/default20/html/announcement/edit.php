@@ -36,23 +36,23 @@ $document->addScriptDeclaration('// <![CDATA[
 				<?php echo JHTML::_( 'form.token' ); ?>
 
 					<div class="kactions"><?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></div>
-					<div>
+					<div class="kannouncement-box">
 						<label>
 							<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>:
 							<input class="klarge required" type="text" name="title" value="<?php echo $this->escape($this->announcement->title) ;?>"/>
 						</label>
 						<label>
 							<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT'); ?>:
-							<textarea class="ksmall required" rows="80" cols="4" name="sdescription"><?php echo $this->escape($this->announcement->sdescription); ?></textarea>
+							<textarea class="ksmall required" rows="80" cols="16" name="sdescription"><?php echo $this->escape($this->announcement->sdescription); ?></textarea>
 						</label>
 					</div>
-					<div>
+					<div class="kannouncement-longbox">
 						<label>
 							<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT'); ?>:
 							<textarea class="klarge" rows="80" cols="16" name="description"><?php echo $this->escape($this->announcement->description); ?></textarea>
 						</label>
 					</div>
-					<div>
+					<div class="kannouncement-datebox">
 						<label>
 							<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>:
 							<?php echo JHTML::_('calendar', $this->escape($this->announcement->created), 'created', 'addcreated');?>

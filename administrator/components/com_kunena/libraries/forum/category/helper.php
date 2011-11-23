@@ -331,7 +331,7 @@ class KunenaForumCategoryHelper {
 
 		// Update categories which have no published topics
 		$query = "UPDATE #__kunena_categories AS c
-			LEFT JOIN #__kunena_topics AS tt ON c.id=tt.category_id
+			LEFT JOIN #__kunena_topics AS tt ON c.id=tt.category_id AND tt.hold=0
 			SET c.numTopics=0,
 				c.numPosts=0,
 				c.last_topic_id=0,

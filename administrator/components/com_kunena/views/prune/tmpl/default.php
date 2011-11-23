@@ -28,16 +28,24 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				<td colspan="2"><?php echo JText::_('COM_KUNENA_A_PRUNE_DESC') ?></td>
 			</tr>
 			<tr>
+				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
+				<td><input type="text" name="prune_days" value="30" /><?php echo "&nbsp;". JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></td>
+			</tr>
+			<tr>
 				<td width="20%"><?php echo JText::_('COM_KUNENA_PRUNE_DELETEORTRASH') ?></td>
 				<td colspan="2"><?php echo $this->listtrashdelete ?></td>
 			</tr>
 			<tr>
 				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NAME') ?></td>
-				<td><?php echo $this->forumList?></td>
+				<td><?php echo $this->forumList ?></td>
 			</tr>
 			<tr>
-				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
-				<td><input type="text" name="prune_days" value="30" /><?php echo "&nbsp;". JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></td>
+				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_CONTROL_OPTIONS') ?></td>
+				<td><?php echo $this->controloptions ?></td>
+			</tr>
+			<tr>
+				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_KEEP_STICKY') ?></td>
+				<td><?php echo $this->keepSticky ?></td>
 			</tr>
 		</table>
 		</form>

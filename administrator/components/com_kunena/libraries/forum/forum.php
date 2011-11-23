@@ -92,6 +92,10 @@ class KunenaForum {
 		return !$config->board_offline;
 	}
 
+	public static function installed() {
+		return true;
+	}
+
 	// Internal functions
 
 	protected static function buildVersion() {

@@ -13,14 +13,18 @@ defined ( '_JEXEC' ) or die ();
 jimport('joomla.html.html');
 jimport('joomla.html.parameter.element');
 
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-
 JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
 
 class JElementKunenaCategoryList extends JElement {
 	var $_name = 'KunenaCategoryList';
 
 	function fetchElement($name, $value, &$node, $control_name) {
+		if (!class_exists('KunenaForum') || !KunenaForum::installed()) {
+			echo '<a href="index.php?option=com_kunena">PLEASE COMPLETE KUNENA INSTALLATION</a>';
+			return;
+		}
+		KunenaFactory::loadLanguage('com_kunena');
+
 		$none = $node->attributes ( 'none' );
 
 		$options = Array ();

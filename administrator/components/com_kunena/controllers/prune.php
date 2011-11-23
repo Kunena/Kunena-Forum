@@ -30,8 +30,9 @@ class KunenaAdminControllerPrune extends KunenaController {
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
-		$category = KunenaForumCategoryHelper::get(JRequest::getInt ( 'prune_forum', 0 ));
-		if (!$category->authorise('admin')) {
+
+		$categories = KunenaForumCategoryHelper::getCategories(JRequest::getVar ( 'prune_forum', array(0) ), false, 'admin');
+		if (!$categories) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CHOOSEFORUMTOPRUNE' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
@@ -43,23 +44,47 @@ class KunenaAdminControllerPrune extends KunenaController {
 
 		$trashdelete = JRequest::getInt( 'trashdelete', 0);
 
-		// Get up to 100 oldest topics to be deleted
-		$params = array(
-			'orderby'=>'tt.last_post_time ASC',
-			'where'=>"AND tt.last_post_time<{$prune_date} AND ordering=0",
-		);
-		list($count, $topics) = KunenaForumTopicHelper::getLatestTopics($category->id, 0, 100, $params);
-		$deleted = 0;
-		foreach ( $topics as $topic ) {
-			$deleted++;
-			if ( $trashdelete ) $topic->delete(false);
-			else $topic->trash();
+		$where = array();
+		$where[] = " AND tt.last_post_time < {$prune_date}";
+
+		$controloptions = JRequest::getString( 'controloptions', 0);
+		if ( $controloptions == 'answered' ) {
+			$where[] = 'AND tt.posts>1';
+		} elseif ( $controloptions == 'unanswered' ) {
+			$where[] = 'AND tt.posts=1';
+		} elseif( $controloptions == 'locked' ) {
+			$where[] = 'AND tt.locked>0';
+		} elseif( $controloptions == 'deleted' ) {
+			$where[] = 'AND tt.hold IN (2,3)';
+		} elseif( $controloptions == 'unapproved' ) {
+			$where[] = 'AND tt.hold=1';
+		} elseif( $controloptions == 'shadow' ) {
+			$where[] = 'AND tt.moved_id>0';
+		} elseif( $controloptions == 'normal' ) {
+			$where[] = 'AND tt.locked=0';
+		} elseif( $controloptions == 'all' ) {
+			// No filtering
+		} else {
+			$where[] = 'AND 0';
 		}
-		KunenaUserHelper::recount();
-		KunenaForumCategoryHelper::recount();
-		KunenaForumMessageAttachmentHelper::cleanup();
-		if ( $trashdelete ) $app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$deleted}/{$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
-		else $app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$deleted}/{$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
+
+		// Keep sticky topics?
+		if (JRequest::getInt( 'keepsticky', 1)) $where[] = ' AND tt.ordering=0';
+
+		$where = implode(' ', $where);
+
+		$params = array(
+			'where'=> $where,
+		);
+
+		$count = 0;
+		foreach ($categories as $category) {
+			if ( $trashdelete ) $count += $category->purge($prune_date, $params);
+			else $count += $category->trash($prune_date, $params);
+		}
+
+		if ( $trashdelete ) $app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
+		else $app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 }

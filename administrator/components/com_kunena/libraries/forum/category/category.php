@@ -368,51 +368,59 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 * Method to purge old topics from the category
 	 *
 	 * @access	public
-	 * @return	boolean	True on success
+	 * @return	boolean	Number of deleted topics
 	 * @since 1.6
 	 */
-	public function purge($time, $limit = 1000) {
+	public function purge($time, $params=array(), $limit = 1000) {
 		if (!$this->exists()) {
-			return true;
+			return 0;
 		}
 
+		$where = isset($params['where']) ? (string) $params['where'] : '';
+
 		$db = JFactory::getDBO ();
-		$query ="SELECT id FROM #__kunena_topics WHERE last_post_time < {$time} ORDER BY last_post_time ASC";
+		$query ="SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} {$where} ORDER BY tt.last_post_time ASC";
 		$db->setQuery($query, 0, $limit);
 		$ids = $db->loadResultArray();
 		KunenaError::checkDatabaseError ();
-		if (empty($ids)) return true;
+		if (empty($ids)) return 0;
 
-		$idlist = implode(',', $ids);
-		// Delete user topics
-		$queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id IN ({$idlist})";
-		// Delete user read
-		$queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id IN ({$idlist})";
-		// Delete thank yous
-		$queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.thread IN ({$idlist})";
-		// Delete poll users
-		$queries[] = "DELETE p FROM #__kunena_polls_users AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.topic_id IN ({$idlist}) AND tt.moved_id=0";
-		// Delete poll options
-		$queries[] = "DELETE p FROM #__kunena_polls_options AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.topic_id IN ({$idlist}) AND tt.moved_id=0";
-		// Delete polls
-		$queries[] = "DELETE p FROM #__kunena_polls AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.id WHERE tt.topic_id IN ({$idlist}) AND tt.moved_id=0";
-		// Delete messages
-		$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.thread IN ({$idlist})";
-		// TODO: delete attachments
-		// TODO: delete keywords
-		// Delete topics
-		$queries[] = "DELETE FROM #__kunena_topics WHERE id IN ({$idlist})";
+		$count = KunenaForumTopicHelper::delete($ids);
 
-		foreach ($queries as $query) {
-			$db->setQuery($query);
-			$db->query();
-			KunenaError::checkDatabaseError ();
+		KunenaUserHelper::recount();
+		KunenaForumCategoryHelper::recount($this->id);
+		KunenaForumMessageAttachmentHelper::cleanup();
+
+		return $count;
+	}
+
+	/**
+	 * Method to trash old topics from the category
+	 *
+	 * @access	public
+	 * @return	boolean	Number of deleted topics
+	 * @since 1.6
+	 */
+	public function trash($time, $params = array(), $limit = 1000) {
+		if (!$this->exists()) {
+			return 0;
 		}
+
+		$where = isset($params['where']) ? (string) $params['where'] : '';
+
+		$db = JFactory::getDBO ();
+		$query ="SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} AND tt.hold!=2 {$where} ORDER BY tt.last_post_time ASC";
+		$db->setQuery($query, 0, $limit);
+		$ids = $db->loadResultArray();
+		KunenaError::checkDatabaseError ();
+		if (empty($ids)) return 0;
+
+		$count = KunenaForumTopicHelper::trash($ids);
 
 		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount($this->id);
 
-		return true;
+		return $count;
 	}
 
 	/**

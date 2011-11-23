@@ -972,11 +972,11 @@ body {line-height:1.5;}
 #kunena div.kwhosonline-smicon {
 	display: block;
 	float:left;
-	padding: 10px;
-	width: 48px;
+	padding: 20px 10px 10px 10px;
+	width: 35px;
 }
 #kunena div.kwhosonline-users {
-	padding: 10px 0 10px 10px;
+	padding: 10px;
 	display: block;
 	float:left;
 }
@@ -985,8 +985,8 @@ body {line-height:1.5;}
 }
 #kunena span.kwho-smicon {
 	display:block;
-	height: 48px;
-	width: 48px;
+	height: 32px;
+	width: 32px;
 	background: url("../images/icon-whosonline.png") no-repeat;
 }
 #kunena .kwhosonline-subtitle {

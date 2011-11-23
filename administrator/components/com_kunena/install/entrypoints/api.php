@@ -127,6 +127,10 @@ class KunenaForum {
 		return false;
 	}
 
+	public static function installed() {
+		return false;
+	}
+
 	public function display($viewName, $layout='default', $template=null, $params = array()) {}
 }
 

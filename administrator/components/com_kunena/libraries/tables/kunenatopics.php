@@ -100,5 +100,20 @@ class TableKunenaTopics extends KunenaTable
 		}
 		return ($this->getError () == '');
 	}
+	
+	function hit() {
+		$k = $this->_tbl_key;
+		$query = "UPDATE #__kunena_topics SET hits=hits+1 WHERE id = {$this->$k}";
+		$this->_db->setQuery($query);
+		$this->_db->Query();
+		
+		// Check for an error message.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+		
+		return true;
+	}
 
 }

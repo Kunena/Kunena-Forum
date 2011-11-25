@@ -59,8 +59,21 @@ class KunenaViewTopic extends KunenaView {
 			return $this->displayNoAccess($errors);
 		}
 
-		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+		$messages	=& $this->get ( 'Messages' ) ;
+		$totals		= $this->get ( 'Total' );
+
+		// Run events
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', &$messages, &$params, 0));
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', array( &$this->topic ), &$params, 0));
+		
+		// Assign variables to template
+		$this->assignRef ( 'messages', $messages );
+		$this->assignRef ( 'total', $totals );
 
 		// If page does not exist, redirect to the last page
 		if ($this->total <= $this->state->get('list.start')) {

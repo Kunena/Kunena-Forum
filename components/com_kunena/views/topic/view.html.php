@@ -61,16 +61,17 @@ class KunenaViewTopic extends KunenaView {
 
 		$messages	=& $this->get ( 'Messages' ) ;
 		$totals		= $this->get ( 'Total' );
-
+		
 		// Run events
 		$params = new JParameter( '' );
 		$params->set('ksource', 'kunena');
 
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', &$messages, &$params, 0));
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', array( &$this->topic ), &$params, 0));
-		
+
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', $this->topic, &$params, 0));
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$messages, &$params, 0));
+
 		// Assign variables to template
 		$this->assignRef ( 'messages', $messages );
 		$this->assignRef ( 'total', $totals );
@@ -90,8 +91,7 @@ class KunenaViewTopic extends KunenaView {
 
 		// Mark topic read
 		$this->topic->markRead ();
-		$this->topic->hits++;
-		$this->topic->save();
+		$this->topic->hit ();
 
 		// Check is subscriptions were sent and reset the value
 		if ($this->topic->authorise('subscribe')) {

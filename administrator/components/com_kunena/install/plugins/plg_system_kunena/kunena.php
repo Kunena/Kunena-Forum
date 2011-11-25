@@ -70,28 +70,43 @@ class plgSystemKunena extends JPlugin {
 	 */
 	//
 	public function onKunenaContentPrepare($context, &$items, &$params, $page = 0) {
-		if ( !is_array( $items )) {
-			// no objects
-			return false;
-		}
-
 		$jcontentevent			= (int) $this->params->get('jcontentevents', false);
 		$jcontentevent_target	= (array) $this->params->get('jcontentevent_target', array('body'));
-
+		
 		if ( $jcontentevent ) {
 			switch ( $context ) {
+			
+				// Object KunenaForumTopic
 				case 'kunena.topic':
+					
+					if ( in_array('title', $jcontentevent_target) ) {
+							$this->runJoomlaContentEvent( &$items->subject, &$params, &$page );
+					}
+					if ( in_array('body', $jcontentevent_target) ) {
+							$this->runJoomlaContentEvent( &$items->first_post_message, &$params, &$page );
+							$this->runJoomlaContentEvent( &$items->last_post_message, &$params, &$page );
+					}
+					break;
+					
+				// Object KunenaForumMessage
+				case 'kunena.message':
+					$items = array( $items );
+					
+				// Array of KunenaForumMessage
+				case 'kunena.messages':
+					if ( !is_array( $items )) {
+						break;
+					}
 					// Run events on all objects
 					foreach ( $items as $item ) {
 						if ( in_array('title', $jcontentevent_target) ) {
 							$this->runJoomlaContentEvent( &$item->subject, &$params, &$page );
 						}
 						if ( in_array('body', $jcontentevent_target) ) {
-							$this->runJoomlaContentEvent( &$item->first_post_message, &$params, &$page );
-							$this->runJoomlaContentEvent( &$item->last_post_message, &$params, &$page );
 							$this->runJoomlaContentEvent( &$item->message, &$params, &$page );
 						}
 					}
+					
 					break;
 				default:
 			}

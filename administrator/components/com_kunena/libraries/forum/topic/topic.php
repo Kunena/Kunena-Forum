@@ -202,6 +202,16 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return $this->hits;
 	}
 
+	public function hit() {
+		// Update only hit - not entire object
+		$table = $this->getTable();
+		$table->id = $this->id;
+		
+		if ( $table->hit() ) {
+			$this->hits++;
+		}
+	}
+	
 	public function getPagination($limitstart=0, $limit=6, $display=4, $prefix='') {
 		if (!$this->_pagination) {
 			$this->_pagination = new KunenaHtmlPagination($this->posts, $limitstart, $limit, $prefix);

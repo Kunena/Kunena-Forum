@@ -262,7 +262,7 @@ class KunenaModelSearch extends KunenaModel {
 		KunenaUserHelper::loadUsers($userids);
 		KunenaForumMessageHelper::loadLocation($this->messages);
 
-		if ( empty($this->messages) ) $this->app->enqueueMessage( JText::_('COM_KUNENA_SEARCH_NORESULTS_FOUND'));
+		if ( empty($this->messages) ) $this->app->enqueueMessage( JText::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', $q));
 
 		return $this->messages;
 	}

@@ -315,10 +315,11 @@
 					WHERE u.moderator='1' AND (m.catid IS NULL OR c.moderated='1')
 				ON DUPLICATE KEY UPDATE role=1
 			</query>
-			<!-- query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP `moderated`;</query -->
-			<!-- query>DROP TABLE IF EXISTS `#__kunena_moderation` </query -->
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+			<phpfile name="upgrade-2.0.0_aliases"></phpfile>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP `moderated`;</query>
+			<query>DROP TABLE IF EXISTS `#__kunena_moderation` </query>
 		</version>
 	</upgrade>
 </comupgrade>

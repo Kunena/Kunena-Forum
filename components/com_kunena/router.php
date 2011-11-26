@@ -23,17 +23,17 @@ class KunenaRouter {
 	// List of reserved views (if category name is one of these, use always catid)
 	// Contains array of default variable=>value pairs, which can be removed from URI
 	static $views = array (
-		'home'=>array(),
+		'announcement'=>array('layout'=>'default'),
 		'category'=>array('layout'=>'default', 'catid'=>'0'),
 		'common'=>array('layout'=>'default'),
 		'credits'=>array('layout'=>'default'),
+		'home'=>array(),
+		'misc'=>array('layout'=>'default'),
 		'search'=>array('layout'=>'default'),
 		'statistics'=>array('layout'=>'default'),
 		'topic'=>array('layout'=>'default'),
 		'topics'=>array('layout'=>'default'),
 		'user'=>array('layout'=>'default', 'userid'=>'0'),
-		'users'=>array('layout'=>'default'),
-		'misc'=>array('layout'=>'default'),
 	);
 	// Reserved layout names for category view
 	static $layouts = array ('create'=>1, 'default'=>1, 'edit'=>1, 'manage'=>1, 'moderate'=>1, 'user'=>1);
@@ -95,34 +95,36 @@ class KunenaRouter {
 
 	function loadCategories() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		$categories = KunenaForumCategoryHelper::getCategories();
+		$db = JFactory::getDbo();
+		$query = "SELECT * FROM #__kunena_aliases WHERE type='catid' AND state=1";
+		$db->setQuery ($query);
+		$aliases = $db->loadObjectList();
+
 		self::$catidcache = array();
-		foreach ($categories as $id=>$category) {
-			self::$catidcache[$id] = self::stringURLSafe ( $category->name );
+		foreach ($aliases as $alias) {
+			self::$catidcache[$alias->item] = $alias->alias;
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
-	function isCategoryConflict($menuitem, $catid, $catname) {
+
+	function findAlias($alias) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		if (isset ( self::$views[$catname] ) || isset ( self::$layouts[$catname] ) || isset ( self::$functions[$catname] ) ) {
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-			return true;
-		}
-		if (self::$catidcache === null) {
-			self::loadCategories ();
-		}
-		$keys = array_keys(self::$catidcache, $catname);
-		if (count($keys) == 1) return false;
-		if (!empty($menuitem->query['catid'])) {
-			$keys = array_flip($keys);
-			unset($keys[$catid]);
-			$categories = array_intersect_key($keys, KunenaForumCategoryHelper::getChildren($menuitem->query['catid']));
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-			return !empty($categories);
+		$db = JFactory::getDbo();
+		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->Quote($alias.'%')}";
+		$db->setQuery ($query);
+		$aliases = $db->loadObjectList();
+
+		foreach ($aliases as $object) {
+			if ($alias == $object->alias) {
+				$var = $object->type != 'legacy' ? $object->type : 'view';
+				$value = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
+				if ($var == 'catid') $vars ['view'] = 'category';
+				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+				return array($var, $value);
+			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		return true;
 	}
 
 	function filterOutput($str) {
@@ -218,7 +220,7 @@ function KunenaBuildRoute(&$query) {
 
 	// Support URIs like: /forum/12-my_category
 	if (!empty ( $query ['catid'] ) && ($view == 'category' || $view == 'topic' || $view == 'home')) {
-		// TODO: ensure that we have view=categories/category/topic
+		// TODO: ensure that we have view=category/topic
 		$catid = ( int ) $query ['catid'];
 		if ($catid) {
 			$numeric = true;
@@ -232,7 +234,7 @@ function KunenaBuildRoute(&$query) {
 			if (empty ( $catname )) {
 				// If category name is empty (or doesn't exist), use numeric catid
 				$segments [] = $catid;
-			} elseif (KunenaRoute::$config->sefcats && isset(KunenaRouter::$sefviews[$view]) && !KunenaRouter::isCategoryConflict($menuitem, $catid, $catname)) {
+			} elseif (KunenaRoute::$config->sefcats) {
 				// If there's no naming conflict, we can use category name
 				$segments [] = $catname;
 			} else {
@@ -321,71 +323,74 @@ function KunenaParseRoute($segments) {
 	// Fix bug in Joomla 1.5 when using /components/kunena instead /component/kunena
 	if (!$active && $segments[0] == 'kunena') array_shift ( $segments );
 
-	// Enable SEF category feature
+	// Enable new category SEF feature?
 	$sefcats = KunenaRoute::$config->sefcats && isset(KunenaRouter::$sefviews[$vars['view']]) && empty($vars ['id']);
 
 	// Handle all segments
 	while ( ($segment = array_shift ( $segments )) !== null ) {
+		// Skip //
+		if (!$segment) continue;
+
+		if ($sefcats) {
+			// Find out if we have SEF alias (category, view or layout)
+			$alias = strtr ( $segment, ':', '-' );
+			list($var, $value) = KunenaRouter::findAlias($alias);
+			if ($var && $value) {
+				$vars [$var] = $value;
+				continue;
+			}
+		}
+
+		$sefcats = false;
+
+		// Generate variable and value
 		$seg = explode ( ':', $segment );
 		$var = array_shift ( $seg );
 		$value = array_shift ( $seg );
 
+		if (empty ( $var ) && empty ( $value )) {
+			// Skip /-/
+			continue;
+		}
+
 		if (is_numeric ( $var )) {
+			// Handle variables starting by number
 			$value = (int) $var;
 			if ($vars['view'] == 'user') {
+				// Special case: User view
 				$var = 'userid';
+
+			} elseif (empty($vars ['catid'])) {
+				// First number is always category
+				$var = 'catid';
+				$vars ['view'] = 'category';
+			} elseif (empty($vars ['id'])) {
+				// Second number is always topic
+				$var = 'id';
+				$vars ['view'] = 'topic';
+				$sefcats = false;
+			} elseif (empty($vars ['mesid'])) {
+				// Third number is always message
+				$var = 'mesid';
+				$vars ['view'] = 'topic';
 			} else {
-				// Numeric variable is always catid or id
-				if (empty($vars ['catid'])) {
-					//|| (empty($vars ['id']) && KunenaForumCategoryHelper::get($value)->exists() && KunenaForumTopicHelper::get($value)->category_id != $vars ['catid'])) {
-					// First numbers are always categories
-					// FIXME: what if $topic->catid == catid
-					$var = 'catid';
-					$vars ['view'] = 'category';
-				} elseif (empty($vars ['id'])) {
-					// Next number is always topic
-					$var = 'id';
-					$vars ['view'] = 'topic';
-					$sefcats = false;
-				} elseif (empty($vars ['mesid'])) {
-					// Next number is always message
-					$var = 'mesid';
-					$vars ['view'] = 'topic';
-				} else {
-					// Invalid parameter, skip it
-					continue;
-				}
+				// Invalid parameter, skip it
+				continue;
 			}
-		} elseif (empty ( $var ) && empty ( $value )) {
-			// Empty parameter, skip it
-			continue;
-		} elseif ($sefcats && (($value !== null && ! isset ( KunenaRouter::$parsevars[$var] ))
-		|| ($value === null && ! isset ( KunenaRouter::$views[$var] ) && ! isset ( KunenaRouter::$layouts[$var] ) && ! isset ( KunenaRouter::$functions[$var] )))) {
-			// We have SEF category: translate category name into catid=123
-			// TODO: cache filtered values to gain some speed -- I would like to start using category names instead of catids if it gets fast enough
-			$var = 'catid';
-			$value = -1;
-			$catname = strtr ( $segment, ':', '-' );
-			$categories = empty($vars ['catid']) ? KunenaForumCategoryHelper::getCategories() : KunenaForumCategoryHelper::getChildren($vars ['catid']);
-			foreach ( $categories as $category ) {
-				if ($catname == KunenaRouter::filterOutput ( $category->name ) || $catname == JFilterOutput::stringURLSafe ( $category->name )) {
-					$value = (int) $category->id;
-					break;
-				}
-			}
-			$vars ['view'] = 'category';
 		} elseif ($value === null) {
-			// Variable must be either view or layout
-			$sefcats = false;
+			// Simple variable without value is always either view or layout
 			$value = $var;
 			if (empty($vars ['view']) || ($value=='topic' && $vars ['view'] == 'category')) {
+				// View
 				$var = 'view';
 			} elseif (empty($vars ['layout'])) {
+				// Layout
 				$var = 'layout';
-			} else {
-				// Unknown parameter: continue
+			} elseif (!empty($vars ['view'])) {
+				// Unknown parameter: skip
 				if (!empty($vars ['view'])) continue;
-				// Oops: unknown view or non-existing category
+			} else {
+				// Unknown view or non-existing category
 				$var = 'view';
 			}
 		}

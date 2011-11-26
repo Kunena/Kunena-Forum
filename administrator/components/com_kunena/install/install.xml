@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE schema>
 <schema>
+	<table name="kunena_aliases">
+		<field primary_key="yes" name="alias" type="varchar(255)" null="0"/>
+		<field name="category_id" type="int(11)" null="0" default="0"/>
+		<field name="state" type="tinyint(4)" null="0" default="0"/>
+		<key name="alias" unique="1" columns="alias"/>
+		<key name="category_id" columns="category_id"/>
+		<key name="state" columns="state"/>
+	</table>
 	<table name="kunena_announcement">
 		<field primary_key="yes" name="id" type="int(3)" null="0"
 			extra="auto_increment" />

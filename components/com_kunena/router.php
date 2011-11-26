@@ -115,16 +115,17 @@ class KunenaRouter {
 		$db->setQuery ($query);
 		$aliases = $db->loadObjectList();
 
+		$vars = array();
 		foreach ($aliases as $object) {
 			if ($alias == $object->alias) {
 				$var = $object->type != 'legacy' ? $object->type : 'view';
-				$value = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
+				$vars [$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
 				if ($var == 'catid') $vars ['view'] = 'category';
-				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-				return array($var, $value);
+				break;
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $vars;
 	}
 
 	function filterOutput($str) {
@@ -334,9 +335,9 @@ function KunenaParseRoute($segments) {
 		if ($sefcats) {
 			// Find out if we have SEF alias (category, view or layout)
 			$alias = strtr ( $segment, ':', '-' );
-			list($var, $value) = KunenaRouter::findAlias($alias);
-			if ($var && $value) {
-				$vars [$var] = $value;
+			$variables = KunenaRouter::findAlias($alias);
+			if ($variables) {
+				$vars = array_replace($vars, $variables);
 				continue;
 			}
 		}

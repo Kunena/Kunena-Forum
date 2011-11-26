@@ -72,14 +72,14 @@ class plgSystemKunena extends JPlugin {
 	public function onKunenaContentPrepare($context, &$items, &$params, $page = 0) {
 		$jcontentevent			= (int) $this->params->get('jcontentevents', false);
 		$jcontentevent_target	= (array) $this->params->get('jcontentevent_target', array('body'));
-		
+
 		if ( $jcontentevent ) {
 			switch ( $context ) {
-			
+
 				// Object KunenaForumTopic
 				case 'kunena.topic':
 					$items = array( $items );
-				
+
 				// Array of KunenaForumTopic
 				case 'kunena.topics':
 					if ( !is_array( $items )) {
@@ -96,11 +96,11 @@ class plgSystemKunena extends JPlugin {
 						}
 					}
 					break;
-					
+
 				// Object KunenaForumMessage
 				case 'kunena.message':
 					$items = array( $items );
-					
+
 				// Array of KunenaForumMessage
 				case 'kunena.messages':
 					if ( !is_array( $items )) {
@@ -109,18 +109,18 @@ class plgSystemKunena extends JPlugin {
 					// Run events on all objects
 					foreach ( $items as $item ) {
 						if ( in_array('title', $jcontentevent_target) ) {
-							$this->runJoomlaContentEvent( &$item->subject, &$params, &$page );
+							$this->runJoomlaContentEvent( $item->subject, $params, $page );
 						}
 						if ( in_array('body', $jcontentevent_target) ) {
-							$this->runJoomlaContentEvent( &$item->message, &$params, &$page );
+							$this->runJoomlaContentEvent( $item->message, $params, $page );
 						}
 					}
-					
+
 					break;
 				default:
 			}
 		}
-		
+
 		return $items;
 	}
 
@@ -141,25 +141,25 @@ class plgSystemKunena extends JPlugin {
 	protected function runJoomlaContentEvent( &$text, &$params, $page = 0 ) {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
-		
+
 		$row = new stdClass();
 		$row->text =& $text;
-		
+
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
 			$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
-			
+
 		} else {
 			// Joomla 1.5
 			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
 		}
-		
+
 		$text =& $row->text;
-		
+
 		return $text;
 	}
-	
-	
+
+
 	// Joomla 1.5 support
 	public function onAfterStoreUser($user, $isnew, $success, $msg) {
 		$this->onUserAfterSave($user, $isnew, $success, $msg);

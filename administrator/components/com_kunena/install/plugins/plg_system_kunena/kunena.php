@@ -78,13 +78,22 @@ class plgSystemKunena extends JPlugin {
 			
 				// Object KunenaForumTopic
 				case 'kunena.topic':
-					
-					if ( in_array('title', $jcontentevent_target) ) {
-							$this->runJoomlaContentEvent( &$items->subject, &$params, &$page );
+					$items = array( $items );
+				
+				// Array of KunenaForumTopic
+				case 'kunena.topics':
+					if ( !is_array( $items )) {
+						break;
 					}
-					if ( in_array('body', $jcontentevent_target) ) {
-							$this->runJoomlaContentEvent( &$items->first_post_message, &$params, &$page );
-							$this->runJoomlaContentEvent( &$items->last_post_message, &$params, &$page );
+					// Run events on all objects
+					foreach ( $items as $item ) {
+						if ( in_array('title', $jcontentevent_target) ) {
+								$this->runJoomlaContentEvent( $item->subject, $params, $page );
+						}
+						if ( in_array('body', $jcontentevent_target) ) {
+								$this->runJoomlaContentEvent( $item->first_post_message, $params, $page );
+								$this->runJoomlaContentEvent( $item->last_post_message, $params, $page );
+						}
 					}
 					break;
 					

@@ -23,6 +23,7 @@ class KunenaModelSearch extends KunenaModel {
 	protected function populateState() {
 		$this->config = KunenaFactory::getConfig ();
 		$this->me = KunenaUserHelper::getMyself();
+		$this->app = JFactory::getApplication ();
 
 		// Get search word list
 		$value = JString::trim ( JRequest::getString ( 'q', '' ) );
@@ -260,6 +261,9 @@ class KunenaModelSearch extends KunenaModel {
 		}
 		KunenaUserHelper::loadUsers($userids);
 		KunenaForumMessageHelper::loadLocation($this->messages);
+
+		if ( empty($this->messages) ) $this->app->enqueueMessage( JText::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', $q));
+
 		return $this->messages;
 	}
 

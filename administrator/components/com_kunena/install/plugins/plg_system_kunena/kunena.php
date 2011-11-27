@@ -69,7 +69,7 @@ class plgSystemKunena extends JPlugin {
 	 * @return array of KunenaForumMessage objects
 	 */
 	//
-	public function onKunenaContentPrepare($context, &$items, &$params, $page = 0) {
+	public function onKunenaContentPrepare($context, $items, $params, $page = 0) {
 		$jcontentevent			= (int) $this->params->get('jcontentevents', false);
 		$jcontentevent_target	= (array) $this->params->get('jcontentevent_target', array('body'));
 
@@ -138,7 +138,7 @@ class plgSystemKunena extends JPlugin {
 	 *
 	 * @return object KunenaForumMessage
 	 */
-	protected function runJoomlaContentEvent( &$text, &$params, $page = 0 ) {
+	protected function runJoomlaContentEvent( $text, $params, $page = 0 ) {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
 
@@ -147,11 +147,11 @@ class plgSystemKunena extends JPlugin {
 
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
-			$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
+			$results = $dispatcher->trigger('onContentPrepare', array ('text', $row, &$params, 0));
 
 		} else {
 			// Joomla 1.5
-			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
+			$results = $dispatcher->trigger('onPrepareContent', array ($row, $params, 0));
 		}
 
 		$text =& $row->text;

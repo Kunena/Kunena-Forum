@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport('kunena.forum.message.thankyou.helper');
-
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
@@ -25,7 +23,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 <!-- BEGIN: STATS -->
 <div class="kadmin-statscover">
 
-<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
+<table class="kadmin-stat">
 	<caption><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></caption>
 	<col class="col1" />
 	<col class="col2" />

@@ -18,15 +18,12 @@ defined ( '_JEXEC' ) or die ();
 		<span class="tk-mb-first" style="color:#666;"><?php echo JText::_('COM_KUNENA_TEMPLATE_ARE_YOU_SURE'); ?></span>
 	</div>
 	<div class="" style="text-align:center;margin-top:15px;">
-		<form action="#" method="post" class="kform klogout">
-			<button type="submit" value="<?php echo JText::_('COM_KUNENA_TEMPLATE_SURE'); ?>" class="tk-logout-button"><?php echo JText::_('COM_KUNENA_TEMPLATE_SURE') ?></button>
-			<input type="hidden" name="option" value="<?php echo $this->logout['option'] ?>" />
-			<?php if (!empty($this->logout['view'])) : ?>
-			<input type="hidden" name="view" value="<?php echo $this->logout['view'] ?>" />
-			<?php endif ?>
-			<input type="hidden" name="task" value="<?php echo $this->logout['task'] ?>" />
-			<input type="hidden" name="<?php echo $this->logout['field_return'] ?>" value="[K=RETURN_URL]" />
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="kform klogout">
+			<input type="hidden" name="view" value="user" />
+			<input type="hidden" name="task" value="logout" />
 			[K=TOKEN]
+
+			<button type="submit" value="<?php echo JText::_('COM_KUNENA_TEMPLATE_SURE'); ?>" class="tk-logout-button"><?php echo JText::_('COM_KUNENA_TEMPLATE_SURE') ?></button>
 		</form>
 	</div>
 </div>

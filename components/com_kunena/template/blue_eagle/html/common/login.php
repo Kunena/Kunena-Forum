@@ -23,27 +23,24 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 				<?php if ($this->login) : ?>
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">
+					<input type="hidden" name="view" value="user" />
+					<input type="hidden" name="task" value="login" />
+					[K=TOKEN]
+
 					<div class="input">
 						<span>
 							<?php echo JText::_('COM_KUNENA_LOGIN_USERNAME') ?>
-							<input type="text" name="<?php echo $this->login['field_username']; ?>" class="inputbox ks" alt="username" size="18" />
+							<input type="text" name="username" class="inputbox ks" alt="username" size="18" />
 						</span>
 						<span>
 							<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD'); ?>
-							<input type="password" name="<?php echo $this->login['field_password']; ?>" class="inputbox ks" size="18" alt="password" /></span>
+							<input type="password" name="password" class="inputbox ks" size="18" alt="password" /></span>
 						<span>
 							<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>
 							<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME');  ?>
 							<input type="checkbox" name="remember" alt="" value="yes" />
 							<?php endif; ?>
 							<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
-							<input type="hidden" name="option" value="<?php echo $this->login['option']; ?>" />
-							<?php if (!empty($this->login['view'])) : ?>
-							<input type="hidden" name="view" value="<?php echo $this->login['view']; ?>" />
-							<?php endif; ?>
-							<input type="hidden" name="task" value="<?php echo $this->login['task']; ?>" />
-							<input type="hidden" name="<?php echo $this->login['field_return']; ?>" value="[K=RETURN_URL]" />
-							[K=TOKEN]
 						</span>
 					</div>
 					<div class="klink-block">

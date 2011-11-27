@@ -14,11 +14,6 @@ JHTML::_ ( 'behavior.mootools' );
 $this->document->addScript ( 'includes/js/joomla.javascript.js' );
 $this->addStyleSheet ( 'css/kunena.manage.css' );
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <div class="kblock kmanage">
 	<div class="kheader">
 		<h2><?php echo $this->header; ?></h2>
@@ -26,6 +21,7 @@ $this->displayLoginBox ();
 	<div class="kcontainer">
 		<div class="kbody">
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" method="post" name="adminForm">
+	<input type="hidden" name="view" value="category" />
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo intval ( $this->state->get('list.direction') ) ?>" />
@@ -59,13 +55,11 @@ $this->displayLoginBox ();
 					<?php echo JHTML::_('grid.order', $this->state->get('list.count.admin') ); ?></small>
 				</th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>
-				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_MODERATED'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_REVIEW'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_PUBLICACCESS'); ?></small></th>
-				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_ADMINACCESS'); ?></small></th>
 				<th class="kcenter"><small><?php echo JText::_('COM_KUNENA_CHECKEDOUT'); ?></small></th>
 			</tr>
 		</thead>
@@ -121,7 +115,7 @@ $this->displayLoginBox ();
 					<?php echo ($category->locked == 1 ? $img_yes : $img_no); ?>
 				</a>
 			</td>
-			<td colspan="4" class="kcenter"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
+			<td colspan="3" class="kcenter"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
 
 			<?php else: ?>
 
@@ -135,11 +129,6 @@ $this->displayLoginBox ();
 			<td class="kcenter">
 				<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->locked ? 'un':'').'lock'; ?>')">
 					<?php echo ($category->locked == 1 ? $img_yes : $img_no); ?>
-				</a>
-			</td>
-			<td class="kcenter">
-				<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo  ($category->moderated ? 'un':'').'moderate'; ?>')">
-					<?php echo ($category->moderated == 1 ? $img_yes : $img_no); ?>
 				</a>
 			</td>
 			<td class="kcenter">
@@ -163,12 +152,9 @@ $this->displayLoginBox ();
 			<?php if (!$category->authorise('admin')): ?>
 			<td></td>
 			<td></td>
-			<td></td>
-			<td></td>
 			<?php else: ?>
 			<td class="kcenter"><?php echo JHTML::_('grid.published', $category, $i) ?></td>
-			<td width="" class="kcenter"><?php echo $this->escape ( $category->pub_group ); ?></td>
-			<td width="" class="kcenter"><?php echo $this->escape ( $category->admin_group ); ?></td>
+			<td class="kcenter"><?php echo $this->escape ( $category->accessname ); ?></td>
 			<td width="15%" class="kcenter"><?php echo $this->escape ( $category->editor ); ?></td>
 
 			<?php endif; ?>
@@ -182,6 +168,4 @@ $this->displayLoginBox ();
 </form>
 </div>
 </div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

@@ -63,7 +63,7 @@ class KunenaSpamRecaptcha {
 	}
 
 	public function enabled() {
-		$me = KunenaFactory::getUser();
+		$me = KunenaUserHelper::getMyself();
 		$config = KunenaFactory::getConfig();
 		// Enabled if guest captcha is enabled and user is not logged in
 		if ($config->captcha && !$me->exists())
@@ -161,7 +161,7 @@ class KunenaSpamRecaptcha {
 		);
 
 		if (!$response) {
-			$response = "false\nrecaptcha-not-reachable";
+			$response[1] = "false\nrecaptcha-not-reachable";
 		}
 		$answers = preg_split('/[\s,]+/', $response[1]);
 		if (empty($answers[0]) || trim ($answers [0]) != 'true') {

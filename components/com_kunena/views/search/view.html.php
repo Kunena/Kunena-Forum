@@ -10,18 +10,15 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.view' );
-kimport ( 'kunena.html.pagination' );
-
 /**
  * Search View
  */
 class KunenaViewSearch extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$app = JFactory::getApplication ();
 
-		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 
 		$searchdatelist	= array();
 		$searchdatelist[] 	= JHTML::_('select.option',  'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT') );
@@ -89,12 +86,24 @@ class KunenaViewSearch extends KunenaView {
 
 	function displaySearchResults() {
 		if($this->results) {
-			echo $this->loadTemplate('results');
+			echo $this->loadTemplateFile('results');
 		}
 	}
 
 	function displayRows() {
 		$this->row(true);
+		
+		// Run events
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'search');
+		$params->set('kunena_layout', 'default');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->results, &$params, 0));
+		
 		foreach ($this->results as $this->message) {
 			$this->topic = $this->message->getTopic();
 			$this->category = $this->message->getCategory();
@@ -114,7 +123,7 @@ class KunenaViewSearch extends KunenaView {
 			$this->subjectHtml = $ressubject;
 			$this->messageHtml = $resmessage;
 
-			$contents = $this->loadTemplate('row');
+			$contents = $this->loadTemplateFile('row');
 			$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 			echo $contents;
 		}

@@ -40,7 +40,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php endif; ?>
 		<?php $avatar = $this->profile->getAvatarImage ('kavatar', 'welcome'); if ($avatar) : ?>
 		<li class="kpost-avatar">
-			<span class="kavatar"><?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $avatar ); ?></span>
+			<span class="kavatar"><?php echo $this->profile->getLink( $avatar ); ?></span>
 		</li>
 		<?php endif; ?>
 		<li class="kpost-username">
@@ -48,7 +48,7 @@ defined ( '_JEXEC' ) or die ();
 		</li>
 		<?php if (!empty($this->usertype)) : ?>
 		<li class="kpost-usertype">
-			<span class = "kmsgusertype">( <?php echo $this->escape($this->usertype) ?> )</span>
+			<span class = "kmsgusertype">( <?php echo JText::_($this->escape($this->usertype)) ?> )</span>
 		</li>
 		<?php endif ?>
 		<?php if ($this->profile->exists()): ?>

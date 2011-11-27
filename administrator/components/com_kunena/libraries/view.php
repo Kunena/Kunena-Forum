@@ -10,10 +10,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.view' );
-kimport ( 'kunena.html.parser' );
-kimport ('kunena.date');
-kimport ('kunena.user.helper');
-kimport ('kunena.profiler');
 
 /**
  * Kunena View Class
@@ -198,88 +194,43 @@ class KunenaView extends JView {
 		return $output;
 	}
 
-	public function getCategoryLink($category, $content = null, $title = null) {
+	public function getCategoryLink($category, $content = null, $title = null, $class = null) {
 		if (!$content) $content = $this->escape($category->name);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
-		return JHTML::_('kunenaforum.link', $category->getUrl(), $content, $title, '', 'follow');
+		return JHTML::_('kunenaforum.link', $category->getUrl(null, 'object'), $content, $title, $class, 'follow');
 	}
 
-	public function getTopicUrl($topic, $action = null, $object=false) {
-		if ($action instanceof StdClass || $action instanceof KunenaForumMessage) {
-			$message = $action;
-			$action = 'm'.$message->id;
-		}
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&id={$topic->id}&action={$action}");
-		if ($uri->getVar('action') !== null) {
-			$uri->delVar('action');
-			$uri->setVar('catid', isset($this->category) ? $this->category->id : $topic->catid);
-			$limit = max(1, $this->config->messages_per_page);
-			$mesid = 0;
-			if (is_numeric($action)) {
-				if ($action) $uri->setVar('limitstart', $action * $limit);
-			} elseif (isset($message)) {
-				$mesid = $message->id;
-				$position = $topic->getPostLocation($mesid, $this->message_ordering);
+	public function getTopicLink($topic, $action = null, $content = null, $title = null, $class = null, $category = NULL) {
+		$uri = $topic->getUrl($category ? $category : $this->category, 'object', $action);
+		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
+		if ($title === null) {
+			if ($action instanceof KunenaForumMessage) {
+				$title = JText::sprintf('COM_KUNENA_TOPIC_MESSAGE_LINK_TITLE', $this->escape($topic->subject));
 			} else {
 				switch ($action) {
 					case 'first':
-						$mesid = $topic->first_post_id;
-						$position = $topic->getPostLocation($mesid, $this->message_ordering);
+						$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
 						break;
 					case 'last':
-						$mesid = $topic->last_post_id;
-						$position = $topic->getPostLocation($mesid, $this->message_ordering);
+						$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
 						break;
 					case 'unread':
-						$mesid = $topic->lastread ? $topic->lastread : $topic->last_post_id;
-						$position = $topic->getPostLocation($mesid, $this->message_ordering);
+						$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
 						break;
+					default:
+						$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
 				}
-			}
-			if ($mesid) {
-				if (KunenaUserHelper::get()->getTopicLayout() != 'threaded') {
-					$uri->setFragment($mesid);
-				} else {
-					$uri->setVar('mesid', $mesid);
-				}
-			}
-			if (isset($position)) {
-				$limitstart = intval($position / $limit) * $limit;
-				if ($limitstart) $uri->setVar('limitstart', $limitstart);
-			}
-		}
-		return $object ? $uri : KunenaRoute::_($uri);
-	}
-
-	public function getTopicLink($topic, $action = null, $content = null, $title = null, $class = null) {
-		$uri = $this->getTopicUrl($topic, $action, true);
-		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
-		if ($title === null) {
-			switch ($action) {
-				case 'first':
-					$title = JText::sprintf('COM_KUNENA_TOPIC_FIRST_LINK_TITLE', $this->escape($topic->subject));
-					break;
-				case 'last':
-					$title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($topic->subject));
-					break;
-				case 'unread':
-					$title = JText::sprintf('COM_KUNENA_TOPIC_UNREAD_LINK_TITLE', $this->escape($topic->subject));
-					break;
-				default:
-					$title = JText::sprintf('COM_KUNENA_TOPIC_LINK_TITLE', $this->escape($topic->subject));
 			}
 		}
 		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
 	public function addStyleSheet($filename) {
-		$template = KunenaFactory::getTemplate();
-		return $template->addStyleSheet ( $filename );
+		return KunenaFactory::getTemplate()->addStyleSheet ( $filename );
 	}
 
 	public function addScript($filename) {
-		$template = KunenaFactory::getTemplate();
-		return $template->addScript ( $filename );
+		return KunenaFactory::getTemplate()->addScript ( $filename );
 	}
 
 	function displayNoAccess($errors = array()) {
@@ -343,6 +294,81 @@ class KunenaView extends JView {
 	function row($start=false) {
 		if ($start) $this->_row = 0;
 		return ++$this->_row & 1 ? 'odd' : 'even';
+	}
+
+	/**
+	 * Load a template file -- first look in the templates folder for an override
+	 *
+	 * @param   string   The name of the template source file ...
+	 * 					automatically searches the template paths and compiles as needed.
+	 * @return  string   The output of the the template script.
+	 */
+	public function loadTemplateFile($tpl = null)
+	{
+		KUNENA_PROFILER ? $this->profiler->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
+		static $files = array();
+
+		// Create the template file name based on the layout
+		$layout = $this->getLayout();
+		$file = isset($tpl) ? $layout.'_'.$tpl : $layout;
+
+		if (!isset($files[$file])) {
+			$template = JFactory::getApplication()->getTemplate();
+			$layoutTemplate = 'foo'; //$this->getLayoutTemplate();
+
+			// Clean the file name
+			$file = preg_replace('/[^A-Z0-9_\.-]/i', '', $file);
+			$tpl  = isset($tpl)? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
+
+			// Change the template folder if alternative layout is in different template
+			if (isset($layoutTemplate) && $layoutTemplate != '_' && $layoutTemplate != $template)
+			{
+				$path = str_replace($template, $layoutTemplate, $this->_path['template']);
+			} else {
+				$path = $this->_path['template'];
+			}
+
+			// Load the template script
+			jimport('joomla.filesystem.path');
+			$filetofind	= $this->_createFileName('template', array('name' => $file));
+			$files[$file] = JPath::find($path, $filetofind);
+
+			// If alternate layout can't be found, fall back to default layout
+			if ($files[$file] == false)
+			{
+				$filetofind = $this->_createFileName('', array('name' => 'default' . (isset($tpl) ? '_' . $tpl : $tpl)));
+				$files[$file] = JPath::find($this->_path['template'], $filetofind);
+			}
+		}
+		$this->_template = $files[$file];
+
+		if ($this->_template != false)
+		{
+			// Unset so as not to introduce into template scope
+			unset($tpl);
+			unset($file);
+
+			// Never allow a 'this' property
+			if (isset($this->this)) {
+				unset($this->this);
+			}
+
+			// Start capturing output into a buffer
+			ob_start();
+			// Include the requested template filename in the local scope
+			// (this will execute the view logic).
+			include $this->_template;
+
+			// Done with the requested template; get the buffer and
+			// clear it.
+			$output = ob_get_contents();
+			ob_end_clean();
+		} else {
+			$output = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
+		}
+		KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $output;
 	}
 
 	// Caching

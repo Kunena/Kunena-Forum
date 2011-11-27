@@ -16,7 +16,7 @@ JHTML::_('behavior.tooltip');
 <div id="kprofile-rightcoltop">
 	<div class="kprofile-rightcol2">
 <?php
-	echo $this->loadTemplate('social');
+	echo $this->loadTemplateFile('social');
 ?>
 	</div>
 	<div class="kprofile-rightcol1">
@@ -64,8 +64,8 @@ JHTML::_('behavior.tooltip');
 		<?php if($this->config->showthankyou && $this->my->id != 0) : ?>
 		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_THANK_YOU'); ?>"><?php echo JText::_('COM_KUNENA_THANK_YOU'); ?></dt>
 		<dd style="display: none;">
-			<?php $this->displayGotThankYou(); ?>
-			<?php $this->displaySaidThankYou(); ?>
+			<?php $this->displayGotThankyou(); ?>
+			<?php $this->displaySaidThankyou(); ?>
 		</dd>
 		<?php endif; ?>
 		<?php if ($this->my->id == $this->user->id || $this->me->isAdmin()): ?>

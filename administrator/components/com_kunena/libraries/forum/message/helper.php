@@ -10,11 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.databasequery');
-kimport ('kunena.forum.message');
-kimport ('kunena.forum.topic.helper');
-
 /**
  * Kunena Forum Message Helper Class
  */
@@ -41,8 +36,11 @@ class KunenaForumMessageHelper {
 		if ($id < 1)
 			return new KunenaForumMessage ();
 
-		if ($reload || empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumMessage ( $id );
+		if (empty ( self::$_instances [$id] )) {
+			self::$_instances [$id] = new KunenaForumMessage ( array('id'=>$id) );
+			self::$_instances [$id]->load();
+		} elseif ($reload) {
+			self::$_instances [$id]->load();
 		}
 
 		return self::$_instances [$id];
@@ -185,13 +183,12 @@ class KunenaForumMessageHelper {
 			$limitstart = intval($total / $limit) * $limit;
 
 		$db->setQuery ( $rquery, $limitstart, $limit );
-		$results = $db->loadObjectList ();
+		$results = $db->loadAssocList ();
 		if (KunenaError::checkDatabaseError()) return array(0, array());
 
 		$messages = array();
 		foreach ( $results as $result ) {
-			$instance = new KunenaForumMessage (false);
-			$instance->setProperties ( $result );
+			$instance = new KunenaForumMessage ($result);
 			$instance->exists(true);
 			self::$_instances [$instance->id] = $instance;
 			$messages[$instance->id] = $instance;
@@ -200,10 +197,11 @@ class KunenaForumMessageHelper {
 		return array($total, $messages);
 	}
 
-	public function getLocation($mesid, $direction = 'asc', $hold=null) {
+	public function getLocation($mesid, $direction = null, $hold = null) {
+		if (is_null($direction)) $direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		if (!$hold) {
-			$me = KunenaFactory::getUser();
-			$access = KunenaFactory::getAccessControl();
+			$me = KunenaUserHelper::getMyself();
+			$access = KunenaAccess::getInstance();
 			$hold = $access->getAllowedHold($me->userid, $mesid, false);
 		}
 		if (!isset(self::$_location [$mesid])) {
@@ -243,8 +241,8 @@ class KunenaForumMessageHelper {
 		$idlist = implode ( ',', $ids );
 		$db = JFactory::getDBO ();
 		$db->setQuery ( "SELECT m.id, mm.hold, m.catid AS category_id, m.thread AS topic_id,
-				SUM(mm.id<m.id) AS before_count,
-				SUM(mm.id>m.id) AS after_count
+				SUM(mm.time<m.time) AS before_count,
+				SUM(mm.time>m.time) AS after_count
 			FROM #__kunena_messages AS m
 			INNER JOIN #__kunena_messages AS mm ON m.thread=mm.thread
 			WHERE m.id IN ({$idlist})
@@ -290,7 +288,8 @@ class KunenaForumMessageHelper {
 
 	static protected function loadMessages($ids) {
 		foreach ($ids as $i=>$id) {
-			if (isset(self::$_instances [$id]))
+			$id = intval($id);
+			if (!$id || isset(self::$_instances [$id]))
 				unset($ids[$i]);
 		}
 		if (empty($ids))
@@ -305,8 +304,7 @@ class KunenaForumMessageHelper {
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumMessage (false);
-				$instance->setProperties ( $results[$id] );
+				$instance = new KunenaForumMessage ($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;
 			} else {
@@ -328,8 +326,7 @@ class KunenaForumMessageHelper {
 
 		$list = array();
 		foreach ( $results as $id=>$result ) {
-			$instance = new KunenaForumMessage (false);
-			$instance->setProperties ( $result );
+			$instance = new KunenaForumMessage ($result);
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;
 			$list[$orderbyid ? $id : $start++] = $instance;

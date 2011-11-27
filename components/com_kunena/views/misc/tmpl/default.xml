@@ -4,6 +4,7 @@
 	<layout title="COM_KUNENA_MENU_MISC_DEFAULT">
 		<message>COM_KUNENA_MENU_MISC_DEFAULT_DESC</message>
 	</layout>
+
 	<!-- Joomla 1.5 Support -->
 	<state>
 		<name>COM_KUNENA_MENU_MISC_DEFAULT_LONG</name>
@@ -17,7 +18,7 @@
 			</param>
 		</params>
 	</state>
-	
+
 	<!-- Joomla 1.6 Support -->
 	<!-- Add fields to the request variables for the layout. -->
 	<fields name="params">

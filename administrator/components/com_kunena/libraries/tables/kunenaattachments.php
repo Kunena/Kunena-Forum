@@ -11,8 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 require_once (dirname ( __FILE__ ) . '/kunena.php');
-kimport ('kunena.user.helper');
-kimport ('kunena.forum.message.helper');
 
 /**
  * Kunena Attachments Table

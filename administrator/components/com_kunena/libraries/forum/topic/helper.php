@@ -10,12 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.user');
-kimport ('kunena.forum.category.helper');
-kimport ('kunena.forum.topic');
-kimport ('kunena.forum.topic.user.helper');
-kimport ('kunena.keyword.helper');
 
 /**
  * Kunena Forum Topic Helper Class
@@ -41,8 +35,11 @@ class KunenaForumTopicHelper {
 		if ($id < 1)
 			return new KunenaForumTopic ();
 
-		if ($reload || empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumTopic ( $id );
+	if (empty ( self::$_instances [$id] )) {
+			self::$_instances [$id] = new KunenaForumTopic ( array('id'=>$id) );
+			self::$_instances [$id]->load();
+		} elseif ($reload) {
+			self::$_instances [$id]->load();
 		}
 
 		return self::$_instances [$id];
@@ -206,8 +203,7 @@ class KunenaForumTopicHelper {
 
 		$topics = array();
 		foreach ( $results as $id=>$result ) {
-			$instance = new KunenaForumTopic ();
-			$instance->bind ( $result );
+			$instance = new KunenaForumTopic ($result);
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;
 			$topics[$id] = $instance;
@@ -215,6 +211,78 @@ class KunenaForumTopicHelper {
 		unset ($results);
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return array($total, $topics);
+	}
+
+	/**
+	 * Method to delete selected topics
+	 *
+	 * @access	public
+	 * @return	int	Affected rows
+	 * @since 1.6
+	 */
+	public function delete($ids) {
+		if (empty($ids)) return 0;
+		if (is_array($ids)) {
+			$idlist = implode(',', $ids);
+		} else {
+			$idlist = (int) $ids;
+		}
+
+		// Delete user topics
+		$queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id IN ({$idlist})";
+		// Delete user read
+		$queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id IN ({$idlist})";
+		// Delete thank yous
+		$queries[] = "DELETE t FROM #__kunena_thankyou AS t INNER JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.thread IN ({$idlist})";
+		// Delete poll users (if not shadow)
+		$queries[] = "DELETE p FROM #__kunena_polls_users AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.id IN ({$idlist}) AND tt.moved_id=0";
+		// Delete poll options (if not shadow)
+		$queries[] = "DELETE p FROM #__kunena_polls_options AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.pollid WHERE tt.id IN ({$idlist}) AND tt.moved_id=0";
+		// Delete polls (if not shadow)
+		$queries[] = "DELETE p FROM #__kunena_polls AS p INNER JOIN #__kunena_topics AS tt ON tt.poll_id=p.id WHERE tt.id IN ({$idlist}) AND tt.moved_id=0";
+		// Delete messages
+		$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.thread IN ({$idlist})";
+		// TODO: delete attachments
+		// TODO: delete keywords
+		// Delete topics
+		$queries[] = "DELETE FROM #__kunena_topics WHERE id IN ({$idlist})";
+
+		$db = JFactory::getDBO ();
+		foreach ($queries as $query) {
+			$db->setQuery($query);
+			$db->query();
+			KunenaError::checkDatabaseError ();
+		}
+
+		return $db->getAffectedRows();
+	}
+
+	/**
+	 * Method to put the KunenaForumTopic object on trash this is still present in database
+	 *
+	 * @access	public
+	 * @return	int	Affected rows
+	 * @since 1.6
+	 */
+	public function trash($ids) {
+		if (empty($ids)) return 0;
+		if (is_array($ids)) {
+			$idlist = implode(',', $ids);
+		} else {
+			$idlist = (int) $ids;
+		}
+
+		$db = JFactory::getDBO ();
+		$queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread IN ({$idlist})";
+		$queries[] = "UPDATE #__kunena_topics SET hold='2' WHERE id IN ({$idlist})";
+
+		foreach ($queries as $query) {
+			$db->setQuery($query);
+			$db->query();
+			KunenaError::checkDatabaseError ();
+		}
+
+		return $db->getAffectedRows();
 	}
 
 	static function recount($ids=false, $start=0, $end=0) {
@@ -326,7 +394,8 @@ class KunenaForumTopicHelper {
 
 	static protected function loadTopics($ids) {
 		foreach ($ids as $i=>$id) {
-			if (isset(self::$_instances [$id]) || !is_numeric($id))
+			$id = intval($id);
+			if (!$id || isset(self::$_instances [$id]))
 				unset($ids[$i]);
 		}
 		if (empty($ids))
@@ -341,8 +410,7 @@ class KunenaForumTopicHelper {
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumTopic ();
-				$instance->bind ( $results[$id] );
+				$instance = new KunenaForumTopic ($results[$id]);
 				$instance->exists(true);
 				self::$_instances [$id] = $instance;
 			} else {

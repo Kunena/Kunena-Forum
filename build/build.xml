@@ -169,6 +169,9 @@
 		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/site" todir="${tmp_dir}/site">
 			<include name="**/*.js" />
 			<include name="**/*.css" />
+			<exclude name="**/plupload.js" />
+			<exclude name="template/default20/css/*.css" />
+			<exclude name="template/orao/css/*.css" />
 		</yui-compressor>
 	</target>
 	
@@ -241,7 +244,7 @@
 		<!-- language tag="es-ES" /-->
 		<!-- language tag="et-EE" /-->
 		<!-- language tag="fa-IR" /-->
-		<language tag="fi-FI" />
+		<!-- language tag="fi-FI" /-->
 		<!-- language tag="fr-FR" /-->
 		<!-- language tag="he-IL" /-->
 		<!-- language tag="hu-HU" /-->

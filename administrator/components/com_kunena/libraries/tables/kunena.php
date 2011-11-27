@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport('kunena.databasequery');
-
 abstract class KunenaTable extends JTable {
 	protected $_exists = false;
 
@@ -28,8 +26,8 @@ abstract class KunenaTable extends JTable {
 				$keyName = $this->_tbl_key;
 				$keyValue = $this->$keyName;
 
-				// If empty primary key there's is no need to load anything
-				if(empty($keyValue)) return false;
+				// If null primary key there's is no need to load anything
+				if(is_null($keyValue)) return false;
 				$keys = array($keyName => $keyValue);
 			} else {
 				$keys = array();
@@ -38,7 +36,7 @@ abstract class KunenaTable extends JTable {
 					$keys[$keyName] = $keyValue;
 
 					// If null primary key there's is no need to load anything
-					if($keyValue === null) return false;
+					if(is_null($keyValue)) return false;
 				}
 			}
 		} elseif (!is_array($keys)) {
@@ -183,5 +181,70 @@ abstract class KunenaTable extends JTable {
 		}
 		$this->_db->setQuery(sprintf($fmtsql, implode(",", $tmp) , $where));
 		return $this->_db->query();
+	}
+
+	/**
+	 * Method to delete a row from the database table by primary key value.
+	 *
+	 * @param   mixed    $keys  An optional primary key value to delete.  If not set the
+	 *                          instance property value is used.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @link	http://docs.joomla.org/JTable/delete
+	 * @since   Joomla 11.1
+	 */
+	public function delete($keys = null)
+	{
+		// Initialise variables.
+		if (empty($keys)) {
+			// If empty, use the value of the current key
+			if (!is_array($this->_tbl_key)) {
+				$keyName = $this->_tbl_key;
+				$keyValue = $this->$keyName;
+
+				// If null primary key there's is no need to delete
+				if(is_null($keyValue)) {
+					$e = new JException(JText::_('JLIB_DATABASE_ERROR_NULL_PRIMARY_KEY'));
+					$this->setError($e);
+					return false;
+				}
+				$keys = array($keyName => $keyValue);
+			} else {
+				$keys = array();
+				foreach ($this->_tbl_key as $keyName) {
+					$keyValue = $this->$keyName;
+					$keys[$keyName] = $keyValue;
+
+					// If null primary key there's is no need to delete
+					if(is_null($keyValue)) {
+						$e = new JException(JText::_('JLIB_DATABASE_ERROR_NULL_PRIMARY_KEY'));
+						$this->setError($e);
+						return false;
+					}
+				}
+			}
+		} elseif (!is_array($keys)) {
+			// Delete by primary key.
+			$keys = array($this->_tbl_key => $keys);
+		}
+
+		// Delete the row by primary key.
+		$query	= new KunenaDatabaseQuery();
+		$query->delete();
+		$query->from($this->_tbl);
+		foreach ($keys as $key=>$value) {
+			$query->where("{$this->_db->nameQuote($key)} = {$this->_db->quote($value)}");
+		}
+		$this->_db->setQuery($query);
+
+		// Check for a database error.
+		if (!$this->_db->query()) {
+			$e = new JException(JText::sprintf('JLIB_DATABASE_ERROR_DELETE_FAILED', get_class($this), $this->_db->getErrorMsg()));
+			$this->setError($e);
+			return false;
+		}
+
+		return true;
 	}
 }

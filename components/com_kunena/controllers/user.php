@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.user.helper' );
-
 require_once KPATH_SITE . '/lib/kunena.link.class.php';
 
 /**
@@ -33,7 +29,7 @@ class KunenaControllerUser extends KunenaController {
 		if ($redirect) {
 			$profileIntegration = KunenaFactory::getProfile();
 			if (!($profileIntegration instanceof KunenaProfileKunena)) {
-				$url = CKunenaLink::GetProfileURL(KunenaFactory::getUser()->userid, false);
+				$url = CKunenaLink::GetProfileURL(KunenaUserHelper::getMyself()->userid, false);
 				if ($url) {
 					$this->setRedirect($url);
 					return;
@@ -51,7 +47,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$layout = JRequest::getString ( 'topic_layout', 'default' );
-		KunenaFactory::getUser()->setTopicLayout ( $layout );
+		KunenaUserHelper::getMyself()->setTopicLayout ( $layout );
 		$this->redirectBack ();
 	}
 
@@ -81,7 +77,7 @@ class KunenaControllerUser extends KunenaController {
 
 		$this->saveUser();
 
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
 		$this->saveProfile();
 		$this->saveAvatar();
 		$this->saveSettings();
@@ -109,7 +105,6 @@ class KunenaControllerUser extends KunenaController {
 		$reason_public = JRequest::getString ( 'reason_public', '' );
 		$comment = JRequest::getString ( 'comment', '' );
 
-		kimport ( 'kunena.user.ban' );
 		$ban = KunenaUserBan::getInstanceByUserid ( $user->userid, true );
 		if (! $ban->id) {
 			$ban->ban ( $user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
@@ -221,14 +216,12 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$username = JRequest::getString ( 'username', '', 'POST' );
-		$password = JRequest::getString ( 'passwd', '', 'POST' );
+		$password = JRequest::getString ( 'password', '', 'POST' );
 		$remember = JRequest::getInt ( 'remember', 0, 'POST');
-		$return = JRequest::getString ( 'return', '', 'POST' );
 
-		$login = KunenaFactory::getLogin();
-		$result = $login->loginUser($username, $password, $remember, $return);
-		if ($result) $app->enqueueMessage ( $result, 'notice' );
-		$app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ) );
+		$login = KunenaLogin::getInstance();
+		$login->loginUser($username, $password, $remember);
+		$this->redirectBack ();
 	}
 
 	function logout() {
@@ -237,11 +230,9 @@ class KunenaControllerUser extends KunenaController {
 			$app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
 		}
 
-		$return = JRequest::getString ( 'return', '', 'POST' );
-		$login = KunenaFactory::getLogin();
-		$result = $login->logoutUser($return);
-		if ($result) $app->enqueueMessage ( $result, 'notice' );
-		$app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ) );
+		$login = KunenaLogin::getInstance();
+		$login->logoutUser();
+		$this->redirectBack ();
 	}
 
 	// Internal functions:
@@ -257,7 +248,7 @@ class KunenaControllerUser extends KunenaController {
 		$catid = JRequest::getInt ( 'catid', 0 );
 
 		$config = KunenaFactory::getConfig();
-		$me = KunenaFactory::getUser();
+		$me = KunenaUserHelper::getMyself();
 		$target = KunenaFactory::getUser($userid);
 
 		if (!$config->showkarma || !$me->exists() || !$target->exists() || $karmaDelta == 0) {
@@ -468,7 +459,6 @@ class KunenaControllerUser extends KunenaController {
 		$number = count($cids);
 
 		foreach( $cids as $id ) {
-			kimport ('kunena.forum.message.attachment.helper');
 			$attachment = KunenaForumMessageAttachmentHelper::get($id);
 			$attachment->delete();
 		}

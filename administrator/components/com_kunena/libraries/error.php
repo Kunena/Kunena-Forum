@@ -16,7 +16,7 @@ class KunenaError {
 	function initialize() {
 		if (!self::$enabled) {
 			$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
-			$admin = JFactory::getApplication()->isAdmin() || KunenaFactory::getUser()->isAdmin();
+			$admin = JFactory::getApplication()->isAdmin() || KunenaUserHelper::getMyself()->isAdmin();
 			register_shutdown_function('kunenaShutdownHandler', $debug || $admin || KUNENA_PROFILER);
 			if (!$debug) return;
 
@@ -64,7 +64,7 @@ class KunenaError {
 		if ($db->getErrorNum ()) {
 			$app = JFactory::getApplication();
 			$my = JFactory::getUser();
-			$acl = KunenaFactory::getAccessControl();
+			$acl = KunenaAccess::getInstance();
 			if ($acl->isAdmin ($my)) {
 				if ($app->isAdmin())
 					$app->enqueueMessage ( $db->getErrorMsg (), 'error' );
@@ -83,7 +83,7 @@ class KunenaError {
 		if ($db->getErrorNum ()) {
 			$app = JFactory::getApplication();
 			$my = JFactory::getUser();
-			$acl = KunenaFactory::getAccessControl();
+			$acl = KunenaAccess::getInstance();
 			if ($acl->isAdmin ($my)) {
 				return $db->getErrorMsg();
 			} else {

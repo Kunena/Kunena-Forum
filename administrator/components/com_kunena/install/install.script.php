@@ -23,6 +23,9 @@ class Com_KunenaInstallerScript {
 		require_once(KPATH_ADMIN . '/install/model.php');
 		$installer = new KunenaModelInstall();
 		$installer->uninstallPlugin('system', 'kunena');
+		$installer->uninstallPlugin('kunena', 'joomla');
+		$installer->uninstallPlugin('kunena', 'comprofiler');
+		$installer->uninstallPlugin('kunena', 'community');
 		$installer->deleteMenu();
 	}
 

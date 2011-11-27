@@ -19,6 +19,14 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_FUM'); ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<input type="hidden" name="view" value="users" />
+		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
+		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
+		<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
+		<input type="hidden" name="boxchecked" value="0" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+
 		<table class="kadmin-sort">
 			<tr>
 				<td class="left" width="90%">
@@ -29,7 +37,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				</td>
 			</tr>
 		</table>
-		<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
+		<table class="adminlist">
 			<thead>
 				<tr>
 					<th align="center" width="5">#</th>
@@ -120,14 +128,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<tr><td colspan="11"><?php echo JText::_('COM_KUNENA_NOUSERSFOUND') ?></td></tr>
 		<?php } ?>
 		</table>
-		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="users" />
-		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
-		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-		<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
-		<input type="hidden" name="boxchecked" value="0" />
-		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>
 	<div class="kadmin-footer">

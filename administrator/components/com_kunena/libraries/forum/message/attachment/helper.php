@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.forum.message.attachment');
-
 /**
  * Kunena Forum Message Attachment Helper Class
  */
@@ -252,7 +249,8 @@ class KunenaForumMessageAttachmentHelper {
 
 	static protected function loadByMessage($ids) {
 		foreach ($ids as $i=>$id) {
-			if (isset(self::$_messages [$id]))
+			$id = intval($id);
+			if (!$id || isset(self::$_messages [$id]))
 				unset($ids[$i]);
 		}
 		if (empty($ids))

@@ -25,7 +25,13 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 		<dt title="<?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?>"><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></dt>
 		<dd>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
-			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
+			<input type="hidden" name="view" value="smilies" />
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="boxchecked" value="0" />
+			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
+			<?php echo JHTML::_( 'form.token' ); ?>
+
+			<table class="adminlist">
 			<thead>
 				<tr>
 					<th width="5" align="center">#</th>
@@ -81,19 +87,17 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					}
 					?>
 			</table>
-			<input type="hidden" name="option" value="com_kunena" />
-			<input type="hidden" name="view" value="smilies" />
-			<input type="hidden" name="task" value="" />
-			<input type="hidden" name="boxchecked" value="0" />
-			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
-			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</dd>
 		<dt title="<?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?>"><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></dt>
 		<dd>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="uploadForm" method="post" enctype="multipart/form-data" >
+		<input type="hidden" name="view" value="smilies" />
+		<input type="hidden" name="task" value="smileyupload" />
+		<input type="hidden" name="boxchecked" value="0" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+
 		<div style="padding:10px;">
-			<?php echo JHTML::_( 'form.token' ); ?>
 			<input type="file" id="file-upload" name="Filedata" />
 			<input type="submit" id="file-upload-submit" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
 			<span id="upload-clear"></span>
@@ -101,11 +105,6 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 		<ul class="upload-queue" id="upload-queue">
 			<li style="display: none" />
 		</ul>
-		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="smilies" />
-		<input type="hidden" name="task" value="smileyupload" />
-		<input type="hidden" name="boxchecked" value="0" />
-		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</dd>
 		</dl>

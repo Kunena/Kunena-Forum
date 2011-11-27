@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 					<li class="kposts-row krow-[K=ROW] krow-[K=NEW]">
-						<a name="<?php echo intval($this->message->id) ?>"></a>
+						<a id="<?php echo intval($this->message->id) ?>"></a>
 						<ul class="kposthead">
 							<li class="kposthead-replytitle"><h3>RE: <?php echo $this->escape($this->message->subject) ?></h3></li>
 							<li class="kposthead-postid" ><?php echo $this->numLink ?></li>
@@ -41,7 +41,13 @@ defined ( '_JEXEC' ) or die ();
 								<?php if ( $this->quickreply ) : ?>
 								<li id="kreply<?php echo intval($this->message->id) ?>_form" class="kreply-form" style="display: none">
 									<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="postform" enctype="multipart/form-data">
-										<?php if (KunenaFactory::getUser()->exists() && $this->category->allow_anonymous): ?>
+										<input type="hidden" name="view" value="topic" />
+										<input type="hidden" name="task" value="post" />
+										<input type="hidden" name="parentid" value="<?php echo intval($this->message->id) ?>" />
+										<input type="hidden" name="catid" value="<?php echo intval($this->category->id) ?>" />
+										<?php echo JHTML::_( 'form.token' ) ?>
+
+										<?php if (KunenaUserHelper::getMyself()->exists() && $this->category->allow_anonymous): ?>
 											<input type="text" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->profile->getName()) ?>" /><br />
 											<input type="checkbox" id="kanonymous<?php echo intval($this->message->id) ?>" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous<?php echo intval($this->message->id) ?>"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC') ?></label><br />
 										<?php else: ?>
@@ -57,17 +63,12 @@ defined ( '_JEXEC' ) or die ();
 										<input type="submit" class="kbutton kreply-submit" name="submit" value="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
 										<input type="reset" class="kbutton kreply-cancel" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
 										<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE') ?></small>
-										<input type="hidden" name="view" value="topic" />
-										<input type="hidden" name="task" value="post" />
-										<input type="hidden" name="parentid" value="<?php echo intval($this->message->id) ?>" />
-										<input type="hidden" name="catid" value="<?php echo intval($this->category->id) ?>" />
-										<?php echo JHTML::_( 'form.token' ) ?>
 									</form>
 								</li>
 								<?php endif ?>
 								<?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
 								<li class="kpost-body-lastedit">
-									<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ": [K=DATE:{$this->message->modified_time}] " . JText::_('COM_KUNENA_BY') . ' ' . CKunenaLink::getProfileLink( $this->message->modified_by ) . '.'; ?>
+									<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ": [K=DATE:{$this->message->modified_time}] " . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
 								</li>
 								<?php if ($this->message->modified_reason) : ?>
 								<li class="kpost-body-editreason">

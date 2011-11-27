@@ -10,13 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.model' );
-kimport('kunena.forum.category.helper');
-kimport('kunena.forum.topic.helper');
-kimport('kunena.forum.message.helper');
-kimport('kunena.user.helper');
-kimport('kunena.forum.topic.poll.helper');
-
 /**
  * Topic Model for Kunena
  *
@@ -26,10 +19,11 @@ class KunenaModelTopic extends KunenaModel {
 	protected $topics = false;
 	protected $messages = false;
 	protected $items = false;
+	protected $topic = false;
 
 	protected function populateState() {
 		$app = JFactory::getApplication ();
-		$this->me = KunenaUserHelper::get();
+		$this->me = KunenaUserHelper::getMyself();
 		$config = KunenaFactory::getConfig ();
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
@@ -53,7 +47,7 @@ class KunenaModelTopic extends KunenaModel {
 		$id = $this->getInt ( 'mesid', 0 );
 		$this->setState ( 'item.mesid', $id );
 
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$value = $access->getAllowedHold($this->me, $catid);
 		$this->setState ( 'hold', $value );
 
@@ -86,26 +80,36 @@ class KunenaModelTopic extends KunenaModel {
 	}
 
 	public function getTopic() {
-		$topic = KunenaForumTopicHelper::get($this->getState ( 'item.id'));
-		$ids = array();
-		// If topic has been moved, find the new topic
-		while ($topic->moved_id) {
-			if (isset($ids[$topic->moved_id])) {
-				// Break on loops
-				return false;
-			}
-			$ids[$topic->moved_id] = 1;
-			$topic = KunenaForumTopicHelper::get($topic->moved_id);
-		}
-		// If topic doesn't exist, check if there's a message with the same id
-		if (! $topic->exists()) {
-			$message = KunenaForumMessageHelper::get($this->getState ( 'item.id'));
-			if ($message->exists()) {
+		if ($this->topic === false) {
+			$mesid = $this->getState('item.mesid');
+			if ($mesid) {
+				// Find actual topic by fetching current message
+				$message = KunenaForumMessageHelper::get($mesid);
 				$topic = KunenaForumTopicHelper::get($message->thread);
+				$this->setState ( 'list.start', intval($topic->getPostLocation($mesid) / $this->getState ( 'list.limit')) * $this->getState ( 'list.limit') );
+			} else {
+				$topic = KunenaForumTopicHelper::get($this->getState ( 'item.id'));
+				$ids = array();
+				// If topic has been moved, find the new topic
+				while ($topic->moved_id) {
+					if (isset($ids[$topic->moved_id])) {
+						// Break on loops
+						return false;
+					}
+					$ids[$topic->moved_id] = 1;
+					$topic = KunenaForumTopicHelper::get($topic->moved_id);
+				}
+				// If topic doesn't exist, check if there's a message with the same id
+				/*if (! $topic->exists()) {
+					$message = KunenaForumMessageHelper::get($this->getState ( 'item.id'));
+					if ($message->exists()) {
+						$topic = KunenaForumTopicHelper::get($message->thread);
+					}
+				}*/
 			}
+			$this->topic = $topic;
 		}
-		$this->topic = $topic;
-		return $topic;
+		return $this->topic;
 	}
 
 	public function getMessages() {

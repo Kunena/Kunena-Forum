@@ -19,7 +19,13 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CHOOSE_CSS_TEMPLATE'); ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
-		<table cellpadding="1" cellspacing="1" border="0" width="100%">
+		<input type="hidden" name="view" value="templates" />
+		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>" />
+		<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>" />
+		<input type="hidden" name="boxchecked" value="0" />
+
+		<table>
 		<tr>
 			<td width="220"><span class="componentheading">&nbsp;</span></td>
 		</tr>
@@ -42,12 +48,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 		<?php
 			$k = 1 - $k; } ?>
 		</table>
-		<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>" />
-		<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>" />
-		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="templates" />
-		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="boxchecked" value="0" />
 	</form>
 	</div>
 	<div class="kadmin-footer">

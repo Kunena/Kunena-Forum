@@ -18,8 +18,14 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
-			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%"></table>
-			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
+			<input type="hidden" name="view" value="trash" />
+			<input type="hidden" name="task" value="purge" />
+			<input type="hidden" name="boxchecked" value="1" />
+			<input type="hidden" name="md5" value="<?php echo $this->md5Calculated ?>" />
+			<?php echo JHTML::_( 'form.token' ); ?>
+
+			<table class="adminheading"></table>
+			<table class="adminlist">
 				<tr>
 					<td><strong><?php echo JText::_('COM_KUNENA_NUMBER_ITEMS'); ?>:</strong>
 						<br />
@@ -40,12 +46,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					</td>
 				</tr>
 			</table>
-			<input type="hidden" name="option" value="com_kunena" />
-			<input type="hidden" name="view" value="trash" />
-			<input type="hidden" name="task" value="purge" />
-			<input type="hidden" name="boxchecked" value="1" />
-			<input type="hidden" name="md5" value="<?php echo $this->md5Calculated ?>" />
-			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
   </div>
   <div class="kadmin-footer">

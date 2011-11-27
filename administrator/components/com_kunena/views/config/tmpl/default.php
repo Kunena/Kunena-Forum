@@ -22,7 +22,10 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-config"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
 		<div id="kadmin-configtabs">
-		<form action="index.php" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+			<input type="hidden" name="view" value="config" />
+			<input type="hidden" name="task" value="" />
+			<?php echo JHTML::_( 'form.token' ); ?>
 
 		<dl class="tabs" id="pane">
 
@@ -31,7 +34,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
 
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 							<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE') ?>
 						</td>
@@ -116,7 +119,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_SEO_SETTINGS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_SEF') ?></td>
 						<td align="left" valign="top" width="25%"><?php echo $this->lists ['sef']; ?></td>
@@ -139,7 +142,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_LOOKS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_THREADS') ?>
 						</td>
@@ -206,14 +209,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 								<td align="left" valign="top"><?php echo $this->lists ['shownew'];
 						?></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SHOWNEW_DESC') ?></td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_PLUGINS_SUPPORT') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $this->lists ['jmambot'];
-						?></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_PLUGINS_SUPPORT_DESC') ?>
-						</td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT') ?>
@@ -415,7 +410,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			</fieldset>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_LENGTHS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" width="25%" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH') ?>
 						</td>
@@ -451,7 +446,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_USER_RELATED') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_DISPLAY_NAME') ?>
 						</td>
@@ -571,7 +566,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			</fieldset>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['allowsubscriptions']; ?></td>
@@ -579,7 +574,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL'); ?></td>
-						<td align="left" valign="top"><?php echo $this->list ['mailfull']; ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['mailfull']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAILFULL_DESC'); ?></td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -619,7 +614,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_SECURITY_SETTINGS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE') ?></td>
@@ -706,7 +701,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			</fieldset>
 			<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_A_CAPTCHA_CONFIGURATION'); ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_CAPTCHA_GUESTS') ?></td>
 						<td align="left" valign="top" width="25%"><?php echo $this->lists ['captcha']; ?></td>
@@ -740,7 +735,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATAR_SETTINGS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVATARUPLOAD') ?></td>
 								<td align="left" valign="top"><?php echo $this->lists ['allowavatarupload'];
@@ -779,7 +774,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_IMAGE') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_IMAGE_UPLOAD') ?></td>
 						<td align="left" valign="top" width="25%"><?php echo $this->lists ['image_upload']; ?></td>
@@ -873,7 +868,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			</fieldset>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_FILE') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_FILE_UPLOAD') ?></td>
 						<td align="left" valign="top" width="25%"><?php echo $this->lists ['file_upload']; ?></td>
@@ -915,7 +910,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_RANKING_SETTINGS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RANKING') ?>
 						</td>
@@ -940,7 +935,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_BBCODE_SETTINGS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISEMOTICONS') ?></td>
 								<td align="left" valign="top"><?php echo $this->lists ['disemoticons'];
@@ -1071,67 +1066,11 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 				</table>
 			</fieldset>
 			</dd>
-			<dt title="<?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?>"><?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?></dt>
-			<dd>
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_INTEGRATION_TITLE') ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_AVATAR') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_avatar']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_AVATAR_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_PROFILE') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_profile']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_PROFILE_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_LOGIN') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_login']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_LOGIN_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_PRIVATE') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_private']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_PRIVATE_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_activity']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT') ?></td>
-							<td align="left" valign="top"><input type="text" name="cfg_activity_limit" class="ksm-field"
-								value="<?php echo $this->escape($this->config->activity_limit);?>" /></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACCESS') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['integration_access']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACCESS_DESC') ?></td>
-						</tr>
-					</table>
-				</fieldset>
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_AUP_ALPHAUSERPOINTS'); ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY'); ?></td>
-							<td align="left" valign="top" width="25%"><input type="text"
-								name="cfg_alphauserpointsnumchars"
-								value="<?php echo $this->escape($this->config->alphauserpointsnumchars); ?>" /></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY_DESC'); ?></td>
-						</tr>
-					</table>
-				</fieldset>
-				</dd>
 				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_RSS') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_RSS') ?></dt>
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_RSS_SETTINGS') ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<table class="kadmin-adminform">
 						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_TYPE') ?></td>
 							<td align="left" valign="top" width="25%"><?php echo $this->lists ['rss_type']; ?></td>
@@ -1205,7 +1144,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<table class="kadmin-adminform">
 						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS') ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
@@ -1272,7 +1211,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 				</fieldset>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_STATS') ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<table class="kadmin-adminform">
 						<tr align="center" valign="middle">
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOWWHOIS');
 							?></td>
@@ -1390,7 +1329,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 				</fieldset>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_A_POLL_TITLE'); ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<table class="kadmin-adminform">
 						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_POLL_ENABLED');
 							?>
@@ -1459,10 +1398,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</tr>
 					</table>
 				</fieldset>
-				<input type="hidden" name="option" value="com_kunena" />
-				<input type="hidden" name="view" value="config" />
-				<input type="hidden" name="task" value="" />
-				<?php echo JHTML::_( 'form.token' ); ?>
 				</dd>
 			</dl>
 			</form>

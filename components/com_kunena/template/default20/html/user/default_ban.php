@@ -16,10 +16,12 @@ JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 ?>
 							<div class="kblock kflat">
-								<form action="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=user") ?>" id="kform-ban" name="kformban" method="post">
+								<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kform-ban" name="kformban" method="post">
+									<input type="hidden" name="view" value="user" />
 									<input type="hidden" name="task" value="ban" />
 									<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
 									<?php echo JHTML::_( 'form.token' ); ?>
+
 									<h2 class="kheader"><span><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></span></h2>
 									<ul class="kform kmoderate-user clearfix">
 										<li class="kedit-user-information-row krow-<?php echo $this->row(true) ?>">

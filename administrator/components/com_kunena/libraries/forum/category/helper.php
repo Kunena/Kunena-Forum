@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.user');
-kimport ('kunena.forum.category');
-
 /**
  * Kunena Forum Category Helper Class
  */
@@ -43,18 +39,38 @@ class KunenaForumCategoryHelper {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return $identifier;
 		}
-		$id = intval ( $identifier );
-		if ($id < 1) {
+		if (!is_numeric($identifier)) {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return new KunenaForumCategory ();
 		}
 
-		if ($reload || empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new KunenaForumCategory ( $id );
+		$id = intval ( $identifier );
+		if (empty ( self::$_instances [$id] )) {
+			self::$_instances [$id] = new KunenaForumCategory (array('id'=>$id));
+			self::$_instances [$id]->load();
+		} elseif ($reload) {
+			self::$_instances [$id]->load();
 		}
 
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return self::$_instances [$id];
+	}
+
+	static public function register($instance) {
+		if (self::$_instances === false) {
+			self::loadCategories();
+		}
+		if ($instance->exists()) {
+			$instance->level = isset(self::$_instances [$instance->parent_id]) ? self::$_instances [$instance->parent_id]->level+1 : 0;
+			self::$_instances [$instance->id] = $instance;
+			if (!isset(self::$_tree [(int)$instance->id])) {
+				self::$_tree [$instance->id] = array();
+				self::$_tree [$instance->parent_id][$instance->id] = &self::$_tree [$instance->id];
+			}
+		} else {
+			unset(self::$_instances [$instance->id]);
+			unset(self::$_tree [$instance->id], self::$_tree [$instance->parent_id][$instance->id]);
+		}
 	}
 
 	static public function getSubscriptions($user = null) {
@@ -132,11 +148,10 @@ class KunenaForumCategoryHelper {
 		}
 
 		if ($ids === false) {
-			if ($authorise != 'none') {
-				$ids = self::$_instances;
-			} else {
+			$ids = self::$_instances;
+			if ($authorise == 'none') {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-				return self::$_instances;
+				return $ids;
 			}
 		} elseif (is_array ($ids) ) {
 			$ids = array_flip($ids);
@@ -146,7 +161,7 @@ class KunenaForumCategoryHelper {
 
 		$list = array ();
 		if (!$reverse) {
-			$allowed = $authorise != 'none' ? array_intersect_key($ids, KunenaFactory::getAccessControl ()->getAllowedCategories ( null, 'read' )) : $ids;
+			$allowed = $authorise != 'none' ? array_intersect_key($ids, KunenaAccess::getInstance()->getAllowedCategories ( null )) : $ids;
 			$list = array_intersect_key(self::$_instances, $allowed);
 			if ($authorise != 'none' && $authorise != 'read') {
 				foreach ( $list as $category ) {
@@ -156,7 +171,7 @@ class KunenaForumCategoryHelper {
 				}
 			}
 		} else {
-			$allowed = $authorise != 'none' ? array_intersect_key(self::$_instances, KunenaFactory::getAccessControl ()->getAllowedCategories ( null, 'read' )) : self::$_instances;
+			$allowed = $authorise != 'none' ? array_intersect_key(self::$_instances, KunenaAccess::getInstance()->getAllowedCategories ( null )) : self::$_instances;
 			$list = array_diff_key($allowed, $ids);
 			if ($authorise != 'none' && $authorise != 'read') {
 				foreach ( $list as $category ) {
@@ -280,20 +295,21 @@ class KunenaForumCategoryHelper {
 	}
 
 	static public function &getIndentation($categories) {
-		kimport('kunena.tree');
-		$tree = new Kunenatree($categories);
+		$tree = new KunenaTree($categories);
 		return $tree->getIndentation();
 	}
 
-	static public function recount() {
+	static public function recount($categories = '') {
 		$db = JFactory::getDBO ();
+		if (is_array($categories)) $categories = implode(',', $categories);
+		$categories = !empty($categories) ? "AND category_id IN ({$categories})" : '';
 
 		// Update category post count and last post info on categories which have published topics
 		$query = "UPDATE #__kunena_categories AS c
 			INNER JOIN (
 				SELECT category_id AS id, COUNT(*) AS numTopics, SUM(posts) AS numPosts, MAX(id) AS last_topic_id
 				FROM #__kunena_topics
-				WHERE hold=0 AND moved_id=0
+				WHERE hold=0 AND moved_id=0 {$categories}
 				GROUP BY category_id
 			) AS r ON r.id=c.id
 			INNER JOIN #__kunena_topics AS tt ON tt.id=r.last_topic_id
@@ -301,6 +317,7 @@ class KunenaForumCategoryHelper {
 				c.numPosts = r.numPosts,
 				c.last_topic_id=r.last_topic_id,
 				c.last_topic_subject = tt.subject,
+				c.last_topic_posts=tt.posts,
 				c.last_post_id = tt.last_post_id,
 				c.last_post_time = tt.last_post_time,
 				c.last_post_userid = tt.last_post_userid,
@@ -314,11 +331,12 @@ class KunenaForumCategoryHelper {
 
 		// Update categories which have no published topics
 		$query = "UPDATE #__kunena_categories AS c
-			LEFT JOIN #__kunena_topics AS tt ON c.id=tt.category_id
+			LEFT JOIN #__kunena_topics AS tt ON c.id=tt.category_id AND tt.hold=0
 			SET c.numTopics=0,
 				c.numPosts=0,
 				c.last_topic_id=0,
 				c.last_topic_subject='',
+				c.last_topic_posts=0,
 				c.last_post_id=0,
 				c.last_post_time=0,
 				c.last_post_userid=0,
@@ -351,8 +369,7 @@ class KunenaForumCategoryHelper {
 
 		self::$_instances = array();
 		foreach ( $results as $category ) {
-			$instance = new KunenaForumCategory (false);
-			$instance->setProperties ( $category );
+			$instance = new KunenaForumCategory ($category);
 			$instance->exists (true);
 			self::$_instances [$instance->id] = $instance;
 

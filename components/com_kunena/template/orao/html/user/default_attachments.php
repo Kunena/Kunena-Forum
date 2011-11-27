@@ -9,7 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
 if (version_compare(JVERSION, '1.7','>')) {
 	// Joomla 1.7+
 	JHtml::_('behavior.multiselect');
@@ -35,10 +34,13 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 	<div class="kcontainer">
 		<div class="kbody">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" id="adminForm">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
 				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="task" value="delfile" />
-				<table width="100%">
+				<input type="hidden" name="boxchecked" value="0" />
+				<?php echo JHTML::_( 'form.token' ); ?>
+
+				<table>
 					<tr class="ksth">
 						<th class="frst"> # </th>
 						<th width="5"><?php if (version_compare(JVERSION, '1.6','>')): ?>
@@ -88,8 +90,6 @@ if (version_compare(JVERSION, '1.7','>')) {
 					<?php $i++; $y++; endforeach; ?>
 				</table>
 				<input class="tk-submit-button" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>" style="float:right;" />
-				<input type="hidden" name="boxchecked" value="0" />
-				<?php echo JHTML::_( 'form.token' ); ?>
 			</form>
 		</div>
 	</div>

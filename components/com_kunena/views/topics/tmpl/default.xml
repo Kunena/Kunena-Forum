@@ -11,13 +11,13 @@
 		<description>COM_KUNENA_MENU_TOPICS_DEFAULT_DESC_LONG</description>
 		<url>
 			<param name="mode" type="list" default="replies" label="COM_KUNENA_MENU_SELECTEDVIEW">
-				<option value="replies">COM_KUNENA_MENU_REPLIES</option>
-				<option value="topics">COM_KUNENA_MENU_TOPICS</option>
-				<option value="noreplies">COM_KUNENA_MENU_NOREPLIES</option>
-				<option value="sticky">COM_KUNENA_MENU_STICKY</option>
-				<option value="locked">COM_KUNENA_MENU_LOCKED</option>
-				<option value="unapproved">COM_KUNENA_MENU_UNAPROVED</option>
-				<option value="deleted">COM_KUNENA_MENU_DELETED</option>
+				<option value="replies">COM_KUNENA_TOPICS_MODE_OPTION_REPLIES</option>
+				<option value="topics">COM_KUNENA_TOPICS_MODE_OPTION_TOPICS</option>
+				<option value="noreplies">COM_KUNENA_TOPICS_MODE_OPTION_NOREPLIES</option>
+				<option value="sticky">COM_KUNENA_TOPICS_MODE_OPTION_STICKY</option>
+				<option value="locked">COM_KUNENA_TOPICS_MODE_OPTION_LOCKED</option>
+				<option value="unapproved">COM_KUNENA_TOPICS_MODE_OPTION_UNAPROVED</option>
+				<option value="deleted">COM_KUNENA_TOPICS_MODE_OPTION_DELETED</option>
 			</param>
 		</url>
 		<params addpath="/administrator/components/com_kunena/libraries/form/elements">
@@ -25,7 +25,9 @@
 				<option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
 				<option value="0">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
 			</param>
-			<param name="topics_categories" type="kunenacategorylist" default="0" toplevel="COM_KUNENA_A_ALL_CATEGORIES" label="COM_KUNENA_COM_A_LATESTCATEGORY" description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"  multiple="true" size="5" />
+			<param name="topics_categories" type="kunenacategorylist" default="0" label="COM_KUNENA_COM_A_LATESTCATEGORY" description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"  multiple="true" size="10">
+				<option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
+			</param>
 			<param name="topics_time" type="list" default="-1" label="COM_KUNENA_A_TOPICS_TIME" description="COM_KUNENA_A_TOPICS_TIME_DESC">
 				<option value="-1">COM_KUNENA_SHOW_ALL</option>
 				<option value="0">COM_KUNENA_SHOW_LASTVISIT</option>
@@ -46,13 +48,13 @@
 	<fields name="request">
 		<fieldset name="request">
 			<field name="mode" type="list" default="replies" label="COM_KUNENA_MENU_SELECTEDVIEW">
-				<option value="replies">COM_KUNENA_MENU_REPLIES</option>
-				<option value="topics">COM_KUNENA_MENU_TOPICS</option>
-				<option value="noreplies">COM_KUNENA_MENU_NOREPLIES</option>
-				<option value="sticky">COM_KUNENA_MENU_STICKY</option>
-				<option value="locked">COM_KUNENA_MENU_LOCKED</option>
-				<option value="unapproved">COM_KUNENA_MENU_UNAPROVED</option>
-				<option value="deleted">COM_KUNENA_MENU_DELETED</option>
+				<option value="replies">COM_KUNENA_TOPICS_MODE_OPTION_REPLIES</option>
+				<option value="topics">COM_KUNENA_TOPICS_MODE_OPTION_TOPICS</option>
+				<option value="noreplies">COM_KUNENA_TOPICS_MODE_OPTION_NOREPLIES</option>
+				<option value="sticky">COM_KUNENA_TOPICS_MODE_OPTION_STICKY</option>
+				<option value="locked">COM_KUNENA_TOPICS_MODE_OPTION_LOCKED</option>
+				<option value="unapproved">COM_KUNENA_TOPICS_MODE_OPTION_UNAPROVED</option>
+				<option value="deleted">COM_KUNENA_TOPICS_MODE_OPTION_DELETED</option>
 			</field>
 		</fieldset>
 	</fields>
@@ -62,7 +64,9 @@
 				<option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
 				<option value="0">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
 			</field>
-			<field name="topics_categories" type="kunenacategorylist" default="0" none="COM_KUNENA_A_ALL_CATEGORIES" label="COM_KUNENA_COM_A_LATESTCATEGORY" description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"  multiple="true" size="5" />
+			<field name="topics_categories" type="kunenacategorylist" default="0" label="COM_KUNENA_COM_A_LATESTCATEGORY" description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"  multiple="true" size="10">
+				<option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
+			</field>
 			<field name="topics_time" type="list" default="-1" label="COM_KUNENA_A_TOPICS_TIME" description="COM_KUNENA_A_TOPICS_TIME_DESC">
 				<option value="-1">COM_KUNENA_SHOW_ALL</option>
 				<option value="0">COM_KUNENA_SHOW_LASTVISIT</option>

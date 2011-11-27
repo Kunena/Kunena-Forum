@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 require_once (dirname ( __FILE__ ) . '/kunena.php');
-kimport('kunena.forum.category.helper');
+
 /**
  * Kunena Topics
  * Provides access to the #__kunena_topics table
@@ -99,6 +99,21 @@ class TableKunenaTopics extends KunenaTable
 			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT' ) );
 		}
 		return ($this->getError () == '');
+	}
+	
+	function hit() {
+		$k = $this->_tbl_key;
+		$query = "UPDATE #__kunena_topics SET hits=hits+1 WHERE id = {$this->$k}";
+		$this->_db->setQuery($query);
+		$this->_db->Query();
+		
+		// Check for an error message.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+		
+		return true;
 	}
 
 }

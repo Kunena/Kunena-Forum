@@ -16,11 +16,6 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
 ?>
 
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <?php $this->displayBreadcrumb () ?>
 
 <?php if ($this->category->headerdesc) : ?>
@@ -72,8 +67,8 @@ $this->displayLoginBox ();
 				<?php
 				echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 				$modlinks = array();
-				foreach ( $this->moderators as $userid ) {
-					$modlinks[] = CKunenaLink::GetProfileLink ( $userid );
+				foreach ( $this->moderators as $moderator ) {
+					$modlinks[] = $moderator->getLink();
 				}
 				echo implode(', ', $modlinks);
 				?>
@@ -82,5 +77,3 @@ $this->displayLoginBox ();
 	</div>
 </div>
 <!-- F: List Actions Bottom -->
-<?php $this->displayFooter (); ?>
-</div>

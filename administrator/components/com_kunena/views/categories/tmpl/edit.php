@@ -13,8 +13,8 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
-?>
-<script language="javascript" type="text/javascript">
+$errormsg = JText::_('COM_KUNENA_ERROR1');
+$document->addScriptDeclaration("
 function submitbutton(pressbutton)
 {
 	var form = document.adminForm;
@@ -23,19 +23,24 @@ function submitbutton(pressbutton)
 		return;
 	}
 	// do field validation
-	if (typeof form.onsubmit == "function") form.onsubmit();
-	if (form.name.value == "") {
-		alert("<?php echo JText::_('COM_KUNENA_ERROR1'); ?>");
+	if (typeof form.onsubmit == 'function') form.onsubmit();
+	if (form.name.value == '') {
+		alert('{$errormsg}');
 	} else {
 		submitform(pressbutton);
 	}
 }
-</script>
+");
+?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN') ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<input type="hidden" name="view" value="categories" />
+		<input type="hidden" name="task" value="save" />
+		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
+		<?php echo JHTML::_( 'form.token' ); ?>
 
 		<?php jimport('joomla.html.pane');
 		$myTabs = JPane::getInstance('tabs', array('startOffset'=>0)); ?>
@@ -76,37 +81,22 @@ function submitbutton(pressbutton)
 			<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<table class="kadmin-adminform">
 						<tr>
 							<td class="nowrap" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_TITLE'); ?></td>
 							<td valign="top" width="25%"><?php echo $this->options ['accesstypes']; ?></td>
 							<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
 						</tr>
-						<tr class="kaccess kaccess-joomla-level" style="<?php echo $row->accesstype == 'none' ? 'display:none' : '' ?>">
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSLEVEL_TITLE');?></td>
-							<td valign="top"><?php echo $this->options ['accesslevels']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSLEVEL_DESC') .'<br /><br />'. (version_compare(JVERSION, '1.6', '>') ? JText::_('COM_KUNENA_A_ACCESSLEVEL_DESC_J16') : JText::_('COM_KUNENA_A_ACCESSLEVEL_DESC_J15')); ?></td>
+						<?php
+						foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) :
+							foreach ($accesslist as $accessinput) :
+						?>
+						<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $row->accesstype != $accesstype ? 'display:none' : '' ?>">
+							<td class="nowrap" valign="top"><?php echo $accessinput['title'] ?></td>
+							<td valign="top"><?php echo $accessinput['input'] ?></td>
+							<td valign="top"><?php echo $accessinput['desc'] ?></td>
 						</tr>
-						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_TITLE'); ?></td>
-							<td valign="top"><?php echo $this->options ['pub_access']; ?></td>
-							<td><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_DESC') .'<br /><br />'. (version_compare(JVERSION, '1.6', '>') ? JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_DESC_J16') : JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_DESC_J15')); ?></td>
-						</tr>
-						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_PRIMARY_CHILDS_TITLE'); ?></td>
-							<td valign="top"><?php echo $this->options ['pub_recurse']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_CHILDS_DESC'); ?></td>
-						</tr>
-						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_TITLE'); ?></td>
-							<td valign="top"><?php echo $this->options ['admin_access']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_DESC') .'<br /><br />'. (version_compare(JVERSION, '1.6', '>') ? JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_DESC_J16') : JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_DESC_J15')); ?></td>
-						</tr>
-						<tr class="kaccess kaccess-none" style="<?php echo $row->accesstype != 'none' ? 'display:none' : '' ?>">
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_SECONDARY_CHILDS_TITLE'); ?></td>
-							<td valign="top"><?php echo $this->options ['admin_recurse']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSGROUP_CHILDS_DESC'); ?></td>
-						</tr>
+						<?php endforeach; endforeach ?>
 					</table>
 				</fieldset>
 			</dd>
@@ -177,15 +167,6 @@ function submitbutton(pressbutton)
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></legend>
-					<table class="kadmin-adminform">
-						<tr>
-							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_MOD'); ?></td>
-							<td valign="top"><?php echo $this->options ['forumModerated']; ?></td>
-							<td valign="top"><?php echo JText::_('COM_KUNENA_MODDESC'); ?></td>
-						</tr>
-					</table>
-
-					<?php if ($this->category->moderated) : ?>
 
 					<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
 
@@ -224,16 +205,10 @@ function submitbutton(pressbutton)
 						?>
 						</tbody>
 					</table>
-					<?php endif; ?>
 				</fieldset>
 				<?php endif; ?>
 			</dd>
 		</dl>
-		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="categories" />
-		<input type="hidden" name="task" value="save" />
-		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>
 	<div class="kadmin-footer">

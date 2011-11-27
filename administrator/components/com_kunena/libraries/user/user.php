@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport('kunena.error');
-kimport ('kunena.date');
-kimport('kunena.user.helper');
 jimport ( 'joomla.utilities.date' );
 jimport ( 'joomla.filesystem.file' );
 
@@ -154,7 +151,7 @@ class KunenaUser extends JObject {
 			$this->setError ( $table->getError () );
 		}
 
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$access->clearCache();
 
 		// Set the id for the KunenaUser object in case we created a new user.
@@ -182,7 +179,7 @@ class KunenaUser extends JObject {
 			$this->setError ( $table->getError () );
 		}
 
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$access->clearCache();
 
 		return $result;
@@ -195,20 +192,35 @@ class KunenaUser extends JObject {
 
 	public function getAllowedCategories($rule = 'read') {
 		if (!isset($this->_allowed[$rule])) {
-			$acl = KunenaFactory::getAccessControl ();
+			$acl = KunenaAccess::getInstance();
 			$allowed = $acl->getAllowedCategories ( $this->userid, $rule );
 			$this->_allowed[$rule] = $allowed;
 		}
 		return $this->_allowed[$rule];
 	}
 
+	public function getMessageOrdering() {
+		static $ordering = null;
+		if (is_null($ordering)) {
+			if ($this->ordering != '0') {
+				$ordering = $this->ordering == '1' ? 'desc' : 'asc';
+			} else {
+				$ordering = KunenaFactory::getConfig()->default_sort == 'asc' ? 'asc' : 'desc';
+			}
+			if ($ordering != 'asc') {
+				$ordering = 'desc';
+			}
+		}
+		return $ordering;
+	}
+
 	public function isAdmin($catid = 0) {
-		$acl = KunenaFactory::getAccessControl ();
+		$acl = KunenaAccess::getInstance();
 		return $acl->isAdmin ( $this, $catid );
 	}
 
 	public function isModerator($catid = 0) {
-		$acl = KunenaFactory::getAccessControl ();
+		$acl = KunenaAccess::getInstance();
 		return $acl->isModerator ( $this, $catid );
 	}
 
@@ -464,7 +476,7 @@ class KunenaUser extends JObject {
 			case 'profile' :
 				if (! $this->userid)
 					return;
-				return CKunenaLink::GetProfileLink ( $this->userid, '<span class="profile" title="' . JText::_ ( 'COM_KUNENA_VIEW_PROFILE' ) . '"></span>' );
+				return $this->getLink('<span class="profile" title="' . JText::_ ( 'COM_KUNENA_VIEW_PROFILE' ) . '"></span>');
 				break;
 		}
 	}

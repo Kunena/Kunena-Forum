@@ -11,9 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
-kimport('kunena.model');
-kimport('kunena.forum.topic.helper');
-kimport('kunena.forum.message.helper');
 
 /**
  * Trash Model for Kunena
@@ -105,8 +102,6 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * @since	1.6
 	 */
 	public function getPurgeItems() {
-		kimport('kunena.error');
-
 		$app = JFactory::getApplication ();
 
 		$ids = $app->getUserState ( 'com_kunena.purge' );

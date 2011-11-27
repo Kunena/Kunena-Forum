@@ -10,22 +10,23 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once KPATH_ADMIN . '/libraries/integration/integration.php';
-
-abstract class KunenaActivity
+class KunenaActivity
 {
-	public $priority = 0;
-
 	protected static $instance = false;
-
-	abstract public function __construct();
 
 	static public function getInstance($integration = null) {
 		if (self::$instance === false) {
-			$config = KunenaFactory::getConfig ();
-			if (! $integration)
-				$integration = $config->integration_activity;
-			self::$instance = KunenaIntegration::initialize ( 'activity', $integration );
+			JPluginHelper::importPlugin('kunena');
+			$dispatcher = JDispatcher::getInstance();
+			$classes = $dispatcher->trigger('onKunenaGetActivity');
+			foreach ($classes as $class) {
+				if (!is_object($class)) continue;
+				self::$instance = $class;
+				break;
+			}
+			if (!self::$instance) {
+				self::$instance = new KunenaActivity();
+			}
 		}
 		return self::$instance;
 	}

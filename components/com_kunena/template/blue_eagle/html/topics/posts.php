@@ -9,11 +9,7 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
+
 $this->displayAnnouncement ();
 $this->getModulePosition ( 'kunena_announcement' );
 ?>
@@ -26,7 +22,7 @@ $this->getModulePosition ( 'kunena_announcement' );
 		</td>
 
 		<td class="klist-times-all">
-			<form id="timeselect" name="timeselect" method="post" target="_self" action="<?php echo $this->escape(JURI::getInstance()->toString());?>">
+			<form action="<?php echo $this->escape(JURI::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
 			<?php
 			// make the select list for time selection
 			$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
@@ -50,7 +46,7 @@ $this->getModulePosition ( 'kunena_announcement' );
 </table>
 <!-- F: List Actions -->
 
-<?php echo $this->loadTemplate('embed'); ?>
+<?php echo $this->loadTemplateFile('embed'); ?>
 
 <!-- B: List Actions -->
 <table class="klist-actions">
@@ -67,6 +63,4 @@ $this->getModulePosition ( 'kunena_announcement' );
 <?php
 $this->displayWhoIsOnline ();
 $this->displayStatistics ();
-$this->displayFooter ();
 ?>
-</div>

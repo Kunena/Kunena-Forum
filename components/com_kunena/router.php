@@ -14,12 +14,6 @@ require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 jimport('joomla.filter.output');
 jimport('joomla.error.profiler');
 
-kimport('kunena.route');
-kimport('kunena.error');
-kimport('kunena.forum.category.helper');
-kimport('kunena.forum.topic.helper');
-kimport('kunena.user.helper');
-
 class KunenaRouter {
 	static $config = null;
 
@@ -177,7 +171,7 @@ function KunenaBuildRoute(&$query) {
 
 	// If Kunena SEF is not enabled, do nothing
 	if (! KunenaRoute::$config->sef) {
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__FUNCTION__.'()') : null;
 		return $segments;
 	}
 
@@ -197,7 +191,7 @@ function KunenaBuildRoute(&$query) {
 
 	// Safety check: we need view in order to create SEF URLs
 	if (!isset ( $menuitem->query ['view'] ) && empty ( $query ['view'] )) {
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__FUNCTION__.'()') : null;
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__FUNCTION__.'()') : null;
 		return $segments;
 	}
 
@@ -342,8 +336,8 @@ function KunenaParseRoute($segments) {
 				$var = 'userid';
 			} else {
 				// Numeric variable is always catid or id
-				if (empty($vars ['catid'])
-					|| (empty($vars ['id']) && KunenaForumCategoryHelper::get($value)->exists() && KunenaForumTopicHelper::get($value)->category_id != $vars ['catid'])) {
+				if (empty($vars ['catid'])) {
+					//|| (empty($vars ['id']) && KunenaForumCategoryHelper::get($value)->exists() && KunenaForumTopicHelper::get($value)->category_id != $vars ['catid'])) {
 					// First numbers are always categories
 					// FIXME: what if $topic->catid == catid
 					$var = 'catid';

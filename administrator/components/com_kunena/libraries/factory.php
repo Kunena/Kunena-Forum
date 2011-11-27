@@ -19,8 +19,7 @@ abstract class KunenaFactory {
 	 *
 	 * @return object CKunenaConfig
 	 */
-	public static function getConfig()
-	{
+	public static function getConfig() {
 		require_once(KPATH_SITE.'/lib/kunena.config.class.php');
 		return CKunenaConfig::getInstance();
 	}
@@ -32,9 +31,7 @@ abstract class KunenaFactory {
 	 *
 	 * @return object KunenaTemplate
 	 */
-	public static function getTemplate($name = null)
-	{
-		kimport('kunena.template');
+	public static function getTemplate($name = null) {
 		return KunenaTemplate::getInstance($name);
 	}
 
@@ -48,7 +45,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaUser
 	 */
 	static public function getUser($id = null, $reload = false) {
-		kimport('kunena.user.helper');
 		return KunenaUserHelper::get($id, $reload);
 	}
 
@@ -60,26 +56,11 @@ abstract class KunenaFactory {
 	 * @param array An array containing session options
 	 * @return object KunenaSession
 	 */
-	public static function getSession($update = false)
-	{
-		kimport('kunena.session');
+	public static function getSession($update = false) {
 		if (!is_object(KunenaFactory::$session)) {
 			KunenaFactory::$session = KunenaSession::getInstance($update);
 		}
 		return KunenaFactory::$session;
-	}
-
-	/**
-	 * Get Kunena login object
-	 *
-	 * Returns the global {@link KunenaLogin} object, only creating it if it doesn't already exist.
-	 *
-	 * @return object KunenaLogin
-	 */
-	public static function getLogin()
-	{
-		require_once KPATH_ADMIN . '/libraries/integration/login.php';
-		return KunenaLogin::getInstance();
 	}
 
 	/**
@@ -89,8 +70,7 @@ abstract class KunenaFactory {
 	 *
 	 * @return object KunenaAvatar
 	 */
-	public static function getAvatarIntegration()
-	{
+	public static function getAvatarIntegration() {
 		require_once KPATH_ADMIN . '/libraries/integration/avatar.php';
 		return KunenaAvatar::getInstance();
 	}
@@ -102,8 +82,7 @@ abstract class KunenaFactory {
 	 *
 	 * @return object KunenaPrivate
 	 */
-	public static function getPrivateMessaging()
-	{
+	public static function getPrivateMessaging() {
 		require_once KPATH_ADMIN . '/libraries/integration/private.php';
 		return KunenaPrivate::getInstance();
 	}
@@ -115,8 +94,7 @@ abstract class KunenaFactory {
 	 *
 	 * @return object KunenaActivity
 	 */
-	public static function getActivityIntegration()
-	{
+	public static function getActivityIntegration() {
 		require_once KPATH_ADMIN . '/libraries/integration/activity.php';
 		return KunenaActivity::getInstance();
 	}
@@ -128,23 +106,9 @@ abstract class KunenaFactory {
 	 *
 	 * @return object KunenaProfile
 	 */
-	public static function getProfile()
-	{
+	public static function getProfile() {
 		require_once KPATH_ADMIN . '/libraries/integration/profile.php';
 		return KunenaProfile::getInstance();
-	}
-
-	/**
-	 * Get Kunena access control object
-	 *
-	 * Returns the global {@link KunenaAccess} object, only creating it if it doesn't already exist.
-	 *
-	 * @return object KunenaAccess
-	 */
-	public static function getAccessControl()
-	{
-		require_once KPATH_ADMIN . '/libraries/integration/access.php';
-		return KunenaAccess::getInstance();
 	}
 
 	/**
@@ -153,8 +117,7 @@ abstract class KunenaFactory {
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
 	 */
-	public static function loadLanguage( $file = 'com_kunena' )
-	{
+	public static function loadLanguage( $file = 'com_kunena' ) {
 		static $loaded = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 

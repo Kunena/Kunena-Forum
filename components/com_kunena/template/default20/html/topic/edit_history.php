@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 			<li>
 				<ul class="kposthead">
 					<li class="kposthead-replytitle"><h3><?php echo KunenaDate::getInstance($this->message->time)->toSpan('config_post_dateformat','config_post_dateformat_hover') ?></h3></li>
-					<li class="kposthead-postid" ><a name="<?php echo intval($this->message->id) ?>"></a><?php echo $this->getNumLink($this->message->id,$this->replycount--) ?></li>
+					<li class="kposthead-postid" ><a id="<?php echo intval($this->message->id) ?>"></a><?php echo $this->getNumLink($this->message->id,$this->replycount--) ?></li>
 				</ul>
 				<ul class="kpost-user-details">
 					<?php $avatar = $profile->getAvatarImage ('kavatar', 'category'); if ($avatar) : ?>

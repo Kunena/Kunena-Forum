@@ -10,31 +10,32 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once KPATH_ADMIN . '/libraries/integration/integration.php';
-
-abstract class KunenaAvatar {
-	public $priority = 0;
+class KunenaAvatar {
 	public $avatarSizes = null;
 	protected $resize = false;
 
 	protected static $instance = false;
 
-	abstract public function __construct();
-
 	static public function getInstance($integration = null) {
 		if (self::$instance === false) {
-			$config = KunenaFactory::getConfig ();
-			if (! $integration)
-				$integration = $config->integration_avatar;
-			self::$instance = KunenaIntegration::initialize ( 'avatar', $integration );
+			JPluginHelper::importPlugin('kunena');
+			$dispatcher = JDispatcher::getInstance();
+			$classes = $dispatcher->trigger('onKunenaGetAvatar');
+			foreach ($classes as $class) {
+				if (!is_object($class)) continue;
+				self::$instance = $class;
+				break;
+			}
+			if (!self::$instance) {
+				self::$instance = new KunenaAvatar();
+			}
 		}
 		return self::$instance;
 	}
 
 	public function load($userlist) {}
-
-	abstract public function getEditURL();
-	abstract protected function _getURL($user, $sizex, $sizey);
+	public function getEditURL() {}
+	protected function _getURL($user, $sizex, $sizey) {}
 
 	public function getSize($sizex=90, $sizey=90) {
 		$size = new StdClass();

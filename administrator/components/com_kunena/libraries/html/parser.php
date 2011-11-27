@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport('kunena.bbcode');
-kimport('kunena.template');
-
 abstract class KunenaHtmlParser {
 	static $emoticons = null;
 
@@ -53,14 +50,13 @@ abstract class KunenaHtmlParser {
 		if ($len && JString::strlen($txt) > $len) $txt = JString::substr ( $txt, 0, $len ) . ' ...';
 		$txt = self::escape ( $txt );
 		$txt = preg_replace('/(\S{30})/u', '\1&#8203;', $txt);
-		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
 
 	function parseBBCode($txt, $parent=null, $len=0) {
 		if (!$txt) return;
 
-		$bbcode = KunenaBBcode::getInstance();
+		$bbcode = KunenaBbcode::getInstance();
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(false);
@@ -68,7 +64,6 @@ abstract class KunenaHtmlParser {
 		$bbcode->SetURLPattern('<a href="{$url/h}" target="_blank" rel="nofollow">{$text/h}</a>');
 		$bbcode->SetURLTarget('_blank');
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
 
@@ -84,55 +79,28 @@ abstract class KunenaHtmlParser {
 		$txt = preg_replace ( '/\[attachment(.*?)\](.*?)\[\/attachment\]/s', '', $txt );
 		$txt = preg_replace ( '/\[code\](.*?)\[\/code]/s', '', $txt );
 
-		$bbcode = KunenaBBCode::getInstance();
+		$bbcode = KunenaBbcode::getInstance();
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetDetectURLs(true);
 		$bbcode->SetURLPattern('<a href="{$url/h}" target="_blank" rel="nofollow">{$text/h}</a>');
 		$bbcode->SetURLTarget('_blank');
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
 
 	function stripBBCode($txt, $len=0) {
 		if (!$txt) return;
 
-		$bbcode = KunenaBBCode::getInstance();
+		$bbcode = KunenaBbcode::getInstance();
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetDetectURLs(true);
 		$bbcode->SetURLPattern('<a href="{$url/h}" target="_blank" rel="nofollow">{$text/h}</a>');
 		$bbcode->SetURLTarget('_blank');
 		$txt = strip_tags($bbcode->Parse($txt));
-		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
-
-	function &prepareContent(&$content)
-	{
-		$config = KunenaFactory::getConfig();
-
-		if ($config->jmambot) {
-			$row = new stdClass();
-			$row->text =& $content;
-			$params = new JParameter( '' );
-			$params->set('ksource', 'kunena');
-
-			$dispatcher = JDispatcher::getInstance();
-			JPluginHelper::importPlugin('content');
-			if (version_compare(JVERSION, '1.6','>')) {
-				// Joomla 1.6+
-				$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
-			} else {
-				// Joomla 1.5
-				$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
-			}
-			$content = $row->text;
-		}
-		return $content;
-	}
-
 
 	function escape($string) {
 		return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');

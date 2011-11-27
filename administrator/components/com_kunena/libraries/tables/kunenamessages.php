@@ -91,6 +91,13 @@ class TableKunenaMessages extends KunenaTable
 	}
 
 	function check() {
+		$category = KunenaForumCategoryHelper::get($this->catid);
+		if (!$category->exists()) {
+			// TODO: maybe we should have own error message? or not?
+			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $this->catid ) );
+		} else {
+			$this->catid = $category->id;
+		}
 		$this->subject = trim($this->subject);
 		if (!$this->subject) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT' ) );
@@ -99,13 +106,8 @@ class TableKunenaMessages extends KunenaTable
 		if (!$this->message) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE' ) );
 		}
-		// Do not allow no posting date or dates from the future
-		$now = JFactory::getDate()->toUnix();
-		if (!$this->time || $this->time > $now) {
-			$this->time = $now;
-		}
-		if ($this->modified_time > $now) {
-			$this->modified_time = $now;
+		if (!$this->time) {
+			$this->time = JFactory::getDate()->toUnix();
 		}
 		$this->modified_reason = trim($this->modified_reason);
 		return ($this->getError () == '');

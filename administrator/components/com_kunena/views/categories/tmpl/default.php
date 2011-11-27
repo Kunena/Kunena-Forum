@@ -19,6 +19,14 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+			<input type="hidden" name="view" value="categories" />
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
+			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
+			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
+			<input type="hidden" name="boxchecked" value="0" />
+			<?php echo JHTML::_( 'form.token' ); ?>
+
 			<table class="kadmin-sort">
 				<tr>
 					<td class="left" width="90%">
@@ -41,7 +49,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 							<?php echo JHTML::_('grid.order',  $this->categories ); ?></small>
 						</th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>
-						<th class="center"><small><?php echo JText::_('COM_KUNENA_MODERATED'); ?></small></th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_REVIEW'); ?></small></th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'); ?></small></th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?></small></th>
@@ -65,8 +72,8 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			$k = 0;
 			$i = 0;
 			$n = count($this->categories);
-			$img_yes = '<img src="images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
-			$img_no = '<img src="images/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
+			$img_yes = '<img src="'.JURI::root().'administrator/components/com_kunena/images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
+			$img_no = '<img src="'.JURI::root().'administrator/components/com_kunena/images/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
 			foreach($this->categories as $category) {
 		?>
 			<tr <?php echo 'class = "row' . $k . '"';?>>
@@ -87,7 +94,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						<?php echo ($category->locked == 1 ? $img_yes : $img_no); ?>
 					</a>
 				</td>
-				<td colspan="4" class="center"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
+				<td colspan="3" class="center"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
 
 				<?php else: ?>
 
@@ -99,11 +106,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				<td class="center">
 					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->locked ? 'un':'').'lock'; ?>')">
 						<?php echo ($category->locked == 1 ? $img_yes : $img_no); ?>
-					</a>
-				</td>
-				<td class="center">
-					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo  ($category->moderated ? 'un':'').'moderate'; ?>')">
-						<?php echo ($category->moderated == 1 ? $img_yes : $img_no); ?>
 					</a>
 				</td>
 				<td class="center">
@@ -135,14 +137,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				?>
 		</table>
 
-		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="categories" />
-		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
-		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-		<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
-		<input type="hidden" name="boxchecked" value="0" />
-		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>
 	<div class="kadmin-footer">

@@ -11,8 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
-kimport('kunena.model');
-kimport ('kunena.date');
 
 /**
  * Config Model for Kunena
@@ -128,7 +126,6 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$yesno [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_A_NO') );
 		$yesno [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_A_YES') );
 
-		$lists ['jmambot'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $config->jmambot );
 		$lists ['disemoticons'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $config->disemoticons );
 		$lists ['regonly'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $config->regonly );
 		$lists ['board_offline'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $config->board_offline );
@@ -218,14 +215,6 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists['boxghostmessage'] = JHTML::_('select.genericlist', $yesno, 'cfg_boxghostmessage', 'class="inputbox" size="1"', 'value', 'text', $config->boxghostmessage);
 		// New for 1.6 -> Thank you button
 		$lists ['showthankyou'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showthankyou', 'class="inputbox" size="1"', 'value', 'text', $config->showthankyou );
-
-		kimport('kunena.integration');
-		$lists['integration_access'] = KunenaIntegration::getConfigOptions('access');
-		$lists['integration_activity'] = KunenaIntegration::getConfigOptions('activity');
-		$lists['integration_avatar'] = KunenaIntegration::getConfigOptions('avatar');
-		$lists['integration_login'] = KunenaIntegration::getConfigOptions('login');
-		$lists['integration_profile'] = KunenaIntegration::getConfigOptions('profile');
-		$lists['integration_private'] = KunenaIntegration::getConfigOptions('private');
 
 		$listUserDeleteMessage = array();
 		$listUserDeleteMessage[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_A_DELETEMESSAGE_NOT_ALLOWED'));

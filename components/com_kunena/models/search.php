@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.model' );
-kimport('kunena.forum.category.helper');
-
 /**
  * Search Model for Kunena
  *
@@ -25,7 +22,8 @@ class KunenaModelSearch extends KunenaModel {
 
 	protected function populateState() {
 		$this->config = KunenaFactory::getConfig ();
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
+		$this->app = JFactory::getApplication ();
 
 		// Get search word list
 		$value = JString::trim ( JRequest::getString ( 'q', '' ) );
@@ -96,19 +94,6 @@ class KunenaModelSearch extends KunenaModel {
 	public function getError() {
 		if ($this->error) return $this->error;
 		else return;
-	}
-
-	public function getMessageOrdering() {
-		$me = KunenaUserHelper::getMyself();
-		if ($me->ordering != '0') {
-			$ordering = $me->ordering == '1' ? 'desc' : 'asc';
-		} else {
-			$config = KunenaFactory::getConfig ();
-			$ordering = $config->default_sort == 'asc' ? 'asc' : 'desc';
-		}
-		if ($ordering != 'asc')
-			$ordering = 'desc';
-		return $ordering;
 	}
 
 	protected function buildWhere() {
@@ -276,6 +261,9 @@ class KunenaModelSearch extends KunenaModel {
 		}
 		KunenaUserHelper::loadUsers($userids);
 		KunenaForumMessageHelper::loadLocation($this->messages);
+
+		if ( empty($this->messages) ) $this->app->enqueueMessage( JText::sprintf('COM_KUNENA_SEARCH_NORESULTS_FOUND', $q));
+
 		return $this->messages;
 	}
 

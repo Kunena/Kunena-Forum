@@ -11,7 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.cache.handler.output' );
-kimport ( 'kunena.view' );
 
 /**
  * Announcement view

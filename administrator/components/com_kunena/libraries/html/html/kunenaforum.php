@@ -11,7 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport('joomla.html.html');
-kimport('kunena.forum.category.helper');
 
 abstract class JHTMLKunenaForum {
 	function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false) {
@@ -65,8 +64,11 @@ abstract class JHTMLKunenaForum {
 			if (empty($selected) && !$disabled) {
 				$selected[] = 0;
 			}
+			$toplevel = 1;
+		} else {
+			$toplevel = -KunenaForumCategoryHelper::get($parent)->level;
 		}
-		$toplevel = intval(!empty($topleveltxt)) - $category->level;
+
 		foreach ( $categories as $category ) {
 			$disabled = !$category->authorise ($action) || (! $sections && $category->isSection());
 			if (empty($selected) && !$disabled) {

@@ -10,10 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div id="Kunena">
 <?php
-$this->displayMenu ();
-$this->displayLoginBox ();
 $this->displayBreadcrumb ();
 ?>
 
@@ -42,7 +39,7 @@ $this->displayBreadcrumb ();
 <table class="klist-actions">
 	<tr>
 		<td class="klist-actions-goto">
-			<a name="forumtop"> </a>
+			<a id="forumtop"> </a>
 			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', $this->getIcon ( 'kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
 		</td>
 		<?php if (!empty ( $this->newTopicHtml ) || !empty ( $this->markReadHtml ) || !empty ( $this->subscribeCatHtml )) : ?>
@@ -58,6 +55,7 @@ $this->displayBreadcrumb ();
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="ktopicsform">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHTML::_( 'form.token' ); ?>
+
 <div class="kblock kflat">
 	<div class="kheader">
 		<?php if (!empty($this->topicActions)) : ?>
@@ -103,7 +101,7 @@ $this->displayBreadcrumb ();
 <table class="klist-actions-bottom" >
 	<tr>
 		<td class="klist-actions-goto">
-			<a name="forumbottom"> </a>
+			<a id="forumbottom"> </a>
 			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', $this->getIcon ( 'kforumtop', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
 		</td>
 		<?php if (!empty ( $this->newTopicHtml ) || !empty ( $this->markReadHtml ) || !empty ( $this->subscribeCatHtml )) : ?>
@@ -123,10 +121,11 @@ $this->displayBreadcrumb ();
 		<?php if (!empty ( $this->moderators ) ) : ?>
 		<div class="klist-moderators">
 			<?php
-			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
-			foreach ( $this->moderators as $userid ) {
-				echo CKunenaLink::GetProfileLink ( $userid ) . '&nbsp; ';
-			}
+				$modslist = array();
+				foreach ( $this->moderators as $moderator ) {
+					$modslist[] = $moderator->getLink();
+				}
+				echo JText::_('COM_KUNENA_GEN_MODERATORS') . ': ' . implode(', ', $modslist);
 			?>
 		</div>
 		<?php endif; ?>
@@ -134,5 +133,3 @@ $this->displayBreadcrumb ();
 </div>
 <!-- F: List Actions Bottom -->
 <?php endif; ?>
-<?php $this->displayFooter (); ?>
-</div>

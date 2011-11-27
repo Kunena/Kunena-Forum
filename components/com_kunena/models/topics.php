@@ -10,12 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.model' );
-kimport('kunena.forum.category.helper');
-kimport('kunena.forum.topic.helper');
-kimport('kunena.forum.message.helper');
-kimport('kunena.user.helper');
-
 /**
  * Topics Model for Kunena
  *
@@ -44,7 +38,7 @@ class KunenaModelTopics extends KunenaModel {
 
 		$userid = $this->getInt ( 'userid', -1 );
 		if ($userid < 0) {
-			$userid = KunenaFactory::getUser()->userid;
+			$userid = KunenaUserHelper::getMyself()->userid;
 		} elseif($userid > 0) {
 			$userid = KunenaFactory::getUser($userid)->userid;
 		} else {
@@ -89,19 +83,6 @@ class KunenaModelTopics extends KunenaModel {
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
-	}
-
-	public function getMessageOrdering() {
-		$me = KunenaUserHelper::getMyself();
-		if ($me->ordering != '0') {
-			$ordering = $me->ordering == '1' ? 'desc' : 'asc';
-		} else {
-			$config = KunenaFactory::getConfig ();
-			$ordering = $config->default_sort == 'asc' ? 'asc' : 'desc';
-		}
-		if ($ordering != 'asc')
-			$ordering = 'desc';
-		return $ordering;
 	}
 
 	public function getTopics() {

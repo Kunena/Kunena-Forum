@@ -34,13 +34,19 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_PROFFOR'); ?>: <?php echo $this->escape($this->user->name) .' ('. $this->escape($this->user->username) .')'; ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
-			<dl class="tabs" id="pane">
+		<input type="hidden" name="view" value="users" />
+		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="boxchecked" value="1" />
+		<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+
+		<dl class="tabs" id="pane">
 
 		<dt title="<?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?>"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></dt>
 		<dd>
 		<fieldset>
 		<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
-		<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+		<table class="kadmin-adminform">
 			<tr>
 				<th colspan="3" class="title"><?php echo JText::_('COM_KUNENA_GENPROF'); ?></th>
 			</tr>
@@ -76,7 +82,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 				<tr>
 				<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_UAVATAR'); ?></th>
 			</tr>
@@ -107,7 +113,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 		<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr>
 						<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_MODCHANGE'); ?></th>
 					</tr>
@@ -129,7 +135,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr>
 						<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></th>
 					</tr>
@@ -163,7 +169,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr>
 						<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></th>
 					</tr>
@@ -198,7 +204,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_TRASH_IP') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<table class="kadmin-adminform">
 					<tr>
 						<th colspan="3" class="title"><?php
 						echo JText::sprintf('COM_KUNENA_IPFOR', $this->escape($this->user->username));
@@ -235,12 +241,6 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			</fieldset>
 		</dd>
 	</dl>
-	<input type="hidden" name="option" value="com_kunena" />
-	<input type="hidden" name="view" value="users" />
-	<input type="hidden" name="task" value="" />
-	<input type="hidden" name="boxchecked" value="1" />
-	<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>" />
-	<?php echo JHTML::_( 'form.token' ); ?>
 	</form>
 	</div>
 	<div class="kadmin-footer">

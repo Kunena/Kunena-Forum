@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.controller' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.user.helper' );
-
 /**
  * Kunena Categories Controller
  *
@@ -38,16 +34,6 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function unlock() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->setVariable($cid, 'locked', 0);
-		$this->redirectBack();
-	}
-	function moderate() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$this->setVariable($cid, 'moderated', 1);
-		$this->redirectBack();
-	}
-	function unmoderate() {
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$this->setVariable($cid, 'moderated', 0);
 		$this->redirectBack();
 	}
 	function review() {
@@ -146,6 +132,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 		}
 
 		$post = JRequest::get('post', JREQUEST_ALLOWRAW);
+		$accesstype = JRequest::getCmd('accesstype', 'none');
+		$post['access'] = JRequest::getInt("access-{$accesstype}", JRequest::getInt('access', 0));
 		$success = false;
 
 		$category = KunenaForumCategoryHelper::get ( intval ( $post ['catid'] ) );
@@ -171,7 +159,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 				if (!$category->exists() || intval ($post ['parent_id']) != $category->parent_id) {
 					// If category didn't exist or is moved, copy access and class_sfx from parent
 					$parent = KunenaForumCategoryHelper::get (intval ( $post ['parent_id']));
-					$category->bind(array_intersect_key($parent->getProperties(), array_flip($access)));
+					$category->bind($parent->getProperties(), $access, true);
 				}
 				$ignore = array_merge($ignore, $access);
 			}

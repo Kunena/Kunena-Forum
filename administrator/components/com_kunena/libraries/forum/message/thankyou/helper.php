@@ -10,9 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.error' );
-kimport ( 'kunena.forum.message.thankyou' );
-
 /**
  * Kunena Forum Message Thank You Helper Class
  * @since 2.0
@@ -152,7 +149,8 @@ class KunenaForumMessageThankyouHelper {
 	 */
 	static protected function loadMessages($ids) {
 		foreach ($ids as $i=>$id) {
-			if (isset(self::$_instances [$id]))
+			$id = intval($id);
+			if (!$id || isset(self::$_instances [$id]))
 				unset($ids[$i]);
 		}
 		if (empty($ids))

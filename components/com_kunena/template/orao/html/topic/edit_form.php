@@ -69,7 +69,8 @@ JHTML::_('behavior.tooltip');
 </div>
 </div>
 
-<form enctype="multipart/form-data" name="postform" method="post" id="postform" class="postform form-validate" action="#">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" enctype="multipart/form-data" name="postform" method="post" id="postform" class="postform form-validate">
+	<input type="hidden" name="view" value="topic" />
 	<?php if ($this->message->exists()) : ?>
 	<input type="hidden" name="task" value="edit" />
 	<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
@@ -179,7 +180,7 @@ JHTML::_('behavior.tooltip');
 			</li>
 			<?php endif ?>
 
-			<?php echo $this->loadTemplate('editor'); ?>
+			<?php echo $this->loadTemplateFile('editor'); ?>
 
 			<li class="kpostmessage-row krow-odd">
 				<div class="kform-label">
@@ -203,7 +204,7 @@ JHTML::_('behavior.tooltip');
 				</div>
 			</li>
 
-			<?php if ($this->me->isModerator ( $this->message->catid ) ) : ?>
+			<?php if ($this->config->keywords && $this->me->isModerator ( $this->message->catid ) ) : ?>
 			<li class="kpostmessage-row krow-even">
 				<div class="kform-label">
 					<label for="ktags">
@@ -216,7 +217,7 @@ JHTML::_('behavior.tooltip');
 			</li>
 			<?php endif; ?>
 
-			<?php if ($this->my->id) : ?>
+			<?php if ($this->config->userkeywords && $this->my->id) : ?>
 			<li class="kpostmessage-row krow-even">
 				<div class="kform-label">
 					<label for="kmytags">

@@ -10,11 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <div class="kblock kdefault">
 	<div class="kheader">
 		<h2><?php echo $this->escape($this->header); ?></h2>
@@ -33,6 +28,4 @@ $this->displayLoginBox ();
 			</div>
 		</div>
 	</div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

@@ -30,7 +30,7 @@ $k = 0;
 							<span class="kmsgdate khistory-msgdate" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
 								<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 							</span>
-							<a name="<?php echo intval($this->message->id) ?>"></a>
+							<a id="<?php echo intval($this->message->id) ?>"></a>
 							<?php echo $this->getNumLink($this->message->id,$this->replycount--) ?>
 						</th>
 					</tr>
@@ -38,12 +38,12 @@ $k = 0;
 				<tbody>
 					<tr>
 						<td rowspan="2" valign="top" class="kprofile-left  kauthor">
-							<p><?php echo CKunenaLink::GetProfileLink( intval($this->message->userid),$this->escape( $this->message->name )) ?></p>
+							<p><?php echo $this->message->getAuthor()->getLink() ?></p>
 							<p><?php
 								$profile = KunenaFactory::getUser(intval($this->message->userid));
 								$useravatar = $profile->getAvatarImage('','','profile');
 								if ($useravatar) :
-									echo CKunenaLink::GetProfileLink ( intval($this->message->userid), $useravatar );
+									echo $this->message->getAuthor()->getLink( $useravatar );
 								endif;
 							?></p>
 						</td>

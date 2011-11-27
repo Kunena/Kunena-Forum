@@ -14,6 +14,7 @@ defined ( '_JEXEC' ) or die ();
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="ktopicsform">
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHTML::_( 'form.token' ); ?>
+
 <div class="kblock kflat">
 	<div class="kheader">
 		<?php if (!empty($this->topicActions)) : ?>

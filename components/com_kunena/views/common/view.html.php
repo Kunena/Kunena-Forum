@@ -11,9 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.cache.handler.output' );
-kimport ( 'kunena.view' );
-kimport ( 'kunena.forum.category.helper' );
-kimport ( 'kunena.forum.statistics' );
+jimport ( 'joomla.document.html.html' );
 
 /**
  * Common view
@@ -29,7 +27,7 @@ class KunenaViewCommon extends KunenaView {
 
 	function displayDefault($tpl = null) {
 		//$this->params = $this->state->get('params');
-		$result = $this->loadTemplate($tpl);
+		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
 		}
@@ -55,7 +53,7 @@ class KunenaViewCommon extends KunenaView {
 				$this->annDate = KunenaDate::getInstance($this->announcement->created);
 				$this->annListURL = KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=list");
 				$this->annMoreURL = !empty($this->announcement->description) ? KunenaRoute::_("index.php?option=com_kunena&view=announcement&id={$this->announcement->id}") : null;
-				$result = $this->loadTemplate($tpl);
+				$result = $this->loadTemplateFile($tpl);
 				if (JError::isError($result)) {
 					return $result;
 				}
@@ -73,7 +71,7 @@ class KunenaViewCommon extends KunenaView {
 		$cat_params = array ('sections'=>1, 'catid'=>0);
 		$this->assignRef ( 'categorylist', JHTML::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid));
 
-		$result = $this->loadTemplate($tpl);
+		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
 		}
@@ -133,7 +131,7 @@ class KunenaViewCommon extends KunenaView {
 			if ($item->link) $this->pathway[] = $item;
 		}
 
-		$result = $this->loadTemplate($tpl);
+		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
 		}
@@ -180,9 +178,9 @@ class KunenaViewCommon extends KunenaView {
 		ksort($this->onlineList);
 		ksort($this->hiddenList);
 
-		$this->usersURL = KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list');
+		$this->usersURL = CKunenaLink::GetUserlistURL('');
 
-		$result = $this->loadTemplate($tpl);
+		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
 		}
@@ -204,7 +202,7 @@ class KunenaViewCommon extends KunenaView {
 		$this->latestMemberLink = CKunenaLink::GetProfileLink($this->lastUserId);
 		$this->statisticsURL = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 
-		$result = $this->loadTemplate($tpl);
+		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
 		}
@@ -213,7 +211,7 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayMenu($tpl = null) {
-		$result = $this->loadTemplate($tpl);
+		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
 		}
@@ -232,18 +230,18 @@ class KunenaViewCommon extends KunenaView {
 
 			$this->assign ( 'moduleHtml', $this->getModulePosition('kunena_profilebox'));
 
-			$login = KunenaFactory::getLogin();
+			$login = KunenaLogin::getInstance();
 			if ($my->get ( 'guest' )) {
 				$this->setLayout('login');
 				if ($login) {
-					$this->assignRef ( 'login', $login->getLoginFormFields() );
+					$this->assignRef ( 'login', $login );
 					$this->assignRef ( 'register', $login->getRegistrationURL() );
 					$this->assignRef ( 'lostpassword', $login->getResetURL() );
 					$this->assignRef ( 'lostusername', $login->getRemindURL() );
 				}
 			} else {
 				$this->setLayout('logout');
-				if ($login) $this->assignRef ( 'logout', $login->getLogoutFormFields() );
+				if ($login) $this->assignRef ( 'logout', $login );
 				$this->lastvisitDate = KunenaDate::getInstance($this->me->lastvisitDate);
 
 				// Private messages
@@ -262,7 +260,7 @@ class KunenaViewCommon extends KunenaView {
 				}
 
 			}
-			$contents = $this->loadTemplate($tpl);
+			$contents = $this->loadTemplateFile($tpl);
 			if (JError::isError($contents)) {
 				return $contents;
 			}
@@ -288,7 +286,6 @@ class KunenaViewCommon extends KunenaView {
 		$catid = 0;
 		if (KunenaFactory::getConfig ()->enablerss) {
 			if ($catid > 0) {
-				kimport ( 'kunena.forum.category.helper' );
 				$category = KunenaForumCategoryHelper::get ( $catid );
 				if ($category->pub_access == 0 && $category->parent)
 					$rss_params = '&catid=' . ( int ) $catid;
@@ -302,15 +299,23 @@ class KunenaViewCommon extends KunenaView {
 			}
 		}
 		$template = KunenaFactory::getTemplate ();
-		$credits = CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
+		$credits = $this->getTeamCreditsLink ( JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . $this->getCreditsLink ();
 		if ($template->params->get('templatebyText') !='') {
 			$credits .= ' :: <a href ="'. $template->params->get('templatebyLink').'" rel="follow">' . $template->params->get('templatebyText') .' '. $template->params->get('templatebyName') .'</a>';
 		}
 		$this->assign ( 'credits', $credits );
-		$result = $this->loadTemplate($tpl);
+		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
 		}
 		echo $result;
+	}
+
+	function getCreditsLink() {
+		return CKunenaLink::GetHrefLink ( 'http://www.kunena.org', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"' );
+	}
+
+	function getTeamCreditsLink($name = '') {
+		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=credits", $name, '', '', 'follow');
 	}
 }

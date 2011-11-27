@@ -14,11 +14,6 @@ $this->document->addScriptDeclaration("// <![CDATA[
 kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw")."';
 // ]]>");
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <div class="kblock">
 	<div class="kheader">
 		<h2><span><?php echo !isset($this->message) ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?></span></h2>
@@ -54,7 +49,7 @@ $this->displayLoginBox ();
 							<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>
 						</span>
 						<span class="kmessage-by">
-							<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($this->message->userid), $this->escape($this->message->name) ); ?>
+							<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->message->getAuthor()->getLink() ?>
 						</span>
 					</div>
 					<div class="kmessage-avatar"><?php echo $this->user->getAvatarImage('', 'list'); ?></div>
@@ -113,6 +108,4 @@ $this->displayLoginBox ();
 			</form>
 		</div>
 	</div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

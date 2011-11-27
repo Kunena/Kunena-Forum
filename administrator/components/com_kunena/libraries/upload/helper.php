@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport('kunena.error');
-
 /**
  * Kunena Upload Backend Helper Class
  */

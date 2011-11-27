@@ -20,7 +20,7 @@ require_once KPATH_ADMIN . '/libraries/external/nbbc/nbbc.php';
  *
  * @version		2.0
  */
-class KunenaBBCode extends BBCode {
+class KunenaBbcode extends BBCode {
 	public $autolink_disable = false;
 
 	/**
@@ -30,7 +30,7 @@ class KunenaBBCode extends BBCode {
 	 */
 	function __construct() {
 		parent::__construct ();
-		$this->defaults = new KunenaBBCodeLibrary;
+		$this->defaults = new KunenaBbcodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
@@ -49,13 +49,13 @@ class KunenaBBCode extends BBCode {
 	public function &getInstance() {
 		static $instance = false;
 		if (! $instance) {
-			$instance = new KunenaBBCode ();
+			$instance = new KunenaBbcode ();
 		}
 		return $instance;
 	}
 }
 
-class KunenaBBCodeLibrary extends BBCodeLibrary {
+class KunenaBbcodeLibrary extends BBCodeLibrary {
 	var $default_smileys = array();
 	var $default_tag_rules = array(
 			'b' => array(
@@ -771,7 +771,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
-		$me = KunenaFactory::getUser ();
+		$me = KunenaUserHelper::getMyself();
 		if (($me->userid && $bbcode->parent->message->userid == $me->userid) || $me->isModerator(isset($bbcode->parent->message->catid) ? $bbcode->parent->message->catid : 0)) {
 			// Display but highlight the fact that it is hidden from everyone except admins and mods
 			return '<b>' . JText::_ ( 'COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT' ) . '</b><div class="kmsgtext-confidential">' . $content . '</div>';
@@ -963,7 +963,13 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				$params->set('ksource', 'kunena');
 				JPluginHelper::importPlugin('content');
 				$dispatcher = JDispatcher::getInstance();
-				$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
+				if (version_compare(JVERSION, '1.6','>')) {
+					// Joomla 1.6+
+					$results = $dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
+				} else {
+					// Joomla 1.5
+					$results = $dispatcher->trigger('onPrepareContent', array (&$article, &$params, 0));
+				}
 				$html = $article->text;
 			}
 		}

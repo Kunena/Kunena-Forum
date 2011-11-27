@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'kunena.view' );
-kimport ( 'kunena.html.parser' );
-kimport ( 'kunena.html.pagination' );
-
 /**
  * Topics View
  */
@@ -26,8 +22,8 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
+		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->config = KunenaFactory::getConfig();
 
 		$this->URL = KunenaRoute::_();
@@ -83,8 +79,8 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
+		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->config = KunenaFactory::getConfig();
 
 		$this->URL = KunenaRoute::_();
@@ -132,8 +128,8 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'postActions', $this->get ( 'PostActions' ) );
 		$this->actionMove = false;
-		$this->assignRef ( 'message_ordering', $this->get ( 'MessageOrdering' ) );
-		$this->me = KunenaFactory::getUser();
+		$this->me = KunenaUserHelper::getMyself();
+		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->config = KunenaFactory::getConfig();
 
 		$this->URL = KunenaRoute::_();
@@ -219,7 +215,7 @@ class KunenaViewTopics extends KunenaView {
 				} else {
 					$this->spacing = 0;
 				}
-				$contents = $this->loadTemplate('row');
+				$contents = $this->loadTemplateFile('row');
 				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
@@ -275,7 +271,7 @@ class KunenaViewTopics extends KunenaView {
 				if ($this->config->avataroncat) {
 					$this->topic->avatar = KunenaFactory::getUser($this->topic->last_post_userid)->getAvatarImage('klist-avatar', 'list');
 				}
-				$contents = $this->loadTemplate('row');
+				$contents = $this->loadTemplateFile('row');
 				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
 				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}

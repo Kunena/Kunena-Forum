@@ -36,7 +36,6 @@
 		<field name="name" type="tinytext" null="1" />
 		<field name="icon_id" type="tinyint(4)" null="0" default="0" />
 		<field name="locked" type="tinyint(4)" null="0" default="0" />
-		<field name="moderated" type="tinyint(4)" null="0" default="1" />
 		<field name="accesstype" type="varchar(20)" null="0" default="none" />
 		<field name="access" type="int(11)" null="0" default="0" />
 		<field name="pub_access" type="tinyint(4)" null="1" default="1" />
@@ -91,7 +90,6 @@
 		<field name="showhistory" type="int(11)" null="1" />
 		<field name="historylimit" type="int(11)" null="1" />
 		<field name="shownew" type="int(11)" null="1" />
-		<field name="jmambot" type="int(11)" null="1" />
 		<field name="disemoticons" type="int(11)" null="1" />
 		<field name="template" type="text" null="1" />
 		<field name="showannouncement" type="int(11)" null="1" />
@@ -346,15 +344,6 @@
 		<field name="message" type="text" null="0" />
 		<key name="PRIMARY" unique="1" columns="mesid" />
 	</table>
-	<table name="kunena_moderation">
-		<field primary_key="yes" name="catid" type="int(11)" null="0"
-			default="0" />
-		<field primary_key="yes" name="userid" type="int(11)" null="0"
-			default="0" />
-		<field name="future1" type="tinyint(4)" null="1" default="0" />
-		<field name="future2" type="int(11)" null="1" default="0" />
-		<key name="PRIMARY" unique="1" columns="catid,userid" />
-	</table>
 	<table name="kunena_polls">
 		<field primary_key="yes" name="id" type="int(11)" null="0"
 			extra="auto_increment" />
@@ -424,11 +413,13 @@
 	<table name="kunena_user_categories">
 		<field primary_key="yes" name="user_id" type="int(11)" null="0" />
 		<field primary_key="yes" name="category_id" type="int(11)" null="0" />
+		<field name="role" type="tinyint(4)" null="0" default="0"/>
 		<field name="allreadtime" type="datetime" null="1" />
 		<field name="subscribed" type="tinyint(4)" null="0" default="0" />
 		<field name="params" type="text" null="0" />
-		<key name="PRIMARY" unique="1" columns="user_id,category_id" />
-		<key name="category_id" columns="category_id" />
+		<key name="PRIMARY" unique="1" columns="user_id,category_id"/>
+		<key name="category_subscribed" columns="category_id,subscribed"/>
+		<key name="role" columns="role"/>
 	</table>
 	<table name="kunena_user_read">
 		<field primary_key="yes" name="user_id" type="int(11)" null="0" />

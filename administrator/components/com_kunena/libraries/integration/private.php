@@ -10,29 +10,30 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once KPATH_ADMIN . '/libraries/integration/integration.php';
-
-abstract class KunenaPrivate
+class KunenaPrivate
 {
-	public $priority = 0;
-
 	protected static $instance = false;
-
-	abstract public function __construct();
 
 	static public function getInstance($integration = null) {
 		if (self::$instance === false) {
-			$config = KunenaFactory::getConfig ();
-			if (! $integration)
-				$integration = $config->integration_private;
-			self::$instance = KunenaIntegration::initialize ( 'private', $integration );
+			JPluginHelper::importPlugin('kunena');
+			$dispatcher = JDispatcher::getInstance();
+			$classes = $dispatcher->trigger('onKunenaGetPrivate');
+			foreach ($classes as $class) {
+				if (!is_object($class)) continue;
+				self::$instance = $class;
+				break;
+			}
+			if (!self::$instance) {
+				self::$instance = new KunenaPrivate();
+			}
 		}
 		return self::$instance;
 	}
 
 	protected function getOnClick($userid) {}
 
-	abstract protected function getURL($userid);
+	protected function getURL($userid) {}
 
 	public function showIcon($userid)
 	{

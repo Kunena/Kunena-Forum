@@ -16,8 +16,7 @@ JHTML::_('behavior.keepalive');
 
 $this->document->addScriptDeclaration('config_attachment_limit = '.$this->config->attachment_limit );
 
-kimport ('kunena.bbcode.editor');
-$editor = KunenaBBCodeEditor::getInstance();
+$editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
 
 include_once (KPATH_SITE.'/lib/kunena.bbcode.js.php');
@@ -27,15 +26,11 @@ $this->setTitle ( $this->title );
 
 $this->k=0;
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
+
 <?php $this->displayBreadcrumb (); ?>
 
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" class="postform form-validate" id="postform"
-	method="post" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="postform form-validate" id="postform" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
+	<input type="hidden" name="view" value="topic" />
 	<?php if ($this->message->exists()) : ?>
 	<input type="hidden" name="task" value="edit" />
 	<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
@@ -123,7 +118,7 @@ $this->displayLoginBox ();
 
 		<?php
 		// Show bbcode editor
-		echo $this->loadTemplate('editor');
+		echo $this->loadTemplateFile('editor');
 		?>
 
 		<?php if ($this->allowedExtensions) : ?>
@@ -220,5 +215,3 @@ if (!$this->message->name) {
 </form><?php if ($this->hasThreadHistory ()) : ?>
 <?php $this->displayThreadHistory (); ?>
 <?php endif; ?>
-<?php $this->displayFooter (); ?>
-</div>

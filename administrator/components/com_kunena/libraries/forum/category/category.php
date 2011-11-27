@@ -10,20 +10,13 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('kunena.error');
-kimport ('kunena.date');
-kimport ('kunena.user');
-kimport ('kunena.user.helper');
-kimport ('kunena.user.ban');
-kimport ('kunena.forum.category.helper');
-kimport ('kunena.forum.message.helper');
-kimport ('kunena.forum.attachment.helper');
-
 /**
  * Kunena Forum Category Class
  */
-class KunenaForumCategory extends JObject {
-	protected $_exists = false;
+class KunenaForumCategory extends KunenaDatabaseObject {
+	public $id = null;
+	public $level = 0;
+
 	protected $_channels = false;
 	protected $_topics = false;
 	protected $_posts = false;
@@ -31,7 +24,7 @@ class KunenaForumCategory extends JObject {
 	protected $_authcache = array();
 	protected $_authfcache = array();
 	protected $_new = 0;
-	public $level = 0;
+	protected $_table = 'KunenaCategories';
 	protected static $actions = array(
 			'none'=>array(),
 			'read'=>array('Read'),
@@ -72,39 +65,47 @@ class KunenaForumCategory extends JObject {
 		);
 
 	/**
-	 * Constructor
+	 * Returns the global KunenaForumCategory object.
 	 *
-	 * @access	protected
-	 */
-	public function __construct($identifier = 0) {
-		// Always load the category -- if category does not exist: fill empty data
-		if($identifier !== false) $this->load ( $identifier );
-	}
-
-	/**
-	 * Returns the global KunenaForumCategory object, only creating it if it doesn't already exist.
+	 * @param   int  $id  The category id to load.
 	 *
-	 * @access	public
-	 * @param	int	$id		The category to load - Can be only an integer.
-	 * @return	KunenaForumCategory	The Category object.
-	 * @since	1.6
+	 * @return  KunenaForumCategory
 	 */
 	static public function getInstance($identifier = null, $reload = false) {
 		return KunenaForumCategoryHelper::get($identifier, $reload);
 	}
 
+	/**
+	 * Returns list of children from this category.
+	 *
+	 * @param   int    $levels  How many levels to search.
+	 *
+	 * @return  array  List of KunenaForumCategory objects.
+	 */
 	public function getChildren($levels = 0) {
 		return KunenaForumCategoryHelper::getChildren($this->id, $levels);
 	}
 
-	function exists($exists = null) {
-		$return = $this->_exists;
-		if ($exists !== null) $this->_exists = $exists;
-		return $return;
+	/**
+	 * Returns object containing user information from this category.
+	 *
+	 * @param mixed $user
+	 * @return KunenaForumCategoryUser
+	 */
+	public function getUserInfo($user = null) {
+		return KunenaForumCategoryUserHelper::get($this->id, $user);
 	}
 
-	public function getNewCount($count=false) {
-		if ($count !== false) $this->_new = $count;
+	/**
+	 * Returns new topics count from this category for current user.
+	 *
+	 * @todo Currently new topics needs to be calculated manually, make it automatic.
+	 *
+	 * @param mixed $count Internal parameter to set new count.
+	 * @return bool New topics count.
+	 */
+	public function getNewCount($count = null) {
+		if ($count !== null) $this->_new = $count;
 		return $this->_new;
 	}
 
@@ -113,8 +114,17 @@ class KunenaForumCategory extends JObject {
 		return $this->parent_id == 0 || (!$this->numTopics && $this->locked && empty($this->_channels['none']));
 	}
 
-	public function getUrl($firstpage = false) {
-		return "index.php?option=com_kunena&view=category&catid={$this->id}" . ($firstpage ? '&limitstart=0' : '');
+	public function getUrl($category = null, $xhtml = true, $action = null) {
+		if (!$category) $category = $this;
+		$uri = JURI::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
+		if ((string)$action === (string)(int)$action) {
+			$uri->setVar('limitstart', $action);
+		}
+		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+	}
+
+	public function getCategory() {
+		return $this;
 	}
 
 	public function getTopics() {
@@ -127,9 +137,13 @@ class KunenaForumCategory extends JObject {
 		return $this->_posts;
 	}
 
-	public function getLastPosted() {
+	public function getLastCategory() {
 		$this->buildInfo();
 		return KunenaForumCategoryHelper::get($this->_lastid);
+	}
+
+	public function getLastTopic() {
+		return KunenaForumTopicHelper::get($this->getLastCategory()->last_topic_id);
 	}
 
 	public function getLastPostLocation($direction = 'asc', $hold = null) {
@@ -185,24 +199,21 @@ class KunenaForumCategory extends JObject {
 		return new KunenaForumCategory();
 	}
 
-	public function newTopic($fields=array(), $user=null) {
-		kimport ('kunena.forum.topic');
-		kimport ('kunena.forum.message');
-
+	public function newTopic(array $fields=null, $user=null) {
 		$catid = $this->getNewTopicCategory()->id;
 		$user = KunenaUserHelper::get($user);
 		$message = new KunenaForumMessage();
 		$message->catid = $catid;
 		$message->name = $user->getName('');
 		$message->userid = $user->userid;
-		$message->ip = $_SERVER ["REMOTE_ADDR"];
+		$message->ip = !empty($_SERVER ['REMOTE_ADDR']) ? $_SERVER ['REMOTE_ADDR'] : '';
 		$message->hold = $this->review ? (int)!$this->authorise ('moderate', $user, true) : 0;
-		$message->bind($fields, array ('name', 'email', 'subject', 'message'));
+		$message->bind($fields, array ('name', 'email', 'subject', 'message'), true);
 
 		$topic = new KunenaForumTopic();
 		$topic->category_id = $catid;
 		$topic->hold = $message->hold;
-		$topic->bind($fields, array ('subject','icon_id'));
+		$topic->bind($fields, array ('subject','icon_id'), true);
 
 		$message->setTopic($topic);
 		return array($topic, $message);
@@ -258,7 +269,7 @@ class KunenaForumCategory extends JObject {
 	 * Get users, who can administrate this category
 	 **/
 	public function getAdmins($includeGlobal = true) {
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$userlist = array();
 		if (!empty($this->catid)) $userlist = $access->getAdmins($this->catid);
 		if ($includeGlobal) $userlist += $access->getAdmins();
@@ -269,7 +280,7 @@ class KunenaForumCategory extends JObject {
 	 * Get users, who can moderate this category
 	 **/
 	public function getModerators($includeGlobal = true, $objects = true) {
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$userlist = array();
 		if (!empty($this->id)) {
 			$userlist += $access->getModerators($this->id);
@@ -283,13 +294,23 @@ class KunenaForumCategory extends JObject {
 	}
 
 	/**
+	 * Change user status in category moderators
+	 *
+	 * @param $user
+	 * @example if ($category->authorise('admin')) $category->setModerator($user);
+	 **/
+	public function setModerator($user = null, $value = false) {
+		return KunenaAccess::getInstance()->setModerator($this, $user, $value);
+	}
+
+	/**
 	 * Add user to category moderators
 	 *
 	 * @param $user
 	 * @example if ($category->authorise('admin')) $category->addModerator($user);
 	 **/
-	public function addModerator($user) {
-		return KunenaFactory::getAccessControl()->setModerator($this, $user, true);
+	public function addModerator($user = null) {
+		return $this->setModerator($user, true);
 	}
 
 	/**
@@ -298,109 +319,108 @@ class KunenaForumCategory extends JObject {
 	 * @param $user
 	 * @example if ($category->authorise('admin')) $category->removeModerator($user);
 	 **/
-	public function removeModerator($user) {
-		return KunenaFactory::getAccessControl()->setModerator($this, $user, false);
+	public function removeModerator($user = null) {
+		return $this->setModerator($user, false);
 	}
 
 	/**
-	 * Method to get the category table object
-	 *
-	 * This function uses a static variable to store the table name of the user table to
-	 * it instantiates. You can call this function statically to set the table name if
-	 * needed.
-	 *
-	 * @access	public
-	 * @param	string	The category table name to be used
-	 * @param	string	The category table prefix to be used
-	 * @return	object	The category table object
-	 * @since	1.6
+	 * (non-PHPdoc)
+	 * @see KunenaDatabaseObject::bind()
 	 */
-	public function getTable($type = 'KunenaCategories', $prefix = 'Table') {
-		static $tabletype = null;
-
-		//Set a custom table type is defined
-		if ($tabletype === null || $type != $tabletype ['name'] || $prefix != $tabletype ['prefix']) {
-			$tabletype ['name'] = $type;
-			$tabletype ['prefix'] = $prefix;
-		}
-
-		// Create the category table object
-		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
-	}
-
-	public function bind($data, $ignore = array()) {
-		if (empty($data)) return;
-		if (is_array($data['channels'])) $data['channels'] = implode(',', $data['channels']);
-		$data = array_diff_key($data, array_flip($ignore));
-		$this->setProperties ( $data );
+	public function bind(array $src = null, array $fields = null, $include = false) {
+		if (isset($src['channels']) && is_array($src['channels'])) $src['channels'] = implode(',', $src['channels']);
+		return parent::bind($src, $fields, $include);
 	}
 
 	/**
-	 * Method to load a KunenaForumCategory object by catid
-	 *
-	 * @access	public
-	 * @param	mixed	$identifier The category id of the user to load
-	 * @return	boolean			True on success
-	 * @since 1.6
+	 * (non-PHPdoc)
+	 * @see KunenaDatabaseObject::load()
 	 */
-	public function load($id) {
-		// Create the user table object
-		$table = $this->getTable ();
+	public function load($id = null) {
+		$exists = parent::load($id);
 
-		// Load the KunenaTableCategories object based on the id
-		if ($id) $this->_exists = $table->load ( $id );
-
-		// Assuming all is well at this point lets bind the data
-		$this->setProperties ( $table->getProperties () );
-		return $this->_exists;
+		// Register category if it exists
+		if ($exists) KunenaForumCategoryHelper::register($this);
+		return $exists;
 	}
 
 	/**
-	 * Method to save the KunenaForumCategory object to the database
-	 *
-	 * @access	public
-	 * @param	boolean $updateOnly Save the object only if not a new category
-	 * @return	boolean True on success
-	 * @since 1.6
+	 * (non-PHPdoc)
+	 * @see KunenaDatabaseObject::saveInternal()
 	 */
-	public function save($updateOnly = false) {
-		// Create the user table object
+	protected function saveInternal() {
+		// Reorder categories
 		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
-
-		// Check and store the object.
-		if (! $table->check ()) {
-			$this->setError ( $table->getError () );
-			return false;
-		}
-
-		//are we creating a new user
-		$isnew = ! $this->_exists;
-
-		// If we aren't allowed to create new users return
-		if ($isnew && $updateOnly) {
-			return true;
-		}
-
-		//Store the user data in the database
-		if (! $result = $table->store ()) {
-			$this->setError ( $table->getError () );
-		}
 		$table->reorder ();
 
-		$access = KunenaFactory::getAccessControl();
+		// Clear cache
+		$access = KunenaAccess::getInstance();
 		$access->clearCache();
-
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$cache->clean('categories');
 
-		// Set the id for the KunenaUser object in case we created a new category.
-		if ($result && $isnew) {
-			$this->load ( $table->get ( 'id' ) );
+		return true;
+	}
+
+	/**
+	 * Method to purge old topics from the category
+	 *
+	 * @access	public
+	 * @return	boolean	Number of deleted topics
+	 * @since 1.6
+	 */
+	public function purge($time, $params=array(), $limit = 1000) {
+		if (!$this->exists()) {
+			return 0;
 		}
 
-		return $result;
+		$where = isset($params['where']) ? (string) $params['where'] : '';
+
+		$db = JFactory::getDBO ();
+		$query ="SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} {$where} ORDER BY tt.last_post_time ASC";
+		$db->setQuery($query, 0, $limit);
+		$ids = $db->loadResultArray();
+		KunenaError::checkDatabaseError ();
+		if (empty($ids)) return 0;
+
+		$count = KunenaForumTopicHelper::delete($ids);
+
+		KunenaUserHelper::recount();
+		KunenaForumCategoryHelper::recount($this->id);
+		KunenaForumMessageAttachmentHelper::cleanup();
+
+		return $count;
+	}
+
+	/**
+	 * Method to trash old topics from the category
+	 *
+	 * @access	public
+	 * @return	boolean	Number of deleted topics
+	 * @since 1.6
+	 */
+	public function trash($time, $params = array(), $limit = 1000) {
+		if (!$this->exists()) {
+			return 0;
+		}
+
+		$where = isset($params['where']) ? (string) $params['where'] : '';
+
+		$db = JFactory::getDBO ();
+		$query ="SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} AND tt.hold!=2 {$where} ORDER BY tt.last_post_time ASC";
+		$db->setQuery($query, 0, $limit);
+		$ids = $db->loadResultArray();
+		KunenaError::checkDatabaseError ();
+		if (empty($ids)) return 0;
+
+		$count = KunenaForumTopicHelper::trash($ids);
+
+		KunenaUserHelper::recount();
+		KunenaForumCategoryHelper::recount($this->id);
+
+		return $count;
 	}
 
 	/**
@@ -408,28 +428,20 @@ class KunenaForumCategory extends JObject {
 	 *
 	 * @access	public
 	 * @return	boolean	True on success
-	 * @since 1.6
 	 */
 	public function delete() {
 		if (!$this->exists()) {
 			return true;
 		}
 
-		// Create the user table object
-		$table = &$this->getTable ();
-
-		$result = $table->delete ( $this->id );
-		if (! $result) {
-			$this->setError ( $table->getError () );
+		if (!parent::delete()) {
+			return false;
 		}
-		$this->_exists = false;
 
-		$access = KunenaFactory::getAccessControl();
+		$access = KunenaAccess::getInstance();
 		$access->clearCache();
 
 		$db = JFactory::getDBO ();
-		// Delete moderators
-		$queries[] = "DELETE FROM #__kunena_moderation WHERE catid={$db->quote($this->id)}";
 		// Delete user topics
 		$queries[] = "DELETE FROM #__kunena_user_topics WHERE category_id={$db->quote($this->id)}";
 		// Delete user categories
@@ -447,6 +459,9 @@ class KunenaForumCategory extends JObject {
 		// Delete messages
 		$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.catid={$db->quote($this->id)}";
 		// TODO: delete attachments
+		// TODO: delete keywords
+		// Delete topics
+		$queries[] = "DELETE FROM #__kunena_topics WHERE category_id={$db->quote($this->id)}";
 
 		foreach ($queries as $query) {
 			$db->setQuery($query);
@@ -455,10 +470,10 @@ class KunenaForumCategory extends JObject {
 		}
 
 		KunenaUserHelper::recount();
-		KunenaForumCategoryHelper::recount();
 
 		$this->id = null;
-		return $result;
+		KunenaForumCategoryHelper::register($this);
+		return true;
 	}
 
 	/**
@@ -534,7 +549,7 @@ class KunenaForumCategory extends JObject {
 	}
 
 	public function update($topic, $topicdelta=0, $postdelta=0) {
-		if ($topic->moved_id) return false;
+		if (!$topic->id) return false;
 
 		$update = false;
 		if ($topicdelta || $postdelta) {
@@ -543,23 +558,22 @@ class KunenaForumCategory extends JObject {
 			$this->numPosts += (int)$postdelta;
 			$update = true;
 		}
-		if ($topic->exists() && $topic->hold==0 && $topic->category_id == $this->id) {
-			// If topic exists and has new post, we need to update cache
-			if ($this->last_post_time < $topic->last_post_time) {
-				$this->last_topic_id = $topic->id;
-				$this->last_topic_posts = $topic->posts;
-				$this->last_topic_subject = $topic->subject;
-				$this->last_post_id = $topic->last_post_id;
-				$this->last_post_time = $topic->last_post_time;
-				$this->last_post_userid = $topic->last_post_userid;
-				$this->last_post_message = $topic->last_post_message;
-				$this->last_post_guest_name = $topic->last_post_guest_name;
-				$update = true;
-			}
+		if ($topic->exists() && $topic->hold==0 && $topic->moved_id==0 && $topic->category_id==$this->id
+			&& ($this->last_post_time<$topic->last_post_time || ($this->last_post_time==$topic->last_post_time && $this->last_post_id <= $topic->last_post_id))) {
+			// If topic has new post or last topic changed, we need to update cache
+			$this->last_topic_id = $topic->id;
+			$this->last_topic_posts = $topic->posts;
+			$this->last_topic_subject = $topic->subject;
+			$this->last_post_id = $topic->last_post_id;
+			$this->last_post_time = $topic->last_post_time;
+			$this->last_post_userid = $topic->last_post_userid;
+			$this->last_post_message = $topic->last_post_message;
+			$this->last_post_guest_name = $topic->last_post_guest_name;
+			$update = true;
 		} elseif ($this->last_topic_id == $topic->id) {
-			// If last topic got moved or deleted, we need to find last post
+			// If last topic/post got moved or deleted, we need to find last post
 			$db = JFactory::getDBO ();
-			$query = "SELECT * FROM #__kunena_topics WHERE category_id={$db->quote($this->id)} AND hold=0 AND moved_id=0 ORDER BY last_post_time DESC";
+			$query = "SELECT * FROM #__kunena_topics WHERE category_id={$db->quote($this->id)} AND hold=0 AND moved_id=0 ORDER BY last_post_time DESC, last_post_id DESC";
 			$db->setQuery ( $query, 0, 1 );
 			$topic = $db->loadObject ();
 			KunenaError::checkDatabaseError ();
@@ -615,7 +629,7 @@ class KunenaForumCategory extends JObject {
 	protected function authoriseRead($user) {
 		static $catids = false;
 		if ($catids === false) {
-			$catids = KunenaFactory::getAccessControl ()->getAllowedCategories ( $user, 'read' );
+			$catids = KunenaAccess::getInstance()->getAllowedCategories ( $user );
 		}
 
 		// Checks if user can read category

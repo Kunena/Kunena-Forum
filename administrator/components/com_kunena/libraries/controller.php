@@ -11,7 +11,6 @@ defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.controller' );
 jimport ( 'joomla.application.component.helper' );
-kimport ( 'kunena.profiler' );
 
 /**
  * Base controller class for Kunena.
@@ -211,9 +210,9 @@ class KunenaController extends JController {
 		return $this->_messageType;
 	}
 
-	protected function redirectBack() {
+	protected function redirectBack($fragment = '') {
 		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
-		JFactory::getApplication ()->redirect ( $httpReferer );
+		JFactory::getApplication ()->redirect ( $httpReferer.($fragment ? '#'.$fragment : '') );
 	}
 
 }

@@ -12,11 +12,13 @@ defined ( '_JEXEC' ) or die ();
 
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
+JHTML::_('kunenafile.uploader', 'kuploader');
 ?>
 <div class="ksection">
 	<h2 class="kheader"><span><?php echo $this->escape($this->title)?></span></h2>
 
-	<form enctype="multipart/form-data" name="postform" method="post" id="postform" class="postform form-validate" action="#">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" enctype="multipart/form-data" name="postform" method="post" id="postform" class="postform form-validate">
+		<input type="hidden" name="view" value="topic" />
 		<?php if ($this->message->exists()) : ?>
 		<input type="hidden" name="task" value="edit" />
 		<input type="hidden" name="mesid" value="<?php echo intval($this->message->id) ?>" />
@@ -114,7 +116,7 @@ JHTML::_('behavior.tooltip');
 			</li>
 			<?php endif ?>
 
-			<?php echo $this->loadTemplate('editor'); ?>
+			<?php echo $this->loadTemplateFile('editor'); ?>
 
 			<li class="kpostmessage-row krow-odd">
 				<div class="kform-label">
@@ -122,22 +124,12 @@ JHTML::_('behavior.tooltip');
 						<?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS') ?>
 					</label>
 				</div>
-				<div class="kform-field">
-					<div id="kattachment-id" class="kattachment">
-						<span class="kattachment-id-container"></span>
-						<input class="kfile-input-textbox" type="text" readonly="readonly" />
-						<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?> :: <?php echo $this->escape($this->config->imagetypes); ?>,<?php echo $this->escape($this->config->filetypes) ?>" >
-							<input type="button" value="Add File" class="kfile-input-button kbutton" />
-							<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" />
-						</div>
-						<a href="#" class="kattachment-remove kbutton" style="display: none">Remove File</a>
-						<a href="#" class="kattachment-insert kbutton" style="display: none">Insert</a>
-					</div>
-					<?php $this->displayAttachments($this->message); ?>
+				<div id="kuploader" class="kform-field">
+					<input id="kupload" class="kupload" name="kattachment" type="file" />
 				</div>
 			</li>
 
-			<?php if ($this->me->isModerator ( $this->message->catid ) ) : ?>
+			<?php if ($this->config->keywords && $this->me->isModerator ( $this->message->catid ) ) : ?>
 			<li class="kpostmessage-row krow-even">
 				<div class="kform-label">
 					<label for="ktags">
@@ -150,7 +142,7 @@ JHTML::_('behavior.tooltip');
 			</li>
 			<?php endif; ?>
 
-			<?php if ($this->my->id) : ?>
+			<?php if ($this->config->userkeywords && $this->my->id) : ?>
 			<li class="kpostmessage-row krow-even">
 				<div class="kform-label">
 					<label for="kmytags">

@@ -56,39 +56,15 @@ abstract class CKunenaConfigBase {
 	// Create the config table for Kunena and add initial default values
 	//
 	public function create() {
-		$fields = array ();
 
 		// Perform custom validation of config data before we write it.
 		$this->ValidateConfig ();
 
 		$vars = $this->GetClassVars ();
 
-		foreach ( $vars as $name => $value ) {
-			//
-			// Need to provide ability to override certain settings
-			// in derived class without the need to recode this entire function
-			//
-
-
-			// Exclude private class variables
-			if ($name != '_db') {
-				switch (gettype ( $value )) {
-					case 'integer' :
-						$fields [] = "`$name` INTEGER NULL";
-
-						break;
-
-					case 'string' :
-						$fields [] = "`$name` TEXT NULL";
-
-						break;
-				}
-			}
-		}
-
 		$collation = $this->_db->getCollation ();
 		if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
-		$this->_db->setQuery ( "CREATE TABLE {$this->GetConfigTableName ()} (" . implode ( ', ', $fields ) . ", PRIMARY KEY (`id`) ) DEFAULT CHARACTER SET utf8 COLLATE {$collation}" );
+		$this->_db->setQuery ( "CREATE TABLE {$this->GetConfigTableName ()} (`id` INTEGER NULL, `vars` text, PRIMARY KEY (`id`) ) DEFAULT CHARACTER SET utf8 COLLATE {$collation}" );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return;
@@ -96,16 +72,16 @@ abstract class CKunenaConfigBase {
 		// Insert current Settings
 		$vars = get_object_vars ( $this ); // for the actual values we must not use the class vars funtion
 		$vars ['id'] = 1;
-		$fields = array ();
+		$config_vars = array ();
 
 		foreach ( $vars as $name => $value ) {
 			// Exclude internal class vars e.g. _db
 			if ($name [0] != '_' && array_key_exists ( $name, $this->GetClassVars () )) {
-				$fields [] = "{$this->_db->nameQuote($name)}={$this->_db->quote($value)}";
+				$config_vars[$name] = $value;
 			}
 		}
 
-		$this->_db->setQuery ( "INSERT INTO " . $this->GetConfigTableName () . " SET " . implode ( ', ', $fields ) );
+		$this->_db->setQuery ( "INSERT INTO " . $this->GetConfigTableName () . " SET `id`=1,`vars`='" . addslashes(serialize($config_vars)) . "'");
 		$this->_db->query ();
 		KunenaError::checkDatabaseError ();
 	}
@@ -148,7 +124,8 @@ abstract class CKunenaConfigBase {
 		}
 
 		if ($config != null) {
-			$this->bind ( $config );
+			$vars = unserialize(stripslashes($config['vars']));
+			$this->bind ( $vars );
 		}
 
 		// Perform custom validation of config data before we let anybody access it.

@@ -50,7 +50,6 @@ abstract class KunenaHtmlParser {
 		if ($len && JString::strlen($txt) > $len) $txt = JString::substr ( $txt, 0, $len ) . ' ...';
 		$txt = self::escape ( $txt );
 		$txt = preg_replace('/(\S{30})/u', '\1&#8203;', $txt);
-		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
 
@@ -65,7 +64,6 @@ abstract class KunenaHtmlParser {
 		$bbcode->SetURLPattern('<a href="{$url/h}" target="_blank" rel="nofollow">{$text/h}</a>');
 		$bbcode->SetURLTarget('_blank');
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
 
@@ -88,7 +86,6 @@ abstract class KunenaHtmlParser {
 		$bbcode->SetURLPattern('<a href="{$url/h}" target="_blank" rel="nofollow">{$text/h}</a>');
 		$bbcode->SetURLTarget('_blank');
 		$txt = $bbcode->Parse($txt);
-		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
 
@@ -102,28 +99,8 @@ abstract class KunenaHtmlParser {
 		$bbcode->SetURLPattern('<a href="{$url/h}" target="_blank" rel="nofollow">{$text/h}</a>');
 		$bbcode->SetURLTarget('_blank');
 		$txt = strip_tags($bbcode->Parse($txt));
-		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
-
-	function &prepareContent(&$content)
-	{
-		$config = KunenaFactory::getConfig();
-		
-		$row = new stdClass();
-		$row->text =& $content;
-		$params = new JParameter( '' );
-		$params->set('ksource', 'kunena');
-		
-		$dispatcher = JDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
-		$results = $dispatcher->trigger('onKunenaContentPrepare', array ('text', &$row, &$params, 0));
-		
-		$content = $row->text;
-		
-		return $content;
-	}
-
 
 	function escape($string) {
 		return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');

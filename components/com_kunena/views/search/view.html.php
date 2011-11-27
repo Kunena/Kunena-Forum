@@ -92,6 +92,18 @@ class KunenaViewSearch extends KunenaView {
 
 	function displayRows() {
 		$this->row(true);
+		
+		// Run events
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'search');
+		$params->set('kunena_layout', 'default');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->results, &$params, 0));
+		
 		foreach ($this->results as $this->message) {
 			$this->topic = $this->message->getTopic();
 			$this->category = $this->message->getCategory();

@@ -50,25 +50,115 @@ class plgSystemKunena extends JPlugin {
 		parent::__construct ( $subject, $config );
 	}
 
-	// Joomla 1.5+ support for native onContentPrepare plugins
-	public function onKunenaContentPrepare($context, &$row, &$params, $page = 0) {
-		$jcontentplugins = $this->params->get('jcontentplugins', false);
-		if ( $jcontentplugins ) {
+	/**
+	 * Map Kunena's ContentPrepare to Joomla's ContentPrepare event
+	 *
+	 * This is done to be able to use Joomla plugins on Kunena postings.
+	 * Option to enable or disable this, is found as plugin parameter.
+	 *
+	 * @access public
+	 * @see self::runJoomlaContentEvent()
+	 * @since Kunena 2.0
+	 * @todo Make an object to array conversion, to support also single postings
+	 *
+	 * @param	string	$context	In which context were event called?
+	 * @param	array	$items		Array of multiple KunenaForumMessage objects
+	 * @param	object	$params		JRegistry object holding eventual parameters
+	 * @param	int		$page		An integer holding page number
+	 *
+	 * @return array of KunenaForumMessage objects
+	 */
+	//
+	public function onKunenaContentPrepare($context, &$items, &$params, $page = 0) {
+		$jcontentevent			= (int) $this->params->get('jcontentevents', false);
+		$jcontentevent_target	= (array) $this->params->get('jcontentevent_target', array('body'));
 
-			$dispatcher = JDispatcher::getInstance();
-			JPluginHelper::importPlugin('content');
+		if ( $jcontentevent ) {
+			switch ( $context ) {
 
-			if (version_compare(JVERSION, '1.6','>')) {
-				// Joomla 1.6+
-				$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
-			} else {
-				// Joomla 1.5
-				$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
+				// Object KunenaForumTopic
+				case 'kunena.topic':
+					$items = array( $items );
+
+				// Array of KunenaForumTopic
+				case 'kunena.topics':
+					if ( !is_array( $items )) {
+						break;
+					}
+					// Run events on all objects
+					foreach ( $items as $item ) {
+						if ( in_array('title', $jcontentevent_target) ) {
+								$this->runJoomlaContentEvent( $item->subject, $params, $page );
+						}
+						if ( in_array('body', $jcontentevent_target) ) {
+								$this->runJoomlaContentEvent( $item->first_post_message, $params, $page );
+								$this->runJoomlaContentEvent( $item->last_post_message, $params, $page );
+						}
+					}
+					break;
+
+				// Object KunenaForumMessage
+				case 'kunena.message':
+					$items = array( $items );
+
+				// Array of KunenaForumMessage
+				case 'kunena.messages':
+					if ( !is_array( $items )) {
+						break;
+					}
+					// Run events on all objects
+					foreach ( $items as $item ) {
+						if ( in_array('title', $jcontentevent_target) ) {
+							$this->runJoomlaContentEvent( $item->subject, $params, $page );
+						}
+						if ( in_array('body', $jcontentevent_target) ) {
+							$this->runJoomlaContentEvent( $item->message, $params, $page );
+						}
+					}
+
+					break;
+				default:
 			}
 		}
 
-		return $row->text;
+		return $items;
 	}
+
+
+	/**
+	 * Runs all Joomla content plugins on a single KunenaForumMessage
+	 *
+	 * @access protected
+	 * @see self::onKunenaContentPrepare()
+	 * @since Kunena 2.0
+	 *
+	 * @param	string	$text		String to run events on
+	 * @param	object	$params		JRegistry object holding eventual parameters
+	 * @param	int		$page		An integer holding page number
+	 *
+	 * @return object KunenaForumMessage
+	 */
+	protected function runJoomlaContentEvent( &$text, &$params, $page = 0 ) {
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('content');
+
+		$row = new stdClass();
+		$row->text =& $text;
+
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
+			$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
+
+		} else {
+			// Joomla 1.5
+			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
+		}
+
+		$text =& $row->text;
+
+		return $text;
+	}
+
 
 	// Joomla 1.5 support
 	public function onAfterStoreUser($user, $isnew, $success, $msg) {

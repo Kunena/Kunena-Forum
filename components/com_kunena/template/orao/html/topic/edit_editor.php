@@ -164,7 +164,7 @@ defined ( '_JEXEC' ) or die ();
 						<?php endif ?>
 
 						<div class="kposthint">
-							<input type="text" value="bbCode Help - Tip: bbCode can be used on selected text!" maxlength="100" disabled="disabled" class="kinputbox" size="45" id="helpbox" name="helpbox" />
+							<input type="text" value="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT') ?>" maxlength="100" disabled="disabled" class="kinputbox" size="45" id="helpbox" name="helpbox" />
 						</div>
 					</div>
 

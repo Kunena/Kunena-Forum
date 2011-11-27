@@ -332,6 +332,18 @@ class KunenaViewCategory extends KunenaView {
 	function displayRows() {
 		$lasttopic = NULL;
 		$this->position = 0;
+
+		// Run events
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'category');
+		$params->set('kunena_layout', 'default');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topics', &$this->topics, &$params, 0));
+
 		foreach ( $this->topics as $this->topic ) {
 			$this->position++;
 			$usertype = $this->me->getType($this->category->id, true);

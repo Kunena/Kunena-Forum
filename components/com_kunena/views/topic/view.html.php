@@ -59,8 +59,24 @@ class KunenaViewTopic extends KunenaView {
 			return $this->displayNoAccess($errors);
 		}
 
-		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+		$messages	=& $this->get ( 'Messages' ) ;
+		$totals		= $this->get ( 'Total' );
+
+		// Run events
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'topic');
+		$params->set('kunena_layout', 'default');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', $this->topic, &$params, 0));
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$messages, &$params, 0));
+
+		// Assign variables to template
+		$this->assignRef ( 'messages', $messages );
+		$this->assignRef ( 'total', $totals );
 
 		// If page does not exist, redirect to the last page
 		if ($this->total <= $this->state->get('list.start')) {
@@ -77,8 +93,7 @@ class KunenaViewTopic extends KunenaView {
 
 		// Mark topic read
 		$this->topic->markRead ();
-		$this->topic->hits++;
-		$this->topic->save();
+		$this->topic->hit ();
 
 		// Check is subscriptions were sent and reset the value
 		if ($this->topic->authorise('subscribe')) {
@@ -243,6 +258,17 @@ class KunenaViewTopic extends KunenaView {
 			$this->topic = $parent->getTopic();
 		}
 
+		// Run events
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'topic');
+		$params->set('kunena_layout', 'reply');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', $this->topic, &$params, 0));
+
 		if (!$parent->authorise('reply')) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage ( $parent->getError(), 'notice' );
@@ -287,6 +313,18 @@ class KunenaViewTopic extends KunenaView {
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
 			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
+
+		// Run events
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'topic');
+		$params->set('kunena_layout', 'reply');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
+
 		$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->topic->subject;
 		$this->action = 'edit';
 
@@ -813,6 +851,17 @@ class KunenaViewTopic extends KunenaView {
 		}
 		KunenaUserHelper::loadUsers($userlist);
 
+		// Run events
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'topic');
+		$params->set('kunena_layout', 'history');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->history, &$params, 0));
+		
 		echo $this->loadTemplateFile ( 'history' );
 	}
 

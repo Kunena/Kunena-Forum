@@ -9,7 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
 if (version_compare(JVERSION, '1.7','>')) {
 	// Joomla 1.7+
 	JHtml::_('behavior.multiselect');

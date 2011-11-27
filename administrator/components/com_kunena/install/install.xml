@@ -3,11 +3,13 @@
 <schema>
 	<table name="kunena_aliases">
 		<field primary_key="yes" name="alias" type="varchar(255)" null="0"/>
-		<field name="category_id" type="int(11)" null="0" default="0"/>
+		<field name="type" type="varchar(10)" null="0"/>
+		<field name="item" type="varchar(32)" null="0"/>
 		<field name="state" type="tinyint(4)" null="0" default="0"/>
 		<key name="alias" unique="1" columns="alias"/>
-		<key name="category_id" columns="category_id"/>
 		<key name="state" columns="state"/>
+		<key name="item" columns="item"/>
+		<key name="type" columns="type"/>
 	</table>
 	<table name="kunena_announcement">
 		<field primary_key="yes" name="id" type="int(3)" null="0"

@@ -157,7 +157,17 @@ table {border-collapse: collapse;}
 #kunena .kpostbuttonset,.kpostbuttons {
 	border-color: #BFC3C6;
 }
-
+#kunena ul.kpollresult {
+	border-bottom: 1px solid #BCBCBC;
+}
+#kunena li.kpollresult-list {
+	padding: 0 5px;
+	border-right: 1px solid #BCBCBC;
+	display: inline;
+}
+#kunena li.kpollresult-list-end {  
+	display: inline;
+}
 /*---------- Top Menu ------------- */
 
 #kunena .kmenu {

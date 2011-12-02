@@ -183,13 +183,13 @@ defined ( '_JEXEC' ) or die ();
 					</label>
 				</div>
 				<div class="kform-field">
-					<textarea cols="50" rows="10" id="kbbcode-message" name="message" class="ktxtarea required hasTip" title="<?php echo (JText::_('COM_KUNENA_MESSAGE')) ?> :: Enter your message here"><?php echo $this->escape($this->message->message); ?></textarea>
+					<textarea cols="50" rows="10" id="kbbcode-message" name="message" class="ktxtarea required hasTip" title="<?php echo (JText::_('COM_KUNENA_MESSAGE')) ?> :: <?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
 					<!-- Hidden preview placeholder -->
 					<div style="display: none;" id="kbbcode-preview"></div>
 					<?php if ($this->message->exists()) : ?>
 					<fieldset>
 						<legend><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend>
-						<input class="kinputbox hasTip" name="modified_reason" size="95" maxlength="200" type="text" title="<?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?> :: Enter Reason for Editing" value="<?php echo $this->modified_reason; ?>" />
+						<input class="kinputbox hasTip" name="modified_reason" size="95" maxlength="200" type="text" title="<?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?> :: <?php echo JText::_('COM_KUNENA_EDITING_ENTER_REASON') ?>" value="<?php echo $this->modified_reason; ?>" />
 					</fieldset>
 					<?php endif ?>
 				</div>

@@ -55,7 +55,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="checkbox" value="1" name="anonymous" id="kanonymous" class="hasTip" title="Anonymous Post :: Check if you want post as Anonymous" <?php if ($this->post_anonymous) echo 'checked="checked"'; ?> />
+					<input type="checkbox" value="1" name="anonymous" id="kanonymous" class="hasTip" title="<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS') ?> :: <?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_CHECK') ?>" <?php if ($this->post_anonymous) echo 'checked="checked"'; ?> />
 					<div class="kform-note"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></div>
 				</div>
 			</li>
@@ -68,7 +68,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->message->name) ?>" maxlength="35" class="kinputbox postinput required hasTip" size="35" name="authorname" id="kauthorname" disabled="disabled" title="Name :: Enter Your Name" />
+					<input type="text" value="<?php echo $this->escape($this->message->name) ?>" maxlength="35" class="kinputbox postinput required hasTip" size="35" name="authorname" id="kauthorname" disabled="disabled" title="<?php echo JText::_('COM_KUNENA_GEN_NAME') ?> :: <?php echo JText::_('COM_KUNENA_MESSAGE_ENTER_NAME') ?>" />
 				</div>
 			</li>
 
@@ -80,7 +80,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 					</label>
 				</div>
 				<div class="kform-field">
-					<div><input type="text" value="<?php echo $this->escape($this->message->email) ?>" maxlength="35" class="kinputbox postinput required hasTip" size="35" name="password" id="kpassword" title="Name :: Enter Your Email" /></div>
+					<div><input type="text" value="<?php echo $this->escape($this->message->email) ?>" maxlength="35" class="kinputbox postinput required hasTip" size="35" name="password" id="kpassword" title="<?php echo JText::_('COM_KUNENA_GEN_EMAIL') ?> :: <?php echo JText::_('COM_KUNENA_MESSAGE_ENTER_EMAIL') ?>" /></div>
 					<div><?php echo $this->config->showemail == '0' ? JText::_('COM_KUNENA_POST_EMAIL_NEVER') : JText::_('COM_KUNENA_POST_EMAIL_REGISTERED'); ?></div>
 				</div>
 			</li>
@@ -93,7 +93,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->message->subject) ?>" maxlength="<?php echo $this->escape($this->config->maxsubject) ?>" size="35" id="ksubject" name="subject" class="kinputbox postinput required hasTip" title="Subject :: Enter Subject" />
+					<input type="text" value="<?php echo $this->escape($this->message->subject) ?>" maxlength="<?php echo $this->escape($this->config->maxsubject) ?>" size="35" id="ksubject" name="subject" class="kinputbox postinput required hasTip" title="<?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ?> :: <?php echo JText::_('COM_KUNENA_ENTER_SUBJECT') ?>" />
 				</div>
 			</li>
 			<?php if ($this->message->parent==0 && $this->config->topicicons) : ?>
@@ -137,7 +137,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>" maxlength="100" size="35" id="ktags" name="tags" class="kinputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?> :: Separate with comma" />
+					<input type="text" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>" maxlength="100" size="35" id="ktags" name="tags" class="kinputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
 				</div>
 			</li>
 			<?php endif; ?>
@@ -150,7 +150,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->topic->getKeywords($this->my->id, ', ')); ?>" maxlength="100" size="35" id="kmytags" name="mytags" class="kinputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?> :: Separate with comma" />
+					<input type="text" value="<?php echo $this->escape($this->topic->getKeywords($this->my->id, ', ')); ?>" maxlength="100" size="35" id="kmytags" name="mytags" class="kinputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
 				</div>
 			</li>
 			<?php endif; ?>

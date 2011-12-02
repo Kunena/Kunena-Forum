@@ -287,7 +287,7 @@ Kunena.Uploader = new Class({
 			'<th class="upload-file-name">'+'File Name'+'</th>' +
 			'<th class="upload-file-status">'+'Status'+'</th>' +
 			'<th class="upload-file-size">'+'Size'+'</th>' +
-			'<th class="upload-file-action">&nbsp;</th>' +
+			'<th class="upload-file-action"></th>' +
 			'</tr>' +
 			'</table>' +
 
@@ -298,7 +298,7 @@ Kunena.Uploader = new Class({
 			'</div>' +
 			'<div class="upload-status">' +
 
-			'<table class="upload-filelist">' +
+			'<table class="upload-filelist-bottom">' +
 			'<tr class="upload-filelist-footer">' +
 			'<td class="upload-file-name">' +
 			'<div class="upload-upload-status"></div>' +

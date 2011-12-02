@@ -148,12 +148,10 @@ body {line-height:1.5;}
 #kunena #kstatistics,
 #kunena .kbuttonbar,
 #kunena .kbuttonbar-topic,
-#kunena .kfilterbar,
 #kunena .kuserlist,
 #kunena .kstatistics,
 #kunena .kuserprofile,
 #kunena .ksearch-adv,
-#kunena #ksection-modbox,
 #kunena #ktopics-modbox {
 	width: 100%;
 	margin: 10px auto;
@@ -467,6 +465,7 @@ body {line-height:1.5;}
 	margin-top: 0;
 }
 #kunena li.kannounce-desc p {
+	padding-top:5px;
 	width: 80%;
 }
 #kunena li.kannounce-date {
@@ -957,7 +956,7 @@ body {line-height:1.5;}
 /*---------- Custom Content page ------------- */
 
 #kunena .kcontent {
-	margin: 0 10px 10px 10px;
+	margin: 5px 10px 10px 10px;
 }
 #kunena .kcontent ul {
 	margin: 0.8em 0 1em 0;
@@ -972,11 +971,11 @@ body {line-height:1.5;}
 #kunena div.kwhosonline-smicon {
 	display: block;
 	float:left;
-	padding: 20px 10px 10px 10px;
-	width: 35px;
+	padding: 10px;
+	width: 48px;
 }
 #kunena div.kwhosonline-users {
-	padding: 10px;
+	padding: 10px 0 10px 10px;
 	display: block;
 	float:left;
 }
@@ -985,8 +984,8 @@ body {line-height:1.5;}
 }
 #kunena span.kwho-smicon {
 	display:block;
-	height: 32px;
-	width: 32px;
+	height: 48px;
+	width: 48px;
 	background: url("../images/icon-whosonline.png") no-repeat;
 }
 #kunena .kwhosonline-subtitle {
@@ -1419,7 +1418,6 @@ body {line-height:1.5;}
 #kunena .kavatar-lg {
 	width: 200px;
 	height: 200px;
-	border: 1px solid;
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;

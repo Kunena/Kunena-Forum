@@ -51,7 +51,7 @@ table {border-collapse: collapse;}
 #kunena .kheader {
 	background: var(styleForumHeadercolor) !important;
 	background-image: linear-gradient(top, var(styleForumHeadercolor) 0%, var(styleForumHeadercolorGradient) 100%)!important;
-	color: #fff;
+	color: #fff !important;
 	font-weight: bold;
 	border-radius: 5px 5px 0 0;
 }
@@ -63,6 +63,12 @@ table {border-collapse: collapse;}
 }
 #kunena .kheader a:hover {
 	text-decoration: underline;
+}
+#kunena .kcategory-details, .ktopic-details, .ktopic-category {
+	color: var(styleForumBodycolorText) !important;
+}
+#kunena a:link {
+	color: var(styleForumLinkcolorText) !important;
 }
 #kunena .krow-odd:hover {
 	background: var(styleForumRowOddcolor) !important;
@@ -77,7 +83,7 @@ table {border-collapse: collapse;}
 	background-image: linear-gradient(top, var(styleForumcategoriesRowcolor) 0%,var(styleForumcategoriesRowcolor2) 100%)!important;
 }
 #kunena .ksection .kheader-desc {
-	background:#3072B3;
+	background: var(styleForumHeadercolorGradient) !important;
 	color: #fff;
 }
 #kunena .ksection .kheader-desc.ktoggle-close {
@@ -86,18 +92,12 @@ table {border-collapse: collapse;}
 #kunena .kannouncement {
 	width:100%;
 }
-#kunena .kannounce-desc {
-    padding:5px 5px 0 0;	
-}
-#kunena .kactions {
-    padding:5px 5px 5px 10px;	
-}
-
 #kunena li.kannounce-date {
 	font-style: italic;
 }
 #kunena tr.krow1 td {
 	background-color: #F2F1EE;
+	border-top: 1px solid #D4D4D4;
 }
 #kunena tr.krow2 td {
 	background-color: #FFFFFF;
@@ -330,7 +330,7 @@ table {border-collapse: collapse;}
 #kunena li.ktopic-smavatar img,
 #kunena li.ktag-smavatar img,
 #kunena li.kposts-smavatar img {
-	border: 1px solid #f4f4f4;	
+	margin-top:5px;
 }
 #kunena .krow-odd {
 }
@@ -352,11 +352,11 @@ table {border-collapse: collapse;}
 #kunena .klegend-title {
 	font-weight: bold;
 }
-#kunena .kuser-admin			{ color: #FF0000; }
-#kunena .kuser-globalmod		{ color: #800000; }
-#kunena .kuser-moderator		{ color: #0000FF; }
-#kunena .kuser-user				{ color: #5388B4; }
-#kunena .kuser-guest			{ color: #666666; }
+#kunena .kuser-admin			{ color: var(styleForumLegendAdmincolorText) !important; }
+#kunena .kuser-globalmod		{ color: var(styleForumLegendGlobalcolorText) !important; }
+#kunena .kuser-moderator		{ color: var(styleForumLegendModeratorcolorText) !important;}
+#kunena .kuser-user				{ color: var(styleForumLegendUsercolorText) !important; }
+#kunena .kuser-guest			{ color: var(styleForumLegendGuestcolorText) !important; }
 #kunena .kwhosonline-legend ul li span {
 	color: #000;
 }
@@ -574,7 +574,7 @@ table {border-collapse: collapse;}
 	font-size: 16px;
 }
 #kunena .kpost-user-avatar img {
-	border: 1px solid #BCBCBC;
+	margin:5px 0 5px 0;
 }
 #kunena .kpost-user-status {}
 #kunena .kpost-user-rank {}
@@ -586,9 +586,12 @@ table {border-collapse: collapse;}
 }
 
 /* Post body */
+#kunena .kpost-body {
+	color: var(styleForumMsgcolorText) !important;
+}
 
 #kunena .kpost-container {
-	border-right: 1px solid #BCBCBC;
+	border-right: 1px solid #e3e0e0;
 }
 #kunena .kpost-body-attach {
 	font-size: 9px;
@@ -688,7 +691,7 @@ table {border-collapse: collapse;}
 	color: #fff;
 }
 #kunena .kbuttonbar-post {
-	border-top: 1px solid #bcbcbc;
+	border-top: 1px solid #e3e0e0;
 }
 /*---------- Filter Options ------------- */
 
@@ -724,9 +727,9 @@ table {border-collapse: collapse;}
 /*---------- Tabs ------------- */
 
 #kunena dl.tabs dt {
-	border-left-color: #BFC3C6;
-	border-right-color: #BFC3C6;
-	border-top-color: #BFC3C6;
+	border-left-color: #D4D4D4;
+	border-right-color: #D4D4D4;
+	border-top-color: #D4D4D4;
 	background-color: #f0f0f0;
 	color: #666;
 }
@@ -736,7 +739,8 @@ table {border-collapse: collapse;}
 	color: #000;
 }
 #kunena div.current {
-	border-color: #BFC3C6;
+	border-color: #D4D4D4;
+	border-radius:10px;
 }
 #kunena dt.kprofile-modbtn {
 	background-color:#999999 !important;
@@ -847,7 +851,7 @@ table {border-collapse: collapse;}
 
 #kunena .kposts-body,
 #kunena .kposts-message {
-	border-color: #f4f4f4CCC;
+	border-color: #D4D4D4;
 }
 
 /*---------- Tooltips ------------- */
@@ -956,8 +960,9 @@ table {border-collapse: collapse;}
 #kunena .kcredits-language {
 	border-color: #BFC3C6;
 }
+
 #kunena .ksth {
-	background-color: #BFC3C6;
+	background-color: #ffffff;
 	width:100%;
 }
 #kunena .ksetting-icon {
@@ -965,19 +970,4 @@ table {border-collapse: collapse;}
 	height: 12px;
 	margin-top: 2px;
 	width: 12px;
-}
-#kunena a:link {
-	color: var(styleActiveLinkcolor);
-}
-#kunena .kmsgtext-article {
-	padding:5px;
-}
-#kunena .kannouncement-box {
-	padding:5px 10px 15px 15px;
-}
-#kunena .kannouncement-longbox {
-	padding:5px 10px 15px 15px;
-}
-#kunena .kannouncement-datebox {
-	padding:5px 10px 15px 15px;
 }

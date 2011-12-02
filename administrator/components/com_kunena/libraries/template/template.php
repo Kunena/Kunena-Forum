@@ -246,6 +246,14 @@ class KunenaTemplate extends JObject
 		return JFactory::getDocument ()->addStyleSheet ( JURI::root(true)."/{$filename}" );
 	}
 
+	public function addIEStyleSheet($filename, $condition='IE') {
+		$filename = $this->getFile($filename);
+		$stylelink = "<!--[if {$condition}]>\n";
+		$stylelink .= '<link rel="stylesheet" href="'.JURI::root(true).'/'.$filename.'" />' ."\n";
+		$stylelink .= "<![endif]-->\n";
+		JFactory::getDocument()->addCustomTag($stylelink);
+	}
+
 	public function createStyleSheets() {
 		if (empty($this->stylesheets)) return;
 		if (JDEBUG || KunenaFactory::getConfig ()->debug) {

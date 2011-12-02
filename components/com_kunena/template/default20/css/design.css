@@ -627,27 +627,6 @@ table {border-collapse: collapse;}
 	font-size: 11px;
 }
 
-/* Threaded view
------------------------------------------------------------------------------------------------ */
-#kunena .ktree {
-	width: 15px;
-	height: 27px;
-	margin: -9px 0;
-	display: inline-block;
-	background: url("../images/treenodes.png") no-repeat left center;
-}
-#kunena .ktree-crossedge { background-position: -45px 0; }
-#kunena .ktree-lastedge { background-position: -75px 0; }
-#kunena .ktree-root { background-position: -15px 0; }
-#kunena .ktree-single { background-position: 0 0; }
-#kunena .ktree-leaf { background-position: -90px 0; }
-#kunena .ktree-node { background-position: -60px 0; }
-#kunena .ktree-edge { background-position: -30px 0; }
-#kunena .ktree-gap { background-position: -105px 0; }
-#kunena .ktree-empty { background: none; }
-#kunena .ktree-zzzleaf { background-position: -120px 0; }
-#kunena .ktree-zzznode { background-position: -135px 0; }
-
 /*---------- Pagination ------------- */
 
 #kunena .kpage li {
@@ -826,7 +805,7 @@ table {border-collapse: collapse;}
 /*---------- Manage Categories ------------- */
 
 #kunena .kcategories .kcategory-row td {
-	border-right-color: #f4f4f4CCC;
+	border-right-color: #f4f4f4;
 }
 #kunena .kcategories .kcategory-title h3 {
 	color: #0066CC;
@@ -904,7 +883,7 @@ table {border-collapse: collapse;}
 /*---------- Manage Subscriptions ------------- */
 
 #kunena .kcategory-moderation {
-	border-left-color: #f4f4f4CCC;
+	border-left-color: #f4f4f4;
 }
 
 /*---------- Display Tags ------------- */

@@ -1,7 +1,13 @@
-/*
-   Plupload
-------------------------------------------------------------------- */
+/**
+* Kunena Component
+* @package Kunena.Template.Default20
+*
+* @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+**/
 
+/* Uploader styles */
 #kuploader {
 	position: relative;
 	width:500px;

@@ -39,7 +39,7 @@ $this->params = $template->params;
 				<?php if ($this->topicActions) : ?>
 				<li class="tk-modbox">
 					<?php echo JText::_('COM_KUNENA_TEMPLATE_SELECT_ALL'); ?>
-					<input id="kcheckall" type="checkbox" value="0" name="toggle" class="tk-kmoderate" />
+					<input id="kchecbox-all" type="checkbox" value="0" name="toggle" class="tk-kmoderate" />
 					<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="kinputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
 					<input type="submit" name="" class="tk-go-button" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 				</li>

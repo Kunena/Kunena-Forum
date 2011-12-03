@@ -834,4 +834,22 @@ window.addEvent('domready', function(){
 			else document.id('kpoll-moreusers-div').setStyle('display', 'none');
 		});
 	}
+	
+	document.id('kchecbox-all').addEvent('click', function(){
+		if ( document.id('kchecbox-all').getProperty('checked') == false ) {
+			$$('.kmoderate-topic-checkbox').each(function(box){	   
+				box.removeProperty('checked');          
+			});
+		} else {
+			$$('.kmoderate-topic-checkbox').each(function(box){	   
+				box.setProperty('checked', 'checked');          
+			});
+		}
+	});
+	
+	document.id('kmoderate-select').addEvent('click', function(){
+		if ( document.id('kmoderate-select').getSelected().get('value') == 'move' ) {
+			 document.id('kcategorytarget').setStyle('display');
+		}
+	});
 });

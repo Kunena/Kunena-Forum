@@ -839,6 +839,18 @@ window.addEvent('domready', function(){
 		});
 	}
 	
+	document.id('kchecbox-all').addEvent('click', function(){
+		if ( document.id('kchecbox-all').getProperty('checked') == false ) {
+			$$('.kmoderate-topic-checkbox').each(function(box){
+				box.removeProperty('checked');
+			});
+		} else {
+			$$('.kmoderate-topic-checkbox').each(function(box){
+				box.setProperty('checked', 'checked');
+			});
+		}
+	});
+	
 	/* Tips 2 */
 	/*var MyTips = new Tips($$('.my-tips'), {
 		initialize:function(){

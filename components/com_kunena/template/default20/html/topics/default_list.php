@@ -29,7 +29,9 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 		<?php if ($this->topicActions) : ?>
 		<div id="ksection-modbox">
-			<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="kinputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
-			<input type="checkbox" value="0" name="" class="kmoderate-topic-checkall" />
+			<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="kinputbox" size="1"', 'value', 'text', 0, 'kmoderate-select');
+			$options = array (JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
+			echo JHTML::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="kinputbox" size="1" style="display:none;"', 'value', 'text', 0, 'kchecktarget'); ?>
+			<input id="kchecbox-all" type="checkbox" value="0" name="" class="kmoderate-topic-checkall" />
 		</div>
 		<?php endif ?>

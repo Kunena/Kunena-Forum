@@ -835,21 +835,25 @@ window.addEvent('domready', function(){
 		});
 	}
 	
-	document.id('kchecbox-all').addEvent('click', function(){
-		if ( document.id('kchecbox-all').getProperty('checked') == false ) {
-			$$('.kmoderate-topic-checkbox').each(function(box){	   
-				box.removeProperty('checked');          
-			});
-		} else {
-			$$('.kmoderate-topic-checkbox').each(function(box){	   
-				box.setProperty('checked', 'checked');          
-			});
-		}
-	});
+	if ( document.id('kchecbox-all') != undefined ) {
+		document.id('kchecbox-all').addEvent('click', function(){
+			if ( document.id('kchecbox-all').getProperty('checked') == false ) {
+				$$('.kmoderate-topic-checkbox').each(function(box){	   
+					box.removeProperty('checked');          
+				});
+			} else {
+				$$('.kmoderate-topic-checkbox').each(function(box){	   
+					box.setProperty('checked', 'checked');          
+				});
+			}
+		});	
+	}
 	
-	document.id('kmoderate-select').addEvent('click', function(){
-		if ( document.id('kmoderate-select').getSelected().get('value') == 'move' ) {
-			 document.id('kcategorytarget').setStyle('display');
-		}
-	});
+	if ( document.id('kmoderate-select') != undefined ) {
+		document.id('kmoderate-select').addEvent('click', function(){
+			if ( document.id('kmoderate-select').getSelected().get('value') == 'move' ) {
+				document.id('kcategorytarget').setStyle('display');
+			}
+		});
+	}
 });

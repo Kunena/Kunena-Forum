@@ -56,7 +56,6 @@ abstract class CKunenaConfigBase {
 	// Create the config table for Kunena and add initial default values
 	//
 	public function create() {
-
 		// Perform custom validation of config data before we write it.
 		$this->ValidateConfig ();
 
@@ -64,7 +63,7 @@ abstract class CKunenaConfigBase {
 
 		$collation = $this->_db->getCollation ();
 		if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
-		$this->_db->setQuery ( "CREATE TABLE {$this->GetConfigTableName ()} (`id` INTEGER NULL, `vars` text, PRIMARY KEY (`id`) ) DEFAULT CHARACTER SET utf8 COLLATE {$collation}" );
+		$this->_db->setQuery ( "CREATE TABLE {$this->GetConfigTableName ()} (`id` INTEGER NULL, `params` text, PRIMARY KEY (`id`) ) DEFAULT CHARACTER SET utf8 COLLATE {$collation}" );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return;
@@ -81,7 +80,7 @@ abstract class CKunenaConfigBase {
 			}
 		}
 
-		$this->_db->setQuery ( "INSERT INTO " . $this->GetConfigTableName () . " SET `id`=1,`vars`='" . addslashes(serialize($config_vars)) . "'");
+		$this->_db->setQuery ( "INSERT INTO " . $this->GetConfigTableName () . " SET `id`=1,`params`=" . $this->_db->quote( json_encode($config_vars) ) );
 		$this->_db->query ();
 		KunenaError::checkDatabaseError ();
 	}
@@ -124,8 +123,8 @@ abstract class CKunenaConfigBase {
 		}
 
 		if ($config != null) {
-			$vars = unserialize(stripslashes($config['vars']));
-			$this->bind ( $vars );
+			$params = json_decode( $config['params'], true );
+			$this->bind ( $params );
 		}
 
 		// Perform custom validation of config data before we let anybody access it.

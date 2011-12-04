@@ -78,7 +78,7 @@
 	<table name="kunena_config">
 		<field primary_key="yes" name="id" type="int(11)" null="0"
 			default="0" />
-		<field name="vars" type="text" null="1" />
+		<field name="params" type="text" null="1" />
 		<key name="PRIMARY" unique="1" columns="id" />
 	</table>
 	<table name="kunena_keywords">

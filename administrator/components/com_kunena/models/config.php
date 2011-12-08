@@ -326,7 +326,7 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$uploads = array();
 		$uploads[] = JHTML::_('select.option', 'all', JText::_('COM_KUNENA_EVERYBODY'));
-		$uploads[] = JHTML::_('select.option', 'user', JText::_('COM_KUNENA_REGISTERED'));
+		$uploads[] = JHTML::_('select.option', 'user', JText::_('COM_KUNENA_REGISTERED_USERS'));
 		$uploads[] = JHTML::_('select.option', 'moderator', JText::_('COM_KUNENA_MODERATORS'));
 		$uploads[] = JHTML::_('select.option', 'admin', JText::_('COM_KUNENA_ADMINS'));
 		$uploads[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_NOBODY'));

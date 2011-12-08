@@ -848,7 +848,7 @@ body {line-height:1.5;}
 	height: 27px;
 	margin: -9px 0;
 	display: inline-block;
-	background: url("../images/treenodes.png") no-repeat left center;
+	background: url("../images/treenodes-ltr.png") no-repeat left center;
 }
 #kunena .ktree-crossedge { background-position: -45px 0; }
 #kunena .ktree-lastedge { background-position: -75px 0; }

@@ -37,8 +37,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 
 		if ($id) {
 			$config->template = $id;
-			$config->remove ();
-			$config->create ();
+			$config->save ();
 		}
 		$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT_SELECTED'));
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -152,7 +151,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
-		if (KunenaTemplateHelper::isDefault($template) || $id == 'default') {
+		if (KunenaTemplateHelper::isDefault($template) || $id == 'blue_eagle') {
 			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_CANNOT_DEFAULT', $id), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;

@@ -839,6 +839,28 @@ window.addEvent('domready', function(){
 		});
 	}
 	
+	if ( document.id('kchecbox-all') != undefined ) {
+		document.id('kchecbox-all').addEvent('click', function(){
+			if ( document.id('kchecbox-all').getProperty('checked') == false ) {
+				$$('.kmoderate-topic-checkbox').each(function(box){	   
+					box.removeProperty('checked');          
+				});
+			} else {
+				$$('.kmoderate-topic-checkbox').each(function(box){	   
+					box.setProperty('checked', 'checked');          
+				});
+			}
+		});	
+	}
+	
+	if ( document.id('kmoderate-select') != undefined ) {
+		document.id('kmoderate-select').addEvent('click', function(){
+			if ( document.id('kmoderate-select').getSelected().get('value') == 'move' ) {
+				document.id('kcategorytarget').setStyle('display');
+			}
+		});
+	}
+	
 	/* Tips 2 */
 	/*var MyTips = new Tips($$('.my-tips'), {
 		initialize:function(){

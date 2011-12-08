@@ -53,9 +53,7 @@ class KunenaAdminControllerConfig extends KunenaController {
 			}
 		}
 
-		$config->backup ();
-		$config->remove ();
-		$config->create ();
+		$config->save ();
 
 		$app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -71,10 +69,8 @@ class KunenaAdminControllerConfig extends KunenaController {
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$config->backup ();
-		$config->remove ();
-		$config = new CKunenaConfig();
-		$config->create();
+		$config->reset();
+		$config->save();
 
 		$app->enqueueMessage ( JText::_('COM_KUNENA_CONFIG_DEFAULT'));
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );

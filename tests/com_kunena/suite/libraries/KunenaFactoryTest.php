@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaFactoryTest extends PHPUnit_Framework_TestCase {
 	public function testGetConfig() {
 		$instance = KunenaFactory::getConfig();
-		$this->assertInstanceOf('CKunenaConfig', $instance);
+		$this->assertInstanceOf('KunenaConfig', $instance);
 	}
 
 	public function testGetTemplate() {

@@ -1,21 +1,33 @@
-/*
-   Plupload
-------------------------------------------------------------------- */
+/**
+* Kunena Component
+* @package Kunena.Template.Default20
+*
+* @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+**/
 
+/* Uploader styles */
 #kuploader {
 	position: relative;
 	width:500px;
 }
+#kuploader .upload-filelist {
+	border-radius:5px 5px 0 0;
+	border: 1px solid #D4D4D4;
+}
+#kuploader .upload-filelist-bottom {
+	border-radius:0 0 5px 5px;
+	border: 1px solid #D4D4D4;
+}
 #kuploader table {
-	width:99%;
+	width:97%;
 	border-collapse:collapse;
 }
 #kuploader table th{
-	width:30px;
-	padding:5px;
-	border-radius: 5px 5px 0 0;
+	width:20px;
+	padding:  5px 0 5px 5px;
 	color: #333333;
-	border: 1px solid #D4D4D4;
 	background: #F4F4F4 repeat scroll 0 0 transparent;
 	font-size:13px;
 }
@@ -41,11 +53,9 @@
 #kuploader table .upload-file-name {
 	width:150px;
 	text-align:left;
-	border-left: 1px solid #D4D4D4;
 }
 #kuploader table .upload-file-action {
 	width:20px;
-	border-right: 1px solid #D4D4D4;
 }
 #kuploader .upload-buttons {
 	margin-top:8px;
@@ -53,9 +63,6 @@
 }
 #kuploader .upload-droptext {
 	padding:25px;
-	border-top:1px solid #D4D4D4;
-	border-left:1px solid #D4D4D4;
-	border-right:1px solid #D4D4D4;
 }
 #kuploader p,
 #kuploader td,
@@ -70,17 +77,14 @@
 	text-align:left;
 }
 #kuploader .upload-status table {
-	border:1px solid #D4D4D4;
+	border-top:1px solid #D4D4D4;
+	border-bottom:1px solid #D4D4D4;
 }
 #kuploader .upload-upload-status {
 	font-weight:bold;
 }
 #kuploader .upload-filelist td {
-	border-radius: 0 0 .5em .5em;
 	color: #333333;
-	border-bottom:1px solid #D4D4D4;
-	border-left:1px solid #D4D4D4;
-	border-right:1px solid #D4D4D4;
 	background: #F4F4F4 repeat scroll 0 0 transparent;
 }
 #kuploader .upload-notify {
@@ -91,6 +95,7 @@
 	background: #FEF1EC;
 	border: 1px solid #CD0A0A;
 	color: #CD0A0A;
+	width:97%;
 }
 #kuploader .upload-icon {
 	cursor: pointer;
@@ -125,6 +130,10 @@
 }
 #kuploader .upload-minus {
 	background:url("../images/plupload/icon-16-queue.png");
+}
+#kuploader .upload-filelist-files {
+	border-left: 1px solid #D4D4D4;
+	border-right: 1px solid #D4D4D4;	
 }
 #kuploader .button {
 	display: inline-block;

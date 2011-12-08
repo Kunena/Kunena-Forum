@@ -17,12 +17,11 @@ JHTML::_('behavior.tooltip');
 <div id="tk-preview-message" class="tk-preview-message" style="margin-bottom:15px;">
 <div style="background:#eee; padding:5px;">
 <dl id="system-message" style="margin-bottom: 10px;margin-top: 5px;">
-<?php // FIXME : Missing translation ?>
-<dt class="message">Message</dt>
+<dt class="message"><?php echo JText::_('COM_KUNENA_GEN_MESSAGE') ?></dt>
 <dd class="message message fade">
 	<ul>
 		<li>
-		<?php echo JText::_('This is only a preview of message and its not yet published. To publish message click on "Submit" button.'); ?>
+		<?php echo JText::_('COM_KUNENA_EDITOR_PREVIEW_NOT_PUBLISHED'); ?>
 		</li>
 	</ul>
 </dd>
@@ -33,14 +32,12 @@ JHTML::_('behavior.tooltip');
 				<li class="header">
 					<dl class="icon">
 						<dt>
-						<?php // FIXME : Missing translations ?>
-						<span class="tk-preview-msgtitle" title="<?php echo JText::_('Date and Time of Post'); ?>">
-							<?php echo JText::_('Date and Time of Post'); ?>
+						<span class="tk-preview-msgtitle" title="<?php echo JText::_('COM_KUNENA_MESSAGE_DATETIME'); ?>">
+							<?php echo JText::_('COM_KUNENA_MESSAGE_DATETIME'); ?>
 						</span>
 						</dt>
 						<dd class="topics" style="float:right;">
-						<?php // FIXME : Missing translations ?>
-							<span style="white-space:nowrap;" class="tk-view-msgid"><?php echo JText::_('Message ID'); ?></span>
+							<span style="white-space:nowrap;" class="tk-view-msgid" title="<?php echo JText::_('COM_KUNENA_MESSAGE_ID'); ?>"><?php echo $this->message->id ? $this->message->id : JText::_('COM_KUNENA_MESSAGE_ID'); ?></span>
 						</dd>
 					</dl>
 				</li>
@@ -57,7 +54,7 @@ JHTML::_('behavior.tooltip');
 		</dl>
 			<div class="postbody tk-avleft" style="padding: 10px; width:77%">
 				<div class="postbackground-left">
-					<h3><?php echo JText::_('Message Subject'); ?></h3>
+					<h3><?php echo JText::_('COM_KUNENA_MESSAGE_SUBJECT'); ?></h3>
 				</div>
 				<div class="tk-msgcontent" style="overflow: hidden;min-height:20px;">
 					<div id="kbbcode-preview" style="display:none; border:0;overflow-x: hidden;overflow-y: auto;width:100%;background: none repeat scroll 0 0 transparent;margin-top: 0px;"></div>
@@ -120,7 +117,7 @@ JHTML::_('behavior.tooltip');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="checkbox" value="1" name="anonymous" id="kanonymous" class="hasTip" title="Anonymous Post :: Check if you want post as Anonymous" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> />
+					<input type="checkbox" value="1" name="anonymous" id="kanonymous" class="hasTip" title="<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS') ?> :: <?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_CHECK') ?>" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> />
 					<div class="kform-note"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></div>
 				</div>
 			</li>
@@ -133,7 +130,7 @@ JHTML::_('behavior.tooltip');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->message->name) ?>" maxlength="35" class="kinputbox postinput required hasTip" size="35" name="authorname" id="kauthorname" disabled="disabled" title="Name :: Enter Your Name" />
+					<input type="text" value="<?php echo $this->escape($this->message->name) ?>" maxlength="35" class="kinputbox postinput required hasTip" size="35" name="authorname" id="kauthorname" disabled="disabled" title="<?php echo JText::_('COM_KUNENA_GEN_NAME') ?> :: <?php echo JText::_('COM_KUNENA_MESSAGE_ENTER_NAME') ?>" />
 				</div>
 			</li>
 
@@ -145,7 +142,7 @@ JHTML::_('behavior.tooltip');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->message->email) ?>" maxlength="35" class="kinputbox postinput required hasTip" size="35" name="password" id="kpassword" title="Name :: Enter Your Email" />
+					<input type="text" value="<?php echo $this->escape($this->message->email) ?>" maxlength="35" class="kinputbox postinput required hasTip" size="35" name="password" id="kpassword" title="<?php echo JText::_('COM_KUNENA_GEN_EMAIL') ?> :: <?php echo JText::_('COM_KUNENA_MESSAGE_ENTER_EMAIL') ?>" />
 				</div>
 			</li>
 			<?php endif; ?>
@@ -157,7 +154,7 @@ JHTML::_('behavior.tooltip');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->message->subject) ?>" maxlength="<?php echo $this->escape($this->config->maxsubject) ?>" size="35" id="ksubject" name="subject" class="kinputbox postinput required hasTip" title="Subject :: Enter Subject" />
+					<input type="text" value="<?php echo $this->escape($this->message->subject) ?>" maxlength="<?php echo $this->escape($this->config->maxsubject) ?>" size="35" id="ksubject" name="subject" class="kinputbox postinput required hasTip" title="<?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ?> :: <?php echo JText::_('COM_KUNENA_ENTER_SUBJECT') ?>" />
 				</div>
 			</li>
 			<?php if ($this->message->parent==0 && $this->config->topicicons) : ?>
@@ -193,12 +190,11 @@ JHTML::_('behavior.tooltip');
 						<span class="kattachment-id-container"></span>
 						<input class="kfile-input-textbox" type="text" readonly="readonly" />
 						<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?> :: <?php echo $this->escape($this->config->imagetypes); ?>,<?php echo $this->escape($this->config->filetypes) ?>" >
-							<?php // FIXME : Missing translations ?>
 							<input type="button" value="Add File" class="kfile-input-button tk-add-button" />
 							<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" />
 						</div>
-						<a href="#" class="kattachment-remove tk-remove-button" style="display: none">Remove File</a>
-						<a href="#" class="kattachment-insert tk-insert-button" style="display: none">Insert</a>
+						<a href="#" class="kattachment-remove tk-remove-button" style="display: none"><?php echo JText::_('COM_KUNENA_GEN_REMOVE_FILE') ?></a>
+						<a href="#" class="kattachment-insert tk-insert-button" style="display: none"><?php echo JText::_('COM_KUNENA_EDITOR_INSERT') ?></a>
 					</div>
 					<?php $this->displayAttachments($this->message); ?>
 				</div>
@@ -212,7 +208,7 @@ JHTML::_('behavior.tooltip');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>" maxlength="100" size="35" id="ktags" name="tags" class="kinputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?> :: Separate with comma" />
+					<input type="text" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>" maxlength="100" size="35" id="ktags" name="tags" class="kinputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
 				</div>
 			</li>
 			<?php endif; ?>
@@ -225,7 +221,7 @@ JHTML::_('behavior.tooltip');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->topic->getKeywords($this->my->id, ', ')); ?>" maxlength="100" size="35" id="kmytags" name="mytags" class="kinputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?> :: Separate with comma" />
+					<input type="text" value="<?php echo $this->escape($this->topic->getKeywords($this->my->id, ', ')); ?>" maxlength="100" size="35" id="kmytags" name="mytags" class="kinputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
 				</div>
 			</li>
 			<?php endif; ?>
@@ -250,7 +246,7 @@ JHTML::_('behavior.tooltip');
 		<div class="kpost-buttons">
 		<span id="tk-preview-message-title" class="">
 			<input type="button" name="preview" class="tk-preview-button tk-tips" onclick="kToggleOrSwapPreview('kbbcode-preview-bottom')"
-			value="<?php echo (' ' . JText::_('Preview') . ' ');?>" title="<?php echo (JText::_('Click here to Preview your message'));?>:: " />
+			value="<?php echo (' ' . JText::_('COM_KUNENA_PREVIEW') . ' ');?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW'));?>:: " />
 		</span>
 			<button class="tk-submit-button hasTip" type="submit" title="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT') ?>"><?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?></button>
 			<button class="tk-cancel-button hasTip" type="button" title="<?php echo JText::_('COM_KUNENA_GEN_CANCEL').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL') ?>" onclick="javascript:window.history.back();"><?php echo JText::_('COM_KUNENA_GEN_CANCEL') ?></button>

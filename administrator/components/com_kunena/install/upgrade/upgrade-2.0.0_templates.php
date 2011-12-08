@@ -19,8 +19,7 @@ function kunena_upgrade_200_templates($parent) {
 		$config->template = 'blue_eagle';
 
 		// Save configuration
-		$config->remove ();
-		$config->create ();
+		$config->save ();
 
 		if ( JFile::exists(JPATH_ROOT.'/components/com_kunena/template/default/params.ini') ) {
 			JFile::copy(JPATH_ROOT.'/components/com_kunena/template/default/params.ini', JPATH_ROOT.'/components/com_kunena/template/blue_eagle/params.ini');

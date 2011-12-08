@@ -20,12 +20,12 @@ $row = 0;
 		<div class="kbody">
 			<div class="kpolldesc" style="border: 1px solid #BCBCBC;">
 				<?php foreach ( $this->poll->getOptions() as $option ) : ?>
-					<ul style="border-bottom: 1px solid #BCBCBC;">
-						<li style="padding: 0 5px; border-right: 1px solid #BCBCBC;display: inline;">
+					<ul class="kpollresult">
+						<li class="kpollresult-list">
 						<?php echo KunenaHtmlParser::parseText ($option->text); ?></li>
-						<li style="padding: 0 5px; border-right: 1px solid #BCBCBC;display: inline;"><img class="jr-forum-stat-bar" src="<?php echo $this->template->getImagePath('bar.png') ?>" height="10" width="<?php echo intval(($option->votes*300)/max($this->poll->getTotal(),1))+3; ?>" /></li>
-						<li style="padding: 0 5px; border-right: 1px solid #BCBCBC;display: inline;"><?php if(isset($option->votes) && ($option->votes > 0)) { echo $option->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></li>
-						<li style="display: inline;"> <?php echo round(($option->votes*100)/max($this->poll->getTotal(),1),1)."%"; ?></li>
+						<li class="kpollresult-list"><img class="jr-forum-stat-bar" src="<?php echo $this->template->getImagePath('bar.png') ?>" height="10" width="<?php echo intval(($option->votes*300)/max($this->poll->getTotal(),1))+3; ?>" /></li>
+						<li class="kpollresult-list"><?php if(isset($option->votes) && ($option->votes > 0)) { echo $option->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></li>
+						<li class="kpollresult-list-end"> <?php echo round(($option->votes*100)/max($this->poll->getTotal(),1),1)."%"; ?></li>
 					</ul>
 
 				<?php endforeach; ?>

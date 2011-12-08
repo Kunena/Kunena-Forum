@@ -71,7 +71,7 @@ class KunenaViewTopic extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', $this->topic, &$params, 0));
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
 		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$messages, &$params, 0));
 
 		// Assign variables to template
@@ -267,7 +267,7 @@ class KunenaViewTopic extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', $this->topic, &$params, 0));
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
 
 		if (!$parent->authorise('reply')) {
 			$app = JFactory::getApplication();
@@ -861,7 +861,7 @@ class KunenaViewTopic extends KunenaView {
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->history, &$params, 0));
-		
+
 		echo $this->loadTemplateFile ( 'history' );
 	}
 

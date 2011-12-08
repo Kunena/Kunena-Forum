@@ -637,25 +637,27 @@ class KunenaModelInstall extends JModel {
 	function migrateConfig() {
 		$config = KunenaFactory::getConfig();
 		$version = $this->getVersion();
+		// Migrate configuration from FB < 1.0.5
 		if (version_compare ( $version->version, '1.0.4', "<=" ) ) {
 			$file = JPATH_ADMINISTRATOR . '/components/com_fireboard/fireboard_config.php';
 			if (is_file($file)) {
 				require_once $file;
 				$fbConfig = (array)$fbConfig;
-				$keys = $config->GetClassVars ();
-				foreach ($fbConfig as $key=>$value) {
-					if (isset ( $keys[$key] )) {
-						if (is_string ( $config->$key )) {
-							$config->$key = $value;
-						} else {
-							$config->$key = (int)$value;
-						}
-					}
-				}
+				$config->bind($fbConfig);
+				$config->id = 1;
 			}
 		}
-		$config->remove ();
-		$config->create ();
+		// Migrate configuration from FB 1.0.5 and Kunena 1.0-1.7
+		if (!$config->id && !empty($version->prefix)) {
+			$tables = $this->listTables ( $version->prefix );
+			$cfgtable = "{$version->prefix}config";
+			if (isset($tables[$cfgtable])) {
+				$this->db->setQuery ( "SELECT * FROM #__{$cfgtable}" );
+				$config->bind((array) $this->db->loadAssoc ());
+				$config->id = 1;
+			}
+		}
+		$config->save ();
 	}
 
 	public function upgradeDatabase() {

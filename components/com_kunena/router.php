@@ -113,7 +113,10 @@ class KunenaRouter {
 			self::loadCategories ();
 		}
 		$keys = array_keys(self::$catidcache, $catname);
-		if (count($keys) == 1) return false;
+		if (count($keys) == 1) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return false;
+		}
 		if (!empty($menuitem->query['catid'])) {
 			$keys = array_flip($keys);
 			unset($keys[$catid]);

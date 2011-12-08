@@ -19,9 +19,6 @@ if (version_compare(JVERSION, '1.6', '>')) {
 // Initialize Kunena (if Kunena System Plugin isn't enabled)
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
-// Initialize error handlers
-KunenaError::initialize ();
-
 // Get view and task
 $view = JRequest::getCmd ( 'view', 'cpanel' );
 $task = JRequest::getCmd ( 'task' );
@@ -40,6 +37,14 @@ if ($view != 'install' && !$kversion->checkVersion()) {
 	$controller = new KunenaControllerInstall();
 
 } else {
+	// Load language files
+	$lang = JFactory::getLanguage();
+	$lang->load('com_kunena',JPATH_SITE);
+	$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
+
+	// Initialize error handlers
+	KunenaError::initialize ();
+
 	// Kunena has been successfully installed: Load our main controller
 	$controller = KunenaController::getInstance();
 }

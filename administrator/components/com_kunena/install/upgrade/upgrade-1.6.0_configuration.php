@@ -59,8 +59,7 @@ function kunena_upgrade_160_configuration($parent) {
 	}
 
 	// Save configuration
-	$config->remove ();
-	$config->create ();
+	$config->save ();
 
 	return array ('action' => '', 'name' => JText::_ ( 'COM_KUNENA_INSTALL_160_CONFIGURATION' ), 'success' => true );
 }

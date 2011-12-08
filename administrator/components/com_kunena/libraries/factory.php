@@ -15,13 +15,12 @@ abstract class KunenaFactory {
 	/**
 	 * Get a Kunena configuration object
 	 *
-	 * Returns the global {@link CKunenaConfig} object, only creating it if it doesn't already exist.
+	 * Returns the global {@link KunenaConfig} object, only creating it if it doesn't already exist.
 	 *
-	 * @return object CKunenaConfig
+	 * @return object KunenaConfig
 	 */
 	public static function getConfig() {
-		require_once(KPATH_SITE.'/lib/kunena.config.class.php');
-		return CKunenaConfig::getInstance();
+		return KunenaConfig::getInstance();
 	}
 
 	/**

@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
-
 $this->document->addScriptDeclaration( "// <![CDATA[
 function tableOrdering( order, dir, task ) {
 	var form=document.adminForm;

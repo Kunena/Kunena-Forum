@@ -33,6 +33,7 @@ class KunenaAdminControllerConfig extends KunenaController {
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
+		$properties = $config->getProperties();
 		foreach ( JRequest::get('post', JREQUEST_ALLOWHTML) as $postsetting => $postvalue ) {
 			if (JString::strpos ( $postsetting, 'cfg_' ) === 0) {
 				//remove cfg_ and force lower case
@@ -43,12 +44,8 @@ class KunenaAdminControllerConfig extends KunenaController {
 
 				// No matter what got posted, we only store config parameters defined
 				// in the config class. Anything else posted gets ignored.
-				if (array_key_exists ( $postname, $config->GetClassVars () )) {
-					if (is_numeric ( $postvalue )) {
-      					$config->$postname = intval($postvalue);
-     				} else {
-      					$config->$postname = strval($postvalue);
-     				}
+				if (array_key_exists ( $postname, $properties )) {
+					$config->set($postname, $postvalue);
 				}
 			}
 		}

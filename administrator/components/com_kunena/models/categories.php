@@ -82,7 +82,8 @@ class KunenaAdminModelCategories extends KunenaModel {
 			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'list.levels' ), $params));
 			$categories = KunenaForumCategoryHelper::getIndentation($categories);
 			$this->setState ( 'list.total', count($categories) );
-			$this->_admincategories = array_slice ( $categories, $this->getState ( 'list.start' ), $this->getState ( 'list.limit' ) );
+			if ($this->getState ( 'list.limit' )) $this->_admincategories = array_slice ( $categories, $this->getState ( 'list.start' ), $this->getState ( 'list.limit' ) );
+			else $this->_admincategories = $categories;
 			$admin = 0;
 			$acl = KunenaAccess::getInstance();
 			foreach ($this->_admincategories as $category) {

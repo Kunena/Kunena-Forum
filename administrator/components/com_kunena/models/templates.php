@@ -51,7 +51,7 @@ class KunenaAdminModelTemplates extends KunenaModel {
 			$row->published = KunenaTemplateHelper::isDefault($row->directory);
 		}
 		$this->setState ( 'list.total', count($rows) );
-		$rows = array_slice($rows, $this->getState ( 'list.start'), $this->getState ( 'list.limit'));
+		if ($this->getState ( 'list.limit')) $rows = array_slice($rows, $this->getState ( 'list.start'), $this->getState ( 'list.limit'));
 		return $rows;
 	}
 

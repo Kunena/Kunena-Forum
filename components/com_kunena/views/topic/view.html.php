@@ -114,7 +114,7 @@ class KunenaViewTopic extends KunenaView {
 
 		//meta description and keywords
 		$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
-		$pages = intval ( $this->total / $this->state->get('list.limit') ) + 1;
+		$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
 
 		// TODO: use real keywords, too
 		$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . JFactory::getapplication()->getCfg ( 'sitename' ) );

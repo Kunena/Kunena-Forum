@@ -113,6 +113,9 @@ class KunenaViewTopic extends KunenaView {
 		$this->quickreply = ($this->topic->authorise('reply',null, false) && $this->me->exists() && !$this->captcha->enabled());
 
 		//meta description and keywords
+		$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
+		$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
+
 		// TODO: use real keywords, too
 		$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . JFactory::getapplication()->getCfg ( 'sitename' ) );
 
@@ -136,7 +139,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $this->escape($metaDesc) );
 
-		$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_TOPICS_DEFAULT', $this->topic->subject));
+		$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_TOPICS_DEFAULT', $this->topic->subject) . " ({$page}/{$pages})");
 
 		$this->display($tpl);
 	}

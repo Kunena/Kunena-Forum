@@ -76,11 +76,11 @@ class KunenaViewCategory extends KunenaView {
 
 		//meta description and keywords
 		$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
-		$pages = intval ( $this->category->getTopics() / $this->state->get('list.limit') ) + 1;
+		$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
 
 		$parentCategory = $this->category->getParent();
 		$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . JFactory::getApplication()->getCfg ( 'sitename' ) );
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$parentCategory->name} ({$page}/{$pages}) - {$this->category->name} - {$this->config->board_title}" );
+		$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$parentCategory->name} - {$this->category->name} ({$page}/{$pages}) - {$this->config->board_title}" );
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $metaDesc );
 

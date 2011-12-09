@@ -9,7 +9,5 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->setTitle(JText::_('COM_KUNENA_VIEW_USER_LIST'));
-
 include 'list_list.php';
 include 'list_actions.php';

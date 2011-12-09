@@ -378,7 +378,7 @@ div#mbCenter input#tk-submit-button.kbutton,
 	background-image: url("../images/icon-locked.png");
 }
 #kunena .ktree { 
-	background-image: url("../images/treenodes.png");
+	background-image: url("../images/treenodes-ltr.png");
 }
 
 #kunena .shadetabs li a { background-image: url("../images/profile-tabs.png"); background-repeat:no-repeat;}
@@ -467,7 +467,7 @@ div#mbCenter input#tk-submit-button.kbutton,
 	background-image: url("../images/buttons.png");
 }
 #kunena .ktree { 
-	background-image: url("../images/treenodes.png");
+	background-image: url("../images/treenodes-ltr.png");
 }
 
 /*

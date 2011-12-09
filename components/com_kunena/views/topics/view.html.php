@@ -57,7 +57,7 @@ class KunenaViewTopics extends KunenaView {
 		//meta description and keywords
 		$limit = $this->state->get('list.limit');
 		$page = intval($this->state->get('list.start')/$limit)+1;
-		$total = intval($this->total/$limit)+1;
+		$total = intval(($this->total-1)/$limit)+1;
 		$pagesTxt = "{$page}/{$total}";
 		$app = JFactory::getApplication();
 		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $app->getCfg ( 'sitename' );

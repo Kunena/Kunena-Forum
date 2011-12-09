@@ -43,7 +43,7 @@ class KunenaViewUser extends KunenaView {
 		$this->pageNav = $this->getPagination(7);
 
 		$page = intval($this->state->get('list.start')/$this->state->get('list.limit'))+1;
-		$pages = intval($this->total/$this->state->get('list.limit'))+1;
+		$pages = intval(($this->total-1)/$this->state->get('list.limit'))+1;
 
 		$this->setTitle(JText::_('COM_KUNENA_VIEW_USER_LIST'). " ({$page}/{$pages})");
 

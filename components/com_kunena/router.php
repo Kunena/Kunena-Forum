@@ -129,7 +129,7 @@ class KunenaRouter {
 	}
 
 	function filterOutput($str) {
-		return JString::trim ( preg_replace ( array ('/\s+/', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.]/' ), array ('-', '' ), $str ) );
+		return JString::trim ( preg_replace ( array ('/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u' ), array ('-', '' ), $str ) );
 	}
 
 	function stringURLSafe($str) {
@@ -137,8 +137,7 @@ class KunenaRouter {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!isset($filtered[$str])) {
 			if (self::$config->sefutf8) {
-				$str = self::filterOutput ( $str );
-				$filtered[$str] = urlencode ( $str );
+				$filtered[$str] = self::filterOutput ( $str );
 			} else {
 				$filtered[$str] = JFilterOutput::stringURLSafe ( $str );
 			}

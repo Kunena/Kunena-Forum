@@ -100,6 +100,7 @@ class KunenaControllerInstall extends JController {
 
 		if ($this->step == 0) {
 			// Reset enqueued messages before starting
+			$session->set('kunena.reload', 1);
 			$session->set('kunena.queue', null);
 			$session->set('kunena.newqueue', null);
 			$this->model->setStep ( ++ $this->step );
@@ -121,7 +122,9 @@ class KunenaControllerInstall extends JController {
 		$session->set('kunena.newqueue', $newqueue);
 
 		if ( isset($this->steps[$this->step+1]) && ! $error ) {
-			$this->setRedirect ( 'index.php?option=com_kunena&view=install&go=next' );
+			$cnt = $session->get('kunena.reload', 1);
+			$this->setRedirect ( 'index.php?option=com_kunena&view=install&go=next&n='.$cnt );
+			$session->set('kunena.reload', $cnt+1);
 		} else {
 			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
 		}

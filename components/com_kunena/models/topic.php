@@ -52,7 +52,7 @@ class KunenaModelTopic extends KunenaModel {
 		$this->setState ( 'hold', $value );
 
 		$value = $this->getInt ( 'limit', 0 );
-		if ($value < 1) $value = $config->messages_per_page;
+		if ($value < 1 || $value > 100) $value = $config->messages_per_page;
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );

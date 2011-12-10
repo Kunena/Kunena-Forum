@@ -114,6 +114,10 @@ class KunenaUser extends JObject {
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
+
+		// Set showOnline if user doesn't exists (if we will save the user)
+		if (!$this->_exists) $this->showOnline = 1;
+
 		return $this->_exists;
 	}
 

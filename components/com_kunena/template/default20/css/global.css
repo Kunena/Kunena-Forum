@@ -9,15 +9,6 @@
 * @link http://www.kunena.org
 **/
 
-/* GLOBAL STYLES
--------------------------------------------------------------------------- */
-
-/*
-html {margin:0;padding:0;border:0;}
-body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, hgroup, nav, section {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
-article, aside, dialog, figure, footer, header, hgroup, nav, section {display:block;}
-body {line-height:1.5;}
-*/
 #kunena,
 #kunena > div,
 #kunena > div p {
@@ -219,9 +210,6 @@ body {line-height:1.5;}
 	position: relative;
 	width: 100px;
 }
-#kunena .kbutton {
-	padding: 1px 5px;
-}
 #kunena .kfile-input-button {
 	background: none repeat scroll 0 0 transparent;
 	border: 1px solid;
@@ -322,8 +310,6 @@ body {line-height:1.5;}
 }
 
 /*---------- Login area ------------- */
-#kunena .klogin {
-}
 #kunena .klogin ul {
 	margin: 10px;
 }
@@ -971,8 +957,8 @@ body {line-height:1.5;}
 #kunena .kpagination-topic .kpage span,
 #kunena .kpagination-topic .kpage a:link,
 #kunena .kpagination-topic .kpage a:visited {
-	margin: 1px;
-	padding: 1px 3px;
+	margin: 1px 2px;
+	padding: 2px 3px;
 }
 #kunena .kpage,
 #kunena .ktopic-tags {
@@ -1059,7 +1045,7 @@ body {line-height:1.5;}
 #kunena .kbuttononline-yes span.online-yes	{ background-position: 0 0px;	}
 #kunena .kbuttononline-no span.online-no	{ background-position: 0 -400px;}
 #kunena .kbuttoncomm span.reply				{ background-position: 0 -460px;}
-#kunena .kbuttoncomm span.quote				{ background-position: 0 -440px;}
+#kunena .kbuttoncomm span.kquote			{ background-position: 0 -440px;}
 #kunena .kbuttoncomm span.newtopic			{ background-position: 0 -420px;}
 #kunena .kbuttonuser span.thankyou			{ background-position: 0 -340px;}
 #kunena .kbuttonuser span.favorite			{ background-position: 0 -260px;}
@@ -1067,7 +1053,7 @@ body {line-height:1.5;}
 #kunena .kbuttonuser span.markread			{ background-position: 0 -300px;}
 #kunena .kbuttonuser span.report			{ background-position: 0 -300px;}
 #kunena .kbuttonmod span.merge				{ background-position: 0 -100px;}
-#kunena .kbuttonmod span.edit				{ background-position: 0 -60px;}
+#kunena .kbuttonmod span.kedit				{ background-position: 0 -60px;}
 #kunena .kbuttonmod span.delete				{ background-position: 0 -40px;}
 #kunena .kbuttonmod span.permdelete			{ background-position: 0 -40px;}
 #kunena .kbuttonmod span.undelete			{ background-position: 0 -20px;}
@@ -1919,7 +1905,7 @@ body {line-height:1.5;}
 
 #kunena .kcredits-intro {
 	margin:5px;
-	padding:15px 30px;
+	padding:25px;
 	text-align:left;
 	border: 1px solid;
 	border-radius: 15px;

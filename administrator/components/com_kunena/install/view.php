@@ -60,9 +60,11 @@ class KunenaViewInstall extends JView
 
 		$this->assign('go', JRequest::getCmd('go', ''));
 
+		$session = JFactory::getSession();
+		$this->cnt = $session->get('kunena.reload', 1);
+
 		if ($this->step) {
 			// Output enqueued messages from previous reloads (to show Joomla warnings)
-			$session = JFactory::getSession();
 			$queue = (array) $session->get('kunena.queue');
 			foreach ($queue as $item) {
 				if (is_array($item)) {
@@ -102,7 +104,7 @@ class KunenaViewInstall extends JView
 
 	function getActionURL() {
 		if ($this->error) return "location.replace('index.php?option=com_kunena&view=install&task=restart&".JUtility::getToken()."=1');";
-		return "location.replace('index.php?option=com_kunena&view=install&task=run&".JUtility::getToken()."=1');";
+		return "location.replace('index.php?option=com_kunena&view=install&task=run&n={$this->cnt}&".JUtility::getToken()."=1');";
 	}
 
 	function getActionText($version, $type='', $action=null) {

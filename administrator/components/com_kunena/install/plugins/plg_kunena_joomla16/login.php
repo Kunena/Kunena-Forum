@@ -30,24 +30,30 @@ class KunenaLoginJoomla {
 	}
 
 	public function getLoginURL() {
-		return JRoute::_('index.php?option=com_users&view=login');
+		$Itemid = UsersHelperRoute::getLoginRoute();
+		return JRoute::_('index.php?option=com_users&view=login'.($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
 	public function getLogoutURL() {
-		return JRoute::_('index.php?option=com_users&view=login');
+		$Itemid = UsersHelperRoute::getLoginRoute();
+		return JRoute::_('index.php?option=com_users&view=login'.($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
 	public function getRegistrationURL() {
 		$usersConfig = JComponentHelper::getParams ( 'com_users' );
-		if ($usersConfig->get ( 'allowUserRegistration' ))
-			return JRoute::_('index.php?option=com_users&view=registration');
+		if ($usersConfig->get ( 'allowUserRegistration' )) {
+			$Itemid = UsersHelperRoute::getRegistrationRoute();
+			return JRoute::_('index.php?option=com_users&view=registration'.($Itemid ? "&Itemid={$Itemid}" : ''));
+		}
 	}
 
 	public function getResetURL() {
-		return JRoute::_('index.php?option=com_users&view=reset');
+		$Itemid = UsersHelperRoute::getResendRoute();
+		return JRoute::_('index.php?option=com_users&view=reset'.($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
 	public function getRemindURL() {
-		return JRoute::_('index.php?option=com_users&view=remind');
+		$Itemid = UsersHelperRoute::getRemindRoute();
+		return JRoute::_('index.php?option=com_users&view=remind'.($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 }

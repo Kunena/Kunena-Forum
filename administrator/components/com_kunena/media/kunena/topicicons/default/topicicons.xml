@@ -20,6 +20,7 @@
 		<icon id="5" name="grin" published="1" title="COM_KUNENA_ICON_GRIN" src="user/grin.png" />
 		<icon id="6" name="shock" published="1" title="COM_KUNENA_ICON_SHOCK" src="user/shock.png" />
 		<icon id="7" name="smile" published="1" title="COM_KUNENA_ICON_SMILE" src="user/smile.png" />
+		<icon id="8" name="solved" published="1" title="COM_KUNENA_ICON_SOLVED" src="user/solved.png" />
 	</icons>
 	
 	<icons type="system" width="48" height="48">

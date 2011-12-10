@@ -29,6 +29,7 @@
 			<menu view="tras" img="components/com_kunena/media/icons/favicons/kunena-trash.png">COM_KUNENA_TRASH_MANAGER</menu>
 		</submenu>
 		<files>
+			<filename>kunena.j16.xml</filename>
 			<filename>api.php</filename>
 			<filename>admin.kunena.php</filename>
 			<folder>install</folder>

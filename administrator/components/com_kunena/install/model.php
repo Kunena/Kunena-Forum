@@ -542,8 +542,12 @@ class KunenaModelInstall extends JModel {
 
 		// Cleanup directory structure
 		if (!KunenaForum::isSVN()) {
-			if( JFolder::exists(KPATH_ADMIN . '/language') ) JFolder::delete(KPATH_ADMIN . '/language');
-			if( JFolder::exists(KPATH_SITE . '/language') ) JFolder::delete(KPATH_SITE . '/language');
+			if ( version_compare(JVERSION, '1.6', '>') && JFile::exists(KPATH_ADMIN . '/kunena.j16.xml')) {
+				if ( JFile::exists(KPATH_ADMIN . '/kunena.xml')) JFile::delete(KPATH_ADMIN . '/kunena.xml');
+				JFile::move(KPATH_ADMIN . '/kunena.j16.xml', KPATH_ADMIN . '/kunena.xml');
+			}
+			if ( JFolder::exists(KPATH_ADMIN . '/language') ) JFolder::delete(KPATH_ADMIN . '/language');
+			if ( JFolder::exists(KPATH_SITE . '/language') ) JFolder::delete(KPATH_SITE . '/language');
 		}
 
 		if (! $this->getError ()) {

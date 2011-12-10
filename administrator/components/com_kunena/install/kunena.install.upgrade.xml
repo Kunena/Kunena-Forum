@@ -320,6 +320,8 @@
 			<phpfile name="upgrade-2.0.0_aliases"></phpfile>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP `moderated`;</query>
 			<query>DROP TABLE IF EXISTS `#__kunena_moderation` </query>
+			<query>DROP TABLE IF EXISTS `#__kunena_config` </query>
+			<query>DROP TABLE IF EXISTS `#__kunena_whoisonline` </query>
 		</version>
 	</upgrade>
 </comupgrade>

@@ -30,24 +30,69 @@ class KunenaLoginJoomla {
 	}
 
 	public function getLoginURL() {
-		return JRoute::_('index.php?option=com_user&view=login');
+		$Itemid = $this->getRoute('login');
+		return JRoute::_('index.php?option=com_user&view=login'.($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
 	public function getLogoutURL() {
-		return JRoute::_('index.php?option=com_user&view=login');
+		$Itemid = $this->getRoute('login');
+		return JRoute::_('index.php?option=com_user&view=login'.($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
 	public function getRegistrationURL() {
 		$usersConfig = JComponentHelper::getParams ( 'com_users' );
-		if ($usersConfig->get ( 'allowUserRegistration' ))
-			return JRoute::_('index.php?option=com_user&view=register');
+		if ($usersConfig->get ( 'allowUserRegistration' )) {
+			$Itemid = $this->getRoute('register');
+			return JRoute::_('index.php?option=com_user&view=register'.($Itemid ? "&Itemid={$Itemid}" : ''));
+		}
 	}
 
 	public function getResetURL() {
-		return JRoute::_('index.php?option=com_user&view=reset');
+		$Itemid = $this->getRoute('reset');
+		return JRoute::_('index.php?option=com_user&view=reset'.($Itemid ? "&Itemid={$Itemid}" : ''));
 	}
 
 	public function getRemindURL() {
-		return JRoute::_('index.php?option=com_user&view=remind');
+		$Itemid = $this->getRoute('remind');
+		return JRoute::_('index.php?option=com_user&view=remind'.($Itemid ? "&Itemid={$Itemid}" : ''));
+	}
+
+	private function &getItems() {
+		static $items = null;
+
+		// Get the menu items for this component.
+		if (!isset($items)) {
+			// Include the site app in case we are loading this from the admin.
+			require_once JPATH_SITE.'/includes/application.php';
+
+			$app	= JFactory::getApplication();
+			$menu	= $app->getMenu();
+			$com	= JComponentHelper::getComponent('com_user');
+			$items	= $menu->getItems('componentid', $com->id);
+
+			// If no items found, set to empty array.
+			if (!$items) {
+				$items = array();
+			}
+		}
+
+		return $items;
+	}
+
+	private function getRoute($view) {
+		// Get the items.
+		$items	= $this->getItems();
+		$itemid	= null;
+
+		// Search for a suitable menu id.
+		foreach ($items as $item) {
+			if (isset($item->query['view']) && $item->query['view'] === $view) {
+				$itemid = $item->id;
+				break;
+			}
+		}
+
+		return $itemid;
 	}
 }
+

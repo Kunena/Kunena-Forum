@@ -47,7 +47,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_list_limit", 'limit', 0, 'int' );
-		if ($value < 1) $value = $format=='feed' ? $this->config->rss_limit : $this->config->threads_per_page;
+		$defaultlimit = $format!='feed' ? $this->config->threads_per_page : $this->config->rss_limit;
+		if ($value < 1 || $value > 100) $value = $defaultlimit;
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.category{$catid}_{$format}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );

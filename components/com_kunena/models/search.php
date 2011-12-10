@@ -83,7 +83,7 @@ class KunenaModelSearch extends KunenaModel {
 		$this->setState ( 'list.start', $value );
 
 		$value = $this->getInt ( 'limit', 0 );
-		if ($value < 1) $value = $this->config->messages_per_page_search;
+		if ($value < 1 || $value > 100) $value = $this->config->messages_per_page_search;
 		$this->setState ( 'list.limit', $value );
 	}
 

@@ -21,7 +21,7 @@ if ($this->go == 'next') {
 	}
 	$this->document = JFactory::getDocument();
 	$this->document->addScriptDeclaration(" // <![CDATA[
-window.addEvent('domready', function() {window.location='".JRoute::_('index.php?option=com_kunena&view=install&task=run&'.JUtility::getToken() .'=1', false)."';});
+window.addEvent('domready', function() {window.location='".JRoute::_("index.php?option=com_kunena&view=install&task=run&n={$this->cnt}&".JUtility::getToken() .'=1', false)."';});
 // ]]>");
 }
 ?>

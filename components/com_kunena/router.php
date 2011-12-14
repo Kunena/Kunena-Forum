@@ -18,7 +18,6 @@ class KunenaRouter {
 	static $config = null;
 
 	static $time = 0;
-	static $catidcache = null;
 
 	// List of reserved views (if category name is one of these, use always catid)
 	// Contains array of default variable=>value pairs, which can be removed from URI
@@ -92,21 +91,6 @@ class KunenaRouter {
 	function initialize() {
 		self::$config = KunenaFactory::getConfig ();
 	}
-
-	function loadCategories() {
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		$db = JFactory::getDbo();
-		$query = "SELECT * FROM #__kunena_aliases WHERE type='catid' AND state=1";
-		$db->setQuery ($query);
-		$aliases = $db->loadObjectList();
-
-		self::$catidcache = array();
-		foreach ($aliases as $alias) {
-			self::$catidcache[$alias->item] = $alias->alias;
-		}
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-	}
-
 
 	function findAlias($alias) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -225,22 +209,9 @@ function KunenaBuildRoute(&$query) {
 		if ($catid) {
 			$numeric = true;
 
-			if (KunenaRouter::$catidcache === null) {
-				KunenaRouter::loadCategories ();
-			}
-			if (isset ( KunenaRouter::$catidcache [$catid] )) {
-				$catname = KunenaRouter::$catidcache [$catid];
-			}
-			if (empty ( $catname )) {
-				// If category name is empty (or doesn't exist), use numeric catid
-				$segments [] = $catid;
-			} elseif (KunenaRoute::$config->sefcats) {
-				// If there's no naming conflict, we can use category name
-				$segments [] = $catname;
-			} else {
-				// By default use 123-category_name
-				$segments [] = "{$catid}-{$catname}";
-			}
+			$alias = KunenaForumCategoryHelper::get($catid)->alias;
+			// If category alias is empty, use category id; otherwise use alias
+			$segments [] = empty ( $alias ) ? $catid : $alias;
 			// This segment fully defines category view so the variable is no longer needed
 			if ($view == 'category') {
 				unset ( $query ['view'] );
@@ -323,8 +294,8 @@ function KunenaParseRoute($segments) {
 	// Fix bug in Joomla 1.5 when using /components/kunena instead /component/kunena
 	if (!$active && $segments[0] == 'kunena') array_shift ( $segments );
 
-	// Enable new category SEF feature?
-	$sefcats = KunenaRoute::$config->sefcats && isset(KunenaRouter::$sefviews[$vars['view']]) && empty($vars ['id']);
+	// Use category SEF feature?
+	$sefcats = isset(KunenaRouter::$sefviews[$vars['view']]) && empty($vars ['id']);
 
 	// Handle all segments
 	while ( ($segment = array_shift ( $segments )) !== null ) {

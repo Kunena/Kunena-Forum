@@ -133,6 +133,11 @@ function createCategoryAlias($category, $alias, $state=0) {
 	$db->setQuery ($query);
 	$success = $db->query () && $db->getAffectedRows ();
 	if ($success && $state) {
+		// Update primary alias into category table
+		$query = "UPDATE #__kunena_categories SET alias={$db->Quote($alias)} WHERE id={$db->Quote($category->id)}";
+		$db->setQuery ($query);
+		$db->query ();
+
 		// There can be only one primary alias
 		$query = "UPDATE #__kunena_aliases SET state=0 WHERE type='catid' AND item={$db->Quote($category->id)} AND alias!={$db->Quote($alias)} AND state=1";
 		$db->setQuery ($query);

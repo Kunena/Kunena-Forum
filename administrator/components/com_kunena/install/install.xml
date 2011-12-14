@@ -44,6 +44,7 @@
 			extra="auto_increment" />
 		<field name="parent_id" type="int(11)" null="1" default="0" />
 		<field name="name" type="tinytext" null="1" />
+		<field name="alias" type="varchar(255)" null="0" />
 		<field name="icon_id" type="tinyint(4)" null="0" default="0" />
 		<field name="locked" type="tinyint(4)" null="0" default="0" />
 		<field name="accesstype" type="varchar(20)" null="0" default="none" />

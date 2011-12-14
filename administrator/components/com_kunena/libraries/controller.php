@@ -88,7 +88,7 @@ class KunenaController extends JController {
 			// Version warning
 			require_once KPATH_ADMIN . '/install/version.php';
 			$version = new KunenaVersion();
-			$version_warning = $version->getVersionWarning('COM_KUNENA_VERSION_INSTALLED');
+			$version_warning = $version->getVersionWarning();
 			if (! empty ( $version_warning )) {
 				$app->enqueueMessage ( $version_warning, 'notice' );
 			}

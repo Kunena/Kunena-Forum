@@ -209,14 +209,9 @@
 					CHANGE `parent` `parent_id` INT( 11 ) NULL DEFAULT '0',
 					CHANGE `cat_emoticon` `icon_id` TINYINT( 4 ) NOT NULL DEFAULT '0',
 					ADD `last_topic_id` int(11) NOT NULL default '0' AFTER `numPosts`,
-					ADD `last_topic_subject` tinytext NULL AFTER `last_topic_id`,
-					ADD `last_topic_posts` int(11) NOT NULL default '0' AFTER `last_topic_subject`,
-					ADD `last_post_id` int(11) NOT NULL default '0' AFTER `last_topic_posts`,
+					ADD `last_post_id` int(11) NOT NULL default '0' AFTER `last_topic_id`,
 					ADD `last_post_time` int(11) NOT NULL default '0' AFTER `last_post_id`,
-					ADD `last_post_userid` int(11) NOT NULL default '0' AFTER `last_post_time`,
-					ADD `last_post_message` text NULL AFTER `last_post_userid`,
-					ADD `last_post_guest_name` tinytext NULL AFTER `last_post_message`,
-					ADD `params` text NOT NULL AFTER `last_post_guest_name`,
+					ADD `params` text NOT NULL AFTER `last_post_time`,
 					ADD KEY `parent_id` (parent_id);
 			</query>
 			<query>
@@ -315,8 +310,21 @@
 					WHERE u.moderator='1' AND (m.catid IS NULL OR c.moderated='1')
 				ON DUPLICATE KEY UPDATE role=1
 			</query>
-			<!-- query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP `moderated`;</query -->
-			<!-- query>DROP TABLE IF EXISTS `#__kunena_moderation` </query -->
+		</version>
+		<version version="2.0.0-DEV6" versiondate="2011-12-14" versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP `moderated`;</query>
+			<query>DROP TABLE IF EXISTS `#__kunena_moderation` </query>
+			<query>DROP TABLE IF EXISTS `#__kunena_config` </query>
+			<query>DROP TABLE IF EXISTS `#__kunena_config_backup` </query>
+			<query>DROP TABLE IF EXISTS `#__kunena_whoisonline` </query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories`
+				DROP `last_topic_subject`,
+				DROP `last_topic_posts`,
+				DROP `last_post_userid`,
+				DROP `last_post_message`,
+				DROP `last_post_guest_name`</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `alias` varchar(255) NOT NULL AFTER `name`;</query>
+			<phpfile name="upgrade-2.0.0_aliases"></phpfile>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>

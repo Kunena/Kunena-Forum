@@ -15,6 +15,7 @@ class KunenaLoginJoomla {
 
 	public function __construct($params) {
 		$this->params = $params;
+		require_once JPATH_SITE.'/components/com_users/helpers/route.php';
 	}
 
 	public function loginUser($username, $password, $rememberme) {

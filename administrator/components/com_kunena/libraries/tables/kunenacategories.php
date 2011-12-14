@@ -46,13 +46,8 @@ class TableKunenaCategories extends KunenaTable
 	var $numTopics = null;
 	var $numPosts = null;
 	var $last_topic_id = null;
-	var $last_topic_subject = null;
-	var $last_topic_posts = null;
 	var $last_post_id = null;
 	var $last_post_time = null;
-	var $last_post_userid = null;
-	var $last_post_message = null;
-	var $last_post_guest_name = null;
 	var $params = null;
 
 	function __construct($db) {

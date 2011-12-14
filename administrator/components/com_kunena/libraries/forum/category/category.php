@@ -146,11 +146,6 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return KunenaForumTopicHelper::get($this->getLastCategory()->last_topic_id);
 	}
 
-	public function getLastPostLocation($direction = 'asc', $hold = null) {
-		if (!KunenaUserHelper::getMyself()->isModerator($this->id)) return $direction = 'asc' ? $this->last_topic_posts-1 : 0;
-		return KunenaForumMessageHelper::getLocation($this->last_post_id, $direction, $hold);
-	}
-
 	public function getChannels($action='read') {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($this->_channels === false) {
@@ -562,13 +557,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			&& ($this->last_post_time<$topic->last_post_time || ($this->last_post_time==$topic->last_post_time && $this->last_post_id <= $topic->last_post_id))) {
 			// If topic has new post or last topic changed, we need to update cache
 			$this->last_topic_id = $topic->id;
-			$this->last_topic_posts = $topic->posts;
-			$this->last_topic_subject = $topic->subject;
 			$this->last_post_id = $topic->last_post_id;
 			$this->last_post_time = $topic->last_post_time;
-			$this->last_post_userid = $topic->last_post_userid;
-			$this->last_post_message = $topic->last_post_message;
-			$this->last_post_guest_name = $topic->last_post_guest_name;
 			$update = true;
 		} elseif ($this->last_topic_id == $topic->id) {
 			// If last topic/post got moved or deleted, we need to find last post
@@ -580,25 +570,15 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 			if ($topic) {
 				$this->last_topic_id = $topic->id;
-				$this->last_topic_posts = $topic->posts;
-				$this->last_topic_subject = $topic->subject;
 				$this->last_post_id = $topic->last_post_id;
 				$this->last_post_time = $topic->last_post_time;
-				$this->last_post_userid = $topic->last_post_userid;
-				$this->last_post_message = $topic->last_post_message;
-				$this->last_post_guest_name = $topic->last_post_guest_name;
 				$update = true;
 			} else {
 				$this->numTopics = 0;
 				$this->numPosts = 0;
 				$this->last_topic_id = 0;
-				$this->last_topic_posts = 0;
-				$this->last_topic_subject = '';
 				$this->last_post_id = 0;
 				$this->last_post_time = 0;
-				$this->last_post_userid = 0;
-				$this->last_post_message = '';
-				$this->last_post_guest_name = '';
 				$update = true;
 			}
 		}

@@ -142,7 +142,7 @@ class KunenaConfig extends JObject {
 	public $alphauserpointsnumchars = 0; // Integration feature for AlphaUserPoints component
 	// New 1.5.8 config variables
 	public $sef = 1;
-	public $sefcats = 0;
+	public $sefcats = 0; // DEPRECATED, needed in installer
 	public $sefutf8 = 0;
 	// New for 1.6 -> Hide images and files for guests
 	public $showimgforguest = 1;

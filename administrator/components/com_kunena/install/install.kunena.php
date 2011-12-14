@@ -14,6 +14,7 @@ $this->parent->copyManifest();
 
 function com_install() {
 	if (version_compare ( phpversion (), '5.0.0', '<' )) {
+		// Installer would fail to load, so let's output an error.
 		echo "ERROR: PHP 5.2 REQUIRED!";
 		return false;
 	}
@@ -25,10 +26,11 @@ function com_install() {
 
 	// Emulate J1.6 installer
 	include_once(dirname(__FILE__).'/install.script.php');
-	Com_KunenaInstallerScript::preflight( null, null );
+	Com_KunenaInstallerScript::preflight( 'update', null );
 	Com_KunenaInstallerScript::install ( null );
+	$redirect_url = Com_KunenaInstallerScript::postflight( 'update', null );
 
 	// Redirect to Kunena Installer
 	header ( "HTTP/1.1 303 See Other" );
-	header ( "Location: " . JURI::base () . 'index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1' );
+	header ( "Location: {$redirect_url}" );
 }

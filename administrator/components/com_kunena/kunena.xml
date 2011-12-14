@@ -2,7 +2,7 @@
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>2.0.0-DEV5</version>
+	<version>2.0.0-DEV6</version>
 	<versionname>Internal</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
@@ -19,7 +19,7 @@
 		<filename>COPYRIGHT.php</filename>
 	</files>
 	<administration>
-		<menu task="cpanel" img="components/com_kunena/media/icons/favicons/kunena.png">COM_KUNENA</menu>
+		<menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena.png">COM_KUNENA</menu>
 		<submenu>
 			<menu view="config" img="components/com_kunena/media/icons/favicons/kunena-config.png">COM_KUNENA_CONFIGURATION</menu>
 			<menu view="categories" img="components/com_kunena/media/icons/favicons/kunena-categories.png">COM_KUNENA_CATEGORY_MANAGER</menu>

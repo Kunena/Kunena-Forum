@@ -10,8 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.environment.uri' );
+jimport('joomla.environment.uri');
 jimport('joomla.html.parameter');
+jimport('joomla.filter.output');
 
 KunenaRoute::initialize();
 
@@ -148,6 +149,75 @@ abstract class KunenaRoute {
 		$cache = JFactory::getCache('_system', 'output');
 		$cache->store(serialize($data), $user->userid, 'com_kunena.route');
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+	}
+
+	function stringURLSafe($string) {
+		static $filtered = array();
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		if (!isset($filtered[$string])) {
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$filtered[$string] = JApplication::stringURLSafe($string);
+			} else {
+				// Joomla 1.5
+				$filtered[$string] =  self::$config->get('sefutf8') ? self::stringURLUnicodeSlug($string) : JFilterOutput::stringURLSafe($string);
+			}
+		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $filtered[$string];
+	}
+
+	/**
+	 * This method implements unicode slugs instead of transliteration.
+	 * It has taken from Joomla 1.7.3 with the difference that urls are not lower case.
+	 *
+	 * @param   string  $string  String to process
+	 *
+	 * @return  string  Processed string
+	 */
+	protected static function stringURLUnicodeSlug($string)
+	{
+		// Replace double byte whitespaces by single byte (East Asian languages)
+		$str = preg_replace('/\xE3\x80\x80/', ' ', $string);
+
+		// Remove any '-' from the string as they will be used as concatenator.
+		// Would be great to let the spaces in but only Firefox is friendly with this
+
+		$str = str_replace('-', ' ', $str);
+
+		// Replace forbidden characters by whitespaces
+		$str = preg_replace('#[:\#\*"@+=;!&\.%()\]\/\'\\\\|\[]#', "\x20", $str);
+
+		// Delete all '?'
+		$str = str_replace('?', '', $str);
+
+		// Trim white spaces at beginning and end of alias and make lowercase
+		$str = trim($str);
+
+		// Remove any duplicate whitespace and replace whitespaces by hyphens
+		$str = preg_replace('#\x20+#', '-', $str);
+
+		return $str;
+	}
+
+	public static function resolveAlias($alias) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		$db = JFactory::getDbo();
+		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->Quote($alias.'%')}";
+		$db->setQuery ($query);
+		$aliases = $db->loadObjectList();
+
+		$vars = array();
+		foreach ($aliases as $object) {
+			if ($alias == $object->alias) {
+				$var = $object->type != 'legacy' ? $object->type : 'view';
+				$vars [$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
+				if ($var == 'catid') $vars ['view'] = 'category';
+				break;
+			}
+		}
+		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		return $vars;
 	}
 
 	public static function initialize() {

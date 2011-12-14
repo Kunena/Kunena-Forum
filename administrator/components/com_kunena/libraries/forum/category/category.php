@@ -17,6 +17,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	public $id = null;
 	public $level = 0;
 
+	protected $_aliases = null;
+	protected $_alias = null;
 	protected $_channels = false;
 	protected $_topics = false;
 	protected $_posts = false;
@@ -63,6 +65,13 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			'topic.post.attachment.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
 			'topic.post.attachment.delete'=>array('Read', 'NotBanned', 'Unlocked'),
 		);
+
+	public function __construct($properties = null) {
+		if ($properties !== null) {
+			$this->setProperties($properties);
+		}
+		$this->_alias = $this->get('alias', '');
+	}
 
 	/**
 	 * Returns the global KunenaForumCategory object.
@@ -125,6 +134,64 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 	public function getCategory() {
 		return $this;
+	}
+
+	public static function getAliases() {
+		if (!isset($this->_aliases)) {
+			$db = JFactory::getDbo();
+			$query = "SELECT * FROM #__kunena_aliases WHERE alias type='catid' AND item={$db->Quote($category->id)}";
+			$db->setQuery ($query);
+			$this->_aliases = (array) $db->loadObjectList('alias');
+		}
+		return $this->_aliases;
+	}
+
+	public function checkAlias($alias) {
+		// Check if category is already using the alias.
+		if (!$alias || $this->_alias == $alias) return true;
+
+		// Check if alias is valid in current configuration.
+		if (KunenaRoute::stringURLSafe($alias) != $alias) return false;
+		$item = KunenaRoute::resolveAlias($alias);
+
+		// Is alias free to be used?
+		if (!$item) return 'insert';
+
+		// Fail if alias is reserved or used by another category.
+		if (empty($item['catid']) || $item['catid'] != $this->id) return false;
+
+		return 'update';
+	}
+
+	public function addAlias($alias) {
+		if ($alias) {
+			$alias = KunenaRoute::stringURLSafe($alias);
+		} else {
+			$alias = $this->id;
+		}
+		$check = $this->checkAlias($alias);
+		// Cannot add alias?
+		if ($check === false) return false;
+		// Did alias change?
+		if ($check === true) return true;
+
+		$db = JFactory::getDbo();
+		$query = "REPLACE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($this->id)})";
+		$db->setQuery ($query);
+		$db->query ();
+		return KunenaError::checkDatabaseError ();
+	}
+
+	public function deleteAlias($alias) {
+		// Do not delete valid alias.
+		if (JString::strtolower($this->alias) == JString::strtolower($alias)) return false;
+
+		$db = JFactory::getDbo();
+		$query = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)} AND alias=={$db->Quote($alias)}";
+		$db->setQuery ($query);
+		$db->query ();
+		KunenaError::checkDatabaseError ();
+		return (bool) $db->getAffectedRows();
 	}
 
 	public function getTopics() {
@@ -333,10 +400,27 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	public function load($id = null) {
 		$exists = parent::load($id);
+		$this->_alias = $this->get('alias', '');
 
 		// Register category if it exists
 		if ($exists) KunenaForumCategoryHelper::register($this);
 		return $exists;
+	}
+
+	public function check() {
+		$alias = trim($this->alias);
+		if (empty($alias)) {
+			$alias = $this->name;
+		}
+		if ($this->alias != $this->_alias) {
+			$alias = KunenaRoute::stringURLSafe($alias);
+			if ($this->checkAlias($alias) === false) {
+				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_FORUM_CATEGORY_ERROR_ALIAS_RESERVED', $alias ) );
+				return false;
+			}
+			$this->alias = $alias;
+		}
+		return true;
 	}
 
 	/**
@@ -348,6 +432,11 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
+
+		// Update alias
+		$this->addAlias($this->alias);
+		$this->_alias = $this->alias;
+
 		$table->reorder ();
 
 		// Clear cache

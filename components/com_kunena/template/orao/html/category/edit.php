@@ -44,13 +44,21 @@ JHTML::_('behavior.tooltip');
 			</li>
 			<li class="kpostcategory-row krow-even">
 				<div class="kform-label">
+					<label for="catalias"><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS') ?></label>
+				</div>
+				<div class="kform-field">
+					<input type="text" value="<?php echo $this->escape ( $this->category->alias ) ?>" maxlength="100" size="35" id="catalias" name="alias" class="kinputbox postinput required hasTip" title="Alias :: Enter Category Alias" />
+				</div>
+			</li>
+			<li class="kpostcategory-row krow-odd">
+				<div class="kform-label">
 					<label for="parent_id"><?php echo JText::_('COM_KUNENA_PARENT') ?></label>
 				</div>
 				<div class="kform-field">
 					<?php echo $this->options ['categories'] ?>
 				</div>
 			</li>
-			<li class="kpostcategory-row krow-odd">
+			<li class="kpostcategory-row krow-even">
 				<div class="kform-label">
 					<label for="published"><?php echo JText::_('COM_KUNENA_PUBLISHED') ?></label>
 				</div>
@@ -58,7 +66,7 @@ JHTML::_('behavior.tooltip');
 					<?php echo $this->options ['published']; ?>
 				</div>
 			</li>
-			<li class="kpostcategory-row krow-even">
+			<li class="kpostcategory-row krow-odd">
 				<div class="kform-label">
 					<label for="kdescription"><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD') ?></label><br/>
 				</div>
@@ -66,7 +74,7 @@ JHTML::_('behavior.tooltip');
 					<textarea cols="50" rows="10" id="kdescription" name="description" class="ktxtarea required hasTip" title="Description :: Enter category description"><?php echo $this->escape ( $this->category->description ) ?></textarea>
 				</div>
 			</li>
-			<li class="kpostcategory-row krow-odd">
+			<li class="kpostcategory-row krow-even">
 				<div class="kform-label">
 					<label for="kheaderdesc"><?php echo JText::_('COM_KUNENA_HEADERADD') ?></label>
 				</div>

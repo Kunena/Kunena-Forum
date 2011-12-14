@@ -11,7 +11,6 @@ defined ( '_JEXEC' ) or die ();
 
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
-jimport('joomla.filter.output');
 jimport('joomla.error.profiler');
 
 class KunenaRouter {
@@ -87,51 +86,7 @@ class KunenaRouter {
 		'thankyou'=>1,
 		'fb_pdf'=>1,
 	);
-
-	function initialize() {
-		self::$config = KunenaFactory::getConfig ();
-	}
-
-	function findAlias($alias) {
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		$db = JFactory::getDbo();
-		$query = "SELECT * FROM #__kunena_aliases WHERE alias LIKE {$db->Quote($alias.'%')}";
-		$db->setQuery ($query);
-		$aliases = $db->loadObjectList();
-
-		$vars = array();
-		foreach ($aliases as $object) {
-			if ($alias == $object->alias) {
-				$var = $object->type != 'legacy' ? $object->type : 'view';
-				$vars [$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
-				if ($var == 'catid') $vars ['view'] = 'category';
-				break;
-			}
-		}
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		return $vars;
-	}
-
-	function filterOutput($str) {
-		return JString::trim ( preg_replace ( array ('/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u' ), array ('-', '' ), $str ) );
-	}
-
-	function stringURLSafe($str) {
-		static $filtered = array();
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		if (!isset($filtered[$str])) {
-			if (self::$config->sefutf8) {
-				$filtered[$str] = self::filterOutput ( $str );
-			} else {
-				$filtered[$str] = JFilterOutput::stringURLSafe ( $str );
-			}
-		}
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		return $filtered[$str];
-	}
 }
-
-KunenaRouter::initialize ();
 
 /**
  * Build SEF URL
@@ -224,7 +179,7 @@ function KunenaBuildRoute(&$query) {
 	if (!empty ( $query ['id'] ) && $numeric) {
 		$id = (int) $query ['id'];
 		if ($id) {
-			$subject = KunenaRouter::stringURLSafe ( KunenaForumTopicHelper::get($id)->subject );
+			$subject = KunenaRoute::stringURLSafe ( KunenaForumTopicHelper::get($id)->subject );
 			if (empty ( $subject )) {
 				$segments [] = $id;
 			} else {
@@ -261,7 +216,7 @@ function KunenaBuildRoute(&$query) {
 
 	// Support URIs like: /forum/user/128-matias
 	if (isset ( $query ['userid'] ) && $view == 'user') {
-		$segments [] = (int) $query ['userid'] .'-'.KunenaRouter::stringURLSafe ( KunenaUserHelper::get((int)$query ['userid'])->getName() );
+		$segments [] = (int) $query ['userid'] .'-'.KunenaRoute::stringURLSafe ( KunenaUserHelper::get((int)$query ['userid'])->getName() );
 		unset ( $query ['userid'] );
 	}
 
@@ -302,10 +257,10 @@ function KunenaParseRoute($segments) {
 		// Skip //
 		if (!$segment) continue;
 
-		if ($sefcats) {
+		if ($sefcats && method_exists('KunenaRoute', 'resolveAlias')) {
 			// Find out if we have SEF alias (category, view or layout)
 			$alias = strtr ( $segment, ':', '-' );
-			$variables = KunenaRouter::findAlias($alias);
+			$variables = KunenaRoute::resolveAlias($alias);
 			if ($variables) {
 				$vars = array_replace($vars, $variables);
 				continue;

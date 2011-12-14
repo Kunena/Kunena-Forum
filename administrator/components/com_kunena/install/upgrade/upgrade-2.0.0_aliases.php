@@ -10,75 +10,31 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport('joomla.filter.output');
-require_once KPATH_SITE . '/router.php';
 
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
 function kunena_upgrade_200_aliases($parent) {
-	$legacyFunctions = array (
-		'listcat'=>1,
-		'showcat'=>1,
-		'latest'=>1,
-		'mylatest'=>1,
-		'noreplies'=>1,
-		'subscriptions'=>1,
-		'favorites'=>1,
-		'userposts'=>1,
-		'unapproved'=>1,
-		'deleted'=>1,
-		'view'=>1,
-		'profile'=>1,
-		'myprofile'=>1,
-		'userprofile'=>1,
-		'fbprofile'=>1,
-		'moderateuser'=>1,
-		'userlist'=>1,
-		'rss'=>1,
-		'post'=>1,
-		'report'=>1,
-		'template'=>1,
-		'announcement'=>1,
-		'article'=>1,
-		'who'=>1,
-		'poll'=>1,
-		'polls'=>1,
-		'stats'=>1,
-		'help'=>1,
-		'review'=>1,
-		'rules'=>1,
-		'search'=>1,
-		'advsearch'=>1,
-		'markallcatsread'=>1,
-		'markthisread'=>1,
-		'subscribecat'=>1,
-		'unsubscribecat'=>1,
-		'karma'=>1,
-		'bulkactions'=>1,
-		'templatechooser'=>1,
-		'json'=>1,
-		'pdf'=>1,
-		'entrypage'=>1,
-		'thankyou'=>1,
-		'fb_pdf'=>1,
-	);
 	$config = KunenaFactory::getConfig ();
 
-	foreach (KunenaRouter::$views as $view=>$dummy) {
-		createAlias('view', $view, $view, 1);
+	// Create views
+	foreach (KunenaRoute::$views as $view=>$dummy) {
+		kCreateAlias('view', $view, $view, 1);
 	}
-	foreach (KunenaRouter::$layouts as $layout=>$dummy) {
-		createAlias('layout', "category.{$layout}", "category/{$layout}", 1);
-		createAlias('layout', "category.{$layout}", $layout, 0);
+	// Create layouts
+	foreach (KunenaRoute::$layouts as $layout=>$dummy) {
+		kCreateAlias('layout', "category.{$layout}", "category/{$layout}", 1);
+		kCreateAlias('layout', "category.{$layout}", $layout, 0);
 	}
-	foreach ($legacyFunctions as $func=>$dummy) {
-		createAlias('legacy', $func, $func, 1);
+	// Create legacy functions
+	foreach (KunenaRouteLegacy::$functions as $func=>$dummy) {
+		kCreateAlias('legacy', $func, $func, 1);
 	}
 	$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 	$aliasLit = $aliasUtf = array();
 	// Create SEF: id
 	foreach ($categories as $category) {
-		createCategoryAlias($category, $category->id);
+		kCreateCategoryAlias($category, $category->id);
 		// Create SEF names
-		$aliasUtf[$category->id] = stringURLSafe ( $category->name );
+		$aliasUtf[$category->id] = kStringURLSafe ( $category->name );
 		$aliasLit[$category->id] = JFilterOutput::stringURLSafe ( $category->name );
 	}
 	// Sort aliases by category id (oldest ID accepts also sefcat format..
@@ -89,10 +45,10 @@ function kunena_upgrade_200_aliases($parent) {
 		$created = false;
 		if ($config->sefutf8) {
 			$name = $aliasUtf[$category->id];
-			if (!empty($name)) $created = createCategoryAlias($category, "{$id}-{$name}", 1);
+			if (!empty($name)) $created = kCreateCategoryAlias($category, "{$id}-{$name}", 1);
 		}
 		$name = $aliasLit[$category->id];
-		if (!empty($name)) createCategoryAlias($category, "{$id}-{$name}", !$created);
+		if (!empty($name)) kCreateCategoryAlias($category, "{$id}-{$name}", !$created);
 	}
 	// Create SEF: name and Name (UTF8)
 	if ($config->sefcats) {
@@ -101,17 +57,17 @@ function kunena_upgrade_200_aliases($parent) {
 			if ($config->sefutf8) {
 				$name = $aliasUtf[$category->id];
 				$keys = array_keys($aliasUtf, $name);
-				if (!empty($name)) $created = createCategoryAlias($category, $name, count($keys) == 1);
+				if (!empty($name)) $created = kCreateCategoryAlias($category, $name, count($keys) == 1);
 			}
 			$name = $aliasLit[$category->id];
 			$keys = array_keys($aliasLit, $name);
-			if (!empty($name)) createCategoryAlias($category, $name, !$created && count($keys) == 1);
+			if (!empty($name)) kCreateCategoryAlias($category, $name, !$created && count($keys) == 1);
 		}
 	}
 	return array ('action' => '', 'name' => JText::_ ( 'COM_KUNENA_INSTALL_200_ALIASES' ), 'success' => true );
 }
 
-function createAlias($type, $item, $alias, $state=0) {
+function kCreateAlias($type, $item, $alias, $state=0) {
 	$state = (int) $state;
 	$db = JFactory::getDbo();
 	$query = "INSERT INTO #__kunena_aliases (alias, type, item, state) VALUES ({$db->Quote($alias)},{$db->Quote($type)},{$db->Quote($item)},{$db->Quote($state)})";
@@ -126,7 +82,7 @@ function createAlias($type, $item, $alias, $state=0) {
 	return $success;
 }
 
-function createCategoryAlias($category, $alias, $state=0) {
+function kCreateCategoryAlias($category, $alias, $state=0) {
 	$state = (int) $state;
 	$db = JFactory::getDbo();
 	$query = "INSERT INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($category->id)})";
@@ -141,6 +97,6 @@ function createCategoryAlias($category, $alias, $state=0) {
 	return $success;
 }
 
-function stringURLSafe($str) {
+function kStringURLSafe($str) {
 	return JString::trim ( preg_replace ( array ('/(\s|\xE3\x80\x80)+/u', '/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.\(\)\*\!]/u' ), array ('-', '' ), $str ) );
 }

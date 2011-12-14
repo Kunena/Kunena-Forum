@@ -17,6 +17,27 @@ jimport('joomla.filter.output');
 KunenaRoute::initialize();
 
 abstract class KunenaRoute {
+	// List of views: array of default variable=>value pairs, which can be removed from URI
+	static $views = array (
+		'announcement'=>array('layout'=>'default'),
+		'category'=>array('layout'=>'default', 'catid'=>'0'),
+		'common'=>array('layout'=>'default'),
+		'credits'=>array('layout'=>'default'),
+		'home'=>array(),
+		'misc'=>array('layout'=>'default'),
+		'search'=>array('layout'=>'default'),
+		'statistics'=>array('layout'=>'default'),
+		'topic'=>array('layout'=>'default'),
+		'topics'=>array('layout'=>'default'),
+		'user'=>array('layout'=>'default', 'userid'=>'0'),
+	);
+	// Reserved layout names for category view
+	static $layouts = array ('create'=>1, 'default'=>1, 'edit'=>1, 'manage'=>1, 'moderate'=>1, 'user'=>1);
+	// Use category name only in these views
+	static $sefviews = array (''=>1, 'home'=>1, 'category'=>1, 'topic'=>1);
+	static $parsevars = array ('do'=>1, 'task'=>1, 'mode'=>1, 'catid'=>1, 'id'=>1, 'mesid'=>1, 'userid'=>1, 'page'=>1, 'sel'=>1 );
+
+	static $time = 0;
 	static $adminApp = false;
 	static $config = false;
 	static $menus = false;

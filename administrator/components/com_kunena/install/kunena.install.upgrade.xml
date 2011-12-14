@@ -311,7 +311,7 @@
 				ON DUPLICATE KEY UPDATE role=1
 			</query>
 		</version>
-		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+		<version version="2.0.0-DEV6" versiondate="2011-12-14" versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP `moderated`;</query>
 			<query>DROP TABLE IF EXISTS `#__kunena_moderation` </query>
 			<query>DROP TABLE IF EXISTS `#__kunena_config` </query>
@@ -325,6 +325,8 @@
 				DROP `last_post_guest_name`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `alias` varchar(255) NOT NULL AFTER `name`;</query>
 			<phpfile name="upgrade-2.0.0_aliases"></phpfile>
+		</version>
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

@@ -13,81 +13,6 @@ require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 jimport('joomla.error.profiler');
 
-class KunenaRouter {
-	static $config = null;
-
-	static $time = 0;
-
-	// List of reserved views (if category name is one of these, use always catid)
-	// Contains array of default variable=>value pairs, which can be removed from URI
-	static $views = array (
-		'announcement'=>array('layout'=>'default'),
-		'category'=>array('layout'=>'default', 'catid'=>'0'),
-		'common'=>array('layout'=>'default'),
-		'credits'=>array('layout'=>'default'),
-		'home'=>array(),
-		'misc'=>array('layout'=>'default'),
-		'search'=>array('layout'=>'default'),
-		'statistics'=>array('layout'=>'default'),
-		'topic'=>array('layout'=>'default'),
-		'topics'=>array('layout'=>'default'),
-		'user'=>array('layout'=>'default', 'userid'=>'0'),
-	);
-	// Reserved layout names for category view
-	static $layouts = array ('create'=>1, 'default'=>1, 'edit'=>1, 'manage'=>1, 'moderate'=>1, 'user'=>1);
-	// Use category name only in these views
-	static $sefviews = array (''=>1, 'home'=>1, 'category'=>1, 'topic'=>1);
-	static $parsevars = array ('do'=>1, 'task'=>1, 'mode'=>1, 'catid'=>1, 'id'=>1, 'mesid'=>1, 'userid'=>1, 'page'=>1, 'sel'=>1 );
-	// List of legacy views from previous releases
-	static $functions = array (
-		'listcat'=>1,
-		'showcat'=>1,
-		'latest'=>1,
-		'mylatest'=>1,
-		'noreplies'=>1,
-		'subscriptions'=>1,
-		'favorites'=>1,
-		'userposts'=>1,
-		'unapproved'=>1,
-		'deleted'=>1,
-		'view'=>1,
-		'profile'=>1,
-		'myprofile'=>1,
-		'userprofile'=>1,
-		'fbprofile'=>1,
-		'moderateuser'=>1,
-		'userlist'=>1,
-		'rss'=>1,
-		'post'=>1,
-		'report'=>1,
-		'template'=>1,
-
-		'announcement'=>1,
-		'article'=>1,
-		'who'=>1,
-		'poll'=>1,
-		'polls'=>1,
-		'stats'=>1,
-		'help'=>1,
-		'review'=>1,
-		'rules'=>1,
-		'search'=>1,
-		'advsearch'=>1,
-		'markallcatsread'=>1,
-		'markthisread'=>1,
-		'subscribecat'=>1,
-		'unsubscribecat'=>1,
-		'karma'=>1,
-		'bulkactions'=>1,
-		'templatechooser'=>1,
-		'json'=>1,
-		'pdf'=>1,
-		'entrypage'=>1,
-		'thankyou'=>1,
-		'fb_pdf'=>1,
-	);
-}
-
 /**
  * Build SEF URL
  *
@@ -140,8 +65,8 @@ function KunenaBuildRoute(&$query) {
 	$view = isset ( $query ['view'] ) ? (string) preg_replace( '/[^a-z]/', '', $query ['view'] ) : $menuitem->query ['view'];
 
 	// Get default values for URI variables
-	if (isset(KunenaRouter::$views[$view])) {
-		$defaults = KunenaRouter::$views[$view];
+	if (isset(KunenaRoute::$views[$view])) {
+		$defaults = KunenaRoute::$views[$view];
 	}
 	// Check all URI variables and remove those which aren't needed
 	foreach ( $query as $var => $value ) {
@@ -223,7 +148,7 @@ function KunenaBuildRoute(&$query) {
 	unset ( $query ['view'], $query ['layout'] );
 
 	// Rest of the known parameters are in var-value form
-	foreach ( KunenaRouter::$parsevars as $var=>$dummy ) {
+	foreach ( KunenaRoute::$parsevars as $var=>$dummy ) {
 		if (isset ( $query [$var] )) {
 			$segments [] = "{$var}-{$query[$var]}";
 			unset ( $query [$var] );
@@ -250,7 +175,7 @@ function KunenaParseRoute($segments) {
 	if (!$active && $segments[0] == 'kunena') array_shift ( $segments );
 
 	// Use category SEF feature?
-	$sefcats = isset(KunenaRouter::$sefviews[$vars['view']]) && empty($vars ['id']);
+	$sefcats = isset(KunenaRoute::$sefviews[$vars['view']]) && empty($vars ['id']);
 
 	// Handle all segments
 	while ( ($segment = array_shift ( $segments )) !== null ) {
@@ -323,6 +248,6 @@ function KunenaParseRoute($segments) {
 		$vars [$var] = $value;
 	}
 	if (empty($vars ['layout'])) $vars ['layout'] = 'default';
-	KunenaRouter::$time = $profiler->getmicrotime() - $starttime;
+	KunenaRoute::$time = $profiler->getmicrotime() - $starttime;
 	return $vars;
 }

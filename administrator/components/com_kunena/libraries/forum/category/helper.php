@@ -316,13 +316,8 @@ class KunenaForumCategoryHelper {
 			SET c.numTopics = r.numTopics,
 				c.numPosts = r.numPosts,
 				c.last_topic_id=r.last_topic_id,
-				c.last_topic_subject = tt.subject,
-				c.last_topic_posts=tt.posts,
 				c.last_post_id = tt.last_post_id,
-				c.last_post_time = tt.last_post_time,
-				c.last_post_userid = tt.last_post_userid,
-				c.last_post_message = tt.last_post_message,
-				c.last_post_guest_name = tt.last_post_guest_name";
+				c.last_post_time = tt.last_post_time";
 		$db->setQuery ( $query );
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
@@ -335,13 +330,8 @@ class KunenaForumCategoryHelper {
 			SET c.numTopics=0,
 				c.numPosts=0,
 				c.last_topic_id=0,
-				c.last_topic_subject='',
-				c.last_topic_posts=0,
 				c.last_post_id=0,
-				c.last_post_time=0,
-				c.last_post_userid=0,
-				c.last_post_message='',
-				c.last_post_guest_name=''
+				c.last_post_time=0
 			WHERE tt.id IS NULL";
 		$db->setQuery ( $query );
 		$db->query ();

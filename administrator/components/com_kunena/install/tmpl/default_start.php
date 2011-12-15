@@ -15,7 +15,7 @@ $version = reset($this->versions);
 <table class="kinstaller">
 	<?php if (!empty($version->state)) : array_shift($this->versions); ?>
 	<tr><th style="font-size: 1.5em; color: #CC0000;"><?php echo JText::_('COM_KUNENA_INSTALL_DETECT_FAILED') ?></th></tr>
-	<tr><td><?php echo JText::sprintf('COM_KUNENA_INSTALL_DETECT_FAILED_DESC',$version->version) ?></td></tr>
+	<tr><td><?php echo JText::sprintf('COM_KUNENA_INSTALL_DETECT_FAILED_DESC',$version->version, '') ?></td></tr>
 	<?php else: ?>
 	<tr><th class="klarge"><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_WARNING') ?></th></tr>
 	<?php if ($version->action != 'REINSTALL') : ?>

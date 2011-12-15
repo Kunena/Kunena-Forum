@@ -13,6 +13,54 @@ defined ( '_JEXEC' ) or die ();
 require_once KPATH_SITE . '/router.php';
 
 class KunenaRouteLegacy {
+	// List of legacy views from previous releases
+	static $functions = array (
+		'listcat'=>1,
+		'showcat'=>1,
+		'latest'=>1,
+		'mylatest'=>1,
+		'noreplies'=>1,
+		'subscriptions'=>1,
+		'favorites'=>1,
+		'userposts'=>1,
+		'unapproved'=>1,
+		'deleted'=>1,
+		'view'=>1,
+		'profile'=>1,
+		'myprofile'=>1,
+		'userprofile'=>1,
+		'fbprofile'=>1,
+		'moderateuser'=>1,
+		'userlist'=>1,
+		'rss'=>1,
+		'post'=>1,
+		'report'=>1,
+		'template'=>1,
+		'announcement'=>1,
+		'article'=>1,
+		'who'=>1,
+		'poll'=>1,
+		'polls'=>1,
+		'stats'=>1,
+		'help'=>1,
+		'review'=>1,
+		'rules'=>1,
+		'search'=>1,
+		'advsearch'=>1,
+		'markallcatsread'=>1,
+		'markthisread'=>1,
+		'subscribecat'=>1,
+		'unsubscribecat'=>1,
+		'karma'=>1,
+		'bulkactions'=>1,
+		'templatechooser'=>1,
+		'json'=>1,
+		'pdf'=>1,
+		'entrypage'=>1,
+		'thankyou'=>1,
+		'fb_pdf'=>1,
+	);
+
 	function convert($uri) {
 		// We need to convert URIs only in site
 		if (!JFactory::getApplication()->isSite()) return;
@@ -32,7 +80,7 @@ class KunenaRouteLegacy {
 			$uri->setVar('view', $uri->getVar('func'));
 			$uri->delVar('func');
 		}
-		if (!isset(KunenaRouter::$functions[$uri->getVar('view')])) {
+		if (!isset(self::$functions[$uri->getVar('view')])) {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return;
 		}

@@ -248,10 +248,11 @@ class KunenaModelInstall extends JModel {
 			if ($success != true) continue;
 			$installdir = "{$dest}/language/{$tag}";
 			// If we are installing Kunena from archive, we need to unzip language file
-			if (!KunenaForum::isSVN() && JFolder::exists(KPATH_ADMIN . '/archive')) {
-				$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
+			$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
+			if (JFolder::exists($path)) {
 				$file = "{$tag}.com_kunena-{$key}".file_get_contents("{$path}/fileformat");
 
+				// SVN never has these files, installation package may have
 				if (file_exists("$path/$file")) {
 					$success = $this->extract ( $path, $file, $installdir, true );
 				}
@@ -430,7 +431,7 @@ class KunenaModelInstall extends JModel {
 			array('name'=>'com_kunena-media', 'dest'=>KPATH_MEDIA)
 		);
 		static $ignore = array(
-			KPATH_ADMIN => array('index.html', 'kunena.xml', 'admin.kunena.php', 'api.php', 'archive', 'install', 'language'),
+			KPATH_ADMIN => array('index.html', 'kunena.xml', 'kunena.j16.xml', 'admin.kunena.php', 'api.php', 'archive', 'install', 'language'),
 			KPATH_SITE => array('index.html', 'kunena.php', 'router.php', 'COPYRIGHT.php', 'template', 'language')
 		);
 		$task = $this->getTask();

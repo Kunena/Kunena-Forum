@@ -125,16 +125,13 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top" width="25%"><?php echo $this->lists ['sef']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SEF_DESC') ?></td>
 					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_SEF_CATS') ?></td>
-						<td align="left" valign="top" width="25%"><?php echo $this->lists ['sefcats']; ?></td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SEF_CATS_DESC') ?></td>
-					</tr>
+					<?php if (version_compare(JVERSION, '1.6', '<')) : ?>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_SEF_UTF8') ?></td>
 						<td align="left" valign="top" width="25%"><?php echo $this->lists ['sefutf8']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SEF_UTF8_DESC') ?></td>
 					</tr>
+					<?php endif ?>
 				</table>
 			</fieldset>
 			</dd>

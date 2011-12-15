@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE schema>
 <schema>
+	<table name="kunena_aliases">
+		<field primary_key="yes" name="alias" type="varchar(255)" null="0"/>
+		<field name="type" type="varchar(10)" null="0"/>
+		<field name="item" type="varchar(32)" null="0"/>
+		<field name="state" type="tinyint(4)" null="0" default="0"/>
+		<key name="alias" unique="1" columns="alias"/>
+		<key name="state" columns="state"/>
+		<key name="item" columns="item"/>
+		<key name="type" columns="type"/>
+	</table>
 	<table name="kunena_announcement">
 		<field primary_key="yes" name="id" type="int(3)" null="0"
 			extra="auto_increment" />
@@ -34,6 +44,7 @@
 			extra="auto_increment" />
 		<field name="parent_id" type="int(11)" null="1" default="0" />
 		<field name="name" type="tinytext" null="1" />
+		<field name="alias" type="varchar(255)" null="0" />
 		<field name="icon_id" type="tinyint(4)" null="0" default="0" />
 		<field name="locked" type="tinyint(4)" null="0" default="0" />
 		<field name="accesstype" type="varchar(20)" null="0" default="none" />
@@ -61,13 +72,8 @@
 		<field name="numTopics" type="mediumint(8)" null="0" default="0" />
 		<field name="numPosts" type="mediumint(8)" null="0" default="0" />
 		<field name="last_topic_id" type="int(11)" null="0" default="0" />
-		<field name="last_topic_subject" type="tinytext" null="1" />
-		<field name="last_topic_posts" type="int(11)" null="0" default="0" />
 		<field name="last_post_id" type="int(11)" null="0" default="0" />
 		<field name="last_post_time" type="int(11)" null="0" default="0" />
-		<field name="last_post_userid" type="int(11)" null="0" default="0" />
-		<field name="last_post_message" type="text" null="1" />
-		<field name="last_post_guest_name" type="tinytext" null="1" />
 		<field name="params" type="text" null="0" />
 
 		<key name="PRIMARY" unique="1" columns="id" />

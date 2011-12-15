@@ -57,7 +57,7 @@ class KunenaViewTopics extends KunenaView {
 		//meta description and keywords
 		$limit = $this->state->get('list.limit');
 		$page = intval($this->state->get('list.start')/$limit)+1;
-		$total = intval($this->total/$limit)+1;
+		$total = intval(($this->total-1)/$limit)+1;
 		$pagesTxt = "{$page}/{$total}";
 		$app = JFactory::getApplication();
 		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $app->getCfg ( 'sitename' );
@@ -182,6 +182,17 @@ class KunenaViewTopics extends KunenaView {
 		$lasttopic = NULL;
 		$this->position = 0;
 
+		// Run events
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'user');
+		$params->set('kunena_layout', 'topics');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topics', &$this->topics, &$params, 0));
+
 		foreach ( $this->topics as $this->topic ) {
 			$this->position++;
 			$this->category = $this->topic->getCategory();
@@ -244,6 +255,17 @@ class KunenaViewTopics extends KunenaView {
 	function displayPostRows() {
 		$lasttopic = NULL;
 		$this->position = 0;
+
+		// Run events
+		$params = new JParameter( '' );
+		$params->set('ksource', 'kunena');
+		$params->set('kunena_view', 'user');
+		$params->set('kunena_layout', 'posts');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->messages, &$params, 0));
 
 		foreach ( $this->messages as $this->message ) {
 			$this->position++;

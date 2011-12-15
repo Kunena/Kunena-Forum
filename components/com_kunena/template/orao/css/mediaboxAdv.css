@@ -1,6 +1,6 @@
-		/*	mediaboxAdvanced White theme	*/
-		/*	version 2.1 - August 2010		*/
-		/*	for mediaboxAdvanced v.1.3.1	*/
+		/*	mediaboxAdvanced Dark theme	*/
+		/*	version 2.6 - June 2011			*/
+		/*	for mediaboxAdvanced v.1.5.x	*/
 
 		/*	Overlay background styling	*/
 
@@ -10,17 +10,29 @@
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 100%;
+	height: 150%;
 	background-color: #fff;
 	cursor: pointer;
 }
 
-		/*	Legacy fix for older browsers	*/
+		/*	Fixes for older or limited browsers	*/
 
+#mbOverlay.mbOverlayOpaque {
+	background: transparent url(../images/mediabox_overlay.png) repeat;
+}
 
-
-#mbOverlay.mbOverlayIE {
+#mbOverlay.mbOverlayAbsolute {
 	position: absolute;
+}
+
+#mbOverlay.mbMobile {
+	position: absolute;
+	background-color: transparent;
+}
+
+#mbBottom.mbMobile {
+	line-height: 24px;
+	font-size: 16px;
 }
 
 		/*	Overlay panel styling	*/
@@ -29,23 +41,22 @@
 	position: absolute;
 	z-index: 9999;
 	left: 50%;
-	overflow: hidden;
+	padding: 10px;
 	background-color: #fff;
 	-webkit-border-radius: 10px;
 	-khtml-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=180, Color='#000000'); /* For IE 5.5 - 7 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=180, Color='#000000')"; /* For IE 8 */
 	-webkit-box-shadow: 0px 5px 20px rgba(0,0,0,0.50);
 	-khtml-box-shadow: 0px 5px 20px rgba(0,0,0,0.50);
 	-moz-box-shadow: 0px 5px 20px rgba(0,0,0,0.50);
 	box-shadow: 0px 5px 20px rgba(0,0,0,0.50);
-	/* For IE 8 */
-	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=180, Color='#000000')";
-	/* For IE 5.5 - 7 */
-	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=180, Color='#000000');
 }
 
 #mbCenter.mbLoading {
+	background: #000 url(../images/loading.gif) no-repeat center;
 		/*	This style is applied only during animation.	*/
 		/*	For example, the next lines turn off shadows	*/
 		/*	improving browser performance on slow systems.	*/
@@ -56,7 +67,7 @@
 	box-shadow: none;
 }
 
-#mbImage {
+#mbMedia {
 	position: relative;
 	left: 0;
 	top: 0;
@@ -70,42 +81,39 @@
 	text-align: left;
 	background-position: center center;
 	background-repeat: no-repeat;
-	padding: 10px;
 }
 
 		/*	Title, Caption and Button styling	*/
 
 #mbBottom {
-	min-height: 20px;
-	font-family: Myriad, Verdana, Arial, Helvetica, sans-serif;
 	line-height: 20px;
 	font-size: 12px;
-	color: #999;
+	font-family: Myriad, Verdana, Arial, Helvetica, sans-serif;
 	text-align: left;
-	padding: 0 10px 10px;
+	color: #999;
+	min-height: 20px;
+	padding: 10px 0 0;
 }
 
 #mbTitle, #mbPrevLink, #mbNextLink, #mbCloseLink {
 	display: inline;
 	color: #000;
 	font-weight: bold;
-	line-height: 20px;
-	font-size: 12px;
 }
 
 #mbNumber {
 	display: inline;
 	color: #999;
-	line-height: 14px;
-	font-size: 10px;
+/*	line-height: 0.8em; */
+	font-size: 0.8em;
 	margin: auto 10px;
 }
 
 #mbCaption {
 	display: block;
 	color: #999;
-	line-height: 14px;
-	font-size: 10px;
+	line-height: 1.6em;
+	font-size: 0.8em;
 }
 
 #mbPrevLink, #mbNextLink, #mbCloseLink {
@@ -116,15 +124,15 @@
 }
 
 #mbPrevLink b, #mbNextLink b, #mbCloseLink b {
-	color: #000;
+	color: #eee;
 	font-weight: bold;
 	text-decoration: underline;
 }
 
 #mbPrevLink big, #mbNextLink big, #mbCloseLink big {
-	color: #000;
-	font-size: 16px;
-	line-height: 14px;
+	color: #eee;
+	font-size: 1.4em;
+/*	line-height: 0.9em;*/
 	font-weight: bold;
 }
 
@@ -137,7 +145,6 @@
 	text-decoration: underline;
 	color: #fff;
 }
-
 
 		/*	Error message styling	*/
 

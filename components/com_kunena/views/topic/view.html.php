@@ -71,7 +71,7 @@ class KunenaViewTopic extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', $this->topic, &$params, 0));
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
 		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$messages, &$params, 0));
 
 		// Assign variables to template
@@ -113,6 +113,9 @@ class KunenaViewTopic extends KunenaView {
 		$this->quickreply = ($this->topic->authorise('reply',null, false) && $this->me->exists() && !$this->captcha->enabled());
 
 		//meta description and keywords
+		$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
+		$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
+
 		// TODO: use real keywords, too
 		$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . JFactory::getapplication()->getCfg ( 'sitename' ) );
 
@@ -136,7 +139,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $this->escape($metaDesc) );
 
-		$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_TOPICS_DEFAULT', $this->topic->subject));
+		$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_TOPICS_DEFAULT', $this->topic->subject) . " ({$page}/{$pages})");
 
 		$this->display($tpl);
 	}
@@ -267,7 +270,7 @@ class KunenaViewTopic extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', $this->topic, &$params, 0));
+		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topic', &$this->topic, &$params, 0));
 
 		if (!$parent->authorise('reply')) {
 			$app = JFactory::getApplication();
@@ -697,7 +700,7 @@ class KunenaViewTopic extends KunenaView {
 				$this->message_quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->message->id, $this->getButton ( 'reply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY') ), 'nofollow', 'kicon-button kbuttoncomm btn-left kqreply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY_LONG'), ' id="kreply'.$this->message->id.'"' );
 			}
 			$this->message_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->message->id, $this->getButton ( 'reply', JText::_('COM_KUNENA_BUTTON_REPLY') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_REPLY_LONG') );
-			$this->message_quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $this->message->id, $this->getButton ( 'quote', JText::_('COM_KUNENA_BUTTON_QUOTE') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_QUOTE_LONG') );
+			$this->message_quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $this->message->id, $this->getButton ( 'kquote', JText::_('COM_KUNENA_BUTTON_QUOTE') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_QUOTE_LONG') );
 		} else {
 			//user is not allowed to write a post
 			if ($this->topic->locked) {
@@ -712,7 +715,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->message_delete = $this->message_undelete = $this->message_permdelete = $this->message_publish = '';
 		if ($me->isModerator ( $this->topic->category_id )) {
 			unset($this->message_closed);
-			$this->message_edit = CKunenaLink::GetTopicPostReplyLink ( 'edit', $catid, $this->message->id, $this->getButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
+			$this->message_edit = CKunenaLink::GetTopicPostReplyLink ( 'edit', $catid, $this->message->id, $this->getButton ( 'kedit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
 			$this->message_moderate = CKunenaLink::GetTopicPostReplyLink ( 'moderate', $catid, $this->message->id, $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE_LONG') );
 			if ($this->message->hold == 1) {
 				$this->message_publish = CKunenaLink::GetTopicPostLink ( 'approve', $catid, $this->message->id, $this->getButton ( 'approve', JText::_('COM_KUNENA_BUTTON_APPROVE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_APPROVE_LONG') );
@@ -861,7 +864,7 @@ class KunenaViewTopic extends KunenaView {
 		JPluginHelper::importPlugin('kunena');
 
 		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->history, &$params, 0));
-		
+
 		echo $this->loadTemplateFile ( 'history' );
 	}
 

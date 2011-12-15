@@ -42,7 +42,6 @@ function kunena_upgrade_160_timezone($parent) {
 	}
 
 	// Save configuration
-	$config->remove ();
-	$config->create ();
+	$config->save ();
 	return $result;
 }

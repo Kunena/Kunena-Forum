@@ -900,5 +900,5 @@ ul.autocompleter-choices {
 
 #Kunena .ktree {
 	/* TODO: create new rtl image and use it */
-	background: url("../images/treenodes.png") no-repeat right center;
+	background: url("../images/treenodes-rtl.png") no-repeat right center;
 }

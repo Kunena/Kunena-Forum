@@ -21,7 +21,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
 			<input type="hidden" name="view" value="attachments" />
 			<input type="hidden" name="task" value="" />
-			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
+			<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering') ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 			<input type="hidden" name="boxchecked" value="0" />

@@ -44,12 +44,7 @@ class KunenaController extends JController {
 		$view = strtolower ( JRequest::getWord ( 'view', 'none' ) );
 
 		$app = JFactory::getApplication();
-		// FIXME: loading languages in Joomla is SLOW (30ms)!
-		if ($app->isAdmin()) {
-			$lang = JFactory::getLanguage();
-			$lang->load('com_kunena',JPATH_SITE);
-			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
-		} else {
+		if (!$app->isAdmin()) {
 			$home = $app->getMenu ()->getActive ();
 			if (!$reload && !empty ( $home->query ['view'] ) && $home->query ['view'] == 'home' && !JRequest::getWord ( 'task' )) {
 				$view = 'home';
@@ -93,7 +88,7 @@ class KunenaController extends JController {
 			// Version warning
 			require_once KPATH_ADMIN . '/install/version.php';
 			$version = new KunenaVersion();
-			$version_warning = $version->getVersionWarning('COM_KUNENA_VERSION_INSTALLED');
+			$version_warning = $version->getVersionWarning();
 			if (! empty ( $version_warning )) {
 				$app->enqueueMessage ( $version_warning, 'notice' );
 			}

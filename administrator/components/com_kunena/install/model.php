@@ -248,10 +248,11 @@ class KunenaModelInstall extends JModel {
 			if ($success != true) continue;
 			$installdir = "{$dest}/language/{$tag}";
 			// If we are installing Kunena from archive, we need to unzip language file
-			if (!KunenaForum::isSVN() && JFolder::exists(KPATH_ADMIN . '/archive')) {
-				$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
+			$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
+			if (JFolder::exists($path)) {
 				$file = "{$tag}.com_kunena-{$key}".file_get_contents("{$path}/fileformat");
 
+				// SVN never has these files, installation package may have
 				if (file_exists("$path/$file")) {
 					$success = $this->extract ( $path, $file, $installdir, true );
 				}
@@ -430,7 +431,7 @@ class KunenaModelInstall extends JModel {
 			array('name'=>'com_kunena-media', 'dest'=>KPATH_MEDIA)
 		);
 		static $ignore = array(
-			KPATH_ADMIN => array('index.html', 'kunena.xml', 'admin.kunena.php', 'api.php', 'archive', 'install', 'language'),
+			KPATH_ADMIN => array('index.html', 'kunena.xml', 'kunena.j16.xml', 'admin.kunena.php', 'api.php', 'archive', 'install', 'language'),
 			KPATH_SITE => array('index.html', 'kunena.php', 'router.php', 'COPYRIGHT.php', 'template', 'language')
 		);
 		$task = $this->getTask();
@@ -637,25 +638,27 @@ class KunenaModelInstall extends JModel {
 	function migrateConfig() {
 		$config = KunenaFactory::getConfig();
 		$version = $this->getVersion();
+		// Migrate configuration from FB < 1.0.5
 		if (version_compare ( $version->version, '1.0.4', "<=" ) ) {
 			$file = JPATH_ADMINISTRATOR . '/components/com_fireboard/fireboard_config.php';
 			if (is_file($file)) {
 				require_once $file;
 				$fbConfig = (array)$fbConfig;
-				$keys = $config->GetClassVars ();
-				foreach ($fbConfig as $key=>$value) {
-					if (isset ( $keys[$key] )) {
-						if (is_string ( $config->$key )) {
-							$config->$key = $value;
-						} else {
-							$config->$key = (int)$value;
-						}
-					}
-				}
+				$config->bind($fbConfig);
+				$config->id = 1;
 			}
 		}
-		$config->remove ();
-		$config->create ();
+		// Migrate configuration from FB 1.0.5 and Kunena 1.0-1.7
+		if (!$config->id && !empty($version->prefix)) {
+			$tables = $this->listTables ( $version->prefix );
+			$cfgtable = "{$version->prefix}config";
+			if (isset($tables[$cfgtable])) {
+				$this->db->setQuery ( "SELECT * FROM #__{$cfgtable}" );
+				$config->bind((array) $this->db->loadAssoc ());
+				$config->id = 1;
+			}
+		}
+		$config->save ();
 	}
 
 	public function upgradeDatabase() {

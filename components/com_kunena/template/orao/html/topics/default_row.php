@@ -38,17 +38,17 @@ defined ( '_JEXEC' ) or die ();
 							</span>
 							<?php if ($this->topic->hold == 1) : ?>
 								<span class="unaprovedicons">
-									<?php echo $this->getImage ( 'topics-unaproved.png', JText::_('Unapproved') ); ?>
+									<?php echo $this->getImage ( 'topics-unaproved.png', JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED') ); ?>
 								</span>
 							<?php endif; ?>
 							<?php if ($this->topic->hold == 2) : ?>
 								<span class="deletedicons">
-									<?php echo $this->getImage ( 'topics-deleted.png', JText::_('Deleted') ); ?>
+									<?php echo $this->getImage ( 'topics-deleted.png', JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED') ); ?>
 								</span>
 							<?php endif; ?>
 							<?php if ($this->topic->ordering != 0) : ?>
 								<span class="stickyicons">
-									<?php  echo $this->getImage ( 'icons/sticky.png', JText::_('Sticky') ); ?>
+									<?php  echo $this->getImage ( 'icons/sticky.png', JText::_('COM_KUNENA_BUTTON_STICKY_TOPIC') ); ?>
 								</span>
 							<?php endif; ?>
 
@@ -59,13 +59,13 @@ defined ( '_JEXEC' ) or die ();
 							<?php endif;*/?>
 
 							<?php if ($this->firstPostAuthor == $this->me) : ?>
-								<span class="mytopicicons tk-tips" title="<?php echo JText::_("You have started this topic")?>">
-									<?php  echo $this->getImage ( 'icons/mytopic.png', JText::_('My Topic') ); ?>
+								<span class="mytopicicons tk-tips" title="<?php echo JText::_('COM_KUNENA_YOU_STARTED_THIS_TOPIC')?>">
+									<?php  echo $this->getImage ( 'icons/mytopic.png', JText::_('COM_KUNENA_MY_TOPIC') ); ?>
 								</span>
 							<?php endif; ?>
 							<?php if ( $this->topic->poll_id ) : ?>
-								<span class="mytopicicons" title="<?php echo JText::_('This topic is a Poll')?>">
-									<?php echo $this->getImage ( 'icons/poll_16.png', JText::_('Poll') ); ?>
+								<span class="mytopicicons" title="<?php echo JText::_('COM_KUNENA_TOPIC_IS_POLL')?>">
+									<?php echo $this->getImage ( 'icons/poll_16.png', JText::_('COM_KUNENA_EDITOR_POLL') ); ?>
 								</span>
 							<?php endif ?>
 						</span>

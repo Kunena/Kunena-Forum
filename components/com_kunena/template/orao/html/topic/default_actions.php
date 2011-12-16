@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 							<div class="tk-tools">
 								<div class="tk-tools-options">
 									<a class="kicon-button kbuttonuser btn-left">
-										<span class="user-tools"><span style="">User Actions</span></span>
+										<span class="user-tools"><span style=""><?php echo JText::_('COM_KUNENA_USER_ACTIONS') ?></span></span>
 									</a>
 									<div style="padding-top:3px;">
 									<ul class="tk-tools-container tk-tools-container-user">
@@ -69,7 +69,7 @@ defined ( '_JEXEC' ) or die ();
 							<div class="tk-tools">
 								<div class="tk-tools-options">
 									<a class="kicon-button kbuttonmod btn-left">
-										<span class="moderator-tools"><span>Moderator Tools</span></span>
+										<span class="moderator-tools"><span><?php echo JText::_('COM_KUNENA_MODERATOR_TOOLS') ?></span></span>
 									</a>
 									<div style="padding-top:3px;">
 									<ul class="tk-tools-container tk-tools-container-moderator">

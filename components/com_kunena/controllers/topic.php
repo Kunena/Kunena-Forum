@@ -202,7 +202,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 	}
 
-	protected function edit() {
+	public function edit() {
 		$this->id = JRequest::getInt('mesid', 0);
 		$app = JFactory::getApplication ();
 

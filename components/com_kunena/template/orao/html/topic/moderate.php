@@ -19,13 +19,13 @@ JHTML::_('behavior.tooltip');
 			<ul class="topiclist">
 				<li class="header">
 					<dl class="icon">
-						<dt><?php echo JText::_('Moderate Topic') ?>: <?php echo $this->escape( $this->topic->subject ); ?></dt>
+						<dt><?php echo JText::_('COM_KUNENA_BUTTON_MODERATE_TOPIC') ?>: <?php echo $this->escape( $this->topic->subject ); ?></dt>
 						<dd>&nbsp;</dd>
 					</dl>
 				</li>
 			</ul>
 			<div class="tksection-desc">
-				<?php echo JText::_ ( 'Category:' ) ?> <?php echo JText::_ ( 'Welcome Mat' ) ?>
+				<?php echo JText::_ ( 'COM_KUNENA_CATEGORY' ) ?> <?php echo $this->escape( $this->category->name ) ?>
 			</div>
 
 			<div class="kdetailsbox kmod-detailsbox" id="kmod-detailsbox" >
@@ -41,13 +41,11 @@ JHTML::_('behavior.tooltip');
 				<li class="header">
 					<dl class="icon">
 						<dt>
-						<?php // FIXME : Missing translations ?>
-						<span class="tk-preview-msgtitle" title="<?php echo JText::_('Date and Time of Post'); ?>">
+						<span class="tk-preview-msgtitle" title="<?php echo JText::_('COM_KUNENA_MESSAGE_DATETIME'); ?>">
 							<?php echo KunenaDate::getInstance($this->message->time)->toSpan('config_post_dateformat','config_post_dateformat_hover') ?>
 						</span>
 						</dt>
 						<dd class="topics" style="float:right;">
-						<?php // FIXME : Missing translations ?>
 							<span style="white-space:nowrap;" class="tk-view-msgid"><a id="<?php echo intval($this->message->id) ?>"></a><?php echo $this->getNumLink($this->message->id,$this->replycount--) ?></span>
 						</dd>
 					</dl>
@@ -126,15 +124,15 @@ JHTML::_('behavior.tooltip');
 							</div>
 
 							<div class="clr"></div>
-							<label for="kmod_shadow1" class="hasTip" title="Leave shadow topic pointing to new location :: "><input id="kmod_shadow1" type="checkbox" value="1" name="shadow[1]">Leave shadow topic pointing to new location</label>
+							<label for="kmod_shadow1" class="hasTip" title="<?php echo JText::_ ( 'COM_KUNENA_MODERATION_TOPIC_SHADOW') ?> :: "><input id="kmod_shadow1" type="checkbox" value="1" name="shadow[1]"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_TOPIC_SHADOW') ?></label>
 						</div>
 					</li>
 
 				</ul>
 
 				<div class="kpost-buttons">
-					<button title="Click here to save" type="submit" class="tk-submit-button"> Submit </button>
-					<button onclick="javascript:window.history.back();" title="Click here to cancel" type="button" class="tk-cancel-button"> Cancel </button>
+					<button title="Click here to save" type="submit" class="tk-submit-button"> <?php echo JText::_ ( 'COM_KUNENA_SUBMIT') ?> </button>
+					<button onclick="javascript:window.history.back();" title="<?php echo JText::_ ( 'COM_KUNENA_CANCEL_DESC') ?>" type="button" class="tk-cancel-button"> <?php echo JText::_ ( 'COM_KUNENA_CANCEL') ?> </button>
 				</div>
 
 				<div class="clr"></div>

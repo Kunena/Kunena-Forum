@@ -148,7 +148,6 @@ body {line-height:1.5;}
 	text-align:left;
 }
 #kunena label {
-    display: block;
     font-weight: bold;
     margin: 4px 8px;
     width: 95% !important;

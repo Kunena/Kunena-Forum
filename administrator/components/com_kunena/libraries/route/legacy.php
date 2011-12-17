@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_SITE . '/router.php';
 
-class KunenaRouteLegacy {
+abstract class KunenaRouteLegacy {
 	// List of legacy views from previous releases
 	static $functions = array (
 		'listcat'=>1,
@@ -45,7 +45,7 @@ class KunenaRouteLegacy {
 		'help'=>1,
 		'review'=>1,
 		'rules'=>1,
-		'search'=>1,
+//		'search'=>1,
 		'advsearch'=>1,
 		'markallcatsread'=>1,
 		'markthisread'=>1,
@@ -61,7 +61,12 @@ class KunenaRouteLegacy {
 		'fb_pdf'=>1,
 	);
 
-	function convert($uri) {
+	public static function isLegacy($view) {
+		if (!$view || $view=='legacy') return true;
+		return isset(self::$functions[$view]);
+	}
+
+	public static function convert($uri) {
 		// We need to convert URIs only in site
 		if (!JFactory::getApplication()->isSite()) return;
 

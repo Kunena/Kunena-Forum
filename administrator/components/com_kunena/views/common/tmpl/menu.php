@@ -32,9 +32,7 @@ JHtml::_('behavior.formvalidation');
 	<a class="kadmin-mainmenu icon-ranks-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=ranks') ?>"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-files-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=attachments') ?>"><?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW'); ?></a>
 	<!-- a class="kadmin-mainmenu icon-topicicons-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topicicons') ?>"><?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER'); ?></a -->
-	<a class="kadmin-mainmenu icon-prune-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=prune') ?>"><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></a>
-	<a class="kadmin-mainmenu icon-syncusers-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=syncusers') ?>"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a>
-	<a class="kadmin-mainmenu icon-recount-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=recount') ?>"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>
+	<a class="kadmin-mainmenu icon-prune-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=tools') ?>"><?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS'); ?></a>
 	<a class="kadmin-mainmenu icon-trash-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=trash') ?>"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a>
 	<a class="kadmin-mainmenu icon-stats-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=stats') ?>"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></a>
 	<a class="kadmin-mainmenu icon-systemreport-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=report') ?>"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>

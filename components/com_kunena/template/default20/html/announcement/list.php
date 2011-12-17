@@ -49,9 +49,9 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 						?>
 						<tr class="krow<?php echo $k;?>">
 							<td class="kcol-first"><?php echo JHTML::_('grid.id', intval($ann->id), intval($ann->id)) ?></td>
-							<td class="kcol-first kcol-annid"><?php echo intval($ann->id); ?></td>
+							<td class="kcol-mid kcol-annid"><?php echo intval($ann->id); ?></td>
 							<td class="kcol-mid kcol-anndate"><?php echo KunenaDate::getInstance($ann->created)->toKunena('date_today'); ?></td>
-							<td class="kcol-mid"><?php echo $ann->created_by_alias; ?></td>
+							<td class="kcol-mid"><?php echo CKunenaLink::GetProfileLink($ann->created_by, $ann->created_by_alias, $ann->created_by_alias); ?></td>
 							<td class="kcol-mid kcol-anntitle">
 								<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', intval($ann->id), KunenaHtmlParser::parseText ($ann->title), KunenaHtmlParser::parseText ($ann->title), 'follow'); ?></div>
 							</td>

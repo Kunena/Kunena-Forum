@@ -55,7 +55,7 @@ defined ( '_JEXEC' ) or die ();
 									<!-- td class="ktopic-subs">22 <span>Subscribers</span></td -->
 									<td class="ktopic-lastpost">
 										<ul>
-											<li class="ktopic-smavatar"><?php echo $this->lastPostAuthor->getLink($this->lastPostAuthor->getAvatarImage('klist-avatar', 'list')) ?></li>
+											<?php if ( $this->config->avataroncat ) : ?><li class="ktopic-smavatar"><?php echo $this->lastPostAuthor->getLink($this->lastPostAuthor->getAvatarImage('klist-avatar', 'list')) ?></li><?php endif ?>
 											<li class="ktopic-smdetails klastpost"><?php echo $this->getTopicLink ( $this->topic, 'last', 'Last post' ) ?> <?php echo JText::_('COM_KUNENA_BY').' '.$this->lastPostAuthor->getLink($this->lastUserName) ?></li>
 											<li class="ktopic-smdetails kdate"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->lastPostTime}]") ?></li>
 										</ul>

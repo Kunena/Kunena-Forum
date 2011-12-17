@@ -18,22 +18,16 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
-				<input type="hidden" name="view" value="syncusers" />
-				<input type="hidden" name="task" value="sync" />
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=tools') ?>" method="post" name="adminForm">
+				<input type="hidden" name="task" value="syncusers" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_SYNC_USERS_OPTIONS'); ?></legend>
 					<table class="kadmin-adminform">
 						<tr>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_CACHE'); ?></td>
-							<td><input type="checkbox" name="usercache" value="1" checked="checked" /></td>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_CACHE_DESC'); ?></td>
-						</tr>
-						<tr>
 							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_ADD'); ?></td>
-							<td><input type="checkbox" name="useradd" value="1" /></td>
+							<td><input type="checkbox" checked="checked" name="useradd" value="1" /></td>
 							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_ADD_DESC'); ?></td>
 						</tr>
 						<tr>

@@ -288,6 +288,7 @@ class KunenaForumTopicHelper {
 	static function recount($ids=false, $start=0, $end=0) {
 		$db = JFactory::getDBO ();
 
+		if ($start < 1) $start = 1;
 		if (is_array($ids)) {
 			$threads = 'm.thread IN ('.implode(',', $ids).')';
 		} elseif ((int)$ids) {

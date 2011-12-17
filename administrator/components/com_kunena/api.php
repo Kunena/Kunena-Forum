@@ -13,7 +13,7 @@ if (defined ( 'KUNENA_LOADED' ))
 	return;
 
 // Manually enable code profiling by setting value to 1
-define ( 'KUNENA_PROFILER', 0 );
+define ( 'KUNENA_PROFILER', 1 );
 
 // Component name amd database prefix
 define ( 'KUNENA_COMPONENT_NAME', basename ( dirname ( __FILE__ ) ) );

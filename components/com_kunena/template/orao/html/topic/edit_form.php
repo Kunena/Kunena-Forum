@@ -190,7 +190,7 @@ JHTML::_('behavior.tooltip');
 						<span class="kattachment-id-container"></span>
 						<input class="kfile-input-textbox" type="text" readonly="readonly" />
 						<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?> :: <?php echo $this->escape($this->config->imagetypes); ?>,<?php echo $this->escape($this->config->filetypes) ?>" >
-							<input type="button" value="Add File" class="kfile-input-button tk-add-button" />
+							<input type="button" value="<?php echo JText::_('COM_KUNENA_EDITOR_ADD_FILE')?>" class="kfile-input-button tk-add-button" />
 							<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" />
 						</div>
 						<a href="#" class="kattachment-remove tk-remove-button" style="display: none"><?php echo JText::_('COM_KUNENA_GEN_REMOVE_FILE') ?></a>

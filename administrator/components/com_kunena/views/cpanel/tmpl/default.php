@@ -52,10 +52,10 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topicicons') ?>" title="<?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/topicicons.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER'); ?> </span></a> </div>
 					</div -->
 					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=tools') ?>" title="<?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/prune.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS'); ?> </span></a> </div>
+						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=trash') ?>" title="<?php echo JText::_('COM_KUNENA_TRASH_VIEW');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/trash.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=trash') ?>" title="<?php echo JText::_('COM_KUNENA_TRASH_VIEW');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/trash.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?> </span></a> </div>
+						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=tools') ?>" title="<?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/prune.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
 						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=stats') ?>" title="<?php echo JText::_('COM_KUNENA_STATS_GEN_STATS');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/stats.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?> </span></a> </div>

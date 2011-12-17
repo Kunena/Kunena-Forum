@@ -187,7 +187,7 @@ function KunenaParseRoute($segments) {
 			$alias = strtr ( $segment, ':', '-' );
 			$variables = KunenaRoute::resolveAlias($alias);
 			if ($variables) {
-				$vars = $vars + $variables;
+				$vars = $variables + $vars;
 				continue;
 			}
 		}

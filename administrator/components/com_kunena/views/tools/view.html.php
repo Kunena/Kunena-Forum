@@ -43,6 +43,10 @@ class KunenaAdminViewTools extends KunenaView {
 	}
 
 	function displayMenu() {
+		$this->legacy = KunenaMenuHelper::getLegacy();
+		$this->invalid = KunenaMenuHelper::getInvalid();
+		$this->conflicts = KunenaMenuHelper::getConflicts();
+
 		$this->setToolBarMenu();
 		$this->display ();
 	}
@@ -85,7 +89,7 @@ class KunenaAdminViewTools extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::trash('trashmenu', 'COM_KUNENA_A_TRASH_MENU', false);
 		JToolBarHelper::spacer();
-		JToolBarHelper::cancel();
+		JToolBarHelper::back();
 		JToolBarHelper::spacer();
 	}
 }

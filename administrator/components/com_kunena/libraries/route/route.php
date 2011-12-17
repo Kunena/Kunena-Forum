@@ -154,7 +154,7 @@ abstract class KunenaRoute {
 	public static function cacheLoad() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$user = KunenaUserHelper::getMyself();
-		$cache = $this->getCache();
+		$cache = self::getCache();
 		// TODO: can use viewlevels instead of userid
 		$data = $cache->get($user->userid, 'com_kunena.route');
 		if ($data !== false) {
@@ -168,7 +168,7 @@ abstract class KunenaRoute {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$user = KunenaUserHelper::getMyself();
 		$data = array(self::$subtree, self::$uris);
-		$cache = $this->getCache();
+		$cache = self::getCache();
 		// TODO: can use viewlevels instead of userid
 		$cache->store(serialize($data), $user->userid, 'com_kunena.route');
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -385,7 +385,7 @@ abstract class KunenaRoute {
 		if (self::$search === false) {
 			$user = KunenaUserHelper::getMyself();
 			$language = JFactory::getDocument()->getLanguage();
-			$cache = $this->getCache();
+			$cache = self::getCache();
 
 			self::$search = unserialize($cache->get('search', "com_kunena.route.{$language}.{$user->userid}"));
 			if (self::$search === false) {

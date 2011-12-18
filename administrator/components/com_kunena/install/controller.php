@@ -168,7 +168,7 @@ class KunenaControllerInstall extends JController {
 		$this->model->deleteMenu();
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
-		if (!KunenaForum::isSvn()) {
+		if (!KunenaForum::isDev()) {
 			jimport('joomla.filesystem.folder');
 			JFolder::delete(KPATH_MEDIA);
 			jimport('joomla.installer.installer');

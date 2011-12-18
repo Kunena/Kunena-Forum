@@ -58,6 +58,10 @@ class Com_KunenaInstallerScript {
 	function preflight($type, $parent) {
 		// TODO: Before install: we want so store files so that user can cancel action
 		if (version_compare(JVERSION, '1.6', '>')) {
+			if (class_exists('Kunena') && Kunena::isSvn() || class_exists('KunenaForum') && KunenaForum::isDev()) {
+				JFactory::getApplication()->enqueueMessage('Oops! You should not install Kunena over your Git reporitory!', 'notice');
+				return false;
+			}
 			$installer = $parent->getParent();
 			$adminpath = $installer->extension_administrator;
 			if ( JFolder::exists($adminpath)) {

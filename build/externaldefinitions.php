@@ -13,6 +13,8 @@ die();
 
 // dummy definitions of external classes and functions to avoid zend studio warnings and errors
 
+class Kunena {}
+
 // Community Builder dummies
 function cbimport($var) {}
 function getCBprofileItemid() {}

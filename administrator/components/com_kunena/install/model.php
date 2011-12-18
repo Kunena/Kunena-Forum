@@ -417,7 +417,7 @@ class KunenaModelInstall extends JModel {
 
 	public function stepExtract() {
 		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
-		if (KunenaForum::isSVN() || !is_file("{$path}/fileformat")) {
+		if (KunenaForum::isDev() || !is_file("{$path}/fileformat")) {
 			// SVN install
 			$dir = JPATH_ADMINISTRATOR.'/components/com_kunena/media/kunena';
 			if (is_dir($dir)) {
@@ -449,7 +449,7 @@ class KunenaModelInstall extends JModel {
 					$this->deleteFolders($dest, $ignore[$dest]);
 				}
 				// Copy new files into folder
-				$this->extract ( $path, $file['name'] . $ext, $dest, KunenaForum::isSVN() );
+				$this->extract ( $path, $file['name'] . $ext, $dest, KunenaForum::isDev() );
 			}
 			$this->setTask($task+1);
 		} else {
@@ -544,7 +544,7 @@ class KunenaModelInstall extends JModel {
 		}
 
 		// Cleanup directory structure
-		if (!KunenaForum::isSVN()) {
+		if (!KunenaForum::isDev()) {
 			if ( JFolder::exists(KPATH_ADMIN . '/language') ) JFolder::delete(KPATH_ADMIN . '/language');
 			if ( JFolder::exists(KPATH_SITE . '/language') ) JFolder::delete(KPATH_SITE . '/language');
 		}

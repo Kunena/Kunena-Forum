@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+jimport ('joomla.database.table');
+
 KunenaMenuHelper::initialize();
 
 abstract class KunenaMenuHelper {
@@ -105,6 +107,23 @@ abstract class KunenaMenuHelper {
 			$items[$itemid] = self::$items[$itemid];
 		}
 		return $items;
+	}
+
+	public static function fixLegacy() {
+		$items = array();
+		foreach (self::$legacy as $itemid) {
+			$item = self::$items[$itemid];
+			KunenaRouteLegacy::convertMenuItem($item);
+			$table = JTable::getInstance ( 'menu' );
+			$table->load($item->id);
+			$data = array (
+				'link' => $item->link,
+				'params' => $item->params,
+			);
+			if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
+				return $table->getError ();
+			}
+		}
 	}
 
 	public static function getAliases() {

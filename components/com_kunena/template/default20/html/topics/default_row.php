@@ -35,19 +35,23 @@ defined ( '_JEXEC' ) or die ();
 													<?php echo $this->topic->getPagination(0, $this->config->messages_per_page, 3)->getPagesLinks() ?>
 												</div>
 											</li>
-											<!-- li>
+											<li>
+											<?php if ($this->config->keywords) : ?>
 												<ul class="ktopic-tags">
-													<li class="ktopic-tags-title">Topic Tags:</li>
-													<li><a href="#">support</a></li>
-													<li><a href="#">templates</a></li>
-													<li><a href="#">css</a></li>
+													<?php if (!empty($this->keywords)) : ?>
+				<li class="ktopic-tag-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->keywords) ?></li>
+				<?php else: ?>
+				<li class="ktopic-tag-title"><?php echo JText::_('COM_KUNENA_TOPIC_NO_TAGS') ?></li>
+				<?php endif ?>
 												</ul>
-											</li -->
+                                                <?php endif ?>
+											</li>
 										</ul>
 									</td>
 									<td class="ktopic-status-icons">
 										<?php if ($this->topic->attachments) echo $this->getIcon ( 'ktopic-attach', JText::_('COM_KUNENA_TOPIC_HAS_ATTACHMENTS') ) ?>
 										<?php if ($this->topic->ordering) echo $this->getIcon ( 'ktopic-sticky', JText::_('COM_KUNENA_TOPIC_IS_STICKY') ) ?>
+                                        <?php if ($this->topic->poll_id) echo $this->getIcon ( 'ktopic-poll', JText::_('COM_KUNENA_TOPIC_HAS_POLL') ) ?>
 									</td>
 									<!-- <td class="ktopic-status-icons"><span class="ktopic-attach">Attachment</span><span class="ktopic-sticky">Sticky</span></td> -->
 									<td class="ktopic-replies"><?php echo $this->formatLargeNumber ( $this->topic->getReplies() ); ?><span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></td>

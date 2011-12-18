@@ -64,6 +64,7 @@
 #kunena span.knew,
 #kunena span.knonew,
 #kunena span.ktopic-attach,
+#kunena span.ktopic-poll,
 #kunena span.kposticon-default,
 #kunena span.ktopicicon-default,
 #kunena span.ktopicicon-question {
@@ -77,6 +78,9 @@
 }
 #kunena span.knonew {
 	background: url("../images/icon-category.png") no-repeat;
+}
+#kunena span.ktopic-poll {
+	background: url("../images/poll_32.png") no-repeat;
 }
 #kunena span.ktopic-attach {
 	background: url("../images/attachment.png") no-repeat;

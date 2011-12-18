@@ -15,6 +15,7 @@
 		<field primary_key="yes" name="id" type="int(3)" null="0"
 			extra="auto_increment" />
 		<field name="title" type="tinytext" null="0" />
+		<field name="created_by" type="int(10)" null="0" default="0" />
 		<field name="sdescription" type="text" null="0" />
 		<field name="description" type="text" null="0" />
 		<field name="created" type="datetime" null="0" default="0000-00-00 00:00:00" />

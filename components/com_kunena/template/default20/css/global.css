@@ -10,65 +10,82 @@
 **/
 
 #kunena,
-#kunena > div,
-#kunena > div p {
+#kunena > div, #kunena > form
+#kunena > div p, #kunena > form p {
 	padding: 0;
-	margin: 0;
+	margin: 5px;
 	line-height: 1.333em;
 }
-#kunena > div h1,
-#kunena > div h2,
-#kunena > div h3,
-#kunena > div h4,
-#kunena > div h5,
-#kunena > div h6 {
+#kunena > div h1, #kunena > form h1,
+#kunena > div h2, #kunena > form h2,
+#kunena > div h3, #kunena > form h3,
+#kunena > div h4, #kunena > form h4,
+#kunena > div h5, #kunena > form h5,
+#kunena > div h6, #kunena > form h6 {
 	margin: 0;
 	width: auto;
 	text-transform: none;
 }
-#kunena > div h1 {
+#kunena > div h1, #kunena > form h1 {
 	line-height:22px;
 }
-#kunena > div h2 {
+#kunena > div h2, #kunena > form h2 {
 	line-height:20px;
 }
-#kunena > div h3 {
+#kunena > div h3, #kunena > form h3 {
 	line-height:18px;
 }
-#kunena > div h4 {
+#kunena > div h4, #kunena > form h4 {
 	line-height:14px;
 }
 #kunena > div h5,
-#kunena > div h6 {
+#kunena > div h6, 
+#kunena > form h5,
+#kunena > form h6 {
 	line-height:13px;
 }
 #kunena > div h1 img,
+#kunena > form h1 img,
 #kunena > div h2 img,
+#kunena > form h2 img,
 #kunena > div h3 img,
+#kunena > form h3 img,
 #kunena > div h4 img,
+#kunena > form h4 img,
 #kunena > div h5 img,
-#kunena > div h6 img {
+#kunena > form h5 img,
+#kunena > div h6 img,
+#kunena > form h6 img {
 	margin:0;
 }
-#kunena > div table {
+#kunena > div table,
+#kunena > form table {
 	border-collapse:separate;
 	border-spacing:0;
 }
 #kunena > div caption,
+#kunena > form caption,
 #kunena > div th,
-#kunena > div td {
+#kunena > form th,
+#kunena > div td,
+#kunena > form td {
 	border: 0 solid;
 	text-align:left;
 	font-weight:normal;
 	float:none !important;
 }
 #kunena > div table,
+#kunena > form table,
 #kunena > div th,
-#kunena > div td {
+#kunena > form th,
+#kunena > div td ,
+#kunena > form td {
 	vertical-align:middle;
 }
 #kunena > div ul,
-#kunena > div ol {
+#kunena > form ul,
+#kunena > div ol,
+#kunena > form ol {
 	margin: 0;
 	padding: 0;
 }

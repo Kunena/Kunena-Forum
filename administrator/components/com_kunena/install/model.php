@@ -255,6 +255,8 @@ class KunenaModelInstall extends JModel {
 				// SVN never has these files, installation package may have
 				if (file_exists("$path/$file")) {
 					$success = $this->extract ( $path, $file, $installdir, true );
+				} else {
+					$success = false;
 				}
 			}
 			// Install language from dest/language/xx-XX

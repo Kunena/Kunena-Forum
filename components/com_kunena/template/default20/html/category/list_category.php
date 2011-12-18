@@ -58,7 +58,7 @@ defined ( '_JEXEC' ) or die ();
 									<td class="kcategory-lastpost">
 										<ul>
 										<?php if ($this->lastPost) : ?>
-											<li class="kcategory-smavatar"><?php echo $this->lastUser->getLink($this->lastUser->getAvatarImage('klist-avatar', 'list')) ?></li>
+											<?php if ( $this->config->avataroncat ) : ?><li class="kcategory-smavatar"><?php echo $this->lastUser->getLink($this->lastUser->getAvatarImage('klist-avatar', 'list')) ?></li><?php endif ?>
 											<li class="kcategory-smdetails klastpost"><?php echo $this->getLastPostLink($this->category) ?></li>
 											<li class="kcategory-smdetails kauthor"><?php echo JText::_('COM_KUNENA_BY').' '.$this->lastUser->getLink($this->lastUserName) ?></li>
 											<li class="kcategory-smdetails kdate"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->lastPostTime}]") ?></li>

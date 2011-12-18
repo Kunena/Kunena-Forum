@@ -60,4 +60,5 @@ class KunenaAdminModelTools extends KunenaAdminModelCpanel {
 		$optionsticky [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_A_YES') );
 
 		return JHTML::_('select.genericlist', $optionsticky, 'keepsticky', 'class="inputbox" size="1"', 'value', 'text', 1);
-	}}
+	}
+}

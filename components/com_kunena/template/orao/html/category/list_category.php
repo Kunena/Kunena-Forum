@@ -73,9 +73,11 @@ defined ( '_JEXEC' ) or die ();
 						<?php endif;?>
 						<?php if ($this->lastPost) : ?>
 						<dd class="lastpost tk-lastpost">
+							<?php if ( $this->config->avataroncat ) : ?>
 							<span class="tklatest-avatar">
 								<?php echo $this->lastUser->getLink($this->lastUser->getAvatarImage('klist-avatar', 'list')) ?>
 							</span>
+							<?php endif ?>
 							<span>
 								<b><?php echo $this->getLastPostLink($this->category) ?></b>
 							</span>

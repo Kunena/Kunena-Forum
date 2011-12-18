@@ -77,6 +77,7 @@ $document->addScriptDeclaration('// <![CDATA[
 						</label>
 					</div>
 					<input name="submit" class="tk-submit-button" type="submit" value="<?php echo JText::_('COM_KUNENA_ANN_SAVE'); ?>"/>
+					<input onclick="javascript:window.history.back();" name="cancel" class="tk-submit-button" type="button" value="<?php echo JText::_('COM_KUNENA_ANN_CANCEL'); ?>"/>
 				</form>
 			</div>
 		<span class="corners-bottom"><span></span></span>

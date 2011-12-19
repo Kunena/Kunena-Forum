@@ -9,12 +9,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-// Minimum version requirements
+// Minimum version requirements for Joomla 1.5
 DEFINE('KUNENA_MIN_PHP', '5.2.4');
 DEFINE('KUNENA_MIN_MYSQL', '5.0.4');
-DEFINE ( 'KUNENA_MIN_JOOMLA15', '1.5.25' );
-DEFINE ( 'KUNENA_MIN_JOOMLA16', '1.7.3' );
-DEFINE ( 'KUNENA_MIN_JOOMLA17', '1.7.3' );
+DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.25' );
 
 jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.folder' );
@@ -96,6 +94,39 @@ class KunenaModelInstall extends JModel {
 	 * @since 1.6
 	 */
 	public function __destruct() {
+	}
+
+	/**
+	 * Initialise Kunena, run from Joomla installer.
+	 */
+	public function install() {
+		$lang = JFactory::getLanguage();
+		$tag = $lang->getTag();
+
+		// Install English and default language
+		$this->installLanguage('en-GB');
+		if ($tag != 'en-GB') $this->installLanguage($tag);
+
+		$this->setStep(0);
+	}
+
+	/**
+	 * Uninstall Kunena, run from Joomla installer.
+	 */
+	public function uninstall() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
+
+		$this->uninstallPlugin('kunena', 'alphauserpoints');
+		$this->uninstallPlugin('kunena', 'community');
+		$this->uninstallPlugin('kunena', 'comprofiler');
+		$this->uninstallPlugin('kunena', 'gravatar');
+		$this->uninstallPlugin('kunena', 'joomla');
+		$this->uninstallPlugin('kunena', 'kunena');
+		$this->uninstallPlugin('kunena', 'uddeim');
+		$this->uninstallPlugin('system', 'kunena');
+		$this->deleteMenu();
+		return true;
 	}
 
 	/**
@@ -1114,6 +1145,7 @@ class KunenaModelInstall extends JModel {
 		return false;
 	}
 
+	// Needed for Joomla 1.5 only
 	public function getRequirements() {
 		if ($this->_req !== false) {
 			return $this->_req;
@@ -1130,11 +1162,7 @@ class KunenaModelInstall extends JModel {
 			$req->fail ['mysql'] = true;
 		if (version_compare ( $req->php, KUNENA_MIN_PHP, "<" ))
 			$req->fail ['php'] = true;
-		if (version_compare ( $req->joomla, '1.7', ">" ) && version_compare ( $req->joomla, KUNENA_MIN_JOOMLA17, "<" ))
-			$req->fail ['joomla'] = true;
-		elseif (version_compare ( $req->joomla, '1.6', ">" ) && version_compare ( $req->joomla, KUNENA_MIN_JOOMLA16, "<" ))
-			$req->fail ['joomla'] = true;
-		elseif (version_compare ( $req->joomla, KUNENA_MIN_JOOMLA15, "<" ))
+		if (version_compare ( $req->joomla, KUNENA_MIN_JOOMLA, "<" ))
 			$req->fail ['joomla'] = true;
 		if(!class_exists('DOMDocument')){
 			$req->fail ['domdocument'] = true;

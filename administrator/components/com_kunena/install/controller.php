@@ -36,6 +36,7 @@ class KunenaControllerInstall extends JController {
 		$this->steps = $this->model->getSteps ();
 	}
 
+	// Run from administrator installer
 	function prepare() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$start = JRequest::getBool('start', false);

@@ -9,6 +9,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+jimport( 'joomla.filesystem.file' );
+
 // This isn't called because of redirect
 $this->parent->copyManifest();
 
@@ -24,13 +26,17 @@ function com_install() {
 		return false;
 	}
 
-	// Emulate J1.6 installer
-	include_once(dirname(__FILE__).'/install.script.php');
-	Com_KunenaInstallerScript::preflight( 'update', null );
-	Com_KunenaInstallerScript::install ( null );
-	$redirect_url = Com_KunenaInstallerScript::postflight( 'update', null );
+	// Initialise Kunena installer
+	require_once(JPATH_ADMINISTRATOR . '/components/com_kunena/install/model.php');
+	$installer = new KunenaModelInstall();
+	$installer->install();
+
+	// Remove deprecated manifest.xml (K1.5)
+	$manifest = JPATH_ADMINISTRATOR . '/components/com_kunena/manifest.xml';
+	if (JFile::exists($manifest)) JFile::delete($manifest);
 
 	// Redirect to Kunena Installer
+	$redirect_url = JURI::base () . 'index.php?option=com_kunena&view=install';
 	header ( "HTTP/1.1 303 See Other" );
 	header ( "Location: {$redirect_url}" );
 }

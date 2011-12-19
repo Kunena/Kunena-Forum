@@ -13,6 +13,20 @@ jimport( 'joomla.filesystem.folder' );
 jimport( 'joomla.filesystem.file' );
 
 class Com_KunenaInstallerScript {
+	protected $versions = array(
+		'PHP' => array (
+			'5.2' => '5.2.4',
+		),
+		'MySQL' => array (
+			'5.0' => '5.0.4',
+		),
+		'Joomla' => array (
+			'2.5' => '2.5',
+			'1.6' => '1.7.3',
+			'1.5' => '1.6.25',
+		)
+	);
+	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	function install($parent) {
 		$app = JFactory::getApplication();
@@ -58,6 +72,11 @@ class Com_KunenaInstallerScript {
 	function preflight($type, $parent) {
 		// TODO: Before install: we want so store files so that user can cancel action
 		if (version_compare(JVERSION, '1.6', '>')) {
+
+			// Prevent installation if requirements are not met.
+			if (!$this->checkRequirements()) return false;
+
+			// Do not install over Git repository.
 			if (class_exists('Kunena') && Kunena::isSvn() || class_exists('KunenaForum') && KunenaForum::isDev()) {
 				JFactory::getApplication()->enqueueMessage('Oops! You should not install Kunena over your Git reporitory!', 'notice');
 				return false;
@@ -104,5 +123,28 @@ class Com_KunenaInstallerScript {
 		}
 
 		return true;
+	}
+
+	protected function checkRequirements() {
+		$pass = $this->checkVersion('Joomla', JVERSION);
+		$pass &= $this->checkVersion('MySQL', JFactory::getDbo()->getVersion ());
+		$pass &= $this->checkVersion('PHP', phpversion());
+		foreach (!$this->extensions as $name) {
+			if (extension_loaded($name)) {
+				JFactory::getApplication()->enqueueMessage(sprintf('Missing PHP extension: %s.', $name), 'notice');
+				$pass = false;
+			}
+		}
+		return $pass;
+	}
+
+	protected function checkVersion($name, $version) {
+		foreach ($this->versions[$name] as $major=>$minor) {
+			if (version_compare ( $version, $major, "<" )) continue;
+			if (version_compare ( $version, $minor, ">=" )) return true;
+			break;
+		}
+		JFactory::getApplication()->enqueueMessage(sprintf('%s %s required (you have %s %s).', $name, $minor, $name, $version), 'notice');
+		return false;
 	}
 }

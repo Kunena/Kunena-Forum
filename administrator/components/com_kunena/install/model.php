@@ -12,9 +12,9 @@ defined ( '_JEXEC' ) or die ();
 // Minimum version requirements
 DEFINE('KUNENA_MIN_PHP', '5.2.4');
 DEFINE('KUNENA_MIN_MYSQL', '5.0.4');
-DEFINE ( 'KUNENA_MIN_JOOMLA15', '1.5.23' );
-DEFINE ( 'KUNENA_MIN_JOOMLA16', '1.6.4' );
-DEFINE ( 'KUNENA_MIN_JOOMLA17', '1.7.0' );
+DEFINE ( 'KUNENA_MIN_JOOMLA15', '1.5.25' );
+DEFINE ( 'KUNENA_MIN_JOOMLA16', '1.7.3' );
+DEFINE ( 'KUNENA_MIN_JOOMLA17', '1.7.3' );
 
 jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.folder' );

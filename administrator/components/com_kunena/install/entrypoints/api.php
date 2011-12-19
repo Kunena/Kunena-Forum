@@ -84,7 +84,7 @@ function KunenaAutoload($class) {
 class KunenaForum {
 	private function __construct() {}
 
-	public static function isSvn() {
+	public static function isDev() {
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
 			return true;
 		}

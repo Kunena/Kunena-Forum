@@ -73,7 +73,6 @@ class KunenaModelAnnouncement extends KunenaModel {
 		if (!$created) $created = $now->toMysql();
 		$published = JRequest::getInt ( "published", 1 );
 		$showdate = JRequest::getInt ( "showdate", 1 );
-		$author = $me->userid;;
 
 		$id = $this->getState ( 'item.id' );
 		if (!$id) {

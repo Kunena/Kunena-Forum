@@ -790,7 +790,7 @@
 
 /* User details */
 #kunena .kpost-user-details {
-	width: 200px;
+	width: 22%;
 	padding: 10px;
 	text-align:center;
 	float:right;
@@ -808,7 +808,7 @@
 	padding: 20px;
 }
 #kunena .kpost-container {
-	margin-right: 220px;
+	margin-right: 25%;
 }
 #kunena .kpost-body-attach {
 	margin: 15px 0;

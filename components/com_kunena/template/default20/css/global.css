@@ -283,7 +283,7 @@
 #kunena .kmenu ul.menu li a {
 	display: inline;
 	background: none;
-	margin: 0 10px;
+	margin: 0 5px;
 	padding: 0 10px;
 	border-bottom-width: 0 !important;
 }

@@ -468,7 +468,7 @@
 #kunena .ktopics-row table td,
 #kunena .ktags-row table td,
 #kunena .kposts-row table td{
-	padding: 10px;
+	padding: 10px 5px;
 	vertical-align: middle;
 }
 #kunena .kcategories-row table caption,

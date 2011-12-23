@@ -9,8 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-$private = KunenaFactory::getPrivateMessaging();
-$pm = $private->getUnreadCount($this->my->id);
+
+$pm = $private->getUnreadCount($this->me->userid);
 ?>
 <div id="mb_pmread" style="display: none; color:#999;background:#fff;position:relative;">
 	<div class="tk-mb-header-pmread">

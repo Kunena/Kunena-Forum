@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 												<h3><a href="<?php echo $this->categoryURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>"><?php echo $this->escape($this->category->name) ?></a> [K=CATEGORY_NEW_COUNT]</h3>
 												<ul class="kcategory-actions">
 													<?php if (!empty($this->categoryRssURL)) : ?>
-													<li><a href="<?php echo $this->categoryRssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?>"><span class="krss-icon"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?></span></a></li>
+													<li><a href="<?php echo $this->categoryRssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->category->name)) ?>"><span class="krss-icon"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?></span></a></li>
 													<?php endif ?>
 													<?php if ($this->category->locked && !$this->category->isSection()) : ?>
 													<li><?php echo $this->getIcon ( 'klocked-icon', JText::_('COM_KUNENA_CATEGORY_LOCKED_TITLE') ) ?></li>

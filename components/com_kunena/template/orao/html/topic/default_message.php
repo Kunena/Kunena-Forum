@@ -8,6 +8,7 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+// TODO: This php doesn't need to be in template file !!
 	if ($this->message->id == $this->message->thread) {
 		$subject = 'first';
 		} else {

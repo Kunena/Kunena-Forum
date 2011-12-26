@@ -9,9 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-$document = JFactory::getDocument();
-$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 ?>
 		<div id="kannounce">
 			<h2 class="kheader">

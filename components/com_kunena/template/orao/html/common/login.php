@@ -27,14 +27,14 @@ defined ( '_JEXEC' ) or die ();
 						<dd class="first tk-welcome">
 							<ul>
 								<li>
-									<input type="text" name="username" class="inputbox tk-username" alt="username" size="25" value="" />
+									<input type="text" name="username" class="inputbox tk-username" alt="<?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>" size="25" value="" />
 								</li>
 								<li>
-									<input type="password" name="password" class="inputbox tk-password" size="25" alt="password" value="" />
+									<input type="password" name="password" class="inputbox tk-password" size="25" alt="<?php echo JText::_('COM_KUNENA_PASS') ?>" value="" />
 								</li>
 								<li>
 							<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>
-							<input type="checkbox" name="remember" alt="" value="yes" />
+							<input type="checkbox" name="remember" alt="<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME') ?>" value="yes" />
 							<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME');  ?>
 							<?php endif; ?><input type="submit" name="submit" class="tk-login-button" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
 								</li>

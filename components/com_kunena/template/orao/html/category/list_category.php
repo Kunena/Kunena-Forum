@@ -95,11 +95,10 @@ defined ( '_JEXEC' ) or die ();
 						</dd>
 						<?php endif ?>
 				<?php if ($this->subcategories) : ?>
-				<?php // TODO : Move style to CSS file ?>
-				<dd class="tk-subcategories" style="padding: 5px 0 5px 0px;margin:  0px 0 0px 45px;clear:left;border-left:0px;width:90%;">
+				<dd class="tk-subcategories">
 					<div>
 					<?php foreach ( $this->subcategories as $subcategory ) : ?>
-						<span class="tkchild-name tkchild-column-<?php echo $this->params->get('numChildcolumn')?> kcategory-smicon[K=CATEGORY_NEW_SUFFIX:<?php echo $subcategory->id ?>]">
+						<span class="tkchild-name tk-sub-categories tkchild-column-<?php echo $this->params->get('numChildcolumn')?> kcategory-smicon[K=CATEGORY_NEW_SUFFIX:<?php echo $subcategory->id ?>]">
 							<?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?> [K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]
 							<?php echo '<span class="tkchild-count">( ' . $subcategory->getTopics() . " / " . $subcategory->getPosts() . ' )</span>'; ?>
 						</span>

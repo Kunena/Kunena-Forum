@@ -37,7 +37,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		// Set the titlebar text
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::save();
-		JToolBarHelper::cancel();
+		JToolBarHelper::cancel('categories');
 		//JToolBarHelper::back ( JText::_ ( 'Home' ), 'index.php?option=com_kunena' );
 	}
 	protected function setToolBarDefault() {

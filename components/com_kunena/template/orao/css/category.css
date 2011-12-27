@@ -117,3 +117,11 @@
 	clear: left;
 	display: block;
 }
+
+#kunena span.tk-sub-categories {
+  padding: 5px 0 5px 0px;
+  margin:  0px 0 0px 45px;
+  clear:left;
+  border-left:0px;
+  width:90%;
+}

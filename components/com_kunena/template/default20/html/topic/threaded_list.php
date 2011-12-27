@@ -16,12 +16,12 @@ defined ( '_JEXEC' ) or die ();
 			<h2 class="kheader"><?php echo JText::_('COM_KUNENA_TOPIC') ?> <a href="#" rel="ktopic-detailsbox"><?php echo $this->escape($this->topic->subject) ?></a></h2>
 			<ul class="ktopic-taglist">
 				<?php if (!empty($this->keywords)) : ?>
-				<li class="ktopic-taglist-title">Topic Tags:</li>
-				<li><a href="#">tag</a></li>
+				<li class="ktopic-taglist-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', count($this->keywords)) ?></li>
+				<!-- <li><a href="#">tag</a></li>-->
 				<?php else: ?>
-				<li class="ktopic-taglist-title">No Tags</li>
+				<li class="ktopic-taglist-title"><?php echo JText::_('COM_KUNENA_TOPIC_NO_TAGS') ?></li>
 				<?php endif ?>
-				<li class="ktopic-taglist-edit"><a href="#">Add/edit tags</a></li>
+				<li class="ktopic-taglist-edit"><a href="#"><?php echo JText::_('COM_KUNENA_TOPIC_TAGS_ADD_EDIT') ?></a></li>
 			</ul>
 			<?php $this->displayTopicActions(0) ?>
 			<div class="kdetailsbox" id="ktopic-detailsbox">

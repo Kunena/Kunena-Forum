@@ -211,6 +211,7 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayMenu($tpl = null) {
+		$this->getPrivateMessageLink();
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
@@ -245,11 +246,7 @@ class KunenaViewCommon extends KunenaView {
 				$this->lastvisitDate = KunenaDate::getInstance($this->me->lastvisitDate);
 
 				// Private messages
-				$private = KunenaFactory::getPrivateMessaging();
-				if ($private) {
-					$count = $private->getUnreadCount($this->me->userid);
-					$this->assign ( 'privateMessagesLink', $private->getInboxLink($count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX')));
-				}
+				$this->getPrivateMessageLink();
 
 				// TODO: Edit profile (need to get link to edit page, even with integration)
 				//$this->assign ( 'editProfileLink', '<a href="' . CKunenaLink::GetAnnouncementURL ( 'show' ).'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>');
@@ -317,5 +314,14 @@ class KunenaViewCommon extends KunenaView {
 
 	function getTeamCreditsLink($name = '') {
 		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=credits", $name, '', '', 'follow');
+	}
+
+	function getPrivateMessageLink() {
+		// Private messages
+		$private = KunenaFactory::getPrivateMessaging();
+		if ($private) {
+			$count = $private->getUnreadCount($this->me->userid);
+			$this->assign ( 'privateMessagesLink', $private->getInboxLink($count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX')));
+		}
 	}
 }

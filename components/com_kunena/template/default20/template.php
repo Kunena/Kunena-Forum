@@ -17,6 +17,11 @@ class KunenaTemplateDefault20 extends KunenaTemplate {
 		// Template requires Mootools 1.2 framework
 		$this->loadMootools();
 
+		if ( KunenaFactory::getConfig()->lazyload == 1 ) {
+			// load lazyload class
+			$this->addScript( 'js/lazyload.js' );
+		}
+
 		// New Kunena JS for default template
 		$this->addScript ( 'js/default.js' );
 

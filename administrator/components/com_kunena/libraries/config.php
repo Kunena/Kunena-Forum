@@ -241,6 +241,7 @@ class KunenaConfig extends JObject {
 	public $hold_guest_posts = 0;
 	public $attachment_limit = 8;
 	public $article_display = 'intro';
+	public $lazyload = 0;
 
 	public function __construct() {
 		parent::__construct ();

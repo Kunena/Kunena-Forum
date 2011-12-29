@@ -408,6 +408,11 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo $this->lists ['article_display']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_ARTICLE_DISPLAY_DESC') ?></td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LAZY_LOAD_IMAGES') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['lazyload']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LAZY_LOAD_IMAGES_DESC') ?></td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>

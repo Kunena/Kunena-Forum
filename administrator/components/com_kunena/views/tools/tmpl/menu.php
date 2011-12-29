@@ -19,9 +19,26 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-recount"><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER'); ?></div>
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=tools') ?>" method="post" name="adminForm">
-				<input type="hidden" name="task" value="" />
-				<?php echo JHTML::_( 'form.token' ); ?>
-			</form>
+			<input type="hidden" name="task" value="" />
+			<?php echo JHTML::_( 'form.token' ); ?>
+			<table class="adminform">
+				<tr>
+					<td colspan="2"><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_ISSUES') ?></td>
+				</tr>
+				<tr>
+					<td width="20%"><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_LEGACY') ?></td>
+					<td><?php echo count($this->legacy) ?></td>
+				</tr>
+				<tr>
+					<td width="20%"><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_CONFLICTS') ?></td>
+					<td><?php echo count($this->conflicts) ?></td>
+				</tr>
+				<tr>
+					<td width="20%"><?php echo JText::_('COM_KUNENA_A_MENU_MANAGER_INVALID') ?></td>
+					<td><?php echo count($this->invalid) ?></td>
+				</tr>
+			</table>
+		</form>
 	</div>
 	<div class="kadmin-footer">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>

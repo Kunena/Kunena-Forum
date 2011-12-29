@@ -277,3 +277,43 @@
 #kunena li.kpollresult-list-end {  
 	display: inline;
 }
+#kunena dl.profilebox dd ul{padding:0 !important}
+#kunena div.kmsgtext-article,
+#kunena div.kmsgtext-quote,
+#kunena div.kmsgtext-hide,
+#kunena div.kmsgtext-confidential{
+	display:block;
+	border:1px dotted #EEE;
+	margin:5px 0;
+	padding:5px;
+	font-style:italic
+}
+#kunena div.kmsgtext-article{
+	background:#fff
+}
+#kunena div.kmsgtext-hide{
+	background:#ffc
+}
+#kunena div.kmsgtext-confidential{
+	background:#FAE0F8
+}
+#kunena div.khide{
+	background:#F2F1EE none no-repeat scroll 5px center;
+	border:1px dotted #F2CAB7;
+	font-size:1.3em
+}
+#kunena .kpost-body-lastedit{
+	font-size:11px;
+	padding:2px 10px;
+	background-color:#f4f4f4;
+	font-style:italic
+}
+#kunena .kpost-body-editreason{
+	font-size:9px
+}
+#kunena .kpost-body-sig{
+	color:#999;
+	border-top:1px dotted #BFC3C6;
+	border-bottom:1px dotted #BFC3C6;
+	font-size:11px
+}

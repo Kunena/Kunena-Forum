@@ -9,6 +9,7 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+// TODO : remove this code from template
 		$q = JRequest::getVar ( 'q', '' ); // Search words
 		$searchuser = JRequest::getVar ( 'searchuser', '' ); // Search user
 		// Backwards compability for old templates

@@ -65,6 +65,7 @@ class KunenaModelAnnouncement extends KunenaModel {
 
 	function edit() {
 		$now = new JDate();
+		$me = KunenaUserHelper::getMyself();
 		$title = JRequest::getString ( "title", "" );
 		$description = JRequest::getVar ( 'description', '', 'string', JREQUEST_ALLOWRAW );
 		$sdescription = JRequest::getVar ( 'sdescription', '', 'string', JREQUEST_ALLOWRAW );
@@ -77,6 +78,7 @@ class KunenaModelAnnouncement extends KunenaModel {
 		if (!$id) {
 			$query = "INSERT INTO #__kunena_announcement VALUES ('',
 				{$this->db->Quote ( $title )},
+				{$this->db->Quote ( $me->userid )},
 				{$this->db->Quote ( $sdescription )},
 				{$this->db->Quote ( $description )},
 				{$this->db->Quote ( $created )},

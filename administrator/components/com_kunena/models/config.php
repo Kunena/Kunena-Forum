@@ -343,6 +343,11 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$lists ['hold_guest_posts'] = JHTML::_('select.genericlist', $yesno, 'cfg_hold_guest_posts', 'class="inputbox" size="1"', 'value', 'text', $config->hold_guest_posts);
 
+		$article_display[] = JHTML::_('select.option', 'full', JText::_('COM_KUNENA_COM_A_FULL_ARTICLE'));
+		$article_display[] = JHTML::_('select.option', 'intro', JText::_('COM_KUNENA_COM_A_INTRO_ARTICLE'));
+		$article_display[] = JHTML::_('select.option', 'link', JText::_('COM_KUNENA_COM_A_ARTICLE_LINK'));
+		$lists ['article_display'] = JHTML::_('select.genericlist', $article_display, 'cfg_article_display', 'class="inputbox" size="1"', 'value', 'text', $config->article_display);
+
 		return $lists;
 	}
 }

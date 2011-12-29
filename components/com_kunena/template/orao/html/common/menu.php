@@ -9,11 +9,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 // TODO : To finish
-$template = KunenaFactory::getTemplate();
-$this->params = $template->params;
-$this->my = JFactory::getUser ();
+$this->params = $this->template->params;
 $private = KunenaFactory::getPrivateMessaging();
-$pm = $private->getUnreadCount($this->my->id);
+$pm = $private->getUnreadCount($this->me->userid);
 ?>
 <?php if (JDocumentHTML::countModules ( 'kunena_menu' )) : ?>
 
@@ -35,29 +33,29 @@ $pm = $private->getUnreadCount($this->my->id);
 						</dd>
 						<?php } else { ?>
 						<dd class="topics" style="width:60%; text-align:left;margin:10px 0 0 10px;padding-left: 5px;">
-							<?php if ($this->my->id == 0) : ?>
+							<?php if ($this->me->userid == 0) : ?>
 								<?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <b><?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST'); ?></b>
 							<?php else : ?>
 								<?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <b><?php echo $this->me->getLink() ?></b>
 							<?php endif;?>
 						</dd>
 						<?php } ?>
-						<?php if ($this->my->id == 0) : ?>
+						<?php if ($this->me->userid == 0) : ?>
 						<dd class="tk-topmenu-links" style="float: right;">
 						<?php //if ($login) : ?>
 						<?php if ($this->params->get('loginLogout') == '1') : ?>
-							<span id="tk-login" class="" title="Members Login:: ">
+							<span id="tk-login" class="" title="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>:: ">
 								<a class="tk-loginlink" style="color:#fff;" href="#mb_login" rel="lightbox[inline 360 180]"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></a>
 							</span>
 						<?php endif ?>
 						<?php //if ($this->register) : ?>
-							<span id="tk-register-rules-title" class="tk-registerlink handcursor" title="Members Registration:: ">
+							<span id="tk-register-rules-title" class="tk-registerlink handcursor" title="<?php echo JText::_('COM_KUNENA_PROFILEBOX_REGISTER'); ?>:: ">
 								<a class="tk-registerlink" style="color:#fff; cursor:pointer;"><?php echo JText::_('COM_KUNENA_PROFILEBOX_REGISTER'); ?></a>
 							</span>
 						<?php //endif ?>
 						<?php //endif;?>
 						<?php if ($this->params->get('searchLink') == '1') : ?>
-							<span id="tk-search" class="tk-searchlink" title="Search in Forum:: ">
+							<span id="tk-search" class="tk-searchlink" title="<?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?>:: ">
 								<a class="tk-searchlink" style="color:#fff;" href="#mb_search" rel="lightbox[contact 250 80]"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></a>
 							</span>
 						<?php endif;?>
@@ -65,17 +63,17 @@ $pm = $private->getUnreadCount($this->my->id);
 						<?php else:?>
 						<dd class="tk-topmenu-links" style="float: right;">
 							<?php if ($this->params->get('loginLogout') == '1') : ?>
-							<span id="tk-logout" class="" title="Members Logout:: ">
+							<span id="tk-logout" class="" title="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>:: ">
 								<a class="tk-logoutlink" style="color:#fff;" href="#mb_logout" rel="lightbox[inline 360 100]"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?></a>
 							</span>
 							<?php endif ?>
 							<?php //if (!empty($this->announcementsLink)) : ?>
-							<span id="tk-ann" class="" title="Announcment:: ">
-								<a class="tk-logoutlink" style="color:#fff;" href="index.php?option=com_kunena&view=announcement&layout=list"><?php echo JText::_('Ann'); ?></a>
+							<span id="tk-ann" class="" title="<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>:: ">
+								<a class="tk-logoutlink" style="color:#fff;" href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=list") ?>"><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?></a>
 							</span>
 							<?php //endif ?>
 							<?php if ($this->params->get('searchLink') == '1') : ?>
-							<span id="tk-search" class="tk-searchlink" title="Search in Forum:: ">
+							<span id="tk-search" class="tk-searchlink" title="<?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?>:: ">
 								<a class="tk-searchlink" style="color:#fff;" href="#mb_search" rel="lightbox[contact 250 80]"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></a>
 							</span>
 							<?php endif; ?>

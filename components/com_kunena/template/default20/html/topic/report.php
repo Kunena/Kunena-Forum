@@ -31,7 +31,8 @@ defined ( '_JEXEC' ) or die ();
 							<div class="kform-field"><textarea id="kreport-msg" name="text" cols="40" rows="10" class="inputbox"></textarea></div>
 						</li>
 						<li class="krow-odd">
-							<div class="kform-field"><input class="kbutton ks" type="submit" name="Submit" value="<?php echo JText::_('COM_KUNENA_REPORT_SEND') ?>"/></div>
+							<div class="kform-field"><input class="kbutton ks" type="submit" name="Submit" value="<?php echo JText::_('COM_KUNENA_REPORT_SEND') ?>"/>
+							<input onclick="javascript:window.history.back();" title="<?php echo JText::_ ( 'COM_KUNENA_CANCEL_DESC') ?>" class="kbutton ks" type="button" name="back" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>"/></div>
 						</li>
 					</ul>
 				</div>

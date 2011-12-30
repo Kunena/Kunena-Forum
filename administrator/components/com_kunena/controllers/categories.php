@@ -117,10 +117,16 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$this->redirectBack();
 	}
 
+	function save2new() {
+		$this->_save();
+		$this->setRedirect(KunenaRoute::_($this->baseurl2."&layout=create", false));
+	}
+
 	function save() {
 		$this->_save();
 		JFactory::getApplication ()->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
+
 	protected function _save() {
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena', JPATH_ADMINISTRATOR);

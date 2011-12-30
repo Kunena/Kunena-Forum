@@ -21,9 +21,15 @@ class KunenaAdminControllerConfig extends KunenaController {
 	public function __construct($config = array()) {
 		parent::__construct($config);
 		$this->baseurl = 'index.php?option=com_kunena&view=config';
+		$this->kunenabaseurl = 'index.php?option=com_kunena';
 	}
 
-	function save() {
+	function apply() {
+		$url = $this->baseurl;
+		$this->save($url);
+	}
+
+	function save($url=null) {
 		$app = JFactory::getApplication ();
 		$config = KunenaFactory::getConfig ();
 		$db = JFactory::getDBO ();
@@ -53,7 +59,8 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$config->save ();
 
 		$app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		if (empty(url)) $app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		else $app->redirect ( $url );
 	}
 
 	function setdefault() {

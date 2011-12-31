@@ -123,13 +123,13 @@ class KunenaController extends JController {
 		$view = $this->getView ( $vName, $vFormat );
 		if ($view) {
 			if ($app->isSite() && $vFormat=='html') {
-				$view->template = KunenaFactory::getTemplate();
 				$common = $this->getView ( 'common', $vFormat );
 				$common->setModel ( $this->getModel ( 'common' ), true );
+				$view->ktemplate = $common->ktemplate = KunenaFactory::getTemplate();
 				$view->common = $common;
 
-				$defaultpath = KPATH_SITE."/{$view->template->getPath(true)}/html";
-				$templatepath = KPATH_SITE."/{$view->template->getPath()}/html";
+				$defaultpath = KPATH_SITE."/{$view->ktemplate->getPath(true)}/html";
+				$templatepath = KPATH_SITE."/{$view->ktemplate->getPath()}/html";
 				if ($templatepath != $defaultpath) {
 					$view->addTemplatePath("{$defaultpath}/{$vName}" );
 					$view->common->addTemplatePath("{$defaultpath}/common");

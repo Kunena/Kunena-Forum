@@ -59,11 +59,11 @@ defined ( '_JEXEC' ) or die ();
 								if ($ann->published > 0) { ?>
 									<a href="javascript:void(0);" onclick="return listItemTask('cb<?php
 									echo intval($ann->id);
-									?>','unpublish')"><img src="<?php echo $this->template->getImagePath('tick.png') ?>" alt="<?php echo JText::_('COM_KUNENA_ANN_PUBLISHED') ?>" title="<?php echo JText::_('COM_KUNENA_ANN_PUBLISHED') ?>" /></a>
+									?>','unpublish')"><img src="<?php echo $this->ktemplate->getImagePath('tick.png') ?>" alt="<?php echo JText::_('COM_KUNENA_ANN_PUBLISHED') ?>" title="<?php echo JText::_('COM_KUNENA_ANN_PUBLISHED') ?>" /></a>
 								<?php } else { ?>
 									<a href="javascript:void(0);" onclick="return listItemTask('cb<?php
 									echo intval($ann->id);
-									?>','publish')"><img src="<?php echo $this->template->getImagePath('publish_x.png') ?>" alt="<?php echo JText::_('COM_KUNENA_ANN_UNPUBLISHED') ?>" title="<?php echo JText::_('COM_KUNENA_ANN_UNPUBLISHED') ?>" /></a>
+									?>','publish')"><img src="<?php echo $this->ktemplate->getImagePath('publish_x.png') ?>" alt="<?php echo JText::_('COM_KUNENA_ANN_UNPUBLISHED') ?>" title="<?php echo JText::_('COM_KUNENA_ANN_UNPUBLISHED') ?>" /></a>
 								<?php }
 								?>
 							</td>
@@ -71,7 +71,7 @@ defined ( '_JEXEC' ) or die ();
 								<?php echo CKunenaLink::GetAnnouncementLink('edit', intval($ann->id), JText::_('COM_KUNENA_ANN_EDIT'),JText::_('COM_KUNENA_ANN_EDIT')); ?>
 							</td>
 							<td class="kcol-mid kcol-anndelete">
-								<?php echo CKunenaLink::GetAnnouncementLink('delete', intval($ann->id), $this->template->getImage('publish_x.png'), JText::_('COM_KUNENA_ANN_DELETE')); ?>
+								<?php echo CKunenaLink::GetAnnouncementLink('delete', intval($ann->id), $this->ktemplate->getImage('publish_x.png'), JText::_('COM_KUNENA_ANN_DELETE')); ?>
 							</td>
 							<?php endif; ?>
 						</tr>

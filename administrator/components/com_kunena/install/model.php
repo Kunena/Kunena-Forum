@@ -13,9 +13,6 @@ defined ( '_JEXEC' ) or die ();
 DEFINE('KUNENA_MIN_PHP', '5.2.4');
 DEFINE('KUNENA_MIN_MYSQL', '5.0.4');
 DEFINE('KUNENA_MIN_JOOMLA', '1.5.25');
-DEFINE ( 'KUNENA_MIN_JOOMLA17', '1.7.3' );
-DEFINE ( 'KUNENA_MIN_JOOMLA16', '1.6.6' );
-DEFINE ( 'KUNENA_MIN_JOOMLA15', '1.5.25' );
 
 jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.folder' );
@@ -128,6 +125,12 @@ class KunenaModelInstall extends JModel {
 		$this->uninstallPlugin('kunena', 'kunena');
 		$this->uninstallPlugin('kunena', 'uddeim');
 		$this->uninstallPlugin('system', 'kunena');
+		if (class_exists('KunenaMenuHelper')) {
+			$items = KunenaMenuHelper::getAll();
+			foreach ($items as $item) {
+				KunenaMenuHelper::delete($item->id);
+			}
+		}
 		$this->deleteMenu();
 		return true;
 	}

@@ -21,7 +21,6 @@ class KunenaViewCommon extends KunenaView {
 
 	function display($layout = null, $tpl = null) {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		$this->template = KunenaFactory::getTemplate();
 		return $this->displayLayout($layout, $tpl);
 	}
 
@@ -38,7 +37,7 @@ class KunenaViewCommon extends KunenaView {
 		if (KunenaFactory::getConfig()->showannouncement > 0) {
 			$moderator = intval($this->me->isModerator('global'));
 			$cache = JFactory::getCache('com_kunena', 'output');
-			if ($cache->start("{$this->template->name}.common.announcement.{$moderator}", 'com_kunena.template')) return;
+			if ($cache->start("{$this->ktemplate->name}.common.announcement.{$moderator}", 'com_kunena.template')) return;
 
 			// User needs to be global moderator to edit announcements
 			if ($moderator) {
@@ -141,7 +140,7 @@ class KunenaViewCommon extends KunenaView {
 	function displayWhosonline($tpl = null) {
 		$moderator = intval($this->me->isModerator());
 		$cache = JFactory::getCache('com_kunena', 'output');
-		if ($cache->start("{$this->template->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
+		if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
 
 		$this->my = JFactory::getUser();
 
@@ -190,7 +189,7 @@ class KunenaViewCommon extends KunenaView {
 
 	function displayStatistics($tpl = null) {
 		$cache = JFactory::getCache('com_kunena', 'output');
-		if ($cache->start("{$this->template->name}.common.statistics", 'com_kunena.template')) return;
+		if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) return;
 
 		// FIXME: refactor code
 		$this->config = KunenaFactory::getConfig();
@@ -222,7 +221,7 @@ class KunenaViewCommon extends KunenaView {
 	function displayLoginBox($tpl = null) {
 		$my = JFactory::getUser ();
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$cachekey = "{$this->template->name}.common.loginbox.u{$my->id}";
+		$cachekey = "{$this->ktemplate->name}.common.loginbox.u{$my->id}";
 		$cachegroup = 'com_kunena.template';
 
 		$contents = $cache->get($cachekey, $cachegroup);

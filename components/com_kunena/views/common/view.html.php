@@ -25,7 +25,6 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayDefault($tpl = null) {
-		//$this->params = $this->state->get('params');
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
@@ -210,6 +209,7 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayMenu($tpl = null) {
+		$this->params = $this->state->get('params');
 		$this->getPrivateMessageLink();
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {

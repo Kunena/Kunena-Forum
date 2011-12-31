@@ -16,7 +16,6 @@ defined ( '_JEXEC' ) or die ();
 class KunenaAdminViewSmilies extends KunenaView {
 	function displayDefault() {
 		$this->setToolBarDefault();
-		$this->template = $template = KunenaFactory::getTemplate();
 		$this->smileys = $this->get('Smileys');
 		$this->state = $this->get('state');
 		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
@@ -31,8 +30,7 @@ class KunenaAdminViewSmilies extends KunenaView {
 		$this->setToolBarEdit();
 		$this->state = $this->get('state');
 		$this->smiley_selected = $this->get('smiley');
-		$this->template = KunenaFactory::getTemplate();
-		$this->smileypath = $this->template->getSmileyPath();
+		$this->smileypath = $this->ktemplate->getSmileyPath();
 		$this->listsmileys = $this->get('Smileyspaths');
 		$this->display();
 	}

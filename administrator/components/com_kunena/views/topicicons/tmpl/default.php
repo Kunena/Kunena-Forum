@@ -96,7 +96,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						echo $y;
 						?>','edit')"><img
 						src="<?php
-						echo $this->escape(JURI::root() . $this->template->getTopicsIconPath($row->filename, 'default'))
+						echo $this->escape(JURI::root() . $this->ktemplate->getTopicsIconPath($row->filename, 'default'))
 						?>"
 						alt="<?php
 						echo $this->escape($row->title);

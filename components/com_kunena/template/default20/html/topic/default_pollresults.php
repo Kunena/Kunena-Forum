@@ -23,7 +23,7 @@ $row = 0;
 					<ul class="kpollresult">
 						<li class="kpollresult-list">
 						<?php echo KunenaHtmlParser::parseText ($option->text); ?></li>
-						<li class="kpollresult-list"><img class="jr-forum-stat-bar" src="<?php echo $this->template->getImagePath('bar.png') ?>" height="10" width="<?php echo intval(($option->votes*300)/max($this->poll->getTotal(),1))+3; ?>" /></li>
+						<li class="kpollresult-list"><img class="jr-forum-stat-bar" src="<?php echo $this->ktemplate->getImagePath('bar.png') ?>" height="10" width="<?php echo intval(($option->votes*300)/max($this->poll->getTotal(),1))+3; ?>" /></li>
 						<li class="kpollresult-list"><?php if(isset($option->votes) && ($option->votes > 0)) { echo $option->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></li>
 						<li class="kpollresult-list-end"> <?php echo round(($option->votes*100)/max($this->poll->getTotal(),1),1)."%"; ?></li>
 					</ul>

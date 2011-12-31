@@ -125,6 +125,12 @@ class KunenaModelInstall extends JModel {
 		$this->uninstallPlugin('kunena', 'kunena');
 		$this->uninstallPlugin('kunena', 'uddeim');
 		$this->uninstallPlugin('system', 'kunena');
+		if (class_exists('KunenaMenuHelper')) {
+			$items = KunenaMenuHelper::getAll();
+			foreach ($items as $item) {
+				KunenaMenuHelper::delete($item->id);
+			}
+		}
 		$this->deleteMenu();
 		return true;
 	}

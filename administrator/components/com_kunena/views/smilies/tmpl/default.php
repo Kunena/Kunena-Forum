@@ -75,7 +75,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						echo $id;
 						?>','edit')"><img
 						src="<?php
-						echo $this->escape( KURL_SITE . $this->template->getSmileyPath($row->location) )
+						echo $this->escape( KURL_SITE . $this->ktemplate->getSmileyPath($row->location) )
 						?>"
 						alt="<?php
 						echo $this->escape($row->location);

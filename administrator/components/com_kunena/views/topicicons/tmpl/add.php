@@ -38,7 +38,7 @@ $document->addScriptDeclaration('function update_topicicon(newimage)
 					<td width="200"><input class="post" type="text" name="topiciconname"
 						value="<?php echo isset($this->topicicon->name) ? $this->topicicon->name : '' ?>" /></td>
 					<td rowspan="3" width="50"><img name="topicicon_image"
-						src="<?php echo isset($this->topicicon) ? $this->escape(JURI::root().$this->template->getTopicsIconPath($this->topicicon->filename)) : '' ?>" border="0" alt="" /> &nbsp;</td>
+						src="<?php echo isset($this->topicicon) ? $this->escape(JURI::root().$this->ktemplate->getTopicsIconPath($this->topicicon->filename)) : '' ?>" border="0" alt="" /> &nbsp;</td>
 					<td rowspan="3">&nbsp;</td>
 				</tr>
 				<tr align="center">

@@ -324,8 +324,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['userkeywords'] = JHTML::_('select.genericlist', $yesno, 'cfg_userkeywords', 'class="inputbox" size="1"', 'value', 'text', $config->userkeywords);
 
 		$uploads = array();
-		$uploads[] = JHTML::_('select.option', 'all', JText::_('COM_KUNENA_EVERYBODY'));
-		$uploads[] = JHTML::_('select.option', 'user', JText::_('COM_KUNENA_REGISTERED_USERS'));
+		$uploads[] = JHTML::_('select.option', 'everybody', JText::_('COM_KUNENA_EVERYBODY'));
+		$uploads[] = JHTML::_('select.option', 'registered', JText::_('COM_KUNENA_REGISTERED_USERS'));
 		$uploads[] = JHTML::_('select.option', 'moderator', JText::_('COM_KUNENA_MODERATORS'));
 		$uploads[] = JHTML::_('select.option', 'admin', JText::_('COM_KUNENA_ADMINS'));
 		$uploads[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_NOBODY'));

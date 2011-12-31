@@ -31,14 +31,6 @@ class KunenaAdminModelReport extends KunenaModel {
 		$kunena_app = JFactory::getApplication ();
 		$kunena_db = JFactory::getDBO ();
 
-		// Joomla 1.7 compatibility (class already exists)
-		if (!class_exists('JVersion')) {
-			// Joomla 1.5 and 1.6 compatibility (jimport needed)
-			jimport ( 'joomla.version' );
-		}
-		$jversion = new JVersion();
-		$jversion = $jversion->getLongVersion();
-
 		if($kunena_app->getCfg('legacy' )) {
 			$jconfig_legacy = '[color=#FF0000]Enabled[/color]';
 		} else {
@@ -166,7 +158,7 @@ class KunenaAdminModelReport extends KunenaModel {
 		if (!empty($sef)) $seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
 		else $seftext = '[quote][b]Third-party SEF components:[/b] None [/quote]';
 
-		$report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
+		$report = '[confidential][b]Joomla! version:[/b] '.JVERSION.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
 	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().'[/confidential][quote][b]Database collation check:[/b] '.$collation.'
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '

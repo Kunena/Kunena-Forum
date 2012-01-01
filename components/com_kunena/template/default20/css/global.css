@@ -160,7 +160,7 @@
 #kunena #ktopics-modbox {
 	width: 100%;
 	margin: 10px auto;
-	border: 1px solid #e3e0e0;
+	border: 1px solid #F4F4F4;
 	padding: 0px;
 	clear:both;
 	text-align:left;
@@ -283,7 +283,7 @@
 #kunena .kmenu ul.menu li a {
 	display: inline;
 	background: none;
-	margin: 0 10px;
+	margin: 0 5px;
 	padding: 0 10px;
 	border-bottom-width: 0 !important;
 }
@@ -468,7 +468,7 @@
 #kunena .ktopics-row table td,
 #kunena .ktags-row table td,
 #kunena .kposts-row table td{
-	padding: 10px;
+	padding: 10px 5px;
 	vertical-align: middle;
 }
 #kunena .kcategories-row table caption,
@@ -790,7 +790,7 @@
 
 /* User details */
 #kunena .kpost-user-details {
-	width: 200px;
+	width: 22%;
 	padding: 10px;
 	text-align:center;
 	float:right;
@@ -808,7 +808,7 @@
 	padding: 20px;
 }
 #kunena .kpost-container {
-	margin-right: 220px;
+	margin-right: 25%;
 }
 #kunena .kpost-body-attach {
 	margin: 15px 0;
@@ -1183,7 +1183,7 @@
 	width: 43%;
 	float:left;
 	border: 1px solid #F4F4F4;
-	margin: 15px;
+	margin: 5px;
 	padding: 15px;
 }
 #kunena h3.kuserlist-fullname,
@@ -1963,7 +1963,7 @@
 }
 #kunena textarea,
 #kunena textarea.kmedium {
-	font-size: 1em;
+	font-size: 12px;
 	width: 95%;
 	height: 10em;
 }

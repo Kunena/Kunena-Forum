@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 		<div class="<?php echo $this->getClass('ksection', $this->escape($this->section->class_sfx)) ?>" id="ksection-<?php echo intval($this->section->id) ?>">
 			<?php if (!empty($this->sectionRssURL)) : ?>
-			<a href="<?php echo $this->sectionRssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?>"><span class="krss-icon"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?></span></a>
+			<a href="<?php echo $this->sectionRssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_SECTION_LIST_RSS_TITLE', $this->escape($this->section->name)) ?>"><span class="krss-icon"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?></span></a>
 			<?php endif ?>
 			<?php if (!empty($this->sectionMarkReadURL)) : ?>
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="kunenaMarkAllRead" method="post">

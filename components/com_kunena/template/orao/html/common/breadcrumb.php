@@ -9,7 +9,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->params = $this->template->params;
+$this->params = $this->ktemplate->params;
 $item = array_shift($this->pathway);
 ?>
 <?php if ($item && $this->params->get('showPathway') == '1') : ?>

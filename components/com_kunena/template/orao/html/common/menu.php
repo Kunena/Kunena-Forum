@@ -8,13 +8,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-// TODO : To finish
-$this->params = $this->template->params;
-$private = KunenaFactory::getPrivateMessaging();
-$pm = $private->getUnreadCount($this->me->userid);
-?>
-<?php if (JDocumentHTML::countModules ( 'kunena_menu' )) : ?>
 
+if (JDocumentHTML::countModules ( 'kunena_menu' )) : ?>
 <div class="forumlist">
 	<div class="catinner">
 		<span class="corners-top"><span></span></span>
@@ -42,18 +37,18 @@ $pm = $private->getUnreadCount($this->me->userid);
 						<?php } ?>
 						<?php if ($this->me->userid == 0) : ?>
 						<dd class="tk-topmenu-links" style="float: right;">
-						<?php //if ($login) : ?>
+						<?php if ($this->login) : ?>
 						<?php if ($this->params->get('loginLogout') == '1') : ?>
 							<span id="tk-login" class="" title="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>:: ">
 								<a class="tk-loginlink" style="color:#fff;" href="#mb_login" rel="lightbox[inline 360 180]"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></a>
 							</span>
-						<?php endif ?>
-						<?php //if ($this->register) : ?>
-							<span id="tk-register-rules-title" class="tk-registerlink handcursor" title="<?php echo JText::_('COM_KUNENA_PROFILEBOX_REGISTER'); ?>:: ">
+						<?php endif; ?>
+						<?php if ($this->register) : ?>
+							<span id="tk-register-rules-title" class="tk-registerlink handcursor" title="<?php echo JText::_('COM_KUNENA_PROFILEBOX_REGISTER'); ?>">
 								<a class="tk-registerlink" style="color:#fff; cursor:pointer;"><?php echo JText::_('COM_KUNENA_PROFILEBOX_REGISTER'); ?></a>
 							</span>
-						<?php //endif ?>
-						<?php //endif;?>
+						<?php endif; ?>
+						<?php endif;?>
 						<?php if ($this->params->get('searchLink') == '1') : ?>
 							<span id="tk-search" class="tk-searchlink" title="<?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?>:: ">
 								<a class="tk-searchlink" style="color:#fff;" href="#mb_search" rel="lightbox[contact 250 80]"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></a>
@@ -67,21 +62,21 @@ $pm = $private->getUnreadCount($this->me->userid);
 								<a class="tk-logoutlink" style="color:#fff;" href="#mb_logout" rel="lightbox[inline 360 100]"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?></a>
 							</span>
 							<?php endif ?>
-							<?php //if (!empty($this->announcementsLink)) : ?>
+							<?php if (KunenaFactory::getConfig()->showannouncement) : ?>
 							<span id="tk-ann" class="" title="<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>:: ">
 								<a class="tk-logoutlink" style="color:#fff;" href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=list") ?>"><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?></a>
 							</span>
-							<?php //endif ?>
+							<?php endif ?>
 							<?php if ($this->params->get('searchLink') == '1') : ?>
 							<span id="tk-search" class="tk-searchlink" title="<?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?>:: ">
 								<a class="tk-searchlink" style="color:#fff;" href="#mb_search" rel="lightbox[contact 250 80]"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></a>
 							</span>
 							<?php endif; ?>
-							<?php //if (!empty($this->privateMessagesLink)) : ?>
-							<span class="tk-pmlink <?php if ($pm > 0): echo 'tk-pm-new'; else : echo 'tk-pm-nonew'; endif;?>">
+							<?php if (!empty($this->privateMessagesLink)) : ?>
+							<span class="tk-pmlink <?php if ($this->unreadprivatemessages > 0): echo 'tk-pm-new'; else : echo 'tk-pm-nonew'; endif;?>">
 								<a class="" style="color:#fff;" href="#mb_pmread" rel="lightbox[pm-read 350 90]"><?php echo JText::_('COM_KUNENA_TEMPLATE_PRIVATE_MESSAGE'); ?></a>
 							</span>
-							<?php //endif; ?>
+							<?php endif; ?>
 						</dd>
 						<?php endif;?>
 

@@ -29,3 +29,6 @@
 #kunena .kmenu ul.menu li.active a {
 	color: var(styleActiveFontcolor) !important;
 }
+#kunena  a {
+	font-size: 13px !important;
+}

@@ -29,6 +29,20 @@
 	margin-top: expression((100-parseInt(offsetHeight)/2)<0 ? '0' : 100-(parseInt(offsetHeight)/2) +'px');
 }
 #kunena .kheader {
-	background: var(styleForumHeadercolor) !important; /* Old browsers */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(styleForumHeadercolor)', endColorstr='var(styleForumHeadercolorGradient)',GradientType=0 )!important; /* IE6-9 */
+	background: #3a7cbd !important;
+	background-image: none !important;
+}
+#kunena .kheader a {
+	color: #FFF !important;
+	font-weight: bold;
+	text-decoration: none;
+	font-size:16px !important;
+}
+#kunena .ksection .kheader-desc, #kunena INPUT.kheader-link {
+	background: #3a7cbd !important;
+	color: #fff !important;
+}
+#kunena .kmenu ul.menu li:hover,
+#kunena .kmenu ul.menu li.active {
+	background: #3a7cbd !important;
 }

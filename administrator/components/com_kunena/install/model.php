@@ -124,8 +124,7 @@ class KunenaModelInstall extends JModel {
 		$this->uninstallPlugin('kunena', 'joomla');
 		$this->uninstallPlugin('kunena', 'kunena');
 		$this->uninstallPlugin('kunena', 'uddeim');
-		// TODO:
-		// $this->uninstallPlugin('finder', 'kunena');
+		$this->uninstallPlugin('finder', 'kunena');
 		$this->uninstallPlugin('system', 'kunena');
 		if (class_exists('KunenaMenuHelper')) {
 			$items = KunenaMenuHelper::getAll();
@@ -501,8 +500,7 @@ class KunenaModelInstall extends JModel {
 
 	public function stepPlugins() {
 		$this->installPlugin('install/plugins/plg_system_kunena', 'system', 'kunena', true);
-		// TODO:
-		// $this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', true);
+		$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false);
 		$this->installPlugin('install/plugins/plg_kunena_kunena', 'kunena', 'kunena', true);
 		$this->installPlugin('install/plugins/plg_kunena_joomla15', 'kunena', 'joomla', true);
 		$this->installPlugin('install/plugins/plg_kunena_joomla16', 'kunena', 'joomla', true);

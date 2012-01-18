@@ -66,13 +66,13 @@ class KunenaAdminControllerConfig extends KunenaController {
 	function setdefault() {
 		$db = JFactory::getDBO ();
 		$app = JFactory::getApplication ();
-		$config = KunenaFactory::getConfig ();
 
 		if (! JRequest::checkToken ()) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
+		$config = KunenaFactory::getConfig ();
 		$config->reset();
 		$config->save();
 

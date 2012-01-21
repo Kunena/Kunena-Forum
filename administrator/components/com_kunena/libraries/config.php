@@ -240,6 +240,7 @@ class KunenaConfig extends JObject {
 	public $hold_newusers_posts = 0;
 	public $hold_guest_posts = 0;
 	public $attachment_limit = 8;
+	public $pickup_category = 0;
 
 	public function __construct() {
 		parent::__construct ();

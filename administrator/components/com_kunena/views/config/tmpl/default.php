@@ -403,6 +403,15 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $this->lists ['pickup_category'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>

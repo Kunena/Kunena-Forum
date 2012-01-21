@@ -23,6 +23,7 @@ abstract class JHTMLKunenaForum {
 		$topleveltxt = isset($params['toplevel']) ? $params['toplevel'] : false;
 		$catid = isset($params['catid']) ? (int) $params['catid'] : 0;
 		$hide_lonely = isset($params['hide_lonely']) ? (bool) $params['hide_lonely'] : 0;
+		$class = null;
 
 		$params = array ();
 		$params['ordering'] = $ordering;
@@ -57,6 +58,15 @@ abstract class JHTMLKunenaForum {
 		} elseif (!is_array($selected)) {
 			$selected = array((string) $selected);
 		}
+
+		if ( KunenaFactory::getConfig()->pickup_category ) {
+			$options[] = JHTML::_ ( 'select.option', 'none', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text' );
+			$class = 'class="required"';
+			unset($selected);
+			$selected = array();
+			$selected[] = 'none';
+		}
+
 		if ($topleveltxt) {
 			$me = KunenaUserHelper::getMyself();
 			$disabled = ($action == 'admin' && !$me->isAdmin());
@@ -97,7 +107,7 @@ abstract class JHTMLKunenaForum {
 
 		$html = '';
 		if (!empty($options)) {
-			$html .= '<select name="' . $name . '" id="' . $id . '" ' . $attribs . '>';
+			$html .= '<select name="' . $name . '" '.$class.' id="' . $id . '" ' . $attribs . '>';
 			$html .= JHTML::_ ( 'select.options', $options, $key, $text, $selected, $translate );
 			$html .= '</select>';
 		}

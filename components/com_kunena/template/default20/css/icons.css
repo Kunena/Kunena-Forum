@@ -69,8 +69,8 @@
 #kunena span.ktopicicon-default,
 #kunena span.ktopicicon-question {
 	display:block;
-	height: 32px;
-	width: 32px;
+	height: 30px;
+	width: 30px;
 	text-indent: -9999em;
 }
 #kunena span.knew {

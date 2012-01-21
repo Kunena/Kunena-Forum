@@ -277,7 +277,7 @@ class KunenaConfig extends JObject {
 
 	public function reset() {
 		$instance = new KunenaConfig ();
-		$this->bind($instance);
+		$this->bind($instance->getProperties());
 	}
 
 	//

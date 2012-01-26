@@ -216,14 +216,14 @@ class KunenaViewCategory extends KunenaView {
 				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif" )) {
 					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
-					return $this->getIcon ( $this->template->categoryIcons[1], JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
+					return $this->getIcon ( $this->ktemplate->categoryIcons[1], JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 				}
 			} else {
 				// Check Read Cat Images
 				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif" )) {
 					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
 				} else {
-					return $this->getIcon ( $this->template->categoryIcons[0], JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+					return $this->getIcon ( $this->ktemplate->categoryIcons[0], JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 				}
 			}
 		} elseif ($this->config->showchildcaticon) {
@@ -232,14 +232,14 @@ class KunenaViewCategory extends KunenaView {
 				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif" )) {
 					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
-					return $this->getIcon ( $this->template->categoryIcons[1].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
+					return $this->getIcon ( $this->ktemplate->categoryIcons[1].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 				}
 			} else {
 				// Check Read Cat Images
 				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif" )) {
 					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
-					return $this->getIcon ( $this->template->categoryIcons[0].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+					return $this->getIcon ( $this->ktemplate->categoryIcons[0].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 				}
 			}
 		}

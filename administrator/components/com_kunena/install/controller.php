@@ -36,8 +36,10 @@ class KunenaControllerInstall extends JController {
 		$this->steps = $this->model->getSteps ();
 	}
 
+	// Run from administrator installer
 	function prepare() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$start = JRequest::getBool('start', false);
 		$this->model->setStep ( 0 );
 
 		// Install English and default language
@@ -45,7 +47,7 @@ class KunenaControllerInstall extends JController {
 		$this->model->installLanguage('en-GB');
 		if ($tag != 'en-GB') $this->model->installLanguage($tag);
 
-		$this->setRedirect('index.php?option=com_kunena&view=install');
+		$this->setRedirect('index.php?option=com_kunena&view=install' . ($start ? '&task=upgrade&'.JUtility::getToken().'=1' : ''));
 	}
 
 	public function display()
@@ -167,7 +169,7 @@ class KunenaControllerInstall extends JController {
 		$this->model->deleteMenu();
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
-		if (!KunenaForum::isSvn()) {
+		if (!KunenaForum::isDev()) {
 			jimport('joomla.filesystem.folder');
 			JFolder::delete(KPATH_MEDIA);
 			jimport('joomla.installer.installer');

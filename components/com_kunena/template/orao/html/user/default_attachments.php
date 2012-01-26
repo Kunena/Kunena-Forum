@@ -60,6 +60,9 @@ if (version_compare(JVERSION, '1.7','>')) {
 					</tr>
 
 					<?php
+					if ( empty($this->items) ):
+						echo '<li>'.JText::_('COM_KUNENA_USER_NO_ATTACHMENTS').'</li>';
+						else:
 					$i=0;
 					$y=1;
 					foreach ($this->items as $file) :
@@ -84,10 +87,10 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 						<td align="center" class="kcol-mid"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php
 						echo $i;
-						?>','delete')"><img src="<?php echo $this->template->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
+						?>','delete')"><img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
 
 					</tr>
-					<?php $i++; $y++; endforeach; ?>
+					<?php $i++; $y++; endforeach; endif; ?>
 				</table>
 				<input class="tk-submit-button" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>" style="float:right;" />
 			</form>

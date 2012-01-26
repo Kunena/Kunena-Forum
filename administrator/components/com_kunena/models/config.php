@@ -324,8 +324,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['userkeywords'] = JHTML::_('select.genericlist', $yesno, 'cfg_userkeywords', 'class="inputbox" size="1"', 'value', 'text', $config->userkeywords);
 
 		$uploads = array();
-		$uploads[] = JHTML::_('select.option', 'all', JText::_('COM_KUNENA_EVERYBODY'));
-		$uploads[] = JHTML::_('select.option', 'user', JText::_('COM_KUNENA_REGISTERED_USERS'));
+		$uploads[] = JHTML::_('select.option', 'everybody', JText::_('COM_KUNENA_EVERYBODY'));
+		$uploads[] = JHTML::_('select.option', 'registered', JText::_('COM_KUNENA_REGISTERED_USERS'));
 		$uploads[] = JHTML::_('select.option', 'moderator', JText::_('COM_KUNENA_MODERATORS'));
 		$uploads[] = JHTML::_('select.option', 'admin', JText::_('COM_KUNENA_ADMINS'));
 		$uploads[] = JHTML::_('select.option', '', JText::_('COM_KUNENA_NOBODY'));
@@ -344,6 +344,11 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['hold_guest_posts'] = JHTML::_('select.genericlist', $yesno, 'cfg_hold_guest_posts', 'class="inputbox" size="1"', 'value', 'text', $config->hold_guest_posts);
 
 		$lists ['pickup_category'] = JHTML::_('select.genericlist', $yesno, 'cfg_pickup_category', 'class="inputbox" size="1"', 'value', 'text', $config->pickup_category);
+
+		$article_display[] = JHTML::_('select.option', 'full', JText::_('COM_KUNENA_COM_A_FULL_ARTICLE'));
+		$article_display[] = JHTML::_('select.option', 'intro', JText::_('COM_KUNENA_COM_A_INTRO_ARTICLE'));
+		$article_display[] = JHTML::_('select.option', 'link', JText::_('COM_KUNENA_COM_A_ARTICLE_LINK'));
+		$lists ['article_display'] = JHTML::_('select.genericlist', $article_display, 'cfg_article_display', 'class="inputbox" size="1"', 'value', 'text', $config->article_display);
 
 		return $lists;
 	}

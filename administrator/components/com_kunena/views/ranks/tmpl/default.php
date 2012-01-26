@@ -78,7 +78,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						echo $id;
 						?>','edit')"><img
 						src="<?php
-						echo $this->escape(KURL_SITE . $this->template->getRankPath($row->rank_image))
+						echo $this->escape(KURL_SITE . $this->ktemplate->getRankPath($row->rank_image))
 						?>"
 						alt="<?php
 						echo $this->escape($row->rank_image);

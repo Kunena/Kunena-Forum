@@ -169,7 +169,7 @@ JHTML::_('behavior.tooltip');
 						<?php foreach ($this->topicIcons as $id=>$icon) : ?>
 						<li class="hasTip" title="Topic icon :: <?php echo $this->escape(ucfirst($icon->name)) ?>">
 							<input type="radio" name="topic_emoticon" id="topic_emoticon_<?php echo $this->escape($icon->name) ?>" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
-							<label for="topic_emoticon_<?php echo $this->escape($icon->name) ?>"><img src="<?php echo $this->template->getTopicIconPath($icon->id, true) ?>" alt="" border="0" /></label>
+							<label for="topic_emoticon_<?php echo $this->escape($icon->name) ?>"><img src="<?php echo $this->ktemplate->getTopicIconPath($icon->id, true) ?>" alt="" border="0" /></label>
 						</li>
 						<?php endforeach ?>
 					</ul>
@@ -190,7 +190,7 @@ JHTML::_('behavior.tooltip');
 						<span class="kattachment-id-container"></span>
 						<input class="kfile-input-textbox" type="text" readonly="readonly" />
 						<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?> :: <?php echo $this->escape($this->config->imagetypes); ?>,<?php echo $this->escape($this->config->filetypes) ?>" >
-							<input type="button" value="Add File" class="kfile-input-button tk-add-button" />
+							<input type="button" value="<?php echo JText::_('COM_KUNENA_EDITOR_ADD_FILE')?>" class="kfile-input-button tk-add-button" />
 							<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" />
 						</div>
 						<a href="#" class="kattachment-remove tk-remove-button" style="display: none"><?php echo JText::_('COM_KUNENA_GEN_REMOVE_FILE') ?></a>

@@ -79,8 +79,8 @@ $this->addStyleSheet ( 'css/kunena.manage.css' );
 		$i = -1;
 		$j = 0;
 		$n = count($this->categories);
-		$img_yes = '<img src="'.$this->template->getImagePath('tick.png').'" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
-		$img_no = '<img src="'.$this->template->getImagePath('publish_x.png').'" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
+		$img_yes = '<img src="'.$this->ktemplate->getImagePath('tick.png').'" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
+		$img_no = '<img src="'.$this->ktemplate->getImagePath('publish_x.png').'" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
 		foreach($this->categories as $category) {
 	?>
 		<tr <?php echo 'class = "row' . $k . '"';?>>

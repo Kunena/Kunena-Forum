@@ -117,7 +117,11 @@ class KunenaDate extends JDate {
 	}
 
 	public function toTimezone() {
-		$timezone = $this->getOffset();
+		if (version_compare(JVERSION, '1.6', '>')) {
+			$timezone = $this->getOffsetFromGMT(true);
+		} else {
+			$timezone = $this->getOffset();
+		}
 		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);
 	}
 

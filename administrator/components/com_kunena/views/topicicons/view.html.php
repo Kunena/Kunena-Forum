@@ -32,7 +32,6 @@ class KunenaAdminViewTopicicons extends KunenaView {
 	}
 
 	function displayDefault() {
-		$this->template = $template = KunenaFactory::getTemplate();
 		$this->topicicons = $this->get('Topicicons');
 		$this->state = $this->get('state');
 		$this->iconsetlist = $this->get('iconsetlist');
@@ -52,7 +51,6 @@ class KunenaAdminViewTopicicons extends KunenaView {
 	function displayEdit() {
 		$this->state = $this->get('state');
 		$this->topicicon = $this->get('topicicon');
-		$this->template = KunenaFactory::getTemplate();
 		$this->listtopicicons = $this->get('topiciconslist');
 	}
 

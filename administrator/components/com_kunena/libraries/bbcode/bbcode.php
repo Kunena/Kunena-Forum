@@ -865,6 +865,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$articleid = intval($content);
 
+		$config = KunenaFactory::getConfig();
 		$user = JFactory::getUser ();
 		$db = JFactory::getDBO ();
 		$site = JFactory::getApplication('site');
@@ -935,8 +936,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
 			}
 
-			// TODO: make configurable
-			if (!$default) $default = 'intro';
+			if (!$default) $default = $config->article_display;
 			switch ($default) {
 				case 'full':
 					if ( !empty($article->fulltext) ) {

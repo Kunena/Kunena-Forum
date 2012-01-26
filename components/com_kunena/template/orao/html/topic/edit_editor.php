@@ -78,10 +78,10 @@ defined ( '_JEXEC' ) or die ();
 								<input type="text" class="inputbox hasTip" name="poll_title" id="kpoll-title" maxlength="100" size="40"
 									value="<?php echo $this->escape( $this->poll->title ) ?>" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE'); ?>" />
 								<img class="hasTip" id="kbutton-poll-add"
-									src="<?php echo JURI::root(true); ?>/components/com_kunena/template/default/images/icons/poll_add_options.png"
+									src="<?php echo JURI::root(true); ?>/components/com_kunena/template/blue_eagle/images/icons/poll_add_options.png"
 									title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'); ?>" alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>" />
 								<img class="hasTip" id="kbutton-poll-rem"
-									src="<?php echo JURI::root(true); ?>/components/com_kunena/template/default/images/icons/poll_rem_options.png"
+									src="<?php echo JURI::root(true); ?>/components/com_kunena/template/blue_eagle/images/icons/poll_rem_options.png"
 									title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
 
 								<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>

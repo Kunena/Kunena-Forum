@@ -11,14 +11,15 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
+require_once dirname ( __FILE__ ) . '/cpanel.php';
 
 /**
- * Prune Model for Kunena
+ * Tools Model for Kunena
  *
  * @since 2.0
- */
-class KunenaAdminModelPrune extends KunenaModel {
-	function getForumlist() {
+*/
+class KunenaAdminModelTools extends KunenaAdminModelCpanel {
+	function getPruneCategories() {
 		$cat_params = array ();
 		$cat_params['ordering'] = 'ordering';
 		$cat_params['toplevel'] = 0;
@@ -31,7 +32,7 @@ class KunenaAdminModelPrune extends KunenaModel {
 		return $forum;
 	}
 
-	function getListtrashdelete() {
+	function getPruneListtrashdelete() {
 		$trashdelete = array();
 		$trashdelete [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_TRASH_USERMESSAGES') );
 		$trashdelete [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_DELETE_PERMANENTLY') );
@@ -39,7 +40,7 @@ class KunenaAdminModelPrune extends KunenaModel {
 		return JHTML::_('select.genericlist', $trashdelete, 'trashdelete', 'class="inputbox" size="1"', 'value', 'text', 0);
 	}
 
-	function getControlOptions() {
+	function getPruneControlOptions() {
 		$contoloptions = array();
 		$contoloptions [] = JHTML::_ ( 'select.option', 'all', JText::_('COM_KUNENA_A_PRUNE_ALL') );
 		$contoloptions [] = JHTML::_ ( 'select.option', 'normal', JText::_('COM_KUNENA_A_PRUNE_NORMAL') );
@@ -53,7 +54,7 @@ class KunenaAdminModelPrune extends KunenaModel {
 		return JHTML::_('select.genericlist', $contoloptions, 'controloptions', 'class="inputbox" size="1"', 'value', 'text', 'normal');
 	}
 
-	function getKeepSticky() {
+	function getPruneKeepSticky() {
 		$optionsticky = array();
 		$optionsticky [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_A_NO') );
 		$optionsticky [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_A_YES') );

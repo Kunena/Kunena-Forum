@@ -46,7 +46,7 @@ class KunenaHtmlPagination extends JPagination
 		parent::__construct($total, $limitstart, $limit, $prefix);
 		$this->setDisplay();
 		if ($limitstart === false) $this->set('pages.current', -1);
-		$this->template = KunenaFactory::getTemplate();
+		$this->ktemplate = KunenaFactory::getTemplate();
 	}
 
 	function setDisplay($displayedPages = 7, $uri = null) {
@@ -163,11 +163,11 @@ class KunenaHtmlPagination extends JPagination
 	}
 
 	public function _list_footer($list) {
-		return $this->template->getPaginationListFooter($list);
+		return $this->ktemplate->getPaginationListFooter($list);
 	}
 
 	public function _list_render($list) {
-		return $this->template->getPaginationListRender($list);
+		return $this->ktemplate->getPaginationListRender($list);
 	}
 
 	public function _item_active(&$item) {
@@ -186,7 +186,7 @@ class KunenaHtmlPagination extends JPagination
 			}
 		}
 		else {
-			return $this->template->getPaginationItemActive($item);
+			return $this->ktemplate->getPaginationItemActive($item);
 		}
 	}
 
@@ -196,7 +196,7 @@ class KunenaHtmlPagination extends JPagination
 			return "<span>".$item->text."</span>";
 		}
 		else {
-			return $this->template->getPaginationItemInactive($item);
+			return $this->ktemplate->getPaginationItemInactive($item);
 		}
 	}
 

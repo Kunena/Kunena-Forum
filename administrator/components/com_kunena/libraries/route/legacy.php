@@ -12,9 +12,10 @@ defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_SITE . '/router.php';
 
-class KunenaRouteLegacy {
+abstract class KunenaRouteLegacy {
 	// List of legacy views from previous releases
 	static $functions = array (
+		'entrypage'=>1,
 		'listcat'=>1,
 		'showcat'=>1,
 		'latest'=>1,
@@ -45,7 +46,7 @@ class KunenaRouteLegacy {
 		'help'=>1,
 		'review'=>1,
 		'rules'=>1,
-		'search'=>1,
+//		'search'=>1,
 		'advsearch'=>1,
 		'markallcatsread'=>1,
 		'markthisread'=>1,
@@ -56,26 +57,26 @@ class KunenaRouteLegacy {
 		'templatechooser'=>1,
 		'json'=>1,
 		'pdf'=>1,
-		'entrypage'=>1,
 		'thankyou'=>1,
 		'fb_pdf'=>1,
 	);
 
-	function convert($uri) {
-		// We need to convert URIs only in site
-		if (!JFactory::getApplication()->isSite()) return;
+	public static function isLegacy($view) {
+		if (!$view || $view=='legacy') return true;
+		return isset(self::$functions[$view]);
+	}
 
-		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-
+	public static function convert($uri, $showstart = 1) {
 		// Make sure that input is JURI to legacy Kunena func=xxx
 		if (!($uri instanceof JURI)) {
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return;
 		}
 		if ($uri->getVar('option') != 'com_kunena') {
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 			return;
 		}
+
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+
 		if ($uri->getVar('func')) {
 			$uri->setVar('view', $uri->getVar('func'));
 			$uri->delVar('func');
@@ -95,14 +96,19 @@ class KunenaRouteLegacy {
 		$config = KunenaFactory::getConfig ();
 		$changed = false;
 		switch ($uri->getVar('view')) {
+			case 'entrypage' :
+				$changed = true;
+				$uri->setVar('view', 'home');
+				break;
 			case 'listcat' :
 				$changed = true;
 				$uri->setVar('view', 'category');
+				$uri->setVar('layout', 'list');
 				break;
 			case 'showcat' :
 				$changed = true;
 				$uri->setVar('view', 'category');
-				$page = (int) $uri->getVar ( 'page', 1 );
+				$page = (int) $uri->getVar ( 'page', $showstart );
 				if ($page > 0) {
 					$uri->setVar ( 'limitstart', (int) $config->messages_per_page * ($page - 1) );
 					$uri->setVar ( 'limit', (int) $config->messages_per_page );
@@ -181,7 +187,7 @@ class KunenaRouteLegacy {
 						$uri->setVar('layout', 'default');
 						$uri->setVar('mode', 'replies');
 				}
-				$page = (int) $uri->getVar ( 'page', 1 );
+				$page = (int) $uri->getVar ( 'page', $showstart );
 				if ($page > 0) {
 					$uri->setVar ( 'limitstart', (int) $config->threads_per_page * ($page - 1) );
 					$uri->setVar ( 'limit', (int) $config->threads_per_page );
@@ -221,7 +227,7 @@ class KunenaRouteLegacy {
 						$uri->setVar('layout', 'edit');
 						break;
 					default :
-						$uri->setVar('layout', 'default');
+						$uri->delVar('layout');
 						break;
 				}
 				break;
@@ -517,9 +523,54 @@ class KunenaRouteLegacy {
 				$uri->setVar('view', 'misc');
 				$uri->setVar('task', 'template');
 				break;
+			case 'rules' :
+			case 'help' :
+				$changed = true;
+				$uri->setVar('view', 'misc');
+				$uri->delVar('layout');
+				break;
 
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $changed;
+	}
+
+	static public function convertMenuItem($item) {
+		$uri = JURI::getInstance($item->link);
+		$view = $uri->getVar('func', $uri->getVar('view'));
+
+		if (self::convert($uri, 0)) {
+
+			$item->link = $uri->toString();
+			$item->query = $uri->getQuery(true);
+			$params = new JParameter($item->params);
+			switch ($view) {
+				case 'latest' :
+				case 'mylatest' :
+				case 'noreplies' :
+				case 'subscriptions' :
+				case 'favorites' :
+				case 'userposts' :
+				case 'unapproved' :
+				case 'deleted' :
+					$params->set('do', null);
+					$params->set('mode', $uri->getVar('mode', null));
+					break;
+				case 'post' :
+					$params->set('do', null);
+					break;
+				case 'rules' :
+					$params->set('body', '[article=full]'.KunenaFactory::getConfig()->get('rules_cid', 1).'[/article]');
+					$params->set('body_format', 'bbcode');
+					$params->set('do', null);
+					break;
+				case 'help' :
+					$params->set('body', '[article=full]'.KunenaFactory::getConfig()->get('help_cid', 1).'[/article]');
+					$params->set('body_format', 'bbcode');
+					$params->set('do', null);
+					break;
+			}
+			$item->params = $params->toString();
+		}
 	}
 }

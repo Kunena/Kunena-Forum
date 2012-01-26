@@ -21,7 +21,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		parent::__construct($config);
 	}
 
-	function edit() {
+	public function edit() {
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
@@ -44,7 +44,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		$this->setRedirect (CKunenaLink::GetAnnouncementURL ( 'show', false, false ));
 	}
 
-	function delete($id) {
+	public function delete($id) {
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -62,5 +62,22 @@ class KunenaControllerAnnouncement extends KunenaController {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ANN_DELETED' ) );
 		}
 		$this->redirectBack ();
+	}
+
+	public function publish() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+	}
+
+	public function unpublish() {
+		$app = JFactory::getApplication ();
+		if (! JRequest::checkToken ('get')) {
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
 	}
 }

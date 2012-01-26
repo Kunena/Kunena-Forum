@@ -21,12 +21,10 @@ class KunenaViewCommon extends KunenaView {
 
 	function display($layout = null, $tpl = null) {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		$this->template = KunenaFactory::getTemplate();
 		return $this->displayLayout($layout, $tpl);
 	}
 
 	function displayDefault($tpl = null) {
-		//$this->params = $this->state->get('params');
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
@@ -38,7 +36,7 @@ class KunenaViewCommon extends KunenaView {
 		if (KunenaFactory::getConfig()->showannouncement > 0) {
 			$moderator = intval($this->me->isModerator('global'));
 			$cache = JFactory::getCache('com_kunena', 'output');
-			if ($cache->start("{$this->template->name}.common.announcement.{$moderator}", 'com_kunena.template')) return;
+			if ($cache->start("{$this->ktemplate->name}.common.announcement.{$moderator}", 'com_kunena.template')) return;
 
 			// User needs to be global moderator to edit announcements
 			if ($moderator) {
@@ -141,7 +139,7 @@ class KunenaViewCommon extends KunenaView {
 	function displayWhosonline($tpl = null) {
 		$moderator = intval($this->me->isModerator());
 		$cache = JFactory::getCache('com_kunena', 'output');
-		if ($cache->start("{$this->template->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
+		if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
 
 		$this->my = JFactory::getUser();
 
@@ -190,7 +188,7 @@ class KunenaViewCommon extends KunenaView {
 
 	function displayStatistics($tpl = null) {
 		$cache = JFactory::getCache('com_kunena', 'output');
-		if ($cache->start("{$this->template->name}.common.statistics", 'com_kunena.template')) return;
+		if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) return;
 
 		// FIXME: refactor code
 		$this->config = KunenaFactory::getConfig();
@@ -211,6 +209,8 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayMenu($tpl = null) {
+		$this->params = $this->state->get('params');
+		$this->getPrivateMessageLink();
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
@@ -221,7 +221,7 @@ class KunenaViewCommon extends KunenaView {
 	function displayLoginBox($tpl = null) {
 		$my = JFactory::getUser ();
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$cachekey = "{$this->template->name}.common.loginbox.u{$my->id}";
+		$cachekey = "{$this->ktemplate->name}.common.loginbox.u{$my->id}";
 		$cachegroup = 'com_kunena.template';
 
 		$contents = $cache->get($cachekey, $cachegroup);
@@ -245,11 +245,7 @@ class KunenaViewCommon extends KunenaView {
 				$this->lastvisitDate = KunenaDate::getInstance($this->me->lastvisitDate);
 
 				// Private messages
-				$private = KunenaFactory::getPrivateMessaging();
-				if ($private) {
-					$count = $private->getUnreadCount($this->me->userid);
-					$this->assign ( 'privateMessagesLink', $private->getInboxLink($count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX')));
-				}
+				$this->getPrivateMessageLink();
 
 				// TODO: Edit profile (need to get link to edit page, even with integration)
 				//$this->assign ( 'editProfileLink', '<a href="' . CKunenaLink::GetAnnouncementURL ( 'show' ).'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>');
@@ -317,5 +313,14 @@ class KunenaViewCommon extends KunenaView {
 
 	function getTeamCreditsLink($name = '') {
 		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=credits", $name, '', '', 'follow');
+	}
+
+	function getPrivateMessageLink() {
+		// Private messages
+		$private = KunenaFactory::getPrivateMessaging();
+		if ($private) {
+			$count = $private->getUnreadCount($this->me->userid);
+			$this->assign ( 'privateMessagesLink', $private->getInboxLink($count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX')));
+		}
 	}
 }

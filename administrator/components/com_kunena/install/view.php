@@ -118,7 +118,7 @@ class KunenaViewInstall extends JView
 		echo '<textarea cols="80" rows="50">';
 		echo $this->escape ( $schema->getSchema ()->saveXML () );
 		echo '</textarea>';
-		if (KunenaForum::isSvn()) {
+		if (KunenaForum::isDev()) {
 			echo '<textarea cols="80" rows="20">';
 			foreach ( $create as $item ) {
 				echo $this->escape($item ['sql']) . "\n\n";
@@ -135,7 +135,7 @@ class KunenaViewInstall extends JView
 		echo '<textarea cols="80" rows="20">';
 		echo $this->escape ( $diff->saveXML () );
 		echo '</textarea>';
-		if (KunenaForum::isSvn()) {
+		if (KunenaForum::isDev()) {
 			echo '<textarea cols="80" rows="20">';
 			foreach ( $sql as $item ) {
 				echo $this->escape($item ['sql']) . "\n\n";

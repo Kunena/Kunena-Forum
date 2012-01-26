@@ -152,9 +152,10 @@ abstract class KunenaRoute {
 	}
 
 	public static function cacheLoad() {
-		$user = KunenaUserHelper::getMyself();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		$cache = JFactory::getCache('_system', 'output');
+		$user = KunenaUserHelper::getMyself();
+		$cache = self::getCache();
+		// TODO: can use viewlevels instead of userid
 		$data = $cache->get($user->userid, 'com_kunena.route');
 		if ($data !== false) {
 			list(self::$subtree, self::$uris) = unserialize($data);
@@ -167,9 +168,20 @@ abstract class KunenaRoute {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$user = KunenaUserHelper::getMyself();
 		$data = array(self::$subtree, self::$uris);
-		$cache = JFactory::getCache('_system', 'output');
+		$cache = self::getCache();
+		// TODO: can use viewlevels instead of userid
 		$cache->store(serialize($data), $user->userid, 'com_kunena.route');
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+	}
+
+	protected static function getCache() {
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			return JFactory::getCache('mod_menu', 'output');
+		} else {
+			// Joomla 1.5
+			return JFactory::getCache('_system', 'output');
+		}
 	}
 
 	function stringURLSafe($string) {
@@ -371,9 +383,11 @@ abstract class KunenaRoute {
 	protected static function build() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (self::$search === false) {
+			$user = KunenaUserHelper::getMyself();
 			$language = JFactory::getDocument()->getLanguage();
-			$cache = JFactory::getCache('_system', 'output');
-			self::$search = unserialize($cache->get('search', "com_kunena.route.{$language}"));
+			$cache = self::getCache();
+
+			self::$search = unserialize($cache->get('search', "com_kunena.route.{$language}.{$user->userid}"));
 			if (self::$search === false) {
 				self::$search['home'] = array();
 				foreach ( self::$menu as $item ) {
@@ -393,7 +407,7 @@ abstract class KunenaRoute {
 						self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
 					}
 				}
-				$cache->store(serialize(self::$search), 'search', "com_kunena.route.{$language}");
+				$cache->store(serialize(self::$search), 'search', "com_kunena.route.{$language}.{$user->userid}");
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

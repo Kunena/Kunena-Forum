@@ -181,7 +181,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		if ($this->config->topicicons) {
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
+			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 
 		$categories = KunenaForumCategoryHelper::getCategories();
@@ -280,7 +280,7 @@ class KunenaViewTopic extends KunenaView {
 		$quote = JRequest::getBool ( 'quote', false );
 		$this->category = $this->topic->getCategory();
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
+			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
 		list ($this->topic, $this->message) = $parent->newReply($quote, $saved);
 		$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->topic->subject;
@@ -314,7 +314,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->topic = $this->message->getTopic();
 		$this->category = $this->topic->getCategory();
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
-			$this->topicIcons = $this->template->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
+			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 
 		// Run events
@@ -680,7 +680,7 @@ class KunenaViewTopic extends KunenaView {
 			//TODO: for normal users, show only limited number of thankyou (config->thankyou_max)
 			foreach( $thankyou->getList() as $userid=>$time){
 				if ( $me->userid  && $me->isModerator()  ) {
-					$this->message_thankyou_delete = '<a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'.KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->topic->category_id}&mesid={$this->message->id}&task=unthankyou&userid={$userid}&".JUtility::getToken() .'=1').'"><img src="'.$this->template->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>';
+					$this->message_thankyou_delete = '<a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'.KunenaRoute::_("index.php?option=com_kunena&view=topic&catid={$this->topic->category_id}&mesid={$this->message->id}&task=unthankyou&userid={$userid}&".JUtility::getToken() .'=1').'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>';
 				}
 				$this->thankyou[] = CKunenaLink::GetProfileLink($userid).' '.$this->message_thankyou_delete;
 			}

@@ -17,12 +17,7 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ( $this->config->keywords ) : ?>
 			<ul class="ktopic-taglist">
 				<?php if (!empty($this->keywords)) : ?>
-				<li class="ktopic-taglist-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', count($this->keywords)) ?></li>
-				<li><a href="#">templates</a></li>
-				<li><a href="#">design</a></li>
-				<li><a href="#">css</a></li>
-				<li><a href="#">colors</a></li>
-				<li><a href="#">help</a></li>
+				<li class="ktopic-taglist-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->keywords) ?></li>
 				<?php else: ?>
 				<li class="ktopic-taglist-title"><?php echo JText::_('COM_KUNENA_TOPIC_NO_TAGS') ?></li>
 				<?php endif ?>

@@ -16,15 +16,15 @@ defined ( '_JEXEC' ) or die ();
 				<li class="rowfull tk-latestx">
 					<dl class="icon">
 						<dt style="">
-							<?php echo JText::_('Filter posts by:'); ?>
+							<?php echo JText::_('COM_KUNENA_FILTER_MESSAGES_BY'); ?>:
 						</dt>
 						<dd class="tk-selecttime">
 					<select size="1" onchange="this.form.submit()" class="kinputbox" id="kfilter-select-attr" name="do">
-						<option selected="selected" value="0">Most Recent</option>
-						<option value="4">Most Popular</option>
-						<option value="4">Most Responses</option>
-						<option value="8">Number of Views</option>
-						<option value="12">Number of Thank Yous</option>
+						<option selected="selected" value="0"><?php echo JText::_('COM_KUNENA_SHOW_LAST') ?></option>
+						<option value="4"><?php echo JText::_('COM_KUNENA_STAT_POPULAR') ?></option>
+						<option value="4"><?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_MOST_ANSWERS') ?></option>
+						<option value="8"><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_VIEWS'); ?></option>
+						<option value="12"><?php echo JText::_('COM_KUNENA_TOPIC_ACTIONS_NUMBER_THANK_YOUS') ?></option>
 					</select>
 						</dd>
 						<dd class="tk-pagination">

@@ -24,7 +24,7 @@ class KunenaControllerUser extends KunenaController {
 		$active = JFactory::getApplication ()->getMenu ()->getActive ();
 		if (!empty($active)) {
 			$params = new JParameter($active->params);
-			$redirect = $params->get('integration');
+			$redirect = $params->get('integration', 1);
 		}
 		if ($redirect) {
 			$profileIntegration = KunenaFactory::getProfile();
@@ -211,7 +211,7 @@ class KunenaControllerUser extends KunenaController {
 
 	function login() {
 		$app = JFactory::getApplication();
-		if(!JRequest::checkToken()) {
+		if(!JFactory::getUser()->guest || !JRequest::checkToken()) {
 			$app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
 		}
 
@@ -231,7 +231,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$login = KunenaLogin::getInstance();
-		$login->logoutUser();
+		if (!JFactory::getUser()->guest) $login->logoutUser();
 		$this->redirectBack ();
 	}
 

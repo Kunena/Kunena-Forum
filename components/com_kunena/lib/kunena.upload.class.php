@@ -178,7 +178,7 @@ class CKunenaUpload {
 		}
 		CKunenaFolder::createIndex($uploadPath);
 
-		$this->fileName = CKunenaFile::makeSafe ( JRequest::getVar ( $input.'_name', '' ) );
+		$this->fileName = JRequest::getVar ( $input.'_name', '' );
 		$this->fileSize = 0;
 		$chunk = JRequest::getInt ( 'chunk', 0 );
 		$chunks = JRequest::getInt ( 'chunks', 0 );
@@ -195,9 +195,10 @@ class CKunenaUpload {
 			}
 			$this->fileTemp = $file ['tmp_name'];
 			$this->fileSize = $file ['size'];
-			if (! $this->fileName)
-				$this->fileName = CKunenaFile::makeSafe ( $file ['name'] );
-				//any errors the server registered on uploading
+			if (! $this->fileName) {
+				$this->fileName = $file ['name'];
+			}
+			//any errors the server registered on uploading
 			switch ($file ['error']) {
 				case 0 : // UPLOAD_ERR_OK :
 					break;
@@ -345,6 +346,8 @@ class CKunenaUpload {
 
 		// Override filename if given in the parameter
 		if ($filename) $uploadedFileBasename = $filename;
+		$uploadedFileBasename = CKunenaFile::makeSafe ( $uploadedFileBasename );
+		if (empty($uploadedFileBasename)) $uploadedFileBasename = 'h'.substr($this->fileHash, 2, 7);
 
 		// Rename file if there is already one with the same name
 		$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;

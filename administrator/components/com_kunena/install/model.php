@@ -278,7 +278,7 @@ class KunenaModelInstall extends JModel {
 		$exists = false;
 		$success = true;
 		$destinations = array(
-			'site'=>JPATH_ROOT . '/components/com_kunena',
+			'site'=>JPATH_SITE . '/components/com_kunena',
 			'admin'=>JPATH_ADMINISTRATOR . '/components/com_kunena'
 		);
 

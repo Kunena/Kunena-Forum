@@ -16,6 +16,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate {
 
 	public function __construct($params) {
 		$this->params = $params;
+		if (! class_exists('uddeIMAPI')) return;
 		$this->uddeim = new uddeIMAPI();
 		if ($this->uddeim->version() < 1) return;
 	}

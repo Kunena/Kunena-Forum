@@ -20,8 +20,6 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		// New Kunena JS for default template
 		$this->addScript ( 'js/default.js' );
 
-		$this->addStyleSheet ( 'css/mirage.css' );
-
 		// Load all css files (they are combined into one)
 		$this->addStyleSheet ( 'css/global.css' );
 		$this->addStyleSheet ( 'css/main.css' );
@@ -35,6 +33,8 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/buttons.css' );
 		$this->addStyleSheet ( 'css/icons-social.css' );
 		$this->addStyleSheet ( 'css/icons-editor.css' );
+
+		$this->addStyleSheet ( 'css/mirage.css' );
 
 		//$this->addIEStyleSheet ( 'css/ie.css' );
 		//$this->addIEStyleSheet ( 'css/ie7.css', 'IE 7' );

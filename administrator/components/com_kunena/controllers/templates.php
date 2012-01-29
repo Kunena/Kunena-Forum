@@ -39,6 +39,9 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$config->template = $id;
 			$config->save ();
 		}
+		$template = KunenaFactory::getTemplate($id);
+		$template->clearCache();
+
 		$app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT_SELECTED'));
 		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}

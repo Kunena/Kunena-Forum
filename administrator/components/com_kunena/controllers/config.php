@@ -29,7 +29,7 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$this->save($url);
 	}
 
-	function save($url=null) {
+	function save() {
 		$app = JFactory::getApplication ();
 		$config = KunenaFactory::getConfig ();
 		$db = JFactory::getDBO ();
@@ -59,8 +59,7 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$config->save ();
 
 		$app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
-		if (empty($url)) $app->redirect ( KunenaRoute::_($this->baseurl, false) );
-		else $app->redirect ( $url );
+		$app->redirect ( KunenaRoute::_($this->kunenabaseurl, false) );
 	}
 
 	function setdefault() {

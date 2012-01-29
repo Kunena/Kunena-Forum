@@ -25,6 +25,8 @@ class KunenaAdminViewConfig extends KunenaView {
 	protected function setToolBarDefault() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
+		JToolBarHelper::apply();
+		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('setdefault', 'restore.png','restore_f2.png', 'COM_KUNENA_RESET_CONFIG', false);

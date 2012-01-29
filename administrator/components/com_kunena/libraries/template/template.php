@@ -298,6 +298,11 @@ class KunenaTemplate extends JObject
 	}
 */
 
+	public function clearCache() {
+		$path = JPATH_ROOT."/media/kunena/cache/{$this->name}";
+		if (JFolder::exists($path)) JFolder::delete($path);
+	}
+
 	public function getCachePath($filename='') {
 		if ($filename) $filename = '/'.$filename;
 		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
@@ -359,9 +364,17 @@ class KunenaTemplate extends JObject
 			$buffer = CssMin::minify($buffer, $filters, $plugins);
 		}
 
-		$buffer = preg_replace ( '/url\(([\'"]?)\.\./u', 'url(\\1'.JURI::root(true)."/components/com_kunena/template/{$this->name}", $buffer );
+		$buffer = preg_replace_callback ( '/url\(([^\)]+)\)/u', array($this, 'findUrl'), $buffer );
 		JFile::write(JPATH_ROOT.'/'.$dest, $buffer);
 		return $dest;
+	}
+
+	function findUrl($matches) {
+		$file = trim($matches[1],' \'"');
+		if (preg_match('#^../#', $file)) {
+			$file = JURI::root(true).'/'.$this->getFile(substr($file, 3));
+		}
+		return "url('{$file}')";
 	}
 
 	/**

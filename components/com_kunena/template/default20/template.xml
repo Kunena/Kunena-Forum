@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE kinstall>
 <kinstall type="kunena-template" version="2.0">
-	<name>New Tableless</name>
+	<name>Mirage</name>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
 	<author>Kunena Team</author>

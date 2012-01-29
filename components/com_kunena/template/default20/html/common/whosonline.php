@@ -10,19 +10,24 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-		<div id="kwhosonline">
-			<a href="<?php echo $this->usersURL ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK') ?> &raquo;</a>
-			<h2 class="kheader">
-				<a href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>" rel="kwhosonline-detailsbox" >
+		<div class="block-wrapper box-color box-border box-border_radius">
+		<div id="whosonline" class="block">
+			<div class="headerbox-wrapper">
+			<div class="header">
+			<h2 class="header">
+				<a href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>" rel="whosonline-detailsbox" >
 					<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE') ?>
 				</a>
 			</h2>
-			<div class="kdetailsbox kwhosonline-details" id="kwhosonline-detailsbox" >
-				<div class="kwhosonline-smicon"><a href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>"><span class="kwho-smicon"></span></a></div>
-				<div class="kwhosonline-users">
+			</div>
+			</div>
+			<div class="detailsbox-wrapper">
+			<div class="detailsbox whosonline-details box-hover" id="whosonline-detailsbox" >
+				<div class="whosonline-smicon"><a href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>"><span class="kwho-smicon"></span></a></div>
+				<div class="whosonline-users">
 					<ul>
-						<li class="kwhosonline-subtitle"><p><?php  echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?></p></li>
-						<li class="kwhosonline-usernames">
+						<li class="whosonline-subtitle"><p><?php  echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?></p></li>
+						<li class="whosonline-usernames">
 							<ul>
 								<?php foreach ($this->onlineList as $user) : ?>
 								<li><?php echo $user->getLink() ?></li>
@@ -30,29 +35,31 @@ defined ( '_JEXEC' ) or die ();
 							</ul>
 						</li>
 						<?php if ($this->hiddenList) : ?>
-						<li class="kwhosonline-usernames">
+						<li class="whosonline-usernames">
 							<ul>
-								<li class="klegend-title"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</li>
+								<li class="legend-title"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</li>
 								<?php foreach ($this->hiddenList as $user) : ?>
 								<li><?php echo $user->getLink() ?></li>
 								<?php endforeach ?>
 							</ul>
 						</li>
 						<?php endif ?>
-						<li class="kwhosonline-legend">
+						<li class="whosonline-legend">
 							<ul>
-								<li class="klegend-title"><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</li>
+								<li class="legend-title"><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</li>
 								<!-- Loop this LI for each group -->
 								<!-- Can each of these link to a memberlist of that group only?  -->
-								<li class="kuser-admin"><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></li>
-								<li class="kuser-globalmod"><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></li>
-								<li class="kuser-moderator"><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></li>
-								<li class="kuser-user"><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></li>
-								<li class="kuser-guest"><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></li>
+								<li class="user-admin"><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></li>
+								<li class="user-globalmod"><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></li>
+								<li class="user-moderator"><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></li>
+								<li class="user-user"><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></li>
+								<li class="user-guest"><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></li>
 							</ul>
 						</li>
 					</ul>
 				</div>
 			</div>
-			<div class="clr"></div>
+			</div>
 		</div>
+		</div>
+		<div class="spacer"></div>

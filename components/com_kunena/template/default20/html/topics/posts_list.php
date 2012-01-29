@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 		<div class="ksection">
-			<h2 class="kheader"><a title="Recent Posts" rel="kposts-detailsbox"><?php echo $this->headerText ?></a></h2>
+			<h2 class="header"><a title="Recent Posts" rel="kposts-detailsbox"><?php echo $this->headerText ?></a></h2>
 			<div class="kdetailsbox krec-posts" id="kposts-detailsbox">
 				<ul class="kposts">
 					<?php if (empty($this->messages )) : ?>

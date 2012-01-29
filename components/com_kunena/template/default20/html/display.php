@@ -9,7 +9,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div id="kunena" class="kunena">
+<div id="kunena">
 <?php
 $this->displayMenu ();
 $this->displayLoginBox ();
@@ -17,8 +17,6 @@ $this->displayBreadcrumb ();
 
 // Display current view/layout
 $this->displayLayout();
-
-$this->displayBreadcrumb ();
 
 $this->displayFooter ();
 ?>

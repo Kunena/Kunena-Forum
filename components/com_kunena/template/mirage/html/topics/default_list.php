@@ -10,26 +10,50 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post">
-		<div class="ksection">
-			<?php if (!empty($this->rssURL)) : ?>
-			<a href="<?php echo $this->rssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_RSS_TITLE', $this->headerText) ?>"><?php echo $this->getIcon('krss-icon') ?></a>
-			<?php endif ?>
-			<a href="#" class="ksection-headericon"><?php echo $this->getImage('icon-section.png') ?></a>
-			<h2 class="kheader"><a rel="klatest-detailsbox"><?php echo $this->headerText ?></a></h2>
-			<div class="kdetailsbox" id="klatest-detailsbox">
-				<ul class="klatest">
-					<?php if (empty($this->topics )) : ?>
-					<li class="ktopics-row krow-odd">
-						<?php echo JText::_('COM_KUNENA_VIEW_RECENT_NO_TOPICS'); ?>
-					</li>
-					<?php else : $this->displayRows(); endif ?>
-				</ul>
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post">
+	<div class="block-wrapper box-color box-border box-border_radius">
+		<div class="block">
+			<div class="headerbox-wrapper">
+				<div class="header">
+					<h2 class="header"><a rel="topic-detailsbox"><?php echo $this->headerText ?></a></h2>
+				</div>
 			</div>
-			<div class="clr"></div>
+			<div class="detailsbox-wrapper">
+				<div class="topic detailsbox" id="topic-detailsbox">
+					<ul class="topic-list">
+						<li class="header">
+							<dl>
+								<dd class="topic-icon">
+								</dd>
+								<dd class="topic-subject">
+									<span><?php echo JText::_('Subject') ?></span>
+								</dd>
+								<dd class="topic-replies">
+									<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
+								</dd>
+								<dd class="topic-views">
+									<span><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
+								</dd>
+								<dd class="topic-lastpost">
+									<span><?php echo JText::_('Last Post') ?></span>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+					<ul class="topic-list">
+						<?php if (empty($this->topics )) : ?>
+						<li class="topic-row">
+							<?php echo JText::_('COM_KUNENA_VIEW_RECENT_NO_TOPICS'); ?>
+						</li>
+						<?php else : $this->displayRows(); endif ?>
+					</ul>
+				</div>
+			</div>
 		</div>
+	</div>
+	<div class="spacer"></div>
 		<?php if ($this->topicActions) : ?>
-		<div id="ksection-modbox">
+		<div id="section-modbox">
 			<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="kinputbox" size="1"', 'value', 'text', 0, 'kmoderate-select');
 			$options = array (JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
 			echo JHTML::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="kinputbox" size="1" style="display:none;"', 'value', 'text', 0, 'kcategorytarget'); ?>

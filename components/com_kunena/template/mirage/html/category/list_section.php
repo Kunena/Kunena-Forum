@@ -10,32 +10,61 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-		<div class="<?php echo $this->getClass('ksection', $this->escape($this->section->class_sfx)) ?>" id="ksection-<?php echo intval($this->section->id) ?>">
-			<?php if (!empty($this->sectionRssURL)) : ?>
-			<a href="<?php echo $this->sectionRssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_SECTION_LIST_RSS_TITLE', $this->escape($this->section->name)) ?>"><span class="krss-icon"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?></span></a>
-			<?php endif ?>
+<?php if (!empty($this->categories [$this->section->id])) : ?>
+	<div class="block-wrapper box-color box-border box-border_radius">
+		<div class="<?php echo $this->getClass('block', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo intval($this->section->id) ?>">
 			<?php if (!empty($this->sectionMarkReadURL)) : ?>
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="kunenaMarkAllRead" method="post">
-				<input type="hidden" name="view" value="category" />
-				<input type="hidden" name="task" value="markread" />
-				<?php echo JHTML::_( 'form.token' ); ?>
-
-				<input type="submit" class="kheader-link" value="<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?>" />
-			</form>
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="kunenaMarkAllRead" method="post">
+					<input type="hidden" name="view" value="category" />
+					<input type="hidden" name="task" value="markread" />
+					<?php echo JHTML::_( 'form.token' ); ?>
+					<input type="submit" class="kheader-link" value="<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?>" />
+				</form>
 			<?php endif ?>
-			<a href="<?php echo $this->sectionURL ?>" class="ksection-headericon"><?php echo $this->getImage('icon-section.png') ?></a>
-			<h2 class="kheader"><a href="<?php echo $this->sectionURL ?>" rel="ksection-detailsbox-<?php echo intval($this->section->id) ?>"><?php echo $this->escape($this->section->name) ?></a></h2>
-			<?php if ($this->section->description) : ?>
-			<div class="kheader-desc"><?php echo $this->parse($this->section->description) ?></div>
-			<?php endif ?>
-			<div class="kdetailsbox" id="ksection-detailsbox-<?php echo intval($this->section->id) ?>">
-				<?php
-				if (!empty($this->categories [$this->section->id])) {
-					foreach ( $this->categories [$this->section->id] as $category ) {
-						echo $this->displayCategory($category);
-					}
-				}
-				?>
+			<div class="headerbox-wrapper">
+				<div class="header">
+					<h2 class="header">
+						<a href="<?php echo $this->sectionURL ?>" rel="ksection-detailsbox-<?php echo intval($this->section->id) ?>">
+							<?php echo $this->escape($this->section->name) ?>
+						</a>
+					</h2>
+					<?php if ($this->section->description) : ?>
+						<div class="header-desc"><?php echo $this->parse($this->section->description) ?></div>
+					<?php endif ?>
+				</div>
 			</div>
-			<div class="clr"></div>
+			<div class="detailsbox-wrapper">
+				<div class="category detailsbox" id="category-<?php echo intval($this->section->id) ?>">
+					<ul class="category-list">
+						<li class="header">
+							<dl>
+								<dd class="category-icon">
+								</dd>
+								<dd class="category-subject">
+									<span><?php echo JText::_('Subject') ?></<span>
+								</dd>
+								<dd class="category-topics">
+									<span><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></<span>
+								</dd>
+								<dd class="category-replies">
+									<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></<span>
+								</dd>
+								<dd class="category-lastpost">
+									<span><?php echo JText::_('Last Post') ?></<span>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+					<ul class="category-list">
+						<?php
+						foreach ( $this->categories [$this->section->id] as $category ) {
+								echo $this->displayCategory($category);
+						}
+						?>
+					</ul>
+				</div>
+			</div>
 		</div>
+	</div>
+	<div class="spacer"></div>
+<?php endif ?>

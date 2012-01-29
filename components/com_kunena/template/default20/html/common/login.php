@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 // TODO: add missing module position
 ?>
-		<div id="klogin" class="block">
+		<div class="klogin">
 			<ul class="klogin-guest">
 				<li class="klogin-welcome kguest"><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME') ?>, <?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST') ?></li>
 				<?php if ($this->login) : ?>
@@ -23,8 +23,12 @@ defined ( '_JEXEC' ) or die ();
 
 						<fieldset>
 							<legend class="klegend"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></legend>
-							<input type="text" name="username" id="kusername" class="kinputbox" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_USERNAME') ?>"/>
-							<input type="password" name="password" id="kpassword" class="kinputbox" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD') ?>" />
+							<label for="kusername"><?php echo JText::_('COM_KUNENA_LOGIN_USERNAME') ?></label>
+							<input type="text" name="username" id="kusername" class="kinputbox" />
+							<label for="kpassword"><?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD') ?></label>
+							<input type="password" name="password" id="kpassword" class="kinputbox" />
+							<label for="kremember"><?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME') ?></label>
+							<input type="checkbox" id="kremember" class="kcheckbox" name="remember" value="yes" />
 							<button type="submit" value="Log in" class="kbutton"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></button>
 						</fieldset>
 					</form>
@@ -41,4 +45,3 @@ defined ( '_JEXEC' ) or die ();
 				<?php endif ?>
 			</ul>
 		</div>
-		<div class="spacer"></div>

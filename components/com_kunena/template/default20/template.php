@@ -9,8 +9,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-class KunenaTemplateMirage extends KunenaTemplate {
-	protected $default = 'mirage';
+class KunenaTemplateDefault20 extends KunenaTemplate {
+	protected $default = 'blue_eagle';
 	public $categoryIcons = array('knonew', 'knew');
 
 	public function initialize() {
@@ -19,9 +19,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 
 		// New Kunena JS for default template
 		$this->addScript ( 'js/default.js' );
-      
-      $this->addStyleSheet ( 'css/mirage.css' );
-      
+
 		// Load all css files (they are combined into one)
 		$this->addStyleSheet ( 'css/global.css' );
 		$this->addStyleSheet ( 'css/main.css' );
@@ -36,9 +34,9 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/icons-social.css' );
 		$this->addStyleSheet ( 'css/icons-editor.css' );
 
-		//$this->addIEStyleSheet ( 'css/ie.css' );
-		//$this->addIEStyleSheet ( 'css/ie7.css', 'IE 7' );
-		//$this->addIEStyleSheet ( 'css/ie8.css', 'IE 8' );
+		$this->addIEStyleSheet ( 'css/ie.css' );
+		$this->addIEStyleSheet ( 'css/ie7.css', 'IE 7' );
+		$this->addIEStyleSheet ( 'css/ie8.css', 'IE 8' );
 
 		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 			// Load mediaxboxadvanced library if enabled in configuration

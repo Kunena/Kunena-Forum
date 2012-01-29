@@ -11,12 +11,12 @@
 defined ( '_JEXEC' ) or die ();
 // TODO: add support for announcement RSS feed
 ?>
-		<div id="kannounce">
+		<div id="announce" class="block">
 			<!-- a href="#" title="Announcement RSS Feed"><span class="krss-icon">Announcement RSS Feed</span></a -->
 			<h2 class="kheader">
 				<a href="<?php echo $this->annListURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox"><?php echo $this->annTitle ?></a>
 			</h2>
-			<div class="kdetailsbox" id="kannounce-detailsbox">
+			<div class="detailsbox" id="announce-detailsbox">
 				<ul class="kheader-desc">
 					<li class="kannounce-date"><?php echo $this->annDate->toKunena('date_today') ?></li>
 					<li class="kannounce-desc"><p><?php echo $this->annDescription ?></p></li>
@@ -25,5 +25,6 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif ?>
 				</ul>
 			</div>
+			<div class="spacer"></div>
 		</div>
 		<?php echo $this->getModulePosition ( 'kunena_announcement' ) ?>

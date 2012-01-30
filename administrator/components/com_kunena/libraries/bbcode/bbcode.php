@@ -34,8 +34,8 @@ class KunenaBbcode extends BBCode {
 		$this->tag_rules = $this->defaults->default_tag_rules;
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
-		$this->SetSmileyDir ( JPATH_ROOT .'/'. KPATH_COMPONENT_RELATIVE );
-		$this->SetSmileyURL ( JURI::root(true) . '/' . KPATH_COMPONENT_RELATIVE );
+		$this->SetSmileyDir ( JPATH_ROOT );
+		$this->SetSmileyURL ( '' );
 		$this->SetDetectURLs ( true );
 	}
 

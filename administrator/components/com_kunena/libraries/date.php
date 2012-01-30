@@ -17,7 +17,7 @@ class KunenaDate extends JDate {
 	}
 
 	public function diff($d2 = 'now', $week = false) {
-		if (method_exists('DateTime', 'diff')) {
+		if (class_exists('DateTime') && method_exists('DateTime', 'diff')) {
 			// PHP 5.3:
 			$d1 = new DateTime($this->toISO8601());
 			$d2 = new DateTime(is_numeric($d2) ? date('c', $d2) : $d2);

@@ -10,19 +10,22 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-	<div class="block-wrapper box-color box-border box-border_radius">
-		<div id="statistics" class="block">
-			<div class="headerbox-wrapper">
-			<div class="header">
-			<h2 class="header">
-				<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>" rel="statistics-detailsbox">
-					<?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS') ?>
-				</a>
-			</h2>
+<div class="block-wrapper box-color box-border box-border_radius box-shadow">
+	<div id="statistics" class="block">
+		<div class="headerbox-wrapper clear">
+			<div class="header fl">
+				<h2 class="header">
+					<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>" rel="statistics-detailsbox">
+						<?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS') ?>
+					</a>
+				</h2>
 			</div>
+			<div class="header fr">
+				<a href="<?php echo $this->statisticsURL ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') ?></a>
 			</div>
-			<div class="detailsbox-wrapper">
-			<div class="detailsbox statistics-details box-hover" id="statistics-detailsbox" >
+		</div>
+		<div class="detailsbox-wrapper clear">
+			<div class="statistics-details detailsbox innerspacer box-hover box-border box-border_radius box-shadow" id="statistics-detailsbox" >
 				<div class="statistics-smicon">
 					<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
 						<span class="stats-smicon"></span>
@@ -51,7 +54,7 @@ defined ( '_JEXEC' ) or die ();
 					</ul>
 				</div>
 			</div>
-			</div>
 		</div>
 	</div>
-	<div class="spacer"></div>
+</div>
+<div class="spacer"></div>

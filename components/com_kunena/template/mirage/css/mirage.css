@@ -1,12 +1,12 @@
-/* if tehmpale is optimized correctly we can take out this line, this will do a forum reset for kunena elements */
-#kunena div, #kunena dl, #kunena dt, #kunena dd, #kunena ul, #kunena ol, #kunena li, #kunena h1, #kunena h2, #kunena h3, #kunena h4, #kunena h5, #kunena h6, #kunena pre, #kunena form, #kunena fieldset, #kunena input, #kunena textarea, #kunena p, #kunena blockquote, #kunena th, #kunena td, #kunena a, #kunena a:hover, #kunena a:visited, #kunena a:focus, #kunena a:active {
-   line-height: normal !important;
-   list-style-type: none !important;
-   margin: 0px;
-   padding: 0px;
-   text-decoration: none;
-   background: none;
-}
+/* The css provides template positioning and styling for Kunena, following some rules and conventions outlined below.
+ * 1. Define standard Kunena container.
+ * 2. Define resets for Kunena.
+ * 3. Define positioning elements for multile tag instances of all possible tags.
+ * 4. Define styling elements for multiple html tag instances of single tags.
+
+/*******************
+ * START CONTAINER *
+ *******************/
 
 #kunena {
    display: inline-block;
@@ -14,9 +14,159 @@
    width: 100% !important;
 }
 
-#kunena h2.header {
-   font-size: 34px;
-   line-height: 24px;
+/*****************
+ * END CONTAINER *
+ *****************/
+
+/***************
+ * START RESET *
+ ***************/
+
+/* NOTE: If third-party wrapper template is optimized correctly we can take out this section.*/
+/* Box Element Reset */
+#kunena div, #kunena h1, #kunena h2, #kunena h3, #kunena h4, #kunena h5, #kunena h6, #kunena ul, #kunena li, #kunena ol, #kunena dl, #kunena dt, #kunena dd, #kunena pre, #kunena form, #kunena fieldset, #kunena input, #kunena textarea, #kunena p, #kunena blockquote, #kunena th, #kunena tr, #kunena td {
+   margin: 0px;
+   padding: 0px;
+   /*line-height: normal !important;*/
+   text-decoration: none;
+   background: none;
+   color: #555555;
+   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* List Reset */
+#kunena ul, #kunena li, #kunena ol, #kunena dl, #kunena dt, #kunena dd {
+   margin: 0px;
+   padding: 0px;
+   line-height: normal !important;
+   list-style-type: none !important;
+   text-decoration: none !important;
+   background: none;
+   color: #555555;
+}
+
+/* Link Active Status Reset */
+#kunena a, #kunena a:link, #kunena a:visited, #kunena a:active {
+	text-decoration: none !important;
+	background: none !important;
+}
+
+/* Link Action Reset */
+#kunena a:hover, #kunena a:focus {
+	text-decoration: underline !important;
+	background: none !important;
+	color: #333333 !important;
+}
+
+#kunena fieldset {
+	padding: 15px;
+	margin: 5px;
+	/*border-width: 1px;
+	border-style: solid;
+	border-color: #BFC3C6;(*/
+}
+
+#kunena input {
+   width: -moz-clac(100%);
+   /*margin: 5px;*/
+   padding: 5px;
+}
+
+#kunena select {
+	padding: 3px;
+	/*margin: 5px;*/
+	/*border-width: 1px;
+	border-style: solid;
+	border-color: #BFC3C6;(*/
+}
+
+/*************
+ * END RESET *
+ *************/
+
+/*****************************
+ * START DEFAULT POSITIONING *
+ *****************************/
+
+#kunena .fl {
+	float: left;
+}
+
+#kunena .fr {
+	float: right;
+}
+
+#kunena .fn {
+	float: none;
+}
+
+#kunena .clear {
+	clear: both;
+}
+
+/****************************
+ * STOP DEFAULT POSITIONING *
+ ****************************/
+
+#kunena .link {
+	text-decoration: underline !important;
+	background: none !important;
+	color: #333333 !important;
+}
+
+#kunena .link:hover, #kunena .link:focus {
+	text-decoration: underline !important;
+	background: none !important;
+	color: #333333 !important;
+}
+
+/*#kunena input.kinputbox,
+#kunena textarea.ktxtarea {
+	border: 1px solid;
+	padding: 3px 5px;
+	width: 95%;
+}
+
+#kunena input.kinputbox-inline {
+	width: auto;
+}
+
+#kunena input.kinputbox-date {
+	width: 25%;
+}
+
+#kunena label {
+	font-weight:bold;
+}
+
+#kunena label i {
+	font-weight:normal;
+}
+
+#kunena fieldset {
+	background: none;
+	padding:0;
+	margin:0;
+	border:0 none;
+}
+
+#kunena legend.klegend {
+	display: none;
+}*/
+
+#kunena h2 > a {
+   font-size: 18px !important;
+   line-height: 24px !important;
+   font-family: Georgia,"Times New Roman",Times,serif !important;
+   font-weight: bold !important;
+   color: #555555 !important;
+}
+
+#kunena h3 > a {
+    font-size: 15px !important;
+    font-family: Georgia,"Times New Roman",Times,serif !important;
+    font-weight: bold !important;
+    color: #555555 !important;
 }
 
 /*#kunena a {
@@ -67,12 +217,19 @@
 /* TODO: Need configure option for: padding */
 #kunena div.headerbox-wrapper {
    /*padding: 10px;*/
+   overflow: hidden;
 }
 
 /*wrapper is needed for some spacing elements */
 /* TODO: Need configure option for: padding */
 #kunena div.detailsbox-wrapper {
    padding: 8px 10px 10px 10px;
+   overflow: hidden;
+}
+
+#kunena div.modbox-wrapper {
+   padding: 5px 10px 5px 10px;
+   overflow: hidden;
 }
 
 #kunena div.header {
@@ -82,9 +239,117 @@
 #kunena div.detailsbox {
    clear: both;
    /*margin: 2px 2px 4px;*/
-   padding: 1px 0 0;
+   /*padding: 1px 0 0;*/
    overflow: hidden;
 }
+
+#kunena div.innerspacer {
+   /*padding: 5px;*/
+}
+
+#kunena div.modbox {
+	overflow: hidden;
+	float: right;
+}
+
+#kunena div.dropdown {
+	display: none;
+}
+
+#kunena div.dropdown li {
+	display: block;
+	float: none;
+	position: relative;
+}
+
+#kunena .divider {
+	display: block
+	overflow: hidden;
+	height: 0;
+	border-bottom-color: #333333;
+    border-top-color: #1B1B1B;
+}
+
+/*---------- Advanced Search ------------- */
+
+#kunena #searchform {
+	padding: 10px 10px 0px;
+}
+#kunena #searchform fieldset {
+	/*border: 1px solid;
+	margin-bottom: 15px;*/
+	padding: 15px;
+}
+
+#kunena #searchform LEGEND {
+	padding: 0 5px;
+	font-size: 1em;
+}
+
+#kunena #searchform .input {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+	padding: 5px;
+	width: 100%
+    background-color: #FFFFFF;
+    background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+    border: 1px solid silver;
+    border-radius: 2px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+#kunena #searchform select {
+	/*padding: 5px;
+	margin: 10px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #BFC3C6;(*/
+}
+
+#kunena #searchform select#catids {
+	width: 100%;
+	/*border-width: 1px;
+	border-style: solid;
+	border-color: #BFC3C6;(*/
+}
+
+#kunena .ksearchform-leftcol {
+	float: left;
+	clear: left;
+	width: 49%;
+}
+#kunena .ksearchform-rightcol {
+	float: right;
+	clear: right;
+	width: 49%;
+}
+#kunena #searchform .clrline {
+}
+#kunena #searchform .kpost-buttons {
+	margin: 0 -10px;
+	border-top: 1px solid;
+}
+#kunena #searchform label input {
+	vertical-align: middle;
+}
+
+#kunena #search-posts-start select {
+	/*margin-left: 10px;*/
+}
+
+#kunena #search-posts-date select,
+#kunena #search-posts-sort select {
+	/*margin-right: 10px;*/
+}
+#kunena input#keywords,
+#kunena input#username {
+	margin-right: 10px;
+}
+#kunena .kadvsearch .clrline {
+	clear: both;
+}
+
+/*---------- Breadcrmb ------------- */
 
 #kunena div.breadcrumb {
     padding: 5px 10px;
@@ -98,7 +363,7 @@
     margin: 0px 10px;
 }
 
-/*---------- Category Link ------------- */
+/*---------- Category List ------------- */
 
 #kunena ul.category-list {
     display: block;
@@ -132,7 +397,7 @@
 
 #kunena ul.category-list li.category-row {
    margin: 0px;
-   padding: 2px;
+   /*padding: 2px;*/
    overflow: hidden;
 }
 
@@ -140,14 +405,21 @@
     display: block;
     float: left;
     margin: 0px;
-    padding: 4px 0;
+    padding: 5px;
+}
+
+#kunena ul.category-list li.header dd {
+    display: block;
+    float: left;
+    margin: 0px;
+    padding: 2px 5px;
 }
 
 #kunena ul.category-list dd {
     display: block;
     float: left;
     margin: 0px;
-    padding: 2px 0;
+    /*padding: 2px 0;*/
 }
 
 #kunena ul.category-list li.category-row dd {
@@ -181,6 +453,16 @@
    width: 20%;
 }
 
+/*#kunena ul.category-list li {
+    clear: both;
+    display: block;
+    margin: 0;
+    overflow: hidden;
+    padding: 1px 0 0;
+    position: relative;
+    vertical-align: bottom;
+}*/
+
 /*---------- Topic List ------------- */
 
 #kunena ul.topic-list {
@@ -213,17 +495,24 @@
     width: auto;
 }
 
-#kunena ul.topic-list li.category-row {
+#kunena ul.topic-list li.topics-row {
    margin: 0px;
-   padding: 2px;
+   padding: 0px;
    overflow: hidden;
 }
 
-#kunena ul.topic-list li.category-row dd {
+#kunena ul.topic-list li.topics-row dd {
     display: block;
     float: left;
     margin: 0px;
-    padding: 4px 0;
+    padding: 5px;
+}
+
+#kunena ul.topic-list li.header dd {
+    display: block;
+    float: left;
+    margin: 0px;
+    padding: 2px 5px;
 }
 
 #kunena ul.topic-list dd {
@@ -233,7 +522,12 @@
     padding: 2px 0;
 }
 
-#kunena ul.topic-list li.topic-row dd {
+/*#kunena ul.topic-list li.topics-row dl {
+    display: block;
+    position: relative;
+}*/
+
+#kunena ul.topic-list li.topics-row dd {
     display: block;
     float: left;
     margin: 0px;
@@ -249,13 +543,15 @@
 #kunena ul.topic-list dd.topic-subject {
    margin: 0;
    text-align: left;
-   width: 45%;
+   width: 40%;
 }
 
 #kunena ul.topic-list dd.topic-replies, #kunena dd.topic-views {
    margin: 0;
    text-align: center;
    width: 10%;
+   position: relative;
+   top: 50%;
 }
 
 #kunena ul.topic-list dd.topic-lastpost {
@@ -264,15 +560,42 @@
    width: 20%;
 }
 
+#kunena ul.topic-list dd.topic-checkbox {
+   margin: 0;
+   text-align: center;
+   vertical-align: middle;
+   width: 5%;
+}
 
-#kunena ul.topic-list li.topic-row dd {
+
+/*#kunena ul.topic-list li.topic-row dd {
     display: block;
     float: left;
     margin: 0px;
     padding: 4px 0;
+}*/
+
+
+/*---------- Postmessage List ------------- */
+
+#kunena ul.postmessage-list {
+    display: block;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
 }
 
-/*---------- Topic ------------- */
+#kunena ul.postmessage-list li {
+   clear: both;
+   display: block;
+   position: relative;
+   vertical-align: bottom;
+   margin: 0;
+   overflow: hidden;
+   padding: 5px;
+}
+
+/*---------- Message List ------------- */
 
 /*#kunena div#topic .posthead {
     padding: 5px 10px;
@@ -280,6 +603,10 @@
 
 #kunena div#topic ul.topic-posts li.topic-row {
     padding: 5px 10px;
+}
+
+#kunena div#topic ul.topic-posts li.topic-row:hover ul.message-buttons {
+   visibility: visible;
 }
 
 #kunena div#topic ul.message-list li.header {
@@ -294,9 +621,20 @@
    visibility: hidden;
 }
 
-#kunena div#topic ul.topic-posts li.topic-row:hover  ul.message-buttons {
-   visibility: visible;
+#kunena div#topic .topic-taglist {
+    display: block;
+    /*padding: 5px 10px;*/
 }
+
+#kunena div#topic .topic-taglist-edit {
+    float: right;
+}
+
+#kunena div#topic .topic-taglist li {
+    display: inline;
+    line-height: 13px;
+}
+
 
 /*---------- Breadcrumbs ------------- */
 
@@ -454,7 +792,7 @@
 #kunena div#whosonline div.whosonline-users {
 	display: block;
 	float: left;
-	padding: 0 0 5px 10px;
+	padding: 10px 0 10px 10px;
 }
 
 #kunena div#whosonline .section-icon span {
@@ -545,7 +883,7 @@
 }
 
 #kunena div.menubox div.menubox-global ul.menu li {
-   background: none repeat scroll 0 0 transparent;
+   /*background: none repeat scroll 0 0 transparent;*/
    /*border-radius: 5px 5px 0 0;*/
    display: inline;
    float: left;
@@ -553,13 +891,16 @@
 
 #kunena div.menubox div.menubox-global ul.menu li a {
    /*height: 30px;*/
-   line-height: 30px;
+   /*line-height: 30px;*/
    margin: 0;
    padding: 12px 8px;
+   height: 18px;
+   overflow: hidden;
 }
 
 #kunena div.menubox div.menubox-global ul.menu li a {
    background: none;
+   font-size: 14px !important;
 }
 
 #kunena div.menubox div.menubox-global ul.menu li a:hover {
@@ -567,7 +908,7 @@
 }
 
 #kunena div.menubox div.menubox-user ul.menu li {
-   background: none repeat scroll 0 0 transparent;
+   /*background: none repeat scroll 0 0 transparent;*/
    /*border-radius: 5px 5px 0 0;*/
    display: inline;
    float: right;
@@ -577,11 +918,16 @@
    /*height: 30px;*/
    line-height: 30px;
    margin: 0;
-   /*padding: 5px 5px;*/
+   padding: 5px;
+   overflow: hidden;
 }
 
-#kunena div.menubox div.menubox-global ul.menu li a {
-   font-size: 14px !important;
+#kunena div.menubox div.menubox-user ul.menu li a {
+   background: none;
+}
+
+#kunena div.menubox div.menubox-user ul.menu li a:hover {
+   background: none;
 }
 
 #kunena div.login-member {
@@ -602,14 +948,6 @@
    height: 32px;
 }
 
-#kunena div.login-member img {
-   border-radius: 5px;
-}
-
-#kunena div.login-member img:hover {
-   border-radius: 5px;
-}
-
 /* Button Bar */
 
 #kunena div.buttonbar ul.message-buttons {
@@ -622,8 +960,14 @@
    margin: 0px;
 }
 
-#kunena div.buttonbar ul.message-buttons li.button dd {
+#kunena div.buttonbar ul.message-buttons li.button a {
+   display: block;
+}
+
+#kunena div.buttonbar ul.message-buttons li.button a > span {
    padding: 5px 10px;
+   display: block;
+   /*overflow: hidden;*/
 }
 
 /*#kunena div.buttonbar ul.message-buttons span {
@@ -633,12 +977,50 @@
 
 /* color */
 
+#kunena input {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+    background-color: #FFFFFF;
+    background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+    border: 1px solid silver;
+    border-radius: 5px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+#kunena select {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+    background-color: #FFFFFF;
+    background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+    border: 1px solid silver;
+    border-radius: 5px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+#kunena textarea {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+    background-color: #FFFFFF;
+    background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+    border: 5px solid silver;
+    border-radius: 5px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
 #kunena .box-hover {
    background-color: rgba(255, 255, 255, 0.0);
 }
 
 #kunena .box-hover:hover {
    background-color: rgba(100, 100, 100, 0.1);
+}
+
+#kunena .box-shadow {
+   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(255, 255, 255, 0.4), -1px -1px 0 rgba(255, 255, 255, 0.4), 1px -1px 0 rgba(255, 255, 255, 0.4), -1px 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+#kunena .box-shadow:hover {
+
 }
 
 #kunena .box-color {
@@ -652,7 +1034,7 @@
 }
 
 #kunena .box-border {
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
    border-color: transparent rgba(0, 0, 0, 0.1);
    border-style: solid;
    border-width: 1px;
@@ -660,8 +1042,8 @@
 }
 
 #kunena .box-border:hover {
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-   border-color: transparent rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+   border-color: transparent rgba(255, 255, 255, 0.1);
    border-style: solid;
    border-width: 1px;
    /*border-radius: 5px;*/
@@ -705,18 +1087,30 @@
 
 #kunena h2.header a {
 	/*color: var(styleForumHeadercolorText) !important;*/
-	font-weight: normal;
+	/*font-weight: normal;
 	text-decoration: none;
 	font-size: 18px !important;
 	line-height: 24px;
+	background: none;
+	color: #444444;*/
+}
+
+#kunena h2.header a:hover {
+	/*color: var(styleForumHeadercolorText) !important;*/
+	/*font-weight: normal;
+	text-decoration: none;
+	font-size: 18px !important;
+	line-height: 24px;
+	background: none;
+	color: #444444;*/
 }
 
 #kunena div.detailsbox {
-   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(255, 255, 255, 0.4), -1px -1px 0 rgba(255, 255, 255, 0.4), 1px -1px 0 rgba(255, 255, 255, 0.4), -1px 1px 0 rgba(255, 255, 255, 0.4);
+   /*box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(255, 255, 255, 0.4), -1px -1px 0 rgba(255, 255, 255, 0.4), 1px -1px 0 rgba(255, 255, 255, 0.4), -1px 1px 0 rgba(255, 255, 255, 0.4);
    border-color: transparent rgba(0, 0, 0, 0.1);
    border-style: solid;
    border-width: 1px;
-   border-radius: 5px;
+   border-radius: 5px;*/
 }
 
 #kunena div.category ul.category-list li.header {
@@ -724,15 +1118,15 @@
 }
 
 #kunena div.category ul.category-list li.category-row {
-   border-top: 1px solid rgba(0, 0, 0, 0.1);
-   border-bottom: 1px solid rgba(0, 0, 0, 0.0);
+   border-top: 1px solid rgba(0, 0, 0, 0.0);
+   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
    background-color: rgba(255, 255, 255, 0.0);
 }
 
 #kunena div.category ul.category-list li.category-row:hover {
-   border-top: 1px solid rgba(0, 0, 0, 0.1);
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+   border-top: 1px solid rgba(255, 255, 255, 0.8);
+   border-bottom: 1px solid rgba(255, 255, 255, 0.8);
    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
    background-color: rgba(100, 100, 100, 0.1);
 }
@@ -747,18 +1141,32 @@
    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-#kunena div.topic ul.topic-list li.topic-row {
-   border-top: 1px solid rgba(0, 0, 0, 0.1);
-   border-bottom: 1px solid rgba(0, 0, 0, 0.0);
+#kunena div.topic ul.topic-list li.topics-row {
+   border-top: 1px solid rgba(0, 0, 0, 0.0);
+   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
    background-color: rgba(255, 255, 255, 0.0);
 }
 
-#kunena div.topic ul.topic-list li.topic-row:hover {
-   border-top: 1px solid rgba(0, 0, 0, 0.1);
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+#kunena div.topic ul.topic-list li.topics-row:hover {
+   border-top: 1px solid rgba(255, 255, 255, 0.8);
+   border-bottom: 1px solid rgba(255, 255, 255, 0.8);
    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
    background-color: rgba(100, 100, 100, 0.1);
+}
+
+#kunena li.postmessage-row {
+	border-top: 1px solid rgba(0, 0, 0, 0.0);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
+	background-color: rgba(255, 255, 255, 0.0);
+}
+
+#kunena li.postmessage-row:hover {
+	border-top: 1px solid rgba(255, 255, 255, 0.8);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
+	background-color: rgba(100, 100, 100, 0.1);
 }
 
 #kunena div.topic ul.topic-list li.topic-row dd.replies, #kunena ul.topic-list li.category-row dd.views {
@@ -768,6 +1176,58 @@
 
 #kunena #topic ul.topic-posts li.header {
    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#kunena div.menubox div.menubox-global ul.menu li a {
+   /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+   background-color: rgba(255, 255, 255, 0.0) !important;
+   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+   /*color: #444444;*/
+}
+
+#kunena div.menubox div.menubox-global ul.menu li a:hover {
+   /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+   background-color: rgba(100, 100, 100, 0.1) !important;
+   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+   /*color: #222222;*/
+}
+
+#kunena div.menubox div.menubox-user ul.menu li a {
+   /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+   background-color: rgba(255, 255, 255, 0.0) !important;
+   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+   /*color: #444444;*/
+}
+
+#kunena div.menubox div.menubox-user ul.menu li a:hover {
+   /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+   background-color: rgba(100, 100, 100, 0.1) !important;
+   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+   /*color: #222222;*/
+}
+
+#kunena div.login-member img {
+   border-radius: 5px;
+}
+
+#kunena div.login-member img:hover {
+   border-radius: 5px;
 }
 
 
@@ -816,6 +1276,43 @@
    -moz-transition: all 0.3s ease 0s;
 }*/
 
+/*--------*/
+/* Search */
+/*--------*/
+
+
+/*#kunena #searchform {
+	background: #F3F3F3;
+}
+
+#kunena #searchform fieldset {
+	background: #FFFFFF;
+	border-color: #BCBCBC;
+	border-radius: 3px 3px 3px 3px;
+    padding: 0;
+}
+
+#kunena #searchform .input {
+    padding: 5px;
+    background-color: transparent;
+    background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+    border: 1px solid silver;
+    border-radius: 2px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+#kunena #searchform .clrline {
+}
+
+#kunena #searchform legend {
+	font-size: 1.1em;
+}
+
+#kunena #searchform .kpost-buttons {
+	background-color: #FFFFFF;
+	border-top-color: #BFC3C6;
+}*/
+
 
 /*---------*/
 /* Buttons */
@@ -829,90 +1326,92 @@
 }
 
 /* Color */
-#kunena li.button {
-   cursor: pointer;
+#kunena li.button a {
+	cursor: pointer;
 	border: 1px solid #D4D4D4;
 	border-radius: 3px;
    /*box-shadow: 0 1px 0 #FFFFFF;*/
 }
 
-#kunena li.button:hover {
-   cursor: pointer;
+#kunena li.button a:hover {
+	cursor: pointer;
 	border: 1px solid #D4D4D4;
 	border-radius: 3px;
 	/*box-shadow: 0 1px 0 #FFFFFF;*/
 }
 
-#kunena li.button dd.buttonbox-hover {
-	background: rgba(0, 0, 0, 0.0);
+#kunena li.button a > span {
+	background: rgba(0, 0, 0, 0.0) !important;
 }
 
-#kunena li.button dd.buttonbox-hover:hover {
+#kunena li.button a > span:hover {
 	/*background: #599bdc;*/
 	/*background-image: linear-gradient(top, #599bdc 0%,#3072b3 100%);*/
-	background: rgba(0, 0, 0, 0.15);
+	background: rgba(0, 0, 0, 0.15) !important;
 	
 }
 
 /* Color */
-#kunena li.button dd > a {
+#kunena li.button a {
 	background: none;
-	color: #FFFFFF;
+	text-decoration: none;
+	color: #FFFFFF !important;
 }
 
-#kunena li.button dd:hover > a {
+#kunena li.button a:hover {
 	background: none;
-	color: #FFFFFF;
+	text-decoration: none;
+	color: #FFFFFF !important;
 }
 
 
-#kunena li.topic-replytopic { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
-#kunena li.topic-subscribe { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.topic-favorite { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.topic-lock { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.topic-sticky { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.topic-moderatetopic { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.topic-delete { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%); }
+#kunena li.topic-replytopic a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important;; }
+#kunena li.topic-subscribe a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
+#kunena li.topic-favorite a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
+#kunena li.topic-lock a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.topic-sticky a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.topic-moderatetopic a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.topic-delete a { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%) !important;; }
 
-#kunena li.topic-replytopic:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
-#kunena li.topic-subscribe:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.topic-favorite:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.topic-lock:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.topic-sticky:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.topic-moderatetopic:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.topic-delete:hover { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%); }
-
-
-#kunena li.topics-newtopic { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
-#kunena li.topics-marktopicread { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.topics-subscribe { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-
-#kunena li.topics-newtopic:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
-#kunena li.topics-marktopicread:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.topics-subscribe:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
+#kunena li.topic-replytopic a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important;; }
+#kunena li.topic-subscribe a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
+#kunena li.topic-favorite a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
+#kunena li.topic-lock a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.topic-sticky a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.topic-moderatetopic a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.topic-delete a:hover { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%) !important;; }
 
 
-#kunena li.message-quickreply { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
-#kunena li.message-reply { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
-#kunena li.message-quote { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.message-thankyou { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.message-report { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.message-edit { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.message-moderate { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.message-delete { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.message-undelete { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.message-permdelete { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%); }
+#kunena li.topics-newtopic a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
+#kunena li.topics-marktopicread a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena li.topics-subscribe a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
 
-#kunena li.message-quickreply:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
-#kunena li.message-reply:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
-#kunena li.message-quote:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.message-thankyou:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.message-report:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
-#kunena li.message-edit:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.message-moderate:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.message-delete { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.message-undelete { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
-#kunena li.message-permdelete:hover { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%); }
+#kunena li.topics-newtopic a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
+#kunena li.topics-marktopicread a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena li.topics-subscribe a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+
+
+#kunena li.message-quickreply a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important;; }
+#kunena li.message-reply a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important;; }
+#kunena li.message-quote a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
+#kunena li.message-thankyou a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
+#kunena li.message-report a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
+#kunena li.message-edit a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.message-moderate a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.message-delete a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.message-undelete a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.message-permdelete a { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%) !important;; }
+
+#kunena li.message-quickreply a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important;; }
+#kunena li.message-reply a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important;; }
+#kunena li.message-quote a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
+#kunena li.message-thankyou a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
+#kunena li.message-report a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
+#kunena li.message-edit a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.message-moderate a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.message-delete a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.message-undelete a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
+#kunena li.message-permdelete:hover { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%) !important;; }
 
 
 #kunena .file-input-button, #kunena .file-input-button:hover, #kunena .file-input-button:focus {

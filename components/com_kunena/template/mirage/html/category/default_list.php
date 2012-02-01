@@ -10,12 +10,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="block-wrapper box-color box-border box-border_radius">
+<div class="block-wrapper box-color box-border box-border_radius box-shadow">   
 	<div class="block">
 		<div class="headerbox-wrapper">
 			<div class="header">
 				<h2 class="header">
-					<a href="#" title="Category Header" rel="ksection-detailsbox">
+					<a class="categories" href="#" title="Category Header" rel="ksection-detailsbox">
 						<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_DEFAULT_TOPICS') ?>
 					</a>
 				</h2>
@@ -25,23 +25,23 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		</div>
 		<div class="detailsbox-wrapper">
-			<div class="topic detailsbox">
+			<div class="topic detailsbox box-border box-border_radius box-shadow">
 				<ul class="topic-list">
 					<li class="header">
 						<dl>
 							<dd class="topic-icon">
 							</dd>
 							<dd class="topic-subject">
-								<span><?php echo JText::_('Subject') ?></span>
+							<span><?php echo JText::_('Subject') ?></<span>
 							</dd>
 							<dd class="topic-replies">
-								<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
+							<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></<span>
 							</dd>
 							<dd class="topic-views">
-								<span><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
+							<span><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></<span>
 							</dd>
 							<dd class="topic-lastpost">
-								<span><?php echo JText::_('Last Post') ?></span>
+							<span><?php echo JText::_('Last Post') ?></<span>
 							</dd>
 						</dl>
 					</li>
@@ -56,11 +56,13 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		</div>
 		<?php if ($this->topicActions) : ?>
-			<div id="section-modbox">
-				<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="kinputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
-				<input type="checkbox" value="0" name="" class="kmoderate-topic-checkall" />
+			<div class="modbox-wrapper">
+				<div class="modbox">
+					<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
+					<input type="checkbox" value="0" name="" class="moderate-topic-checkall" />
+				</div>
 			</div>
-	<?php endif ?>
+		<?php endif ?>
 	</div>
 </div>
 <div class="spacer"></div>

@@ -21,12 +21,12 @@ document.addEvent('domready', function() {
 
 $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 ?>
-<div class="block-wrapper box-color box-border box-border_radius">
+<div class="block-wrapper box-color box-border box-border_radius">   
 	<div class="search-adv block">
-		<div class="headerbox-wrapper">
-			<div class="header">
-				<h2 class="header"><a title="Advanced Search" rel="kadvsearch-detailsbox"><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH') ?></a></h2>
-			</div>
+      <div class="headerbox-wrapper">
+         <div class="header">
+            <h2 class="header"><a title="Advanced Search" rel="kadvsearch-detailsbox"><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH') ?></a></h2>
+         </div>
 		</div>
 		<div class="detailsbox advsearch" id="kadvsearch-detailsbox">
 

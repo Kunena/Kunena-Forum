@@ -185,19 +185,20 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function _getKunenaConfiguration() {
-		$kunena_db = JFactory::getDBO ();
-		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."kunena_config'" );
-		$table_config = $kunena_db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return;
+		$db = JFactory::getDBO ();
+		$db->setQuery ( "SELECT * FROM #__kunena_configuration WHERE id=1" );
+		$config = $db->loadAssoc ();
+		KunenaError::checkDatabaseError ();
 
-		if ($table_config) {
-			$kunena_db->setQuery("SELECT * FROM #__kunena_config");
-			$kconfig = (object)$kunena_db->loadObject ();
-			if (KunenaError::checkDatabaseError()) return;
+		if ($config) {
+			$params = json_decode($config['params']);
+
+			$params = get_object_vars($params);
 
 			$kconfigsettings = '[table]';
 			$kconfigsettings .= '[th]Kunena config settings:[/th]';
-			foreach ($kconfig as $key => $value ) {
+			foreach ($params as $key => $value ) {
+
 				if ($key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
 					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_addres'
 					&& $key != 'recaptcha_theme') {
@@ -208,6 +209,7 @@ class KunenaAdminModelReport extends KunenaModel {
 		} else {
 			$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
 		}
+
 		return $kconfigsettings;
 	}
 

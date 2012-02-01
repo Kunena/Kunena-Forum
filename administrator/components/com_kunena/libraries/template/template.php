@@ -545,11 +545,6 @@ class KunenaTemplate extends JObject
 		return $templatedetails;
 	}
 
-	static public function loadTemplate($file) {
-		// FIXME: cannot be static!
-		include JPATH_SITE .'/'. self::getInstance()->getFile($file);
-	}
-
 	/**
 	 * Returns the global KunenaTemplate object, only creating it if it doesn't already exist.
 	 *

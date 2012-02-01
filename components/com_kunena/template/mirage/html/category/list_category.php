@@ -10,35 +10,35 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-	<li class="category-row box-hover">
-		<dl>
-			<dd class="category-icon">
-				<a href="<?php echo $this->categoryURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>">[K=CATEGORY_ICON]</a>
-			</dd>
-			<dd class="category-subject">
-				<ul>
-					<li class="kcategory-title">
-						<h3><a href="<?php echo $this->categoryURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>"><?php echo $this->escape($this->category->name) ?></a> [K=CATEGORY_NEW_COUNT]</h3>
-					</li>
-					<?php if ($this->category->description) : ?>
-						<li class="kcategory-details"><div><?php echo $this->parse($this->category->description) ?></div></li>
-					<?php endif ?>
-					<?php if ($this->moderators) : ?>
-						<li class="kcategory-mods">
-							<ul>
-								<li class="kcategory-modtitle"><?php echo JText::_('COM_KUNENA_GEN_MODERATORS') ?>:</li>
-								<?php foreach ($this->moderators as $moderator) : ?>
-								<li class="kcategory-modname kusername-mod"><?php echo $moderator->getLink() ?></li>
-								<?php endforeach ?>
-							</ul>
-						</li>
-					<?php endif ?>
-				</ul>
-			</dd>
-			<dd class="category-topics"><?php echo $this->formatLargeNumber ( $this->category->getTopics() ) ?> <span><?php //echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span></dd>
-			<dd class="category-replies"><?php echo $this->formatLargeNumber ( $this->category->getPosts() ) ?> <span><?php //echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></td>
+   <li class="category-row box-hover">
+      <dl>
+                  <dd class="category-icon">
+                     <a href="<?php echo $this->categoryURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>">[K=CATEGORY_ICON]</a>
+                  </dd>
+                  <dd class="category-subject">
+                     <ul>
+                        <li class="category-title">
+                           <h3><a href="<?php echo $this->categoryURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>"><?php echo $this->escape($this->category->name) ?></a> [K=CATEGORY_NEW_COUNT]</h3>
+                        </li>
+                        <?php if ($this->category->description) : ?>
+                           <li class="category-details"><div><?php echo $this->parse($this->category->description) ?></div></li>
+                        <?php endif ?>
+                        <?php if ($this->moderators) : ?>
+                           <li class="kcategory-mods">
+                              <ul>
+                                 <li class="kcategory-modtitle"><?php echo JText::_('COM_KUNENA_GEN_MODERATORS') ?>:</li>
+                                 <?php foreach ($this->moderators as $moderator) : ?>
+                                 <li class="kcategory-modname kusername-mod"><?php echo $moderator->getLink() ?></li>
+                                 <?php endforeach ?>
+                              </ul>
+                           </li>
+                        <?php endif ?>
+                     </ul>
+                  </dd>
+                  <dd class="category-topics"><?php echo $this->formatLargeNumber ( $this->category->getTopics() ) ?> <span><?php //echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span></dd>
+                  <dd class="category-replies"><?php echo $this->formatLargeNumber ( $this->category->getPosts() ) ?> <span><?php //echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></td>
 <!-- td class="kcategory-subs">944 <span>Subscribers</span></td -->
-			<dd class="category-lastpost">
+                  <dd class="category-lastpost">
 <ul>
 <?php if ($this->lastPost) : ?>
 <?php if ( $this->config->avataroncat ) : ?><li class="kcategory-smavatar"><?php echo $this->lastUser->getLink($this->lastUser->getAvatarImage('klist-avatar', 'list')) ?></li><?php endif ?>

@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 $item = array_shift($this->pathway);
 ?>
 <?php if ($item) : ?>
-	<div class="block-wrapper">
+	<div class="block-wrapper box-border_radius box-shadow"> 
 		<div id="breadcrumb" class="block">
 			<div class="breadcrumb-wrapper">
 				<div class="breadcrumb">

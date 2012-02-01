@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="block-wrapper box-border box-border_radius">
+<div class="block-wrapper box-border_radius box-shadow">
 	<div class="menubox block">
 		<div class="menubox-global">
 			<?php echo $this->getMenu() ?>
@@ -22,13 +22,15 @@ defined ( '_JEXEC' ) or die ();
 				<?php endif; ?>
 				<?php if ($this->me->exists()) : ?>
 					<li>
+						<a href="#">
 						<div class="login-member">
-							<div class="login-avatar"><span><?php echo $this->me->getLink($this->me->getAvatarImage('', 'welcome'), JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE')) ?></span></div>
+							<div class="login-avatar"><span><?php echo $this->me->getAvatarImage('', 'welcome') ?></span></div>
 							<div class="loginbox">
-								<div class="login-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getLink(null, JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE'))) ?></div>
+								<div class="login-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getName(null, JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE'))) ?></div>
 								<div class="login-lastvisit"><?php //echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_LASTVISIT', $this->lastvisitDate->toSpan('date_today', 'ago')); ?></div>
 							</div>
 						</div>
+						</a>	
 					</li>
 				<?php endif; ?>
 			</ul>

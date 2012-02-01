@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <?php if (!empty($this->categories [$this->section->id])) : ?>
-	<div class="block-wrapper box-color box-border box-border_radius">
+	<div class="block-wrapper box-color box-border box-border_radius box-shadow">
 		<div class="<?php echo $this->getClass('block', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo intval($this->section->id) ?>">
 			<?php if (!empty($this->sectionMarkReadURL)) : ?>
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="kunenaMarkAllRead" method="post">
@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="headerbox-wrapper">
 				<div class="header">
 					<h2 class="header">
-						<a href="<?php echo $this->sectionURL ?>" rel="ksection-detailsbox-<?php echo intval($this->section->id) ?>">
+						<a class="section" href="<?php echo $this->sectionURL ?>" rel="ksection-detailsbox-<?php echo intval($this->section->id) ?>">
 							<?php echo $this->escape($this->section->name) ?>
 						</a>
 					</h2>
@@ -34,7 +34,7 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 			</div>
 			<div class="detailsbox-wrapper">
-				<div class="category detailsbox" id="category-<?php echo intval($this->section->id) ?>">
+				<div class="category detailsbox box-border box-border_radius box-shadow" id="category-<?php echo intval($this->section->id) ?>">
 					<ul class="category-list">
 						<li class="header">
 							<dl>
@@ -56,9 +56,9 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 					</ul>
 					<ul class="category-list">
-						<?php
+						<?php 
 						foreach ( $this->categories [$this->section->id] as $category ) {
-								echo $this->displayCategory($category);
+						echo $this->displayCategory($category);
 						}
 						?>
 					</ul>

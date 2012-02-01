@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="block-wrapper box-border box-border_radius">
+<div class="block-wrapper box-color box-border box-border_radius box-shadow">
 	<div id="topic" class="block">
 		<div class="headerbox-wrapper">
 			<div class="header">
@@ -18,23 +18,23 @@ defined ( '_JEXEC' ) or die ();
 				<!-- a href="#" title="View Subscribers of this Topic" class="ktopic-subsc">4 Subscribers</a -->
 				<h2 class="header"><?php echo JText::_('COM_KUNENA_TOPIC') ?> <a href="#" rel="topic-detailsbox"><?php echo $this->escape($this->topic->subject) ?></a></h2>
 				<?php if ( $this->config->keywords ) : ?>
-				<ul class="topic-taglist">
-					<?php if (!empty($this->keywords)) : ?>
-					<li class="topic-taglist-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->keywords) ?></li>
-					<?php else: ?>
-					<li class="topic-taglist-title"><?php echo JText::_('COM_KUNENA_TOPIC_NO_TAGS') ?></li>
-					<?php endif ?>
-					<?php if ( $this->me->userid == $this->topic->first_post_userid || intval($this->me->isModerator('global')) ): ?><li class="topic-taglist-edit"><a href="#" id="edit_keywords"><?php echo JText::_('COM_KUNENA_TOPIC_TAGS_ADD_EDIT') ?></a></li><?php endif ?>
-				</ul>
+					<ul class="topic-taglist">
+						<?php if (!empty($this->keywords)) : ?>
+							<li class="topic-taglist-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->keywords) ?></li>
+						<?php else: ?>
+							<li class="topic-taglist-title"><?php echo JText::_('COM_KUNENA_TOPIC_NO_TAGS') ?></li>
+						<?php endif ?>
+						<?php if ( $this->me->userid == $this->topic->first_post_userid || intval($this->me->isModerator('global')) ): ?><li class="topic-taglist-edit"><a href="#" id="edit_keywords"><?php echo JText::_('COM_KUNENA_TOPIC_TAGS_ADD_EDIT') ?></a></li><?php endif ?>
+					</ul>
 				<?php endif ?>
 			</div>
 		</div>
-		<div class="detailsbox-wrapper">
-		<div class="topic detailsbox">
-			<ul class="topic-posts">
-				<?php foreach ( $this->messages as $id=>$message ) $this->displayMessage($id, $message, 'message') ?>
-			</ul>
-		</div>
+		<div class="innerbox-wrapper">
+			<div class="topic detailsbox">
+				<ul class="topic-posts">
+					<?php foreach ( $this->messages as $id=>$message ) $this->displayMessage($id, $message, 'message') ?>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

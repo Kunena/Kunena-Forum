@@ -31,7 +31,7 @@ class KunenaModelUser extends KunenaModel {
 
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_limit", 'limit', 0, 'int' );
-		if ($value < 1 || $value > 100) $value = 30;
+		if ($value < 1 || $value > 100) $value = 100;
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_ordering", 'filter_order', 'id', 'cmd' );

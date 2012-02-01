@@ -96,6 +96,7 @@ class KunenaForumMessageAttachmentHelper {
 	static public function getExtensions($category, $user = null) {
 		$imagetypes = self::getImageExtensions($category, $user);
 		$filetypes = self::getFileExtensions($category, $user);
+
 		if ($imagetypes === false && $filetypes === false) return false;
 		return array_merge((array)$imagetypes, (array)$filetypes);
 	}
@@ -112,11 +113,11 @@ class KunenaForumMessageAttachmentHelper {
 
 		// Check if attachments are allowed at all
 		if (!$config->image_upload) return false;
-		if ($config->image_upload == 'all') return $types;
+		if ($config->image_upload == 'everybody') return $types;
 
 		// For now on we only allow registered users
 		if (!$user->exists()) return false;
-		if ($config->image_upload == 'user') return $types;
+		if ($config->image_upload == 'registered') return $types;
 
 		// For now on we only allow moderators
 		if (!$user->isModerator($category->id)) return false;
@@ -141,11 +142,11 @@ class KunenaForumMessageAttachmentHelper {
 
 		// Check if attachments are allowed at all
 		if (!$config->file_upload) return false;
-		if ($config->file_upload == 'all') return $types;
+		if ($config->file_upload == 'everybody') return $types;
 
 		// For now on we only allow registered users
 		if (!$user->exists()) return false;
-		if ($config->file_upload == 'user') return $types;
+		if ($config->file_upload == 'registered') return $types;
 
 		// For now on we only allow moderators
 		if (!$user->isModerator($category->id)) return false;

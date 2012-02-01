@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 						<dd class="lastpost"><span><?php echo JText::_('COM_KUNENA_GEN_LAST_POST');?></span></dd>
 						<dd class="rss">
 							<?php if (!empty($this->sectionRssURL)) : ?>
-							<a href="<?php echo $this->sectionRssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_RSS_TITLE', $this->escape($this->section->name)) ?>">
+							<a href="<?php echo $this->sectionRssURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_SECTION_LIST_RSS_TITLE', $this->escape($this->section->name)) ?>">
 								<span class="krss-icon"></span>
 							</a>
 							<?php endif ?>

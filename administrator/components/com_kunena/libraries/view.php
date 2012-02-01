@@ -22,7 +22,7 @@ class KunenaView extends JView {
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
-		$this->template = KunenaFactory::getTemplate();
+		$this->ktemplate = KunenaFactory::getTemplate();
 	}
 
 	function displayAll() {
@@ -36,17 +36,18 @@ class KunenaView extends JView {
 
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
-		$this->template->initialize();
+		$this->ktemplate->initialize();
 
 		if (JFactory::getApplication()->isAdmin()) {
 			$this->displayLayout();
 		} else {
 			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
-			include $this->template->getFile ('html/display.php');
+			include $this->ktemplate->getFile ('html/display.php');
 		}
 	}
 
 	function displayLayout($layout=null, $tpl = null) {
+		$this->template = KunenaFactory::getTemplate();
 		if ($layout) $this->setLayout ($layout);
 		$viewName = ucfirst($this->getName ());
 		$layoutName = ucfirst($this->getLayout ());
@@ -106,19 +107,19 @@ class KunenaView extends JView {
 	}
 
 	function getButton($name, $text) {
-		return $this->template->getButton($name, $text);
+		return $this->ktemplate->getButton($name, $text);
 	}
 
 	function getIcon($name, $title='') {
-		return $this->template->getIcon($name, $title);
+		return $this->ktemplate->getIcon($name, $title);
 	}
 
 	function getImage($image, $alt='') {
-		return $this->template->getImage($image, $alt);
+		return $this->ktemplate->getImage($image, $alt);
 	}
 
 	function getClass($class, $class_sfx='') {
-		return $this->template->getClass($class, $class_sfx);
+		return $this->ktemplate->getClass($class, $class_sfx);
 	}
 
 	public function get($property, $default = null) {
@@ -296,6 +297,12 @@ class KunenaView extends JView {
 		return ++$this->_row & 1 ? 'odd' : 'even';
 	}
 
+	public function displayTemplateFile($view, $layout, $template = null) {
+		$file = "html/{$view}/{$layout}".($template ? "_{$template}" : '').".php";
+		include JPATH_SITE .'/'. $this->template->getFile($file);
+		// TODO: handle missing file
+	}
+
 	/**
 	 * Load a template file -- first look in the templates folder for an override
 	 *
@@ -373,6 +380,6 @@ class KunenaView extends JView {
 
 	// Caching
 	function getTemplateMD5() {
-		return md5(serialize($this->_path['template']).'-'.$this->template->name);
+		return md5(serialize($this->_path['template']).'-'.$this->ktemplate->name);
 	}
 }

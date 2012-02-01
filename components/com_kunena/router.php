@@ -182,7 +182,7 @@ function KunenaParseRoute($segments) {
 		// Skip //
 		if (!$segment) continue;
 
-		if ($sefcats && method_exists('KunenaRoute', 'resolveAlias')) {
+		if ($sefcats && class_exists('KunenaRoute') && method_exists('KunenaRoute', 'resolveAlias')) {
 			// Find out if we have SEF alias (category, view or layout)
 			$alias = strtr ( $segment, ':', '-' );
 			$variables = KunenaRoute::resolveAlias($alias);

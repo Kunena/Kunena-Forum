@@ -87,7 +87,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 						<td align="center" class="kcol-mid"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php
 						echo $i;
-						?>','delete')"><img src="<?php echo $this->template->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
+						?>','delete')"><img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
 
 					</tr>
 					<?php $i++; $y++; endforeach; endif; ?>

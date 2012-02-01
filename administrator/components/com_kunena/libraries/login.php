@@ -31,7 +31,7 @@ class KunenaLogin {
 		return self::$instance;
 	}
 
-	public function loginUser($username, $password, $rememberme, $return) {
+	public function loginUser($username, $password, $rememberme=false, $return=null) {
 		foreach ($this->instances as $login) {
 			if (method_exists($login, 'loginUser')) {
 				return $login->loginUser($username, $password, $rememberme, $return);
@@ -40,7 +40,7 @@ class KunenaLogin {
 		return false;
 	}
 
-	public function logoutUser($return) {
+	public function logoutUser($return=null) {
 		foreach ($this->instances as $login) {
 			if (method_exists($login, 'logoutUser')) {
 				return $login->logoutUser($return);

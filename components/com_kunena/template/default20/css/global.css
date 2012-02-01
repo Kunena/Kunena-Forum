@@ -15,6 +15,7 @@
 	padding: 0;
 	margin: 5px;
 	line-height: 1.333em;
+	width:100%;
 }
 #kunena > div h1, #kunena > form h1,
 #kunena > div h2, #kunena > form h2,
@@ -160,7 +161,7 @@
 #kunena #ktopics-modbox {
 	width: 100%;
 	margin: 10px auto;
-	border: 1px solid #e3e0e0;
+	border: 1px solid #F4F4F4;
 	padding: 0px;
 	clear:both;
 	text-align:left;
@@ -283,7 +284,7 @@
 #kunena .kmenu ul.menu li a {
 	display: inline;
 	background: none;
-	margin: 0 10px;
+	margin: 0 5px;
 	padding: 0 10px;
 	border-bottom-width: 0 !important;
 }
@@ -389,7 +390,7 @@
 	margin-right: 5px;
 }
 #kunena .kbutton {
-	padding: 1px 5px;
+	padding: 5px 15px;
 }
 #kunena .klogout .kbutton {
 	margin-top: 4px;
@@ -483,7 +484,7 @@
 #kunena td.kcategory-icon {
 	text-align:center;
 	padding: 10px;
-	width: 35px;
+	width: 5%;
 }
 #kunena td.kcategory-icon a span {
 	margin: 0 auto;
@@ -506,7 +507,7 @@
 #kunena .kposts-cats,
 #kunena .kposts-sect-title,
 #kunena .kposts-cats-title {
-	margin-bottom: 5px;
+	margin-bottom: 2px;
 	float:left;
 }
 #kunena .kposts-title,
@@ -521,9 +522,6 @@
 #kunena li.kposts-det {
 	display: block;
 	clear:both;
-}
-#kunena .ktopic-category{
-	margin-bottom: 5px;
 }
 #kunena li.kcategory-mods ul {
 	padding: 0;
@@ -607,7 +605,7 @@
 #kunena td.kcategory-posts,
 #kunena td.kposts-replies,
 #kunena td.kposts-views {
-	width: 55px;
+	width: 5%;
 	text-align:center;
 }
 #kunena td.kcategory-subs,
@@ -642,7 +640,7 @@
 #kunena td.ktopic-topic-checkbox,
 #kunena td.kposts-post-checkbox,
 #kunena td.kcategory-moderation {
-	width: 25px;
+	width: 5%;
 	border-left: 1px solid #F4F4F4;
 }
 #kunena .kcategories-row table td.kcategory-lastpost,
@@ -650,7 +648,7 @@
 #kunena .ktopics-row table td.ktopic-lastpost,
 #kunena .ktags-row table td.ktag-lastpost,
 #kunena .kposts-row table td.kposts-lastpost {
-	width: 180px;
+	width: 30%;
 	padding: 15px 10px;
 }
 #kunena li.kcategory-smavatar,
@@ -713,10 +711,6 @@
 
 /*---------- Topic Tags ------------- */
 
-#kunena .ktopic-tags {
-	margin-top: 5px;
-	padding-top: 5px;
-}
 #kunena .ktopic-tags li {
 	display: inline;
 }
@@ -790,7 +784,7 @@
 
 /* User details */
 #kunena .kpost-user-details {
-	width: 200px;
+	min-width: 22%;
 	padding: 10px;
 	text-align:center;
 	float:right;
@@ -808,7 +802,7 @@
 	padding: 20px;
 }
 #kunena .kpost-container {
-	margin-right: 220px;
+	margin-right: 25%;
 }
 #kunena .kpost-body-attach {
 	margin: 15px 0;
@@ -883,24 +877,20 @@
 #kunena div.kwhosonline-smicon {
 	display: block;
 	float:left;
-	padding: 10px;
+	padding: 20px 0 5px 8px;
 	width: 48px;
 }
 #kunena div.kwhosonline-users {
-	padding: 10px 0 10px 10px;
 	display: block;
 	float:left;
+	padding: 0 0 5px 10px;
 }
 #kunena .ksection-icon span {
 	margin: 15px auto;
 }
 #kunena .kwhosonline-subtitle {
 	display: block;
-	margin-bottom: 5px;
 	width: 99%;
-}
-#kunena .kwhosonline-legend {
-	margin-top: 5px;
 }
 #kunena .kwhosonline-legend ul li {
 	display:inline;
@@ -988,7 +978,7 @@
 /*---------- Buttons ------------- */
 
 #kunena ul.kmessage-buttons {
-	padding: 5px 10px;
+	padding: 0 4px 0px;
 }
 #kunena ul.kmessage-buttons li {
 	display: inline;
@@ -1183,7 +1173,7 @@
 	width: 43%;
 	float:left;
 	border: 1px solid #F4F4F4;
-	margin: 15px;
+	margin: 5px;
 	padding: 15px;
 }
 #kunena h3.kuserlist-fullname,
@@ -1520,11 +1510,36 @@
 	border: 1px solid;
 	border-bottom: none;
 }
-#kunena .kpostbuttons,
-#kunena .kposthint {
-	border-style: solid solid none;
-	border-width: 1px 1px 0;
-	padding: 4px 8px;
+#kunena ul#kbbcode-toolbar li a.kbbcode-bold-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-italic-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-underline-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-strike-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-sub-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-sup-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-size-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-color-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-ulist-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-olist-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-list-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-left-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-center-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-right-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-quote-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-code-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-table-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-spoiler-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-hide-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-image-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-link-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-ebay-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-video-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-map-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-help-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-previewbottom-button,
+#kunena ul#kbbcode-toolbar li a.kbbcode-previewright-button {
+    border: 1px solid  #ccc;
+    border-radius: 5px;
+    clear: both;
 }
 #kunena .kpostmessage .kpostbuttonset .kposthint {
 	border: 1px solid;
@@ -1983,4 +1998,20 @@
 #kunena div.kblock div.kactions a {
 	color: #FFF !important;
 	background-color:transparent !important;
+}
+#main  li.kcategory-details{
+    line-height: 1.2em;
+}
+#kunena table {
+    border: 0px solid #F4F4F4 !important;
+}
+#kunena .kcategories-row,
+#kunena .ktopics-row {
+	border-top: 1px solid #F4F4F4 !important;
+}
+#kunena .kcategory-body {
+	width:40%;
+}
+#kunena input[type="checkbox"], input[type="password"], input[type="search"], isindex {
+	border:none !important;
 }

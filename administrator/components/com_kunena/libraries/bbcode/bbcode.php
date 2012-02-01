@@ -34,8 +34,8 @@ class KunenaBbcode extends BBCode {
 		$this->tag_rules = $this->defaults->default_tag_rules;
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
-		$this->SetSmileyDir ( JPATH_ROOT .'/'. KPATH_COMPONENT_RELATIVE );
-		$this->SetSmileyURL ( JURI::root(true) . '/' . KPATH_COMPONENT_RELATIVE );
+		$this->SetSmileyDir ( JPATH_ROOT );
+		$this->SetSmileyURL ( '' );
 		$this->SetDetectURLs ( true );
 	}
 
@@ -1218,7 +1218,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		'youku' => array ('flash', 480, 400, 0, 0, 'http://player.youku.com/player.php/sid/%vcode%/v.swf', '\/v_show\/id_(.*)\.html', '' ),
 
-		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1&cc_load_policy=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
 		// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
 		//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )

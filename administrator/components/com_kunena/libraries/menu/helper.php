@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+jimport ('joomla.database.table');
+
 KunenaMenuHelper::initialize();
 
 abstract class KunenaMenuHelper {
@@ -107,6 +109,38 @@ abstract class KunenaMenuHelper {
 		return $items;
 	}
 
+	public static function fixLegacy() {
+		$items = array();
+		foreach (self::$legacy as $itemid) {
+			$item = self::$items[$itemid];
+			KunenaRouteLegacy::convertMenuItem($item);
+			$table = JTable::getInstance ( 'menu' );
+			$table->load($item->id);
+			$data = array (
+				'link' => $item->link,
+				'params' => $item->params,
+			);
+			if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
+				return $table->getError ();
+			}
+		}
+	}
+
+	public static function delete($itemid) {
+		// Only delete Kunena menu items
+		if (!isset(self::$items[$itemid])) return false;
+		$table = JTable::getInstance ( 'menu' );
+		return $table->delete($itemid);
+	}
+
+	public static function getAll() {
+		$items = array();
+		foreach (self::$filtered as $itemid=>$targetid) {
+			if ($targetid) $items[$itemid] = self::$items[$itemid];
+		}
+		return $items;
+	}
+
 	public static function getAliases() {
 		$items = array();
 		foreach (self::$aliases as $itemid=>$targetid) {
@@ -141,7 +175,7 @@ abstract class KunenaMenuHelper {
 					continue;
 
 				$itemid = null;
-				if ($item->type == 'menulink' && !empty($item->query['Itemid'])) {
+				if (($item->type == 'menulink' || $item->type == 'alias') && !empty($item->query['Itemid'])) {
 					$realitem = empty(self::$items[$item->query['Itemid']]) ? null : self::$items[$item->query['Itemid']];
 					if (is_object ($realitem) && $realitem->type == 'component' && $realitem->component == 'com_kunena') {
 						$itemid = $item->query['Itemid'];

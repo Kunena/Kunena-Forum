@@ -4,7 +4,7 @@
  * @package Kunena.Template.Default20
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -22,4 +22,4 @@ $editor->initialize();
 include_once (KPATH_SITE.'/lib/kunena.bbcode.js.php');
 include_once (KPATH_SITE.'/lib/kunena.special.js.php');
 
-include 'edit_form.php';
+$this->displayTemplateFile('topic', 'edit', 'form');

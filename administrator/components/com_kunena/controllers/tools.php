@@ -219,6 +219,17 @@ class KunenaAdminControllerTools extends KunenaController {
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	public function fixlegacy() {
+		$app = JFactory::getApplication ();
+
+		$legacy = KunenaMenuHelper::getLegacy();
+		$error = KunenaMenuHelper::fixLegacy();
+
+		if ($error) $app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY_FAILED', $error ), 'notice' );
+		else $app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY', count($legacy) ) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
 	protected function checkTimeout($stop = false) {
 		static $start = null;
 		if ($stop) $start = 0;

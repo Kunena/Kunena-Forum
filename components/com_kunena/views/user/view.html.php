@@ -117,7 +117,7 @@ class KunenaViewUser extends KunenaView {
 		$this->avatarlink = $this->profile->getAvatarImage('kavatar','profile');
 		$this->personalText = $this->profile->personalText;
 		$this->signature = $this->profile->signature;
-		$this->localtime = KunenaDate::getInstance();
+		$this->localtime = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->_app->getCfg ( 'offset', 0 )));
 		$this->localtime->setOffset($this->user->getParam('timezone', $this->_app->getCfg ( 'offset', 0 )));
 		$this->moderator = $this->profile->isModerator();
 		$this->admin = $this->profile->isAdmin();

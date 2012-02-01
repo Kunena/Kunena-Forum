@@ -117,10 +117,16 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$this->redirectBack();
 	}
 
+	function save2new() {
+		$this->_save();
+		$this->setRedirect(KunenaRoute::_($this->baseurl2."&layout=create", false));
+	}
+
 	function save() {
 		$this->_save();
 		JFactory::getApplication ()->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
+
 	protected function _save() {
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
@@ -286,7 +292,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		foreach ( $categories as $category ) {
 			if (! isset ( $order [$category->id] ) || $category->get ( 'ordering' ) == $order [$category->id])
 				continue;
-			if (!$category->parent()->authorise ( 'admin' )) {
+			if (!$category->getParent()->authorise ( 'admin' )) {
 				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->getParent()->name ) ), 'notice' );
 			} elseif (! $category->isCheckedOut ( $this->me->userid )) {
 				$category->set ( 'ordering', $order [$category->id] );
@@ -330,7 +336,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		}
 
 		$category = KunenaForumCategoryHelper::get ( $id );
-		if (!$category->parent()->authorise ( 'admin' )) {
+		if (!$category->getParent()->authorise ( 'admin' )) {
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->getParent()->name ) ), 'notice' );
 			return;
 		}

@@ -36,6 +36,7 @@ class KunenaControllerInstall extends JController {
 		$this->steps = $this->model->getSteps ();
 	}
 
+	// Run from administrator installer
 	function prepare() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$start = JRequest::getBool('start', false);
@@ -168,7 +169,7 @@ class KunenaControllerInstall extends JController {
 		$this->model->deleteMenu();
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
-		if (!KunenaForum::isSvn()) {
+		if (!KunenaForum::isDev()) {
 			jimport('joomla.filesystem.folder');
 			JFolder::delete(KPATH_MEDIA);
 			jimport('joomla.installer.installer');

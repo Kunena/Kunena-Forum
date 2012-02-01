@@ -73,15 +73,12 @@ class KunenaModelAnnouncement extends KunenaModel {
 		if (!$created) $created = $now->toMysql();
 		$published = JRequest::getInt ( "published", 1 );
 		$showdate = JRequest::getInt ( "showdate", 1 );
-		$author = $me->userid;
-		$username = $me->usernamme;
 
 		$id = $this->getState ( 'item.id' );
 		if (!$id) {
 			$query = "INSERT INTO #__kunena_announcement VALUES ('',
 				{$this->db->Quote ( $title )},
 				{$this->db->Quote ( $me->userid )},
-				{$this->db->Quote ( $me->username )},
 				{$this->db->Quote ( $sdescription )},
 				{$this->db->Quote ( $description )},
 				{$this->db->Quote ( $created )},

@@ -36,8 +36,9 @@ class KunenaTemplate extends JObject
 	public $params = null;
 	public $paramstime = false;
 
-	protected $default = 'blue_eagle';
+	protected $default = array();
 	protected $css_compile = true;
+	protected $filecache = array();
 	protected $smileyPath = array();
 	protected $rankPath = array();
 	protected $userClasses = array(
@@ -67,11 +68,12 @@ class KunenaTemplate extends JObject
 			$name = KunenaFactory::getConfig()->template;
 		}
 		$name = JPath::clean($name);
+
+		// Create template inheritance
+		if (!is_array($this->default)) $this->default = (array) $this->default;
+		array_unshift($this->default, $name);
+
 		$xml = KPATH_SITE . "/template/{$name}/template.xml";
-		if (!is_readable ( $xml )) {
-			$name = 'blue_eagle';
-			$xml = KPATH_SITE . "/template/{$name}/template.xml";
-		}
 		$this->xml_path = $xml;
 		$ini = KPATH_SITE . "/template/{$name}/params.ini";
 		$content = '';
@@ -94,15 +96,13 @@ class KunenaTemplate extends JObject
 	}
 
 	public function loadLanguage() {
-		// Loading language strings for default template and override with current template
+		// Loading language strings for the template
 		$lang = JFactory::getLanguage();
-		if (!$lang->load('com_kunena.tpl_'.$this->default, JPATH_SITE)) {
-			$lang->load('com_kunena.tpl_'.$this->default, KPATH_SITE.'/template/'.$this->default);
-		}
-		if ($this->name != $this->default) {
-			if (!$lang->load('com_kunena.tpl_'.$this->name, JPATH_SITE)) {
-				$lang->load('com_kunena.tpl_'.$this->name, KPATH_SITE.'/template/'.$this->name);
-			}
+		foreach (array_reverse($this->default) as $template) {
+			$file = 'com_kunena.tpl_'.$template;
+			$lang->load($file, JPATH_SITE)
+				|| $lang->load($file, KPATH_SITE)
+				|| $lang->load($file, KPATH_SITE.'/template/'.$template);
 		}
 	}
 
@@ -247,9 +247,9 @@ class KunenaTemplate extends JObject
 	}
 
 	public function addIEStyleSheet($filename, $condition='IE') {
-		$filename = $this->getFile($filename);
+		$url = $this->getFile($filename, true);
 		$stylelink = "<!--[if {$condition}]>\n";
-		$stylelink .= '<link rel="stylesheet" href="'.JURI::root(true).'/'.$filename.'" />' ."\n";
+		$stylelink .= '<link rel="stylesheet" href="'.$url.'" />' ."\n";
 		$stylelink .= "<![endif]-->\n";
 		JFactory::getDocument()->addCustomTag($stylelink);
 	}
@@ -297,6 +297,11 @@ class KunenaTemplate extends JObject
 		$this->stylesheets[] = $string;
 	}
 */
+
+	public function clearCache() {
+		$path = JPATH_ROOT."/media/kunena/cache/{$this->name}";
+		if (JFolder::exists($path)) JFolder::delete($path);
+	}
 
 	public function getCachePath($filename='') {
 		if ($filename) $filename = '/'.$filename;
@@ -359,20 +364,28 @@ class KunenaTemplate extends JObject
 			$buffer = CssMin::minify($buffer, $filters, $plugins);
 		}
 
-		$buffer = preg_replace ( '/url\(([\'"]?)\.\./u', 'url(\\1'.JURI::root(true)."/components/com_kunena/template/{$this->name}", $buffer );
+		$buffer = preg_replace_callback ( '/url\(([^\)]+)\)/u', array($this, 'findUrl'), $buffer );
 		JFile::write(JPATH_ROOT.'/'.$dest, $buffer);
 		return $dest;
+	}
+
+	function findUrl($matches) {
+		$file = trim($matches[1],' \'"');
+		if (preg_match('#^../#', $file)) {
+			$file = $this->getFile(substr($file, 3), true, '', 'media/kunena');
+		}
+		return "url('{$file}')";
 	}
 
 	/**
 	 * Wrapper to addScript
 	 */
 	function addScript($filename) {
-		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn ()) {
+		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev ()) {
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		}
-		return JFactory::getDocument ()->addScript ( JURI::root(true).'/'.$this->getFile($filename) );
+		return JFactory::getDocument ()->addScript ( $this->getFile($filename, true) );
 	}
 
 	/*
@@ -385,53 +398,41 @@ class KunenaTemplate extends JObject
 	}
 	*/
 
-	public function getPath($default = false) {
-		if ($default) return "template/{$this->default}";
-		return "template/{$this->name}";
+	public function getTemplatePaths() {
+		$array = array();
+		foreach (array_reverse($this->default) as $template) $array[] = KPATH_COMPONENT_RELATIVE.'/template/'.$template;
+		return $array;
 	}
 
-	public function getFile($file) {
-		$path = $this->getPath();
-		if (!is_file(KPATH_SITE . "/{$path}/{$file}")) {
-			$path = $this->getPath(true);
+	public function getFile($file, $url = false, $basepath = '', $default = null) {
+		if ($basepath) $basepath = '/' . $basepath;
+		if (!isset($this->filecache[$file])) {
+			$this->filecache[$file] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE."/template/blue_eagle/{$file}";
+			foreach ($this->default as $template) {
+				$path = "template/{$template}{$basepath}";
+				if (file_exists(KPATH_SITE . "/{$path}/{$file}")) {
+					$this->filecache[$file] = KPATH_COMPONENT_RELATIVE."/{$path}/{$file}";
+					break;
+				}
+			}
 		}
-		return KPATH_COMPONENT_RELATIVE."/{$path}/{$file}";
+		return ($url ? JURI::root(true).'/' : '').$this->filecache[$file];
 	}
 
 	public function getSmileyPath($filename='', $url = false) {
-		if (!isset($this->smileyPath[$filename])) {
-			$path = "{$this->getPath()}/images/emoticons/{$filename}";
-			if (($filename && !is_file(KPATH_SITE . "/{$path}")) || !is_dir(KPATH_SITE . "/{$path}")) {
-				$path = "{$this->getPath(true)}/images/emoticons/{$filename}";
-			}
-			$this->smileyPath[$filename] = $path;
-		}
-		$base = '';
-		if ($url) $base = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE.'/';
-		return $base.$this->smileyPath[$filename];
+		return $this->getFile($filename, $url, 'images/emoticons', 'media/kunena/emoticons');
 	}
 
 	public function getRankPath($filename='', $url = false) {
-		if (!isset($this->rankPath[$filename])) {
-			$path = "{$this->getPath()}/images/ranks/{$filename}";
-			if (($filename && !is_file(KPATH_SITE . "/{$path}")) || !is_dir(KPATH_SITE . "/{$path}")) {
-				$path = "{$this->getPath(true)}/images/ranks/{$filename}";
-			}
-			$this->rankPath[$filename] = $path;
-		}
-		$base = '';
-		if ($url) $base = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE.'/';
-		return $base.$this->rankPath[$filename];
+		return $this->getFile($filename, $url, 'images/ranks', 'media/kunena/ranks');
 	}
 
-	public function getImagePath($image, $url = true) {
-		$path = $this->getPath();
-		if (!is_file(KPATH_SITE . "/{$path}/images/{$image}")) {
-			$path = $this->getPath(true);
-		}
-		$base = '';
-		if ($url) $base = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE.'/';
-		return "{$base}{$path}/images/{$image}";
+	public function getTopicIconPath($filename='', $url = true) {
+		return $this->getFile($filename, $url, 'images/topicicons', 'media/kunena/topicicons');
+	}
+
+	public function getImagePath($filename='', $url = true) {
+		return $this->getFile($filename, $url, 'images', 'media/kunena/images');
 	}
 
 	public function getTopicIcons($all = false, $checked = 0) {
@@ -474,8 +475,7 @@ class KunenaTemplate extends JObject
 				$icon->filename = 'default.png';
 				$icon->width = 48;
 				$icon->height = 48;
-				$default = !is_file( KPATH_SITE . "/{$this->getPath()}/images/topicicons/user/{$icon->filename}" );
-				$icon->relpath = KPATH_COMPONENT_RELATIVE."/{$this->getPath($default)}/images/topicicons/user/{$icon->filename}";
+				$icon->relpath = $this->getTopicIconPath("user/{$icon->filename}", false);
 				$this->topicIcons[0] = $icon;
 			}
 		}
@@ -493,7 +493,7 @@ class KunenaTemplate extends JObject
 		return $icons;
 	}
 
-	public function getTopicIconPath($index, $url = false) {
+	public function getTopicIconIndexPath($index, $url = false) {
 		if (empty($this->topicIcons)) {
 			$this->getTopicIcons();
 		}
@@ -501,40 +501,14 @@ class KunenaTemplate extends JObject
 			$index = 0;
 		}
 		$icon = $this->topicIcons[$index];
-		if (!isset($icon->relpath)) {
-			$curpath = $this->getPath();
-			$defpath = $this->getPath(true);
-			if (is_file( KPATH_SITE . "/{$curpath}/images/topicicons/default/{$icon->filename}" )) {
-				$icon->relpath = KPATH_COMPONENT_RELATIVE."/{$curpath}/images/topicicons/default/{$icon->filename}";
-			} elseif (is_file( KPATH_SITE . "/{$defpath}/images/topicicons/default/{$icon->filename}" )) {
-				$icon->relpath = KPATH_COMPONENT_RELATIVE."/{$defpath}/images/topicicons/default/{$icon->filename}";
-			} else {
-				$icon->relpath = "media/kunena/topicicons/default/{$icon->filename}";
-			}
-		}
-		return ($url ? JURI::root(true).'/' : '') . $icon->relpath;
-	}
-
-	public function getMovedIconPath($url = false) {
-		static $moved = false;
-		if ($moved === false) {
-			$path = $this->getPath();
-			if (!is_file(KPATH_SITE . "/{$path}/images/topicicons/user/moved.png")) {
-				$path = $this->getPath(true);
-			}
-			$moved =  "{$path}/images/topicicons/user/moved.png";
-		}
-
-		$base = '';
-		if ($url) $base = JURI::root(true).'/'.KPATH_COMPONENT_RELATIVE.'/';
-		return $base.$moved;
+		return $this->getTopicIconPath("default/{$icon->filename}", $url);
 	}
 
 	public function getTopicIcon($topic ) {
 		$config = KunenaFactory::getConfig ();
 		if ($config->topicicons) {
-			if ( $topic->moved_id == 0 ) $iconurl = $this->getTopicIconPath($topic->icon_id, true);
-			else $iconurl = $this->getMovedIconPath(true);
+			if ( $topic->moved_id == 0 ) $iconurl = $this->getTopicIconIndexPath($topic->icon_id, true);
+			else $iconurl = $this->getTopicIconPath('user/moved.png', true);
 		} else {
 			$icon = 'normal';
 			if ($topic->posts < 2) $icon = 'unanswered';
@@ -545,13 +519,13 @@ class KunenaTemplate extends JObject
 			if ($topic->hold == 2) $icon = 'deleted';
 			if ($topic->moved_id) $icon = 'moved';
 			if (!empty($topic->unread)) $icon .= '_new';
-			$iconurl = $this->getImagePath("topicicons/system/{$icon}.png");
+			$iconurl = $this->getTopicIconPath("system/{$icon}.png", true);
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;
 	}
 
-	// FIXME: remove:
+	// TODO: remove in the future
 	public function getTopicsIconPath($filename) {
 		if ( empty($filename) ) return;
 
@@ -571,14 +545,6 @@ class KunenaTemplate extends JObject
 		return $templatedetails;
 	}
 
-	static public function loadTemplate($file) {
-		$path = self::getInstance()->getPath();
-		if (!is_file(KPATH_SITE . "/{$path}/{$file}")) {
-			$path = self::getInstance()->getPath(true);
-		}
-		include KPATH_SITE . "/{$path}/{$file}";
-	}
-
 	/**
 	 * Returns the global KunenaTemplate object, only creating it if it doesn't already exist.
 	 *
@@ -595,6 +561,11 @@ class KunenaTemplate extends JObject
 			// Find overridden template class
 			$classname = "KunenaTemplate{$name}";
 			if (!class_exists($classname)) {
+				if (!file_exists(KPATH_SITE . "/template/{$name}/template.xml")) {
+					// If template xml doesn't exist, use blue eagle instead
+					$name = 'blue_eagle';
+					$classname = "KunenaTemplate{$name}";
+				}
 				$file = KPATH_SITE."/template/{$name}/template.php";
 				if (!file_exists($file)) {
 					$classname = "KunenaTemplateBlue_Eagle";

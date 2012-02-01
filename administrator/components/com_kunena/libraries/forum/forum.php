@@ -29,7 +29,7 @@ class KunenaForum {
 
 	private function __construct() {}
 
-	public static function isSvn() {
+	public static function isDev() {
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
 			return true;
 		}
@@ -149,13 +149,16 @@ class KunenaForum {
 
 		// Add template path
 		$ktemplate = KunenaFactory::getTemplate();
-		$templatepath = KPATH_SITE."/{$ktemplate->getPath()}/html/";
-		$view->addTemplatePath($templatepath.$viewName);
+		foreach ($ktemplate->getTemplatePaths() as $templatepath) {
+			$view->addTemplatePath(JPATH_SITE."/{$templatepath}/html/{$viewName}");
+		}
 		if ($parameters->get('templatepath')) $view->addTemplatePath($parameters->get('templatepath'));
 
 		if ($viewName != 'common') {
 			$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );
-			$view->common->addTemplatePath($templatepath.'common');
+			foreach ($ktemplate->getTemplatePaths() as $templatepath) {
+				$view->common->addTemplatePath(JPATH_SITE."/{$templatepath}/html/common");
+			}
 		}
 		// Push document object into the view.
 		$view->assignRef ( 'document', JFactory::getDocument() );

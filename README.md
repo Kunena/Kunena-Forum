@@ -12,8 +12,8 @@
 
 *Kunena* 2.0 requires (this section is work in progress until Kunena 2.0 has been released)
 
-    Joomla! 1.5: version 1.5.25 or greater
-    Joomla! 1.7: version 1.7.3 or greater
+    Joomla! 1.5: version 1.5.25 or greater (>= 1.5.26 recommended)
+    Joomla! 1.7: version 1.7.3 or greater (>= 2.5.0 recommended)
     Joomla! 2.5: version 2.5.0 or greater
     PHP: version 5.2.4 or greater (>= 5.3.6 recommended)
     MySQL: version 5.0.4 or greater (>= 5.1 recommended)

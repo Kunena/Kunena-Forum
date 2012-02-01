@@ -13,7 +13,7 @@
 	background: #F4F4F4 repeat scroll 0 0 transparent;
 	background-image: linear-gradient(center top, #F4F4F4, #ECECEC);
 	border: 1px solid #D4D4D4;
-	border-radius: 3px 3px 3px 3px;
+	border-radius: 3px;
 	color: #333333;
 	cursor: pointer;
 	display: inline-block;
@@ -22,7 +22,6 @@
 	position: relative;
 	text-shadow: 1px 1px 0 #FFFFFF;
 	white-space: nowrap;
-	
 }
 #kunena .kbutton:hover {
 	background: #599bdc;
@@ -34,11 +33,7 @@
 	display: inline-block;
 	font-family: helvetica,arial,freesans,clean,sans-serif;
 	overflow: visible;
-	position: relative;
-	
-}
-#kunena .kattachment .kbutton {
-	color: #000000;
+	position: relative;	
 }
 #kunena .kfile-input-button,
 #kunena .kfile-input-button:hover,
@@ -58,7 +53,7 @@
 	font-size: 10px;
 }
 #kunena .kfilter-button:hover {
-	border: 1px solid #333;
+	border: 1px solid #F4F4F4;
 	background-color: #DDDDDD;
 	cursor:pointer;
 	color: #000;
@@ -76,16 +71,16 @@
 	color: #fff;
 }
 #kunena .kbuttonbar-post {
-	border-top: 1px solid #e3e0e0;
+	border-top: 1px solid #F4F4F4;
 }
 #kunena .kmod-detailsbox .kpost-buttons {
-	border-top-color: #BCBCBC;
+	border-top-color: #F4F4F4;
 }
 #kunena .kpostmessage .kpostbuttonset td,
 #kunena .kpostmessage tr.krow2 .kpostbuttonset td {
-	border-color: #BFC3C6;
+	border-color: #F4F4F4;
 }
 #kunena .kpostmessage .kpostbuttonset .kposthint {
 	background-color: #FFFFCC;
-	border-color: #DDD5BF;
+	border-color: #F4F4F4;
 }

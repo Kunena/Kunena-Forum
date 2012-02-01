@@ -33,7 +33,6 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->me = KunenaUserHelper::getMyself();
-		$this->template = KunenaTemplate::getInstance();
 
 		// TODO: if start != 0, add information from it into description
 		$this->document->setGenerator('Kunena Forum (Joomla)');
@@ -66,7 +65,7 @@ class KunenaViewTopics extends KunenaView {
 		// Create image for feed
 		$image = new JFeedImage();
 		$image->title = $this->document->getTitle();
-		$image->url = $this->template->getImagePath('icons/rss.png');
+		$image->url = $this->ktemplate->getImagePath('icons/rss.png');
 		$image->description = $this->document->getDescription();
 		$this->document->image = $image;
 
@@ -82,7 +81,6 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->me = KunenaUserHelper::getMyself();
-		$this->template = KunenaTemplate::getInstance();
 
 		// TODO: if start != 0, add information from it into description
 		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
@@ -109,7 +107,7 @@ class KunenaViewTopics extends KunenaView {
 		// Create image for feed
 		$image = new JFeedImage();
 		$image->title = $this->document->getTitle();
-		$image->url = $this->template->getImagePath('icons/rss.png');
+		$image->url = $this->ktemplate->getImagePath('icons/rss.png');
 		$image->description = $this->document->getDescription();
 		$this->document->image = $image;
 
@@ -126,7 +124,6 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->me = KunenaUserHelper::getMyself();
-		$this->template = KunenaTemplate::getInstance();
 
 		// TODO: if start != 0, add information from it into description
 		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
@@ -154,7 +151,7 @@ class KunenaViewTopics extends KunenaView {
 		// Create image for feed
 		$image = new JFeedImage();
 		$image->title = $this->document->getTitle();
-		$image->url = $this->template->getImagePath('icons/rss.png');
+		$image->url = $this->ktemplate->getImagePath('icons/rss.png');
 		$image->description = $this->document->getDescription();
 		$this->document->image = $image;
 

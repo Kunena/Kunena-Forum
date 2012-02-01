@@ -20,6 +20,9 @@ class KunenaViewAnnouncement extends KunenaView {
 		$this->config = KunenaFactory::getConfig();
 		$this->assignRef ( 'announcement', $this->get ( 'Announcement' ) );
 		$this->assignRef ( 'canEdit', $this->get ( 'CanEdit' ) );
+
+		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+
 		$this->display();
 	}
 
@@ -27,6 +30,9 @@ class KunenaViewAnnouncement extends KunenaView {
 		$this->config = KunenaFactory::getConfig();
 		$this->assignRef ( 'announcement', $this->get ( 'NewAnnouncement' ) );
 		$this->assignRef ( 'canEdit', $this->get ( 'CanEdit' ) );
+
+		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+
 		$this->display();
 	}
 
@@ -34,6 +40,9 @@ class KunenaViewAnnouncement extends KunenaView {
 		$this->config = KunenaFactory::getConfig();
 		$this->assignRef ( 'announcement', $this->get ( 'Announcement' ) );
 		$this->assignRef ( 'canEdit', $this->get ( 'CanEdit' ) );
+
+		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+
 		$this->display();
 	}
 
@@ -42,6 +51,9 @@ class KunenaViewAnnouncement extends KunenaView {
 		$this->config = KunenaFactory::getConfig();
 		$this->assignRef ( 'announcements', $this->get ( 'Announcements' ) );
 		$this->assignRef ( 'canEdit', $this->get ( 'CanEdit' ) );
+
+		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+
 		$this->display();
 	}
 }

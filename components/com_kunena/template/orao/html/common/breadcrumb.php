@@ -8,8 +8,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-$template = KunenaFactory::getTemplate();
-$this->params = $template->params;
+
+$this->params = $this->ktemplate->params;
 $item = array_shift($this->pathway);
 ?>
 <?php if ($item && $this->params->get('showPathway') == '1') : ?>

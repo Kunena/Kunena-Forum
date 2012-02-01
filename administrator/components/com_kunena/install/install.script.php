@@ -54,7 +54,8 @@ class Com_KunenaInstallerScript {
 		if (!$this->checkRequirements()) return false;
 
 		// Do not install over Git repository.
-		if (method_exists('Kunena', 'isSvn') && Kunena::isSvn() || method_exists('KunenaForum', 'isDev') && KunenaForum::isDev()) {
+		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())
+			|| (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev())) {
 			JFactory::getApplication()->enqueueMessage('Oops! You should not install Kunena over your Git reporitory!', 'notice');
 			return false;
 		}

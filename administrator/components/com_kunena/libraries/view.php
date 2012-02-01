@@ -47,6 +47,7 @@ class KunenaView extends JView {
 	}
 
 	function displayLayout($layout=null, $tpl = null) {
+		$this->template = KunenaFactory::getTemplate();
 		if ($layout) $this->setLayout ($layout);
 		$viewName = ucfirst($this->getName ());
 		$layoutName = ucfirst($this->getLayout ());
@@ -294,6 +295,12 @@ class KunenaView extends JView {
 	function row($start=false) {
 		if ($start) $this->_row = 0;
 		return ++$this->_row & 1 ? 'odd' : 'even';
+	}
+
+	public function displayTemplateFile($view, $layout, $template = null) {
+		$file = "html/{$view}/{$layout}".($template ? "_{$template}" : '').".php";
+		include JPATH_SITE .'/'. $this->template->getFile($file);
+		// TODO: handle missing file
 	}
 
 	/**

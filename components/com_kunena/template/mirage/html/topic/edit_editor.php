@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-			<li id="kpost-toolbar" class="kpostmessage-row krow-odd">
+			<li id="kpost-toolbar" class="postmessage-row box-hover">
 				<div class="kform-label">
 					<label>
 						<?php echo JText::_('COM_KUNENA_BOARDCODE') ?>
@@ -174,7 +174,7 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 			</li>
 
-			<li class="kpostmessage-row krow-even">
+			<li class="postmessage-row box-hover">
 				<div class="kform-label">
 					<label for="kbbcode-message">
 						<strong><?php echo (JText::_('COM_KUNENA_MESSAGE')) ?></strong><br />

@@ -11,14 +11,18 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 		<div id="kwhosonline">
-			<a href="<?php echo $this->usersURL ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK') ?> &raquo;</a>
+			<?php if ($this->usersURL): ?><a href="<?php echo $this->usersURL ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK') ?> &raquo;</a><?php endif; ?>
 			<h2 class="kheader">
 				<a href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>" rel="kwhosonline-detailsbox" >
 					<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE') ?>
 				</a>
 			</h2>
 			<div class="kdetailsbox kwhosonline-details" id="kwhosonline-detailsbox" >
-				<div class="kwhosonline-smicon"><a href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>"><span class="kwho-smicon"></span></a></div>
+				<?php if ($this->usersURL): ?>
+					<a href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>"><span class="kwho-smicon"></span></a>
+				<?php else: ?>
+					<span class="kwho-smicon"></span>
+				<?php endif; ?>
 				<div class="kwhosonline-users">
 					<ul>
 						<li class="kwhosonline-subtitle"><p><?php  echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?></p></li>

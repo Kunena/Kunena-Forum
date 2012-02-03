@@ -59,7 +59,7 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$config->save ();
 
 		$app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
-		if (empty($url)) $app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		if (empty($url)) $app->redirect ( KunenaRoute::_($this->kunenabaseurl, false) );
 		else $app->redirect ( $url );
 	}
 

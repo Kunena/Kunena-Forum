@@ -411,6 +411,8 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY_DESC') ?>
 						</td>
+					</tr>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_ARTICLE_DISPLAY') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['article_display']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_ARTICLE_DISPLAY_DESC') ?></td>

@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 // TODO: add missing module position
 ?>
-		<div class="login dropdown">
+		<div class="login dropdown-menu">
 			<ul class="login-profile">
 				<li class="login-avatar"><span><?php echo $this->me->getLink($this->me->getAvatarImage('', 'welcome'), JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE')) ?></span></li>
 				<li class="login-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getLink(null, JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE'))) ?></li>

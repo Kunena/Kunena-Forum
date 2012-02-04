@@ -177,15 +177,10 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function _getKunenaConfiguration() {
-		$db = JFactory::getDBO ();
-		$db->setQuery ( "SELECT * FROM #__kunena_configuration WHERE id=1" );
-		$config = $db->loadAssoc ();
-		KunenaError::checkDatabaseError ();
+		$config = KunenaFactory::getConfig ();
 
 		if ($config) {
-			$params = json_decode($config['params']);
-
-			$params = get_object_vars($params);
+			$params = $config->getProperties();
 
 			$kconfigsettings = '[table]';
 			$kconfigsettings .= '[th]Kunena config settings:[/th]';

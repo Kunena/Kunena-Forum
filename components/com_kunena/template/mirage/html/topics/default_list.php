@@ -38,9 +38,9 @@ defined ( '_JEXEC' ) or die ();
 								<span><?php echo JText::_('Last Post') ?></<span>
 							</dd>
 							<?php if ($this->topicActions) : ?>
-							<dd class="topic-checkbox">
-								<span><input id="checbox-all" type="checkbox" value="0" name="" class="moderate-topic-checkall" /></<span>
-							</dd>
+								<dd class="topic-checkbox">
+									<span><input id="checbox-all" type="checkbox" value="0" name="" class="moderate-topic-checkall" /></<span>
+								</dd>
 							<?php endif ?>
 							</dl>
 						</li>
@@ -58,9 +58,9 @@ defined ( '_JEXEC' ) or die ();
 		<?php if ($this->topicActions) : ?>
 			<div class="modbox-wrapper">
 				<div class="modbox">
-					<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="kinputbox" size="1"', 'value', 'text', 0, 'kmoderate-select');
+					<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox" size="1"', 'value', 'text', 0, 'kmoderate-select');
 					$options = array (JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
-					echo JHTML::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="kinputbox" size="1" style="display:none;"', 'value', 'text', 0, 'kcategorytarget'); ?>
+					echo JHTML::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox" size="1" style="display:none;"', 'value', 'text', 0, 'kcategorytarget'); ?>
 					<input name="submit" class="button" type="submit" value="<?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?>"/>
 				</div>
 			</div>

@@ -13,17 +13,15 @@ defined ( '_JEXEC' ) or die ();
 $item = array_shift($this->pathway);
 ?>
 <?php if ($item) : ?>
-	<div class="block-wrapper box-border_radius box-shadow"> 
-		<div id="breadcrumb" class="block">
+	<div class="box-wrapper box-full box-border_radius box-shadow"> 
+		<div class="breadcrumb block">
 			<div class="breadcrumb-wrapper">
-				<div class="breadcrumb">
-					<ul class="breadcrumb-path">
-						<li><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
-						<?php foreach ($this->pathway as $item) : ?>
-						<li> &#47; <a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
-						<?php endforeach ?>
-					</ul>
-				</div>
+				<ul class="breadcrumb-path">
+					<li><a class="link" href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
+					<?php foreach ($this->pathway as $item) : ?>
+					<li> &#47; <a class="link" href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
+					<?php endforeach ?>
+				</ul>
 			</div>
 		</div>
 	</div>

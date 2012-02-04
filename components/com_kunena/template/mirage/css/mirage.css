@@ -74,6 +74,15 @@
 
 #kunena select {
 	padding: 3px;
+	overflow: auto;
+	/*margin: 5px;*/
+	/*border-width: 1px;
+	border-style: solid;
+	border-color: #BFC3C6;(*/
+}
+
+#kunena textarea {
+	overflow: auto;
 	/*margin: 5px;*/
 	/*border-width: 1px;
 	border-style: solid;
@@ -108,6 +117,18 @@
  * STOP DEFAULT POSITIONING *
  ****************************/
 
+/* This is needed for a fix, not sure why */
+.box-full:before {
+	content: "";
+    display: block;
+}
+
+.box-full:after {
+	content: "";
+    display: block;
+    clear: both;
+}
+
 #kunena .link {
 	text-decoration: underline !important;
 	background: none !important;
@@ -118,6 +139,50 @@
 	text-decoration: underline !important;
 	background: none !important;
 	color: #333333 !important;
+}
+
+#kunena .divider {
+	display: block;
+	/*overflow: hidden;*/
+	height: 1px;
+	background: #333333;
+	/*border-bottom-color: #333333;
+    border-top-color: #1B1B1B;*/
+}
+
+#kunena .dropdown a {
+	position: relative;
+}
+
+#kunena .dropdown .dropdown-menu {
+    visibility: hidden;
+    display: none;
+    opacity: 0.0;
+    background-clip: padding-box;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 5px 5px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /*display: block;*/
+    float: right;
+    right: 0;
+    list-style: none outside none;
+    margin: 0;
+    max-width: 220px;
+    min-width: 160px;
+    padding: 4px 0;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+}
+
+#kunena li.dropdown a:focus + div.dropdown-menu {
+    visibility: visible;
+    opacity: 1.0;
+    display: block;
 }
 
 /*#kunena input.kinputbox,
@@ -183,12 +248,17 @@
    list-style-type: none !important;
 }*/
 
-#kunena div.block-wrapper {
-    clear: both;
+/* This outter element is needed for dropdowns */
+#kunena div.box-module {
+    overflow: visible;
+}
+
+#kunena div.box-wrapper {
     display: block;
     position: relative;
+    /*position: relative;
     /*padding: 10px;*/
-    overflow: hidden;
+    /*overflow: auto;*/
 }
 
 #kunena div.innerblock-wrapper {
@@ -217,34 +287,38 @@
 /* TODO: Need configure option for: padding */
 #kunena div.headerbox-wrapper {
    /*padding: 10px;*/
-   overflow: hidden;
+   /*overflow: auto;*/
+   clear: both;
+   position: relative;
 }
 
 /*wrapper is needed for some spacing elements */
 /* TODO: Need configure option for: padding */
 #kunena div.detailsbox-wrapper {
    padding: 8px 10px 10px 10px;
-   overflow: hidden;
+   /*overflow: auto;*/
+   clear: both;
 }
 
 #kunena div.modbox-wrapper {
-   padding: 5px 10px 5px 10px;
-   overflow: hidden;
+   padding: 0px 10px 10px 10px;
+   overflow: auto;
+   clear: both;
 }
 
 #kunena div.header {
    padding: 5px 10px;
+   display: block;
 }
 
 #kunena div.detailsbox {
    clear: both;
    /*margin: 2px 2px 4px;*/
    /*padding: 1px 0 0;*/
-   overflow: hidden;
 }
 
 #kunena div.innerspacer {
-   /*padding: 5px;*/
+   padding: 5px 10px 10px 10px;
 }
 
 #kunena div.modbox {
@@ -260,14 +334,6 @@
 	display: block;
 	float: none;
 	position: relative;
-}
-
-#kunena .divider {
-	display: block
-	overflow: hidden;
-	height: 0;
-	border-bottom-color: #333333;
-    border-top-color: #1B1B1B;
 }
 
 /*---------- Advanced Search ------------- */
@@ -292,9 +358,9 @@
 	padding: 5px;
 	width: 100%
     background-color: #FFFFFF;
-    background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+    /*background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);*/
     border: 1px solid silver;
-    border-radius: 2px;
+    /*border-radius: 2px;*/
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
 }
 
@@ -362,6 +428,134 @@
 #kunena div.breadcrumb ul li a {
     margin: 0px 10px;
 }
+
+
+/*---------- Announcement List ------------- */
+
+#kunena ul.announcement-list {
+    display: block;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#kunena ul.announcement-list div.header {
+    clear: both;
+    display: block;
+    position: relative;
+    vertical-align: bottom;
+}
+
+#kunena ul.announcement-list li {
+   clear: both;
+   display: block;
+   position: relative;
+   vertical-align: bottom;
+   margin: 0;
+   overflow: hidden;
+   padding: 1px 0 0;
+}
+
+#kunena ul.announcement-list li.announcements-row dl, ul.announcement-list li.header {
+    float: none !important;
+    height: auto;
+    width: auto;
+}
+
+#kunena ul.announcement-list li.announcements-row {
+   margin: 0px;
+   padding: 0px;
+   overflow: hidden;
+}
+
+#kunena ul.announcement-list li.announcements-row dd {
+    display: block;
+    float: left;
+    margin: 0px;
+    padding: 5px;
+}
+
+#kunena ul.announcement-list li.header dd {
+    display: block;
+    float: left;
+    margin: 0px;
+    padding: 2px 5px;
+}
+
+#kunena ul.announcement-list dd {
+    display: block;
+    float: left;
+    margin: 0px;
+    padding: 2px 0;
+}
+
+/*#kunena ul.topic-list li.topics-row dl {
+    display: block;
+    position: relative;
+}*/
+
+#kunena ul.announcement-list li.announcements-row dd {
+    display: block;
+    float: left;
+    margin: 0px;
+}
+
+#kunena ul.announcement-list dd.announcement-checkbox {
+   margin: 0;
+   text-align: center;
+   vertical-align: center;
+   width: 10px;
+}
+
+#kunena ul.announcement-list dd.announcement-id {
+   margin: 0;
+   text-align: center;
+   vertical-align: center;
+   width: 5%;
+}
+
+#kunena ul.announcement-list dd.announcement-date {
+   margin: 0;
+   text-align: left;
+   vertical-align: center;
+   width: 10%;
+}
+
+#kunena ul.announcement-list dd.announcement-author {
+   margin: 0;
+   text-align: left;
+   vertical-align: center;
+   width: 10%;
+}
+
+#kunena ul.announcement-list dd.announcement-title {
+   margin: 0;
+   text-align: left;
+   vertical-align: center;
+   width: 45%;
+}
+
+#kunena ul.announcement-list dd.announcement-publish {
+   margin: 0;
+   text-align: center;
+   vertical-align: center;
+   width: 10%;
+}
+
+#kunena ul.announcement-list dd.announcement-edit {
+   margin: 0;
+   text-align: center;
+   vertical-align: center;
+   width: 5%;
+}
+
+#kunena ul.announcement-list dd.announcement-delete {
+   margin: 0;
+   text-align: center;
+   vertical-align: center;
+   width: 5%;
+}
+
 
 /*---------- Category List ------------- */
 
@@ -638,25 +832,25 @@
 
 /*---------- Breadcrumbs ------------- */
 
-#kunena div#breadcrumb {
+#kunena div.breadcrumb {
 	background: #f4f4f4;
 	background-image: linear-gradient(top, #f4f4f4 0%,#ececec 100%);
 }
 
-#kunena div#breadcrumb li.breadcumb-viewing,
-#kunena div#breadcrumb li.breadcumb-total {
+#kunena div.breadcrumb li.breadcumb-viewing,
+#kunena div.breadcrumb li.breadcumb-total {
 	font-weight: bold;
 }
 
 /* Attachments */
 
-#kunena div#breadcrumb .post-body-attach {
+#kunena div.breadcrumb .post-body-attach {
 	border: 1px solid #BCBCBC;
 	background-color: #f9f9f9;
 	border-radius:6px;
 }
 
-#kunena div#breadcrumb .attach-title {
+#kunena div.breadcrumb .attach-title {
 	font-size: 11px;
 	font-weight: bold;
 	background-color: #14537b;
@@ -664,7 +858,7 @@
 	border-radius: 6px 6px 0 0;
 }
 
-#kunena div#breadcrumb .attach-details span {
+#kunena div.breadcrumb .attach-details span {
 	font-size: 11px;
 }
 
@@ -792,7 +986,7 @@
 #kunena div#whosonline div.whosonline-users {
 	display: block;
 	float: left;
-	padding: 10px 0 10px 10px;
+	padding: 5px 10px 10px 10px;
 }
 
 #kunena div#whosonline .section-icon span {
@@ -827,40 +1021,40 @@
 
 /*---------- Statistics ------------- */
 
-#kunena div#statistics .statistics-details div {
+#kunena div.statistics .statistics-details div {
 	display: block;
 	float: left;
 }
 
-#kunena div#statistics .statistics-smicon {
+#kunena div.statistics .statistics-smicon {
 	padding: 10px;
 	width: 35px;
 }
 
-#kunena div#statistics .statistics-smicon span {
+#kunena div.statistics .statistics-smicon span {
 	margin: 15px auto;
 }
 
-#kunena div#statistics .statistics-totals ul li {
+#kunena div.statistics .statistics-totals ul li {
 	clear: left;
 }
 
-#kunena div#statistics .statistics-totals {
-	padding: 10px 0 10px 10px;
+#kunena div.statistics .statistics-totals {
+	padding: 5px 10 10px 10px;
 	line-height: 20px;
 	/*min-height: 80px;*/
 	width: 27%;
 }
 
-#kunena div#statistics .statistics-totals ul li span {
+#kunena div.statistics .statistics-totals ul li span {
 	margin-left: 3px;
 }
 
-#kunena div#statistics .statistics-latestmem {
+#kunena div.statistics .statistics-latestmem {
 	margin-bottom: 8px;
 }
 
-#kunena div#statistics .header-link {
+#kunena div.statistics .header-link {
 	float: right;
 	margin-right: 10px;
 	margin-top: 5px;
@@ -1012,6 +1206,14 @@
 }
 
 #kunena .box-hover:hover {
+   background-color: rgba(100, 100, 100, 0.05);
+}
+
+#kunena .box-focus {
+   background-color: rgba(255, 255, 255, 0.0);
+}
+
+#kunena .box-focus:focus {
    background-color: rgba(100, 100, 100, 0.1);
 }
 
@@ -1030,12 +1232,12 @@
 
 #kunena .box-color:hover {
    /*background-color: rgba(100, 100, 100, 0.1);*/
-   background-image: linear-gradient(top, rgba(89, 155, 220, 0.4) 0%, rgba(48, 114, 179, 0.4) 100%) !important;
+   background-image: linear-gradient(top, rgba(89, 155, 220, 0.15) 0%, rgba(48, 114, 179, 0.15) 100%) !important;
 }
 
 #kunena .box-border {
    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-   border-color: transparent rgba(0, 0, 0, 0.1);
+   border-color: rgba(0, 0, 0, 0.05);
    border-style: solid;
    border-width: 1px;
    /*border-radius: 5px;*/
@@ -1043,7 +1245,7 @@
 
 #kunena .box-border:hover {
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-   border-color: transparent rgba(255, 255, 255, 0.1);
+   border-color: rgba(0, 0, 0, 0.05);
    border-style: solid;
    border-width: 1px;
    /*border-radius: 5px;*/
@@ -1113,6 +1315,25 @@
    border-radius: 5px;*/
 }
 
+#kunena div.announcements ul.announcement-list li.header {
+   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#kunena div.announcements ul.announcement-list li.announcements-row {
+   border-top: 1px solid rgba(0, 0, 0, 0.0);
+   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
+   background-color: rgba(255, 255, 255, 0.0);
+}
+
+#kunena div.announcements ul.announcement-list li.announcements-row:hover {
+   border-top: 1px solid rgba(255, 255, 255, 0.8);
+   border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
+   background-color: rgba(100, 100, 100, 0.05);
+}
+
+
 #kunena div.category ul.category-list li.header {
    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -1128,7 +1349,7 @@
    border-top: 1px solid rgba(255, 255, 255, 0.8);
    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
-   background-color: rgba(100, 100, 100, 0.1);
+   background-color: rgba(100, 100, 100, 0.05);
 }
 
 #kunena div.category ul.category-list li.category-row dd.topics, #kunena ul.category-list li.category-row dd.replies {
@@ -1152,7 +1373,7 @@
    border-top: 1px solid rgba(255, 255, 255, 0.8);
    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
-   background-color: rgba(100, 100, 100, 0.1);
+   background-color: rgba(100, 100, 100, 0.05);
 }
 
 #kunena li.postmessage-row {
@@ -1166,7 +1387,7 @@
 	border-top: 1px solid rgba(255, 255, 255, 0.8);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
 	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
-	background-color: rgba(100, 100, 100, 0.1);
+	background-color: rgba(100, 100, 100, 0.05);
 }
 
 #kunena div.topic ul.topic-list li.topic-row dd.replies, #kunena ul.topic-list li.category-row dd.views {
@@ -1174,18 +1395,24 @@
    line-height: 2.2em;
 }
 
-#kunena #topic ul.topic-posts li.header {
+#kunena div.topic ul.topic-posts li.header {
    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #kunena div.menubox div.menubox-global ul.menu li a {
    /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+   /*box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
    background-color: rgba(255, 255, 255, 0.0) !important;
    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;*/
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0) !important;
+   background-color: rgba(255, 255, 255, 0.0) !important;
+   border-top: 1px solid rgba(0, 0, 0, 0.0) !important;
+   border-right: 1px solid rgba(0, 0, 0, 0.0) !important;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.0) !important;
+   border-left: 1px solid rgba(0, 0, 0, 0.0) !important;
    /*color: #444444;*/
 }
 
@@ -1202,16 +1429,33 @@
 
 #kunena div.menubox div.menubox-user ul.menu li a {
    /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+   /*box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
    background-color: rgba(255, 255, 255, 0.0) !important;
    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;*/
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0) !important;
+   background-color: rgba(255, 255, 255, 0.0) !important;
+   border-top: 1px solid rgba(0, 0, 0, 0.0) !important;
+   border-right: 1px solid rgba(0, 0, 0, 0.0) !important;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.0) !important;
+   border-left: 1px solid rgba(0, 0, 0, 0.0) !important;
    /*color: #444444;*/
 }
 
 #kunena div.menubox div.menubox-user ul.menu li a:hover {
+   /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+   background-color: rgba(100, 100, 100, 0.1) !important;
+   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+   /*color: #222222;*/
+}
+
+#kunena div.menubox div.menubox-user ul.menu li a:focus {
    /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
    background-color: rgba(100, 100, 100, 0.1) !important;

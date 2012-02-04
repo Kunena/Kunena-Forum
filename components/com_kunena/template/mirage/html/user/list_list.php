@@ -19,21 +19,21 @@ document.addEvent('domready', function() {
 // ]]>");
 }
 ?>
-		<div class="search-user">
-				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" name="usrlform" method="post">
-					<input type="hidden" name="view" value="user" />
-					<?php echo JHTML::_( 'form.token' ); ?>
+<div class="search-user">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" name="usrlform" method="post">
+			<input type="hidden" name="view" value="user" />
+			<?php echo JHTML::_( 'form.token' ); ?>
 
-					<input id="kusersearch" type="text" name="search" class="inputbox"
-						value="<?php echo $this->escape($this->state->get('list.search', JText::_('COM_KUNENA_USRL_SEARCH'))); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';" onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';" />
-					<input type="image" src="<?php echo $this->ktemplate->getImagePath('usl_search_icon.png') ?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" style="border: 0px;" />
-				</form>
-		</div>
-		<div class="kuserlist">
-			<a href="#" class="ksection-headericon"><?php echo $this->getImage('icon-whosonline-sm.png') ?></a>
-			<h2 class="kheader"><a href="#" rel="ksection-detailsbox"><?php echo JText::_('COM_KUNENA_USRL_USERLIST') ?></a></h2>
-			<div class="kuserlist-items">
-				<?php foreach ($this->users as $user) { $this->displayUserRow($user); } ?>
-			</div>
-			<div class="clr"></div>
-		</div>
+			<input id="kusersearch" type="text" name="search" class="inputbox"
+				value="<?php echo $this->escape($this->state->get('list.search', JText::_('COM_KUNENA_USRL_SEARCH'))); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';" onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';" />
+			<input type="image" src="<?php echo $this->ktemplate->getImagePath('usl_search_icon.png') ?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" style="border: 0px;" />
+		</form>
+</div>
+<div class="kuserlist">
+	<a href="#" class="ksection-headericon"><?php echo $this->getImage('icon-whosonline-sm.png') ?></a>
+	<h2 class="kheader"><a href="#" rel="ksection-detailsbox"><?php echo JText::_('COM_KUNENA_USRL_USERLIST') ?></a></h2>
+	<div class="kuserlist-items">
+		<?php foreach ($this->users as $user) { $this->displayUserRow($user); } ?>
+	</div>
+	<div class="clr"></div>
+</div>

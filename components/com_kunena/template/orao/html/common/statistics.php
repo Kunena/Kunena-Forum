@@ -46,7 +46,7 @@ defined ( '_JEXEC' ) or die ();
 								<ul id="statslistright"  class="fltlft">
 									<li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $this->memberCount ?></strong></li>
 									<li><?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<strong> <?php echo $this->latestMemberLink ?></strong></li>
-									<li><?php //echo $this->memberCount ?>&nbsp;</li>
+									<li><?php if ($this->usersURL): ?><a href="<?php echo $this->usersURL ?>" ><?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK') ?></a><?php else: ?>&nbsp;<?php endif; ?></li>
 									<li><a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>" rel="kstatistics-detailsbox">
 											<?php echo JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') ?>
 										</a>

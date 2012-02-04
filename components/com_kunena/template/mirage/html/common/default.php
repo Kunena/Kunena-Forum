@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="block-wrapper">
+<div class="box-wrapper">
 	<div class="block">
 		<h2 class="kheader"><?php echo $this->escape($this->header); ?></h2>
 		<div class="detailsbox">

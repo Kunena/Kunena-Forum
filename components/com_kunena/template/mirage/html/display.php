@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 <div id="kunena" class="kunena">
 <?php
 $this->displayMenu ();
-$this->displayLoginBox ();
+//$this->displayLoginBox ();
 $this->displayBreadcrumb ();
 
 // Display current view/layout

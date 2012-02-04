@@ -10,19 +10,27 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-		<div class="ksection">
-			<h2 class="kheader"><?php echo $this->escape($this->header); ?></h2>
-			<div class=kdetailsbox>
-				<div class="kcontent">
-				<?php
-				if ($this->format == 'html') :
-					echo $this->body;
-				elseif ($this->format == 'text') :
-					echo $this->escape($this->body);
-				else :
-				echo KunenaHtmlParser::parseBBCode($this->body);
-				endif; ?>
+<div class="box-module">
+	<div class="block-wrapper box-color box-border box-border_radius box-shadow">
+		<div class="section block">
+			<div class="headerbox-wrapper box-full">
+				<div class="header">
+					<h2 class="header"><?php echo $this->escape($this->header); ?></h2>
 				</div>
-				<div class="clr"></div>
+			</div>
+			<div class="detailsbox>">
+				<div class="content">
+					<?php
+					if ($this->format == 'html') :
+						echo $this->body;
+					elseif ($this->format == 'text') :
+						echo $this->escape($this->body);
+					else :
+					echo KunenaHtmlParser::parseBBCode($this->body);
+					endif; ?>
+				</div>
 			</div>
 		</div>
+	</div>
+</div>
+<div class="spacer"></div>

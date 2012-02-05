@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<install type="language" version="1.5" client="administrator" method="upgrade">
+	<name>Kunena Forum - Albanian (Albania)</name>
+	<tag>sq-AL</tag>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>translations@kunena.org</authorEmail>
+	<authorUrl>https://www.transifex.net/projects/p/Kunena/team/sq_AL/</authorUrl>
+	<copyright>(C) 2008 - 2012 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPL</license>
+	<description>Albanian (Albania) language file for Kunena Forum Component</description>
+
+	<files>
+		<!-- filename>sq-AL.com_kunena.ini</filename -->
+		<!-- filename>sq-AL.com_kunena.install.ini</filename -->
+		<filename>sq-AL.com_kunena.menu.ini</filename>
+		<!-- filename>sq-AL.com_kunena.sys.ini</filename -->
+		<!-- filename>sq-AL.plg_system_kunena.sys.ini</filename -->
+	</files>
+</install>

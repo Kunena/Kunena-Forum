@@ -116,29 +116,44 @@ abstract class KunenaFactory {
 	 * Helper function for external modules and plugins to load the main Kunena language file(s)
 	 *
 	 */
-	public static function loadLanguage( $file = 'com_kunena' ) {
+	public static function loadLanguage( $file = 'com_kunena', $client = 'site' ) {
 		static $loaded = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
+		if ($client == 'site') {
+			$lookup1 = JPATH_SITE;
+			$lookup2 = KPATH_SITE;
+		} else {
+			$lookup1 = JPATH_ADMINISTRATOR;
+			$lookup2 = KPATH_ADMIN;
+		}
 		if (empty($loaded[$file])) {
 			$lang = JFactory::getLanguage();
 			if (version_compare(JVERSION, '1.6','<') && !$lang->getDebug()) {
 				// Joomla 1.5 hack to make languages to load faster
-				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang)."/{$lang->_lang}.{$file}.ini";
+				$filename = JLanguage::getLanguagePath( $lookup1, $lang->_lang)."/{$lang->_lang}.{$file}.ini";
 				$loaded[$file] = self::parseLanguage($lang, $filename);
 				if (!$loaded[$file]) {
-					$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang)."/{$lang->_default}.{$file}.ini";
+					$filename = JLanguage::getLanguagePath( $lookup2, $lang->_lang)."/{$lang->_lang}.{$file}.ini";
+					$loaded[$file] = self::parseLanguage($lang, $filename);
+				}
+				if (!$loaded[$file]) {
+					$filename = JLanguage::getLanguagePath( $lookup1, $lang->_lang)."/{$lang->_default}.{$file}.ini";
+					$loaded[$file] = self::parseLanguage($lang, $filename);
+				}
+				if (!$loaded[$file]) {
+					$filename = JLanguage::getLanguagePath( $lookup2, $lang->_lang)."/{$lang->_default}.{$file}.ini";
 					$loaded[$file] = self::parseLanguage($lang, $filename);
 				}
 			} else {
-				$loaded[$file] = $lang->load($file, JPATH_SITE, null, 1);
+				$loaded[$file] = $lang->load($file, $lookup1, null, 1) || $lang->load($file, $lookup2, null, 1);
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $loaded[$file];
 }
 
-	protected function parseLanguage($lang, $filename) {
+	protected static function parseLanguage($lang, $filename) {
 		if (!file_exists($filename)) return false;
 		$version = phpversion();
 		if ($version >= '5.3.1') {

@@ -18,7 +18,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_FUM'); ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="view" value="users" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
@@ -44,7 +44,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					<th align="center" width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->users ); ?>);" /></th>
 					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
 					<th class="title" align="center"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-					<th align="left"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_USRL_NAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th align="left"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th align="left"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_USRL_REALNAME', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_LOGGEDIN'); ?></th>
 					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_ENABLED'); ?></th>

@@ -94,8 +94,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 	protected function orderUpDown($id, $direction) {
 		/*
 		require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/tables/kunenatopicicons.php');
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if (!$id) return;
 
@@ -127,8 +126,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 	}
 
 	protected function setVariable($cid, $variable, $value) {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$app = JFactory::getApplication ();
 		$db = JFactory::getDBO ();

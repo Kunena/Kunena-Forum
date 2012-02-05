@@ -38,7 +38,8 @@ class plgSystemKunena extends JPlugin {
 					$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 					$row = JTable::getInstance('plugin');
 					$row->load( (int) $cid[0] );
-					$lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', JPATH_ADMINISTRATOR );
+					$lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', JPATH_ADMINISTRATOR )
+						|| $lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', KPATH_ADMIN );
 				}
 			} else {
 				// Never load language file

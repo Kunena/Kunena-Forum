@@ -23,7 +23,7 @@ defined ( '_JEXEC' ) or die ();
 			</h2>
 
 			<div class="kdetailsbox kannouncements-details" id="kannouncements-detailsbox" >
-				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 				<table class="kannouncement">
 					<tbody id="kannouncement_body">
 						<tr class="ksth">

@@ -12,6 +12,10 @@ defined ( '_JEXEC' ) or die ();
 
 class plgKunenaComprofiler extends JPlugin {
 	public function __construct(&$subject, $config) {
+
+		// TODO: add CB support
+		return;
+
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
 

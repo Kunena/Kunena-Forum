@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
 <install type="language" version="1.5" client="administrator" method="upgrade">
-	<name>Kunena Forum - Dutch</name>
+	<name>Kunena Forum - Dutch (Netherlands)</name>
 	<tag>nl-NL</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<author>Jelle Kok</author>
-	<authorEmail>info@newf1.nl</authorEmail>
-	<authorUrl>http://www.newf1.nl</authorUrl>
-	<copyright>(C) 2011 Kunena</copyright>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>translations@kunena.org</authorEmail>
+	<authorUrl>https://www.transifex.net/projects/p/Kunena/team/nl_NL/</authorUrl>
+	<copyright>(C) 2008 - 2012 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPL</license>
-	<description>Nederlands taalbestand voor Kunena Forum Component. Met dank aan de volgende vertalers: Jelle Kok (810), John (John), DTP2.nl (DTP2) en het taalteam van DutchJoomla!</description>
+	<description>Dutch (Netherlands) language file for Kunena Forum Component</description>
 
 	<files>
 		<filename>nl-NL.com_kunena.ini</filename>

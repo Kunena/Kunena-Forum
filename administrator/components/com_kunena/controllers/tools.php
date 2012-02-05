@@ -205,10 +205,8 @@ class KunenaAdminControllerTools extends KunenaController {
 
 	public function trashmenu() {
 		$app = JFactory::getApplication ();
-		$lang = JFactory::getLanguage();
 		// Start by loading English strings and override them by current locale
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, null, true);
+		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 
 		require_once(KPATH_ADMIN . '/install/model.php');
 		$installer = new KunenaModelInstall();

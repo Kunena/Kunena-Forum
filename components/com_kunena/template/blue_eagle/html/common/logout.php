@@ -30,7 +30,7 @@ defined ( '_JEXEC' ) or die ();
 				<ul class="kprofilebox-welcome">
 					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo $this->me->getLink() ?></strong></li>
 					<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo KunenaDate::getInstance($this->me->lastvisitDate)->toKunena('ago'); ?>"><?php echo KunenaDate::getInstance($this->me->lastvisitDate)->toKunena('date_today'); ?></span></li>
-					<?php if ($this->logout) : ?>
+					<?php if ($this->logout->enabled()) : ?>
 					<li>
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">
 						<input type="hidden" name="view" value="user" />

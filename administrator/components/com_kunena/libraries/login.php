@@ -24,6 +24,11 @@ class KunenaLogin {
 		}
 	}
 
+	public function enabled() {
+		// TODO: do better
+		return !empty($this->instances);
+	}
+
 	static public function getInstance($integration = null) {
 		if (self::$instance === false) {
 			self::$instance = new KunenaLogin();

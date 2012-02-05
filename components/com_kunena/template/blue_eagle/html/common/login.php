@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>,
 					<b><?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST'); ?></b>
 				</div>
-				<?php if ($this->login) : ?>
+				<?php if ($this->login->enabled()) : ?>
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">
 					<input type="hidden" name="view" value="user" />
 					<input type="hidden" name="task" value="login" />

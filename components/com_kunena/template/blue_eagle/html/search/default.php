@@ -27,7 +27,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="searchform" name="adminForm">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="searchform" id="adminForm" name="adminForm">
 	<input type="hidden" name="view" value="search" />
 	<input type="hidden" name="task" value="results" />
 	<?php echo JHTML::_( 'form.token' ); ?>

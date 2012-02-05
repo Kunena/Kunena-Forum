@@ -38,9 +38,8 @@ if ($view != 'install' && !$kversion->checkVersion()) {
 
 } else {
 	// Load language files
-	$lang = JFactory::getLanguage();
-	$lang->load('com_kunena',JPATH_SITE);
-	$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
+	KunenaFactory::loadLanguage('com_kunena', 'site');
+	KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 
 	// Initialize error handlers
 	KunenaError::initialize ();

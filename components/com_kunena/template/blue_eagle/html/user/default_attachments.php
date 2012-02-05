@@ -29,7 +29,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 </div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" id="adminForm">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="task" value="delfile" />
 				<input type="hidden" name="boxchecked" value="0" />

@@ -15,7 +15,7 @@ JHTML::_('behavior.tooltip');
 ?>
 <div class="ksection">
 	<h2 class="kheader"><?php echo $this->category->id? JText::_('COM_KUNENA_EDIT_CATEGORY') : JText::_('COM_KUNENA_NEW_CATEGORY') ?></h2>
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" enctype="multipart/form-data" name="adminForm" method="post" id="categoryform" class="adminForm form-validate">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" enctype="multipart/form-data" id="adminForm" name="adminForm" method="post" class="adminForm form-validate">
 		<input type="hidden" name="view" value="category" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="catid" value="<?php echo $this->category->id ?>" />

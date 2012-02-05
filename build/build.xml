@@ -167,9 +167,9 @@
 		</move>
 		
 		<!-- Language pack -->
-		<copy file="${project_dir}/${kunena.backend}/language/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/${kunena.backend}/install/language/kunena_language_pack.xml" tofile="${tmp_dir}/languages_extra/kunena_language_pack.xml" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/${kunena.backend}/install/language/install.script.php" tofile="${tmp_dir}/languages_extra/install.script.php" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.admin}/language/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.admin}/install/language/kunena_language_pack.xml" tofile="${tmp_dir}/languages_extra/kunena_language_pack.xml" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.admin}/install/language/install.script.php" tofile="${tmp_dir}/languages_extra/install.script.php" overwrite="true" filtering="true" />
 
 		<!-- Readme -->
 		<copy file="${project_dir}/README.md" tofile="${package_dir}/README.txt" overwrite="true" filtering="true" />
@@ -255,7 +255,7 @@
 		<language tag="ar-AA" include="false" />
 		<language tag="az-AZ" />
 		<language tag="bg-BG" />
-		<language tag="bs-BA" />
+		<!--language tag="bs-BA" /-->
 		<language tag="ca-ES" include="false" />
 		<language tag="cs-CZ" />
 		<language tag="da-DK" />
@@ -296,9 +296,9 @@
 		<language tag="vi-VN" />
 		<language tag="zh-CN" include="false" />
 		<language tag="zh-TW" include="false" />
-		<archive destfile="${build_dir}/archive/com_kunena-admin" basedir="${tmp_dir}/${kunena.backend}" />
-		<archive destfile="${build_dir}/archive/com_kunena-site" basedir="${tmp_dir}/${kunena.frontend}" />
-		<archive destfile="${build_dir}/archive/com_kunena-media" basedir="${tmp_dir}/${kunena.media}" />
+		<archive destfile="${build_dir}/archive/com_kunena-admin" basedir="${tmp_dir}/admin" />
+		<archive destfile="${build_dir}/archive/com_kunena-site" basedir="${tmp_dir}/site" />
+		<archive destfile="${build_dir}/archive/com_kunena-media" basedir="${tmp_dir}/media" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />
 		<archive destfile="${str.destlangfile}" basedir="${tmp_dir}/languages_extra" />
 	</target>

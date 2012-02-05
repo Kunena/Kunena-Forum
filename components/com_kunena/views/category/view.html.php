@@ -162,8 +162,7 @@ class KunenaViewCategory extends KunenaView {
 			return;
 		}
 
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena',JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$this->assignRef ( 'categories', $this->get ( 'AdminCategories' ) );
 		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
@@ -186,8 +185,7 @@ class KunenaViewCategory extends KunenaView {
 			return;
 		}
 
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena',JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$this->assignRef ( 'options', $this->get ( 'AdminOptions' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'AdminModerators' ) );

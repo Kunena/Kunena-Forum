@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
 <install type="language" version="1.5" client="administrator" method="upgrade">
-	<name>Kunena Forum - German</name>
+	<name>Kunena Forum - German (Germany)</name>
 	<tag>de-DE</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<author>Sven Schultschik (LDA) / Richard Binder (rich)</author>
-        <lector>Jan Erik Zassenhaus (Team J!German)</lector>
-	<authorEmail>kunena@kunena.org</authorEmail>
-	<authorUrl>http://www.kunena.org</authorUrl>
-	<copyright>(C) 2008 - 2011 Kunena Team. All rights reserved.</copyright>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>translations@kunena.org</authorEmail>
+	<authorUrl>https://www.transifex.net/projects/p/Kunena/team/de_DE/</authorUrl>
+	<copyright>(C) 2008 - 2012 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPL</license>
-	<description>German language file for Kunena Forum Component</description>
+	<description>German (Germany) language file for Kunena Forum Component</description>
 
 	<files>
 		<filename>de-DE.com_kunena.ini</filename>

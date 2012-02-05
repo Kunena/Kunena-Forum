@@ -43,6 +43,8 @@
 
 	<target name="mkdir">
 		<mkdir dir="${tmp_dir}" />
+		<mkdir dir="${tmp_dir}/languages_extra" />
+		<mkdir dir="${tmp_dir}/languages_extra/language" />
 		<mkdir dir="${build_dir}" />
 		<mkdir dir="${package_dir}" />
 		<mkdir dir="${package_dir}/archive" />
@@ -69,11 +71,7 @@
 			</classpath>
 		</taskdef>
 
-		<taskdef resource="net/sf/antcontrib/antlib.xml">
-			<classpath>
-				<pathelement location="${project_dir}/build/lib/ant-contrib-1.0b3.jar"/>
-			</classpath>
-		</taskdef>
+		<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${project_dir}/build/lib/ant-contrib-1.0b3.jar"/>
 
 		<xmlproperty file="${project_dir}/${kunena.admin}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<tstamp>
@@ -89,6 +87,7 @@
 			<istrue value="${cfg.adddate}" />
 		</condition>
 		<property name="str.destfile" value="${package_dir}/${cfg.prefix}${cfg.name}${str.version}${str.date}" />
+		<property name="str.destlangfile" value="${package_dir}/${cfg.prefix}${cfg.name}-languages${str.version}${str.date}" />
 
 		<condition property="do.tar">
 			<istrue value="${cfg.tar}" />
@@ -166,6 +165,14 @@
 		<move todir="${build_dir}/archive" includeEmptyDirs="no">
 			<fileset dir="${tmp_dir}/admin/archive" />
 		</move>
+		
+		<!-- Language pack -->
+		<copy file="${project_dir}/${kunena.backend}/language/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.backend}/install/language/kunena_language_pack.xml" tofile="${tmp_dir}/languages_extra/kunena_language_pack.xml" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.backend}/install/language/install.script.php" tofile="${tmp_dir}/languages_extra/install.script.php" overwrite="true" filtering="true" />
+
+		<!-- Readme -->
+		<copy file="${project_dir}/README.md" tofile="${package_dir}/README.txt" overwrite="true" filtering="true" />
 	</target>
 
 	<target name="minify" depends="build">
@@ -180,21 +187,31 @@
 	
 	<macrodef name="language">
 		<attribute name="tag" default="en-GB"/>
+		<attribute name="include" default="false"/>
 		<sequential>
 			<copy file="${project_dir}/${kunena.admin}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}/admin" overwrite="true" filtering="true" />
 			<copy todir="${tmp_dir}/languages/@{tag}/admin" flatten="yes" includeEmptyDirs="no" overwrite="true">
 				<fileset dir="${project_dir}/${kunena.admin}">
 					<include name="**/@{tag}.*.ini"/>
+					<include name="index.html"/>
 				</fileset>
 			</copy>
 			<copy file="${project_dir}/${kunena.site}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}/site" overwrite="true" filtering="true" />
 			<copy todir="${tmp_dir}/languages/@{tag}/site" flatten="yes" includeEmptyDirs="no" overwrite="true">
 				<fileset dir="${project_dir}/${kunena.site}">
 					<include name="**/@{tag}.*.ini"/>
+					<include name="index.html"/>
 				</fileset>
 			</copy>
-			<archive destfile="${build_dir}/archive/@{tag}.com_kunena-admin" basedir="${tmp_dir}/languages/@{tag}/admin"/>
-			<archive destfile="${build_dir}/archive/@{tag}.com_kunena-site" basedir="${tmp_dir}/languages/@{tag}/site"/>
+			<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}.admin_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/admin"/>
+			<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}.site_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/site"/>
+			<if>
+				<equals arg1="@{include}" arg2="true" />
+				<then>
+					<archive destfile="${build_dir}/archive/com_kunena.@{tag}.admin_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/admin"/>
+					<archive destfile="${build_dir}/archive/com_kunena.@{tag}.site_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/site"/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -235,49 +252,55 @@
 
 	<target name="copy" depends="minify">
 		<mkdir dir="${build_dir}/archive" />
-		<!-- language tag="ar-AA" /-->
-		<!-- language tag="az-AZ" /-->
-		<!-- language tag="bg-BG" /-->
-		<!-- language tag="ca-ES" /-->
-		<!-- language tag="cs-CZ" /-->
-		<!-- language tag="da-DK" /-->
-		<!-- language tag="de-DE" /-->
-		<!-- language tag="el-GR" /-->
-		<language tag="en-GB" />
-		<!-- language tag="es-ES" /-->
-		<!-- language tag="et-EE" /-->
-		<!-- language tag="fa-IR" /-->
-		<!-- language tag="fi-FI" /-->
-		<!-- language tag="fr-FR" /-->
-		<!-- language tag="he-IL" /-->
-		<!-- language tag="hu-HU" /-->
-		<!-- language tag="id-ID" /-->
-		<!-- language tag="it-IT" /-->
-		<!-- language tag="ja-JP" /-->
-		<!-- language tag="km-KH" /-->
-		<!-- language tag="lt-LT" /-->
-		<!-- language tag="mk-MK" /-->
-		<!-- language tag="nb-NO" /-->
-		<!-- language tag="nl-NL" /-->
-		<!-- language tag="pl-PL" /-->
-		<!-- language tag="pt-BR" /-->
-		<!-- language tag="pt-PT" /-->
-		<!-- language tag="ro-RO" /-->
-		<!-- language tag="ru-RU" /-->
-		<!-- language tag="sq-AL" /-->
-		<!-- language tag="sr-RS" /-->
-		<!-- language tag="sr-YU" /-->
-		<!-- language tag="sv-SE" /-->
-		<!-- language tag="th-TH" /-->
-		<!-- language tag="tr-TR" /-->
-		<!-- language tag="vi-VN" /-->
-		<!-- language tag="zh-CN" /-->
-		<!-- language tag="zh-TW" /-->
-		<archive destfile="${build_dir}/archive/com_kunena-media" basedir="${tmp_dir}/media" />
-		<archive destfile="${build_dir}/archive/com_kunena-admin" basedir="${tmp_dir}/admin" />
-		<archive destfile="${build_dir}/archive/com_kunena-site" basedir="${tmp_dir}/site" />
+		<language tag="ar-AA" include="false" />
+		<language tag="az-AZ" />
+		<language tag="bg-BG" />
+		<language tag="bs-BA" />
+		<language tag="ca-ES" include="false" />
+		<language tag="cs-CZ" />
+		<language tag="da-DK" />
+		<language tag="de-DE" include="false" />
+		<language tag="el-GR" include="false" />
+		<language tag="en-GB" include="true" />
+		<language tag="es-ES" include="false" />
+		<language tag="et-EE" />
+		<language tag="fa-IR" />
+		<language tag="fi-FI" include="false" />
+		<language tag="fr-FR" include="false" />
+		<language tag="he-IL" />
+		<language tag="hr-HR" />
+		<language tag="hu-HU" />
+		<language tag="id-ID" />
+		<language tag="it-IT" include="false" />
+		<language tag="ja-JP" />
+		<language tag="km-KH" include="false" />
+		<language tag="kz-KZ" include="false" />
+		<language tag="lt-LT" include="false" />
+		<language tag="lv-LV" />
+		<language tag="mk-MK" />
+		<language tag="nb-NO" include="false" />
+		<language tag="nl-NL" include="false" />
+		<language tag="pl-PL" />
+		<language tag="pt-BR" include="false" />
+		<language tag="pt-PT" include="false" />
+		<language tag="ro-RO" />
+		<language tag="ru-RU" include="false" />
+		<language tag="sk-SK" />
+		<language tag="sq-AL" />
+		<language tag="sr-RS" />
+		<language tag="sr-YU" />
+		<language tag="sv-SE" />
+		<language tag="th-TH" include="false" />
+		<language tag="tr-TR" />
+		<language tag="ur-PK" />
+		<language tag="vi-VN" />
+		<language tag="zh-CN" include="false" />
+		<language tag="zh-TW" include="false" />
+		<archive destfile="${build_dir}/archive/com_kunena-admin" basedir="${tmp_dir}/${kunena.backend}" />
+		<archive destfile="${build_dir}/archive/com_kunena-site" basedir="${tmp_dir}/${kunena.frontend}" />
+		<archive destfile="${build_dir}/archive/com_kunena-media" basedir="${tmp_dir}/${kunena.media}" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />
-		<copy file="${build_dir}/README.txt" todir="${package_dir}" />
+		<archive destfile="${str.destlangfile}" basedir="${tmp_dir}/languages_extra" />
 	</target>
 
 	<target name="info" depends="copy">

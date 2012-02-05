@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
 <install type="language" version="1.5" client="site" method="upgrade">
-	<name>Kunena Forum - Thai</name>
+	<name>Kunena Forum - Thai (Thailand)</name>
 	<tag>th-TH</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<author>drlovecat</author>
-	<authorEmail>admin@kunenathai.com</authorEmail>
-	<authorUrl>www.kunenathai.com</authorUrl>
-	<copyright>(C) 2011 Kunenathai.com</copyright>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>translations@kunena.org</authorEmail>
+	<authorUrl>https://www.transifex.net/projects/p/Kunena/team/th_TH/</authorUrl>
+	<copyright>(C) 2008 - 2012 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPL</license>
-	<description>ชุดติดตั้งภาษาไทยสำหรับระบบฟอรัม Kunena 1.6.1</description>
+	<description>Thai (Thailand) language file for Kunena Forum Component</description>
 
 	<files>
 		<filename>th-TH.com_kunena.ini</filename>
 		<filename>th-TH.com_kunena.tpl_blue_eagle.ini</filename>
-		<!-- <filename>th-TH.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

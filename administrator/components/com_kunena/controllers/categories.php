@@ -78,8 +78,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function add() {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
@@ -93,8 +92,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function edit() {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
@@ -128,8 +126,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	protected function _save() {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
@@ -205,8 +202,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function remove() {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
@@ -246,8 +242,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function cancel() {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
@@ -269,8 +264,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function saveorder() {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
@@ -324,8 +318,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	protected function orderUpDown($id, $direction) {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		if (!$id) return;
 
@@ -356,8 +349,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	protected function setVariable($cid, $variable, $value) {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_ADMINISTRATOR);
+		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {

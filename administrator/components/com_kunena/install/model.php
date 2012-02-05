@@ -300,7 +300,7 @@ class KunenaModelInstall extends JModel {
 			// If we are installing Kunena from archive, we need to unzip language file
 			$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
 			if (JFolder::exists($path)) {
-				$version = Kunena::version();
+				$version = KunenaForum::version();
 				$file = "com_kunena.{$tag}.{$key}_v{$version}".file_get_contents("{$path}/fileformat");
 
 				// SVN never has these files, installation package may have

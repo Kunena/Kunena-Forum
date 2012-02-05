@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 						<a title="<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>" rel="kannouncements-detailsbox"><?php echo $this->app->getCfg('sitename') . ' ' . JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?></a>
 					</h2>
 				</div>
-				<div class="header fr">	
+				<div class="header fr">
 					<?php if ($this->canEdit) : ?>
 						<a class="link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement&layout=create') ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_ANN_ADD') ?></a>
 					<?php endif ?>
@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper">
 				<div class="announcements-details detailsbox box-full box-hover box-border box-border_radius box-shadow" id="announcements-detailsbox" >
-					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 						<ul class="announcement-list">
 							<li class="header">
 								<dl>

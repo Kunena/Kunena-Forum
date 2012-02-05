@@ -10,4 +10,4 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->displayTemplateFile('category', 'default', 'row');
+$this->displayTemplateFile('topics', 'default', 'row');

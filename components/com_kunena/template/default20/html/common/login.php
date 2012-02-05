@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 		<div class="klogin">
 			<ul class="klogin-guest">
 				<li class="klogin-welcome kguest"><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME') ?>, <?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST') ?></li>
-				<?php if ($this->login) : ?>
+				<?php if ($this->login->enabled()) : ?>
 				<li class="klogin-form">
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="kform">
 						<input type="hidden" name="view" value="user" />

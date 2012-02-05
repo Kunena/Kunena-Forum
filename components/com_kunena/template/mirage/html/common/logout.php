@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 			</ul>
 			<ul class="login-divider"><li class="divider"></li></ul>
 			<ul class="login-buttons">
-				<?php if ($this->logout) : ?>
+				<?php if ($this->logout->enabled()) : ?>
 				<li class="logout-form">
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="kform klogout">
 						<input type="hidden" name="view" value="user" />

@@ -206,12 +206,12 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		// Update only hit - not entire object
 		$table = $this->getTable();
 		$table->id = $this->id;
-		
+
 		if ( $table->hit() ) {
 			$this->hits++;
 		}
 	}
-	
+
 	public function getPagination($limitstart=0, $limit=6, $display=4, $prefix='') {
 		if (!$this->_pagination) {
 			$this->_pagination = new KunenaHtmlPagination($this->posts, $limitstart, $limit, $prefix);
@@ -318,7 +318,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return KunenaForumMessageHelper::getLocation($mesid, $direction, $hold);
 	}
 
-	public function newReply($fields=array(), $user=null) {
+	public function newReply($fields=array(), $user=null, $safefields=null) {
 		$user = KunenaUserHelper::get($user);
 		$category = $this->getCategory();
 
@@ -342,8 +342,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$user = KunenaUserHelper::get($this->first_post_userid);
 			$text = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->first_post_message );
 			$message->message = "[quote=\"{$user->getName($this->first_post_guest_name)}\" post={$this->first_post_id}]" .  $text . "[/quote]";
-		} elseif (is_array($fields)) {
-			$message->bind($fields, array ('name', 'email', 'subject', 'message' ), true);
+		} else {
+			if ($safefields) $message->bind($safefields);
+			if ($fields) $message->bind($fields, array ('name', 'email', 'subject', 'message' ), true);
 		}
 		return $message;
 	}

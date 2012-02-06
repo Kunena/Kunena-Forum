@@ -18,16 +18,18 @@ defined ( '_JEXEC' ) or die ();
 					<h2 class="header"><?php echo $this->escape($this->header); ?></h2>
 				</div>
 			</div>
-			<div class="detailsbox>">
-				<div class="content">
-					<?php
-					if ($this->format == 'html') :
-						echo $this->body;
-					elseif ($this->format == 'text') :
-						echo $this->escape($this->body);
-					else :
-					echo KunenaHtmlParser::parseBBCode($this->body);
-					endif; ?>
+			<div class="detailsbox-wrapper">
+				<div class="detailsbox>">
+					<div class="content">
+						<?php
+						if ($this->format == 'html') :
+							echo $this->body;
+						elseif ($this->format == 'text') :
+							echo $this->escape($this->body);
+						else :
+						echo KunenaHtmlParser::parseBBCode($this->body);
+						endif; ?>
+					</div>
 				</div>
 			</div>
 		</div>

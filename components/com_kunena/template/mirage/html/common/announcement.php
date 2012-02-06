@@ -17,7 +17,7 @@ defined ( '_JEXEC' ) or die ();
 		<div id="announce" class="block">
 			<div class="headerbox-wrapper box-full">
 				<div class="header fl">
-					<h2 class="header">
+					<h2 class="header link-header2">
 						<a href="<?php echo $this->annListURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox"><?php echo $this->annTitle ?></a>
 						</a>
 					</h2>

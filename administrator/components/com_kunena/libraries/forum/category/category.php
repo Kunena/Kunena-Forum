@@ -261,8 +261,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return new KunenaForumCategory();
 	}
 
-	public function newTopic(array $fields=null, $user=null) {
-		$catid = $this->getNewTopicCategory()->id;
+	public function newTopic(array $fields=null, $user=null, $safefields=null) {
+		$catid = isset($safefields['category_id']) ? $safefields['category_id'] : $this->getNewTopicCategory()->id;
 		$user = KunenaUserHelper::get($user);
 		$message = new KunenaForumMessage();
 		$message->catid = $catid;
@@ -270,12 +270,14 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$message->userid = $user->userid;
 		$message->ip = !empty($_SERVER ['REMOTE_ADDR']) ? $_SERVER ['REMOTE_ADDR'] : '';
 		$message->hold = $this->review ? (int)!$this->authorise ('moderate', $user, true) : 0;
-		$message->bind($fields, array ('name', 'email', 'subject', 'message'), true);
+		if ($safefields) $message->bind($safefields);
+		if ($fields) $message->bind($fields, array ('name', 'email', 'subject', 'message'), true);
 
 		$topic = new KunenaForumTopic();
 		$topic->category_id = $catid;
 		$topic->hold = $message->hold;
-		$topic->bind($fields, array ('subject','icon_id'), true);
+		if ($safefields) $topic->bind($safefields);
+		if ($fields) $topic->bind($fields, array ('subject','icon_id'), true);
 
 		$message->setTopic($topic);
 		return array($topic, $message);

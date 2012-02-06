@@ -55,8 +55,8 @@ class KunenaTemplateDefault20 extends KunenaTemplate {
 		parent::initializeBackend();
 	}
 
-	public function getButton($name, $text) {
-		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
+	public function getButton($link, $name, $scope, $type, $id = null) {
+		return parent::getButton($link, $name, $scope, $type, $id);
 	}
 
 	public function getIcon($name, $title='') {

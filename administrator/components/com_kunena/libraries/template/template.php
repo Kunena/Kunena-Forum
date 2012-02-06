@@ -120,8 +120,25 @@ class KunenaTemplate extends JObject
 		return $this->userClasses;
 	}
 
-	public function getButton($name, $text) {
-		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
+	public function getButton($link, $name, $scope, $type, $id = null) {
+		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
+		$names = array('unsubscribe'=>'subscribe', 'unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
+				'quickreply'=>'reply', 'quote'=>'kquote', 'edit'=>'kedit');
+
+		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
+		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG") $title = '';
+		if ($id) $id = 'id="'.$id.'"';
+
+		if (isset($types[$type])) $type = $types[$type];
+		if ($name == 'quickreply') $type .= ' kqreply';
+		if (isset($names[$name])) $name = $names[$name];
+
+		return <<<HTML
+<a $id class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
+	<span class="{$name}"><span>{$text}</span></span>
+</a>
+HTML;
 	}
 
 	public function getIcon($name, $title='') {

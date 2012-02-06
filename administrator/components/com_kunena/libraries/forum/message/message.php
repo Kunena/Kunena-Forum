@@ -74,7 +74,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
 	}
 
-	public function newReply($fields=array(), $user=null) {
+	public function newReply($fields=array(), $user=null, $safefields=null) {
 		$user = KunenaUserHelper::get($user);
 		$topic = $this->getTopic();
 		$category = $this->getCategory();
@@ -99,8 +99,9 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			$user = KunenaFactory::getUser($this->userid);
 			$text = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->message );
 			$message->message = "[quote=\"{$user->getName($this->name)}\" post={$this->id}]" .  $text . "[/quote]";
-		} elseif (is_array($fields)) {
-			$message->bind($fields, array ('name', 'email', 'subject', 'message' ), true);
+		} else {
+			if ($safefields) $message->bind($safefields);
+			if ($fields) $message->bind($fields, array ('name', 'email', 'subject', 'message' ), true);
 		}
 		return array($topic, $message);
 	}

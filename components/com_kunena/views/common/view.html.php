@@ -87,6 +87,7 @@ class KunenaViewCommon extends KunenaView {
 		$active = JFactory::getApplication()->getMenu ()->getActive ();
 
 		if (empty($this->pathway)) {
+			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 			if ($catid) {
 				$parents = KunenaForumCategoryHelper::getParents($catid);
 				$parents[$catid] = KunenaForumCategoryHelper::get($catid);
@@ -110,13 +111,13 @@ class KunenaViewCommon extends KunenaView {
 				$active_layout = (!empty($active->query['view']) && $active->query['view'] == 'topic' && !empty($active->query['layout'])) ? $active->query['layout'] : '';
 				switch ($layout) {
 					case 'create':
-						if ($active_layout != 'create') $pathway->addItem($this->escape( JText::_('COM_KUNENA_BUTTON_NEW_TOPIC'), KunenaRoute::normalize() ));
+						if ($active_layout != 'create') $pathway->addItem($this->escape( JText::_('COM_KUNENA_MENU_TOPIC_CREATE'), KunenaRoute::normalize() ));
 						break;
 					case 'reply':
-						if ($active_layout != 'reply') $pathway->addItem($this->escape( JText::_('COM_KUNENA_BUTTON_REPLY_TOPIC'), KunenaRoute::normalize() ));
+						if ($active_layout != 'reply') $pathway->addItem($this->escape( JText::_('COM_KUNENA_MENU_TOPIC_REPLY'), KunenaRoute::normalize() ));
 						break;
 					case 'edit':
-						if ($active_layout != 'edit') $pathway->addItem($this->escape( JText::_('COM_KUNENA_BUTTON_EDIT'), KunenaRoute::normalize() ));
+						if ($active_layout != 'edit') $pathway->addItem($this->escape( JText::_('COM_KUNENA_MENU_TOPIC_EDIT'), KunenaRoute::normalize() ));
 						break;
 				}
 			}

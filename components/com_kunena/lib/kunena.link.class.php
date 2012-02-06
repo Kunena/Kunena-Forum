@@ -57,11 +57,6 @@ class CKunenaLink {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=review&action=list&catid={$catid}", $catname, '', $rel, $class );
 	}
 
-	function GetUserLayoutLink($layout, $text, $title='', $rel = 'nofollow', $class = '') {
-		$token = '&'.JUtility::getToken().'=1';
-		return CKunenaLink::GetSefHrefLink ( "index.php?option=com_kunena&view=user&task=change&topic_layout={$layout}{$token}", $text, $title, 'nofollow', $class );
-	}
-
 	function GetSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '') {
 		jimport ( 'joomla.environment.request' );
 		return self::GetHrefLink ( htmlspecialchars(JRequest::getURI (), ENT_COMPAT, 'UTF-8'), $name, '', $rel, $class, $anker );
@@ -146,29 +141,9 @@ class CKunenaLink {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=latest{$do}", $name, '', $rel );
 	}
 
-	function GetPostNewTopicLink($catid, $name, $rel = 'nofollow', $class = '', $title = '') {
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=post&do=new&catid={$catid}", $name, $title, $rel, $class );
-	}
-
-	// Get actions: favorite, subscribe, delete, approve etc
-	function GetTopicPostLink($do, $catid, $id, $name, $rel = 'nofollow', $class = '', $title = '', $attr = '') {
-		$token = '&'.JUtility::getToken().'=1';
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=post&do={$do}&catid={$catid}&id={$id}{$token}", $name, $title, $rel, $class, '', $attr );
-	}
-
-	// Post actions: post, edit, moderate etc
-	function GetTopicPostReplyLink($do, $catid, $id, $name, $rel = 'nofollow', $class = '', $title = '', $attr = '') {
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=post&do={$do}&catid={$catid}&id={$id}", $name, $title, $rel, $class, '', $attr );
-	}
-
 	function GetKarmaLink($do, $catid, $pid, $userid, $name, $rel = 'nofollow') {
 		$token = '&'.JUtility::getToken().'=1';
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=karma&do={$do}&userid={$userid}&catid={$catid}&pid={$pid}{$token}", $name, '', $rel );
-	}
-
-	function GetThankyouLink( $task, $catid, $pid, $targetuserid, $name, $title, $class) {
-		$token = '&'.JUtility::getToken().'=1';
-		return self::GetSefHrefLink ("index.php?option=com_kunena&view=thankyou&task={$task}&catid={$catid}&pid={$pid}{$token}", $name, $title, 'nofollow', $class);
 	}
 
 	function GetSearchURL($view, $searchword='', $limitstart=0, $limit=0, $params = '', $xhtml=true) {

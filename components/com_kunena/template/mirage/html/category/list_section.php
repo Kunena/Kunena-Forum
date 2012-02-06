@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="<?php echo $this->getClass('block', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo intval($this->section->id) ?>">
 				<div class="headerbox-wrapper box-full">
 					<div class="header fl">
-						<h2 class="header">
+						<h2 class="header link-header2">
 							<a class="section" href="<?php echo $this->sectionURL ?>" rel="ksection-detailsbox-<?php echo intval($this->section->id) ?>">
 								<?php echo $this->escape($this->section->name) ?>
 							</a>
@@ -31,7 +31,7 @@ defined ( '_JEXEC' ) or die ();
 				<div class="detailsbox-wrapper">
 					<div class="category detailsbox box-full box-border box-border_radius box-shadow" id="category-<?php echo intval($this->section->id) ?>">
 						<ul class="category-list">
-							<li class="header">
+							<li class="header box-hover_header-row">
 								<dl>
 									<dd class="category-icon">
 									</dd>

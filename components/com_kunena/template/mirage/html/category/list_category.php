@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="category-row box-hover">
+<li class="category-row box-hover box-hover_list-row">
 	<dl>
 		<dd class="category-icon">
 			<a href="<?php echo $this->categoryURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>">[K=CATEGORY_ICON]</a>
@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 		<dd class="category-subject">
 			<ul>
 				<li class="category-title">
-					<h3><a href="<?php echo $this->categoryURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>"><?php echo $this->escape($this->category->name) ?></a> [K=CATEGORY_NEW_COUNT]</h3>
+					<h3 class="link-header3"><a href="<?php echo $this->categoryURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>"><?php echo $this->escape($this->category->name) ?></a> [K=CATEGORY_NEW_COUNT]</h3>
 				</li>
 				<?php if ($this->category->description) : ?>
 					<li class="category-details"><div><?php echo $this->parse($this->category->description) ?></div></li>

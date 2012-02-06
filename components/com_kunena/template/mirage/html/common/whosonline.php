@@ -12,18 +12,17 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="box-module">
 	<div class="box-wrapper box-color box-border box-border_radius box-shadow">
-		<div id="whosonline" class="block">
+		<div class="whosonline block">
 			<div class="headerbox-wrapper box-full">
 				<div class="header fl">
-					<h2 class="header">
-						<a href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>" rel="whosonline-detailsbox" >
-						<?php if ($this->usersURL): ?><a href="<?php echo $this->usersURL ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK') ?></a><?php endif; ?>
+					<h2 class="header link-header2">
+						<a class="section" href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>" rel="whosonline-detailsbox" >
 						<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_TITLE') ?>
 						</a>
 					</h2>
 				</div>
 				<div class="header fr">
-					<a class="link" href="<?php echo $this->usersURL ?>"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK') ?></a>
+					<?php if ($this->usersURL): ?><a class="link" href="<?php echo $this->usersURL ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK') ?></a><?php endif; ?>
 				</div>
 			</div>
 			<div class="detailsbox-wrapper">

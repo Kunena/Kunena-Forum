@@ -37,16 +37,20 @@ class KunenaViewCategory extends KunenaView {
 
 		$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 
+		$this->token = '&' . JUtility::getToken() . '=1';
+
 		// Is user allowed to post new topic?
 		$this->newTopicHtml = '';
 		if ($this->category->getNewTopicCategory()->exists()) {
-			$this->newTopicHtml = CKunenaLink::GetPostNewTopicLink ( $this->category->id, $this->getButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
+			$url = KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$this->category->id}");
+			$this->newTopicHtml = $this->getButton($url, 'create', 'topic', 'communication');
 		}
 
 		// Is user allowed to mark forums as read?
 		$this->markReadHtml = '';
 		if ($this->me->exists() && $this->total) {
-			$this->markReadHtml = CKunenaLink::GetCategoryActionLink ( 'markread', $this->category->id, $this->getButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
+			$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->category->id}{$this->token}");
+			$this->markReadHtml = $this->getButton($url, 'markread', 'category', 'user');
 		}
 
 		$this->subscribeCatHtml = '';
@@ -62,9 +66,11 @@ class KunenaViewCategory extends KunenaView {
 			if (KunenaError::checkDatabaseError()) return;
 
 			if (!$subscribed) {
-				$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'subscribe', $this->category->id, $this->getButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
+				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=subscribe&catid={$this->category->id}{$this->token}");
+				$this->subscribeCatHtml = $this->getButton($url, 'subscribe', 'category', 'user');
 			} else {
-				$this->subscribeCatHtml = CKunenaLink::GetCategoryActionLink ( 'unsubscribe', $this->category->id, $this->getButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
+				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=unsubscribe&catid={$this->category->id}{$this->token}");
+				$this->subscribeCatHtml = $this->getButton($url, 'unsubscribe', 'category', 'user');
 			}
 		}
 
@@ -105,7 +111,8 @@ class KunenaViewCategory extends KunenaView {
 		if ($this->category->isSection()) {
 // TODO: turn this on:
 /*			if ($this->me->isAdmin(null)) {
-				$this->category_manage = CKunenaLink::GetHrefLink(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage&catid='.$this->category->id), $this->getButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES') ), $title = '', 'nofollow', 'kicon-button kbuttonmod btn-left', '', JText::_('COM_KUNENA_BUTTON_MANAGE_CATEGORIES_LONG'));
+				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&layout=manage&catid={$this->category->id}");
+				$this->category_manage = $this->getButton($url, 'manage', 'category', 'moderation');
 			}*/
 		}
 		if ($this->me->exists()) {

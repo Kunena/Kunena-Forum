@@ -28,8 +28,8 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 		require_once dirname(__FILE__).'/initialize.php';
 	}
 
-	public function getButton($name, $text) {
-		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
+	public function getButton($link, $name, $scope, $type, $id = null) {
+		return parent::getButton($link, $name, $scope, $type, $id);
 	}
 
 	public function getIcon($name, $title='') {

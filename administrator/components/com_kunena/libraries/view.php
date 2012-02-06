@@ -106,8 +106,8 @@ class KunenaView extends JView {
 		return KunenaHtmlParser::parseBBCode($text, $this, $len);
 	}
 
-	function getButton($name, $text) {
-		return $this->ktemplate->getButton($name, $text);
+	public function getButton($link, $name, $scope, $type, $id = null) {
+		return $this->ktemplate->getButton($link, $name, $scope, $type, $id);
 	}
 
 	function getIcon($name, $title='') {

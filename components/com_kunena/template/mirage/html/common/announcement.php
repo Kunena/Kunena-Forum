@@ -19,7 +19,6 @@ defined ( '_JEXEC' ) or die ();
 				<div class="header fl">
 					<h2 class="header link-header2">
 						<a href="<?php echo $this->annListURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox"><?php echo $this->annTitle ?></a>
-						</a>
 					</h2>
 				</div>
 				<div class="header fr">

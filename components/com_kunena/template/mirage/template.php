@@ -58,7 +58,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {
-		/*$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
+		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
 		$names = array('unsubscribe'=>'subscribe', 'unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
 				'quickreply'=>'reply', 'quote'=>'kquote', 'edit'=>'kedit');
 
@@ -75,7 +75,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$html .= '<span class="'.$name'"><span>'.$text'</span></span>'
 		$html .= '</a>';
 
-		return $html;*/
+		return $html;
 	}
 			
 

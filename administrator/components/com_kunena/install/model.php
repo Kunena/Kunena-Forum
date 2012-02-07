@@ -311,9 +311,8 @@ class KunenaModelInstall extends JModel {
 				}
 			}
 			// Install language from dest/language/xx-XX
-			if ($success == true && is_dir($installdir)) {
-				$exists = true;
-
+			if (is_dir($installdir)) {
+				$exists = $success;
 				if (version_compare(JVERSION, '1.6', '>')) {
 					// Joomla 1.6+
 					// Older versions installed language files into main folders
@@ -324,7 +323,7 @@ class KunenaModelInstall extends JModel {
 						if (file_exists(JPATH_SITE."/language/{$tag}/{$filename}")) JFile::delete(JPATH_SITE."/language/{$tag}/{$filename}");
 						if (file_exists(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}")) JFile::delete(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}");
 					}
-				} else {
+				} elseif ($success == true) {
 					// Joomla 1.5
 					// Use installer to get files into the right place
 					$installer = new JInstaller ( );

@@ -28,21 +28,21 @@
 .kavatar-lg img {
 	margin-top: expression((100-parseInt(offsetHeight)/2)<0 ? '0' : 100-(parseInt(offsetHeight)/2) +'px');
 }
-#kunena .kheader {
+#kunena.layout .kheader {
 	background: #3a7cbd !important;
 	background-image: none !important;
 }
-#kunena .kheader a {
+#kunena.layout .kheader a {
 	color: #FFF !important;
 	font-weight: bold;
 	text-decoration: none;
 	font-size:16px !important;
 }
-#kunena .ksection .kheader-desc, #kunena INPUT.kheader-link {
+#kunena.layout .ksection .kheader-desc, #kunena.layout INPUT.kheader-link {
 	background: #3a7cbd !important;
 	color: #fff !important;
 }
-#kunena .kmenu ul.menu li:hover,
-#kunena .kmenu ul.menu li.active {
+#kunena.layout .kmenu ul.menu li:hover,
+#kunena.layout .kmenu ul.menu li.active {
 	background: #3a7cbd !important;
 }

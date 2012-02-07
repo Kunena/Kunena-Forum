@@ -8,46 +8,46 @@
 * @link http://www.kunena.org
 **/
 
-#kunena .kpost-user-username a {
+#kunena.layout .kpost-user-username a {
 	font-size: 16px;
 }
-#kunena .kpost-user-avatar img {
+#kunena.layout .kpost-user-avatar img {
 	margin:5px 0 5px 0;
 }
-#kunena .kpost-user-status {}
-#kunena .kpost-user-rank {}
-#kunena .kpost-user-points {}
-#kunena .kpost-user-posts {}
-#kunena .kpost-user-icons {}
-#kunena .kpost-user-perstext {
+#kunena.layout .kpost-user-status {}
+#kunena.layout .kpost-user-rank {}
+#kunena.layout .kpost-user-points {}
+#kunena.layout .kpost-user-posts {}
+#kunena.layout .kpost-user-icons {}
+#kunena.layout .kpost-user-perstext {
 	font-style:italic;
 }
 
-#kunena .clrline {
+#kunena.layout .clrline {
 	border-top-color: #BFC3C6;
 }
-#kunena .kblock, .kflat {
+#kunena.layout .kblock, .kflat {
 	border-color: #BCBCBC;	
 }
-#kunena div.kmsgsignature {
+#kunena.layout div.kmsgsignature {
 	border-top-color: #BFC3C6;
 	color: #999999;
 }
 
-#kunena .kuserlist-checkbox {
+#kunena.layout .kuserlist-checkbox {
 	font-size: 10px;
 }
 
-#kunena .kedit-user-information-row {
+#kunena.layout .kedit-user-information-row {
 	border-bottom-color: #BFC3C6;
 }
-#kunena .kedit-user-information-row .kform-label {
+#kunena.layout .kedit-user-information-row .kform-label {
 	width: 20%;
 }
-#kunena .kedit-user-information-row .kform-field {
+#kunena.layout .kedit-user-information-row .kform-field {
 	width: 73%;
 }
-#kunena #avatar_category_select {
+#kunena.layout #avatar_category_select {
 	margin-bottom: 15px;
 }
 

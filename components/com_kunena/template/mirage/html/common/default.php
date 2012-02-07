@@ -10,17 +10,25 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-wrapper">
-	<div class="block">
-		<h2 class="kheader"><?php echo $this->escape($this->header); ?></h2>
-		<div class="detailsbox">
-			<div class="kcontent">
-			<?php
-			if (!empty($this->html)) :
-				echo $this->body;
-			else :
-				echo KunenaHtmlParser::parseBBCode($this->body);
-			endif; ?>
+<div class="box-module">
+	<div class="box-wrapper">
+		<div class="block">
+			<div class="headerbox-wrapper box-full">
+				<div class="header fl">
+					<h2 class="header link-header2"><?php echo $this->escape($this->header); ?></h2>
+				</div>
+			</div>
+			<div  class="detailsbox-wrapper">
+				<div class="detailsbox">
+					<div class="kcontent">
+					<?php
+					if (!empty($this->html)) :
+						echo $this->body;
+					else :
+						echo KunenaHtmlParser::parseBBCode($this->body);
+					endif; ?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

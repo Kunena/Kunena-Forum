@@ -57,4 +57,4 @@ span.ktopicicon-question,
 .ktopic-taglist li {margin-left: 3px;}
 .ktopic-taglist .ktopic-taglist-edit {float:right;}
 .kpopsubstats-col3 { width: 7.6%; }
-#kunena > DIV H2 { margin-bottom:-18px;}
+#kunena.layout > DIV H2 { margin-bottom:-18px;}

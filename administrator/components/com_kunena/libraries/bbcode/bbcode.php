@@ -1007,20 +1007,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$enabled = true;
 			if (version_compare(JVERSION, '1.6','>')) {
 				// Joomla 1.6+
-				// TODO: use the content plugin instead
-				//require_once JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
-				$params = $site->getParams('com_content');
-				$params->set('ksource', 'kunena');
-				JPluginHelper::importPlugin( 'content', 'geshi' );
-				$dispatcher = JDispatcher::getInstance();
-				$plg_result = $dispatcher->trigger('onContentPrepare', array ('text', &$content, &$params, 0));
+				require_once JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
 			} else {
 				// Joomla 1.5
 				jimport ( 'geshi.geshi' );
 			}
-			$languages = GeSHi::get_supported_languages();
-		}
-		if ($enabled && in_array ( $type, $languages )) {
+
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );
 			$code = $geshi->parse_code ();

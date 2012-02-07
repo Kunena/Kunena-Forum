@@ -36,16 +36,16 @@ defined ( '_JEXEC' ) or die ();
 									<dd class="category-icon">
 									</dd>
 									<dd class="category-subject">
-										<span><?php echo JText::_('Subject') ?></<span>
+										<span><?php echo JText::_('Subject') ?></span>
 									</dd>
 									<dd class="category-topics">
-										<span><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></<span>
+										<span><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span>
 									</dd>
 									<dd class="category-replies">
-										<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></<span>
+										<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
 									</dd>
 									<dd class="category-lastpost">
-										<span><?php echo JText::_('Last Post') ?></<span>
+										<span><?php echo JText::_('Last Post') ?></span>
 									</dd>
 								</dl>
 							</li>

@@ -24,8 +24,8 @@ defined ( '_JEXEC' ) or die ();
 		
 						<fieldset>
 							<legend class="klegend"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></legend>
-							<input type="text" name="username" id="kusername" class="box-length kinputbox" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_USERNAME') ?>"/>
-							<input type="password" name="password" id="kpassword" class="box-length kinputbox" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD') ?>" />
+							<input type="text" name="username" id="kusername" class="box-width kinputbox" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_USERNAME') ?>"/>
+							<input type="password" name="password" id="kpassword" class="box-width kinputbox" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD') ?>" />
 							<button type="submit" value="Log in" class="kbutton"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></button>
 						</fieldset>
 					</form>
@@ -37,7 +37,6 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->register) : ?>
 				<li class="klogin-register"><?php echo CKunenaLink::GetHrefLink($this->register, JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT')) ?></li>
 			<?php endif ?>
-			</li>
 		<?php endif ?>
 	</ul>
 </div>

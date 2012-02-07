@@ -10,13 +10,13 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="topics-row box-hover">
+<li class="topics-row box-hover box-hover_list-row">
 	<dl>
 		<dd class="topic-icon">[K=TOPIC_ICON]</dd>
 		<dd class="topic-subject">
 			<ul>
 				<li class="ktopic-title">
-					<h3><?php echo $this->getTopicLink($this->topic, null, null) ?></h3>
+					<h3 class="link-header3"><?php echo $this->getTopicLink($this->topic, null, null) ?></h3>
 					<ul class="ktopic-actions">
 						<li>[K=TOPIC_NEW_COUNT]</li>
 						<li><?php if ($this->topic->locked) echo $this->getIcon ( 'klocked-icon', JText::_('COM_KUNENA_TOPIC_IS_LOCKED') ) ?></li>

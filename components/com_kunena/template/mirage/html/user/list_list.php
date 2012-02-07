@@ -29,11 +29,22 @@ document.addEvent('domready', function() {
 			<input type="image" src="<?php echo $this->ktemplate->getImagePath('usl_search_icon.png') ?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" style="border: 0px;" />
 		</form>
 </div>
-<div class="kuserlist">
-	<a href="#" class="ksection-headericon"><?php echo $this->getImage('icon-whosonline-sm.png') ?></a>
-	<h2 class="kheader"><a href="#" rel="ksection-detailsbox"><?php echo JText::_('COM_KUNENA_USRL_USERLIST') ?></a></h2>
-	<div class="kuserlist-items">
-		<?php foreach ($this->users as $user) { $this->displayUserRow($user); } ?>
+
+<div class="box-module">
+	<div class="box-wrapper box-color box-border box-border_radius box-shadow">   
+		<div class="userlist block">
+			<div class="headerbox-wrapper box-full">
+				<div class="header">
+					<a href="#" class="ksection-headericon"><?php echo $this->getImage('icon-whosonline-sm.png') ?></a>
+					<h2 class="header"><a href="#" rel="ksection-detailsbox"><?php echo JText::_('COM_KUNENA_USRL_USERLIST') ?></a></h2>
+				</div>
+			</div>
+			<div class="dettailsbox-wrapper box-full">
+				<div class="kuserlist-items">
+					<?php foreach ($this->users as $user) { $this->displayUserRow($user); } ?>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="clr"></div>
 </div>
+<div class="spacer"></div>

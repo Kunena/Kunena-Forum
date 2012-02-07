@@ -13,17 +13,20 @@ defined ( '_JEXEC' ) or die ();
 <div class="box-module">
 	<div class="box-wrapper box-full box-border box-border_radius box-shadow">
 		<div class="menubox block">
-			<div class="menubox-global">
+			<div class="menubox-global link">
 				<?php echo $this->getMenu() ?>
 			</div>
 			<div class="menubox-user">
 				<ul class="menu">
 					<?php if (!$this->me->exists()) : ?>
-						<li class="dropdown"><a href="#"><?php echo JText::_('Sign In / Sign Up'); ?></a></li>
+						<li class="dropdown">
+							<a class="link-login" href="#"><?php echo JText::_('Sign In / Sign Up'); ?></a>
+							<?php $this->displayLoginBox (); ?>
+						</li>
 					<?php endif; ?>
 					<?php if ($this->me->exists()) : ?>
 						<li class="dropdown">
-							<a href="#">
+							<a class="link-logout" href="#">
 								<div class="login-member">
 									<div class="login-avatar"><span><?php echo $this->me->getAvatarImage('', 'welcome') ?></span></div>
 									<div class="loginbox">

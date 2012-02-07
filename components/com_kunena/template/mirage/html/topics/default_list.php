@@ -15,40 +15,45 @@ defined ( '_JEXEC' ) or die ();
 		<div class="block">
 			<div class="headerbox-wrapper">
 				<div class="header">
-					<h2 class="header"><a rel="topic-detailsbox"><?php echo $this->headerText ?></a></h2>
+					<h2 class="header"><a class="section link-header2" rel="topic-detailsbox"><?php echo $this->headerText ?></a>(<strong><?php echo intval($this->total) ?></strong>
+					<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>)</h2>
 				</div>
 			</div>
 			<div class="detailsbox-wrapper">
-				<div class="topic detailsbox box-border box-border_radius box-shadow" id="topic-detailsbox">
+				<div class="topic detailsbox box-full box-border box-border_radius box-shadow" id="topic-detailsbox">
 					<ul class="topic-list">
-						<li class="header">
+						<li class="header box-hover_header-row">
 							<dl>
-							<dd class="topic-icon">
-							</dd>
-							<dd class="topic-subject">
-								<span><?php echo JText::_('Subject') ?></<span>
-							</dd>
-							<dd class="topic-replies">
-								<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></<span>
-							</dd>
-							<dd class="topic-views">
-								<span><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></<span>
-							</dd>
-							<dd class="topic-lastpost">
-								<span><?php echo JText::_('Last Post') ?></<span>
-							</dd>
-							<?php if ($this->topicActions) : ?>
-								<dd class="topic-checkbox">
-									<span><input id="checbox-all" type="checkbox" value="0" name="" class="moderate-topic-checkall" /></<span>
+								<dd class="topic-icon">
 								</dd>
-							<?php endif ?>
+								<dd class="topic-subject">
+									<span><?php echo JText::_('Subject') ?></<span>
+								</dd>
+								<dd class="topic-replies">
+									<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></<span>
+								</dd>
+								<dd class="topic-views">
+									<span><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></<span>
+								</dd>
+								<dd class="topic-lastpost">
+									<span><?php echo JText::_('Last Post') ?></<span>
+								</dd>
+								<?php if ($this->topicActions) : ?>
+									<dd class="topic-checkbox">
+										<span><input id="checbox-all" type="checkbox" value="0" name="" class="moderate-topic-checkall" /></<span>
+									</dd>
+								<?php endif ?>
 							</dl>
 						</li>
 					</ul>
 					<ul class="topic-list">
 						<?php if (empty($this->topics )) : ?>
 							<li class="topic-row">
-								<?php echo JText::_('COM_KUNENA_VIEW_RECENT_NO_TOPICS'); ?>
+								<dl>
+									<dd>
+										<?php echo JText::_('COM_KUNENA_VIEW_RECENT_NO_TOPICS'); ?>
+									</dd>
+								</dl>
 							</li>
 						<?php else : $this->displayRows(); endif ?>
 					</ul>

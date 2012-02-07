@@ -71,8 +71,8 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		if ($name == 'quickreply') $type .= ' kqreply';
 		if (isset($names[$name])) $name = $names[$name];
 
-		$html = '<a $id class="" href="'.$link'" rel="nofollow" title="'.$title'">'
-		$html .= '<span class="'.$name'"><span>'.$text'</span></span>'
+		$html = '<a '.$id.' href="'.$link.'" rel="nofollow" title="'.$title.'">';
+		$html .= '<span class="'.$name.'"><span>'.$text.'</span></span>';
 		$html .= '</a>';
 
 		return $html;

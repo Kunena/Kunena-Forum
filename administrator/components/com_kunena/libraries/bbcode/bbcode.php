@@ -990,12 +990,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 	function DoCode($bbcode, $action, $name, $default, $params, $content) {
 		static $enabled = false;
-		static $languages = array();
 
-		$site = JFactory::getApplication('site');
-
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCODE_CHECK) {
+			$bbcode->autolink_disable = 1;
 			return true;
+		}
+		$bbcode->autolink_disable = 0;
 
 		$type = isset ( $params ["type"] ) ? $params ["type"] : "php";
 		if ($type == 'js') {
@@ -1007,12 +1007,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$enabled = true;
 			if (version_compare(JVERSION, '1.6','>')) {
 				// Joomla 1.6+
-				require_once JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
+				$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
+				if (file_exists($path)) {
+					require_once $path;
+				}
 			} else {
 				// Joomla 1.5
 				jimport ( 'geshi.geshi' );
 			}
-
+		}
+		if ($enabled && class_exists('GeSHi')) {
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );
 			$code = $geshi->parse_code ();

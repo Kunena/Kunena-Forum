@@ -15,8 +15,8 @@ defined ( '_JEXEC' ) or die ();
 		<div class="statistics block">
 			<div class="headerbox-wrapper box-full">
 				<div class="header fl">
-					<h2 class="header">
-						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>" rel="statistics-detailsbox">
+					<h2 class="header link-header2">
+						<a class="section" href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>" rel="statistics-detailsbox">
 							<?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS') ?>
 						</a>
 					</h2>
@@ -26,7 +26,7 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 			</div>
 			<div class="detailsbox-wrapper">
-				<div class="statistics-details detailsbox innerspacer box-full box-hover box-border box-border_radius box-shadow" id="statistics-detailsbox" >
+				<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow" id="statistics-detailsbox" >
 					<div class="statistics-smicon">
 						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
 							<span class="stats-smicon"></span>
@@ -40,6 +40,11 @@ defined ( '_JEXEC' ) or die ();
 							<li class="statistics-totalcats"><?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES') ?>:<span><?php echo $this->categoryCount ?></span></li>
 						</ul>
 					</div>
+					<div class="statistics-smicon">
+						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
+							<span class="stats-smicon"></span>
+						</a>
+					</div>
 					<div class="statistics-totals">
 						<ul>
 							<li class="statistics-todayopen"><?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD') ?>:<span><?php echo $this->todayTopicCount ?></span></li>
@@ -47,6 +52,11 @@ defined ( '_JEXEC' ) or die ();
 							<li class="statistics-todayans"><?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER') ?>:<span><?php echo $this->todayReplyCount ?></span></li>
 							<li class="statistics-yestans"><?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER') ?>:<span><?php echo $this->yesterdayReplyCount ?></span></li>
 						</ul>
+					</div>
+					<div class="statistics-smicon">
+						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
+							<span class="stats-smicon"></span>
+						</a>
 					</div>
 					<div class="statistics-totals">
 						<ul>

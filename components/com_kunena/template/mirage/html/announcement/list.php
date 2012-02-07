@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="headerbox-wrapper box-full">
 				<div class="header fl">
 					<h2 class="header">
-						<a title="<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>" rel="kannouncements-detailsbox"><?php echo $this->app->getCfg('sitename') . ' ' . JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?></a>
+						<a class="section link-header2" title="<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>" rel="kannouncements-detailsbox"><?php echo $this->app->getCfg('sitename').''.JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?></a>
 					</h2>
 				</div>
 				<div class="header fr">
@@ -31,7 +31,7 @@ defined ( '_JEXEC' ) or die ();
 				<div class="announcements-details detailsbox box-full box-hover box-border box-border_radius box-shadow" id="announcements-detailsbox" >
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 						<ul class="announcement-list">
-							<li class="header">
+							<li class="header box-hover_header-row">
 								<dl>
 									<dd class="announcement-checkbox">
 										#
@@ -70,7 +70,7 @@ defined ( '_JEXEC' ) or die ();
 							foreach ($this->announcements as $ann) :
 							$k=1 - $k;
 							?>
-								<li class="announcements-row box-hover">
+								<li class="announcements-row box-hover box-hover_list-row">
 									<dl>
 										<dd class="announcement-checkbox">
 											<?php echo JHTML::_('grid.id', intval($ann->id), intval($ann->id)) ?>

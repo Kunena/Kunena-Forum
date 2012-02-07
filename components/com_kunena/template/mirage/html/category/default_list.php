@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 		<div class="block">
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
-					<h2 class="header">
+					<h2 class="header link-header2">
 						<a class="categories" href="#" title="Category Header" rel="ksection-detailsbox">
 							<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_DEFAULT_TOPICS') ?>
 						</a>
@@ -27,30 +27,35 @@ defined ( '_JEXEC' ) or die ();
 				
 			</div>
 			<div class="detailsbox-wrapper">
-				<div class="topic detailsbox box-border box-border_radius box-shadow">
+				<div class="topic detailsbox box-full box-border box-border_radius box-shadow">
 					<ul class="topic-list">
-						<li class="header">
+						<li class="header box-hover_header-row">
 							<dl>
 								<dd class="topic-icon">
 								</dd>
 								<dd class="topic-subject">
-								<span><?php echo JText::_('Subject') ?></<span>
+									<span><?php echo JText::_('Subject') ?></<span>
 								</dd>
 								<dd class="topic-replies">
-								<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></<span>
+									<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></<span>
 								</dd>
 								<dd class="topic-views">
-								<span><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></<span>
+									<span><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></<span>
 								</dd>
 								<dd class="topic-lastpost">
-								<span><?php echo JText::_('Last Post') ?></<span>
+									<span><?php echo JText::_('Last Post') ?></<span>
 								</dd>
+								<?php if ($this->topicActions) : ?>
+									<dd class="topic-checkbox">
+										<input type="checkbox" value="0" name="" class="moderate-topic-checkall" />
+									</dd>
+								<?php endif ?>
 							</dl>
 						</li>
 					</ul>
 					<ul class="topic-list">
 						<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
-							<li class="topics-row">
+							<li class="topics-row box-hover box-hover_list-row">
 								<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_NO_TOPICS'); ?>
 							</li>
 						<?php else : $this->displayRows(); endif ?>
@@ -61,7 +66,6 @@ defined ( '_JEXEC' ) or die ();
 				<div class="modbox-wrapper">
 					<div class="modbox">
 						<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
-						<input type="checkbox" value="0" name="" class="moderate-topic-checkall" />
 					</div>
 				</div>
 			<?php endif ?>

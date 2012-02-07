@@ -9,9 +9,9 @@
  *******************/
 
 #kunena {
-   display: inline-block;
-   position: relative;
-   width: 100% !important;
+	display: inline-block;
+	position: relative;
+	width: 100% !important;
 }
 
 /*****************
@@ -25,35 +25,35 @@
 /* NOTE: If third-party wrapper template is optimized correctly we can take out this section.*/
 /* Box Element Reset */
 #kunena div, #kunena h1, #kunena h2, #kunena h3, #kunena h4, #kunena h5, #kunena h6, #kunena ul, #kunena li, #kunena ol, #kunena dl, #kunena dt, #kunena dd, #kunena pre, #kunena form, #kunena fieldset, #kunena input, #kunena textarea, #kunena p, #kunena blockquote, #kunena th, #kunena tr, #kunena td {
-   margin: 0px;
-   padding: 0px;
-   /*line-height: normal !important;*/
-   text-decoration: none;
-   background: none;
-   color: #555555;
-   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+	margin: 0px;
+	padding: 0px;
+	/*line-height: normal !important;*/
+	text-decoration: none;
+	background: none;
+	color: #555555;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* List Reset */
 #kunena ul, #kunena li, #kunena ol, #kunena dl, #kunena dt, #kunena dd {
-   margin: 0px;
-   padding: 0px;
-   line-height: normal !important;
-   list-style-type: none !important;
-   text-decoration: none !important;
-   background: none;
-   color: #555555;
+	margin: 0px;
+	padding: 0px;
+	line-height: normal !important;
+	list-style-type: none !important;
+	text-decoration: none !important;
+	background: none;
+	color: #555555;
 }
 
 /* Link Active Status Reset */
 #kunena a, #kunena a:link, #kunena a:visited, #kunena a:active {
 	text-decoration: none !important;
-	background: none !important;
+	/*background: none !important;*/
 }
 
 /* Link Action Reset */
 #kunena a:hover, #kunena a:focus {
-	text-decoration: underline !important;
+	text-decoration: none !important;
 	background: none !important;
 	color: #333333 !important;
 }
@@ -67,9 +67,9 @@
 }
 
 #kunena input {
-   width: -moz-clac(100%);
-   /*margin: 5px;*/
-   padding: 5px;
+	width: 100%;
+	/*margin: 5px;*/
+	padding: 5px;
 }
 
 #kunena select {
@@ -118,21 +118,86 @@
  ****************************/
 
 /* This is needed for a fix, not sure why */
-.box-full:before {
+#kunena .box-full:before {
 	content: "";
-    display: block;
+ 	display: block;
 }
 
-.box-full:after {
+#kunena .box-full:after {
 	content: "";
-    display: block;
-    clear: both;
+ 	display: block;
+ 	clear: both;
+}
+
+/* Box fix, not sure why */
+/* http://stackoverflow.com/questions/1030793/input-with-displayblock-is-not-a-block-why-not */
+#kunena .box-length {
+	box-sizing: border-box; /* css3 rec */
+	-moz-box-sizing: border-box; /* ff2 */
+	-ms-box-sizing: border-box; /* ie8 */
+	-webkit-box-sizing: border-box; /* safari3 */
+	-khtml-box-sizing: border-box; /* konqueror */
+}
+
+
+#kunena .input {
+	
+}
+
+#kunena .select {
+	
+}
+
+#kunena .textarea {
+	
 }
 
 #kunena .link {
+	text-decoration: none !important;
+	background: none !important;
+	color: #333333 !important;
+}
+
+#kunena .link:hover {
 	text-decoration: underline !important;
 	background: none !important;
 	color: #333333 !important;
+}
+
+#kunena .link-header2 > a {
+	text-decoration: none !important;
+	background: none !important;
+	color: #555555 !important;
+}
+
+#kunena .link-header2 > a:hover {
+	text-decoration: underline !important;
+	background: none !important;
+	color: #555555 !important;
+}
+
+#kunena .link-header3 > a {
+	text-decoration: none !important;
+	background: none !important;
+	color: #555555 !important;
+}
+
+#kunena .link-header3 > a:hover {
+	text-decoration: underline !important;
+	background: none !important;
+	color: #555555 !important;
+}
+
+#kunena .link-menu {
+	margin: 0;
+	overflow: hidden;
+	padding: 12px 8px;
+}
+
+#kunena .link-dropdown > a{
+	margin: 0;
+	overflow: hidden;
+	padding: 2px 5px;
 }
 
 #kunena .link:hover, #kunena .link:focus {
@@ -143,46 +208,71 @@
 
 #kunena .divider {
 	display: block;
-	/*overflow: hidden;*/
-	height: 1px;
-	background: #333333;
-	/*border-bottom-color: #333333;
-    border-top-color: #1B1B1B;*/
+	overflow: hidden;
+	margin: 5px 0px;
+	height: 0px;
+	width: 100%;
+	float: none;
+	/*background: #333333;*/
+	border-top: 1px solid #CCCCCC;
+	border-bottom: 1px solid #EEEEEE;
 }
 
-#kunena .dropdown a {
+#kunena .separator {
+	display: block;
+	overflow: hidden;
+	margin: 5px 0px;
+	height: 80%;
+	width: 2px;
+	float: none;
+	/*background: #333333;*/
+	border-left: 1px solid #1B1B1B;
+	border-right: 1px solid #333333;
+}
+
+#kunena li.dropdown a {
 	position: relative;
 }
 
-#kunena .dropdown .dropdown-menu {
-    visibility: hidden;
-    display: none;
-    opacity: 0.0;
-    background-clip: padding-box;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-color: rgba(0, 0, 0, 0.2);
-    border-radius: 0 0 5px 5px;
-    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
-    border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    /*display: block;*/
-    float: right;
-    right: 0;
-    list-style: none outside none;
-    margin: 0;
-    max-width: 220px;
-    min-width: 160px;
-    padding: 4px 0;
-    position: absolute;
-    top: 100%;
-    z-index: 1000;
+#kunena li.dropdown .dropdown-menu {
+ 	visibility: hidden;
+ 	display: none;
+ 	opacity: 0.0;
+ 	background-clip: padding-box;
+ 	background-color: rgba(255, 255, 255, 1.0);
+ 	border-color: rgba(0, 0, 0, 0.2);
+ 	border-radius: 0 0 5px 5px;
+ 	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+ 	border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+ 	border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
+ 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+ 	/*display: block;*/
+ 	/*float: right;*/
+ 	right: 0;
+ 	list-style: none outside none;
+ 	margin: 0;
+ 	max-width: 300px;
+ 	min-width: 240px;
+ 	/*padding: 4px 0;*/
+ 	position: absolute;
+ 	top: 99%;
+ 	z-index: 1000;
 }
 
-#kunena li.dropdown a:focus + div.dropdown-menu {
-    visibility: visible;
-    opacity: 1.0;
-    display: block;
+#kunena li.dropdown .dropdown-menu > li {
+ 	padding: 2px 5px;
+}
+
+/*#kunena li.dropdown a:hover > * {
+ 	visibility: visible;
+ 	opacity: 1.0;
+ 	display: block;
+}*/
+
+#kunena li.dropdown:hover > * {
+ 	visibility: visible;
+ 	opacity: 1.0;
+ 	display: block;
 }
 
 /*#kunena input.kinputbox,
@@ -220,105 +310,105 @@
 }*/
 
 #kunena h2 > a {
-   font-size: 18px !important;
-   line-height: 24px !important;
-   font-family: Georgia,"Times New Roman",Times,serif !important;
-   font-weight: bold !important;
-   color: #555555 !important;
+	font-size: 18px !important;
+	line-height: 24px !important;
+	font-family: Georgia,"Times New Roman",Times,serif !important;
+	font-weight: bold !important;
+	color: #555555 !important;
 }
 
 #kunena h3 > a {
-    font-size: 15px !important;
-    font-family: Georgia,"Times New Roman",Times,serif !important;
-    font-weight: bold !important;
-    color: #555555 !important;
+ 	font-size: 15px !important;
+ 	font-family: Georgia,"Times New Roman",Times,serif !important;
+ 	font-weight: bold !important;
+ 	color: #555555 !important;
 }
 
 /*#kunena a {
-   text-decoration:none;
+	text-decoration:none;
 }
 
 #kunena li {
-   line-height: normal;
-   list-style-type: none !important;
+	line-height: normal;
+	list-style-type: none !important;
 }
 
 #kunena ul {
-   line-height: normal;
-   list-style-type: none !important;
+	line-height: normal;
+	list-style-type: none !important;
 }*/
 
 /* This outter element is needed for dropdowns */
 #kunena div.box-module {
-    overflow: visible;
+ 	overflow: visible;
 }
 
 #kunena div.box-wrapper {
-    display: block;
-    position: relative;
-    /*position: relative;
-    /*padding: 10px;*/
-    /*overflow: auto;*/
+ 	display: block;
+ 	position: relative;
+ 	/*position: relative;
+ 	/*padding: 10px;*/
+ 	/*overflow: auto;*/
 }
 
 #kunena div.innerblock-wrapper {
-    padding: 5px;
+ 	padding: 5px;
 }
 
 /* TODO: Need configure option for: padding */
 /*#kunena div.block-wrapper {
-    position: relative;
-    padding: 5px;
-    overflow: hidden;
+ 	position: relative;
+ 	padding: 5px;
+ 	overflow: hidden;
 }*/
 
 /* although we can do margin, it makes sense if we want people to configure the space easily */
 #kunena div.spacer {
-   background: none repeat scroll 0 0 transparent;
-   clear: both;
-   display: block;
-   height: 15px;
-   margin: 0px;
-   opacity: 0;
-   padding: 0px;
-   width: 100%;
+	background: none repeat scroll 0 0 transparent;
+	clear: both;
+	display: block;
+	height: 15px;
+	margin: 0px;
+	opacity: 0;
+	padding: 0px;
+	width: 100%;
 }
 
 /* TODO: Need configure option for: padding */
 #kunena div.headerbox-wrapper {
-   /*padding: 10px;*/
-   /*overflow: auto;*/
-   clear: both;
-   position: relative;
+	/*padding: 10px;*/
+	/*overflow: auto;*/
+	clear: both;
+	position: relative;
 }
 
 /*wrapper is needed for some spacing elements */
 /* TODO: Need configure option for: padding */
 #kunena div.detailsbox-wrapper {
-   padding: 8px 10px 10px 10px;
-   /*overflow: auto;*/
-   clear: both;
+	padding: 8px 10px 10px 10px;
+	/*overflow: auto;*/
+	clear: both;
 }
 
 #kunena div.modbox-wrapper {
-   padding: 0px 10px 10px 10px;
-   overflow: auto;
-   clear: both;
+	padding: 0px 10px 10px 10px;
+	overflow: auto;
+	clear: both;
 }
 
 #kunena div.header {
-   padding: 5px 10px;
-   display: block;
+	padding: 5px 10px;
+	display: block;
 }
 
 #kunena div.detailsbox {
-   clear: both;
-   /*margin: 2px 2px 4px;*/
-   /*padding: 1px 0 0;*/
+	clear: both;
+	/*margin: 2px 2px 4px;*/
+	/*padding: 1px 0 0;*/
 }
 
 #kunena div.innerspacer {
-   padding: 5px 10px 10px 10px;
+	padding: 5px 10px 10px 10px;
 }
 
 #kunena div.modbox {
@@ -330,7 +420,7 @@
 	display: none;
 }
 
-#kunena div.dropdown li {
+#kunena div.dropdown-menu li {
 	display: block;
 	float: none;
 	position: relative;
@@ -357,11 +447,11 @@
 	padding: 0px 5px;*/
 	padding: 5px;
 	width: 100%
-    background-color: #FFFFFF;
-    /*background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);*/
-    border: 1px solid silver;
-    /*border-radius: 2px;*/
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+ 	background-color: #FFFFFF;
+ 	/*background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);*/
+ 	border: 1px solid silver;
+ 	/*border-radius: 2px;*/
+ 	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
 }
 
 #kunena #searchform select {
@@ -418,415 +508,501 @@
 /*---------- Breadcrmb ------------- */
 
 #kunena div.breadcrumb {
-    padding: 5px 10px;
+ 	padding: 5px 10px;
 }
 
 #kunena div.breadcrumb ul li {
-    display: inline;
+ 	display: inline;
 }
 
 #kunena div.breadcrumb ul li a {
-    margin: 0px 10px;
+ 	margin: 0px 10px;
 }
 
 
 /*---------- Announcement List ------------- */
 
 #kunena ul.announcement-list {
-    display: block;
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
+ 	display: block;
+ 	list-style-type: none;
+ 	margin: 0px;
+ 	padding: 0px;
 }
 
 #kunena ul.announcement-list div.header {
-    clear: both;
-    display: block;
-    position: relative;
-    vertical-align: bottom;
+ 	clear: both;
+ 	display: block;
+ 	position: relative;
+ 	vertical-align: bottom;
 }
 
 #kunena ul.announcement-list li {
-   clear: both;
-   display: block;
-   position: relative;
-   vertical-align: bottom;
-   margin: 0;
-   overflow: hidden;
-   padding: 1px 0 0;
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+	margin: 0;
+	overflow: hidden;
+	padding: 1px 0 0;
 }
 
 #kunena ul.announcement-list li.announcements-row dl, ul.announcement-list li.header {
-    float: none !important;
-    height: auto;
-    width: auto;
+ 	float: none !important;
+ 	height: auto;
+ 	width: auto;
 }
 
 #kunena ul.announcement-list li.announcements-row {
-   margin: 0px;
-   padding: 0px;
-   overflow: hidden;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
 }
 
 #kunena ul.announcement-list li.announcements-row dd {
-    display: block;
-    float: left;
-    margin: 0px;
-    padding: 5px;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 5px;
 }
 
 #kunena ul.announcement-list li.header dd {
-    display: block;
-    float: left;
-    margin: 0px;
-    padding: 2px 5px;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 2px 5px;
 }
 
 #kunena ul.announcement-list dd {
-    display: block;
-    float: left;
-    margin: 0px;
-    padding: 2px 0;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 2px 0;
 }
 
 /*#kunena ul.topic-list li.topics-row dl {
-    display: block;
-    position: relative;
+ 	display: block;
+ 	position: relative;
 }*/
 
 #kunena ul.announcement-list li.announcements-row dd {
-    display: block;
-    float: left;
-    margin: 0px;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
 }
 
 #kunena ul.announcement-list dd.announcement-checkbox {
-   margin: 0;
-   text-align: center;
-   vertical-align: center;
-   width: 10px;
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 10px;
 }
 
 #kunena ul.announcement-list dd.announcement-id {
-   margin: 0;
-   text-align: center;
-   vertical-align: center;
-   width: 5%;
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 5%;
 }
 
 #kunena ul.announcement-list dd.announcement-date {
-   margin: 0;
-   text-align: left;
-   vertical-align: center;
-   width: 10%;
+	margin: 0;
+	text-align: left;
+	vertical-align: center;
+	width: 10%;
 }
 
 #kunena ul.announcement-list dd.announcement-author {
-   margin: 0;
-   text-align: left;
-   vertical-align: center;
-   width: 10%;
+	margin: 0;
+	text-align: left;
+	vertical-align: center;
+	width: 10%;
 }
 
 #kunena ul.announcement-list dd.announcement-title {
-   margin: 0;
-   text-align: left;
-   vertical-align: center;
-   width: 45%;
+	margin: 0;
+	text-align: left;
+	vertical-align: center;
+	width: 45%;
 }
 
 #kunena ul.announcement-list dd.announcement-publish {
-   margin: 0;
-   text-align: center;
-   vertical-align: center;
-   width: 10%;
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 10%;
 }
 
 #kunena ul.announcement-list dd.announcement-edit {
-   margin: 0;
-   text-align: center;
-   vertical-align: center;
-   width: 5%;
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 5%;
 }
 
 #kunena ul.announcement-list dd.announcement-delete {
-   margin: 0;
-   text-align: center;
-   vertical-align: center;
-   width: 5%;
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 5%;
 }
 
 
 /*---------- Category List ------------- */
 
 #kunena ul.category-list {
-    display: block;
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
+ 	display: block;
+ 	list-style-type: none;
+ 	margin: 0px;
+ 	padding: 0px;
 }
 
 #kunena ul.category-list div.header {
-    clear: both;
-    display: block;
-    position: relative;
-    vertical-align: bottom;
+ 	clear: both;
+ 	display: block;
+ 	position: relative;
+ 	vertical-align: bottom;
 }
 
 #kunena ul.category-list li {
-   clear: both;
-   display: block;
-   position: relative;
-   vertical-align: bottom;
-   margin: 0;
-   overflow: hidden;
-   padding: 1px 0 0;
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+	margin: 0;
+	overflow: hidden;
+	padding: 1px 0 0;
 }
 
 #kunena ul.category-list li.row dl, ul.category-list li.header {
-    float: none !important;
-    height: auto;
-    width: auto;
+ 	float: none !important;
+ 	height: auto;
+ 	width: auto;
 }
 
 #kunena ul.category-list li.category-row {
-   margin: 0px;
-   /*padding: 2px;*/
-   overflow: hidden;
+	margin: 0px;
+	/*padding: 2px;*/
+	overflow: hidden;
 }
 
 #kunena ul.category-list li.category-row dd {
-    display: block;
-    float: left;
-    margin: 0px;
-    padding: 5px;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 5px;
 }
 
 #kunena ul.category-list li.header dd {
-    display: block;
-    float: left;
-    margin: 0px;
-    padding: 2px 5px;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 2px 5px;
 }
 
 #kunena ul.category-list dd {
-    display: block;
-    float: left;
-    margin: 0px;
-    /*padding: 2px 0;*/
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	/*padding: 2px 0;*/
 }
 
 #kunena ul.category-list li.category-row dd {
-    display: block;
-    float: left;
-    margin: 0px;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
 }
 
 #kunena ul.category-list dd.category-icon {
-   margin: 0;
-   text-align: center;
-   vertical-align: center;
-   min-width: 42px;
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	min-width: 42px;
 }
 
 #kunena ul.category-list dd.category-subject {
-   margin: 0;
-   text-align: left;
-   width: 45%;
+	margin: 0;
+	text-align: left;
+	width: 45%;
 }
 
 #kunena ul.category-list dd.category-topics, #kunena dd.category-replies {
-   margin: 0;
-   text-align: center;
-   width: 10%;
+	margin: 0;
+	text-align: center;
+	width: 10%;
 }
 
 #kunena ul.category-list dd.category-lastpost {
-   margin: 0;
-   text-align: left;
-   width: 20%;
+	margin: 0;
+	text-align: left;
+	width: 20%;
 }
 
 /*#kunena ul.category-list li {
-    clear: both;
-    display: block;
-    margin: 0;
-    overflow: hidden;
-    padding: 1px 0 0;
-    position: relative;
-    vertical-align: bottom;
+ 	clear: both;
+ 	display: block;
+ 	margin: 0;
+ 	overflow: hidden;
+ 	padding: 1px 0 0;
+ 	position: relative;
+ 	vertical-align: bottom;
 }*/
+
+
+/*---------- Announcement List ------------- */
+
+#kunena ul.popsubstat-list {
+ 	display: block;
+ 	list-style-type: none;
+ 	margin: 0px;
+ 	padding: 0px;
+}
+
+#kunena ul.popsubstat-list div.header {
+ 	clear: both;
+ 	display: block;
+ 	position: relative;
+ 	vertical-align: bottom;
+}
+
+#kunena ul.announcement-list li {
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+	margin: 0;
+	overflow: hidden;
+	padding: 1px 0 0;
+}
+
+#kunena ul.popsubstat-list li.popsubstats-row dl, ul.announcement-list li.header {
+ 	float: none !important;
+ 	height: auto;
+ 	width: auto;
+}
+
+#kunena ul.popsubstat-list li.popsubstats-row {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+#kunena ul.popsubstat-list li.popsubstats-row dd {
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 5px;
+}
+
+#kunena ul.popsubstat-list li.header dd {
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 2px 5px;
+}
+
+#kunena ul.popsubstat-list dd {
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 2px 0;
+}
+
+/*#kunena ul.topic-list li.topics-row dl {
+ 	display: block;
+ 	position: relative;
+}*/
+
+#kunena ul.popsubstat-list li.popsubstats-row dd {
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+}
+
+#kunena ul.popsubstat-list dd.announcement-checkbox {
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 10px;
+}
+
+#kunena ul.popsubstat-list dd.announcement-id {
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 5%;
+}
+
 
 /*---------- Topic List ------------- */
 
 #kunena ul.topic-list {
-    display: block;
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
+ 	display: block;
+ 	list-style-type: none;
+ 	margin: 0px;
+ 	padding: 0px;
 }
 
 #kunena ul.topic-list div.header {
-    clear: both;
-    display: block;
-    position: relative;
-    vertical-align: bottom;
+ 	clear: both;
+ 	display: block;
+ 	position: relative;
+ 	vertical-align: bottom;
 }
 
 #kunena ul.topic-list li {
-   clear: both;
-   display: block;
-   position: relative;
-   vertical-align: bottom;
-   margin: 0;
-   overflow: hidden;
-   padding: 1px 0 0;
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+	margin: 0;
+	overflow: hidden;
+	padding: 1px 0 0;
 }
 
 #kunena ul.topic-list li.row dl, ul.topic-list li.header {
-    float: none !important;
-    height: auto;
-    width: auto;
+ 	float: none !important;
+ 	height: auto;
+ 	width: auto;
 }
 
 #kunena ul.topic-list li.topics-row {
-   margin: 0px;
-   padding: 0px;
-   overflow: hidden;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
 }
 
 #kunena ul.topic-list li.topics-row dd {
-    display: block;
-    float: left;
-    margin: 0px;
-    padding: 5px;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 5px;
 }
 
 #kunena ul.topic-list li.header dd {
-    display: block;
-    float: left;
-    margin: 0px;
-    padding: 2px 5px;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 2px 5px;
 }
 
 #kunena ul.topic-list dd {
-    display: block;
-    float: left;
-    margin: 0px;
-    padding: 2px 0;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 2px 0;
 }
 
 /*#kunena ul.topic-list li.topics-row dl {
-    display: block;
-    position: relative;
+ 	display: block;
+ 	position: relative;
 }*/
 
 #kunena ul.topic-list li.topics-row dd {
-    display: block;
-    float: left;
-    margin: 0px;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
 }
 
 #kunena ul.topic-list dd.topic-icon {
-   margin: 0;
-   text-align: center;
-   vertical-align: center;
-   min-width: 42px;
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	min-width: 42px;
 }
 
 #kunena ul.topic-list dd.topic-subject {
-   margin: 0;
-   text-align: left;
-   width: 40%;
+	margin: 0;
+	text-align: left;
+	width: 40%;
 }
 
 #kunena ul.topic-list dd.topic-replies, #kunena dd.topic-views {
-   margin: 0;
-   text-align: center;
-   width: 10%;
-   position: relative;
-   top: 50%;
+	margin: 0;
+	text-align: center;
+	width: 10%;
+	position: relative;
+	top: 50%;
 }
 
 #kunena ul.topic-list dd.topic-lastpost {
-   margin: 0;
-   text-align: left;
-   width: 20%;
+	margin: 0;
+	text-align: left;
+	width: 20%;
 }
 
 #kunena ul.topic-list dd.topic-checkbox {
-   margin: 0;
-   text-align: center;
-   vertical-align: middle;
-   width: 5%;
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 5%;
 }
 
 
 /*#kunena ul.topic-list li.topic-row dd {
-    display: block;
-    float: left;
-    margin: 0px;
-    padding: 4px 0;
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 4px 0;
 }*/
 
 
 /*---------- Postmessage List ------------- */
 
 #kunena ul.postmessage-list {
-    display: block;
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
+ 	display: block;
+ 	list-style-type: none;
+ 	margin: 0px;
+ 	padding: 0px;
 }
 
 #kunena ul.postmessage-list li {
-   clear: both;
-   display: block;
-   position: relative;
-   vertical-align: bottom;
-   margin: 0;
-   overflow: hidden;
-   padding: 5px;
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+	margin: 0;
+	overflow: hidden;
+	padding: 5px;
 }
 
 /*---------- Message List ------------- */
 
 /*#kunena div#topic .posthead {
-    padding: 5px 10px;
+ 	padding: 5px 10px;
 }*/
 
 #kunena div#topic ul.topic-posts li.topic-row {
-    padding: 5px 10px;
+ 	padding: 5px 10px;
 }
 
 #kunena div#topic ul.topic-posts li.topic-row:hover ul.message-buttons {
-   visibility: visible;
+	visibility: visible;
 }
 
 #kunena div#topic ul.message-list li.header {
-    padding: 5px 10px;
+ 	padding: 5px 10px;
 }
 
 #kunena div#topic ul.message-list li.header h3, #kunena ul.message-list li.header dd, #kunena ul.message-list li.header dd a {
-    display: inline;
+ 	display: inline;
 }
 
 #kunena div#topic div.buttonbar ul.message-buttons {
-   visibility: hidden;
+	visibility: hidden;
 }
 
 #kunena div#topic .topic-taglist {
-    display: block;
-    /*padding: 5px 10px;*/
+ 	display: block;
+ 	/*padding: 5px 10px;*/
 }
 
 #kunena div#topic .topic-taglist-edit {
-    float: right;
+ 	float: right;
 }
 
 #kunena div#topic .topic-taglist li {
-    display: inline;
-    line-height: 13px;
+ 	display: inline;
+ 	line-height: 13px;
 }
 
 
@@ -975,7 +1151,7 @@
 
 /*---------- Who Is Online & Statistics ------------- */
 
-#kunena div#whosonline div.whosonline-smicon {
+#kunena div.whosonline div.whosonline-smicon {
 	display: block;
 	float: left;
 	/*padding: 20px 0 5px 8px;*/
@@ -983,39 +1159,39 @@
 	width: 48px;
 }
 
-#kunena div#whosonline div.whosonline-users {
+#kunena div.whosonline div.whosonline-users {
 	display: block;
 	float: left;
 	padding: 5px 10px 10px 10px;
 }
 
-#kunena div#whosonline .section-icon span {
+#kunena div.whosonline .section-icon span {
 	margin: 15px auto;
 }
 
-#kunena div#whosonline .whosonline-subtitle {
+#kunena div.whosonline .whosonline-subtitle {
 	display: block;
 	width: 99%;
 }
 
-#kunena div#whosonline .whosonline-legend ul li {
+#kunena div.whosonline .whosonline-legend ul li {
 	display: inline;
 	margin-right: 5px;
 }
 
-#kunena div#whosonline .whosonline-usernames {
+#kunena div.whosonline .whosonline-usernames {
 	clear:left;
 	display: block;
 	width: 99%;
 }
 
-#kunena div#whosonline .whosonline-usernames ul li {
+#kunena div.whosonline .whosonline-usernames ul li {
 	display: inline;
 	margin-right: 4px;
 }
 
-#kunena div#whosonline .whosonline-details div {
-   display: block;
+#kunena div.whosonline .whosonline-details div {
+	display: block;
 	float: left;
 }
 
@@ -1040,10 +1216,10 @@
 }
 
 #kunena div.statistics .statistics-totals {
-	padding: 5px 10 10px 10px;
+	padding: 5px 10px 10px 10px;
 	line-height: 20px;
 	/*min-height: 80px;*/
-	width: 27%;
+	width: 25%;
 }
 
 #kunena div.statistics .statistics-totals ul li span {
@@ -1063,109 +1239,131 @@
 
 /* Menu */
 #kunena div.menubox div.menubox-global {
-   display: block;
+	display: block;
+	float: left;
 }
 
 #kunena div.menubox div.menubox-user {
-   display: block;
+	display: block;
+	float: right;
 }
 
 #kunena div.menubox ul.menu {
-   background: none repeat scroll 0 0 transparent;
-   margin: 0;
-   padding: 0;
+	background: none repeat scroll 0 0 transparent;
+	margin: 0;
+	padding: 0;
 }
 
 #kunena div.menubox div.menubox-global ul.menu li {
-   /*background: none repeat scroll 0 0 transparent;*/
-   /*border-radius: 5px 5px 0 0;*/
-   display: inline;
-   float: left;
+	/*background: none repeat scroll 0 0 transparent;*/
+	/*border-radius: 5px 5px 0 0;*/
+	display: inline;
+	float: left;
+}
+
+kunena div.menubox div.menubox-user ul.menu li {
+	/*background: none repeat scroll 0 0 transparent;*/
+	/*border-radius: 5px 5px 0 0;*/
+	display: inline;
+	float: left;
 }
 
 #kunena div.menubox div.menubox-global ul.menu li a {
-   /*height: 30px;*/
-   /*line-height: 30px;*/
-   margin: 0;
-   padding: 12px 8px;
-   height: 18px;
-   overflow: hidden;
+	/*height: 30px;*/
+	/*line-height: 30px;*/
+	margin: 0;
+	padding: 12px 8px;
+	height: 18px;
+	overflow: hidden;
 }
 
 #kunena div.menubox div.menubox-global ul.menu li a {
-   background: none;
-   font-size: 14px !important;
+	background: none;
+	font-size: 14px !important;
+}
+
+#kunena div.menubox div.menubox-user ul.menu li a.link-login {
+	background: none;
+	font-size: 14px !important;
 }
 
 #kunena div.menubox div.menubox-global ul.menu li a:hover {
-   background: none;
+	background: none;
 }
 
 #kunena div.menubox div.menubox-user ul.menu li {
-   /*background: none repeat scroll 0 0 transparent;*/
-   /*border-radius: 5px 5px 0 0;*/
-   display: inline;
-   float: right;
+	/*background: none repeat scroll 0 0 transparent;*/
+	/*border-radius: 5px 5px 0 0;*/
+	/*display: inline;*/
+	/*float: right;*/
+}
+
+#kunena div.menubox div.menubox-user ul.menu li a.link-login {
+	/*height: 30px;*/
+	/*line-height: 30px;*/
+	margin: 0;
+	padding: 12px 8px;
+	overflow: hidden;
+}
+
+#kunena div.menubox div.menubox-user ul.menu li a.link-logout {
+	/*height: 30px;*/
+	/*line-height: 30px;*/
+	margin: 0;
+	padding: 5px;
+	overflow: hidden;
 }
 
 #kunena div.menubox div.menubox-user ul.menu li a {
-   /*height: 30px;*/
-   line-height: 30px;
-   margin: 0;
-   padding: 5px;
-   overflow: hidden;
-}
-
-#kunena div.menubox div.menubox-user ul.menu li a {
-   background: none;
+	background: none;
 }
 
 #kunena div.menubox div.menubox-user ul.menu li a:hover {
-   background: none;
+	background: none;
 }
 
 #kunena div.login-member {
-   display: block;
+	display: block;
 }
 
 #kunena div.login-member div.login-avatar {
-   float: left;
+	float: left;
 }
 
 #kunena div.login-member div.loginbox {
-   float: left;
-   padding-left: 5px;
+	float: left;
+	padding-left: 5px;
 }
 
 #kunena div.login-member img {
-   width: 32px;
-   height: 32px;
+	width: 32px;
+	height: 32px;
 }
 
 /* Button Bar */
 
 #kunena div.buttonbar ul.message-buttons {
-   padding: 0px;
-   margin: 0px;
+	padding: 0px;
+	margin: 0px;
 }
 
 #kunena div.buttonbar ul.message-buttons li {
-   padding: 0px;
-   margin: 0px;
+	padding: 0px;
+	margin: 0px;
 }
 
 #kunena div.buttonbar ul.message-buttons li.button a {
-   display: block;
+	display: block;
 }
 
 #kunena div.buttonbar ul.message-buttons li.button a > span {
-   padding: 5px 10px;
-   display: block;
-   /*overflow: hidden;*/
+	padding: 5px 10px;
+	display: block;
+	/*overflow: hidden;*/
 }
 
 /*#kunena div.buttonbar ul.message-buttons span {
-   padding: 10px 5px
+	padding: 10px 5px
 }*/
 
 
@@ -1174,51 +1372,51 @@
 #kunena input {
 	/*border: 1px solid;
 	padding: 0px 5px;*/
-    background-color: #FFFFFF;
-    background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
-    border: 1px solid silver;
-    border-radius: 5px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+ 	background-color: #FFFFFF;
+ 	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+ 	border: 1px solid silver;
+ 	border-radius: 5px;
+ 	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
 }
 
 #kunena select {
 	/*border: 1px solid;
 	padding: 0px 5px;*/
-    background-color: #FFFFFF;
-    background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
-    border: 1px solid silver;
-    border-radius: 5px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+ 	background-color: #FFFFFF;
+ 	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+ 	border: 1px solid silver;
+ 	border-radius: 5px;
+ 	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
 }
 
 #kunena textarea {
 	/*border: 1px solid;
 	padding: 0px 5px;*/
-    background-color: #FFFFFF;
-    background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
-    border: 5px solid silver;
-    border-radius: 5px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+ 	background-color: #FFFFFF;
+ 	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+ 	border: 5px solid silver;
+ 	border-radius: 5px;
+ 	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
 }
 
 #kunena .box-hover {
-   background-color: rgba(255, 255, 255, 0.0);
+	background-color: rgba(255, 255, 255, 0.0);
 }
 
 #kunena .box-hover:hover {
-   background-color: rgba(100, 100, 100, 0.05);
+	background-color: rgba(100, 100, 100, 0.05);
 }
 
 #kunena .box-focus {
-   background-color: rgba(255, 255, 255, 0.0);
+	background-color: rgba(255, 255, 255, 0.0);
 }
 
 #kunena .box-focus:focus {
-   background-color: rgba(100, 100, 100, 0.1);
+	background-color: rgba(100, 100, 100, 0.1);
 }
 
 #kunena .box-shadow {
-   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(255, 255, 255, 0.4), -1px -1px 0 rgba(255, 255, 255, 0.4), 1px -1px 0 rgba(255, 255, 255, 0.4), -1px 1px 0 rgba(255, 255, 255, 0.4);
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(255, 255, 255, 0.4), -1px -1px 0 rgba(255, 255, 255, 0.4), 1px -1px 0 rgba(255, 255, 255, 0.4), -1px 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 #kunena .box-shadow:hover {
@@ -1226,65 +1424,83 @@
 }
 
 #kunena .box-color {
-   /*background-color: rgba(100, 100, 100, 0.1);*/
-   background-image: linear-gradient(top, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.0) 100%) !important;
+	/*background-color: rgba(100, 100, 100, 0.1);*/
+	background-image: linear-gradient(top, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.0) 100%) !important;
 }
 
 #kunena .box-color:hover {
-   /*background-color: rgba(100, 100, 100, 0.1);*/
-   background-image: linear-gradient(top, rgba(89, 155, 220, 0.15) 0%, rgba(48, 114, 179, 0.15) 100%) !important;
+	/*background-color: rgba(100, 100, 100, 0.1);*/
+	background-image: linear-gradient(top, rgba(89, 155, 220, 0.15) 0%, rgba(48, 114, 179, 0.15) 100%) !important;
 }
 
 #kunena .box-border {
-   /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-   border-color: rgba(0, 0, 0, 0.05);
-   border-style: solid;
-   border-width: 1px;
-   /*border-radius: 5px;*/
+	/*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+	border-color: rgba(0, 0, 0, 0.05);
+	border-style: solid;
+	border-width: 1px;
+	/*border-radius: 5px;*/
 }
 
 #kunena .box-border:hover {
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-   border-color: rgba(0, 0, 0, 0.05);
-   border-style: solid;
-   border-width: 1px;
-   /*border-radius: 5px;*/
+	border-color: rgba(0, 0, 0, 0.05);
+	border-style: solid;
+	border-width: 1px;
+	/*border-radius: 5px;*/
 }
 
 #kunena .box-border_radius {
-   border-radius: 5px;
+	border-radius: 5px;
 }
 
 #kunena .box-border_radius:hover {
-   border-radius: 5px;
+	border-radius: 5px;
+}
+
+#kunena .box-hover_header-row {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#kunena .box-hover_list-row {
+	border-top: 1px solid rgba(0, 0, 0, 0.0);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
+	background-color: rgba(255, 255, 255, 0.0);
+}
+
+#kunena .box-hover_list-row:hover {
+	border-top: 1px solid rgba(255, 255, 255, 0.8);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
+	background-color: rgba(100, 100, 100, 0.05);
 }
 
 #kunena div.block-wrapper {
-   /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-   border-color: transparent rgba(0, 0, 0, 0.1);
-   border-style: solid;
-   border-width: 1px;
-   border-radius: 5px;*/
-   /* need to include this line because the transition will not work */
-   /*background-image: linear-gradient(top, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.0) 100%) !important;*/
-   /*opacity: 0.1;
-   background: var(styleForumHeadercolor) !important;
+	/*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-color: transparent rgba(0, 0, 0, 0.1);
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 5px;*/
+	/* need to include this line because the transition will not work */
+	/*background-image: linear-gradient(top, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.0) 100%) !important;*/
+	/*opacity: 0.1;
+	background: var(styleForumHeadercolor) !important;
 	background-image: linear-gradient(top, var(styleForumHeadercolor) 0%, var(styleForumHeadercolorGradient) 100%) !important;*/
 }
 
 #kunena div.block-wrapper:hover {
-   /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-   border-color: transparent rgba(0, 0, 0, 0.1);
-   border-style: solid;
-   border-width: 1px;
-   border-radius: 5px;*/
-   /*background: var(styleForumHeadercolor) !important;*/
+	/*box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	border-color: transparent rgba(0, 0, 0, 0.1);
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 5px;*/
+	/*background: var(styleForumHeadercolor) !important;*/
 	/*background-image: linear-gradient(top, rgba(89, 155, 220, 0.4) 0%, rgba(48, 114, 179, 0.4) 100%) !important;*/
 	/*background-image: linear-gradient(top, (0.25, var(styleForumHeadercolor)) 0%, (0.25, var(styleForumHeadercolorGradient)) 100%) !important;*/
 }
 
 #kunena div.headerbox-wrapper {
-   background-image: linear-gradient(top, rgba(255, 255, 255, 1.0) 0%, rgba(240, 240, 240, 1.0) 100%) !important;
+	background-image: linear-gradient(top, rgba(255, 255, 255, 1.0) 0%, rgba(240, 240, 240, 1.0) 100%) !important;
 }
 
 #kunena h2.header a {
@@ -1308,73 +1524,73 @@
 }
 
 #kunena div.detailsbox {
-   /*box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(255, 255, 255, 0.4), -1px -1px 0 rgba(255, 255, 255, 0.4), 1px -1px 0 rgba(255, 255, 255, 0.4), -1px 1px 0 rgba(255, 255, 255, 0.4);
-   border-color: transparent rgba(0, 0, 0, 0.1);
-   border-style: solid;
-   border-width: 1px;
-   border-radius: 5px;*/
+	/*box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(255, 255, 255, 0.4), -1px -1px 0 rgba(255, 255, 255, 0.4), 1px -1px 0 rgba(255, 255, 255, 0.4), -1px 1px 0 rgba(255, 255, 255, 0.4);
+	border-color: transparent rgba(0, 0, 0, 0.1);
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 5px;*/
 }
 
-#kunena div.announcements ul.announcement-list li.header {
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+/*#kunena div.announcements ul.announcement-list li.header {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #kunena div.announcements ul.announcement-list li.announcements-row {
-   border-top: 1px solid rgba(0, 0, 0, 0.0);
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
-   background-color: rgba(255, 255, 255, 0.0);
+	border-top: 1px solid rgba(0, 0, 0, 0.0);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
+	background-color: rgba(255, 255, 255, 0.0);
 }
 
 #kunena div.announcements ul.announcement-list li.announcements-row:hover {
-   border-top: 1px solid rgba(255, 255, 255, 0.8);
-   border-bottom: 1px solid rgba(255, 255, 255, 0.8);
-   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
-   background-color: rgba(100, 100, 100, 0.05);
-}
+	border-top: 1px solid rgba(255, 255, 255, 0.8);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
+	background-color: rgba(100, 100, 100, 0.05);
+}*/
 
 
-#kunena div.category ul.category-list li.header {
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+/*#kunena div.category ul.category-list li.header {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #kunena div.category ul.category-list li.category-row {
-   border-top: 1px solid rgba(0, 0, 0, 0.0);
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
-   background-color: rgba(255, 255, 255, 0.0);
+	border-top: 1px solid rgba(0, 0, 0, 0.0);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
+	background-color: rgba(255, 255, 255, 0.0);
 }
 
 #kunena div.category ul.category-list li.category-row:hover {
-   border-top: 1px solid rgba(255, 255, 255, 0.8);
-   border-bottom: 1px solid rgba(255, 255, 255, 0.8);
-   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
-   background-color: rgba(100, 100, 100, 0.05);
+	border-top: 1px solid rgba(255, 255, 255, 0.8);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
+	background-color: rgba(100, 100, 100, 0.05);*/
 }
 
 #kunena div.category ul.category-list li.category-row dd.topics, #kunena ul.category-list li.category-row dd.replies {
-   font-size: 1.2em;
-   line-height: 2.2em;
+	font-size: 1.2em;
+	line-height: 2.2em;
 }
 
 
-#kunena div.topic ul.topic-list li.header {
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+/*#kunena div.topic ul.topic-list li.header {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #kunena div.topic ul.topic-list li.topics-row {
-   border-top: 1px solid rgba(0, 0, 0, 0.0);
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
-   background-color: rgba(255, 255, 255, 0.0);
+	border-top: 1px solid rgba(0, 0, 0, 0.0);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
+	background-color: rgba(255, 255, 255, 0.0);
 }
 
 #kunena div.topic ul.topic-list li.topics-row:hover {
-   border-top: 1px solid rgba(255, 255, 255, 0.8);
-   border-bottom: 1px solid rgba(255, 255, 255, 0.8);
-   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
-   background-color: rgba(100, 100, 100, 0.05);
-}
+	border-top: 1px solid rgba(255, 255, 255, 0.8);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
+	background-color: rgba(100, 100, 100, 0.05);
+}*/
 
 #kunena li.postmessage-row {
 	border-top: 1px solid rgba(0, 0, 0, 0.0);
@@ -1391,87 +1607,87 @@
 }
 
 #kunena div.topic ul.topic-list li.topic-row dd.replies, #kunena ul.topic-list li.category-row dd.views {
-   font-size: 1.2em;
-   line-height: 2.2em;
+	font-size: 1.2em;
+	line-height: 2.2em;
 }
 
 #kunena div.topic ul.topic-posts li.header {
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #kunena div.menubox div.menubox-global ul.menu li a {
-   /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
-   /*box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
-   background-color: rgba(255, 255, 255, 0.0) !important;
-   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;*/
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0) !important;
-   background-color: rgba(255, 255, 255, 0.0) !important;
-   border-top: 1px solid rgba(0, 0, 0, 0.0) !important;
-   border-right: 1px solid rgba(0, 0, 0, 0.0) !important;
-   border-bottom: 1px solid rgba(0, 0, 0, 0.0) !important;
-   border-left: 1px solid rgba(0, 0, 0, 0.0) !important;
-   /*color: #444444;*/
+	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+	/*box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(255, 255, 255, 0.0) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.05) !important;*/
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0) !important;
+	background-color: rgba(255, 255, 255, 0.0) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.0) !important;
+	/*color: #444444;*/
 }
 
 #kunena div.menubox div.menubox-global ul.menu li a:hover {
-   /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
-   background-color: rgba(100, 100, 100, 0.1) !important;
-   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
-   /*color: #222222;*/
+	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(100, 100, 100, 0.1) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+	/*color: #222222;*/
 }
 
 #kunena div.menubox div.menubox-user ul.menu li a {
-   /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
-   /*box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
-   background-color: rgba(255, 255, 255, 0.0) !important;
-   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;*/
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0) !important;
-   background-color: rgba(255, 255, 255, 0.0) !important;
-   border-top: 1px solid rgba(0, 0, 0, 0.0) !important;
-   border-right: 1px solid rgba(0, 0, 0, 0.0) !important;
-   border-bottom: 1px solid rgba(0, 0, 0, 0.0) !important;
-   border-left: 1px solid rgba(0, 0, 0, 0.0) !important;
-   /*color: #444444;*/
+	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+	/*box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(255, 255, 255, 0.0) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.05) !important;*/
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0) !important;
+	background-color: rgba(255, 255, 255, 0.0) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.0) !important;
+	/*color: #444444;*/
 }
 
 #kunena div.menubox div.menubox-user ul.menu li a:hover {
-   /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
-   background-color: rgba(100, 100, 100, 0.1) !important;
-   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
-   /*color: #222222;*/
+	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(100, 100, 100, 0.1) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+	/*color: #222222;*/
 }
 
 #kunena div.menubox div.menubox-user ul.menu li a:focus {
-   /*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
-   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
-   background-color: rgba(100, 100, 100, 0.1) !important;
-   border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-   border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
-   /*color: #222222;*/
+	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(100, 100, 100, 0.1) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+	/*color: #222222;*/
 }
 
 #kunena div.login-member img {
-   border-radius: 5px;
+	border-radius: 5px;
 }
 
 #kunena div.login-member img:hover {
-   border-radius: 5px;
+	border-radius: 5px;
 }
 
 
@@ -1485,39 +1701,39 @@
 /* effects */
 
 #kunena .box-hover {
-   -moz-transition: all 0.6s ease 0s;
+	-moz-transition: all 0.6s ease 0s;
 }
 
 #kunena .box-hover:hover {
-   -moz-transition: all 0.3s ease 0s;
+	-moz-transition: all 0.3s ease 0s;
 }
 
 #kunena .boxcolor-hover {
-   -moz-transition: all 0.6s ease 0s;
+	-moz-transition: all 0.6s ease 0s;
 }
 
 #kunena .boxcolor-hover:hover {
-   -moz-transition: all 0.3s ease 0s;
+	-moz-transition: all 0.3s ease 0s;
 }
 
 /*#kunena div.block-wrapper {
-   -moz-transition: all 0.6s ease 0s;
+	-moz-transition: all 0.6s ease 0s;
 }
 
 #kunena div.block-wrapper:hover {
-   -moz-transition: all 0.3s ease 0s;
+	-moz-transition: all 0.3s ease 0s;
 }*/
 
 /*#kunena div.category ul.category-list li.category-row {
-   -moz-transition: all 0.6s ease 0s;
-}   
+	-moz-transition: all 0.6s ease 0s;
+}	
 
 #kunena div.category ul.category-list li.category-row:hover {
-   -moz-transition: all 0.3s ease 0s;
+	-moz-transition: all 0.3s ease 0s;
 }
 
 #kunena div.category ul.category-list li.category-row + li.category-row {
-   -moz-transition: all 0.3s ease 0s;
+	-moz-transition: all 0.3s ease 0s;
 }*/
 
 /*--------*/
@@ -1533,16 +1749,16 @@
 	background: #FFFFFF;
 	border-color: #BCBCBC;
 	border-radius: 3px 3px 3px 3px;
-    padding: 0;
+ 	padding: 0;
 }
 
 #kunena #searchform .input {
-    padding: 5px;
-    background-color: transparent;
-    background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
-    border: 1px solid silver;
-    border-radius: 2px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+ 	padding: 5px;
+ 	background-color: transparent;
+ 	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+ 	border: 1px solid silver;
+ 	border-radius: 2px;
+ 	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
 }
 
 #kunena #searchform .clrline {
@@ -1574,7 +1790,7 @@
 	cursor: pointer;
 	border: 1px solid #D4D4D4;
 	border-radius: 3px;
-   /*box-shadow: 0 1px 0 #FFFFFF;*/
+	/*box-shadow: 0 1px 0 #FFFFFF;*/
 }
 
 #kunena li.button a:hover {
@@ -1607,6 +1823,50 @@
 	text-decoration: none;
 	color: #FFFFFF !important;
 }
+
+/*---------- Editor Icons ------------- */
+#kunena #kbbcode-toolbar li a {
+	height:18px;
+	width:18px;
+	background-image:url("../images/icons-editor.png");
+}
+#kunena ul#kbbcode-toolbar li a.kbbcode-separator {
+	background-position:-400px 0;
+	width: 8px;
+	cursor: default;
+}
+#kunena ul#kbbcode-toolbar li a.kbbcode-bold-button {background-position:0 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-italic-button {background-position:-18px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-underline-button {background-position:-36px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-strike-button {background-position:-54px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-sub-button {background-position:-72px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-sup-button {background-position:-90px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-size-button {background-position:-108px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-color-button {background-position:-126px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-spoiler-button {background-position:-144px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-hide-button {background-position:-162px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-ulist-button {background-position:-180px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-olist-button {background-position:-198px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-list-button {background-position:-216px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-left-button {background-position:-234px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-center-button {background-position:-252px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-right-button {background-position:-270px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-quote-button {background-position:-288px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-code-button {background-position:-306px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-image-button {background-position:-324px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-link-button {background-position:-342px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-table-button {background-position:0 -18px;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-module-button {background-position:-18px -18px;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-ebay-button {background-position:-360px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-video-button {background-position:-378px 0;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-map-button {background-position:-72px -18px;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-attach-button {background-position:-36px -18px;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-gallery-button {background-position:-54px -18px;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-poll-button {background-position:-90px -18px;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-previewbottom-button {background-position:-252px -18px;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-previewright-button {background-position:-270px -18px;}
+#kunena ul#kbbcode-toolbar li a.kbbcode-help-button {background-position:-396px -18px;}
+
 
 
 #kunena li.topic-replytopic a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important;; }
@@ -1716,9 +1976,9 @@
 
 /* effects */
 #kunena li.button:hover {
-   -moz-transition: all 0.6s ease 0s;
+	-moz-transition: all 0.6s ease 0s;
 }
 
 #kunena li.button:hover {
-   -moz-transition: all 0.3s ease 0s;
+	-moz-transition: all 0.3s ease 0s;
 }

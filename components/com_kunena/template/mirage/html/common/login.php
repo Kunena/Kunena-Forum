@@ -13,7 +13,6 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="login dropdown-menu">
 	<ul class="login-guest">
-		<li class="login-welcome kguest"><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME') ?>, <?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST') ?></li>
 		<?php if ($this->login) : ?>
 			<li class="login-form">
 				<span>

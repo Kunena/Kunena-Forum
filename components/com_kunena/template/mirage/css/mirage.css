@@ -412,14 +412,39 @@
 	float: right;
 }
 
-#kunena.layout div.dropdown {
-	display: none;
+#kunena.layout .menubox li > a {
+	/*height: 30px;*/
+	/*line-height: 30px;*/
+	line-height: 32px;
+	margin: 0px;
+	padding: 5px 8px;
+	/*height: 18px;*/
+	overflow: hidden;
 }
 
-#kunena.layout div.dropdown-menu li {
+#kunena.layout .menubox li > a {
+	/*height: 30px;*/
+	/*line-height: 30px;*/
+	line-height: 32px;
+	margin: 0px;
+	padding: 5px 8px;
+	/*height: 18px;*/
+	overflow: hidden;
+}
+
+#kunena.layout div.dropdown-menu {
 	display: block;
 	float: none;
 	position: relative;
+}
+
+#kunena.layout div.dropdown-menu li > a {
+	padding: 5px;
+	line-height: 15px;
+}
+
+#kunena.layout div.dropdown-menu li > span {
+	padding: 5px;
 }
 
 /*---------- Advanced Search ------------- */
@@ -968,7 +993,7 @@
 }*/
 
 #kunena.layout div#topic ul.topic-posts li.topic-row {
- 	padding: 5px 10px;
+ 	padding: 8px 10px;
 }
 
 #kunena.layout div#topic ul.topic-posts li.topic-row:hover ul.message-buttons {
@@ -1271,21 +1296,12 @@
 	border: none;
 }
 
-#kunena.layout div.menubox div.menubox-global ul.menu li a {
-	/*height: 30px;*/
-	/*line-height: 30px;*/
-	margin: 0px;
-	padding: 12px 8px;
-	/*height: 18px;*/
-	overflow: hidden;
-}
-
-#kunena.layout div.menubox div.menubox-global ul.menu li a {
+#kunena.layout div.menubox div.menubox-global ul.menu li > a {
 	background: none;
 	font-size: 14px !important;
 }
 
-#kunena.layout div.menubox div.menubox-user ul.menu li a.link-login {
+#kunena.layout div.menubox div.menubox-user ul.menu li > a {
 	background: none;
 	font-size: 14px !important;
 }
@@ -1299,22 +1315,6 @@
 	/*border-radius: 5px 5px 0 0;*/
 	/*display: inline;*/
 	/*float: right;*/
-}
-
-#kunena.layout div.menubox div.menubox-user ul.menu li a.link-login {
-	/*height: 30px;*/
-	/*line-height: 30px;*/
-	margin: 0;
-	padding: 12px 8px;
-	overflow: hidden;
-}
-
-#kunena.layout div.menubox div.menubox-user ul.menu li a.link-logout {
-	/*height: 30px;*/
-	/*line-height: 30px;*/
-	margin: 0;
-	padding: 5px;
-	overflow: hidden;
 }
 
 #kunena.layout div.menubox div.menubox-user ul.menu li a {
@@ -1872,13 +1872,13 @@
 
 
 
-#kunena.layout li.topic-replytopic a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important;; }
-#kunena.layout li.topic-subscribe a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
-#kunena.layout li.topic-favorite a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
-#kunena.layout li.topic-lock a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
-#kunena.layout li.topic-sticky a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
-#kunena.layout li.topic-moderatetopic a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
-#kunena.layout li.topic-delete a { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%) !important;; }
+#kunena.layout li.topic-replytopic a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
+#kunena.layout li.topic-subscribe a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena.layout li.topic-favorite a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena.layout li.topic-lock a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.topic-sticky a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.topic-moderatetopic a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.topic-delete a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
 
 #kunena.layout li.topic-replytopic a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important;; }
 #kunena.layout li.topic-subscribe a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important;; }
@@ -1886,7 +1886,7 @@
 #kunena.layout li.topic-lock a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
 #kunena.layout li.topic-sticky a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
 #kunena.layout li.topic-moderatetopic a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
-#kunena.layout li.topic-delete a:hover { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%) !important;; }
+#kunena.layout li.topic-delete a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important;; }
 
 
 #kunena.layout li.topics-newtopic a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }

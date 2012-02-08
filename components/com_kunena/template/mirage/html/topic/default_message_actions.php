@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="innerblock-wrapper">
+<div class="innerbox-wrapper innerspacer">
 	<?php if(!empty($this->thankyou)): ?>
 		<div class="buttonbar" >
 			<ul class="message-buttons innerblock">

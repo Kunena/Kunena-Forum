@@ -20,7 +20,7 @@ defined ( '_JEXEC' ) or die ();
 				<ul class="menu">
 					<?php if (!$this->me->exists()) : ?>
 						<li class="dropdown">
-							<a class="link-login" href="#"><?php echo JText::_('Sign In / Sign Up'); ?></a>
+							<a class="link-login" href="#"><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME') ?> <?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST') ?>, <?php echo JText::_('Sign In'); ?></a>
 							<?php $this->displayLoginBox (); ?>
 						</li>
 					<?php endif; ?>

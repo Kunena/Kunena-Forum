@@ -607,33 +607,33 @@
  ****************/
  
  
-/*************************
- * START MESSAGE-BUTTONS *
- *************************/
+/***************************
+ * START MESSAGE BUTTONBAR *
+ ***************************/
  
-#kunena.layout div.message-buttonbar ul.message-buttons {
+#kunena.layout div.buttonbar ul.buttons-message {
 	padding: 0px;
 	margin: 0px;
 }
 
-#kunena.layout div.message-buttonbar ul.message-buttons li {
+#kunena.layout div.buttonbar ul.buttons-message li {
 	padding: 0px;
 	margin: 0px;
 }
 
-#kunena.layout div.message-buttonbar ul.message-buttons li.button a {
+#kunena.layout div.buttonbar ul.buttons-message li.button a {
 	display: block;
 }
 
-#kunena.layout div.message-buttonbar ul.message-buttons li.button a > span {
+#kunena.layout div.buttonbar ul.buttons-message li.button a > span {
 	padding: 5px 10px;
 	display: block;
 	/*overflow: hidden;*/
 }
 
-/************************
- * STOP MESSAGE-BUTTONS *
- ************************/
+/**************************
+ * STOP MESSAGE BUTTONBAR *
+ **************************/
 
 
 /**********************
@@ -648,7 +648,7 @@
  	padding: 8px 10px;
 }
 
-#kunena.layout div.topic ul.topic-posts li.topic-row:hover div.message-buttonbar ul.message-buttons {
+#kunena.layout div.topic ul.topic-posts li.topic-row:hover div.buttonbar ul.buttons-message {
 	visibility: visible;
 }
 
@@ -660,7 +660,7 @@
  	display: inline;
 }
 
-#kunena.layout div.topic ul.topic-posts li.topic-row div.message-buttonbar ul.message-buttons {
+#kunena.layout div.topic ul.topic-posts li.topic-row div.buttonbar ul.buttons-message {
 	visibility: hidden;
 }
 
@@ -800,27 +800,61 @@
  ************************/
 
 
-/* Button Bar */
+/*************************
+ * START TOPIC BUTTONBAR *
+ *************************/
 
-#kunena.layout div.topic-buttonbar ul.message-buttons {
+#kunena.layout div.buttonbar ul.buttons-topic {
 	padding: 0px;
 	margin: 0px;
 }
 
-#kunena.layout div.topic-buttonbar ul.message-buttons li {
+#kunena.layout div.buttonbar ul.buttons-topic li {
 	padding: 0px;
 	margin: 0px;
 }
 
-#kunena.layout div.topic-buttonbar ul.message-buttons li.button a {
+#kunena.layout div.buttonbar ul.buttons-topic li.button a {
 	display: block;
 }
 
-#kunena.layout div.topic-buttonbar ul.message-buttons li.button a > span {
+#kunena.layout div.buttonbar ul.buttons-topic li.button a > span {
 	padding: 5px 10px;
 	display: block;
 	/*overflow: hidden;*/
 }
+
+/************************
+ * STOP TOPIC BUTTONBAR *
+ ************************/
+
+/**************************
+ * START TOPICS BUTTONBAR *
+ **************************/
+
+#kunena.layout div.buttonbar ul.buttons-topics {
+	padding: 0px;
+	margin: 0px;
+}
+
+#kunena.layout div.buttonbar ul.buttons-topics li {
+	padding: 0px;
+	margin: 0px;
+}
+
+#kunena.layout div.buttonbar ul.buttons-topics li.button a {
+	display: block;
+}
+
+#kunena.layout div.buttonbar ul.buttons-topics li.button a > span {
+	padding: 5px 10px;
+	display: block;
+	/*overflow: hidden;*/
+}
+
+/*************************
+ * STOP TOPICS BUTTONBAR *
+ *************************/
 
 
 /********************

@@ -10,11 +10,11 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="topic-buttonbar">
+<div class="buttonbar">
 	<div class="paginationbar">
 		<?php echo $this->getPagination(4) ?>
 	</div>
-	<ul class="message-buttons">
+	<ul class="buttons-topics">
 		<!-- User buttons -->
 		<?php if (!empty($this->topic_reply)) : ?><li class="button button-topic-reply"><?php echo $this->topic_reply ?></li><?php endif ?>
 		<?php if (!empty($this->topic_subscribe)) : ?><li class="button button-topic-subscribe"><?php echo $this->topic_subscribe ?></li><?php endif ?>

@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 <div class="innerbox-wrapper innerspacer">
 	<?php if(!empty($this->thankyou)): ?>
 		<div class="buttonbar">
-			<ul class="message-buttons innerblock">
+			<ul class="buttons-message innerblock">
 			<?php
 			echo JText::_('COM_KUNENA_THANKYOU').': ';
 			echo implode(', ', $this->thankyou);

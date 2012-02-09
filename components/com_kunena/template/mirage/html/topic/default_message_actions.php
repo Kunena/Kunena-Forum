@@ -22,7 +22,7 @@ defined ( '_JEXEC' ) or die ();
 			</ul>
 		</div>
 	<?php endif ?>
-	<div id="message-buttonbar" class="buttonbar innerblock">
+	<div class="message-buttonbar innerblock">
 		<ul class="message-buttons">
 			<?php if (empty($this->message_closed)) : ?>
 			<!-- User buttons  -->

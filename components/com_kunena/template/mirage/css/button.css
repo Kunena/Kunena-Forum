@@ -24,27 +24,27 @@
 #kunena.layout li.button-topics-subscribe a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
 
 
-#kunena.layout libutton-message-quickreply a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
-#kunena.layout libutton-message-reply a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
-#kunena.layout libutton-message-quote a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
-#kunena.layout libutton-message-thankyou a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
-#kunena.layout libutton-message-report a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
-#kunena.layout libutton-message-edit a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
-#kunena.layout libutton-message-moderate a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
-#kunena.layout libutton-message-delete a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
-#kunena.layout libutton-message-undelete a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
-#kunena.layout libutton-message-permdelete a { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%) !important; }
+#kunena.layout li.button-message-quickreply a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
+#kunena.layout li.button-message-reply a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
+#kunena.layout li.button-message-quote a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena.layout li.button-message-thankyou a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena.layout li.button-message-report a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena.layout li.button-message-edit a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.button-message-moderate a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.button-message-delete a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.button-message-undelete a { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.button-message-permdelete a { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%) !important; }
 
-#kunena.layout libutton-message-quickreply a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
-#kunena.layout libutton-message-reply a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
-#kunena.layout libutton-message-quote a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
-#kunena.layout libutton-message-thankyou a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
-#kunena.layout libutton-message-report a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
-#kunena.layout libutton-message-edit a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
-#kunena.layout libutton-message-moderate a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
-#kunena.layout libutton-message-delete a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
-#kunena.layout libutton-message-undelete a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
-#kunena.layout libutton-message-permdelete:hover { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%) !important; }
+#kunena.layout li.button-message-quickreply a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
+#kunena.layout li.button-message-reply a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
+#kunena.layout li.button-message-quote a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena.layout li.button-message-thankyou a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena.layout li.button-message-report a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena.layout li.button-message-edit a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.button-message-moderate a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.button-message-delete a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.button-message-undelete a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
+#kunena.layout li.button-message-permdelete:hover { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%) !important; }
 
 
 /* EFFECTS:BUTTONS */

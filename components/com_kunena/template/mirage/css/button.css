@@ -15,12 +15,12 @@
 #kunena.layout li.button-topic-delete a:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%) !important; }
 
 
-#kunena.layout li.button-topics-newtopic a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
-#kunena.layout li.button-topics-marktopicread a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena.layout li.button-topics-new a { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
+#kunena.layout li.button-topics-markread a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
 #kunena.layout li.button-topics-subscribe a { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
 
-#kunena.layout li.button-topics-newtopic a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
-#kunena.layout li.button-topics-marktopicread a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
+#kunena.layout li.button-topics-new a:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%) !important; }
+#kunena.layout li.button-topics-markread a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
 #kunena.layout li.button-topics-subscribe a:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%) !important; }
 
 

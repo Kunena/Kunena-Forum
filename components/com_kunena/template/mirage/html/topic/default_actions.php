@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div id="topic-buttonbar" class="buttonbar">
+<div class="topic-buttonbar">
 	<div class="paginationbar">
 		<?php echo $this->getPagination(4) ?>
 	</div>
@@ -29,4 +29,3 @@ defined ( '_JEXEC' ) or die ();
 		<?php endif ?>
 	</ul>
 </div>
-<div class="spacer"></div>

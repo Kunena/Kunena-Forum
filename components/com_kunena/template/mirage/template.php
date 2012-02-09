@@ -20,10 +20,23 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		// New Kunena JS for default template
 		$this->addScript ( 'js/default.js' );
 
-		$this->addStyleSheet ( 'css/mirage.css' );
+		//$this->addStyleSheet ( 'css/mirage.css' );
+
+		$this->addStyleSheet ( 'css/reset.css' );
+
+		$this->addStyleSheet ( 'css/position.css' );
+		$this->addStyleSheet ( 'css/style.css' );
+		$this->addStyleSheet ( 'css/button.css' );
+		$this->addStyleSheet ( 'css/effect.css' );
+		$this->addStyleSheet ( 'css/emoticon.css' );
+		$this->addStyleSheet ( 'css/icon-category.css' );
+		$this->addStyleSheet ( 'css/icon-general.css' );
+		$this->addStyleSheet ( 'css/icon-editor.css' );
+		$this->addStyleSheet ( 'css/icon-topic.css' );
+		$this->addStyleSheet ( 'css/quirks.css' );
 
 		// Load all css files (they are combined into one)
-		$this->addStyleSheet ( 'css/global.css' );
+		//$this->addStyleSheet ( 'css/global.css' );
 		$this->addStyleSheet ( 'css/main.css' );
 		$this->addStyleSheet ( 'css/menu.css' );
 		$this->addStyleSheet ( 'css/icons.css' );
@@ -31,7 +44,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/topic.css' );
 		$this->addStyleSheet ( 'css/user.css' );
 		//$this->addStyleSheet ( 'css/search.css' );
-		$this->addStyleSheet ( 'css/uploader.css' );
+		//$this->addStyleSheet ( 'css/uploader.css' );
 		$this->addStyleSheet ( 'css/buttons.css' );
 		$this->addStyleSheet ( 'css/icons-social.css' );
 		$this->addStyleSheet ( 'css/icons-editor.css' );

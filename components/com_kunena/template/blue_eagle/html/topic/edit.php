@@ -27,8 +27,6 @@ $this->setTitle ( $this->title );
 $this->k=0;
 ?>
 
-<?php $this->displayBreadcrumb (); ?>
-
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="postform form-validate" id="postform" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
 	<input type="hidden" name="view" value="topic" />
 	<?php if ($this->message->exists()) : ?>

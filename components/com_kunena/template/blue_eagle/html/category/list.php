@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->displayAnnouncement ();
-$this->displayBreadcrumb ();
+// TODO: add announcement module position
 ?>
 
 <div class="klist-markallcatsread kcontainer">

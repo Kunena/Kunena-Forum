@@ -16,8 +16,6 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
 ?>
 
-<?php $this->displayBreadcrumb () ?>
-
 <?php if ($this->category->headerdesc) : ?>
 	<div id="kforum-head" class="<?php echo isset ( $this->category->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>">
 		<?php echo KunenaHtmlParser::parseBBCode ( $this->category->headerdesc ) ?>

@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post">
-	<div class="block-wrapper box-color box-border box-border_radius box-shadow">   
+	<div class="block-wrapper box-color box-border box-border_radius box-shadow">
 		<div class="block">
 			<div class="headerbox-wrapper">
 				<div class="header">
@@ -40,7 +40,7 @@ defined ( '_JEXEC' ) or die ();
 								</dd>
 								<?php if ($this->topicActions) : ?>
 									<dd class="topic-checkbox">
-										<span><input id="checbox-all" type="checkbox" value="0" name="" class="moderate-topic-checkall" /></<span>
+										<span><input id="kcheckbox-all" type="checkbox" value="0" name="" class="moderate-topic-checkall" /></<span>
 									</dd>
 								<?php endif ?>
 							</dl>
@@ -71,7 +71,7 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		<?php endif ?>
 	</div>
-	<div class="spacer"></div>	
+	<div class="spacer"></div>
 	<input type="hidden" name="view" value="topics" />
 	<?php echo JHTML::_( 'form.token' ); ?>
 </form>

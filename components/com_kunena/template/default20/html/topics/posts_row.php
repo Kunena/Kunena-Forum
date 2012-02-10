@@ -53,7 +53,7 @@ defined ( '_JEXEC' ) or die ();
 									</td>
 									<?php if ($this->postActions) : ?>
 									<td class="kpost-checkbox">
-										<input type="checkbox" value="0" name="" class="kmoderate-post-checkbox" />
+										<input type="checkbox" value="0" name="" class="kmoderate-topic-checkbox" />
 									</td>
 									<?php endif ?>
 								</tr>

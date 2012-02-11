@@ -15,6 +15,7 @@ class plgKunenaUddeIM extends JPlugin {
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
 
+		KunenaFactory::loadLanguage('plg_kunena_uddeim.sys', 'admin');
 		$path = JPATH_SITE."/components/com_uddeim/uddeim.api.php";
 		if (!is_file ( $path )) return;
 

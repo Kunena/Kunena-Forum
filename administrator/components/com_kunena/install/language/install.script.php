@@ -54,7 +54,7 @@ class Kunena_Language_PackInstallerScript {
 				'admin'=>JPATH_ADMINISTRATOR . '/components/com_kunena'
 		);
 
-		$version = Kunena::version();
+		$version = KunenaForum::version();
 		$file = "com_kunena.en-GB.site_v{$version}";
 		if (file_exists("$source/$file.zip")) {
 			$ext = "zip";

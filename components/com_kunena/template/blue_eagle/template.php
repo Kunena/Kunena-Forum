@@ -10,7 +10,7 @@
 defined( '_JEXEC' ) or die();
 
 class KunenaTemplateBlue_Eagle extends KunenaTemplate {
-	protected $default = 'blue_eagle';
+	protected $default = array('blue_eagle');
 	protected $css_compile = false;
 	protected $userClasses = array(
 		'kwho-',
@@ -25,7 +25,10 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 	public $categoryIcons = array('kreadforum', 'kunreadforum');
 
 	public function initialize() {
-		require_once dirname(__FILE__).'/initialize.php';
+		// Enable legacy mode
+		KunenaTemplateLegacy::load();
+
+		require_once JPATH_SITE. '/' . $this->getFile('initialize.php');
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {

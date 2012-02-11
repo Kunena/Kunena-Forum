@@ -11,15 +11,15 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <li id="kpost-toolbar" class="postmessage-row box-hover">
-	<div class="kform-label">
+	<div class="form-label">
 		<label>
 			<?php echo JText::_('COM_KUNENA_BOARDCODE') ?>
 		</label>
 	</div>
-	<div class="kform-field">
+	<div class="form-field">
 
-		<div class="kpostbuttonset">
-			<div class="kpostbuttons">
+		<div class="postbuttonset">
+			<div class="postbuttons">
 				<ul id="kbbcode-toolbar">
 					<li>
 						<script type="text/javascript">document.write('<?php echo JText::_('COM_KUNENA_BBCODE_EDITOR_JAVASCRIPT_LOADING') ?>')</script>
@@ -28,7 +28,7 @@ defined ( '_JEXEC' ) or die ();
 				</ul>
 			</div>
 
-			<div class="kpostbuttons">
+			<div class="postbuttons clear">
 				<div style="display: none;" id="kbbcode-size-options">
 					<span class="kmsgtext-xs hasTip" title="[size=1]" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XS') ?>">
 						<?php echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT') ?>
@@ -155,7 +155,7 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 
 			<?php if (!$this->config->disemoticons) : ?>
-			<div class="kpostbuttons">
+			<div class="postbuttons clear ">
 				<div id="ksmiliebar"><?php
 				$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
 				foreach ( $emoticons as $emo_code=>$emo_url ) {
@@ -166,8 +166,8 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<?php endif ?>
 
-			<div class="kposthint">
-				<input type="text" value="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT') ?>" maxlength="100" disabled="disabled" class="kinputbox" size="45" id="helpbox" name="helpbox" />
+			<div class="kposthint clear">
+				<input type="text" value="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT') ?>" maxlength="100" disabled="disabled" class="box-width inputbox" size="45" id="helpbox" name="helpbox" />
 			</div>
 		</div>
 
@@ -175,21 +175,21 @@ defined ( '_JEXEC' ) or die ();
 </li>
 
 <li class="postmessage-row box-hover">
-	<div class="kform-label">
+	<div class="form-label">
 		<label for="kbbcode-message">
 			<strong><?php echo (JText::_('COM_KUNENA_MESSAGE')) ?></strong><br />
 			<span style="cursor: pointer;" onclick="kGrowShrinkMessage(100);" class="ks"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE') ?></span>&nbsp;/&nbsp;
 			<span style="cursor: pointer;" onclick="kGrowShrinkMessage(-100);" class="ks"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK') ?></span>
 		</label>
 	</div>
-	<div class="kform-field">
-		<textarea cols="50" rows="10" id="kbbcode-message" name="message" class="ktxtarea required hasTip" title="<?php echo (JText::_('COM_KUNENA_MESSAGE')) ?> :: <?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
+	<div class="form-field">
+		<textarea cols="50" rows="10" id="kbbcode-message" name="message" class="box-width txtarea required hasTip" title="<?php echo (JText::_('COM_KUNENA_MESSAGE')) ?> :: <?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
 		<!-- Hidden preview placeholder -->
 		<div style="display: none;" id="kbbcode-preview"></div>
 		<?php if ($this->message->exists()) : ?>
 		<fieldset>
 			<legend><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend>
-			<input class="kinputbox hasTip" name="modified_reason" size="95" maxlength="200" type="text" title="<?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?> :: <?php echo JText::_('COM_KUNENA_EDITING_ENTER_REASON') ?>" value="<?php echo $this->modified_reason; ?>" />
+			<input class="inputbox hasTip" name="modified_reason" size="95" maxlength="200" type="text" title="<?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?> :: <?php echo JText::_('COM_KUNENA_EDITING_ENTER_REASON') ?>" value="<?php echo $this->modified_reason; ?>" />
 		</fieldset>
 		<?php endif ?>
 	</div>

@@ -1,0 +1,88 @@
+/* The css provides template positioning and styling for Kunena, following some rules and conventions outlined below.
+ * 1. Define standard Kunena container.
+ * 2. Define resets for Kunena.
+ * 3. Define positioning elements for multile tag instances of all possible tags.
+ * 4. Define styling elements for multiple html tag instances of single tags.
+
+/***************
+ * START RESET *
+ ***************/
+
+#kunena {
+	display: inline-block;
+	position: relative;
+	width: 100% !important;
+}
+
+/* NOTE: If third-party wrapper template is optimized correctly we can take out this section.*/
+/* Box Element Reset */
+#kunena.layout div, #kunena.layout h1, #kunena.layout.layout h2, #kunena.layout h3, #kunena.layout h4, #kunena.layout h5, #kunena.layout h6, #kunena.layout ul, #kunena.layout li, #kunena.layout ol, #kunena.layout dl, #kunena.layout dt, #kunena.layout dd, #kunena.layout pre, #kunena.layout form, #kunena.layout fieldset, #kunena.layout input, #kunena.layout textarea, #kunena.layout p, #kunena.layout blockquote, #kunena.layout th, #kunena.layout tr, #kunena.layout td {
+	margin: 0px;
+	padding: 0px;
+	/*line-height: normal !important;*/
+	text-decoration: none;
+	background: none;
+	color: #555555;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* List Reset */
+#kunena.layout ul, #kunena.layout li, #kunena.layout ol, #kunena.layout dl, #kunena.layout dt, #kunena.layout dd {
+	margin: 0px;
+	padding: 0px;
+	line-height: normal;
+	list-style-type: none;
+	text-decoration: none;
+	background: none;
+	color: #555555;
+}
+
+/* Link Active Status Reset */
+#kunena.layout a, #kunena.layout a:link, #kunena.layout a:visited, #kunena.layout a:active {
+	text-decoration: none;
+	/*background: none !important;*/
+}
+
+/* Link Action Reset */
+#kunena.layout a:hover, #kunena.layout a:focus {
+	text-decoration: none;
+	background: none;
+	color: #333333;
+}
+
+#kunena.layout fieldset {
+	/*padding: 15px;
+	margin: 5px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #BFC3C6;(*/
+}
+
+#kunena.layout input {
+	width: 100%;
+	/*margin: 5px;*/
+	padding: 5px;
+}
+
+#kunena.layout select {
+	padding: 5px;
+	overflow: auto;
+	/*margin: 5px;*/
+	/*border-width: 1px;
+	border-style: solid;
+	border-color: #BFC3C6;(*/
+}
+
+#kunena.layout textarea {
+	width: 100%;
+	padding: 5px;
+	overflow: auto;
+	/*margin: 5px;*/
+	/*border-width: 1px;
+	border-style: solid;
+	border-color: #BFC3C6;(*/
+}
+
+/*************
+ * END RESET *
+ *************/

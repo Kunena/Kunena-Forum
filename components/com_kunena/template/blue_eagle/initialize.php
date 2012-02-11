@@ -36,11 +36,11 @@ $skinner = $template->params->get('enableSkinner', 0);
 
 if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.forum.css" )) {
 	// Load css from Joomla template
-	KunenaAddStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.forum.css" );
+	CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.forum.css" );
 	if ($skinner && file_exists ( JPATH_ROOT. "templates/{$app->getTemplate()}css/kunena.skinner.css" )){
-		KunenaAddStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.skinner.css" );
+		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.skinner.css" );
 	} elseif (!$skinner && file_exists ( JPATH_ROOT. "templates/{$app->getTemplate()}css/kunena.default.css" )) {
-		KunenaAddStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.default.css" );
+		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.default.css" );
 	}
 } else {
 	// Load css from default template
@@ -189,20 +189,3 @@ $styles .= <<<EOF
 EOF;
 
 $document->addStyleDeclaration($styles);
-
-/**
- * Wrapper to addStyleSheet
- *
- */
-function KunenaAddStyleSheet($filename) {
-
-	$document = JFactory::getDocument ();
-	$config = KunenaFactory::getConfig ();
-
-	if (JDEBUG || $config->debug || KunenaForum::isDev()) {
-		// If we are in debug more, make sure we load the unpacked css
-		$filename = preg_replace ( '/\-min\./u', '.', $filename );
-	}
-
-	return $document->addStyleSheet ( $filename );
-}

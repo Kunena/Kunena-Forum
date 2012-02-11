@@ -15,6 +15,7 @@ class plgKunenaCommunity extends JPlugin {
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
 
+		KunenaFactory::loadLanguage('plg_kunena_community.sys', 'admin');
 		// Do not load if JomSocial is not installed
 		$path = JPATH_ROOT . '/components/com_community/libraries/core.php';
 		if (!is_file ( $path )) return;

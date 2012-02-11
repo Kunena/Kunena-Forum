@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<?php
-$this->displayBreadcrumb ();
-?>
-
 <!-- Subcategories -->
 <?php $this->displayCategories () ?>
 <!-- / Subcategories -->
@@ -112,8 +108,6 @@ $this->displayBreadcrumb ();
 		<td class="klist-pages-all"><?php echo $this->getPagination (7); // odd number here (# - 2) ?></td>
 	</tr>
 </table>
-
-<?php $this->displayBreadcrumb () ?>
 
 <div class="kcontainer klist-bottom">
 	<div class="kbody">

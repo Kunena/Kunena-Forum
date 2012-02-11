@@ -39,6 +39,7 @@ class KunenaControllerHome extends KunenaController {
 
 		// Check if menu item was correctly routed
 		$active = $menu->getItem ( KunenaRoute::getItemID() );
+
 		if (!$active || ($active->id != $home->id && $active->id != $default->id)) {
 			// Routing has been changed, redirect or fail
 			if ($active) {
@@ -53,6 +54,7 @@ class KunenaControllerHome extends KunenaController {
 		if (!isset($default->query['layout'])) $default->query['layout'] = 'default';
 		foreach ( $default->query as $var => $value ) {
 			$cmp = JRequest::getVar($var, null);
+			if ($var == 'layout' && !$cmp) $cmp = 'default';
 			if ($var == 'defaultmenu') continue;
 			if ($var == 'view' && $cmp == 'home') continue;
 			if ($cmp !== null && $value != $cmp) {
@@ -63,7 +65,7 @@ class KunenaControllerHome extends KunenaController {
 		// Add query variables from shown menu item
 		if ($default != $home) {
 			foreach ( $default->query as $var => $value ) {
-				JRequest::setVar ( $var, $value );
+				if (JRequest::getVar ($var) === null) JRequest::setVar ( $var, $value );
 			}
 		}
 		// Set active menu item to point the real page

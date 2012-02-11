@@ -427,7 +427,7 @@ window.addEvent('domready', function(){
 		}
 	}
 
-	protected function &loadSubscribers($topic, $subsriptions) {
+	protected function loadSubscribers($topic, $subsriptions) {
 		$category = $topic->getCategory();
 		$db = JFactory::getDBO ();
 		$query = array();

@@ -1,0 +1,93 @@
+/* CSS Design */
+
+#kunena.layout input,
+#kunena.layout select,
+#kunena.layout textarea {
+	border-color: silver;
+}
+#kunena.layout .box-border,
+#kunena.layout .box-border:hover {
+	border-color: rgba(0, 0, 0, 0.05);
+}
+#kunena.layout .box-hover_header-row {
+	border-bottom: rgba(0, 0, 0, 0.1);
+}
+#kunena.layout .box-hover_list-row {
+	border-top: rgba(0, 0, 0, 0.0);
+	border-bottom: rgba(0, 0, 0, 0.1);
+}
+#kunena.layout .box-hover_list-row:hover {
+	border-top: rgba(255, 255, 255, 0.8);
+	border-bottom: rgba(255, 255, 255, 0.8);
+}
+#kunena.layout .divider {
+	border-top: #CCCCCC;
+	border-bottom: #EEEEEE;
+}
+#kunena.layout .separator {
+	border-left: #1B1B1B;
+	border-right: #333333;
+}
+#kunena.layout li.dropdown .dropdown-menu {
+	border-color: rgba(0, 0, 0, 0.2) !important;
+	border-right: rgba(0, 0, 0, 0.1) !important;
+	border-bottom: rgba(0, 0, 0, 0.1) !important;
+	border-left: rgba(0, 0, 0, 0.1) !important;
+}
+#kunena.layout li.postmessage-row {
+	border-top: rgba(0, 0, 0, 0.0) !important;
+	border-bottom: rgba(0, 0, 0, 0.1) !important;
+}
+#kunena.layout li.postmessage-row:hover {
+	border-top: rgba(255, 255, 255, 0.8) !important;
+	border-bottom: rgba(255, 255, 255, 0.8) !important;
+}
+#kunena.layout div.topic ul.topic-posts li.header {
+	border-bottom: rgba(0, 0, 0, 0.1) !important;
+}
+#kunena.layout div.menubox div.menubox-global ul.menu li a {
+	border-color: rgba(0, 0, 0, 0.0) !important;
+}
+#kunena.layout div.menubox div.menubox-global ul.menu li a:hover {
+	border-top: rgba(0, 0, 0, 0.05) !important;
+	border-right: rgba(0, 0, 0, 0.1) !important;
+	border-bottom: rgba(0, 0, 0, 0.05) !important;
+	border-left: rgba(0, 0, 0, 0.05) !important;
+}
+#kunena.layout div.menubox div.menubox-user ul.menu li a {
+	border: rgba(0, 0, 0, 0.0) !important;
+}
+#kunena.layout div.menubox div.menubox-user ul.menu li a:hover {
+	border-top: rgba(0, 0, 0, 0.05) !important;
+	border-right: rgba(0, 0, 0, 0.1) !important;
+	border-bottom: rgba(0, 0, 0, 0.05) !important;
+	border-left: rgba(0, 0, 0, 0.05) !important;
+}
+#kunena.layout div.breadcrumb .post-body-attach {
+	border: #BCBCBC;
+}
+#kunena.layout li.button a,
+#kunena.layout li.button a:hover {
+	border: #D4D4D4;
+}
+#kunena.layout .file-input-button, #kunena.layout .file-input-button:hover, #kunena.layout .file-input-button:focus {
+	border-color: #999999;
+}
+#kunena.layout .postbuttonset, .postbuttons {
+	border-color: #BFC3C6;
+}
+#kunena.layout .filter-button {
+	border: #666;
+}
+#kunena.layout .userlist-user,
+#kunena.layout .userlist-avatar img,
+#kunena.layout .filter-button:hover,
+#kunena.layout .buttonbar-post,
+#kunena.layout .mod-detailsbox .post-buttons,
+#kunena.layout .postmessage .postbuttonset td, #kunena.layout .postmessage tr.krow2 .postbuttonset td,
+#kunena.layout .postmessage .postbuttonset .posthint {
+	border-color: #F4F4F4;
+}
+#kunena.layout #searchform .input {
+	border: silver;
+}

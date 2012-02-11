@@ -34,7 +34,7 @@ $row = 0;
 							<tr class="krow<?php echo (++$row)%2+1;?>">
 								<td colspan="4">
 									<?php
-									echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL')." <strong>".$this->usercount."</strong> ";
+									echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL')." <b>".$this->usercount."</b> ";
 									echo " ( ".implode(', ', $this->users_voted_list)." ) "; ?>
 									<?php if ( $this->usercount > '5' ) : ?><a href="#" id="kpoll-moreusers"><?php echo JText::_('COM_KUNENA_POLLUSERS_MORE')?></a>
 									<div style="display: none;" id="kpoll-moreusers-div"><?php echo implode(', ', $this->users_voted_morelist); ?></div>

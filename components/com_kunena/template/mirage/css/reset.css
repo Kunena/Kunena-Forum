@@ -65,7 +65,7 @@
 }
 
 #kunena.layout select {
-	padding: 3px;
+	padding: 5px;
 	overflow: auto;
 	/*margin: 5px;*/
 	/*border-width: 1px;
@@ -74,6 +74,8 @@
 }
 
 #kunena.layout textarea {
+	width: 100%;
+	padding: 5px;
 	overflow: auto;
 	/*margin: 5px;*/
 	/*border-width: 1px;

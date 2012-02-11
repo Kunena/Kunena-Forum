@@ -5,7 +5,7 @@
 	padding: 0px 5px;*/
  	background-color: #FFFFFF;
  	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
- 	border: 1px solid silver;
+ 	border: 1px solid #BFC3C6;
  	border-radius: 5px;
  	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
 }
@@ -15,7 +15,7 @@
 	padding: 0px 5px;*/
  	background-color: #FFFFFF;
  	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
- 	border: 1px solid silver;
+ 	border: 1px solid #BFC3C6;
  	border-radius: 5px;
  	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
 }
@@ -25,9 +25,13 @@
 	padding: 0px 5px;*/
  	background-color: #FFFFFF;
  	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
- 	border: 5px solid silver;
+ 	border: 1px solid #BFC3C6;
  	border-radius: 5px;
  	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+#kunena.layout label {
+	font-weight: bold;
 }
 
 #kunena.layout .box-hover {
@@ -104,10 +108,6 @@
 	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
 	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
 	background-color: rgba(100, 100, 100, 0.05);
-}
-
-#kunena.layout .box-width {
-	box-sizing: border-box; /* css3 rec */
 }
 
 #kunena.layout .link {
@@ -397,18 +397,21 @@
 /*****************
  * START MENUBOX *
  *****************/
- 
-#kunena.layout div.menubox ul.menu {
+
+#kunena.layout div.moduletable > ul {
 	background: none repeat scroll 0 0 transparent;
+	border-style: none;
 }
 
 #kunena.layout div.menubox div.menubox-global ul.menu li > a {
 	background: none;
+	border-color: none;
 	font-size: 14px !important;
 }
 
 #kunena.layout div.menubox div.menubox-user ul.menu li > a {
 	background: none;
+	border-color: none;
 	font-size: 14px !important;
 }
 

@@ -14,6 +14,10 @@
 	clear: both;
 }
 
+#kunena.layout .box-width {
+	box-sizing: border-box; /* css3 rec */
+}
+
 #kunena.layout .fl {
 	float: left;
 }
@@ -195,6 +199,19 @@
 #kunena.layout div.dropdown-menu li > span {
 	padding: 5px;
 }
+
+#kunena.layout .form-label {
+	float: left;
+    padding: 10px;
+	width: 20%;
+}
+
+#kunena.layout .form-field {
+	float: left;
+	padding: 10px;
+	width: 75%;
+}
+
 
 
 /************************
@@ -694,14 +711,15 @@
  	padding: 0px;
 }
 
-#kunena.layout ul.postmessage-list li {
+#kunena.layout ul.postmessage-list > li {
 	clear: both;
 	display: block;
 	position: relative;
 	vertical-align: bottom;
-	margin: 0;
+	margin: 0px;
+	padding: 0px;
 	overflow: hidden;
-	padding: 5px;
+	/*padding: 5px;*/
 }
 
 /*************************

@@ -20,6 +20,8 @@ class plgKunenaJoomla extends JPlugin {
 			return;
 		}
 
+		KunenaFactory::loadLanguage('plg_kunena_joomla.sys', 'admin');
+
 		parent::__construct ( $subject, $config );
 		$this->loadLanguage ( 'plg_kunena_joomla.sys', JPATH_ADMINISTRATOR );
 

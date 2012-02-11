@@ -134,7 +134,8 @@
 				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
-		<!-- Remove Orao template from the build -->
+		<!-- Remove Default20 and Orao templates from the build -->
+		<delete dir="${tmp_dir}/site/template/default20" />
 		<delete dir="${tmp_dir}/site/template/orao" />
 
 		<!-- Move media files -->

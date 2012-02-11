@@ -22,6 +22,7 @@ $this->cache = false;
 
 	<td class="kcol-mid ktopictittle">
 	<?php
+// FIXME:
 		/*if ($this->message->attachments) {
 			echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') );
 		}*/

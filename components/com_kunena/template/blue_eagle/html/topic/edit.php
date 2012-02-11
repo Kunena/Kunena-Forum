@@ -95,7 +95,7 @@ $this->k=0;
 			</td>
 
 			<td class="kcol-mid"><input type="text" class="kinputbox postinput required" name="subject" id="subject" size="35"
-				maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->message->subject); ?>" />
+				maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->message->subject); ?>" tabindex="1" />
 			</td>
 		</tr>
 
@@ -189,11 +189,11 @@ $this->k=0;
 			<td id="kpost-buttons" colspan="2">
 				<input type="submit" name="ksubmit" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CONTINUE') . ' ');?>"
-				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
+				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" tabindex="3" />
 				<input type="button" name="cancel" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CANCEL') . ' ');?>"
 				onclick="javascript:window.history.back();"
-				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
+				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" tabindex="4" />
 			</td>
 		</tr>
 	</tbody>

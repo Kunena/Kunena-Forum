@@ -12,8 +12,8 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="innerbox-wrapper innerspacer">
 	<?php if(!empty($this->thankyou)): ?>
-		<div class="buttonbar" >
-			<ul class="message-buttons innerblock">
+		<div class="buttonbar">
+			<ul class="buttons-message innerblock">
 			<?php
 			echo JText::_('COM_KUNENA_THANKYOU').': ';
 			echo implode(', ', $this->thankyou);
@@ -22,8 +22,8 @@ defined ( '_JEXEC' ) or die ();
 			</ul>
 		</div>
 	<?php endif ?>
-	<div class="message-buttonbar innerblock">
-		<ul class="message-buttons">
+	<div class="buttonbar innerblock">
+		<ul class="buttons-message">
 			<?php if (empty($this->message_closed)) : ?>
 			<!-- User buttons  -->
 			<?php if (!empty($this->message_quickreply)) : ?><li class="button button-message-quickreply"><?php echo $this->message_quickreply ?></li><?php endif ?>

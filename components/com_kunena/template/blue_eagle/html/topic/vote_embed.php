@@ -10,11 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
-?>
 <div class="kblock kpollbox">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpolls_tbody"></a></span>
@@ -23,8 +18,8 @@ $this->displayLoginBox ();
 	<div class="kcontainer" id="kpolls_tbody">
 		<div class="kbody">
 			<table class="kblocktable" id="kpoll">
-				<tr>
-					<td>
+				<tr class="krow2">
+					<td class="kcol-first km">
 						<div class="kpolldesc">
 						<div id="kpoll-text-help"></div>
 						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kpoll-form-vote" method="post">
@@ -55,6 +50,4 @@ $this->displayLoginBox ();
 			</table>
 		</div>
 	</div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

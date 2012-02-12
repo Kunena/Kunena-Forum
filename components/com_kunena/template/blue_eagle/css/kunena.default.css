@@ -85,7 +85,6 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 #Kunena .kheader h2,
 #Kunena .kheader h2 a {
 	color: #fff !important;
-	font-size:16px !important;
 }
 
 #Kunena div.kblock div.ktitle {
@@ -636,11 +635,11 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	border-bottom-color: #BFC3C6;
 }
 
-#Kunena tr.kunapproved td {
+#Kunena .kunapproved td {
 	background-color: #DDDDDD !important;
 }
 
-#Kunena tr.kdeleted td {
+#Kunena .kdeleted td {
 	background-color: #CCCCCC !important;
 }
 
@@ -1067,10 +1066,8 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	background-color:#E5E3DF;
 }
 
-/* Fix Atomic Joomla 1.6 template*/
-/* Breaks unapproved / deleted messages!!! */
-/*
-#Kunena tbody tr:nth-child(2n).krow2 td, 
+/* Fix Atomic Joomla 1.6 template (breaks topic coloration) */
+/*#Kunena tbody tr:nth-child(2n).krow2 td, 
 #Kunena tbody tr.even.krow2 td {
 	background-color: #FFF !important;
 }
@@ -1083,4 +1080,9 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	border-color:#5388B4;
 	background-color:#5388B4;
 	color:#FFFFFF;
+}
+
+#Kunena .kheader h2,
+#Kunena .kheader h2 a {
+	font-size:16px !important;
 }

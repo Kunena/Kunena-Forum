@@ -19,7 +19,7 @@ $i=0;
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : ''; ?>">
+<table>
 <?php if ($this->profile->avatar): ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">

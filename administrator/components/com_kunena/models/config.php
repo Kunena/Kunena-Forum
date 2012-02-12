@@ -352,4 +352,12 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		return $lists;
 	}
+
+	function getJoomlaemail() {
+		$config = new JConfig();
+		if (!empty($config->mailfrom)) {
+			return $config->mailfrom;
+		}
+		return;
+	}
 }

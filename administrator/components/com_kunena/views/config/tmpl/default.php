@@ -48,7 +48,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_email"
-							value="<?php echo $this->escape($this->config->email);
+							value="<?php echo !empty($this->joomlaemail) ? $this->escape($this->joomlaemail) : $this->escape($this->config->email);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL_DESC') ?></td>
 					</tr>

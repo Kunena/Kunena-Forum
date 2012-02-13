@@ -28,7 +28,7 @@ class KunenaAccessCommunity {
 	 *
 	 * @return array	Supported access types.
 	 */
-	public function &getAccessTypes() {
+	public function getAccessTypes() {
 		static $accesstypes = array('jomsocial');
 		return $accesstypes;
 	}
@@ -87,7 +87,7 @@ class KunenaAccessCommunity {
 	 *
 	 * @return array(array('user_id'=>u, 'category_id'=>c, 'role'=>r))
 	 */
-	public function &loadCategoryRoles(array $categories = null) {
+	public function loadCategoryRoles(array $categories = null) {
 		$db = JFactory::getDBO ();
 		$query	= "SELECT g.memberid AS user_id, c.id AS category_id, ".KunenaForum::ADMINISTRATOR." AS role
 			FROM #__kunena_categories AS c
@@ -112,7 +112,7 @@ class KunenaAccessCommunity {
 	 *
 	 * @return array, where category ids are in the keys.
 	 */
-	public function &authoriseCategories($userid, array &$categories) {
+	public function authoriseCategories($userid, array &$categories) {
 		$allowed = array();
 
 		if (KunenaFactory::getUser($userid)->exists()) {
@@ -137,7 +137,7 @@ class KunenaAccessCommunity {
 	 * @param	mixed	Category or topic.
 	 * @param	array	list(allow, deny).
 	 */
-	public function &authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
+	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
 		if (empty($userids)) {
 			return;
 		}

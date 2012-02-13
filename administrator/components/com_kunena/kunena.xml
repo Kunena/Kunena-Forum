@@ -35,6 +35,7 @@
 			<filename>admin.kunena.php</filename>
 			<folder>install</folder>
 			<folder>archive</folder>
+			<folder>language</folder>
 		</files>
 	</administration>
 </install>

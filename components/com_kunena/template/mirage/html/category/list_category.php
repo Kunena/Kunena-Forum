@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="category-row box-hover box-hover_list-row">
+<li class="category-row box-hover box-hover_list-row clear">
 	<dl>
 		<dd class="category-icon">
 			<a href="<?php echo $this->categoryURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>">[K=CATEGORY_ICON]</a>
@@ -36,7 +36,7 @@ defined ( '_JEXEC' ) or die ();
 			</ul>
 		</dd>
 		<dd class="category-topics"><?php echo $this->formatLargeNumber ( $this->category->getTopics() ) ?> <span><?php //echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span></dd>
-		<dd class="category-replies"><?php echo $this->formatLargeNumber ( $this->category->getPosts() ) ?> <span><?php //echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></td>
+		<dd class="category-replies"><?php echo $this->formatLargeNumber ( $this->category->getPosts() ) ?> <span><?php //echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></dd>
 		<!-- td class="kcategory-subs">944 <span>Subscribers</span></td -->
 		<dd class="category-lastpost">
 			<ul>
@@ -52,17 +52,17 @@ defined ( '_JEXEC' ) or die ();
 		</dd>
 	</dl>
 	<?php if ($this->subcategories) : ?>
-		<tr>
-			<td colspan="4" class="kcategory-subcats">
-				<ul class="kcategory-subcat">
-					<?php foreach ( $this->subcategories as $subcategory ) : ?>
-						<li class="kcategory-smdetails kcategory-smicon[K=CATEGORY_NEW_SUFFIX:<?php echo $subcategory->id ?>]">
-							<h4><?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?> [K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]</h4>
-							<span class="kcounts"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_TOPICS_N_REPLIES', $subcategory->getTopics(), $subcategory->getPosts()) ?></span>
-						</li>
-					<?php endforeach ?>
-				</ul>
-			</td>
-		</tr>
+	<dl>
+		<dd class="kcategory-subcats">
+			<ul class="kcategory-subcat">
+				<?php foreach ( $this->subcategories as $subcategory ) : ?>
+					<li class="kcategory-smdetails kcategory-smicon[K=CATEGORY_NEW_SUFFIX:<?php echo $subcategory->id ?>]">
+						<h4><?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?> [K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]</h4>
+						<span class="kcounts"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_TOPICS_N_REPLIES', $subcategory->getTopics(), $subcategory->getPosts()) ?></span>
+					</li>
+				<?php endforeach ?>
+			</ul>
+		</dd>
+	</dl>
 	<?php endif ?>
 </li>

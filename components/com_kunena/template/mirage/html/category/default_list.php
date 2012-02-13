@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="detailsbox-wrapper">
 				<div class="topic detailsbox box-full box-border box-border_radius box-shadow">
 					<ul class="topic-list">
-						<li class="header box-hover_header-row">
+						<li class="header box-hover_header-row clear">
 							<dl>
 								<dd class="topic-icon">
 								</dd>

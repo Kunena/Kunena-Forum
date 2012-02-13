@@ -37,32 +37,31 @@ defined ( '_JEXEC' ) or die ();
 										#
 									</dd>
 									<dd class="announcement-id">
-										<span><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></<span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></span>
 									</dd>
 									<dd class="announcement-date">
-										<span><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></<span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></span>
 									</dd>
 									<dd class="announcement-author">
-										<span><?php echo JText::_('COM_KUNENA_ANN_AUTHOR'); ?></<span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_AUTHOR'); ?></span>
 									</dd>
 									<dd class="announcement-title">
-										<span><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></<span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></span>
 									</dd>
 									<?php if ($this->canEdit): ?>
 										<dd class="announcement-publish">
-											<span><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></<span>
+											<span><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></span>
 										</dd>
 										<dd class="announcement-edit">
-											<span><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></<span>
+											<span><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></span>
 										</dd>
 										<dd class="announcement-delete">
-											<span><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></<span>
+											<span><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></span>
 										</dd>
 									<?php endif; ?>
 								</dl>
 							</li>
 						</ul>
-						<ul class="announcement-list">
 						<ul class="announcement-list">
 							<?php
 							$k=0;

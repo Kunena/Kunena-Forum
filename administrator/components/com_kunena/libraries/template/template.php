@@ -242,6 +242,7 @@ HTML;
 		if ($this->css_compile) {
 			// If template supports CSS compiler
 			$source = $this->getFile($filename);
+			if (!file_exists(JPATH_ROOT.'/'.$source)) return false;
 			$sourcetime = filemtime(JPATH_ROOT.'/'.$source);
 			$filename = $this->getCachePath($filename);
 			if (!JFile::exists(JPATH_ROOT.'/'.$filename)

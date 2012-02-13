@@ -28,7 +28,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @return array	Supported access types.
 	 */
-	public function &getAccessTypes() {
+	public function getAccessTypes() {
 		static $accesstypes = array('joomla.level', 'none');
 		return $accesstypes;
 	}
@@ -122,7 +122,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @return array of (catid=>userid)
 	 */
-	public function &loadCategoryRoles(array $categories = null) {
+	public function loadCategoryRoles(array $categories = null) {
 		$list = array();
 
 		// Currently we have only global administrators in Joomla
@@ -150,7 +150,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @return array, where category ids are in the keys.
 	 */
-	public function &authoriseCategories($userid, array &$categories) {
+	public function authoriseCategories($userid, array &$categories) {
 		$user = JFactory::getUser($userid);
 
 		$accesslevels = (array) $user->authorisedLevels();
@@ -183,7 +183,7 @@ class KunenaAccessJoomla {
 	 * @param	mixed	Category or topic.
 	 * @param	array	list(allow, deny).
 	 */
-	public function &authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
+	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
 		if (empty($userids)) {
 			return;
 		}

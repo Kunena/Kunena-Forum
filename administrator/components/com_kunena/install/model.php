@@ -283,19 +283,7 @@ class KunenaModelInstall extends JModel {
 		foreach ($destinations as $key=>$dest) {
 			if ($success != true) continue;
 			$installdir = "{$dest}/language/{$tag}";
-			// If we are installing Kunena from archive, we need to unzip language file
-			$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
-			if (JFolder::exists($path)) {
-				$version = KunenaForum::version();
-				$file = "com_kunena.{$tag}.{$key}_v{$version}".file_get_contents("{$path}/fileformat");
 
-				// SVN never has these files, installation package may have
-				if (file_exists("$path/$file")) {
-					$success = $this->extract ( $path, $file, $installdir, true );
-				} else {
-					$success = false;
-				}
-			}
 			// Install language from dest/language/xx-XX
 			if (is_dir($installdir)) {
 				$exists = $success;
@@ -309,7 +297,7 @@ class KunenaModelInstall extends JModel {
 						if (file_exists(JPATH_SITE."/language/{$tag}/{$filename}")) JFile::delete(JPATH_SITE."/language/{$tag}/{$filename}");
 						if (file_exists(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}")) JFile::delete(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}");
 					}
-				} elseif ($success == true) {
+				} elseif ($success == true && file_exists("{$installdir}/{$tag}.com_kunena.xml")) {
 					// Joomla 1.5
 					// Use installer to get files into the right place
 					$installer = new JInstaller ( );

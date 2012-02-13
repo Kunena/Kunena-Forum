@@ -104,14 +104,12 @@
 
 		<copy todir="${tmp_dir}/admin">
 			<fileset dir="${project_dir}/${kunena.admin}">
-				<exclude name="language/*-*/**"/>
-				<exclude name="language/README.md"/>
+				<exclude name="language/**"/>
 			</fileset>
 		</copy>	
 		<copy todir="${tmp_dir}/site">
 			<fileset dir="${project_dir}/${kunena.site}">
 				<exclude name="language/*-*/**"/>
-				<exclude name="language/README.md"/>
 				<exclude name="template/**/params.ini"/>
 				<exclude name="template/orao/**"/>
 				<!-- exclude name="template/default20/**"/ -->
@@ -187,6 +185,7 @@
 			<include name="**/*.css" />
 			<exclude name="**/plupload.js" />
 			<exclude name="template/default20/css/*.css" />
+			<exclude name="template/mirage/css/*.css" />
 			<exclude name="template/orao/css/*.css" />
 		</yui-compressor>
 	</target>
@@ -212,7 +211,7 @@
 			<if>
 				<equals arg1="@{include}" arg2="true" />
 				<then>
-					<copy todir="${tmp_dir}/admin/language/@{tag}">
+					<copy todir="${build_dir}/language/@{tag}">
 						<fileset dir="${tmp_dir}/languages/@{tag}/admin" />
 					</copy>
 					<copy todir="${tmp_dir}/site/language/@{tag}">
@@ -220,6 +219,12 @@
 					</copy>
 				</then>
 				<else>
+					<copy todir="${build_dir}/language/@{tag}">
+						<fileset dir="${tmp_dir}/languages/@{tag}/admin">
+							<include name="*.install.ini"/>
+							<include name="index.html"/>
+						</fileset>
+					</copy>
 					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}.admin_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/admin"/>
 					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}.site_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/site"/>
 				</else>

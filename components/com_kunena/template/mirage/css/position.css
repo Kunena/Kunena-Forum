@@ -16,6 +16,7 @@
 
 #kunena.layout .box-width {
 	box-sizing: border-box; /* css3 rec */
+	width: 100%
 }
 
 #kunena.layout .fl {
@@ -301,17 +302,17 @@
  ***************************/
 
 #kunena.layout ul.announcement-list {
- 	display: block;
- 	list-style-type: none;
- 	margin: 0px;
- 	padding: 0px;
+	display: block;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
 }
 
 #kunena.layout ul.announcement-list div.header {
- 	clear: both;
- 	display: block;
- 	position: relative;
- 	vertical-align: bottom;
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
 }
 
 #kunena.layout ul.announcement-list li {
@@ -337,10 +338,10 @@
 }
 
 #kunena.layout ul.announcement-list li.announcements-row dd {
- 	display: block;
- 	float: left;
- 	margin: 0px;
- 	padding: 5px;
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 5px;
 }
 
 #kunena.layout ul.announcement-list li.header dd {
@@ -726,6 +727,21 @@
  * STOP POSTMESSAGE LIST *
  *************************/
 
+/*************************
+ * START POSTICONS LIST *
+ *************************/
+
+#kunena.layout .post-topicicons input {
+	height: 0;
+	width: 0;
+	overflow: hidden;
+	position: absolute;
+	visibility: hidden;
+}
+
+#kunena.layout .post-topicicons li {
+	float: left;
+}
 
 /*************************
  * START POPSUBSTAT LIST *
@@ -745,7 +761,7 @@
  	vertical-align: bottom;
 }
 
-#kunena.layout ul.announcement-list li {
+#kunena.layout ul.popsubstat-list li {
 	clear: both;
 	display: block;
 	position: relative;
@@ -755,7 +771,7 @@
 	padding: 1px 0 0;
 }
 
-#kunena.layout ul.popsubstat-list li.popsubstats-row dl, ul.announcement-list li.header {
+#kunena.layout ul.popsubstat-list li.popsubstats-row dl, ul.popsubstat-list li.header {
  	float: none !important;
  	height: auto;
  	width: auto;
@@ -768,24 +784,24 @@
 }
 
 #kunena.layout ul.popsubstat-list li.popsubstats-row dd {
- 	display: block;
- 	float: left;
- 	margin: 0px;
- 	padding: 5px;
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 5px;
 }
 
 #kunena.layout ul.popsubstat-list li.header dd {
- 	display: block;
- 	float: left;
- 	margin: 0px;
- 	padding: 2px 5px;
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 2px 5px;
 }
 
 #kunena.layout ul.popsubstat-list dd {
- 	display: block;
- 	float: left;
- 	margin: 0px;
- 	padding: 2px 0;
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 2px 0;
 }
 
 /*#kunena.layout ul.topic-list li.topics-row dl {
@@ -794,28 +810,94 @@
 }*/
 
 #kunena.layout ul.popsubstat-list li.popsubstats-row dd {
- 	display: block;
- 	float: left;
- 	margin: 0px;
+	display: block;
+	float: left;
+	margin: 0px;
 }
 
-#kunena.layout ul.popsubstat-list dd.announcement-checkbox {
+#kunena.layout ul.popsubstat-list dd.popsubstats-col1 {
+	margin: 0;
+	text-align: left;
+	vertical-align: center;
+	width: 25%;
+}
+
+#kunena.layout ul.popsubstat-list dd.popsubstats-col2 {
+	margin: 0;
+	text-align: left;
+	vertical-align: center;
+	width: 60%;
+}
+
+#kunena.layout ul.popsubstat-list dd.popsubstats-col3 {
 	margin: 0;
 	text-align: center;
 	vertical-align: center;
-	width: 10px;
-}
-
-#kunena.layout ul.popsubstat-list dd.announcement-id {
-	margin: 0;
-	text-align: center;
-	vertical-align: center;
-	width: 5%;
+	width: 10%;
 }
 
 /************************
  * STOP POPSUBSTAT LIST *
  ************************/
+
+
+/********************
+ * START STATISTICS *
+ ********************/
+
+#kunena.layout div.statistics .statistics-details div {
+	display: block;
+	float: left;
+}
+
+#kunena.layout div.statistics .statistics-smicon {
+	padding: 10px;
+	width: 35px;
+}
+
+#kunena.layout div.statistics .statistics-smicon span {
+	margin: 15px auto;
+}
+
+#kunena.layout div.statistics .statistics-totals ul li {
+	clear: left;
+}
+
+#kunena.layout div.statistics .statistics-totals {
+	padding: 5px 10px 10px 10px;
+	line-height: 20px;
+	/*min-height: 80px;*/
+	width: 25%;
+}
+
+#kunena.layout div.statistics .statistics-totals ul li span {
+	margin-left: 3px;
+}
+
+#kunena.layout div.statistics .statistics-latestmem {
+	margin-bottom: 8px;
+}
+
+#kunena.layout div.statistics .header-link {
+	float: right;
+	margin-right: 10px;
+	margin-top: 5px;
+}
+
+#kunena.layout div.popsubjstats div.stats-bar {
+	display: block;
+	height: 15px;
+	border-radius: 5px;
+}
+
+#kunena.layout div.popsubjstats div.stats-bar {
+	background-image: linear-gradient(center left, rgba(139, 190, 242, 1.0) 0%, rgba(107, 158, 209, 1.0) 100%);
+}
+
+
+/********************
+ * STOP STATISTICS *
+ ********************/
 
 
 /*************************
@@ -909,13 +991,13 @@
  	width: auto;
 }
 
-#kunena.layout ul.topic-list li.topics-row {
+#kunena.layout ul.topic-list li.topic-row {
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
 }
 
-#kunena.layout ul.topic-list li.topics-row dd {
+#kunena.layout ul.topic-list li.topic-row dd {
  	display: block;
  	float: left;
  	margin: 0px;
@@ -941,7 +1023,7 @@
  	position: relative;
 }*/
 
-#kunena.layout ul.topic-list li.topics-row dd {
+#kunena.layout ul.topic-list li.topic-row dd {
  	display: block;
  	float: left;
  	margin: 0px;
@@ -991,54 +1073,6 @@
 /*******************
  * STOP TOPIC-LIST *
  *******************/
- 
- 
-/********************
- * START STATISTICS *
- ********************/
-
-#kunena.layout div.statistics .statistics-details div {
-	display: block;
-	float: left;
-}
-
-#kunena.layout div.statistics .statistics-smicon {
-	padding: 10px;
-	width: 35px;
-}
-
-#kunena.layout div.statistics .statistics-smicon span {
-	margin: 15px auto;
-}
-
-#kunena.layout div.statistics .statistics-totals ul li {
-	clear: left;
-}
-
-#kunena.layout div.statistics .statistics-totals {
-	padding: 5px 10px 10px 10px;
-	line-height: 20px;
-	/*min-height: 80px;*/
-	width: 25%;
-}
-
-#kunena.layout div.statistics .statistics-totals ul li span {
-	margin-left: 3px;
-}
-
-#kunena.layout div.statistics .statistics-latestmem {
-	margin-bottom: 8px;
-}
-
-#kunena.layout div.statistics .header-link {
-	float: right;
-	margin-right: 10px;
-	margin-top: 5px;
-}
-
-/********************
- * STOP STATISTICS *
- ********************/
 
 
 /*******************
@@ -1144,6 +1178,23 @@
  * STOP WHO IS ONLINE *
  **********************/
 
+
+#kunena.layout ul.user-edit-information-list {
+	display: block;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#kunena.layout ul.user-edit-information-list li {
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+	margin: 0;
+	overflow: hidden;
+	padding: 1px 0 0;
+}
 
 
 #kunena.layout div.category ul.category-list li.category-row dd.topics, #kunena.layout ul.category-list li.category-row dd.replies {

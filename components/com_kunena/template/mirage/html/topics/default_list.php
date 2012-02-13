@@ -22,7 +22,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="detailsbox-wrapper">
 				<div class="topic detailsbox box-full box-border box-border_radius box-shadow" id="topic-detailsbox">
 					<ul class="topic-list">
-						<li class="header box-hover_header-row">
+						<li class="header box-hover_header-row clear">
 							<dl>
 								<dd class="topic-icon">
 								</dd>
@@ -40,9 +40,9 @@ defined ( '_JEXEC' ) or die ();
 								</dd>
 								<?php if ($this->topicActions) : ?>
 									<dd class="topic-checkbox">
-										<span><input id="kcheckbox-all" type="checkbox" value="0" name="" class="moderate-topic-checkall" /></<span>
+										<span><input id="kcheckbox-all" type="checkbox" value="0" name="" class="moderate-topic-checkall" /></span>
 									</dd>
-								<?php endif ?>
+								<?php endif; ?>
 							</dl>
 						</li>
 					</ul>

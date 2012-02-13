@@ -202,19 +202,19 @@
 	background-image: linear-gradient(top, rgba(255, 255, 255, 1.0) 0%, rgba(240, 240, 240, 1.0) 100%) !important;
 }
 
-#kunena.layout li.postmessage-row {
+/*#kunena.layout li.postmessage-row {
 	border-top: 1px solid rgba(0, 0, 0, 0.0);
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
 	background-color: rgba(255, 255, 255, 0.0);
-}
+}*/
 
-#kunena.layout li.postmessage-row:hover {
+/*#kunena.layout li.postmessage-row:hover {
 	border-top: 1px solid rgba(255, 255, 255, 0.8);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
 	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
 	background-color: rgba(100, 100, 100, 0.05);
-}
+}*/
 
 #kunena.layout div.topic ul.topic-posts li.header {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);

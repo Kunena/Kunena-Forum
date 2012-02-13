@@ -109,9 +109,10 @@
 		</copy>	
 		<copy todir="${tmp_dir}/site">
 			<fileset dir="${project_dir}/${kunena.site}">
-				<exclude name="language/**"/>
+				<exclude name="language/*-*/**"/>
 				<exclude name="template/**/params.ini"/>
 				<exclude name="template/orao/**"/>
+				<!-- exclude name="template/default20/**"/ -->
 			</fileset>
 		</copy>	
 	</target>
@@ -125,18 +126,20 @@
 		<!-- Add version information to all xml files and forum.php -->
 		<copy todir="${tmp_dir}/admin" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/${kunena.admin}">
-				<include name="**/*.xml"/>
 				<include name="libraries/forum/forum.php"/>
+				<include name="**/*.xml"/>
+				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/site" overwrite="true" filtering="true">
 			<fileset dir="${project_dir}/${kunena.site}">
 				<include name="**/*.xml"/>
+				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
 		<!-- Remove Default20 and Orao templates from the build -->
-		<delete dir="${tmp_dir}/site/template/default20" />
 		<delete dir="${tmp_dir}/site/template/orao" />
+		<!-- delete dir="${tmp_dir}/site/template/default20" / -->
 
 		<!-- Move media files -->
 		<move todir="${tmp_dir}/media">
@@ -182,6 +185,7 @@
 			<include name="**/*.css" />
 			<exclude name="**/plupload.js" />
 			<exclude name="template/default20/css/*.css" />
+			<exclude name="template/mirage/css/*.css" />
 			<exclude name="template/orao/css/*.css" />
 		</yui-compressor>
 	</target>
@@ -204,14 +208,26 @@
 					<include name="index.html"/>
 				</fileset>
 			</copy>
-			<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}.admin_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/admin"/>
-			<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}.site_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/site"/>
 			<if>
 				<equals arg1="@{include}" arg2="true" />
 				<then>
-					<archive destfile="${build_dir}/archive/com_kunena.@{tag}.admin_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/admin"/>
-					<archive destfile="${build_dir}/archive/com_kunena.@{tag}.site_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/site"/>
+					<copy todir="${build_dir}/language/@{tag}">
+						<fileset dir="${tmp_dir}/languages/@{tag}/admin" />
+					</copy>
+					<copy todir="${tmp_dir}/site/language/@{tag}">
+						<fileset dir="${tmp_dir}/languages/@{tag}/site" />
+					</copy>
 				</then>
+				<else>
+					<copy todir="${build_dir}/language/@{tag}">
+						<fileset dir="${tmp_dir}/languages/@{tag}/admin">
+							<include name="*.install.ini"/>
+							<include name="index.html"/>
+						</fileset>
+					</copy>
+					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}.admin_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/admin"/>
+					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}.site_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/site"/>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

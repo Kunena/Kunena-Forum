@@ -22,8 +22,9 @@ class KunenaControllerHome extends KunenaController {
 		global $Itemid;
 		$menu = JFactory::getApplication ()->getMenu ();
 		$home = $menu->getActive ();
-		// TODO: maybe add error
-		if (!$home) return;
+		if (!$home) {
+			JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+		}
 
 		// Find default menu item
 		$default = $this->_getDefaultMenuItem($menu, $home);
@@ -50,6 +51,20 @@ class KunenaControllerHome extends KunenaController {
 			return;
 		}
 
+		// Remove query variables coming from the home menu item
+		foreach ( $home->query as $var => $value ) {
+			if ( $var != 'Itemid' && $var != 'option' && $value == JRequest::getVar ($var) ) {
+				JRequest::setVar ( $var, null );
+			}
+		}
+		// If view is not set, add query variables from shown menu item
+		if (!JRequest::getVar ('view')) {
+			foreach ( $default->query as $var => $value ) {
+				if (JRequest::getVar ($var) === null)
+					JRequest::setVar ( $var, $value );
+			}
+		}
+
 		// Check if we are using default menu item
 		if (!isset($default->query['layout'])) $default->query['layout'] = 'default';
 		foreach ( $default->query as $var => $value ) {
@@ -60,12 +75,6 @@ class KunenaControllerHome extends KunenaController {
 			if ($cmp !== null && $value != $cmp) {
 				$default = $home;
 				break;
-			}
-		}
-		// Add query variables from shown menu item
-		if ($default != $home) {
-			foreach ( $default->query as $var => $value ) {
-				if (JRequest::getVar ($var) === null) JRequest::setVar ( $var, $value );
 			}
 		}
 		// Set active menu item to point the real page

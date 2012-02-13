@@ -10,12 +10,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="topics-row box-hover box-hover_list-row">
+<li class="topic-row box-hover box-hover_list-row clear">
 	<dl>
 		<dd class="topic-icon">[K=TOPIC_ICON]</dd>
 		<dd class="topic-subject">
 			<ul>
-				<li class="ktopic-title">
+				<li class="topic-title">
 					<h3 class="link-header3"><?php echo $this->getTopicLink($this->topic, null, null) ?></h3>
 					<ul class="ktopic-actions">
 						<li>[K=TOPIC_NEW_COUNT]</li>
@@ -24,9 +24,9 @@ defined ( '_JEXEC' ) or die ();
 					</ul>
 				</li>
 				<?php if (!empty($this->categoryLink)) : ?>
-				<li class="ktopic-category"><?php echo JText::_('COM_KUNENA_CATEGORY') ?> <?php echo $this->categoryLink ?></li>
+				<li class="topic-category"><?php echo JText::_('COM_KUNENA_CATEGORY') ?> <?php echo $this->categoryLink ?></li>
 				<?php endif ?>
-				<li class="ktopic-details"><?php echo JText::sprintf('COM_KUNENA_TOPIC_STARTED_ON_DATE_BY_USER', "[K=DATE:{$this->firstPostTime}]", $this->firstPostAuthor->getLink($this->firstUserName)) ?></li>
+				<li class="topic-details"><?php echo JText::sprintf('COM_KUNENA_TOPIC_STARTED_ON_DATE_BY_USER', "[K=DATE:{$this->firstPostTime}]", $this->firstPostAuthor->getLink($this->firstUserName)) ?></li>
 				<li>
 					<div class="kpagination-topic">
 						<?php echo $this->topic->getPagination(0, $this->config->messages_per_page, 3)->getPagesLinks() ?>

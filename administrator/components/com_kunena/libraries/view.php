@@ -59,6 +59,7 @@ class KunenaView extends JView {
 				// Forum is offline
 				$this->common->header = JText::_('COM_KUNENA_FORUM_IS_OFFLINE');
 				$this->common->body = $this->config->offline_message;
+				$this->common->html = true;
 				$this->common->display('default');
 				KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
 				return;

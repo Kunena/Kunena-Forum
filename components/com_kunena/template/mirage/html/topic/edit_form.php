@@ -14,7 +14,7 @@ JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 JHTML::_('kunenafile.uploader', 'kuploader');
 ?>
-<div class="block-wrapper box-color box-border box-border_radius box-shadow">   
+<div class="block-wrapper box-color box-border box-border_radius box-shadow">
 	<div class="block">
 		<div class="headerbox-wrapper">
 			<div class="header">
@@ -113,7 +113,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 								<?php foreach ($this->topicIcons as $id=>$icon) : ?>
 								<li class="hasTip" title="Topic icon :: <?php echo $this->escape(ucfirst($icon->name)) ?>">
 									<input type="radio" name="topic_emoticon" id="topic_emoticon_<?php echo $this->escape($icon->name) ?>" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
-									<label for="topic_emoticon_<?php echo $this->escape($icon->name) ?>"><img src="<?php echo $this->ktemplate->getTopicIconPath($icon->id, true) ?>" alt="" border="0" /></label>
+									<label for="topic_emoticon_<?php echo $this->escape($icon->name) ?>"><img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true) ?>" alt="" border="0" /></label>
 								</li>
 								<?php endforeach ?>
 							</ul>

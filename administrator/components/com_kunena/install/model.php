@@ -100,20 +100,6 @@ class KunenaModelInstall extends JModel {
 	 * Initialise Kunena, run from Joomla installer.
 	 */
 	public function install() {
-		$app = JFactory::getApplication();
-		$lang = JFactory::getLanguage();
-		$tag = $lang->getTag();
-
-		// Install English and default language
-		$success = $this->installLanguage('en-GB');
-		if (!$success) $app->enqueueMessage('Installing Kunena language (en-GB) failed!', 'notice');
-		$lang = JFactory::getLanguage();
-		$tag = $lang->getTag();
-		if ($tag != 'en-GB') {
-			$success = $this->installLanguage($tag);
-			if (!$success) $app->enqueueMessage("Installing Kunena language ({$tag}) failed!", 'notice');
-		}
-
 		$this->setStep(0);
 	}
 

@@ -31,5 +31,5 @@ $showAll	= $params->get('showAllChildren');
 $class_sfx	= htmlspecialchars($params->get('class_sfx'));
 
 if(count($list)) {
-	require JModuleHelper::getLayoutPath('mod_menu', $params->get('layout', 'default'));
+	require JModuleHelper::getLayoutPath('mod_kunenamenu', $params->get('layout', 'default'));
 }

@@ -15,6 +15,7 @@
 		<filename>access.php</filename>
 		<filename>login.php</filename>
 		<filename>index.html</filename>
+		<folder>language</folder>
 	</files>
 	<config>
 		<fields name="params">

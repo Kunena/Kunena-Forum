@@ -9,11 +9,7 @@ defined('_JEXEC') or die;
 
 // Kunena detection and version check
 $minKunenaVersion = '2.0';
-if (!class_exists('KunenaForum') || version_compare(KunenaForum::version(), $minKunenaVersion, '<')) {
-	return;
-}
-// Kunena online check
-if (!KunenaForum::enabled()) {
+if (!class_exists('KunenaForum') || !KunenaForum::installed() || !KunenaForum::isCompatible($minKunenaVersion)) {
 	return;
 }
 

@@ -58,14 +58,6 @@ abstract class JHTMLKunenaForum {
 			$selected = array((string) $selected);
 		}
 
-		if ( KunenaFactory::getConfig()->pickup_category ) {
-			$options[] = JHTML::_ ( 'select.option', 'none', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text' );
-
-			unset($selected);
-			$selected = array();
-			$selected[] = 'none';
-		}
-
 		if ($topleveltxt) {
 			$me = KunenaUserHelper::getMyself();
 			$disabled = ($action == 'admin' && !$me->isAdmin());

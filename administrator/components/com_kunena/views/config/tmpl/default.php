@@ -579,6 +579,11 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 				<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
 				<table class="kadmin-adminform">
 					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISABLE_NOTIFICATIONS') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['disablenotifications']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISABLE_NOTIFICATIONS_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['allowsubscriptions']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_DESC') ?></td>

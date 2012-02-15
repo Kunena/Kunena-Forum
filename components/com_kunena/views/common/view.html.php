@@ -18,9 +18,14 @@ jimport ( 'joomla.document.html.html' );
  */
 class KunenaViewCommon extends KunenaView {
 	public $catid = 0;
+	protected $offline = false;
 
 	function display($layout = null, $tpl = null) {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
+
+		if ($this->config->board_offline && ! $this->me->isAdmin ()) {
+			$this->offline = true;
+		}
 		return $this->displayLayout($layout, $tpl);
 	}
 
@@ -33,6 +38,8 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayAnnouncement($tpl = null) {
+		if ($this->offline) return;
+
 		if (KunenaFactory::getConfig()->showannouncement > 0) {
 			$moderator = intval($this->me->isModerator('global'));
 			$cache = JFactory::getCache('com_kunena', 'output');
@@ -64,6 +71,8 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayForumJump($tpl = null) {
+		if ($this->offline) return;
+
 		$options = array ();
 		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
 		$cat_params = array ('sections'=>1, 'catid'=>0);
@@ -77,6 +86,8 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayBreadcrumb($tpl = null) {
+		if ($this->offline) return;
+
 		$catid = JRequest::getInt ( 'catid', 0 );
 		$id = JRequest::getInt ( 'id', 0 );
 		$view = JRequest::getWord ( 'view', 'default' );
@@ -138,6 +149,8 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayWhosonline($tpl = null) {
+		if ($this->offline) return;
+
 		$moderator = intval($this->me->isModerator());
 		$cache = JFactory::getCache('com_kunena', 'output');
 		if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
@@ -188,6 +201,8 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayStatistics($tpl = null) {
+		if ($this->offline) return;
+
 		$cache = JFactory::getCache('com_kunena', 'output');
 		if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) return;
 
@@ -210,6 +225,8 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayMenu($tpl = null) {
+		if ($this->offline) return;
+
 		$this->params = $this->state->get('params');
 		$this->getPrivateMessageLink();
 		$result = $this->loadTemplateFile($tpl);
@@ -220,6 +237,8 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayLoginBox($tpl = null) {
+		if ($this->offline) return;
+
 		$my = JFactory::getUser ();
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$cachekey = "{$this->ktemplate->name}.common.loginbox.u{$my->id}";
@@ -279,6 +298,8 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayFooter($tpl = null) {
+		if ($this->offline) return;
+
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$catid = 0;
 		if (KunenaFactory::getConfig ()->enablerss) {

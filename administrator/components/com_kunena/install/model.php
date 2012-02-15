@@ -119,6 +119,7 @@ class KunenaModelInstall extends JModel {
 		$this->uninstallPlugin('kunena', 'uddeim');
 		$this->uninstallPlugin('finder', 'kunena');
 		$this->uninstallPlugin('system', 'kunena');
+		$this->uninstallModule('mod_kunenamenu');
 		if (class_exists('KunenaMenuHelper')) {
 			$items = KunenaMenuHelper::getAll();
 			foreach ($items as $item) {
@@ -328,8 +329,59 @@ class KunenaModelInstall extends JModel {
 		return true;
 	}
 
+	function installModule($path, $name) {
+		$dest = JPATH_ROOT."/tmp/kinstall_mod_{$name}";
+		if (file_exists($dest)) JFolder::delete($dest);
+		if (is_file(KPATH_ADMIN .'/'. $path)) {
+			// Extract file
+			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
+		} else {
+			// Copy path
+			$success = JFolder::copy(KPATH_ADMIN .'/'. $path, $dest);
+		}
+		// We need to have only one manifest which is named as kunena.xml
+		if ($success && version_compare(JVERSION, '1.6','>')) {
+			// Joomla 2.5+
+			if (is_file("{$dest}/mod_{$name}.j15.xml")) {
+				JFile::delete("{$dest}/mod_{$name}.j15.xml");
+			}
+			if (is_file("{$dest}/mod_{$name}.j25.xml")) {
+				$success = JFile::move("{$dest}/mod_{$name}.j25.xml", "{$dest}/mod_{$name}.xml");
+			}
+		} else {
+			// Joomla 1.5
+			if (is_file("{$dest}/mod_{$name}.j25.xml")) {
+				JFile::delete("{$dest}/mod_{$name}.j25.xml");
+			}
+			if (is_file("{$dest}/mod_{$name}.j15.xml")) {
+				$success = JFile::move("{$dest}/mod_{$name}.j15.xml", "{$dest}/mod_{$name}.xml");
+			}
+		}
+		// TODO: copy all language files to module directory
+		JFolder::create($dest.'/language/en-GB');
+		JFile::copy(KPATH_SITE."/language/index.html", "{$dest}/language/en-GB/index.html");
+		if (is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.ini")) {
+			$success = JFile::copy(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
+		}
+		if (is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.sys.ini")) {
+			$success = JFile::copy(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.sys.ini");
+		}
+
+		// Only install module if it can be used in current Joomla version (manifest exists)
+		if (is_file("{$dest}/mod_{$name}.xml")) {
+			$installer = new JInstaller ( );
+			$success = $installer->install ( $dest );
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', ucfirst($name)), $success);
+		} elseif (!$success) {
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', ucfirst($name)), $success);
+		}
+		JFolder::delete($dest);
+		return $success;
+	}
+
 	function installPlugin($path, $group, $name, $publish) {
 		$dest = JPATH_ROOT."/tmp/kinstall_plg_{$group}_{$name}";
+		if (file_exists($dest)) JFolder::delete($dest);
 		if (is_file(KPATH_ADMIN .'/'. $path)) {
 			// Extract file
 			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
@@ -355,6 +407,16 @@ class KunenaModelInstall extends JModel {
 				$success = JFile::move("{$dest}/{$name}.j15.xml", "{$dest}/{$name}.xml");
 			}
 		}
+		// TODO: copy all language files to module directory
+		JFolder::create($dest.'/language/en-GB');
+		JFile::copy(KPATH_ADMIN."/language/index.html", "{$dest}/language/en-GB/index.html");
+		if (is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
+			$success = JFile::copy(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
+		}
+		if (is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini")) {
+			$success = JFile::copy(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini");
+		}
+
 		// Only install plugin if it can be used in current Joomla version (manifest exists)
 		if (is_file("{$dest}/{$name}.xml")) {
 			$installer = new JInstaller ( );
@@ -368,6 +430,22 @@ class KunenaModelInstall extends JModel {
 		}
 		JFolder::delete($dest);
 		return $success;
+	}
+
+	function uninstallModule($name) {
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
+			$query = "SELECT extension_id FROM #__extensions WHERE type='module' AND element='{$name}'";
+		} else {
+			// Joomla 1.5
+			$query = "SELECT id FROM #__modules WHERE module='{$name}'";
+		}
+		$this->db->setQuery ( $query );
+		$moduleid = $this->db->loadResult ();
+		if ($moduleid) {
+			$installer = new JInstaller ( );
+			$installer->uninstall ( 'module', $moduleid );
+		}
 	}
 
 	function uninstallPlugin($folder, $name) {
@@ -510,6 +588,7 @@ class KunenaModelInstall extends JModel {
 		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false);
 		$this->installPlugin('install/plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false);
 		$this->installPlugin('install/plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false);
+		$this->installModule('install/modules/mod_kunenamenu', 'kunenamenu');
 
 		if (! $this->getError ())
 			$this->setStep ( $this->getStep()+1 );

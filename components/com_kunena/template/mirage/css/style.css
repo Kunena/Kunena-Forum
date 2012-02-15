@@ -220,7 +220,7 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-#kunena.layout div.menubox div.menubox-global ul.menu li a {
+#kunena.layout ul.menu li a {
 	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
 	/*box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
 	background-color: rgba(255, 255, 255, 0.0) !important;
@@ -237,7 +237,7 @@
 	/*color: #444444;*/
 }
 
-#kunena.layout div.menubox div.menubox-global ul.menu li a:hover {
+#kunena.layout ul.menu li a:hover {
 	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
 	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
 	background-color: rgba(100, 100, 100, 0.1) !important;
@@ -248,7 +248,7 @@
 	/*color: #222222;*/
 }
 
-#kunena.layout div.menubox div.menubox-user ul.menu li a {
+#kunena.layout ul.menu li a {
 	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
 	/*box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
 	background-color: rgba(255, 255, 255, 0.0) !important;
@@ -265,7 +265,7 @@
 	/*color: #444444;*/
 }
 
-#kunena.layout div.menubox div.menubox-user ul.menu li a:hover {
+#kunena.layout ul.menu li a:hover {
 	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
 	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
 	background-color: rgba(100, 100, 100, 0.1) !important;
@@ -276,7 +276,7 @@
 	/*color: #222222;*/
 }
 
-#kunena.layout div.menubox div.menubox-user ul.menu li a:focus {
+#kunena.layout ul.menu li a:focus {
 	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
 	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
 	background-color: rgba(100, 100, 100, 0.1) !important;
@@ -403,27 +403,22 @@
 	border-style: none;
 }
 
-#kunena.layout div.menubox div.menubox-global ul.menu li > a {
+#kunena.layout ul.menu li > a {
 	background: none;
 	border-color: none;
-	font-size: 14px !important;
+	font-size: 13px !important;
+	font-weight: normal;
 }
 
-#kunena.layout div.menubox div.menubox-user ul.menu li > a {
-	background: none;
-	border-color: none;
-	font-size: 14px !important;
-}
-
-#kunena.layout div.menubox div.menubox-global ul.menu li a:hover {
+#kunena.layout ul.menu li a:hover {
 	background: none;
 }
 
-#kunena.layout div.menubox div.menubox-user ul.menu li a {
+#kunena.layout ul.menu li a {
 	background: none;
 }
 
-#kunena.layout div.menubox div.menubox-user ul.menu li a:hover {
+#kunena.layout ul.menu li a:hover {
 	background: none;
 }
 

@@ -95,7 +95,7 @@ function submitbutton(pressbutton)
 						foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) :
 							foreach ($accesslist as $accessinput) :
 						?>
-						<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $accesstype != 'none' ? 'display:none' : '' ?>">
+						<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
 							<td class="nowrap" valign="top"><?php echo $accessinput['title'] ?></td>
 							<td valign="top"><?php echo $accessinput['input'] ?></td>
 							<td valign="top"><?php echo $accessinput['desc'] ?></td>

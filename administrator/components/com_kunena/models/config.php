@@ -350,6 +350,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$article_display[] = JHTML::_('select.option', 'link', JText::_('COM_KUNENA_COM_A_ARTICLE_LINK'));
 		$lists ['article_display'] = JHTML::_('select.genericlist', $article_display, 'cfg_article_display', 'class="inputbox" size="1"', 'value', 'text', $config->article_display);
 
+		$lists ['disablenotifications'] = JHTML::_('select.genericlist', $yesno, 'cfg_disablenotifications', 'class="inputbox" size="1"', 'value', 'text', $config->disablenotifications);
+
 		return $lists;
 	}
 

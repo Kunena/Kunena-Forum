@@ -27,11 +27,13 @@ class KunenaView extends JView {
 
 	function displayAll() {
 		$this->app = JFactory::getApplication ();
-		if ($this->config->board_offline) {
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), $this->me->isAdmin () ? 'notice' : 'error');
-		}
-		if ($this->config->debug && $this->me->isAdmin ()) {
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
+		if ($this->me->isAdmin ()) {
+			if ($this->config->board_offline) {
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
+			}
+			if ($this->config->debug) {
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
+			}
 		}
 
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
@@ -47,7 +49,6 @@ class KunenaView extends JView {
 	}
 
 	function displayLayout($layout=null, $tpl = null) {
-		$this->template = KunenaFactory::getTemplate();
 		if ($layout) $this->setLayout ($layout);
 		$viewName = ucfirst($this->getName ());
 		$layoutName = ucfirst($this->getLayout ());
@@ -59,15 +60,16 @@ class KunenaView extends JView {
 				// Forum is offline
 				$this->common->header = JText::_('COM_KUNENA_FORUM_IS_OFFLINE');
 				$this->common->body = $this->config->offline_message;
+				$this->common->html = true;
 				$this->common->display('default');
-				KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
+				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
 			} elseif ($this->config->regonly && ! $this->me->exists()) {
 				// Forum is for registered users only
 				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body = JText::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');
-				KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
+				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
 			}
 		}
@@ -299,7 +301,7 @@ class KunenaView extends JView {
 
 	public function displayTemplateFile($view, $layout, $template = null) {
 		$file = "html/{$view}/{$layout}".($template ? "_{$template}" : '').".php";
-		include JPATH_SITE .'/'. $this->template->getFile($file);
+		include JPATH_SITE .'/'. $this->ktemplate->getFile($file);
 		// TODO: handle missing file
 	}
 

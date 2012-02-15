@@ -3,8 +3,6 @@
  * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
-
-// no direct access
 defined('_JEXEC') or die;
 
 /**
@@ -24,22 +22,18 @@ class modKunenamenuHelper
 	 */
 	static function getList(&$params)
 	{
-		$app = JFactory::getApplication();
-		$menu = $app->getMenu();
+		$menu = JFactory::getApplication()->getMenu();
 
 		// If no active menu, use default
 		$active = ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
 
-		$user = JFactory::getUser();
-		$levels = $user->getAuthorisedViewLevels();
+		$levels = JFactory::getUser()->getAuthorisedViewLevels();
 		asort($levels);
 		$key = 'menu_items'.$params.implode(',', $levels).'.'.$active->id;
-		$cache = JFactory::getCache('mod_menu', '');
-		if (!($items = $cache->get($key)))
-		{
+		$cache = JFactory::getCache('mod_kunenamenu', '');
+		if (!($items = $cache->get($key))) {
 			// Initialise variables.
 			$list		= array();
-			$db			= JFactory::getDbo();
 
 			$path		= $active->tree;
 			$start		= (int) $params->get('startLevel');
@@ -50,8 +44,7 @@ class modKunenamenuHelper
 			$lastitem	= 0;
 
 			if ($items) {
-				foreach($items as $i => $item)
-				{
+				foreach($items as $i => $item) {
 					if (($start && $start > $item->level)
 						|| ($end && $item->level > $end)
 						|| (!$showAll && $item->level > 1 && !in_array($item->parent_id, $path))
@@ -77,8 +70,7 @@ class modKunenamenuHelper
 					$item->active		= false;
 					$item->flink = $item->link;
 
-					switch ($item->type)
-					{
+					switch ($item->type) {
 						case 'separator':
 							// No further action needed.
 							continue;
@@ -108,8 +100,7 @@ class modKunenamenuHelper
 
 					if (strcasecmp(substr($item->flink, 0, 4), 'http') && (strpos($item->flink, 'index.php?') !== false)) {
 						$item->flink = JRoute::_($item->flink, true, $item->params->get('secure'));
-					}
-					else {
+					} else {
 						$item->flink = JRoute::_($item->flink);
 					}
 

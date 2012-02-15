@@ -269,6 +269,9 @@
 
 	<target name="copy" depends="minify">
 		<mkdir dir="${build_dir}/archive" />
+		
+		<mkdir dir="${tmp_dir}/languages" />
+		<copy file="${project_dir}/${kunena.admin}/language/index.html" todir="${build_dir}/language/" />
 		<language tag="ar-AA" include="false" />
 		<language tag="az-AZ" />
 		<language tag="bg-BG" />

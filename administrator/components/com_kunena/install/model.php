@@ -652,6 +652,9 @@ class KunenaModelInstall extends JModel {
 
 		$this->createMenu(false);
 
+		// Fix broken category aliases (workaround for < 2.0-DEV12 bug)
+		$count = KunenaForumCategoryHelper::fixAliases();
+
 		foreach ($entryfiles as $fileparts) {
 			list($path, $filename, $ext) = $fileparts;
 			if (is_file("{$path}/{$filename}.new.{$ext}")) {

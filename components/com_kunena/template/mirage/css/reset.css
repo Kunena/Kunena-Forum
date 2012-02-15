@@ -16,7 +16,7 @@
 
 /* NOTE: If third-party wrapper template is optimized correctly we can take out this section.*/
 /* Box Element Reset */
-#kunena.layout div, #kunena.layout h1, #kunena.layout.layout h2, #kunena.layout h3, #kunena.layout h4, #kunena.layout h5, #kunena.layout h6, #kunena.layout ul, #kunena.layout li, #kunena.layout ol, #kunena.layout dl, #kunena.layout dt, #kunena.layout dd, #kunena.layout pre, #kunena.layout form, #kunena.layout fieldset, #kunena.layout input, #kunena.layout textarea, #kunena.layout p, #kunena.layout blockquote, #kunena.layout th, #kunena.layout tr, #kunena.layout td {
+#kunena.layout div, #kunena.layout h1, #kunena.layout h2, #kunena.layout h3, #kunena.layout h4, #kunena.layout h5, #kunena.layout h6, #kunena.layout ul, #kunena.layout li, #kunena.layout ol, #kunena.layout dl, #kunena.layout dt, #kunena.layout dd, #kunena.layout pre, #kunena.layout form, #kunena.layout fieldset, #kunena.layout input, #kunena.layout textarea, #kunena.layout p, #kunena.layout blockquote, #kunena.layout th, #kunena.layout tr, #kunena.layout td {
 	margin: 0px;
 	padding: 0px;
 	/*line-height: normal !important;*/
@@ -39,6 +39,7 @@
 
 /* Link Active Status Reset */
 #kunena.layout a, #kunena.layout a:link, #kunena.layout a:visited, #kunena.layout a:active {
+	/*display: block;*/
 	text-decoration: none;
 	/*background: none !important;*/
 }

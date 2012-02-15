@@ -218,7 +218,15 @@ class KunenaViewTopic extends KunenaView {
 			return false;
 		}
 
-		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', $this->catid, null, $cat_params, 'class="inputbox required"', 'value', 'text', $saved ? $saved['catid'] : $this->topic->category_id, 'postcatid');
+		$options = array();
+		$selected = $this->topic->category_id;
+		if ( $this->config->pickup_category ) {
+			$options[] = JHTML::_ ( 'select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text' );
+			$selected = 0;
+		}
+		if ($saved) $selected = $saved['catid'];
+
+		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', $this->catid, $options, $cat_params, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
 		$this->action = 'post';

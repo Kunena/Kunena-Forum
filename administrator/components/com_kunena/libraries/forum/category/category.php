@@ -164,6 +164,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	public function addAlias($alias) {
+		if (!$this->exists()) return false;
+
 		if ($alias) {
 			$alias = KunenaRoute::stringURLSafe($alias);
 		} else {
@@ -440,6 +442,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$this->_alias = $this->alias;
 
 		$table->reorder ();
+		$this->ordering = $table->ordering;
 
 		// Clear cache
 		$access = KunenaAccess::getInstance();

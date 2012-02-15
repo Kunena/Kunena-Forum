@@ -36,8 +36,8 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/quirks.css' );
 
 		// Load all css files (they are combined into one)
-		$this->addStyleSheet ( 'css/global.css' );
-		$this->addStyleSheet ( 'css/main.css' );
+		//$this->addStyleSheet ( 'css/global.css' );
+		//$this->addStyleSheet ( 'css/main.css' );
 		$this->addStyleSheet ( 'css/menu.css' );
 		$this->addStyleSheet ( 'css/icons.css' );
 		$this->addStyleSheet ( 'css/category.css' );

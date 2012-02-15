@@ -176,12 +176,13 @@
 	float: right;
 }
 
-#kunena.layout .menubox li > a {
+#kunena.layout ul.menu li > a {
 	/*height: 30px;*/
 	/*line-height: 30px;*/
+	display: block;
 	line-height: 32px;
 	margin: 0px;
-	padding: 5px;
+	padding: 5px 4px;
 	/*height: 18px;*/
 	overflow: hidden;
 }
@@ -193,12 +194,12 @@
 }
 
 #kunena.layout div.dropdown-menu li > a {
-	padding: 5px;
+	padding: 5px 4px;
 	line-height: 15px;
 }
 
 #kunena.layout div.dropdown-menu li > span {
-	padding: 5px;
+	padding: 5px 3px;
 }
 
 #kunena.layout .form-label {
@@ -589,32 +590,16 @@
  * START MENUBOX *
  *****************/
  
-#kunena.layout div.menubox div.menubox-global {
+#kunena.layout ul.menu {
 	display: block;
-	float: left;
-}
-
-#kunena.layout div.menubox div.menubox-user {
-	display: block;
-	float: right;
-}
-
-#kunena.layout div.menubox ul.menu {
+	/*float: left;*/
+	left: 0px;
+	position: relative
 	margin: 0;
 	padding: 0;
 }
 
-#kunena.layout div.menubox div.menubox-global ul.menu > li {
-	/*background: none repeat scroll 0 0 transparent;*/
-	/*border-radius: 5px 5px 0 0;*/
-	display: inline;
-	float: left;
-	border: none;
-}
-
-#kunena.layout div.menubox div.menubox-user ul.menu > li {
-	/*background: none repeat scroll 0 0 transparent;*/
-	/*border-radius: 5px 5px 0 0;*/
+#kunena.layout ul.menu > li {
 	display: inline;
 	float: left;
 	border: none;

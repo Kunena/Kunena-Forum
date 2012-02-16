@@ -131,12 +131,12 @@ abstract class KunenaDatabaseObject extends JObject {
 			return false;
 		}
 
-		$this->saveInternal();
-
 		// If item was created, load the object.
 		if ($isNew) {
 			$this->load ( $table->id );
 		}
+
+		$this->saveInternal();
 
 		// Trigger the onKunenaAfterSave event.
 		$dispatcher->trigger('onKunenaAfterSave', array("com_kunena.{$this->_name}", &$table, $isNew));

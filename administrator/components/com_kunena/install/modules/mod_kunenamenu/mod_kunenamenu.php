@@ -9,11 +9,7 @@ defined('_JEXEC') or die;
 
 // Kunena detection and version check
 $minKunenaVersion = '2.0';
-if (!class_exists('KunenaForum') || version_compare(KunenaForum::version(), $minKunenaVersion, '<')) {
-	return;
-}
-// Kunena online check
-if (!KunenaForum::enabled()) {
+if (!class_exists('KunenaForum') || !KunenaForum::installed() || !KunenaForum::isCompatible($minKunenaVersion)) {
 	return;
 }
 
@@ -31,5 +27,5 @@ $showAll	= $params->get('showAllChildren');
 $class_sfx	= htmlspecialchars($params->get('class_sfx'));
 
 if(count($list)) {
-	require JModuleHelper::getLayoutPath('mod_menu', $params->get('layout', 'default'));
+	require JModuleHelper::getLayoutPath('mod_kunenamenu', $params->get('layout', 'default'));
 }

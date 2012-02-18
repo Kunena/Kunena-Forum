@@ -122,7 +122,13 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 	function save() {
 		$this->_save();
-		JFactory::getApplication ()->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	function save2copy() {
+		// TODO: add logic
+		$this->_save();
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	protected function _save() {

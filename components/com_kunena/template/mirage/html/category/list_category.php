@@ -36,7 +36,7 @@ defined ( '_JEXEC' ) or die ();
 			</ul>
 		</dd>
 		<dd class="category-topics"><span class="number"><?php echo $this->category->getTopics() ?></span></dd>
-		<dd class="category-replies"><span class="number"><?php echo $this->category->getReplies() ?> </span><?php //echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></dd>
+		<dd class="category-replies"><span class="number"><?php echo $this->category->getReplies() ?> </span></dd>
 		<!-- td class="kcategory-subs">944 <span>Subscribers</span></td -->
 		<dd class="category-lastpost">
 			<ul>

@@ -285,12 +285,12 @@ class KunenaViewTopic extends KunenaView {
 			$app->enqueueMessage ( $parent->getError(), 'notice' );
 			return false;
 		}
-		$quote = JRequest::getBool ( 'quote', false );
+		$quote = (bool) JRequest::getBool ( 'quote', false );
 		$this->category = $this->topic->getCategory();
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
 		}
-		list ($this->topic, $this->message) = $parent->newReply($quote, $saved);
+		list ($this->topic, $this->message) = $parent->newReply($saved ? $saved : $quote);
 		$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->topic->subject;
 		$this->action = 'post';
 

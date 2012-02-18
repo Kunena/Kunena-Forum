@@ -36,7 +36,7 @@ defined ( '_JEXEC' ) or die ();
 									<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
 								</dd>
 								<dd class="topic-lastpost">
-									<spanclass="bold" ><?php echo JText::_('Last Post') ?></span>
+									<span class="bold"><?php echo JText::_('Last Post') ?></span>
 								</dd>
 								<?php if ($this->topicActions) : ?>
 									<dd class="topic-checkbox">

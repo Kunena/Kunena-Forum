@@ -84,7 +84,7 @@ defined ( '_JEXEC' ) or die ();
 							<li class="header box-hover_header-row">
 								<dl>
 									<dd class="popsubstats-col1"><span class="bold"><?php echo $top[0]->titleName ?></span></dd>
-									<dd class="popsubstats-col2"<span class="bold">&nbsp;</span></dd>
+									<dd class="popsubstats-col2"><span class="bold">&nbsp;</span></dd>
 									<dd class="popsubstats-col3"><span class="bold"><?php echo $top[0]->titleCount ?></span></dd>
 								</dl>
 							</li>

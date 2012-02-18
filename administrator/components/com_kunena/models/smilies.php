@@ -82,7 +82,7 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		}
 
 		$smileypath = $template->getSmileyPath();
-		$smiley_images = (array)JFolder::Files(KPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
+		$smiley_images = (array)JFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
 
 		$smiley_list = array();
 		$i = 0;

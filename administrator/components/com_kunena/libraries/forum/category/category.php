@@ -206,6 +206,11 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return $this->_posts;
 	}
 
+	public function getReplies() {
+		$this->buildInfo();
+		return max($this->_posts - $this->_topics, 0);
+	}
+
 	public function getLastCategory() {
 		$this->buildInfo();
 		return KunenaForumCategoryHelper::get($this->_lastid);
@@ -695,8 +700,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$categories += KunenaForumCategoryHelper::getChildren($this->id);
 		foreach ($categories as $category) {
 			$category->buildInfo();
-			$this->_topics += $category->numTopics;
-			$this->_posts += $category->numPosts;
+			$this->_topics += max($category->numTopics, 0);
+			$this->_posts += max($category->numPosts, 0);
 			if (KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $category->last_post_time)
 				$this->_lastid = $category->id;
 		}

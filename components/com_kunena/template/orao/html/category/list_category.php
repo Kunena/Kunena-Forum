@@ -49,7 +49,7 @@ defined ( '_JEXEC' ) or die ();
 							<?php if ($this->params->get('countcolumnShow') == 0):?>
 							<span class="tk-activity-count">
 								<?php echo JText::_('COM_KUNENA_GEN_TOPICS');?>: <b><?php echo $this->formatLargeNumber ( $this->category->getTopics() ) ?></b>
-								&nbsp;<?php echo JText::_('COM_KUNENA_GEN_REPLIES');?>: <b><?php echo $this->formatLargeNumber ( $this->category->getPosts() ) ?></b>
+								&nbsp;<?php echo JText::_('COM_KUNENA_GEN_REPLIES');?>: <b><?php echo $this->formatLargeNumber ( $this->category->getReplies() ) ?></b>
 							</span>
 							<?php endif; ?>
 							<?php if ($this->category->review && !$this->category->isSection()) : ?>
@@ -67,7 +67,7 @@ defined ( '_JEXEC' ) or die ();
 						</dd>
 						<dd class="posts">
 							<span>
-								<?php echo $this->formatLargeNumber ( $this->category->getPosts() ) ?>
+								<?php echo $this->formatLargeNumber ( $this->category->getReplies() ) ?>
 							</span>
 						</dd>
 						<?php endif;?>
@@ -100,7 +100,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php foreach ( $this->subcategories as $subcategory ) : ?>
 						<span class="tkchild-name tk-sub-categories tkchild-column-<?php echo $this->params->get('numChildcolumn')?> kcategory-smicon[K=CATEGORY_NEW_SUFFIX:<?php echo $subcategory->id ?>]">
 							<?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?> [K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]
-							<?php echo '<span class="tkchild-count">( ' . $subcategory->getTopics() . " / " . $subcategory->getPosts() . ' )</span>'; ?>
+							<?php echo '<span class="tkchild-count">( ' . $subcategory->getTopics() . " / " . $subcategory->getReplies() . ' )</span>'; ?>
 						</span>
 					<?php endforeach; ?>
 					</div>

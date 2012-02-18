@@ -65,6 +65,12 @@ function submitbutton(pressbutton)
 						<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 						<td><input class="inputbox" type="text" name="alias" size="80" value="<?php echo $this->escape ( $this->category->alias ); ?>" /></td>
 					</tr>
+					<?php if ($this->options ['aliases']) : ?>
+					<tr>
+						<td>&nbsp;</td>
+						<td><?php echo $this->options ['aliases']; ?></td>
+					</tr>
+					<?php endif ?>
 					<tr>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?>:</td>
 						<td valign="top"><?php echo $this->options ['published']; ?></td>

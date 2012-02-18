@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 jimport('joomla.html.html');
 
 abstract class JHTMLKunenaForum {
-	function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false) {
+	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false) {
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
 		$sections = isset($params['sections']) ? (bool) $params['sections'] : 0;
 		$ordering = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
@@ -117,7 +117,7 @@ abstract class JHTMLKunenaForum {
 	 * @param string $rel Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
 	 * @param mixed $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
 	 */
-	function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '') {
+	public static function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '') {
 		$list['href'] = KunenaRoute::_($uri);
 		if ($title) $list['title'] = $title;
 		if ($class) $list['class'] = $class;
@@ -137,5 +137,30 @@ abstract class JHTMLKunenaForum {
 		}
 		$attributes = implode (' ', $attr);
 		return "<a {$attributes}>{$content}</a>";
+	}
+
+	public static function checklist($name, $options, $selected = array()) {
+		if ($selected !== true && !is_array($selected)) $selected = (array) $selected;
+		$html = array();
+		$html[] = '<ul class="checklist">';
+
+		foreach ($options as $item) {
+			// Setup  the variable attributes.
+			$eid = "checklist_{$name}_{$item}";
+			$checked = $selected === true || in_array($item, $selected) ? ' checked="checked"' : '';
+
+			// Build the HTML for the item.
+			$html[] = '	<li>';
+			$html[] = '		<input type="checkbox" name="' . $name . '[]" value="' . $item . '" id="' . $eid . '"';
+			$html[] = '			' . $checked . ' />';
+			$html[] = '		<label for="' . $eid . '">';
+			$html[] = '			' . $item;
+			$html[] = '		</label>';
+			$html[] = '	</li>';
+		}
+		$html[] = '</ul>';
+		if ($selected === true) $html[] = '<input type="hidden" name="' . $name . '_all" value="' . implode(',', $options) . '" />';
+
+		return implode("\n", $html);
 	}
 }

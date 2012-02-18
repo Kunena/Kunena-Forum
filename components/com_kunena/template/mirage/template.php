@@ -36,8 +36,8 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/quirks.css' );
 
 		// Load all css files (they are combined into one)
-		//$this->addStyleSheet ( 'css/global.css' );
-		//$this->addStyleSheet ( 'css/main.css' );
+		$this->addStyleSheet ( 'css/global.css' );
+		$this->addStyleSheet ( 'css/main.css' );
 		$this->addStyleSheet ( 'css/menu.css' );
 		$this->addStyleSheet ( 'css/icons.css' );
 		$this->addStyleSheet ( 'css/category.css' );
@@ -111,8 +111,8 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	}
 
 	public function getPaginationListRender($list) {
-		$html = '<ul class="kpage">';
-		$html .= '<li class="kpage-title">'.JText::_('COM_KUNENA_PAGE').'</li>';
+		$html = '<div class="pagination">';
+		$html .= '<ul class="list-pagination">';
 		$last = 0;
 		foreach($list['pages'] as $i=>$page) {
 			if ($last+1 != $i) $html .= '<li class="kpage-more">...</li>';
@@ -120,14 +120,15 @@ class KunenaTemplateMirage extends KunenaTemplate {
 			$last = $i;
 		}
 		$html .= '</ul>';
+		$html .= '</div>';
 		return $html;
 	}
 
 	public function getPaginationItemActive(&$item) {
-		return '<li class="kpage-active"><a title="'.$item->text.'" href="'.$item->link.'">'.$item->text.'</a></li>';
+		return '<li class="page-item page-active"><a class="button" title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></span></a></li>';
 	}
 
 	public function getPaginationItemInactive(&$item) {
-		return '<li class="kpage-item"><span title="'.$item->text.'">'.$item->text.'</span></li>';
+		return '<li class="page-item"><a class="button" title="'.$item->text.'"><span><span>'.$item->text.'</span></span></a></li>';
 	}
 }

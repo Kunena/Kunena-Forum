@@ -32,7 +32,7 @@ abstract class JHTMLKunenaForum {
 		$params['selected'] = $catid;
 		if ($catid) {
 			$category = KunenaForumCategoryHelper::get($catid);
-			if (!$category->getParent()->authorise($action))
+			if (!$category->getParent()->authorise($action) && !KunenaUserHelper::getMyself()->isAdmin())
 				$categories = KunenaForumCategoryHelper::getParents($catid, $levels, $params);
 		}
 		$channels = array();
@@ -46,7 +46,7 @@ abstract class JHTMLKunenaForum {
 					if (!$id || $category->id == $id || isset($children[$id]) || !$channel->authorise ($action)) unset ($channels[$id]);
 				}
 			}
-			$categories = $category->exists() ? array($category->id=>$category)+$children : $children;
+			$categories = $category->id > 0 ? array($category->id=>$category)+$children : $children;
 			if ($hide_lonely && count($categories)+count($channels) <= 1) return;
 		}
 		if (!is_array($options)) {

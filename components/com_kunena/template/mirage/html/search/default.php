@@ -29,6 +29,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 					<h2 class="header"><a title="Advanced Search" rel="kadvsearch-detailsbox"><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH') ?></a></h2>
 				</div>
 			</div>
+			<div class="detailsbox-wrapper">
 			<div class="advsearch-detailsbox detailsbox">
 	
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="adminForm" id="searchform" method="post">
@@ -36,7 +37,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 					<input type="hidden" name="task" value="results" />
 					<?php echo JHTML::_( 'form.token' ); ?>
 	
-					<div class="ksearchform-leftcol">
+					<div class="searchform-leftcol">
 						<fieldset class="fieldset">
 							<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD') ?></legend>
 							<label for="keywords" class="searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS') ?>:</label><br />
@@ -48,7 +49,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 						</fieldset>
 					</div>
 	
-					<div class="ksearchform-rightcol">
+					<div class="searchform-rightcol">
 						<fieldset class="fieldset">
 							<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER') ?></legend>
 							<label class="searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_UNAME') ?>:
@@ -64,7 +65,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 	
 					<div class="clrline"></div>
 	
-					<div class="ksearchform-leftcol">
+					<div class="searchform-leftcol">
 						<fieldset id="search-posts-date" class="fieldset">
 							<legend><?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS') ?></legend>
 							<?php echo $this->searchdatelist ?>
@@ -86,7 +87,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 						</fieldset>
 					</div>
 	
-					<div class="ksearchform-rightcol">
+					<div class="searchform-rightcol">
 						<fieldset class="fieldset">
 							<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?></legend>
 							<?php echo $this->categorylist; ?>
@@ -111,11 +112,12 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 					</div>
 					<div class="clr"></div>
 
-					<div class="kpost-buttons">
+					<div class="kost-buttons">
 						<button title="Click here to search" type="submit" class="kbutton"><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></button>
 						<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton"><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL'); ?></button>
 					</div>
 				</form>
+			</div>
 			</div>
 		</div>
 	</div>

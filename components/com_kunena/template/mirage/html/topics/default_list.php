@@ -27,16 +27,16 @@ defined ( '_JEXEC' ) or die ();
 								<dd class="topic-icon">
 								</dd>
 								<dd class="topic-subject">
-									<span><?php echo JText::_('Subject') ?></span>
+									<span class="bold"><?php echo JText::_('Subject') ?></span>
 								</dd>
 								<dd class="topic-replies">
-									<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
+									<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
 								</dd>
 								<dd class="topic-views">
-									<span><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
+									<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
 								</dd>
 								<dd class="topic-lastpost">
-									<span><?php echo JText::_('Last Post') ?></span>
+									<spanclass="bold" ><?php echo JText::_('Last Post') ?></span>
 								</dd>
 								<?php if ($this->topicActions) : ?>
 									<dd class="topic-checkbox">

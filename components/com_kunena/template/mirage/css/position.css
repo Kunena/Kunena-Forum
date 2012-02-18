@@ -220,21 +220,21 @@
  * START ADVANCE SEARCH *
  ************************/
 
-#kunena.layout #searchform {
+#kunena.layout .searchform {
 	padding: 10px 10px 0px;
 }
-#kunena.layout #searchform fieldset {
+#kunena.layout .searchform fieldset {
 	/*border: 1px solid;
 	margin-bottom: 15px;*/
 	padding: 15px;
 }
 
-#kunena.layout #searchform legend {
+#kunena.layout .searchform legend {
 	padding: 0 5px;
 	font-size: 1em;
 }
 
-#kunena.layout #searchform .input {
+#kunena.layout .searchform .input {
 	/*border: 1px solid;
 	padding: 0px 5px;*/
 	padding: 5px;
@@ -246,7 +246,7 @@
  	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
 }
 
-#kunena.layout #searchform select {
+#kunena.layout .searchform select {
 	/*padding: 5px;
 	margin: 10px;
 	border-width: 1px;
@@ -254,46 +254,46 @@
 	border-color: #BFC3C6;(*/
 }
 
-#kunena.layout #searchform select#catids {
+#kunena.layout .searchform select.catids {
 	width: 100%;
 	/*border-width: 1px;
 	border-style: solid;
 	border-color: #BFC3C6;(*/
 }
 
-#kunena.layout .ksearchform-leftcol {
+#kunena.layout .searchform-leftcol {
 	float: left;
 	clear: left;
 	width: 49%;
 }
-#kunena.layout .ksearchform-rightcol {
+#kunena.layout .searchform-rightcol {
 	float: right;
 	clear: right;
 	width: 49%;
 }
-#kunena.layout #searchform .clrline {
+#kunena.layout .searchform .clrline {
 }
-#kunena.layout #searchform .kpost-buttons {
+#kunena.layout .searchform .kpost-buttons {
 	margin: 0 -10px;
 	border-top: 1px solid;
 }
-#kunena.layout #searchform label input {
+#kunena.layout .searchform label input {
 	vertical-align: middle;
 }
 
-#kunena.layout #search-posts-start select {
+#kunena.layout .search-posts-start select {
 	/*margin-left: 10px;*/
 }
 
-#kunena.layout #search-posts-date select,
-#kunena.layout #search-posts-sort select {
+#kunena.layout .search-posts-date select,
+#kunena.layout .search-posts-sort select {
 	/*margin-right: 10px;*/
 }
-#kunena.layout input#keywords,
-#kunena.layout input#username {
+#kunena.layout input.keywords,
+#kunena.layout input.username {
 	margin-right: 10px;
 }
-#kunena.layout .kadvsearch .clrline {
+#kunena.layout .advsearch .clrline {
 	clear: both;
 }
 
@@ -316,7 +316,7 @@
 	vertical-align: bottom;
 }
 
-#kunena.layout ul.announcement-list li {
+#kunena.layout ul.announcement-list > li {
 	clear: both;
 	display: block;
 	position: relative;
@@ -470,7 +470,7 @@
  	vertical-align: bottom;
 }
 
-#kunena.layout ul.category-list li {
+#kunena.layout ul.category-list > li {
 	clear: both;
 	display: block;
 	position: relative;
@@ -532,16 +532,25 @@
 	width: 35%;
 }
 
-#kunena.layout ul.category-list dd.category-topics, #kunena.layout dd.category-replies {
+#kunena.layout ul.category-list dd.category-topics, #kunena.layout ul.category-list dd.category-replies {
 	margin: 0;
 	text-align: center;
 	width: 10%;
+}
+
+#kunena.layout ul.category-list dd.category-topics span.number, #kunena.layout  ul.category-list dd.category-replies span.number {
+	font-size: 32px;
+	color: #666666;
 }
 
 #kunena.layout ul.category-list dd.category-lastpost {
 	margin: 0;
 	text-align: left;
 	width: 20%;
+}
+
+#kunena.layout li.category-lastpost-avatar{
+	float: left;
 }
 
 /*#kunena.layout ul.category-list li {
@@ -668,22 +677,50 @@
 }
 
 #kunena.layout div.topic .topic-taglist {
- 	display: block;
- 	/*padding: 5px 10px;*/
+	display: block;
+	/*padding: 5px 10px;*/
 }
 
 #kunena.layout div.topic .topic-taglist-edit {
- 	float: right;
+	float: right;
 }
 
 #kunena.layout div.topic .topic-taglist li {
- 	display: inline;
- 	line-height: 13px;
+	display: inline;
+	line-height: 13px;
 }
 
 /**********************
  * STOP MESSAGE-LIST *
  **********************/
+
+
+/********************
+ * START PAGINATION *
+ ********************/
+
+#kunena.layout div.pagination {
+}
+
+#kunena.layout div.pagination ul.list-pagination li {
+	display: inline;
+	float: left;
+}
+
+#kunena.layout div.pagination ul.list-pagination li.page-item a {
+	display: block;
+}
+
+#kunena.layout div.pagination ul.list-pagination li.page-item a > span {
+	display: block;
+	padding: 5px 10px;
+	line-height: 24px;
+}
+
+
+/*******************
+ * STOP PAGINATION *
+ *******************/
 
 
 /**************************
@@ -960,7 +997,7 @@
  	vertical-align: bottom;
 }
 
-#kunena.layout ul.topic-list li {
+#kunena.layout ul.topic-list > li {
 	clear: both;
 	display: block;
 	position: relative;
@@ -1027,12 +1064,17 @@
 	width: 40%;
 }
 
-#kunena.layout ul.topic-list dd.topic-replies, #kunena.layout dd.topic-views {
+#kunena.layout ul.topic-list dd.topic-replies, #kunena.layout ul.topic-list dd.topic-views {
 	margin: 0;
 	text-align: center;
 	width: 10%;
 	position: relative;
 	top: 50%;
+}
+
+#kunena.layout ul.topic-list dd.topic-replies span.number, #kunena.layout ul.topic-list dd.topic-views span.number {
+	font-size: 32px;
+	color: #666666;
 }
 
 #kunena.layout ul.topic-list dd.topic-lastpost {

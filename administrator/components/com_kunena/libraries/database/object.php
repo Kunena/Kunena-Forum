@@ -18,6 +18,7 @@ abstract class KunenaDatabaseObject extends JObject {
 	protected $_name = null;
 	protected $_table = null;
 	protected $_exists = false;
+	protected $_saving = false;
 
 	/**
 	 * Returns the global object.
@@ -97,9 +98,11 @@ abstract class KunenaDatabaseObject extends JObject {
 	 * @return  boolean  True on success.
 	 */
 	public function save() {
+		$this->_saving = true;
+
 		// Check the object.
 		if (! $this->check ()) {
-			return false;
+			return $this->_saving = false;
 		}
 
 		// Initialize table object.
@@ -111,7 +114,7 @@ abstract class KunenaDatabaseObject extends JObject {
 		// Check the table object.
 		if (! $table->check ()) {
 			$this->setError ( $table->getError () );
-			return false;
+			return $this->_saving = false;
 		}
 
 		// Include the Kunena plugins for the on save events.
@@ -122,13 +125,13 @@ abstract class KunenaDatabaseObject extends JObject {
 		$result = $dispatcher->trigger('onKunenaBeforeSave', array("com_kunena.{$this->_name}", &$table, $isNew));
 		if (in_array(false, $result, true)) {
 			$this->setError($table->getError());
-			return false;
+			return $this->_saving = false;
 		}
 
 		// Store the data.
 		if (!$table->store()) {
 			$this->setError($table->getError());
-			return false;
+			return $this->_saving = false;
 		}
 
 		// If item was created, load the object.
@@ -141,6 +144,7 @@ abstract class KunenaDatabaseObject extends JObject {
 		// Trigger the onKunenaAfterSave event.
 		$dispatcher->trigger('onKunenaAfterSave', array("com_kunena.{$this->_name}", &$table, $isNew));
 
+		$this->_saving = false;
 		return true;
 	}
 

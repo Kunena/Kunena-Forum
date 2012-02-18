@@ -242,7 +242,7 @@ abstract class KunenaRoute {
 
 		$vars = array();
 		foreach ($aliases as $object) {
-			if ($alias == $object->alias) {
+			if (JString::strtolower($alias) == JString::strtolower($object->alias)) {
 				$var = $object->type != 'legacy' ? $object->type : 'view';
 				$vars [$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
 				if ($var == 'catid') $vars ['view'] = 'category';

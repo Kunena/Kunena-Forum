@@ -246,11 +246,14 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$topic_ordering_options[] = JHTML::_ ( 'select.option', 'creation', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION' ) );
 		$topic_ordering_options[] = JHTML::_ ( 'select.option', 'alpha', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA' ) );
 
+		$aliases = array_keys($category->getAliases());
+
 		$lists = array ();
 		$lists ['accesstypes'] = KunenaAccess::getInstance()->getAccessTypesList($category);
 		$lists ['accesslists'] = KunenaAccess::getInstance()->getAccessOptions($category);
 		$lists ['categories'] = JHTML::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
 		$lists ['channels'] = JHTML::_('kunenaforum.categorylist', 'channels[]', 0, $channels_options, $channels_params, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
+		$lists ['aliases'] = $aliases ? JHTML::_ ( 'kunenaforum.checklist', 'aliases', $aliases, true) : null;
 		$lists ['published'] = JHTML::_ ( 'select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published );
 		$lists ['forumLocked'] = JHTML::_ ( 'select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $category->locked );
 		$lists ['forumReview'] = JHTML::_ ( 'select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $category->review );

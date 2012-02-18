@@ -11,9 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <div class="buttonbar">
-	<div class="paginationbar">
-		<?php echo $this->getPagination(4) ?>
-	</div>
 	<ul class="buttons-topic">
 		<!-- User buttons -->
 		<?php if (!empty($this->topic_reply)) : ?><li class="button button-topic-reply"><?php echo $this->topic_reply ?></li><?php endif ?>

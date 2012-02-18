@@ -13,12 +13,12 @@ defined ( '_JEXEC' ) or die ();
 abstract class KunenaHtmlParser {
 	static $emoticons = null;
 
-	function getEmoticons($grayscale, $emoticonbar = 0) {
+	function getEmoticons($grayscale = false, $emoticonbar = false) {
 		$db = JFactory::getDBO ();
-		$grayscale == 1 ? $column = "greylocation" : $column = "location";
+		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$sql = "SELECT code, `$column` as file FROM #__kunena_smileys";
 
-		if ($emoticonbar == 1)
+		if ($emoticonbar == true)
 			$sql .= " WHERE emoticonbar='1'";
 
 		$db->setQuery ( $sql );

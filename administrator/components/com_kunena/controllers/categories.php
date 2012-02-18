@@ -122,7 +122,13 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 	function save() {
 		$this->_save();
-		JFactory::getApplication ()->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	function save2copy() {
+		// TODO: add logic
+		$this->_save();
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	protected function _save() {
@@ -150,7 +156,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $parent->name ) ), 'notice' );
 		} elseif (! $category->isCheckedOut ( $this->me->userid )) {
 			// Nobody can change id or statistics
-			$ignore = array('option', 'view', 'task', 'catid', 'id', 'id_last_msg','numTopics','numPosts','time_last_msg');
+			$ignore = array('option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliases_all');
 			// User needs to be admin in parent (both new and old) in order to move category, parent_id=0 needs global admin rights
 			if (!$this->me->isAdmin ( intval ( $post ['parent_id'] )) || ($category->exists() && !$this->me->isAdmin ( $category->parent_id ))) {
 				$ignore = array_merge($ignore, array('parent_id', 'ordering'));
@@ -173,6 +179,12 @@ class KunenaAdminControllerCategories extends KunenaController {
 				$category->ordering = 99999;
 			}
 			$success = $category->save ();
+
+			$aliases = explode(',', JRequest::getVar('aliases_all'));
+			if ($aliases) {
+				$aliases = array_diff($aliases, JRequest::getVar('aliases', array(), 'post', 'array'));
+				foreach ($aliases as $alias) $category->deleteAlias($alias);
+			}
 
 			// Update read access
 			$read = $app->getUserState("com_kunena.user{$this->me->userid}_read");
@@ -260,7 +272,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		} else {
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 		}
-		$this->redirectBack();
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function saveorder() {

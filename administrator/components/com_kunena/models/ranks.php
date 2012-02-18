@@ -81,7 +81,7 @@ class KunenaAdminModelRanks extends KunenaModel {
 		}
 
 		$rankpath = $template->getRankPath();
-		$rank_images = (array)JFolder::Files(KPATH_SITE.'/'.$rankpath,false,false,false,array('index.php','index.html'));
+		$rank_images = (array)JFolder::Files(JPATH_SITE.'/'.$rankpath,false,false,false,array('index.php','index.html'));
 
 		$rank_list = array();
 		$i = 0;

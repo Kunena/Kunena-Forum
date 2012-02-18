@@ -285,7 +285,7 @@ class KunenaViewTopic extends KunenaView {
 			$app->enqueueMessage ( $parent->getError(), 'notice' );
 			return false;
 		}
-		$quote = JRequest::getBool ( 'quote', false );
+		$quote = (bool) JRequest::getBool ( 'quote', false );
 		$this->category = $this->topic->getCategory();
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
 			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);

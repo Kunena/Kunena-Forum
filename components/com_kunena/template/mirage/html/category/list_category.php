@@ -36,7 +36,7 @@ defined ( '_JEXEC' ) or die ();
 			</ul>
 		</dd>
 		<dd class="category-topics"><?php echo $this->formatLargeNumber ( $this->category->getTopics() ) ?> <span><?php //echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span></dd>
-		<dd class="category-replies"><?php echo $this->formatLargeNumber ( $this->category->getPosts() ) ?> <span><?php //echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></dd>
+		<dd class="category-replies"><?php echo $this->formatLargeNumber ( $this->category->getReplies() ) ?> <span><?php //echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></dd>
 		<!-- td class="kcategory-subs">944 <span>Subscribers</span></td -->
 		<dd class="category-lastpost">
 			<ul>

@@ -111,8 +111,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 	}
 
 	function apply() {
-		$this->_save();
-		$this->redirectBack();
+		$category = $this->_save();
+		if ($category->exists()) $this->setRedirect(KunenaRoute::_($this->baseurl2."&layout=edit&catid={$category->id}", false));
+		else $this->setRedirect(KunenaRoute::_($this->baseurl2."&layout=create", false));
 	}
 
 	function save2new() {
@@ -211,6 +212,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 				}
 			}
 		}
+		return $category;
 	}
 
 	function remove() {

@@ -148,7 +148,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 	public function checkAlias($alias) {
 		// Check if category is already using the alias.
-		if (!$alias || $this->_alias == $alias) return true;
+		if ($this->_alias && $this->_alias == $alias) return true;
 
 		// Check if alias is valid in current configuration.
 		if (KunenaRoute::stringURLSafe($alias) != $alias) return false;
@@ -404,7 +404,9 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	public function load($id = null) {
 		$exists = parent::load($id);
-		$this->_alias = $this->get('alias', '');
+
+		if (!$this->_saving)
+			$this->_alias = $this->get('alias', '');
 
 		// Register category if it exists
 		if ($exists) KunenaForumCategoryHelper::register($this);

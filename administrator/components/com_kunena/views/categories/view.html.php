@@ -48,8 +48,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		} else {
 			JToolBarHelper::save();
 		}
-		JToolBarHelper::cancel('categories');
-		//JToolBarHelper::back ( JText::_ ( 'Home' ), 'index.php?option=com_kunena' );
+		JToolBarHelper::cancel();
 	}
 	protected function setToolBarDefault() {
 		// Set the titlebar text

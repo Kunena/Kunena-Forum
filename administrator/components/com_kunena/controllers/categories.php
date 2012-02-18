@@ -266,7 +266,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		} else {
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 		}
-		$this->redirectBack();
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function saveorder() {

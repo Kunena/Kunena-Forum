@@ -46,8 +46,8 @@ defined ( '_JEXEC' ) or die ();
 			</ul>
 		</dd>
 		<!-- <td class="ktopic-status-icons"><span class="ktopic-attach">Attachment</span><span class="ktopic-sticky">Sticky</span></td> -->
-		<dd class="topic-replies"><?php echo $this->formatLargeNumber ( $this->topic->getReplies() ); ?></dd>
-		<dd class="topic-views"><?php echo $this->formatLargeNumber ( $this->topic->getHits() );?></dd>
+		<dd class="topic-replies"><span class="number"><?php echo $this->topic->getReplies(); ?></span></dd>
+		<dd class="topic-views"><span class="number"><?php echo $this->topic->getHits();?></span></dd>
 		<!-- td class="ktopic-subs">22 <span>Subscribers</span></td -->
 		<dd class="topic-lastpost">
 			<ul>

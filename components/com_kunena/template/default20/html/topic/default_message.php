@@ -80,6 +80,17 @@ defined ( '_JEXEC' ) or die ();
 								<li class="kpost-body-sig"><?php echo $this->signatureHtml ?></li>
 								<?php endif ?>
 							</ul>
+							<?php if(!empty($this->thankyou)): ?>
+							<div class="kbuttonbar-post" >
+								<ul class="kmessage-buttons">
+								<?php
+								echo JText::_('COM_KUNENA_THANKYOU').': ';
+								echo implode(', ', $this->thankyou);
+								if (count($this->thankyou) > 9) echo '...';
+								?>
+								</ul>
+							</div>
+							<?php endif ?>
 							[K=MESSAGE_ACTIONS]
 							<div class="clr"></div>
 						</div>

@@ -73,11 +73,8 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
-		$this->config = KunenaFactory::getConfig();
-
 		$this->saveUser();
 
-		$this->me = KunenaUserHelper::getMyself();
 		$this->saveProfile();
 		$this->saveAvatar();
 		$this->saveSettings();

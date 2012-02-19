@@ -155,8 +155,6 @@ class KunenaViewCommon extends KunenaView {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
 
-		$this->my = JFactory::getUser();
-
 		$users = KunenaUserHelper::getOnlineUsers();
 		KunenaUserHelper::loadUsers(array_keys($users));
 		$onlineusers = KunenaUserHelper::getOnlineCount();
@@ -207,7 +205,6 @@ class KunenaViewCommon extends KunenaView {
 		if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) return;
 
 		// FIXME: refactor code
-		$this->config = KunenaFactory::getConfig();
 		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
 		$kunena_stats = KunenaForumStatistics::getInstance ( );
 		$kunena_stats->loadGeneral();

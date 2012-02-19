@@ -22,9 +22,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->me = KunenaUserHelper::getMyself();
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
-		$this->config = KunenaFactory::getConfig();
 
 		$this->URL = KunenaRoute::_();
 		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
@@ -79,9 +77,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->me = KunenaUserHelper::getMyself();
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
-		$this->config = KunenaFactory::getConfig();
 
 		$this->URL = KunenaRoute::_();
 		switch ($this->state->get ( 'list.mode' )) {
@@ -128,9 +124,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'postActions', $this->get ( 'PostActions' ) );
 		$this->actionMove = false;
-		$this->me = KunenaUserHelper::getMyself();
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
-		$this->config = KunenaFactory::getConfig();
 
 		$this->URL = KunenaRoute::_();
 		switch ($this->state->get ( 'list.mode' )) {
@@ -191,7 +185,7 @@ class KunenaViewTopics extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topics', &$this->topics, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topics', &$this->topics, &$params, 0));
 
 		foreach ( $this->topics as $this->topic ) {
 			$this->position++;
@@ -265,7 +259,7 @@ class KunenaViewTopics extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->messages, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->messages, &$params, 0));
 
 		foreach ( $this->messages as $this->message ) {
 			$this->position++;

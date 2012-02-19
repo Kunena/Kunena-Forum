@@ -29,7 +29,6 @@ class KunenaViewCategory extends KunenaView {
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
 
-		$this->me = KunenaUserHelper::getMyself();
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
@@ -101,7 +100,6 @@ class KunenaViewCategory extends KunenaView {
 		if ($this->category->id && ! $this->category->authorise('read')) {
 			$this->setError($this->category->getError());
 		}
-		$this->me = KunenaUserHelper::getMyself();
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
@@ -347,7 +345,7 @@ class KunenaViewCategory extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topics', &$this->topics, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topics', &$this->topics, &$params, 0));
 
 		foreach ( $this->topics as $this->topic ) {
 			$this->position++;

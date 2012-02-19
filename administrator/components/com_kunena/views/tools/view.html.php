@@ -15,7 +15,6 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewTools extends KunenaView {
 	function displayDefault() {
-		$this->config = KunenaFactory::getConfig ();
 		$this->versioncheck = $this->get('latestversion');
 
 		$this->setToolBarDefault();

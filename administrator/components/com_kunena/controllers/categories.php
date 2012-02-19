@@ -79,9 +79,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function add() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
 
@@ -93,16 +92,15 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function edit() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$id = array_shift($cid);
 		if (!$id) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
 			$this->redirectBack();
 		} else {
 			$this->setRedirect(KunenaRoute::_($this->baseurl2."&layout=edit&catid={$id}", false));
@@ -134,9 +132,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 	protected function _save() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
 
@@ -149,11 +146,11 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if ($category->exists() && !$category->authorise ( 'admin' )) {
 			// Category exists and user is not admin in category
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
 		} elseif (!$category->exists() && !$this->me->isAdmin ( intval ( $post ['parent_id'] ) )) {
 			// Category doesn't exist and user is not admin in parent, parent_id=0 needs global admin rights
 			$parent = KunenaForumCategoryHelper::get ( intval ( $post ['parent_id'] ) );
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $parent->name ) ), 'notice' );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $parent->name ) ), 'notice' );
 		} elseif (! $category->isCheckedOut ( $this->me->userid )) {
 			// Nobody can change id or statistics
 			$ignore = array('option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliases_all');
@@ -187,27 +184,27 @@ class KunenaAdminControllerCategories extends KunenaController {
 			}
 
 			// Update read access
-			$read = $app->getUserState("com_kunena.user{$this->me->userid}_read");
+			$read = $this->app->getUserState("com_kunena.user{$this->me->userid}_read");
 			$read[$category->id] = $category->id;
-			$app->setUserState("com_kunena.user{$this->me->userid}_read", null);
+			$this->app->setUserState("com_kunena.user{$this->me->userid}_read", null);
 
 			if (! $success) {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape ( $category->getError () ) ), 'notice' );
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape ( $category->getError () ) ), 'notice' );
 			}
 			$category->checkin();
 		} else {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 		}
 
 		if ($success) {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVED', $this->escape ( $category->name ) ) );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVED', $this->escape ( $category->name ) ) );
 		}
 
 		if (!empty($post['rmmod'])) {
 			foreach ((array) $post['rmmod'] as $userid=>$value) {
 				$user = KunenaFactory::getUser($userid);
 				if ($category->authorise('admin', null, false) && $category->removeModerator($user)) {
-					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED', $this->escape ( $user->getName() ), $this->escape ( $category->name ) ) );
+					$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_VIEW_CATEGORY_EDIT_MODERATOR_REMOVED', $this->escape ( $user->getName() ), $this->escape ( $category->name ) ) );
 				}
 			}
 		}
@@ -217,16 +214,15 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function remove() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
 		if (empty ( $cid )) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
 			$this->redirectBack();
 		}
 
@@ -234,32 +230,31 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$categories = KunenaForumCategoryHelper::getCategories ( $cid );
 		foreach ( $categories as $category ) {
 			if (!$category->authorise ( 'admin' )) {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
 			} elseif (! $category->isCheckedOut ( $this->me->userid )) {
 				if ($category->delete ()) {
 					$count ++;
 					$name = $category->name;
 				} else {
-					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_DELETE_FAILED', $this->escape ( $category->getError () ) ), 'notice' );
+					$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_DELETE_FAILED', $this->escape ( $category->getError () ) ), 'notice' );
 				}
 			} else {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 			}
 		}
 
 		if ($count == 1)
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_DELETED', $this->escape ( $name ) ) );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_DELETED', $this->escape ( $name ) ) );
 		if ($count > 1)
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORIES_DELETED', $count ) );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORIES_DELETED', $count ) );
 		$this->redirectBack();
 	}
 
 	function cancel() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
 
@@ -267,11 +262,11 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		$category = KunenaForumCategoryHelper::get ( $id );
 		if (!$category->authorise ( 'admin' )) {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
 		} elseif (! $category->isCheckedOut ( $this->me->userid )) {
 			$category->checkin ();
 		} else {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 		}
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
@@ -279,9 +274,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function saveorder() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
 
@@ -289,7 +283,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$order = JRequest::getVar ( 'order', array (), 'post', 'array' );
 
 		if (empty ( $cid )) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
 			$this->redirectBack();
 		}
 
@@ -300,20 +294,20 @@ class KunenaAdminControllerCategories extends KunenaController {
 			if (! isset ( $order [$category->id] ) || $category->get ( 'ordering' ) == $order [$category->id])
 				continue;
 			if (!$category->getParent()->authorise ( 'admin' )) {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->getParent()->name ) ), 'notice' );
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->getParent()->name ) ), 'notice' );
 			} elseif (! $category->isCheckedOut ( $this->me->userid )) {
 				$category->set ( 'ordering', $order [$category->id] );
 				$success = $category->save ();
 				if (! $success) {
-					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape ( $category->getError () ) ), 'notice' );
+					$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape ( $category->getError () ) ), 'notice' );
 				}
 			} else {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 			}
 		}
 
 		if ($success) {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_NEW_ORDERING_SAVED' ) );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_NEW_ORDERING_SAVED' ) );
 		}
 		$this->redirectBack();
 	}
@@ -335,19 +329,18 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (!$id) return;
 
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return;
 		}
 
 		$category = KunenaForumCategoryHelper::get ( $id );
 		if (!$category->getParent()->authorise ( 'admin' )) {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->getParent()->name ) ), 'notice' );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->getParent()->name ) ), 'notice' );
 			return;
 		}
 		if ($category->isCheckedOut ( $this->me->userid )) {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 			return;
 		}
 
@@ -364,13 +357,12 @@ class KunenaAdminControllerCategories extends KunenaController {
 	protected function setVariable($cid, $variable, $value) {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return;
 		}
 		if (empty ( $cid )) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_CATEGORIES_SELECTED' ), 'notice' );
 			return;
 		}
 
@@ -381,23 +373,23 @@ class KunenaAdminControllerCategories extends KunenaController {
 			if ($category->get ( $variable ) == $value)
 				continue;
 			if (!$category->authorise ( 'admin' )) {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
 			} elseif (! $category->isCheckedOut ( $this->me->userid )) {
 				$category->set ( $variable, $value );
 				if ($category->save ()) {
 					$count ++;
 					$name = $category->name;
 				} else {
-					$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape ( $category->getError () ) ), 'notice' );
+					$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape ( $category->getError () ) ), 'notice' );
 				}
 			} else {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 			}
 		}
 
 		if ($count == 1)
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVED', $this->escape ( $name ) ) );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVED', $this->escape ( $name ) ) );
 		if ($count > 1)
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORIES_SAVED', $count ) );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORIES_SAVED', $count ) );
 	}
 }

@@ -30,7 +30,7 @@ if ($this->message->modified_time) {
 		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
 	</span>
 	<?php endif ?>
-	<?php if ($this->config->reportmsg && KunenaUserHelper::getMyself()->exists()) :?>
+	<?php if ($this->config->reportmsg && $this->me->exists()) :?>
 	<span class="kmessage-informmarkup"><?php echo CKunenaLink::GetReportMessageLink ( intval($this->category->id), intval($this->message->id), JText::_('COM_KUNENA_REPORT') ) ?></span>
 	<?php endif ?>
 	<?php if (!empty ( $this->ipLink )) : ?>

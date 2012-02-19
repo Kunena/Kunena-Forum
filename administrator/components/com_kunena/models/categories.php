@@ -30,10 +30,8 @@ class KunenaAdminModelCategories extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.categories.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.admin.categories.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.ordering', 'filter_order', 'ordering', 'cmd' );
@@ -66,7 +64,6 @@ class KunenaAdminModelCategories extends KunenaModel {
 
 	public function getAdminCategories() {
 		if ( $this->_admincategories === false ) {
-			$me = KunenaUserHelper::getMyself();
 			$params = array (
 				'ordering'=>$this->getState ( 'list.ordering' ),
 				'direction'=>$this->getState ( 'list.direction' ) == 'asc' ? 1 : -1,
@@ -94,9 +91,9 @@ class KunenaAdminModelCategories extends KunenaModel {
 					$category->parent_id = 0;
 					$category->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $category->name;
 				}
-				$category->up = $me->isAdmin($category->parent_id) && reset($siblings) != $category->id;
-				$category->down = $me->isAdmin($category->parent_id) && end($siblings) != $category->id;
-				$category->reorder = $me->isAdmin($category->parent_id);
+				$category->up = $this->me->isAdmin($category->parent_id) && reset($siblings) != $category->id;
+				$category->down = $this->me->isAdmin($category->parent_id) && end($siblings) != $category->id;
+				$category->reorder = $this->me->isAdmin($category->parent_id);
 				if ($category->accesstype == 'joomla.level') {
 					$groupname = $acl->getGroupName($category->accesstype, $category->access);
 					if (version_compare(JVERSION, '1.6','>')) {
@@ -138,19 +135,18 @@ class KunenaAdminModelCategories extends KunenaModel {
 				} else {
 					$category->admin_group = JText::_ ( $acl->getGroupName($category->accesstype, $category->admin_access ));
 				}
-				if ($me->isAdmin($category->id) && $category->isCheckedOut(0)) {
+				if ($this->me->isAdmin($category->id) && $category->isCheckedOut(0)) {
 					$category->editor = KunenaFactory::getUser($category->checked_out)->getName();
 				} else {
 					$category->checked_out = 0;
 					$category->editor = '';
 				}
-				$admin += $me->isAdmin($category->id);
+				$admin += $this->me->isAdmin($category->id);
 			}
 			$this->setState ( 'list.count.admin', $admin );
 		}
 		if (isset($orphans)) {
-			$app = JFactory::getApplication ();
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN_DESC' ), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN_DESC' ), 'notice' );
 		}
 		return $this->_admincategories;
 	}
@@ -163,16 +159,14 @@ class KunenaAdminModelCategories extends KunenaModel {
 	public function getAdminCategory() {
 		$parent_id = $this->getState ( 'item.parent_id' );
 		$catid = $this->getState ( 'item.id' );
-		$me = KunenaUserHelper::getMyself();
-		if (!$me->isAdmin(null) && !$me->isAdmin($catid)) {
+		if (!$this->me->isAdmin(null) && !$this->me->isAdmin($catid)) {
 			return false;
 		}
 		if ($this->_admincategory === false) {
-			$app = JFactory::getApplication ();
 			$category = KunenaForumCategoryHelper::get ( $catid );
 			if ($category->exists ()) {
-				if (!$category->isCheckedOut ( $me->userid ))
-					$category->checkout ( $me->userid );
+				if (!$category->isCheckedOut ( $this->me->userid ))
+					$category->checkout ( $this->me->userid );
 			} else {
 				// New category is by default child of the first section -- this will help new users to do it right
 				$db = JFactory::getDBO ();

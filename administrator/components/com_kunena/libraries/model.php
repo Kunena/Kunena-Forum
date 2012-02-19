@@ -17,6 +17,7 @@ jimport ( 'joomla.application.component.model' );
  * @since		2.0
  */
 class KunenaModel extends JModel {
+	public $app = null;
 	public $me = null;
 	public $config = null;
 
@@ -29,6 +30,7 @@ class KunenaModel extends JModel {
 		if (isset($this->_state)) {
 			$this->state = $this->_state;
 		}
+		$this->app = JFactory::getApplication();
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 	}

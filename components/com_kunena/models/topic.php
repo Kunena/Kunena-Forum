@@ -22,9 +22,7 @@ class KunenaModelTopic extends KunenaModel {
 	protected $topic = false;
 
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-		$config = KunenaFactory::getConfig ();
-		$active = $app->getMenu ()->getActive ();
+		$active = $this->app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
 
 		$layout = $this->getWord ( 'layout', 'default' );
@@ -51,7 +49,7 @@ class KunenaModelTopic extends KunenaModel {
 		$this->setState ( 'hold', $value );
 
 		$value = $this->getInt ( 'limit', 0 );
-		if ($value < 1 || $value > 100) $value = $config->messages_per_page;
+		if ($value < 1 || $value > 100) $value = $this->config->messages_per_page;
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
@@ -66,7 +64,7 @@ class KunenaModelTopic extends KunenaModel {
 			if ($this->me->ordering != '0') {
 				$value = $this->me->ordering == '1' ? 'desc' : 'asc';
 			} else {
-				$value = $config->default_sort == 'asc' ? 'asc' : 'desc';
+				$value = $this->config->default_sort == 'asc' ? 'asc' : 'desc';
 			}
 		}
 		if ($value != 'asc')

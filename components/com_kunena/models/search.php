@@ -21,8 +21,6 @@ class KunenaModelSearch extends KunenaModel {
 	protected $messages = false;
 
 	protected function populateState() {
-		$this->config = KunenaFactory::getConfig ();
-		$this->me = KunenaUserHelper::getMyself();
 		$this->app = JFactory::getApplication ();
 
 		// Get search word list

@@ -24,8 +24,6 @@ class KunenaControllerTopic extends KunenaController {
 		$this->return = JRequest::getInt('return', $this->catid);
 		$this->id = JRequest::getInt('id', 0);
 		$this->mesid = JRequest::getInt('mesid', 0);
-		$this->config = KunenaFactory::getConfig();
-		$this->me = KunenaUserHelper::getMyself();
 	}
 
 	public function upload() {
@@ -380,14 +378,14 @@ class KunenaControllerTopic extends KunenaController {
 				$app->enqueueMessage ( $thankyou->getError() );
 				$this->redirectBack ();
 			}
-			$activityIntegration->onAfterThankyou($this->my->id, $message->userid, $message);
+			$activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
 		} else {
 			$userid = JRequest::getInt('userid','0');
 			if (!$thankyou->delete ( $userid )) {
 				$app->enqueueMessage ( $thankyou->getError() );
 				$this->redirectBack ();
 			}
-			$activityIntegration->onAfterUnThankyou($userid, $this->my->id, $message);
+			$activityIntegration->onAfterUnThankyou($userid, $this->me->userid, $message);
 		}
 	}
 

@@ -15,7 +15,6 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewStatistics extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->config = KunenaFactory::getConfig ();
 		$document = JFactory::getDocument();
 		$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' .      $this->config->board_title);
 

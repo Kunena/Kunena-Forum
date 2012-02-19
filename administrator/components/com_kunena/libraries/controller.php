@@ -18,6 +18,9 @@ jimport ( 'joomla.application.component.helper' );
  * @since		2.0
  */
 class KunenaController extends JController {
+	public $me = null;
+	public $config = null;
+
 	var $_escape = 'htmlspecialchars';
 	var $_redirect = null;
 	var $_message= null;
@@ -26,6 +29,8 @@ class KunenaController extends JController {
 	function __construct() {
 		parent::__construct ();
 		$this->profiler = KunenaProfiler::instance('Kunena');
+		$this->me = KunenaUserHelper::getMyself();
+		$this->config = KunenaFactory::getConfig();
 	}
 
 	/**

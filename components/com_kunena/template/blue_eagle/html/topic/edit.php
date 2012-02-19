@@ -69,7 +69,7 @@ $this->k=0;
 		<?php endif; ?>
 
 		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check-name"
-		<?php if ( $this->my->id && !$this->config->changename && !$this->category->allow_anonymous ): ?>style="display:none;"<?php endif; ?>>
+		<?php if ( $this->me->userid && !$this->config->changename && !$this->category->allow_anonymous ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>
 			</td>
@@ -78,7 +78,7 @@ $this->k=0;
 			</td>
 		</tr>
 
-		<?php if ($this->config->askemail && !$this->my->id) : ?>
+		<?php if ($this->config->askemail && !$this->me->userid) : ?>
 		<tr class = "krow<?php echo 1+ $this->k^=1 ?>">
 			<td class = "kcol-first"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></strong></td>
 			<td class="kcol-mid">
@@ -153,13 +153,13 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
-		<?php if ($this->config->userkeywords && $this->my->id) : ?>
+		<?php if ($this->config->userkeywords && $this->me->userid) : ?>
 		<tr id="kpost-tags" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?></strong>
 			</td>
 			<td class="kcol-mid">
-				<input type="text" class="kinputbox postinput" name="mytags" id="mytags" size="35" maxlength="100" value="<?php echo $this->escape($this->topic->getKeywords($this->my->id, ', ')); ?>" />
+				<input type="text" class="kinputbox postinput" name="mytags" id="mytags" size="35" maxlength="100" value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')); ?>" />
 			</td>
 		</tr>
 		<?php endif; ?>

@@ -75,7 +75,7 @@ class plgSystemKunena extends JPlugin {
 	 * @return array of KunenaForumMessage objects
 	 */
 	//
-	public function onKunenaContentPrepare($context, &$items, &$params, $page = 0) {
+	public function onKunenaPrepare($context, &$items, &$params, $page = 0) {
 		$jcontentevent			= (int) $this->params->get('jcontentevents', false);
 		$jcontentevent_target	= (array) $this->params->get('jcontentevent_target', array('body'));
 
@@ -135,7 +135,7 @@ class plgSystemKunena extends JPlugin {
 	 * Runs all Joomla content plugins on a single KunenaForumMessage
 	 *
 	 * @access protected
-	 * @see self::onKunenaContentPrepare()
+	 * @see self::onKunenaPrepare()
 	 * @since Kunena 2.0
 	 *
 	 * @param	string	$text		String to run events on

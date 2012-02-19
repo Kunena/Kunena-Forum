@@ -16,12 +16,12 @@ defined ( '_JEXEC' ) or die ();
 <li class="tk-profiletab-posts tk-tips" title=" ::<?php echo JText::_('COM_KUNENA_USERPOSTS'); ?>">
 	<a href="#" rel="tcontent-posts"><?php echo JText::_('COM_KUNENA_USERPOSTS'); ?><br /><span></span></a>
 </li>
-<?php if($this->config->showthankyou && $this->my->id != 0) : ?>
+<?php if($this->config->showthankyou && $this->me->userid != 0) : ?>
 <li class="tk-profiletab-thankyou tk-tips" title=" ::<?php echo JText::_('COM_KUNENA_THANK_YOU'); ?>">
 	<a href="#" rel="tcontent-thankyou"><?php echo JText::_('COM_KUNENA_THANK_YOU'); ?><br /><span></span></a>
 </li>
 <?php endif;?>
-<?php if ($this->my->id == $this->user->id): ?>
+<?php if ($this->me->userid == $this->user->id): ?>
 <?php if ($this->config->allowsubscriptions) :?>
 <li class="tk-profiletab-sub tk-tips" title=" ::<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?>">
 	<a href="#" rel="tcontent-subs"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?><br /><span></span></a>
@@ -33,11 +33,11 @@ defined ( '_JEXEC' ) or die ();
 </li>
 <?php endif;?>
 <?php endif;?>
-<?php if ($this->me->isModerator() && $this->my->id == $this->profile->userid ): ?>
+<?php if ($this->me->isModerator() && $this->me->userid == $this->profile->userid ): ?>
 <li class="tk-profiletab-banm tk-tips" title=" ::<?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?>">
 	<a href="#" rel="tcontent-banm"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?><br /><span></span></a></li>
 <?php endif;?>
-<?php if ($this->me->isModerator() && $this->my->id != $this->user->id):?>
+<?php if ($this->me->isModerator() && $this->me->userid != $this->user->id):?>
 <li class="tk-profiletab-banh tk-tips" title=" ::<?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?>">
 	<a href="#" rel="tcontent-banh"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?><br /><span></span></a>
 </li>
@@ -49,7 +49,7 @@ defined ( '_JEXEC' ) or die ();
 <?php endif;?>
 <?php // TODO : enable when Kunena updated ?>
 <?php //if ( $this->canManageAttachs ): ?>
-<?php if ($this->me->isModerator() || $this->my->id == $this->profile->userid ): ?>
+<?php if ($this->me->isModerator() || $this->me->userid == $this->profile->userid ): ?>
 <li class="tk-profiletab-edit-avatar tk-tips" title=" ::<?php echo JText::_('COM_KUNENA_MANAGE_ATTACHMENTS'); ?>">
 	<a href="#" rel="tcontent-attachments"><?php echo JText::_('Attachhments'); ?><br /><span></span></a>
 </li>
@@ -136,13 +136,13 @@ defined ( '_JEXEC' ) or die ();
 <div id="tcontent-posts" class="tabcontent">
 <?php $this->displayUserPosts(); ?>
 </div>
-<?php if($this->config->showthankyou && $this->my->id != 0) : ?>
+<?php if($this->config->showthankyou && $this->me->userid != 0) : ?>
 <div id="tcontent-thankyou" class="tabcontent">
 <?php $this->displayGotThankyou(); ?>
 <?php $this->displaySaidThankyou(); ?>
 </div>
 <?php endif;?>
-<?php if ($this->my->id == $this->user->id): ?>
+<?php if ($this->me->userid == $this->user->id): ?>
 <?php if ($this->config->allowsubscriptions) :?>
 <div id="tcontent-subs" class="tabcontent">
 <?php $this->displaySubscriptions(); ?>
@@ -155,12 +155,12 @@ defined ( '_JEXEC' ) or die ();
 </div>
 <?php endif;?>
 <?php endif;?>
-<?php if ($this->me->isModerator() && $this->my->id == $this->profile->userid ): ?>
+<?php if ($this->me->isModerator() && $this->me->userid == $this->profile->userid ): ?>
 <div id="tcontent-banm" class="tabcontent">
 <?php $this->displayBanManager(); ?>
 </div>
 <?php endif?>
-<?php if ($this->me->isModerator() && $this->my->id != $this->user->id):?>
+<?php if ($this->me->isModerator() && $this->me->userid != $this->user->id):?>
 <div id="tcontent-banh" class="tabcontent">
 <?php $this->displayBanHistory(); ?>
 </div>
@@ -171,7 +171,7 @@ defined ( '_JEXEC' ) or die ();
 </div>
 <?php endif?>
 <?php //if ( $this->canManageAttachs ): ?>
-<?php if ($this->me->isModerator() || $this->my->id == $this->profile->userid ): ?>
+<?php if ($this->me->isModerator() || $this->me->userid == $this->profile->userid ): ?>
 <div id="tcontent-attachments" class="tabcontent">
 	<?php $this->displayAttachments(); ?>
 </div>

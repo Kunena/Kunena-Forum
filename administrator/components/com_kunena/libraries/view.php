@@ -15,6 +15,9 @@ jimport ( 'joomla.application.component.view' );
  * Kunena View Class
  */
 class KunenaView extends JView {
+	public $me = null;
+	public $config = null;
+
 	protected $_row = 0;
 
 	function __construct($config = array()){

@@ -23,7 +23,6 @@ class KunenaModelTopic extends KunenaModel {
 
 	protected function populateState() {
 		$app = JFactory::getApplication ();
-		$this->me = KunenaUserHelper::getMyself();
 		$config = KunenaFactory::getConfig ();
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;

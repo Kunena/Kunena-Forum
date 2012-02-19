@@ -23,7 +23,6 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	function displayEdit() {
 		$this->setToolBarEdit();
-		$this->config = KunenaFactory::getConfig ();
 		$this->user = $this->get('user');
 		$this->sub = $this->get('subscriptions');
 		$this->subscatslist = $this->get('catsubcriptions');

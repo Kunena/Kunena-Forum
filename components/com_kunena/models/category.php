@@ -34,8 +34,6 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		}
 
 		$app = JFactory::getApplication ();
-		$this->config = KunenaFactory::getConfig ();
-		$this->me = KunenaUserHelper::getMyself();
 
 		$active = $app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;

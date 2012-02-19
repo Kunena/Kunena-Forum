@@ -15,7 +15,6 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewTopics extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->config = KunenaFactory::getConfig();
 		if (!$this->config->enablerss) {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
@@ -32,7 +31,6 @@ class KunenaViewTopics extends KunenaView {
 		$this->params = $this->state->get('params');
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->me = KunenaUserHelper::getMyself();
 
 		// TODO: if start != 0, add information from it into description
 		$this->document->setGenerator('Kunena Forum (Joomla)');
@@ -73,14 +71,12 @@ class KunenaViewTopics extends KunenaView {
 	}
 
 	function displayUser($tpl = null) {
-		$this->config = KunenaFactory::getConfig();
 		if (!$this->config->enablerss) {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
 		$this->layout = 'user';
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->me = KunenaUserHelper::getMyself();
 
 		// TODO: if start != 0, add information from it into description
 		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
@@ -115,7 +111,6 @@ class KunenaViewTopics extends KunenaView {
 	}
 
 	function displayPosts($tpl = null) {
-		$this->config = KunenaFactory::getConfig();
 		if (!$this->config->enablerss) {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
@@ -123,7 +118,6 @@ class KunenaViewTopics extends KunenaView {
 		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->me = KunenaUserHelper::getMyself();
 
 		// TODO: if start != 0, add information from it into description
 		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');

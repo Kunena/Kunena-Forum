@@ -21,7 +21,7 @@ var KUNENA_POLL_OPTION_NAME = "<?php echo JText::_('COM_KUNENA_POLL_OPTION_NAME'
 var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "<?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW') ?>";
 var KUNENA_ICON_ERROR = "<?php echo KunenaFactory::getTemplate()->getImagePath('publish_x.png') ?>";
 <?php endif ?>
-<?php if ($this->my->id) : ?>
+<?php if ($this->me->userid) : ?>
 var kunena_anonymous_name = "<?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS') ?>";
 <?php endif ?>
 
@@ -58,7 +58,7 @@ window.addEvent('domready', function(){
 		if ( arrayanynomousbox[catid] ) {
 			document.id('kanonymous').set('checked','checked');
 		}
-		<?php if ($this->my->id != 0) : ?>
+		<?php if ($this->me->userid != 0) : ?>
 		kunenaSelectUsername(kbutton,kuser);
 		<?php endif ?>
 	}
@@ -72,7 +72,7 @@ window.addEvent('domready', function(){
 	if(document.id('kauthorname') !== undefined) {
 		var kuser = document.id('kauthorname').get('value');
 		var kbutton = document.id('kanonymous');
-		<?php if ($this->my->id != 0) : ?>
+		<?php if ($this->me->userid != 0) : ?>
 		kunenaSelectUsername(kbutton, kuser);
 		kbutton.addEvent('click', function(e) {
 			kunenaSelectUsername(this, kuser);

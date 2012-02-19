@@ -29,7 +29,6 @@ class KunenaViewCategory extends KunenaView {
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
 
-		$this->me = KunenaUserHelper::getMyself();
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
@@ -101,7 +100,6 @@ class KunenaViewCategory extends KunenaView {
 		if ($this->category->id && ! $this->category->authorise('read')) {
 			$this->setError($this->category->getError());
 		}
-		$this->me = KunenaUserHelper::getMyself();
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );

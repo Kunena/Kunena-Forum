@@ -23,7 +23,6 @@ class KunenaModelAnnouncement extends KunenaModel {
 	public function __construct() {
 		parent::__construct();
 		$this->db = JFactory::getDBO ();
-		$this->app = JFactory::getApplication ();
 	}
 
 	protected function populateState() {
@@ -52,10 +51,8 @@ class KunenaModelAnnouncement extends KunenaModel {
 	}
 
 	function getCanEdit() {
-		$me = KunenaUserHelper::getMyself();
-
 		// User needs to be global moderator to edit announcements
-		if ($me->exists() && $me->isModerator('global')) {
+		if ($this->me->exists() && $this->me->isModerator('global')) {
 			$this->canEdit = true;
 		} else {
 			$this->canEdit = false;
@@ -65,7 +62,6 @@ class KunenaModelAnnouncement extends KunenaModel {
 
 	function edit() {
 		$now = new JDate();
-		$me = KunenaUserHelper::getMyself();
 		$title = JRequest::getString ( "title", "" );
 		$description = JRequest::getVar ( 'description', '', 'string', JREQUEST_ALLOWRAW );
 		$sdescription = JRequest::getVar ( 'sdescription', '', 'string', JREQUEST_ALLOWRAW );
@@ -78,7 +74,7 @@ class KunenaModelAnnouncement extends KunenaModel {
 		if (!$id) {
 			$query = "INSERT INTO #__kunena_announcement VALUES ('',
 				{$this->db->Quote ( $title )},
-				{$this->db->Quote ( $me->userid )},
+				{$this->db->Quote ( $this->me->userid )},
 				{$this->db->Quote ( $sdescription )},
 				{$this->db->Quote ( $description )},
 				{$this->db->Quote ( $created )},

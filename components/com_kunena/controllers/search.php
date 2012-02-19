@@ -18,7 +18,6 @@ defined ( '_JEXEC' ) or die ();
 class KunenaControllerSearch extends KunenaController {
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->app = JFactory::getApplication ();
 	}
 
 	public function results() {

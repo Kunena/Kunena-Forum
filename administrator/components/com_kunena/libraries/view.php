@@ -15,6 +15,7 @@ jimport ( 'joomla.application.component.view' );
  * Kunena View Class
  */
 class KunenaView extends JView {
+	public $app = null;
 	public $me = null;
 	public $config = null;
 
@@ -23,13 +24,13 @@ class KunenaView extends JView {
 	function __construct($config = array()){
 		parent::__construct($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
+		$this->app = JFactory::getApplication ();
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$this->ktemplate = KunenaFactory::getTemplate();
 	}
 
 	function displayAll() {
-		$this->app = JFactory::getApplication ();
 		if ($this->me->isAdmin ()) {
 			if ($this->config->board_offline) {
 				$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');

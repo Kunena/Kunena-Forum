@@ -15,8 +15,6 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewSearch extends KunenaView {
 	function displayDefault($tpl = null) {
-		$app = JFactory::getApplication ();
-
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 
 		$searchdatelist	= array();

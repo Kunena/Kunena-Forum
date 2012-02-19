@@ -51,7 +51,7 @@ class KunenaViewTopic extends KunenaView {
 				$mesid = $this->topic->first_post_id;
 			}
 			$message = KunenaForumMessageHelper::get($mesid);
-			if ($message->exists()) JFactory::getApplication()->redirect($message->getUrl(null, false));
+			if ($message->exists()) $this->app->redirect($message->getUrl(null, false));
 		}
 
 		$errors = $this->getErrors();
@@ -64,7 +64,7 @@ class KunenaViewTopic extends KunenaView {
 
 		// If page does not exist, redirect to the last page
 		if ($this->total <= $this->state->get('list.start')) {
-			JFactory::getApplication()->redirect($this->topic->getUrl(null, false, (int)($this->total / $this->state->get('list.limit'))));
+			$this->app->redirect($this->topic->getUrl(null, false, (int)($this->total / $this->state->get('list.limit'))));
 		}
 
 		// Run events
@@ -108,7 +108,7 @@ class KunenaViewTopic extends KunenaView {
 		$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
 
 		// TODO: use real keywords, too
-		$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . JFactory::getapplication()->getCfg ( 'sitename' ) );
+		$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
 
 		// Create Meta Description form the content of the first message
 		// better for search results display but NOT for search ranking!

@@ -19,8 +19,6 @@ jimport ( 'joomla.application.component.model' );
  */
 class KunenaAdminModelConfig extends KunenaModel {
 	function getConfiglists() {
-		$config = KunenaFactory::getConfig ();
-
 		$lists = array ();
 
 		// RSS

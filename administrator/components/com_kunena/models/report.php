@@ -28,30 +28,29 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	public function getSystemReport () {
-		$kunena_app = JFactory::getApplication ();
 		$kunena_db = JFactory::getDBO ();
 
-		if($kunena_app->getCfg('legacy' )) {
+		if($this->app->getCfg('legacy' )) {
 			$jconfig_legacy = '[color=#FF0000]Enabled[/color]';
 		} else {
 			$jconfig_legacy = 'Disabled';
 		}
-		if(!$kunena_app->getCfg('smtpuser' )) {
+		if(!$this->app->getCfg('smtpuser' )) {
 			$jconfig_smtpuser = 'Empty';
 		} else {
-			$jconfig_smtpuser = $kunena_app->getCfg('smtpuser' );
+			$jconfig_smtpuser = $this->app->getCfg('smtpuser' );
 		}
-		if($kunena_app->getCfg('ftp_enable' )) {
+		if($this->app->getCfg('ftp_enable' )) {
 			$jconfig_ftp = 'Enabled';
 		} else {
 			$jconfig_ftp = 'Disabled';
 		}
-		if($kunena_app->getCfg('sef' )) {
+		if($this->app->getCfg('sef' )) {
 			$jconfig_sef = 'Enabled';
 		} else {
 			$jconfig_sef = 'Disabled';
 		}
-		if($kunena_app->getCfg('sef_rewrite' )) {
+		if($this->app->getCfg('sef_rewrite' )) {
 			$jconfig_sef_rewrite = 'Enabled';
 		} else {
 			$jconfig_sef_rewrite = 'Disabled';
@@ -162,7 +161,7 @@ class KunenaAdminModelReport extends KunenaModel {
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
 	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().' | [b]Base URL:[/b]' .JURI::root(). '[/confidential][quote][b]Database collation check:[/b] '.$collation.'
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
-	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
+	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$this->app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$this->app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$this->app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$this->app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$this->app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$this->app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] '.$kunenaVersionInfo.'
 	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
@@ -177,10 +176,8 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function _getKunenaConfiguration() {
-		$config = KunenaFactory::getConfig ();
-
-		if ($config) {
-			$params = $config->getProperties();
+		if ($this->config) {
+			$params = $this->config->getProperties();
 
 			$kconfigsettings = '[table]';
 			$kconfigsettings .= '[th]Kunena config settings:[/th]';

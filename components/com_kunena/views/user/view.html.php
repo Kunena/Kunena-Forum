@@ -25,14 +25,13 @@ class KunenaViewUser extends KunenaView {
 		$userid = JRequest::getInt('userid');
 		if ($userid && $this->me->userid != $userid) {
 			$user = KunenaFactory::getUser( $userid );
-			$this->_app->enqueueMessage ( JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $user->getName()), 'notice' );
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $user->getName()), 'notice' );
 			return;
 		}
 		$this->displayCommon($tpl);
 	}
 
 	function displayList($tpl = null) {
-		$this->app = JFactory::getApplication();
 		$this->total = $this->get ( 'Total' );
 		$this->count = $this->get ( 'Count' );
 		$this->users = $this->get ( 'Items' );
@@ -57,7 +56,6 @@ class KunenaViewUser extends KunenaView {
 		$userid = JRequest::getInt('userid');
 
 		$this->_db = JFactory::getDBO ();
-		$this->_app = JFactory::getApplication ();
 		$this->do = JRequest::getWord('layout');
 
 		if (!$userid) {
@@ -66,7 +64,7 @@ class KunenaViewUser extends KunenaView {
 			$this->user = JFactory::getUser( $userid );
 		}
 		if ($this->user->id == 0|| ($this->me->userid == 0 && !$this->config->pubprofile)) {
-			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice' );
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice' );
 			return;
 		}
 
@@ -76,7 +74,7 @@ class KunenaViewUser extends KunenaView {
 		$this->params = $template->params;
 
 		if (get_class($integration) == 'KunenaProfileNone') {
-			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_DISABLED'), 'notice' );
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_DISABLED'), 'notice' );
 			return;
 		}
 
@@ -111,8 +109,8 @@ class KunenaViewUser extends KunenaView {
 		$this->avatarlink = $this->profile->getAvatarImage('kavatar','profile');
 		$this->personalText = $this->profile->personalText;
 		$this->signature = $this->profile->signature;
-		$this->localtime = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->_app->getCfg ( 'offset', 0 )));
-		$this->localtime->setOffset($this->user->getParam('timezone', $this->_app->getCfg ( 'offset', 0 )));
+		$this->localtime = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
+		$this->localtime->setOffset($this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
 		$this->moderator = $this->profile->isModerator();
 		$this->admin = $this->profile->isAdmin();
 		switch ($this->profile->gender) {

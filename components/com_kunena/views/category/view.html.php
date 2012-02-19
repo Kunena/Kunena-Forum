@@ -84,7 +84,7 @@ class KunenaViewCategory extends KunenaView {
 		$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
 
 		$parentCategory = $this->category->getParent();
-		$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . JFactory::getApplication()->getCfg ( 'sitename' ) );
+		$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$parentCategory->name} - {$this->category->name} ({$page}/{$pages}) - {$this->config->board_title}" );
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $metaDesc );
@@ -124,7 +124,7 @@ class KunenaViewCategory extends KunenaView {
 		}
 		// meta description and keywords
 		$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
-		$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . JFactory::getApplication ()->getCfg ( 'sitename' ));
+		$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
 
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 		$this->document->setMetadata ( 'keywords', $metaKeys );
@@ -138,7 +138,6 @@ class KunenaViewCategory extends KunenaView {
 	function displayUser($tpl = null) {
 		$this->Itemid = $this->get ( 'Itemid' );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
-		$this->app = JFactory::getApplication();
 
 		$errors = $this->getErrors();
 		if ($errors) {
@@ -148,7 +147,7 @@ class KunenaViewCategory extends KunenaView {
 
 			// meta description and keywords
 			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
-			$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . JFactory::getApplication ()->getCfg ( 'sitename' ));
+			$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
 
 			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 			$this->document->setMetadata ( 'keywords', $metaKeys );

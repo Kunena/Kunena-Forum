@@ -10,7 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$kunena_config = KunenaFactory::getConfig ();
 ?>
 <div class="kblock kedituser">
 	<div class="kheader">

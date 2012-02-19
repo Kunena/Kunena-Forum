@@ -33,9 +33,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			return parent::populateState();
 		}
 
-		$app = JFactory::getApplication ();
-
-		$active = $app->getMenu ()->getActive ();
+		$active = $this->app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
 		$catid = $this->getInt ( 'catid', 0 );
 		$this->setState ( 'item.id', $catid );

@@ -44,7 +44,6 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 
 	function displayList($tpl = null) {
-		$this->app = JFactory::getApplication();
 		$this->assignRef ( 'announcements', $this->get ( 'Announcements' ) );
 		$this->assignRef ( 'canEdit', $this->get ( 'CanEdit' ) );
 

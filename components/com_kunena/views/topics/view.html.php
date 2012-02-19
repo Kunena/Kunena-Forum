@@ -18,11 +18,11 @@ class KunenaViewTopics extends KunenaView {
 		$this->layout = 'default';
 		$this->params = $this->state->get('params');
 		$this->Itemid = $this->get('Itemid');
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
-		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
+		$this->topicActions = $this->get ( 'TopicActions' );
+		$this->actionMove = $this->get ( 'ActionMove' );
+		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
 		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
@@ -57,8 +57,7 @@ class KunenaViewTopics extends KunenaView {
 		$page = intval($this->state->get('list.start')/$limit)+1;
 		$total = intval(($this->total-1)/$limit)+1;
 		$pagesTxt = "{$page}/{$total}";
-		$app = JFactory::getApplication();
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $app->getCfg ( 'sitename' );
+		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
 		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 
@@ -73,11 +72,11 @@ class KunenaViewTopics extends KunenaView {
 	function displayUser($tpl = null) {
 		$this->layout = 'user';
 		$this->params = $this->state->get('params');
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
-		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
+		$this->topicActions = $this->get ( 'TopicActions' );
+		$this->actionMove = $this->get ( 'ActionMove' );
+		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
 		switch ($this->state->get ( 'list.mode' )) {
@@ -103,8 +102,7 @@ class KunenaViewTopics extends KunenaView {
 		$page = intval($this->state->get('list.start')/$limit)+1;
 		$total = intval($this->total/$limit)+1;
 		$pagesTxt = "{$page}/{$total}";
-		$app = JFactory::getApplication();
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $app->getCfg ( 'sitename' );
+		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
 		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 
@@ -119,12 +117,12 @@ class KunenaViewTopics extends KunenaView {
 	function displayPosts($tpl = null) {
 		$this->layout = 'posts';
 		$this->params = $this->state->get('params');
-		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->assignRef ( 'postActions', $this->get ( 'PostActions' ) );
+		$this->messages = $this->get ( 'Messages' );
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
+		$this->postActions = $this->get ( 'PostActions' );
 		$this->actionMove = false;
-		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
+		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
 		switch ($this->state->get ( 'list.mode' )) {
@@ -151,8 +149,7 @@ class KunenaViewTopics extends KunenaView {
 		$page = intval($this->state->get('list.start')/$limit)+1;
 		$total = intval($this->total/$limit)+1;
 		$pagesTxt = "{$page}/{$total}";
-		$app = JFactory::getApplication();
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $app->getCfg ( 'sitename' );
+		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
 		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 

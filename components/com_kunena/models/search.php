@@ -21,8 +21,6 @@ class KunenaModelSearch extends KunenaModel {
 	protected $messages = false;
 
 	protected function populateState() {
-		$this->app = JFactory::getApplication ();
-
 		// Get search word list
 		$value = JString::trim ( JRequest::getString ( 'q', '' ) );
 		if ($value == JText::_('COM_KUNENA_GEN_SEARCH_BOX')) {

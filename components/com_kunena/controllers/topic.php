@@ -20,8 +20,8 @@ require_once KPATH_SITE . '/lib/kunena.link.class.php';
 class KunenaControllerTopic extends KunenaController {
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->return = JRequest::getInt('return', $this->catid);
 		$this->catid = JRequest::getInt('catid', 0);
+		$this->return = JRequest::getInt('return', $this->catid);
 		$this->id = JRequest::getInt('id', 0);
 		$this->mesid = JRequest::getInt('mesid', 0);
 	}

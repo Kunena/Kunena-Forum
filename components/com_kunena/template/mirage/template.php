@@ -72,8 +72,6 @@ class KunenaTemplateMirage extends KunenaTemplate {
 
 	public function getButton($link, $name, $scope, $type, $id = null) {
 		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
-		$names = array('unsubscribe'=>'subscribe', 'unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
-				'quickreply'=>'reply', 'quote'=>'kquote', 'edit'=>'kedit');
 
 		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
@@ -82,15 +80,14 @@ class KunenaTemplateMirage extends KunenaTemplate {
 
 		if (isset($types[$type])) $type = $types[$type];
 		if ($name == 'quickreply') $type .= ' kqreply';
-		if (isset($names[$name])) $name = $names[$name];
 
-		$html = '<a '.$id.' href="'.$link.'" rel="nofollow" title="'.$title.'">';
-		$html .= '<span class="'.$name.'"><span>'.$text.'</span></span>';
-		$html .= '</a>';
+		$html = '<li class="button button-'.$scope.'-'.$name.'"><a '.$id.' href="'.$link.'" rel="nofollow" title="'.$title.'">';
+		$html .= '<span class="'.$name.'">'.$text.'</span>';
+		$html .= '</a></li>';
 
 		return $html;
 	}
-			
+
 
 	public function getIcon($name, $title='') {
 		return '<span class="kicon '.$name.'" title="'.$title.'"></span>';

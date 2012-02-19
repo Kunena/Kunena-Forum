@@ -101,7 +101,7 @@ class KunenaViewSearch extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->results, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->results, &$params, 0));
 
 		foreach ($this->results as $this->message) {
 			$this->topic = $this->message->getTopic();

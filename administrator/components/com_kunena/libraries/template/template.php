@@ -120,8 +120,25 @@ class KunenaTemplate extends JObject
 		return $this->userClasses;
 	}
 
-	public function getButton($name, $text) {
-		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
+	public function getButton($link, $name, $scope, $type, $id = null) {
+		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
+		$names = array('unsubscribe'=>'subscribe', 'unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
+				'quickreply'=>'reply', 'quote'=>'kquote', 'edit'=>'kedit');
+
+		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
+		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG") $title = '';
+		if ($id) $id = 'id="'.$id.'"';
+
+		if (isset($types[$type])) $type = $types[$type];
+		if ($name == 'quickreply') $type .= ' kqreply';
+		if (isset($names[$name])) $name = $names[$name];
+
+		return <<<HTML
+<a $id class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
+	<span class="{$name}"><span>{$text}</span></span>
+</a>
+HTML;
 	}
 
 	public function getIcon($name, $title='') {
@@ -225,6 +242,7 @@ class KunenaTemplate extends JObject
 		if ($this->css_compile) {
 			// If template supports CSS compiler
 			$source = $this->getFile($filename);
+			if (!file_exists(JPATH_ROOT.'/'.$source)) return false;
 			$sourcetime = filemtime(JPATH_ROOT.'/'.$source);
 			$filename = $this->getCachePath($filename);
 			if (!JFile::exists(JPATH_ROOT.'/'.$filename)
@@ -406,17 +424,18 @@ class KunenaTemplate extends JObject
 
 	public function getFile($file, $url = false, $basepath = '', $default = null) {
 		if ($basepath) $basepath = '/' . $basepath;
-		if (!isset($this->filecache[$file])) {
-			$this->filecache[$file] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE."/template/blue_eagle/{$file}";
+		$filepath = "{$basepath}/{$file}";
+		if (!isset($this->filecache[$filepath])) {
+			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE."/template/blue_eagle/{$file}";
 			foreach ($this->default as $template) {
 				$path = "template/{$template}{$basepath}";
 				if (file_exists(KPATH_SITE . "/{$path}/{$file}")) {
-					$this->filecache[$file] = KPATH_COMPONENT_RELATIVE."/{$path}/{$file}";
+					$this->filecache[$filepath] = KPATH_COMPONENT_RELATIVE."/{$path}/{$file}";
 					break;
 				}
 			}
 		}
-		return ($url ? JURI::root(true).'/' : '').$this->filecache[$file];
+		return ($url ? JURI::root(true).'/' : '').$this->filecache[$filepath];
 	}
 
 	public function getSmileyPath($filename='', $url = false) {
@@ -543,11 +562,6 @@ class KunenaTemplate extends JObject
 		$templatedetails->name = $xml_tmpl->document->name[0]->data();
 
 		return $templatedetails;
-	}
-
-	static public function loadTemplate($file) {
-		// FIXME: cannot be static!
-		include JPATH_SITE .'/'. self::getInstance()->getFile($file);
 	}
 
 	/**

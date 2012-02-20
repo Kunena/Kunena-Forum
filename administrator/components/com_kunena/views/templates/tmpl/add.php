@@ -18,7 +18,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" enctype="multipart/form-data" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" enctype="multipart/form-data" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="templates" />
 			<input type="hidden" name="task" value="install" />
 			<input type="hidden" name="boxchecked" value="0" />

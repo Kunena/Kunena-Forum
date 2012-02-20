@@ -27,6 +27,11 @@ class plgSystemKunena extends JPlugin {
 		// Load Kunena API
 		require_once $api;
 
+		// Do not load if Kunena version is not supported or Kunena is offline
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return false;
+
+		KunenaFactory::loadLanguage('plg_system_kunena.sys', 'admin');
+
 		if (version_compare(JVERSION, '1.6','<')) {
 			// Joomla 1.5: Fix bugs and bad performance
 			$lang = JFactory::getLanguage();
@@ -38,7 +43,8 @@ class plgSystemKunena extends JPlugin {
 					$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 					$row = JTable::getInstance('plugin');
 					$row->load( (int) $cid[0] );
-					$lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', JPATH_ADMINISTRATOR );
+					$lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', JPATH_ADMINISTRATOR )
+						|| $lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', KPATH_ADMIN );
 				}
 			} else {
 				// Never load language file
@@ -69,7 +75,7 @@ class plgSystemKunena extends JPlugin {
 	 * @return array of KunenaForumMessage objects
 	 */
 	//
-	public function onKunenaContentPrepare($context, &$items, &$params, $page = 0) {
+	public function onKunenaPrepare($context, &$items, &$params, $page = 0) {
 		$jcontentevent			= (int) $this->params->get('jcontentevents', false);
 		$jcontentevent_target	= (array) $this->params->get('jcontentevent_target', array('body'));
 
@@ -129,7 +135,7 @@ class plgSystemKunena extends JPlugin {
 	 * Runs all Joomla content plugins on a single KunenaForumMessage
 	 *
 	 * @access protected
-	 * @see self::onKunenaContentPrepare()
+	 * @see self::onKunenaPrepare()
 	 * @since Kunena 2.0
 	 *
 	 * @param	string	$text		String to run events on

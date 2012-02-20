@@ -18,7 +18,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-recount"><?php echo JText::_('COM_KUNENA_A_RECOUNT'); ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=tools') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="task" value="recount" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 				<fieldset>

@@ -10,57 +10,66 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="block-wrapper box-color box-border box-border_radius">
-	<div class="block">
-		<div class="headerbox-wrapper">
-			<div class="header">
-				<h2 class="header">
-					<a href="#" title="Category Header" rel="ksection-detailsbox">
-						<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_DEFAULT_TOPICS') ?>
-					</a>
-				</h2>
-				<?php if ($this->category->headerdesc) : ?>
-					<div class="header-desc"><?php echo $this->parse($this->category->headerdesc) ?></div>
-				<?php endif ?>
+<div class="box-module">
+	<div class="box-wrapper box-color box-border box-border_radius box-shadow">   
+		<div class="block">
+			<div class="headerbox-wrapper box-full">
+				<div class="header">
+					<h2 class="header link-header2">
+						<a class="categories" href="#" title="Category Header" rel="ksection-detailsbox">
+							<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_DEFAULT_TOPICS') ?>
+						</a>
+					</h2>
+					<?php if ($this->category->headerdesc) : ?>
+						<div class="header-desc"><?php echo $this->parse($this->category->headerdesc) ?></div>
+					<?php endif ?>
+				</div>
+				
 			</div>
-		</div>
-		<div class="detailsbox-wrapper">
-			<div class="topic detailsbox">
-				<ul class="topic-list">
-					<li class="header">
-						<dl>
-							<dd class="topic-icon">
-							</dd>
-							<dd class="topic-subject">
-								<span><?php echo JText::_('Subject') ?></span>
-							</dd>
-							<dd class="topic-replies">
-								<span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
-							</dd>
-							<dd class="topic-views">
-								<span><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
-							</dd>
-							<dd class="topic-lastpost">
-								<span><?php echo JText::_('Last Post') ?></span>
-							</dd>
-						</dl>
-					</li>
-				</ul>
-				<ul class="topic-list">
-					<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
-						<li class="topics-row">
-							<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_NO_TOPICS'); ?>
+			<div class="detailsbox-wrapper">
+				<div class="topic detailsbox box-full box-border box-border_radius box-shadow">
+					<ul class="topic-list">
+						<li class="header box-hover_header-row clear">
+							<dl>
+								<dd class="topic-icon">
+								</dd>
+								<dd class="topic-subject">
+									<span class="bold"><?php echo JText::_('Subject') ?></span>
+								</dd>
+								<dd class="topic-replies">
+									<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
+								</dd>
+								<dd class="topic-views">
+									<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
+								</dd>
+								<dd class="topic-lastpost">
+									<span class="bold"><?php echo JText::_('Last Post') ?></span>
+								</dd>
+								<?php if ($this->topicActions) : ?>
+									<dd class="topic-checkbox">
+										<input type="checkbox" value="0" name="" class="moderate-topic-checkall" />
+									</dd>
+								<?php endif ?>
+							</dl>
 						</li>
-					<?php else : $this->displayRows(); endif ?>
-				</ul>
+					</ul>
+					<ul class="topic-list">
+						<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
+							<li class="topics-row box-hover box-hover_list-row">
+								<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_NO_TOPICS'); ?>
+							</li>
+						<?php else : $this->displayRows(); endif ?>
+					</ul>
+				</div>
 			</div>
+			<?php if ($this->topicActions) : ?>
+				<div class="modbox-wrapper">
+					<div class="modbox">
+						<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
+					</div>
+				</div>
+			<?php endif ?>
 		</div>
-		<?php if ($this->topicActions) : ?>
-			<div id="section-modbox">
-				<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="kinputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
-				<input type="checkbox" value="0" name="" class="kmoderate-topic-checkall" />
-			</div>
-	<?php endif ?>
 	</div>
 </div>
 <div class="spacer"></div>

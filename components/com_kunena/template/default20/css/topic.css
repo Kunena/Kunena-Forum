@@ -8,165 +8,165 @@
 * @link http://www.kunena.org
 **/
 
-#kunena .ktopic-tags {
+#kunena.layout .ktopic-tags {
 	border-top: 1px solid #ddd;
 }
-#kunena .ktopic-tags li {
+#kunena.layout .ktopic-tags li {
 	font-size: 11px;
 }
-#kunena .ktopic-tags li a,
-#kunena .kposts-sect a,
-#kunena .kposts-cats a {
+#kunena.layout .ktopic-tags li a,
+#kunena.layout .kposts-sect a,
+#kunena.layout .kposts-cats a {
 	color: #5388B4;
 }
-#kunena .ktopic-tags li a,
-#kunena .kposts-sect a,
-#kunena .kposts-cats a {
+#kunena.layout .ktopic-tags li a,
+#kunena.layout .kposts-sect a,
+#kunena.layout .kposts-cats a {
 	text-decoration: none;
 }
-#kunena .ktopic-tags li a:hover,
-#kunena .kposts-sect a:hover,
-#kunena .kposts-cats a:hover {
+#kunena.layout .ktopic-tags li a:hover,
+#kunena.layout .kposts-sect a:hover,
+#kunena.layout .kposts-cats a:hover {
 	text-decoration: underline;
 }
-#kunena .ktopic-tags-title,
-#kunena .kposts-title,
-#kunena .kposts-sect-title,
-#kunena .kposts-cats-title {
+#kunena.layout .ktopic-tags-title,
+#kunena.layout .kposts-title,
+#kunena.layout .kposts-sect-title,
+#kunena.layout .kposts-cats-title {
 	font-weight: bold;
 	color: #333;
 }
-#kunena .ktopic-taglist {
+#kunena.layout .ktopic-taglist {
 	background-color: #14537b;
 }
-#kunena .ktopic-taglist li {
+#kunena.layout .ktopic-taglist li {
 	font-size: 11px;
 }
-#kunena .ktopic-taglist li a {
+#kunena.layout .ktopic-taglist li a {
 	color: #f5f5f5;
 }
-#kunena .ktopic-taglist-title {
+#kunena.layout .ktopic-taglist-title {
 	color: #FFF;
 }
 
 /*---------- Topic Categories ------------- */
 
-#kunena .ktopic-cats {
+#kunena.layout .ktopic-cats {
 	border-top: 1px solid #ddd;
 }
-#kunena .ktopic-cats li {
+#kunena.layout .ktopic-cats li {
 	font-size: 11px;
 }
-#kunena .ktopic-cats li a {
+#kunena.layout .ktopic-cats li a {
 	color: #5388B4;
 }
-#kunena .ktopic-cats li a {
+#kunena.layout .ktopic-cats li a {
 	text-decoration: none;
 }
-#kunena .ktopic-cats li a:hover {
+#kunena.layout .ktopic-cats li a:hover {
 	text-decoration: underline;
 }
-#kunena .ktopic-cats-title {
+#kunena.layout .ktopic-cats-title {
 	font-weight: bold;
 	color: #333;
 }
-#kunena .ktopic-catlist {
+#kunena.layout .ktopic-catlist {
 	background-color: #14537b;
 }
-#kunena .ktopic-catlist li {
+#kunena.layout .ktopic-catlist li {
 	font-size: 11px;
 }
-#kunena .ktopic-catlist li a {
+#kunena.layout .ktopic-catlist li a {
 	color: #f5f5f5;
 }
-#kunena .ktopic-catlist-title {
+#kunena.layout .ktopic-catlist-title {
 	color: #FFF;
 }
 /*---------- Topics ------------- */
 
-#kunena .ktopic-subsc {
+#kunena.layout .ktopic-subsc {
 	font-size: 11px;
 	color: #fff;
 }
-#kunena .kposthead {
+#kunena.layout .kposthead {
 	background-color: #14537b;
 }
-#kunena .kposthead h3,
-#kunena .kposthead li,
-#kunena .kposthead li a{
+#kunena.layout .kposthead h3,
+#kunena.layout .kposthead li,
+#kunena.layout .kposthead li a{
 	color: #fff;
 }
-#kunena .kposthead-postsubs,
-#kunena .kposthead-posttime,
-#kunena .kposthead-postip,
-#kunena .kposthead-postid {
+#kunena.layout .kposthead-postsubs,
+#kunena.layout .kposthead-posttime,
+#kunena.layout .kposthead-postip,
+#kunena.layout .kposthead-postid {
 	font-size: 11px;
 }
-/*#kunena .kposts-row {
+/*#kunena.layout .kposts-row {
 	border-bottom: 1px solid #BCBCBC;
 }*/
 
-#kunena .kposts-body {
+#kunena.layout .kposts-body {
 	width: 40%;
 	border-right: 1px solid #BCBCBC;
 }
 
-#kunena .kpostmessage select {
+#kunena.layout .kpostmessage select {
 	border-color: #999;
 }
-#kunena .kpostmessage fieldset {
+#kunena.layout .kpostmessage fieldset {
 	background: #FFFFFF;
 	border-color: #BCBCBC;
 }
-#kunena .kpost-message .invalid {
+#kunena.layout .kpost-message .invalid {
 	background-color: #FFDDDD !important;
 	border-color: red !important;
 }
-#kunena table.kblocktable {
+#kunena.layout table.kblocktable {
 	border-color: #BFC3C6;
 }
-#kunena img.kbbcode:hover {
+#kunena.layout img.kbbcode:hover {
 	background-color: #e4e4e4;
 }
-#kunena div#kbbcode-size-options span:hover {
+#kunena.layout div#kbbcode-size-options span:hover {
 	background-color: #e4e4e4;
 }
-#kunena #kbbcode-toolbar li a:hover {
+#kunena.layout #kbbcode-toolbar li a:hover {
 	background-color: #e4e4e4;
 }
 
-#kunena .kpostmessage .kposthint .kinputbox {
+#kunena.layout .kpostmessage .kposthint .kinputbox {
 	background-color: #FFFFCC;
 	border-color: #FFFFCC;
 	padding: 0;
 }
-#kunena .kpostmessage .ktxtarea {
+#kunena.layout .kpostmessage .ktxtarea {
 	border-color: #BFC3C6;
 }
 /*---------- Display User Posts ------------- */
 
-#kunena .kposts-body,
-#kunena .kposts-message {
+#kunena.layout .kposts-body,
+#kunena.layout .kposts-message {
 	border-color: #F4F4F4;
 }
 
-#kunena .kpost-body {
+#kunena.layout .kpost-body {
 	color: var(styleForumMsgcolorText) !important;
 }
 
-#kunena .kpost-container {
+#kunena.layout .kpost-container {
 	border-right: 1px solid #F4F4F4;
 }
-#kunena .kpost-body-attach {
+#kunena.layout .kpost-body-attach {
 	font-size: 9px;
 }
-#kunena .kpost-body-lastedit {
+#kunena.layout .kpost-body-lastedit {
 	font-size: 9px;
 }
-#kunena .kpost-body-editreason {
+#kunena.layout .kpost-body-editreason {
 	font-size: 9px;
 }
-#kunena .kpost-body-sig {
+#kunena.layout .kpost-body-sig {
 	color: #999;
 	border-top: 1px dotted #BFC3C6;
 	border-bottom: 1px dotted #BFC3C6;

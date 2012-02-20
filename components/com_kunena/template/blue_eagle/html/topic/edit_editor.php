@@ -125,7 +125,6 @@ defined ( '_JEXEC' ) or die ();
 
 			<?php
 			if ($this->config->highlightcode) {
-				$this->config = KunenaFactory::getConfig();
 				if (version_compare(JVERSION, '1.6','>')) {
 					// Joomla 1.6+
 					$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi';
@@ -257,7 +256,7 @@ defined ( '_JEXEC' ) or die ();
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></td>
 
 	<td class="kcol-last kcol-editor-field">
-		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50" tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
 		<?php
 		// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
 		?>

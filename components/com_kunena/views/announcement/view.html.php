@@ -17,7 +17,6 @@ jimport ( 'joomla.cache.handler.output' );
  */
 class KunenaViewAnnouncement extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->config = KunenaFactory::getConfig();
 		$this->assignRef ( 'announcement', $this->get ( 'Announcement' ) );
 		$this->assignRef ( 'canEdit', $this->get ( 'CanEdit' ) );
 
@@ -27,7 +26,6 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 
 	function displayCreate($tpl = null) {
-		$this->config = KunenaFactory::getConfig();
 		$this->assignRef ( 'announcement', $this->get ( 'NewAnnouncement' ) );
 		$this->assignRef ( 'canEdit', $this->get ( 'CanEdit' ) );
 
@@ -37,7 +35,6 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 
 	function displayEdit($tpl = null) {
-		$this->config = KunenaFactory::getConfig();
 		$this->assignRef ( 'announcement', $this->get ( 'Announcement' ) );
 		$this->assignRef ( 'canEdit', $this->get ( 'CanEdit' ) );
 
@@ -47,8 +44,6 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 
 	function displayList($tpl = null) {
-		$this->app = JFactory::getApplication();
-		$this->config = KunenaFactory::getConfig();
 		$this->assignRef ( 'announcements', $this->get ( 'Announcements' ) );
 		$this->assignRef ( 'canEdit', $this->get ( 'CanEdit' ) );
 

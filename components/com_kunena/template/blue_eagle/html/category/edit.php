@@ -34,7 +34,7 @@ function submitbutton(pressbutton)
 
 	<div class="kcontainer">
 		<div class="kbody">
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="view" value="category" />
 		<input type="hidden" name="task" value="save" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />

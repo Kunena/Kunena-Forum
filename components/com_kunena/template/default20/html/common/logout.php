@@ -22,7 +22,7 @@ defined ( '_JEXEC' ) or die ();
 				<li class="klogin-avatar"><span><?php echo $this->me->getLink($this->me->getAvatarImage('', 'welcome'), JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE')) ?></span></li>
 				<li class="klogin-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getLink(null, JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE'))) ?></li>
 				<li class="klogin-lastvisit"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_LASTVISIT', $this->lastvisitDate->toSpan('date_today', 'ago')) ?></li>
-				<?php if ($this->logout) : ?>
+				<?php if ($this->logout->enabled()) : ?>
 				<li class="klogout-form">
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="kform klogout">
 						<input type="hidden" name="view" value="user" />

@@ -94,3 +94,4 @@ $k = 0;
 	</div>
 </div>
 <?php endforeach; ?>
+<?php $this->displayWhoIsOnline(); ?>

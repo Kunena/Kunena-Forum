@@ -23,7 +23,6 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	function displayEdit() {
 		$this->setToolBarEdit();
-		$this->config = KunenaFactory::getConfig ();
 		$this->user = $this->get('user');
 		$this->sub = $this->get('subscriptions');
 		$this->subscatslist = $this->get('catsubcriptions');
@@ -51,8 +50,7 @@ class KunenaAdminViewUsers extends KunenaView {
 	function displayMove() {
 		$this->setToolBarMove();
 		$this->catslist = $this->get('movecatslist');
-		$app = JFactory::getApplication ();
-		$this->userid = $app->getUserState ( 'kunena.usermove.userid');
+		$this->userid = $this->app->getUserState ( 'kunena.usermove.userid');
 		$this->user = $this->get('moveuser');
 		$this->display();
 	}

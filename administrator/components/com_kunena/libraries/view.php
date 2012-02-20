@@ -15,23 +15,29 @@ jimport ( 'joomla.application.component.view' );
  * Kunena View Class
  */
 class KunenaView extends JView {
+	public $app = null;
+	public $me = null;
+	public $config = null;
+
 	protected $_row = 0;
 
 	function __construct($config = array()){
 		parent::__construct($config);
 		$this->profiler = KunenaProfiler::instance('Kunena');
+		$this->app = JFactory::getApplication ();
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$this->ktemplate = KunenaFactory::getTemplate();
 	}
 
 	function displayAll() {
-		$this->app = JFactory::getApplication ();
-		if ($this->config->board_offline) {
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), $this->me->isAdmin () ? 'notice' : 'error');
-		}
-		if ($this->config->debug && $this->me->isAdmin ()) {
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
+		if ($this->me->isAdmin ()) {
+			if ($this->config->board_offline) {
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
+			}
+			if ($this->config->debug) {
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
+			}
 		}
 
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
@@ -58,15 +64,16 @@ class KunenaView extends JView {
 				// Forum is offline
 				$this->common->header = JText::_('COM_KUNENA_FORUM_IS_OFFLINE');
 				$this->common->body = $this->config->offline_message;
+				$this->common->html = true;
 				$this->common->display('default');
-				KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
+				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
 			} elseif ($this->config->regonly && ! $this->me->exists()) {
 				// Forum is for registered users only
 				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body = JText::_('COM_KUNENA_LOGIN_FORUM');
 				$this->common->display('default');
-				KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
+				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
 			}
 		}
@@ -105,8 +112,8 @@ class KunenaView extends JView {
 		return KunenaHtmlParser::parseBBCode($text, $this, $len);
 	}
 
-	function getButton($name, $text) {
-		return $this->ktemplate->getButton($name, $text);
+	public function getButton($link, $name, $scope, $type, $id = null) {
+		return $this->ktemplate->getButton($link, $name, $scope, $type, $id);
 	}
 
 	function getIcon($name, $title='') {
@@ -294,6 +301,12 @@ class KunenaView extends JView {
 	function row($start=false) {
 		if ($start) $this->_row = 0;
 		return ++$this->_row & 1 ? 'odd' : 'even';
+	}
+
+	public function displayTemplateFile($view, $layout, $template = null) {
+		$file = "html/{$view}/{$layout}".($template ? "_{$template}" : '').".php";
+		include JPATH_SITE .'/'. $this->ktemplate->getFile($file);
+		// TODO: handle missing file
 	}
 
 	/**

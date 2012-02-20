@@ -17,43 +17,28 @@ defined ( '_JEXEC' ) or die ();
 			<?php echo $this->goto ?>
 		</td>
 		<td class="klist-actions-forum">
-		<?php if ($this->topic_reply || $this->topic_subscribe || $this->topic_favorite ) : ?>
+		<?php if ($this->topicButtons->get('reply') || $this->topicButtons->get('subscribe') || $this->topicButtons->get('favorite') ) : ?>
 			<div class="kmessage-buttons-row">
-			<?php echo $this->topic_reply ?>
-			<?php echo $this->topic_subscribe ?>
-			<?php echo $this->topic_favorite ?>
+			<?php echo $this->topicButtons->get('reply') ?>
+			<?php echo $this->topicButtons->get('subscribe') ?>
+			<?php echo $this->topicButtons->get('favorite') ?>
 			</div>
 		<?php endif ?>
-		<?php if ($this->topic_delete || $this->topic_sticky || $this->topic_lock) : ?>
+		<?php if ($this->topicButtons->get('delete') || $this->topicButtons->get('moderate') || $this->topicButtons->get('sticky') || $this->topicButtons->get('lock')) : ?>
 			<div class="kmessage-buttons-row">
-			<?php echo $this->topic_delete ?>
-			<?php echo $this->topic_sticky ?>
-			<?php echo $this->topic_lock ?>
-			</div>
-		<?php endif ?>
-		</td>
-
-		<td class="klist-actions-forum">
-		<?php if (isset ( $this->topic_new )) : ?>
-			<div class="kmessage-buttons-row">
-			<?php echo $this->topic_new; ?>
-			</div>
-		<?php endif ?>
-		<?php if (isset ( $this->topic_moderate )) : ?>
-			<div class="kmessage-buttons-row">
-			<?php echo $this->topic_moderate; ?>
-			</div>
-		<?php endif ?>
-		<?php if (isset ( $this->topic_merge )) : ?>
-			<div class="kmessage-buttons-row">
-				<?php echo $this->topic_merge; ?>
+			<?php echo $this->topicButtons->get('delete') ?>
+			<?php echo $this->topicButtons->get('moderate') ?>
+			<?php echo $this->topicButtons->get('sticky') ?>
+			<?php echo $this->topicButtons->get('lock') ?>
 			</div>
 		<?php endif ?>
 		</td>
-		<?php if (!empty($this->layout_buttons)) : ?>
+		<?php if ($this->topicButtons->get('flat') || $this->topicButtons->get('threaded') || $this->topicButtons->get('indented')) : ?>
 		<td class="klist-actions-forum">
 			<div class="kmessage-buttons-row">
-			<?php echo implode(' ', $this->layout_buttons) ?>
+			<?php echo $this->topicButtons->get('flat') ?>
+			<?php echo $this->topicButtons->get('threaded') ?>
+			<?php echo $this->topicButtons->get('indented') ?>
 			</div>
 		</td>
 		<?php endif ?>

@@ -20,10 +20,11 @@ class KunenaControllerHome extends KunenaController {
 
 	public function display() {
 		global $Itemid;
-		$menu = JFactory::getApplication ()->getMenu ();
+		$menu = $this->app->getMenu ();
 		$home = $menu->getActive ();
-		// TODO: maybe add error
-		if (!$home) return;
+		if (!$home) {
+			JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+		}
 
 		// Find default menu item
 		$default = $this->_getDefaultMenuItem($menu, $home);
@@ -39,6 +40,7 @@ class KunenaControllerHome extends KunenaController {
 
 		// Check if menu item was correctly routed
 		$active = $menu->getItem ( KunenaRoute::getItemID() );
+
 		if (!$active || ($active->id != $home->id && $active->id != $default->id)) {
 			// Routing has been changed, redirect or fail
 			if ($active) {
@@ -49,21 +51,30 @@ class KunenaControllerHome extends KunenaController {
 			return;
 		}
 
+		// Remove query variables coming from the home menu item
+		foreach ( $home->query as $var => $value ) {
+			if ( $var != 'Itemid' && $var != 'option' && $value == JRequest::getVar ($var) ) {
+				JRequest::setVar ( $var, null );
+			}
+		}
+		// If view is not set, add query variables from shown menu item
+		if (!JRequest::getVar ('view')) {
+			foreach ( $default->query as $var => $value ) {
+				if (JRequest::getVar ($var) === null)
+					JRequest::setVar ( $var, $value );
+			}
+		}
+
 		// Check if we are using default menu item
 		if (!isset($default->query['layout'])) $default->query['layout'] = 'default';
 		foreach ( $default->query as $var => $value ) {
 			$cmp = JRequest::getVar($var, null);
+			if ($var == 'layout' && !$cmp) $cmp = 'default';
 			if ($var == 'defaultmenu') continue;
 			if ($var == 'view' && $cmp == 'home') continue;
 			if ($cmp !== null && $value != $cmp) {
 				$default = $home;
 				break;
-			}
-		}
-		// Add query variables from shown menu item
-		if ($default != $home) {
-			foreach ( $default->query as $var => $value ) {
-				JRequest::setVar ( $var, $value );
 			}
 		}
 		// Set active menu item to point the real page

@@ -30,10 +30,8 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.trash.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.trash.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.trash.list.ordering', 'filter_order', 'id', 'cmd' );
@@ -102,11 +100,9 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * @since	1.6
 	 */
 	public function getPurgeItems() {
-		$app = JFactory::getApplication ();
-
-		$ids = $app->getUserState ( 'com_kunena.purge' );
-		$topic = $app->getUserState('com_kunena.topic');
-		$message = $app->getUserState('com_kunena.message');
+		$ids = $this->app->getUserState ( 'com_kunena.purge' );
+		$topic = $this->app->getUserState('com_kunena.topic');
+		$message = $this->app->getUserState('com_kunena.message');
 
 		$ids = implode ( ',', $ids );
 
@@ -128,8 +124,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * @since	1.6
 	 */
 	public function getMd5() {
-		$app = JFactory::getApplication ();
-		$ids = $app->getUserState ( 'com_kunena.purge' );
+		$ids = $this->app->getUserState ( 'com_kunena.purge' );
 
 		return md5(serialize($ids));
 	}

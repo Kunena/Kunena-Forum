@@ -19,8 +19,6 @@ jimport ( 'joomla.application.component.model' );
  */
 class KunenaAdminModelConfig extends KunenaModel {
 	function getConfiglists() {
-		$config = KunenaFactory::getConfig ();
-
 		$lists = array ();
 
 		// RSS
@@ -342,6 +340,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['show_imgfiles_manage_profile'] = JHTML::_('select.genericlist', $yesno, 'cfg_show_imgfiles_manage_profile', 'class="inputbox" size="1"', 'value', 'text', $config->show_imgfiles_manage_profile);
 
 		$lists ['hold_guest_posts'] = JHTML::_('select.genericlist', $yesno, 'cfg_hold_guest_posts', 'class="inputbox" size="1"', 'value', 'text', $config->hold_guest_posts);
+
+		$lists ['pickup_category'] = JHTML::_('select.genericlist', $yesno, 'cfg_pickup_category', 'class="inputbox" size="1"', 'value', 'text', $config->pickup_category);
 
 		$article_display[] = JHTML::_('select.option', 'full', JText::_('COM_KUNENA_COM_A_FULL_ARTICLE'));
 		$article_display[] = JHTML::_('select.option', 'intro', JText::_('COM_KUNENA_COM_A_INTRO_ARTICLE'));

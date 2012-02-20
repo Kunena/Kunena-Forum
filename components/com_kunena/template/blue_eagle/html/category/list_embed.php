@@ -74,7 +74,7 @@ foreach ( $this->sections as $section ) :
 			<?php
 				echo $this->getCategoryIcon($childforum, true);
 				echo $this->getCategoryLink($childforum);
-				echo '<span class="kchildcount ks">(' . $childforum->getTopics() . "/" . $childforum->getPosts() . ')</span>';
+				echo '<span class="kchildcount ks">(' . $childforum->getTopics() . "/" . $childforum->getReplies() . ')</span>';
 			?>
 			</div>
 			<?php endforeach; ?>
@@ -109,7 +109,7 @@ foreach ( $this->sections as $section ) :
 
 			<td class="kcol-mid kcol-kcatreplies">
 			<!-- Number of Replies -->
-			<span class="kcat-replies-number"><?php echo $this->formatLargeNumber ( $category->getPosts() ) ?></span>
+			<span class="kcat-replies-number"><?php echo $this->formatLargeNumber ( $category->getReplies() ) ?></span>
 			<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
 			<!-- /Number of Replies -->
 			</td>

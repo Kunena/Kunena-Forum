@@ -58,7 +58,7 @@ document.addEvent('domready', function() {
 	</div>
 	<div class="kcontainer" id="userlist-tbody">
 		<div class="kbody">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" method="post" name="adminForm">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.order'); ?>" />
 				<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.order_dir'); ?>" />

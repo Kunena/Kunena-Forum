@@ -42,14 +42,12 @@ class KunenaAdminModelCpanel extends KunenaModel {
 	* Website : http://www.alphaplug.com
 	*/
 	function getLatestKunenaVersion() {
-		$app = JFactory::getApplication ();
-
 		$url = 'http://update.kunena.org/kunena_update.xml';
 		$data = '';
 		$check = array();
 		$check['connect'] = 0;
 
-		$data = $app->getUserState('com_kunena.version_check', null);
+		$data = $this->app->getUserState('com_kunena.version_check', null);
 		if (!$data) {
 			//try to connect via cURL
 			if(function_exists('curl_init') && function_exists('curl_exec')) {
@@ -120,7 +118,7 @@ class KunenaAdminModelCpanel extends KunenaModel {
 				@fclose($handle);
 			}
 
-			$app->setUserState('com_kunena.version_check', $data);
+			$this->app->setUserState('com_kunena.version_check', $data);
 		}
 
 		if( !empty($data) && strstr($data, '<?xml version="1.0" encoding="utf-8"?>') ) {

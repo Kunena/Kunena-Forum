@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
-<install type="language" version="1.5.4" client="site" method="upgrade">
-	<name>Turkish(Turkiye)</name>
+<install type="language" version="1.5" client="site" method="upgrade">
+	<name>Kunena Forum - Turkish (Turkey)</name>
 	<tag>tr-TR</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<author>Tolga</author>
-	<authoremail>cumla@windowslive.com</authoremail>
-	<authorurl>http://www.cumla.org</authorurl>
-	<copyright>(C) 2005 Open Source Matters. All rights reserved..</copyright>
-	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<description>Kunena bileseni icin Turkce dil dosyalari</description>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>translations@kunena.org</authorEmail>
+	<authorUrl>https://www.transifex.net/projects/p/Kunena/team/tr_TR/</authorUrl>
+	<copyright>(C) 2008 - 2012 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPL</license>
+	<description>Turkish (Turkey) language file for Kunena Forum Component</description>
 
 	<files>
 		<filename>tr-TR.com_kunena.ini</filename>
 		<filename>tr-TR.com_kunena.tpl_blue_eagle.ini</filename>
-		<!-- <filename>tr-TR.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

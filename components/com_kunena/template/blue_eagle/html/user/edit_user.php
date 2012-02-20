@@ -10,7 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$kunena_config = KunenaFactory::getConfig ();
 ?>
 <div class="kblock kedituser">
 	<div class="kheader">
@@ -18,7 +17,7 @@ $kunena_config = KunenaFactory::getConfig ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : '' ?>">
+<table>
 	<tbody class="kmyprofile_general">
 		<tr class="krow2">
 			<td class="kcol-first">
@@ -74,7 +73,7 @@ $kunena_config = KunenaFactory::getConfig ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : '' ?>" id="kflattable">
+			<table>
 				<tbody class="kmyprofile_params">
 					<?php $i=0; foreach ($this->userparameters as $userparam): ?>
 					<tr class="krow<?php echo ($i^=1)+1;?>">

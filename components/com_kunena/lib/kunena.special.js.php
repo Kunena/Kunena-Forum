@@ -39,11 +39,9 @@ window.addEvent('domready', function(){
 
 	function kunenaCheckPollallowed(catid) {
 		if ( pollcategoriesid[catid] !== undefined ) {
-			document.id('kbbcode-poll-options').setStyle('display');
 			document.id('kbbcode-poll-button').setStyle('display');
 		} else {
 			document.id('kbbcode-poll-button').setStyle('display','none');
-			document.id('kbbcode-poll-options').setStyle('display','none');
 		}
 	}
 

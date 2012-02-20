@@ -70,7 +70,7 @@ function kunena_upgrade_200_aliases($parent) {
 function kCreateAlias($type, $item, $alias, $state=0) {
 	$state = (int) $state;
 	$db = JFactory::getDbo();
-	$query = "INSERT INTO #__kunena_aliases (alias, type, item, state) VALUES ({$db->Quote($alias)},{$db->Quote($type)},{$db->Quote($item)},{$db->Quote($state)})";
+	$query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item, state) VALUES ({$db->Quote($alias)},{$db->Quote($type)},{$db->Quote($item)},{$db->Quote($state)})";
 	$db->setQuery ($query);
 	$success = $db->query () && $db->getAffectedRows ();
 	if ($success && $state) {
@@ -85,7 +85,7 @@ function kCreateAlias($type, $item, $alias, $state=0) {
 function kCreateCategoryAlias($category, $alias, $state=0) {
 	$state = (int) $state;
 	$db = JFactory::getDbo();
-	$query = "INSERT INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($category->id)})";
+	$query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($category->id)})";
 	$db->setQuery ($query);
 	$success = $db->query () && $db->getAffectedRows ();
 	if ($success && $state) {

@@ -61,7 +61,7 @@ if (empty($this->category->allow_polls)) {
 }
 ?>
 
-<?php if ($this->my->id != 0) { ?>
+<?php if ($this->me->userid != 0) { ?>
 kbbcode.addFunction('PreviewBottom', function() {
 	kToggleOrSwapPreview("kbbcode-preview-bottom");
 }, {'id': 'kbbcode-previewbottom-button',

@@ -24,38 +24,35 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 	}
 
 	function add() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=add", false));
 	}
 
 	function edit() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$id = array_shift($cid);
 		if (!$id) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_TOPICICON_SELECTED' ), 'notice' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_TOPICICON_SELECTED' ), 'notice' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		} else {
 			$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=add&id={$id}", false));
 		}
 	}
 
 	function save() {
-		$app = JFactory::getApplication ();
 		$db = JFactory::getDBO ();
 		if (!JRequest::checkToken()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;
 		}
 
@@ -75,8 +72,8 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 			if (KunenaError::checkDatabaseError()) return;
 		}*/
 
-		$app->enqueueMessage ( JText::_('COM_KUNENA_TOPICICON_SAVED') );
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->app->enqueueMessage ( JText::_('COM_KUNENA_TOPICICON_SAVED') );
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
 	function orderup() {
@@ -98,9 +95,8 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 
 		if (!$id) return;
 
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return;
 		}
 
@@ -128,16 +124,15 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 	protected function setVariable($cid, $variable, $value) {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$app = JFactory::getApplication ();
 		$db = JFactory::getDBO ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return;
 		}
 
 		$id = array_shift($cid);
 		if (empty ( $id )) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_TOPICICON_SELECTED' ), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_TOPICICON_SELECTED' ), 'notice' );
 			return;
 		}
 
@@ -150,8 +145,8 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		if ( $value ) $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_PUBLISHED' );
 		else $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_UNPUBLISHED' );
 
-		$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_TOPICICON', ' '.$status ) );
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_TOPICICON', ' '.$status ) );
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
 	function bydefault() {
@@ -167,16 +162,15 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 	}
 
 	protected function setDefault($cid, $value) {
-		$app = JFactory::getApplication ();
 		$db = JFactory::getDBO ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return;
 		}
 
 		$id = array_shift($cid);
 		if (empty ( $id )) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_TOPICICON_SELECTED' ), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_TOPICICON_SELECTED' ), 'notice' );
 			return;
 		}
 
@@ -190,7 +184,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		}
 
 		if ( $defaultexist == 1) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_TOPICICON_ALREADY_DEFAULT' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_TOPICICON_ALREADY_DEFAULT' ) );
 		} else {
 				$topicicons_xml = simplexml_load_file(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
 
@@ -201,10 +195,10 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 			if ( $value ) $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_DEFAULT' );
 			else $status = JText::_ ( 'COM_KUNENA_A_TOPICICON_NOTDEFAULT' );
 
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_TOPICICON', ' '.$status ) );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_TOPICICON', ' '.$status ) );
 		}
 
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
 	function parseXMLTopiciconFile($topiciconBaseDir) {
@@ -265,8 +259,6 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 	}
 
 	function topiciconupload() {
-		$app = JFactory::getApplication ();
-
 		jimport ( 'joomla.filesystem.folder' );
 		jimport ( 'joomla.filesystem.file' );
 		jimport ( 'joomla.filesystem.archive' );
@@ -275,18 +267,18 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
 
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
 		if (!$file || !is_uploaded_file ( $file ['tmp_name'])) {
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
 		}
 		else {
 			$success = JFile::upload($file ['tmp_name'], $tmp . $file ['name']);
 			$success = JArchive::extract ( $tmp . $file ['name'], $tmp );
 			if (! $success) {
-				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
+				$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
 			}
 			// Delete the tmp install directory
 			if (JFolder::exists($tmp)) {
@@ -295,12 +287,12 @@ class KunenaAdminControllerTopicicons extends KunenaController {
           	// Never overwrite existing topic icon set
 						if (!JFolder::exists($dest.(String)$topicicons->name)) {
 					 	   $error = JFolder::move($tmp, $dest.(String)$topicicons->name);
-						    if ($error !== true) $app->enqueueMessage ( JText::_('COM_KUNENA_A_TOPICON_MANAGER_TEMPLATE').': ' . $error, 'notice' );
+						    if ($error !== true) $this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TOPICON_MANAGER_TEMPLATE').': ' . $error, 'notice' );
 
 					       JFile::delete($dest.(String)$topicicons->name.'/'.$file['name']);
 
 				        	if(JFolder::exists ($tmp)) $retval = JFolder::delete($tmp);
-					       $app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
+					       $this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
 					}
 				} else {
 					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TOPICON_MANAGER_TEMPLATE_MISSING_FILE'));
@@ -311,16 +303,15 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 				$retval = false;
 			}
 		}
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
 	function delete() {
 		$db = JFactory::getDBO ();
-		$app = JFactory::getApplication ();
 
 		if (!JRequest::checkToken()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;
 		}
 
@@ -335,27 +326,26 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 			$topicicons_xml->asXML(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/topicicons/topicicons2.xml');
 		}
 
-		$app->enqueueMessage (JText::_('COM_KUNENA_TOPICICONS_DELETED') );
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->app->enqueueMessage (JText::_('COM_KUNENA_TOPICICONS_DELETED') );
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
 	function saveorder() {
-		$app = JFactory::getApplication ();
 		/*
 		$db = JFactory::getDBO ();
 		require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/tables/kunenatopicicons.php');
 
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$order = JRequest::getVar ( 'order', array (), 'post', 'array' );
 
 		if (empty ( $cid )) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_TOPICICONS_SELECTED' ), 'notice' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_TOPICICONS_SELECTED' ), 'notice' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
 		$success = false;
@@ -377,15 +367,15 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 			$row->load( (int) $icon->id );
 			$row->ordering = $order [$icon->id];
 			if (!$row->store()) {
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_ORDERING_SAVE_FAILED', $this->escape ( $category->getError () ) ), 'notice' );
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_ORDERING_SAVE_FAILED', $this->escape ( $category->getError () ) ), 'notice' );
 			}
 		}
 		$row->reorder ( );
 
 		if ($success) {
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_NEW_ORDERING_SAVED' ) );
+			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_NEW_ORDERING_SAVED' ) );
 		}
 		*/
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 }

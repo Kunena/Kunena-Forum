@@ -147,7 +147,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 					</li>
 					<?php endif; ?>
 
-					<?php if ($this->config->userkeywords && $this->my->id) : ?>
+					<?php if ($this->config->userkeywords && $this->me->userid) : ?>
 					<li class="postmessage-row box-hover box-hover_list-row">
 						<div class="form-label">
 							<label for="kmytags">
@@ -155,7 +155,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 							</label>
 						</div>
 						<div class="form-field">
-							<input type="text" value="<?php echo $this->escape($this->topic->getKeywords($this->my->id, ', ')); ?>" maxlength="100" size="35" id="kmytags" name="mytags" class="box-width inputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
+							<input type="text" value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')); ?>" maxlength="100" size="35" id="kmytags" name="mytags" class="box-width inputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
 						</div>
 					</li>
 					<?php endif; ?>

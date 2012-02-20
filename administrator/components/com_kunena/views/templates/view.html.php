@@ -28,10 +28,9 @@ class KunenaAdminViewTemplates extends KunenaView {
 
 	function displayEdit () {
 		$this->setToolBarEdit();
-		$app = JFactory::getApplication ();
 		$this->params = $this->get('editparams');
 		$this->details = $this->get('templatedetails');
-		$this->templatename = $app->getUserState ( 'kunena.edit.template');
+		$this->templatename = $this->app->getUserState ( 'kunena.edit.template');
 		$template = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
 		$this->display();
@@ -39,8 +38,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 
 	function displayChoosecss() {
 		$this->setToolBarChoosecss();
-		$app = JFactory::getApplication ();
-		$this->templatename = $app->getUserState ( 'kunena.edit.template');
+		$this->templatename = $this->app->getUserState ( 'kunena.edit.template');
 		$this->dir = KPATH_SITE.'/template/'.$this->templatename.'/css';
 		jimport('joomla.filesystem.folder');
 		$this->files = JFolder::files($this->dir, '\.css$', false, false);		;
@@ -49,9 +47,8 @@ class KunenaAdminViewTemplates extends KunenaView {
 
 	function displayEditcss() {
 		$this->setToolBarEditcss();
-		$app = JFactory::getApplication ();
-		$this->templatename = $app->getUserState ( 'kunena.editcss.tmpl');
-		$this->filename = $app->getUserState ( 'kunena.editcss.filename');
+		$this->templatename = $this->app->getUserState ( 'kunena.editcss.tmpl');
+		$this->filename = $this->app->getUserState ( 'kunena.editcss.filename');
 		$this->content = $this->get ( 'FileContentParsed');
 		$this->css_path = KPATH_SITE.'/template/'.$this->templatename.'/css/'.$this->filename;
 		$this->ftp = $this->get('FTPcredentials');

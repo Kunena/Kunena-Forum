@@ -23,22 +23,20 @@ class KunenaModelTopics extends KunenaModel {
 	protected $actionMove = false;
 
 	protected function populateState() {
-		$app = JFactory::getApplication ();
 		$params = $this->getParameters();
 		$this->setState ( 'params', $params );
-		$config = KunenaFactory::getConfig ();
 
 		$format = $this->getWord ( 'format', 'html' );
 		$this->setState ( 'format', $format );
 
-		$active = $app->getMenu ()->getActive ();
+		$active = $this->app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
 		$layout = $this->getWord ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
 
 		$userid = $this->getInt ( 'userid', -1 );
 		if ($userid < 0) {
-			$userid = KunenaUserHelper::getMyself()->userid;
+			$userid = $this->me->userid;
 		} elseif($userid > 0) {
 			$userid = KunenaFactory::getUser($userid)->userid;
 		} else {
@@ -54,22 +52,22 @@ class KunenaModelTopics extends KunenaModel {
 			$latestcategory = array($catid);
 			$latestcategory_in = true;
 		} else {
-			$latestcategory = $params->get('topics_categories', $config->latestcategory );
+			$latestcategory = $params->get('topics_categories', $this->config->latestcategory );
 			if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
 			if (empty($latestcategory) || in_array(0, $latestcategory)) {
 				$latestcategory = false;
 			}
-			$latestcategory_in = (bool)$params->get('topics_catselection', $config->latestcategory_in);
+			$latestcategory_in = (bool)$params->get('topics_catselection', $this->config->latestcategory_in);
 		}
 		$this->setState ( 'list.categories', $latestcategory );
 		$this->setState ( 'list.categories.in', $latestcategory_in );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $config->show_list_time), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
 		$this->setState ( 'list.time', $value );
 
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_limit", 'limit', 0, 'int' );
-		if ($value < 1 || $value > 100) $value = $config->threads_per_page;
+		if ($value < 1 || $value > 100) $value = $this->config->threads_per_page;
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
@@ -247,8 +245,6 @@ class KunenaModelTopics extends KunenaModel {
 
 	protected function _common() {
 		if ($this->total > 0) {
-			$config = KunenaFactory::getConfig ();
-
 			// collect user ids for avatar prefetch when integrated
 			$userlist = array();
 			$lastpostlist = array();

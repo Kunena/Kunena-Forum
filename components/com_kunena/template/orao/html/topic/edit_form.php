@@ -169,7 +169,7 @@ JHTML::_('behavior.tooltip');
 						<?php foreach ($this->topicIcons as $id=>$icon) : ?>
 						<li class="hasTip" title="Topic icon :: <?php echo $this->escape(ucfirst($icon->name)) ?>">
 							<input type="radio" name="topic_emoticon" id="topic_emoticon_<?php echo $this->escape($icon->name) ?>" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
-							<label for="topic_emoticon_<?php echo $this->escape($icon->name) ?>"><img src="<?php echo $this->template->getTopicIconPath($icon->id, true) ?>" alt="" border="0" /></label>
+							<label for="topic_emoticon_<?php echo $this->escape($icon->name) ?>"><img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true) ?>" alt="" border="0" /></label>
 						</li>
 						<?php endforeach ?>
 					</ul>
@@ -213,7 +213,7 @@ JHTML::_('behavior.tooltip');
 			</li>
 			<?php endif; ?>
 
-			<?php if ($this->config->userkeywords && $this->my->id) : ?>
+			<?php if ($this->config->userkeywords && $this->me->userid) : ?>
 			<li class="kpostmessage-row krow-even">
 				<div class="kform-label">
 					<label for="kmytags">
@@ -221,7 +221,7 @@ JHTML::_('behavior.tooltip');
 					</label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape($this->topic->getKeywords($this->my->id, ', ')); ?>" maxlength="100" size="35" id="kmytags" name="mytags" class="kinputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
+					<input type="text" value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')); ?>" maxlength="100" size="35" id="kmytags" name="mytags" class="kinputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
 				</div>
 			</li>
 			<?php endif; ?>

@@ -347,6 +347,29 @@ class KunenaForumCategoryHelper {
 		return $rows;
 	}
 
+	static public function fixAliases() {
+		$db = JFactory::getDBO ();
+
+		$rows = 0;
+		$queries = array();
+		// Fix wrong category id in aliases
+		$queries[] = "UPDATE #__kunena_aliases AS a INNER JOIN #__kunena_categories AS c ON a.alias = c.alias SET a.item = c.id WHERE a.type='catid'";
+		// Delete aliases from non-existing categories
+		$queries[] = "DELETE a FROM #__kunena_aliases AS a LEFT JOIN #__kunena_categories AS c ON a.item = c.id WHERE a.type='catid' AND c.id IS NULL";
+		// Add missing category aliases
+		$queries[] = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item) SELECT alias, 'catid' AS type, id AS item FROM #__kunena_categories WHERE alias!=''";
+
+		foreach ($queries as $query) {
+			$db->setQuery ( $query );
+			$db->query ();
+			if (KunenaError::checkDatabaseError ())
+				return false;
+			$rows += $db->getAffectedRows ();
+		}
+
+		return $rows;
+	}
+
 	// Internal functions:
 
 	static protected function loadCategories() {

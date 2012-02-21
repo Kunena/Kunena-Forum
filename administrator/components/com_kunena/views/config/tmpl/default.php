@@ -22,7 +22,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-config"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
 		<div id="kadmin-configtabs">
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="config" />
 			<input type="hidden" name="task" value="" />
 			<?php echo JHTML::_( 'form.token' ); ?>
@@ -402,6 +402,20 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_ATTACHMENT_LIMIT_DESC') ?>
 						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $this->lists ['pickup_category'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_PICKUP_CATEGORY_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_ARTICLE_DISPLAY') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['article_display']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_ARTICLE_DISPLAY_DESC') ?></td>
 					</tr>
 				</table>
 			</fieldset>

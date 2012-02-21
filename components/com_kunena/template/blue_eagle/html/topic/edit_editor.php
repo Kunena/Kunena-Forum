@@ -100,10 +100,10 @@ defined ( '_JEXEC' ) or die ();
 					echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE'); ?>')" />
 
 				<img id="kbutton-poll-add"
-					src="<?php echo $this->template->getImagePath('icons/poll_add_options.png') ?>"
+					src="<?php echo $this->ktemplate->getImagePath('icons/poll_add_options.png') ?>"
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>" />
 				<img id="kbutton-poll-rem"
-					src="<?php echo $this->template->getImagePath('icons/poll_rem_options.png' ) ?>"
+					src="<?php echo $this->ktemplate->getImagePath('icons/poll_rem_options.png' ) ?>"
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
 
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
@@ -125,7 +125,6 @@ defined ( '_JEXEC' ) or die ();
 
 			<?php
 			if ($this->config->highlightcode) {
-				$this->config = KunenaFactory::getConfig();
 				if (version_compare(JVERSION, '1.6','>')) {
 					// Joomla 1.6+
 					$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi';
@@ -257,7 +256,7 @@ defined ( '_JEXEC' ) or die ();
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></td>
 
 	<td class="kcol-last kcol-editor-field">
-		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50" tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
 		<?php
 		// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
 		?>

@@ -34,8 +34,8 @@ class KunenaBbcode extends BBCode {
 		$this->tag_rules = $this->defaults->default_tag_rules;
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
-		$this->SetSmileyDir ( JPATH_ROOT .'/'. KPATH_COMPONENT_RELATIVE );
-		$this->SetSmileyURL ( JURI::root(true) . '/' . KPATH_COMPONENT_RELATIVE );
+		$this->SetSmileyDir ( JPATH_ROOT );
+		$this->SetSmileyURL ( JURI::root(true) );
 		$this->SetDetectURLs ( true );
 	}
 
@@ -865,6 +865,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$articleid = intval($content);
 
+		$config = KunenaFactory::getConfig();
 		$user = JFactory::getUser ();
 		$db = JFactory::getDBO ();
 		$site = JFactory::getApplication('site');
@@ -935,8 +936,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
 			}
 
-			// TODO: make configurable
-			if (!$default) $default = 'intro';
+			if (!$default) $default = $config->article_display;
 			switch ($default) {
 				case 'full':
 					if ( !empty($article->fulltext) ) {
@@ -990,10 +990,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 	function DoCode($bbcode, $action, $name, $default, $params, $content) {
 		static $enabled = false;
-		static $languages = array();
 
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCODE_CHECK) {
+			$bbcode->autolink_disable = 1;
 			return true;
+		}
+		$bbcode->autolink_disable = 0;
 
 		$type = isset ( $params ["type"] ) ? $params ["type"] : "php";
 		if ($type == 'js') {
@@ -1005,15 +1007,16 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$enabled = true;
 			if (version_compare(JVERSION, '1.6','>')) {
 				// Joomla 1.6+
-				// TODO: use the content plugin instead
-				require_once JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
+				$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
+				if (file_exists($path)) {
+					require_once $path;
+				}
 			} else {
 				// Joomla 1.5
 				jimport ( 'geshi.geshi' );
 			}
-			$languages = GeSHi::get_supported_languages();
 		}
-		if ($enabled && in_array ( $type, $languages )) {
+		if ($enabled && class_exists('GeSHi')) {
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );
 			$code = $geshi->parse_code ();
@@ -1211,7 +1214,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		'youku' => array ('flash', 480, 400, 0, 0, 'http://player.youku.com/player.php/sid/%vcode%/v.swf', '\/v_show\/id_(.*)\.html', '' ),
 
-		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1&cc_load_policy=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
 		// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
 		//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )

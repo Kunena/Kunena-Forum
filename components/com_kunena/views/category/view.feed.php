@@ -17,7 +17,6 @@ require_once KPATH_SITE.'/lib/kunena.link.class.php';
  */
 class KunenaViewCategory extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->config = KunenaFactory::getConfig();
 		if (!$this->config->enablerss) {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
@@ -27,7 +26,6 @@ class KunenaViewCategory extends KunenaView {
 			JError::raiseError ( 404, $this->category->getError() );
 		}
 
-		$this->template = KunenaTemplate::getInstance();
 		$this->topics = $this->get ( 'Topics' );
 
 		$title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
@@ -39,7 +37,7 @@ class KunenaViewCategory extends KunenaView {
 		// Create image for feed
 		$image = new JFeedImage();
 		$image->title = $this->document->getTitle();
-		$image->url = $this->template->getImagePath('icons/rss.png');
+		$image->url = $this->ktemplate->getImagePath('icons/rss.png');
 		$image->description = $this->document->getDescription();
 		$this->document->image = $image;
 

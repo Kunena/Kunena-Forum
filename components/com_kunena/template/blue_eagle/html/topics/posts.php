@@ -18,7 +18,7 @@ $this->getModulePosition ( 'kunena_announcement' );
 	<tr>
 		<td class="klist-actions-info-all">
 			<strong><?php echo intval($this->total) ?></strong>
-			<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>
+			<?php echo JText::_('COM_KUNENA_USERPOSTS') ?>
 		</td>
 
 		<td class="klist-times-all">

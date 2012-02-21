@@ -1,0 +1,569 @@
+/* color */
+
+#kunena.layout input {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+	background-color: #FFFFFF;
+	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+	border: 1px solid #BFC3C6;
+	border-radius: 5px;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+#kunena.layout select {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+	background-color: #FFFFFF;
+	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+	border: 1px solid #BFC3C6;
+	border-radius: 5px;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+#kunena.layout textarea {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+	background-color: #FFFFFF;
+	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+	border: 1px solid #BFC3C6;
+	border-radius: 5px;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+#kunena.layout fieldset {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+	/*background-color: #FFFFFF;
+	/*background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);*/
+	/*border: 1px solid #BFC3C6;
+	border-radius: 5px;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;*/
+}
+
+#kunena.layout label {
+	font-weight: bold;
+}
+
+#kunena.layout .box-hover {
+	background-color: rgba(255, 255, 255, 0.0);
+}
+
+#kunena.layout .box-hover:hover {
+	background-color: rgba(100, 100, 100, 0.05);
+}
+
+#kunena.layout .box-focus {
+	background-color: rgba(255, 255, 255, 0.0);
+}
+
+#kunena.layout .box-focus:focus {
+	background-color: rgba(100, 100, 100, 0.1);
+}
+
+#kunena.layout .box-shadow {
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(255, 255, 255, 0.4), -1px -1px 0 rgba(255, 255, 255, 0.4), 1px -1px 0 rgba(255, 255, 255, 0.4), -1px 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+#kunena.layout .box-shadow:hover {
+
+}
+
+#kunena.layout .box-color {
+	/*background-color: rgba(100, 100, 100, 0.1);*/
+	background-image: linear-gradient(top, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.0) 100%) !important;
+}
+
+#kunena.layout .box-color:hover {
+	/*background-color: rgba(100, 100, 100, 0.1);*/
+	background-image: linear-gradient(top, rgba(89, 155, 220, 0.15) 0%, rgba(48, 114, 179, 0.15) 100%) !important;
+}
+
+#kunena.layout .box-border {
+	/*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+	border-color: rgba(0, 0, 0, 0.05);
+	border-style: solid;
+	border-width: 1px;
+	/*border-radius: 5px;*/
+}
+
+#kunena.layout .box-border:hover {
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+	border-color: rgba(0, 0, 0, 0.05);
+	border-style: solid;
+	border-width: 1px;
+	/*border-radius: 5px;*/
+}
+
+#kunena.layout .box-border_radius {
+	border-radius: 5px;
+}
+
+#kunena.layout .box-border_radius:hover {
+	border-radius: 5px;
+}
+
+#kunena.layout .box-hover_header-row {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#kunena.layout .box-hover_list-row {
+	border-top: 1px solid rgba(0, 0, 0, 0.0);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
+	background-color: rgba(255, 255, 255, 0.0);
+}
+
+#kunena.layout .box-hover_list-row:hover {
+	border-top: 1px solid rgba(255, 255, 255, 0.8);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
+	background-color: rgba(100, 100, 100, 0.05);
+}
+
+#kunena.layout .bold {
+	font-weight: bold;
+}
+
+#kunena.layout .link {
+	text-decoration: none !important;
+	background: none !important;
+	color: #555555 !important;
+}
+
+#kunena.layout .link:hover {
+	text-decoration: underline !important;
+	background: none !important;
+	color: #555555 !important;
+}
+
+#kunena.layout .link-header2 > a {
+	text-decoration: none !important;
+	background: none !important;
+	color: #555555 !important;
+}
+
+#kunena.layout .link-header2 > a:hover {
+	text-decoration: underline !important;
+	background: none !important;
+	color: #555555 !important;
+}
+
+#kunena.layout .link-header3 > a {
+	text-decoration: none !important;
+	background: none !important;
+	color: #555555 !important;
+}
+
+#kunena.layout .link-header3 > a:hover {
+	text-decoration: underline !important;
+	background: none !important;
+	color: #555555 !important;
+}
+
+#kunena.layout .link:hover, #kunena.layout .link:focus {
+	text-decoration: underline !important;
+	background: none !important;
+	color: #333333 !important;
+}
+
+#kunena.layout .divider {
+	border-top: 1px solid #CCCCCC;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+#kunena.layout .separator {
+	border-left: 1px solid #1B1B1B;
+	border-right: 1px solid #333333;
+}
+
+#kunena.layout li.dropdown .dropdown-menu {
+	opacity: 0.0;
+	background-clip: padding-box;
+	background-color: rgba(255, 255, 255, 1.0);
+	border-color: rgba(0, 0, 0, 0.2);
+	border-radius: 0 0 5px 5px;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	list-style: none outside none;
+}
+
+#kunena.layout li.dropdown:hover > * {
+	opacity: 1.0;
+}
+
+#kunena.layout h2 > a {
+	font-size: 18px !important;
+	line-height: 24px !important;
+	font-family: Georgia,"Times New Roman",Times,serif !important;
+	font-weight: bold !important;
+	color: #555555 !important;
+}
+
+#kunena.layout h3 > a {
+ 	font-size: 15px !important;
+ 	font-family: Georgia,"Times New Roman",Times,serif !important;
+ 	font-weight: bold !important;
+ 	color: #555555 !important;
+}
+
+#kunena.layout .spacer {
+	background: none repeat scroll 0 0 transparent;
+}
+
+#kunena.layout div.headerbox-wrapper {
+	background-image: linear-gradient(top, rgba(255, 255, 255, 1.0) 0%, rgba(240, 240, 240, 1.0) 100%) !important;
+}
+
+/*#kunena.layout li.postmessage-row {
+	border-top: 1px solid rgba(0, 0, 0, 0.0);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
+	background-color: rgba(255, 255, 255, 0.0);
+}*/
+
+/*#kunena.layout li.postmessage-row:hover {
+	border-top: 1px solid rgba(255, 255, 255, 0.8);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
+	background-color: rgba(100, 100, 100, 0.05);
+}*/
+
+#kunena.layout div.topic ul.topic-posts li.header {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#kunena.layout ul.menu li a {
+	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+	/*box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(255, 255, 255, 0.0) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.05) !important;*/
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0) !important;
+	background-color: rgba(255, 255, 255, 0.0) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.0) !important;
+	/*color: #444444;*/
+}
+
+#kunena.layout ul.menu li a:hover {
+	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(100, 100, 100, 0.1) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+	/*color: #222222;*/
+}
+
+#kunena.layout ul.menu li a {
+	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+	/*box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(255, 255, 255, 0.0) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.05) !important;*/
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0) !important;
+	background-color: rgba(255, 255, 255, 0.0) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.0) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.0) !important;
+	/*color: #444444;*/
+}
+
+#kunena.layout ul.menu li a:hover {
+	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(100, 100, 100, 0.1) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+	/*color: #222222;*/
+}
+
+#kunena.layout ul.menu li a:focus {
+	/*border-left: 1px solid rgba(0, 0, 0, 0.1);*/
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	background-color: rgba(100, 100, 100, 0.1) !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
+	/*color: #222222;*/
+}
+
+
+/*********************
+ * START BREADCRUMBS *
+ *********************/
+
+#kunena.layout div.breadcrumb {
+	background: #f4f4f4;
+	background-image: linear-gradient(top, #f4f4f4 0%,#ececec 100%);
+}
+
+#kunena.layout div.breadcrumb li.breadcumb-viewing,
+#kunena.layout div.breadcrumb li.breadcumb-total {
+	font-weight: bold;
+}
+
+/* Attachments */
+
+#kunena.layout div.breadcrumb .post-body-attach {
+	border: 1px solid #BCBCBC;
+	background-color: #f9f9f9;
+	border-radius:6px;
+}
+
+#kunena.layout div.breadcrumb .attach-title {
+	font-size: 11px;
+	font-weight: bold;
+	background-color: #14537b;
+	color: #FFF;
+	border-radius: 6px 6px 0 0;
+}
+
+#kunena.layout div.breadcrumb .attach-details span {
+	font-size: 11px;
+}
+
+/********************
+ * STOP BREADCRUMBS *
+ ********************/
+
+
+/****************
+ * START BUTTON *
+ ****************/
+
+#kunena.layout li.button {
+	display: inline-block;
+	overflow: visible;
+	position: relative;
+	white-space: nowrap;
+}
+
+/* Color */
+#kunena.layout li.button a {
+	cursor: pointer;
+	border: 1px solid #D4D4D4;
+	border-radius: 3px;
+	/*box-shadow: 0 1px 0 #FFFFFF;*/
+}
+
+#kunena.layout li.button a:hover {
+	cursor: pointer;
+	border: 1px solid #D4D4D4;
+	border-radius: 3px;
+	/*box-shadow: 0 1px 0 #FFFFFF;*/
+}
+
+#kunena.layout li.button a > span {
+	background: rgba(0, 0, 0, 0.0) !important;
+}
+
+#kunena.layout li.button a > span:hover {
+	/*background: #599bdc;*/
+	/*background-image: linear-gradient(top, #599bdc 0%,#3072b3 100%);*/
+	background: rgba(0, 0, 0, 0.15) !important;
+	
+}
+
+#kunena.layout li.button a {
+	background: none;
+	text-decoration: none;
+	color: #FFFFFF !important;
+}
+
+#kunena.layout li.button a:hover {
+	background: none;
+	text-decoration: none;
+	color: #FFFFFF !important;
+}
+
+/***************
+ * STOP BUTTON *
+ ***************/
+ 
+ 
+/*****************
+ * START CREDITS *
+ *****************/
+
+#kunena.layout div.credit p {
+	text-align: center;
+}
+
+/****************
+ * STOP CREDITS *
+ ****************/
+
+
+/*****************
+ * START MENUBOX *
+ *****************/
+
+#kunena.layout div.moduletable > ul {
+	background: none repeat scroll 0 0 transparent;
+	border-style: none;
+}
+
+#kunena.layout ul.menu li > a {
+	background: none;
+	border-color: none;
+	font-size: 13px !important;
+	font-weight: normal;
+}
+
+#kunena.layout ul.menu li a:hover {
+	background: none;
+}
+
+#kunena.layout ul.menu li a {
+	background: none;
+}
+
+#kunena.layout ul.menu li a:hover {
+	background: none;
+}
+
+/****************
+ * STOP MENUBOX *
+ ****************/
+
+
+/*******************
+ * START USER LIST *
+ *******************/
+
+#kunena.layout .userlist-user {
+	border: 1px solid #F4F4F4;
+}
+
+#kunena.layout h3.userlist-fullname,
+#kunena.layout h3.userlist-fullname a {
+	font-weight: bold;
+	color: #5388B4;
+	text-decoration: none;
+}
+
+#kunena.layout h3.userlist-fullname a:hover {
+	text-decoration: underline;
+	color: #0099FF;
+}
+
+#kunena.layout .userlist-avatar img{
+	border: 1px solid #F4F4F4;
+}
+
+#kunena.layout .details-status {
+	background-color: #000;
+	font-weight: bold;
+	text-align:center;
+	text-transform: uppercase;
+	opacity: 0.8;
+}
+
+#kunena.layout .details-status.konline {
+	color: green;
+}
+
+#kunena.layout .details-status.koffline {
+	color: red;
+}
+
+#kunena.layout .userlist-details{
+	float: left;
+}
+
+#kunena.layout .details-links {
+	float: left;
+}
+
+#kunena.layout .userlist-details li span {
+	font-weight: bold;
+}
+
+/******************
+ * STOP USER LIST *
+ ******************/
+
+
+/**************
+ * START MISC *
+ **************/
+ 
+#kunena.layout .user-admin { color: var(styleForumLegendAdmincolorText) !important; }
+#kunena.layout .user-globalmod { color: var(styleForumLegendGlobalcolorText) !important; }
+#kunena.layout .user-moderator { color: var(styleForumLegendModeratorcolorText) !important;}
+#kunena.layout .user-user { color: var(styleForumLegendUsercolorText) !important; }
+#kunena.layout .user-guest { color: var(styleForumLegendGuestcolorText) !important; }
+
+#kunena.layout .file-input-button, #kunena.layout .file-input-button:hover, #kunena.layout .file-input-button:focus {
+	background-color: #F2F1EE;
+	border-color: #999999;
+	color: #000000;
+}
+
+#kunena.layout .postbuttonset, .postbuttons {
+	border-color: #BFC3C6;
+}
+
+#kunena.layout .filter-button {
+	border: 1px solid #666;
+	margin: 2px;
+	background-color:#5388B4;
+	color: #fff;
+	font-size: 10px;
+}
+
+#kunena.layout .filter-button:hover {
+	border: 1px solid #F4F4F4;
+	background-color: #DDDDDD;
+	cursor:pointer;
+	color: #000;
+}
+#kunena.layout .icon-button {
+	color: #fff;
+	text-decoration: none;
+	font-size: 11px;
+	border: none;
+}
+
+#kunena.layout a.icon-button span span:hover {
+	text-decoration: underline;
+}
+
+#kunena.layout a.icon-button:hover {
+	color: #fff;
+}
+
+#kunena.layout .buttonbar-post {
+	border-top: 1px solid #F4F4F4;
+}
+
+#kunena.layout .mod-detailsbox .post-buttons {
+	border-top-color: #F4F4F4;
+}
+
+#kunena.layout .postmessage .postbuttonset td, #kunena.layout .postmessage tr.krow2 .postbuttonset td {
+	border-color: #F4F4F4;
+}
+
+#kunena.layout .postmessage .postbuttonset .posthint {
+	background-color: #FFFFCC;
+	border-color: #F4F4F4;
+}
+
+/*************
+ * STOP MISC *
+ *************/

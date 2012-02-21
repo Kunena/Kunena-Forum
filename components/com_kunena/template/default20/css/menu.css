@@ -8,24 +8,27 @@
 * @link http://www.kunena.org
 **/
 
-#kunena .kmenu {
+#kunena.layout .kmenu {
 	border-bottom: 3px solid #3072B3 !important;
 }
-#kunena .kmenu ul.menu li {
+#kunena.layout .kmenu ul.menu li {
 	background: #f4f4f4 !important;
 	background-image: linear-gradient(top, #f4f4f4 0%,#ececec 100%) !important;
 	font-size: 13px !important;
 }
-#kunena .kmenu ul.menu li:hover,
-#kunena .kmenu ul.menu li.active {
+#kunena.layout .kmenu ul.menu li:hover,
+#kunena.layout .kmenu ul.menu li.active {
 	background: #599bdc !important;
 	background-image: linear-gradient(top, #599bdc 0%,#3072b3 100%)!important;
 }
-#kunena .kmenu ul.menu li a {
+#kunena.layout .kmenu ul.menu li a {
 	color: var(styleInactiveFontcolor) !important;
 	text-decoration: none;
 }
-#kunena .kmenu ul.menu li:hover a,
-#kunena .kmenu ul.menu li.active a {
+#kunena.layout .kmenu ul.menu li:hover a,
+#kunena.layout .kmenu ul.menu li.active a {
 	color: var(styleActiveFontcolor) !important;
+}
+#kunena.layout  a {
+	font-size: 13px !important;
 }

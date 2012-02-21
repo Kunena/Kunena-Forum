@@ -21,46 +21,59 @@ class KunenaControllerAnnouncement extends KunenaController {
 		parent::__construct($config);
 	}
 
-	function edit() {
+	public function edit() {
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$model = $this->getModel('announcement');
 		$this->canEdit = $model->getCanEdit();
 		if (! $this->canEdit) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$model->edit();
 		if (1) {
 			$id = JRequest::getInt ( 'id', 0 );
-			$app->enqueueMessage ( JText::_ ( $id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD' ) );
+			$this->app->enqueueMessage ( JText::_ ( $id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD' ) );
 		}
 		$this->setRedirect (CKunenaLink::GetAnnouncementURL ( 'show', false, false ));
 	}
 
-	function delete($id) {
-		$app = JFactory::getApplication ();
+	public function delete($id) {
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$model = $this->getModel('announcement');
 		$this->canEdit = $model->getCanEdit();
 		if (! $this->canEdit) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ), 'error' );
 			$this->redirectBack ();
 		}
 		$model->delete();
 		if (1) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ANN_DELETED' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ANN_DELETED' ) );
 		}
 		$this->redirectBack ();
+	}
+
+	public function publish() {
+		if (! JRequest::checkToken ('get')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+	}
+
+	public function unpublish() {
+		if (! JRequest::checkToken ('get')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
 	}
 }

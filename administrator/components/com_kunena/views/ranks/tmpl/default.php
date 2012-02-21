@@ -24,7 +24,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 		<dl class="tabs" id="pane">
 		<dt><?php echo JText::_('COM_KUNENA_A_RANKS'); ?></dt>
 		<dd>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="ranks" />
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
@@ -78,7 +78,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						echo $id;
 						?>','edit')"><img
 						src="<?php
-						echo $this->escape(KURL_SITE . $this->template->getRankPath($row->rank_image))
+						echo $this->escape($this->ktemplate->getRankPath($row->rank_image, true))
 						?>"
 						alt="<?php
 						echo $this->escape($row->rank_image);

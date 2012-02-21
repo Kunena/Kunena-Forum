@@ -2323,6 +2323,18 @@ BBCODE BUTTONS
 	display:none;
 }
 
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator1,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator2,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator3,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator4,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator5,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator6,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator7,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator8 {
+	background-position:-400px 0;
+	width: 8px;
+	cursor: default;
+}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-bold-button {background-position:0 0;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-italic-button {background-position:-18px 0;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-underline-button {background-position:-36px 0;}
@@ -2944,7 +2956,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 #Kunena div.kavatar-lg img {	 }
 #Kunena div#kprofile-stats { margin-top: 15px;}
 #Kunena div#kprofile-stats ul { margin: 0 0 0 3px; padding: 0;}
-#Kunena div#kprofile-stats ul li { list-style-type: none; padding-top: 5px; clear:both; font-size:.917em ;}
+#Kunena div#kprofile-stats ul li { list-style-type: none; padding-top: 5px; clear:both; font-size:.917em; white-space: normal; }
 #Kunena div#kprofile-stats ul li span.konline-status-yes {
 	display:block; 
 	background: url("../images/icons/online.gif") no-repeat; 
@@ -3348,9 +3360,9 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 .span-16 {
 	width: 100% !important;	
 }
+/* --------------------------------------------------------------- */
 /* Fix Joomla 1.6 & 1.7 image border */
 #Kunena a img {border:none;}
-
 /* --------------------------------------------------------------- */
 /* Kunena 2.0 */
 

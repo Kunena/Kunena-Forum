@@ -10,7 +10,7 @@
 defined( '_JEXEC' ) or die();
 
 class KunenaTemplateBlue_Eagle extends KunenaTemplate {
-	protected $default = 'blue_eagle';
+	protected $default = array('blue_eagle');
 	protected $css_compile = false;
 	protected $userClasses = array(
 		'kwho-',
@@ -25,11 +25,31 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 	public $categoryIcons = array('kreadforum', 'kunreadforum');
 
 	public function initialize() {
-		require_once dirname(__FILE__).'/initialize.php';
+		// Enable legacy mode
+		KunenaTemplateLegacy::load();
+
+		require_once JPATH_SITE. '/' . $this->getFile('initialize.php');
 	}
 
-	public function getButton($name, $text) {
-		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
+	public function getButton($link, $name, $scope, $type, $id = null) {
+		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
+		$names = array('unsubscribe'=>'subscribe', 'unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
+				'quickreply'=>'reply', 'quote'=>'quote', 'edit'=>'edit');
+
+		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
+		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG") $title = '';
+		if ($id) $id = 'id="'.$id.'"';
+
+		if (isset($types[$type])) $type = $types[$type];
+		if ($name == 'quickreply') $type .= ' kqreply';
+		if (isset($names[$name])) $name = $names[$name];
+
+		return <<<HTML
+<a $id class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
+	<span class="{$name}"><span>{$text}</span></span>
+</a>
+HTML;
 	}
 
 	public function getIcon($name, $title='') {

@@ -40,8 +40,8 @@ Joomla! LogoJoomla! provides an easy-to-use graphical user interface that simpli
 				<li class="rowfull">
 					<dl class="">
 						<dt class="body" style="padding:15px">
-							<span id="tk-register-title" class="tk-register-agree tk-tips" title="Click to continue:: "><a class="tk-registerlink"><?php echo JText::_('COM_KUNENA_TEMPLATE_AGREE'); ?></a></span>
-							<span class="tk-register-cancel tk-tips" title="No Thanks:: "><a class="tk-registerlink" href="javascript:register.sweepToggle('contract')"><?php echo JText::_('COM_KUNENA_TEMPLATE_DO_NOT_AGREE'); ?></a></span>
+							<span id="tk-register-title" class="tk-register-agree tk-tips" title="<?php echo JText::_('COM_KUNENA_RULES_NO_THANKS') ?>"><a class="tk-registerlink"><?php echo JText::_('COM_KUNENA_TEMPLATE_AGREE'); ?></a></span>
+							<span class="tk-register-cancel tk-tips" title="<?php echo JText::_('COM_KUNENA_RULES_CLICK_CONTINUE') ?>"><a class="tk-registerlink" href="javascript:register.sweepToggle('contract')"><?php echo JText::_('COM_KUNENA_TEMPLATE_DO_NOT_AGREE'); ?></a></span>
 						</dt>
 					</dl>
 				</li>

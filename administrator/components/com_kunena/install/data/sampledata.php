@@ -12,8 +12,8 @@ defined ( '_JEXEC' ) or die ();
 // This file contains initial sample data for the forum
 
 class KText {
-	function _($param) {
-		return JText::_(str_replace('\n', "\n", $param));
+	function _($string) {
+		return JText::_(str_replace('\n', "\n", html_entity_decode($string, ENT_COMPAT, 'UTF-8')));
 	}
 }
 
@@ -138,12 +138,12 @@ function installSampleData()
 
 	$queries[] = array ('kunena_smileys', $query);
 
-	$section = JText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE');
-	$cat1 = JText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE');
-	$cat2 = JText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE');
-	$sectionR = KunenaRoute::stringURLSafe(JText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE'));
-	$cat1R = KunenaRoute::stringURLSafe(JText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE'));
-	$cat2R = KunenaRoute::stringURLSafe(JText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE'));
+	$section = KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE');
+	$cat1 = KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE');
+	$cat2 = KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE');
+	$sectionR = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE'));
+	$cat1R = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE'));
+	$cat2R = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE'));
 
 	$aliasquery = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES
 		({$db->quote($sectionR)}, 'catid', '1', 1),
@@ -176,13 +176,13 @@ function installSampleData()
 
 	$query="INSERT INTO `#__kunena_messages_text`
 	(`mesid`, `message`) VALUES
-	(1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT')).");";
+	(1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT_CONTENT')).");";
 
 	$queries[] = array ('kunena_messages_text', $query);
 
 	$query="INSERT INTO `#__kunena_topics`
 	(`id`, `category_id`, `subject`, `posts`, `first_post_id`, `first_post_time`, `first_post_userid`, `first_post_message`, `first_post_guest_name`, `last_post_id`, `last_post_time`, `last_post_userid`, `last_post_message`, `last_post_guest_name`) VALUES
-	(1, 2, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_SUBJECT')).", 1, 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT')).", 'Kunena', 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT')).", 'Kunena');";
+	(1, 2, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_SUBJECT')).", 1, 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT_CONTENT')).", 'Kunena', 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT_CONTENT')).", 'Kunena');";
 
 	$queries[] = array ('kunena_topics', $query);
 

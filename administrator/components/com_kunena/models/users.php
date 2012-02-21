@@ -28,10 +28,8 @@ class KunenaAdminModelUsers extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.users.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.admin.users.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.ordering', 'filter_order', 'username', 'cmd' );
@@ -90,9 +88,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 	}
 
 	public function getUser() {
-		$app = JFactory::getApplication ();
-
-		$userid = $app->getUserState ( 'kunena.user.userid');
+		$userid = $this->app->getUserState ( 'kunena.user.userid');
 
 		$user = KunenaUserHelper::get($userid);
 
@@ -101,8 +97,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 	public function getSubscriptions() {
 		$db = JFactory::getDBO ();
-		$app = JFactory::getApplication ();
-		$userid = $app->getUserState ( 'kunena.user.userid');
+		$userid = $this->app->getUserState ( 'kunena.user.userid');
 
 		$db->setQuery ( "SELECT topic_id AS thread FROM #__kunena_user_topics WHERE user_id='$userid' AND subscribed=1" );
 		$subslist = $db->loadObjectList ();
@@ -113,8 +108,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 	public function getCatsubcriptions() {
 		$db = JFactory::getDBO ();
-		$app = JFactory::getApplication ();
-		$userid = $app->getUserState ( 'kunena.user.userid');
+		$userid = $this->app->getUserState ( 'kunena.user.userid');
 
 		$db->setQuery ( "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$userid}" );
 		$subscatslist = $db->loadObjectList ();
@@ -125,8 +119,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 	public function getIPlist() {
 		$db = JFactory::getDBO ();
-		$app = JFactory::getApplication ();
-		$userid = $app->getUserState ( 'kunena.user.userid');
+		$userid = $this->app->getUserState ( 'kunena.user.userid');
 
 		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip" );
 		$iplist = implode("','", $db->loadResultArray ());
@@ -202,8 +195,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 	public function getMoveuser() {
 		$db = JFactory::getDBO ();
 
-		$app = JFactory::getApplication ();
-		$userid = $app->getUserState ( 'kunena.usermove.userid');
+		$userid = $this->app->getUserState ( 'kunena.usermove.userid');
 
 		$userid = implode(',', $userid);
 		$db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userid.")" );

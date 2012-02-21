@@ -28,8 +28,7 @@ JRequest::setVar( 'view', $view );
 require_once(KPATH_ADMIN.'/install/version.php');
 $kversion = new KunenaVersion();
 if ($view != 'install' && !$kversion->checkVersion()) {
-	$app = JFactory::getApplication ();
-	$app->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
+	JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
 
 } elseif ($view == 'install') {
 	// Load our installer (special case)
@@ -38,9 +37,8 @@ if ($view != 'install' && !$kversion->checkVersion()) {
 
 } else {
 	// Load language files
-	$lang = JFactory::getLanguage();
-	$lang->load('com_kunena',JPATH_SITE);
-	$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
+	KunenaFactory::loadLanguage('com_kunena', 'site');
+	KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 
 	// Initialize error handlers
 	KunenaError::initialize ();

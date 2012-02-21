@@ -11,7 +11,7 @@ defined ( '_JEXEC' ) or die ();
 
 // Kunena 1.6.1: Delete view/artcile folder which is not needed anymore
 function kunena_upgrade_161_delfiles($parent) {
-	if (KunenaForum::isSVN()) return;
+	if (KunenaForum::isDev()) return;
 
 	//Import filesystem libraries.
 	jimport ( 'joomla.filesystem.folder' );

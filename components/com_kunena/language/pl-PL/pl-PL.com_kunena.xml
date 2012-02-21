@@ -3,27 +3,18 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Polish</name>
 	<tag>pl-PL</tag>
-	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
-	<author>JoomlAdmin - www.joomladmin.pl</author>
-	<authoremail>andrzej@joomladmin.pl</authoremail>
-	<authorurl>www.joomladmin.pl</authorurl>
-	<copyright>2010</copyright>
-	<license>Open Source License, GPL v2 based</license>
-	<description><![CDATA[
-  <div style="padding: 15px; font-weight: normal; border: 2px dashed #C8C8C8; width: 450px; margin: auto; " >
-<strong>Pakiet języka polskiego dla Kunena 1.6.3</strong>
-<br /><br />Autor: 2011, <a href="http://joomladmin.pl">JoomlAdmin</a>
-<br /><br />
-<strong>Tłumaczył:</strong> Andrzej 'Randal' Makowiecki - <a href="mailto:andrzej@joomladmin.pl">kontakt</a>
-<br /><br />
-W oparciu o tłumaczenie wersji 1.5 wykonanej przez 'Sogo' i Stefana 'zwiastuna' Wajdę
-</div>
-  ]]></description>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>translations@kunena.org</authorEmail>
+	<authorUrl>https://www.transifex.net/projects/p/Kunena/team/pl/</authorUrl>
+	<copyright>(C) 2008 - 2012 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPL</license>
+	<description>Polish language file for Kunena Forum Component</description>
 
 	<files>
 		<filename>pl-PL.com_kunena.ini</filename>
 		<filename>pl-PL.com_kunena.tpl_blue_eagle.ini</filename>
-		<!-- <filename>pl-PL.com_kunena.tpl_orao.ini</filename>-->
 	</files>
 </install>

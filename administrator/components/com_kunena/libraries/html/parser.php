@@ -13,12 +13,12 @@ defined ( '_JEXEC' ) or die ();
 abstract class KunenaHtmlParser {
 	static $emoticons = null;
 
-	function getEmoticons($grayscale, $emoticonbar = 0) {
+	function getEmoticons($grayscale = false, $emoticonbar = false) {
 		$db = JFactory::getDBO ();
-		$grayscale == 1 ? $column = "greylocation" : $column = "location";
+		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$sql = "SELECT code, `$column` as file FROM #__kunena_smileys";
 
-		if ($emoticonbar == 1)
+		if ($emoticonbar == true)
 			$sql .= " WHERE emoticonbar='1'";
 
 		$db->setQuery ( $sql );
@@ -28,7 +28,7 @@ abstract class KunenaHtmlParser {
 		$smileyArray = array ();
 		$template = KunenaFactory::getTemplate();
 		foreach ( $smilies as $smiley ) { // We load all smileys in array, so we can sort them
-			$smileyArray [$smiley->code] = JURI::root(true) .'/'. KPATH_COMPONENT_RELATIVE .'/'. $template->getSmileyPath($smiley->file);
+			$smileyArray [$smiley->code] = JURI::root(true) .'/'. $template->getSmileyPath($smiley->file);
 		}
 
 		if ($emoticonbar == 0) { // don't sort when it's only for use in the emoticonbar

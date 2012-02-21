@@ -11,7 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 JHTML::_('behavior.formvalidation');
 $document->addScriptDeclaration('// <![CDATA[
 	function myValidate(f) {
@@ -73,6 +72,7 @@ $document->addScriptDeclaration('// <![CDATA[
 						</label>
 					</div>
 				<input name="submit" class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_ANN_SAVE'); ?>"/>
+				<input onclick="javascript:window.history.back();" name="cancel" class="kbutton" type="button" value="<?php echo JText::_('COM_KUNENA_ANN_CANCEL'); ?>"/>
 			</form>
 		</div>
 	</div>

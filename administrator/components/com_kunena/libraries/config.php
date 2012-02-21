@@ -240,6 +240,8 @@ class KunenaConfig extends JObject {
 	public $hold_newusers_posts = 0;
 	public $hold_guest_posts = 0;
 	public $attachment_limit = 8;
+	public $pickup_category = 0;
+	public $article_display = 'intro';
 
 	public function __construct() {
 		parent::__construct ();
@@ -275,7 +277,7 @@ class KunenaConfig extends JObject {
 
 	public function reset() {
 		$instance = new KunenaConfig ();
-		$this->bind($instance);
+		$this->bind($instance->getProperties());
 	}
 
 	//

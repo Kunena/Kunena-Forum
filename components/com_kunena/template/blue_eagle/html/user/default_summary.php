@@ -11,8 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 $private = KunenaFactory::getPrivateMessaging();
-if ($this->my->id == $this->user->id) {
-	$PMCount = $private->getUnreadCount($this->my->id);
+if ($this->me->userid == $this->user->id) {
+	$PMCount = $private->getUnreadCount($this->me->userid);
 	$PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
 } else {
 	$PMlink = $this->profile->profileIcon('private');

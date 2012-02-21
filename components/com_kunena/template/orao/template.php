@@ -47,7 +47,7 @@ class KunenaTemplateOrao extends KunenaTemplate {
 		}
 
 		$lang =& JFactory::getLanguage();
-		$lang->load( 'com_kunena.tpl_'.$template->name, KPATH_SITE.DS.'template'.DS.$template->name.'/' );
+		$lang->load( 'com_kunena.tpl_'.$template->name, KPATH_SITE.'/template/'.$template->name.'/' );
 
 		if (version_compare(JVERSION, '1.6','>')) {
 			$this->addStyleSheet ( 'css/j16plus.css' );
@@ -76,8 +76,8 @@ class KunenaTemplateOrao extends KunenaTemplate {
 		parent::initializeBackend();
 	}
 
-	public function getButton($name, $text) {
-		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
+	public function getButton($link, $name, $scope, $type, $id = null) {
+		return parent::getButton($link, $name, $scope, $type, $id);
 	}
 
 	public function getIcon($name, $title='') {

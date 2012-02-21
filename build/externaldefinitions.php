@@ -13,6 +13,8 @@ die();
 
 // dummy definitions of external classes and functions to avoid zend studio warnings and errors
 
+class Kunena {}
+
 // Community Builder dummies
 function cbimport($var) {}
 function getCBprofileItemid() {}
@@ -46,6 +48,7 @@ class JxAcl {};
 
 // JUpgrage
 class jUpgrade {};
+class jUpgradeExtensions {};
 
 // PHP 5.3
 function parse_ini_string($str) {}

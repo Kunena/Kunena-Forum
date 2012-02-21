@@ -30,7 +30,7 @@ if ($this->message->modified_time) {
 		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
 	</span>
 	<?php endif ?>
-	<?php if ($this->config->reportmsg && KunenaUserHelper::getMyself()->exists()) :?>
+	<?php if ($this->config->reportmsg && $this->me->exists()) :?>
 	<span class="kmessage-informmarkup"><?php echo CKunenaLink::GetReportMessageLink ( intval($this->category->id), intval($this->message->id), JText::_('COM_KUNENA_REPORT') ) ?></span>
 	<?php endif ?>
 	<?php if (!empty ( $this->ipLink )) : ?>
@@ -39,24 +39,24 @@ if ($this->message->modified_time) {
 </div>
 <div class="kmessage-buttons-cover">
 	<div class="kmessage-buttons-row">
-	<?php if (empty( $this->message_closed )) : ?>
-		<?php echo $this->message_quickreply; ?>
-		<?php echo $this->message_reply; ?>
-		<?php echo $this->message_quote; ?>
-		<?php echo $this->message_edit; ?>
-		<?php echo $this->message_moderate; ?>
-		<?php echo $this->message_delete; ?>
-		<?php echo $this->message_permdelete; ?>
-		<?php echo $this->message_undelete; ?>
-		<?php echo $this->message_publish; ?>
+	<?php if (empty($this->message_closed)) : ?>
+		<?php echo $this->messageButtons->get('quickreply'); ?>
+		<?php echo $this->messageButtons->get('reply'); ?>
+		<?php echo $this->messageButtons->get('quote'); ?>
+		<?php echo $this->messageButtons->get('edit'); ?>
+		<?php echo $this->messageButtons->get('moderate'); ?>
+		<?php echo $this->messageButtons->get('delete'); ?>
+		<?php echo $this->messageButtons->get('permdelete'); ?>
+		<?php echo $this->messageButtons->get('undelete'); ?>
+		<?php echo $this->messageButtons->get('publish'); ?>
 	<?php else : ?>
 		<?php echo $this->message_closed; ?>
 	<?php endif ?>
 	</div>
 </div>
-<?php if(!empty($this->message_thankyou)): ?>
+<?php if($this->messageButtons->get('thankyou')): ?>
 <div class="kpost-thankyou">
-	<?php echo $this->message_thankyou; ?>
+	<?php echo $this->messageButtons->get('thankyou'); ?>
 </div>
 <?php endif; ?>
 <?php if(!empty($this->thankyou)): ?>

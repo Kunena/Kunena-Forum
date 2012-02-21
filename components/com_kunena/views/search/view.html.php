@@ -15,9 +15,6 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewSearch extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->me = KunenaUserHelper::getMyself();
-		$app = JFactory::getApplication ();
-
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 
 		$searchdatelist	= array();
@@ -92,7 +89,7 @@ class KunenaViewSearch extends KunenaView {
 
 	function displayRows() {
 		$this->row(true);
-		
+
 		// Run events
 		$params = new JParameter( '' );
 		$params->set('ksource', 'kunena');
@@ -102,8 +99,8 @@ class KunenaViewSearch extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->results, &$params, 0));
-		
+		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->results, &$params, 0));
+
 		foreach ($this->results as $this->message) {
 			$this->topic = $this->message->getTopic();
 			$this->category = $this->message->getCategory();

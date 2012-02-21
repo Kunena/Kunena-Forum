@@ -24,8 +24,6 @@ class KunenaControllerTopic extends KunenaController {
 		$this->return = JRequest::getInt('return', $this->catid);
 		$this->id = JRequest::getInt('id', 0);
 		$this->mesid = JRequest::getInt('mesid', 0);
-		$this->config = KunenaFactory::getConfig();
-		$this->me = KunenaUserHelper::getMyself();
 	}
 
 	public function upload() {
@@ -34,7 +32,6 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function post() {
-		$app = JFactory::getApplication ();
 		$this->id = JRequest::getInt('parentid', 0);
 		$fields = array (
 			'catid' => $this->catid,
@@ -53,8 +50,8 @@ class KunenaControllerTopic extends KunenaController {
 		);
 
 		if (! JRequest::checkToken ()) {
-			$app->setUserState('com_kunena.postfields', $fields);
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->setUserState('com_kunena.postfields', $fields);
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
@@ -62,8 +59,8 @@ class KunenaControllerTopic extends KunenaController {
 		if ($captcha->enabled()) {
 			$success = $captcha->verify();
 			if ( !$success ) {
-				$app->setUserState('com_kunena.postfields', $fields);
-				$app->enqueueMessage ( $captcha->getError(), 'error' );
+				$this->app->setUserState('com_kunena.postfields', $fields);
+				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
 				$this->redirectBack ();
 			}
 		}
@@ -72,8 +69,8 @@ class KunenaControllerTopic extends KunenaController {
 			// Create topic
 			$category = KunenaForumCategoryHelper::get($this->catid);
 			if (!$category->authorise('topic.create')) {
-				$app->setUserState('com_kunena.postfields', $fields);
-				$app->enqueueMessage ( $category->getError(), 'notice' );
+				$this->app->setUserState('com_kunena.postfields', $fields);
+				$this->app->enqueueMessage ( $category->getError(), 'notice' );
 				$this->redirectBack ();
 			}
 			list ($topic, $message) = $category->newTopic($fields);
@@ -81,8 +78,8 @@ class KunenaControllerTopic extends KunenaController {
 			// Reply topic
 			$parent = KunenaForumMessageHelper::get($this->id);
 			if (!$parent->authorise('reply')) {
-				$app->setUserState('com_kunena.postfields', $fields);
-				$app->enqueueMessage ( $parent->getError(), 'notice' );
+				$this->app->setUserState('com_kunena.postfields', $fields);
+				$this->app->enqueueMessage ( $parent->getError(), 'notice' );
 				$this->redirectBack ();
 			}
 			list ($topic, $message) = $parent->newReply($fields);
@@ -90,7 +87,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Flood protection
-		if ($this->config->floodprotection && ! KunenaUserHelper::getMyself()->isModerator($category->id)) {
+		if ($this->config->floodprotection && ! $this->me->isModerator($category->id)) {
 			$timelimit = JFactory::getDate()->toUnix() - $this->config->floodprotection;
 			$ip = $_SERVER ["REMOTE_ADDR"];
 
@@ -98,8 +95,8 @@ class KunenaControllerTopic extends KunenaController {
 			$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} AND time>{$db->quote($timelimit)}" );
 			$count = $db->loadResult ();
 			if (KunenaError::checkDatabaseError() || $count) {
-				$app->setUserState('com_kunena.postfields', $fields);
-				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection) );
+				$this->app->setUserState('com_kunena.postfields', $fields);
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection) );
 				$this->redirectBack ();
 			}
 		}
@@ -139,13 +136,13 @@ class KunenaControllerTopic extends KunenaController {
 		// Save message
 		$success = $message->save ();
 		if (! $success) {
-			$app->enqueueMessage ( $message->getError (), 'error' );
-			$app->setUserState('com_kunena.postfields', $fields);
+			$this->app->enqueueMessage ( $message->getError (), 'error' );
+			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->redirectBack ();
 		}
 		// Display possible warnings (upload failed etc)
 		foreach ( $message->getErrors () as $warning ) {
-			$app->enqueueMessage ( $warning, 'notice' );
+			$this->app->enqueueMessage ( $warning, 'notice' );
 		}
 
 		// Create Poll
@@ -158,14 +155,14 @@ class KunenaControllerTopic extends KunenaController {
 				$poll->polltimetolive = $fields['poll_time_to_live'];
 				$poll->setOptions($poll_options);
 				if (!$poll->save()) {
-					$app->enqueueMessage ( $poll->getError(), 'notice' );
+					$this->app->enqueueMessage ( $poll->getError(), 'notice' );
 				} else {
 					$topic->poll_id = $poll->id;
 					$topic->save();
-					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_CREATED' ) );
+					$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_CREATED' ) );
 				}
 			} else {
-				$app->enqueueMessage ( $topic->getError(), 'notice' );
+				$this->app->enqueueMessage ( $topic->getError(), 'notice' );
 			}
 		}
 
@@ -177,20 +174,20 @@ class KunenaControllerTopic extends KunenaController {
 		//now try adding any new subscriptions if asked for by the poster
 		if ($fields['subscribe']) {
 			if ($topic->subscribe(1)) {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
 
 				// Activity integration
 				$activity = KunenaFactory::getActivityIntegration();
 				$activity->onAfterSubscribe($topic, 1);
 			} else {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) );
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) );
 			}
 		}
 
 		if ($message->hold == 1) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCES_REVIEW' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCES_REVIEW' ) );
 		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' ) );
 		}
 		$category = KunenaForumCategoryHelper::get($this->return);
 		if ($message->authorise('read', null, false)) {
@@ -204,7 +201,6 @@ class KunenaControllerTopic extends KunenaController {
 
 	public function edit() {
 		$this->id = JRequest::getInt('mesid', 0);
-		$app = JFactory::getApplication ();
 
 		$message = KunenaForumMessageHelper::get($this->id);
 		$topic = $message->getTopic();
@@ -225,14 +221,14 @@ class KunenaControllerTopic extends KunenaController {
 		);
 
 		if (! JRequest::checkToken ()) {
-			$app->setUserState('com_kunena.postfields', $fields);
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->setUserState('com_kunena.postfields', $fields);
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		if (!$message->authorise('edit')) {
-			$app->setUserState('com_kunena.postfields', $fields);
-			$app->enqueueMessage ( $message->getError(), 'notice' );
+			$this->app->setUserState('com_kunena.postfields', $fields);
+			$this->app->enqueueMessage ( $message->getError(), 'notice' );
 			$this->redirectBack ();
 		}
 
@@ -267,8 +263,8 @@ class KunenaControllerTopic extends KunenaController {
 			$topic->subject = $fields['subject'];
 			$success = $topic->save();
 			if (! $success) {
-				$app->setUserState('com_kunena.postfields', $fields);
-				$app->enqueueMessage ( $topic->getError (), 'error' );
+				$this->app->setUserState('com_kunena.postfields', $fields);
+				$this->app->enqueueMessage ( $topic->getError (), 'error' );
 				$this->redirectBack ();
 			}
 		}
@@ -280,13 +276,13 @@ class KunenaControllerTopic extends KunenaController {
 		// Save message
 		$success = $message->save ();
 		if (! $success) {
-			$app->setUserState('com_kunena.postfields', $fields);
-			$app->enqueueMessage ( $message->getError (), 'error' );
+			$this->app->setUserState('com_kunena.postfields', $fields);
+			$this->app->enqueueMessage ( $message->getError (), 'error' );
 			$this->redirectBack ();
 		}
 		// Display possible warnings (upload failed etc)
 		foreach ( $message->getErrors () as $warning ) {
-			$app->enqueueMessage ( $warning, 'notice' );
+			$this->app->enqueueMessage ( $warning, 'notice' );
 		}
 
 		$poll_title = $fields['poll_title'];
@@ -301,33 +297,33 @@ class KunenaControllerTopic extends KunenaController {
 				if (!$topic->poll_id) {
 					// Create a new poll
 					if (!$topic->authorise('poll.create')) {
-						$app->enqueueMessage ( $topic->getError(), 'notice' );
+						$this->app->enqueueMessage ( $topic->getError(), 'notice' );
 					} elseif (!$poll->save()) {
-						$app->enqueueMessage ( $poll->getError(), 'notice' );
+						$this->app->enqueueMessage ( $poll->getError(), 'notice' );
 					} else {
 						$topic->poll_id = $poll->id;
 						$topic->save();
-						$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_CREATED' ) );
+						$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_CREATED' ) );
 					}
 				} else {
 					// Edit existing poll
 					if (!$topic->authorise('poll.edit')) {
-						$app->enqueueMessage ( $topic->getError(), 'notice' );
+						$this->app->enqueueMessage ( $topic->getError(), 'notice' );
 					} elseif (!$poll->save()) {
-						$app->enqueueMessage ( $poll->getError(), 'notice' );
+						$this->app->enqueueMessage ( $poll->getError(), 'notice' );
 					} else {
-						$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_EDITED' ) );
+						$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_EDITED' ) );
 					}
 				}
 			} elseif ($poll->exists()) {
 				// Delete poll
 				if (!$topic->authorise('poll.delete')) {
 					// Error: No permissions to delete poll
-					$app->enqueueMessage ( $topic->getError(), 'notice' );
+					$this->app->enqueueMessage ( $topic->getError(), 'notice' );
 				} elseif (!$poll->delete()) {
-					$app->enqueueMessage ( $poll->getError(), 'notice' );
+					$this->app->enqueueMessage ( $poll->getError(), 'notice' );
 				} else {
-					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_DELETED' ) );
+					$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_DELETED' ) );
 				}
 			}
 		}
@@ -335,234 +331,222 @@ class KunenaControllerTopic extends KunenaController {
 		// Update Tags
 		$this->updateTags($message->thread, $fields['tags'], $fields['mytags']);
 
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
+		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
 		if ($message->hold == 1) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
 		}
-		$app->redirect ( $message->getUrl($this->return, false ) );
+		$this->app->redirect ( $message->getUrl($this->return, false ) );
 	}
 
 	public function thankyou() {
-		$app = JFactory::getApplication ();
 		$type = JRequest::getString('task');
 		$this->setThankyou($type);
 
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_SUCCESS' ) );
+		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_SUCCESS' ) );
 		$this->redirectBack ();
 	}
 
 	public function unthankyou() {
-		$app = JFactory::getApplication ();
 		$type = JRequest::getString('task');
 		$this->setThankyou($type);
 
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_REMOVED_SUCCESS' ) );
+		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_REMOVED_SUCCESS' ) );
 		$this->redirectBack ();
 	}
 
 	protected function setThankyou($type){
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$message = KunenaForumMessageHelper::get($this->mesid);
 		if (!$message->authorise($type)) {
-			$app->enqueueMessage ( $message->getError() );
+			$this->app->enqueueMessage ( $message->getError() );
 			$this->redirectBack ();
 		}
 
 		$thankyou = KunenaForumMessageThankyouHelper::get($this->mesid);
 		$activityIntegration = KunenaFactory::getActivityIntegration();
 		if ( $type== 'thankyou') {
-			if (!$thankyou->save ( KunenaUserHelper::getMyself() )) {
-				$app->enqueueMessage ( $thankyou->getError() );
+			if (!$thankyou->save ( $this->me )) {
+				$this->app->enqueueMessage ( $thankyou->getError() );
 				$this->redirectBack ();
 			}
-			$activityIntegration->onAfterThankyou($this->my->id, $message->userid, $message);
+			$activityIntegration->onAfterThankyou($this->me->userid, $message->userid, $message);
 		} else {
 			$userid = JRequest::getInt('userid','0');
 			if (!$thankyou->delete ( $userid )) {
-				$app->enqueueMessage ( $thankyou->getError() );
+				$this->app->enqueueMessage ( $thankyou->getError() );
 				$this->redirectBack ();
 			}
-			$activityIntegration->onAfterUnThankyou($userid, $this->my->id, $message);
+			$activityIntegration->onAfterUnThankyou($userid, $this->me->userid, $message);
 		}
 	}
 
 	public function subscribe() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->subscribe(1)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterSubscribe($topic, 1);
 		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic->getError(), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
 		$this->redirectBack ();
 	}
 
 	public function unsubscribe() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->subscribe(0)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' ) );
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterSubscribe($topic, 0);
 		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' ) .' '. $topic->getError(), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
 		$this->redirectBack ();
 	}
 
 	public function favorite() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->favorite(1)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' ) );
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterFavorite($topic, 1);
 		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' ) .' '. $topic->getError(), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
 		$this->redirectBack ();
 	}
 
 	public function unfavorite() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->favorite(0)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' ) );
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterFavorite($topic, 0);
 		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' ) .' '. $topic->getError(), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
 		$this->redirectBack ();
 	}
 
 	public function sticky() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if (!$topic->authorise('sticky')) {
-			$app->enqueueMessage ( $topic->getError(), 'notice' );
+			$this->app->enqueueMessage ( $topic->getError(), 'notice' );
 		} elseif ($topic->sticky(1)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_SET' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_SET' ) );
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterSticky($topic, 1);
 		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_SET' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_SET' ) );
 		}
 		$this->redirectBack ();
 	}
 
 	public function unsticky() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if (!$topic->authorise('sticky')) {
-			$app->enqueueMessage ( $topic->getError(), 'notice' );
+			$this->app->enqueueMessage ( $topic->getError(), 'notice' );
 		} elseif ($topic->sticky(0)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' ) );
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterSticky($topic, 0);
 		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_UNSET' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_UNSET' ) );
 		}
 		$this->redirectBack ();
 	}
 
 	public function lock() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if (!$topic->authorise('lock')) {
-			$app->enqueueMessage ( $topic->getError(), 'notice' );
+			$this->app->enqueueMessage ( $topic->getError(), 'notice' );
 		} elseif ($topic->lock(1)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_SET' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_SET' ) );
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterLock($topic, 1);
 		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_SET' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_SET' ) );
 		}
 		$this->redirectBack ();
 	}
 
 	public function unlock() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if (!$topic->authorise('lock')) {
-			$app->enqueueMessage ( $topic->getError(), 'notice' );
+			$this->app->enqueueMessage ( $topic->getError(), 'notice' );
 		} elseif ($topic->lock(0)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' ) );
 
 			// Activity integration
 			$activity = KunenaFactory::getActivityIntegration();
 			$activity->onAfterLock($topic, 0);
 		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_UNSET' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_UNSET' ) );
 		}
 		$this->redirectBack ();
 	}
 
 	public function delete() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
@@ -580,17 +564,16 @@ class KunenaControllerTopic extends KunenaController {
 			$url = KunenaForumCategory::getInstance($this->return)->getUrl(null, false);
 		}
 		if ($target->authorise('delete') && $target->publish($hold)) {
-			$app->enqueueMessage ( $msg );
+			$this->app->enqueueMessage ( $msg );
 		} else {
-			$app->enqueueMessage ( $target->getError(), 'notice' );
+			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}
-		$app->redirect ( $url );
+		$this->app->redirect ( $url );
 	}
 
 	public function undelete() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
@@ -604,17 +587,16 @@ class KunenaControllerTopic extends KunenaController {
 			$msg = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_UNDELETE' );
 		}
 		if ($target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED)) {
-			$app->enqueueMessage ( $msg );
+			$this->app->enqueueMessage ( $msg );
 		} else {
-			$app->enqueueMessage ( $target->getError(), 'notice' );
+			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}
-		$app->redirect ( $target->getUrl($this->return, false ) );
+		$this->app->redirect ( $target->getUrl($this->return, false ) );
 	}
 
 	public function permdelete() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
@@ -630,17 +612,16 @@ class KunenaControllerTopic extends KunenaController {
 			$url = KunenaForumCategory::getInstance($this->return)->getUrl(null, false);
 		}
 		if ($target->authorise('permdelete') && $target->delete()) {
-			$app->enqueueMessage ( $msg );
+			$this->app->enqueueMessage ( $msg );
 		} else {
-			$app->enqueueMessage ( $target->getError(), 'notice' );
+			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}
-		$app->redirect ( $url );
+		$this->app->redirect ( $url );
 	}
 
 	public function approve() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
@@ -652,19 +633,18 @@ class KunenaControllerTopic extends KunenaController {
 			$target = KunenaForumTopicHelper::get($this->id);
 		}
 		if ($target->authorise('approve') && $target->publish(KunenaForum::PUBLISHED)) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' ) );
 			// FIXME: $topic->sendNotification() doesn't exist
 			//$target->sendNotification();
 		} else {
-			$app->enqueueMessage ( $target->getError(), 'notice' );
+			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}
-		$app->redirect ( $target->getUrl($this->return, false ) );
+		$this->app->redirect ( $target->getUrl($this->return, false ) );
 	}
 
 	public function move() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
@@ -715,33 +695,29 @@ class KunenaControllerTopic extends KunenaController {
 			}
 		}
 		if ($error) {
-			$app->enqueueMessage ( $error, 'notice' );
+			$this->app->enqueueMessage ( $error, 'notice' );
 		} else {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ) );
 		}
-		$app->redirect ( $target->getUrl($this->return, false ) );
+		$this->app->redirect ( $target->getUrl($this->return, false ) );
 	}
 
 	function report() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
-		$config = KunenaFactory::getConfig ();
-		$me = KunenaUserHelper::getMyself();
-
-		if (!$me->exists() || $config->reportmsg == 0) {
+		if (!$this->me->exists() || $this->config->reportmsg == 0) {
 			// Deny access if report feature has been disabled or user is guest
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ), 'notice' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ), 'notice' );
 			$this->redirectBack ();
 		}
 
 		jimport ( 'joomla.mail.helper' );
-		if (! $config->email || ! JMailHelper::isEmailAddress ( $config->email )) {
+		if (! $this->config->email || ! JMailHelper::isEmailAddress ( $this->config->email )) {
 			// Error: email address is invalid
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'error' );
 			$this->redirectBack ();
 		}
 
@@ -758,7 +734,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 		if (!$target->authorise('read')) {
 			// Deny access if user cannot read target
-			$app->enqueueMessage ( $target->getError(), 'notice' );
+			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 			$this->redirectBack ();
 		}
 		$category = $topic->getCategory();
@@ -768,15 +744,15 @@ class KunenaControllerTopic extends KunenaController {
 
 		if (empty ( $reason ) && empty ( $text )) {
 			// Do nothing: empty subject or reason is empty
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_FORG0T_SUB_MES' ) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_FORG0T_SUB_MES' ) );
 			$this->redirectBack ();
 		} else {
 			$acl = KunenaAccess::getInstance();
-			$emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false, $me->userid);
+			$emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false, $this->me->userid);
 
 			if (!empty ( $emailToList )) {
-				$mailsender = JMailHelper::cleanAddress ( $config->board_title . ' ' . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ': ' . $me->getName() );
-				$mailsubject = "[" . $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . JText::_ ( 'COM_KUNENA_REPORT_MSG' ) . ": ";
+				$mailsender = JMailHelper::cleanAddress ( $this->config->board_title . ' ' . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ': ' . $this->me->getName() );
+				$mailsubject = "[" . $this->config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . JText::_ ( 'COM_KUNENA_REPORT_MSG' ) . ": ";
 				if ($reason) {
 					$mailsubject .= $reason;
 				} else {
@@ -787,7 +763,7 @@ class KunenaControllerTopic extends KunenaController {
 				$uri = JURI::getInstance ( JURI::base () );
 				$msglink = $uri->toString ( array ('scheme', 'host', 'port' ) ) . $target->getPermaUrl(null, false);
 
-				$mailmessage = "" . JText::_ ( 'COM_KUNENA_REPORT_RSENDER' ) . " {$me->username} ($me->name)";
+				$mailmessage = "" . JText::_ ( 'COM_KUNENA_REPORT_RSENDER' ) . " {$this->me->username} ($this->me->name)";
 				$mailmessage .= "\n";
 				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_RREASON' ) . " " . $reason;
 				$mailmessage .= "\n";
@@ -807,15 +783,15 @@ class KunenaControllerTopic extends KunenaController {
 					if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
 						continue;
 
-					JUtility::sendMail ( $config->email, $mailsender, $emailTo->email, $mailsubject, $mailmessage );
+					JUtility::sendMail ( $this->config->email, $mailsender, $emailTo->email, $mailsubject, $mailmessage );
 				}
 
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );
 			} else {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_NOT_SEND' ) );
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_NOT_SEND' ) );
 			}
 		}
-		$app->redirect ( $target->getUrl($this->return, false) );
+		$this->app->redirect ( $target->getUrl($this->return, false) );
 	}
 
 	protected function updateTags($topic, $globalTags, $userTags) {
@@ -829,44 +805,41 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function vote() {
-		$app = JFactory::getApplication ();
 		if (!JRequest::checkToken()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
-		$config = KunenaFactory::getConfig();
 		$vote = JRequest::getInt('kpollradio', '');
 		$id = JRequest::getInt ( 'id', 0 );
 
 		$topic = KunenaForumTopicHelper::get($id);
 		$poll = $topic->getPoll();
 		if (!$topic->authorise('poll.vote')) {
-			$app->enqueueMessage ( $topic->getError(), 'error' );
-		} elseif (!$config->pollallowvoteone || !$poll->getMyVotes()) {
+			$this->app->enqueueMessage ( $topic->getError(), 'error' );
+		} elseif (!$this->config->pollallowvoteone || !$poll->getMyVotes()) {
 			// Give a new vote
 			$success = $poll->vote($vote);
 			if ( !$success ) {
-				$app->enqueueMessage ( $topic->getError(), 'error' );
+				$this->app->enqueueMessage ( $topic->getError(), 'error' );
 			} else {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_SUCCESS' ) );
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_SUCCESS' ) );
 			}
 		} else {
 			// Change existing vote
 			$success = $poll->vote($vote, true);
 			if ( !$success ) {
-				$app->enqueueMessage ( $topic->getError(), 'error' );
+				$this->app->enqueueMessage ( $topic->getError(), 'error' );
 			} else {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS' ) );
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS' ) );
 			}
 		}
-		$app->redirect ( $topic->getUrl($this->return, false) );
+		$this->app->redirect ( $topic->getUrl($this->return, false) );
 	}
 
 	public function resetvotes() {
-		$app = JFactory::getApplication ();
 		if (!JRequest::checkToken('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
@@ -875,7 +848,7 @@ class KunenaControllerTopic extends KunenaController {
 		$topic = KunenaForumTopicHelper::get($this->id);
 		$result = $topic->resetvotes($pollid);
 
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS' ) );
-		$app->redirect ( $topic->getUrl($this->return, false) );
+		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_RESET_SUCCESS' ) );
+		$this->app->redirect ( $topic->getUrl($this->return, false) );
 	}
 }

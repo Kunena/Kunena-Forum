@@ -29,7 +29,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 </div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" id="adminForm">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="task" value="delfile" />
 				<input type="hidden" name="boxchecked" value="0" />
@@ -80,7 +80,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 						<td align="center" class="kcol-mid"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php
 						echo $i;
-						?>','delete')"><img src="<?php echo $this->template->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
+						?>','delete')"><img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
 
 					</tr>
 					<?php

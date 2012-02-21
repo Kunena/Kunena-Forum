@@ -63,7 +63,7 @@ defined ( '_JEXEC' ) or die ();
 						<ul class="clearfix">
 							<li class="kpopsubstats-col kpopsubstats-col1"><?php echo $item->link ?></li>
 							<li class="kpopsubstats-col kpopsubstats-col2">
-								<img class="kstats-bar" src="<?php echo $this->template->getImagePath('bar.png') ?>" alt="" height="10" width="<?php echo $item->percent ?>%" />
+								<img class="kstats-bar" src="<?php echo $this->ktemplate->getImagePath('bar.png') ?>" alt="" height="10" width="<?php echo $item->percent ?>%" />
 							</li>
 							<li class="kpopsubstats-col kpopsubstats-col3"><?php echo $item->count ?></li>
 						</ul>

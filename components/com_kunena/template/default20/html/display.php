@@ -9,7 +9,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div id="kunena">
+<div id="kunena" class="kunena layout">
 <?php
 $this->displayMenu ();
 $this->displayLoginBox ();

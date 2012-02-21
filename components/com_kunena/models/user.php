@@ -17,8 +17,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaModelUser extends KunenaModel {
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-		$active = $app->getMenu ()->getActive ();
+		$active = $this->app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
 
 		$layout = $this->getCmd ( 'layout', 'default' );
@@ -31,7 +30,7 @@ class KunenaModelUser extends KunenaModel {
 
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_limit", 'limit', 0, 'int' );
-		if ($value < 1 || $value > 100) $value = 30;
+		if ($value < 1 || $value > 100) $value = 100;
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_ordering", 'filter_order', 'id', 'cmd' );
@@ -54,24 +53,22 @@ class KunenaModelUser extends KunenaModel {
 	}
 
 	public function getQueryWhere() {
-		$config = KunenaFactory::getConfig();
-		if ($config->userlist_count_users == '1' ) $where = '(block=0 OR activation="")';
-		elseif ($config->userlist_count_users == '2' ) $where = '(block=0 AND activation="")';
-		elseif ($config->userlist_count_users == '3' ) $where = 'block=0';
+		if ($this->config->userlist_count_users == '1' ) $where = '(block=0 OR activation="")';
+		elseif ($this->config->userlist_count_users == '2' ) $where = '(block=0 AND activation="")';
+		elseif ($this->config->userlist_count_users == '3' ) $where = 'block=0';
 		else $where = '1';
 		return $where;
 	}
 
 	public function getQuerySearch() {
 		// TODO: add strict search from the beginning of the name
-		$config = KunenaFactory::getConfig();
 		$search = $this->getState ( 'list.search');
 		$exclude = $this->getState ( 'list.exclude');
 		$where = array();
 		if ($search) {
 			$db = JFactory::getDBO();
-			if ($config->userlist_name) $where[] = "u.name LIKE '%{$db->getEscaped($search)}%'";
-			if ($config->userlist_username || !$where) $where[] = "u.username LIKE '%{$db->getEscaped($search)}%'";
+			if ($this->config->userlist_name) $where[] = "u.name LIKE '%{$db->getEscaped($search)}%'";
+			if ($this->config->userlist_username || !$where) $where[] = "u.username LIKE '%{$db->getEscaped($search)}%'";
 			$where = 'AND ('.implode(' OR ', $where).')';
 		} else {
 			$where = '';
@@ -112,7 +109,7 @@ class KunenaModelUser extends KunenaModel {
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
-			$moderator = intval(KunenaUserHelper::getMyself()->isModerator());
+			$moderator = intval($this->me->isModerator());
 			$query = "SELECT *, IF(ku.hideEmail=0 OR {$moderator},u.email,'') AS email
 				FROM #__users AS u
 				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id

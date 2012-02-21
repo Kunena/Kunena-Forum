@@ -14,6 +14,7 @@
 		<filename plugin="kunena">kunena.php</filename>
 		<filename>index.html</filename>
 		<folder>kunena</folder>
+		<folder>language</folder>
 	</files>
 	<config>
 		<fields name="params">

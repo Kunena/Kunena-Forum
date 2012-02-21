@@ -11,7 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->displayAnnouncement ();
-$this->displayBreadcrumb ();
 ?>
 
 <div class="klist-markallcatsread kcontainer">

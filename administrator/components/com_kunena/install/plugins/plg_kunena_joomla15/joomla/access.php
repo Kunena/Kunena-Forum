@@ -28,7 +28,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @return array	Supported access types.
 	 */
-	public function &getAccessTypes() {
+	public function getAccessTypes() {
 		static $accesstypes = array('joomla.level', 'none');
 		return $accesstypes;
 	}
@@ -132,7 +132,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @return array of (catid=>userid)
 	 */
-	public function &loadCategoryRoles(array $categories = null) {
+	public function loadCategoryRoles(array $categories = null) {
 		$db = JFactory::getDBO ();
 		$query = "SELECT u.id AS user_id, 0 AS category_id, ".KunenaForum::ADMINISTRATOR." AS role
 			FROM #__users AS u
@@ -156,7 +156,7 @@ class KunenaAccessJoomla {
 	 *
 	 * @return array, where category ids are in the keys.
 	 */
-	public function &authoriseCategories($userid, array &$categories) {
+	public function authoriseCategories($userid, array &$categories) {
 		$user = JFactory::getUser($userid);
 
 		// Workaround for missing aid
@@ -208,7 +208,7 @@ class KunenaAccessJoomla {
 	 * @param	mixed	Category or topic.
 	 * @param	array	list(allow, deny).
 	 */
-	public function &authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
+	public function authoriseUsers(KunenaDatabaseObject $topic, array &$userids) {
 		if (empty($userids)) {
 			return;
 		}

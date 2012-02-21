@@ -21,19 +21,23 @@ class KunenaAdminControllerConfig extends KunenaController {
 	public function __construct($config = array()) {
 		parent::__construct($config);
 		$this->baseurl = 'index.php?option=com_kunena&view=config';
+		$this->kunenabaseurl = 'index.php?option=com_kunena';
 	}
 
-	function save() {
-		$app = JFactory::getApplication ();
-		$config = KunenaFactory::getConfig ();
+	function apply() {
+		$url = $this->baseurl;
+		$this->save($url);
+	}
+
+	function save($url=null) {
 		$db = JFactory::getDBO ();
 
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$properties = $config->getProperties();
+		$properties = $this->config->getProperties();
 		foreach ( JRequest::get('post', JREQUEST_ALLOWHTML) as $postsetting => $postvalue ) {
 			if (JString::strpos ( $postsetting, 'cfg_' ) === 0) {
 				//remove cfg_ and force lower case
@@ -45,31 +49,30 @@ class KunenaAdminControllerConfig extends KunenaController {
 				// No matter what got posted, we only store config parameters defined
 				// in the config class. Anything else posted gets ignored.
 				if (array_key_exists ( $postname, $properties )) {
-					$config->set($postname, $postvalue);
+					$this->config->set($postname, $postvalue);
 				}
 			}
 		}
 
-		$config->save ();
+		$this->config->save ();
 
-		$app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
+		if (empty($url)) $this->app->redirect ( KunenaRoute::_($this->kunenabaseurl, false) );
+		else $this->app->redirect ( $url );
 	}
 
 	function setdefault() {
 		$db = JFactory::getDBO ();
-		$app = JFactory::getApplication ();
-		$config = KunenaFactory::getConfig ();
 
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$config->reset();
-		$config->save();
+		$this->config->reset();
+		$this->config->save();
 
-		$app->enqueueMessage ( JText::_('COM_KUNENA_CONFIG_DEFAULT'));
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->app->enqueueMessage ( JText::_('COM_KUNENA_CONFIG_DEFAULT'));
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 }

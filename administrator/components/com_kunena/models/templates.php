@@ -28,10 +28,8 @@ class KunenaAdminModelTemplates extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.templates.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.admin.templates.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.templates.list.ordering', 'filter_order', 'ordering', 'cmd' );
@@ -56,11 +54,10 @@ class KunenaAdminModelTemplates extends KunenaModel {
 	}
 
 	function getEditparams() {
-		$app = JFactory::getApplication ();
 		jimport('joomla.filesystem.file');
 
 		$tBaseDir	= JPath::clean(KPATH_SITE.'/template');
-		$template = $app->getUserState ( 'kunena.edit.template');
+		$template = $this->app->getUserState ( 'kunena.edit.template');
 		$ini	= KPATH_SITE.'/template/'.$template.'/params.ini';
 		$xml	= KPATH_SITE.'/template/'.$template.'/template.xml';
 
@@ -76,19 +73,17 @@ class KunenaAdminModelTemplates extends KunenaModel {
 	}
 
 	function getTemplatedetails() {
-		$app = JFactory::getApplication ();
 		$tBaseDir	= JPath::clean(KPATH_SITE.'/template');
-		$template = $app->getUserState ( 'kunena.edit.template');
+		$template = $this->app->getUserState ( 'kunena.edit.template');
 		$details	= KunenaTemplateHelper::parseXmlFile($tBaseDir, $template);
 
 		return $details;
 	}
 
 	function getFileContentParsed() {
-		$app = JFactory::getApplication ();
 		jimport('joomla.filesystem.file');
-		$template = $app->getUserState ( 'kunena.edit.template');
-		$filename = $app->getUserState ( 'kunena.editcss.filename');
+		$template = $this->app->getUserState ( 'kunena.edit.template');
+		$filename = $this->app->getUserState ( 'kunena.editcss.filename');
 		$content = JFile::read(KPATH_SITE.'/template/'.$template.'/css/'.$filename);
 		if ($content === false) {
 			 return;

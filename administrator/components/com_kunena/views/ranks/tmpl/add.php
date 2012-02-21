@@ -23,7 +23,7 @@ $document->addScriptDeclaration('function update_rank(newimage)
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-ranks"><?php if ( !$this->state->get('item.id') ): ?><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?><?php else: ?><?php echo JText::_('COM_KUNENA_RANKS_EDIT'); ?><?php endif; ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="ranks" />
 			<input type="hidden" name="task" value="save" />
 			<input type="hidden" name="boxchecked" value="0" />
@@ -45,7 +45,7 @@ $document->addScriptDeclaration('function update_rank(newimage)
 					?></td>
 					<td><?php echo $this->listranks?> &nbsp;
 					<?php if ( !$this->state->get('item.id') ): ?><img name="rank_image" src="" border="0" alt="" />
-					<?php else: ?><img name="rank_image" src="<?php echo $this->escape(KURL_SITE .$this->template->getRankPath( $this->rank_selected->rank_image)); ?>" border="0" alt="" /><?php endif; ?>
+					<?php else: ?><img name="rank_image" src="<?php echo $this->escape(KURL_SITE .$this->ktemplate->getRankPath( $this->rank_selected->rank_image)); ?>" border="0" alt="" /><?php endif; ?>
 					</td>
 				</tr>
 				<tr>

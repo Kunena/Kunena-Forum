@@ -42,15 +42,13 @@ class KunenaAdminModelCpanel extends KunenaModel {
 	* Website : http://www.alphaplug.com
 	*/
 	function getLatestKunenaVersion() {
-		$app = JFactory::getApplication ();
-
 		$url = 'http://update.kunena.org/kunena_update.xml';
 		$data = '';
 		$check = array();
 		$check['connect'] = 0;
 
-		$data = $app->getUserState('com_kunena.version_check', null);
-		if ( empty($data) ) {
+		$data = $this->app->getUserState('com_kunena.version_check', null);
+		if (!$data) {
 			//try to connect via cURL
 			if(function_exists('curl_init') && function_exists('curl_exec')) {
 				$ch = @curl_init();
@@ -67,7 +65,7 @@ class KunenaAdminModelCpanel extends KunenaModel {
 			}
 
 			//try to connect via fsockopen
-			if(function_exists('fsockopen') && $data == '') {
+			if(!$data && function_exists('fsockopen')) {
 
 				$errno = 0;
 				$errstr = '';
@@ -104,37 +102,36 @@ class KunenaAdminModelCpanel extends KunenaModel {
 			}
 
 			//try to connect via fopen
-			if (function_exists('fopen') && ini_get('allow_url_fopen') && $data == '') {
+			if (!$data && function_exists('fopen') && ini_get('allow_url_fopen')) {
 
-			//set socket timeout
-			ini_set('default_socket_timeout', 5);
+				//set socket timeout
+				ini_set('default_socket_timeout', 5);
 
-			$handle = @fopen ($url, 'r');
+				$handle = @fopen ($url, 'r');
 
-			//set stream timeout
-			@stream_set_blocking($handle, 1);
-			@stream_set_timeout($handle, 5);
+				//set stream timeout
+				@stream_set_blocking($handle, 1);
+				@stream_set_timeout($handle, 5);
 
-			$data	= @fread($handle, 1000);
+				$data	= @fread($handle, 1000);
 
-			@fclose($handle);
+				@fclose($handle);
+			}
+
+			$this->app->setUserState('com_kunena.version_check', $data);
 		}
 
-		return $data;
+		if( !empty($data) && strstr($data, '<?xml version="1.0" encoding="utf-8"?>') ) {
+			$xml = JFactory::getXMLparser('Simple');
+			$xml->loadString($data);
+			$version 				= $xml->document->version[0];
+			$check['latest_version'] = $version->data();
+			$released 				= $xml->document->released[0];
+			$check['released'] 		= $released->data();
+			$check['connect'] 		= 1;
+			$check['enabled'] 		= 1;
+		}
 
-	}
-
-	if( !empty($data) && strstr($data, '<?xml version="1.0" encoding="utf-8"?>') ) {
-		$xml = JFactory::getXMLparser('Simple');
-		$xml->loadString($data);
-		$version 				= $xml->document->version[0];
-		$check['latest_version'] = $version->data();
-		$released 				= $xml->document->released[0];
-		$check['released'] 		= $released->data();
-		$check['connect'] 		= 1;
-		$check['enabled'] 		= 1;
-	}
-
-	return $check;
+		return $check;
 	}
 }

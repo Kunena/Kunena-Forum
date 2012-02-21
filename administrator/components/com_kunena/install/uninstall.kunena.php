@@ -11,6 +11,8 @@ defined ( '_JEXEC' ) or die ();
 
 function com_uninstall() {
 	if (version_compare(JVERSION, '1.6','>')) return;
-	include_once(dirname(__FILE__).'/install.script.php');
-	Com_KunenaInstallerScript::uninstall ( null );
+
+	require_once(JPATH_ADMINISTRATOR . '/components/com_kunena/install/model.php');
+	$installer = new KunenaModelInstall();
+	$installer->uninstall();
 }

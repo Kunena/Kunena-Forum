@@ -23,7 +23,7 @@ $document->addScriptDeclaration('function update_topicicon(newimage)
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-topicicons"><?php if ( !$this->state->get('item.id') ): ?><?php echo JText::_('COM_KUNENA_A_NEW_TOPICICON'); ?><?php else: ?><?php echo JText::_('COM_KUNENA_A_EDIT_TOPICICON'); ?><?php endif; ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="topicicons" />
 			<input type="hidden" name="task" value="save" />
 			<input type="hidden" name="boxchecked" value="0" />
@@ -38,7 +38,7 @@ $document->addScriptDeclaration('function update_topicicon(newimage)
 					<td width="200"><input class="post" type="text" name="topiciconname"
 						value="<?php echo isset($this->topicicon->name) ? $this->topicicon->name : '' ?>" /></td>
 					<td rowspan="3" width="50"><img name="topicicon_image"
-						src="<?php echo isset($this->topicicon) ? $this->escape(JURI::root().$this->template->getTopicsIconPath($this->topicicon->filename)) : '' ?>" border="0" alt="" /> &nbsp;</td>
+						src="<?php echo isset($this->topicicon) ? $this->escape(JURI::root().$this->ktemplate->getTopicsIconPath($this->topicicon->filename)) : '' ?>" border="0" alt="" /> &nbsp;</td>
 					<td rowspan="3">&nbsp;</td>
 				</tr>
 				<tr align="center">

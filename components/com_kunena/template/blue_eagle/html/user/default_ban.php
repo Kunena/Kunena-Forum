@@ -25,7 +25,7 @@ JHTML::_('behavior.calendar');
 				<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 
-			<table id="kaddban" class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : ''; ?>">
+			<table id="kaddban">
 				<tbody>
 				<tr class="krow<?php echo ($i^=1)+1;?>">
 					<td class="kcol-first"><b><?php echo JText::_('COM_KUNENA_BAN_USERNAME'); ?></b></td>

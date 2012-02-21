@@ -684,7 +684,7 @@ class KunenaViewTopic extends KunenaView {
 
 			if ($this->message->hold == 2 || $this->message->hold == 3) {
 				$this->messageButtons->set('undelete', $this->getButton ( sprintf($task, 'undelete'), 'undelete', 'message', 'moderation'));
-				$this->messageButtons->set('permdelete', $this->getButton ( sprintf($task, 'permdelete'), 'permdelete', 'message', 'moderation'));
+				$this->messageButtons->set('permdelete', $this->getButton ( sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent'));
 			} else {
 				$this->messageButtons->set('delete', $this->getButton ( sprintf($task, 'delete'), 'delete', 'message', 'moderation'));
 			}

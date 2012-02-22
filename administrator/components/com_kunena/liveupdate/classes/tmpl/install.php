@@ -30,5 +30,5 @@ $message2		= $state->get('extmessage');
 	Powered by <a href="https://www.akeebabackup.com/software/akeeba-live-update.html">Akeeba Live Update</a>
 </p>
 
-<iframe style="width: 0px; height: 0px; border: none;" frameborder="0" marginheight="0" marginwidth="0" height="0" width="0"
+<iframe style="width: 0px; height: 0px; border: none;" height="0" width="0"
 	src="index.php?option=<?php echo JRequest::getCmd('option','')?>&view=<?php echo JRequest::getCmd('view','')?>&task=cleanup"></iframe>

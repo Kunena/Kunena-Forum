@@ -98,7 +98,7 @@ class LiveUpdateINIHelper
 				if (count($tmp) == 2) {
 					if ((($value{0} != '"') && ($value{0} != "'")) ||
 					preg_match('/^".*"\s*;/', $value) || preg_match('/^".*;[^"]*$/', $value) ||
-					preg_match("/^'.*'\s*;/", $value) || preg_match("/^'.*;[^']*$/", $value) ){
+					preg_match("/^'.*'\\s*;/", $value) || preg_match("/^'.*;[^']*$/", $value) ){
 						$value = $tmp[0];
 					}
 				} else {

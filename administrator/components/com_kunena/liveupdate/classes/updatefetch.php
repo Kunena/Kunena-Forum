@@ -14,52 +14,52 @@ defined('_JEXEC') or die();
 class LiveUpdateFetch extends JObject
 {
 	private $cacheTTL = 24;
-	
+
 	private $storage = null;
-	
+
 	/**
 	 * One-stop-shop function which fetches update information and tells you
 	 * if there are updates available or not, or if updates are not supported.
-	 * 
+	 *
 	 * @return int 0 = no updates, 1 = updates available, -1 = updates not supported, -2 = fetching updates crashes the server
 	 */
 	public function hasUpdates()
 	{
 		$updateInfo = $this->getUpdateInformation();
-		
+
 		if($updateInfo->stuck) return -2;
-		
+
 		if(!$updateInfo->supported) return -1;
-		
+
 		$config = LiveUpdateConfig::getInstance();
 		$extInfo = $config->getExtensionInformation();
-		
+
 		// Filter by stability level
 		$minStability = $config->getMinimumStability();
 		$stability = strtolower($updateInfo->stability);
-		
+
 		switch($minStability) {
 			case 'alpha':
 			default:
 				// Reports any stability level as an available update
 				break;
-			
+
 			case 'beta':
 				// Do not report alphas as available updates
 				if(in_array($stability, array('alpha'))) return 0;
 				break;
-			
+
 			case 'rc':
 				// Do not report alphas and betas as available updates
 				if(in_array($stability, array('alpha','beta'))) return 0;
 				break;
-				
+
 			case 'stable':
 				// Do not report alphas, betas and rcs as available updates
 				if(in_array($stability, array('alpha','beta','rc'))) return 0;
 				break;
 		}
-		
+
 		// Use the version strategy to determine the availability of an update
 		switch($config->getVersionStrategy()) {
 			case 'newest':
@@ -69,51 +69,51 @@ class LiveUpdateFetch extends JObject
 				} else {
 					$mine = new JDate($extInfo['date']);
 				}
-				
+
 				$theirs = new JDate($updateInfo->date);
-				
+
 				return ($theirs->toUnix() > $mine->toUnix()) ? 1 : 0;
 				break;
-			
+
 			case 'vcompare':
 				$mine = $extInfo['version'];
 				if(empty($mine)) $mine = '0.0.0';
 				$theirs = $updateInfo->version;
 				if(empty($theirs)) $theirs = '0.0.0';
-				
+
 				return (version_compare($theirs, $mine, 'gt')) ? 1 : 0;
 				break;
-			
+
 			case 'different':
 				$mine = $extInfo['version'];
 				if(empty($mine)) $mine = '0.0.0';
 				$theirs = $updateInfo->version;
 				if(empty($theirs)) $theirs = '0.0.0';
-				
+
 				return ($theirs != $mine) ? 1 : 0;
 				break;
 		}
 	}
-	
+
 	/**
 	 * Get the latest version (update) information, either from the cache or
 	 * from the update server.
-	 * 
+	 *
 	 * @param $force bool Set to true to force fetching fresh data from the server
-	 * 
+	 *
 	 * @return stdClass The update information, in object format
 	 */
 	public function getUpdateInformation($force = false)
 	{
 		// Get the Live Update configuration
 		$config = LiveUpdateConfig::getInstance();
-		
+
 		// Get an instance of the storage class
 		$storageOptions = $config->getStorageAdapterPreferences();
 		require_once dirname(__FILE__).'/storage/storage.php';
 		$this->storage = LiveUpdateStorage::getInstance($storageOptions['adapter'], $storageOptions['config']);
 		$storage = $this->storage;
-		
+
 		// Fetch information from the cache
 		if(version_compare(JVERSION, '1.6.0', 'ge')) {
 			$registry = $storage->getRegistry();
@@ -123,16 +123,16 @@ class LiveUpdateFetch extends JObject
 			$lastCheck = $storage->get('lastcheck', 0);
 			$cachedData = $storage->get('updatedata', null);
 		}
-		
+
 		if(is_string($cachedData)) {
 			$cachedData = trim($cachedData,'"');
 			$cachedData = json_decode($cachedData);
 		}
-		
+
 		if(empty($cachedData)) {
 			$lastCheck = 0;
 		}
-		
+
 		// Check if the cache is at most $cacheTTL hours old
 		$now = time();
 		$maxDifference = $this->cacheTTL * 3600;
@@ -150,11 +150,11 @@ class LiveUpdateFetch extends JObject
 			return $data;
 		}
 	}
-	
+
 	/**
 	 * Retrieves the update data from the server, unless previous runs indicate
 	 * that the download process gets stuck and ends up in a WSOD.
-	 * 
+	 *
 	 * @param bool $force Set to true to force fetching new data no matter if the process is marked as stuck
 	 * @return stdClass
 	 */
@@ -170,42 +170,42 @@ class LiveUpdateFetch extends JObject
 			'infoURL'		=> '',
 			'releasenotes'	=> ''
 		);
-		
+
 		// If the process is marked as "stuck", we won't bother fetching data again; well,
 		// unless you really force me to, by setting $force = true.
 		if( ($this->storage->get('stuck',0) != 0) && !$force) return (object)$ret;
-		
+
 		$ret['stuck'] = false;
 
 		require_once dirname(__FILE__).'/download.php';
-		
+
 		// First we mark Live Updates as getting stuck. This way, if fetching the update
 		// fails with a server error, reloading the page will not result to a White Screen
 		// of Death again. Hey, Joomla! core team, are you listening? Some hosts PRETEND to
 		// support cURL or URL fopen() wrappers but using them throws an immediate WSOD.
 		$this->storage->set('stuck', 1);
-		$this->storage->save(); 
-		
+		$this->storage->save();
+
 		$config = LiveUpdateConfig::getInstance();
 		$extInfo = $config->getExtensionInformation();
 		$url = $extInfo['updateurl'];
 		$rawData = LiveUpdateDownloadHelper::downloadAndReturn($url);
-		
+
 		// Now that we have some data returned, let's unmark the process as being stuck ;)
 		$this->storage->set('stuck', 0);
 		$this->storage->save();
-		
+
 		// If we didn't get anything, assume Live Update is not supported (communication error)
 		if(empty($rawData) || ($rawData == false)) return (object)$ret;
-		
+
 		// TODO Detect the content type of the returned update stream. For now, I will pretend it's an INI file.
-		
+
 		$data = $this->parseINI($rawData);
 		$ret['supported'] = true;
-		
+
 		return (object)array_merge($ret, $data);
 	}
-	
+
 	/**
 	 * Fetches update information from the server using cURL
 	 * @return string The raw server data
@@ -215,7 +215,7 @@ class LiveUpdateFetch extends JObject
 		$config = LiveUpdateConfig::getInstance();
 		$extInfo = $config->getExtensionInformation();
 		$url = $extInfo['updateurl'];
-		
+
 		$process = curl_init($url);
 		$config = new LiveUpdateConfig();
 		$config->applyCACert($process);
@@ -233,7 +233,7 @@ class LiveUpdateFetch extends JObject
 		curl_close($process);
 		return $inidata;
 	}
-	
+
 	/**
 	 * Fetches update information from the server using file_get_contents, which internally
 	 * uses URL fopen() wrappers.
@@ -244,10 +244,10 @@ class LiveUpdateFetch extends JObject
 		$config = LiveUpdateConfig::getInstance();
 		$extInfo = $config->getExtensionInformation();
 		$url = $extInfo['updateurl'];
-		
-		return @file_get_contents($urls);
+
+		return @file_get_contents($url);
 	}
-	
+
 	/**
 	 * Parses the raw INI data into an array of update information
 	 * @param string $rawData The raw INI data
@@ -263,22 +263,22 @@ class LiveUpdateFetch extends JObject
 			'infoURL'		=> '',
 			'releasenotes'	=> ''
 		);
-		
+
 		// Get the magic string
 		$magicPos = strpos($rawData, '; Live Update provision file');
-		
+
 		if($magicPos === false) {
 			// That's not an INI file :(
 			return $ret;
 		}
-		
+
 		if($magicPos !== 0) {
 			$rawData = substr($rawData, $magicPos);
 		}
-		
+
 		require_once dirname(__FILE__).'/inihelper.php';
 		$iniData = LiveUpdateINIHelper::parse_ini_file($rawData, false, true);
-		
+
 		$ret['version'] = $iniData['version'];
 		$ret['date'] = $iniData['date'];
 		$config = LiveUpdateConfig::getInstance();
@@ -303,11 +303,11 @@ class LiveUpdateFetch extends JObject
 			}
 		}
 		$ret['stability'] = $stability;
-		
+
 		if(array_key_exists('releasenotes', $iniData)) {
 			$ret['releasenotes'] = $iniData['releasenotes'];
 		}
-		
+
 		if(array_key_exists('infourl', $iniData)) {
 			$ret['infoURL'] = $iniData['infourl'];
 		}

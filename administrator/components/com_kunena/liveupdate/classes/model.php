@@ -19,7 +19,7 @@ class LiveUpdateModel extends JModel
 		// Get the path to Joomla!'s temporary directory
 		$jreg =& JFactory::getConfig();
 		$tmpdir = $jreg->getValue('config.tmp_path');
-		
+
 		jimport('joomla.filesystem.folder');
 		// Make sure the user doesn't use the system-wide tmp directory. You know, the one that's
 		// being erased periodically and will cause a real mess while installing extensions (Grrr!)
@@ -38,7 +38,7 @@ class LiveUpdateModel extends JModel
 		$config = LiveUpdateConfig::getInstance();
 		$auth = $config->getAuthorization();
 		$url = $updateInfo->downloadURL;
-		
+
 		// Sniff the package type. If sniffing is impossible, I'll assume a ZIP package
 		$basename = basename($url);
 		if(strstr($basename,'?')) {
@@ -55,30 +55,30 @@ class LiveUpdateModel extends JModel
 		} else {
 			$type = 'zip';
 		}
-		
+
 		// Cache the path to the package file and the temp installation directory in the session
 		$target = $tmpdir.'/'.$updateInfo->extInfo->name.'.update.'.$type;
 		$tempdir = $tmpdir.'/'.$updateInfo->extInfo->name.'_update';
-		
+
 		$session = JFactory::getSession();
 		$session->set('target', $target, 'liveupdate');
 		$session->set('tempdir', $tempdir, 'liveupdate');
-		
+
 		// Let's download!
 		require_once dirname(__FILE__).'/download.php';
 		return LiveUpdateDownloadHelper::download($url, $target);
 	}
-	
+
 	public function extract()
 	{
 		$session = JFactory::getSession();
 		$target = $session->get('target', '', 'liveupdate');
 		$tempdir = $session->get('tempdir', '', 'liveupdate');
-		
+
 		jimport('joomla.filesystem.archive');
 		return JArchive::extract( $target, $tempdir);
 	}
-	
+
 	public function install()
 	{
 		$session = JFactory::getSession();
@@ -88,7 +88,7 @@ class LiveUpdateModel extends JModel
 		jimport('joomla.installer.helper');
 		$installer =& JInstaller::getInstance();
 		$packageType = JInstallerHelper::detectType($tempdir);
-		
+
 		if(!$packageType) {
 			$msg = JText::_('LIVEUPDATE_INVALID_PACKAGE_TYPE');
 			$result = false;
@@ -101,7 +101,7 @@ class LiveUpdateModel extends JModel
 			$msg = JText::sprintf('LIVEUPDATE_INSTALLEXT', JText::_($packageType), JText::_('LIVEUPDATE_Success'));
 			$result = true;
 		}
-		
+
 		$app = JFactory::getApplication();
 		$app->enqueueMessage($msg);
 		$this->setState('result', $result);
@@ -115,23 +115,23 @@ class LiveUpdateModel extends JModel
 				$this->setState('extmessage', $installer->get('extension.message'));
 			}
 		}
-		
+
 		return $result;
 	}
-	
+
 	public function cleanup()
 	{
 		$session = JFactory::getSession();
 		$target = $session->get('target', '', 'liveupdate');
 		$tempdir = $session->get('tempdir', '', 'liveupdate');
-		
+
 		jimport('joomla.installer.helper');
 		JInstallerHelper::cleanupInstall($target, $tempdir);
-		
+
 		$session->clear('target','liveupdate');
 		$session->clear('tempdir','liveupdate');
 	}
-	
+
 	public function getSRPURL($return = '')
 	{
 		$session = JFactory::getSession();
@@ -140,17 +140,17 @@ class LiveUpdateModel extends JModel
 		jimport('joomla.installer.installer');
 		jimport('joomla.installer.helper');
 		jimport('joomla.filesystem.file');
-		
+
 		$instModelFile = JPATH_ADMINISTRATOR.'/components/com_akeeba/models/installer.php';
 		if(!JFile::exists($instModelFile)) return false;
-		
+
 		require_once JPATH_ADMINISTRATOR.'/components/com_akeeba/models/installer.php';
 		$model	= JModel::getInstance('Installer', 'AkeebaModel');
 		$packageType = JInstallerHelper::detectType($tempdir);
 		$name = $model->getExtensionName($tempdir);
-		
+
 		$url = 'index.php?option=com_akeeba&view=backup&tag=restorepoint&type='.$packageType.'&name='.urlencode($name['name']);
-		switch($type) {
+		switch($packageType) {
 			case 'module':
 			case 'template':
 				$url .= '&group='.$name['client'];
@@ -159,9 +159,9 @@ class LiveUpdateModel extends JModel
 				$url .= '&group='.$name['group'];
 				break;
 		}
-		
+
 		if(!empty($return)) $url .= '&returnurl='.urlencode($return);
-		
+
 		return $url;
 	}
 }

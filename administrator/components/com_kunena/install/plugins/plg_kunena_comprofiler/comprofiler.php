@@ -11,18 +11,22 @@
 defined ( '_JEXEC' ) or die ();
 
 class plgKunenaComprofiler extends JPlugin {
+	public $minCBVersion = '1.7';
+
 	public function __construct(&$subject, $config) {
-
-		// TODO: add CB support
-		return;
-
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
 
 		KunenaFactory::loadLanguage('plg_kunena_comprofiler.sys', 'admin');
+
+		$app = JFactory::getApplication ();
+
 		// Do not load if CommunityBuilder is not installed
 		$path = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
-		if (!is_file ( $path )) return;
+		if (!is_file ( $path )) {
+			$app->enqueueMessage ( JText::sprintf ( 'PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion ), 'notice' );
+			return;
+		}
 
 		require_once ($path);
 		cbimport ( 'cb.database' );
@@ -32,18 +36,8 @@ class plgKunenaComprofiler extends JPlugin {
 		cbimport ( 'cb.field' );
 		global $ueConfig;
 
-		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR );
-
-		$app = JFactory::getApplication ();
-		if (! isset ( $ueConfig ['version'] )) {
-			$app->enqueueMessage ( COM_KUNENA_INTEGRATION_CB_WARN_GENERAL, 'notice' );
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_INTEGRATION_CB_WARN_INSTALL', '1.7' ) );
-			$app->enqueueMessage ( COM_KUNENA_INTEGRATION_CB_WARN_HIDE, 'notice' );
-			return;
-		} if (version_compare ( $ueConfig ['version'], '1.7' ) < 0) {
-			$app->enqueueMessage ( COM_KUNENA_INTEGRATION_CB_WARN_GENERAL, 'notice' );
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_INTEGRATION_CB_WARN_UPDATE', '1.7' ) );
-			$app->enqueueMessage ( COM_KUNENA_INTEGRATION_CB_WARN_HIDE, 'notice' );
+		if (! isset ( $ueConfig ['version'] ) || version_compare ( $ueConfig ['version'], $this->minCBVersion ) < 0) {
+			$app->enqueueMessage ( JText::sprintf ( 'PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion ), 'notice' );
 			return;
 		}
 		parent::__construct ( $subject, $config );
@@ -60,8 +54,8 @@ class plgKunenaComprofiler extends JPlugin {
 	public function onKunenaGetAccessControl() {
 		if (!$this->params->get('access', 1)) return;
 
-		require_once "{$this->path}/access.php";
-		return new KunenaAccessComprofiler($this->params);
+		//require_once "{$this->path}/access.php";
+		//return new KunenaAccessComprofiler($this->params);
 	}
 
 	/*

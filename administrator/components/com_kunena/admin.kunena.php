@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Administrator
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,6 +23,13 @@ require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 $view = JRequest::getCmd ( 'view', 'cpanel' );
 $task = JRequest::getCmd ( 'task' );
 JRequest::setVar( 'view', $view );
+
+// Akeeba Live Update
+if($view == 'liveupdate') {
+	require_once KPATH_ADMIN.'/liveupdate/liveupdate.php';
+	LiveUpdate::handleRequest();
+	return;
+}
 
 // Start by checking if Kunena has been installed -- if not, redirect to our installer
 require_once(KPATH_ADMIN.'/install/version.php');

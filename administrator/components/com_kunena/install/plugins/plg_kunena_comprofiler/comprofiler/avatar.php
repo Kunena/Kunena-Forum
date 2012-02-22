@@ -18,9 +18,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar {
 	}
 
 	public function load($userlist) {
-		if (class_exists('CBuser') && method_exists('CBuser','advanceNoticeOfUsersNeeded')) {
-			CBuser::advanceNoticeOfUsersNeeded($userlist);
-		}
+		CBuser::advanceNoticeOfUsersNeeded($userlist);
 	}
 
 	public function getEditURL()

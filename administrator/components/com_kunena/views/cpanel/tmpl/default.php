@@ -73,7 +73,10 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 </div>
 	<?php if ( $this->config->version_check ) : ?>
 	<div class="kadmin-welcome">
-		<?php echo $this->versioncheck; ?>
+		<?php
+		require_once KPATH_ADMIN.'/liveupdate/liveupdate.php';
+		echo LiveUpdate::getIcon();
+		?>
 	</div>
 	<?php endif; ?>
 </div>

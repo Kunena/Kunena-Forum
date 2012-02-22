@@ -10,6 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+require_once dirname(__FILE__).'/integration.php';
+
 class KunenaActivityComprofiler extends KunenaActivity {
 	protected $params = null;
 
@@ -30,7 +32,7 @@ class KunenaActivityComprofiler extends KunenaActivity {
 	}
 
 	public function onBeforeReply($message) {
-		$params = array ('actor' => $message->get ( 'userid' ), 'replyto' => $message->parent->userid, 'message' => $message );
+		$params = array ('actor' => $message->get ( 'userid' ), 'replyto' => (int) $message->getParent()->userid, 'message' => $message );
 		KunenaIntegrationComprofiler::trigger ( 'onBeforeReply', $params );
 	}
 
@@ -45,7 +47,7 @@ class KunenaActivityComprofiler extends KunenaActivity {
 	}
 
 	public function onAfterReply($message) {
-		$params = array ('actor' => $message->get ( 'userid' ), 'replyto' => $message->parent->userid, 'message' => $message );
+		$params = array ('actor' => $message->get ( 'userid' ), 'replyto' => (int) $message->getParent()->userid, 'message' => $message );
 		KunenaIntegrationComprofiler::trigger ( 'onAfterReply', $params );
 	}
 

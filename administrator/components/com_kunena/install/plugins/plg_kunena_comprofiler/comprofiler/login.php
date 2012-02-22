@@ -17,7 +17,7 @@ class KunenaLoginComprofiler {
 		$this->params = $params;
 	}
 
-	public function loginUser($username, $password, $rememberme, $return) {
+	public function loginUser($username, $password, $rememberme) {
 		cbimport ( 'cb.authentication' );
 		global $ueConfig;
 
@@ -30,14 +30,10 @@ class KunenaLoginComprofiler {
 		$loginType = ( isset( $ueConfig['login_type'] ) ? $ueConfig['login_type'] : 0 );
 		$resultError = $cbAuthenticate->login ( $username, $password, $rememberme, 1, $redirect_url, $messagesToUser, $alertmessages, $loginType );
 
-		if ($resultError) {
-			return $resultError;
-		} else {
-			return null;
-		}
+		return $resultError ? $resultError : null;
 	}
 
-	public function logoutUser($return) {
+	public function logoutUser() {
 		cbimport ( 'cb.authentication' );
 
 		$cbAuthenticate = new CBAuthentication ();
@@ -45,34 +41,7 @@ class KunenaLoginComprofiler {
 		$redirect_url = KunenaRoute::current();
 		$resultError = $cbAuthenticate->logout ( $redirect_url );
 
-		if ($resultError) {
-			return $resultError;
-		} else {
-			return null;
-		}
-	}
-
-	public function getLoginFormFields() {
-		return array (
-			'form'=>'login',
-			'field_username'=>'username',
-			'field_password'=>'passwd',
-			'field_remember'=>'remember',
-			'field_return'=>'return',
-			'option'=>'com_kunena',
-			'view'=>'user',
-			'task'=>'login'
-		);
-	}
-
-	public function getLogoutFormFields() {
-		return array (
-			'form'=>'login',
-			'field_return'=>'return',
-			'option'=>'com_kunena',
-			'view'=>'user',
-			'task'=>'logout'
-		);
+		return $resultError ? $resultError : null;
 	}
 
 	public function getLoginURL() {

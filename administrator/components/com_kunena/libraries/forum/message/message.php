@@ -236,6 +236,10 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return KunenaForumCategoryHelper::get($this->catid);
 	}
 
+	public function getParent() {
+		return KunenaForumMessageHelper::get($this->parent);
+	}
+
 	public function getAuthor() {
 		return KunenaUserHelper::getAuthor($this->userid, $this->name);
 	}

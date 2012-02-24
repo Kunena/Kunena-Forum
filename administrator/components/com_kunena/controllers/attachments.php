@@ -24,19 +24,18 @@ class KunenaAdminControllerAttachments extends KunenaController {
 	}
 
 	function delete() {
-		$app =  JFactory::getApplication ();
 		$db = JFactory::getDBO ();
 
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
 		if (! $cids) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_NO_ATTACHMENTS_SELECTED' ), 'error' );
-			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_NO_ATTACHMENTS_SELECTED' ), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
 		foreach( $cids as $id ) {
@@ -44,7 +43,7 @@ class KunenaAdminControllerAttachments extends KunenaController {
 			$attachment->delete();
 		}
 
-		$app->enqueueMessage ( JText::_('COM_KUNENA_ATTACHMENTS_DELETED_SUCCESSFULLY') );
-		$app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->app->enqueueMessage ( JText::_('COM_KUNENA_ATTACHMENTS_DELETED_SUCCESSFULLY') );
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 }

@@ -32,7 +32,24 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {
-		return parent::getButton($link, $name, $scope, $type, $id);
+		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
+		$names = array('unsubscribe'=>'subscribe', 'unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
+				'quickreply'=>'reply', 'quote'=>'quote', 'edit'=>'edit');
+
+		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
+		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");
+		if ($title == "COM_KUNENA_BUTTON_{$scope}_{$name}_LONG") $title = '';
+		if ($id) $id = 'id="'.$id.'"';
+
+		if (isset($types[$type])) $type = $types[$type];
+		if ($name == 'quickreply') $type .= ' kqreply';
+		if (isset($names[$name])) $name = $names[$name];
+
+		return <<<HTML
+<a $id class="kicon-button kbutton{$type} btn-left" href="{$link}" rel="nofollow" title="{$title}">
+	<span class="{$name}"><span>{$text}</span></span>
+</a>
+HTML;
 	}
 
 	public function getIcon($name, $title='') {

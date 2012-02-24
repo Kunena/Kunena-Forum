@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Administrator
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -24,12 +24,18 @@ $view = JRequest::getCmd ( 'view', 'cpanel' );
 $task = JRequest::getCmd ( 'task' );
 JRequest::setVar( 'view', $view );
 
+// Akeeba Live Update
+if($view == 'liveupdate') {
+	require_once KPATH_ADMIN.'/liveupdate/liveupdate.php';
+	LiveUpdate::handleRequest();
+	return;
+}
+
 // Start by checking if Kunena has been installed -- if not, redirect to our installer
 require_once(KPATH_ADMIN.'/install/version.php');
 $kversion = new KunenaVersion();
 if ($view != 'install' && !$kversion->checkVersion()) {
-	$app = JFactory::getApplication ();
-	$app->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
+	JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
 
 } elseif ($view == 'install') {
 	// Load our installer (special case)

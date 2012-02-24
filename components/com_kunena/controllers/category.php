@@ -25,9 +25,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 	}
 
 	function markread() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('request')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
@@ -37,15 +36,15 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			$session = KunenaFactory::getSession();
 			$session->markAllCategoriesRead ();
 			if (!$session->save ()) {
-				$app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
 			} else {
-				$app->enqueueMessage ( JText::_('COM_KUNENA_GEN_ALL_MARKED') );
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_GEN_ALL_MARKED') );
 			}
 		} else {
 			// One category
 			$category = KunenaForumCategoryHelper::get($catid);
 			if (!$category->authorise('read')) {
-				$app->enqueueMessage ( $category->getError(), 'error' );
+				$this->app->enqueueMessage ( $category->getError(), 'error' );
 				$this->redirectBack ();
 			}
 
@@ -61,9 +60,9 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 
 				$session->readtopics = $readTopics;
 				if (!$session->save ()) {
-					$app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
+					$this->app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
 				} else {
-					$app->enqueueMessage ( JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
+					$this->app->enqueueMessage ( JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
 				}
 			}
 		}
@@ -71,29 +70,27 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 	}
 
 	function subscribe() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$category = KunenaForumCategoryHelper::get(JRequest::getInt('catid', 0));
 		if (!$category->authorise('read')) {
-			$app->enqueueMessage ( $category->getError(), 'error' );
+			$this->app->enqueueMessage ( $category->getError(), 'error' );
 			$this->redirectBack ();
 		}
 
 		$db = JFactory::getDBO();
-		$me = KunenaUserHelper::getMyself();
-		if ($me->exists()) {
+		if ($this->me->exists()) {
 			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)
-				VALUES ({$db->quote($me->userid)},{$db->quote($category->id)},1)
+				VALUES ({$db->quote($this->me->userid)},{$db->quote($category->id)},1)
 				ON DUPLICATE KEY UPDATE subscribed=1";
 			$db->setQuery ( $query );
 			$db->query ();
 			KunenaError::checkDatabaseError();
 			if ($db->getAffectedRows ()) {
-				$app->enqueueMessage ( JText::_('COM_KUNENA_GEN_CATEGORY_SUBCRIBED') );
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_GEN_CATEGORY_SUBCRIBED') );
 			}
 		}
 
@@ -101,28 +98,26 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 	}
 
 	function unsubscribe() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$category = KunenaForumCategoryHelper::get(JRequest::getInt('catid', 0));
 		if (!$category->authorise('read')) {
-			$app->enqueueMessage ( $category->getError(), 'error' );
+			$this->app->enqueueMessage ( $category->getError(), 'error' );
 			$this->redirectBack ();
 		}
 
 		$db = JFactory::getDBO();
-		$me = KunenaUserHelper::getMyself();
-		if ($me->exists()) {
+		if ($this->me->exists()) {
 			$query = "UPDATE #__kunena_user_categories SET subscribed=0
-				WHERE user_id={$db->quote($me->userid)} AND category_id={$db->quote($category->id)}";
+				WHERE user_id={$db->quote($this->me->userid)} AND category_id={$db->quote($category->id)}";
 			$db->setQuery ( $query );
 			$db->query ();
 			KunenaError::checkDatabaseError();
 			if ($db->getAffectedRows ()) {
-				$app->enqueueMessage ( JText::_('COM_KUNENA_GEN_CATEGORY_UNSUBCRIBED') );
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_GEN_CATEGORY_UNSUBCRIBED') );
 			}
 		}
 

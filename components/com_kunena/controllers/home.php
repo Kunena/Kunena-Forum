@@ -20,7 +20,7 @@ class KunenaControllerHome extends KunenaController {
 
 	public function display() {
 		global $Itemid;
-		$menu = JFactory::getApplication ()->getMenu ();
+		$menu = $this->app->getMenu ();
 		$home = $menu->getActive ();
 		if (!$home) {
 			JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );

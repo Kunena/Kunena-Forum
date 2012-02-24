@@ -35,7 +35,7 @@ class KunenaBbcode extends BBCode {
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
 		$this->SetSmileyDir ( JPATH_ROOT );
-		$this->SetSmileyURL ( '' );
+		$this->SetSmileyURL ( JURI::root(true) );
 		$this->SetDetectURLs ( true );
 	}
 

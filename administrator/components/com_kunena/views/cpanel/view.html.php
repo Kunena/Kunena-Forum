@@ -16,7 +16,6 @@ defined ( '_JEXEC' ) or die ();
 class KunenaAdminViewCpanel extends KunenaView {
 	function displayDefault() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
-		$this->config = KunenaFactory::getConfig ();
 		$this->versioncheck = $this->get('latestversion');
 
 		if (version_compare(JVERSION, '1.6', '>')) {

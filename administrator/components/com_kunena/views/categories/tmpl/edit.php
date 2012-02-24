@@ -36,8 +36,7 @@ function submitbutton(pressbutton)
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN') ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
-		<input type="hidden" name="view" value="categories" />
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="task" value="save" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
 		<?php echo JHTML::_( 'form.token' ); ?>
@@ -65,6 +64,16 @@ function submitbutton(pressbutton)
 					<tr>
 						<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 						<td><input class="inputbox" type="text" name="alias" size="80" value="<?php echo $this->escape ( $this->category->alias ); ?>" /></td>
+					</tr>
+					<?php if ($this->options ['aliases']) : ?>
+					<tr>
+						<td>&nbsp;</td>
+						<td><?php echo $this->options ['aliases']; ?></td>
+					</tr>
+					<?php endif ?>
+					<tr>
+						<td valign="top"><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?>:</td>
+						<td valign="top"><?php echo $this->options ['published']; ?></td>
 					</tr>
 					<tr>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>

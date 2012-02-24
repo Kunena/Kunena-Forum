@@ -17,7 +17,6 @@ class KunenaAdminViewConfig extends KunenaView {
 	function displayDefault() {
 		$this->setToolBarDefault();
 		$this->lists = $this->get('Configlists');
-		$this->config = KunenaFactory::getConfig ();
 
 		$joomlaemail = $this->get('Joomlaemail');
 		if ( !empty($joomlaemail) && $this->config->email == 'change@me.com' ) {

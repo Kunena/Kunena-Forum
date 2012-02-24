@@ -28,10 +28,8 @@ class KunenaAdminModelRanks extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.ranks.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.admin.ranks.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.ranks.list.ordering', 'filter_order', 'ordering', 'cmd' );
@@ -81,7 +79,7 @@ class KunenaAdminModelRanks extends KunenaModel {
 		}
 
 		$rankpath = $template->getRankPath();
-		$rank_images = (array)JFolder::Files(KPATH_SITE.'/'.$rankpath,false,false,false,array('index.php','index.html'));
+		$rank_images = (array)JFolder::Files(JPATH_SITE.'/'.$rankpath,false,false,false,array('index.php','index.html'));
 
 		$rank_list = array();
 		$i = 0;

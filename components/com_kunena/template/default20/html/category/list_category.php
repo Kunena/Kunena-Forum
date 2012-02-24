@@ -53,7 +53,7 @@ defined ( '_JEXEC' ) or die ();
 										</ul>
 									</td>
 									<td class="kcategory-topics"><?php echo $this->formatLargeNumber ( $this->category->getTopics() ) ?> <span><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span></td>
-									<td class="kcategory-replies"><?php echo $this->formatLargeNumber ( $this->category->getPosts() ) ?> <span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></td>
+									<td class="kcategory-replies"><?php echo $this->formatLargeNumber ( $this->category->getReplies() ) ?> <span><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span></td>
 									<!-- td class="kcategory-subs">944 <span>Subscribers</span></td -->
 									<td class="kcategory-lastpost">
 										<ul>
@@ -75,7 +75,7 @@ defined ( '_JEXEC' ) or die ();
 										<?php foreach ( $this->subcategories as $subcategory ) : ?>
 										<li class="kcategory-smdetails kcategory-smicon[K=CATEGORY_NEW_SUFFIX:<?php echo $subcategory->id ?>]">
 											<h4><?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?> [K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]</h4>
-											<span class="kcounts"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_TOPICS_N_REPLIES', $subcategory->getTopics(), $subcategory->getPosts()) ?></span>
+											<span class="kcounts"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_TOPICS_N_REPLIES', $subcategory->getTopics(), $subcategory->getReplies()) ?></span>
 										</li>
 										<?php endforeach ?>
 										</ul>

@@ -125,7 +125,6 @@ defined ( '_JEXEC' ) or die ();
 
 			<?php
 			if ($this->config->highlightcode) {
-				$this->config = KunenaFactory::getConfig();
 				if (version_compare(JVERSION, '1.6','>')) {
 					// Joomla 1.6+
 					$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi';

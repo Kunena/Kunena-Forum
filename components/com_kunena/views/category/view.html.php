@@ -29,7 +29,6 @@ class KunenaViewCategory extends KunenaView {
 		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
 
-		$this->me = KunenaUserHelper::getMyself();
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
@@ -85,7 +84,7 @@ class KunenaViewCategory extends KunenaView {
 		$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
 
 		$parentCategory = $this->category->getParent();
-		$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . JFactory::getApplication()->getCfg ( 'sitename' ) );
+		$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$parentCategory->name} - {$this->category->name} ({$page}/{$pages}) - {$this->config->board_title}" );
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $metaDesc );
@@ -101,7 +100,6 @@ class KunenaViewCategory extends KunenaView {
 		if ($this->category->id && ! $this->category->authorise('read')) {
 			$this->setError($this->category->getError());
 		}
-		$this->me = KunenaUserHelper::getMyself();
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
@@ -126,7 +124,7 @@ class KunenaViewCategory extends KunenaView {
 		}
 		// meta description and keywords
 		$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
-		$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . JFactory::getApplication ()->getCfg ( 'sitename' ));
+		$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
 
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 		$this->document->setMetadata ( 'keywords', $metaKeys );
@@ -140,7 +138,6 @@ class KunenaViewCategory extends KunenaView {
 	function displayUser($tpl = null) {
 		$this->Itemid = $this->get ( 'Itemid' );
 		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
-		$this->app = JFactory::getApplication();
 
 		$errors = $this->getErrors();
 		if ($errors) {
@@ -150,7 +147,7 @@ class KunenaViewCategory extends KunenaView {
 
 			// meta description and keywords
 			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
-			$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . JFactory::getApplication ()->getCfg ( 'sitename' ));
+			$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
 
 			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 			$this->document->setMetadata ( 'keywords', $metaKeys );
@@ -347,7 +344,7 @@ class KunenaViewCategory extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topics', &$this->topics, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topics', &$this->topics, &$params, 0));
 
 		foreach ( $this->topics as $this->topic ) {
 			$this->position++;

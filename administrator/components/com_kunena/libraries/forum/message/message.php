@@ -100,8 +100,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			$text = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->message );
 			$message->message = "[quote=\"{$user->getName($this->name)}\" post={$this->id}]" .  $text . "[/quote]";
 		} else {
-			if ($safefields) $message->bind($safefields);
-			if ($fields) $message->bind($fields, array ('name', 'email', 'subject', 'message' ), true);
+			if (is_array($safefields)) $message->bind($safefields);
+			if (is_array($fields)) $message->bind($fields, array ('name', 'email', 'subject', 'message' ), true);
 		}
 		return array($topic, $message);
 	}
@@ -238,6 +238,10 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 	public function getCategory() {
 		return KunenaForumCategoryHelper::get($this->catid);
+	}
+
+	public function getParent() {
+		return KunenaForumMessageHelper::get($this->parent);
 	}
 
 	public function getAuthor() {
@@ -693,8 +697,9 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	protected function authoriseDelete($user) {
-		// FIXME: check also $config->userdeletetmessage parameter
-		if (!$user->isModerator($this->catid) && $this->getTopic()->last_post_id != $this->id) {
+		$config = KunenaFactory::getConfig();
+		if (!$user->isModerator($this->catid)
+				&& $config->userdeletetmessage != '2' && ($config->userdeletetmessage == '0' || $this->getTopic()->last_post_id != $this->id)) {
 			$this->setError (JText::_ ( 'COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER' ) );
 			return false;
 		}

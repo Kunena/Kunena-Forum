@@ -40,7 +40,7 @@ class KunenaViewCommon extends KunenaView {
 	function displayAnnouncement($tpl = null) {
 		if ($this->offline) return;
 
-		if (KunenaFactory::getConfig()->showannouncement > 0) {
+		if ($this->config->showannouncement > 0) {
 			$moderator = intval($this->me->isModerator('global'));
 			$cache = JFactory::getCache('com_kunena', 'output');
 			if ($cache->start("{$this->ktemplate->name}.common.announcement.{$moderator}", 'com_kunena.template')) return;
@@ -93,9 +93,8 @@ class KunenaViewCommon extends KunenaView {
 		$view = JRequest::getWord ( 'view', 'default' );
 		$layout = JRequest::getWord ( 'layout', 'default' );
 
-		$app = JFactory::getApplication();
-		$pathway = $app->getPathway();
-		$active = JFactory::getApplication()->getMenu ()->getActive ();
+		$pathway = $this->app->getPathway();
+		$active = $this->app->getMenu ()->getActive ();
 
 		if (empty($this->pathway)) {
 			KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
@@ -155,8 +154,6 @@ class KunenaViewCommon extends KunenaView {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
 
-		$this->my = JFactory::getUser();
-
 		$users = KunenaUserHelper::getOnlineUsers();
 		KunenaUserHelper::loadUsers(array_keys($users));
 		$onlineusers = KunenaUserHelper::getOnlineCount();
@@ -207,7 +204,6 @@ class KunenaViewCommon extends KunenaView {
 		if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) return;
 
 		// FIXME: refactor code
-		$this->config = KunenaFactory::getConfig();
 		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
 		$kunena_stats = KunenaForumStatistics::getInstance ( );
 		$kunena_stats->loadGeneral();
@@ -302,7 +298,7 @@ class KunenaViewCommon extends KunenaView {
 
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$catid = 0;
-		if (KunenaFactory::getConfig ()->enablerss) {
+		if ($this->config->enablerss) {
 			if ($catid > 0) {
 				$category = KunenaForumCategoryHelper::get ( $catid );
 				if ($category->pub_access == 0 && $category->parent)

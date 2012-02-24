@@ -28,10 +28,8 @@ class KunenaAdminModelSmilies extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.ordering', 'filter_order', 'ordering', 'cmd' );
@@ -82,7 +80,7 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		}
 
 		$smileypath = $template->getSmileyPath();
-		$smiley_images = (array)JFolder::Files(KPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
+		$smiley_images = (array)JFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
 
 		$smiley_list = array();
 		$i = 0;

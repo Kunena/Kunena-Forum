@@ -17,7 +17,6 @@ require_once KPATH_SITE.'/lib/kunena.link.class.php';
  */
 class KunenaViewCategory extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->config = KunenaFactory::getConfig();
 		if (!$this->config->enablerss) {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}

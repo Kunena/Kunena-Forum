@@ -539,7 +539,7 @@
 }
 
 #kunena.layout ul.category-list dd.category-topics span.number, #kunena.layout  ul.category-list dd.category-replies span.number {
-	font-size: 32px;
+	font-size: 24px;
 	color: #666666;
 }
 
@@ -1073,7 +1073,7 @@
 }
 
 #kunena.layout ul.topic-list dd.topic-replies span.number, #kunena.layout ul.topic-list dd.topic-views span.number {
-	font-size: 32px;
+	font-size: 24px;
 	color: #666666;
 }
 

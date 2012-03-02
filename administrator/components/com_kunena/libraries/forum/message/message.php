@@ -108,6 +108,10 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 	public function sendNotification($url=null) {
 		$config = KunenaFactory::getConfig();
+		if (!$config->disablenotifications) {
+			return;
+		}
+
 		if ($this->hold > 1) {
 			return;
 		} elseif ($this->hold == 1) {

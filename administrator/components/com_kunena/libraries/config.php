@@ -242,6 +242,7 @@ class KunenaConfig extends JObject {
 	public $attachment_limit = 8;
 	public $pickup_category = 0;
 	public $article_display = 'intro';
+	public $disablenotifications = 0;
 
 	public function __construct() {
 		parent::__construct ();

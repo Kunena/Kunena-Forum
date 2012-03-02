@@ -28,9 +28,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$content = KunenaHtmlParser::plainBBCode($message->message, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
-		$content .= '<br /><a rel="nofollow" href="'.
-				KunenaRoute::_($message->getPermaUrl()).
-				'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
+		$content .= '<br /><a rel="nofollow" href="'.$message->getTopic()->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
@@ -57,9 +55,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$content = KunenaHtmlParser::plainBBCode($message->message, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
-		$content .= '<br /><a rel="nofollow" href="'.
-				KunenaRoute::_($message->getPermaUrl()).
-				'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
+		$content .= '<br /><a rel="nofollow" href="'.$message->getTopic()->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';

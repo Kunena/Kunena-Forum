@@ -242,6 +242,7 @@ class KunenaConfig extends JObject {
 	public $attachment_limit = 8;
 	public $pickup_category = 0;
 	public $article_display = 'intro';
+	public $send_emails = 1;
 
 	public function __construct() {
 		parent::__construct ();
@@ -306,5 +307,10 @@ class KunenaConfig extends JObject {
 		$this->messages_per_page_search = max ( $this->messages_per_page_search, 2 );
 		$this->threads_per_page = max ( $this->threads_per_page, 2 );
 
+	}
+
+
+	function getEmail() {
+		return $this->get('email', JFactory::getApplication()->getCfg('mailfrom', ''));
 	}
 }

@@ -54,8 +54,8 @@ class plgKunenaComprofiler extends JPlugin {
 	public function onKunenaGetAccessControl() {
 		if (!$this->params->get('access', 1)) return;
 
-		//require_once "{$this->path}/access.php";
-		//return new KunenaAccessComprofiler($this->params);
+		require_once "{$this->path}/access.php";
+		return new KunenaAccessComprofiler($this->params);
 	}
 
 	/*

@@ -262,6 +262,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$message = $action;
 			$action = 'post'.$message->id;
 		}
+
 		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}");
 		if ($uri->getVar('action') !== null) {
 			$uri->delVar('action');
@@ -298,7 +299,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	public function getPermaUrl($category = null, $xhtml = true, $action = null) {
-		$this->getUrl($category, $xhtml, $action);
+		return $this->getUrl($category, $xhtml, $action);
 	}
 
 	public function getPostLocation($mesid, $direction = null, $hold = null) {

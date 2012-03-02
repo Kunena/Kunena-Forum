@@ -714,8 +714,13 @@ class KunenaControllerTopic extends KunenaController {
 			$this->redirectBack ();
 		}
 
+		if (!$this->config->get('send_emails')) {
+			// Emails have been disabled
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ), 'notice' );
+			$this->redirectBack ();
+		}
 		jimport ( 'joomla.mail.helper' );
-		if (! $this->config->email || ! JMailHelper::isEmailAddress ( $this->config->email )) {
+		if (! $this->config->getEmail() || ! JMailHelper::isEmailAddress ( $this->config->getEmail() )) {
 			// Error: email address is invalid
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'error' );
 			$this->redirectBack ();
@@ -783,7 +788,7 @@ class KunenaControllerTopic extends KunenaController {
 					if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
 						continue;
 
-					JUtility::sendMail ( $this->config->email, $mailsender, $emailTo->email, $mailsubject, $mailmessage );
+					JUtility::sendMail ( $this->config->getEmail(), $mailsender, $emailTo->email, $mailsubject, $mailmessage );
 				}
 
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );

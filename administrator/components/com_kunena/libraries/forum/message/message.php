@@ -108,6 +108,10 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 	public function sendNotification($url=null) {
 		$config = KunenaFactory::getConfig();
+		if (!$config->get('send_emails')) {
+			return;
+		}
+
 		if ($this->hold > 1) {
 			return;
 		} elseif ($this->hold == 1) {
@@ -149,10 +153,10 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$topic = $this->getTopic();
 		if (count ( $emailToList )) {
 			jimport('joomla.mail.helper');
-			if (! $config->email ) {
+			if (! $config->getEmail() ) {
 				KunenaError::warning ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ) );
 				return false;
-			} elseif ( ! JMailHelper::isEmailAddress ( $config->email ) ) {
+			} elseif ( ! JMailHelper::isEmailAddress ( $config->getEmail() ) ) {
 				KunenaError::warning ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ) );
 				return false;
 			}
@@ -177,7 +181,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			// Create email
 			$mail = JFactory::getMailer();
 			$mail->setSubject($mailsubject);
-			$mail->setSender(array($this->_config->email, $mailsender));
+			$mail->setSender(array($config->getEmail(), $mailsender));
 
 			// Send email to all subscribers
 			if (!empty($receivers[1])) {

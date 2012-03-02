@@ -120,6 +120,8 @@ class KunenaModelInstall extends JModel {
 		$this->uninstallPlugin('finder', 'kunena');
 		$this->uninstallPlugin('system', 'kunena');
 		$this->uninstallModule('mod_kunenamenu');
+
+		// Remove all Kunena related menu items, including aliases
 		if (class_exists('KunenaMenuHelper')) {
 			$items = KunenaMenuHelper::getAll();
 			foreach ($items as $item) {

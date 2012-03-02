@@ -11,7 +11,11 @@
 #kunena {
 	display: inline-block;
 	position: relative;
-	width: 100% !important;
+	width: 100%;
+}
+
+#kunena.layout {
+	min-width: 580px;
 }
 
 /* NOTE: If third-party wrapper template is optimized correctly we can take out this section.*/

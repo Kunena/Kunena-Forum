@@ -151,6 +151,10 @@ class KunenaForumMessageThankyou extends JObject {
 		$db->setQuery ( $query );
 		$db->query ();
 
+		$query = "UPDATE #__kunena_users SET thankyou=thankyou-1 WHERE userid={$db->quote($message->userid)}";
+		$db->setQuery ( $query );
+		$db->query ();
+
 		// Check for an error message.
 		if ($db->getErrorNum ()) {
 			$this->setError ( $db->getErrorMsg () );

@@ -34,7 +34,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo $this->displayTopicActions(0); ?>
 			</div>
 			<div class="innerbox-wrapper innerspacer">
-				<?php echo $this->getPagination(4) ?>
+				<?php echo $this->getPagination(4); ?>
 			</div>
 			<div class="innerbox-wrapper">
 				<div class="topic detailsbox">

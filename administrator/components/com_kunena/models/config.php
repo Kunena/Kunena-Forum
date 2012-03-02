@@ -348,20 +348,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$article_display[] = JHTML::_('select.option', 'link', JText::_('COM_KUNENA_COM_A_ARTICLE_LINK'));
 		$lists ['article_display'] = JHTML::_('select.genericlist', $article_display, 'cfg_article_display', 'class="inputbox" size="1"', 'value', 'text', $this->config->article_display);
 
-		$disableenable = array ();
-		$disableenable [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_A_DISABLE') );
-		$disableenable [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_A_ENABLE') );
-
-		$lists ['disablenotifications'] = JHTML::_('select.genericlist', $disableenable, 'cfg_disablenotifications', 'class="inputbox" size="1"', 'value', 'text', $config->disablenotifications);
+		$lists ['send_emails'] = JHTML::_('select.genericlist', $yesno, 'cfg_send_emails', 'class="inputbox" size="1"', 'value', 'text', $this->config->send_emails);
 
 		return $lists;
-	}
-
-	function getJoomlaemail() {
-		$config = new JConfig();
-		if (!empty($config->mailfrom)) {
-			return $config->mailfrom;
-		}
-		return;
 	}
 }

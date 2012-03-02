@@ -35,33 +35,33 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 				<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
 
 				<table class="kadmin-adminform">
-							<tr align="center" valign="middle">
-						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE') ?>
-						</td>
-								<td align="left" valign="top" width="25%"><input type="text"
-							name="cfg_board_title"
-							value="<?php echo $this->escape ( $this->config->board_title );
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE_DESC') ?>
-						</td>
-					</tr>
-							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL') ?></td>
-								<td align="left" valign="top"><input type="text" name="cfg_email"
-							value="<?php echo !empty($this->joomlaemail) ? $this->escape($this->joomlaemail) : $this->escape($this->config->email);
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL_DESC') ?></td>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE') ?></td>
+						<td align="left" valign="top" width="25%"><input type="text" name="cfg_board_title" value="<?php echo $this->escape ( $this->config->board_title ) ?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $this->lists ['board_offline'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_DESC') ?>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL') ?></td>
+						<td align="left" valign="top"><input type="text" name="cfg_email" value="<?php echo $this->escape($this->config->email) ?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL_DESC2') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SEND_EMAILS') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['send_emails'] ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SEND_EMAILS_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['board_offline'] ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES') ?></td>
+						<td align="left" valign="top" colspan="2">
+							<textarea name="cfg_offline_message" rows="3" cols="50"><?php echo $this->escape ( $this->config->offline_message ) ?></textarea>
 						</td>
 					</tr>
-							<tr align="center" valign="middle">
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT') ?>
 						</td>
 								<td align="left" valign="top"><input type="text"
@@ -69,12 +69,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							value="<?php echo $this->escape($this->config->fbsessiontimeout);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES') ?></td>
-						<td align="left" valign="top" colspan="2">
-							<textarea name="cfg_offline_message" rows="3" cols="50"><?php echo $this->escape ( $this->config->offline_message ); ?></textarea>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -88,13 +82,9 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $this->lists ['debug'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE_DESC') ?>
-						</td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['debug'] ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_VERSION_CHECK') ?>
@@ -578,11 +568,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
 				<table class="kadmin-adminform">
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISABLE_NOTIFICATIONS') ?></td>
-						<td align="left" valign="top"><?php echo $this->lists ['disablenotifications']; ?></td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISABLE_NOTIFICATIONS_DESC') ?></td>
-					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['allowsubscriptions']; ?></td>

@@ -1947,6 +1947,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function deleteMenuJ16() {
+		jimport ( 'joomla.application.component.helper' );
 		$table = JTable::getInstance ( 'menutype' );
 		$table->load(array('menutype'=>'kunenamenu'));
 		if ($table->id) {
@@ -1955,9 +1956,19 @@ class KunenaModelInstall extends JModel {
 				JFactory::getApplication()->enqueueMessage($table->getError(), 'error');
 			}
 		}
+
+		$component_id = JComponentHelper::getComponent ( 'com_kunena' )->id;
+
+		$query = "DELETE FROM `#__menu` WHERE `component_id`={$this->db->quote($component_id)};";
+		$this->db->setQuery ( $query );
+		$this->db->query ();
+
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 	}
 
 	function deleteMenuJ15() {
+		jimport ( 'joomla.application.component.helper' );
 		$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 		$this->db->setQuery ( $query );
 		$menuid = $this->db->loadResult ();
@@ -1969,6 +1980,15 @@ class KunenaModelInstall extends JModel {
 		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/models/menutype.php');
 		$menuhelper = new MenusModelMenutype ();
 		$menuhelper->delete ( $menuid );
+
+		$component_id = JComponentHelper::getComponent ( 'com_kunena' )->id;
+
+		$query = "DELETE FROM `#__menu` WHERE `component_id`={$this->db->quote($component_id)};";
+		$this->db->setQuery ( $query );
+		$this->db->query ();
+
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 	}
 
 	function checkTimeout($stop = false) {

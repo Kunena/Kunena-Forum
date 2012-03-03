@@ -4,7 +4,7 @@
  * @package Kunena.Template.Default
  * @subpackage Announcement
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,22 +18,24 @@ defined ( '_JEXEC' ) or die ();
 		</h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
-		<?php if ($this->canEdit) : ?>
+		<?php if ($this->actions) : ?>
 		<div class="kactions">
-			<?php echo CKunenaLink::GetAnnouncementLink( 'edit', $this->announcement->id, JText::_('COM_KUNENA_ANN_EDIT'), JText::_('COM_KUNENA_ANN_EDIT')); ?> |
-			<?php echo CKunenaLink::GetAnnouncementLink( 'delete', $this->announcement->id, JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?> |
-			<?php echo CKunenaLink::GetAnnouncementLink( 'add',NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?> |
-			<?php echo CKunenaLink::GetAnnouncementLink( 'show', NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?>
+			<?php
+			foreach ($this->actions as $name => $url) {
+				$links[] = JHtml::_('kunenaforum.link', $url, JText::_("COM_KUNENA_ANN_{$name}"), JText::_("COM_KUNENA_ANN_{$name}"));
+			}
+			echo implode(' | ', $links);
+			?>
 		</div>
 		<?php endif; ?>
 		<div class="kbody">
 			<div class="kanndesc">
-				<?php if ($this->announcement->showdate > 0) : ?>
-				<div class="anncreated" title="<?php echo KunenaDate::getInstance($this->announcement->created)->toKunena('ago'); ?>">
-					<?php echo KunenaDate::getInstance($this->announcement->created)->toKunena('date_today'); ?>
+				<?php if ($this->showdate) : ?>
+				<div class="anncreated" title="<?php echo $this->announcement->getCreationDate()->toKunena('ago'); ?>">
+					<?php echo $this->announcement->getCreationDate()->toKunena('date_today'); ?>
 				</div>
 				<?php endif; ?>
-				<div class="anndesc"><?php echo !empty($this->announcement->description) ? KunenaHtmlParser::parseBBCode($this->announcement->description) : KunenaHtmlParser::parseBBCode($this->announcement->sdescription); ?></div>
+				<div class="anndesc"><?php echo KunenaHtmlParser::parseBBCode(!empty($this->announcement->description) ? $this->announcement->description : $this->announcement->sdescription) ?></div>
 			</div>
 		</div>
 	</div>

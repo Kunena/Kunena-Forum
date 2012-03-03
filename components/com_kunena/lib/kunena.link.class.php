@@ -158,21 +158,6 @@ class CKunenaLink {
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$searchword}{$params}{$limitstr}", $xhtml );
 	}
 
-	function GetAnnouncementLink($do, $id = NULL, $name, $title, $rel = 'nofollow') {
-		$idstring = '';
-		if ($id)
-			$idstring .= "&id=$id";
-		return self::GetHrefLink ( self::GetAnnouncementURL($do, $id), $name, $title, $rel );
-	}
-
-	function GetAnnouncementURL($do, $id = NULL, $xhtml = true) {
-		$idstring = '';
-		if ($id)
-			$idstring .= "&id=$id";
-		if ($do == 'delete') $idstring .= '&'.JUtility::getToken().'=1';
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=announcement&do={$do}{$idstring}", $xhtml );
-	}
-
 	function GetPollURL($do, $id = NULL, $catid) {
 		$idstring = '';
 		if ($id)

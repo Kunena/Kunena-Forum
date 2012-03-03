@@ -16,31 +16,32 @@ defined ( '_JEXEC' ) or die ();
  * @since		2.0
  */
 class KunenaControllerAnnouncement extends KunenaController {
-	public function __construct($config = array()) {
-		$this->db = JFactory::getDBO ();
-		parent::__construct($config);
-	}
 
 	public function edit() {
-		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		if (! JRequest::checkToken ()) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
-		$model = $this->getModel('announcement');
-		$this->canEdit = $model->getCanEdit();
-		if (! $this->canEdit) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ), 'error' );
+		$now = new JDate();
+		$fields = array();
+		$fields['title'] = JRequest::getString ( 'title' );
+		$fields['description'] = JRequest::getVar ( 'description', '', 'string', JREQUEST_ALLOWRAW );
+		$fields['sdescription'] = JRequest::getVar ( 'sdescription', '', 'string', JREQUEST_ALLOWRAW );
+		$fields['created'] = JRequest::getString ( 'created', $now->toMysql() );
+		$fields['published'] = JRequest::getInt ( 'published', 1 );
+		$fields['showdate'] = JRequest::getInt ( 'showdate', 1 );
+
+		$id = JRequest::getInt ('id');
+		$announcement = KunenaForumAnnouncementHelper::get($id);
+		$announcement->bind($fields);
+		if (!$announcement->authorise($id ? 'edit' : 'create') || !$announcement->save()) {
+			$this->app->enqueueMessage ( $announcement->getError(), 'error');
 			$this->redirectBack ();
 		}
 
-		$model->edit();
-		if (1) {
-			$id = JRequest::getInt ( 'id', 0 );
-			$this->app->enqueueMessage ( JText::_ ( $id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD' ) );
-		}
-		$this->setRedirect (CKunenaLink::GetAnnouncementURL ( 'show', false, false ));
+		$this->app->enqueueMessage ( JText::_ ( $id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD' ) );
+		$this->setRedirect ($announcement->getLayoutUrl('default', false));
 	}
 
 	public function delete($id) {
@@ -49,31 +50,14 @@ class KunenaControllerAnnouncement extends KunenaController {
 			$this->redirectBack ();
 		}
 
-		$model = $this->getModel('announcement');
-		$this->canEdit = $model->getCanEdit();
-		if (! $this->canEdit) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ), 'error' );
+		$id = JRequest::getInt ('id');
+		$announcement = KunenaForumAnnouncementHelper::get($id);
+		if (!$announcement->authorise('delete') || !$announcement->delete()) {
+			$this->app->enqueueMessage ( $announcement->getError(), 'error');
 			$this->redirectBack ();
 		}
-		$model->delete();
-		if (1) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ANN_DELETED' ) );
-		}
+
+		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ANN_DELETED' ) );
 		$this->redirectBack ();
-	}
-
-	public function publish() {
-		if (! JRequest::checkToken ('get')) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
-		}
-
-	}
-
-	public function unpublish() {
-		if (! JRequest::checkToken ('get')) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->redirectBack ();
-		}
 	}
 }

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,14 +16,6 @@ defined ( '_JEXEC' ) or die ();
  * @since		2.0
  */
 class KunenaModelAnnouncement extends KunenaModel {
-	public $announcement = null;
-	public $announcements = null;
-	public $canEdit = false;
-
-	public function __construct() {
-		parent::__construct();
-		$this->db = JFactory::getDBO ();
-	}
 
 	protected function populateState() {
 		$id = $this->getInt ( 'id', 0 );
@@ -39,91 +31,23 @@ class KunenaModelAnnouncement extends KunenaModel {
 	}
 
 	function getNewAnnouncement() {
-		$this->announcement = new stdClass();
-		$this->announcement->id = 0;
-		$this->announcement->title = '';
-		$this->announcement->description = '';
-		$this->announcement->sdescription = '';
-		$this->announcement->created = '';
-		$this->announcement->published = 1;
-		$this->announcement->showdate = 1;
-		return $this->announcement;
+		return new KunenaForumAnnouncement;
 	}
 
 	function getCanEdit() {
 		// User needs to be global moderator to edit announcements
-		if ($this->me->exists() && $this->me->isModerator('global')) {
-			$this->canEdit = true;
-		} else {
-			$this->canEdit = false;
-		}
-		return $this->canEdit;
-	}
-
-	function edit() {
-		$now = new JDate();
-		$title = JRequest::getString ( "title", "" );
-		$description = JRequest::getVar ( 'description', '', 'string', JREQUEST_ALLOWRAW );
-		$sdescription = JRequest::getVar ( 'sdescription', '', 'string', JREQUEST_ALLOWRAW );
-		$created = JRequest::getString ( "created", $now->toMysql() );
-		if (!$created) $created = $now->toMysql();
-		$published = JRequest::getInt ( "published", 1 );
-		$showdate = JRequest::getInt ( "showdate", 1 );
-
-		$id = $this->getState ( 'item.id' );
-		if (!$id) {
-			$query = "INSERT INTO #__kunena_announcement VALUES ('',
-				{$this->db->Quote ( $title )},
-				{$this->db->Quote ( $this->me->userid )},
-				{$this->db->Quote ( $sdescription )},
-				{$this->db->Quote ( $description )},
-				{$this->db->Quote ( $created )},
-				{$this->db->Quote ( $published )},
-				0,
-				{$this->db->Quote ( $showdate )})";
-		} else {
-			$query = "UPDATE #__kunena_announcement SET title={$this->db->Quote ( $title )},
-				description={$this->db->Quote ( $description )},
-				sdescription={$this->db->Quote ( $sdescription )},
-				created={$this->db->Quote ( $created )},
-				published={$this->db->Quote ( $published )},
-				showdate={$this->db->Quote ( $showdate )}
-				WHERE id=$id";
-		}
-		$this->db->setQuery ( $query );
-		$this->db->query ();
-		KunenaError::checkDatabaseError();
-	}
-
-	function delete() {
-		$id = $this->getState ( 'item.id' );
-		$query = "DELETE FROM #__kunena_announcement WHERE id={$this->db->Quote ($id)} ";
-		$this->db->setQuery ( $query );
-		$this->db->query ();
-		KunenaError::checkDatabaseError();
+		return ($this->me->exists() && $this->me->isModerator('global'));
 	}
 
 	function getAnnouncement() {
 		$id = $this->getState ( 'item.id' );
-		if (! $id) {
-			$query = "SELECT * FROM #__kunena_announcement WHERE published='1' ORDER BY created DESC";
-		} else {
-			$query = "SELECT * FROM #__kunena_announcement WHERE id={$this->db->Quote($id)}" . ($this->getCanEdit() ? '': " AND published='1'");
+		if ($id) {
+			return KunenaForumAnnouncementHelper::get($id);
 		}
-		$this->db->setQuery ( $query, 0, 1 );
-		$this->announcement = $this->db->loadObject ();
-		if (!$this->announcement) $this->getNewAnnouncement();
-		KunenaError::checkDatabaseError();
-
-		return $this->announcement;
+		return KunenaForumAnnouncementHelper::getAnnouncements();
 	}
 
 	function getAnnouncements() {
-		$query = "SELECT * FROM #__kunena_announcement ORDER BY created DESC";
-		$this->db->setQuery ( $query, $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		$this->announcements = $this->db->loadObjectList ();
-		KunenaError::checkDatabaseError();
-
-		return $this->announcements;
+		return KunenaForumAnnouncementHelper::getAnnouncements($this->getState ( 'list.start'), $this->getState ( 'list.limit'), $this->getCanEdit());
 	}
 }

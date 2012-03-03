@@ -111,7 +111,6 @@
 			<fileset dir="${project_dir}/${kunena.site}">
 				<exclude name="language/*-*/**"/>
 				<exclude name="template/**/params.ini"/>
-				<exclude name="template/orao/**"/>
 				<!-- exclude name="template/default20/**"/ -->
 			</fileset>
 		</copy>	
@@ -137,8 +136,7 @@
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
-		<!-- Remove Default20 and Orao templates from the build -->
-		<delete dir="${tmp_dir}/site/template/orao" />
+		<!-- Remove Default20 template from the build -->
 		<!-- delete dir="${tmp_dir}/site/template/default20" / -->
 
 		<!-- Move media files -->
@@ -186,7 +184,6 @@
 			<exclude name="**/plupload.js" />
 			<exclude name="template/default20/css/*.css" />
 			<exclude name="template/mirage/css/*.css" />
-			<exclude name="template/orao/css/*.css" />
 		</yui-compressor>
 	</target>
 	

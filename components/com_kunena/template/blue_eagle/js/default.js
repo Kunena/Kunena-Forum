@@ -30,8 +30,8 @@ var KunenaTabs = new Class({
 	initialize: function(dlist, options){
 		this.setOptions(options);
 		this.dlist = document.id(dlist);
-		this.titles = this.dlist.getElements(this.options.titleSelector);
-		this.descriptions = this.dlist.getElements(this.options.descriptionSelector);
+		this.titles = this.dlist.getChildren(this.options.titleSelector);
+		this.descriptions = this.dlist.getChildren(this.options.descriptionSelector);
 		this.content = new Element('div').inject(this.dlist, 'after').addClass('current');
 
 		for (var i = 0, l = this.titles.length; i < l; i++){

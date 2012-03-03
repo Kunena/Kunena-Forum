@@ -201,8 +201,7 @@
 		<field name="pollid" type="int(11)" null="1" />
 		<field name="userid" type="int(11)" null="1" />
 		<field name="votes" type="int(11)" null="1" />
-		<field name="lasttime" type="timestamp" null="0"
-			extra="on update CURRENT_TIMESTAMP" />
+		<field name="lasttime" type="timestamp" null="0" default="0000-00-00 00:00:00"/>
 		<field name="lastvote" type="int(11)" null="1" />
 		<key name="pollid" unique="1" columns="pollid,userid" />
 	</table>

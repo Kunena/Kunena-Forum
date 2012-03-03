@@ -35,8 +35,8 @@
 	margin: 0px;
 	padding: 0px;
 	line-height: normal;
-	list-style-type: none;
-	text-decoration: none;
+	/*list-style-type: none;
+	text-decoration: none;*/
 	background: none;
 	color: #666666;
 }

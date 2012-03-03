@@ -120,6 +120,10 @@
 	background-color: rgba(100, 100, 100, 0.05);
 }
 
+#kunena.layout .list-unstyled {
+	list-style: none outside none;
+}
+
 #kunena.layout .bold {
 	font-weight: bold;
 }
@@ -214,6 +218,17 @@
 
 #kunena.layout div.headerbox-wrapper {
 	background-image: linear-gradient(top, rgba(255, 255, 255, 1.0) 0%, rgba(240, 240, 240, 1.0) 100%) !important;
+}
+
+#kunena.layout dl.tabs {
+	border-bottom: 1px solid #DDDDDD;
+}
+
+#kunena.layout dl.tabs > dd {
+	background-color: #FFFFFF;
+	border-left: 1px solid #DDDDDD;
+	border-right: 1px solid #DDDDDD;
+	border-top: 1px solid #DDDDDD;
 }
 
 /*#kunena.layout li.postmessage-row {

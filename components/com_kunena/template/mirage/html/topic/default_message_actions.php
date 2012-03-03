@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="innerbox-wrapper innerspacer">
 	<div class="buttonbar innerblock">
-		<ul class="buttons-message">
+		<ul class="list-unstyled buttons-message">
 			<?php
 			if (empty($this->message_closed)) {
 				echo implode(' ', $this->messageButtons->getProperties());

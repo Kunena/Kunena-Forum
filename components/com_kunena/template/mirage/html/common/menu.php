@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 	<div class="box-wrapper box-full box-border box-border_radius box-shadow">
 		<div class="menubox block">
 				<?php echo $this->getMenu() ?>
-				<ul class="menu fr">
+				<ul class="list-unstyled menu fr">
 					<?php if (!$this->me->exists()) : ?>
 						<li class="dropdown">
 							<a class="link-login" href="#"><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME') ?> <?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST') ?>, <?php echo JText::_('Sign In'); ?></a>

@@ -36,7 +36,7 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper">
 				<div class="detailsbox innerspacer box-full box-hover box-border box-border_radius box-shadow" id="announce-detailsbox">
-					<ul class="details-desc">
+					<ul class="list-unstyled details-desc">
 						<?php if ($this->announcement->showdate > 0) : ?>
 						<li class="kannounce-date"><?php echo KunenaDate::getInstance($this->announcement->created)->toKunena('date_today') ?></li>
 						<?php endif; ?>

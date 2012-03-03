@@ -20,10 +20,10 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper">
 				<div class="rec-posts posts-detailsbox detailsbox box-full box-border box-border_radius box-shadow">
-					<ul class="post-list">
+					<ul class="list-unstyled post-list">
 						<?php if (empty($this->messages )) : ?>
 							<li class="post-row">
-								<dl>
+								<dl class="list-unstyled">
 									<dd class="post-none">
 										<?php echo JText::_('COM_KUNENA_NO_POSTS'); ?>
 									</dd>

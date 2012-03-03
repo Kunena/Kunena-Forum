@@ -30,7 +30,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="detailsbox-wrapper">
 				<div class="announcements-details detailsbox box-full box-hover box-border box-border_radius box-shadow" id="announcements-detailsbox" >
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
-						<ul class="announcement-list">
+						<ul class="list-unstyled announcement-list">
 							<li class="header box-hover_header-row">
 								<dl>
 									<dd class="announcement-checkbox">
@@ -62,7 +62,7 @@ defined ( '_JEXEC' ) or die ();
 								</dl>
 							</li>
 						</ul>
-						<ul class="announcement-list">
+						<ul class="list-unstyled announcement-list">
 							<?php
 							$k=0;
 							if (!empty($this->announcements))
@@ -70,7 +70,7 @@ defined ( '_JEXEC' ) or die ();
 							$k=1 - $k;
 							?>
 								<li class="announcements-row box-hover box-hover_list-row">
-									<dl>
+									<dl class="list-unstyled">
 										<dd class="announcement-checkbox">
 											<?php echo JHTML::_('grid.id', intval($ann->id), intval($ann->id)) ?>
 										</dd>

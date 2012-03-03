@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<ul class="kpost-user-details">
+<ul class="list-unstyled kpost-user-details">
 	<li class="kpost-user-username"><?php echo $this->profile->getLink($this->message->name) ?></li>
 	<?php if (!empty($this->usertype)) : ?><li class="kpost-user-type">( <?php echo JText::_($this->escape($this->usertype)) ?> )</li><?php endif ?>
 	<?php $avatar = $this->profile->getAvatarImage ('kavatar', 'post'); if ($avatar) : ?>

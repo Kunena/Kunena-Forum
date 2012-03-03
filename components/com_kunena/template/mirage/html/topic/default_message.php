@@ -11,12 +11,12 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <li class="topic-row">
-	<dl>
+	<dl class="list-unstyled">
 		<dd class="box-border box-border_radius box-shadow">
-			<ul class="message-list">
+			<ul class="list-unstyled message-list">
 				<li class="header">
 					<a id="<?php echo intval($this->message->id) ?>"></a>
-					<dl>
+					<dl class="list-unstyled">
 						<dd class="kposthead-replytitle"><h3>RE: <?php echo $this->escape($this->message->subject) ?></h3></dd>
 						<dd class="kposthead-postid" ><?php echo $this->numLink ?></dd>
 						<?php if (!empty($this->ipLink)) : ?><dd class="kposthead-postip"><?php echo $this->ipLink ?></dd><?php endif ?>
@@ -26,7 +26,7 @@ defined ( '_JEXEC' ) or die ();
 			</ul>
 			[K=MESSAGE_PROFILE]
 			<div class="kpost-container box-hover">
-				<ul class="kpost-post-body">
+				<ul class="list-unstyled kpost-post-body">
 					<li class="kpost-body">
 						<?php echo $this->parse($this->message->message) ?>
 					</li>
@@ -34,7 +34,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php if (!empty($this->attachments)) : ?>
 						<li class="kpost-body-attach">
 							<span class="kattach-title"><?php echo JText::_('COM_KUNENA_ATTACHMENTS') ?></span>
-							<ul>
+							<ul class="list-unstyled">
 								<?php foreach($this->attachments as $attachment) : ?>
 								<li class="kattach-details">
 									<?php echo $attachment->getThumbnailLink(); ?> <span><?php echo $attachment->getTextLink(); ?></span>
@@ -88,7 +88,7 @@ defined ( '_JEXEC' ) or die ();
 				</ul>
 				<?php if(!empty($this->thankyou)): ?>
 				<div class="buttonbar">
-					<ul class="buttons-message innerblock">
+					<ul class="list-unstyled buttons-message innerblock">
 					<?php
 					echo JText::_('COM_KUNENA_THANKYOU').': ';
 					echo implode(', ', $this->thankyou);

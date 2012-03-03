@@ -13,21 +13,28 @@ defined ( '_JEXEC' ) or die ();
 $j=count($this->banhistory);
 ?>
 
-<div class="ksection">
-	<h2 class="kheader"><a rel="kbanhistory-detailsbox"><?php echo JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name)); ?></a></h2>
-	<div class="kdetailsbox kbanhistory" id="kbanhistory-detailsbox">
-		<div class="kbody">
-			<table class="kblocktable kbanhistory">
-				<thead>
-					<tr class="ksth">
-						<th class="kcol-first kid"> # </th>
-						<th class="kcol-mid kbanfrom"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></th>
-						<th class="kcol-mid kbanstart"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></th>
-						<th class="kcol-mid kbanexpire"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></th>
-						<th class="kcol-mid kbancreate"><?php echo JText::_('COM_KUNENA_BAN_CREATEDBY'); ?></th>
-						<th class="kcol-last kbanmodify"><?php echo JText::_('COM_KUNENA_BAN_MODIFIEDBY'); ?></th>
-					</tr>
-				</thead>
+<div class="box-module">
+	<div class="block-wrapper box-color box-border box-border_radius">
+		<div class="block">
+			<div class="headerbox-wrapper box-full">
+				<div class="header">
+					<h2 class="kheader"><a rel="kbanhistory-detailsbox"><?php echo JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name)); ?></a></h2>
+				</div>
+			</div>
+			<div class="detailsbox-wrapper">
+				<div class="detailsbox banhistory">
+					<ul class="list-unstyled topic-list">
+						<li class="header box-hover_header-row clear">
+							<dl>
+								<dd class="kcol-first kid"> # </th>
+								<dd class="kcol-mid kbanfrom"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></dd>
+								<dd class="kcol-mid kbanstart"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></dd>
+								<dd class="kcol-mid kbanexpire"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></dd>
+								<dd class="kcol-mid kbancreate"><?php echo JText::_('COM_KUNENA_BAN_CREATEDBY'); ?></dd>
+								<dd class="kcol-last kbanmodify"><?php echo JText::_('COM_KUNENA_BAN_MODIFIEDBY'); ?></dd>
+							<dl>
+						</li>
+					</ul>
 				<tbody>
 				<?php
 					if ( !empty($this->banhistory) ) :

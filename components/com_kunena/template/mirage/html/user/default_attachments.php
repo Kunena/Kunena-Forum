@@ -37,7 +37,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 						<input type="hidden" name="boxchecked" value="0" />
 						<?php echo JHTML::_( 'form.token' ); ?>
 		
-						<ul>
+						<ul class="list-unstyled">
 						<?php
 						if ( empty($this->items) ):
 							 echo '<li>'.JText::_('COM_KUNENA_USER_NO_ATTACHMENTS').'</li>';

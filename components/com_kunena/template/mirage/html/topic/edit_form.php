@@ -39,7 +39,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 			<?php echo JHTML::_( 'form.token' ); ?>
 		<div class="detailsbox-wrapper">
 			<div class="detailsbox box-border box-border_radius box-shadow">
-				<ul class="kform postmessage-list clearfix">
+				<ul class="list-unstyled kform postmessage-list clearfix">
 
 					<?php if (isset($this->selectcatlist)): ?>
 					<li id="kpost-category" class="postmessage-row box-hover box-hover_list-row">
@@ -109,7 +109,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 							</label>
 						</div>
 						<div class="form-field">
-							<ul>
+							<ul class="list-unstyled">
 								<?php foreach ($this->topicIcons as $id=>$icon) : ?>
 								<li class="hasTip" title="Topic icon :: <?php echo $this->escape(ucfirst($icon->name)) ?>">
 									<input type="radio" name="topic_emoticon" id="topic_emoticon_<?php echo $this->escape($icon->name) ?>" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />

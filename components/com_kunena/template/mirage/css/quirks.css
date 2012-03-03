@@ -1,0 +1,9 @@
+/* Beeze Problem */
+#kunena.layout div.current {
+	border: none;
+	border-radius: 0px;
+}
+
+#kunena.layout dl.tabs {
+	padding: 0px;
+}

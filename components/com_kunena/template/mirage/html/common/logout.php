@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 // TODO: add missing module position
 ?>
 <div class="login dropdown-menu">
-	<ul class="login-profile">
+	<ul class="list-unstyled login-profile">
 		<li class="login-avatar link-dropdown">
 			<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>">
 				<span class="login-avatar"><?php echo $this->me->getAvatarImage('', 'welcome'), JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE') ?></span>

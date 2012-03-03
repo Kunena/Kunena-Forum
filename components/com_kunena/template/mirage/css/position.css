@@ -214,6 +214,41 @@
 	width: 75%;
 }
 
+#kunena.layout dl.tabs > dt {
+	padding: 9px 12px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	margin: 0px 2px;
+}
+
+#kunena.layout .tabs:after {
+	clear: both;
+}
+
+#kunena.layout .tabs:before {
+	content: "";
+	display: block;
+}
+
+#kunena.layout .tabs:after {
+	content: "";
+	display: block;
+}
+
+#kunena.layout .pills:after {
+	clear: both;
+}
+
+#kunena.layout .pills:before {
+	content: "";
+	display: block;
+}
+
+#kunena.layout .pills:after {
+	content: "";
+	display: block;
+}
+
 
 
 /************************
@@ -429,6 +464,118 @@
 /**************************
  * STOP ANNOUNCEMENT LIST *
  **************************/
+
+
+/*************************
+ * START BANMANAGER LIST *
+ *************************/
+
+#kunena.layout ul.banmanager-list {
+	display: block;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#kunena.layout ul.banmanager-list div.header {
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+}
+
+#kunena.layout ul.banmanager-list > li {
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+	margin: 0;
+	overflow: hidden;
+	padding: 1px 0 0;
+}
+
+#kunena.layout ul.banmanager-list li.banmanager-row dl, ul.banmanager-list li.header {
+ 	float: none !important;
+ 	height: auto;
+ 	width: auto;
+}
+
+#kunena.layout ul.banmanager-list li.banmanager-row {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+#kunena.layout ul.banmanager-list li.banmanager-row dd {
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 5px;
+}
+
+#kunena.layout ul.banmanager-list li.header dd {
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 2px 5px;
+}
+
+#kunena.layout ul.banmanager-list dd {
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+ 	padding: 2px 0;
+}
+
+/*#kunena.layout ul.topic-list li.topics-row dl {
+ 	display: block;
+ 	position: relative;
+}*/
+
+#kunena.layout ul.banmanager-list li.banmanager-row dd {
+ 	display: block;
+ 	float: left;
+ 	margin: 0px;
+}
+
+#kunena.layout ul.banmanager-list dd.banned-id {
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 5%;
+}
+
+#kunena.layout ul.banmanager-list dd.banned-user {
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 20%;
+}
+
+#kunena.layout ul.banmanager-list dd.banned-from {
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 20%;
+}
+
+#kunena.layout ul.banmanager-list dd.banned-start {
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 20%;
+}
+
+#kunena.layout ul.banmanager-list dd.banned-expire {
+	margin: 0;
+	text-align: center;
+	vertical-align: center;
+	width: 20%;
+}
+
+/*************************
+ * STOP BANMANAGER LIST *
+ *************************/
 
 
 /********************
@@ -728,10 +875,10 @@
  **************************/
 
 #kunena.layout ul.postmessage-list {
- 	display: block;
- 	list-style-type: none;
- 	margin: 0px;
- 	padding: 0px;
+	display: block;
+	/*list-style-type: none;*/
+	margin: 0px;
+	padding: 0px;
 }
 
 #kunena.layout ul.postmessage-list > li {

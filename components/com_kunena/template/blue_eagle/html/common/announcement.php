@@ -14,26 +14,28 @@ defined ( '_JEXEC' ) or die ();
 <div class="kblock kannouncement">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kannouncement"></a></span>
-		<h2><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->announcement->id, $this->annTitle, JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></h2>
+		<h2><?php echo JHtml::_('kunenaforum.link', $this->annUrl, $this->annTitle, JText::_('COM_KUNENA_ANN_READMORE'), null, 'follow'); ?></h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
-		<?php if ($this->canEdit) : ?>
+		<?php if ($this->actions) : ?>
 		<div class="kactions">
-			<?php echo CKunenaLink::GetAnnouncementLink( 'edit', $this->announcement->id, JText::_('COM_KUNENA_ANN_EDIT'), JText::_('COM_KUNENA_ANN_EDIT')); ?> |
-			<?php echo CKunenaLink::GetAnnouncementLink( 'delete', $this->announcement->id, JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?> |
-			<?php echo CKunenaLink::GetAnnouncementLink( 'add',NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?> |
-			<?php echo CKunenaLink::GetAnnouncementLink( 'show', NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?>
+			<?php
+			foreach ($this->actions as $name => $url) {
+				$links[] = JHtml::_('kunenaforum.link', $url, JText::_("COM_KUNENA_ANN_{$name}"), JText::_("COM_KUNENA_ANN_{$name}"));
+			}
+			echo implode(' | ', $links);
+			?>
 		</div>
 		<?php endif; ?>
 		<div class="kbody">
 			<div class="kanndesc">
-				<?php if ($this->announcement->showdate) : ?>
+				<?php if ($this->showdate) : ?>
 				<div class="anncreated"><?php echo $this->annDate->toKunena('date_today') ?></div>
 				<?php endif; ?>
 				<div class="anndesc">
 					<?php echo $this->annDescription; ?>
 					<?php if (!empty($this->announcement->description)) : ?>
-					...<br /><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->announcement->id, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
+					...<br /><?php echo JHtml::_('kunenaforum.link', $this->annUrl, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
 					<?php endif; ?>
 				</div>
 			</div>

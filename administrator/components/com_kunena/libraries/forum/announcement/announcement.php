@@ -15,6 +15,8 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	protected $_table = 'KunenaAnnouncements';
+	protected $_date = null;
+	protected $_author = null;
 
 	protected static $actions = array(
 			'none'=>array(),
@@ -47,17 +49,30 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	}
 
 	public function getLayoutUrl($layout = null, $xhtml = true) {
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=announcement");
+		$uri = new JURI('index.php?option=com_kunena&view=announcement');
 		if ($layout) $uri->setVar('layout', $layout);
 		if ($this->id) $uri->setVar('id', $this->id);
 		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
 	}
 
 	public function getTaskUrl($task = null, $xhtml = true) {
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=announcement");
+		$uri = new JURI('index.php?option=com_kunena&view=announcement');
 		if ($task) $uri->setVar('task', $task);
 		if ($this->id) $uri->setVar('id', $this->id);
+		if ($task) $uri->setVar(JUtility::getToken(), 1);
 		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+	}
+
+	public function getAuthor() {
+		if (!$this->_author)
+			$this->_author = KunenaUser::getInstance((int)$this->created_by);
+		return $this->_author;
+	}
+
+	public function getCreationDate() {
+		if (!$this->_date)
+			$this->_date = KunenaDate::getInstance($this->created);
+		return $this->_date;
 	}
 
 	public function authorise($action='read', $user=null, $silent=false) {
@@ -106,7 +121,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 		}
 	}
 	protected function authoriseRead($user) {
-		if (!$this->exists() || ($this->published == 0 && !$this->authoriseWrite($user))) {
+		if (!$this->exists() || ($this->published == 0 && !$user->isModerator('global'))) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
 	}

@@ -38,7 +38,7 @@ class TableKunenaAnnouncements extends KunenaTable
 				$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_USER_INVALID', (int) $user->userid));
 			}
 		} else {
-			$this->created_by = KunenaUserHelper::getMyself()->id;
+			$this->created_by = KunenaUserHelper::getMyself()->userid;
 		}
 		if (!$this->created) $this->created = JFactory::getDate()->toMySQL();
 		$this->title = trim($this->title);
@@ -47,7 +47,7 @@ class TableKunenaAnnouncements extends KunenaTable
 		}
 		$this->sdescription = trim($this->sdescription);
 		$this->description = trim($this->description);
-		if (!$this->description && !$this->sdescription) {
+		if (!$this->sdescription) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_NO_DESCRIPTION' ) );
 		}
 		return ($this->getError () == '');

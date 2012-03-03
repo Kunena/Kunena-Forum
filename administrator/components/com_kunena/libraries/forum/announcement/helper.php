@@ -47,6 +47,12 @@ class KunenaForumAnnouncementHelper {
 		return self::$_instances [$id];
 	}
 
+	static public function getLayoutUrl($layout = null, $xhtml = true) {
+		$uri = new JURI('index.php?option=com_kunena&view=announcement');
+		if ($layout) $uri->setVar('layout', $layout);
+		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+	}
+
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true) {
 		$db = JFactory::getDBO ();
 		$where = $filter ? "WHERE published=1" : '';

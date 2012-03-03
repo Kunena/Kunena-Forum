@@ -22,7 +22,7 @@ class KunenaModelAnnouncement extends KunenaModel {
 		$this->setState ( 'item.id', $id );
 
 		$value = $this->getInt ( 'limit', 0 );
-		if ($value < 1) $value = 5;
+		if ($value < 1) $value = 20;
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getInt ( 'limitstart', 0 );
@@ -34,20 +34,11 @@ class KunenaModelAnnouncement extends KunenaModel {
 		return new KunenaForumAnnouncement;
 	}
 
-	function getCanEdit() {
-		// User needs to be global moderator to edit announcements
-		return ($this->me->exists() && $this->me->isModerator('global'));
-	}
-
 	function getAnnouncement() {
-		$id = $this->getState ( 'item.id' );
-		if ($id) {
-			return KunenaForumAnnouncementHelper::get($id);
-		}
-		return KunenaForumAnnouncementHelper::getAnnouncements();
+		return KunenaForumAnnouncementHelper::get($this->getState ( 'item.id' ));
 	}
 
 	function getAnnouncements() {
-		return KunenaForumAnnouncementHelper::getAnnouncements($this->getState ( 'list.start'), $this->getState ( 'list.limit'), $this->getCanEdit());
+		return KunenaForumAnnouncementHelper::getAnnouncements($this->getState ( 'list.start'), $this->getState ( 'list.limit'), !$this->me->isModerator('global'));
 	}
 }

@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmsg-header kmsg-header-top">
 	<h2>
-		<span class="kmsgtitle<?php echo $this->escape($this->messagesuffix) ?> kmsg-title-top">
+		<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-top">
 			<?php echo $this->escape($this->message->subject) ?>
 		</span>
 		<span class="kmsgdate kmsgdate-top" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">

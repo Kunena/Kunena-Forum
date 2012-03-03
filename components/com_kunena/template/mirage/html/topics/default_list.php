@@ -21,9 +21,9 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper">
 				<div class="topic detailsbox box-full box-border box-border_radius box-shadow" id="topic-detailsbox">
-					<ul class="topic-list">
+					<ul class="list-unstyled topic-list">
 						<li class="header box-hover_header-row clear">
-							<dl>
+							<dl class="list-unstyled list-unstyled">
 								<dd class="topic-icon">
 								</dd>
 								<dd class="topic-subject">
@@ -46,10 +46,10 @@ defined ( '_JEXEC' ) or die ();
 							</dl>
 						</li>
 					</ul>
-					<ul class="topic-list">
+					<ul class="list-unstyled topic-list">
 						<?php if (empty($this->topics )) : ?>
 							<li class="topic-row">
-								<dl>
+								<dl clss="list-unstyled">
 									<dd>
 										<?php echo JText::_('COM_KUNENA_VIEW_RECENT_NO_TOPICS'); ?>
 									</dd>

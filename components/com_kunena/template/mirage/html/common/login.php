@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 // TODO: add missing module position
 ?>
 <div class="login dropdown-menu">
-	<ul class="login-guest">
+	<ul class="list-unstyled login-guest">
 		<?php if ($this->login) : ?>
 			<li class="login-form">
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="kform">

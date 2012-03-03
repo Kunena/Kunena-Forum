@@ -24,17 +24,6 @@ class KunenaTemplateMirage extends KunenaTemplate {
 
 		$this->addStyleSheet ( 'css/reset.css' );
 
-		$this->addStyleSheet ( 'css/position.css' );
-		$this->addStyleSheet ( 'css/style.css' );
-		$this->addStyleSheet ( 'css/button.css' );
-		$this->addStyleSheet ( 'css/effect.css' );
-		$this->addStyleSheet ( 'css/emoticon.css' );
-		$this->addStyleSheet ( 'css/icon-category.css' );
-		$this->addStyleSheet ( 'css/icon-general.css' );
-		$this->addStyleSheet ( 'css/icon-editor.css' );
-		$this->addStyleSheet ( 'css/icon-topic.css' );
-		$this->addStyleSheet ( 'css/quirks.css' );
-
 		// Load all css files (they are combined into one)
 		$this->addStyleSheet ( 'css/global.css' );
 		$this->addStyleSheet ( 'css/main.css' );
@@ -48,6 +37,17 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/buttons.css' );
 		$this->addStyleSheet ( 'css/icons-social.css' );
 		//$this->addStyleSheet ( 'css/icons-editor.css' );
+
+		$this->addStyleSheet ( 'css/position.css' );
+		$this->addStyleSheet ( 'css/style.css' );
+		$this->addStyleSheet ( 'css/button.css' );
+		$this->addStyleSheet ( 'css/effect.css' );
+		$this->addStyleSheet ( 'css/emoticon.css' );
+		$this->addStyleSheet ( 'css/icon-category.css' );
+		$this->addStyleSheet ( 'css/icon-general.css' );
+		$this->addStyleSheet ( 'css/icon-editor.css' );
+		$this->addStyleSheet ( 'css/icon-topic.css' );
+		$this->addStyleSheet ( 'css/quirks.css' );
 
 		//$this->addIEStyleSheet ( 'css/ie.css' );
 		//$this->addIEStyleSheet ( 'css/ie7.css', 'IE 7' );

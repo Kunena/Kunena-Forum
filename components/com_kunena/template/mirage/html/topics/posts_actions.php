@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="kpaginationbar">
 				<?php echo $this->getPagination(7) ?>
 			</div>
-			<ul class="kfilter-options">
+			<ul class="list-unstyled kfilter-options">
 				<li class="kfilter-title"><?php echo JText::_('COM_KUNENA_FILTER_MESSAGES_BY'); ?>:</li>
 				<li>
 					<select size="1" onchange="this.form.submit()" class="kinputbox" id="kfilter-select-attr" name="do">

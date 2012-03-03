@@ -19,7 +19,7 @@ defined ( '_JEXEC' ) or die ();
 					<!-- a href="#" title="View Subscribers of this Topic" class="ktopic-subsc">4 Subscribers</a -->
 					<h2 class="header link-header2"><?php echo JText::_('COM_KUNENA_TOPIC') ?> <a class="section" href="#" rel="topic-detailsbox"><?php echo $this->escape($this->topic->subject) ?></a></h2>
 					<?php if ( $this->config->keywords ) : ?>
-						<ul class="topic-taglist">
+						<ul class="list-unstyled topic-taglist">
 							<?php if (!empty($this->keywords)) : ?>
 								<li class="topic-taglist-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->keywords) ?></li>
 							<?php else: ?>
@@ -38,7 +38,7 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="innerbox-wrapper">
 				<div class="topic detailsbox">
-					<ul class="topic-posts">
+					<ul class="list-unstyled topic-posts">
 						<?php foreach ( $this->messages as $id=>$message ) $this->displayMessage($id, $message, 'message') ?>
 					</ul>
 				</div>

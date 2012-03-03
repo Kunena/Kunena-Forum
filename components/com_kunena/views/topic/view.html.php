@@ -108,7 +108,17 @@ class KunenaViewTopic extends KunenaView {
 		$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
 
 		// TODO: use real keywords, too
-		$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
+		if (version_compare(JVERSION, '2.5','>')) {
+			if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
+				$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') );
+			} else if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 1 ) {
+				$metaKeys = $this->escape ( $this->app->getCfg ( 'sitename' ) . ', ' . "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') );
+			} else {
+				$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
+			}
+		} else {
+			$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
+		}
 
 		// Create Meta Description form the content of the first message
 		// better for search results display but NOT for search ranking!

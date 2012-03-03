@@ -26,7 +26,7 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper">
 				<div class="announce-details detailsbox innerspacer box-full box-hover box-border box-border_radius box-shadow" id="announce-detailsbox">
-					<ul class="detaails-desc">
+					<ul class="list-unstyled details-desc">
 						<li class="kannounce-date"><?php echo $this->annDate->toKunena('date_today') ?></li>
 						<li class="kannounce-desc"><p><?php echo $this->annDescription ?></p></li>
 						<?php if ($this->annMoreURL) : ?>

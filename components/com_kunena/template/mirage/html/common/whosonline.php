@@ -29,10 +29,10 @@ defined ( '_JEXEC' ) or die ();
 				<div class="detailsbox whosonline-details box-full box-hover box-border box-border_radius box-shadow" id="whosonline-detailsbox" >
 					<div class="whosonline-smicon"><a href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>"><span class="kwho-smicon"></span></a></div>
 						<div class="whosonline-users">
-							<ul>
+							<ul class="list-unstyled">
 								<li class="whosonline-subtitle"><p><?php  echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?></p></li>
 								<li class="whosonline-usernames">
-									<ul>
+									<ul class="list-unstyled">
 										<?php foreach ($this->onlineList as $user) : ?>
 										<li><?php echo $user->getLink() ?></li>
 										<?php endforeach ?>
@@ -40,7 +40,7 @@ defined ( '_JEXEC' ) or die ();
 								</li>
 								<?php if ($this->hiddenList) : ?>
 									<li class="whosonline-usernames">
-										<ul>
+										<ul class="list-unstyled">
 											<li class="legend-title"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</li>
 											<?php foreach ($this->hiddenList as $user) : ?>
 											<li><?php echo $user->getLink() ?></li>
@@ -49,7 +49,7 @@ defined ( '_JEXEC' ) or die ();
 									</li>
 								<?php endif ?>
 								<li class="whosonline-legend">
-									<ul>
+									<ul class="list-unstyled">
 										<li class="legend-title"><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</li>
 										<!-- Loop this LI for each group -->
 										<!-- Can each of these link to a memberlist of that group only?  -->

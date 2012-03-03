@@ -28,9 +28,8 @@ JHTML::_('behavior.tooltip');
 			<div class="detailsbox-wrapper">
 				<div class="kdetailsbox kmod-userbox" id="kmod-detailsbox">
 					<?php $this->displaySummary(); ?>
-					<div class="clrline"></div>
+
 					<?php //$this->displayTab(); ?>
-					<div class="clr"></div>
 				</div>
 			</div>
 		</div>

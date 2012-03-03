@@ -33,7 +33,7 @@ defined ( '_JEXEC' ) or die ();
 						</a>
 					</div>
 					<div class="statistics-totals">
-						<ul>
+						<ul class="list-unstyled">
 							<li class="statistics-totalmess"><?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES') ?>:<span><?php echo $this->messageCount ?></span></li>
 							<li class="statistics-totalsubj"><?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS') ?>:<span><?php echo $this->topicCount ?></span></li>
 							<li class="statistics-totalsect"><?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS') ?>:<span><?php echo $this->sectionCount ?></span></li>
@@ -46,7 +46,7 @@ defined ( '_JEXEC' ) or die ();
 						</a>
 					</div>
 					<div class="statistics-totals">
-						<ul>
+						<ul class="list-unstyled">
 							<li class="statistics-todayopen"><?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD') ?>:<span><?php echo $this->todayTopicCount ?></span></li>
 							<li class="statistics-yestopen"><?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD') ?>:<span><?php echo $this->yesterdayTopicCount ?></span></li>
 							<li class="statistics-todayans"><?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER') ?>:<span><?php echo $this->todayReplyCount ?></span></li>
@@ -59,7 +59,7 @@ defined ( '_JEXEC' ) or die ();
 						</a>
 					</div>
 					<div class="statistics-totals">
-						<ul>
+						<ul class="list-unstyled">
 							<li class="statistics-totalusers"><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS') ?>:<span><?php echo $this->memberCount ?></span></li>
 							<li class="statistics-latestmem"><?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS') ?>:<span><?php echo $this->latestMemberLink ?></span></li>
 						</ul>

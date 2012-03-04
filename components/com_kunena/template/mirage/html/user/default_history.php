@@ -54,12 +54,12 @@ $j=count($this->banhistory);
 						<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : KunenaDate::getInstance($userban->expiration)->toKunena('datetime'); ?></span>
 					</td>
 					<td class="kcol-mid kbancreate">
-						<span><?php echo CKunenaLink::GetProfileLink ( intval($userban->created_by) ); ?></span>
+						<span><?php echo $userban->getCreator()->getLink() ?></span>
 					</td>
 					<td class="kcol-last kbanmodify">
 						<?php if ( $userban->modified_by && $userban->modified_time) { ?>
 						<span>
-							<?php echo CKunenaLink::GetProfileLink ( intval($userban->modified_by) ); ?>
+							<?php echo $userban->getModifier()->getLink() ?>
 							<?php echo KunenaDate::getInstance($userban->modified_time)->toKunena('datetime'); } ?>
 						</span>
 					</td>
@@ -78,7 +78,7 @@ $j=count($this->banhistory);
 				<?php endif; ?>
 				<?php if (is_array($userban->comments)) foreach ($userban->comments as $comment) : ?>
 				<tr class="krow2">
-					<td colspan="2" class="kcol-first kcommentby-label"><b><?php echo JText::sprintf('COM_KUNENA_BAN_COMMENT_BY', CKunenaLink::GetProfileLink ( intval($comment->userid) )); ?></b> :</td>
+					<td colspan="2" class="kcol-first kcommentby-label"><b><?php echo JText::sprintf('COM_KUNENA_BAN_COMMENT_BY', KunenaFactory::getUser(intval($comment->userid))->getLink()) ?></b> :</td>
 					<td colspan="1" class="kcol-mid kcommenttime-field"><?php echo KunenaDate::getInstance($comment->time)->toKunena(); ?></td>
 					<td colspan="3" class="kcol-mid kcomment-field"><?php echo KunenaHtmlParser::parseText ($comment->comment); ?></td>
 				</tr>

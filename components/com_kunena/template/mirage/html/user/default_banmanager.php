@@ -48,7 +48,7 @@ $j=0;
 									<?php echo $j; ?>
 								</dd>
 								<dd class="banned-user">
-									<?php echo CKunenaLink::GetProfileLink ( intval($userban->userid) ) ?>
+									<?php echo $userban->getUser()->getLink() ?>
 								</dd>
 								<dd class="banned-from">
 									<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?></span>

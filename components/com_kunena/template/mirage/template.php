@@ -10,7 +10,7 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaTemplateMirage extends KunenaTemplate {
-	protected $default = array('default20', 'blue_eagle');
+	protected $default = array('blue_eagle');
 	public $categoryIcons = array('knonew', 'knew');
 
 	public function initialize() {

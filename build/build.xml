@@ -111,7 +111,6 @@
 			<fileset dir="${project_dir}/${kunena.site}">
 				<exclude name="language/*-*/**"/>
 				<exclude name="template/**/params.ini"/>
-				<!-- exclude name="template/default20/**"/ -->
 			</fileset>
 		</copy>	
 	</target>
@@ -136,8 +135,6 @@
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
-		<!-- Remove Default20 template from the build -->
-		<!-- delete dir="${tmp_dir}/site/template/default20" / -->
 
 		<!-- Move media files -->
 		<move todir="${tmp_dir}/media">
@@ -182,7 +179,6 @@
 			<include name="**/*.js" />
 			<include name="**/*.css" />
 			<exclude name="**/plupload.js" />
-			<exclude name="template/default20/css/*.css" />
 			<exclude name="template/mirage/css/*.css" />
 		</yui-compressor>
 	</target>

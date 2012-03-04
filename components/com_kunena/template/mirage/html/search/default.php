@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Search
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -22,7 +22,7 @@ document.addEvent('domready', function() {
 $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 ?>
 <div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius">   
+	<div class="block-wrapper box-color box-border box-border_radius">
 		<div class="search-adv block">
 			<div class="headerbox-wrapper">
 				<div class="header">
@@ -31,12 +31,12 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 			</div>
 			<div class="detailsbox-wrapper">
 			<div class="advsearch-detailsbox detailsbox">
-	
+
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="adminForm" id="searchform" method="post">
 					<input type="hidden" name="view" value="search" />
 					<input type="hidden" name="task" value="results" />
 					<?php echo JHTML::_( 'form.token' ); ?>
-	
+
 					<div class="searchform-leftcol">
 						<fieldset class="fieldset">
 							<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD') ?></legend>
@@ -48,7 +48,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 							</select>
 						</fieldset>
 					</div>
-	
+
 					<div class="searchform-rightcol">
 						<fieldset class="fieldset">
 							<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER') ?></legend>
@@ -62,9 +62,9 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 							</label>
 						</fieldset>
 					</div>
-	
+
 					<div class="clrline"></div>
-	
+
 					<div class="searchform-leftcol">
 						<fieldset id="search-posts-date" class="fieldset">
 							<legend><?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS') ?></legend>
@@ -79,14 +79,14 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 								<option value="dec"<?php if ($this->state->get('query.order')=='dec') echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_DEC') ?></option>
 							</select>
 						</fieldset>
-	
+
 						<fieldset id="search-posts-start" class="fieldset">
 							<legend><?php echo JText::_('COM_KUNENA_SEARCH_START'); ?></legend>
 							<input type="text" size="5" value="<?php echo $this->escape($this->state->get('list.start')); ?>" name="limitstart" class="box-width ks input" />
 							<?php echo $this->limitlist ?>
 						</fieldset>
 					</div>
-	
+
 					<div class="searchform-rightcol">
 						<fieldset class="fieldset">
 							<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?></legend>
@@ -97,7 +97,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 								<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?>
 							</label>
 						</fieldset>
-	
+
 						<?php if ( $this->me->isModerator() ) : ?>
 						<fieldset class="fieldset">
 							<legend><?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?></legend>

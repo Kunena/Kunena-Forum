@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Mirage
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -36,7 +36,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 						<input type="hidden" name="task" value="delfile" />
 						<input type="hidden" name="boxchecked" value="0" />
 						<?php echo JHTML::_( 'form.token' ); ?>
-		
+
 						<ul class="list-unstyled">
 						<?php
 						if ( empty($this->items) ):
@@ -46,12 +46,12 @@ if (version_compare(JVERSION, '1.7','>')) {
 						$y=1;
 						foreach ($this->items as $file) :
 							$instance = KunenaForumMessageAttachmentHelper::get($file->id);
-		
+
 							$evenodd = $i % 2;
-		
+
 							if ($evenodd == 0)	$usrl_class="row1";
 							else $usrl_class="row2"; ?>
-		
+
 							<li class="kposts-row">
 								<table summary="List of all forum categories with posts and replies of each">
 									<tbody>

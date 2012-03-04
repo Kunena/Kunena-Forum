@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Common
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ $item = array_shift($this->pathway);
 ?>
 <?php if ($item) : ?>
 	<div class="box-module">
-		<div class="box-wrapper box-full box-border_radius box-shadow"> 
+		<div class="box-wrapper box-full box-border_radius box-shadow">
 			<div class="breadcrumb block">
 				<div class="breadcrumb-wrapper">
 					<ul class="list-unstyled breadcrumb-path">

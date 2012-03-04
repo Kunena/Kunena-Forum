@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Common
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="headerbox-wrapper box-full">
 				<div class="header fl">
 					<h2 class="header link-header2">
-						<a href="<?php echo $this->annListURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox"><?php echo $this->annTitle ?></a>
+						<a href="<?php echo $this->annListUrl ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox"><?php echo $this->annTitle ?></a>
 					</h2>
 				</div>
 				<div class="header fr">
@@ -29,8 +29,8 @@ defined ( '_JEXEC' ) or die ();
 					<ul class="list-unstyled details-desc">
 						<li class="kannounce-date"><?php echo $this->annDate->toKunena('date_today') ?></li>
 						<li class="kannounce-desc"><p><?php echo $this->annDescription ?></p></li>
-						<?php if ($this->annMoreURL) : ?>
-						<li class="kannounce-desc kreadmore"><a href="<?php echo $this->annMoreURL ?>"><?php echo JText::_('COM_KUNENA_ANN_READMORE') ?></a></li>
+						<?php if ($this->annUrl) : ?>
+						<li class="kannounce-desc kreadmore"><?php echo JHtml::_('kunenaforum.link', $this->annUrl, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></li>
 						<?php endif ?>
 					</ul>
 				</div>

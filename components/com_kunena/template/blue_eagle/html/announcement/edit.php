@@ -4,21 +4,15 @@
  * @package Kunena.Template.Default
  * @subpackage Announcement
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-$document = JFactory::getDocument();
-JHTML::_('behavior.formvalidation');
-$document->addScriptDeclaration('// <![CDATA[
-	function myValidate(f) {
-	if (document.formvalidator.isValid(f)) {
-		return true;
-	}
-	return false;
-}
+JHtml::_('behavior.formvalidation');
+$this->document->addScriptDeclaration('// <![CDATA[
+	function kunenaValidate(f) { return document.formvalidator.isValid(f); }
 // ]]>');
 ?>
 <div class="kblock kannouncement">
@@ -26,14 +20,13 @@ $document->addScriptDeclaration('// <![CDATA[
 		<h2><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo $this->announcement->id ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD'); ?></h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
-		<div class="kactions"><?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></div>
+		<div class="kactions"><?php echo JHtml::_('kunenaforum.link', $this->returnUrl, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></div>
 		<div class="kbody">
 			<div class="kanndesc">
-				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" class="form-validate" method="post" name="editform" onsubmit="return myValidate(this);">
-					<input type="hidden" name="view" value="announcement" />
-					<input type='hidden' name="task" value="edit"/>
+				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" class="form-validate" method="post" name="editform" onsubmit="return kunenaValidate(this);">
+					<input type='hidden' name="task" value="save"/>
 					<input type='hidden' name="id" value="<?php echo intval($this->announcement->id) ;?>"/>
-					<?php echo JHTML::_( 'form.token' ); ?>
+					<?php echo JHtml::_( 'form.token' ); ?>
 
 				<div>
 					<label>

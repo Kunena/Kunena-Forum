@@ -96,32 +96,9 @@ class CKunenaLink {
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view=profile{$userid}{$task}{$extra}", $xhtml );
 	}
 
-	function GetProfileLink($user, $name = null, $title ='', $rel = 'nofollow', $class = '') {
-		$user = KunenaFactory::getUser($user);
-		If (!$name) {
-			$name = htmlspecialchars($user->getName(), ENT_COMPAT, 'UTF-8');
-		}
-		$uclass = $user->getType(0,'class');
-		$link = self::GetProfileURL ( $user->userid );
-		if (! empty ( $link ))
-			return self::GetHrefLink ( $link, $name, $title, $rel, $uclass );
-		else
-			return "<span class=\"{$uclass}\">{$name}</span>";
-	}
-
-	function GetProfileURL($userid, $xhtml = true) {
-		if (!$userid) return;
-		$profile = KunenaFactory::getProfile ();
-		return $profile->getProfileURL ( $userid, '', $xhtml );
-	}
-
 	function GetUserlistURL($action = '', $xhtml = true) {
 		$profile = KunenaFactory::getProfile ();
 		return $profile->getUserListURL ( $action, $xhtml );
-	}
-
-	function GetUserlistPostURL($xhtml = true) {
-		return KunenaRoute::_ ( 'index.php?option=com_kunena&view=userlist', $xhtml );
 	}
 
 	function GetModerateUserLink($userid, $name = null, $title ='', $rel = 'nofollow', $class = '') {
@@ -158,21 +135,6 @@ class CKunenaLink {
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$searchword}{$params}{$limitstr}", $xhtml );
 	}
 
-	function GetAnnouncementLink($do, $id = NULL, $name, $title, $rel = 'nofollow') {
-		$idstring = '';
-		if ($id)
-			$idstring .= "&id=$id";
-		return self::GetHrefLink ( self::GetAnnouncementURL($do, $id), $name, $title, $rel );
-	}
-
-	function GetAnnouncementURL($do, $id = NULL, $xhtml = true) {
-		$idstring = '';
-		if ($id)
-			$idstring .= "&id=$id";
-		if ($do == 'delete') $idstring .= '&'.JUtility::getToken().'=1';
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=announcement&do={$do}{$idstring}", $xhtml );
-	}
-
 	function GetPollURL($do, $id = NULL, $catid) {
 		$idstring = '';
 		if ($id)
@@ -181,16 +143,7 @@ class CKunenaLink {
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view=poll&do={$do}{$catidstr}{$idstring}" );
 	}
 
-	function GetPollsURL($do, $catid) {
-		$catidstr = "&catid=$catid";
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=polls&do={$do}{$catidstr}" );
-	}
-
 	function GetStatsLink($name, $class = '', $rel = 'follow') {
-		return self::GetHrefLink ( self::GetStatsURL(), $name, '', $rel, $class );
-	}
-
-	function GetStatsURL() {
-		return KunenaRoute::_ ( 'index.php?option=com_kunena&view=stats' );
+		return self::GetHrefLink ( KunenaRoute::_ ( 'index.php?option=com_kunena&view=stats' ), $name, '', $rel, $class );
 	}
 }

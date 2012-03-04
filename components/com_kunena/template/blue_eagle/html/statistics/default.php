@@ -32,7 +32,7 @@ $template = KunenaTemplate::getInstance();
 				</td>
 				<td class = "kcol-mid">
 					<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:<b> <?php echo $this->userlist;?></b> &nbsp;
-					<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<b> <?php echo CKunenaLink::GetProfileLink(intval($this->lastUserId)); ?></b>
+					<?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<b> <?php echo $this->latestMemberLink ?></b>
 
 					<br /> <?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>: <b> <?php echo intval($this->messageCount); ?></b> &nbsp;
 					<?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>: <b> <?php echo intval($this->topicCount); ?></b> &nbsp;

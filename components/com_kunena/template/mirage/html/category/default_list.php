@@ -1,17 +1,17 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
 <div class="box-module">
-	<div class="box-wrapper box-color box-border box-border_radius box-shadow">   
+	<div class="box-wrapper box-color box-border box-border_radius box-shadow">
 		<div class="block">
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 						<div class="header-desc"><?php echo $this->parse($this->category->headerdesc) ?></div>
 					<?php endif ?>
 				</div>
-				
+
 			</div>
 			<div class="detailsbox-wrapper">
 				<div class="topic detailsbox box-full box-border box-border_radius box-shadow">

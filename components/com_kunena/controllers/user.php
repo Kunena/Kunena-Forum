@@ -29,7 +29,7 @@ class KunenaControllerUser extends KunenaController {
 		if ($redirect) {
 			$profileIntegration = KunenaFactory::getProfile();
 			if (!($profileIntegration instanceof KunenaProfileKunena)) {
-				$url = CKunenaLink::GetProfileURL($this->me->userid, false);
+				$url = $this->me->getUrl(false);
 				if ($url) {
 					$this->setRedirect($url);
 					return;
@@ -81,13 +81,13 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$msg = JText::_( 'COM_KUNENA_PROFILE_SAVED' );
-		$this->setRedirect ( CKunenaLink::GetMyProfileURL($this->user->get('id'), '', false), $msg );
+		$this->setRedirect ( $this->user->getUrl(false), $msg );
 	}
 
 	function ban() {
 		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 		if(!$user->exists() || !JRequest::checkToken()) {
-			$this->app->redirect ( CKunenaLink::GetProfileURL($user->userid, false), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( $user->getUrl(false), COM_KUNENA_ERROR_TOKEN, 'error' );
 			return;
 		}
 
@@ -193,7 +193,7 @@ class KunenaControllerUser extends KunenaController {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES') );*/
 		}
 
-		$this->app->redirect ( CKunenaLink::GetProfileURL($user->userid, false) );
+		$this->app->redirect ( $user->getUrl(false) );
 	}
 
 	function cancel()

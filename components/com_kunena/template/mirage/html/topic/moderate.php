@@ -33,7 +33,7 @@ JHTML::_('behavior.tooltip');
 									<span class="kmessage-time" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover'); ?>">
 										<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>
 									</span>
-								<span class="kmessage-by"><?php echo JText::_('COM_KUNENA_BY')?> <?php echo CKunenaLink::GetProfileLink($this->message->userid, $this->message->name) ?></span></div>
+								<span class="kmessage-by"><?php echo JText::_('COM_KUNENA_BY')?> <?php echo $this->message->getAuthor()->getLink() ?></span></div>
 								<div class="kmessage-avatar"><?php echo KunenaFactory::getAvatarIntegration()->getLink(KunenaFactory::getUser($this->message->userid)); ?></div>
 								<div class="kmessage-msgtext"><?php echo KunenaHtmlParser::stripBBCode ($this->message->message, 300) ?></div>
 								<div class="clr"></div>
@@ -41,7 +41,7 @@ JHTML::_('behavior.tooltip');
 
 							<p>
 							<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER') ?>:
-								<strong><?php echo CKunenaLink::GetProfileLink($this->message->userid, $this->escape($this->message->name).' ('.$this->message->userid.')') ?></strong>
+								<strong><?php echo CKunenaLink::GetModerateUserLink( intval($this->message->userid), $this->escape($this->message->name).' ('.intval($this->message->userid).')' ) ?></strong>
 							</p>
 
 							<ul>

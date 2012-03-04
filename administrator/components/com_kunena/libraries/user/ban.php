@@ -52,6 +52,18 @@ class KunenaUserBan extends JObject
 		$this->_db = JFactory::getDBO ();
 	}
 
+	public function getUser() {
+		return KunenaUserHelper::get((int) $this->userid);
+	}
+
+	public function getCreator() {
+		return KunenaUserHelper::get((int) $this->created_by);
+	}
+
+	public function getModifier() {
+		return KunenaUserHelper::get((int) $this->modified_by);
+	}
+
 	static private function storeInstance($instance) {
 		// Fill userid cache
 		self::cacheUserid($instance->userid);

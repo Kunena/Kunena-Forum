@@ -40,7 +40,7 @@ $j=0;
 							<?php echo $j; ?>
 						</td>
 						<td class="kcol-mid kbanned-user">
-							<?php echo CKunenaLink::GetProfileLink ( intval($userban->userid) ) ?>
+							<?php echo $userban->getUser()->getLink() ?>
 						</td>
 						<td class="kcol-mid kbanned-from">
 							<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?></span>

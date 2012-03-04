@@ -219,7 +219,7 @@ class KunenaViewCommon extends KunenaView {
 		$kunena_stats->loadGeneral();
 
 		$this->assign($kunena_stats);
-		$this->latestMemberLink = CKunenaLink::GetProfileLink($this->lastUserId);
+		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->statisticsURL = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 
 		$result = $this->loadTemplateFile($tpl);

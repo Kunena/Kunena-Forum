@@ -27,11 +27,11 @@ $j=0;
 					<ul class="list-unstyled banmanager-list">
 						<li class="header box-hover_header-row clear">
 							<dl class="list-unstyled">
-								<dd class="banned-id"><span class="bold">#</span></dd>
-								<dd class="banned-user"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_BANNEDUSER'); ?></span></dd>
-								<dd class="banned-from"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></span></dd>
-								<dd class="banned-start"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></span></dd>
-								<dd class="banned-expire"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></span></dd>
+								<dd class="banmanager-id"><span class="bold">#</span></dd>
+								<dd class="banmanager-user"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_BANNEDUSER'); ?></span></dd>
+								<dd class="banmanager-from"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></span></dd>
+								<dd class="banmanager-start"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></span></dd>
+								<dd class="banmanager-expire"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></span></dd>
 							</dl>
 						</li>
 					</ul>
@@ -44,19 +44,19 @@ $j=0;
 						?>
 						<li class="banmanager-row box-hover box-hover_list-row">
 							<dl class="list-unstyled">
-								<dd class="banned-id">
+								<dd class="banmanager-id">
 									<?php echo $j; ?>
 								</dd>
-								<dd class="banned-user">
+								<dd class="banmanager-user">
 									<?php echo $userban->getUser()->getLink() ?>
 								</dd>
-								<dd class="banned-from">
+								<dd class="banmanager-from">
 									<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?></span>
 								</dd>
-								<dd class="banned-start">
+								<dd class="banmanager-start">
 									<span><?php echo KunenaDate::getInstance($userban->created_time)->toKunena('datetime') ?></span>
 								</dd>
-								<dd class="banned-expire">
+								<dd class="banmanager-expire">
 									<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : KunenaDate::getInstance($userban->expiration)->toKunena('datetime') ?></span>
 								</dd>
 							</dl>

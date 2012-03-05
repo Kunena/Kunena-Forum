@@ -10,29 +10,42 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-		<div class="ksection">
-			<!-- a href="#" title="Topic RSS Feed"><span class="krss-icon">Topic RSS Feed</span></a -->
-			<!-- a href="#" title="View Subscribers of this Topic" class="ktopic-subsc">4 Subscribers</a -->
-			<h2 class="kheader"><?php echo JText::_('COM_KUNENA_TOPIC') ?> <a href="#" rel="ktopic-detailsbox"><?php echo $this->escape($this->topic->subject) ?></a></h2>
-			<ul class="ktopic-taglist">
-				<?php if (!empty($this->keywords)) : ?>
-				<li class="ktopic-taglist-title">Topic Tags:</li>
-				<li><a href="#">templates</a></li>
-				<li><a href="#">design</a></li>
-				<li><a href="#">css</a></li>
-				<li><a href="#">colors</a></li>
-				<li><a href="#">help</a></li>
-				<?php else: ?>
-				<li class="ktopic-taglist-title">No Tags</li>
-				<?php endif ?>
-				<li class="ktopic-taglist-edit"><a href="#">Add/edit tags</a></li>
-			</ul>
-			<div class="kdetailsbox" id="ktopic-detailsbox">
-				<div class="kposts">
-					<?php foreach ( $this->messages as $id=>$message ) : ?>
-					<div class="kpost-indent" style="padding-left: <?php echo (max(0,count($message->indent)-3)*2) ?>%"><?php $this->displayMessage($id, $message, 'message'); ?></div>
-					<?php endforeach ?>
+<div class="box-module">
+	<div class="block-wrapper box-color box-border box-border_radius box-shadow">
+		<div class="topic_indented block">
+			<div class="headerbox-wrapper">
+				<div class="header">
+				<!-- a href="#" title="Topic RSS Feed"><span class="krss-icon">Topic RSS Feed</span></a -->
+				<!-- a href="#" title="View Subscribers of this Topic" class="ktopic-subsc">4 Subscribers</a -->
+					<h2 class="header"><?php echo JText::_('COM_KUNENA_TOPIC') ?> <a href="#" rel="ktopic-detailsbox"><?php echo $this->escape($this->topic->subject) ?></a></h2>
+					<?php if ( $this->config->keywords ) : ?>
+						<ul class="list-unstyled topic-taglist">
+							<?php if (!empty($this->keywords)) : ?>
+								<li class="topic-taglist-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->keywords) ?></li>
+							<?php else: ?>
+								<li class="topic-taglist-title"><?php echo JText::_('COM_KUNENA_TOPIC_NO_TAGS') ?></li>
+							<?php endif ?>
+							<?php if ( $this->me->userid == $this->topic->first_post_userid || intval($this->me->isModerator('global')) ): ?><li class="topic-taglist-edit"><a href="#" id="edit_keywords" class="link"><?php echo JText::_('COM_KUNENA_TOPIC_TAGS_ADD_EDIT') ?></a></li><?php endif ?>
+						</ul>
+					<?php endif ?>
 				</div>
 			</div>
-			<div class="clr"></div>
+			<div class="innerbox-wrapper innerspacer">
+				<?php echo $this->displayTopicActions(0); ?>
+			</div>
+			<div class="innerbox-wrapper innerspacer">
+				<?php echo $this->getPagination(4); ?>
+			</div>
+			<div class="innerbox-wrapper">
+				<div class="topic_indented-detailsbox detailsbox">
+					<ul class="list-unstyled topic-posts">
+						<?php foreach ( $this->messages as $id=>$message ) : ?>
+							<?php $this->displayMessage($id, $message, 'message'); ?>
+						<?php endforeach ?>
+					</ul>
+				</div>
+			</div>
 		</div>
+	</div>
+</div>
+<div class="spacer"></div>

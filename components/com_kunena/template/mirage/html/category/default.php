@@ -12,6 +12,6 @@ defined ( '_JEXEC' ) or die ();
 
 $this->displaySection($this->category);
 if (!$this->category->isSection()) {
-	$this->displayTemplateFile('category', 'default', 'actions');
+	$this->displayActions();
 	$this->displayTemplateFile('category', 'default', 'list');
 }

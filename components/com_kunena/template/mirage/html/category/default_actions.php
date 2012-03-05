@@ -14,7 +14,7 @@ if (!$this->getPagination(7) && empty($this->newTopicHtml) && empty($this->markR
 <div class="block-wrapper">
 	<div class="buttonbar block">
 		<div class="kpaginationbar">
-			<?php //echo $this->getPagination(7) ?>
+			<?php echo $this->getPagination(7) ?>
 		</div>
 		<ul class="list-unstyled buttons-topics">
 			<?php if ($this->newTopicHtml) : ?><li class="button button-topics-new"><?php echo $this->newTopicHtml ?></li><?php endif ?>

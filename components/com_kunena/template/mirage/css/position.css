@@ -538,35 +538,35 @@
  	margin: 0px;
 }
 
-#kunena.layout ul.banmanager-list dd.banned-id {
+#kunena.layout ul.banmanager-list dd.banmanager-id {
 	margin: 0;
 	text-align: center;
 	vertical-align: center;
 	width: 5%;
 }
 
-#kunena.layout ul.banmanager-list dd.banned-user {
+#kunena.layout ul.banmanager-list dd.banmanager-user {
 	margin: 0;
 	text-align: center;
 	vertical-align: center;
 	width: 20%;
 }
 
-#kunena.layout ul.banmanager-list dd.banned-from {
+#kunena.layout ul.banmanager-list dd.banmanager-from {
 	margin: 0;
 	text-align: center;
 	vertical-align: center;
 	width: 20%;
 }
 
-#kunena.layout ul.banmanager-list dd.banned-start {
+#kunena.layout ul.banmanager-list dd.banmanager-start {
 	margin: 0;
 	text-align: center;
 	vertical-align: center;
 	width: 20%;
 }
 
-#kunena.layout ul.banmanager-list dd.banned-expire {
+#kunena.layout ul.banmanager-list dd.banmanager-expire {
 	margin: 0;
 	text-align: center;
 	vertical-align: center;
@@ -833,6 +833,50 @@
 }
 
 #kunena.layout div.topic .topic-taglist li {
+	display: inline;
+	line-height: 13px;
+}
+
+
+
+/**********************
+ * START MESSAGE-LIST *
+ **********************/
+
+/*#kunena.layout div#topic .posthead {
+ 	padding: 5px 10px;
+}*/
+
+#kunena.layout div.topic_indented ul.topic-posts li.topic-row {
+ 	padding: 8px 10px;
+}
+
+#kunena.layout div.topic_indented ul.topic-posts li.topic-row:hover div.buttonbar ul.buttons-message {
+	visibility: visible;
+}
+
+#kunena.layout div.topic_indented ul.message-list li.header {
+ 	padding: 5px 10px;
+}
+
+#kunena.layout div.topic_indented ul.message-list li.header h3, #kunena.layout ul.message-list li.header dd, #kunena.layout ul.message-list li.header dd a {
+ 	display: inline;
+}
+
+#kunena.layout div.topic_indented ul.topic-posts li.topic-row div.buttonbar ul.buttons-message {
+	visibility: hidden;
+}
+
+#kunena.layout div.topic_indented .topic-taglist {
+	display: block;
+	/*padding: 5px 10px;*/
+}
+
+#kunena.layout div.topic_indented .topic-taglist-edit {
+	float: right;
+}
+
+#kunena.layout div.topic_indented .topic-taglist li {
 	display: inline;
 	line-height: 13px;
 }

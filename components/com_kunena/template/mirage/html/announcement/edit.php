@@ -26,7 +26,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 						</a>
 					</h2>
 				</div>
-				<div class="header fr">	
+				<div class="header fr">
 					<?php echo JHtml::_('kunenaforum.link', $this->returnUrl, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')) ?>
 				</div>
 			</div>
@@ -110,6 +110,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 					</form>
 				</div>
 			</div>
+		</div>
 	</div>
 </div>
 <div class="spacer"></div>

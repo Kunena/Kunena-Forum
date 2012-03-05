@@ -49,7 +49,7 @@ defined ( '_JEXEC' ) or die ();
 					<ul class="list-unstyled topic-list">
 						<?php if (empty($this->topics )) : ?>
 							<li class="topic-row">
-								<dl clss="list-unstyled">
+								<dl class="list-unstyled">
 									<dd>
 										<?php echo JText::_('COM_KUNENA_VIEW_RECENT_NO_TOPICS'); ?>
 									</dd>

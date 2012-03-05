@@ -67,7 +67,7 @@ $j=0;
 							<dl class="list-unstyled">
 								<dd><?php echo JText::_('COM_KUNENA_BAN_NO_BANNED_USERS') ?></dd>
 							</dl>
-						</tr>
+						</li>
 						<?php endif; ?>
 					</ul>
 				</div>

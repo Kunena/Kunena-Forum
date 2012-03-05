@@ -69,7 +69,7 @@ defined ( '_JEXEC' ) or die ();
 					<!-- Bulk Actions -->
 					<tr class="krow1">
 						<td colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>" class="kcol-first krowmoderation">
-							<?php if (!empty($this->embedded)) echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow'); ?>
+							<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
 							<?php if (!empty($this->topicActions)) : ?>
 							<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 							<?php if ($this->actionMove) :

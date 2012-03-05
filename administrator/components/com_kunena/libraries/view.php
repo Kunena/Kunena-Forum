@@ -15,14 +15,17 @@ jimport ( 'joomla.application.component.view' );
  * Kunena View Class
  */
 class KunenaView extends JView {
+	public $document = null;
 	public $app = null;
 	public $me = null;
 	public $config = null;
+	public $embedded = false;
 
 	protected $_row = 0;
 
 	function __construct($config = array()){
 		parent::__construct($config);
+		$this->document = JFactory::getDocument();
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->app = JFactory::getApplication ();
 		$this->me = KunenaUserHelper::getMyself();

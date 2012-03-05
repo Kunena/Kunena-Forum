@@ -52,6 +52,8 @@ class KunenaViewTopics extends KunenaView {
 		}
 		$this->title = $this->headerText;
 
+		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode='.$this->state->get ( 'list.mode' );
+
 		//meta description and keywords
 		$limit = $this->state->get('list.limit');
 		$page = intval($this->state->get('list.start')/$limit)+1;
@@ -96,6 +98,8 @@ class KunenaViewTopics extends KunenaView {
 				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
 		}
 		$this->title = $this->headerText;
+
+		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=user&mode='.$this->state->get ( 'list.mode' );
 
 		//meta description and keywords
 		$limit = $this->state->get('list.limit');
@@ -143,6 +147,8 @@ class KunenaViewTopics extends KunenaView {
 				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
 		}
 		$this->title = $this->headerText;
+
+		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=posts&mode='.$this->state->get ( 'list.mode' );
 
 		//meta description and keywords
 		$limit = $this->state->get('list.limit');

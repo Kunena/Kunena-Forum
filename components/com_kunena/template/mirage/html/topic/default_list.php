@@ -37,7 +37,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo $this->getPagination(4); ?>
 			</div>
 			<div class="innerbox-wrapper">
-				<div class="topic detailsbox">
+				<div class="topic-detailsbox detailsbox">
 					<ul class="list-unstyled topic-posts">
 						<?php foreach ( $this->messages as $id=>$message ) $this->displayMessage($id, $message, 'message') ?>
 					</ul>

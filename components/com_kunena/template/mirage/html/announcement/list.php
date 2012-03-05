@@ -22,7 +22,7 @@ defined ( '_JEXEC' ) or die ();
 					</h2>
 				</div>
 				<div class="header fr">
-					<?php if (!empty($this->actions['add'])) echo JHtml::_('kunenaforum.link', $this->actions['add'], JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD'), 'kheader-link') ?>
+					<?php if (!empty($this->actions['add'])) echo JHtml::_('kunenaforum.link', $this->actions['add'], JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD'), 'link') ?>
 				</div>
 			</div>
 			<div class="detailsbox-wrapper">

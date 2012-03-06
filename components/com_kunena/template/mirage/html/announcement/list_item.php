@@ -14,38 +14,30 @@ defined ( '_JEXEC' ) or die ();
 		<dl class="list-unstyled">
 			<?php if ($this->actions): ?>
 			<dd class="announcement-checkbox">
-				<?php echo JHTML::_('grid.id', intval($this->announcement->id), intval($this->announcement->id)) ?>
+				<?php echo JHTML::_('kunenagrid.id', $this->row, $this->announcement->id) ?>
 			</dd>
 			<?php endif ?>
 			<dd class="announcement-id">
-				<?php echo intval($this->announcement->id) ?>
+				<?php echo $this->announcement->displayField('id') ?>
 			</dd>
 			<dd class="announcement-date">
-				<?php echo $this->announcement->getCreationDate()->toKunena('date_today') ?>
+				<?php echo $this->announcement->displayField('created', 'date_today') ?>
 			</dd>
 			<dd class="announcement-author">
-				<?php echo $this->announcement->getAuthor()->getLink() ?>
+				<?php echo $this->announcement->displayField('created_by') ?>
 			</dd>
 			<dd class="announcement-title">
-				<?php echo JHtml::_('kunenaforum.link', $this->announcement->getLayoutUrl('default', 'object'), KunenaHtmlParser::parseText ($this->announcement->title), KunenaHtmlParser::parseText ($this->announcement->title), 'follow') ?>
+				<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), $this->announcement->displayField('title'), null, 'follow') ?>
 			</dd>
 			<?php if ($this->actions): ?>
 			<dd class="announcement-publish">
-			<?php if ($this->announcement->published) : ?>
-			<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo intval($this->announcement->id) ?>','unpublish')"><img src="<?php echo $this->ktemplate->getImagePath('tick.png') ?>" alt="<?php echo JText::_('COM_KUNENA_ANN_PUBLISHED') ?>" title="<?php echo JText::_('COM_KUNENA_ANN_PUBLISHED') ?>" /></a>
-			<?php else : ?>
-			<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo intval($this->announcement->id) ?>','publish')"><img src="<?php echo $this->ktemplate->getImagePath('publish_x.png') ?>" alt="<?php echo JText::_('COM_KUNENA_ANN_UNPUBLISHED') ?>" title="<?php echo JText::_('COM_KUNENA_ANN_UNPUBLISHED') ?>" /></a>
-			<?php endif ?>
+				<?php if ($this->canPublish()) echo JHTML::_('kunenagrid.published', $this->row, $this->announcement->published) ?>
 			</dd>
 			<dd class="announcement-edit">
-			<?php if (!empty($this->actions['edit'])) : ?>
-				<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo intval($this->announcement->id) ?>','edit')"><img src="<?php echo $this->ktemplate->getImagePath('tick.png') ?>" alt="<?php echo JText::_('COM_KUNENA_ANN_EDIT') ?>" title="<?php echo JText::_('COM_KUNENA_ANN_EDIT') ?>" /></a>
-			<?php endif ?>
+				<?php if ($this->canEdit()) echo JHTML::_('kunenagrid.task', $this->row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'), 'edit') ?>
 			</dd>
 			<dd class="announcement-delete">
-			<?php if (!empty($this->actions['delete'])) : ?>
-				<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo intval($this->announcement->id) ?>','delete')"><img src="<?php echo $this->ktemplate->getImagePath('publish_x.png') ?>" alt="<?php echo JText::_('COM_KUNENA_ANN_EDIT') ?>" title="<?php echo JText::_('COM_KUNENA_ANN_DELETE') ?>" /></a>
-			<?php endif ?>
+				<?php if ($this->canDelete()) echo JHTML::_('kunenagrid.task', $this->row, 'publish_x.png', JText::_('COM_KUNENA_ANN_DELETE'), 'delete') ?>
 			</dd>
 			<?php endif; ?>
 		</dl>

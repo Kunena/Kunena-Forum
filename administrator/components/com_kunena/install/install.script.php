@@ -62,8 +62,7 @@ class Com_KunenaInstallerScript {
 
 		// TODO: Before install: we want so store files so that user can cancel action
 
-		$installer = $parent->getParent();
-		$adminpath = $installer->extension_administrator;
+		$adminpath = KPATH_ADMIN;
 		if ( JFolder::exists($adminpath)) {
 			// Delete old zip files
 			$archive = "{$adminpath}/archive";
@@ -80,7 +79,7 @@ class Com_KunenaInstallerScript {
 		$installer = $parent->getParent();
 
 		// Rename kunena.j16.xml to kunena.xml
-		$adminpath = $installer->extension_administrator;
+		$adminpath = KPATH_ADMIN;
 		if (JFile::exists("{$adminpath}/kunena.j16.xml")) {
 			if ( JFile::exists("{$adminpath}/kunena.xml")) JFile::delete("{$adminpath}/kunena.xml");
 			JFile::move("{$adminpath}/kunena.j16.xml", "{$adminpath}/kunena.xml");

@@ -18,19 +18,25 @@ defined ( '_JEXEC' ) or die ();
 			<div class="headerbox-wrapper box-full">
 				<div class="header fl">
 					<h2 class="header link-header2">
-						<a href="<?php echo $this->annListUrl ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox"><?php echo $this->annTitle ?></a>
+						<?php echo JHtml::_('kunenaforum.link', $this->annListUrl, $this->announcement->displayField('title'), JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST'), null, 'follow', array('rel'=>'kannounce-detailsbox')); ?>
 					</h2>
-				</div>
-				<div class="header fr">
 				</div>
 			</div>
 			<div class="detailsbox-wrapper">
 				<div class="announce-details detailsbox innerspacer box-full box-hover box-border box-border_radius box-shadow" id="announce-detailsbox">
 					<ul class="list-unstyled details-desc">
-						<li class="kannounce-date"><?php echo $this->annDate->toKunena('date_today') ?></li>
-						<li class="kannounce-desc"><p><?php echo $this->annDescription ?></p></li>
-						<?php if ($this->annUrl) : ?>
-						<li class="kannounce-desc kreadmore"><?php echo JHtml::_('kunenaforum.link', $this->annUrl, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></li>
+						<?php if ($this->showdate) : ?>
+						<li class="kannounce-date" title="<?php echo $this->announcement->displayField('created', 'ago'); ?>">
+							<?php echo $this->announcement->displayField('created', 'date_today') ?>
+						</li>
+						<?php endif ?>
+						<li class="kannounce-desc">
+							<p><?php echo $this->announcement->displayField('description') ?></p>
+						</li>
+						<?php if ($this->announcement->description) : ?>
+						<li class="kannounce-desc kreadmore">
+							<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), JText::_('COM_KUNENA_ANN_READMORE'), null, 'follow'); ?>
+						</li>
 						<?php endif ?>
 					</ul>
 				</div>

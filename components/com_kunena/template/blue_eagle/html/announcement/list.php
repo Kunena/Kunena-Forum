@@ -26,9 +26,16 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" id="adminForm" name="adminForm">
+			<input type="hidden" name="boxchecked" value="0" />
+			<input type="hidden" name="task" value="" />
+			<?php echo JHTML::_( 'form.token' ); ?>
 <table class="kannouncement">
 	<tbody id="kannouncement_body">
 		<tr class="ksth">
+			<?php if ($this->actions): ?>
+			<th class="kcol-annid">#</th>
+			<?php endif; ?>
 			<th class="kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
 			<th class="kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
 			<th class="kcol-anntitle"><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></th>
@@ -42,6 +49,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php $this->displayItems() ?>
 	</tbody>
 </table>
+		</form>
 		</div>
 	</div>
 </div>

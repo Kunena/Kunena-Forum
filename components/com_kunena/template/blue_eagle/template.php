@@ -29,6 +29,7 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 		KunenaTemplateLegacy::load();
 
 		require_once JPATH_SITE. '/' . $this->getFile('initialize.php');
+		$this->addStyleSheet ( 'css/kunena.20.css' );
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {

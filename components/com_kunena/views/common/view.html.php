@@ -48,25 +48,11 @@ class KunenaViewCommon extends KunenaView {
 				return;
 			}
 
-			$canCreate = (int) $new->authorise('create');
-			$canEdit = (int) $this->announcement->authorise('edit');
-			$canDelete = (int) $this->announcement->authorise('delete');
-
 			$cache = JFactory::getCache('com_kunena', 'output');
-			if ($cache->start("{$this->ktemplate->name}.common.announcement.{$canCreate}{$canEdit}{$canDelete}", 'com_kunena.template')) return;
+			if ($cache->start("{$this->ktemplate->name}.common.announcement", 'com_kunena.template')) return;
 
 			if ($this->announcement && $this->announcement->authorise('read')) {
-				$this->actions = array();
-				$this->annUrl = $this->announcement->getLayoutUrl('default', 'object');
-				$this->annListUrl = KunenaForumAnnouncementHelper::getLayoutUrl('list', 'object');
-				if ($canEdit) $this->actions['edit'] = $this->announcement->getLayoutUrl('edit', 'object');
-				if ($canDelete) $this->actions['delete'] = $this->announcement->getTaskUrl('delete', 'object');
-				if ($canCreate) $this->actions['add'] = $new->getLayoutUrl('create', 'object');
-				if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getLayoutUrl('list', 'object');
-
-				$this->annTitle = KunenaHtmlParser::parseText($this->announcement->title);
-				$this->annDescription = $this->announcement->sdescription ? KunenaHtmlParser::parseBBCode($this->announcement->sdescription) : KunenaHtmlParser::parseBBCode($this->announcement->description, 300);
-				$this->annDate = $this->announcement->getCreationDate();
+				$this->annListUrl = KunenaForumAnnouncementHelper::getUrl('list', 'object');
 				$this->showdate = $this->announcement->showdate;
 				$result = $this->loadTemplateFile($tpl);
 				if (JError::isError($result)) {
@@ -278,7 +264,7 @@ class KunenaViewCommon extends KunenaView {
 
 				// Announcements
 				if ( $this->me->isModerator()) {
-					$this->assign ( 'announcementsLink', '<a href="' . KunenaForumAnnouncementHelper::getLayoutUrl('list').'">'. JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS').'</a>');
+					$this->assign ( 'announcementsLink', '<a href="' . KunenaForumAnnouncementHelper::getUrl('list').'">'. JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS').'</a>');
 				}
 
 			}

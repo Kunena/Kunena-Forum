@@ -1073,16 +1073,3 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 }
 */
 /* --------------------------------------------------------------- */
-
-/* Kunena 2.0 */
-
-#Kunena .kpagination span {
-	border-color:#5388B4;
-	background-color:#5388B4;
-	color:#FFFFFF;
-}
-
-#Kunena .kheader h2,
-#Kunena .kheader h2 a {
-	font-size:16px !important;
-}

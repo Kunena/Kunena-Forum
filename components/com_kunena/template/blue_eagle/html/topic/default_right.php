@@ -13,13 +13,13 @@ defined ( '_JEXEC' ) or die ();
 <div class="kmsg-header kmsg-header-right">
 	<h2>
 		<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-right">
-			<?php $this->escape($this->message->subject) ?>
+			<?php echo $this->escape($this->message->subject) ?>
 		</span>
 		<span class="kmsgdate kmsgdate-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
 			<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 		</span>
 		<span class="kmsg-id-right">
-			<a id="<?php echo intval($this->id) ?>"></a>
+			<a id="<?php echo intval($this->message->id) ?>"></a>
 			<?php echo $this->numLink ?>
 		</span>
 	</h2>

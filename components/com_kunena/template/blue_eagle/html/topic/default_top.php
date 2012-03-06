@@ -19,7 +19,7 @@ defined ( '_JEXEC' ) or die ();
 			<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
 		</span>
 		<span class="kmsg-id-top">
-			<a id="<?php echo intval($this->id) ?>"></a>
+			<a id="<?php echo intval($this->message->id) ?>"></a>
 			<?php echo $this->numLink ?>
 		</span>
 	</h2>

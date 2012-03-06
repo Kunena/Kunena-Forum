@@ -24,7 +24,12 @@ defined ( '_JEXEC' ) or die ();
 						<div class="header-desc"><?php echo $this->parse($this->category->headerdesc) ?></div>
 					<?php endif ?>
 				</div>
-
+			</div>
+			<div class="innerbox-wrapper innerspacer">
+				<?php echo $this->displayActions(); ?>
+			</div>
+			<div class="innerbox-wrapper innerspacer">
+				<?php echo $this->getPagination(7); ?>
 			</div>
 			<div class="detailsbox-wrapper">
 				<div class="topic detailsbox box-full box-border box-border_radius box-shadow">

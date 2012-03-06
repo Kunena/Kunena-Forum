@@ -16,7 +16,9 @@ defined ( '_JEXEC' ) or die ();
 			<div class="headerbox-wrapper box-full">
 				<div class="header fl">
 					<h2 class="header">
-						<a href="" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox"><?php echo KunenaHtmlParser::parseText($this->announcement->title) ?></a>
+						<a href="" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox">
+							<?php echo $this->announcement->displayField('title') ?>
+						</a>
 					</h2>
 					<?php if ($this->actions) : ?>
 					<div class="kactions">
@@ -34,9 +36,11 @@ defined ( '_JEXEC' ) or die ();
 				<div class="detailsbox innerspacer box-full box-hover box-border box-border_radius box-shadow" id="announce-detailsbox">
 					<ul class="list-unstyled details-desc">
 						<?php if ($this->showdate) : ?>
-						<li class="kannounce-date"><?php echo $this->announcement->getCreationDate()->toKunena('date_today') ?></li>
+						<li class="kannounce-date" title="<?php echo $this->announcement->displayField('created', 'ago'); ?>">
+							<?php echo $this->announcement->displayField('created', 'date_today') ?>
+						</li>
 						<?php endif ?>
-						<li class="kannounce-desc"><?php echo !empty($this->announcement->description) ? KunenaHtmlParser::parseBBCode($this->announcement->description) : KunenaHtmlParser::parseBBCode($this->announcement->sdescription) ?></li>
+						<li class="kannounce-desc"><?php echo $this->announcement->displayField('description') ?></li>
 					</ul>
 				</div>
 			</div>

@@ -62,7 +62,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$announcement = KunenaForumAnnouncementHelper::get(array_pop($cid));
 
-		$this->setRedirect ($announcement->getLayoutUrl('edit', false));
+		$this->setRedirect ($announcement->getUrl('edit', false));
 	}
 
 	public function delete() {
@@ -80,7 +80,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ANN_DELETED' ) );
 			}
 		}
-		$this->setRedirect (KunenaForumAnnouncementHelper::getLayoutUrl('list', false));
+		$this->setRedirect (KunenaForumAnnouncementHelper::getUrl('list', false));
 	}
 
 	public function save() {
@@ -107,6 +107,6 @@ class KunenaControllerAnnouncement extends KunenaController {
 		}
 
 		$this->app->enqueueMessage ( JText::_ ( $id ? 'COM_KUNENA_ANN_SUCCESS_EDIT' : 'COM_KUNENA_ANN_SUCCESS_ADD' ) );
-		$this->setRedirect ($announcement->getLayoutUrl('default', false));
+		$this->setRedirect ($announcement->getUrl('default', false));
 	}
 }

@@ -26,10 +26,10 @@ class KunenaViewAnnouncement extends KunenaView {
 		$new = new KunenaForumAnnouncement;
 
 		$this->actions = array();
-		if ($this->announcement->authorise('edit')) $this->actions['edit'] = $this->announcement->getLayoutUrl('edit', 'object');
+		if ($this->announcement->authorise('edit')) $this->actions['edit'] = $this->announcement->getUrl('edit', 'object');
 		if ($this->announcement->authorise('delete')) $this->actions['delete'] = $this->announcement->getTaskUrl('delete', 'object');
-		if ($new->authorise('create')) $this->actions['add'] = $new->getLayoutUrl('create', 'object');
-		if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getLayoutUrl('list', 'object');
+		if ($new->authorise('create')) $this->actions['add'] = $new->getUrl('create', 'object');
+		if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getUrl('list', 'object');
 
 		$this->showdate = $this->announcement->showdate;
 
@@ -50,7 +50,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			$this->setError($this->announcement->getError());
 		}
 
-		$this->returnUrl = KunenaForumAnnouncementHelper::getLayoutUrl('list', 'object');
+		$this->returnUrl = KunenaForumAnnouncementHelper::getUrl('list', 'object');
 
 		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 
@@ -69,7 +69,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			$this->setError($this->announcement->getError());
 		}
 
-		$this->returnUrl = KunenaForumAnnouncementHelper::getLayoutUrl('list', 'object');
+		$this->returnUrl = KunenaForumAnnouncementHelper::getUrl('list', 'object');
 
 		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 
@@ -86,8 +86,8 @@ class KunenaViewAnnouncement extends KunenaView {
 		$new = new KunenaForumAnnouncement;
 
 		$this->actions = array();
-		if ($new->authorise('create')) $this->actions['add'] = $new->getLayoutUrl('create', 'object');
-		if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getLayoutUrl('list', 'object');
+		if ($new->authorise('create')) $this->actions['add'] = $new->getUrl('create', 'object');
+		if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getUrl('list', 'object');
 
 		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 
@@ -100,6 +100,7 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 
 	function displayItems() {
+		$this->row = 0;
 		$this->k = 0;
 		foreach ($this->announcements as $this->announcement) {
 			$this->displayItem();
@@ -108,9 +109,16 @@ class KunenaViewAnnouncement extends KunenaView {
 
 	function displayItem() {
 		$this->k= 1 - $this->k;
-		if ($this->announcement->authorise('edit')) $this->actions['edit'] = $this->announcement->getLayoutUrl('edit', 'object');
-		if ($this->announcement->authorise('delete')) $this->actions['delete'] = $this->announcement->getTaskUrl('delete', 'object');
-
 		echo $this->loadTemplateFile ( 'item' );
+		$this->row++;
+	}
+	function canPublish() {
+		return $this->announcement->authorise('edit');
+	}
+	function canEdit() {
+		return $this->announcement->authorise('edit');
+	}
+	function canDelete() {
+		return $this->announcement->authorise('delete');
 	}
 }

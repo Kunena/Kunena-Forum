@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 <div class="kblock kannouncement">
 	<div class="kheader">
 		<h2>
-			<span><?php echo KunenaHtmlParser::parseText($this->announcement->title); ?></span>
+			<span><?php echo $this->announcement->displayField('title') ?></span>
 		</h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
@@ -31,11 +31,11 @@ defined ( '_JEXEC' ) or die ();
 		<div class="kbody">
 			<div class="kanndesc">
 				<?php if ($this->showdate) : ?>
-				<div class="anncreated" title="<?php echo $this->announcement->getCreationDate()->toKunena('ago'); ?>">
-					<?php echo $this->announcement->getCreationDate()->toKunena('date_today'); ?>
+				<div class="anncreated" title="<?php echo $this->announcement->displayField('created', 'ago'); ?>">
+					<?php echo $this->announcement->displayField('created', 'date_today') ?>
 				</div>
 				<?php endif; ?>
-				<div class="anndesc"><?php echo KunenaHtmlParser::parseBBCode(!empty($this->announcement->description) ? $this->announcement->description : $this->announcement->sdescription) ?></div>
+				<div class="anndesc"><?php echo $this->announcement->displayField('description') ?></div>
 			</div>
 		</div>
 	</div>

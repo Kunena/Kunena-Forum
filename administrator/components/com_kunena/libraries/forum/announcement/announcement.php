@@ -48,11 +48,15 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 		return KunenaForumAnnouncementHelper::get($identifier, $reload);
 	}
 
-	public function getLayoutUrl($layout = null, $xhtml = true) {
+	public function getUrl($layout = 'default', $xhtml = true) {
+		$uri = $this->getUri($layout);
+		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+	}
+	public function getUri($layout = 'default') {
 		$uri = new JURI('index.php?option=com_kunena&view=announcement');
 		if ($layout) $uri->setVar('layout', $layout);
 		if ($this->id) $uri->setVar('id', $this->id);
-		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+		return $uri;
 	}
 
 	public function getTaskUrl($task = null, $xhtml = true) {
@@ -61,6 +65,21 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 		if ($this->id) $uri->setVar('id', $this->id);
 		if ($task) $uri->setVar(JUtility::getToken(), 1);
 		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+	}
+
+	public function displayField($field, $mode=null) {
+		switch ($field) {
+			case 'id':
+				return intval($this->id);
+			case 'title':
+				return KunenaHtmlParser::parseText($this->title);
+			case 'description':
+				return KunenaHtmlParser::parseBBCode($this->description ? $this->description : $this->sdescription);
+			case 'created_by':
+				return $this->getAuthor()->getLink();
+			case 'created':
+				return $this->getCreationDate()->toKunena($mode);
+		}
 	}
 
 	public function getAuthor() {

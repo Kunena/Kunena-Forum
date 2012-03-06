@@ -26,16 +26,16 @@ $j=count($this->banhistory);
 					<ul class="list-unstyled topic-list">
 						<li class="header box-hover_header-row clear">
 							<dl>
-								<dd class="kcol-first kid"> # </th>
+								<dd class="kcol-first kid"> # </dd>
 								<dd class="kcol-mid kbanfrom"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></dd>
 								<dd class="kcol-mid kbanstart"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></dd>
 								<dd class="kcol-mid kbanexpire"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></dd>
 								<dd class="kcol-mid kbancreate"><?php echo JText::_('COM_KUNENA_BAN_CREATEDBY'); ?></dd>
 								<dd class="kcol-last kbanmodify"><?php echo JText::_('COM_KUNENA_BAN_MODIFIEDBY'); ?></dd>
-							<dl>
+							</dl>
 						</li>
 					</ul>
-				<tbody>
+				<table>
 				<?php
 					if ( !empty($this->banhistory) ) :
 						foreach ($this->banhistory as $userban) :
@@ -89,8 +89,9 @@ $j=count($this->banhistory);
 					<td colspan="6" class="kcol-first"><?php echo JText::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape($this->profile->name)); ?></td>
 				</tr>
 				<?php endif; ?>
-				</tbody>
 			</table>
+			</div>
+			</div>
 		</div>
 	</div>
 </div>

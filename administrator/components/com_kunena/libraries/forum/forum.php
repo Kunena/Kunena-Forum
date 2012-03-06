@@ -156,12 +156,13 @@ class KunenaForum {
 
 		if ($viewName != 'common') {
 			$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );
+			$view->common->embedded = true;
 			foreach ($ktemplate->getTemplatePaths() as $templatepath) {
 				$view->common->addTemplatePath(JPATH_SITE."/{$templatepath}/html/common");
 			}
 		}
-		// Push document object into the view.
-		$view->assignRef ( 'document', JFactory::getDocument() );
+		// Flag view as being embedded
+		$view->embedded = true;
 
 		// Render the view.
 		$view->displayLayout ($layout, $template);

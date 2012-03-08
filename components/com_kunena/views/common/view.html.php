@@ -228,6 +228,31 @@ class KunenaViewCommon extends KunenaView {
 		echo $result;
 	}
 
+	function getMenu() {
+		$basemenu = KunenaRoute::getMenu ();
+		if (!$basemenu) return ' ';
+
+		$this->parameters = new JRegistry();
+		$this->parameters->set('menutype', $basemenu->menutype);
+		if (version_compare(JVERSION, '1.6', '>')) {
+			$this->parameters->set('startLevel', $basemenu->level + 1);
+			$this->parameters->set('endLevel', $basemenu->level + 2);
+		} else {
+			$this->parameters->set('startLevel', $basemenu->sublevel + 1);
+			$this->parameters->set('endLevel', $basemenu->sublevel + 2);
+		}
+
+		$this->list = KunenaMenuHelper::getList($this->parameters);
+		$this->menu = $this->app->getMenu();
+		$this->active = $this->menu->getActive();
+		$this->active_id = isset($active) ? $active->id : $this->menu->getDefault()->id;
+		$this->path = isset($active) ? $active->tree : array();
+		$this->showAll = $this->parameters->get('showAllChildren');
+		$this->class_sfx = htmlspecialchars($this->parameters->get('class_sfx'));
+
+		return count($this->list) ? $this->loadTemplateFile('menu') : '';
+	}
+
 	function displayLoginBox($tpl = null) {
 		if ($this->offline) return;
 

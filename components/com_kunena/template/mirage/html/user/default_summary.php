@@ -18,7 +18,6 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 				<?php endif; ?>
 				<div id="kprofile-rightcol">
-
 					<div id="kprofile-stats" class="clearfix">
 						<ul>
 							<?php if ( !empty($this->banReason) ) : ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO') ?>:</strong> <?php echo $this->escape($this->banReason) ?></li><?php endif ?>

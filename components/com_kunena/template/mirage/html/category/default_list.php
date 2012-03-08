@@ -11,8 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <div class="box-module">
-	<div class="box-wrapper box-color box-border box-border_radius box-shadow">
-		<div class="block">
+	<div class="box-wrapper">
+		<div class="kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
 					<h2 class="header link-header2">

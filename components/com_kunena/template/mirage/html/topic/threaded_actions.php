@@ -9,7 +9,5 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-?>
-	<ul class="kmessage-buttons">
-		<li><?php echo implode('</li> <li>', $this->topicButtons->getProperties()) ?></li>
-	</ul>
+
+$this->displayTemplateFile('topic', 'default', 'actions');

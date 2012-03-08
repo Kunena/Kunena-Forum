@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="box-wrapper box-color box-border box-border_radius box-shadow">
-		<div class="statistics block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="statistics-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header fl">
 					<h2 class="header link-header2">
@@ -26,7 +26,7 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 			</div>
 			<div class="detailsbox-wrapper">
-				<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow" id="statistics-detailsbox" >
+				<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow">
 					<div class="statistics-smicon">
 						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
 							<span class="stats-smicon"></span>

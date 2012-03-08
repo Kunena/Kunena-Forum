@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="box-wrapper box-full box-border box-border_radius box-shadow">
-		<div class="menubox block">
+<div class="kmodule">
+	<div class="box-wrapper ">
+		<div class="menubox-kbox kbox box-color box-full box-border box-border_radius box-shadow">
 				<?php echo $this->getMenu() ?>
 				<ul class="list-unstyled menu fr">
 					<?php if (!$this->me->exists()) : ?>
@@ -24,12 +24,12 @@ defined ( '_JEXEC' ) or die ();
 					<?php if ($this->me->exists()) : ?>
 						<li class="dropdown">
 							<a class="link-logout" href="#">
-								<div class="login-member">
-									<div class="login-avatar"><span><?php echo $this->me->getAvatarImage('', 'welcome') ?></span></div>
-									<div class="loginbox">
-										<div class="login-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getName(null, JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE'))) ?></div>
-									</div>
-								</div>
+								<span class="login-member">
+									<span class="login-avatar"><span><?php echo $this->me->getAvatarImage('', 'welcome') ?></span></span>
+									<span class="loginbox">
+										<span class="login-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getName(null, JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE'))) ?></span>
+									</span>
+								</span>
 							</a>
 							<?php $this->displayLoginBox (); ?>
 						</li>

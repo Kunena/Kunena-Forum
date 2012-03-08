@@ -10,17 +10,51 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<tr class="krow<?php echo $this->mmm % 2 ?> <?php echo $this->class ?>">
-	<td class="kcol-first kmsgsubject kmsgsubject<?php echo $this->escape($this->msgsuffix) ?>">
-		<span class="<?php echo implode('"></span><span class="ktree ktree-', $this->message->indent)?>"></span>
-		<?php if ($this->message->id == $this->state->get('item.mesid')) : ?>
-		<?php echo $this->escape($this->message->subject) ?>
-		<?php else : ?>
-		<?php echo $this->getTopicLink($this->topic, $this->message) ?>
-		<?php endif; ?>
-	</td>
-	<td class="kcol-mid kprofile kprofile-list"><?php echo $this->message->getAuthor()->getLink() ?></td>
-	<td class="kcol-last kmsgdate kmsgdate-list" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
-		<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
-	</td>
-</tr>
+<li class="topic_threaded_tree-row box-hover box-hover_list-row clear">
+	<dl class="list-unstyled">
+		<dd class="topic_threaded_tree-post">
+			<?php foreach($this->message->indent as $indent) : ?>
+				<span class="ktree ktree-<?php echo $indent ?>  box-full">
+					<?php switch ($indent) {
+						case 'root' :
+						?>
+							<span class="root-halfbottom_vertical_line"></span>
+							<span class="root-circle"></span>
+						<?php 
+						break;
+						case 'edge' :
+						?>
+							<span class="edge-vertical_line"></span>
+						<?php
+						break;
+						case 'crossedge' :
+						?>
+							<span class="edge-vertical_line"></span>
+							<span class="edge-halfright_horizontal_line"></span>
+						<?php
+						break;
+						case 'lastedge' :
+						?>
+							<span class=""></span>
+						<?php
+						break; 
+						case 'leaf' :
+						?>
+							<span class=""></span>
+						<?php 
+						break; 
+					} ?>
+				</span>
+			<? endforeach; ?>
+			<?php if ($this->message->id == $this->state->get('item.mesid')) : ?>
+				<?php echo $this->escape($this->message->subject) ?>
+			<?php else : ?>
+				<?php echo $this->getTopicLink($this->topic, $this->message) ?>
+			<?php endif; ?>
+		</dd>
+		<dd class="topic_threaded_tree-author"><?php echo $this->message->getAuthor()->getLink() ?></dd>
+		<dd class="topic_threaded_tree-time" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>">
+			<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?>
+		</dd>
+	</dl>
+</li>

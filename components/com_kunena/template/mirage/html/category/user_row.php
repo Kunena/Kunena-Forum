@@ -24,12 +24,12 @@ defined ( '_JEXEC' ) or die ();
 				</td>
 				<td class="kcategory-topics">
 					<span class="kcategory-views-number"><?php echo $this->formatLargeNumber ( $this->category->numTopics );?></span>
-					<span class="kcategory-views"> <?php echo JText::_('COM_KUNENA_DISCUSSIONS'); ?> </span>
+					<span class="kcategory-views"> </span>
 				</td>
 
 				<td class="kcategory-posts">
 					<span class="kcategory-views-number"><?php echo $this->formatLargeNumber ( $this->category->numPosts ); ?></span>
-					<span class="kcategory-views"> <?php echo JText::_('COM_KUNENA_MY_POSTS'); ?> </span>
+					<span class="kcategory-views"> </span>
 				</td>
 				<?php
 				$last = $this->category->getLastTopic();

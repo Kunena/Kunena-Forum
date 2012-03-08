@@ -11,9 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 
 ?>
-<div class="box-module">
-	<div class="box-wrapper box-color box-border box-border_radius box-shadow">
-		<div class="credits block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="credits kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
 					<h2 class="header"><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></h2>

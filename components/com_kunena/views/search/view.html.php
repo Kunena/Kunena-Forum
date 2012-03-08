@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaViewSearch extends KunenaView {
 	function displayDefault($tpl = null) {
 		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
-
+//TODO: Need to move the select markup outside of view.  Otherwise difficult to stylize
 		$searchdatelist	= array();
 		$searchdatelist[] 	= JHTML::_('select.option',  'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT') );
 		$searchdatelist[] 	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_SEARCH_DATE_YESTERDAY') );

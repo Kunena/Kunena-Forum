@@ -34,7 +34,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/user.css' );
 		//$this->addStyleSheet ( 'css/search.css' );
 		//$this->addStyleSheet ( 'css/uploader.css' );
-		$this->addStyleSheet ( 'css/buttons.css' );
+		//$this->addStyleSheet ( 'css/buttons.css' );
 		$this->addStyleSheet ( 'css/icons-social.css' );
 		//$this->addStyleSheet ( 'css/icons-editor.css' );
 
@@ -81,7 +81,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		if (isset($types[$type])) $type = $types[$type];
 		if ($name == 'quickreply') $type .= ' kqreply';
 
-		$html = '<li class="button button-type-'.$type.' button-'.$scope.'-'.$name.'"><a '.$id.' href="'.$link.'" rel="nofollow" title="'.$title.'">';
+		$html = '<li class="item-button"><a class="kbutton button-type-'.$type.' button-'.$scope.'-'.$name.'" '.$id.' href="'.$link.'" rel="nofollow" title="'.$title.'">';
 		$html .= '<span class="'.$name.'">'.$text.'</span>';
 		$html .= '</a></li>';
 
@@ -122,7 +122,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	}
 
 	public function getPaginationItemActive(&$item) {
-		return '<li class="page-item page-active"><a class="button" title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></span></a></li>';
+		return '<li class="page-item page-active"><a class="kbutton" title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></span></a></li>';
 	}
 
 	public function getPaginationItemInactive(&$item) {

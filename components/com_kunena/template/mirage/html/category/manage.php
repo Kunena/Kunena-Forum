@@ -128,4 +128,8 @@ JHTML::_('behavior.tooltip');
 		</select>
 		<button class="button" onclick="javascript: submitbutton(this.form.batch.value)"><?php echo JText::_('COM_KUNENA_SUBMIT') ?></button>
 	</div>
+	</div>
+	</div>
+	</div>
+	</div>
 </form>

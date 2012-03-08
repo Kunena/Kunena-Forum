@@ -124,10 +124,11 @@ abstract class KunenaFactory {
 			$lookup1 = JPATH_SITE;
 			$lookup2 = KPATH_SITE;
 		} else {
+			$client = 'admin';
 			$lookup1 = JPATH_ADMINISTRATOR;
 			$lookup2 = KPATH_ADMIN;
 		}
-		if (empty($loaded[$file])) {
+		if (empty($loaded["{$client}/{$file}"])) {
 			$lang = JFactory::getLanguage();
 			if (version_compare(JVERSION, '1.6','<') && !$lang->getDebug()) {
 				// Joomla 1.5 hack to make languages to load faster
@@ -146,7 +147,7 @@ abstract class KunenaFactory {
 					$loaded[$file] = self::parseLanguage($lang, $filename);
 				}
 			} else {
-				$loaded[$file] = $lang->load($file, $lookup1, null, 1) || $lang->load($file, $lookup2, null, 1);
+				$loaded[$file] = $lang->load($file, $lookup2, null, true);
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

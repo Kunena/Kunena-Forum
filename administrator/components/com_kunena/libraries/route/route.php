@@ -450,7 +450,7 @@ abstract class KunenaRoute {
 		//echo "$key "; print_r($candidates[$key]);
 		foreach ($candidates[$key] as $id) {
 			$item = self::$menu[$id];
-			$authorise = isset($item->parent_id) ? self::$menus->authorise($item->id) : !empty($item->published) && (!isset ( $item->access ) || $item->access <= JFactory::getUser()->aid);
+			$authorise = version_compare(JVERSION, '1.6', '>') ? self::$menus->authorise($item->id) : !empty($item->published) && (!isset ( $item->access ) || $item->access <= JFactory::getUser()->aid);
 			if (!$authorise) {
 				continue;
 			}

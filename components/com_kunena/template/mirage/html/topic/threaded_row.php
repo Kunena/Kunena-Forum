@@ -15,37 +15,29 @@ defined ( '_JEXEC' ) or die ();
 		<dd class="topic_threaded_tree-post">
 			<?php foreach($this->message->indent as $indent) : ?>
 				<span class="ktree ktree-<?php echo $indent ?>  box-full">
-					<?php switch ($indent) {
+					<?php switch ($indent) :
 						case 'root' :
 						?>
 							<span class="root-halfbottom_vertical_line"></span>
 							<span class="root-circle"></span>
-						<?php 
-						break;
-						case 'edge' :
-						?>
+						<?php break;
+						case 'edge' : ?>
 							<span class="edge-vertical_line"></span>
-						<?php
-						break;
-						case 'crossedge' :
-						?>
+						<?php break;
+						case 'crossedge' : ?>
 							<span class="edge-vertical_line"></span>
 							<span class="edge-halfright_horizontal_line"></span>
-						<?php
-						break;
-						case 'lastedge' :
-						?>
+						<?php break;
+							case 'lastedge' : ?>
 							<span class=""></span>
-						<?php
-						break; 
-						case 'leaf' :
-						?>
+						<?php break;
+						case 'leaf' : ?>
 							<span class=""></span>
-						<?php 
-						break; 
-					} ?>
+							<?php
+							break;
+					endswitch; ?>
 				</span>
-			<? endforeach; ?>
+			<?php endforeach; ?>
 			<?php if ($this->message->id == $this->state->get('item.mesid')) : ?>
 				<?php echo $this->escape($this->message->subject) ?>
 			<?php else : ?>

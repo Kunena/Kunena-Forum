@@ -147,34 +147,6 @@ class KunenaView extends JView {
 		return JDocumentHTML::countModules ( 'kunena_menu' );
 	}
 
-	function getMenu() {
-		jimport ( 'joomla.application.module.helper' );
-		$position = "kunena_menu";
-		$options = array ('style' => 'xhtml' );
-		$modules = JModuleHelper::getModules ( $position );
-		$html = '';
-		foreach ( $modules as $module ) {
-			if ($module->module == 'mod_mainmenu' || $module->module == 'mod_menu') {
-				$basemenu = KunenaRoute::getMenu ();
-				if ($basemenu) {
-					$module = clone $module;
-					if (version_compare(JVERSION, '1.6','>')) {
-						// Joomla 1.6+
-						$search = array ('/"menutype":"([^"]*)"/i', '/"startLevel":"([^"]*)"/', '/"endLevel":"([^"]*)"/' );
-						$replace = array ("\"menutype\":\"{$basemenu->menutype}\"", '"startLevel":"' . ($basemenu->level + 1) . '"', '"endLevel":"' . ($basemenu->level + 2) . '"' );
-					} else {
-						// Joomla 1.5
-						$search = array ('/menutype=(.*)(\s)/', '/startLevel=(.*)(\s)/', '/endLevel=(.*)(\s)/' );
-						$replace = array ("menutype={$basemenu->menutype}\\2", 'startLevel=' . ($basemenu->sublevel + 1) . '\2', 'endLevel=' . ($basemenu->sublevel + 2) . '\2' );
-					}
-					$module->params = preg_replace ( $search, $replace, $module->params );
-				}
-			}
-			$html .= JModuleHelper::renderModule ( $module, $options );
-		}
-		return $html;
-	}
-
 	/**
 	 * This function formats a number to n significant digits when above
 	 * 10,000. Starting at 10,0000 the out put changes to 10k, starting

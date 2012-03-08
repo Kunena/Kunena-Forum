@@ -15,9 +15,9 @@ JHTML::_('behavior.calendar');
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius">
-		<div class="block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="ban-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kform-ban" name="kformban" method="post">
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="ban" />

@@ -13,12 +13,12 @@ defined ( '_JEXEC' ) or die ();
 $j=count($this->banhistory);
 ?>
 
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius">
-		<div class="block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="history-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
-					<h2 class="kheader"><a rel="kbanhistory-detailsbox"><?php echo JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name)); ?></a></h2>
+					<h2 class="header"><a rel="kbanhistory-detailsbox"><?php echo JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name)); ?></a></h2>
 				</div>
 			</div>
 			<div class="detailsbox-wrapper">

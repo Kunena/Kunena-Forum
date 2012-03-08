@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="box-wrapper box-color box-border box-border_radius box-shadow">
-		<div class="statistics block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="statistics-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
 					<h2 class="header">
@@ -71,7 +71,7 @@ defined ( '_JEXEC' ) or die ();
 
 <?php foreach ($this->top as $top) : ?>
 	<div class="box-module">
-		<div class="box-wrapper box-color box-border box-border_radius box-shadow">
+		<div class="box-wrapper box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="section popsubjstats block">
 				<div class="headerbox-wrapper box-full">
 					<div class="header">

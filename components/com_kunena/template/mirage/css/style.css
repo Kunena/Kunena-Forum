@@ -10,6 +10,36 @@
 	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
 }
 
+#kunena.layout input[type="checkbox"] {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+	background-color: #FFFFFF;
+	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+	border: 1px solid #BFC3C6;
+	border-radius: 5px;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+ #kunena.layout input[type="password"] {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+	background-color: #FFFFFF;
+	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+	border: 1px solid #BFC3C6;
+	border-radius: 5px;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
+#kunena.layout input[type="search"] {
+	/*border: 1px solid;
+	padding: 0px 5px;*/
+	background-color: #FFFFFF;
+	background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);
+	border: 1px solid #BFC3C6;
+	border-radius: 5px;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;
+}
+
 #kunena.layout select {
 	/*border: 1px solid;
 	padding: 0px 5px;*/
@@ -44,12 +74,16 @@
 	font-weight: bold;
 }
 
+#kunena.layout .display-hidden {
+	display: none
+}
+
 #kunena.layout .box-hover {
-	background-color: rgba(255, 255, 255, 0.0);
+	background-color: rgba(0, 0, 0, 0.0);
 }
 
 #kunena.layout .box-hover:hover {
-	background-color: rgba(100, 100, 100, 0.05);
+	background-color: rgba(0, 0, 0, 0.05);
 }
 
 #kunena.layout .box-focus {
@@ -80,7 +114,7 @@
 
 #kunena.layout .box-border {
 	/*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-	border-color: rgba(0, 0, 0, 0.05);
+	border-color: rgba(0, 0, 0, 0.08);
 	border-style: solid;
 	border-width: 1px;
 	/*border-radius: 5px;*/
@@ -88,7 +122,7 @@
 
 #kunena.layout .box-border:hover {
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-	border-color: rgba(0, 0, 0, 0.05);
+	border-color: rgba(0, 0, 0, 0.08);
 	border-style: solid;
 	border-width: 1px;
 	/*border-radius: 5px;*/
@@ -98,8 +132,28 @@
 	border-radius: 5px;
 }
 
-#kunena.layout .box-border_radius:hover {
+#kunena.layout .box-border_radius {
 	border-radius: 5px;
+}
+
+#kunena.layout .box-border_radius-child > :first-child {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+#kunena.layout .box-border_radius-child > :first-child:hover {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+#kunena.layout .box-border_radius-child > :last-child {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+#kunena.layout .box-border_radius-child > :last-child:hover {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 #kunena.layout .box-hover_header-row {
@@ -117,7 +171,7 @@
 	border-top: 1px solid rgba(255, 255, 255, 0.8);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
 	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
-	background-color: rgba(100, 100, 100, 0.05);
+	background-color: rgba(0, 0, 0, 0.05);
 }
 
 #kunena.layout .list-unstyled {
@@ -185,7 +239,7 @@
 	background-clip: padding-box;
 	background-color: rgba(255, 255, 255, 1.0);
 	border-color: rgba(0, 0, 0, 0.2);
-	border-radius: 0 0 5px 5px;
+	border-radius: 5px;
 	border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
 	border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
@@ -322,8 +376,8 @@
  *********************/
 
 #kunena.layout div.breadcrumb {
-	background: #f4f4f4;
-	background-image: linear-gradient(top, #f4f4f4 0%,#ececec 100%);
+	/*background: #f4f4f4;
+	background-image: linear-gradient(top, #f4f4f4 0%,#ececec 100%);*/
 }
 
 #kunena.layout div.breadcrumb li.breadcumb-viewing,
@@ -360,7 +414,7 @@
  * START BUTTON *
  ****************/
 
-#kunena.layout li.button {
+#kunena.layout li.item-button {
 	display: inline-block;
 	overflow: visible;
 	position: relative;
@@ -368,41 +422,42 @@
 }
 
 /* Color */
-#kunena.layout li.button a {
+#kunena.layout a.kbutton, #kunena.layout button.kbutton {
 	cursor: pointer;
 	border: 1px solid #D4D4D4;
 	border-radius: 3px;
 	/*box-shadow: 0 1px 0 #FFFFFF;*/
 }
 
-#kunena.layout li.button a:hover {
+#kunena.layout a.kbutton:hover, #kunena.layout button.kbutton:hover {
 	cursor: pointer;
 	border: 1px solid #D4D4D4;
 	border-radius: 3px;
 	/*box-shadow: 0 1px 0 #FFFFFF;*/
 }
 
-#kunena.layout li.button a > span {
-	background: rgba(0, 0, 0, 0.0) !important;
+#kunena.layout a.kbutton > span, #kunena.layout button.kbutton > span {
+	background: rgba(0, 0, 0, 0.0);
 }
 
-#kunena.layout li.button a > span:hover {
+#kunena.layout a.kbutton > span:hover, #kunena.layout button.kbutton > span:hover {
 	/*background: #599bdc;*/
 	/*background-image: linear-gradient(top, #599bdc 0%,#3072b3 100%);*/
-	background: rgba(0, 0, 0, 0.15) !important;
-	
+	background: rgba(0, 0, 0, 0.15);
 }
 
-#kunena.layout li.button a {
+#kunena.layout a.kbutton, #kunena.layout button.kbutton {
 	background: none;
 	text-decoration: none;
 	color: #FFFFFF !important;
+	display: block;
 }
 
-#kunena.layout li.button a:hover {
+#kunena.layout a.kbutton:hover, #kunena.layout button.kbutton:hover {
 	background: none;
 	text-decoration: none;
 	color: #FFFFFF !important;
+	display: block;
 }
 
 /***************

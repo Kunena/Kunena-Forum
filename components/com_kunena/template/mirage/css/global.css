@@ -371,12 +371,12 @@
 	float:left;
 	margin-right: 5px;
 }
-#kunena.layout .kbutton {
+/*#kunena.layout .kbutton {
 	padding: 5px 15px;
 }
 #kunena.layout .klogout .kbutton {
 	margin-top: 4px;
-}
+}*/
 
 /*---------- Breadcrumbs ------------- */
 
@@ -1630,17 +1630,17 @@
 #kunena.layout #searchform label input {
 	vertical-align: middle;
 }
-#kunena.layout #search-posts-start select {
+/*#kunena.layout #search-posts-start select {
 	margin-left: 10px;
 }
 #kunena.layout #search-posts-date select,
 #kunena.layout #search-posts-sort select {
 	margin-right: 10px;
-}
-#kunena.layout input#keywords,
+}*/
+/*#kunena.layout input#keywords,
 #kunena.layout input#username {
 	margin-right: 10px;
-}
+}*/
 #kunena.layout .kadvsearch .clrline {
 	clear: both;
 }
@@ -1977,7 +1977,7 @@
 	padding: 5px 10px;
 	line-height: 13px;
 }
-#kunena.layout div.kblock div.kactions a {
+/*#kunena.layout div.kblock div.kactions a {
 	color: #FFF !important;
 	background-color:transparent !important;
 }
@@ -1996,4 +1996,4 @@
 }
 #kunena.layout input[type="checkbox"], input[type="password"], input[type="search"], isindex {
 	border:none !important;
-}
+}*/

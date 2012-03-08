@@ -14,9 +14,9 @@ JHTML::_('behavior.tooltip');
 $i=1;
 $j=0;
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius">
-		<div class="block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="banmanager-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
 					<h2 class="header"><a rel="kbanmanager-detailsbox"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></a></h2>

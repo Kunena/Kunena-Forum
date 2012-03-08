@@ -35,16 +35,24 @@
 	clear: both;
 }
 
+#kunena.layout .inline {
+	display: inline;
+}
+
+#kunena.layout .inline-block {
+	display: inline-block;
+}
+
 #kunena.layout .input {
-	
+
 }
 
 #kunena.layout .select {
-	
+
 }
 
 #kunena.layout .textarea {
-	
+
 }
 
 #kunena.layout .link-menu {
@@ -66,6 +74,10 @@
 	height: 0px;
 	width: 100%;
 	float: none;
+}
+
+#kunena.layout .inline-divider {
+	padding: 0 10px;
 }
 
 #kunena.layout .separator {
@@ -94,7 +106,7 @@
 	visibility: hidden;
 	display: none;
 	right: 0;
-	margin: 0;
+	margin: 0px;
 	max-width: 300px;
 	min-width: 240px;
 	/*padding: 4px 0;*/
@@ -112,7 +124,7 @@
 	display: block;
 }
 
-#kunena.layout div.box-module {
+#kunena.layout div.kmodule {
 	overflow: visible;
 }
 
@@ -182,7 +194,7 @@
 	display: block;
 	line-height: 32px;
 	margin: 0px;
-	padding: 5px 4px;
+	padding: 4px 8px;
 	/*height: 18px;*/
 	overflow: hidden;
 }
@@ -202,9 +214,13 @@
 	padding: 5px 3px;
 }
 
+#kunena.layout legend.legend-hide {
+	display: none;
+}
+
 #kunena.layout .form-label {
 	float: left;
-    padding: 10px;
+	padding: 10px;
 	width: 20%;
 }
 
@@ -214,11 +230,25 @@
 	width: 75%;
 }
 
+#kunena.layout .form-field_simple {
+	float: left;
+	/*padding: 10px;*/
+	width: 100%;
+}
+
+#kunena.layout .form-vertical {
+	margin-bottom: 10px;
+}
+
 #kunena.layout dl.tabs > dt {
 	padding: 9px 12px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	margin: 0px 2px;
+}
+
+#kunena.layout dl.tabs {
+	margin-bottom: 10px;
 }
 
 #kunena.layout .tabs:after {
@@ -247,6 +277,18 @@
 #kunena.layout .pills:after {
 	content: "";
 	display: block;
+}
+
+#kunena.layout a.kbutton, #kunena.layout button.kbutton {
+	display: block;
+	line-height: normal;
+}
+
+#kunena.layout a.kbutton > span, #kunena.layout button.kbutton > span {
+	display: block;
+	line-height: normal;
+	padding: 5px 10px;
+	font-size: 13px;
 }
 
 
@@ -582,16 +624,17 @@
  * START BREADCRUMB *
  ********************/
 
-#kunena.layout div.breadcrumb {
- 	padding: 5px 10px;
+#kunena.layout div.breadcrumb-kbox {
+ 	padding: 4px 8px;
 }
 
-#kunena.layout div.breadcrumb ul li {
- 	display: inline;
+#kunena.layout div.breadcrumb-kbox ul li {
+ 	display: inline-block;
 }
 
-#kunena.layout div.breadcrumb ul li a {
- 	margin: 0px 10px;
+#kunena.layout div.breadcrumb-kbox ul li a {
+ 	/*margin: 0px 10px;*/
+ 	line-height: 32px;
 }
 
 /*******************
@@ -640,10 +683,10 @@
 }
 
 #kunena.layout ul.category-list li.category-row dd {
- 	display: block;
- 	float: left;
- 	margin: 0px;
- 	padding: 5px;
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 5px;
 }
 
 #kunena.layout ul.category-list li.header dd {
@@ -666,10 +709,8 @@
  	margin: 0px;
 }
 
-#kunena.layout ul.category-list dd.category-icon {
+#kunena.layout ul.category-list i.category-icon {
 	margin: 0;
-	text-align: center;
-	vertical-align: center;
 	min-width: 42px;
 }
 
@@ -719,22 +760,34 @@
  * START LOGIN-MEMBER *
  **********************/
 
-#kunena.layout div.login-member {
+#kunena.layout div.login-form {
+	padding: 10px;
+}
+
+#kunena.layout span.login-member {
 	display: block;
 }
 
-#kunena.layout div.login-member div.login-avatar {
+#kunena.layout span.login-member span.login-avatar {
 	float: left;
 }
 
-#kunena.layout div.login-member div.loginbox {
+#kunena.layout span.login-member span.loginbox {
 	float: left;
 	padding-left: 5px;
 }
 
-#kunena.layout div.login-member img {
+#kunena.layout span.login-member img {
 	width: 32px;
 	height: 32px;
+}
+
+#kunena.layout span.login-member img {
+	border-radius: 5px;
+}
+
+#kunena.layout span.login-member img:hover {
+	border-radius: 5px;
 }
 
 /*********************
@@ -803,80 +856,106 @@
  	padding: 5px 10px;
 }*/
 
-#kunena.layout div.topic ul.topic-posts li.topic-row {
+#kunena.layout div.topic-kbox ul.topic-posts li.topic-row {
  	padding: 8px 10px;
 }
 
-#kunena.layout div.topic ul.topic-posts li.topic-row:hover div.buttonbar ul.buttons-message {
+#kunena.layout div.topic-kbox ul.topic-posts li.topic-row:hover div.buttonbar ul.buttons-message {
 	visibility: visible;
 }
 
-#kunena.layout div.topic ul.message-list li.header {
+#kunena.layout div.topic-kbox ul.message-list li.header {
  	padding: 5px 10px;
 }
 
-#kunena.layout div.topic ul.message-list li.header h3, #kunena.layout ul.message-list li.header dd, #kunena.layout ul.message-list li.header dd a {
+#kunena.layout div.topic-kbox ul.message-list li.header h3, #kunena.layout ul.message-list li.header dd, #kunena.layout ul.message-list li.header dd a {
  	display: inline;
 }
 
-#kunena.layout div.topic ul.topic-posts li.topic-row div.buttonbar ul.buttons-message {
+#kunena.layout div.topic-kbox ul.topic-posts li.topic-row div.buttonbar ul.buttons-message {
 	visibility: hidden;
 }
 
-#kunena.layout div.topic .topic-taglist {
+#kunena.layout div.topic-kbox .topic-taglist {
 	display: block;
 	/*padding: 5px 10px;*/
 }
 
-#kunena.layout div.topic .topic-taglist-edit {
+#kunena.layout div.topic-kbox .topic-taglist-edit {
 	float: right;
 }
 
-#kunena.layout div.topic .topic-taglist li {
+#kunena.layout div.topic-kbox .topic-taglist li {
 	display: inline;
 	line-height: 13px;
 }
 
 
-
-/**********************
- * START MESSAGE-LIST *
- **********************/
-
-/*#kunena.layout div#topic .posthead {
- 	padding: 5px 10px;
-}*/
-
-#kunena.layout div.topic_indented ul.topic-posts li.topic-row {
+#kunena.layout div.topic_indented-kbox ul.topic-posts li.topic-row {
  	padding: 8px 10px;
 }
 
-#kunena.layout div.topic_indented ul.topic-posts li.topic-row:hover div.buttonbar ul.buttons-message {
+#kunena.layout div.topic_indented-kbox ul.topic-posts li.topic-row:hover div.buttonbar ul.buttons-message {
 	visibility: visible;
 }
 
-#kunena.layout div.topic_indented ul.message-list li.header {
+#kunena.layout div.topic_indented-kbox ul.message-list li.header {
  	padding: 5px 10px;
 }
 
-#kunena.layout div.topic_indented ul.message-list li.header h3, #kunena.layout ul.message-list li.header dd, #kunena.layout ul.message-list li.header dd a {
+#kunena.layout div.topic_indented-kbox ul.message-list li.header h3, #kunena.layout ul.message-list li.header dd, #kunena.layout ul.message-list li.header dd a {
  	display: inline;
 }
 
-#kunena.layout div.topic_indented ul.topic-posts li.topic-row div.buttonbar ul.buttons-message {
+#kunena.layout div.topic_indented-kbox ul.topic-posts li.topic-row div.buttonbar ul.buttons-message {
 	visibility: hidden;
 }
 
-#kunena.layout div.topic_indented .topic-taglist {
+#kunena.layout div.topic_indented-kbox .topic-taglist {
 	display: block;
 	/*padding: 5px 10px;*/
 }
 
-#kunena.layout div.topic_indented .topic-taglist-edit {
+#kunena.layout div.topic_indented-kbox .topic-taglist-edit {
 	float: right;
 }
 
-#kunena.layout div.topic_indented .topic-taglist li {
+#kunena.layout div.topic_indented-kbox .topic-taglist li {
+	display: inline;
+	line-height: 13px;
+}
+
+
+#kunena.layout div.topic_threaded-kbox ul.topic-posts li.topic-row {
+ 	padding: 8px 10px;
+}
+
+#kunena.layout div.topic_threade-kbox ul.topic-posts li.topic-row:hover div.buttonbar ul.buttons-message {
+	visibility: visible;
+}
+
+#kunena.layout div.topic_threaded-kbox ul.message-list li.header {
+ 	padding: 5px 10px;
+}
+
+#kunena.layout div.topic_threaded-kbox ul.message-list li.header h3, #kunena.layout ul.message-list li.header dd, #kunena.layout ul.message-list li.header dd a {
+ 	display: inline;
+}
+
+#kunena.layout div.topic_threaded-kbox ul.topic-posts li.topic-row div.buttonbar ul.buttons-message {
+	visibility: hidden;
+}
+
+#kunena.layout div.topic_threaded-kbox .topic-taglist {
+	display: block;
+	/*padding: 5px 10px;*/
+}
+
+#kunena.layout div.topic_threaded-kbox .topic-taglist-edit {
+	float: right;
+}
+
+#kunena.layout div.topic_threaded-kbox .topic-taglist li {
 	display: inline;
 	line-height: 13px;
 }
@@ -1058,40 +1137,40 @@
  * START STATISTICS *
  ********************/
 
-#kunena.layout div.statistics .statistics-details div {
+#kunena.layout div.statistics-kbox .statistics-details div {
 	display: block;
 	float: left;
 }
 
-#kunena.layout div.statistics .statistics-smicon {
+#kunena.layout div.statistics-kbox .statistics-smicon {
 	padding: 10px;
 	width: 35px;
 }
 
-#kunena.layout div.statistics .statistics-smicon span {
+#kunena.layout div.statistics-kbox .statistics-smicon span {
 	margin: 15px auto;
 }
 
-#kunena.layout div.statistics .statistics-totals ul li {
+#kunena.layout div.statistics-kbox .statistics-totals ul li {
 	clear: left;
 }
 
-#kunena.layout div.statistics .statistics-totals {
+#kunena.layout div.statistics-kbox .statistics-totals {
 	padding: 5px 10px 10px 10px;
 	line-height: 20px;
 	/*min-height: 80px;*/
 	width: 25%;
 }
 
-#kunena.layout div.statistics .statistics-totals ul li span {
+#kunena.layout div.statistics-kbox .statistics-totals ul li span {
 	margin-left: 3px;
 }
 
-#kunena.layout div.statistics .statistics-latestmem {
+#kunena.layout div.statistics-kbox .statistics-latestmem {
 	margin-bottom: 8px;
 }
 
-#kunena.layout div.statistics .header-link {
+#kunena.layout div.statistics-kbox .header-link {
 	float: right;
 	margin-right: 10px;
 	margin-top: 5px;
@@ -1113,6 +1192,104 @@
  ********************/
 
 
+/**********************************
+ * START TOPIC THREADED TREE LIST *
+ **********************************/
+
+#kunena.layout ul.topic_threaded_tree-list {
+	display: block;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#kunena.layout ul.topic_threaded_tree-list div.header {
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+}
+
+#kunena.layout ul.topic_threaded_tree-list li {
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+	margin: 0;
+	overflow: hidden;
+	padding: 1px 0 0;
+}
+
+#kunena.layout ul.topic_threaded_tree-list li.topic_threaded_tree-row dl, ul.topic_threaded_tree-list li.header {
+ 	float: none !important;
+ 	height: auto;
+ 	width: auto;
+}
+
+#kunena.layout ul.topic_threaded_tree-list li.topic_threaded_tree-row {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+#kunena.layout ul.topic_threaded_tree-list li.topic_threaded_tree-row dd {
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 5px;
+}
+
+#kunena.layout ul.topic_threaded_tree-list li.header dd {
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 2px 5px;
+}
+
+#kunena.layout ul.topic_threaded_tree-list dd {
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 2px 0;
+}
+
+/*#kunena.layout ul.topic-list li.topics-row dl {
+ 	display: block;
+ 	position: relative;
+}*/
+
+#kunena.layout ul.topic_threaded_tree-list li.topic_threaded_tree-row dd {
+	display: block;
+	float: left;
+	margin: 0px;
+}
+
+#kunena.layout ul.topic_threaded_tree-list dd.topic_threaded_tree-post {
+	margin: 0;
+	text-align: left;
+	vertical-align: center;
+	width: 60%;
+}
+
+#kunena.layout ul.topic_threaded_tree-list dd.topic_threaded_tree-author {
+	margin: 0;
+	text-align: left;
+	vertical-align: center;
+	width: 15%;
+}
+
+#kunena.layout ul.topic_threaded_tree-list dd.topic_threaded_tree-time {
+	margin: 0;
+	text-align: left;
+	vertical-align: center;
+	width: 15%;
+}
+
+/*********************************
+ * STOP TOPIC THREADED TREE LIST *
+ *********************************/
+
+
 /*************************
  * START TOPIC BUTTONBAR *
  *************************/
@@ -1129,12 +1306,6 @@
 
 #kunena.layout div.buttonbar ul.buttons-topic li.button a {
 	display: block;
-}
-
-#kunena.layout div.buttonbar ul.buttons-topic li.button a > span {
-	padding: 5px 10px;
-	display: block;
-	/*overflow: hidden;*/
 }
 
 /************************
@@ -1155,14 +1326,8 @@
 	margin: 0px;
 }
 
-#kunena.layout div.buttonbar ul.buttons-topics li.button a {
+#kunena.layout div.buttonbar ul.buttons-topics li a.butotn {
 	display: block;
-}
-
-#kunena.layout div.buttonbar ul.buttons-topics li.button a > span {
-	padding: 5px 10px;
-	display: block;
-	/*overflow: hidden;*/
 }
 
 /*************************
@@ -1348,7 +1513,7 @@
  * START WHO IS ONLINE *
  ***********************/
 
-#kunena.layout div.whosonline div.whosonline-smicon {
+#kunena.layout div.whosonline-kbox div.whosonline-smicon {
 	display: block;
 	float: left;
 	/*padding: 20px 0 5px 8px;*/
@@ -1356,38 +1521,38 @@
 	width: 48px;
 }
 
-#kunena.layout div.whosonline div.whosonline-users {
+#kunena.layout div.whosonline-kbox div.whosonline-users {
 	display: block;
 	float: left;
 	padding: 5px 10px 10px 10px;
 }
 
-#kunena.layout div.whosonline .section-icon span {
+#kunena.layout div.whosonline-kbox .section-icon span {
 	margin: 15px auto;
 }
 
-#kunena.layout div.whosonline .whosonline-subtitle {
+#kunena.layout div.whosonline-kbox .whosonline-subtitle {
 	display: block;
 	width: 99%;
 }
 
-#kunena.layout div.whosonline .whosonline-legend ul li {
+#kunena.layout div.whosonline-kbox .whosonline-legend ul li {
 	display: inline;
 	margin-right: 5px;
 }
 
-#kunena.layout div.whosonline .whosonline-usernames {
+#kunena.layout div.whosonline-kbox .whosonline-usernames {
 	clear:left;
 	display: block;
 	width: 99%;
 }
 
-#kunena.layout div.whosonline .whosonline-usernames ul li {
+#kunena.layout div.whosonline-kbox .whosonline-usernames ul li {
 	display: inline;
 	margin-right: 4px;
 }
 
-#kunena.layout div.whosonline .whosonline-details div {
+#kunena.layout div.whosonline-kbox .whosonline-details div {
 	display: block;
 	float: left;
 }
@@ -1425,10 +1590,46 @@
 	line-height: 2.2em;
 }
 
-#kunena.layout div.login-member img {
-	border-radius: 5px;
+#kunena.layout span.ktree {
+	width: 20px;
+	position: relative;
 }
 
-#kunena.layout div.login-member img:hover {
-	border-radius: 5px;
+#kunena.layout span.ktree span.root-circle {
+	width: 14px;
+	height: 14px;
+	border-radius: 7px;
+	display: block;
+	background: #000000;
+	top: 25%;
+	position: absolute;
+	margin: 0 auto 0 auto;
+}
+
+#kunena.layout span.ktree span.root-halfbottom_vertical_line {
+	width: 3px;
+	height: 50%;
+	top: 50%;
+	display: block;
+	background: #000000;
+	position: relative;
+}
+
+#kunena.layout span.ktree span.edge-vertical_line {
+	width: 3px;
+	height: 100%;
+	display: block;
+	background: #000000;
+	left: 49%;
+	position: absolute;
+}
+
+#kunena.layout span.ktree span.edge-halfright_horizontal_line {
+	width: 100%;
+	height: 3px;
+	display: block;
+	background: #000000;
+	left: 49%;
+	top: 49%;
+	position: absolute;
 }

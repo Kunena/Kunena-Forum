@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius">
-		<div class="block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
 					<h2 class="header"><a title="Recent Posts" rel="kposts-detailsbox"><?php echo $this->headerText ?></a></h2>

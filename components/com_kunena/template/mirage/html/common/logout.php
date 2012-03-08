@@ -33,7 +33,7 @@ defined ( '_JEXEC' ) or die ();
 
 					<fieldset>
 						<legend class="klegend klogout"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_LONG') ?></legend>
-						<button type="submit" value="Log out" class="kbutton"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?></button>
+						<button class="kbutton button-type-standard" type="submit" value="Log out"><span><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?></span></button>
 					</fieldset>
 				</form>
 			</li>

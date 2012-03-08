@@ -22,8 +22,12 @@ JHTML::_('behavior.tooltip');
 	<input type="hidden" name="boxchecked" value="0" />
 	<?php echo JHTML::_( 'form.token' ); ?>
 
-	<div class="ksection">
-		<h2 class="kheader"><a rel="ksection-categories" title="<?php echo $this->header ?>"><?php echo $this->header ?></a></h2>
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="manage-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
+			<div class="headerbox-wrapper box-full">
+				<div class="header">
+					<h2 class="header"><a rel="ksection-categories" title="<?php echo $this->header ?>"><?php echo $this->header ?></a></h2>
 			<table class="kgrid kgrid-categories" id="kcategories-manager">
 				<thead>
 					<tr>
@@ -122,6 +126,6 @@ JHTML::_('behavior.tooltip');
 			<option value="deny_polls"><?php echo JText::_('COM_KUNENA_DISALLOW_POLLS') ?></option>
 			<option value="delete"><?php echo JText::_('COM_KUNENA_DELETE') ?></option>
 		</select>
-		<button class="kbutton" onclick="javascript: submitbutton(this.form.batch.value)"><?php echo JText::_('COM_KUNENA_SUBMIT') ?></button>
+		<button class="button" onclick="javascript: submitbutton(this.form.batch.value)"><?php echo JText::_('COM_KUNENA_SUBMIT') ?></button>
 	</div>
 </form>

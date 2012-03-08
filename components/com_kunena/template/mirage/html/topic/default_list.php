@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius box-shadow">
-		<div class="topic block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="topic-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper">
 				<div class="header">
 					<!-- a href="#" title="Topic RSS Feed"><span class="krss-icon">Topic RSS Feed</span></a -->

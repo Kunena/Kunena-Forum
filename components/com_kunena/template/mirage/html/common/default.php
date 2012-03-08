@@ -10,16 +10,16 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
+<div class="kmodule">
 	<div class="box-wrapper">
-		<div class="block">
+		<div class="kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header fl">
 					<h2 class="header link-header2"><?php echo $this->escape($this->header); ?></h2>
 				</div>
 			</div>
 			<div  class="detailsbox-wrapper">
-				<div class="detailsbox">
+				<div class="detailsbox box-full box-hover box-border box-border_radius box-shadow">
 					<div class="kcontent">
 					<?php
 					if (!empty($this->html)) :

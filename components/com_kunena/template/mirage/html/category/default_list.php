@@ -26,7 +26,7 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 			</div>
 			<div class="innerbox-wrapper innerspacer">
-				<?php echo $this->displayActions(); ?>
+				<?php echo $this->displayCategoryActions(); ?>
 			</div>
 			<div class="innerbox-wrapper innerspacer">
 				<?php echo $this->getPagination(7); ?>

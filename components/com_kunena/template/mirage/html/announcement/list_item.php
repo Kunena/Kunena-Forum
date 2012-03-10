@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo $this->announcement->displayField('id') ?>
 			</dd>
 			<dd class="announcement-date">
-				<?php echo $this->announcement->displayField('created', 'date_today') ?>
+				<?php echo $this->announcement->displayField('created') ?>
 			</dd>
 			<dd class="announcement-author">
 				<?php echo $this->announcement->displayField('created_by') ?>

@@ -11,12 +11,10 @@
 defined ( '_JEXEC' ) or die ();
 
 JHTML::_('behavior.formvalidation');
-JHTML::_('behavior.tooltip');
 ?>
 <div class="ksection">
-	<h2 class="kheader"><?php echo $this->category->id? JText::_('COM_KUNENA_EDIT_CATEGORY') : JText::_('COM_KUNENA_NEW_CATEGORY') ?></h2>
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" enctype="multipart/form-data" id="adminForm" name="adminForm" method="post" class="adminForm form-validate">
-		<input type="hidden" name="view" value="category" />
+	<h2 class="kheader"><?php echo $this->category->exists() ? JText::_('COM_KUNENA_EDIT_CATEGORY') : JText::_('COM_KUNENA_NEW_CATEGORY') ?></h2>
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" enctype="multipart/form-data" id="adminForm" name="adminForm" method="post" class="adminForm form-validate">
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="catid" value="<?php echo $this->category->id ?>" />
 		<?php echo JHTML::_( 'form.token' ); ?>
@@ -54,7 +52,7 @@ JHTML::_('behavior.tooltip');
 					<label for="published"><?php echo JText::_('COM_KUNENA_PUBLISHED') ?></label>
 				</div>
 				<div class="kform-field">
-					<?php echo $this->options ['published']; ?>
+					<?php echo $this->options ['published'] ?>
 				</div>
 			</li>
 			<li class="kpostcategory-row krow-odd">
@@ -89,10 +87,7 @@ JHTML::_('behavior.tooltip');
 					<?php echo $this->options ['accesstypes'] ?>
 				</div>
 			</li>
-			<?php
-			foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) :
-				foreach ($accesslist as $accessinput) :
-			?>
+			<?php foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) foreach ($accesslist as $accessinput) : ?>
 			<li class="kpostcategory-row krow-even kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $row->accesstype != $accesstype ? 'display:none' : '' ?>">
 				<div class="kform-label">
 					<label for="locked"><?php echo $accessinput['title'] ?></label>
@@ -101,7 +96,7 @@ JHTML::_('behavior.tooltip');
 					<?php echo $accessinput['input'] ?>
 				</div>
 			</li>
-			<?php endforeach; endforeach ?>
+			<?php endforeach ?>
 		</ul>
 		<?php endif ?>
 
@@ -118,7 +113,7 @@ JHTML::_('behavior.tooltip');
 					<?php echo $this->options ['forumLocked'] ?>
 				</div>
 			</li>
-			<?php if (!$this->category->id || !$this->category->isSection()): ?>
+			<?php if (!$this->category->exists() || !$this->category->isSection()): ?>
 			<li class="kpostcategory-row krow-even">
 				<div class="kform-label">
 					<label for="review"><?php echo JText::_('COM_KUNENA_REV') ?></label>
@@ -148,7 +143,7 @@ JHTML::_('behavior.tooltip');
 					<label for="allow_polls"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED') ?></label>
 				</div>
 				<div class="kform-field">
-					<?php echo $this->options ['allow_polls']; ?>
+					<?php echo $this->options ['allow_polls'] ?>
 				</div>
 			</li>
 			<li class="kpostcategory-row krow-even">
@@ -156,7 +151,7 @@ JHTML::_('behavior.tooltip');
 					<label for="channels"><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS') ?></label>
 				</div>
 				<div class="kform-field">
-					<?php echo $this->options ['channels']; ?>
+					<?php echo $this->options ['channels'] ?>
 				</div>
 			</li>
 			<li class="kpostcategory-row krow-odd">
@@ -164,7 +159,7 @@ JHTML::_('behavior.tooltip');
 					<label for="channels"><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING') ?></label>
 				</div>
 				<div class="kform-field">
-					<?php echo $this->options ['topic_ordering']; ?>
+					<?php echo $this->options ['topic_ordering'] ?>
 				</div>
 			</li>
 			<?php endif ?>
@@ -180,14 +175,14 @@ JHTML::_('behavior.tooltip');
 					<label for="class_sfx"><?php echo JText::_('COM_KUNENA_CLASS_SFX') ?></label>
 				</div>
 				<div class="kform-field">
-					<input type="text" value="<?php echo $this->escape ( $this->category->class_sfx ); ?>" maxlength="20" size="20" id="class_sfx" name="class_sfx" class="kinputbox postinput hasTip" title="Forum CSS Class Suffix :: Enter Forum CSS Class Suffix" />
+					<input type="text" value="<?php echo $this->escape ( $this->category->class_sfx ) ?>" maxlength="20" size="20" id="class_sfx" name="class_sfx" class="kinputbox postinput hasTip" title="Forum CSS Class Suffix :: Enter Forum CSS Class Suffix" />
 				</div>
 			</li>
 		</ul>
 
-		<?php if (!$this->category->id || !$this->category->isSection()): ?>
+		<?php if (!$this->category->exists() || !$this->category->isSection()): ?>
 		<ul class="kposthead clearfix">
-			<li><h3><?php echo JText::_('COM_KUNENA_MODERATION'); ?></h3></li>
+			<li><h3><?php echo JText::_('COM_KUNENA_MODERATION') ?></h3></li>
 		</ul>
 
 		<ul class="kform kpostcategory clearfix">
@@ -197,7 +192,7 @@ JHTML::_('behavior.tooltip');
 				</ul>
 
 				<div class="kuserlist-items">
-					<?php if (count ( $this->moderators ) == 0) : ?>
+					<?php if (empty($this->moderators)) : ?>
 					<?php echo JText::_('COM_KUNENA_NOMODS') ?>
 					<?php else : ?>
 					<?php

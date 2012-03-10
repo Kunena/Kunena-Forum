@@ -14,7 +14,6 @@ JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" enctype="multipart/form-data" id="adminForm" name="adminForm" method="post" class="adminForm form-validate">
-	<input type="hidden" name="view" value="category" />
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering') ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction') ?>" />

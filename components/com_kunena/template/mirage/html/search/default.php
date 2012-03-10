@@ -32,8 +32,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 			<div class="detailsbox-wrapper">
 				<div class="advsearch-detailsbox detailsbox">
 
-					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="adminForm" id="searchform" method="post">
-						<input type="hidden" name="view" value="search" />
+					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search') ?>" name="adminForm" id="adminForm" method="post">
 						<input type="hidden" name="task" value="results" />
 						<?php echo JHTML::_( 'form.token' ); ?>
 
@@ -50,10 +49,10 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 							<fieldset class="fieldset">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER') ?></legend>
 								<label class="display-hidden searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_UNAME') ?>:</label>
-								<input type="text" value="<?php echo $this->escape($this->state->get('query.searchuser')); ?>" name="searchuser" class="box-width form-vertical form-field_simple kautocomplete-off" id="kusername" placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_UNAME') ?>" />
-								<label class="display-hidden searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>:</label>
+								<input type="text" value="<?php echo $this->escape($this->state->get('query.searchuser')) ?>" name="searchuser" class="box-width form-vertical form-field_simple kautocomplete-off" id="kusername" placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_UNAME') ?>" />
+								<label class="display-hidden searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_EXACT') ?>:</label>
 								<input type="checkbox" value="1" name="exactname" <?php if ($this->state->get('query.exactname')) echo $this->checked ?> />
-								<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>
+								<?php echo JText::_('COM_KUNENA_SEARCH_EXACT') ?>
 							</fieldset>
 						</div>
 
@@ -72,40 +71,40 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 							</fieldset>
 
 							<fieldset id="search-posts-start" class="fieldset">
-								<legend><?php echo JText::_('COM_KUNENA_SEARCH_START'); ?></legend>
-								<input type="text" size="5" value="<?php echo $this->escape($this->state->get('list.start')); ?>" name="limitstart" class="box-width form-vertical form-field_simple" />
+								<legend><?php echo JText::_('COM_KUNENA_SEARCH_START') ?></legend>
+								<input type="text" size="5" value="<?php echo $this->escape($this->state->get('list.start')) ?>" name="limitstart" class="box-width form-vertical form-field_simple" />
 								<?php $this->displayLimitlist('limit', 'class="ks"') ?>
 							</fieldset>
 						</div>
 
 						<div class="searchform-rightcol">
 							<fieldset class="fieldset">
-								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?></legend>
+								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN') ?></legend>
 								<?php $this->displayCategoryList('categorylist', 'class="inputbox" size="8" multiple="multiple"') ?>
 								<br />
 								<label id="childforums-lbl">
-									<input type="checkbox" value="1" name="childforums" <?php if ($this->state->get('query.childforums')) echo 'checked="checked"'; ?> />
-									<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?>
+									<input type="checkbox" value="1" name="childforums" <?php if ($this->state->get('query.childforums')) echo 'checked="checked"' ?> />
+									<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN') ?>
 								</label>
 							</fieldset>
 
 							<?php if ( $this->me->isModerator() ) : ?>
 							<fieldset class="fieldset">
-								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?></legend>
-								<input id="show0" type="radio" name="show" value="0" <?php if ($this->state->get('query.show') == 0) echo 'checked="checked"'; ?> />
-								<label for="show0"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?></label><br />
-								<input id="show1" type="radio" name="show" value="1" <?php if ($this->state->get('query.show') == 1) echo 'checked="checked"'; ?> />
-								<label for="show1"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?></label><br />
-								<input id="show2" type="radio" name="show" value="2" <?php if ($this->state->get('query.show') == 2) echo 'checked="checked"'; ?> />
-								<label for="show2"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?></label><br />
+								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SHOW') ?></legend>
+								<input id="show0" type="radio" name="show" value="0" <?php if ($this->state->get('query.show') == 0) echo 'checked="checked"' ?> />
+								<label for="show0"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL') ?></label><br />
+								<input id="show1" type="radio" name="show" value="1" <?php if ($this->state->get('query.show') == 1) echo 'checked="checked"' ?> />
+								<label for="show1"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED') ?></label><br />
+								<input id="show2" type="radio" name="show" value="2" <?php if ($this->state->get('query.show') == 2) echo 'checked="checked"' ?> />
+								<label for="show2"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED') ?></label><br />
 							</fieldset>
 							<?php endif; ?>
 						</div>
 						<div class="clr"></div>
 
 						<div class="kost-buttons">
-							<button title="Click here to search" type="submit" class="kbutton"><span><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></span></button>
-							<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton"><span><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL'); ?></span></button>
+							<button title="Click here to search" type="submit" class="kbutton"><span><?php echo JText::_('COM_KUNENA_SEARCH_SEND') ?></span></button>
+							<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton"><span><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL') ?></span></button>
 						</div>
 					</form>
 				</div>

@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 <?php if (!empty($this->categories [$this->section->id])) : ?>
 	<div class="kmodule">
 		<div class="box-wrapper">
-			<div class="category-kbox box-color box-border box-border_radius box-border_radius-child box-shadow <?php echo $this->getClass('', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo intval($this->section->id) ?>">
+			<div class="category-kbox box-color box-border box-border_radius box-border_radius-child box-shadow <?php echo $this->getClass('', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo $this->displaySectionField('id') ?>">
 				<div class="headerbox-wrapper box-full">
 					<div class="header fl">
 						<h2 class="header link-header2">
@@ -51,23 +51,14 @@ defined ( '_JEXEC' ) or die ();
 							</li>
 						</ul>
 						<ul class="category-list">
-							<?php
-							foreach ( $this->categories [$this->section->id] as $category ) {
-							echo $this->displayCategory($category);
-							}
-							?>
+							<?php foreach ( $this->categories [$this->section->id] as $category ) echo $this->displayCategory($category) ?>
 						</ul>
 					</div>
 				</div>
-				<?php if (!empty($this->sectionMarkReadURL)) : ?>
+				<?php if (!empty($this->sectionButtons)) : ?>
 					<div class="modbox-wrapper">
 						<div class="modbox">
-							<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="kunenaMarkAllRead" method="post">
-								<input type="hidden" name="view" value="category" />
-								<input type="hidden" name="task" value="markread" />
-								<?php echo JHTML::_( 'form.token' ); ?>
-								<button class="kbutton button-type-user"><span><?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?></span></button>
-							</form>
+							<?php echo implode(' ', $this->sectionButtons) ?>
 						</div>
 					</div>
 				<?php endif ?>

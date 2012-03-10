@@ -14,8 +14,9 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	public $categoryIcons = array('knonew', 'knew');
 
 	public function initialize() {
-		// Template requires Mootools 1.2 framework
+		// Template requires Mootools 1.2+ framework
 		$this->loadMootools();
+		JHTML::_('behavior.tooltip');
 
 		// New Kunena JS for default template
 		$this->addScript ( 'js/default.js' );

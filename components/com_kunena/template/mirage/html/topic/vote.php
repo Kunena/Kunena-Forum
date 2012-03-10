@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 					<h2 class="kheader"><?php echo JText::_('COM_KUNENA_POLL_NAME') .' '. KunenaHtmlParser::parseText ($this->poll->title); ?></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="kdetailsbox box-full box-hover box-border box-border_radius box-shadow">
 					<div class="kpolldesc">
 						<div id="kpoll-text-help"></div>

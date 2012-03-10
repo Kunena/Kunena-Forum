@@ -19,7 +19,7 @@ defined ( '_JEXEC' ) or die ();
 					<div class="header-desc"><?php echo JText::sprintf ('COM_KUNENA_FORUM_SEARCH', $this->escape($this->state->get('searchwords')) ) ?></div>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="ksearchresults-detailsbox detailsbox box-full box-border box-border_radius box-shadow">
 					<ul class="kposts">
 						<?php if (!empty($this->error )) : ?>

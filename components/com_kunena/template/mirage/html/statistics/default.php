@@ -23,7 +23,7 @@ defined ( '_JEXEC' ) or die ();
 					</h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow">
 					<div class="statistics-smicon">
 						<span class="stats-smicon"></span>
@@ -72,7 +72,7 @@ defined ( '_JEXEC' ) or die ();
 						<h2 class="header"><a rel="popsubstats-tbody" title="Top 10 Most Popular Topics"><span><?php echo $top[0]->title ?></span></a></h2>
 					</div>
 				</div>
-				<div class="detailsbox-wrapper">
+				<div class="detailsbox-wrapper innerspacer">
 					<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow" id="statistics-detailsbox">
 						<ul class="list-unstyled popsubstat-list">
 							<li class="header box-hover_header-row">

@@ -151,19 +151,19 @@
 
 #kunena.layout div.headerbox-wrapper {
 	/*padding: 10px;*/
-	/*overflow: auto;*/
+	overflow: auto/
 	clear: both;
 	position: relative;
 }
 
-#kunena.layout div.detailsbox-wrapper {
-	padding: 8px 10px 10px 10px;
-	/*overflow: auto;*/
+#kunena.layout div.detailsbox-wrapper innerspacer {
+	/*padding: 8px 10px 10px 10px;*/
+	overflow: auto;
 	clear: both;
 }
 
 #kunena.layout div.modbox-wrapper {
-	padding: 0px 10px 10px 10px;
+	/*padding: 0px 10px 10px 10px;*/
 	overflow: auto;
 	clear: both;
 }
@@ -180,7 +180,19 @@
 }
 
 #kunena.layout div.innerspacer {
-	padding: 5px 10px 10px 10px;
+	/*padding: 5px 10px 10px 10px;*/
+	padding: 8px 10px 10px 10px;
+}
+
+
+#kunena.layout div.innerspacer-top {
+	/*padding: 5px 10px 10px 10px;*/
+	padding: 10px 10px 0px 10px;
+}
+
+#kunena.layout div.innerspacer-bottom {
+	/*padding: 5px 10px 10px 10px;*/
+	padding: 0px 10px 10px 10px;
 }
 
 #kunena.layout div.modbox {
@@ -240,27 +252,27 @@
 	margin-bottom: 10px;
 }
 
-#kunena.layout dl.tabs > dt {
-	padding: 9px 12px;
+#kunena.layout dl.ktabs > dt {
+	/*padding: 9px 12px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	margin: 0px 2px;
+	margin: 0px 2px;*/
 }
 
-#kunena.layout dl.tabs {
+#kunena.layout dl.ktabs {
 	margin-bottom: 10px;
 }
 
-#kunena.layout .tabs:after {
+#kunena.layout .ktabs:after {
 	clear: both;
 }
 
-#kunena.layout .tabs:before {
+#kunena.layout .ktabs:before {
 	content: "";
 	display: block;
 }
 
-#kunena.layout .tabs:after {
+#kunena.layout .ktabs:after {
 	content: "";
 	display: block;
 }

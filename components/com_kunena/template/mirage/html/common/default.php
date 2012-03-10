@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 					<h2 class="header link-header2"><?php echo $this->header ?></h2>
 				</div>
 			</div>
-			<div  class="detailsbox-wrapper">
+			<div  class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox box-full box-hover box-border box-border_radius box-shadow">
 					<div class="kcontent">
 						<?php echo $this->body ?>

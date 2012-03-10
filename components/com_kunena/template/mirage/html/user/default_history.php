@@ -21,7 +21,7 @@ $j=count($this->banhistory);
 					<h2 class="header"><a rel="kbanhistory-detailsbox"><?php echo JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name)); ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox banhistory">
 					<ul class="list-unstyled topic-list">
 						<li class="header box-hover_header-row clear">

@@ -22,7 +22,7 @@ $j=0;
 					<h2 class="header"><a rel="kbanmanager-detailsbox"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="banmanager banmanager-detailsbox detailsbox box-full box-border box-border_radius box-shadow">
 					<ul class="list-unstyled banmanager-list">
 						<li class="header box-hover_header-row clear">

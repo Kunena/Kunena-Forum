@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 				<input type="hidden" name="id" value="<?php echo intval($this->id); ?>"/>
 				<input type="hidden" name="mesid" value="<?php echo intval($this->mesid); ?>"/>
 				<?php echo JHTML::_( 'form.token' ); ?>
-				<div class="detailsbox-wrapper">
+				<div class="detailsbox-wrapper innerspacer">
 					<div class="detailsbox box-full box-border box-border_radius box-shadow">
 						<ul class="kform clearfix">
 							<li class="krow-odd">

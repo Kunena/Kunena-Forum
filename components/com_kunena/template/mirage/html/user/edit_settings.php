@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 					<h2 class="header"><a rel="kedit-user-forum-settings"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE') ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox box-full box-border box-border_radius box-shadow">
 					<ul class="kform user-edit-information-list clear" id="kedit-user-forum-settings">
 						<?php foreach ($this->settings as $setting) : ?>

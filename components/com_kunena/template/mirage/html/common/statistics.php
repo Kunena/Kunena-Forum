@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 					<a class="link" href="<?php echo $this->statisticsUrl ?>" rel="follow"><?php echo JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') ?></a>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow">
 					<div class="statistics-smicon">
 						<a href="<?php echo $this->statisticsUrl ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>" rel="nofollow">

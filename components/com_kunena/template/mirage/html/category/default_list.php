@@ -25,13 +25,11 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif ?>
 				</div>
 			</div>
-			<div class="innerbox-wrapper innerspacer">
-				<?php echo $this->displayCategoryActions(); ?>
-			</div>
+			<?php echo $this->displayCategoryActions(); ?>
 			<div class="innerbox-wrapper innerspacer">
 				<?php echo $this->getPagination(7); ?>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="topic detailsbox box-full box-border box-border_radius box-shadow">
 					<ul class="list-unstyled topic-list">
 						<li class="header box-hover_header-row clear">
@@ -70,7 +68,7 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 			</div>
 			<?php if ($this->topicActions) : ?>
-			<div class="modbox-wrapper">
+			<div class="modbox-wrapper innerspacer-bottom">
 				<div class="modbox">
 					<?php echo $this->displayTopicActions('class="inputbox" size="1"', 'kmoderate-select') ?>
 				</div>

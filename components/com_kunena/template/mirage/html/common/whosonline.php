@@ -27,7 +27,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif ?>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox whosonline-details box-full box-hover box-border box-border_radius box-shadow" id="whosonline-detailsbox" >
 					<div class="whosonline-smicon">
 						<?php if ($this->usersUrl) : ?>

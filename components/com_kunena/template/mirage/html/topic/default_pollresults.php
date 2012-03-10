@@ -20,7 +20,7 @@ $row = 0;
 					<h2 class="header"><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText ($this->poll->title); ?></span></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox box-border box-border_radius box-shadow">
 					<div class="kpolldesc" style="border: 1px solid #BCBCBC;">
 						<?php foreach ( $this->poll->getOptions() as $option ) : ?>

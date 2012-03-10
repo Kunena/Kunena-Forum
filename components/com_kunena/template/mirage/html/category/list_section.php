@@ -28,8 +28,8 @@ defined ( '_JEXEC' ) or die ();
 					<div class="header fr">
 					</div>
 				</div>
-				<div class="detailsbox-wrapper">
-					<div class="category detailsbox box-full box-border box-border_radius box-shadow" id="category-<?php echo $this->displaySectionField('id') ?>">
+				<div class="detailsbox-wrapper innerspacer">
+					<div class="category detailsbox box-full box-border box-border_radius box-shadow" id="category-<?php echo intval($this->section->id) ?>">
 						<ul class="category-list">
 							<li class="header box-hover_header-row">
 								<dl>
@@ -56,7 +56,7 @@ defined ( '_JEXEC' ) or die ();
 					</div>
 				</div>
 				<?php if (!empty($this->sectionButtons)) : ?>
-					<div class="modbox-wrapper">
+					<div class="modbox-wrapper innerspacer-bottom">
 						<div class="modbox">
 							<?php echo implode(' ', $this->sectionButtons) ?>
 						</div>

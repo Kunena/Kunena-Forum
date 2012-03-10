@@ -1,3 +1,10 @@
+/* Firefox has some button problems */
+#kunena.layout button::-moz-focus-inner{
+	padding:0;
+	border:none;
+	display: block;
+}
+
 /* Beeze Problem */
 #kunena.layout div.current {
 	border: none;

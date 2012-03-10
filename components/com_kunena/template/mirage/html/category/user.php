@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 					<h2 class="header"><a title="<?php echo $this->header ?>" rel="kposts-detailsbox"><?php echo $this->header ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="kdetailsbox krec-posts" id="kposts-detailsbox">
 					<ul class="list-unstyled topic-list">
 						<li class="header box-hover_header-row clear">

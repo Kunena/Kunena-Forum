@@ -53,7 +53,7 @@ defined ( '_JEXEC' ) or die ();
 					<h2 class="header"><?php echo JText::sprintf('COM_KUNENA_TOPIC_REPLIES_TITLE', $this->escape($this->topic->subject)) ?></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="topic_threaded-detailsbox detailsbox box-full box-border box-border_radius box-shadow">
 					<ul class="list-unstyled topic_threaded_tree-list">
 						<li class="header box-hover_header-row clear">

@@ -19,7 +19,7 @@ defined ( '_JEXEC' ) or die ();
 					<p class="header-desc"><?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->escape($this->config->historylimit) . ' <em>' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' ).'</em>'?></p>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox box-border box-border_radius box-shadow">
 					<ul class="kposts">
 						<?php foreach ( $this->history as $this->message ):

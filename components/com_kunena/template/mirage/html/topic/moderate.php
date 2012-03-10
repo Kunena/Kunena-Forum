@@ -22,7 +22,7 @@ JHTML::_('behavior.tooltip');
 					<p class="kheader-desc">Category: <strong><?php echo $this->escape($this->category->name) ?></strong></p>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox box-border box-border_radius box-shadow">
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="myform" method="post">
 						<ul class="kmod-postlist">

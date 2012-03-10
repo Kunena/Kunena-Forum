@@ -269,30 +269,28 @@ class KunenaViewCategory extends KunenaView {
 		echo $contents;
 	}
 
-	function displayActions() {
+	function displayCategoryActions() {
 		if (!$this->category->isSection()) {
-			echo $this->getActions();
+			echo $this->getCategoryActions();
 		}
 	}
 
-	function getActions() {
+	function getCategoryActions() {
 		$token = '&' . JUtility::getToken() . '=1';
+		$this->categoryButtons = array();
 
 		// Is user allowed to post new topic?
-		$this->newTopicHtml = '';
 		if ($this->category->getNewTopicCategory()->exists()) {
 			$url = KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$this->category->id}");
-			$this->newTopicHtml = $this->getButton($url, 'create', 'topic', 'communication');
+			$this->categoryButtons['create'] = $this->getButton($url, 'create', 'topic', 'communication');
 		}
 
 		// Is user allowed to mark forums as read?
-		$this->markReadHtml = '';
 		if ($this->me->exists() && $this->total) {
 			$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->category->id}{$token}");
-			$this->markReadHtml = $this->getButton($url, 'markread', 'category', 'user');
+			$this->categoryButtons['markread'] = $this->getButton($url, 'markread', 'category', 'user');
 		}
 
-		$this->subscribeCatHtml = '';
 		// Is user allowed to subscribe category?
 		if ($this->category->authorise ( 'subscribe', null, true )) {
 			// FIXME: add into library:
@@ -306,10 +304,10 @@ class KunenaViewCategory extends KunenaView {
 
 			if (!$subscribed) {
 				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=subscribe&catid={$this->category->id}{$token}");
-				$this->subscribeCatHtml = $this->getButton($url, 'subscribe', 'category', 'user');
+				$this->categoryButtons['subscribe'] = $this->getButton($url, 'subscribe', 'category', 'user');
 			} else {
 				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=unsubscribe&catid={$this->category->id}{$token}");
-				$this->subscribeCatHtml = $this->getButton($url, 'unsubscribe', 'category', 'user');
+				$this->categoryButtons['unsubscribe'] = $this->getButton($url, 'unsubscribe', 'category', 'user');
 			}
 		}
 

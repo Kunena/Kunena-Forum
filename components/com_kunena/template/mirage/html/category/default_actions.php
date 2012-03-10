@@ -9,10 +9,11 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-if (!$this->getPagination(7) && empty($this->newTopicHtml) && empty($this->markReadHtml) && empty($this->subscribeCatHtml)) return;
+
+if (empty($this->categoryButtons)) return;
 ?>
 <div class="block-wrapper">
 	<div class="buttonbar block">
-		<?php //echo implode(' ', $this->topicButtons->getProperties()) ?>
+		<?php echo implode(' ', $this->categoryButtons) ?>
 	</div>
 </div>

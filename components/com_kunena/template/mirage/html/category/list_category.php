@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 					<h3 class="link-header3"><a href="<?php echo $this->categoryURL ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>"><?php echo $this->escape($this->category->name) ?></a> [K=CATEGORY_NEW_COUNT]</h3>
 				</li>
 				<?php if ($this->category->description) : ?>
-					<li class="category-details"><div><?php echo $this->parse($this->category->description) ?></div></li>
+					<li class="category-details"><div><?php echo $this->displayCategoryField('description') ?></div></li>
 				<?php endif ?>
 				<?php if ($this->moderators) : ?>
 					<li class="kcategory-mods">

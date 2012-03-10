@@ -211,6 +211,14 @@ class KunenaViewCategory extends KunenaView {
 		return '';
 	}
 
+	public function displaySectionField($field) {
+		return $this->section->displayField($field);
+	}
+
+	public function displayCategoryField($field) {
+		return $this->category->displayField($field);
+	}
+
 	function displayInfoMessage() {
 		$this->common->header = $this->escape($this->category->name);
 		$this->common->body = '<p>'.JText::sprintf('COM_KUNENA_VIEW_CATEGORIES_INFO_EMPTY', $this->escape($this->category->name)).'</p>';

@@ -17,19 +17,19 @@ defined ( '_JEXEC' ) or die ();
 				<div class="headerbox-wrapper box-full">
 					<div class="header fl">
 						<h2 class="header link-header2">
-							<a class="section" href="<?php echo $this->sectionURL ?>" rel="ksection-detailsbox-<?php echo intval($this->section->id) ?>">
+							<a class="section" href="<?php echo $this->sectionURL ?>" rel="ksection-detailsbox-<?php echo $this->displaySectionField('id') ?>">
 								<?php echo $this->escape($this->section->name) ?>
 							</a>
 						</h2>
 						<?php if ($this->section->description) : ?>
-							<div class="header-desc"><?php echo $this->parse($this->section->description) ?></div>
+							<div class="header-desc"><?php echo $this->displaySectionField('description') ?></div>
 						<?php endif ?>
 					</div>
 					<div class="header fr">
 					</div>
 				</div>
 				<div class="detailsbox-wrapper">
-					<div class="category detailsbox box-full box-border box-border_radius box-shadow" id="category-<?php echo intval($this->section->id) ?>">
+					<div class="category detailsbox box-full box-border box-border_radius box-shadow" id="category-<?php echo $this->displaySectionField('id') ?>">
 						<ul class="category-list">
 							<li class="header box-hover_header-row">
 								<dl>

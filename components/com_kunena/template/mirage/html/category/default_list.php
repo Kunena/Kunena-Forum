@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 						</a>
 					</h2>
 					<?php if ($this->category->headerdesc) : ?>
-						<div class="header-desc"><?php echo $this->parse($this->category->headerdesc) ?></div>
+					<div class="header-desc"><?php echo $this->displayCategoryField('headerdesc') ?></div>
 					<?php endif ?>
 				</div>
 			</div>
@@ -39,6 +39,7 @@ defined ( '_JEXEC' ) or die ();
 								<dd class="topic-icon">
 								</dd>
 								<dd class="topic-subject">
+									<?php // FIXME: translate ?>
 									<span class="bold"><?php echo JText::_('Subject') ?></span>
 								</dd>
 								<dd class="topic-replies">
@@ -48,31 +49,36 @@ defined ( '_JEXEC' ) or die ();
 									<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
 								</dd>
 								<dd class="topic-lastpost">
+									<?php // FIXME: translate ?>
 									<span class="bold"><?php echo JText::_('Last Post') ?></span>
 								</dd>
 								<?php if ($this->topicActions) : ?>
-									<dd class="topic-checkbox">
-										<input type="checkbox" value="0" name="" class="moderate-topic-checkall" />
-									</dd>
+								<dd class="topic-checkbox">
+									<input type="checkbox" value="0" name="" class="moderate-topic-checkall" />
+								</dd>
 								<?php endif ?>
 							</dl>
 						</li>
 					</ul>
 					<ul class="list-unstyled topic-list">
 						<?php if (empty($this->topics) && empty($this->subcategories)) : ?>
-							<li class="topics-row box-hover box-hover_list-row">
-								<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_NO_TOPICS'); ?>
-							</li>
-						<?php else : $this->displayRows(); endif ?>
+						<li class="topics-row box-hover box-hover_list-row">
+							<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_NO_TOPICS'); ?>
+						</li>
+						<?php
+						else :
+						$this->displayRows();
+						endif;
+						?>
 					</ul>
 				</div>
 			</div>
 			<?php if ($this->topicActions) : ?>
-				<div class="modbox-wrapper">
-					<div class="modbox">
-						<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
-					</div>
+			<div class="modbox-wrapper">
+				<div class="modbox">
+					<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
 				</div>
+			</div>
 			<?php endif ?>
 		</div>
 	</div>

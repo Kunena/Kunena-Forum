@@ -78,6 +78,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 			case 'created_by':
 				return $this->getAuthor()->getLink();
 			case 'created':
+				if (!$mode) $mode = 'date_today';
 				return $this->getCreationDate()->toKunena($mode);
 		}
 	}

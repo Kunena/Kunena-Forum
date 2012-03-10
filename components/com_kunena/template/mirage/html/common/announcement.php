@@ -27,7 +27,7 @@ defined ( '_JEXEC' ) or die ();
 					<ul class="list-unstyled details-desc">
 						<?php if ($this->showdate) : ?>
 						<li class="kannounce-date" title="<?php echo $this->announcement->displayField('created', 'ago'); ?>">
-							<?php echo $this->announcement->displayField('created', 'date_today') ?>
+							<?php echo $this->announcement->displayField('created') ?>
 						</li>
 						<?php endif ?>
 						<li class="kannounce-desc">

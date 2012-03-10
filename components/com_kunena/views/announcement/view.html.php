@@ -23,14 +23,6 @@ class KunenaViewAnnouncement extends KunenaView {
 			$this->setError($this->announcement->getError());
 		}
 
-		$new = new KunenaForumAnnouncement;
-
-		$this->actions = array();
-		if ($this->announcement->authorise('edit')) $this->actions['edit'] = $this->announcement->getUrl('edit', 'object');
-		if ($this->announcement->authorise('delete')) $this->actions['delete'] = $this->announcement->getTaskUrl('delete', 'object');
-		if ($new->authorise('create')) $this->actions['add'] = $new->getUrl('create', 'object');
-		if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getUrl('list', 'object');
-
 		$this->showdate = $this->announcement->showdate;
 
 		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
@@ -112,6 +104,49 @@ class KunenaViewAnnouncement extends KunenaView {
 		echo $this->loadTemplateFile ( 'item' );
 		$this->row++;
 	}
+
+	function displayActions() {
+		$this->buttons = array();
+		if ($this->announcement->authorise('edit'))
+			$this->buttons['edit'] = $this->getButton($this->announcement->getUrl('edit', 'object'), 'edit', 'announcement', 'moderation');
+		if ($this->announcement->authorise('delete'))
+			$this->buttons['delete'] = $this->getButton($this->announcement->getTaskUrl('delete', 'object'), 'delete', 'announcement', 'permanent');
+		if ($this->buttons)
+			$this->buttons['cpanel'] = $this->getButton(KunenaForumAnnouncementHelper::getUrl('list', 'object'), 'list', 'announcement', 'communication');
+
+		$contents = $this->loadTemplateFile('actions');
+		return $contents;
+	}
+
+	function displayField($name, $mode=null) {
+		return $this->announcement->displayField($name, $mode);
+	}
+
+	function displayInput($name, $attributes='', $id=null) {
+		switch ($name) {
+			case 'id':
+				return '<input type="hidden" name="id" value="'.intval($this->announcement->id).'" />';
+			case 'title':
+				return '<input type="text" name="title" $attributes value="'.$this->escape($this->announcement->title).'"/>';
+			case 'sdescription':
+				return '<textarea name="sdescription" $attributes>'.$this->escape($this->announcement->sdescription).'</textarea>';
+			case 'description':
+				return '<textarea name="description" $attributes>'.$this->escape($this->announcement->description).'</textarea>';
+			case 'created':
+				return JHTML::_('calendar', $this->escape($this->announcement->created), 'created', $id);
+			case 'showdate':
+				$options	= array();
+				$options[]	= JHTML::_('select.option',  '0', JText::_('COM_KUNENA_ANN_NO') );
+				$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_ANN_YES') );
+				return JHTML::_('select.genericlist',  $options, 'showdate', $attributes, 'value', 'text', $this->announcement->showdate, $id );
+			case 'published':
+				$options	= array();
+				$options[]	= JHTML::_('select.option',  '0', JText::_('COM_KUNENA_ANN_NO') );
+				$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_ANN_YES') );
+				return JHTML::_('select.genericlist',  $options, 'published', $attributes, 'value', 'text', $this->announcement->published, $id );
+		}
+	}
+
 	function canPublish() {
 		return $this->announcement->authorise('edit');
 	}

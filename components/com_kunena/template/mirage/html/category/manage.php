@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,7 +14,6 @@ JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" enctype="multipart/form-data" id="adminForm" name="adminForm" method="post" class="adminForm form-validate">
-	<input type="hidden" name="view" value="category" />
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering') ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction') ?>" />

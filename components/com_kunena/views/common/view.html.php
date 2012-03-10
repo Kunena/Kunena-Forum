@@ -30,6 +30,10 @@ class KunenaViewCommon extends KunenaView {
 	}
 
 	function displayDefault($tpl = null) {
+		$this->header = $this->escape($this->header);
+		if (empty($this->html)) {
+			$this->body = KunenaHtmlParser::parseBBCode($this->body);
+		}
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
@@ -183,7 +187,7 @@ class KunenaViewCommon extends KunenaView {
 		ksort($this->onlineList);
 		ksort($this->hiddenList);
 
-		$this->usersURL = CKunenaLink::GetUserlistURL('');
+		$this->usersUrl = CKunenaLink::GetUserlistURL('');
 
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
@@ -206,7 +210,7 @@ class KunenaViewCommon extends KunenaView {
 
 		$this->assign($kunena_stats);
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
-		$this->statisticsURL = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
+		$this->statisticsUrl = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
@@ -263,18 +267,18 @@ class KunenaViewCommon extends KunenaView {
 
 		$contents = $cache->get($cachekey, $cachegroup);
 		if (!$contents) {
-			require_once KPATH_SITE . '/lib/kunena.link.class.php';
-
 			$this->assign ( 'moduleHtml', $this->getModulePosition('kunena_profilebox'));
 
 			$login = KunenaLogin::getInstance();
 			if ($my->get ( 'guest' )) {
 				$this->setLayout('login');
 				if ($login) {
-					$this->assignRef ( 'login', $login );
-					$this->assignRef ( 'register', $login->getRegistrationURL() );
-					$this->assignRef ( 'lostpassword', $login->getResetURL() );
-					$this->assignRef ( 'lostusername', $login->getRemindURL() );
+					$this->login = $login;
+					$this->registerUrl = $login->getRegistrationUrl();
+					$this->lostPasswordUrl = $login->getResetUrl();
+					$this->lostUsernameUrl = $login->getRemindUrl();
+					// FIXME: find a better way to remember
+					$this->remember = (bool) JPluginHelper::isEnabled('system', 'remember');
 				}
 			} else {
 				$this->setLayout('logout');
@@ -333,25 +337,11 @@ class KunenaViewCommon extends KunenaView {
 				$this->assign ( 'rss', CKunenaLink::GetRSSLink ( $this->getIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params ));
 			}
 		}
-		$template = KunenaFactory::getTemplate ();
-		$credits = $this->getTeamCreditsLink ( JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . $this->getCreditsLink ();
-		if ($template->params->get('templatebyText') !='') {
-			$credits .= ' :: <a href ="'. $template->params->get('templatebyLink').'" rel="follow">' . $template->params->get('templatebyText') .' '. $template->params->get('templatebyName') .'</a>';
-		}
-		$this->assign ( 'credits', $credits );
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
 		}
 		echo $result;
-	}
-
-	function getCreditsLink() {
-		return CKunenaLink::GetHrefLink ( 'http://www.kunena.org', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"' );
-	}
-
-	function getTeamCreditsLink($name = '') {
-		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=credits", $name, '', '', 'follow');
 	}
 
 	function getPrivateMessageLink() {

@@ -13,16 +13,16 @@ defined ( '_JEXEC' ) or die ();
 <?php if (!empty($this->categories [$this->section->id])) : ?>
 	<div class="kmodule">
 		<div class="box-wrapper">
-			<div class="category-kbox box-color box-border box-border_radius box-border_radius-child box-shadow <?php echo $this->getClass('', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo intval($this->section->id) ?>">
+			<div class="category-kbox box-color box-border box-border_radius box-border_radius-child box-shadow <?php echo $this->getClass('', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo $this->displaySectionField('id') ?>">
 				<div class="headerbox-wrapper box-full">
 					<div class="header fl">
 						<h2 class="header link-header2">
-							<a class="section" href="<?php echo $this->sectionURL ?>" rel="ksection-detailsbox-<?php echo intval($this->section->id) ?>">
+							<a class="section" href="<?php echo $this->sectionURL ?>" rel="ksection-detailsbox-<?php echo $this->displaySectionField('id') ?>">
 								<?php echo $this->escape($this->section->name) ?>
 							</a>
 						</h2>
 						<?php if ($this->section->description) : ?>
-							<div class="header-desc"><?php echo $this->parse($this->section->description) ?></div>
+							<div class="header-desc"><?php echo $this->displaySectionField('description') ?></div>
 						<?php endif ?>
 					</div>
 					<div class="header fr">
@@ -51,18 +51,14 @@ defined ( '_JEXEC' ) or die ();
 							</li>
 						</ul>
 						<ul class="category-list">
-							<?php
-							foreach ( $this->categories [$this->section->id] as $category ) {
-							echo $this->displayCategory($category);
-							}
-							?>
+							<?php foreach ( $this->categories [$this->section->id] as $category ) echo $this->displayCategory($category) ?>
 						</ul>
 					</div>
 				</div>
-				<?php if (!empty($this->sectionMarkReadURL)) : ?>
+				<?php if (!empty($this->sectionButtons)) : ?>
 					<div class="modbox-wrapper innerspacer-bottom">
 						<div class="modbox">
-								<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&task=markread&'.JUtility::getToken().'=1') ?>"class="kbutton button-type-user"><span><?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?></span></a>
+							<?php echo implode(' ', $this->sectionButtons) ?>
 						</div>
 					</div>
 				<?php endif ?>

@@ -211,6 +211,14 @@ class KunenaViewCategory extends KunenaView {
 		return '';
 	}
 
+	public function displaySectionField($field) {
+		return $this->section->displayField($field);
+	}
+
+	public function displayCategoryField($field) {
+		return $this->category->displayField($field);
+	}
+
 	function displayInfoMessage() {
 		$this->common->header = $this->escape($this->category->name);
 		$this->common->body = '<p>'.JText::sprintf('COM_KUNENA_VIEW_CATEGORIES_INFO_EMPTY', $this->escape($this->category->name)).'</p>';
@@ -223,7 +231,12 @@ class KunenaViewCategory extends KunenaView {
 		$this->section = $section;
 		$this->sectionURL = KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$this->section->id}");
 		$this->sectionRssURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$this->section->id}&format=feed") : '';
-		$this->sectionMarkReadURL = $this->me->exists() ? KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->section->id}") : '';
+
+		$this->sectionButtons = array();
+		if ($this->me->exists()) {
+			$token = '&' . JUtility::getToken() . '=1';
+			$this->sectionButtons['markread'] = $this->getButton(KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->section->id}{$token}"), 'markread', 'section', 'user');
+		}
 		echo $this->loadTemplateFile('section');
 		$this->rowno = 0;
 		$this->category = $this->parentcategory;
@@ -267,6 +280,10 @@ class KunenaViewCategory extends KunenaView {
 		$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillCategoryInfo'), $contents);
 		KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		echo $contents;
+	}
+
+	function displayTopicActions($attributes='', $id=null) {
+		return JHTML::_('select.genericlist', $this->topicActions, 'task', $attributes, 'value', 'text', null, $id);
 	}
 
 	function displayCategoryActions() {

@@ -9,10 +9,8 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-$item = array_shift($this->pathway);
 ?>
-<?php if ($item) : ?>
+<?php if (($item = array_shift($this->pathway)) !== null) : ?>
 	<div class="kmodule">
 		<div class="box-wrapper">
 			<div class="breadcrumb-kbox kbox box-color box-border box-border_radius box-shadow">
@@ -29,3 +27,4 @@ $item = array_shift($this->pathway);
 	</div>
 	<div class="spacer"></div>
 <?php endif ?>
+<?php echo $this->getModulePosition ( 'kunena_breadcrumb' ) ?>

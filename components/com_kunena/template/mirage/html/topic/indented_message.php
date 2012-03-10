@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
@@ -54,7 +54,7 @@ defined ( '_JEXEC' ) or die ();
 										<input type="hidden" name="parentid" value="<?php echo intval($this->message->id) ?>" />
 										<input type="hidden" name="catid" value="<?php echo intval($this->category->id) ?>" />
 										<?php echo JHTML::_( 'form.token' ) ?>
-	
+
 										<?php if ($this->me->exists() && $this->category->allow_anonymous): ?>
 											<input type="text" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->profile->getName()) ?>" /><br />
 											<input type="checkbox" id="kanonymous<?php echo intval($this->message->id) ?>" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous<?php echo intval($this->message->id) ?>"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC') ?></label><br />

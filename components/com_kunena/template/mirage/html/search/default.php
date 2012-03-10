@@ -31,24 +31,21 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 			</div>
 			<div class="detailsbox-wrapper">
 				<div class="advsearch-detailsbox detailsbox">
-	
+
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="adminForm" id="searchform" method="post">
 						<input type="hidden" name="view" value="search" />
 						<input type="hidden" name="task" value="results" />
 						<?php echo JHTML::_( 'form.token' ); ?>
-	
+
 						<div class="searchform-leftcol">
 							<fieldset class="fieldset">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD') ?></legend>
 								<label for="keywords" class="display-hidden searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS') ?>:</label>
 								<input type="text" value="<?php echo $this->escape($this->state->get('searchwords')) ?>" size="30" name="q" class="box-width form-vertical form-field_simple" id="keywords" placeholder="<?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS') ?>" />
-								<select name="titleonly" class="form-vertical" id="keywordfilter">
-									<option value="0"<?php if ($this->state->get('query.titleonly')==0) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SEARCH_POSTS') ?></option>
-									<option value="1"<?php if ($this->state->get('query.titleonly')==1) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SEARCH_TITLES') ?></option>
-								</select>
+								<?php $this->displayModeList('mode', 'class="ks"') ?>
 							</fieldset>
 						</div>
-	
+
 						<div class="searchform-rightcol">
 							<fieldset class="fieldset">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER') ?></legend>
@@ -59,35 +56,32 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 								<?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?>
 							</fieldset>
 						</div>
-	
+
 						<div class="clrline"></div>
-	
+
 						<div class="searchform-leftcol">
 							<fieldset id="search-posts-date" class="fieldset">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS') ?></legend>
-								<?php echo $this->searchdatelist ?>
-								<?php echo $this->beforeafterlist ?>
+								<?php $this->displayDateList('date', 'class="ks"') ?>
+								<?php $this->displayBeforeAfterList('beforeafter', 'class="ks"') ?>
 							</fieldset>
 							<fieldset id="search-posts-sort" class="fieldset">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY'); ?></legend>
-								<?php echo $this->sortbylist ?>
-								<select name="order" class="ks">
-									<option value="inc"<?php if ($this->state->get('query.order')=='inc') echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_INC') ?></option>
-									<option value="dec"<?php if ($this->state->get('query.order')=='dec') echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_DEC') ?></option>
-								</select>
+								<?php $this->displaySortByList('sort', 'class="ks"') ?>
+								<?php $this->displayOrderList('order', 'class="ks"') ?>
 							</fieldset>
 
 							<fieldset id="search-posts-start" class="fieldset">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_START'); ?></legend>
 								<input type="text" size="5" value="<?php echo $this->escape($this->state->get('list.start')); ?>" name="limitstart" class="box-width form-vertical form-field_simple" />
-								<?php echo $this->limitlist ?>
+								<?php $this->displayLimitlist('limit', 'class="ks"') ?>
 							</fieldset>
 						</div>
 
 						<div class="searchform-rightcol">
 							<fieldset class="fieldset">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?></legend>
-								<?php echo $this->categorylist; //TODO: Need to convert this to a regular select list in template ?>
+								<?php $this->displayCategoryList('categorylist', 'class="inputbox" size="8" multiple="multiple"') ?>
 								<br />
 								<label id="childforums-lbl">
 									<input type="checkbox" value="1" name="childforums" <?php if ($this->state->get('query.childforums')) echo 'checked="checked"'; ?> />
@@ -108,7 +102,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 							<?php endif; ?>
 						</div>
 						<div class="clr"></div>
-	
+
 						<div class="kost-buttons">
 							<button title="Click here to search" type="submit" class="kbutton"><span><?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?></span></button>
 							<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton"><span><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL'); ?></span></button>

@@ -46,15 +46,15 @@ defined ( '_JEXEC' ) or die ();
 					</div>
 					<div class="klink-block">
 						<span class="kprofilebox-pass">
-							<?php echo CKunenaLink::GetHrefLink($this->lostpassword, JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD')) ?>
+							<a href="<?php echo $this->lostPasswordUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD') ?></a>
 						</span>
 						<span class="kprofilebox-user">
-							<?php echo CKunenaLink::GetHrefLink($this->lostusername, JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME')) ?>
+							<a href="<?php echo $this->lostUsernameUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME') ?></a>
 						</span>
 						<?php
-						if ($this->register) : ?>
+						if ($this->registerUrl) : ?>
 						<span class="kprofilebox-register">
-							<?php echo CKunenaLink::GetHrefLink($this->register, JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT')) ?>
+							<a href="<?php echo $this->registerUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') ?></a>
 						</span>
 						<?php endif; ?>
 					</div>
@@ -64,7 +64,7 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->moduleHtml) : ?>
 			<td class = "kprofilebox-right">
 				<div class="kprofilebox-modul">
-					<?php $this->moduleHtml; ?>
+					<?php echo $this->moduleHtml; ?>
 				</div>
 			</td>
 			<?php endif; ?>

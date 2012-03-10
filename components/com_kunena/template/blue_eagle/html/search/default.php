@@ -40,10 +40,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?></legend>
 						<label class="searchlabel" for="keywords"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:</label>
 						<input id="keywords" type="text" class="ks input" name="q" size="30" value="<?php echo $this->escape($this->state->get('searchwords')) ?>" />
-						<select id="keywordfilter" class="ks" name="titleonly">
-							<option value="0"<?php if ($this->state->get('query.titleonly')==0) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SEARCH_POSTS'); ?></option>
-							<option value="1"<?php if ($this->state->get('query.titleonly')==1) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SEARCH_TITLES'); ?></option>
-						</select>
+						<?php $this->displayModeList('mode', 'class="ks"') ?>
 					</fieldset>
 				</td>
 				<td class="kcol-mid">
@@ -98,25 +95,16 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
 						</legend>
-						<?php
-						echo $this->searchdatelist;
-
-						echo $this->beforeafterlist;
-						?>
+						<?php $this->displayDateList('date', 'class="ks"') ?>
+						<?php $this->displayBeforeAfterList('beforeafter', 'class="ks"') ?>
 					</fieldset>
 
 					<fieldset class="fieldset" id="search-posts-sort">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_SORTBY'); ?>
 						</legend>
-						<?php
-						echo $this->sortbylist;
-
-						?>
-						<select class="ks" name="order">
-							<option value="inc"<?php if ($this->state->get('query.order')=='inc') echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_INC'); ?></option>
-							<option value="dec"<?php if ($this->state->get('query.order')=='dec') echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_DEC'); ?></option>
-						</select>
+						<?php $this->displaySortByList('sort', 'class="ks"') ?>
+						<?php $this->displayOrderList('order', 'class="ks"') ?>
 					</fieldset>
 
 					<fieldset class="fieldset" id="search-posts-start">
@@ -124,17 +112,13 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 							<?php echo JText::_('COM_KUNENA_SEARCH_START'); ?>
 						</legend>
 						<input class="ks input" type="text" name="limitstart" value="<?php echo $this->escape($this->state->get('list.start')); ?>" size="5" />
-						<?php
-
-						echo $this->limitlist;
-
-						?>
+						<?php $this->displayLimitlist('limit', 'class="ks"') ?>
 					</fieldset>
 				</td>
 				<td class="kcol-mid">
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?></legend>
-						<?php echo $this->categorylist; ?>
+						<?php $this->displayCategoryList('categorylist', 'class="inputbox" size="8" multiple="multiple"') ?>
 						<label id="childforums-lbl">
 							<input type="checkbox" name="childforums" value="1" <?php if ($this->state->get('query.childforums')) echo 'checked="checked"'; ?> />
 							<span onclick="document.adminForm.childforums.checked=(! document.adminForm.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>

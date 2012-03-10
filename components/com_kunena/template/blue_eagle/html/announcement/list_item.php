@@ -14,10 +14,10 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->actions): ?>
 			<td class="announcement-checkbox"><?php echo JHTML::_('kunenagrid.id', $this->row, $this->announcement->id) ?></td>
 			<?php endif ?>
-			<td class="kcol-first kcol-annid"><?php echo $this->announcement->displayField('id') ?></td>
-			<td class="kcol-mid kcol-anndate"><?php echo $this->announcement->displayField('created', 'date_today') ?></td>
+			<td class="kcol-first kcol-annid"><?php echo $this->displayField('id') ?></td>
+			<td class="kcol-mid kcol-anndate"><?php echo $this->displayField('created', 'date_today') ?></td>
 			<td class="kcol-mid kcol-anntitle">
-				<div class="overflow"><?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), $this->announcement->displayField('title'), null, 'follow') ?></div>
+				<div class="overflow"><?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), $this->displayField('title'), null, 'follow') ?></div>
 			</td>
 			<?php if ($this->actions): ?>
 			<td class="kcol-mid kcol-annpublish">

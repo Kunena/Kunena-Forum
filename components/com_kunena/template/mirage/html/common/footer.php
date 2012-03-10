@@ -11,10 +11,13 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <?php echo $this->getModulePosition( 'kunena_bottom' ); ?>
+
+<?php if (($time = $this->getTime()) !== null) : ?>
 <div class="box-module">
 	<div class="box-wrapper">
 		<div class="credit block">
-			<?php if ( $this->config->time_to_create_page ) : ?><p><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $this->getTime()) ?></p><?php endif; ?>
+			<p><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time) ?></p>
 		</div>
 	</div>
 </div>
+<?php endif; ?>

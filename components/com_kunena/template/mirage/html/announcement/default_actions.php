@@ -12,6 +12,8 @@ defined ( '_JEXEC' ) or die ();
 
 if (empty($this->buttons)) return;
 ?>
-<div class="kactions">
-	<?php echo implode(' ', $this->buttons) ?>
+<div class="block-wrapper">
+	<div class="buttonbar block">
+		<?php echo implode(' ', $this->buttons) ?>
+	</div>
 </div>

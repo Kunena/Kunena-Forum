@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaViewStatistics extends KunenaView {
 	function displayDefault($tpl = null) {
 		$document = JFactory::getDocument();
-		$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' .      $this->config->board_title);
+		$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->config->board_title);
 
 		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
 		$kunena_stats = KunenaForumStatistics::getInstance ( );
@@ -25,7 +25,6 @@ class KunenaViewStatistics extends KunenaView {
 		$this->assign($kunena_stats);
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->userlist = CKunenaLink::GetUserlistLink('', intval($this->get('memberCount')));
-		$this->statisticsURL = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 
 		parent::display ();
 	}

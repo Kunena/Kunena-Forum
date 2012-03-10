@@ -26,9 +26,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="detailsbox-wrapper">
 				<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow">
 					<div class="statistics-smicon">
-						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
-							<span class="stats-smicon"></span>
-						</a>
+						<span class="stats-smicon"></span>
 					</div>
 					<div class="statistics-totals">
 						<ul class="list-unstyled">
@@ -39,9 +37,7 @@ defined ( '_JEXEC' ) or die ();
 						</ul>
 					</div>
 					<div class="statistics-smicon">
-						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
-							<span class="stats-smicon"></span>
-						</a>
+						<span class="stats-smicon"></span>
 					</div>
 					<div class="statistics-totals">
 						<ul class="list-unstyled">
@@ -52,9 +48,7 @@ defined ( '_JEXEC' ) or die ();
 						</ul>
 					</div>
 					<div class="statistics-smicon">
-						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
-							<span class="stats-smicon"></span>
-						</a>
+						<span class="stats-smicon"></span>
 					</div>
 					<div class="statistics-totals">
 						<ul class="list-unstyled">

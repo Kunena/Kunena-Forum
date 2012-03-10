@@ -20,7 +20,6 @@ defined ( '_JEXEC' ) or die ();
 						<input type="hidden" name="view" value="user" />
 						<input type="hidden" name="task" value="login" />
 						[K=TOKEN]
-	
 						<fieldset>
 							<legend class="legend-hide"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></legend>
 							<input id="kusername" class="box-width inputbox form-vertical form-field_simple" type="text" name="username" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_USERNAME') ?>"/>

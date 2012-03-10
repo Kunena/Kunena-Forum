@@ -32,8 +32,8 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif ?>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
-				<div class="detailsbox innerspacer box-full box-hover box-border box-border_radius box-shadow" id="announce-detailsbox">
+			<div class="detailsbox-wrapper innerspacer">
+				<div class="announce-detailsbox detailsbox box-full box-hover box-border box-border_radius box-shadow">
 					<ul class="list-unstyled details-desc">
 						<?php if ($this->showdate) : ?>
 						<li class="kannounce-date" title="<?php echo $this->announcement->displayField('created', 'ago'); ?>">

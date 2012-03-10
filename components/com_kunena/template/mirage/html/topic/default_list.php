@@ -30,9 +30,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif ?>
 				</div>
 			</div>
-			<div class="innerbox-wrapper innerspacer">
-				<?php echo $this->displayTopicActions(0); ?>
-			</div>
+			<?php echo $this->displayTopicActions(0); ?>
 			<div class="innerbox-wrapper innerspacer">
 				<?php echo $this->getPagination(4); ?>
 			</div>

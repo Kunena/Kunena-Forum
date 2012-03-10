@@ -28,7 +28,7 @@ defined ( '_JEXEC' ) or die ();
 					<div class="header fr">
 					</div>
 				</div>
-				<div class="detailsbox-wrapper">
+				<div class="detailsbox-wrapper innerspacer">
 					<div class="category detailsbox box-full box-border box-border_radius box-shadow" id="category-<?php echo intval($this->section->id) ?>">
 						<ul class="category-list">
 							<li class="header box-hover_header-row">
@@ -60,14 +60,9 @@ defined ( '_JEXEC' ) or die ();
 					</div>
 				</div>
 				<?php if (!empty($this->sectionMarkReadURL)) : ?>
-					<div class="modbox-wrapper">
+					<div class="modbox-wrapper innerspacer-bottom">
 						<div class="modbox">
-							<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="kunenaMarkAllRead" method="post">
-								<input type="hidden" name="view" value="category" />
-								<input type="hidden" name="task" value="markread" />
-								<?php echo JHTML::_( 'form.token' ); ?>
-								<button class="kbutton button-type-user"><span><?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?></span></button>
-							</form>
+								<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&task=markread&'.JUtility::getToken().'=1') ?>"class="kbutton button-type-user"><span><?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?></span></a>
 						</div>
 					</div>
 				<?php endif ?>

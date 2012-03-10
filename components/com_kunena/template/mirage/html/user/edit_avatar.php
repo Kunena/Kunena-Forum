@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 					<h2 class="header"><a rel="kchange-avatar-image"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE') ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox box-full box-border box-border_radius box-shadow">
 					<ul class="kform user-edit-information-list clear" id="kchange-avatar-image">
 						<?php if ($this->profile->avatar): ?>

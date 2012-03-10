@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="innerbox-wrapper innerspacer">
 	<div class="buttonbar innerblock">
-		<ul class="buttons-message">
+		<ul class="list-unstyled buttons-message">
 			<?php
 			if (empty($this->message_closed)) {
 				echo implode(' ', $this->messageButtons->getProperties());

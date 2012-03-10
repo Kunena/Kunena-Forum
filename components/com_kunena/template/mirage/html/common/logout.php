@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Common
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 // TODO: add missing module position
 ?>
 <div class="login dropdown-menu">
-	<ul class="login-profile">
+	<ul class="list-unstyled login-profile">
 		<li class="login-avatar link-dropdown">
 			<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>">
 				<span class="login-avatar"><?php echo $this->me->getAvatarImage('', 'welcome'), JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE') ?></span>
@@ -30,10 +30,10 @@ defined ( '_JEXEC' ) or die ();
 					<input type="hidden" name="view" value="user" />
 					<input type="hidden" name="task" value="logout" />
 					[K=TOKEN]
-	
+
 					<fieldset>
 						<legend class="klegend klogout"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_LONG') ?></legend>
-						<button type="submit" value="Log out" class="kbutton"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?></button>
+						<button class="kbutton button-type-standard" type="submit" value="Log out"><span><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?></span></button>
 					</fieldset>
 				</form>
 			</li>

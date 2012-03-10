@@ -1,26 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-if (!$this->getPagination(7) && empty($this->newTopicHtml) && empty($this->markReadHtml) && empty($this->subscribeCatHtml)) return;
+
+if (empty($this->categoryButtons)) return;
 ?>
 <div class="block-wrapper">
 	<div class="buttonbar block">
-		<div class="kpaginationbar">
-			<?php //echo $this->getPagination(7) ?>
-		</div>
-		<ul class="buttons-topics">
-			<?php if ($this->newTopicHtml) : ?><li class="button button-topics-new"><?php echo $this->newTopicHtml ?></li><?php endif ?>
-			<?php if ($this->markReadHtml) : ?><li class="button button-topics-markread"><?php echo $this->markReadHtml ?></li><?php endif ?>
-			<?php if ($this->subscribeCatHtml) : ?><li class="button button-topics-subscribe"><?php echo $this->subscribeCatHtml ?></li><?php endif ?>
-		</ul>
+		<?php echo implode(' ', $this->categoryButtons) ?>
 	</div>
 </div>
-<div class="spacer"></div>

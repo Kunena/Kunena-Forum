@@ -1,23 +1,23 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topics
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
 <li class="topic-row box-hover box-hover_list-row clear">
-	<dl>
+	<dl class="list-unstyled">
 		<dd class="topic-icon">[K=TOPIC_ICON]</dd>
 		<dd class="topic-subject">
-			<ul>
+			<ul class="list-unstyled">
 				<li class="topic-title">
 					<h3 class="link-header3"><?php echo $this->getTopicLink($this->topic, null, null) ?></h3>
-					<ul class="ktopic-actions">
+					<ul class="list-unstyled ktopic-actions">
 						<li>[K=TOPIC_NEW_COUNT]</li>
 						<li><?php if ($this->topic->locked) echo $this->getIcon ( 'klocked-icon', JText::_('COM_KUNENA_TOPIC_IS_LOCKED') ) ?></li>
 						<!-- li><a href="#"><span class="ksubscribe-icon">Subscribe to this topic.</span></a></li -->
@@ -34,7 +34,7 @@ defined ( '_JEXEC' ) or die ();
 				</li>
 				<li>
 					<?php if ($this->config->keywords) : ?>
-						<ul class="ktopic-tags">
+						<ul class="list-unstyled ktopic-tags">
 							<?php if (!empty($this->keywords)) : ?>
 								<li class="ktopic-tag-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->keywords) ?></li>
 							<?php else: ?>
@@ -50,7 +50,7 @@ defined ( '_JEXEC' ) or die ();
 		<dd class="topic-views"><span class="number"><?php echo $this->topic->getHits();?></span></dd>
 		<!-- td class="ktopic-subs">22 <span>Subscribers</span></td -->
 		<dd class="topic-lastpost">
-			<ul>
+			<ul class="list-unstyled">
 				<?php if ( $this->config->avataroncat ) : ?><li class="ktopic-smavatar"><?php echo $this->lastPostAuthor->getLink($this->lastPostAuthor->getAvatarImage('klist-avatar', 'list')) ?></li><?php endif ?>
 				<li class="ktopic-smdetails klastpost"><?php echo $this->getTopicLink ( $this->topic, 'last', 'Last post' ) ?> <?php echo JText::_('COM_KUNENA_BY').' '.$this->lastPostAuthor->getLink($this->lastUserName) ?></li>
 				<li class="ktopic-smdetails kdate"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->lastPostTime}]") ?></li>

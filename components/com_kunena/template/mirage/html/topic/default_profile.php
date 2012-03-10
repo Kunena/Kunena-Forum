@@ -1,16 +1,16 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<ul class="kpost-user-details">
+<ul class="list-unstyled kpost-user-details">
 	<li class="kpost-user-username"><?php echo $this->profile->getLink($this->message->name) ?></li>
 	<?php if (!empty($this->usertype)) : ?><li class="kpost-user-type">( <?php echo JText::_($this->escape($this->usertype)) ?> )</li><?php endif ?>
 	<?php $avatar = $this->profile->getAvatarImage ('kavatar', 'post'); if ($avatar) : ?>

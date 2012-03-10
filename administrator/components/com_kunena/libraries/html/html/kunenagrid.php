@@ -149,6 +149,20 @@ abstract class JHtmlKunenaGrid
 		return $href;
 	}
 
+	/**
+	 * @param   integer  $i
+	 * @param   string   $img	Image for a positive or on value
+	 * @param   string   $img0	Image for the empty or off value
+	 * @param   string   $prefix	An optional prefix for the task
+	 *
+	 * @return  string
+	 */
+	public static function task($i, $img, $alt, $task, $prefix='') {
+		$href = '<a href="javascript:void(0);" onclick="return listItemTask(\'cb' . $i .'\',\''. $prefix.$task .'\')"><img src="'. KunenaFactory::getTemplate()->getImagePath($img) .'" alt="'. $alt .'" title="'. $alt .'" /></a>';
+
+		return $href;
+	}
+
 	/*
 	public static function state(
 		$filter_state = '*',

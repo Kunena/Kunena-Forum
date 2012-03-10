@@ -15,14 +15,17 @@ jimport ( 'joomla.application.component.view' );
  * Kunena View Class
  */
 class KunenaView extends JView {
+	public $document = null;
 	public $app = null;
 	public $me = null;
 	public $config = null;
+	public $embedded = false;
 
 	protected $_row = 0;
 
 	function __construct($config = array()){
 		parent::__construct($config);
+		$this->document = JFactory::getDocument();
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->app = JFactory::getApplication ();
 		$this->me = KunenaUserHelper::getMyself();
@@ -142,34 +145,6 @@ class KunenaView extends JView {
 
 	function isMenu() {
 		return JDocumentHTML::countModules ( 'kunena_menu' );
-	}
-
-	function getMenu() {
-		jimport ( 'joomla.application.module.helper' );
-		$position = "kunena_menu";
-		$options = array ('style' => 'xhtml' );
-		$modules = JModuleHelper::getModules ( $position );
-		$html = '';
-		foreach ( $modules as $module ) {
-			if ($module->module == 'mod_mainmenu' || $module->module == 'mod_menu') {
-				$basemenu = KunenaRoute::getMenu ();
-				if ($basemenu) {
-					$module = clone $module;
-					if (version_compare(JVERSION, '1.6','>')) {
-						// Joomla 1.6+
-						$search = array ('/"menutype":"([^"]*)"/i', '/"startLevel":"([^"]*)"/', '/"endLevel":"([^"]*)"/' );
-						$replace = array ("\"menutype\":\"{$basemenu->menutype}\"", '"startLevel":"' . ($basemenu->level + 1) . '"', '"endLevel":"' . ($basemenu->level + 2) . '"' );
-					} else {
-						// Joomla 1.5
-						$search = array ('/menutype=(.*)(\s)/', '/startLevel=(.*)(\s)/', '/endLevel=(.*)(\s)/' );
-						$replace = array ("menutype={$basemenu->menutype}\\2", 'startLevel=' . ($basemenu->sublevel + 1) . '\2', 'endLevel=' . ($basemenu->sublevel + 2) . '\2' );
-					}
-					$module->params = preg_replace ( $search, $replace, $module->params );
-				}
-			}
-			$html .= JModuleHelper::renderModule ( $module, $options );
-		}
-		return $html;
 	}
 
 	/**

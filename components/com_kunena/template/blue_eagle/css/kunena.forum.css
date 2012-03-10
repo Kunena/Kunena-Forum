@@ -3364,17 +3364,3 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 /* Fix Joomla 1.6 & 1.7 image border */
 #Kunena a img {border:none;}
 /* --------------------------------------------------------------- */
-/* Kunena 2.0 */
-
-#Kunena .kpagination span {
-	border:solid 1px;
-	font-weight:bold;
-	padding:1px 5px;
-	margin: 2px;
-}
-
-#Kunena ul#kbbcode-toolbar li a.kbbcode-separator {
-	background-position:-400px 0;
-	width: 8px;
-	cursor: default;
-}

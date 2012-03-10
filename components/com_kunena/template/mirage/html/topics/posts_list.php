@@ -1,18 +1,18 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topics
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius">
-		<div class="block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
 					<h2 class="header"><a title="Recent Posts" rel="kposts-detailsbox"><?php echo $this->headerText ?></a></h2>
@@ -20,10 +20,10 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper">
 				<div class="rec-posts posts-detailsbox detailsbox box-full box-border box-border_radius box-shadow">
-					<ul class="post-list">
+					<ul class="list-unstyled post-list">
 						<?php if (empty($this->messages )) : ?>
 							<li class="post-row">
-								<dl>
+								<dl class="list-unstyled">
 									<dd class="post-none">
 										<?php echo JText::_('COM_KUNENA_NO_POSTS'); ?>
 									</dd>

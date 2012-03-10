@@ -349,6 +349,7 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['article_display'] = JHTML::_('select.genericlist', $article_display, 'cfg_article_display', 'class="inputbox" size="1"', 'value', 'text', $this->config->article_display);
 
 		$lists ['send_emails'] = JHTML::_('select.genericlist', $yesno, 'cfg_send_emails', 'class="inputbox" size="1"', 'value', 'text', $this->config->send_emails);
+		$lists ['enable_threaded_layouts'] = JHTML::_('select.genericlist', $yesno, 'cfg_enable_threaded_layouts', 'class="inputbox" size="1"', 'value', 'text', $this->config->enable_threaded_layouts);
 
 		return $lists;
 	}

@@ -474,8 +474,8 @@ class KunenaViewTopic extends KunenaView {
 		if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
 			$i = 0;
 			foreach($this->usersvoted as $userid=>$vote) {
-				if ( $i <= '4' ) $this->users_voted_list[] = CKunenaLink::GetProfileLink($userid);
-				else $this->users_voted_morelist[] = CKunenaLink::GetProfileLink($userid);
+				if ( $i <= '4' ) $this->users_voted_list[] = KunenaFactory::getUser(intval($userid))->getLink();
+				else $this->users_voted_morelist[] = KunenaFactory::getUser(intval($userid))->getLink();
 				$i++;
 			}
 		}
@@ -731,7 +731,7 @@ class KunenaViewTopic extends KunenaView {
 			foreach( $thankyou->getList() as $userid=>$time){
 				$thankyou_delete = $this->me->isModerator() ? ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
-				$this->thankyou[] = CKunenaLink::GetProfileLink($userid).$thankyou_delete;
+				$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;
 			}
 		}
 

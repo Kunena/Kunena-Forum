@@ -10,7 +10,7 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaTemplateMirage extends KunenaTemplate {
-	protected $default = array('default20', 'blue_eagle');
+	protected $default = array('blue_eagle');
 	public $categoryIcons = array('knonew', 'knew');
 
 	public function initialize() {
@@ -24,17 +24,6 @@ class KunenaTemplateMirage extends KunenaTemplate {
 
 		$this->addStyleSheet ( 'css/reset.css' );
 
-		$this->addStyleSheet ( 'css/position.css' );
-		$this->addStyleSheet ( 'css/style.css' );
-		$this->addStyleSheet ( 'css/button.css' );
-		$this->addStyleSheet ( 'css/effect.css' );
-		$this->addStyleSheet ( 'css/emoticon.css' );
-		$this->addStyleSheet ( 'css/icon-category.css' );
-		$this->addStyleSheet ( 'css/icon-general.css' );
-		$this->addStyleSheet ( 'css/icon-editor.css' );
-		$this->addStyleSheet ( 'css/icon-topic.css' );
-		$this->addStyleSheet ( 'css/quirks.css' );
-
 		// Load all css files (they are combined into one)
 		$this->addStyleSheet ( 'css/global.css' );
 		$this->addStyleSheet ( 'css/main.css' );
@@ -45,9 +34,20 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/user.css' );
 		//$this->addStyleSheet ( 'css/search.css' );
 		//$this->addStyleSheet ( 'css/uploader.css' );
-		$this->addStyleSheet ( 'css/buttons.css' );
+		//$this->addStyleSheet ( 'css/buttons.css' );
 		$this->addStyleSheet ( 'css/icons-social.css' );
 		//$this->addStyleSheet ( 'css/icons-editor.css' );
+
+		$this->addStyleSheet ( 'css/position.css' );
+		$this->addStyleSheet ( 'css/style.css' );
+		$this->addStyleSheet ( 'css/button.css' );
+		$this->addStyleSheet ( 'css/effect.css' );
+		$this->addStyleSheet ( 'css/emoticon.css' );
+		$this->addStyleSheet ( 'css/icon-category.css' );
+		$this->addStyleSheet ( 'css/icon-general.css' );
+		$this->addStyleSheet ( 'css/icon-editor.css' );
+		$this->addStyleSheet ( 'css/icon-topic.css' );
+		$this->addStyleSheet ( 'css/quirks.css' );
 
 		//$this->addIEStyleSheet ( 'css/ie.css' );
 		//$this->addIEStyleSheet ( 'css/ie7.css', 'IE 7' );
@@ -81,7 +81,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		if (isset($types[$type])) $type = $types[$type];
 		if ($name == 'quickreply') $type .= ' kqreply';
 
-		$html = '<li class="button button-type-'.$type.' button-'.$scope.'-'.$name.'"><a '.$id.' href="'.$link.'" rel="nofollow" title="'.$title.'">';
+		$html = '<li class="item-button"><a class="kbutton button-type-'.$type.' button-'.$scope.'-'.$name.'" '.$id.' href="'.$link.'" rel="nofollow" title="'.$title.'">';
 		$html .= '<span class="'.$name.'">'.$text.'</span>';
 		$html .= '</a></li>';
 
@@ -122,7 +122,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	}
 
 	public function getPaginationItemActive(&$item) {
-		return '<li class="page-item page-active"><a class="button" title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></span></a></li>';
+		return '<li class="page-item page-active"><a class="kbutton" title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></span></a></li>';
 	}
 
 	public function getPaginationItemInactive(&$item) {

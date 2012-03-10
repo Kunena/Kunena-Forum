@@ -36,43 +36,6 @@ class KunenaViewCategory extends KunenaView {
 
 		$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 
-		$this->token = '&' . JUtility::getToken() . '=1';
-
-		// Is user allowed to post new topic?
-		$this->newTopicHtml = '';
-		if ($this->category->getNewTopicCategory()->exists()) {
-			$url = KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$this->category->id}");
-			$this->newTopicHtml = $this->getButton($url, 'create', 'topic', 'communication');
-		}
-
-		// Is user allowed to mark forums as read?
-		$this->markReadHtml = '';
-		if ($this->me->exists() && $this->total) {
-			$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->category->id}{$this->token}");
-			$this->markReadHtml = $this->getButton($url, 'markread', 'category', 'user');
-		}
-
-		$this->subscribeCatHtml = '';
-		// Is user allowed to subscribe category?
-		if ($this->category->authorise ( 'subscribe', null, true )) {
-			// FIXME: add into library:
-			$db = JFactory::getDBO();
-			$query = "SELECT subscribed
-				FROM #__kunena_user_categories
-				WHERE user_id={$db->Quote($this->me->userid)} AND category_id={$db->Quote($this->category->id)}";
-			$db->setQuery ( $query );
-			$subscribed = $db->loadResult ();
-			if (KunenaError::checkDatabaseError()) return;
-
-			if (!$subscribed) {
-				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=subscribe&catid={$this->category->id}{$this->token}");
-				$this->subscribeCatHtml = $this->getButton($url, 'subscribe', 'category', 'user');
-			} else {
-				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=unsubscribe&catid={$this->category->id}{$this->token}");
-				$this->subscribeCatHtml = $this->getButton($url, 'unsubscribe', 'category', 'user');
-			}
-		}
-
 		$errors = $this->getErrors();
 		if ($errors) {
 			$this->displayNoAccess($errors);
@@ -322,6 +285,52 @@ class KunenaViewCategory extends KunenaView {
 		$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillCategoryInfo'), $contents);
 		KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		echo $contents;
+	}
+
+	function displayCategoryActions() {
+		if (!$this->category->isSection()) {
+			echo $this->getCategoryActions();
+		}
+	}
+
+	function getCategoryActions() {
+		$token = '&' . JUtility::getToken() . '=1';
+		$this->categoryButtons = array();
+
+		// Is user allowed to post new topic?
+		if ($this->category->getNewTopicCategory()->exists()) {
+			$url = KunenaRoute::_("index.php?option=com_kunena&view=topic&layout=create&catid={$this->category->id}");
+			$this->categoryButtons['create'] = $this->getButton($url, 'create', 'topic', 'communication');
+		}
+
+		// Is user allowed to mark forums as read?
+		if ($this->me->exists() && $this->total) {
+			$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->category->id}{$token}");
+			$this->categoryButtons['markread'] = $this->getButton($url, 'markread', 'category', 'user');
+		}
+
+		// Is user allowed to subscribe category?
+		if ($this->category->authorise ( 'subscribe', null, true )) {
+			// FIXME: add into library:
+			$db = JFactory::getDBO();
+			$query = "SELECT subscribed
+				FROM #__kunena_user_categories
+				WHERE user_id={$db->Quote($this->me->userid)} AND category_id={$db->Quote($this->category->id)}";
+			$db->setQuery ( $query );
+			$subscribed = $db->loadResult ();
+			if (KunenaError::checkDatabaseError()) return;
+
+			if (!$subscribed) {
+				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=subscribe&catid={$this->category->id}{$token}");
+				$this->categoryButtons['subscribe'] = $this->getButton($url, 'subscribe', 'category', 'user');
+			} else {
+				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=unsubscribe&catid={$this->category->id}{$token}");
+				$this->categoryButtons['unsubscribe'] = $this->getButton($url, 'unsubscribe', 'category', 'user');
+			}
+		}
+
+		$contents = $this->loadTemplateFile('actions');
+		return $contents;
 	}
 
 	function fillCategoryInfo($matches) {

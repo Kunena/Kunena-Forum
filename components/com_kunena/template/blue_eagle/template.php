@@ -29,12 +29,14 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 		KunenaTemplateLegacy::load();
 
 		require_once JPATH_SITE. '/' . $this->getFile('initialize.php');
+		$this->addStyleSheet ( 'css/kunena.20.css' );
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {
-		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
+		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod', 'permanent'=>'mod');
 		$names = array('unsubscribe'=>'subscribe', 'unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
-				'quickreply'=>'reply', 'quote'=>'quote', 'edit'=>'edit');
+				'quickreply'=>'reply', 'quote'=>'quote', 'edit'=>'edit', 'permdelete'=>'delete',
+				'flat'=>'layout-flat', 'threaded'=>'layout-threaded', 'indented'=>'layout-indented');
 
 		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");
 		$title = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}_LONG");

@@ -22,12 +22,7 @@ class KunenaModelCommon extends KunenaModel {
 	}
 
 	public function getAnnouncement() {
-		$db = JFactory::getDBO();
-		$query = "SELECT * FROM #__kunena_announcement WHERE published='1' ORDER BY created DESC";
-		$db->setQuery ( $query, 0, 1 );
-		$announcement = $db->loadObject ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		return $announcement;
+		$items = KunenaForumAnnouncementHelper::getAnnouncements(0, 1, $this->me->isModerator('global'));
+		return array_pop($items);
 	}
 }

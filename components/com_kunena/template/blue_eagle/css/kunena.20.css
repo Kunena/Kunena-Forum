@@ -1,0 +1,69 @@
+@charset "utf-8";
+
+/**
+* Kunena Component
+* @package Kunena.Template.Default
+*
+* @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+**/ 
+
+/* Layout */
+
+#Kunena .kpagination span {
+	border:solid 1px;
+	font-weight:bold;
+	padding:1px 5px;
+	margin: 2px;
+}
+
+#Kunena ul#kbbcode-toolbar li a.kbbcode-separator {
+	background-position:-400px 0;
+	width: 8px;
+	cursor: default;
+}
+
+/* Colors */
+
+#Kunena .kpagination span {
+	border-color:#5388B4;
+	background-color:#5388B4;
+	color:#FFFFFF;
+}
+
+#Kunena .kheader h2,
+#Kunena .kheader h2 a {
+	font-size:16px !important;
+}
+
+/* Grid */
+
+#Kunena a.grid_true,
+#Kunena a.grid_false,
+#Kunena a.grid_publish,
+#Kunena a.grid_unpublish,
+#Kunena .move_up,
+#Kunena .move_down {
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	display: inline-block;
+}
+#Kunena a.grid_true,
+#Kunena a.grid_unpublish {
+	background: url("../images/publish.png") no-repeat left center;
+}
+#Kunena a.grid_false,
+#Kunena a.grid_publish {
+	background: url("../images/unpublish.png") no-repeat left center;
+}
+#Kunena a.move_up {
+	background: url("../images/arrow-up.png") no-repeat left center;
+}
+#Kunena a.move_down {
+	background: url("../images/arrow-down.png") no-repeat left center;
+}
+#Kunena .kgrid-lock a.grid_true {
+	background: url("../images/icon-locked.png") no-repeat left center;
+}

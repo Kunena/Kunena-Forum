@@ -41,23 +41,19 @@ class KunenaViewCommon extends KunenaView {
 		if ($this->offline) return;
 
 		if ($this->config->showannouncement > 0) {
-			$moderator = intval($this->me->isModerator('global'));
-			$cache = JFactory::getCache('com_kunena', 'output');
-			if ($cache->start("{$this->ktemplate->name}.common.announcement.{$moderator}", 'com_kunena.template')) return;
-
-			// User needs to be global moderator to edit announcements
-			if ($moderator) {
-				$this->canEdit = true;
-			} else {
-				$this->canEdit = false;
-			}
+			$new = new KunenaForumAnnouncement;
 			$this->announcement = $this->get('Announcement');
-			if ($this->announcement) {
-				$this->annTitle = KunenaHtmlParser::parseText($this->announcement->title);
-				$this->annDescription = $this->announcement->sdescription ? KunenaHtmlParser::parseBBCode($this->announcement->sdescription) : KunenaHtmlParser::parseBBCode($this->announcement->description, 300);
-				$this->annDate = KunenaDate::getInstance($this->announcement->created);
-				$this->annListURL = KunenaRoute::_("index.php?option=com_kunena&view=announcement&layout=list");
-				$this->annMoreURL = !empty($this->announcement->description) ? KunenaRoute::_("index.php?option=com_kunena&view=announcement&id={$this->announcement->id}") : null;
+			if (!$this->announcement) {
+				echo ' ';
+				return;
+			}
+
+			$cache = JFactory::getCache('com_kunena', 'output');
+			if ($cache->start("{$this->ktemplate->name}.common.announcement", 'com_kunena.template')) return;
+
+			if ($this->announcement && $this->announcement->authorise('read')) {
+				$this->annListUrl = KunenaForumAnnouncementHelper::getUrl('list', 'object');
+				$this->showdate = $this->announcement->showdate;
 				$result = $this->loadTemplateFile($tpl);
 				if (JError::isError($result)) {
 					return $result;
@@ -209,7 +205,7 @@ class KunenaViewCommon extends KunenaView {
 		$kunena_stats->loadGeneral();
 
 		$this->assign($kunena_stats);
-		$this->latestMemberLink = CKunenaLink::GetProfileLink($this->lastUserId);
+		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->statisticsURL = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 
 		$result = $this->loadTemplateFile($tpl);
@@ -230,6 +226,31 @@ class KunenaViewCommon extends KunenaView {
 			return $result;
 		}
 		echo $result;
+	}
+
+	function getMenu() {
+		$basemenu = KunenaRoute::getMenu ();
+		if (!$basemenu) return ' ';
+
+		$this->parameters = new JRegistry();
+		$this->parameters->set('menutype', $basemenu->menutype);
+		if (version_compare(JVERSION, '1.6', '>')) {
+			$this->parameters->set('startLevel', $basemenu->level + 1);
+			$this->parameters->set('endLevel', $basemenu->level + 2);
+		} else {
+			$this->parameters->set('startLevel', $basemenu->sublevel + 1);
+			$this->parameters->set('endLevel', $basemenu->sublevel + 2);
+		}
+
+		$this->list = KunenaMenuHelper::getList($this->parameters);
+		$this->menu = $this->app->getMenu();
+		$this->active = $this->menu->getActive();
+		$this->active_id = isset($active) ? $active->id : $this->menu->getDefault()->id;
+		$this->path = isset($active) ? $active->tree : array();
+		$this->showAll = $this->parameters->get('showAllChildren');
+		$this->class_sfx = htmlspecialchars($this->parameters->get('class_sfx'));
+
+		return count($this->list) ? $this->loadTemplateFile('menu') : '';
 	}
 
 	function displayLoginBox($tpl = null) {
@@ -264,11 +285,11 @@ class KunenaViewCommon extends KunenaView {
 				$this->getPrivateMessageLink();
 
 				// TODO: Edit profile (need to get link to edit page, even with integration)
-				//$this->assign ( 'editProfileLink', '<a href="' . CKunenaLink::GetAnnouncementURL ( 'show' ).'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>');
+				//$this->assign ( 'editProfileLink', '<a href="' . $url.'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>');
 
 				// Announcements
 				if ( $this->me->isModerator()) {
-					$this->assign ( 'announcementsLink', '<a href="' . CKunenaLink::GetAnnouncementURL ( 'show' ).'">'. JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS').'</a>');
+					$this->assign ( 'announcementsLink', '<a href="' . KunenaForumAnnouncementHelper::getUrl('list').'">'. JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS').'</a>');
 				}
 
 			}

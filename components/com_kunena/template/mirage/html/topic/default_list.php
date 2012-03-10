@@ -1,25 +1,25 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius box-shadow">
-		<div class="topic block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="topic-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper">
 				<div class="header">
 					<!-- a href="#" title="Topic RSS Feed"><span class="krss-icon">Topic RSS Feed</span></a -->
 					<!-- a href="#" title="View Subscribers of this Topic" class="ktopic-subsc">4 Subscribers</a -->
 					<h2 class="header link-header2"><?php echo JText::_('COM_KUNENA_TOPIC') ?> <a class="section" href="#" rel="topic-detailsbox"><?php echo $this->escape($this->topic->subject) ?></a></h2>
 					<?php if ( $this->config->keywords ) : ?>
-						<ul class="topic-taglist">
+						<ul class="list-unstyled topic-taglist">
 							<?php if (!empty($this->keywords)) : ?>
 								<li class="topic-taglist-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->keywords) ?></li>
 							<?php else: ?>
@@ -37,8 +37,8 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo $this->getPagination(4); ?>
 			</div>
 			<div class="innerbox-wrapper">
-				<div class="topic detailsbox">
-					<ul class="topic-posts">
+				<div class="topic-detailsbox detailsbox">
+					<ul class="list-unstyled topic-posts">
 						<?php foreach ( $this->messages as $id=>$message ) $this->displayMessage($id, $message, 'message') ?>
 					</ul>
 				</div>

@@ -35,8 +35,8 @@
 	margin: 0px;
 	padding: 0px;
 	line-height: normal;
-	list-style-type: none;
-	text-decoration: none;
+	/*list-style-type: none;
+	text-decoration: none;*/
 	background: none;
 	color: #666666;
 }
@@ -56,8 +56,10 @@
 }
 
 #kunena.layout fieldset {
-	padding: 15px;
-	margin: 5px;
+	background: none repeat scroll 0 0 transparent;
+	border: 0 none;
+	margin: 0;
+	padding: 0;
 	/*border-width: 1px;
 	border-style: solid;
 	border-color: #BFC3C6;(*/
@@ -67,12 +69,14 @@
 	/*width: 100%;*/
 	/*margin: 5px;*/
 	padding: 5px;
+	background: none;
 }
 
 #kunena.layout select {
 	/*width: 100%*/;
 	padding: 5px;
 	overflow: auto;
+	background: none;
 	/*margin: 5px;*/
 	/*border-width: 1px;
 	border-style: solid;
@@ -83,6 +87,23 @@
 	width: 100%;
 	padding: 5px;
 	overflow: auto;
+	background: none;
+	/*margin: 5px;*/
+	/*border-width: 1px;
+	border-style: solid;
+	border-color: #BFC3C6;(*/
+}
+
+#kunena.layout button {
+	/*width: 100%;*/
+	padding: 0px
+	margin: 0px;
+	border:none;
+	background:none;
+	width:auto;
+	overflow:visible;
+	text-align:center;	
+	white-space:nowrap;	
 	/*margin: 5px;*/
 	/*border-width: 1px;
 	border-style: solid;

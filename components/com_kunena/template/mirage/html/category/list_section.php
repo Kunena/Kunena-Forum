@@ -1,19 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
 <?php if (!empty($this->categories [$this->section->id])) : ?>
-	<div class="box-module">
-		<div class="block-wrapper box-color box-border box-border_radius box-shadow">
-			<div class="<?php echo $this->getClass('block', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo intval($this->section->id) ?>">
+	<div class="kmodule">
+		<div class="box-wrapper">
+			<div class="category-kbox box-color box-border box-border_radius box-border_radius-child box-shadow <?php echo $this->getClass('', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo intval($this->section->id) ?>">
 				<div class="headerbox-wrapper box-full">
 					<div class="header fl">
 						<h2 class="header link-header2">
@@ -33,8 +33,8 @@ defined ( '_JEXEC' ) or die ();
 						<ul class="category-list">
 							<li class="header box-hover_header-row">
 								<dl>
-									<dd class="category-icon">
-									</dd>
+									<!--<dd class="category-icon">
+									</dd>-->
 									<dd class="category-subject">
 										<span class="bold"><?php echo JText::_('Category') ?></span>
 									</dd>
@@ -51,7 +51,7 @@ defined ( '_JEXEC' ) or die ();
 							</li>
 						</ul>
 						<ul class="category-list">
-							<?php 
+							<?php
 							foreach ( $this->categories [$this->section->id] as $category ) {
 							echo $this->displayCategory($category);
 							}
@@ -66,7 +66,7 @@ defined ( '_JEXEC' ) or die ();
 								<input type="hidden" name="view" value="category" />
 								<input type="hidden" name="task" value="markread" />
 								<?php echo JHTML::_( 'form.token' ); ?>
-								<input type="submit" class="header-link" value="<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?>" />
+								<button class="kbutton button-type-user"><span><?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_LIST_MARKALL'); ?></span></button>
 							</form>
 						</div>
 					</div>

@@ -1,18 +1,18 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Statistics
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="box-wrapper box-color box-border box-border_radius box-shadow">
-		<div class="statistics block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="statistics-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
 					<h2 class="header">
@@ -31,7 +31,7 @@ defined ( '_JEXEC' ) or die ();
 						</a>
 					</div>
 					<div class="statistics-totals">
-						<ul>
+						<ul class="list-unstyled">
 							<li class="statistics-totalmess"><?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES') ?>:<span><?php echo $this->messageCount ?></span></li>
 							<li class="statistics-totalsubj"><?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS') ?>:<span><?php echo $this->topicCount ?></span></li>
 							<li class="statistics-totalsect"><?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS') ?>:<span><?php echo $this->sectionCount ?></span></li>
@@ -44,7 +44,7 @@ defined ( '_JEXEC' ) or die ();
 						</a>
 					</div>
 					<div class="statistics-totals">
-						<ul>
+						<ul class="list-unstyled">
 							<li class="statistics-todayopen"><?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD') ?>:<span><?php echo $this->todayTopicCount ?></span></li>
 							<li class="statistics-yestopen"><?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD') ?>:<span><?php echo $this->yesterdayTopicCount ?></span></li>
 							<li class="statistics-todayans"><?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER') ?>:<span><?php echo $this->todayReplyCount ?></span></li>
@@ -57,7 +57,7 @@ defined ( '_JEXEC' ) or die ();
 						</a>
 					</div>
 					<div class="statistics-totals">
-						<ul>
+						<ul class="list-unstyled">
 							<li class="statistics-totalusers"><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS') ?>:<span><?php echo $this->memberCount ?></span></li>
 							<li class="statistics-latestmem"><?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS') ?>:<span><?php echo $this->latestMemberLink ?></span></li>
 						</ul>
@@ -71,7 +71,7 @@ defined ( '_JEXEC' ) or die ();
 
 <?php foreach ($this->top as $top) : ?>
 	<div class="box-module">
-		<div class="box-wrapper box-color box-border box-border_radius box-shadow">
+		<div class="box-wrapper box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="section popsubjstats block">
 				<div class="headerbox-wrapper box-full">
 					<div class="header">
@@ -80,19 +80,19 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 				<div class="detailsbox-wrapper">
 					<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow" id="statistics-detailsbox">
-						<ul class="popsubstat-list">
+						<ul class="list-unstyled popsubstat-list">
 							<li class="header box-hover_header-row">
-								<dl>
+								<dl class="list-unstyled">
 									<dd class="popsubstats-col1"><span class="bold"><?php echo $top[0]->titleName ?></span></dd>
 									<dd class="popsubstats-col2"><span class="bold">&nbsp;</span></dd>
 									<dd class="popsubstats-col3"><span class="bold"><?php echo $top[0]->titleCount ?></span></dd>
 								</dl>
 							</li>
 						</ul>
-						<ul class="popsubstat-list">
+						<ul class="list-unstyled popsubstat-list">
 							<?php foreach ($top as $id=>$item) : ?>
 								<li class="popsubstats-row box-hover box-hover_list-row">
-									<dl>
+									<dl class="list-unstyled">
 										<dd class="popsubstats-col1"><?php echo $item->link ?></dd>
 										<dd class="popsubstats-col2">
 											<div class="stats-bar box-border box-shadow" style="width:<?php echo $item->percent ?>%"></div>

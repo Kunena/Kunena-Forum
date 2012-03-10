@@ -22,7 +22,7 @@ defined ( '_JEXEC' ) or die ();
 					</h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="announce-details detailsbox innerspacer box-full box-hover box-border box-border_radius box-shadow" id="announce-detailsbox">
 					<ul class="list-unstyled details-desc">
 						<?php if ($this->showdate) : ?>

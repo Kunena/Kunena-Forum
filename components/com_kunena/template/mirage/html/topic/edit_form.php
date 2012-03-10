@@ -38,7 +38,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 				<input type="hidden" name="return" value="<?php echo intval($this->catid) ?>" />
 				<?php endif; ?>
 				<?php echo JHTML::_( 'form.token' ); ?>
-				<div class="detailsbox-wrapper">
+				<div class="detailsbox-wrapper innerspacer">
 					<div class="detailsbox box-border box-border_radius box-shadow">
 						<ul class="list-unstyled kform postmessage-list clearfix">
 							<?php if (isset($this->selectcatlist)): ?>

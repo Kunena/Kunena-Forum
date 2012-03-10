@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php if (!empty($this->actions['add'])) echo JHtml::_('kunenaforum.link', $this->actions['add'], JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD'), 'link') ?>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="announcements-details detailsbox box-full box-hover box-border box-border_radius box-shadow" id="announcements-detailsbox" >
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" id="adminForm" name="adminForm">
 						<input type="hidden" name="boxchecked" value="0" />

@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php if ($this->usersURL): ?><a class="link" href="<?php echo $this->usersURL ?>" class="kheader-link"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK') ?></a><?php endif; ?>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox whosonline-details box-full box-hover box-border box-border_radius box-shadow" id="whosonline-detailsbox" >
 					<div class="whosonline-smicon"><a href="<?php echo $this->usersURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>"><span class="kwho-smicon"></span></a></div>
 						<div class="whosonline-users">

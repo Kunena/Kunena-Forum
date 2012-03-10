@@ -20,7 +20,7 @@ defined ( '_JEXEC' ) or die ();
 						<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>)</h2>
 					</div>
 				</div>
-				<div class="detailsbox-wrapper">
+				<div class="detailsbox-wrapper innerspacer">
 					<div class="topic detailsbox box-full box-border box-border_radius box-shadow" id="topic-detailsbox">
 						<ul class="list-unstyled topic-list">
 							<li class="header box-hover_header-row clear">
@@ -62,7 +62,7 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 			</div>
 			<?php if ($this->topicActions) : ?>
-				<div class="modbox-wrapper">
+				<div class="modbox-wrapper innerspacer-bottom">
 					<div class="modbox">
 						<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox" size="1"', 'value', 'text', 0, 'kmoderate-select');
 						$options = array (JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));

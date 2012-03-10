@@ -20,7 +20,7 @@ JHTML::_('behavior.tooltip');
 					<h2 class="header"><a rel="kedit-profile-information"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE'); ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox box-full box-border box-border_radius box-shadow">
 					<ul class="kform user-edit-information-list clear" id="kedit-profile-information">
 						<li class="user-edit-information-row box-hover box-hover_list-row clear">

@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -66,7 +66,7 @@ defined ( '_JEXEC' ) or die ();
 										location.href=url.replace(urlreg,gallery);
 									}
 								</script>
-			
+
 								<?php foreach ($this->galleryimg as $id=>$avatarimg) : ?>
 								<span>
 									<label for="kavatar<?php echo $id ?>"><img src="<?php echo $this->galleryurl .'/'. ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>" alt="" /></label>

@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -31,7 +31,7 @@ $row = 0;
 								<li class="kpollresult-list"><?php if(isset($option->votes) && ($option->votes > 0)) { echo $option->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></li>
 								<li class="kpollresult-list-end"> <?php echo round(($option->votes*100)/max($this->poll->getTotal(),1),1)."%"; ?></li>
 							</ul>
-		
+
 						<?php endforeach; ?>
 						<ul style="border-bottom: 1px solid #BCBCBC;">
 							<li>

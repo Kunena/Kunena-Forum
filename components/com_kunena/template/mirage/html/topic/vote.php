@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,7 +28,7 @@ defined ( '_JEXEC' ) or die ();
 							<input type="hidden" name="catid" value="<?php echo $this->topic->category_id ?>" />
 							<input type="hidden" name="id" value="<?php echo $this->topic->id ?>" />
 							<?php echo JHTML::_( 'form.token' ); ?>
-		
+
 							<fieldset>
 								<legend><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
 								<ul>

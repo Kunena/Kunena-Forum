@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.

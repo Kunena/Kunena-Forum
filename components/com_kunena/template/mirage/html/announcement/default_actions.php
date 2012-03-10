@@ -12,8 +12,8 @@ defined ( '_JEXEC' ) or die ();
 
 if (empty($this->buttons)) return;
 ?>
-<div class="block-wrapper">
-	<div class="buttonbar block">
+<div class="innerbox-wrapper innerspacer-top">
+	<ul class="buttonbar">
 		<?php echo implode(' ', $this->buttons) ?>
-	</div>
+	</ul>
 </div>

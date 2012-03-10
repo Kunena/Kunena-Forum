@@ -22,6 +22,7 @@ defined ( '_JEXEC' ) or die ();
 					</h2>
 				</div>
 			</div>
+			<?php echo $this->displayActions() ?>
 			<div class="detailsbox-wrapper innerspacer">
 				<div class="announce-detailsbox detailsbox box-full box-hover box-border box-border_radius box-shadow">
 					<ul class="list-unstyled details-desc">
@@ -34,7 +35,6 @@ defined ( '_JEXEC' ) or die ();
 					</ul>
 				</div>
 			</div>
-			<?php echo $this->displayActions() ?>
 		</div>
 	</div>
 </div>

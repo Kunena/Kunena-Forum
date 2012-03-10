@@ -333,25 +333,11 @@ class KunenaViewCommon extends KunenaView {
 				$this->assign ( 'rss', CKunenaLink::GetRSSLink ( $this->getIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params ));
 			}
 		}
-		$template = KunenaFactory::getTemplate ();
-		$credits = $this->getTeamCreditsLink ( JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . $this->getCreditsLink ();
-		if ($template->params->get('templatebyText') !='') {
-			$credits .= ' :: <a href ="'. $template->params->get('templatebyLink').'" rel="follow">' . $template->params->get('templatebyText') .' '. $template->params->get('templatebyName') .'</a>';
-		}
-		$this->assign ( 'credits', $credits );
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;
 		}
 		echo $result;
-	}
-
-	function getCreditsLink() {
-		return CKunenaLink::GetHrefLink ( 'http://www.kunena.org', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"' );
-	}
-
-	function getTeamCreditsLink($name = '') {
-		return JHTML::_('kunenaforum.link', "index.php?option=com_kunena&view=credits", $name, '', '', 'follow');
 	}
 
 	function getPrivateMessageLink() {

@@ -52,6 +52,7 @@ class KunenaView extends JView {
 		} else {
 			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
 			include $this->ktemplate->getFile ('html/display.php');
+			echo $this->poweredBy();
 		}
 	}
 
@@ -357,6 +358,17 @@ class KunenaView extends JView {
 		}
 		KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $output;
+	}
+
+	final public function poweredBy() {
+			$credits = '<div style="text-align:center">';
+			$credits .= JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=credits', JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow', array('style'=>'text-decoration: none;'));
+			$credits .= ' <a href="http://www.kunena.org" rel="follow" target="_blank" style="text-decoration: none;">Kunena</a>';
+			if ($this->ktemplate->params->get('templatebyText') !='') {
+				$credits .= ' :: <a href ="'. $this->ktemplate->params->get('templatebyLink').'" rel="follow" target="_blank" style="text-decoration: none;">' . $this->ktemplate->params->get('templatebyText') .' '. $this->ktemplate->params->get('templatebyName') .'</a>';
+			}
+			$credits .= '</div>';
+			echo $credits;
 	}
 
 	// Caching

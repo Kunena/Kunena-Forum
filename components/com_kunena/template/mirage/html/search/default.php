@@ -29,7 +29,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 					<h2 class="header"><a title="Advanced Search" rel="kadvsearch-detailsbox"><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH') ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="advsearch-detailsbox detailsbox">
 	
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="adminForm" id="searchform" method="post">

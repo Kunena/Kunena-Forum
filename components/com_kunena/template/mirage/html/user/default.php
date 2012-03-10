@@ -25,7 +25,7 @@ JHTML::_('behavior.tooltip');
 					<?php endif; ?>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer">
 				<div class="kdetailsbox kmod-userbox" id="kmod-detailsbox">
 					<?php $this->displaySummary(); ?>
 
@@ -39,6 +39,6 @@ JHTML::_('behavior.tooltip');
 <?php $this->displayTab(); ?>
 <script type="text/javascript">
 // <![CDATA[
-window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });
+window.addEvent('domready', function(){ $$('dl.ktabs').each(function(tabs){ new KunenaTabs(tabs); }); });
 // ]]>
 </script>

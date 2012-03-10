@@ -15,9 +15,9 @@ $this->document->addScriptDeclaration('// <![CDATA[
 	function kunenaValidate(f) { return document.formvalidator.isValid(f); }
 // ]]>');
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius box-shadow">
-		<div id="announce" class="block">
+<div class="kmodule">
+	<div class="box-wrapper">
+		<div class="announcement-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
 			<div class="headerbox-wrapper box-full">
 				<div class="header fl">
 					<h2 class="header">

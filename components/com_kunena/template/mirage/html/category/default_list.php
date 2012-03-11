@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="headerbox-wrapper box-full">
 				<div class="header">
 					<h2 class="header link-header2">
-						<a class="categories" href="#" title="Category Header" rel="ksection-detailsbox">
+						<a class="categories" title="Category Header" rel="ksection-detailsbox">
 							<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_DEFAULT_TOPICS') ?>
 						</a>
 					</h2>

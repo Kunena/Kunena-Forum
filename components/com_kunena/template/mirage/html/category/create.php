@@ -11,4 +11,3 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->displayTemplateFile('category', 'edit');
-;

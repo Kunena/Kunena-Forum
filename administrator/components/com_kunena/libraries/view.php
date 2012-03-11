@@ -140,7 +140,7 @@ class KunenaView extends JView {
 	}
 
 	function getTime() {
-		if ( $this->config->time_to_create_page ) return;
+		if ( !$this->config->time_to_create_page ) return;
 		$time = $this->profiler->getTime('Total Time');
 		return sprintf('%0.3f', $time);
 	}

@@ -17,18 +17,14 @@ defined ( '_JEXEC' ) or die ();
 
 <ul class="menu<?php echo $this->class_sfx;?>"<?php echo ($this->parameters->get('tag_id')) ? " id=\"{$this->parameters->get('tag_id')}\"" : '' ?>>
 <?php
-foreach ($this->list as $i => &$item) :
-	if (version_compare(JVERSION, '1.6', '<')) {
-		$itemparams = new JParameter($item->params);
-	}
-
+foreach ($this->list as $i => $item) :
 	$class = 'item-'.$item->id;
 	$class .= ($item->id == $this->active_id) ? ' current' : '';
 
 	if (in_array($item->id, $this->path)) {
 		$class .= ' active';
 	} elseif ($item->type == 'alias') {
-		$aliasToId = !empty($itemparams) ? $itemparams->get('aliasoptions') : $item->params->get('aliasoptions');
+		$aliasToId = $item->params->get('aliasoptions');
 		if (count($this->path) > 0 && $aliasToId == $this->path[count($this->path)-1]) {
 			$class .= ' active';
 		} elseif (in_array($aliasToId, $this->path)) {
@@ -46,7 +42,7 @@ foreach ($this->list as $i => &$item) :
 	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : '';
 	$title = $item->anchor_title ? ' title="'.$item->anchor_title.'" ' : '';
 	if ($item->menu_image) {
-		$menu_text = !empty($itemparams) ? $itemparams->get('menu_text', 1) : $item->params->get('menu_text', 1);
+		$menu_text = $item->params->get('menu_text', 1);
 		$menu_text ?
 		$linktype = '<img src="'.$item->menu_image.'" alt="'.$item->title.'" /><span class="image-title">'.$item->title.'</span> ' :
 		$linktype = '<img src="'.$item->menu_image.'" alt="'.$item->title.'" />';
@@ -71,7 +67,7 @@ foreach ($this->list as $i => &$item) :
 
 	// Render the menu item.
 	if ($item->type == 'separator') {
-		echo "<span class=\"separator\">{$title}>{$linktype}</span>";
+		echo "<span class=\"separator\"{$title}>{$linktype}</span>";
 	} else {
 		echo "<a {$flink}{$class}{$title}{$extra}>{$linktype}</a>";
 	}

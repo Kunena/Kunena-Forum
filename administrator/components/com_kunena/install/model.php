@@ -373,9 +373,9 @@ class KunenaModelInstall extends JModel {
 		if ($success && is_file("{$dest}/mod_{$name}.xml")) {
 			$installer = new JInstaller ( );
 			$success = $installer->install ( $dest );
-			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', ucfirst($name)), $success);
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_MODULE_STATUS', ucfirst($name)), $success);
 		} elseif (!$success) {
-			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', ucfirst($name)), $success);
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_MODULE_STATUS', ucfirst($name)), $success);
 		}
 		JFolder::delete($dest);
 		return $success;

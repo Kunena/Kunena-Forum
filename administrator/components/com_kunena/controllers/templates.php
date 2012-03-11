@@ -140,6 +140,14 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
+		// templates to prevent to remove
+		$templates_default = array('blue_eagle', 'default20', 'mirage', 'orao');
+
+		if ( in_array($id,$templates_default) ) {
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_PREVENT_UNINSTALL_DEFAULT_TEMPLATE', $id) );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+
 		// Initialize variables
 		$retval	= true;
 		if ( !$id ) {

@@ -252,6 +252,17 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return KunenaUserHelper::get($this->modified_by);
 	}
 
+	public function displayField($field) {
+		switch ($field) {
+			case 'id':
+				return intval($this->id);
+			case 'subject':
+				return KunenaHtmlParser::parseBBCode($this->subject);
+			case 'message':
+				return KunenaHtmlParser::parseBBCode($this->message);
+		}
+	}
+
 	public function authorise($action='read', $user=null, $silent=false) {
 		static $actions  = array(
 			'none'=>array(),

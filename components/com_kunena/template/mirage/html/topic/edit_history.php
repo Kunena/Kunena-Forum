@@ -23,7 +23,7 @@ defined ( '_JEXEC' ) or die ();
 				<div class="detailsbox box-border box-border_radius box-shadow">
 					<ul class="kposts">
 						<?php foreach ( $this->history as $this->message ):
-							$profile = KunenaFactory::getUser(intval($this->message->userid));
+							$profile = $this->message->getAuthor();
 						?>
 							<li>
 								<ul class="kposthead">

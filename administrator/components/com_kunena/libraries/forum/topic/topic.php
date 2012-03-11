@@ -240,6 +240,15 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return new KunenaDate($this->last_post_time);
 	}
 
+	public function displayField($field) {
+		switch ($field) {
+			case 'id':
+				return intval($this->id);
+			case 'subject':
+				return KunenaHtmlParser::parseText($this->subject);
+		}
+	}
+
 	public function getIcon() {
 		return KunenaFactory::getTemplate()->getTopicIcon($this);
 	}

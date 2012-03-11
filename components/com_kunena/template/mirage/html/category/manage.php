@@ -111,20 +111,7 @@ JHTML::_('behavior.tooltip');
 	</div>
 
 	<div id="ksection-modbox">
-		<select name="batch" id="kmoderate-select" class="kinputbox" size="1">
-			<option value=""><?php echo JText::_('COM_KUNENA_SELECT_BATCH_OPTION') ?></option>
-			<option value="publish"><?php echo JText::_('COM_KUNENA_PUBLISH') ?></option>
-			<option value="unpublish"><?php echo JText::_('COM_KUNENA_UNPUBLISH') ?></option>
-			<option value="lock"><?php echo JText::_('COM_KUNENA_LOCK') ?></option>
-			<option value="unlock"><?php echo JText::_('COM_KUNENA_UNLOCK') ?></option>
-			<option value="review"><?php echo JText::_('COM_KUNENA_ENABLE_REVIEW') ?></option>
-			<option value="unreview"><?php echo JText::_('COM_KUNENA_DISABLE_REVIEW') ?></option>
-			<option value="allow_anomymous"><?php echo JText::_('COM_KUNENA_ALLOW_ANONYMOUS') ?></option>
-			<option value="deny_anonymous"><?php echo JText::_('COM_KUNENA_DISALLOW_ANONYMOUS') ?></option>
-			<option value="allow_polls"><?php echo JText::_('COM_KUNENA_ALLOW_POLLS') ?></option>
-			<option value="deny_polls"><?php echo JText::_('COM_KUNENA_DISALLOW_POLLS') ?></option>
-			<option value="delete"><?php echo JText::_('COM_KUNENA_DELETE') ?></option>
-		</select>
+		<?php echo $this->displayManageActions('class="kinputbox" size="1"', 'kmoderate-select') ?>
 		<button class="button" onclick="javascript: submitbutton(this.form.batch.value)"><?php echo JText::_('COM_KUNENA_SUBMIT') ?></button>
 	</div>
 	</div>

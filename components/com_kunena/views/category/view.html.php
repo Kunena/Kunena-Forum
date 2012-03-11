@@ -434,7 +434,7 @@ class KunenaViewCategory extends KunenaView {
 		}
 	}
 
-	function getTopicClass($prefix='k', $class='topic') {
+function getTopicClass($prefix='k', $class='topic') {
 		$class = $prefix . $class;
 		$txt = $class . (($this->position & 1) + 1);
 		if ($this->topic->ordering) {
@@ -450,6 +450,23 @@ class KunenaViewCategory extends KunenaView {
 		if ($this->topic->hold == 1) $txt .= ' '.$prefix.'unapproved';
 		else if ($this->topic->hold) $txt .= ' '.$prefix.'deleted';
 		return $txt;
+	}
+
+	function displayManageActions($attributes='', $id=null) {
+		$options	= array();
+		$options[]	= JHTML::_('select.option',  '', JText::_('COM_KUNENA_SELECT_BATCH_OPTION') );
+		$options[]	= JHTML::_('select.option',  'publish', JText::_('COM_KUNENA_PUBLISH') );
+		$options[]	= JHTML::_('select.option',  'unpublish', JText::_('COM_KUNENA_UNPUBLISH') );
+		$options[]	= JHTML::_('select.option',  'lock', JText::_('COM_KUNENA_LOCK') );
+		$options[]	= JHTML::_('select.option',  'unlock', JText::_('COM_KUNENA_UNLOCK') );
+		$options[]	= JHTML::_('select.option',  'review', JText::_('COM_KUNENA_ENABLE_REVIEW') );
+		$options[]	= JHTML::_('select.option',  'unreview', JText::_('COM_KUNENA_DISABLE_REVIEW') );
+		$options[]	= JHTML::_('select.option',  'allow_anomymous', JText::_('COM_KUNENA_ALLOW_ANONYMOUS') );
+		$options[]	= JHTML::_('select.option',  'deny_anonymous', JText::_('COM_KUNENA_DISALLOW_ANONYMOUS') );
+		$options[]	= JHTML::_('select.option',  'allow_polls', JText::_('COM_KUNENA_ALLOW_POLLS') );
+		$options[]	= JHTML::_('select.option',  'deny_polls', JText::_('COM_KUNENA_DISALLOW_POLLS') );
+		$options[]	= JHTML::_('select.option',  'delete', JText::_('COM_KUNENA_DELETE') );
+		return JHTML::_('select.genericlist',  $options, 'batch', $attributes, 'value', 'text', null, $id );
 	}
 
 	function getPagination($maxpages) {

@@ -249,8 +249,8 @@ class KunenaViewCommon extends KunenaView {
 		$this->list = KunenaMenuHelper::getList($this->parameters);
 		$this->menu = $this->app->getMenu();
 		$this->active = $this->menu->getActive();
-		$this->active_id = isset($active) ? $active->id : $this->menu->getDefault()->id;
-		$this->path = isset($active) ? $active->tree : array();
+		$this->active_id = isset($this->active) ? $this->active->id : $this->menu->getDefault()->id;
+		$this->path = isset($this->active) ? $this->active->tree : array();
 		$this->showAll = $this->parameters->get('showAllChildren');
 		$this->class_sfx = htmlspecialchars($this->parameters->get('class_sfx'));
 

@@ -130,7 +130,6 @@ class KunenaAdminControllerTemplates extends KunenaController {
 
 	function uninstall() {
 		jimport ( 'joomla.filesystem.folder' );
-		$defaultemplate = $this->config->template;
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$id = array_shift($cid);
 		$template	= $id;
@@ -141,21 +140,21 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		}
 
 		// templates to prevent to remove
-		$templates_default = array('blue_eagle', 'default20', 'mirage', 'orao');
-
-		if ( in_array($id,$templates_default) ) {
-			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_PREVENT_UNINSTALL_DEFAULT_TEMPLATE', $id) );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
-		}
+		$templates_locked = array('blue_eagle', 'mirage');
+		$otemplate = KunenaTemplateHelper::parseXmlFile($id);
 
 		// Initialize variables
 		$retval	= true;
-		if ( !$id ) {
+		if ( !$otemplate ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
-		if (KunenaTemplateHelper::isDefault($template) || $id == 'blue_eagle') {
-			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_CANNOT_DEFAULT', $id), 'error' );
+		if ( in_array($id, $templates_locked) ) {
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_SYSTEM_TEMPLATE', $otemplate->name), 'error' );
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		}
+		if ( KunenaTemplateHelper::isDefault($template) ) {
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CTRL_TEMPLATES_ERROR_UNINSTALL_DEFAULT_TEMPLATE', $otemplate->name), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;
 		}

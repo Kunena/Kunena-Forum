@@ -40,10 +40,9 @@ class KunenaAdminModelTemplates extends KunenaModel {
 	}
 
 	function getTemplates() {
-		$tBaseDir = KPATH_SITE.'/template';
 		//get template xml file info
 		$rows = array();
-		$rows = KunenaTemplateHelper::parseXmlFiles($tBaseDir);
+		$rows = KunenaTemplateHelper::parseXmlFiles();
 		// set dynamic template information
 		foreach( $rows as $row ) {
 			$row->published = KunenaTemplateHelper::isDefault($row->directory);
@@ -73,9 +72,8 @@ class KunenaAdminModelTemplates extends KunenaModel {
 	}
 
 	function getTemplatedetails() {
-		$tBaseDir	= JPath::clean(KPATH_SITE.'/template');
 		$template = $this->app->getUserState ( 'kunena.edit.template');
-		$details	= KunenaTemplateHelper::parseXmlFile($tBaseDir, $template);
+		$details	= KunenaTemplateHelper::parseXmlFile($template);
 
 		return $details;
 	}

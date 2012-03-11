@@ -792,9 +792,9 @@ class KunenaViewTopic extends KunenaView {
 		}
 	}
 
-	function displayMessages() {
+	function displayMessages($template = null) {
 		foreach ( $this->messages as $id=>$message ) {
-			$this->displayMessage($id, $message);
+			$this->displayMessage($id, $message, $template);
 		}
 	}
 
@@ -864,6 +864,16 @@ class KunenaViewTopic extends KunenaView {
 		} else {
 			echo JText::_('COM_KUNENA_ATTACHMENTS_ERROR_NO_MESSAGE');
 		}
+	}
+
+	function displayMessageField($name) {
+		return $this->message->displayField($name);
+	}
+	function displayTopicField($name) {
+		return $this->topic->displayField($name);
+	}
+	function displayCategoryField($name) {
+		return $this->category->displayField($name);
 	}
 
 	function canSubscribe() {

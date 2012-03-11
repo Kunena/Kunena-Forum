@@ -30,7 +30,7 @@ defined ( '_JEXEC' ) or die ();
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" id="adminForm" name="adminForm">
 						<input type="hidden" name="boxchecked" value="0" />
 						<input type="hidden" name="task" value="" />
-						<?php echo JHTML::_( 'form.token' ); ?>
+						<?php echo JHTML::_( 'form.token' ) ?>
 						<ul class="list-unstyled announcement-list">
 							<li class="header box-hover_header-row">
 								<dl>
@@ -38,26 +38,26 @@ defined ( '_JEXEC' ) or die ();
 									<dd class="announcement-checkbox">#</dd>
 									<?php endif ?>
 									<dd class="announcement-id">
-										<span><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_ID') ?></span>
 									</dd>
 									<dd class="announcement-date">
-										<span><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_DATE') ?></span>
 									</dd>
 									<dd class="announcement-author">
-										<span><?php echo JText::_('COM_KUNENA_ANN_AUTHOR'); ?></span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_AUTHOR') ?></span>
 									</dd>
 									<dd class="announcement-title">
-										<span><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_TITLE') ?></span>
 									</dd>
 									<?php if ($this->actions): ?>
 									<dd class="announcement-publish">
-										<span><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_PUBLISH') ?></span>
 									</dd>
 									<dd class="announcement-edit">
-										<span><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_EDIT') ?></span>
 									</dd>
 									<dd class="announcement-delete">
-										<span><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></span>
+										<span><?php echo JText::_('COM_KUNENA_ANN_DELETE') ?></span>
 									</dd>
 									<?php endif ?>
 								</dl>

@@ -39,6 +39,6 @@ defined ( '_JEXEC' ) or die ();
 			<dd class="announcement-delete">
 				<?php if ($this->canDelete()) echo JHTML::_('kunenagrid.task', $this->row, 'publish_x.png', JText::_('COM_KUNENA_ANN_DELETE'), 'delete') ?>
 			</dd>
-			<?php endif; ?>
+			<?php endif ?>
 		</dl>
 	</li>

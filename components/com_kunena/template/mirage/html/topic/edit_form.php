@@ -123,7 +123,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 										<?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS') ?>
 									</label>
 								</div>
-								<div id="kuploader" class="form-field">
+								<div id="kuploader" class="form-field hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo JText::sprintf('COM_KUNENA_UPLOAD_MAX_IMAGE_SIZE', $this->config->imagesize)?> - <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?> - <?php echo JText::sprintf('COM_KUNENA_UPLOAD_MAX_FILE_SIZE', $this->config->filesize)?>" >
 									<input id="kupload" class="kupload" name="kattachment" type="file" />
 								</div>
 							</li>

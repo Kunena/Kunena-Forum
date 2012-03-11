@@ -208,6 +208,8 @@ abstract class KunenaMenuHelper {
 						$items[$lastitem]->level_diff	= ($items[$lastitem]->sublevel - $item->sublevel);
 					}
 
+					$item->parent = (boolean) $menu->getItems('parent', (int) $item->id, true);
+
 					$lastitem			= $i;
 					$item->active		= false;
 					$item->flink = $item->link;

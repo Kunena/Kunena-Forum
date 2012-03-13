@@ -11,8 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmodule">
-	<div class="box-wrapper">
-		<div id="kprofile-tabs" class="kbox">
+	<div class="kbox-wrapper box-full">
+		<div id="kprofile-tabs" class="kbox tabbable">
 			<dl class="ktabs">
 				<?php if ($this->me->isModerator()): ?>
 				<dt class="closed" title="<?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION') ?>"><a class="link-tab" href="#tab-administrator"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION') ?></a></dt>

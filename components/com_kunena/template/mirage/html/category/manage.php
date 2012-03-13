@@ -21,10 +21,10 @@ JHTML::_('behavior.tooltip');
 	<input type="hidden" name="boxchecked" value="0" />
 	<?php echo JHTML::_( 'form.token' ); ?>
 
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="manage-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule category-manage">
+	<div class="kbox-wrapper kbox-full">
+		<div class="category-manage-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="ksection-categories" title="<?php echo $this->header ?>"><?php echo $this->header ?></a></h2>
 			<table class="kgrid kgrid-categories" id="kcategories-manager">

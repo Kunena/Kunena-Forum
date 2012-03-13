@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <li class="topic-row">
 	<dl class="list-unstyled">
-		<dd class="box-border box-border_radius box-shadow">
+		<dd class="kbox-border kbox-border_radius kbox-shadow">
 			<ul class="list-unstyled message-list">
 				<li class="header">
 					<a id="<?php echo $this->displayMessageField('id') ?>"></a>
@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 				</li>
 			</ul>
 			[K=MESSAGE_PROFILE]
-			<div class="kpost-container box-hover">
+			<div class="kpost-container kbox-hover">
 				<ul class="list-unstyled kpost-post-body">
 					<li class="kpost-body">
 						<?php echo $this->displayMessageField('message') ?>

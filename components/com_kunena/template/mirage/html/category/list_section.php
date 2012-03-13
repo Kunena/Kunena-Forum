@@ -11,13 +11,13 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <?php if (!empty($this->categories [$this->section->id])) : ?>
-	<div class="kmodule">
-		<div class="box-wrapper">
-			<div class="category-kbox box-color box-border box-border_radius box-border_radius-child box-shadow <?php echo $this->getClass('', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo $this->displaySectionField('id') ?>">
-				<div class="headerbox-wrapper box-full">
+	<div class="kmodule category-list_section">
+		<div class="kbox-wrapper kbox-full">
+			<div class="category-list_section-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow <?php echo $this->getClass('', $this->escape($this->section->class_sfx)) ?>" id="block-<?php echo $this->displaySectionField('id') ?>">
+				<div class="headerbox-wrapper kbox-full">
 					<div class="header fl">
 						<h2 class="header link-header2">
-							<a class="section" href="<?php echo $this->sectionURL ?>" rel="ksection-detailsbox-<?php echo $this->displaySectionField('id') ?>">
+							<a class="section" href="<?php echo $this->sectionURL ?>" rel="ksection-detailskbox-<?php echo $this->displaySectionField('id') ?>">
 								<?php echo $this->escape($this->section->name) ?>
 							</a>
 						</h2>
@@ -28,10 +28,10 @@ defined ( '_JEXEC' ) or die ();
 					<div class="header fr">
 					</div>
 				</div>
-				<div class="detailsbox-wrapper innerspacer">
-					<div class="category detailsbox box-full box-border box-border_radius box-shadow" id="category-<?php echo intval($this->section->id) ?>">
+				<div class="detailsbox-wrapper innerspacer kbox-full">
+					<div class="category detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow" id="category-<?php echo intval($this->section->id) ?>">
 						<ul class="category-list">
-							<li class="header box-hover_header-row">
+							<li class="header kbox-hover_header-row">
 								<dl>
 									<!--<dd class="category-icon">
 									</dd>-->

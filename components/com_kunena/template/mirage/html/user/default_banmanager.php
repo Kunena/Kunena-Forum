@@ -14,18 +14,18 @@ JHTML::_('behavior.tooltip');
 $i=1;
 $j=0;
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="banmanager-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule user-default_banmanager">
+	<div class="kbox-wrapper">
+		<div class="user-default_banmanager-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="kbanmanager-detailsbox"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper innerspacer">
-				<div class="banmanager banmanager-detailsbox detailsbox box-full box-border box-border_radius box-shadow">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
+				<div class="banmanager banmanager-detailsbox detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
 					<ul class="list-unstyled banmanager-list">
-						<li class="header box-hover_header-row clear">
+						<li class="header kbox-hover_header-row clear">
 							<dl class="list-unstyled">
 								<dd class="banmanager-id"><span class="bold">#</span></dd>
 								<dd class="banmanager-user"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_BANNEDUSER'); ?></span></dd>
@@ -42,7 +42,7 @@ $j=0;
 								$bantext = $userban->blocked ? JText::_('COM_KUNENA_BAN_UNBLOCK_USER') : JText::_('COM_KUNENA_BAN_UNBAN_USER');
 								$j++;
 						?>
-						<li class="banmanager-row box-hover box-hover_list-row">
+						<li class="banmanager-row kbox-hover kbox-hover_list-row">
 							<dl class="list-unstyled">
 								<dd class="banmanager-id">
 									<?php echo $j; ?>
@@ -63,7 +63,7 @@ $j=0;
 						</li>
 						<?php endforeach; ?>
 						<?php else : ?>
-						<li class="banmanager-row box-hover box-hover_list-row">
+						<li class="banmanager-row kbox-hover kbox-hover_list-row">
 							<dl class="list-unstyled">
 								<dd><?php echo JText::_('COM_KUNENA_BAN_NO_BANNED_USERS') ?></dd>
 							</dl>

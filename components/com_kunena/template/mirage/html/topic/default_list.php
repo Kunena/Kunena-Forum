@@ -10,10 +10,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="topic-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper">
+<div class="kmodule topic-default_list">
+	<div class="kbox-wrapper kbox-full">
+		<div class="topic-default_list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<!-- a href="#" title="Topic RSS Feed"><span class="krss-icon">Topic RSS Feed</span></a -->
 					<!-- a href="#" title="View Subscribers of this Topic" class="ktopic-subsc">4 Subscribers</a -->

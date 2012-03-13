@@ -15,10 +15,10 @@ $this->document->addScriptDeclaration('// <![CDATA[
 	function kunenaValidate(f) { return document.formvalidator.isValid(f); }
 // ]]>');
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="announcement-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule announcement-edit">
+	<div class="kbox-wrapper kbox-full">
+		<div class="announcement-edit-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header fl">
 					<h2 class="header">
 						<a class="link" title="<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') ?>" rel="kannouncement-detailsbox">
@@ -31,44 +31,44 @@ $this->document->addScriptDeclaration('// <![CDATA[
 				</div>
 			</div>
 			<div class="detailsbox-wrapper innerspacer">
-				<div class="announcement-details detailsbox box-border box-border_radius box-shadow" >
+				<div class="announcement-details detailsbox kbox-border kbox-border_radius kbox-shadow" >
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" class="form-validate" method="post" name="editform" onsubmit="return kunenaValidate(this);">
 						<input type="hidden" name="task" value="save" />
 						<?php echo $this->displayInput('id') ?>
 						<?php echo JHtml::_( 'form.token' ) ?>
 
 							<ul class="list-unstyled kform announcement-list clearfix">
-								<li class="announcement-row box-hover box-hover_list-row">
+								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
 										<label>
 											<?php echo JText::_('COM_KUNENA_ANN_TITLE') ?>:
 										</label>
 									</div>
 									<div class="form-field">
-										<?php echo $this->displayInput('title', 'class="box-width inputbox required"') ?>
+										<?php echo $this->displayInput('title', 'class="kbox-width inputbox required"') ?>
 									</div>
 								</li>
-								<li class="announcement-row box-hover box-hover_list-row">
+								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
 										<label>
 											<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT') ?>:
 										</label>
 									</div>
 									<div class="form-field">
-										<?php echo $this->displayInput('sdescription', 'class="box-width textbox required" rows="80" cols="4"') ?>
+										<?php echo $this->displayInput('sdescription', 'class="kbox-width textbox required" rows="80" cols="4"') ?>
 									</div>
 								</li>
-								<li class="announcement-row box-hover box-hover_list-row">
+								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
 										<label>
 											<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT') ?>:
 										</label>
 									</div>
 									<div class="form-field">
-										<?php echo $this->displayInput('description', 'class="box-width textbox" rows="80" cols="16"') ?>
+										<?php echo $this->displayInput('description', 'class="kbox-width textbox" rows="80" cols="16"') ?>
 									</div>
 								</li>
-								<li class="announcement-row box-hover box-hover_list-row">
+								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
 										<label>
 											<?php echo JText::_('COM_KUNENA_ANN_DATE') ?>:
@@ -78,7 +78,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 										<?php echo $this->displayInput('created', 'addcreated') ?>
 									</div>
 								</li>
-								<li class="announcement-row box-hover box-hover_list-row">
+								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
 										<label>
 											<?php echo JText::_('COM_KUNENA_ANN_SHOWDATE') ?>:
@@ -88,7 +88,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 										<?php echo $this->displayInput('showdate') ?>
 									</div>
 								</li>
-								<li class="announcement-row box-hover box-hover_list-row">
+								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
 										<label>
 											<?php echo JText::_('COM_KUNENA_ANN_PUBLISH') ?>:

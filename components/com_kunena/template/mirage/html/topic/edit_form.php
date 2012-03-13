@@ -14,10 +14,10 @@ JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 JHTML::_('kunenafile.uploader', 'kuploader');
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper">
+<div class="kmodule topic-edit_form">
+	<div class="kbox-wrapper kbox-full">
+		<div class="topic-edit_form-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><span><?php echo $this->escape($this->title)?></span></h2>
 				</div>
@@ -39,10 +39,10 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 				<?php endif ?>
 				<?php echo JHTML::_( 'form.token' ) ?>
 				<div class="detailsbox-wrapper innerspacer">
-					<div class="detailsbox box-border box-border_radius box-shadow">
+					<div class="detailsbox kbox-border kbox-border_radius kbox-shadow">
 						<ul class="list-unstyled kform postmessage-list clearfix">
 							<?php if (isset($this->selectcatlist)): ?>
-							<li id="kpost-category" class="postmessage-row box-hover box-hover_list-row">
+							<li id="kpost-category" class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label for="kpostcatid"><?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY')?></label>
 								</div>
@@ -52,7 +52,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 							</li>
 							<?php endif ?>
 							<?php if ($this->message->userid) : ?>
-							<li style="display: none" id="kanynomous-check" class="postmessage-row box-hover box-hover_list-row">
+							<li style="display: none" id="kanynomous-check" class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label for="kanonymous">
 										<?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS') ?>
@@ -64,7 +64,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 								</div>
 							</li>
 							<?php endif ?>
-							<li style="display: none" id="kanynomous-check-name" class="postmessage-row box-hover box-hover_list-row">
+							<li style="display: none" id="kanynomous-check-name" class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label for="kauthorname">
 										<?php echo JText::_('COM_KUNENA_GEN_NAME') ?>
@@ -75,7 +75,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 								</div>
 							</li>
 							<?php if ($this->config->askemail && !$this->me->exists()) : ?>
-							<li id="kanynomous-email" class="postmessage-row box-hover box-hover_list-row">
+							<li id="kanynomous-email" class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label for="kauthorname">
 										<?php echo JText::_('COM_KUNENA_GEN_EMAIL') ?>
@@ -87,18 +87,18 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 								</div>
 							</li>
 							<?php endif ?>
-							<li class="post-subject postmessage-row box-hover box-hover_list-row">
+							<li class="post-subject postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label for="ksubject">
 										<?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ?>
 									</label>
 								</div>
 								<div class="form-field">
-									<input type="text" value="<?php echo $this->escape($this->message->subject) ?>" maxlength="<?php echo $this->escape($this->config->maxsubject) ?>" size="35" id="ksubject" name="subject" class="box-width inputbox postinput required hasTip" title="<?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ?> :: <?php echo JText::_('COM_KUNENA_ENTER_SUBJECT') ?>" />
+									<input type="text" value="<?php echo $this->escape($this->message->subject) ?>" maxlength="<?php echo $this->escape($this->config->maxsubject) ?>" size="35" id="ksubject" name="subject" class="kbox-width inputbox postinput required hasTip" title="<?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ?> :: <?php echo JText::_('COM_KUNENA_ENTER_SUBJECT') ?>" />
 								</div>
 							</li>
 							<?php if ($this->message->parent==0 && $this->config->topicicons) : ?>
-							<li class="post-topicicons postmessage-row box-hover box-hover_list-row">
+							<li class="post-topicicons postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label for="topic_emoticon_default">
 										<?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON') ?>
@@ -117,42 +117,42 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 							</li>
 							<?php endif ?>
 							<?php echo $this->loadTemplateFile('editor') ?>
-							<li class="postmessage-row box-hover box-hover_list-row">
+							<li class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label for="kupload">
 										<?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS') ?>
 									</label>
 								</div>
-								<div id="kuploader" class="form-field">
+								<div id="kuploader" class="form-field hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo JText::sprintf('COM_KUNENA_UPLOAD_MAX_IMAGE_SIZE', $this->config->imagesize)?> - <?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?> - <?php echo JText::sprintf('COM_KUNENA_UPLOAD_MAX_FILE_SIZE', $this->config->filesize)?>" >
 									<input id="kupload" class="kupload" name="kattachment" type="file" />
 								</div>
 							</li>
 							<?php if ($this->config->keywords && $this->me->isModerator ( $this->message->catid ) ) : ?>
-							<li class="postmessage-row box-hover box-hover_list-row">
+							<li class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label for="ktags">
 										<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?>
 									</label>
 								</div>
 								<div class="form-field">
-									<input type="text" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')) ?>" maxlength="100" size="35" id="ktags" name="tags" class="box-width inputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
+									<input type="text" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')) ?>" maxlength="100" size="35" id="ktags" name="tags" class="kbox-width inputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
 								</div>
 							</li>
 							<?php endif ?>
 							<?php if ($this->config->userkeywords && $this->me->userid) : ?>
-							<li class="postmessage-row box-hover box-hover_list-row">
+							<li class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label for="kmytags">
 										<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?>
 									</label>
 								</div>
 								<div class="form-field">
-									<input type="text" value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')) ?>" maxlength="100" size="35" id="kmytags" name="mytags" class="box-width inputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
+									<input type="text" value="<?php echo $this->escape($this->topic->getKeywords($this->me->userid, ', ')) ?>" maxlength="100" size="35" id="kmytags" name="mytags" class="kbox-width inputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
 								</div>
 							</li>
 							<?php endif ?>
 							<?php if ($this->canSubscribe()) : ?>
-							<li class="postmessage-row box-hover box-hover_list-row">
+							<li class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label for="ksubscribe-me">
 										<?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE') ?>
@@ -167,7 +167,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 							</li>
 							<?php endif ?>
 							<?php if (!empty($this->captchaHtml)) : ?>
-							<li class="postmessage-row box-hover box-hover_list-row">
+							<li class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<label>
 										<?php echo JText::_('COM_KUNENA_CAPDESC') ?>

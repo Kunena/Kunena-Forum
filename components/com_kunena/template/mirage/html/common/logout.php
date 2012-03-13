@@ -19,9 +19,9 @@ defined ( '_JEXEC' ) or die ();
 			</a>
 		</li>
 		<li class="divider"></li>
-		<?php if (!empty($this->privateMessagesLink))	echo '<li class="pm link-dropdown">'.$this->privateMessagesLink.'</li>' ?>
-		<?php if (!empty($this->editProfileLink))		echo '<li class="editprofile link-dropdown">'.$this->editProfileLink.'</li>' ?>
-		<?php if (!empty($this->announcementsLink))		echo '<li class="announcements link-dropdown">'.$this->announcementsLink.'</li>' ?>
+		<?php if (!empty($this->privateMessagesLink) echo '<li class="pm link-dropdown">'.$this->privateMessagesLink.'</li>' ?>
+		<?php if (!empty($this->editProfileLink)) echo '<li class="editprofile link-dropdown">'.$this->editProfileLink.'</li>' ?>
+		<?php if (!empty($this->announcementsLink)) echo '<li class="announcements link-dropdown">'.$this->announcementsLink.'</li>' ?>
 		<li class="divider"></li>
 		<?php if ($this->logout) : ?>
 			<li class="login-form">
@@ -42,5 +42,5 @@ defined ( '_JEXEC' ) or die ();
 			<?php echo $this->moduleHtml ?>
 		</li>
 		<?php endif; ?>
-		</ul>
+	</ul>
 </div>

@@ -10,10 +10,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="announcement-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule announcement-default">
+	<div class="kbox-wrapper kbox-full">
+		<div class="announcement-default-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header fl">
 					<h2 class="header">
 						<a title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox">
@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<?php echo $this->displayActions() ?>
 			<div class="detailsbox-wrapper innerspacer">
-				<div class="announce-detailsbox detailsbox box-full box-hover box-border box-border_radius box-shadow">
+				<div class="announce-detailsbox detailsbox kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow">
 					<ul class="list-unstyled details-desc">
 						<?php if ($this->showdate) : ?>
 						<li class="kannounce-date" title="<?php echo $this->displayField('created', 'ago'); ?>">

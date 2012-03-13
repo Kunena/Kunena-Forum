@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="innerbox-wrapper innerspacer">
+<div class="innerbox-wrapper innerspacer kbox-full">
 	<div class="buttonbar innerblock">
 		<ul class="list-unstyled buttons-message">
 			<?php

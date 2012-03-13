@@ -13,9 +13,9 @@ defined ( '_JEXEC' ) or die ();
 <?php echo $this->getModulePosition( 'kunena_bottom' ); ?>
 
 <?php if (($time = $this->getTime()) !== null) : ?>
-<div class="box-module">
-	<div class="box-wrapper">
-		<div class="credit block">
+<div class="kbox-module common-credit">
+	<div class="kbox-wrapper kbox-full">
+		<div class="common-credit-kbox kbox">
 			<p><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time) ?></p>
 		</div>
 	</div>

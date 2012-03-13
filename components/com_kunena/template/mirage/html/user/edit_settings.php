@@ -10,19 +10,19 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius">
-		<div class="editsettings block">
-			<div class="headerbox-wrapper box-full">
+<div class="kbox-module user-edit_settings">
+	<div class="kbox-wrapper kbox-full">
+		<div class="user-edit_settings-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="kedit-user-forum-settings"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE') ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper innerspacer">
-				<div class="detailsbox box-full box-border box-border_radius box-shadow">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
+				<div class="detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
 					<ul class="kform user-edit-information-list clear" id="kedit-user-forum-settings">
 						<?php foreach ($this->settings as $setting) : ?>
-						<li class="user-edit-information-row box-hover box-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
 								<label for="k<?php echo $setting->name ?>"><?php echo $setting->label ?></label>
 							</div>

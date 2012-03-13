@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="topic-row box-hover box-hover_list-row clear">
+<li class="topic-row kbox-hover kbox-hover_list-row box-full">
 	<dl class="list-unstyled">
 		<dd class="topic-icon">[K=TOPIC_ICON]</dd>
 		<dd class="topic-subject">

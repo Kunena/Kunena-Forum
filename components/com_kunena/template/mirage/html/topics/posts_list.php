@@ -10,16 +10,16 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule topics-posts_list">
+	<div class="kbox-wrapper">
+		<div class="topics-posts_list-kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a title="Recent Posts" rel="kposts-detailsbox"><?php echo $this->headerText ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper innerspacer">
-				<div class="rec-posts posts-detailsbox detailsbox box-full box-border box-border_radius box-shadow">
+			<div class="detailsbox-wrapper innerspacer box-full">
+				<div class="rec-posts posts-detailsbox detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
 					<ul class="list-unstyled post-list">
 						<?php if (empty($this->messages )) : ?>
 							<li class="post-row">

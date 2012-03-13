@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 // FIXME: add pagination
 ?>
 <div class="kmodule announcement-list">
-	<div class="kbox-wrapper box-full">
+	<div class="kbox-wrapper kbox-full">
 		<div class="announcement-list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header fl">

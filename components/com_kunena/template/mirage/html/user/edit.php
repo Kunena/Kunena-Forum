@@ -12,10 +12,10 @@ defined ( '_JEXEC' ) or die ();
 
 JHTML::_('behavior.tooltip');
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius">
-		<div class="userprofile block">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule user-edit">
+	<div class="kbox-wrapper kbox-full">
+		<div class="user-edit-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-child kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header fl">
 					<h2 class="header"><a href="#" rel="kmod-detailsbox"><?php echo JText::_('COM_KUNENA_USER_PROFILE').' '.$this->escape($this->name) ?></a></h2>
 				</div>

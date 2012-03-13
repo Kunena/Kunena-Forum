@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 if (empty($this->categoryButtons)) return;
 ?>
-<div class="innerbox-wrapper innerspacer-top">
+<div class="innerbox-wrapper innerspacer-top kbox-full">
 	<ul class="buttonbar buttons-category">
 		<?php echo implode(' ', $this->categoryButtons) ?>
 	</ul>

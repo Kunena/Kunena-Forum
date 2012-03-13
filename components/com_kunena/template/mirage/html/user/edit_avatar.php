@@ -10,19 +10,19 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius">
-		<div class="keditavatar block">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule user-edit_avatar">
+	<div class="kbox-wrapper kbox-full">
+		<div class="user-edit_avatar-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="kchange-avatar-image"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE') ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper innerspacer">
-				<div class="detailsbox box-full box-border box-border_radius box-shadow">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
+				<div class="detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
 					<ul class="kform user-edit-information-list clear" id="kchange-avatar-image">
 						<?php if ($this->profile->avatar): ?>
-						<li class="user-edit-information-row box-hover box-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
 								<label for="kavatar-keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP') ?></label>
 							</div>
@@ -30,7 +30,7 @@ defined ( '_JEXEC' ) or die ();
 								<input id="kavatar-keep" type="radio" name="avatar" value="keep" checked="checked" />
 							</div>
 						</li>
-						<li class="user-edit-information-row box-hover box-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
 								<label for="kavatar-delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE') ?></label>
 							</div>
@@ -40,7 +40,7 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 						<?php endif; ?>
 						<?php if ($this->config->allowavatarupload) : ?>
-						<li class="user-edit-information-row box-hover box-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
 								<label for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY') ?></label>
 							</div>
@@ -50,7 +50,7 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 						<?php endif ?>
 						<?php if ($this->config->allowavatargallery) : ?>
-						<li class="user-edit-information-row box-hover box-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
 								<label for="avatar_category_select"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY') ?></label>
 							</div>

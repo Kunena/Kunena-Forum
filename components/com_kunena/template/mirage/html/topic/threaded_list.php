@@ -10,10 +10,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="topic_threaded-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper">
+<div class="kmodule topic-threaded_list">
+	<div class="kbox-wrapper kbox-full">
+		<div class="topic-threaded_list-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<!-- a href="#" title="Topic RSS Feed"><span class="krss-icon">Topic RSS Feed</span></a -->
 					<!-- a href="#" title="View Subscribers of this Topic" class="ktopic-subsc">4 Subscribers</a -->
@@ -30,10 +30,8 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif ?>
 				</div>
 			</div>
-			<div class="innerbox-wrapper innerspacer">
-				<?php echo $this->displayTopicActions(0); ?>
-			</div>
-			<div class="innerbox-wrapper">
+			<?php echo $this->displayTopicActions(0); ?>
+			<div class="innerbox-wrapper kbox-full">
 				<div class="topic_threaded-detailsbox detailsbox">
 					<ul class="list-unstyled topic-posts">
 						<?php $this->displayMessage($this->state->get('item.mesid'), $this->messages[$this->state->get('item.mesid')], 'message') ?>
@@ -45,18 +43,18 @@ defined ( '_JEXEC' ) or die ();
 </div>
 <div class="spacer"></div>
 
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius box-shadow">
-		<div class="topic_threaded block">
-			<div class="headerbox-wrapper">
+<div class="kmodule topic-threaded_list">
+	<div class="kbox-wrapper">
+		<div class="topic-threaded_list-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper box-full">
 				<div class="header">
 					<h2 class="header"><?php echo JText::sprintf('COM_KUNENA_TOPIC_REPLIES_TITLE', $this->escape($this->topic->subject)) ?></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper innerspacer">
-				<div class="topic_threaded-detailsbox detailsbox box-full box-border box-border_radius box-shadow">
+			<div class="detailsbox-wrapper innerspacer box-full">
+				<div class="topic_threaded-detailsbox detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
 					<ul class="list-unstyled topic_threaded_tree-list">
-						<li class="header box-hover_header-row clear">
+						<li class="header kbox-hover_header-row clear">
 							<dl class="list-unstyled">
 								<dd class="topic_threaded_tree-post">
 									<span class="bold"><?php echo JText::_('Post') ?></span>

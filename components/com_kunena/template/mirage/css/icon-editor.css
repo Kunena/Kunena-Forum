@@ -11,6 +11,7 @@
 
 #kunena.layout #kbbcode-toolbar li {
 	float: left;
+	display: inline;
 	list-style-image: none !important;
 	list-style-type: none !important;
 	margin: 0px;
@@ -23,8 +24,8 @@
 
 #kunena.layout #kbbcode-toolbar li a {
 	display: block;
-	height: 24px;
-	width: 24px;
+	height: 18px;
+	width: 18px;
 }
 
 #kunena.layout ul#kbbcode-toolbar li a.kbbcode-separator {

@@ -10,17 +10,17 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="history-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper">
+<div class="kmodule topic-edit_history">
+	<div class="kbox-wrapper kbox-full">
+		<div class="topic-edit_history-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="khistory">Topic History of: <?php echo $this->escape($this->topic->subject)?></a></h2>
 					<p class="header-desc"><?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->escape($this->config->historylimit) . ' <em>' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' ).'</em>'?></p>
 				</div>
 			</div>
 			<div class="detailsbox-wrapper innerspacer">
-				<div class="detailsbox box-border box-border_radius box-shadow">
+				<div class="detailsbox kbox-border kbox-border_radius kbox-shadow">
 					<ul class="kposts">
 						<?php foreach ( $this->history as $this->message ):
 							$profile = $this->message->getAuthor();

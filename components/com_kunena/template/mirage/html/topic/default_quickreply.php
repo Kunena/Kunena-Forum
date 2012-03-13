@@ -11,20 +11,20 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <?php if ( $this->quickreply ) : ?>
-	<li id="kreply<?php echo $this->displayField('message', 'id') ?>_form" class="kreply-form" style="display: none">
+	<li id="kreply<?php echo $this->displayMessageField('id') ?>_form" class="kreply-form" style="display: none">
 		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topic') ?>" method="post" name="postform" enctype="multipart/form-data">
 			<input type="hidden" name="task" value="post" />
-			<input type="hidden" name="parentid" value="<?php echo $this->displayField('message', 'id') ?>" />
-			<input type="hidden" name="catid" value="<?php echo $this->displayField('category', 'id') ?>" />
+			<input type="hidden" name="parentid" value="<?php echo $this->displayMessageField('id') ?>" />
+			<input type="hidden" name="catid" value="<?php echo $this->displayCategoryField('id') ?>" />
 			<?php echo JHTML::_( 'form.token' ) ?>
 
 			<?php if ($this->me->exists() && $this->category->allow_anonymous): ?>
 				<input type="text" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->profile->getName()) ?>" /><br />
-				<input type="checkbox" id="kanonymous<?php echo $this->displayField('message', 'id') ?>" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous<?php echo intval($this->message->id) ?>"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC') ?></label><br />
+				<input type="checkbox" id="kanonymous<?php echo $this->displayMessageField('id') ?>" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous<?php echo intval($this->message->id) ?>"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC') ?></label><br />
 			<?php else: ?>
 				<input type="hidden" name="authorname" value="<?php echo $this->escape($this->profile->getName()) ?>" />
 			<?php endif; ?>
-			<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo $this->displayField('message', 'subject') ?>" /><br />
+			<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo $this->displayMessageField('subject') ?>" /><br />
 			<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
 			<?php if ($this->topic->authorise('subscribe')) : ?>
 				<input type="checkbox" name="subscribeMe" value="1" <?php echo ($this->config->subscriptionschecked == 1) ? 'checked="checked"' : '' ?> />

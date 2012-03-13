@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li id="kpost-toolbar" class="postmessage-row box-hover box-hover_list-row">
+<li id="kpost-toolbar" class="postmessage-row kbox-hover kbox-hover_list-row">
 	<div class="form-label">
 		<label>
 			<?php echo JText::_('COM_KUNENA_BOARDCODE') ?>
@@ -166,14 +166,14 @@ defined ( '_JEXEC' ) or die ();
 			<?php endif ?>
 
 			<div class="kposthint clear">
-				<input type="text" value="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT') ?>" maxlength="100" disabled="disabled" class="box-width inputbox" size="45" id="helpbox" name="helpbox" />
+				<input type="text" value="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT') ?>" maxlength="100" disabled="disabled" class="kbox-width inputbox" size="45" id="helpbox" name="helpbox" />
 			</div>
 		</div>
 
 	</div>
 </li>
 
-<li class="postmessage-row box-hover box-hover_list-row">
+<li class="postmessage-row kbox-hover kbox-hover_list-row">
 	<div class="form-label">
 		<label for="kbbcode-message">
 			<strong><?php echo (JText::_('COM_KUNENA_MESSAGE')) ?></strong><br />
@@ -182,7 +182,7 @@ defined ( '_JEXEC' ) or die ();
 		</label>
 	</div>
 	<div class="form-field">
-		<textarea cols="50" rows="10" id="kbbcode-message" name="message" class="box-width txtarea required hasTip" title="<?php echo (JText::_('COM_KUNENA_MESSAGE')) ?> :: <?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
+		<textarea cols="50" rows="10" id="kbbcode-message" name="message" class="kbox-width txtarea required hasTip" title="<?php echo (JText::_('COM_KUNENA_MESSAGE')) ?> :: <?php echo JText::_('COM_KUNENA_ENTER_MESSAGE') ?>"><?php echo $this->escape($this->message->message); ?></textarea>
 		<!-- Hidden preview placeholder -->
 		<div style="display: none;" id="kbbcode-preview"></div>
 		<?php if ($this->message->exists()) : ?>

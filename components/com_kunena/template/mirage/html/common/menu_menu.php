@@ -33,13 +33,13 @@ foreach ($this->list as $i => $item) :
 	}
 
 	$class .= ($item->deeper) ? ' deeper' : '';
-	$class .= ($item->parent) ? ' parent' : '';
+	$class .= ($item->parent) ? ' parent dropdown' : '';
 	$class = !empty($class) ? ' class="'.trim($class) .'"' : '';
 
 	echo '<li'.$class.'>';
 
 	$flink = ' href="'.htmlspecialchars($item->flink).'" ';
-	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : '';
+	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : 'class="link"';
 	$title = $item->anchor_title ? ' title="'.$item->anchor_title.'" ' : '';
 	if ($item->menu_image) {
 		$menu_text = $item->params->get('menu_text', 1);
@@ -74,7 +74,7 @@ foreach ($this->list as $i => $item) :
 
 	if ($item->deeper) {
 		// The next item is deeper.
-		echo '<ul>';
+		echo '<ul class="dropdown-menu">';
 	} elseif ($item->shallower) {
 		// The next item is shallower.
 		echo '</li>';

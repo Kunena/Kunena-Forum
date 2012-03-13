@@ -21,10 +21,10 @@ if (version_compare(JVERSION, '1.7','>')) {
 	$this->document->addScript(JURI::Root(true).'/includes/js/joomla.javascript.js');
 }
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="attachments-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule user-default_attachments">
+	<div class="kbox-wrapper kbox-full">
+		<div class="user-default_attachments-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2><span><?php echo $this->title;?></span></h2>
 				</div>

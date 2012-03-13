@@ -10,10 +10,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="statistics-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule common-statistics">
+	<div class="kbox-wrapper kbox-full">
+		<div class="common-statistics-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header fl">
 					<h2 class="header link-header2">
 						<a class="section" href="<?php echo $this->statisticsUrl ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>" rel="statistics-detailsbox">
@@ -25,8 +25,8 @@ defined ( '_JEXEC' ) or die ();
 					<a class="link" href="<?php echo $this->statisticsUrl ?>" rel="follow"><?php echo JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS') ?></a>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper innerspacer">
-				<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
+				<div class="statistics-details detailsbox kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow">
 					<div class="statistics-smicon">
 						<a href="<?php echo $this->statisticsUrl ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>" rel="nofollow">
 							<span class="stats-smicon"></span>

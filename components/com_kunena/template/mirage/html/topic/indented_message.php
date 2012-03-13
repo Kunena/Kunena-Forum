@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 <li class="topic-row">
 	<div class="post-indent" style="padding-left: <?php echo (max(0,count($this->message->indent)-3)*2) ?>%">
 		<dl class="list-unstyled">
-			<dd class="box-border box-border_radius box-shadow">
+			<dd class="kbox-border kbox-border_radius kbox-shadow">
 				<ul class="list-unstyled message-list">
 					<li class="header">
 						<a id="<?php echo intval($this->message->id) ?>"></a>
@@ -27,7 +27,7 @@ defined ( '_JEXEC' ) or die ();
 					</li>
 				</ul>
 				[K=MESSAGE_PROFILE]
-				<div class="kpost-container box-hover">
+				<div class="kpost-container kbox-hover">
 					<ul class="list-unstyled kpost-post-body">
 						<li class="kpost-body">
 							<?php echo $this->parse($this->message->message) ?>

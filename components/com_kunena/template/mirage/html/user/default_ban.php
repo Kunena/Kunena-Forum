@@ -15,16 +15,16 @@ JHTML::_('behavior.calendar');
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="ban-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
+<div class="kmodule user-default_ban">
+	<div class="kbox-wrapper kbox-full">
+		<div class="user-default_ban-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kform-ban" name="kformban" method="post">
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="ban" />
 				<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 
-				<div class="headerbox-wrapper box-full">
+				<div class="headerbox-wrapper kbox-full">
 					<div class="header">
 						<h2 class="header"><span><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></span></h2>
 					</div>

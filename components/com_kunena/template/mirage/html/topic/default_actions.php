@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="innerbox-wrapper innerspacer-top">
+<div class="innerbox-wrapper innerspacer-top kbox-full">
 	<ul class="buttonbar buttons-topic">
 		<?php echo implode(' ', $this->topicButtons->getProperties()) ?>
 	</ul>

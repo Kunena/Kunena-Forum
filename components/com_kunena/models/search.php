@@ -61,6 +61,9 @@ class KunenaModelSearch extends KunenaModel {
 		$value = JRequest::getInt ( 'childforums', 0 );
 		$this->setState ( 'query.childforums', $value );
 
+		$value = JRequest::getInt ( 'topic_id', 0 );
+		$this->setState ( 'query.topic_id', $value );
+
 		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
 			$value = JRequest::getVar ( 'catids', array (0), 'post', 'array' );
 			JArrayHelper::toInteger($value);
@@ -151,6 +154,11 @@ class KunenaModelSearch extends KunenaModel {
 			} else {
 				$querystrings [] = "m.time <= '{$time}'";
 			}
+		}
+
+		$topic_id = $this->getState('query.topic_id');
+		if ( $topic_id ) {
+			$querystrings [] = "m.id = '{$topic_id}'";
 		}
 
 		return implode ( ' AND ', $querystrings );
@@ -267,7 +275,7 @@ class KunenaModelSearch extends KunenaModel {
 		// Turn internal state into URL, but ignore default values
 		$defaults = array ('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
 			'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-			'order' => 'dec', 'catids' => '0', 'show' => '0' );
+			'order' => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0 );
 
 		$url_params = '';
 		$state = $this->getState();

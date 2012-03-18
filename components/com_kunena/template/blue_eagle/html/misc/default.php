@@ -12,19 +12,12 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kblock kdefault">
 	<div class="kheader">
-		<h2><?php echo $this->escape($this->header); ?></h2>
+		<h2><?php echo $this->header ?></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
 			<div class="kcontent khelprulescontent">
-			<?php
-			if ($this->format == 'html') :
-				echo $this->body;
-			elseif ($this->format == 'text') :
-				echo $this->escape($this->body);
-			else :
-			echo KunenaHtmlParser::parseBBCode($this->body);
-			endif; ?>
+				<?php echo $this->body ?>
 			</div>
 		</div>
 	</div>

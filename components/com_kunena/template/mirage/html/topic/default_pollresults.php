@@ -1,27 +1,27 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 $row = 0;
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="poll-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper">
+<div class="kmodule topic-default_pollresults">
+	<div class="kbox-wrapper kbox-full">
+		<div class="topic-default_pollresults-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpolls_tbody"></a></span>
 					<h2 class="header"><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText ($this->poll->title); ?></span></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
-				<div class="detailsbox box-border box-border_radius box-shadow">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
+				<div class="detailsbox kbox-border kbox-border_radius kbox-shadow">
 					<div class="kpolldesc" style="border: 1px solid #BCBCBC;">
 						<?php foreach ( $this->poll->getOptions() as $option ) : ?>
 							<ul class="kpollresult">
@@ -31,7 +31,7 @@ $row = 0;
 								<li class="kpollresult-list"><?php if(isset($option->votes) && ($option->votes > 0)) { echo $option->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></li>
 								<li class="kpollresult-list-end"> <?php echo round(($option->votes*100)/max($this->poll->getTotal(),1),1)."%"; ?></li>
 							</ul>
-		
+
 						<?php endforeach; ?>
 						<ul style="border-bottom: 1px solid #BCBCBC;">
 							<li>

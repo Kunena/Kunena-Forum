@@ -1,27 +1,27 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="category_user-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule category-user">
+	<div class="kbox-wrapper kbox-full">
+		<div class="category-user-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a title="<?php echo $this->header ?>" rel="kposts-detailsbox"><?php echo $this->header ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="kdetailsbox krec-posts" id="kposts-detailsbox">
 					<ul class="list-unstyled topic-list">
-						<li class="header box-hover_header-row clear">
+						<li class="header kbox-hover_header-row clear">
 							<dl class="list-unstyled">
 								<dd class="subscription-icon">
 								</dd>
@@ -47,7 +47,7 @@ defined ( '_JEXEC' ) or die ();
 					</ul>
 					<ul class="list-unstyled subscription-list">
 						<?php if (empty($this->categories )) : ?>
-							<li class="topics-row box-hover box-hover_list-row">
+							<li class="topics-row kbox-hover kbox-hover_list-row">
 								<?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS_NONE'); ?>
 							</li>
 						<?php
@@ -62,5 +62,5 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
 <div class="spacer"></div>

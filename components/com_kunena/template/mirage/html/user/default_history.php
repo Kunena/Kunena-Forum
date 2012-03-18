@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,18 +13,18 @@ defined ( '_JEXEC' ) or die ();
 $j=count($this->banhistory);
 ?>
 
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="history-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule user-history">
+	<div class="kbox-wrapper kbox-full">
+		<div class="user-history-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="kbanhistory-detailsbox"><?php echo JText::sprintf('COM_KUNENA_BAN_BANHISTORYFOR', $this->escape($this->profile->name)); ?></a></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="detailsbox banhistory">
 					<ul class="list-unstyled topic-list">
-						<li class="header box-hover_header-row clear">
+						<li class="header kbox-hover_header-row clear">
 							<dl>
 								<dd class="kcol-first kid"> # </dd>
 								<dd class="kcol-mid kbanfrom"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></dd>

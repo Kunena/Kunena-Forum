@@ -1,20 +1,20 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="topic_threaded_tree-row box-hover box-hover_list-row clear">
+<li class="topic_threaded_tree-row kbox-hover kbox-hover_list-row clear">
 	<dl class="list-unstyled">
 		<dd class="topic_threaded_tree-post">
 			<?php foreach($this->message->indent as $indent) : ?>
-				<span class="ktree ktree-<?php echo $indent ?>  box-full">
+				<span class="ktree ktree-<?php echo $indent ?>  kbox-full">
 					<?php switch ($indent) :
 						case 'root' :
 						?>

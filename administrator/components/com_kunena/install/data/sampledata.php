@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 
 class KText {
 	function _($string) {
-		return JText::_(str_replace('\n', "\n", html_entity_decode($string, ENT_COMPAT, 'UTF-8')));
+		return str_replace('\n', "\n", html_entity_decode(JText::_($string), ENT_COMPAT, 'UTF-8'));
 	}
 }
 

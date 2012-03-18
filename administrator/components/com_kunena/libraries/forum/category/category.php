@@ -132,6 +132,18 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
 	}
 
+	public function displayField($field) {
+		switch ($field) {
+			case 'id':
+				return intval($this->id);
+			case 'name':
+				return KunenaHtmlParser::parseText($this->name);
+			case 'description':
+			case 'headerdesc':
+				return KunenaHtmlParser::parseBBCode($this->$field);
+		}
+	}
+
 	public function getCategory() {
 		return $this;
 	}

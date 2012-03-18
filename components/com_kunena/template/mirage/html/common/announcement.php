@@ -12,18 +12,18 @@ defined ( '_JEXEC' ) or die ();
 // TODO: add support for announcement RSS feed
 ?>
 
-<div class="box-module">
-	<div class="box-wrapper">
-		<div class="announce-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kbox-module common-announcement">
+	<div class="kbox-wrapper kbox-full">
+		<div class="common-announcement-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header fl">
 					<h2 class="header link-header2">
 						<?php echo JHtml::_('kunenaforum.link', $this->annListUrl, $this->announcement->displayField('title'), JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST'), null, 'follow', array('rel'=>'kannounce-detailsbox')); ?>
 					</h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
-				<div class="announce-details detailsbox innerspacer box-full box-hover box-border box-border_radius box-shadow" id="announce-detailsbox">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
+				<div class="common-announce-detailbox detailsbox innerspacer kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow">
 					<ul class="list-unstyled details-desc">
 						<?php if ($this->showdate) : ?>
 						<li class="kannounce-date" title="<?php echo $this->announcement->displayField('created', 'ago'); ?>">

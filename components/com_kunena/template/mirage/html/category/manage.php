@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,7 +14,6 @@ JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" enctype="multipart/form-data" id="adminForm" name="adminForm" method="post" class="adminForm form-validate">
-	<input type="hidden" name="view" value="category" />
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering') ?>" />
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction') ?>" />
@@ -22,10 +21,10 @@ JHTML::_('behavior.tooltip');
 	<input type="hidden" name="boxchecked" value="0" />
 	<?php echo JHTML::_( 'form.token' ); ?>
 
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="manage-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule category-manage">
+	<div class="kbox-wrapper kbox-full">
+		<div class="category-manage-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="ksection-categories" title="<?php echo $this->header ?>"><?php echo $this->header ?></a></h2>
 			<table class="kgrid kgrid-categories" id="kcategories-manager">
@@ -112,20 +111,7 @@ JHTML::_('behavior.tooltip');
 	</div>
 
 	<div id="ksection-modbox">
-		<select name="batch" id="kmoderate-select" class="kinputbox" size="1">
-			<option value=""><?php echo JText::_('COM_KUNENA_SELECT_BATCH_OPTION') ?></option>
-			<option value="publish"><?php echo JText::_('COM_KUNENA_PUBLISH') ?></option>
-			<option value="unpublish"><?php echo JText::_('COM_KUNENA_UNPUBLISH') ?></option>
-			<option value="lock"><?php echo JText::_('COM_KUNENA_LOCK') ?></option>
-			<option value="unlock"><?php echo JText::_('COM_KUNENA_UNLOCK') ?></option>
-			<option value="review"><?php echo JText::_('COM_KUNENA_ENABLE_REVIEW') ?></option>
-			<option value="unreview"><?php echo JText::_('COM_KUNENA_DISABLE_REVIEW') ?></option>
-			<option value="allow_anomymous"><?php echo JText::_('COM_KUNENA_ALLOW_ANONYMOUS') ?></option>
-			<option value="deny_anonymous"><?php echo JText::_('COM_KUNENA_DISALLOW_ANONYMOUS') ?></option>
-			<option value="allow_polls"><?php echo JText::_('COM_KUNENA_ALLOW_POLLS') ?></option>
-			<option value="deny_polls"><?php echo JText::_('COM_KUNENA_DISALLOW_POLLS') ?></option>
-			<option value="delete"><?php echo JText::_('COM_KUNENA_DELETE') ?></option>
-		</select>
+		<?php echo $this->displayManageActions('class="kinputbox" size="1"', 'kmoderate-select') ?>
 		<button class="button" onclick="javascript: submitbutton(this.form.batch.value)"><?php echo JText::_('COM_KUNENA_SUBMIT') ?></button>
 	</div>
 	</div>

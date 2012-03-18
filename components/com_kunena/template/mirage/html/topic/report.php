@@ -1,19 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="report-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule topic-report">
+	<div class="kbox-wrapper kbox-full">
+		<div class="topic-report-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></h2>
 				</div>
@@ -25,8 +25,8 @@ defined ( '_JEXEC' ) or die ();
 				<input type="hidden" name="id" value="<?php echo intval($this->id); ?>"/>
 				<input type="hidden" name="mesid" value="<?php echo intval($this->mesid); ?>"/>
 				<?php echo JHTML::_( 'form.token' ); ?>
-				<div class="detailsbox-wrapper">
-					<div class="detailsbox box-full box-border box-border_radius box-shadow">
+				<div class="detailsbox-wrapper innerspacer">
+					<div class="detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
 						<ul class="kform clearfix">
 							<li class="krow-odd">
 								<div class="kform-label"><label for="kreport-reason"><?php echo JText::_('COM_KUNENA_REPORT_REASON') ?>:</label></div>

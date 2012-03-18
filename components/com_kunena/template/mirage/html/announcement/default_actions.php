@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Template.Mirage
- * @subpackage Topics
+ * @subpackage Announcement
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,4 +10,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->displayTemplateFile('topics', 'default', 'actions');
+if (empty($this->buttons)) return;
+?>
+<div class="innerbox-wrapper innerspacer-top">
+	<ul class="buttonbar">
+		<?php echo implode(' ', $this->buttons) ?>
+	</ul>
+</div>

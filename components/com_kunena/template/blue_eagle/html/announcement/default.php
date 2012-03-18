@@ -14,28 +14,19 @@ defined ( '_JEXEC' ) or die ();
 <div class="kblock kannouncement">
 	<div class="kheader">
 		<h2>
-			<span><?php echo $this->announcement->displayField('title') ?></span>
+			<span><?php echo $this->displayField('title') ?></span>
 		</h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
-		<?php if ($this->actions) : ?>
-		<div class="kactions">
-			<?php
-			foreach ($this->actions as $name => $url) {
-				$links[] = JHtml::_('kunenaforum.link', $url, JText::_("COM_KUNENA_ANN_{$name}"), JText::_("COM_KUNENA_ANN_{$name}"));
-			}
-			echo implode(' | ', $links);
-			?>
-		</div>
-		<?php endif; ?>
+		<?php echo $this->displayActions() ?>
 		<div class="kbody">
 			<div class="kanndesc">
 				<?php if ($this->showdate) : ?>
-				<div class="anncreated" title="<?php echo $this->announcement->displayField('created', 'ago'); ?>">
-					<?php echo $this->announcement->displayField('created', 'date_today') ?>
+				<div class="anncreated" title="<?php echo $this->displayField('created', 'ago'); ?>">
+					<?php echo $this->displayField('created', 'date_today') ?>
 				</div>
 				<?php endif; ?>
-				<div class="anndesc"><?php echo $this->announcement->displayField('description') ?></div>
+				<div class="anndesc"><?php echo $this->displayField('description') ?></div>
 			</div>
 		</div>
 	</div>

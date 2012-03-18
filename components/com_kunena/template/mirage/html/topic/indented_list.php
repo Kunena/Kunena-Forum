@@ -1,19 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="topic_indented-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper">
+<div class="kmodule topic-indented_list">
+	<div class="kbox-wrapper kbox-full">
+		<div class="topic-indented_list-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper box-full">
 				<div class="header">
 				<!-- a href="#" title="Topic RSS Feed"><span class="krss-icon">Topic RSS Feed</span></a -->
 				<!-- a href="#" title="View Subscribers of this Topic" class="ktopic-subsc">4 Subscribers</a -->
@@ -30,13 +30,11 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif ?>
 				</div>
 			</div>
-			<div class="innerbox-wrapper innerspacer">
-				<?php echo $this->displayTopicActions(0); ?>
-			</div>
+			<?php echo $this->displayTopicActions(0); ?>
 			<div class="innerbox-wrapper innerspacer">
 				<?php echo $this->getPagination(4); ?>
 			</div>
-			<div class="innerbox-wrapper">
+			<div class="innerbox-wrapper kbox-full">
 				<div class="topic_indented-detailsbox detailsbox">
 					<ul class="list-unstyled topic-posts">
 						<?php foreach ( $this->messages as $id=>$message ) : ?>

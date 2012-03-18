@@ -15,10 +15,9 @@ defined ( '_JEXEC' ) or die ();
 <?php if (isset($this->rss)) : ?>
 <div class="krss-block"><?php echo $this->rss; ?></div>
 <?php endif; ?>
-<div class="kcredits kms"><?php echo $this->credits; ?></div>
-<?php if ( $this->config->time_to_create_page ) : ?>
+<?php if (($time = $this->getTime()) !== null) : ?>
 <div class="kfooter">
-	<span class="kfooter-time"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $this->getTime()) ?></span>
+	<span class="kfooter-time"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time) ?></span>
 </div>
 <?php endif; ?>
 <!-- /Kunena Footer -->

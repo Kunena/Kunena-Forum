@@ -9,23 +9,25 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-$item = array_shift($this->pathway);
 ?>
-<?php if ($item) : ?>
-	<div class="kmodule">
-		<div class="box-wrapper">
-			<div class="breadcrumb-kbox kbox box-color box-border box-border_radius box-shadow">
-				<div class="breadcrumb-wrapper">
-					<ul class="list-unstyled breadcrumb-path">
-						<li><a class="link" href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
-						<?php foreach ($this->pathway as $item) : ?>
-						<li><span class="inline-divider">&#47;</span><a class="link" href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
-						<?php endforeach ?>
-					</ul>
-				</div>
+<?php if (($item = array_shift($this->pathway)) !== null) : ?>
+	<div class="kmodule common-breadcrumb">
+		<div class="kbox-wrapper kbox-full">
+			<div class="common-breadcrumb-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-shadow">
+				<ul class="list-unstyled breadcrumb-path">
+					<li><a class="link" href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
+					<?php foreach ($this->pathway as $item) : 
+						if(end($this->pathway) != $item) :
+					?>	
+							<li><span class="inline-divider">&#47;</span><a class="link" href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
+						<?php else: ?>
+							<li><span class="inline-divider">&#47;</span><span><?php echo $item->name ?></span></li>
+						<?php endif ?>
+					<?php endforeach ?>
+				</ul>
 			</div>
 		</div>
 	</div>
 	<div class="spacer"></div>
 <?php endif ?>
+<?php echo $this->getModulePosition ( 'kunena_breadcrumb' ) ?>

@@ -342,40 +342,40 @@ class KunenaModelInstall extends JModel {
 			$success = JFolder::copy(KPATH_ADMIN .'/'. $path, $dest);
 		}
 		// We need to have only one manifest which is named as kunena.xml
-		if ($success && version_compare(JVERSION, '1.6','>')) {
+		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 2.5+
-			if (is_file("{$dest}/mod_{$name}.j15.xml")) {
-				JFile::delete("{$dest}/mod_{$name}.j15.xml");
+			if ($success && is_file("{$dest}/mod_{$name}.j15.xml")) {
+				$success = JFile::delete("{$dest}/mod_{$name}.j15.xml");
 			}
-			if (is_file("{$dest}/mod_{$name}.j25.xml")) {
+			if ($success && is_file("{$dest}/mod_{$name}.j25.xml")) {
 				$success = JFile::move("{$dest}/mod_{$name}.j25.xml", "{$dest}/mod_{$name}.xml");
 			}
 		} else {
 			// Joomla 1.5
-			if (is_file("{$dest}/mod_{$name}.j25.xml")) {
-				JFile::delete("{$dest}/mod_{$name}.j25.xml");
+			if ($success && is_file("{$dest}/mod_{$name}.j25.xml")) {
+				$success = JFile::delete("{$dest}/mod_{$name}.j25.xml");
 			}
-			if (is_file("{$dest}/mod_{$name}.j15.xml")) {
+			if ($success && is_file("{$dest}/mod_{$name}.j15.xml")) {
 				$success = JFile::move("{$dest}/mod_{$name}.j15.xml", "{$dest}/mod_{$name}.xml");
 			}
 		}
 		// TODO: copy all language files to module directory
-		JFolder::create($dest.'/language/en-GB');
-		JFile::copy(KPATH_SITE."/language/index.html", "{$dest}/language/en-GB/index.html");
-		if (is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.ini")) {
+		if ($success) $success = JFolder::create($dest.'/language/en-GB');
+		if ($success) $success = JFile::copy(KPATH_SITE."/language/index.html", "{$dest}/language/en-GB/index.html");
+		if ($success && is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.ini")) {
 			$success = JFile::copy(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
 		}
-		if (is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.sys.ini")) {
+		if ($success && is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.sys.ini")) {
 			$success = JFile::copy(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.sys.ini");
 		}
 
 		// Only install module if it can be used in current Joomla version (manifest exists)
-		if (is_file("{$dest}/mod_{$name}.xml")) {
+		if ($success && is_file("{$dest}/mod_{$name}.xml")) {
 			$installer = new JInstaller ( );
 			$success = $installer->install ( $dest );
-			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', ucfirst($name)), $success);
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_MODULE_STATUS', ucfirst($name)), $success);
 		} elseif (!$success) {
-			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', ucfirst($name)), $success);
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_MODULE_STATUS', ucfirst($name)), $success);
 		}
 		JFolder::delete($dest);
 		return $success;
@@ -392,35 +392,35 @@ class KunenaModelInstall extends JModel {
 			$success = JFolder::copy(KPATH_ADMIN .'/'. $path, $dest);
 		}
 		// We need to have only one manifest which is named as kunena.xml
-		if ($success && version_compare(JVERSION, '1.6','>')) {
+		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
-			if (is_file("{$dest}/{$name}.j15.xml")) {
-				JFile::delete("{$dest}/{$name}.j15.xml");
+			if ($success && is_file("{$dest}/{$name}.j15.xml")) {
+				$success = JFile::delete("{$dest}/{$name}.j15.xml");
 			}
-			if (is_file("{$dest}/{$name}.j16.xml")) {
+			if ($success && is_file("{$dest}/{$name}.j16.xml")) {
 				$success = JFile::move("{$dest}/{$name}.j16.xml", "{$dest}/{$name}.xml");
 			}
 		} else {
 			// Joomla 1.5
-			if (is_file("{$dest}/{$name}.j16.xml")) {
-				JFile::delete("{$dest}/{$name}.j16.xml");
+			if ($success && is_file("{$dest}/{$name}.j16.xml")) {
+				$success = JFile::delete("{$dest}/{$name}.j16.xml");
 			}
-			if (is_file("{$dest}/{$name}.j15.xml")) {
+			if ($success && is_file("{$dest}/{$name}.j15.xml")) {
 				$success = JFile::move("{$dest}/{$name}.j15.xml", "{$dest}/{$name}.xml");
 			}
 		}
 		// TODO: copy all language files to module directory
-		JFolder::create($dest.'/language/en-GB');
-		JFile::copy(KPATH_ADMIN."/language/index.html", "{$dest}/language/en-GB/index.html");
-		if (is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
+		$success = JFolder::create($dest.'/language/en-GB');
+		$success = JFile::copy(KPATH_ADMIN."/language/index.html", "{$dest}/language/en-GB/index.html");
+		if ($success && is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
 			$success = JFile::copy(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
 		}
-		if (is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini")) {
+		if ($success && is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini")) {
 			$success = JFile::copy(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini");
 		}
 
 		// Only install plugin if it can be used in current Joomla version (manifest exists)
-		if (is_file("{$dest}/{$name}.xml")) {
+		if ($success && is_file("{$dest}/{$name}.xml")) {
 			$installer = new JInstaller ( );
 			$success = $installer->install ( $dest );
 			if ($success && $publish) {

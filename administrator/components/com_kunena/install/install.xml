@@ -50,9 +50,9 @@
 		<field name="locked" type="tinyint(4)" null="0" default="0" />
 		<field name="accesstype" type="varchar(20)" null="0" default="none" />
 		<field name="access" type="int(11)" null="0" default="0" />
-		<field name="pub_access" type="tinyint(4)" null="1" default="1" />
+		<field name="pub_access" type="int(11)" null="1" default="1" />
 		<field name="pub_recurse" type="tinyint(4)" null="1" default="1" />
-		<field name="admin_access" type="tinyint(4)" null="1" default="0" />
+		<field name="admin_access" type="int(11)" null="1" default="0" />
 		<field name="admin_recurse" type="tinyint(4)" null="1" default="1" />
 		<field name="ordering" type="smallint(6)" null="0" default="0" />
 		<field name="published" type="tinyint(4)" null="0" default="0" />

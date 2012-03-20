@@ -130,12 +130,12 @@
 	line-height: normal;
 }
 
-#kunena.layout li.dropdown a > * {
+#kunena.layout li.dropdown .dropdown-menu > * {
 	visibility: hidden;
 	display: none;
 }
 
-#kunena.layout li.dropdown a:hover > * {
+#kunena.layout li.dropdown:hover .dropdown-menu > * {
 	visibility: visible;
 	display: block;
 }

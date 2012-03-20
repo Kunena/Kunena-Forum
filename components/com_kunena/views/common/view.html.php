@@ -237,6 +237,7 @@ class KunenaViewCommon extends KunenaView {
 		if (!$basemenu) return ' ';
 
 		$this->parameters = new JRegistry();
+		$this->parameters->set('showAllChildren', 1);
 		$this->parameters->set('menutype', $basemenu->menutype);
 		if (version_compare(JVERSION, '1.6', '>')) {
 			$this->parameters->set('startLevel', $basemenu->level + 1);

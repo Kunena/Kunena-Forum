@@ -235,9 +235,9 @@
 	/*border: 1px solid;*/
 	padding: 10px 15px 15px 15px;
 	margin-bottom: 15px;
-	/*background-color: #FFFFFF;
+	/*background-color: #FFFFFF;*/
 	/*background-image: -moz-linear-gradient(center top , rgba(0, 0, 0, 0.05) 0%, rgba(127, 127, 127, 0.05) 50%, rgba(255, 255, 255, 0.05) 100%);*/
-	/*box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;*/*/
+	/*box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1) inset;*/
 }
 
 #kunena.layout .bold {
@@ -429,7 +429,7 @@
 	background-color: rgba(100, 100, 100, 0.05);
 }*/
 
-#kunena.layout div.topic-kbox ul.message-list li.header {
+#kunena.layout div.topic-default_list-kbox ul.message-list li.header {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 

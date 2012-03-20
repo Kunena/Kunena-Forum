@@ -103,8 +103,18 @@
 }
 
 #kunena.layout li.dropdown .dropdown-menu {
-	visibility: hidden;
-	display: none;
+	left: 0;
+	right: auto;
+	margin: 0px;
+	min-width: 140px;
+	/*padding: 4px 0;*/
+	position: absolute;
+	top: 99%;
+	z-index: 1000;
+}
+
+#kunena.layout .fr li.dropdown .dropdown-menu {
+	left: auto;
 	right: 0;
 	margin: 0px;
 	max-width: 300px;
@@ -116,11 +126,16 @@
 }
 
 #kunena.layout li.dropdown .dropdown-menu li > a {
-	padding: 5px;
+	padding: 5px 20px;
 	line-height: normal;
 }
 
-#kunena.layout li.dropdown:hover > * {
+#kunena.layout li.dropdown a > * {
+	visibility: hidden;
+	display: none;
+}
+
+#kunena.layout li.dropdown a:hover > * {
 	visibility: visible;
 	display: block;
 }
@@ -856,6 +871,7 @@
 	display: inline;
 	float: left;
 	border: none;
+	position: relative;
 }
 
 /****************

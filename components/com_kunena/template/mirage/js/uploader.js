@@ -311,9 +311,9 @@ Kunena.Uploader = new Class({
 
 			'</div>' +
 			'<div class="upload-buttons">' +
-			'<a class="button upload-button-add">'+'Add Files'+'</a>&nbsp;' +
-			'<a class="button upload-button-start upload-hidden">'+'Start Upload'+'</a>&nbsp;' +
-			'<a class="button upload-button-stop upload-hidden">'+'Stop Upload'+'</a>&nbsp;' +
+			'<a class="kbutton button-type-standard upload-button-add"><span>'+'Add Files'+'</span></a>' +
+			'<a class="kbutton button-type-standard upload-button-start upload-hidden"><span>'+'Start Upload'+'</span></a>' +
+			'<a class="kbutton button-type-standard upload-button-stop upload-hidden"><span>'+'Stop Upload'+'</span></a>' +
 			'</div>' +
 			'</div>' +
 			'</div>' +

@@ -23,7 +23,7 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 					<?php else : ?>
 						<li class="dropdown">
-							<a class="link-logout" href="#">
+							<a class="link-logout link" href="#">
 								<span class="login-member">
 									<span class="login-avatar"><span><?php echo $this->me->getAvatarImage('', 'welcome') ?></span></span>
 									<span class="loginbox">

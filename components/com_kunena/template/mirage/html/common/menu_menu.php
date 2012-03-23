@@ -39,7 +39,7 @@ foreach ($this->list as $i => $item) :
 	echo '<li'.$class.'>';
 
 	$flink = ' href="'.htmlspecialchars($item->flink).'" ';
-	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : 'class="link"';
+	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : 'class="link-menu"';
 	$title = $item->anchor_title ? ' title="'.$item->anchor_title.'" ' : '';
 	if ($item->menu_image) {
 		$menu_text = $item->params->get('menu_text', 1);

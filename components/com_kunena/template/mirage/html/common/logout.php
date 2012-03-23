@@ -11,9 +11,10 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <ul class="list-unstyled login login-profile dropdown-menu">
-	<li class="login-avatar">
+	<li class="login-avatar link-dropdown">
 		<a class="link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>">
-			<span class="login-avatar"><?php echo $this->me->getAvatarImage('', 'welcome'), JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE') ?></span>
+			<span class="login-avatar fl"><?php echo $this->me->getAvatarImage('', 'welcome') ?></span>
+			<span class="login-view_profile"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE') ?></span>
 			<span class="login-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getName()) ?></span>
 		</a>
 	</li>
@@ -24,15 +25,18 @@ defined ( '_JEXEC' ) or die ();
 	<li class="divider"></li>
 	<?php if ($this->logout) : ?>
 		<li class="login-form">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>" method="post" class="form logout">
+			<!--<form action="<?php //echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>" method="post" class="form logout">
 				<input type="hidden" name="task" value="logout" />
-				<?php echo $this->displayFormToken() ?>
+				<?php //echo $this->displayFormToken() ?>
 
 				<fieldset>
-					<legend class="klegend klogout"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_LONG') ?></legend>
-					<button class="kbutton button-type-standard" type="submit"><span><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?></span></button>
+					<legend class="klegend klogout"><?php //echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_LONG') ?></legend>
+					<button class="kbutton button-type-standard" type="submit"><span><?php //echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?></span></button>
 				</fieldset>
-			</form>
+			</form>-->
+			<a class="link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=logout') ?>">
+				<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?>
+			</a>
 		</li>
 	<?php endif ?>
 

@@ -297,6 +297,7 @@
 
 #kunena.layout .form-horizontal {
 	display: inline-block;
+	margin-right: 3px;
 }
 
 #kunena.layout dl.ktabs > dt {

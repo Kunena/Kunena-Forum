@@ -258,6 +258,34 @@
 	color: #005580 !important;
 }
 
+#kunena.layout .link-menu {
+	text-decoration: none !important;
+	background: none !important;
+	/*color: #555555 !important;*/
+	color: #0088CC !important;
+}
+
+#kunena.layout .link-menu:hover {
+	text-decoration: none !important;
+	background: none !important;
+	/*color: #555555 !important;*/
+	color: #005580 !important;
+}
+
+#kunena.layout .link-drodpwon {
+	text-decoration: none !important;
+	background: none !important;
+	/*color: #555555 !important;*/
+	color: #333333 !important;
+}
+
+#kunena.layout .link-dropdown:hover {
+	text-decoration: none !important;
+	background: none !important;
+	/*color: #555555 !important;*/
+	color: #222222 !important;
+}
+
 #kunena.layout .header2 > a {
 	text-decoration: none !important;
 	background: none !important;

@@ -73,7 +73,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 
 							<fieldset id="search-in-a-specific-topic" class="fieldset kbox-hover kbox-border kbox-border_radius">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_ENTER_TOPICID'); ?></legend>
-								<input type="text" value="<?php echo $this->escape($this->state->get('list.topic_id')); ?>" size="30" name="topic_id" class="box-width form-vertical form-field_simple" />
+								<input type="text" value="<?php echo $this->escape($this->state->get('list.topic_id')); ?>" size="30" name="topic_id" class="kbox-width form-vertical form-field_simple" />
 							</fieldset>
 						</div>
 

@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 // Note. It is important to remove spaces between elements.
 ?>
 
-<ul class="menu<?php echo $this->class_sfx;?>"<?php echo ($this->parameters->get('tag_id')) ? " id=\"{$this->parameters->get('tag_id')}\"" : '' ?>>
+<ul class="list-unstyled menu<?php echo $this->class_sfx;?>"<?php echo ($this->parameters->get('tag_id')) ? " id=\"{$this->parameters->get('tag_id')}\"" : '' ?>>
 <?php
 foreach ($this->list as $i => $item) :
 	$class = 'item-'.$item->id;
@@ -39,7 +39,7 @@ foreach ($this->list as $i => $item) :
 	echo '<li'.$class.'>';
 
 	$flink = ' href="'.htmlspecialchars($item->flink).'" ';
-	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : 'class="link"';
+	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : 'class="link-menu"';
 	$title = $item->anchor_title ? ' title="'.$item->anchor_title.'" ' : '';
 	if ($item->menu_image) {
 		$menu_text = $item->params->get('menu_text', 1);

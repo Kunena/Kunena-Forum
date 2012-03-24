@@ -136,7 +136,7 @@
 }
 
 #kunena.layout .kbox-hover:hover {
-	background-color: rgba(0, 0, 0, 0.03);
+	background-color: rgba(0, 0, 0, 0.01);
 }
 
 #kunena.layout .kbox-focus {
@@ -162,12 +162,12 @@
 
 #kunena.layout .kbox-color:hover {
 	/*background-color: rgba(100, 100, 100, 0.1);*/
-	background-image: linear-gradient(top, rgba(89, 155, 220, 0.1) 0%, rgba(48, 114, 179, 0.1) 100%) !important;
+	background-image: linear-gradient(top, rgba(100, 100, 100, 0.1) 0%, rgba(100, 100, 100, 0.1) 100%) !important;
 }
 
 #kunena.layout .kbox-border {
 	/*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-	border-color: rgba(0, 0, 0, 0.08);
+	border-color: rgba(0, 0, 0, 0.1);
 	border-style: solid;
 	border-width: 1px;
 	/*border-radius: 5px;*/
@@ -175,7 +175,7 @@
 
 #kunena.layout .kbox-border:hover {
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-	border-color: rgba(0, 0, 0, 0.08);
+	border-color: rgba(0, 0, 0, 0.1);
 	border-style: solid;
 	border-width: 1px;
 	/*border-radius: 5px;*/
@@ -217,14 +217,14 @@
 	border-top: 1px solid rgba(0, 0, 0, 0.0);
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0);
-	background-color: rgba(255, 255, 255, 0.0);
+	background-color: transparent;
 }
 
 #kunena.layout .kbox-hover_list-row:hover {
-	border-top: 1px solid rgba(255, 255, 255, 0.8);
-	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
-	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
-	background-color: rgba(0, 0, 0, 0.03);
+	border-top: 1px solid rgba(0, 0, 0, 0.0);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.0);
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.0);
+	background-color: rgba(0, 0, 0, 0.01);
 }
 
 #kunena.layout .list-unstyled {

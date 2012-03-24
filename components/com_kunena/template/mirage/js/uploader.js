@@ -279,45 +279,35 @@ Kunena.Uploader = new Class({
 	_render: function(name) {
 		document.id(name).set('html', 
 			'<div class="upload-container">' +
-
 			'<div class="upload-filelist-container">' +
-
-			'<table class="upload-filelist">' +
+			'<table class="upload-filelist kbox-full kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">' +
+			'<thead class="upload-filelist header kbox-hover_header-row">' +
 			'<tr class="upload-filelist-header">' +
-			'<th class="upload-file-name">'+'File Name'+'</th>' +
-			'<th class="upload-file-status">'+'Status'+'</th>' +
-			'<th class="upload-file-size">'+'Size'+'</th>' +
+			'<th class="upload-file-name"><span class="bold">'+'File Name'+'</span></th>' +
+			'<th class="upload-file-status"><span class="bold">'+'Status'+'</span></th>' +
+			'<th class="upload-file-size"><span class="bold">'+'Size'+'</span></th>' +
 			'<th class="upload-file-action"></th>' +
 			'</tr>' +
-			'</table>' +
-
-			'<div class="upload-scroll">' +
-
-			'<table class="upload-filelist-files"></table>' +
-
-			'</div>' +
-			'<div class="upload-status">' +
-
-			'<table class="upload-filelist-bottom">' +
+			'</thead>' +
+			'<tbody class="upload-filelist-files kbox-hover_list-row"></tbody>' +
+			'<tfoot class="upload-filelist-bottom">' +
 			'<tr class="upload-filelist-footer">' +
 			'<td class="upload-file-name">' +
 			'<div class="upload-upload-status"></div>' +
 			'</td>' +
-			'<td class="upload-file-status"><span class="upload-total-status">0%</span></td>' +
-			'<td class="upload-file-size"><span class="upload-total-file-size">'+'0kb'+'</span></td>' +
+			'<td class="upload-file-status"><span class="upload-total-status bold">'+'0%'+'</span></td>' +
+			'<td class="upload-file-size"><span class="upload-total-file-size bold">'+'0kb'+'</span></td>' +
 			'<td class="upload-file-action"></td>' +
 			'</tr>' +
+			'</tfoot>' +
 			'</table>' +
-
 			'</div>' +
-			'<div class="upload-buttons">' +
+			'<div class="upload-buttons innerspacer">' +
 			'<a class="kbutton button-type-standard upload-button-add"><span>'+'Add Files'+'</span></a>' +
 			'<a class="kbutton button-type-standard upload-button-start upload-hidden"><span>'+'Start Upload'+'</span></a>' +
 			'<a class="kbutton button-type-standard upload-button-stop upload-hidden"><span>'+'Stop Upload'+'</span></a>' +
 			'</div>' +
-			'</div>' +
-			'</div>' +
-			'<input class="upload-count" value="0" type="hidden">' +
+			'<input class="upload-count" value="0" type="hidden" />' +
 			'</div>');
 	},
 
@@ -418,7 +408,7 @@ Kunena.Uploader = new Class({
 				'class': 'upload_file',
 				'id': file.id, 
 				'html': '<td class="upload-file-name"><span>' + file.name + '</span></td>' +
-				'<td class="upload-file-status">' + file.percent + '%</td>' +
+				'<td class="upload-file-status"><div class="progress progress-stripped active"><div class="bar" style="width: ' + file.percent + '">' + file.percent + '%</div></div></td>' +
 				'<td class="upload-file-size">' + plupload.formatSize(file.size) + '</td>' +
 				'<td class="upload-file-action"><div class="upload-icon" title="'+'Remove File'+'"></div>' + fields + '</td>'
 				}

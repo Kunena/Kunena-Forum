@@ -54,14 +54,14 @@
 	border-collapse:separate;
 	border-spacing:0;
 }
-#kunena.layout caption,
+/*#kunena.layout caption,
 #kunena.layout th,
 #kunena.layout td {
 	border: 0 solid;
 	text-align:left;
 	font-weight:normal;
 	float:none !important;
-}
+}*/
 #kunena.layout table,
 #kunena.layout th,
 #kunena.layout td {

@@ -13,3 +13,7 @@
 #kunena.layout .boxcolor-hover:hover {
 	-moz-transition: all 0.3s ease 0s;
 }
+
+#kunena.layout .bar {
+	animation: 2s linear 0s normal none infinite progress-bar-stripes;
+}

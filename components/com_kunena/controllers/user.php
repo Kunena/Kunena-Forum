@@ -216,7 +216,7 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	function logout() {
-		if(!JRequest::checkToken()) {
+		if(!JRequest::checkToken('request')) {
 			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
 		}
 

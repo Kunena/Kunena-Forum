@@ -23,8 +23,8 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 ?>
 <div class="kmodule search_adv">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search') ?>" name="adminForm" id="adminForm" method="post">
-	<input type="hidden" name="task" value="results" />
-	<?php echo JHTML::_( 'form.token' ); ?>
+		<input type="hidden" name="task" value="results" />
+		<?php echo JHTML::_( 'form.token' ); ?>
 		<div class="kbox-wrapper kbox-full">
 			<div class="search_adv-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 				<div class="headerbox-wrapper kbox-full">
@@ -110,7 +110,6 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 						</div>
 					</div>
 				</div>
-				</form>
 			</div>
 		</div>
 	</form>

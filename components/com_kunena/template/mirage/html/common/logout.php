@@ -34,7 +34,7 @@ defined ( '_JEXEC' ) or die ();
 					<button class="kbutton button-type-standard" type="submit"><span><?php //echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?></span></button>
 				</fieldset>
 			</form>-->
-			<a class="link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=logout') ?>">
+			<a class="link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=logout&'.JUtility::getToken().'=1') ?>" title="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') .' :: '. JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_LONG') ?>">
 				<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?>
 			</a>
 		</li>

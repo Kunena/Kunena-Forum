@@ -168,6 +168,7 @@ class KunenaUpload extends JObject {
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
 		while(@ob_end_clean());
+		ob_start();
 		$error = $this->getError();
 		if ($error) {
 			jexit('{"error" : '.$error.'", "id" : "id"}');

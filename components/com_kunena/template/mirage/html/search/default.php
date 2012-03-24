@@ -42,7 +42,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 								<?php $this->displayModeList('mode', 'class=""') ?>
 							</fieldset>
 						</div>
-	
+
 						<div class="searchform-rightcol">
 							<fieldset class="fieldset kbox-hover kbox-border kbox-border_radius">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER') ?></legend>
@@ -53,7 +53,6 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 								<?php echo JText::_('COM_KUNENA_SEARCH_EXACT') ?>
 							</fieldset>
 						</div>
-	
 						<div class="searchform-leftcol">
 							<fieldset id="search-posts-date" class="fieldset kbox-hover kbox-border kbox-border_radius">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS') ?></legend>
@@ -65,14 +64,19 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 								<?php $this->displaySortByList('sort', 'class="form-horizontal"') ?>
 								<?php $this->displayOrderList('order', 'class="form-horizontal"') ?>
 							</fieldset>
-	
+
 							<fieldset id="search-posts-start" class="fieldset kbox-hover kbox-border kbox-border_radius">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_START') ?></legend>
 								<input type="text" size="5" value="<?php echo $this->escape($this->state->get('list.start')) ?>" name="limitstart" class="kbox-width form-vertical form-field_simple" />
 								<?php $this->displayLimitlist('limit', 'class="form-vertical"') ?>
 							</fieldset>
+
+							<fieldset id="search-in-a-specific-topic" class="fieldset kbox-hover kbox-border kbox-border_radius">
+								<legend><?php echo JText::_('COM_KUNENA_SEARCH_ENTER_TOPICID'); ?></legend>
+								<input type="text" value="<?php echo $this->escape($this->state->get('list.topic_id')); ?>" size="30" name="topic_id" class="kbox-width form-vertical form-field_simple" />
+							</fieldset>
 						</div>
-	
+
 						<div class="searchform-rightcol">
 							<fieldset class="fieldset kbox-hover kbox-border kbox-border_radius">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN') ?></legend>
@@ -83,7 +87,7 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 									<?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN') ?>
 								</label>
 							</fieldset>
-	
+
 							<?php if ( $this->me->isModerator() ) : ?>
 							<fieldset class="fieldset kbox-hover kbox-border kbox-border_radius">
 								<legend><?php echo JText::_('COM_KUNENA_SEARCH_SHOW') ?></legend>

@@ -10,8 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post">
-	<div class="kmodule topics_default_list">
+<div class="kmodule topics_default_list">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post">
 		<div class="kbox-wrapper kbox-full">
 			<div class="topics-default_list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 				<div class="headerbox-wrapper kbox-full">
@@ -63,17 +63,17 @@ defined ( '_JEXEC' ) or die ();
 				<?php if ($this->topicActions) : ?>
 					<div class="modbox-wrapper innerspacer-bottom">
 						<div class="modbox">
-							<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox" size="1"', 'value', 'text', 0, 'kmoderate-select');
+							<button class="kbutton button-type-standard fr" type="submit"><span><?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?></span></button>
+							<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="form-horizontal fr" size="1"', 'value', 'text', 0, 'kmoderate-select');
 							$options = array (JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
-							echo JHTML::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox" size="1" style="display:none;"', 'value', 'text', 0, 'kcategorytarget'); ?>
-							<input name="submit" class="button" type="submit" value="<?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?>"/>
+							echo JHTML::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-horizontal" size="1" style="display:none;"', 'value', 'text', 0, 'kcategorytarget'); ?>
 						</div>
 					</div>
 				<?php endif ?>
 			</div>
 		</div>
-	</div>
-	<div class="spacer"></div>
-	<input type="hidden" name="view" value="topics" />
-	<?php echo JHTML::_( 'form.token' ); ?>
-</form>
+		<input type="hidden" name="view" value="topics" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+	</form>
+</div>
+<div class="spacer"></div>

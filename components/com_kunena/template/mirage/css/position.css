@@ -98,13 +98,31 @@
  * START COMMON POSITIONING *
  ****************************/
 
+#kunena.layout div.progress {
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	height: 18px;
+	margin-bottom: 18px;
+	overflow: hidden;
+}
+
 #kunena.layout li.dropdown a {
 	position: relative;
 }
 
 #kunena.layout li.dropdown .dropdown-menu {
-	visibility: hidden;
-	display: none;
+	left: 0;
+	right: auto;
+	margin: 0px;
+	min-width: 140px;
+	/*padding: 4px 0;*/
+	position: absolute;
+	top: 99%;
+	z-index: 1000;
+}
+
+#kunena.layout .fr li.dropdown .dropdown-menu {
+	left: auto;
 	right: 0;
 	margin: 0px;
 	max-width: 300px;
@@ -116,11 +134,16 @@
 }
 
 #kunena.layout li.dropdown .dropdown-menu li > a {
-	padding: 5px;
+	padding: 5px 20px;
 	line-height: normal;
 }
 
-#kunena.layout li.dropdown:hover > * {
+#kunena.layout li.dropdown .dropdown-menu > * {
+	visibility: hidden;
+	display: none;
+}
+
+#kunena.layout li.dropdown:hover .dropdown-menu > * {
 	visibility: visible;
 	display: block;
 }
@@ -261,13 +284,13 @@
 #kunena.layout .form-label {
 	float: left;
 	padding: 10px;
-	width: 20%;
+	width: 15%;
 }
 
 #kunena.layout .form-field {
 	float: left;
 	padding: 10px;
-	width: 75%;
+	width: 80%;
 }
 
 #kunena.layout .form-field_simple {
@@ -282,6 +305,7 @@
 
 #kunena.layout .form-horizontal {
 	display: inline-block;
+	margin-right: 3px;
 }
 
 #kunena.layout dl.ktabs > dt {
@@ -856,6 +880,7 @@
 	display: inline;
 	float: left;
 	border: none;
+	position: relative;
 }
 
 /****************

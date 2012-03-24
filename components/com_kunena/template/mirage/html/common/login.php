@@ -33,10 +33,10 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		</li>
 		<li class="divider"></li>
-		<li class="klogin-password"><a href="<?php echo $this->lostPasswordUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD') ?></a></li>
-		<li class="klogin-username"><a href="<?php echo $this->lostUsernameUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME') ?></a></li>
+		<li class="klogin-password"><a class="link-dropdown" href="<?php echo $this->lostPasswordUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD') ?></a></li>
+		<li class="klogin-username"><a class="link-dropdown" href="<?php echo $this->lostUsernameUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME') ?></a></li>
 		<?php if ($this->registerUrl) : ?>
-		<li class="klogin-register"><a href="<?php echo $this->registerUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') ?></a></li>
+		<li class="klogin-register"><a class="link-dropdown" href="<?php echo $this->registerUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') ?></a></li>
 		<?php endif ?>
 
 		<?php if ($this->moduleHtml) : ?>

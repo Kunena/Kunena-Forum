@@ -272,18 +272,19 @@
 	color: #005580 !important;
 }
 
-#kunena.layout .link-drodpwon {
+#kunena.layout .link-dropdown,
+#kunena.layout ul.menu li a:visited {
 	text-decoration: none !important;
 	background: none !important;
 	/*color: #555555 !important;*/
-	color: #333333 !important;
+	color: #0088CC !important;
 }
 
 #kunena.layout .link-dropdown:hover {
 	text-decoration: none !important;
 	background: none !important;
 	/*color: #555555 !important;*/
-	color: #222222 !important;
+	color: #005580 !important;
 }
 
 #kunena.layout .header2 > a {
@@ -412,8 +413,7 @@
 }
 
 #kunena.layout div.footerkbox-wrapper {
-	background-image: linear-gradient(top, rgba(245, 245, 245, 1.0) 0%, rgba(240, 240, 240, 1.0) 100%) !important;
-}
+    background: none repeat scroll 0 0 transparent;}
 
 #kunena.layout dl.ktabs {
 	border-bottom: 1px solid #DDDDDD;
@@ -448,13 +448,14 @@
 
 #kunena.layout dl.ktabs > dt > a {
 	display: block;
-	/*border: 1px solid transparent;*/
+	border: 1px solid transparent;
 	border-radius: 4px 4px 0 0;
-	padding: 9px 12px;
+	padding: 4px 6px;
 	line-height: 18px;
-	margin-right: 2px;
 }
-
+#kunena.layout div.current{
+	padding:0;
+}
 /*#kunena.layout li.postmessage-row {
 	border-top: 1px solid rgba(0, 0, 0, 0.0);
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);

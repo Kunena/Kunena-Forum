@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 <?php if (($time = $this->getTime()) !== null) : ?>
 <div class="kbox-module common-credit">
 	<div class="kbox-wrapper kbox-full">
-		<div class="common-credit-kbox kbox">
+		<div class="common-credit-kbox kbox" style="text-align:center;">
 			<p><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_FOOTER_TIME', $time) ?></p>
 		</div>
 	</div>

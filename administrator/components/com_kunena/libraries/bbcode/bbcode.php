@@ -42,6 +42,7 @@ class KunenaBbcode extends BBCode {
 		$this->SetSmileyDir ( JPATH_ROOT );
 		$this->SetSmileyURL ( JURI::root(true) );
 		$this->SetDetectURLs ( true );
+		$this->SetURLPattern (array($this, 'parseUrl'));
 	}
 
 	/**
@@ -57,6 +58,26 @@ class KunenaBbcode extends BBCode {
 			$instance = new KunenaBbcode ();
 		}
 		return $instance;
+	}
+
+	function parseUrl($params) {
+		$url = $params['url'];
+		$text = $params['text'];
+
+		// Remove http(s):// from the text
+		$text = preg_replace ( '#^http(s?)://#u', '', $text );
+
+		// Remove natural language punctuation from the url
+		$url = preg_replace ( '#[\.,!?\)]+$#u', '', $url );
+		$url = preg_match('#https?://#', $url) ? $url : 'http://'.$url;
+
+		$config = KunenaFactory::getConfig ();
+		if ($config->trimlongurls) {
+			// shorten URL text if they are too long
+			$text = preg_replace ( '#^(.{' . $config->trimlongurlsfront . '})(.{4,})(.{' . $config->trimlongurlsback . '})$#u', '\1...\3', $text );
+		}
+
+		return "<a href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
 	}
 }
 

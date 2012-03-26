@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="topics-default_list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 				<div class="headerbox-wrapper kbox-full">
 					<div class="header">
-						<h2 class="header"><a class="section link-header2" rel="topic-detailsbox"><?php echo $this->headerText ?></a>(<strong><?php echo intval($this->total) ?></strong>
+						<h2 class="header"><a class="section link-header2" rel="topic-detailsbox"><?php echo $this->headerText ?></a> (<strong><?php echo intval($this->total) ?></strong>
 						<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>)</h2>
 					</div>
 				</div>
@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 									</dd>
 									<?php if ($this->topicActions) : ?>
 										<dd class="topic-checkbox">
-											<span><input id="kcheckkbox-all" type="checkbox" value="0" name="" class="moderate-topic-checkall" /></span>
+											<span><input id="kcheckbox-all" type="checkbox" value="0" name="" class="kcheckall" /></span>
 										</dd>
 									<?php endif; ?>
 								</dl>

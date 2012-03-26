@@ -40,7 +40,7 @@ defined ( '_JEXEC' ) or die ();
 					</div>
 					<div class="whosonline-users">
 						<ul class="list-unstyled">
-							<li class="whosonline-subtitle"><p><?php  echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?></p></li>
+							<li class="whosonline-subtitle"><?php  echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?></li>
 							<li class="whosonline-usernames">
 								<ul class="list-unstyled">
 									<?php foreach ($this->onlineList as $user) : ?>

@@ -16,6 +16,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header link-header2">
+						CATEGORY: 
 						<a class="categories" title="Category Header" rel="ksection-detailsbox">
 							<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_DEFAULT_TOPICS') ?>
 						</a>
@@ -70,7 +71,8 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->topicActions) : ?>
 			<div class="modbox-wrapper innerspacer-bottom">
 				<div class="modbox">
-					<?php echo $this->displayTopicActions('class="inputbox" size="1"', 'kmoderate-select') ?>
+					<button class="kbutton button-type-standard fr" type="submit"><span><?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?></span></button>
+					<?php echo $this->displayTopicActions('class="inputbox form-horizontal fr" size="1"', 'kmoderate-select') ?>
 				</div>
 			</div>
 			<?php endif ?>

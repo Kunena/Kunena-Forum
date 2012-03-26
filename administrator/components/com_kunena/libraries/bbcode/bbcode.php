@@ -64,12 +64,16 @@ class KunenaBbcode extends BBCode {
 		$url = $params['url'];
 		$text = $params['text'];
 
-		// Remove http(s):// from the text
-		$text = preg_replace ( '#^http(s?)://#u', '', $text );
+		if (preg_match('#^https?://#u', $text)) {
+			// Remove http(s):// from the text
+			$text = preg_replace ( '#^http(s?)://#u', '', $text );
+		} elseif (isset($params['host']) && substr($params['host'], -3) == '.gz') {
+			return $text;
+		}
 
 		// Remove natural language punctuation from the url
 		$url = preg_replace ( '#[\.,!?\)]+$#u', '', $url );
-		$url = preg_match('#https?://#', $url) ? $url : 'http://'.$url;
+		$url = preg_match('#^https?://#u', $url) ? $url : 'http://'.$url;
 
 		$config = KunenaFactory::getConfig ();
 		if ($config->trimlongurls) {

@@ -1338,7 +1338,12 @@ preg_match("/^([^\\/&?#]+)\\/*(.*)\$/", $token, $matches);
 $url = "http:/" . "/" . $matches[1] . "/" . $matches[2];
 }
 $params = @parse_url($url);
-if (!is_array($params)) $params = Array();
+/*HACK >*/
+if (!is_array($params)) {
+	$output[$index] = $token;
+	continue;
+}
+/*< HACK*/
 $params['url'] = $url;
 $params['link'] = $url;
 $params['text'] = $token;

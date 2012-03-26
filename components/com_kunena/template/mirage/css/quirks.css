@@ -9,6 +9,7 @@
 #kunena.layout div.current {
 	border: none;
 	border-radius: 0px;
+	padding: 0px;
 }
 
 #kunena.layout dl.tabs {

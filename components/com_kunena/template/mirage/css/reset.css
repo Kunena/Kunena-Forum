@@ -110,6 +110,10 @@
 	border-color: #BFC3C6;(*/
 }
 
+#kunena.layout td {
+	border: 1px solid #DDDDDD;
+}
+
 /*************
  * END RESET *
  *************/

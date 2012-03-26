@@ -50,5 +50,7 @@
 #kunena.layout #avatar_category_select {
 	margin-bottom: 15px;
 }
-
+#kunena.layout .klogin-remember {
+	margin-top:10px ;
+}
 

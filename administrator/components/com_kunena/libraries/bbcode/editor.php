@@ -42,6 +42,8 @@ class KunenaBbcodeEditor {
 	}
 
 	/**
+	 * Inserts a button or another element at the specified location. See insertElements for details.
+	 *
 	 * @param $element
 	 * @param null $pos
 	 * @param $where
@@ -54,6 +56,11 @@ class KunenaBbcodeEditor {
 	}
 
 	/**
+	 * Inserts a list of buttons or other elements at the specified location. The position $pos can be
+	 * specified as NULL, 'after' or 'before. In the case of 'after' and 'before' the element will be
+	 * inserted after/before the element named $where. If NULL is specified then it is inserted after
+	 * all other elements.
+	 *
 	 * @param $elements
 	 * @param null $pos
 	 * @param $where
@@ -96,6 +103,13 @@ class KunenaBbcodeEditor {
 		$this->editor_elements = array_combine($editor_keys, $editor_values);
 	}
 
+	/**
+	 * Parses an XML description of the buttons into the internal object representation.
+	 *
+	 * @static
+	 * @param SimpleXMLElement $xml
+	 * @return array
+	 */
 	public static function parseXML (SimpleXMLElement $xml) {
 		$elements = array();
 		foreach ($xml as $xml_item) {
@@ -117,6 +131,9 @@ class KunenaBbcodeEditor {
 		return $elements;
 	}
 
+	/**
+	 * @param string $identifier
+	 */
 	public function initialize($identifier='class') {
 		$js = "window.addEvent('domready', function() {
 	kbbcode = new kbbcode('kbbcode-message', 'kbbcode-toolbar', {
@@ -148,11 +165,29 @@ class KunenaBbcodeEditor {
 abstract class KunenaBbcodeEditorElement {
 	var $name;
 
+	/**
+	 * Constructor for the base class for editor elements.
+	 *
+	 * @param $name
+	 */
 	function __construct($name) {
 		$this->name = $name;
 	}
 
+	/**
+	 * Generats and creates the JavaScript code required to show the buttons.
+	 *
+	 * @abstract
+	 * @param $identifier
+	 */
 	abstract function generateJs ($identifier);
+	/**
+	 * Internal function that is used to parse an XML representation of an element.
+	 *
+	 * @static
+	 * @abstract
+	 * @param $xml
+	 */
 	abstract static function parseXML ($xml);
 }
 
@@ -164,6 +199,15 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 	protected $class;
 	protected $actions = array();
 
+	/**
+	 * Create a button that can be added to the BBCode Editor.
+	 *
+	 * @param $name
+	 * @param $class
+	 * @param $tag
+	 * @param $title
+	 * @param $alt
+	 */
 	function __construct($name, $class, $tag, $title, $alt) {
 		parent::__construct($name);
 
@@ -217,6 +261,12 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 		return $obj;
 	}
 
+	/**
+	 * Generate the JavaScript for each of the actions that the button has.
+	 *
+	 * @param $name
+	 * @return string
+	 */
 	protected function editorActionJs($name) {
 		$js = '';
 		foreach ($this->actions as $action) {
@@ -282,6 +332,13 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 		return $js;
 	}
 
+	/**
+	 * Add a new display action. This can be used to show a button specific action area.
+	 *
+	 * @param $selection
+	 * @param $class
+	 * @param null $tag
+	 */
 	function addDisplayAction ($selection, $class, $tag=NULL) {
 		$item['type'] = 'display';
 		$item['selection'] = $selection;
@@ -291,6 +348,18 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 		$this->actions[] = $item;
 	}
 
+	/**
+	 * Specify what code should be inserted when the user presses the button.
+	 *
+	 * @param null $repeat
+	 * @param null $empty_before
+	 * @param null $empty_after
+	 * @param null $start
+	 * @param null $end
+	 * @param null $before
+	 * @param null $after
+	 * @param null $tag
+	 */
 	function addWrapSelectionAction ($repeat=NULL, $empty_before=NULL, $empty_after=NULL, $start=NULL, $end=NULL, $before=NULL, $after=NULL, $tag=NULL) {
 		$item['type'] = 'wrap-selection';
 		$item['repeat'] = $repeat;
@@ -307,6 +376,11 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 		$this->actions[] = $item;
 	}
 
+	/**
+	 * Open the specified URL when the button is pressed.
+	 *
+	 * @param $url
+	 */
 	function addUrlAction ($url) {
 		$item['type'] = 'url';
 		$item['url'] = $url;

@@ -1338,7 +1338,12 @@ preg_match("/^([^\\/&?#]+)\\/*(.*)\$/", $token, $matches);
 $url = "http:/" . "/" . $matches[1] . "/" . $matches[2];
 }
 $params = @parse_url($url);
-if (!is_array($params)) $params = Array();
+/*HACK >*/
+if (!is_array($params)) {
+	$output[$index] = $token;
+	continue;
+}
+/*< HACK*/
 $params['url'] = $url;
 $params['link'] = $url;
 $params['text'] = $token;
@@ -1355,6 +1360,9 @@ $is_a_url = !$is_a_url;
 return $output;
 }
 function FillTemplate($template, $insert_array, $default_array = Array()) {
+/*HACK >*/
+if (is_array($template)) return call_user_func($template, $insert_array);
+/*< HACK*/
 $pieces = preg_split('/(\{\$[a-zA-Z0-9_.:\/-]+\})/', $template,
 -1, PREG_SPLIT_DELIM_CAPTURE);
 if (count($pieces) <= 1)

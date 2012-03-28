@@ -29,6 +29,7 @@ function kPreviewHelper()
 			var __message = document.id("kbbcode-preview");
 			if (__message) {
 				__message.set("html", response.preview);
+				__message.fireEvent('updated');
 			}
 			}}).post({body: document.id("kbbcode-message").get("value")
 		});

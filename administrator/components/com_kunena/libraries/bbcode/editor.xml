@@ -26,7 +26,7 @@
 		<display name="kbbcode-colorpalette" />
 	</button>
 
-	<seperator name="structure" />
+	<separator name="structure" />
 
 	<button tag="ul" name="ulist" title="COM_KUNENA_EDITOR_ULIST" alt="COM_KUNENA_EDITOR_HELPLINE_ULIST">
 		<wrap-selection empty_before="[ul]\n  [li]"
@@ -57,7 +57,7 @@
 		<wrap-selection />
 	</button>
 
-	<seperator name="blocks" />
+	<separator name="blocks" />
 
 	<button tag="quote" name="quote" title="COM_KUNENA_EDITOR_QUOTE" alt="COM_KUNENA_EDITOR_HELPLINE_QUOTE">
 		<wrap-selection />
@@ -82,7 +82,7 @@
 		<wrap-selection />
 	</button>
 
-	<seperator name="embeding" />
+	<separator name="embeding" />
 
 	<button tag="img" name="image" title="COM_KUNENA_EDITOR_IMAGELINK" alt="COM_KUNENA_EDITOR_HELPLINE_IMAGELINK">
 		<display name="kbbcode-image-options" />
@@ -91,7 +91,7 @@
 		<display name="kbbcode-link-options" selection="kbbcode-link_text" />
 	</button>
 
-	<seperator name="external" />
+	<separator name="external" />
 
 	<button tag="ebay" name="ebay" config="showebaytag" title="COM_KUNENA_EDITOR_EBAY" alt="COM_KUNENA_EDITOR_HELPLINE_EBAY">
 		<wrap-selection />
@@ -103,7 +103,7 @@
 		<wrap-selection />
 	</button>
 
-	<seperator name="misc" />
+	<separator name="misc" />
 
 	<button name="help" title="COM_KUNENA_EDITOR_HELP" alt="COM_KUNENA_EDITOR_HELPLINE_HELP">
 		<link url="http://docs.kunena.org/index.php/bbcode" />

@@ -81,15 +81,23 @@ class KunenaBbcode extends BBCode {
 			$text = preg_replace ( '#^(.{' . $config->trimlongurlsfront . '})(.{4,})(.{' . $config->trimlongurlsback . '})$#u', '\1...\3', $text );
 		}
 
-		if ($config->autoembedyoutube && isset($params['host']) && strstr($params['host'], '.youtube.')) {
+		if (!isset($params['query'])) $params['query'] = '';
+		if (!isset($params['path'])) $params['path'] = '';
+
+		if ($config->autoembedyoutube && isset($params['host'])) {
+			// convert youtube links to embedded player
 			parse_str($params['query'], $query);
-			switch ($params['path']) {
-				case '/watch':
-					// convert youtube links to embedded player
-					if (empty($query['v'])) break;
-					return '<object width="425" height="344"><param name="movie" value="http://'
-						.$params['host'].'/v/'.urlencode($query['v']).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://'
-						.$params['host'].'/v/'.urlencode($query['v']).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+			$path = explode('/', $params['path']);
+
+			if (strstr($params['host'], '.youtube.') && !empty($path[1]) && $path[1]=='watch' && !empty($query['v'])) {
+				$video = $query['v'];
+			} elseif ($params['host'] == 'youtu.be' && !empty($path[1])) {
+				$video = $path[1];
+			}
+			if (isset($video)) {
+				return '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
+					.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/'
+					.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
 			}
 		}
 		if ($config->autoembedebay && isset($params['host']) && strstr($params['host'], '.ebay.')) {

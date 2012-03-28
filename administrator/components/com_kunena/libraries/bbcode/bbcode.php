@@ -81,6 +81,55 @@ class KunenaBbcode extends BBCode {
 			$text = preg_replace ( '#^(.{' . $config->trimlongurlsfront . '})(.{4,})(.{' . $config->trimlongurlsback . '})$#u', '\1...\3', $text );
 		}
 
+		if ($config->autoembedyoutube && isset($params['host']) && strstr($params['host'], '.youtube.')) {
+			parse_str($params['query'], $query);
+			switch ($params['path']) {
+				case '/watch':
+					// convert youtube links to embedded player
+					if (empty($query['v'])) break;
+					return '<object width="425" height="344"><param name="movie" value="http://'
+						.$params['host'].'/v/'.urlencode($query['v']).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://'
+						.$params['host'].'/v/'.urlencode($query['v']).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+			}
+		}
+		if ($config->autoembedebay && isset($params['host']) && strstr($params['host'], '.ebay.')) {
+			parse_str($params['query'], $query);
+			$path = explode('/', $params['path']);
+
+			if (isset($path[3]) && $path[1] == 'itm' && is_numeric($path[3])) {
+				// convert ebay item to embedded widget
+				$itemid = intval($path[3]);
+				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebaylanguagecode . '&mode=normal&itemid='.$itemid.'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebaylanguagecode . '&mode=normal&itemid='.$itemid.'&campid=5336042350"></embed></object>';
+				/*
+				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*QQitemZ([0-9]+).+#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $text );
+				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*ViewItem.+Item=([0-9]+).*#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $text );
+				*/
+			}
+			if (isset($path[1]) && $path[1] == 'sch') {
+				// convert ebay search to embedded widget
+				parse_str($params['query'], $query);
+
+				if (empty($query['_nkw'])) break;
+				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query='
+					. urlencode($query['_nkw']) .'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebaylanguagecode . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid=5336042350"></embed></object>';
+				/*
+				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*satitle=([^&]+).*#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=$2&campid=5336042350"></embed></object>', $text );
+				*/
+			}
+			if (strstr($params['host'], 'myworld.') && !empty($path[1])) {
+				// convert seller listing to embedded widget
+				return '<object width="355" height="355"><param name="movie" value="http://togo.ebay.com/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebaylanguagecode . '&seller=' . urlencode($path[1]) . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebaylanguagecode . '&seller=' . urlencode($path[1]) . '&campid=5336042350"></embed></object>';
+				/*
+				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*QQsassZ([^&]+).*#u', '<object width="355" height="355"><param name="movie" value="http://togo.ebay.$1/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&seller=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&seller=$2&campid=5336042350"></embed></object>', $text );
+				*/
+			}
+		}
+
 		return "<a href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
 	}
 }

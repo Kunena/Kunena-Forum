@@ -25,8 +25,8 @@ defined ( '_JEXEC' ) or die ();
 						<ul class="list-unstyled topic-list">
 							<li class="header kbox-hover_header-row clear">
 								<dl class="list-unstyled list-unstyled">
-									<dd class="topic-icon">
-									</dd>
+									<!--<dd class="topic-icon">
+									</dd>-->
 									<dd class="topic-subject">
 										<span class="bold"><?php echo JText::_('Subject') ?></span>
 									</dd>

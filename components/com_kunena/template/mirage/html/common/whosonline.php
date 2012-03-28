@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="detailsbox whosonline-details kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow" id="whosonline-detailsbox" >
-					<div class="whosonline-smicon">
+					<div class="kcontent-32">
 						<?php if ($this->usersUrl) : ?>
 						<a href="<?php echo $this->usersUrl ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>" rel="nofollow">
 							<span class="kwho-smicon"></span>
@@ -37,40 +37,40 @@ defined ( '_JEXEC' ) or die ();
 						<?php else : ?>
 						<span class="kwho-smicon"></span>
 						<?php endif ?>
-					</div>
-					<div class="whosonline-users">
-						<ul class="list-unstyled">
-							<li class="whosonline-subtitle"><?php  echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?></li>
-							<li class="whosonline-usernames">
-								<ul class="list-unstyled">
-									<?php foreach ($this->onlineList as $user) : ?>
-									<li><?php echo $user->getLink() ?></li>
-									<?php endforeach ?>
-								</ul>
-							</li>
-							<?php if ($this->hiddenList) : ?>
+						<div class="whosonline-users">
+							<ul class="list-unstyled">
+								<li class="whosonline-subtitle"><?php  echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?></li>
 								<li class="whosonline-usernames">
 									<ul class="list-unstyled">
-										<li class="legend-title"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</li>
-										<?php foreach ($this->hiddenList as $user) : ?>
+										<?php foreach ($this->onlineList as $user) : ?>
 										<li><?php echo $user->getLink() ?></li>
 										<?php endforeach ?>
 									</ul>
 								</li>
-							<?php endif ?>
-							<li class="whosonline-legend">
-								<ul class="list-unstyled">
-									<li class="legend-title"><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</li>
-									<!-- Loop this LI for each group -->
-									<!-- Can each of these link to a memberlist of that group only?  -->
-									<li class="user-admin"><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></li>
-									<li class="user-globalmod"><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></li>
-									<li class="user-moderator"><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></li>
-									<li class="user-user"><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></li>
-									<li class="user-guest"><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></li>
-								</ul>
-							</li>
-						</ul>
+								<?php if ($this->hiddenList) : ?>
+									<li class="whosonline-usernames">
+										<ul class="list-unstyled">
+											<li class="legend-title"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>:</li>
+											<?php foreach ($this->hiddenList as $user) : ?>
+											<li><?php echo $user->getLink() ?></li>
+											<?php endforeach ?>
+										</ul>
+									</li>
+								<?php endif ?>
+								<li class="whosonline-legend">
+									<ul class="list-unstyled">
+										<li class="legend-title"><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</li>
+										<!-- Loop this LI for each group -->
+										<!-- Can each of these link to a memberlist of that group only?  -->
+										<li class="user-admin"><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></li>
+										<li class="user-globalmod"><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></li>
+										<li class="user-moderator"><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></li>
+										<li class="user-user"><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></li>
+										<li class="user-guest"><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>

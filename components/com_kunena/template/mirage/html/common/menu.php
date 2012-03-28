@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 						<li class="dropdown">
 							<a class="link-logout link" href="#">
 								<span class="login-member">
-									<span class="login-avatar"><span><?php echo $this->me->getAvatarImage('', 'welcome') ?></span></span>
+									<span class="login-avatar"><?php echo $this->me->getAvatarImage('', 'welcome') ?></span>
 									<span class="loginbox">
 										<span class="login-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getName(null, JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE'))) ?></span>
 									</span>

@@ -12,10 +12,12 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <ul class="list-unstyled login login-profile dropdown-menu">
 	<li class="login-avatar link-dropdown">
-		<a class="link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>">
-			<span class="login-avatar fl"><?php echo $this->me->getAvatarImage('', 'welcome') ?></span>
-			<span class="login-view_profile"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE') ?></span>
-			<span class="login-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getName()) ?></span>
+		<a class="link login-profile" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>">
+			<span class="login_profile-content">
+				<?php echo $this->me->getAvatarImage('', 'welcome') ?>
+				<b class="display-name"><?php echo JText::sprintf($this->me->getName()) ?></b><br />
+				<span class="login-profile"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE') ?></span>
+			</span>
 		</a>
 	</li>
 	<li class="divider"></li>

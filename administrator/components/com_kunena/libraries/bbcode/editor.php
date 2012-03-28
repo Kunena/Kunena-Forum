@@ -61,7 +61,7 @@ class KunenaBbcodeEditor {
 
 		switch ($pos) {
 			case 'after':
-				if ($pos = array_search($where, $editor_keys) === false)
+				if (($pos = array_search($where, $editor_keys)) === false)
 					return false;
 				$pos++;
 				break;

@@ -1987,6 +1987,25 @@
 #kunena.layout .kgooglemap img {
 	max-width:none !important;
 }
+#kunena.layout pre {
+	border-left: 5px solid;
+	border-right: 1px solid;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	font-weight: normal;
+	line-height: 1.5;
+	margin: 3px 0 10px 0;
+	padding: 10px 15px;	
+	overflow: auto;
+	width: auto;
+	word-wrap:normal;
+	max-height: 25em;
+	border-left-color: #F4A94F;
+	border-right-color: #BFC3C6;
+	border-top-color: #BFC3C6;
+	border-bottom-color: #BFC3C6;
+	font-family: "Courier News", Courier, monospace;
+}
 /*#kunena.layout div.kblock div.kactions a {
 	color: #FFF !important;
 	background-color:transparent !important;

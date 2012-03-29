@@ -67,8 +67,8 @@ class KunenaModelUser extends KunenaModel {
 		$where = array();
 		if ($search) {
 			$db = JFactory::getDBO();
-			if ($this->config->userlist_name) $where[] = "u.name LIKE '%{$db->getEscaped($search)}%'";
-			if ($this->config->userlist_username || !$where) $where[] = "u.username LIKE '%{$db->getEscaped($search)}%'";
+			if (!$this->config->username) $where[] = "u.name LIKE '%{$db->getEscaped($search)}%'";
+			if ($this->config->username || !$where) $where[] = "u.username LIKE '%{$db->getEscaped($search)}%'";
 			$where = 'AND ('.implode(' OR ', $where).')';
 		} else {
 			$where = '';

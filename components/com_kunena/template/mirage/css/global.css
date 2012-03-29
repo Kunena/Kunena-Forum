@@ -1977,6 +1977,16 @@
 	padding: 5px 10px;
 	line-height: 13px;
 }
+#kunena.layout .kgooglemap {
+	width: 100%;
+	display:block;
+	height:480px;
+	overflow:hidden;
+	position:relative;
+}
+#kunena.layout .kgooglemap img {
+	max-width:none !important;
+}
 /*#kunena.layout div.kblock div.kactions a {
 	color: #FFF !important;
 	background-color:transparent !important;

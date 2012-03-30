@@ -54,7 +54,7 @@ defined ( '_JEXEC' ) or die ();
 		</dd>
 		<?php if ($this->topicActions) : ?>
 		<dd class="topic-checkbox">
-			<input type="checkbox" class="kmoderate-topic-checkbox" name="topics[<?php echo $this->topic->id?>]" value="1" />
+			<input type="checkbox" class="kcheck" name="topics[<?php echo $this->topic->id?>]" value="1" />
 		</dd>
 		<?php endif ?>
 	</dl>

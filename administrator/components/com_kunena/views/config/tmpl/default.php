@@ -1174,11 +1174,6 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_NAME_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME') ?></td>
-							<td align="left" valign="top"><?php echo $this->lists ['userlist_username']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_posts']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS_DESC') ?></td>

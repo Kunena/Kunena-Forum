@@ -24,9 +24,8 @@
 }
 
 #kunena.layout .fr {
-	float: none;
+	float: right;
 }
-
 #kunena.layout .fn {
 	float: none;
 }

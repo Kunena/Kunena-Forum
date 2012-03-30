@@ -71,6 +71,8 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
+		$user = KunenaFactory::getUser($this->user->id);
+
 		$this->saveUser();
 
 		$this->saveProfile();
@@ -81,7 +83,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$msg = JText::_( 'COM_KUNENA_PROFILE_SAVED' );
-		$this->setRedirect ( $this->user->getUrl(false), $msg );
+		$this->setRedirect ( $user->getUrl(false), $msg );
 	}
 
 	function ban() {

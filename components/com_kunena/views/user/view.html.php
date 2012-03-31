@@ -93,7 +93,7 @@ class KunenaViewUser extends KunenaView {
 			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK'), 'nofollow' );
 		}
 		$this->name = $this->user->username;
-		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
+		if ($this->config->username==2) $this->name = $this->user->name . ' (' . $this->name . ')';
 		if ($this->config->showuserstats) {
 			if ($this->config->userlist_usertype) $this->usertype = $this->user->usertype;
 			$this->rank_image = $this->profile->getRank (0, 'image');

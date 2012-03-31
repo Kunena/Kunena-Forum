@@ -384,6 +384,7 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->websitename = JRequest::getString ( 'websitename', '' );
 		$this->me->websiteurl = JRequest::getString ( 'websiteurl', '' );
 		$this->me->signature = JRequest::getVar ( 'signature', '', 'post', 'string', JREQUEST_ALLOWRAW );
+		$this->me->displayname = JRequest::getVar ( 'displayname', '' );
 	}
 
 	protected function saveAvatar() {

@@ -33,6 +33,14 @@ JHTML::_('behavior.tooltip');
 						</li>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
+								<label for="kdisplayname"><?php echo JText::_('COM_KUNENA_MYPROFILE_DISPLAYNAME'); ?></label>
+							</div>
+							<div class="form-field">
+								<input type="text" value="<?php echo !empty($this->profile->displayname) ? $this->escape($this->profile->displayname) : $this->profile->username; ?>" name="displayname" id="displayname" class="kbox-width inputbox hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_DISPLAYNAME') ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_DISPLAYNAME_DESC') ?>" />
+							</div>
+						</li>
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+							<div class="form-label">
 								<label for="kbirthdate1"><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') ?></label>
 							</div>
 							<div class="form-field">

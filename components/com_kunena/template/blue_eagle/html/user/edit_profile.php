@@ -29,6 +29,10 @@ JHTML::_('behavior.tooltip');
 			<td class="kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?></td>
 			<td class="kcol-mid"><input type="text" maxlength="<?php echo intval($this->config->maxpersotext) ?>" name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>" /></td>
 		</tr>
+		<tr class="krow2">
+			<td class="kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_DISPLAYNAME'); ?></td>
+			<td class="kcol-mid"><input type="text" name="displayname" value="<?php echo !empty($this->profile->displayname) ? $this->escape($this->profile->displayname) : $this->profile->username; ?>" /></td>
+		</tr>
 		<tr class="krow1">
 			<td class="kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?></td>
 			<?php $bithdate = explode('-',$this->profile->birthdate); ?>

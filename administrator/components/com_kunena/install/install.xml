@@ -323,6 +323,7 @@
 		<field name="hideEmail" type="tinyint(1)" null="0" default="1" />
 		<field name="showOnline" type="tinyint(1)" null="0" default="1" />
 		<field name="thankyou" type="int(11)" null="1" default="0" />
+		<field name="displayname" type="varchar(50)" null="1" />
 		<key name="PRIMARY" unique="1" columns="userid" />
 		<key name="group_id" columns="group_id" />
 		<key name="posts" columns="posts" />

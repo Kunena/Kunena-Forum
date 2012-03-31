@@ -333,11 +333,14 @@
 			<phpfile name="upgrade-2.0.0_menu"></phpfile>
 		</version>
 		<version version="2.0.0-DEV12" versiondate="2012-02-03" versionname="Internal">
-			<query>ALTER TABLE `#__kunena_polls_users` CHANGE `lasttime` `lasttime` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'</query>
+			<query>ALTER TABLE `#__kunena_polls_users` CHANGE `lasttime` `lasttime` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00';</query>
 		</version>
 		<version version="2.0.0-DEV13" versiondate="2012-03-15" versionname="Internal">
 			<query>ALTER TABLE `#__kunena_categories` CHANGE `pub_access` `pub_access` int(11) NOT NULL default '1',
-			CHANGE `admin_access` `admin_access` int(11) NOT NULL default '1'</query>
+			CHANGE `admin_access` `admin_access` int(11) NOT NULL default '1';</query>
+		</version>
+		<version version="2.0.0-DEV14" versiondate="2012-03-15" versionname="Internal">
+			<query>ALTER TABLE `#__kunena_users` ADD `displayname` varchar(50) NOT NULL AFTER `thankyou`;</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>

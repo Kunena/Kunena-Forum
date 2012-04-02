@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="topic-row box-hover box-hover_list-row clear">
+<li class="topic-row kbox-hover kbox-hover_list-row box-full">
 	<dl class="list-unstyled">
 		<dd class="topic-icon">[K=TOPIC_ICON]</dd>
 		<dd class="topic-subject">
@@ -33,14 +33,10 @@ defined ( '_JEXEC' ) or die ();
 					</div>
 				</li>
 				<li>
-					<?php if ($this->config->keywords) : ?>
-						<ul class="list-unstyled ktopic-tags">
-							<?php if (!empty($this->keywords)) : ?>
-								<li class="ktopic-tag-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->keywords) ?></li>
-							<?php else: ?>
-								<li class="ktopic-tag-title"><?php echo JText::_('COM_KUNENA_TOPIC_NO_TAGS') ?></li>
-							<?php endif ?>
-						</ul>
+					<?php if (!empty($this->keywords)) : ?>
+					<ul class="list-unstyled ktopic-tags">
+						<li class="ktopic-tag-title"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->keywords) ?></li>
+					</ul>
 					<?php endif ?>
 				</li>
 			</ul>

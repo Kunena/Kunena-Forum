@@ -10,20 +10,20 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper ">
-		<div class="menubox-kbox kbox box-color box-full box-border box-border_radius box-shadow">
+<div class="kmodule common-menu">
+	<div class="kbox-wrapper kbox-full">
+		<div class="common-menu-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-shadow">
 				<?php echo $this->getMenu() ?>
+
 				<ul class="list-unstyled menu fr">
 					<?php if (!$this->me->exists()) : ?>
 						<li class="dropdown">
-							<a class="link-login" href="#"><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME') ?> <?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST') ?>, <?php echo JText::_('Sign In'); ?></a>
+							<a class="link-login link" href="#"><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME') ?> <?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST') ?>, <?php echo JText::_('Sign In'); ?></a>
 							<?php $this->displayLoginBox (); ?>
 						</li>
-					<?php endif; ?>
-					<?php if ($this->me->exists()) : ?>
+					<?php else : ?>
 						<li class="dropdown">
-							<a class="link-logout" href="#">
+							<a class="link-logout link" href="#">
 								<span class="login-member">
 									<span class="login-avatar"><span><?php echo $this->me->getAvatarImage('', 'welcome') ?></span></span>
 									<span class="loginbox">

@@ -1,7 +1,15 @@
+/* Firefox has some button problems */
+#kunena.layout button::-moz-focus-inner{
+	padding:0;
+	border:none;
+	display: block;
+}
+
 /* Beeze Problem */
 #kunena.layout div.current {
 	border: none;
 	border-radius: 0px;
+	padding: 0px;
 }
 
 #kunena.layout dl.tabs {

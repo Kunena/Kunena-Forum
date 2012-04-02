@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 <li class="topic-row">
 	<div class="post-indent" style="padding-left: <?php echo (max(0,count($this->message->indent)-3)*2) ?>%">
 		<dl class="list-unstyled">
-			<dd class="box-border box-border_radius box-shadow">
+			<dd class="kbox-border kbox-border_radius kbox-shadow">
 				<ul class="list-unstyled message-list">
 					<li class="header">
 						<a id="<?php echo intval($this->message->id) ?>"></a>
@@ -27,7 +27,7 @@ defined ( '_JEXEC' ) or die ();
 					</li>
 				</ul>
 				[K=MESSAGE_PROFILE]
-				<div class="kpost-container box-hover">
+				<div class="kpost-container kbox-hover">
 					<ul class="list-unstyled kpost-post-body">
 						<li class="kpost-body">
 							<?php echo $this->parse($this->message->message) ?>
@@ -54,7 +54,7 @@ defined ( '_JEXEC' ) or die ();
 										<input type="hidden" name="parentid" value="<?php echo intval($this->message->id) ?>" />
 										<input type="hidden" name="catid" value="<?php echo intval($this->category->id) ?>" />
 										<?php echo JHTML::_( 'form.token' ) ?>
-	
+
 										<?php if ($this->me->exists() && $this->category->allow_anonymous): ?>
 											<input type="text" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->profile->getName()) ?>" /><br />
 											<input type="checkbox" id="kanonymous<?php echo intval($this->message->id) ?>" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous<?php echo intval($this->message->id) ?>"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC') ?></label><br />

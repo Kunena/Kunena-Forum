@@ -46,7 +46,7 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->moduleHtml) : ?>
 			<td class = "kprofilebox-right">
 				<div class="kprofilebox-modul">
-					<?php $this->moduleHtml; ?>
+					<?php echo $this->moduleHtml; ?>
 				</div>
 			</td>
 			<?php endif; ?>

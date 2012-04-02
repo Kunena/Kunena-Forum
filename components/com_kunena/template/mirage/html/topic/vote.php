@@ -1,25 +1,25 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="topic_poll-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule topic-vote">
+	<div class="kbox-wrapper kbox-full">
+		<div class="topic-vote-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="kheader"><?php echo JText::_('COM_KUNENA_POLL_NAME') .' '. KunenaHtmlParser::parseText ($this->poll->title); ?></h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
-				<div class="kdetailsbox box-full box-hover box-border box-border_radius box-shadow">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
+				<div class="kdetailsbox kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow">
 					<div class="kpolldesc">
 						<div id="kpoll-text-help"></div>
 						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kpoll-form-vote" method="post">
@@ -28,7 +28,7 @@ defined ( '_JEXEC' ) or die ();
 							<input type="hidden" name="catid" value="<?php echo $this->topic->category_id ?>" />
 							<input type="hidden" name="id" value="<?php echo $this->topic->id ?>" />
 							<?php echo JHTML::_( 'form.token' ); ?>
-		
+
 							<fieldset>
 								<legend><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
 								<ul>

@@ -153,7 +153,7 @@
 }
 /*---------- Tabs ------------- */
 
-#kunena.layout dl.tabs dt {
+/*#kunena.layout dl.tabs dt {
 	border-left-color: #D4D4D4;
 	border-right-color: #D4D4D4;
 	border-top-color: #D4D4D4;
@@ -172,7 +172,7 @@
 #kunena.layout dt.kprofile-modbtn {
 	background-color:#999999 !important;
 	color: #FFF !important;
-}
+}*/
 /*---------- Moderate Topic ------------- */
 
 

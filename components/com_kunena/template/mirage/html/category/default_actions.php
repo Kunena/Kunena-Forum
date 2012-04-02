@@ -12,8 +12,8 @@ defined ( '_JEXEC' ) or die ();
 
 if (empty($this->categoryButtons)) return;
 ?>
-<div class="block-wrapper">
-	<div class="buttonbar block">
+<div class="innerbox-wrapper innerspacer-top kbox-full">
+	<ul class="buttonbar buttons-category">
 		<?php echo implode(' ', $this->categoryButtons) ?>
-	</div>
+	</ul>
 </div>

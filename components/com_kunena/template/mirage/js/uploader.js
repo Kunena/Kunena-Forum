@@ -65,8 +65,8 @@ Kunena.Uploader = new Class({
 
 		// buttons
 		this.browse_button = this.container.getElement('.upload-button-add').set('id', id + '_browse');
-		this.start_button = this.container.getElement('.upload-button-start').set('id', id + '_start');
-		this.stop_button = this.container.getElement('.upload-button-stop').set('id', id + '_stop');
+		this.start_button = this.container.getElement('.upload-button-start').set('id', id + '_start').set('style', 'display: none');
+		this.stop_button = this.container.getElement('.upload-button-stop').set('id', id + '_stop').set('style', 'display: none');
 
 		// counter
 		this.counter = this.element.getElement('.upload-count').set({
@@ -153,7 +153,11 @@ Kunena.Uploader = new Class({
 
 		uploader.bind('UploadProgress', function(up, file) {
 			// Set file specific progress
-			self.element.getElement('#' + file.id + ' .upload-file-status').set('html', file.percent + '%');
+			if(file.percent != 100) {
+				self.element.getElement('#' + file.id + ' .upload-file-status').set('html', '<div class="progress progress-striped active"><div class="bar" style="width: ' + file.percent + '%"><span class="bold">' + file.percent + '%</span></div></div>');
+			} else {
+				self.element.getElement('#' + file.id + ' .upload-file-status').set('html', '<div class="progress progress-striped active"><div class="bar" style="width: ' + file.percent + '%"><span class="bold">' + "Completed " + file.percent + '%</span></div></div>');
+			}
 
 			self._handleFileStatus(file);
 			self._updateTotalProgress();
@@ -279,45 +283,43 @@ Kunena.Uploader = new Class({
 	_render: function(name) {
 		document.id(name).set('html', 
 			'<div class="upload-container">' +
-
 			'<div class="upload-filelist-container">' +
-
-			'<table class="upload-filelist">' +
+			'<table class="upload-filelist kbox-full kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">' +
+			'<thead class="upload-filelist header kbox-hover_header-row">' +
 			'<tr class="upload-filelist-header">' +
-			'<th class="upload-file-name">'+'File Name'+'</th>' +
-			'<th class="upload-file-status">'+'Status'+'</th>' +
-			'<th class="upload-file-size">'+'Size'+'</th>' +
+			'<th class="upload-file-name"><span class="bold">'+'File Name'+'</span></th>' +
+			'<th class="upload-file-status"><span class="bold">'+'Status'+'</span></th>' +
+			'<th class="upload-file-size"><span class="bold">'+'Size'+'</span></th>' +
 			'<th class="upload-file-action"></th>' +
 			'</tr>' +
-			'</table>' +
-
-			'<div class="upload-scroll">' +
-
-			'<table class="upload-filelist-files"></table>' +
-
-			'</div>' +
-			'<div class="upload-status">' +
-
-			'<table class="upload-filelist-bottom">' +
+			'</thead>' +
+			'<tbody class="upload-filelist-files kbox-hover_list-row"></tbody>' +
+			'<tfoot class="upload-filelist-bottom">' +
 			'<tr class="upload-filelist-footer">' +
 			'<td class="upload-file-name">' +
 			'<div class="upload-upload-status"></div>' +
 			'</td>' +
-			'<td class="upload-file-status"><span class="upload-total-status">0%</span></td>' +
-			'<td class="upload-file-size"><span class="upload-total-file-size">'+'0kb'+'</span></td>' +
+			'<td class="upload-file-status"><span class="upload-total-status bold">'+'0%'+'</span></td>' +
+			'<td class="upload-file-size"><span class="upload-total-file-size bold">'+'0kb'+'</span></td>' +
 			'<td class="upload-file-action"></td>' +
 			'</tr>' +
+			'</tfoot>' +
 			'</table>' +
-
 			'</div>' +
-			'<div class="upload-buttons">' +
-			'<a class="button upload-button-add">'+'Add Files'+'</a>&nbsp;' +
-			'<a class="button upload-button-start upload-hidden">'+'Start Upload'+'</a>&nbsp;' +
-			'<a class="button upload-button-stop upload-hidden">'+'Stop Upload'+'</a>&nbsp;' +
+			'<div class="upload-buttons innerspacer">' +
+			'<ul class="buttonbar buttons-category">' +
+			'<li class="item-button">' +
+			'<a class="kbutton button-type-standard upload-button-add">'+'Add Files'+'</a>' +
+			'</li>' +
+			'<li class="item-button">' +
+			'<a class="kbutton button-type-standard upload-button-start"><span>'+'Start Upload'+'</span></a>' +
+			'</li>' +
+			'<li class="item-button">' +
+			'<a class="kbutton button-type-standard upload-button-stop"><span>'+'Stop Upload'+'</span></a>' +
+			'</li>' +
+			'</ul>' +
 			'</div>' +
-			'</div>' +
-			'</div>' +
-			'<input class="upload-count" value="0" type="hidden">' +
+			'<input class="upload-count" value="0" type="hidden" />' +
 			'</div>');
 	},
 
@@ -336,13 +338,13 @@ Kunena.Uploader = new Class({
 
 		if (uploader.state === plupload.STARTED) {
 			
-			self.start_button.addClass('upload-hidden');
-			if (this.options.buttons.stop === true) self.stop_button.removeClass('upload-hidden');
+			self.start_button.set('style', 'display: none');
+			if (this.options.buttons.stop === true) self.stop_button.set('style', 'display: block');
 			
 		} else {
 			
-			self.stop_button.addClass('upload-hidden');
-			if (this.options.buttons.start === true && uploader.total.queued > 0) self.start_button.removeClass('upload-hidden');
+			self.stop_button.set('style', 'display: none');
+			if (this.options.buttons.start === true && uploader.total.queued > 0) self.start_button.set('style', 'display: block');
 			self._updateFileList();
 		}
 	},
@@ -379,15 +381,19 @@ Kunena.Uploader = new Class({
 	_updateTotalProgress: function() {
 		var uploader = this.uploader;
 
-		this.element.getElement('.upload-total-status').set('html', uploader.total.percent + '%');
+		if(uploader.total.percent != 100) {
+			this.element.getElement('.upload-total-status').set('html', '<div class="progress progress-striped active"><div class="bar" style="width: ' + uploader.total.percent + '%"><span class="bold">' + uploader.total.percent + '%</span></div></div>');
+		} else {
+			this.element.getElement('.upload-total-status').set('html', '<div class="progress progress-striped active"><div class="bar" style="width: ' + uploader.total.percent + '%"><span class="bold">' + "Completed " + uploader.total.percent + '%</span></div></div>');
+		}
 
-		this.element.getElement('.upload-upload-status').set('text',
-			'Uploaded %d/%d files'.replace('%d/%d', uploader.total.uploaded+'/'+uploader.files.length)
+		this.element.getElement('.upload-upload-status').set('html',
+			'<span class="bold">'+'Uploaded %d/%d files'.replace('%d/%d', uploader.total.uploaded+'/'+uploader.files.length)+'</span>'
 		);
 		if (uploader.total.queued === 0) {
-			this.browse_button.set('text', 'Add Files');
+			this.browse_button.set('html', '<span>'+'Add Files'+'</span>');
 		} else {
-			this.browse_button.set('text', '%d files queued'.replace('%d', uploader.total.queued));
+			this.browse_button.set('html', '<span>'+'%d files queued'.replace('%d', uploader.total.queued)+'</span>');
 		}
 	},
 
@@ -418,7 +424,7 @@ Kunena.Uploader = new Class({
 				'class': 'upload_file',
 				'id': file.id, 
 				'html': '<td class="upload-file-name"><span>' + file.name + '</span></td>' +
-				'<td class="upload-file-status">' + file.percent + '%</td>' +
+				'<td class="upload-file-status"><div class="progress progress-striped active"><div class="bar" style="width: ' + file.percent + '%">' + file.percent + '%</div></div></td>' +
 				'<td class="upload-file-size">' + plupload.formatSize(file.size) + '</td>' +
 				'<td class="upload-file-action"><div class="upload-icon" title="'+'Remove File'+'"></div>' + fields + '</td>'
 				}

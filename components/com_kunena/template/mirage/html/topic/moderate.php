@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,17 +13,17 @@ defined ( '_JEXEC' ) or die ();
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="modtopic-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper">
+<div class="kmodule topic-moderate">
+	<div class="kbox-wrapper kbox-full">
+		<div class="topic-moderate-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="kheader"><a rel="kmod-detailsbox"><?php echo !isset($this->mesid) ? JText::_('COM_KUNENA_BUTTON_MODERATE_MESSAGE') : JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') ?></a></h2>
 					<p class="kheader-desc">Category: <strong><?php echo $this->escape($this->category->name) ?></strong></p>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
-				<div class="detailsbox box-border box-border_radius box-shadow">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
+				<div class="detailsbox kbox-border kbox-border_radius kbox-shadow">
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="myform" method="post">
 						<ul class="kmod-postlist">
 							<li>

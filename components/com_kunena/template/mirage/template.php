@@ -1,9 +1,9 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,8 +14,9 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	public $categoryIcons = array('knonew', 'knew');
 
 	public function initialize() {
-		// Template requires Mootools 1.2 framework
+		// Template requires Mootools 1.2+ framework
 		$this->loadMootools();
+		JHTML::_('behavior.tooltip');
 
 		// New Kunena JS for default template
 		$this->addScript ( 'js/default.js' );
@@ -33,7 +34,6 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/topic.css' );
 		$this->addStyleSheet ( 'css/user.css' );
 		//$this->addStyleSheet ( 'css/search.css' );
-		//$this->addStyleSheet ( 'css/uploader.css' );
 		//$this->addStyleSheet ( 'css/buttons.css' );
 		$this->addStyleSheet ( 'css/icons-social.css' );
 		//$this->addStyleSheet ( 'css/icons-editor.css' );
@@ -47,7 +47,9 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/icon-general.css' );
 		$this->addStyleSheet ( 'css/icon-editor.css' );
 		$this->addStyleSheet ( 'css/icon-topic.css' );
+		$this->addStyleSheet ( 'css/uploader.css' );
 		$this->addStyleSheet ( 'css/quirks.css' );
+
 
 		//$this->addIEStyleSheet ( 'css/ie.css' );
 		//$this->addIEStyleSheet ( 'css/ie7.css', 'IE 7' );

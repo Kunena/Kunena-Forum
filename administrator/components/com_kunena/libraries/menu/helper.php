@@ -166,7 +166,7 @@ abstract class KunenaMenuHelper {
 			$lastitem	= 0;
 
 			if ($items) {
-				foreach($items as $i => $item) {
+				foreach($items as $i => &$item) {
 					if (($start && $start > $item->sublevel)
 						|| ($end && $item->sublevel > $end)
 						|| (!$showAll && $item->sublevel > 0 && !in_array($item->parent, $path))
@@ -177,7 +177,26 @@ abstract class KunenaMenuHelper {
 						continue;
 					}
 
-					$itemparams = new JParameter($item->params);
+					// Menu Link is a special type that is a link to another item
+					if ($item->type == 'menulink') {
+						$menu = JSite::getMenu();
+						$newItem = $menu->getItem($item->query['Itemid']);
+						if ($newItem) {
+							$tmp = clone($newItem);
+							$tmp->name = $item->name;
+							$tmp->parent = $item->parent;
+							$tmp->sublevel = $item->sublevel;
+							$tmp->tree = $item->tree;
+							$item = $tmp;
+						}
+					} else {
+						$item = clone($item);
+					}
+
+					// Convert object to be Joomla 2.5 compatible
+					$item->params = new JParameter($item->params);
+					$item->parent_id = $item->parent;
+					$item->level = $item->sublevel+1;
 
 					$item->deeper = false;
 					$item->shallower = false;
@@ -188,6 +207,8 @@ abstract class KunenaMenuHelper {
 						$items[$lastitem]->shallower	= ($item->sublevel < $items[$lastitem]->sublevel);
 						$items[$lastitem]->level_diff	= ($items[$lastitem]->sublevel - $item->sublevel);
 					}
+
+					$item->parent = (boolean) $menu->getItems('parent', (int) $item->id, true);
 
 					$lastitem			= $i;
 					$item->active		= false;
@@ -205,11 +226,6 @@ abstract class KunenaMenuHelper {
 							}
 							break;
 
-						case 'alias':
-							// If this is an alias use the item id stored in the parameters to make the link.
-							$item->flink = 'index.php?Itemid='.($itemparams->get('aliasoptions'));
-							break;
-
 						default:
 							$router = JSite::getRouter();
 							if ($router->getMode() == JROUTER_MODE_SEF) {
@@ -222,15 +238,16 @@ abstract class KunenaMenuHelper {
 					}
 
 					if (strcasecmp(substr($item->flink, 0, 4), 'http') && (strpos($item->flink, 'index.php?') !== false)) {
-						$item->flink = JRoute::_($item->flink, false, $itemparams->get('secure'));
+						$item->flink = JRoute::_($item->flink, false, $item->params->get('secure'));
 					} else {
 						$item->flink = JRoute::_($item->flink, false);
 					}
 
 					$item->title = htmlspecialchars($item->name);
-					$item->anchor_css = htmlspecialchars($itemparams->get('menu-anchor_css', ''));
-					$item->anchor_title = htmlspecialchars($itemparams->get('menu-anchor_title', ''));
-					$item->menu_image = htmlspecialchars($itemparams->get('menu_image', ''));
+					$item->anchor_css = htmlspecialchars($item->params->get('menu-anchor_css', ''));
+					$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''));
+					$item->menu_image = htmlspecialchars($item->params->get('menu_image', ''));
+					if ($item->menu_image == '-1') $item->menu_image = '';
 				}
 
 				if (isset($items[$lastitem])) {

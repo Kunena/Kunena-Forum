@@ -10,25 +10,23 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmodule">
-	<div class="box-wrapper">
-		<div class="statistics-kbox kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule common-statistics">
+	<div class="kbox-wrapper kbox-full">
+		<div class="common-statistics-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
-					<h2 class="header">
-						<a rel="statistics-general" title="<?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS') ?>" rel="statistics-detailsbox">
+					<h2 class="header header2">
+						<a class="header" rel="statistics-general" title="<?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS') ?>" rel="statistics-detailsbox">
 							<!-- span class="kstats-smicon"></span -->
 							<?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS') ?>
 						</a>
 					</h2>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
-				<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow">
+			<div class="detailsbox-wrapper innerspacer kbox-full">
+				<div class="statistics-details detailsbox kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow">
 					<div class="statistics-smicon">
-						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
-							<span class="stats-smicon"></span>
-						</a>
+						<span class="stats-smicon"></span>
 					</div>
 					<div class="statistics-totals">
 						<ul class="list-unstyled">
@@ -39,9 +37,7 @@ defined ( '_JEXEC' ) or die ();
 						</ul>
 					</div>
 					<div class="statistics-smicon">
-						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
-							<span class="stats-smicon"></span>
-						</a>
+						<span class="stats-smicon"></span>
 					</div>
 					<div class="statistics-totals">
 						<ul class="list-unstyled">
@@ -52,9 +48,7 @@ defined ( '_JEXEC' ) or die ();
 						</ul>
 					</div>
 					<div class="statistics-smicon">
-						<a href="<?php echo $this->statisticsURL ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_STAT_LINK_TITLE') ?>">
-							<span class="stats-smicon"></span>
-						</a>
+						<span class="stats-smicon"></span>
 					</div>
 					<div class="statistics-totals">
 						<ul class="list-unstyled">
@@ -70,18 +64,18 @@ defined ( '_JEXEC' ) or die ();
 <div class="spacer"></div>
 
 <?php foreach ($this->top as $top) : ?>
-	<div class="box-module">
-		<div class="box-wrapper box-color box-border box-border_radius box-border_radius-child box-shadow">
-			<div class="section popsubjstats block">
-				<div class="headerbox-wrapper box-full">
+	<div class="kbox-module statistics-default">
+		<div class="kbox-wrapper kbox-full">
+			<div class="statistics-default-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+				<div class="headerbox-wrapper kbox-full">
 					<div class="header">
 						<h2 class="header"><a rel="popsubstats-tbody" title="Top 10 Most Popular Topics"><span><?php echo $top[0]->title ?></span></a></h2>
 					</div>
 				</div>
-				<div class="detailsbox-wrapper">
-					<div class="statistics-details detailsbox box-full box-hover box-border box-border_radius box-shadow" id="statistics-detailsbox">
+				<div class="detailsbox-wrapper innerspacer">
+					<div class="statistics-details detailsbox kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow" id="statistics-detailsbox">
 						<ul class="list-unstyled popsubstat-list">
-							<li class="header box-hover_header-row">
+							<li class="header kbox-hover_header-row">
 								<dl class="list-unstyled">
 									<dd class="popsubstats-col1"><span class="bold"><?php echo $top[0]->titleName ?></span></dd>
 									<dd class="popsubstats-col2"><span class="bold">&nbsp;</span></dd>
@@ -91,11 +85,11 @@ defined ( '_JEXEC' ) or die ();
 						</ul>
 						<ul class="list-unstyled popsubstat-list">
 							<?php foreach ($top as $id=>$item) : ?>
-								<li class="popsubstats-row box-hover box-hover_list-row">
+								<li class="popsubstats-row kbox-hover kbox-hover_list-row">
 									<dl class="list-unstyled">
 										<dd class="popsubstats-col1"><?php echo $item->link ?></dd>
 										<dd class="popsubstats-col2">
-											<div class="stats-bar box-border box-shadow" style="width:<?php echo $item->percent ?>%"></div>
+											<div class="stats-bar kbox-border kbox-shadow" style="width:<?php echo $item->percent ?>%"></div>
 										</dd>
 										<dd class="popsubstats-col3"><?php echo $item->count ?></dd>
 									</dl>

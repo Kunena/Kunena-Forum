@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default20
+ * @package Kunena.Template.Mirage
  * @subpackage Category
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
@@ -11,4 +11,3 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->displayTemplateFile('category', 'edit');
-;

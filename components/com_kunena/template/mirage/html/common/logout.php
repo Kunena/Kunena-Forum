@@ -9,34 +9,40 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-// TODO: add missing module position
 ?>
-<div class="login dropdown-menu">
-	<ul class="list-unstyled login-profile">
-		<li class="login-avatar link-dropdown">
-			<a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>">
-				<span class="login-avatar"><?php echo $this->me->getAvatarImage('', 'welcome'), JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE') ?></span>
-				<span class="login-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getName()) ?></span>
+<ul class="list-unstyled login login-profile dropdown-menu">
+	<li class="login-avatar link-dropdown">
+		<a class="link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>">
+			<span class="login-avatar fl"><?php echo $this->me->getAvatarImage('', 'welcome') ?></span>
+			<span class="login-view_profile"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE') ?></span>
+			<span class="login-welcome"><?php echo JText::sprintf('COM_KUNENA_VIEW_COMMON_LOGOUT_WELCOME', $this->me->getName()) ?></span>
+		</a>
+	</li>
+	<li class="divider"></li>
+	<?php if (!empty($this->privateMessagesLink)) echo '<li class="pm link-dropdown">'.$this->privateMessagesLink.'</li>' ?>
+	<?php if (!empty($this->editProfileLink)) echo '<li class="editprofile link-dropdown">'.$this->editProfileLink.'</li>' ?>
+	<?php if (!empty($this->announcementsLink)) echo '<li class="announcements link-dropdown">'.$this->announcementsLink.'</li>' ?>
+	<li class="divider"></li>
+	<?php if ($this->logout) : ?>
+		<li class="login-form">
+			<!--<form action="<?php //echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>" method="post" class="form logout">
+				<input type="hidden" name="task" value="logout" />
+				<?php //echo $this->displayFormToken() ?>
+
+				<fieldset>
+					<legend class="klegend klogout"><?php //echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_LONG') ?></legend>
+					<button class="kbutton button-type-standard" type="submit"><span><?php //echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?></span></button>
+				</fieldset>
+			</form>-->
+			<a class="link" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&task=logout&'.JUtility::getToken().'=1') ?>" title="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') .' :: '. JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_LONG') ?>">
+				<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?>
 			</a>
 		</li>
-		<li class="divider"></li>
-		<?php if (!empty($this->privateMessagesLink)) : ?><li class="pm link-dropdown"><?php echo $this->privateMessagesLink ?></li><?php endif ?>
-		<?php if (!empty($this->editProfileLink)) : ?><li class="editprofile link-dropdown"><?php echo $this->editProfileLink ?></li><?php endif ?>
-		<?php if (!empty($this->announcementsLink)) : ?><li class="announcements link-dropdown"><?php echo $this->announcementsLink ?></li><?php endif ?>
-		<li class="divider"></li>
-		<?php if ($this->logout) : ?>
-			<li class="login-form">
-				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="form logout">
-					<input type="hidden" name="view" value="user" />
-					<input type="hidden" name="task" value="logout" />
-					[K=TOKEN]
+	<?php endif ?>
 
-					<fieldset>
-						<legend class="klegend klogout"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_LONG') ?></legend>
-						<button class="kbutton button-type-standard" type="submit" value="Log out"><span><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT') ?></span></button>
-					</fieldset>
-				</form>
-			</li>
-		<?php endif ?>
-	</ul>
-</div>
+	<?php if ($this->moduleHtml) : ?>
+	<li class = "login-modules">
+		<?php echo $this->moduleHtml ?>
+	</li>
+	<?php endif; ?>
+</ul>

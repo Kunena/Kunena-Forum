@@ -24,25 +24,28 @@ class KunenaTemplateHelper {
 		return $defaultemplate == $template ? 1 : 0;
 	}
 
-	public static function parseXmlFiles($templateBaseDir) {
+	public static function parseXmlFiles($templateBaseDir = null) {
 		// Read the template folder to find templates
+		if (!$templateBaseDir) $templateBaseDir = KPATH_SITE.'/template';
 		jimport('joomla.filesystem.folder');
 		$templateDirs = JFolder::folders($templateBaseDir);
 		$rows = array();
 		// Check that the directory contains an xml file
 		foreach ($templateDirs as $templateDir)
 		{
-			if(!$data = self::parseXmlFile($templateBaseDir, $templateDir)){
+			if(!$data = self::parseXmlFile($templateDir, $templateBaseDir)){
 				continue;
 			} else {
-				$rows[] = $data;
+				$rows[$templateDir] = $data;
 			}
 		}
+		ksort($rows);
 		return $rows;
 	}
 
-	function parseXmlFile($templateBaseDir, $templateDir) {
+	function parseXmlFile($templateDir, $templateBaseDir = null) {
 		// Check if the xml file exists
+		if (!$templateBaseDir) $templateBaseDir = KPATH_SITE.'/template';
 		if(!is_file($templateBaseDir.'/'.$templateDir.'/template.xml')) {
 			return false;
 		}

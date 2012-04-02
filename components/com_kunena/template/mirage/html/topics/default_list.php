@@ -10,20 +10,20 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post">
-	<div class="kmodule">
-		<div class="box-wrapper">
-			<div class="kbox box-color box-border box-border_radius box-border_radius-child box-shadow">
-				<div class="headerbox-wrapper">
+<div class="kmodule topics_default_list">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post">
+		<div class="kbox-wrapper kbox-full">
+			<div class="topics-default_list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+				<div class="headerbox-wrapper kbox-full">
 					<div class="header">
-						<h2 class="header"><a class="section link-header2" rel="topic-detailsbox"><?php echo $this->headerText ?></a>(<strong><?php echo intval($this->total) ?></strong>
+						<h2 class="header"><a class="section link-header2" rel="topic-detailsbox"><?php echo $this->headerText ?></a> (<strong><?php echo intval($this->total) ?></strong>
 						<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>)</h2>
 					</div>
 				</div>
-				<div class="detailsbox-wrapper">
-					<div class="topic detailsbox box-full box-border box-border_radius box-shadow" id="topic-detailsbox">
+				<div class="detailsbox-wrapper innerspacer kbox-full">
+					<div class="topics-default_list-detailsbox detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
 						<ul class="list-unstyled topic-list">
-							<li class="header box-hover_header-row clear">
+							<li class="header kbox-hover_header-row clear">
 								<dl class="list-unstyled list-unstyled">
 									<dd class="topic-icon">
 									</dd>
@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 									</dd>
 									<?php if ($this->topicActions) : ?>
 										<dd class="topic-checkbox">
-											<span><input id="kcheckbox-all" type="checkbox" value="0" name="" class="moderate-topic-checkall" /></span>
+											<span><input id="kcheckbox-all" type="checkbox" value="0" name="" class="kcheckall" /></span>
 										</dd>
 									<?php endif; ?>
 								</dl>
@@ -60,20 +60,20 @@ defined ( '_JEXEC' ) or die ();
 						</ul>
 					</div>
 				</div>
-			</div>
-			<?php if ($this->topicActions) : ?>
-				<div class="modbox-wrapper">
-					<div class="modbox">
-						<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox" size="1"', 'value', 'text', 0, 'kmoderate-select');
-						$options = array (JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
-						echo JHTML::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="inputbox" size="1" style="display:none;"', 'value', 'text', 0, 'kcategorytarget'); ?>
-						<input name="submit" class="button" type="submit" value="<?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?>"/>
+				<?php if ($this->topicActions) : ?>
+					<div class="modbox-wrapper innerspacer-bottom">
+						<div class="modbox">
+							<button class="kbutton button-type-standard fr" type="submit"><span><?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?></span></button>
+							<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="form-horizontal fr" size="1"', 'value', 'text', 0, 'kmoderate-select');
+							$options = array (JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_BULK_CHOOSE_DESTINATION') ));
+							echo JHTML::_('kunenaforum.categorylist', 'target', 0, $options, array(), 'class="form-horizontal" size="1" style="display:none;"', 'value', 'text', 0, 'kcategorytarget'); ?>
+						</div>
 					</div>
-				</div>
-			<?php endif ?>
+				<?php endif ?>
+			</div>
 		</div>
-	</div>
-	<div class="spacer"></div>
-	<input type="hidden" name="view" value="topics" />
-	<?php echo JHTML::_( 'form.token' ); ?>
-</form>
+		<input type="hidden" name="view" value="topics" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+	</form>
+</div>
+<div class="spacer"></div>

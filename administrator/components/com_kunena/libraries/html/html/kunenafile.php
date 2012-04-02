@@ -60,9 +60,10 @@ JS;
 
 		if (!$loaded)
 		{
+			$template = KunenaFactory::getTemplate();
 			$document = JFactory::getDocument();
 			$document->addScript ( 'media/kunena/js/plupload/plupload.js' );
-			$document->addScript ( 'components/com_kunena/template/default20/js/uploader.js' );
+			$document->addScript ( $template->getFile('uploader.js', false, 'js', 'media/kunena/js') );
 
 			$loaded = true;
 		}

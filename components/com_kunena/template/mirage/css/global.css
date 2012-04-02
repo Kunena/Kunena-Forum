@@ -9,13 +9,13 @@
 * @link http://www.kunena.org
 **/
 
-#kunena.layout,
+/*#kunena.layout,
 #kunena.layout p {
 	padding: 0;
 	margin: 5px;
 	line-height: 1.333em;
 	width:100%;
-}
+}*/
 #kunena.layout h1,
 #kunena.layout h2,
 #kunena.layout h3,
@@ -54,14 +54,14 @@
 	border-collapse:separate;
 	border-spacing:0;
 }
-#kunena.layout caption,
+/*#kunena.layout caption,
 #kunena.layout th,
 #kunena.layout td {
 	border: 0 solid;
 	text-align:left;
 	font-weight:normal;
 	float:none !important;
-}
+}*/
 #kunena.layout table,
 #kunena.layout th,
 #kunena.layout td {
@@ -1382,18 +1382,18 @@
 
 /*---------- Tabs ------------- */
 
-#kunena.layout dl.tabs {
-	/*float: left;*/
+/*#kunena.layout dl.tabs {*/
+	/*float: left;
 	/*margin: 10px 0 -1px 0;*/
-	position: relative;
+	/*position: relative;
 	z-index: 1;
 	z-index: 50;
 	padding: .22em 0;
 	margin-bottom: 0;
 }
-#kunena.layout dl.tabs dt {
+#kunena.layout dl.tabs dt {*/
 	/*float: left;*/
-	display: inline;
+	/*display: inline;
 	padding: 4px 10px;
 	border-left: 1px solid;
 	border-right: 1px solid;
@@ -1404,9 +1404,9 @@
 	border-bottom: 1px solid;
 	z-index: 100;
 }
-#kunena.layout div.current {
+#kunena.layout div.current {*/
 	/*clear: both;*/
-	border: 1px solid;
+	/*border: 1px solid;
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
@@ -1423,7 +1423,7 @@
 	border-width: 1px 1px 4px 1px;
 	border-style: solid;
 	margin: 0px -1px;
-}
+}*/
 
 /*---------- New Topic Form ------------- */
 
@@ -1590,7 +1590,7 @@
 
 /*---------- Advanced Search ------------- */
 
-#kunena.layout #searchform {
+/*#kunena.layout #searchform {
 	padding: 10px 10px 0px;
 }
 #kunena.layout #searchform fieldset {
@@ -1629,7 +1629,7 @@
 }
 #kunena.layout #searchform label input {
 	vertical-align: middle;
-}
+}*/
 /*#kunena.layout #search-posts-start select {
 	margin-left: 10px;
 }
@@ -1641,9 +1641,9 @@
 #kunena.layout input#username {
 	margin-right: 10px;
 }*/
-#kunena.layout .kadvsearch .clrline {
+/*#kunena.layout .kadvsearch .clrline {
 	clear: both;
-}
+}*/
 
 /*---------- Manage Categories ------------- */
 

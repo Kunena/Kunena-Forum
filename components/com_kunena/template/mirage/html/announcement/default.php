@@ -10,37 +10,28 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="box-module">
-	<div class="block-wrapper box-color box-border box-border_radius box-shadow">
-		<div id="announce" class="block">
-			<div class="headerbox-wrapper box-full">
+<div class="kmodule announcement-default">
+	<div class="kbox-wrapper kbox-full">
+		<div class="announcement-default-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="headerbox-wrapper kbox-full">
 				<div class="header fl">
 					<h2 class="header">
-						<a href="" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox">
-							<?php echo $this->announcement->displayField('title') ?>
+						<a title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?>" rel="kannounce-detailsbox">
+							<?php echo $this->displayField('title') ?>
 						</a>
 					</h2>
-					<?php if ($this->actions) : ?>
-					<div class="kactions">
-						<?php
-						foreach ($this->actions as $name => $url) {
-							$links[] = JHtml::_('kunenaforum.link', $url, JText::_("COM_KUNENA_ANN_{$name}"), JText::_("COM_KUNENA_ANN_{$name}"));
-						}
-						echo implode(' | ', $links);
-						?>
-					</div>
-					<?php endif ?>
 				</div>
 			</div>
-			<div class="detailsbox-wrapper">
-				<div class="detailsbox innerspacer box-full box-hover box-border box-border_radius box-shadow" id="announce-detailsbox">
+			<?php echo $this->displayActions() ?>
+			<div class="detailsbox-wrapper innerspacer">
+				<div class="announce-detailsbox detailsbox kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow">
 					<ul class="list-unstyled details-desc">
 						<?php if ($this->showdate) : ?>
-						<li class="kannounce-date" title="<?php echo $this->announcement->displayField('created', 'ago'); ?>">
-							<?php echo $this->announcement->displayField('created') ?>
+						<li class="kannounce-date" title="<?php echo $this->displayField('created', 'ago'); ?>">
+							<?php echo $this->displayField('created') ?>
 						</li>
 						<?php endif ?>
-						<li class="kannounce-desc"><?php echo $this->announcement->displayField('description') ?></li>
+						<li class="kannounce-desc"><?php echo $this->displayField('description') ?></li>
 					</ul>
 				</div>
 			</div>

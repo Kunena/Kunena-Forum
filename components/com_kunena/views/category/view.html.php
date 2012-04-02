@@ -229,6 +229,14 @@ class KunenaViewCategory extends KunenaView {
 		return '';
 	}
 
+	public function displaySectionField($field) {
+		return $this->section->displayField($field);
+	}
+
+	public function displayCategoryField($field) {
+		return $this->category->displayField($field);
+	}
+
 	function displayInfoMessage() {
 		$this->common->header = $this->escape($this->category->name);
 		$this->common->body = '<p>'.JText::sprintf('COM_KUNENA_VIEW_CATEGORIES_INFO_EMPTY', $this->escape($this->category->name)).'</p>';
@@ -241,7 +249,12 @@ class KunenaViewCategory extends KunenaView {
 		$this->section = $section;
 		$this->sectionURL = KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$this->section->id}");
 		$this->sectionRssURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$this->section->id}&format=feed") : '';
-		$this->sectionMarkReadURL = $this->me->exists() ? KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->section->id}") : '';
+
+		$this->sectionButtons = array();
+		if ($this->me->exists()) {
+			$token = '&' . JUtility::getToken() . '=1';
+			$this->sectionButtons['markread'] = $this->getButton(KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->section->id}{$token}"), 'markread', 'section', 'user');
+		}
 		echo $this->loadTemplateFile('section');
 		$this->rowno = 0;
 		$this->category = $this->parentcategory;
@@ -285,6 +298,10 @@ class KunenaViewCategory extends KunenaView {
 		$contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillCategoryInfo'), $contents);
 		KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		echo $contents;
+	}
+
+	function displayTopicActions($attributes='', $id=null) {
+		return JHTML::_('select.genericlist', $this->topicActions, 'task', $attributes, 'value', 'text', null, $id);
 	}
 
 	function displayCategoryActions() {
@@ -435,7 +452,7 @@ class KunenaViewCategory extends KunenaView {
 		}
 	}
 
-	function getTopicClass($prefix='k', $class='topic') {
+function getTopicClass($prefix='k', $class='topic') {
 		$class = $prefix . $class;
 		$txt = $class . (($this->position & 1) + 1);
 		if ($this->topic->ordering) {
@@ -451,6 +468,23 @@ class KunenaViewCategory extends KunenaView {
 		if ($this->topic->hold == 1) $txt .= ' '.$prefix.'unapproved';
 		else if ($this->topic->hold) $txt .= ' '.$prefix.'deleted';
 		return $txt;
+	}
+
+	function displayManageActions($attributes='', $id=null) {
+		$options	= array();
+		$options[]	= JHTML::_('select.option',  '', JText::_('COM_KUNENA_SELECT_BATCH_OPTION') );
+		$options[]	= JHTML::_('select.option',  'publish', JText::_('COM_KUNENA_PUBLISH') );
+		$options[]	= JHTML::_('select.option',  'unpublish', JText::_('COM_KUNENA_UNPUBLISH') );
+		$options[]	= JHTML::_('select.option',  'lock', JText::_('COM_KUNENA_LOCK') );
+		$options[]	= JHTML::_('select.option',  'unlock', JText::_('COM_KUNENA_UNLOCK') );
+		$options[]	= JHTML::_('select.option',  'review', JText::_('COM_KUNENA_ENABLE_REVIEW') );
+		$options[]	= JHTML::_('select.option',  'unreview', JText::_('COM_KUNENA_DISABLE_REVIEW') );
+		$options[]	= JHTML::_('select.option',  'allow_anomymous', JText::_('COM_KUNENA_ALLOW_ANONYMOUS') );
+		$options[]	= JHTML::_('select.option',  'deny_anonymous', JText::_('COM_KUNENA_DISALLOW_ANONYMOUS') );
+		$options[]	= JHTML::_('select.option',  'allow_polls', JText::_('COM_KUNENA_ALLOW_POLLS') );
+		$options[]	= JHTML::_('select.option',  'deny_polls', JText::_('COM_KUNENA_DISALLOW_POLLS') );
+		$options[]	= JHTML::_('select.option',  'delete', JText::_('COM_KUNENA_DELETE') );
+		return JHTML::_('select.genericlist',  $options, 'batch', $attributes, 'value', 'text', null, $id );
 	}
 
 	function getPagination($maxpages) {

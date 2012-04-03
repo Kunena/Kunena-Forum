@@ -89,7 +89,7 @@ defined ( '_JEXEC' ) or die ();
 									<dl class="list-unstyled">
 										<dd class="popsubstats-col1"><?php echo $item->link ?></dd>
 										<dd class="popsubstats-col2">
-											<div class="stats-bar kbox-border kbox-shadow" style="width:<?php echo $item->percent ?>%"></div>
+											<div class="stats-bar" style="width:<?php echo $item->percent ?>%"></div>
 										</dd>
 										<dd class="popsubstats-col3"><?php echo $item->count ?></dd>
 									</dl>

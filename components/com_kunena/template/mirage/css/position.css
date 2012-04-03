@@ -100,15 +100,24 @@
 	margin-left: 63px;
 }
 
+
+#kunena.layout img.kavatar {
+	border-radius: 5px;
+}
+
 #kunena.layout img.kavatar-32 {
-	height: 32px;
 	width: 32px;
+	max-height: 32px;
+	width: 32px;
+	max-width: 32px;
 	border-radius: 5px;
 }
 
 #kunena.layout img.kavatar-48 {
-	height: 48px;
-	width: 48px;
+	height: 32px;
+	max-height: 48px;
+	width: 32px;
+	max-width: 48px;
 	border-radius: 5px;
 }
 
@@ -137,11 +146,12 @@
 	height: 18px;
 	/*margin-bottom: 18px;*/
 	overflow: hidden;
+	position: relative;
 }
 
 #kunena.layout .progress .bar {
 	-moz-box-sizing: border-box;
-	transition: width 0.6s ease 0s;
+	/*transition: width 0.6s ease 0s;*/
 	background-color: #0E90D2;
 	background-image: -moz-linear-gradient(center top , #149BDF, #0480BE);
 	background-repeat: repeat-x;
@@ -152,6 +162,8 @@
 	text-align: center;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	width: 0;
+	overflow: hidden;
+	position: relative;
 }
 
 #kunena.layout li.dropdown a {
@@ -236,16 +248,39 @@
 }
 
 #kunena.layout div.kpagination {
-	margin: 12px 0;
+	/*margin: 12px 0;*/
+}
+
+#kunena.layout div.kpagination ul {
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	display: inline-block;
+	margin-bottom: 0;
+	margin-left: 0;
 }
 
 #kunena.layout div.kpagination li {
 	display: inline;
 }
 
+#kunena.layout div.kpagination li:first-child > a {
+	border-left-width: 1px;
+	border-radius: 3px 0 0 3px;
+}
+
 #kunena.layout div.kpagination a {
-	padding: 10px;
-	line-height: 18px;
+	border-bottom-colors: none;
+	border-image: none;
+	border-left-colors: none;
+	border-right-colors: none;
+	border-top-colors: none;
+	border-color: #DDDDDD;
+	border-style: solid;
+	border-width: 1px 1px 1px 0;
+	float: left;
+	line-height: 34px;
+	padding: 0 14px;
+	text-decoration: none;
 }
 
 #kunena.layout div.headerbox-wrapper {
@@ -496,26 +531,41 @@
 }
 
 #kunena.layout .kpost-user_details-vertical {
-	min-width: 22%;
+	width: 25%;
+	/*padding: 10px;*/
+	text-align:center;
+	/*float:right;*/
+}
+
+#kunena.layout .kpost-user_details-horizontal {
 	padding: 10px;
 	text-align:center;
-	float:right;
+	/*float:right;*/
 }
-#kunena.layout .kpost-user-username a {
+
+#kunena.layout .kpost-user-vertical-username a {
 	text-decoration: none;
 }
-#kunena.layout .kpost-user-avatar img {
+
+#kunena.layout .kpost-user-vertical-avatar img {
 	margin: 0;
 	padding: 0;
 }
+
 
 /* Post body */
 #kunena.layout .kpost-post-body {
 	padding: 20px;
 }
-#kunena.layout .kpost-container {
+
+#kunena.layout .kpost-container-left {
+	margin-left: 25%;
+}
+
+#kunena.layout .kpost-container-right {
 	margin-right: 25%;
 }
+
 #kunena.layout .kpost-body-attach {
 	margin: 15px 0;
 }
@@ -524,6 +574,39 @@
 	margin: 15px 0;
 	padding: 5px 0;
 }
+
+#kunena.layout .kpost-user-vertical-username {;
+	margin: 20px 0px 5px 0px;
+}
+
+#kunena.layout .kpost-user-vertical-username > a {;
+	font-size: 16px;
+}
+
+#kunena.layout .kpost-user-vertical-avatar {
+	margin: 5px 0px 5px 0px;
+}
+
+#kunena.layout .kpost-user-vertical-status {
+	margin: 5px 0px 5px 0px;
+}
+
+#kunena.layout .kpost-user-vertical-rank {
+	margin: 5px 0px 0px 0px;
+}
+
+#kunena.layout .kpost-user-vertical-rank-img {
+	margin: 0px 0px 5px 0px;
+}
+
+#kunena.layout .kpost-user-vertical-posts {
+	margin: 5px 0px 0px 0px;
+}
+
+#kunena.layout .kpost-user-vertical-karma {
+	margin: 0px 0px 5px 0px;
+}
+
 
 /***************************
  * START ANNOUNCEMENT LIST *
@@ -569,7 +652,7 @@
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 5px;
+	padding: 10px 5px;
 	position: relative;
 }
 
@@ -703,7 +786,7 @@
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 5px;
+	padding: 10px 5px;
 	position: relative;
 }
 
@@ -838,7 +921,7 @@
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 5px;
+	padding: 10px 5px;
 	position: relative;
 }
 
@@ -1279,7 +1362,7 @@
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 5px;
+	padding: 10px 5px;
 }
 
 #kunena.layout ul.popsubstat-list li.header dd {
@@ -1437,7 +1520,7 @@
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 5px;
+	padding: 10px 5px;
 }
 
 #kunena.layout ul.topic_threaded_tree-list li.header dd {
@@ -1580,7 +1663,7 @@
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 5px;
+	padding: 10px 5px;
 	position: relative;
 }
 

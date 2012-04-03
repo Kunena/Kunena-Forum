@@ -13,18 +13,19 @@
 }
 
 #kunena.layout #kuploader .upload-filelist {
-	border-radius: 5px 5px 0 0;
-	border:1px solid #D4D4D4;
+	/*border-radius: 5px 5px 0 0;
+	border:1px solid #D4D4D4;*/
 }
 
  #kunena.layout #kuploader .upload-filelist-bottom {
-	border-radius: 0 0 5px 5px;
-	border: 1px solid #D4D4D4;
+	/*border-radius: 0 0 5px 5px;
+	border: 1px solid #D4D4D4;*/
 }
 
 #kunena.layout #kuploader table {
 	width: 100%;
-	border-collapse: collapse;
+	/*border-collapse: collapse;*/
+	border-collapse: inherit;
 }
 
 #kunena.layout #kuploader table th {
@@ -33,6 +34,10 @@
 	color: #333333;
 	background: #F4F4F4 repeat scroll 0 0 transparent;
 	font-size: 13px;
+}
+
+#kunena.layout #kuploader table tr {
+	border-collapse: inherit;
 }
 
 #kunena.layout #kuploader table td {

@@ -87,7 +87,6 @@ class KunenaConfig extends JObject {
 	public $userlist_online = 1;
 	public $userlist_avatar = 1;
 	public $userlist_name = 1;
-	public $userlist_username = 1;
 	public $userlist_posts = 1;
 	public $userlist_karma = 1;
 	public $userlist_email = 0;

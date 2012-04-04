@@ -50,7 +50,7 @@ defined ( '_JEXEC' ) or die ();
 									<?php if ($this->topicActions) : ?>
 										<dd class="topic-checkbox">
 											<div class="innerspacer-header">
-												<span><input id="kcheckbox-all" type="checkbox" value="0" name="" class="kcheckall" /></span>
+												<span><input id="kcheckbox-all" type="checkbox" value="" name="toggle" class="kcheckall" /></span>
 											</div>
 										</dd>
 									<?php endif; ?>

@@ -22,10 +22,10 @@ defined ( '_JEXEC' ) or die ();
 	<?php endif ?>
 	</div>
 	<ul class="kuserlist-details">
-		<?php if ($this->config->userlist_name && !$this->config->username) : ?>
+		<?php if (!$this->config->username) : ?>
 		<li class="kdetails-username"><span><?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>:</span> <?php echo $this->escape($this->user->username) ?></li>
 		<?php endif; ?>
-		<?php if ($this->config->userlist_username && $this->config->username) : ?>
+		<?php if ($this->config->username) : ?>
 		<li class="kdetails-username"><span><?php echo JText::_('COM_KUNENA_USRL_NAME') ?>:</span> <?php echo $this->escape($this->user->name) ?></li>
 		<?php endif; ?>
 		<?php if (!empty($this->email)) : ?>

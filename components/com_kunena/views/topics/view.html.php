@@ -59,7 +59,11 @@ class KunenaViewTopics extends KunenaView {
 		$page = intval($this->state->get('list.start')/$limit)+1;
 		$total = intval(($this->total-1)/$limit)+1;
 		$pagesTxt = "{$page}/{$total}";
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+		if ( $this->setJoomla25Title() ) {
+			$metaKeys = $this->headerText . $this->setJoomla25Title();
+		} else {
+			$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+		}
 		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 
@@ -106,7 +110,11 @@ class KunenaViewTopics extends KunenaView {
 		$page = intval($this->state->get('list.start')/$limit)+1;
 		$total = intval($this->total/$limit)+1;
 		$pagesTxt = "{$page}/{$total}";
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+		if ( $this->setJoomla25Title() ) {
+			$metaKeys = $this->headerText . $this->setJoomla25Title();
+		} else {
+			$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+		}
 		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 
@@ -155,7 +163,11 @@ class KunenaViewTopics extends KunenaView {
 		$page = intval($this->state->get('list.start')/$limit)+1;
 		$total = intval($this->total/$limit)+1;
 		$pagesTxt = "{$page}/{$total}";
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+		if ( $this->setJoomla25Title() ) {
+			$metaKeys = $this->headerText . $this->setJoomla25Title();
+		} else {
+			$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+		}
 		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 
@@ -339,5 +351,18 @@ class KunenaViewTopics extends KunenaView {
 		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
 		$pagination->setDisplay($maxpages);
 		return $pagination->getPagesLinks();
+	}
+
+	function setJoomla25Title() {
+		if (version_compare(JVERSION, '2.5','>')) {
+			if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
+				return $this->escape ( ", {$this->config->board_title}, " );
+			} else if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 1 ) {
+				return $this->app->getCfg ( 'sitename' ) . $this->escape ( ", {$this->config->board_title}, " );
+			} else {
+				return $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+			}
+		}
+		return;
 	}
 }

@@ -65,8 +65,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		// perform security checks
-		$this->user = JFactory::getUser();
-		if ($this->user->id == 0) {
+		if ($this->me->id == 0) {
 			JError::raiseError( 403, JText::_('Access Forbidden') );
 			return;
 		}
@@ -81,7 +80,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$msg = JText::_( 'COM_KUNENA_PROFILE_SAVED' );
-		$this->setRedirect ( $this->user->getUrl(false), $msg );
+		$this->setRedirect ( $this->me->getUrl(false), $msg );
 	}
 
 	function ban() {

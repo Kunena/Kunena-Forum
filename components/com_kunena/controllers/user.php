@@ -65,7 +65,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		// perform security checks
-		if ($this->me->id == 0) {
+		if (!$this->me->exists()) {
 			JError::raiseError( 403, JText::_('Access Forbidden') );
 			return;
 		}

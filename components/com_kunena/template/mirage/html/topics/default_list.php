@@ -29,6 +29,7 @@ defined ( '_JEXEC' ) or die ();
 									</dd>-->
 									<dd class="topic-subject">
 										<div class="innerspacer-header">
+											<?php //FIXME: Translate ?>
 											<span class="bold"><?php echo JText::_('Subject') ?></span>
 										</div>
 									</dd>
@@ -44,6 +45,7 @@ defined ( '_JEXEC' ) or die ();
 									</dd>
 									<dd class="topic-lastpost">
 										<div class="innerspacer-header">
+											<?php //FIXME: Translate ?>
 											<span class="bold"><?php echo JText::_('Last Post') ?></span>
 										</div>
 									</dd>

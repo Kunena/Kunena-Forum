@@ -783,9 +783,9 @@
 #kunena.layout .kpost-post-body {
 	padding: 20px;
 }
-#kunena.layout .kpost-container {
+/*#kunena.layout .kpost-container {
 	margin-right: 25%;
-}
+}*/
 #kunena.layout .kpost-body-attach {
 	margin: 15px 0;
 }
@@ -1520,7 +1520,7 @@
 #kunena.layout ul#kbbcode-toolbar li a.kbbcode-help-button,
 #kunena.layout ul#kbbcode-toolbar li a.kbbcode-previewbottom-button,
 #kunena.layout ul#kbbcode-toolbar li a.kbbcode-previewright-button {
-    border: 1px solid  #ccc;
+    /*border: 1px solid  #ccc;*/
     border-radius: 5px;
     clear: both;
 }

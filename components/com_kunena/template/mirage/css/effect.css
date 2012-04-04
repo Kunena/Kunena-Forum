@@ -15,24 +15,24 @@
 }
 
 @keyframes progress-bar-stripes {
-	from {
-		background-position: 0 0;
-	}
-	to {
+	0% {
 		background-position: 40px 0;
+	}
+	100% {
+		background-position: 0 0;
 	}
 }
 
 @-moz-keyframes progress-bar-stripes {
-	from {
-		background-position: 0 0;
-	}
-	to {
+	0% {
 		background-position: 40px 0;
+	}
+	100% {
+		background-position: 0 0;
 	}
 }
 
 #kunena.layout .progress.active .bar {
-	-moz-animation: progress-bar-stripes 2s linear infinite;
-	transition: width 0.6s ease;
+	-moz-animation: progress-bar-stripes 2s linear 0s normal none infinite;
+	/*transition: width 0.6s ease;*/
 }

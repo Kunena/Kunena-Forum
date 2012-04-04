@@ -73,6 +73,8 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {
+		if ($link instanceof JUri && version_compare(JVERSION, '2.5', '<')) $link = $link->toString();
+
 		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod', 'permanent'=>'perm');
 
 		$text = JText::_("COM_KUNENA_BUTTON_{$scope}_{$name}");

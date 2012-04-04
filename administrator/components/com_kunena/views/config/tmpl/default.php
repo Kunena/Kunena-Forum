@@ -736,6 +736,16 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					</tr>
 				</table>
 			</fieldset>
+			<fieldset>
+				<legend><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_CONFIGURATION'); ?></legend>
+				<table class="kadmin-adminform">
+					<tr align="center" valign="middle">
+						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY') ?></td>
+						<td align="left" valign="top" width="25%"><input type="text" name="cfg_stopforumspam_key" class="ksm-field-large" value="<?php echo kescape($this->config->stopforumspam_key); ?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY_DESC') ?></td>
+					</tr>
+				</table>
+			</fieldset>
 			</dd>
 			<dt title="<?php echo JText::_('COM_KUNENA_A_AVATARS') ?>"><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
 			<dd>

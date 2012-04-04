@@ -110,7 +110,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	}
 
 	public function getPaginationListRender($list) {
-		$html = '<div class="pagination">';
+		$html = '<div class="kpagination kbox-full">';
 		$html .= '<ul class="list-pagination">';
 		$last = 0;
 		foreach($list['pages'] as $i=>$page) {
@@ -124,10 +124,10 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	}
 
 	public function getPaginationItemActive(&$item) {
-		return '<li class="page-item page-active"><a class="kbutton" title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></span></a></li>';
+		return '<li class="page-item page-active"><a class="active" title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></a></li>';
 	}
 
 	public function getPaginationItemInactive(&$item) {
-		return '<li class="page-item"><a class="button" title="'.$item->text.'"><span><span>'.$item->text.'</span></span></a></li>';
+		return '<li class="page-item"><a class="disabled" title="'.$item->text.'"><span>'.$item->text.'</span></a></li>';
 	}
 }

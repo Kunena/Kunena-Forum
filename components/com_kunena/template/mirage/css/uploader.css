@@ -8,26 +8,27 @@
 **/
 
 /* Uploader styles */
-#kuploader {
+#kunena.layout #kuploader {
 	position: relative;
 }
 
-#kuploader .upload-filelist {
-	border-radius: 5px 5px 0 0;
-	border:1px solid #D4D4D4;
+#kunena.layout #kuploader .upload-filelist {
+	/*border-radius: 5px 5px 0 0;
+	border:1px solid #D4D4D4;*/
 }
 
-#kuploader .upload-filelist-bottom {
-	border-radius: 0 0 5px 5px;
-	border: 1px solid #D4D4D4;
+ #kunena.layout #kuploader .upload-filelist-bottom {
+	/*border-radius: 0 0 5px 5px;
+	border: 1px solid #D4D4D4;*/
 }
 
-#kuploader table {
+#kunena.layout #kuploader table {
 	width: 100%;
-	border-collapse: collapse;
+	/*border-collapse: collapse;*/
+	border-collapse: inherit;
 }
 
-#kuploader table th {
+#kunena.layout #kuploader table th {
 	width:20px;
 	padding: 5px 5px 5px 5px;
 	color: #333333;
@@ -35,117 +36,121 @@
 	font-size: 13px;
 }
 
-#kuploader table td {
+#kunena.layout #kuploader table tr {
+	border-collapse: inherit;
+}
+
+#kunena.layout #kuploader table td {
 	width:30px;
 	padding:5px;
 	background:transparent;
 	text-align:center;
 }
 
-#kuploader table .upload-done td {
+#kunena.layout #kuploader table .upload-done td {
 	color:#007236;
 	background:#E4FDDF;
 }
 
-#kuploader table .upload-failed td {
+#kunena.layout #kuploader table .upload-failed td {
 	color: #CD0A0A;
 	background: #FEF1EC;
 }
-#kuploader table .upload-uploading td {
+#kunena.layout #kuploader table .upload-uploading td {
 	background: #CDF3FF;
 	font-weight: bold;
 }
-#kuploader table .upload-file-name {
+#kunena.layout #kuploader table .upload-file-name {
 	width: 45%;
 	text-align: left;
 }
-#kuploader table .upload-file-status {
+#kunena.layout #kuploader table .upload-file-status {
 	width: 40%;
 	text-align: left;
 }
-#kuploader table .upload-file-size {
+#kunena.layout #kuploader table .upload-file-size {
 	width: 10%;
 	text-align: left;
 }
-#kuploader table .upload-file-action {
+#kunena.layout #kuploader table .upload-file-action {
 	width: 5%;
 }
-#kuploader .upload-buttons {
+#kunena.layout #kuploader .upload-buttons {
 	/*margin-top: 8px;
 	margin-left: 70px;*/
 }
-#kuploader .upload-droptext {
+#kunena.layout #kuploader .upload-droptext {
 	padding: 15px;
 	font-size: 18px;
 }
-#kuploader p,
-#kuploader td,
-#kuploader th {
+#kunena.layout #kuploader p,
+#kunena.layout #kuploader td,
+#kunena.layout #kuploader th {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 }
-#kuploader p.upload-desc {
+#kunena.layout #kuploader p.upload-desc {
 	padding-bottom:10px;
 }
-#kuploader th.upload-file-name {
+#kunena.layout #kuploader th.upload-file-name {
 	text-align:left;
 }
-#kuploader .upload-status table {
+#kunena.layout #kuploader .upload-status table {
 	/*border-top:1px solid #D4D4D4;
 	border-bottom:1px solid #D4D4D4;*/
 }
-#kuploader .upload-upload-status {
+#kunena.layout #kuploader .upload-upload-status {
 	font-weight:bold;
 }
-#kuploader .upload-filelist td {
+#kunena.layout #kuploader .upload-filelist td {
 	color: #333333;
 	background: #F4F4F4 repeat scroll 0 0 transparent;
 }
-#kuploader .upload-notify {
+#kunena.layout #kuploader .upload-notify {
 	margin: 0 5px 5px 0;
 }
-#kuploader .upload-info,
-#kuploader .upload-error {
+#kunena.layout #kuploader .upload-info,
+#kunena.layout #kuploader .upload-error {
 	background: #FEF1EC;
 	border: 1px solid #CD0A0A;
 	color: #CD0A0A;
 	width: 100%;
 }
-#kuploader .upload-icon {
+#kunena.layout #kuploader .upload-icon {
 	cursor: pointer;
 	display:inline-block;
 	height: 16px;
 	width: 16px;
 	margin:0 auto;
 }
-#kuploader .upload-notify p {
+#kunena.layout #kuploader .upload-notify p {
 	margin: 4px;
 }
-#kuploader .upload-notify p .upload-icon {
+#kunena.layout #kuploader .upload-notify p .upload-icon {
 	margin: 0 5px -2px 0;
 	cursor: text;
 }
-#kuploader .upload-close {
+#kunena.layout #kuploader .upload-close {
 	float:right;
 }
-#kuploader .upload-check {
+#kunena.layout #kuploader .upload-check {
 	background:url("../images/plupload/icon-16-done.png");
 }
-#kuploader .upload-alert {
+#kunena.layout #kuploader .upload-alert {
 	background:url("../images/plupload/icon-16-fail.png");
 }
-#kuploader .upload-info,
-#kuploader .upload-arrow {
+#kunena.layout #kuploader .upload-info,
+#kunena.layout #kuploader .upload-arrow {
 	background:url("../images/plupload/icon-16-upload.png");
 }
-#kuploader .upload-close {
+#kunena.layout #kuploader .upload-close {
 	margin: 5px;
 	background:url("../images/plupload/icon-16-close.png");
 }
-#kuploader .upload-minus {
+#kunena.layout #kuploader .upload-minus {
 	background:url("../images/plupload/icon-16-queue.png");
 }
-#kuploader .upload-filelist-files {
+#kunena.layout #kuploader .upload-filelist-files {
 	border-left: 1px solid #D4D4D4;
 	border-right: 1px solid #D4D4D4;	
 }
@@ -185,6 +190,6 @@
 	color: #afafaf;
 	background-image: linear-gradient(left top, left bottom, #575757 0%, #888 100%);
 }*/
-#kuploader .upload-hidden {
+#kunena.layout #kuploader .upload-hidden {
 	display: none;
 }

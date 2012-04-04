@@ -42,6 +42,11 @@
 }
 
 /* Link Active Status Reset */
+#kunena.layout a {
+	font-size: 13px;
+}
+
+/* Link Active Status Reset */
 #kunena.layout a, #kunena.layout a:link, #kunena.layout a:visited, #kunena.layout a:active {
 	/*display: block;*/
 	text-decoration: none;

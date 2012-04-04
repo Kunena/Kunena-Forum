@@ -1197,7 +1197,9 @@ else return str_replace(Array('<', '>', '"'),
 Array('&lt;', '&gt;', '&quot;'), $string);
 }
 function FixupOutput($string) {
-if (!$this->detect_urls) {
+/*HACK >*/
+if (!$this->detect_urls || $this->autolink_disable) {
+/*< HACK*/
 $output = $this->Internal_ProcessSmileys($string);
 }
 else {
@@ -1267,11 +1269,6 @@ $regex[] = ")(?![\\w])/";
 $this->smiley_regex = implode("", $regex);
 }
 function Internal_AutoDetectURLs($string) {
-/*HACK >*/
-if ($this->autolink_disable) {
-	return array($string);
-}
-/*< HACK*/
 $output = preg_split("/( (?:
 (?:https?|ftp) : \\/*
 (?:

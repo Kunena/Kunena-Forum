@@ -28,20 +28,30 @@ defined ( '_JEXEC' ) or die ();
 									<!--<dd class="topic-icon">
 									</dd>-->
 									<dd class="topic-subject">
-										<span class="bold"><?php echo JText::_('Subject') ?></span>
+										<div class="innerspacer-header">
+											<span class="bold"><?php echo JText::_('Subject') ?></span>
+										</div>
 									</dd>
 									<dd class="topic-replies">
-										<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
+										<div class="innerspacer-header">
+											<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
+										</div>
 									</dd>
 									<dd class="topic-views">
-										<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
+										<div class="innerspacer-header">
+											<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
+										</div>
 									</dd>
 									<dd class="topic-lastpost">
-										<span class="bold"><?php echo JText::_('Last Post') ?></span>
+										<div class="innerspacer-header">
+											<span class="bold"><?php echo JText::_('Last Post') ?></span>
+										</div>
 									</dd>
 									<?php if ($this->topicActions) : ?>
 										<dd class="topic-checkbox">
-											<span><input id="kcheckbox-all" type="checkbox" value="0" name="" class="kcheckall" /></span>
+											<div class="innerspacer-header">
+												<span><input id="kcheckbox-all" type="checkbox" value="0" name="" class="kcheckall" /></span>
+											</div>
 										</dd>
 									<?php endif; ?>
 								</dl>

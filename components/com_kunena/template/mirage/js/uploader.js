@@ -288,7 +288,8 @@ Kunena.Uploader = new Class({
 	},
 
 	_render: function(name) {
-		document.id(name).set('html', 
+		document.id(name).set('html',
+			'<div class="innerspacer kbox-full">' +
 			'<div class="upload-container">' +
 			'<div class="upload-filelist-container">' +
 			'<table class="upload-filelist kbox-full kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">' +
@@ -325,6 +326,7 @@ Kunena.Uploader = new Class({
 			'</ul>' +
 			'</div>' +
 			'<input class="upload-count" value="0" type="hidden" />' +
+			'</div>' +
 			'</div>');
 	},
 

@@ -38,22 +38,32 @@ defined ( '_JEXEC' ) or die ();
 								<!--<dd class="topic-icon">
 								</dd>-->
 								<dd class="topic-subject">
-									<?php // FIXME: translate ?>
-									<span class="bold"><?php echo JText::_('Subject') ?></span>
+									<div class="innerspacer-header">
+										<?php // FIXME: translate ?>
+										<span class="bold"><?php echo JText::_('Subject') ?></span>
+									</div>
 								</dd>
 								<dd class="topic-replies">
-									<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
+										<div class="innerspacer-header">
+										<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
+									</div>
 								</dd>
 								<dd class="topic-views">
-									<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
+										<div class="innerspacer-header">
+										<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
+									</div>
 								</dd>
 								<dd class="topic-lastpost">
-									<?php // FIXME: translate ?>
-									<span class="bold"><?php echo JText::_('Last Post') ?></span>
+									<div class="innerspacer-header">
+										<?php // FIXME: translate ?>
+										<span class="bold"><?php echo JText::_('Last Post') ?></span>
+									</div>
 								</dd>
 								<?php if ($this->topicActions) : ?>
 								<dd class="topic-checkbox">
-									<input type="checkbox" value="0" name="" class="moderate-topic-checkall" />
+									<div class="innerspacer-header">
+										<input type="checkbox" value="0" name="" class="moderate-topic-checkall" />
+									</div>
 								</dd>
 								<?php endif ?>
 							</dl>
@@ -62,7 +72,13 @@ defined ( '_JEXEC' ) or die ();
 					<ul class="list-unstyled topic-list">
 						<?php if (empty($this->topics) && !$this->category->isSection()) : ?>
 						<li class="topics-row kbox-hover kbox-hover_list-row">
-							<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_NO_TOPICS'); ?>
+							<dl>
+								<dd class="topic-none">
+									<div class="innerspacer-column">
+										<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_NO_TOPICS'); ?>
+									</div>
+								</dd>
+							</dl>
 						</li>
 						<?php else : $this->displayRows(); endif; ?>
 					</ul>

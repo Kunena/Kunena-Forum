@@ -29,15 +29,14 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="detailsbox whosonline-details kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow" id="whosonline-detailsbox" >
-					<div class="kcontent-32">
 						<?php if ($this->usersUrl) : ?>
-						<a href="<?php echo $this->usersUrl ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>" rel="nofollow">
+						<a class="fl" href="<?php echo $this->usersUrl ?>" title="<?php echo JText::_('COM_KUNENA_VIEW_COMMON_WHO_LINK_TITLE') ?>" rel="nofollow">
 							<span class="kwho-smicon"></span>
 						</a>
 						<?php else : ?>
 						<span class="kwho-smicon"></span>
 						<?php endif ?>
-						<div class="whosonline-users">
+						<div class="kcontent-48 whosonline-users">
 							<ul class="list-unstyled">
 								<li class="whosonline-subtitle"><?php  echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?></li>
 								<li class="whosonline-usernames">
@@ -71,7 +70,6 @@ defined ( '_JEXEC' ) or die ();
 								</li>
 							</ul>
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>

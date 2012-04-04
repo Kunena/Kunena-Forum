@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 	<li class="login-avatar link-dropdown">
 		<a class="link login-profile" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user') ?>">
 			<span class="login_profile-content">
-				<?php echo $this->me->getAvatarImage('', 'welcome') ?>
+				<?php echo $this->me->getAvatarImage('kavatar', 'welcome') ?>
 				<b class="display-name"><?php echo JText::sprintf($this->me->getName()) ?></b><br />
 				<span class="login-profile"><?php echo JText::_('COM_KUNENA_VIEW_COMMON_LOGOUT_OWN_LINK_TITLE') ?></span>
 			</span>

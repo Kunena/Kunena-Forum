@@ -35,29 +35,45 @@ defined ( '_JEXEC' ) or die ();
 							<li class="header kbox-hover_header-row">
 								<dl>
 									<?php if ($this->actions): ?>
-									<dd class="announcement-checkbox">#</dd>
+									<dd class="announcement-checkbox">
+										<div class="innerspacer-header">#</div>
+									</dd>
 									<?php endif ?>
 									<dd class="announcement-id">
-										<span><?php echo JText::_('COM_KUNENA_ANN_ID') ?></span>
+										<div class="innerspacer-header">
+											<span><?php echo JText::_('COM_KUNENA_ANN_ID') ?></span>
+										</div>
 									</dd>
 									<dd class="announcement-date">
-										<span><?php echo JText::_('COM_KUNENA_ANN_DATE') ?></span>
+										<div class="innerspacer-header">
+											<span><?php echo JText::_('COM_KUNENA_ANN_DATE') ?></span>
+										</div>
 									</dd>
 									<dd class="announcement-author">
-										<span><?php echo JText::_('COM_KUNENA_ANN_AUTHOR') ?></span>
+										<div class="innerspacer-header">
+											<span><?php echo JText::_('COM_KUNENA_ANN_AUTHOR') ?></span>
+										</div>
 									</dd>
 									<dd class="announcement-title">
-										<span><?php echo JText::_('COM_KUNENA_ANN_TITLE') ?></span>
+										<div class="innerspacer-header">
+											<span><?php echo JText::_('COM_KUNENA_ANN_TITLE') ?></span>
+										</div>
 									</dd>
 									<?php if ($this->actions): ?>
 									<dd class="announcement-publish">
-										<span><?php echo JText::_('COM_KUNENA_ANN_PUBLISH') ?></span>
+										<div class="innerspacer-header">
+											<span><?php echo JText::_('COM_KUNENA_ANN_PUBLISH') ?></span>
+										</div>
 									</dd>
 									<dd class="announcement-edit">
-										<span><?php echo JText::_('COM_KUNENA_ANN_EDIT') ?></span>
+										<div class="innerspacer-header">
+											<span><?php echo JText::_('COM_KUNENA_ANN_EDIT') ?></span>
+										</div>
 									</dd>
 									<dd class="announcement-delete">
-										<span><?php echo JText::_('COM_KUNENA_ANN_DELETE') ?></span>
+										<div class="innerspacer-header">
+											<span><?php echo JText::_('COM_KUNENA_ANN_DELETE') ?></span>
+										</div>
 									</dd>
 									<?php endif ?>
 								</dl>

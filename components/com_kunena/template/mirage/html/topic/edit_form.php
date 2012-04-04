@@ -165,7 +165,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 								<div class="form-field">
 									<div class="innerspacer kbox-full">
 										<input type="text" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')) ?>" maxlength="100" size="35" id="ktags" name="tags" class="kbox-width inputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
-									</div
+									</div>
 								</div>
 							</li>
 							<?php endif ?>

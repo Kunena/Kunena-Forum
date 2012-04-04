@@ -77,9 +77,21 @@ defined ( '_JEXEC' ) or die ();
 						<ul class="list-unstyled popsubstat-list">
 							<li class="header kbox-hover_header-row">
 								<dl class="list-unstyled">
-									<dd class="popsubstats-col1"><span class="bold"><?php echo $top[0]->titleName ?></span></dd>
-									<dd class="popsubstats-col2"><span class="bold">&nbsp;</span></dd>
-									<dd class="popsubstats-col3"><span class="bold"><?php echo $top[0]->titleCount ?></span></dd>
+									<dd class="popsubstats-col1">
+										<div class="innerspacer-header">
+											<span class="bold"><?php echo $top[0]->titleName ?></span>
+										</div>
+									</dd>
+									<dd class="popsubstats-col2">
+										<div class="innerspacer-header">
+											<span class="bold">&nbsp;</span>
+										</div>
+									</dd>
+									<dd class="popsubstats-col3">
+										<div class="innerspacer-header">
+											<span class="bold"><?php echo $top[0]->titleCount ?></span>
+										</div>
+									</dd>
 								</dl>
 							</li>
 						</ul>
@@ -87,11 +99,21 @@ defined ( '_JEXEC' ) or die ();
 							<?php foreach ($top as $id=>$item) : ?>
 								<li class="popsubstats-row kbox-hover kbox-hover_list-row">
 									<dl class="list-unstyled">
-										<dd class="popsubstats-col1"><?php echo $item->link ?></dd>
-										<dd class="popsubstats-col2">
-											<div class="stats-bar kbox-border kbox-shadow" style="width:<?php echo $item->percent ?>%"></div>
+										<dd class="popsubstats-col1">
+											<div class="innerspacer-column">
+												<?php echo $item->link ?>
+											</div>
 										</dd>
-										<dd class="popsubstats-col3"><?php echo $item->count ?></dd>
+										<dd class="popsubstats-col2">
+											<div class="innerspacer-column">
+												<div class="stats-bar" style="width:<?php echo $item->percent ?>%"></div>
+											</div>
+										</dd>
+										<dd class="popsubstats-col3">
+											<div class="innerspacer-column">
+												<?php echo $item->count ?>
+											</div>
+										</dd>
 									</dl>
 								</li>
 							<?php endforeach ?>

@@ -14,30 +14,46 @@ defined ( '_JEXEC' ) or die ();
 	<dl class="list-unstyled">
 		<?php if ($this->actions): ?>
 		<dd class="announcement-checkbox">
-			<?php echo JHTML::_('kunenagrid.id', $this->row, $this->announcement->id) ?>
+			<div class="innerspacer-column">
+				<?php echo JHTML::_('kunenagrid.id', $this->row, $this->announcement->id) ?>
+			</div>
 		</dd>
 		<?php endif ?>
 		<dd class="announcement-id">
-			<?php echo $this->displayField('id') ?>
+			<div class="innerspacer-column">
+				<?php echo $this->displayField('id') ?>
+			</div>
 		</dd>
 		<dd class="announcement-date">
-			<?php echo $this->displayField('created') ?>
+			<div class="innerspacer-column">
+				<?php echo $this->displayField('created') ?>
+			</div>
 		</dd>
 		<dd class="announcement-author">
-			<?php echo $this->displayField('created_by') ?>
+			<div class="innerspacer-column">
+				<?php echo $this->displayField('created_by') ?>
+			</div>
 		</dd>
 		<dd class="announcement-title">
-			<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), $this->displayField('title'), null, 'follow') ?>
+			<div class="innerspacer-column">
+				<?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), $this->displayField('title'), null, 'follow') ?>
+			</div>
 		</dd>
 		<?php if ($this->actions): ?>
 		<dd class="announcement-publish">
-			<?php if ($this->canPublish()) echo JHTML::_('kunenagrid.published', $this->row, $this->announcement->published) ?>
+			<div class="innerspacer-column">
+				<?php if ($this->canPublish()) echo JHTML::_('kunenagrid.published', $this->row, $this->announcement->published) ?>
+			</div>
 		</dd>
 		<dd class="announcement-edit">
-			<?php if ($this->canEdit()) echo JHTML::_('kunenagrid.task', $this->row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'), 'edit') ?>
+			<div class="innerspacer-column">
+				<?php if ($this->canEdit()) echo JHTML::_('kunenagrid.task', $this->row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'), 'edit') ?>
+			</div>
 		</dd>
 		<dd class="announcement-delete">
-			<?php if ($this->canDelete()) echo JHTML::_('kunenagrid.task', $this->row, 'publish_x.png', JText::_('COM_KUNENA_ANN_DELETE'), 'delete') ?>
+			<div class="innerspacer-column">
+				<?php if ($this->canDelete()) echo JHTML::_('kunenagrid.task', $this->row, 'publish_x.png', JText::_('COM_KUNENA_ANN_DELETE'), 'delete') ?>
+			</div>
 		</dd>
 		<?php endif ?>
 	</dl>

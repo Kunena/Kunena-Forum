@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 		<!--<dd class="topic-icon">[K=TOPIC_ICON]</dd>-->
 		<dd class="topic-subject">
 			<div class="innerspacer-column">
-				<a class="fl" href="<?php echo $this->topic->getUrl() ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->topic->name)) ?>">[K=TOPIC_ICON]</a>
+				<a class="fl" href="<?php echo $this->topic->getUrl() ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_TOPIC_LIST_TOPIC_TITLE', $this->escape($this->topic->subject)) ?>">[K=TOPIC_ICON]</a>
 				<ul class="kcontent-32 list-unstyled">
 					<li class="topic-title">
 						<h3 class="link-header3"><?php echo $this->getTopicLink($this->topic, null, null) ?></h3>

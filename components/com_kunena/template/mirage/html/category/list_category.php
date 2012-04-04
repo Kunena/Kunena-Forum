@@ -15,40 +15,54 @@ defined ( '_JEXEC' ) or die ();
 		<!--<dd class="category-icon">
 		</dd>-->
 		<dd class="category-subject">
-			<a class="fl" href="<?php echo $this->category->getUrl() ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>">[K=CATEGORY_ICON]</a>
-			<ul class="list-unstyled fn">
-				<li class="category-title">
-					<h3 class="link-header3"><a href="<?php echo $this->category->getUrl() ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>"><?php echo $this->escape($this->category->name) ?></a> [K=CATEGORY_NEW_COUNT]</h3>
-				</li>
-				<?php if ($this->category->description) : ?>
-					<li class="category-details"><div><?php echo $this->displayCategoryField('description') ?></div></li>
-				<?php endif ?>
-				<?php if ($this->moderators) : ?>
-					<li class="kcategory-mods">
-						<ul>
-							<li class="kcategory-modtitle"><?php echo JText::_('COM_KUNENA_GEN_MODERATORS') ?>:</li>
-							<?php foreach ($this->moderators as $moderator) : ?>
-								<li class="kcategory-modname kusername-mod"><?php echo $moderator->getLink() ?></li>
-							<?php endforeach ?>
-						</ul>
+			<div class="innerspacer-column">
+				<a class="fl" href="<?php echo $this->category->getUrl() ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>">[K=CATEGORY_ICON]</a>
+				<ul class="kcontent-32 list-unstyled">
+					<li class="category-title">
+						<h3 class="link-header3"><a href="<?php echo $this->category->getUrl() ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>"><?php echo $this->escape($this->category->name) ?></a> [K=CATEGORY_NEW_COUNT]</h3>
 					</li>
-				<?php endif ?>
-			</ul>
+					<?php if ($this->category->description) : ?>
+						<li class="category-details"><div><?php echo $this->displayCategoryField('description') ?></div></li>
+					<?php endif ?>
+					<?php if ($this->moderators) : ?>
+						<li class="kcategory-mods">
+							<ul>
+								<li class="kcategory-modtitle"><?php echo JText::_('COM_KUNENA_GEN_MODERATORS') ?>:</li>
+								<?php foreach ($this->moderators as $moderator) : ?>
+									<li class="kcategory-modname kusername-mod"><?php echo $moderator->getLink() ?></li>
+								<?php endforeach ?>
+							</ul>
+						</li>
+					<?php endif ?>
+				</ul>
+			</div>
 		</dd>
-		<dd class="category-topics"><span class="number"><?php echo $this->category->getTopics() ?></span></dd>
-		<dd class="category-replies"><span class="number"><?php echo $this->category->getReplies() ?> </span></dd>
+		<dd class="category-topics">
+			<div class="innerspacer-column">
+				<span class="number"><?php echo $this->category->getTopics() ?></span>
+			</div>
+		</dd>
+		<dd class="category-replies">
+			<div class="innerspacer-column">
+				<span class="number"><?php echo $this->category->getReplies() ?></span>
+			</div>
+		</dd>
 		<!-- td class="kcategory-subs">944 <span>Subscribers</span></td -->
 		<dd class="category-lastpost">
-			<ul class="list-unstyled">
-				<?php if ($this->lastPost) : ?>
-					<?php if ( $this->config->avataroncat ) : ?><li class="category-lastpost-avatar"><?php echo $this->lastUser->getLink($this->lastUser->getAvatarImage('klist-avatar', 'list')) ?></li><?php endif ?>
+			<div class="innerspacer-column">
+			<?php if ($this->lastPost) : ?>
+				<?php if ( $this->config->avataroncat ) : ?><?php echo $this->lastUser->getLink($this->lastUser->getAvatarImage('klist-avatar  kavatar kavatar-32 fl', 'list')) ?><?php endif ?>
+				<ul class="kcontent-32 list-unstyled">
 					<li class="category-lastpost-topic"><?php echo $this->getLastPostLink($this->category) ?></li>
 					<li class="category-lastpost-author"><?php echo JText::_('COM_KUNENA_BY').' '.$this->lastUser->getLink($this->lastUserName) ?></li>
 					<li class="category-lastpost-date"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->lastPostTime}]") ?></li>
-					<?php else : ?>
+				</ul>
+			<?php else : ?>
+				<ul class="list-unstyled">
 					<li class="kcategory-smdetails klastpost"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></li>
-				<?php endif ?>
-			</ul>
+				</ul>
+			<?php endif ?>
+			</div>
 		</dd>
 	</dl>
 	<?php if ($this->subcategories) : ?>

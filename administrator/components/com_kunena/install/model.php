@@ -792,6 +792,7 @@ class KunenaModelInstall extends JModel {
 			// Run only once: Get migration SQL from our XML file
 			$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
 		}
+		if ($xml === false) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_DB_UPGRADE_FAILED_XML'), false, '', 'upgrade' );
 
 		$app = JFactory::getApplication ();
 		$state = $app->getUserState ( 'com_kunena.install.dbstate', null );

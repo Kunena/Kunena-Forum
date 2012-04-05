@@ -38,10 +38,7 @@ class KunenaViewUser extends KunenaView {
 		// TODO: Deprecated:
 		$this->pageNav = $this->getPagination(7);
 
-		$page = intval($this->state->get('list.start')/$this->state->get('list.limit'))+1;
-		$pages = intval(($this->total-1)/$this->state->get('list.limit'))+1;
-
-		$this->setTitle(JText::_('COM_KUNENA_VIEW_USER_LIST'). " ({$page}/{$pages})");
+		$this->_prepareDocument('list');
 
 		parent::display($tpl);
 	}
@@ -157,7 +154,8 @@ class KunenaViewUser extends KunenaView {
 		} else {
 			$this->pmLink = $this->profile->profileIcon('private');
 		}
-		$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName()));
+
+		$this->_prepareDocument('common');
 		parent::display();
 	}
 
@@ -527,5 +525,16 @@ class KunenaViewUser extends KunenaView {
 		$this->items = $this->userattachs;
 
 		echo $this->loadTemplateFile('attachments');
+	}
+
+	protected function _prepareDocument($type){
+		if ( $type == 'list' ) {
+			$page = intval($this->state->get('list.start')/$this->state->get('list.limit'))+1;
+			$pages = intval(($this->total-1)/$this->state->get('list.limit'))+1;
+
+			$this->setTitle(JText::_('COM_KUNENA_VIEW_USER_LIST'). " ({$page}/{$pages})");
+		} elseif ( $type == 'common' ) {
+			$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName()));
+		}
 	}
 }

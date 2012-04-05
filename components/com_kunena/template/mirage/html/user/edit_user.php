@@ -23,43 +23,63 @@ defined ( '_JEXEC' ) or die ();
 					<ul class="kform user-edit-information-list clear" id="kedit-user-information">
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<label for="kusername"><?php echo JText::_( 'COM_KUNENA_UNAME' ) ?></label>
+								<div class="innerspacer-left kbox-full">
+									<label for="kusername"><?php echo JText::_( 'COM_KUNENA_UNAME' ) ?></label>
+								</div>
 							</div>
 							<div class="form-field">
-								<input type="text" value="<?php echo $this->escape($this->user->get('username'));?>" id="kusername" name="username" class="kbox-width inputbox required" <?php echo !$this->config->usernamechange ? 'disabled="disabled" ' : ''?>/>
+								<div class="innerspacer kbox-full">
+									<input type="text" value="<?php echo $this->escape($this->user->get('username'));?>" id="kusername" name="username" class="kbox-width inputbox required" <?php echo !$this->config->usernamechange ? 'disabled="disabled" ' : ''?>/>
+								</div>
 							</div>
 						</li>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<label for="kname"><?php echo JText::_( 'COM_KUNENA_USRL_NAME' ) ?></label>
+								<div class="innerspacer-left kbox-full">
+									<label for="kname"><?php echo JText::_( 'COM_KUNENA_USRL_NAME' ) ?></label>
+								</div>
 							</div>
 							<div class="form-field">
-								<input type="text" value="<?php echo $this->escape($this->user->get('name'));?>" id="kname" name="name" class="kbox-width inputbox required" />
+								<div class="innerspacer kbox-full">
+									<input type="text" value="<?php echo $this->escape($this->user->get('name'));?>" id="kname" name="name" class="kbox-width inputbox required" />
+								</div>
 							</div>
 						</li>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<label for="kemail"><?php echo JText::_( 'COM_KUNENA_USRL_EMAIL' ) ?></label>
+								<div class="innerspacer-left kbox-full">
+									<label for="kemail"><?php echo JText::_( 'COM_KUNENA_USRL_EMAIL' ) ?></label>
+								</div>
 							</div>
 							<div class="form-field">
-								<input type="text" value="<?php echo $this->escape($this->user->get('email'));?>" id="kemail" name="email" class="kbox-width inputbox required" />
+								<div class="innerspacer kbox-full">
+									<input type="text" value="<?php echo $this->escape($this->user->get('email'));?>" id="kemail" name="email" class="kbox-width inputbox required" />
+								</div>
 							</div>
 						</li>
 						<?php if($this->user->get('password')) : ?>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<label for="kpassword"><?php echo JText::_( 'COM_KUNENA_PASS' ) ?></label>
+								<div class="innerspacer-left kbox-full">
+									<label for="kpassword"><?php echo JText::_( 'COM_KUNENA_PASS' ) ?></label>
+								</div>
 							</div>
 							<div class="form-field">
-								<input type="text" value="" id="kpassword" name="password" class="kbox-width inputbox" />
+								<div class="innerspacer kbox-full">
+									<input type="text" value="" id="kpassword" name="password" class="kbox-width inputbox" />
+								</div>
 							</div>
 						</li>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<label for="kpassword2"><?php echo JText::_( 'COM_KUNENA_VPASS' ) ?></label>
+								<div class="innerspacer-left kbox-full">
+									<label for="kpassword2"><?php echo JText::_( 'COM_KUNENA_VPASS' ) ?></label>
+								</div>
 							</div>
 							<div class="form-field">
-								<input type="text" value="" id="kpassword2" name="password2" class="kbox-width inputbox" />
+								<div class="innerspacer kbox-full">
+									<input type="text" value="" id="kpassword2" name="password2" class="kbox-width inputbox" />
+								</div>
 							</div>
 						</li>
 						<?php endif ?>
@@ -85,10 +105,14 @@ defined ( '_JEXEC' ) or die ();
 						<?php foreach ($this->userparameters as $userparam): ?>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<?php echo $userparam->label ?>
+								<div class="innerspacer-left kbox-full">
+									<?php echo $userparam->label ?>
+								</div>
 							</div>
 							<div class="form-field">
-								<?php echo $userparam->input ?>
+								<div class="innerspacer-left kbox-full">
+									<?php echo $userparam->input ?>
+								</div>
 							</div>
 						</li>
 						<?php endforeach ?>

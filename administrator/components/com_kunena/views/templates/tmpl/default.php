@@ -51,11 +51,12 @@ JHTML::_('behavior.tooltip');
 			<tbody>
 			<?php
 				$k = 0;
+				$i = 0;
 				foreach ( $this->templates as $id => $row) {
 			?>
 				<tr <?php echo 'class = "row' . $k . '"'; ?>>
 					<td align="center"><?php
-						echo ($id + $this->navigation->limitstart + 1);
+						echo ($i + $this->navigation->limitstart + 1);
 						?></td>
 					<td width="5">
 						<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="isChecked(this.checked);" />
@@ -96,6 +97,7 @@ JHTML::_('behavior.tooltip');
 					</td>
 				</tr>
 				<?php $k = 1 - $k;
+					$i++;
 				} ?>
 			</tbody>
 			</table>

@@ -42,6 +42,14 @@ class KunenaView extends JView {
 				$this->app->enqueueMessage ( JText::_('COM_KUNENA_WARNING_DEBUG'), 'notice');
 			}
 		}
+		if ($this->me->isBanned()) {
+			$banned = KunenaUserBan::getInstanceByUserid($this->me->userid, true);
+			if (!$banned->isLifetime()) {
+				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', KunenaDate::getInstance($banned->expiration)->toKunena('date_today')), 'notice');
+			} else {
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' ), 'notice');
+			}
+		}
 
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';

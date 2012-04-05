@@ -25,7 +25,7 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$this->showdate = $this->announcement->showdate;
 
-		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+		$this->_prepareDocument();
 
 		$errors = $this->getErrors();
 		if ($errors) {
@@ -44,7 +44,7 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$this->returnUrl = KunenaForumAnnouncementHelper::getUrl('list', 'object');
 
-		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+		$this->_prepareDocument();
 
 		$errors = $this->getErrors();
 		if ($errors) {
@@ -63,7 +63,7 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$this->returnUrl = KunenaForumAnnouncementHelper::getUrl('list', 'object');
 
-		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+		$this->_prepareDocument();
 
 		$errors = $this->getErrors();
 		if ($errors) {
@@ -81,7 +81,7 @@ class KunenaViewAnnouncement extends KunenaView {
 		if ($new->authorise('create')) $this->actions['add'] = $new->getUrl('create', 'object');
 		if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getUrl('list', 'object');
 
-		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+		$this->_prepareDocument();
 
 		$errors = $this->getErrors();
 		if ($errors) {
@@ -155,5 +155,9 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 	function canDelete() {
 		return $this->announcement->authorise('delete');
+	}
+
+	protected function _prepareDocument(){
+		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 	}
 }

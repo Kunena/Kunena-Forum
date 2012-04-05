@@ -34,35 +34,15 @@ class KunenaViewCategory extends KunenaView {
 		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
 
-		$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
-
 		$errors = $this->getErrors();
 		if ($errors) {
 			$this->displayNoAccess($errors);
 			return;
 		}
 
-		//meta description and keywords
-		$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
-		$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
+		$this->parentCategory = $this->category->getParent();
 
-		$parentCategory = $this->category->getParent();
-		if (version_compare(JVERSION, '2.5','>')) {
-			if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
-				$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title} " );
-			} else if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 1 ) {
-				$metaKeys = $this->escape ( $this->app->getCfg ( 'sitename' ). "," . JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title} "  );
-			} else {
-				$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
-			}
-		} else {
-			$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
-		}
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$parentCategory->name} - {$this->category->name} ({$page}/{$pages}) - {$this->config->board_title}" );
-		$this->document->setMetadata ( 'keywords', $metaKeys );
-		$this->document->setDescription ( $metaDesc );
-
-		$this->setTitle( JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', $this->category->name) . " ({$page}/{$pages})" );
+		$this->_prepareDocument('default');
 
 		$this->display ($tpl);
 	}
@@ -95,19 +75,8 @@ class KunenaViewCategory extends KunenaView {
 			$this->displayNoAccess($errors);
 			return;
 		}
-		// meta description and keywords
-		$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
-		if ( $this->setJoomla25Title() ) {
-			$metaKeys = $this->setJoomla25Title();
-		} else {
-			$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
-		}
 
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-		$this->document->setMetadata ( 'keywords', $metaKeys );
-		$this->document->setDescription ( $metaDesc );
-
-		$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') );
+		$this->_prepareDocument('list');
 
 		$this->display ($tpl);
 	}
@@ -120,21 +89,8 @@ class KunenaViewCategory extends KunenaView {
 		if ($errors) {
 			$this->displayNoAccess($errors);
 		} else {
-			$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+			$this->_prepareDocument('user');
 
-			// meta description and keywords
-			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
-			if ( $this->setJoomla25Title() ) {
-				$metaKeys = $this->setJoomla25Title();
-			} else {
-				$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
-			}
-
-			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-			$this->document->setMetadata ( 'keywords', $metaKeys );
-			$this->document->setDescription ( $metaDesc );
-
-			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_USER') );
 			$this->display ($tpl);
 		}
 	}
@@ -493,7 +449,7 @@ function getTopicClass($prefix='k', $class='topic') {
 		return $pagination->getPagesLinks();
 	}
 
-	function setJoomla25Title() {
+	protected function _setJoomla25Title() {
 		if (version_compare(JVERSION, '2.5','>')) {
 			if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
 				return (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title);
@@ -504,5 +460,63 @@ function getTopicClass($prefix='k', $class='topic') {
 			}
 		}
 		return;
+	}
+
+	protected function _prepareDocument($type){
+		if ( $type=='default' ) {
+			$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
+
+			if (version_compare(JVERSION, '2.5','>')) {
+				if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
+					$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$this->parentCategory->name}, {$this->category->name}, {$this->config->board_title} " );
+				} else if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 1 ) {
+					$metaKeys = $this->escape ( $this->app->getCfg ( 'sitename' ). "," . JText::_('COM_KUNENA_CATEGORIES') . ", {$this->parentCategory->name}, {$this->category->name}, {$this->config->board_title} "  );
+				} else {
+					$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$this->parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
+				}
+			} else {
+				$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$this->parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
+			}
+
+		$this->document->setMetadata ( 'keywords', $metaKeys );
+
+			//meta description and keywords
+			$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
+			$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
+
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$this->parentCategory->name} - {$this->category->name} ({$page}/{$pages}) - {$this->config->board_title}" );
+			$this->document->setDescription ( $metaDesc );
+			$this->setTitle( JText::sprintf('COM_KUNENA_VIEW_CATEGORY_DEFAULT', $this->category->name) . " ({$page}/{$pages})" );
+		} elseif($type=='list'){
+			// meta description and keywords
+			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
+			if ( $this->_setJoomla25Title() ) {
+				$metaKeys = $this->_setJoomla25Title();
+			} else {
+				$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
+			}
+
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setDescription ( $metaDesc );
+
+			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') );
+		} elseif ($type=='user'){
+			$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+
+			// meta description and keywords
+			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
+			if ( $this->_setJoomla25Title() ) {
+				$metaKeys = $this->_setJoomla25Title();
+			} else {
+				$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
+			}
+
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setDescription ( $metaDesc );
+
+			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_USER') );
+		}
 	}
 }

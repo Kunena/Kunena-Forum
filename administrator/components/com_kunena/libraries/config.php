@@ -259,6 +259,10 @@ class KunenaConfig extends JObject {
 
 	public function bind($properties) {
 		$this->setProperties($properties);
+
+		// Disable some experimental features
+		$this->keywords = 0;
+		$this->userkeywords = 0;
 	}
 
 	public function save() {

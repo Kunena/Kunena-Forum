@@ -24,55 +24,71 @@ defined ( '_JEXEC' ) or die ();
 						<?php if ($this->profile->avatar): ?>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<label for="kavatar-keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP') ?></label>
+								<div class="innerspacer-left kbox-full">
+									<label for="kavatar-keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP') ?></label>
+								</div>
 							</div>
 							<div class="form-field">
-								<input id="kavatar-keep" type="radio" name="avatar" value="keep" checked="checked" />
+								<div class="innerspacer kbox-full">
+									<input id="kavatar-keep" type="radio" name="avatar" value="keep" checked="checked" />
+								</div>
 							</div>
 						</li>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<label for="kavatar-delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE') ?></label>
+								<div class="innerspacer-left kbox-full">
+									<label for="kavatar-delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE') ?></label>
+								</div>
 							</div>
 							<div class="form-field">
-								<input id="kavatar-delete" type="radio" name="avatar" value="delete" />
+								<div class="innerspacer kbox-full">
+									<input id="kavatar-delete" type="radio" name="avatar" value="delete" />
+								</div>
 							</div>
 						</li>
 						<?php endif; ?>
 						<?php if ($this->config->allowavatarupload) : ?>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<label for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY') ?></label>
+								<div class="innerspacer-left kbox-full">
+									<label for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY') ?></label>
+								</div>
 							</div>
 							<div class="form-field">
-								<input type="file" name="avatarfile" class="button" id="kavatar-upload" />
+								<div class="innerspacer kbox-full">
+									<input type="file" name="avatarfile" class="button" id="kavatar-upload" />
+								</div>
 							</div>
 						</li>
 						<?php endif ?>
 						<?php if ($this->config->allowavatargallery) : ?>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<label for="avatar_category_select"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY') ?></label>
+								<div class="innerspacer-left kbox-full">
+									<label for="avatar_category_select"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY') ?></label>
+								</div>
 							</div>
 							<div class="form-field">
-								<?php echo $this->galleries ?>
-								<div class="clr"></div>
-								<script type="text/javascript">
-									function switch_avatar_category(gallery) {
-										if (gallery == "")
-											return;
-										var url = "<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' ) ?>";
-										var urlreg = new RegExp("_GALLERY_","g");
-										location.href=url.replace(urlreg,gallery);
-									}
-								</script>
-
-								<?php foreach ($this->galleryimg as $id=>$avatarimg) : ?>
-								<span>
-									<label for="kavatar<?php echo $id ?>"><img src="<?php echo $this->galleryurl .'/'. ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>" alt="" /></label>
-									<input id="kavatar<?php echo $id ?>" type="radio" name="avatar" value="<?php echo 'gallery/' . ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>"/>
-								</span>
-								<?php endforeach ?>
+								<div class="innerspacer kbox-full">
+									<?php echo $this->galleries ?>
+									<div class="clr"></div>
+									<script type="text/javascript">
+										function switch_avatar_category(gallery) {
+											if (gallery == "")
+												return;
+											var url = "<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' ) ?>";
+											var urlreg = new RegExp("_GALLERY_","g");
+											location.href=url.replace(urlreg,gallery);
+										}
+									</script>
+	
+									<?php foreach ($this->galleryimg as $id=>$avatarimg) : ?>
+									<span>
+										<label for="kavatar<?php echo $id ?>"><img src="<?php echo $this->galleryurl .'/'. ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>" alt="" /></label>
+										<input id="kavatar<?php echo $id ?>" type="radio" name="avatar" value="<?php echo 'gallery/' . ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>"/>
+									</span>
+									<?php endforeach ?>
+								</div>
 							</div>
 						</li>
 						<?php endif ?>

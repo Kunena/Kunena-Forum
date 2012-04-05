@@ -24,10 +24,14 @@ defined ( '_JEXEC' ) or die ();
 						<?php foreach ($this->settings as $setting) : ?>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
 							<div class="form-label">
-								<label for="k<?php echo $setting->name ?>"><?php echo $setting->label ?></label>
+								<div class="innerspacer-left kbox-full">
+									<label for="k<?php echo $setting->name ?>"><?php echo $setting->label ?></label>
+								</div>
 							</div>
 							<div class="form-field">
-								<?php echo $setting->field ?>
+								<div class="innerspacer kbox-full">
+									<?php echo $setting->field ?>
+								</div>
 							</div>
 						</li>
 						<?php endforeach ?>

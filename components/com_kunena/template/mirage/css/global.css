@@ -1542,7 +1542,7 @@
 #kunena.layout .kpostmessage .kcat-catheader .ktxtarea {
 	height: 100px;
 }
-#kunena.layout .kpost-buttons {
+/*#kunena.layout .kpost-buttons {
 	text-align: center;
 	padding: 4px;
 }
@@ -1550,7 +1550,7 @@
 	font-size: 1em;
 	font-weight: bold;
 	padding: 4px;
-}
+}*/
 #kunena.layout #khistory .kcategory-smavatar,
 #kunena.layout #khistory .ktopic-smavatar {
 	float: left;
@@ -1892,11 +1892,11 @@
 #kunena.layout #birthdate3 {
 	width: auto;
 }
-#kunena.layout #kprofile-edit .kpost-buttons,
+/*#kunena.layout #kprofile-edit .kpost-buttons,
 #kunena.layout .kmod-userbox .kpost-buttons{
 	border: 1px solid;
 	border-top: none;
-}
+}*/
 #kunena.layout .kavatars-list li {
 	float: left;
 	padding-right: 5px;

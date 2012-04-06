@@ -39,7 +39,7 @@ defined ( '_JEXEC' ) or die ();
 								</dd>
 								<?php if ($this->topicActions) : ?>
 									<dd class="topic-checkbox">
-										<input type="checkbox" value="0" name="" class="moderate-topic-checkall" />
+										<input type="checkbox" value="0" name="" class="kcheckall moderate-topic-checkall" />
 									</dd>
 								<?php endif ?>
 							</dl>

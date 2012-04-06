@@ -11,7 +11,10 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmodule topics-posts_list">
-	<div class="kbox-wrapper">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics') ?>" method="post">
+		<?php echo JHTML::_( 'form.token' ); ?>
+
+		<div class="kbox-wrapper">
 		<div class="topics-posts_list-kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
@@ -38,11 +41,12 @@ defined ( '_JEXEC' ) or die ();
 					<div class="modbox">
 						<button class="kbutton button-type-standard fr" type="submit"><span><?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?></span></button>
 						<?php echo JHTML::_('select.genericlist', $this->postActions, 'task', 'class="kinputbox form-horizontal fr" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
-						<!--<input type="checkbox" value="0" name="" class="kmoderate-topic-checkall" />-->
+						<input type="checkbox" value="0" name="" class="kcheckall kmoderate-topic-checkall" />
 					</div>
 				</div>
 			<?php endif; ?>
 		</div>
 	</div>
+	</form>
 </div>
 <div class="spacer"></div>

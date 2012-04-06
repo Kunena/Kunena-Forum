@@ -11,7 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmodule topics_default_list">
-	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics') ?>" method="post">
+		<?php echo JHTML::_( 'form.token' ); ?>
+
 		<div class="kbox-wrapper kbox-full">
 			<div class="topics-default_list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 				<div class="headerbox-wrapper kbox-full">
@@ -84,8 +86,6 @@ defined ( '_JEXEC' ) or die ();
 				<?php endif ?>
 			</div>
 		</div>
-		<input type="hidden" name="view" value="topics" />
-		<?php echo JHTML::_( 'form.token' ); ?>
 	</form>
 </div>
 <div class="spacer"></div>

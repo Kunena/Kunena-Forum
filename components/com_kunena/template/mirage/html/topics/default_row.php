@@ -52,14 +52,17 @@ defined ( '_JEXEC' ) or die ();
 			<div class="innerspacer-column">
 				<?php if ( $this->config->avataroncat ) : ?><?php echo $this->lastPostAuthor->getLink($this->lastPostAuthor->getAvatarImage('klist-avatar kavatar kavatar-32 fl', 'list')) ?><?php endif ?>
 				<ul class="kcontent-32 list-unstyled">
-					<li class="ktopic-smdetails klastpost"><?php echo $this->getTopicLink ( $this->topic, 'last', 'Last post' ) ?> <?php echo JText::_('COM_KUNENA_BY').' '.$this->lastPostAuthor->getLink($this->lastUserName) ?></li>
-					<li class="ktopic-smdetails kdate"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->lastPostTime}]") ?></li>
+					<li class="topic-lastpost-post"><?php echo $this->getTopicLink ( $this->topic, 'last', 'Last post' ) ?></li>
+					<li class="topic-author-post"><?php echo JText::_('COM_KUNENA_BY').' '.$this->lastPostAuthor->getLink($this->lastUserName) ?></li>
+					<li class="topic-date-post"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->lastPostTime}]") ?></li>
 				</ul>
 			</div>
 		</dd>
 		<?php if ($this->topicActions) : ?>
 		<dd class="topic-checkbox">
-			<input type="checkbox" class="kmoderate-topic-checkbox" name="topics[<?php echo $this->topic->id?>]" value="1" />
+			<div class="innerspacer-column">
+				<input type="checkbox" class="kcheck kmoderate-topic-checkbox" name="topics[<?php echo $this->topic->id?>]" value="1" />
+			</div>
 		</dd>
 		<?php endif ?>
 	</dl>

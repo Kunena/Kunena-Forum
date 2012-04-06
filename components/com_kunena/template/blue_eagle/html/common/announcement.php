@@ -23,7 +23,7 @@ defined ( '_JEXEC' ) or die ();
 				<div class="anncreated"><?php echo $this->announcement->displayField('created', 'date_today') ?></div>
 				<?php endif; ?>
 				<div class="anndesc">
-					<?php echo $this->announcement->displayField('description') ?>
+					<?php echo $this->announcement->displayField('sdescription') ?>
 					<?php if (!empty($this->announcement->description)) : ?>
 					...<br /><?php echo JHtml::_('kunenaforum.link', $this->announcement->getUri(), JText::_('COM_KUNENA_ANN_READMORE'), null, 'follow'); ?>
 					<?php endif; ?>

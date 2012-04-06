@@ -73,6 +73,8 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 				return intval($this->id);
 			case 'title':
 				return KunenaHtmlParser::parseText($this->title);
+			case 'sdescription':
+				return KunenaHtmlParser::parseBBCode($this->sdescription);
 			case 'description':
 				return KunenaHtmlParser::parseBBCode($this->description ? $this->description : $this->sdescription);
 			case 'created_by':

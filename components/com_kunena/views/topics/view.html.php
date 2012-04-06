@@ -25,48 +25,10 @@ class KunenaViewTopics extends KunenaView {
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
+		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode='.$this->state->get ( 'list.mode' );
 		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
 
-		switch ($this->state->get ( 'list.mode' )) {
-			case 'topics' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
-				break;
-			case 'sticky' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
-				break;
-			case 'locked' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
-				break;
-			case 'noreplies' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
-				break;
-			case 'unapproved' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
-				break;
-			case 'deleted' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
-				break;
-			case 'replies' :
-			default :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
-		}
-		$this->title = $this->headerText;
-
-		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode='.$this->state->get ( 'list.mode' );
-
-		//meta description and keywords
-		$limit = $this->state->get('list.limit');
-		$page = intval($this->state->get('list.start')/$limit)+1;
-		$total = intval(($this->total-1)/$limit)+1;
-		$pagesTxt = "{$page}/{$total}";
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
-		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-
-		$this->document->setMetadata ( 'robots', 'noindex, follow' );
-		$this->document->setMetadata ( 'keywords', $metaKeys );
-		$this->document->setDescription ( $metaDesc );
-		$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+		$this->_prepareDocument('default');
 
 		$this->display($tpl);
 	}
@@ -81,39 +43,10 @@ class KunenaViewTopics extends KunenaView {
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
-		switch ($this->state->get ( 'list.mode' )) {
-			case 'posted' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
-				break;
-			case 'started' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
-				break;
-			case 'favorites' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
-				break;
-			case 'subscriptions' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
-				break;
-			default :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
-		}
-		$this->title = $this->headerText;
 
 		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=user&mode='.$this->state->get ( 'list.mode' );
 
-		//meta description and keywords
-		$limit = $this->state->get('list.limit');
-		$page = intval($this->state->get('list.start')/$limit)+1;
-		$total = intval($this->total/$limit)+1;
-		$pagesTxt = "{$page}/{$total}";
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
-		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-
-		$this->document->setMetadata ( 'robots', 'noindex, follow' );
-		$this->document->setMetadata ( 'keywords', $metaKeys );
-		$this->document->setDescription ( $metaDesc );
-		$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+		$this->_prepareDocument('user');
 
 		$this->display($tpl);
 	}
@@ -129,40 +62,10 @@ class KunenaViewTopics extends KunenaView {
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
-		switch ($this->state->get ( 'list.mode' )) {
-			case 'unapproved':
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
-				break;
-			case 'deleted':
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
-				break;
-			case 'mythanks':
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
-				break;
-			case 'thankyou':
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
-				break;
-			case 'recent':
-			default:
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
-		}
-		$this->title = $this->headerText;
 
 		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=posts&mode='.$this->state->get ( 'list.mode' );
 
-		//meta description and keywords
-		$limit = $this->state->get('list.limit');
-		$page = intval($this->state->get('list.start')/$limit)+1;
-		$total = intval($this->total/$limit)+1;
-		$pagesTxt = "{$page}/{$total}";
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
-		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-
-		$this->document->setMetadata ( 'robots', 'noindex, follow' );
-		$this->document->setMetadata ( 'keywords', $metaKeys );
-		$this->document->setDescription ( $metaDesc );
-		$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+		$this->_prepareDocument('posts');
 
 		$this->display($tpl);
 	}
@@ -339,5 +242,131 @@ class KunenaViewTopics extends KunenaView {
 		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
 		$pagination->setDisplay($maxpages);
 		return $pagination->getPagesLinks();
+	}
+
+	protected function _setJoomla25Title() {
+		if (version_compare(JVERSION, '2.5','>')) {
+			if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
+				return $this->escape ( ", {$this->config->board_title}, " );
+			} else if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 1 ) {
+				return $this->app->getCfg ( 'sitename' ) . $this->escape ( ", {$this->config->board_title}, " );
+			} else {
+				return $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+			}
+		}
+		return;
+	}
+
+	protected function _prepareDocument($type){
+		$limit = $this->state->get('list.limit');
+		$page = intval($this->state->get('list.start')/$limit)+1;
+		$total = intval(($this->total-1)/$limit)+1;
+		$pagesTxt = "{$page}/{$total}";
+
+		if ( $type=='default' ){
+			switch ($this->state->get ( 'list.mode' )) {
+			case 'topics' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+				break;
+			case 'sticky' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
+				break;
+			case 'locked' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
+				break;
+			case 'noreplies' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
+				break;
+			case 'unapproved' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
+				break;
+			case 'deleted' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
+				break;
+			case 'replies' :
+			default :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
+			}
+			$this->title = $this->headerText;
+
+			//meta description and keywords
+			if ( $this->_setJoomla25Title() ) {
+				$metaKeys = $this->headerText . $this->_setJoomla25Title();
+			} else {
+				$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+			}
+			$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+
+			$this->document->setMetadata ( 'robots', 'noindex, follow' );
+			$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setDescription ( $metaDesc );
+			$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+		} elseif($type=='user'){
+			switch ($this->state->get ( 'list.mode' )) {
+				case 'posted' :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
+					break;
+				case 'started' :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
+					break;
+				case 'favorites' :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
+					break;
+				case 'subscriptions' :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
+					break;
+				default :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
+			}
+			$this->title = $this->headerText;
+
+			//meta description and keywords
+			if ( $this->_setJoomla25Title() ) {
+				$metaKeys = $this->headerText . $this->_setJoomla25Title();
+			} else {
+				$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+			}
+			$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+
+			$this->document->setMetadata ( 'robots', 'noindex, follow' );
+			$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setDescription ( $metaDesc );
+			$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+		} elseif($type=='posts'){
+			switch ($this->state->get ( 'list.mode' )) {
+			case 'unapproved':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				break;
+			case 'deleted':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				break;
+			case 'mythanks':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				break;
+			case 'thankyou':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				break;
+			case 'recent':
+			default:
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+			}
+			$this->title = $this->headerText;
+
+			//meta description and keywords
+			if ( $this->_setJoomla25Title() ) {
+				$metaKeys = $this->headerText . $this->_setJoomla25Title();
+			} else {
+				$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+			}
+			$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+
+			$this->document->setMetadata ( 'robots', 'noindex, follow' );
+			$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setDescription ( $metaDesc );
+			$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+		}
 	}
 }

@@ -736,6 +736,16 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					</tr>
 				</table>
 			</fieldset>
+			<fieldset>
+				<legend><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_CONFIGURATION'); ?></legend>
+				<table class="kadmin-adminform">
+					<tr align="center" valign="middle">
+						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY') ?></td>
+						<td align="left" valign="top" width="25%"><input type="text" name="cfg_stopforumspam_key" class="ksm-field-large" value="<?php echo $this->escape($this->config->stopforumspam_key); ?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY_DESC') ?></td>
+					</tr>
+				</table>
+			</fieldset>
 			</dd>
 			<dt title="<?php echo JText::_('COM_KUNENA_A_AVATARS') ?>"><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
 			<dd>
@@ -1057,12 +1067,13 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><input type="text" name="cfg_spoiler_image" value="<?php echo $this->escape($this->config->spoiler_image); ?>" /></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CUSTOM_SPOILER_IMAGE_DESC') ?></td>
 					</tr>
+					<?php /*
+					// If you uncomment this feature, please remove forced disable from the KunenaConfig class.
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KEYWORDS') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['keywords']; ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KEYWORDS_DESC') ?></td>
 					</tr>
-					<?php /*
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_USER_KEYWORDS') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['userkeywords']; ?></td>

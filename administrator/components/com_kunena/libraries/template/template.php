@@ -121,6 +121,8 @@ class KunenaTemplate extends JObject
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {
+		if ($link instanceof JUri && version_compare(JVERSION, '2.5', '<')) $link = $link->toString();
+
 		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
 		$names = array('unsubscribe'=>'subscribe', 'unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
 				'quickreply'=>'reply', 'quote'=>'kquote', 'edit'=>'kedit');

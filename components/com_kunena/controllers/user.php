@@ -65,8 +65,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		// perform security checks
-		$this->user = JFactory::getUser();
-		if ($this->user->id == 0) {
+		if (!$this->me->exists()) {
 			JError::raiseError( 403, JText::_('Access Forbidden') );
 			return;
 		}
@@ -83,7 +82,8 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$msg = JText::_( 'COM_KUNENA_PROFILE_SAVED' );
-		$this->setRedirect ( $user->getUrl(false), $msg );
+
+		$this->setRedirect ( $this->me->getUrl(false), $msg );
 	}
 
 	function ban() {
@@ -104,6 +104,7 @@ class KunenaControllerUser extends KunenaController {
 		if (! $ban->id) {
 			$ban->ban ( $user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
 			$success = $ban->save ();
+			$this->report($user->userid);
 		} else {
 			$delban = JRequest::getString ( 'delban', '' );
 
@@ -434,6 +435,30 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->ordering = JRequest::getInt('messageordering', '', 'post', 'messageordering');
 		$this->me->hideEmail = JRequest::getInt('hidemail', '', 'post', 'hidemail');
 		$this->me->showOnline = JRequest::getInt('showonline', '', 'post', 'showonline');
+	}
+
+	// Reports a user to stopforumspam.com
+	protected function report($userid) {
+		if(!$this->config->stopforumspam_key || ! $userid)
+		{
+			return false;
+		}
+		$spammer = JFactory::getUser($userid);
+
+		$db = JFactory::getDBO();
+		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid=".$userid." GROUP BY ip ORDER BY `time` DESC", 0, 1 );
+		$ip = $db->loadResult();
+
+		$data = "username=".$spammer->username."&ip_addr=".$ip."&email=".$spammer->email."&api_key=".$this->config->stopforumspam_key;
+		$fp = fsockopen("www.stopforumspam.com",80);
+		fputs($fp, "POST /add.php HTTP/1.1\n" );
+		fputs($fp, "Host: www.stopforumspam.com\n" );
+		fputs($fp, "Content-type: application/x-www-form-urlencoded\n" );
+		fputs($fp, "Content-length: ".strlen($data)."\n" );
+		fputs($fp, "Connection: close\n\n" );
+		fputs($fp, $data);
+		fclose($fp);
+		return true;
 	}
 
 	function delfile() {

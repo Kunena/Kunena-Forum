@@ -31,7 +31,7 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 						<?php endif ?>
 						<li class="kannounce-desc">
-							<?php echo $this->announcement->displayField('description') ?>
+							<?php echo $this->announcement->displayField('sdescription') ?>
 						</li>
 						<?php if ($this->announcement->description) : ?>
 						<li class="kannounce-desc kreadmore">

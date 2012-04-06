@@ -242,6 +242,7 @@ class KunenaConfig extends JObject {
 	public $pickup_category = 0;
 	public $article_display = 'intro';
 	public $send_emails = 1;
+	public $stopforumspam_key = '';
 
 	public function __construct() {
 		parent::__construct ();
@@ -258,6 +259,10 @@ class KunenaConfig extends JObject {
 
 	public function bind($properties) {
 		$this->setProperties($properties);
+
+		// Disable some experimental features
+		$this->keywords = 0;
+		$this->userkeywords = 0;
 	}
 
 	public function save() {

@@ -19,6 +19,10 @@
 	width: 100%
 }
 
+#kunena.layout .ac {
+	margin: 0px auto;
+}
+
 #kunena.layout .fl {
 	float: left;
 }
@@ -99,6 +103,10 @@
 	margin-left: 58px;
 }
 
+#kunena.layout .kcontent-128 {
+	margin-left: 58px;
+}
+
 
 #kunena.layout img.kavatar {
 	border-radius: 3px;
@@ -119,6 +127,22 @@
 	max-height: 48px;
 	width: 32px;
 	max-width: 48px;
+	border-radius: 5px;
+}
+
+#kunena.layout img.kavatar-64 {
+	height: 32px;
+	max-height: 64px;
+	width: 32px;
+	max-width: 64px;
+	border-radius: 5px;
+}
+
+#kunena.layout img.kavatar-128 {
+	height: 32px;
+	max-height: 128px;
+	width: 32px;
+	max-width: 128px;
 	border-radius: 5px;
 }
 
@@ -309,7 +333,21 @@
 	display: block;
 }
 
+#kunena.layout div.headerbox {
+	clear: both;
+	position: relative;
+	/*margin: 2px 2px 4px;*/
+	/*padding: 1px 0 0;*/
+}
+
 #kunena.layout div.detailsbox {
+	clear: both;
+	position: relative;
+	/*margin: 2px 2px 4px;*/
+	/*padding: 1px 0 0;*/
+}
+
+#kunena.layout div.footerbox {
 	clear: both;
 	position: relative;
 	/*margin: 2px 2px 4px;*/
@@ -354,7 +392,7 @@
 
 #kunena.layout .innerspacer-horizontal {
 	/*padding: 5px 10px 10px 10px;*/
-	padding: 0px 15px 0px 15px;
+	padding: 0px 10px 0px 10px;
 }
 
 #kunena.layout div.modbox {
@@ -1122,10 +1160,19 @@
  * STOP MENUBOX *
  ****************/
 
+#kunena.layout ul.button-list {
+	display: block;
+}
+
 
 /***************************
  * START MESSAGE BUTTONBAR *
  ***************************/
+
+#kunena.layout div.buttonbar ul.buttons-message {
+	padding: 0px;
+	margin: 0px;
+}
 
 #kunena.layout div.buttonbar ul.buttons-message {
 	padding: 0px;
@@ -1327,7 +1374,7 @@
  * START POSTICONS LIST *
  *************************/
 
-#kunena.layout .post-topicicons input {
+#kunena.layout ul.checkbox-outline li.checkbox-outline-item > input {
 	height: 0;
 	width: 0;
 	overflow: hidden;
@@ -1335,7 +1382,7 @@
 	visibility: hidden;
 }
 
-#kunena.layout .post-topicicons label {
+#kunena.layout ul.checkbox-outline li.checkbox-outline-item label {
 	background: none repeat scroll 0 0 transparent;
 	border: 2px solid transparent;
 	border-radius: 5px 5px 5px 5px;
@@ -1346,7 +1393,7 @@
 
 }
 
-#kunena.layout .post-topicicons input:checked + label {
+#kunena.layout ul.checkbox-outline li.checkbox-outline-item input:checked + label {
 	background: none repeat scroll 0 0 transparent;
 	border: 2px solid;
 	border-color: #4B99DD;
@@ -1358,7 +1405,7 @@
 
 }
 
-#kunena.layout .post-topicicons li {
+#kunena.layout ul.checkbox-outline li.checkbox-outline-item li {
 	float: left;
 	display: inline;
 }
@@ -1628,12 +1675,12 @@
 	margin: 0px;
 }
 
-#kunena.layout div.buttonbar ul.buttons-topic li {
+#kunena.layout div.buttonbar ul.buttons-topic > li {
 	padding: 0px;
 	margin: 0px;
 }
 
-#kunena.layout div.buttonbar ul.buttons-topic li.button a {
+#kunena.layout div.buttonbar ul.buttons-topic > li.button a {
 	display: block;
 }
 
@@ -1650,12 +1697,12 @@
 	margin: 0px;
 }
 
-#kunena.layout div.buttonbar ul.buttons-topics li {
+#kunena.layout div.buttonbar ul.buttons-topics > li {
 	padding: 0px;
 	margin: 0px;
 }
 
-#kunena.layout div.buttonbar ul.buttons-topics li a.button {
+#kunena.layout div.buttonbar ul.buttons-topics > li a.button {
 	display: block;
 }
 
@@ -1899,7 +1946,7 @@
 	padding: 0px;
 }
 
-#kunena.layout ul.user-edit-information-list li {
+#kunena.layout ul.user-edit-information-list > li {
 	clear: both;
 	display: block;
 	position: relative;

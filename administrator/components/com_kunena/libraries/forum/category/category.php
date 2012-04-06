@@ -124,7 +124,11 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	public function getUrl($category = null, $xhtml = true, $action = null) {
-		if (!$category) $category = $this;
+		if (!$category) {
+			$category = $this;
+		} else {
+			$category = KunenaForumCategoryHelper::get($category);
+		}
 		$uri = JURI::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
 		if ((string)$action === (string)(int)$action) {
 			$uri->setVar('limitstart', $action);

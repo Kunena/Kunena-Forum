@@ -126,9 +126,9 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 								</div>
 								<div class="form-field">
 									<div class="innerspacer kbox-full">
-										<ul class="list-unstyled">
+										<ul class="list-unstyled checkbox-outline">
 											<?php foreach ($this->topicIcons as $id=>$icon) : ?>
-											<li class="hasTip" title="Topic icon :: <?php echo $this->escape(ucfirst($icon->name)) ?>">
+											<li class="hasTip checkbox-outline-item" title="Topic icon :: <?php echo $this->escape(ucfirst($icon->name)) ?>">
 												<input type="radio" name="topic_emoticon" id="topic_emoticon_<?php echo $this->escape($icon->name) ?>" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
 												<label for="topic_emoticon_<?php echo $this->escape($icon->name) ?>"><img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true) ?>" alt="" border="0" /></label>
 											</li>
@@ -165,7 +165,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 								<div class="form-field">
 									<div class="innerspacer kbox-full">
 										<input type="text" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')) ?>" maxlength="100" size="35" id="ktags" name="tags" class="kbox-width inputbox postinput hasTip" title="<?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?> :: <?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_ADD_COMMAS') ?>" />
-									</div
+									</div>
 								</div>
 							</li>
 							<?php endif ?>

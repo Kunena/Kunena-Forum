@@ -123,7 +123,7 @@ class KunenaBbcodeEditor {
 			}
 
 			$class = "KunenaBbcodeEditor" . strtoupper($xml_item->getName());
-			$item = $class::parseXML($xml_item);
+			$item = call_user_func(array($class, 'parseXML'), $xml_item);
 
 			$elements[$item->name] = $item;
 		}

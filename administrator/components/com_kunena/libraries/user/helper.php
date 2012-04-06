@@ -274,6 +274,20 @@ class KunenaUserHelper {
 		if (KunenaError::checkDatabaseError ())
 			return false;
 		$rows += $db->getAffectedRows ();
+
+		// Update banned state
+		// TODO: move out of here, it's slow
+		$query = "UPDATE #__kunena_users AS u
+			LEFT JOIN (
+				SELECT userid, MAX(expiration) AS banned FROM #__kunena_users_banned GROUP BY userid
+			) AS b ON u.userid=b.userid
+			SET u.banned=b.banned";
+		$db->setQuery ($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		$rows += $db->getAffectedRows ();
+
 		return $rows;
 	}
 }

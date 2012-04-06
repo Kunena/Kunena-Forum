@@ -81,13 +81,14 @@ defined ( '_JEXEC' ) or die ();
 											location.href=url.replace(urlreg,gallery);
 										}
 									</script>
-	
+									<ul class="list-unstyled checkbox-outline">
 									<?php foreach ($this->galleryimg as $id=>$avatarimg) : ?>
-									<span>
-										<label for="kavatar<?php echo $id ?>"><img src="<?php echo $this->galleryurl .'/'. ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>" alt="" /></label>
-										<input id="kavatar<?php echo $id ?>" type="radio" name="avatar" value="<?php echo 'gallery/' . ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>"/>
-									</span>
-									<?php endforeach ?>
+										<li class="checkbox-outline-item">
+											<input id="kavatar<?php echo $id ?>" type="radio" name="avatar" value="<?php echo 'gallery/' . ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>"/>
+											<label for="kavatar<?php echo $id ?>"><img src="<?php echo $this->galleryurl .'/'. ($this->gallery ? $this->gallery.'/':'') . $avatarimg ?>" alt="" /></label>
+										</li>
+										<?php endforeach ?>
+									</ul>
 								</div>
 							</div>
 						</li>

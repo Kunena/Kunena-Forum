@@ -1083,12 +1083,12 @@
 #kunena.layout #ktopics-modbox select {
 	margin: 5px;
 }
-#kunena.layout .kmoderate-topic-checkall,
+/*#kunena.layout .kmoderate-topic-checkall,
 #kunena.layout .kmoderate-category-checkall {
 	margin-right: 16px;
 	vertical-align: top;
 	margin-top: 7px;
-}
+}*/
 
 /*---------- Module Positions ------------- */
 

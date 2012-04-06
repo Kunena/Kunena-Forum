@@ -127,6 +127,10 @@
 	font-weight: bold;
 }
 
+#kunena.layout a {
+	
+}
+
 #kunena.layout .display-hidden {
 	display: none
 }

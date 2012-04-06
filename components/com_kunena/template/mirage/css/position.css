@@ -1374,7 +1374,7 @@
  * START POSTICONS LIST *
  *************************/
 
-#kunena.layout .post-topicicons input {
+#kunena.layout ul.checkbox-outline li.checkbox-outline-item > input {
 	height: 0;
 	width: 0;
 	overflow: hidden;
@@ -1382,7 +1382,7 @@
 	visibility: hidden;
 }
 
-#kunena.layout .post-topicicons label {
+#kunena.layout ul.checkbox-outline li.checkbox-outline-item label {
 	background: none repeat scroll 0 0 transparent;
 	border: 2px solid transparent;
 	border-radius: 5px 5px 5px 5px;
@@ -1393,7 +1393,7 @@
 
 }
 
-#kunena.layout .post-topicicons input:checked + label {
+#kunena.layout ul.checkbox-outline li.checkbox-outline-item input:checked + label {
 	background: none repeat scroll 0 0 transparent;
 	border: 2px solid;
 	border-color: #4B99DD;
@@ -1405,7 +1405,7 @@
 
 }
 
-#kunena.layout .post-topicicons li {
+#kunena.layout ul.checkbox-outline li.checkbox-outline-item li {
 	float: left;
 	display: inline;
 }
@@ -1675,12 +1675,12 @@
 	margin: 0px;
 }
 
-#kunena.layout div.buttonbar ul.buttons-topic li {
+#kunena.layout div.buttonbar ul.buttons-topic > li {
 	padding: 0px;
 	margin: 0px;
 }
 
-#kunena.layout div.buttonbar ul.buttons-topic li.button a {
+#kunena.layout div.buttonbar ul.buttons-topic > li.button a {
 	display: block;
 }
 
@@ -1697,12 +1697,12 @@
 	margin: 0px;
 }
 
-#kunena.layout div.buttonbar ul.buttons-topics li {
+#kunena.layout div.buttonbar ul.buttons-topics > li {
 	padding: 0px;
 	margin: 0px;
 }
 
-#kunena.layout div.buttonbar ul.buttons-topics li a.button {
+#kunena.layout div.buttonbar ul.buttons-topics > li a.button {
 	display: block;
 }
 
@@ -1946,7 +1946,7 @@
 	padding: 0px;
 }
 
-#kunena.layout ul.user-edit-information-list li {
+#kunena.layout ul.user-edit-information-list > li {
 	clear: both;
 	display: block;
 	position: relative;

@@ -11,12 +11,15 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmodule category-default_list">
+	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics') ?>" method="post">
+		<?php echo JHTML::_( 'form.token' ); ?>
+
 	<div class="kbox-wrapper kbox-full">
 		<div class="category-default_list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header link-header2">
-						CATEGORY: 
+						CATEGORY:
 						<a class="categories" title="Category Header" rel="ksection-detailsbox">
 							<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_DEFAULT_TOPICS') ?>
 						</a>
@@ -62,7 +65,7 @@ defined ( '_JEXEC' ) or die ();
 								<?php if ($this->topicActions) : ?>
 								<dd class="topic-checkbox">
 									<div class="innerspacer-header">
-										<input type="checkbox" value="0" name="" class="moderate-topic-checkall" />
+										<input type="checkbox" value="0" name="" class="kcheckall moderate-topic-checkall" />
 									</div>
 								</dd>
 								<?php endif ?>
@@ -94,5 +97,6 @@ defined ( '_JEXEC' ) or die ();
 			<?php endif ?>
 		</div>
 	</div>
+	</form>
 </div>
 <div class="spacer"></div>

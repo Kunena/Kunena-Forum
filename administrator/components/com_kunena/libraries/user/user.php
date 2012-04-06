@@ -251,7 +251,7 @@ class KunenaUser extends JObject {
 		} else {
 			if ($this->_config->username == 1) {
 				$name = $this->username;
-			} elseif ( $this->_config->username == 2 ) {
+			} elseif ( $this->_config->username == 0 ) {
 				$name = $this->name;
 			} else {
 				$name = $this->displayname;

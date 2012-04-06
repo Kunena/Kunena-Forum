@@ -76,7 +76,7 @@ document.addEvent('domready', function() {
 						<th><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
 						<?php endif; ?>
 
-						<?php if ($this->config->username==2) : ?>
+						<?php if ($this->config->username==0) : ?>
 						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_NAME', 'name', $this->state->get('list.order_dir'), $this->state->get('list.order')); ?></th>
 						<?php endif; ?>
 
@@ -84,7 +84,7 @@ document.addEvent('domready', function() {
 						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.order_dir'), $this->state->get('list.order')); ?></th>
 						<?php endif; ?>
 
-						<?php if ($this->config->username==3) : ?>
+						<?php if ($this->config->username==2) : ?>
 						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_DISPLAYNAME', 'displayname', $this->state->get('list.order_dir'), $this->state->get('list.order')); ?></th>
 						<?php endif; ?>
 
@@ -154,7 +154,7 @@ document.addEvent('domready', function() {
 						<td class="kcol-mid"><?php echo !empty($uslavatar) ? $profile->getLink($uslavatar) : '&nbsp;' ?></td>
 						<?php endif; ?>
 
-						<?php if ($this->config->username==2) : ?>
+						<?php if ($this->config->username==0) : ?>
 						<td class="kcol-mid"><?php echo $profile->getLink($this->escape($user->name)); ?></td>
 						<?php endif; ?>
 
@@ -162,7 +162,7 @@ document.addEvent('domready', function() {
 						<td class="kcol-mid"><?php echo $profile->getLink($this->escape($user->username)); ?></td>
 						<?php endif; ?>
 
-						<?php if ($this->config->userusername==3) : ?>
+						<?php if ($this->config->userusername==2) : ?>
 						<td class="kcol-mid"><?php echo $profile->getLink($this->escape($user->displayname)); ?></td>
 						<?php endif; ?>
 

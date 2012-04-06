@@ -92,14 +92,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					<td align="center"><?php
 						echo ($id + $this->navigation->limitstart + 1);
 						?></td>
-					<td align="center"><input type="checkbox"
-						id="cb<?php
-						echo $id;
-						?>" name="cid[]"
-						value="<?php
-						echo $this->escape($row->id);
-						?>"
-						onclick="isChecked(this.checked);" /></td>
+					<td align="center"><?php echo JHTML::_('grid.id', $i, intval($row->id)) ?></td>
 					<td >
 						<?php
 						echo $this->escape($row->id);

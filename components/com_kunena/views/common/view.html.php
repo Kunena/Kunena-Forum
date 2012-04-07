@@ -237,14 +237,14 @@ class KunenaViewCommon extends KunenaView {
 		if (!$basemenu) return ' ';
 
 		$this->parameters = new JRegistry();
-		$this->parameters->set('showAllChildren', 1);
+		$this->parameters->set('showAllChildren', $this->ktemplate->params->get('menu_showall', 0));
 		$this->parameters->set('menutype', $basemenu->menutype);
 		if (version_compare(JVERSION, '1.6', '>')) {
 			$this->parameters->set('startLevel', $basemenu->level + 1);
-			$this->parameters->set('endLevel', $basemenu->level + 2);
+			$this->parameters->set('endLevel', $basemenu->level + $this->ktemplate->params->get('menu_levels', 1));
 		} else {
 			$this->parameters->set('startLevel', $basemenu->sublevel + 1);
-			$this->parameters->set('endLevel', $basemenu->sublevel + 2);
+			$this->parameters->set('endLevel', $basemenu->sublevel + $this->ktemplate->params->get('menu_levels', 1));
 		}
 
 		$this->list = KunenaMenuHelper::getList($this->parameters);

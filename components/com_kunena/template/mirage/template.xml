@@ -100,5 +100,9 @@
 		<param name="avatarSizeYPost" type="hidden" default="144" />
 		<param name="avatarSizeXProfile" type="hidden" default="200" />
 		<param name="avatarSizeYProfile" type="hidden" default="200" />
+		
+		<!-- Menu settings -->
+		<param name="menu_showall" type="hidden" default="1" />
+		<param name="menu_levels" type="hidden" default="2" />
 	</params>
 </kinstall>

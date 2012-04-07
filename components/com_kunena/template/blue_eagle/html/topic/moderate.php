@@ -82,7 +82,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 
 				<div id="modtopicslist">
 					<?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_TOPIC' ); ?>:
-					<input id="kmod_targetid" type="text" size="7" name="targetid" value="" style="display: none"/>
+					<input id="kmod_targetid" type="text" size="7" name="targetid" value="" style="display: none" />
 					<?php echo $this->topiclist ?>
 				</div>
 

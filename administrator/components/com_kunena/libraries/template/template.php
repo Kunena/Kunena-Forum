@@ -579,15 +579,18 @@ HTML;
 			$name = JRequest::getString ( 'kunena_template', KunenaFactory::getConfig()->template, 'COOKIE' );
 		}
 		if (empty(self::$_instances[$name])) {
-			// Find overridden template class
-			$classname = "KunenaTemplate{$name}";
+			// Find overridden template class (use $templatename to avoid creating new objects if the template doesn't exist)
+			$templatename = $name;
+			$classname = "KunenaTemplate{$templatename}";
 			if (!class_exists($classname)) {
-				if (!file_exists(KPATH_SITE . "/template/{$name}/template.xml")) {
-					// If template xml doesn't exist, use blue eagle instead
-					$name = 'blue_eagle';
-					$classname = "KunenaTemplate{$name}";
+				if (!file_exists(KPATH_SITE . "/template/{$templatename}/template.xml")) {
+					// If template xml doesn't exist, raise warning and use blue eagle instead
+					$templatename = 'blue_eagle';
+					$classname = "KunenaTemplate{$templatename}";
+
+					JFactory::getApplication()->enqueueMessage(JText::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename), 'notice');
 				}
-				$file = KPATH_SITE."/template/{$name}/template.php";
+				$file = KPATH_SITE."/template/{$templatename}/template.php";
 				if (!file_exists($file)) {
 					$classname = "KunenaTemplateBlue_Eagle";
 					$file = KPATH_SITE."/template/blue_eagle/template.php";
@@ -597,9 +600,9 @@ HTML;
 				}
 			}
 			if (class_exists ( $classname )) {
-				self::$_instances [$name] = new $classname ( $name );
+				self::$_instances [$name] = new $classname ( $templatename );
 			} else {
-				self::$_instances [$name] = new KunenaTemplate ( $name );
+				self::$_instances [$name] = new KunenaTemplate ( $templatename );
 			}
 		}
 

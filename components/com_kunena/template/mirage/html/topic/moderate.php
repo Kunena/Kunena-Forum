@@ -87,8 +87,12 @@ JHTML::_('behavior.tooltip');
 										<label for="kmod_topicsubject"><?php echo JText::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT') ?>:</label>
 										<input id="kmod_topicsubject" type="text" value="<?php echo !isset($this->mesid) ? $this->escape($this->message->subject) : $this->escape($this->topic->subject)  ?>" name="subject" class="input hasTip" size="50" title="<?php echo JText::_('COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT') ?> :: <?php echo JText::_('COM_KUNENA_MODERATION_TITLE_DEST_ENTER_SUBJECT') ?>" />
 									</div>
+									<label for="kmod_replieschangesubject"><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES') ?>:</label>
+									<input id="kmod_replieschangesubject" type="checkbox" name="changesubject" value="1" title="<?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES') ?> :: <?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES') ?>" />
 									<div class="clr"></div>
-									<label for="kmod_shadow" class="hasTip" title="<?php echo JText::_('COM_KUNENA_MODERATION_TOPIC_SHADOW') ?> :: "><input id="kmod_shadow" type="checkbox" value="1" name="shadow"><?php echo JText::_('COM_KUNENA_MODERATION_TOPIC_SHADOW') ?></label>
+									<?php if (0 && !isset($this->message)) : ?>
+										<label for="kmod_shadow" class="hasTip" title="<?php echo JText::_('COM_KUNENA_MODERATION_TOPIC_SHADOW') ?> :: "><input id="kmod_shadow" type="checkbox" value="1" name="shadow"><?php echo JText::_('COM_KUNENA_MODERATION_TOPIC_SHADOW') ?></label>
+									<?php endif ?>
 								</div>
 							</li>
 						</ul>

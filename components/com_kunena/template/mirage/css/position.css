@@ -79,13 +79,8 @@
 	float: none;
 }
 
-/*#kunena.layout .inline-divider {
+#kunena.layout .inline-divider {
 	padding: 0 10px;
-}*/
-
-#kunena.layout .divider-vertical-inline-dotted {
-	border-bottom: 1px dotted #EEEEEE;
-	border-top: 1px dotted #CCCCCC;
 }
 
 #kunena.layout .divider-vertical-inline-dotted {
@@ -93,7 +88,12 @@
 	border-top: 1px dotted #CCCCCC;
 }
 
-#kunena.layout .divider {
+#kunena.layout .divider-vertical-inline-dotted {
+	border-bottom: 1px dotted #EEEEEE;
+	border-top: 1px dotted #CCCCCC;
+}
+
+#kunena.layout .divider-vertical-inline-dotted {
 	display: block;
 	float: none;
 	height: 0;

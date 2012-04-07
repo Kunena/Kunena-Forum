@@ -129,6 +129,18 @@ class KunenaForumTopicPoll extends JObject {
 		return $this->myvotes[$user->userid];
 	}
 
+	public function getLastVoteId($user = null) {
+		$user = KunenaFactory::getUser($user);
+		$query = "SELECT lastvote
+				FROM #__kunena_polls_users
+				WHERE pollid={$this->_db->Quote($this->id)} AND userid={$this->_db->Quote($user->userid)}";
+		$this->_db->setQuery($query);
+		$this->mylastvoteId = $this->_db->loadResult();
+		KunenaError::checkDatabaseError();
+
+		return $this->mylastvoteId;
+	}
+
 	public function getMyTime($user = null) {
 		$user = KunenaFactory::getUser($user);
 		if (!isset($this->mytime[$user->userid])) {
@@ -158,7 +170,9 @@ class KunenaForumTopicPoll extends JObject {
 			return false;
 		}
 
+		$lastVoteId = $this->getLastVoteId($user->userid);
 		$votes = $this->getMyVotes($user);
+
 		if (!$votes) {
 			// First vote
 			$votes = new StdClass();
@@ -166,9 +180,15 @@ class KunenaForumTopicPoll extends JObject {
 			$votes->pollid = $this->id;
 			$votes->userid = $user->userid;
 			$votes->votes = 1;
-		} elseif ($change && isset($this->options[$votes->lastvote])) {
+		} elseif ($change && isset($lastVoteId)) {
+			$votes = new StdClass();
+			$votes->new = false;
+			$votes->lasttime = null;
+			$votes->lastvote = null;
+			$votes->userid = $user->userid;
+			$votes->votes = 1;
 			// Change vote: decrease votes in the last option
-			if (!$this->changeOptionVotes($votes->lastvote, -1)) {
+			if (!$this->changeOptionVotes($lastVoteId, -1)) {
 				// Saving option failed, add a vote to the user
 				$votes->votes++;
 			}
@@ -176,6 +196,7 @@ class KunenaForumTopicPoll extends JObject {
 			// Add a vote to the user
 			$votes->votes++;
 		}
+
 		$votes->lasttime = JFactory::getDate()->toMySQL();
 		$votes->lastvote = $option;
 
@@ -219,6 +240,7 @@ class KunenaForumTopicPoll extends JObject {
 		// Change votes in the option
 		$delta = intval($delta);
 		$query = "UPDATE #__kunena_polls_options SET votes=votes+{$delta} WHERE id={$this->_db->Quote($option)}";
+
 		$this->_db->setQuery($query);
 		$this->_db->query();
 		if (KunenaError::checkDatabaseError()) {

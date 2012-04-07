@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 // TODO: add support for announcement RSS feed
 ?>
 
-<div class="kbox-module common-announcement">
+<div class="kmodule common-announcement">
 	<div class="kbox-wrapper kbox-full">
 		<div class="common-announcement-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 			<div class="headerbox-wrapper kbox-full">
@@ -44,5 +44,5 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 <?php echo $this->getModulePosition ( 'kunena_announcement' ) ?>

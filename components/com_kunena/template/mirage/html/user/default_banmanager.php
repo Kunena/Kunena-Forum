@@ -75,4 +75,4 @@ $j=0;
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+

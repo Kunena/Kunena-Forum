@@ -61,7 +61,7 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 
 <?php foreach ($this->top as $top) : ?>
 	<div class="kbox-module statistics-default">
@@ -123,5 +123,5 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		</div>
 	</div>
-	<div class="spacer"></div>
+
 <?php endforeach ?>

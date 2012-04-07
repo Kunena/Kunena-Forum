@@ -89,7 +89,7 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 <?php if(!empty($this->userparameters)) : ?>
 <div class="kbox-module">
 	<div class="block-wrapper kbox-color kbox-border kbox-border_radius">
@@ -122,5 +122,5 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 <?php endif; ?>

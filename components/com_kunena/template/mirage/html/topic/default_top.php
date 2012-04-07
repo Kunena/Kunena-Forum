@@ -13,9 +13,9 @@
 				</li>
 			</ul>
 			<div class="kpost-container kbox-full kbox-hover">
-				<ul class="list-unstyled kpost-user_details-horizontal kbox-width">
+				<div class="kpost-user_details-horizontal kbox-full kbox-width">
 					<?php $this->displayMessageProfile('horizontal') ?>
-				</ul>
+				</div>
 				<div class="kpost-container-top">
 					<ul class="list-unstyled kpost-post-body">
 						<?php $this->displayMessageContents() ?>

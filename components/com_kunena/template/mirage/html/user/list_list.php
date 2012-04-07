@@ -45,4 +45,3 @@ document.addEvent('domready', function() {
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>

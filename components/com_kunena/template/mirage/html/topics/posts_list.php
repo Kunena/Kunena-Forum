@@ -49,4 +49,3 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 	</form>
 </div>
-<div class="spacer"></div>

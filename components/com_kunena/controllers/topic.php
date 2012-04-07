@@ -768,13 +768,13 @@ class KunenaControllerTopic extends KunenaController {
 				$uri = JURI::getInstance ( JURI::base () );
 				$msglink = $uri->toString ( array ('scheme', 'host', 'port' ) ) . $target->getPermaUrl(null, false);
 
-				$mailmessage = "" . JText::_ ( 'COM_KUNENA_REPORT_RSENDER' ) . " {$this->me->username} ($this->me->name)";
+				$mailmessage = "" . JText::_ ( 'COM_KUNENA_REPORT_RSENDER' ) . " {$this->me->username} ({$this->me->name})";
 				$mailmessage .= "\n";
 				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_RREASON' ) . " " . $reason;
 				$mailmessage .= "\n";
 				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_RMESSAGE' ) . " " . $text;
 				$mailmessage .= "\n\n";
-				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_POSTER' ) . " {$baduser->username} ($baduser->name)";
+				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_POSTER' ) . " {$baduser->username} ({$baduser->name})";
 				$mailmessage .= "\n";
 				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_SUBJECT' ) . ": " . $topic->subject;
 				$mailmessage .= "\n";

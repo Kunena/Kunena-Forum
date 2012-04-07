@@ -889,7 +889,7 @@
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 10px 5px;
+	/*padding: 10px 5px;*/
 	position: relative;
 }
 
@@ -897,14 +897,14 @@
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 2px 5px;
+	/*padding: 2px 5px;*/
 }
 
 #kunena.layout ul.banmanager-list dd {
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 2px 0;
+	/*padding: 2px 0;*/
 }
 
 /*#kunena.layout ul.topic-list li.topics-row dl {

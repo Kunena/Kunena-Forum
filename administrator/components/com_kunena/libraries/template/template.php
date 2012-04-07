@@ -428,7 +428,7 @@ HTML;
 		if ($basepath) $basepath = '/' . $basepath;
 		$filepath = "{$basepath}/{$file}";
 		if (!isset($this->filecache[$filepath])) {
-			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE."/template/".KunenaFactory::getConfig()->template."/{$file}";
+			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE."/template/blue_eagle/{$file}";
 			foreach ($this->default as $template) {
 				$path = "template/{$template}{$basepath}";
 				if (file_exists(KPATH_SITE . "/{$path}/{$file}")) {

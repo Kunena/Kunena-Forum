@@ -108,6 +108,7 @@ class KunenaView extends JView {
 	function isModulePosition($position) {
 		return JDocumentHTML::countModules ( $position );
 	}
+
 	function getModulePosition($position) {
 		$html = '';
 		if (JDocumentHTML::countModules ( $position )) {
@@ -117,7 +118,7 @@ class KunenaView extends JView {
 			$html .= $renderer->render ( $position, $options, null );
 			$html .= '</div>';
 		}
-		echo $html;
+		return $html;
 	}
 
 	function parse($text, $len=0) {

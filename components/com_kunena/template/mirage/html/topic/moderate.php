@@ -81,6 +81,7 @@ JHTML::_('behavior.tooltip');
 									</div>
 									<div class="modtopicslist">
 										<label for="kmod_topics"><?php echo JText::_('COM_KUNENA_MODERATION_DEST_TOPIC') ?>:</label>
+										<input id="kmod_targetid" type="text" size="7" name="targetid" value="" style="display: none" />
 										<?php echo $this->topiclist ?>
 									</div>
 									<div class="kmod_subject">

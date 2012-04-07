@@ -51,4 +51,3 @@ $this->getModulePosition( 'kunena_poll' );
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>

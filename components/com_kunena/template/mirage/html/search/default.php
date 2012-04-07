@@ -114,5 +114,5 @@ $this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 		</div>
 	</form>
 </div>
-<div class="spacer"></div>
+
 <?php $this->displaySearchResults() ?>

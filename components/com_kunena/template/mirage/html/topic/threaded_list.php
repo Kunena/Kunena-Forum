@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 
 <div class="kmodule topic-threaded_list">
 	<div class="kbox-wrapper">
@@ -76,4 +76,4 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+

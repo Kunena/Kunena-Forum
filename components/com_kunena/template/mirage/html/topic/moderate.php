@@ -104,4 +104,4 @@ JHTML::_('behavior.tooltip');
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+

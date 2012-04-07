@@ -27,11 +27,31 @@ $j=0;
 					<ul class="list-unstyled banmanager-list">
 						<li class="header kbox-hover_header-row clear">
 							<dl class="list-unstyled">
-								<dd class="banmanager-id"><span class="bold">#</span></dd>
-								<dd class="banmanager-user"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_BANNEDUSER'); ?></span></dd>
-								<dd class="banmanager-from"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></span></dd>
-								<dd class="banmanager-start"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></span></dd>
-								<dd class="banmanager-expire"><span class="bold"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></span></dd>
+								<dd class="banmanager-id">
+									<div class="innerspacer-header">
+										<span class="bold">#</span>
+									</div>
+								</dd>
+								<dd class="banmanager-user">
+									<div class="innerspacer-header">
+										<span class="bold"><?php echo JText::_('COM_KUNENA_BAN_BANNEDUSER'); ?></span>
+									</div>
+								</dd>
+								<dd class="banmanager-from">
+									<div class="innerspacer-header">
+										<span class="bold"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></span>
+									</div>
+								</dd>
+								<dd class="banmanager-start">
+									<div class="innerspacer-header">
+										<span class="bold"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></span>
+									</div>
+								</dd>
+								<dd class="banmanager-expire">
+									<div class="innerspacer-header">
+										<span class="bold"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></span>
+									</div>
+								</dd>
 							</dl>
 						</li>
 					</ul>
@@ -45,19 +65,29 @@ $j=0;
 						<li class="banmanager-row kbox-hover kbox-hover_list-row">
 							<dl class="list-unstyled">
 								<dd class="banmanager-id">
-									<?php echo $j; ?>
+									<div class="innerspacer-column">
+										<?php echo $j; ?>
+									</div>
 								</dd>
 								<dd class="banmanager-user">
-									<?php echo $userban->getUser()->getLink() ?>
+									<div class="innerspacer-column">
+										<?php echo $userban->getUser()->getLink() ?>
+									</div>
 								</dd>
 								<dd class="banmanager-from">
-									<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?></span>
+									<div class="innerspacer-column">
+										<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?></span>
+									</div>
 								</dd>
 								<dd class="banmanager-start">
-									<span><?php echo KunenaDate::getInstance($userban->created_time)->toKunena('datetime') ?></span>
+									<div class="innerspacer-column">
+										<span><?php echo KunenaDate::getInstance($userban->created_time)->toKunena('datetime') ?></span>
+									</div>
 								</dd>
 								<dd class="banmanager-expire">
-									<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : KunenaDate::getInstance($userban->expiration)->toKunena('datetime') ?></span>
+									<div class="innerspacer-column">
+										<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : KunenaDate::getInstance($userban->expiration)->toKunena('datetime') ?></span>
+									</div>
 								</dd>
 							</dl>
 						</li>
@@ -65,7 +95,11 @@ $j=0;
 						<?php else : ?>
 						<li class="banmanager-row kbox-hover kbox-hover_list-row">
 							<dl class="list-unstyled">
-								<dd><?php echo JText::_('COM_KUNENA_BAN_NO_BANNED_USERS') ?></dd>
+								<dd class="banmanager-none">
+									<div class="innerspacer-column">
+										<?php echo JText::_('COM_KUNENA_BAN_NO_BANNED_USERS') ?>
+									</div>
+								</dd>
 							</dl>
 						</li>
 						<?php endif; ?>
@@ -75,4 +109,4 @@ $j=0;
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+

@@ -143,11 +143,11 @@
 #kunena.layout .klegend-title {
 	font-weight: bold;
 }
-#kunena.layout .kuser-admin			{ color: var(styleForumLegendAdmincolorText) !important; }
+/*#kunena.layout .kuser-admin			{ color: var(styleForumLegendAdmincolorText) !important; }
 #kunena.layout .kuser-globalmod		{ color: var(styleForumLegendGlobalcolorText) !important; }
 #kunena.layout .kuser-moderator		{ color: var(styleForumLegendModeratorcolorText) !important;}
 #kunena.layout .kuser-user				{ color: var(styleForumLegendUsercolorText) !important; }
-#kunena.layout .kuser-guest			{ color: var(styleForumLegendGuestcolorText) !important; }
+#kunena.layout .kuser-guest			{ color: var(styleForumLegendGuestcolorText) !important; }*/
 #kunena.layout .kwhosonline-legend ul li span {
 	color: #000;
 }

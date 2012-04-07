@@ -28,7 +28,9 @@ defined ( '_JEXEC' ) or die ();
 							<li class="post-row">
 								<dl class="list-unstyled">
 									<dd class="post-none">
-										<?php echo JText::_('COM_KUNENA_NO_POSTS'); ?>
+										<div class="innerspacer-column">
+											<?php echo JText::_('COM_KUNENA_NO_POSTS'); ?>
+										</div>
 									</dd>
 								</dl>
 							</li>
@@ -49,4 +51,3 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 	</form>
 </div>
-<div class="spacer"></div>

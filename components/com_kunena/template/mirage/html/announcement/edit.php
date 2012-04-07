@@ -107,4 +107,4 @@ $this->document->addScriptDeclaration('// <![CDATA[
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+

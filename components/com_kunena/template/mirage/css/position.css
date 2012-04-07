@@ -83,6 +83,25 @@
 	padding: 0 10px;
 }
 
+#kunena.layout .divider-vertical-inline-dotted {
+	border-bottom: 1px dotted #EEEEEE;
+	border-top: 1px dotted #CCCCCC;
+}
+
+#kunena.layout .divider-vertical-inline-dotted {
+	border-bottom: 1px dotted #EEEEEE;
+	border-top: 1px dotted #CCCCCC;
+}
+
+#kunena.layout .divider-vertical-inline-dotted {
+	display: block;
+	float: none;
+	height: 0;
+	margin: 5px 0;
+	overflow: hidden;
+	width: 95%;
+}
+
 /*#kunena.layout .kcontent-32 > a {
 	position: absolute;
 	top: 5px;
@@ -104,7 +123,7 @@
 }
 
 #kunena.layout .kcontent-128 {
-	margin-left: 58px;
+	margin-left: 138px;
 }
 
 
@@ -112,36 +131,35 @@
 	border-radius: 3px;
 	box-shadow: 0 0 2px rgba(255, 255, 255, 0.3), 0 2px 0 rgba(0, 0, 0, 0.2) inset, 0 -1px 0 rgba(0, 0, 0, 0.2) inset, -1px 0 0 rgba(0, 0, 0, 0.2) inset, 2px 0 0 rgba(0, 0, 0, 0.2) inset, 0 2px 0 rgba(0, 0, 0, 0.2) inset, 0 2px 2px rgba(0, 0, 0, 0.2) inset;
 }
-}
 
 #kunena.layout img.kavatar-32 {
-	width: 32px;
+	min-height: 32px;
 	max-height: 32px;
-	width: 32px;
+	min-width: 32px;
 	max-width: 32px;
 	border-radius: 5px;
 }
 
 #kunena.layout img.kavatar-48 {
-	height: 32px;
+	min-height: 32px;
 	max-height: 48px;
-	width: 32px;
+	min-width: 32px;
 	max-width: 48px;
 	border-radius: 5px;
 }
 
 #kunena.layout img.kavatar-64 {
-	height: 32px;
+	min-height: 32px;
 	max-height: 64px;
-	width: 32px;
+	min-width: 32px;
 	max-width: 64px;
 	border-radius: 5px;
 }
 
 #kunena.layout img.kavatar-128 {
-	height: 32px;
+	min-height: 32px;
 	max-height: 128px;
-	width: 32px;
+	min-width: 32px;
 	max-width: 128px;
 	border-radius: 5px;
 }
@@ -235,6 +253,8 @@
 
 #kunena.layout div.kmodule {
 	overflow: visible;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 #kunena.layout div.kbox-wrapper {
@@ -621,8 +641,8 @@
 }
 
 #kunena.layout .kpost-user_details-horizontal {
-	padding: 10px;
-	text-align:center;
+	/*padding: 10px;
+	text-align:center;*/
 	/*float:right;*/
 }
 
@@ -869,7 +889,7 @@
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 10px 5px;
+	/*padding: 10px 5px;*/
 	position: relative;
 }
 
@@ -877,14 +897,14 @@
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 2px 5px;
+	/*padding: 2px 5px;*/
 }
 
 #kunena.layout ul.banmanager-list dd {
 	display: block;
 	float: left;
 	margin: 0px;
-	padding: 2px 0;
+	/*padding: 2px 0;*/
 }
 
 /*#kunena.layout ul.topic-list li.topics-row dl {
@@ -1036,7 +1056,7 @@
 #kunena.layout ul.category-list dd.category-subject {
 	margin: 0;
 	text-align: left;
-	width: 45%;
+	width: 55%;
 }
 
 #kunena.layout ul.category-list dd.category-topics, #kunena.layout ul.category-list dd.category-replies {
@@ -1053,7 +1073,7 @@
 #kunena.layout ul.category-list dd.category-lastpost {
 	margin: 0;
 	text-align: left;
-	width: 35%;
+	width: 25%;
 }
 
 #kunena.layout li.category-lastpost-avatar{

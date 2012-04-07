@@ -97,4 +97,4 @@ if (version_compare(JVERSION, '1.7','>')) {
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+

@@ -28,6 +28,6 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		</div>
 	</div>
-	<div class="spacer"></div>
+
 <?php endif ?>
 <?php echo $this->getModulePosition ( 'kunena_breadcrumb' ) ?>

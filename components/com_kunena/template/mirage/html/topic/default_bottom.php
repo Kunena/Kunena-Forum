@@ -19,7 +19,7 @@
 					</ul>
 					<?php $this->displayMessageActions() ?>
 				</div>
-				<ul class="list-unstyled kpost-user_details-horizontal kbox-width">
+				<ul class="list-unstyled kpost-user_details-horizontal kbox-full kbox-width">
 					<?php $this->displayMessageProfile('horizontal') ?>
 				</ul>
 			</div>

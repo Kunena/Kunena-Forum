@@ -39,12 +39,12 @@ defined ( '_JEXEC' ) or die ();
 		</dd>
 		<dd class="category-topics">
 			<div class="innerspacer-column">
-				<span class="number"><?php echo $this->category->getTopics() ?></span>
+				<span class="number"><?php echo $this->formatLargeNumber($this->category->getTopics()); ?></span>
 			</div>
 		</dd>
 		<dd class="category-replies">
 			<div class="innerspacer-column">
-				<span class="number"><?php echo $this->category->getReplies() ?></span>
+				<span class="number"><?php echo $this->formatLargeNumber($this->category->getReplies()); ?></span>
 			</div>
 		</dd>
 		<!-- td class="kcategory-subs">944 <span>Subscribers</span></td -->
@@ -66,17 +66,15 @@ defined ( '_JEXEC' ) or die ();
 		</dd>
 	</dl>
 	<?php if ($this->subcategories) : ?>
-	<dl>
-		<dd class="kcategory-subcats">
-			<ul class="list-unstyled kcategory-subcat">
-				<?php foreach ( $this->subcategories as $subcategory ) : ?>
-					<li class="kcategory-smdetails kcategory-smicon[K=CATEGORY_NEW_SUFFIX:<?php echo $subcategory->id ?>]">
-						<h4><?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?> [K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]</h4>
-						<span class="kcounts"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_TOPICS_N_REPLIES', $subcategory->getTopics(), $subcategory->getReplies()) ?></span>
-					</li>
-				<?php endforeach ?>
-			</ul>
-		</dd>
-	</dl>
+	<div class="divider-vertical-inline-dotted"></div>
+	<div class="innerspacer-column">
+		<ul class="kcontent-32 list-unstyled kcategory-subcat">
+			<?php foreach ( $this->subcategories as $subcategory ) : ?>
+				<li class="kcategory-smdetails kcategory-smicon[K=CATEGORY_NEW_SUFFIX:<?php echo $subcategory->id ?>]">
+					<h4><?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?> [K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]<span class="kcounts"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_TOPICS_N_REPLIES', $subcategory->getTopics(), $subcategory->getReplies()) ?></span></h4>
+				</li>
+			<?php endforeach ?>
+		</ul>
+	</div>
 	<?php endif ?>
 </li>

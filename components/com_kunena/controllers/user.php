@@ -283,7 +283,7 @@ class KunenaControllerUser extends KunenaController {
 	// Mostly copied from Joomla 1.5
 	protected function saveUser()
 	{
-		$user = $this->user; //new JUser ( $this->user->get('id') );
+		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 
 		// we don't want users to edit certain fields so we will ignore them
 		$ignore = array('id', 'gid', 'block', 'usertype', 'registerDate', 'activation');
@@ -432,7 +432,7 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->hideEmail = JRequest::getInt('hidemail', '', 'post', 'hidemail');
 		$this->me->showOnline = JRequest::getInt('showonline', '', 'post', 'showonline');
 	}
-	
+
 	// Reports a user to stopforumspam.com
 	protected function report($userid) {
 		if(!$this->config->stopforumspam_key || ! $userid)
@@ -440,11 +440,11 @@ class KunenaControllerUser extends KunenaController {
 			return false;
 		}
 		$spammer = JFactory::getUser($userid);
-		
+
 		$db = JFactory::getDBO();
 		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid=".$userid." GROUP BY ip ORDER BY `time` DESC", 0, 1 );
 		$ip = $db->loadResult();
-		
+
 		$data = "username=".$spammer->username."&ip_addr=".$ip."&email=".$spammer->email."&api_key=".$this->config->stopforumspam_key;
 		$fp = fsockopen("www.stopforumspam.com",80);
 		fputs($fp, "POST /add.php HTTP/1.1\n" );

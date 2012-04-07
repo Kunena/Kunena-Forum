@@ -286,7 +286,7 @@ class KunenaControllerUser extends KunenaController {
 	// Mostly copied from Joomla 1.5
 	protected function saveUser()
 	{
-		$user = $this->user; //new JUser ( $this->user->get('id') );
+		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 
 		// we don't want users to edit certain fields so we will ignore them
 		$ignore = array('id', 'gid', 'block', 'usertype', 'registerDate', 'activation');

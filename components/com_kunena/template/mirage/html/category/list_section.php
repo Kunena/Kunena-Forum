@@ -9,6 +9,10 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$this->k = 0;
+$this->rowclass = array ("odd", "even" ); 
+
 ?>
 <?php if (!empty($this->categories [$this->section->id])) : ?>
 	<div class="kmodule category-list_section">

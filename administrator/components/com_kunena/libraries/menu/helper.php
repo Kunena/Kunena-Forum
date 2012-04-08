@@ -62,8 +62,6 @@ abstract class KunenaMenuHelper {
 			$showAll	= $params->get('showAllChildren');
 			$items 		= $menu->getItems('menutype', $params->get('menutype'));
 
-			$lastitem	= 0;
-
 			if ($items) {
 				foreach($items as $i => $item) {
 					if (($start && $start > $item->level)
@@ -79,15 +77,15 @@ abstract class KunenaMenuHelper {
 					$item->shallower = false;
 					$item->level_diff = 0;
 
-					if (isset($items[$lastitem])) {
-						$items[$lastitem]->deeper		= ($item->level > $items[$lastitem]->level);
-						$items[$lastitem]->shallower	= ($item->level < $items[$lastitem]->level);
-						$items[$lastitem]->level_diff	= ($items[$lastitem]->level - $item->level);
+					if (isset($lastitem)) {
+						$lastitem->deeper		= ($item->level > $lastitem->level);
+						$lastitem->shallower	= ($item->level < $lastitem->level);
+						$lastitem->level_diff	= ($lastitem->level - $item->level);
 					}
 
 					$item->parent = (boolean) $menu->getItems('parent_id', (int) $item->id, true);
 
-					$lastitem			= $i;
+					$lastitem			= $item;
 					$item->active		= false;
 					$item->flink = $item->link;
 
@@ -131,10 +129,10 @@ abstract class KunenaMenuHelper {
 					$item->menu_image = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', '')) : '';
 				}
 
-				if (isset($items[$lastitem])) {
-					$items[$lastitem]->deeper		= (($start?$start:1) > $items[$lastitem]->level);
-					$items[$lastitem]->shallower	= (($start?$start:1) < $items[$lastitem]->level);
-					$items[$lastitem]->level_diff	= ($items[$lastitem]->level - ($start?$start:1));
+				if (isset($lastitem)) {
+					$lastitem->deeper		= (($start?$start:1) > $lastitem->level);
+					$lastitem->shallower	= (($start?$start:1) < $lastitem->level);
+					$lastitem->level_diff	= ($lastitem->level - ($start?$start:1));
 				}
 			}
 
@@ -161,17 +159,29 @@ abstract class KunenaMenuHelper {
 			$start		= (int) $params->get('startLevel');
 			$end		= (int) $params->get('endLevel');
 			$showAll	= $params->get('showAllChildren');
-			$items 		= $menu->getItems('menutype', $params->get('menutype'));
+			$rows		= $menu->getItems('menutype', $params->get('menutype'));
+			$items		= array();
 
-			$lastitem	= 0;
+			if ($rows) {
+				$itemsord = array(0=>array());
+				foreach($rows as $item) {
+					$itemsord[$item->parent][] = $item;
+				}
+				$heap = $itemsord[0];
+				while (!is_null($item = array_shift($heap))) {
+					if (empty($item->published) || (isset ( $item->access ) && $item->access > $level)) continue;
+					$items[] = $item;
+					if (isset($itemsord[$item->id])) {
+						$heap = array_merge($itemsord[$item->id], $heap);
+					}
+				}
+				$items = array_values($items);
 
-			if ($items) {
 				foreach($items as $i => &$item) {
 					if (($start && $start > $item->sublevel)
 						|| ($end && $item->sublevel > $end)
 						|| (!$showAll && $item->sublevel > 0 && !in_array($item->parent, $path))
-						|| ($start > 0 && !in_array($item->tree[$start-1], $path)
-						|| (empty($item->published) || (isset ( $item->access ) && $item->access > $level)))
+						|| ($start > 0 && !in_array($item->tree[$start-1], $path))
 					) {
 						unset($items[$i]);
 						continue;
@@ -202,15 +212,15 @@ abstract class KunenaMenuHelper {
 					$item->shallower = false;
 					$item->level_diff = 0;
 
-					if (isset($items[$lastitem])) {
-						$items[$lastitem]->deeper		= ($item->sublevel > $items[$lastitem]->sublevel);
-						$items[$lastitem]->shallower	= ($item->sublevel < $items[$lastitem]->sublevel);
-						$items[$lastitem]->level_diff	= ($items[$lastitem]->sublevel - $item->sublevel);
+					if (isset($lastitem)) {
+						$lastitem->deeper		= ($item->sublevel > $lastitem->sublevel);
+						$lastitem->shallower	= ($item->sublevel < $lastitem->sublevel);
+						$lastitem->level_diff	= ($lastitem->sublevel - $item->sublevel);
 					}
 
 					$item->parent = (boolean) $menu->getItems('parent', (int) $item->id, true);
 
-					$lastitem			= $i;
+					$lastitem			= $item;
 					$item->active		= false;
 					$item->flink = $item->link;
 
@@ -250,10 +260,10 @@ abstract class KunenaMenuHelper {
 					if ($item->menu_image == '-1') $item->menu_image = '';
 				}
 
-				if (isset($items[$lastitem])) {
-					$items[$lastitem]->deeper		= (($start?$start:1) > $items[$lastitem]->sublevel);
-					$items[$lastitem]->shallower	= (($start?$start:1) < $items[$lastitem]->sublevel);
-					$items[$lastitem]->level_diff	= ($items[$lastitem]->sublevel - ($start?$start:1));
+				if (isset($lastitem)) {
+					$lastitem->deeper		= (($start?$start:1) > $lastitem->sublevel);
+					$lastitem->shallower	= (($start?$start:1) < $lastitem->sublevel);
+					$lastitem->level_diff	= ($lastitem->sublevel - ($start?$start:1));
 				}
 			}
 

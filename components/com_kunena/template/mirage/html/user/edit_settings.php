@@ -20,9 +20,9 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
-					<ul class="kform user-edit-information-list clear" id="kedit-user-forum-settings">
+					<ul class="kform user-edit-information-list kbox-full" id="kedit-user-forum-settings">
 						<?php foreach ($this->settings as $setting) : ?>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="k<?php echo $setting->name ?>"><?php echo $setting->label ?></label>

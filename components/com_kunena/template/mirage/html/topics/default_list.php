@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 				<div class="detailsbox-wrapper innerspacer kbox-full">
 					<div class="topics-default_list-detailsbox detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
 						<ul class="list-unstyled topic-list">
-							<li class="header kbox-hover_header-row clear">
+							<li class="header kbox-hover_header-row kbox-full">
 								<dl class="list-unstyled list-unstyled">
 									<!--<dd class="topic-icon">
 									</dd>-->

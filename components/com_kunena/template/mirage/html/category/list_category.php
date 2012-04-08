@@ -9,8 +9,11 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$this->k ^= 1;
 ?>
-<li class="category-row kbox-hover kbox-hover_list-row kbox-full">
+
+<li class="category-row category-row-<?php echo $this->rowclass [$this->k], isset ( $this->category->class_sfx ) ? ' category-row-' . $this->escape($this->rowclass [$this->k]) . $this->escape($this->category->class_sfx) : '' ?> kbox-hover kbox-hover_list-row kbox-full">
 	<dl class="list-unstyled">
 		<!--<dd class="category-icon">
 		</dd>-->
@@ -53,7 +56,8 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->lastPost) : ?>
 				<?php if ( $this->config->avataroncat ) : ?><?php echo $this->lastUser->getLink($this->lastUser->getAvatarImage('klist-avatar  kavatar kavatar-32 fl', 'list')) ?><?php endif ?>
 				<ul class="kcontent-32 list-unstyled">
-					<li class="category-lastpost-topic"><?php echo $this->getLastPostLink($this->category) ?></li>
+					<?php //TODO: Fix KunenaHtmlParser function reference. ?>
+					<li class="category-lastpost-topic"><?php echo $this->getLastPostLink($this->category, null, KunenaHtmlParser::parseText($this->category->getLastTopic()->subject, 40), 'link') ?></li>
 					<li class="category-lastpost-author"><?php echo JText::_('COM_KUNENA_BY').' '.$this->lastUser->getLink($this->lastUserName) ?></li>
 					<li class="category-lastpost-date"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->lastPostTime}]") ?></li>
 				</ul>

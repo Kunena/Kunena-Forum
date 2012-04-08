@@ -124,6 +124,11 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	public function getUrl($category = null, $xhtml = true, $action = null) {
+		$uri = $this->getUri($category, $action);
+		return KunenaRoute::_($uri, $xhtml);
+	}
+
+	public function getUri($category = null, $action = null) {
 		if (!$category) {
 			$category = $this;
 		} else {
@@ -133,7 +138,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if ((string)$action === (string)(int)$action) {
 			$uri->setVar('limitstart', $action);
 		}
-		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+		return $uri;
 	}
 
 	public function displayField($field) {

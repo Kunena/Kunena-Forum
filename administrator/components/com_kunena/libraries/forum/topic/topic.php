@@ -265,6 +265,15 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	public function getUrl($category = null, $xhtml = true, $action = null) {
+		$uri = $this->getUri($category, $action);
+		return KunenaRoute::_($uri, $xhtml);
+	}
+
+	public function getPermaUrl($category = null, $xhtml = true, $action = null) {
+		return $this->getUrl($category, $xhtml, $action);
+	}
+
+	public function getUri($category = null, $action = null) {
 		$category = $category ? KunenaForumCategoryHelper::get($category) : $this->getCategory();
 		if (!$this->exists() || !$category->exists()) return null;
 		if ($action instanceof KunenaForumMessage) {
@@ -304,11 +313,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				}
 			}
 		}
-		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
-	}
-
-	public function getPermaUrl($category = null, $xhtml = true, $action = null) {
-		return $this->getUrl($category, $xhtml, $action);
+		return $uri;
 	}
 
 	public function getPostLocation($mesid, $direction = null, $hold = null) {

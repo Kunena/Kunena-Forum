@@ -190,11 +190,11 @@ class KunenaView extends JView {
 	public function getCategoryLink($category, $content = null, $title = null, $class = null) {
 		if (!$content) $content = $this->escape($category->name);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
-		return JHTML::_('kunenaforum.link', $category->getUrl(null, 'object'), $content, $title, $class, 'follow');
+		return JHTML::_('kunenaforum.link', $category->getUri(), $content, $title, $class, 'follow');
 	}
 
 	public function getTopicLink($topic, $action = null, $content = null, $title = null, $class = null, $category = NULL) {
-		$uri = $topic->getUrl($category ? $category : $this->category, 'object', $action);
+		$uri = $topic->getUri($category ? $category : $this->category, $action);
 		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
 		if ($title === null) {
 			if ($action instanceof KunenaForumMessage) {

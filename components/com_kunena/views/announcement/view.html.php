@@ -42,7 +42,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			$this->setError($this->announcement->getError());
 		}
 
-		$this->returnUrl = KunenaForumAnnouncementHelper::getUrl('list', 'object');
+		$this->returnUrl = KunenaForumAnnouncementHelper::getUri('list');
 
 		$this->_prepareDocument();
 
@@ -61,7 +61,7 @@ class KunenaViewAnnouncement extends KunenaView {
 			$this->setError($this->announcement->getError());
 		}
 
-		$this->returnUrl = KunenaForumAnnouncementHelper::getUrl('list', 'object');
+		$this->returnUrl = KunenaForumAnnouncementHelper::getUri('list');
 
 		$this->_prepareDocument();
 
@@ -78,8 +78,8 @@ class KunenaViewAnnouncement extends KunenaView {
 		$new = new KunenaForumAnnouncement;
 
 		$this->actions = array();
-		if ($new->authorise('create')) $this->actions['add'] = $new->getUrl('create', 'object');
-		if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getUrl('list', 'object');
+		if ($new->authorise('create')) $this->actions['add'] = $new->getUri('create');
+		if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getUri('list');
 
 		$this->_prepareDocument();
 
@@ -108,11 +108,11 @@ class KunenaViewAnnouncement extends KunenaView {
 	function displayActions() {
 		$this->buttons = array();
 		if ($this->announcement->authorise('edit'))
-			$this->buttons['edit'] = $this->getButton($this->announcement->getUrl('edit', 'object'), 'edit', 'announcement', 'moderation');
+			$this->buttons['edit'] = $this->getButton($this->announcement->getUri('edit'), 'edit', 'announcement', 'moderation');
 		if ($this->announcement->authorise('delete'))
-			$this->buttons['delete'] = $this->getButton($this->announcement->getTaskUrl('delete', 'object'), 'delete', 'announcement', 'permanent');
+			$this->buttons['delete'] = $this->getButton($this->announcement->getTaskUri('delete'), 'delete', 'announcement', 'permanent');
 		if ($this->buttons)
-			$this->buttons['cpanel'] = $this->getButton(KunenaForumAnnouncementHelper::getUrl('list', 'object'), 'list', 'announcement', 'communication');
+			$this->buttons['cpanel'] = $this->getButton(KunenaForumAnnouncementHelper::getUri('list'), 'list', 'announcement', 'communication');
 
 		$contents = $this->loadTemplateFile('actions');
 		return $contents;

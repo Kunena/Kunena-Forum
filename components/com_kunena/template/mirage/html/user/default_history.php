@@ -24,7 +24,7 @@ $j=count($this->banhistory);
 			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="detailsbox banhistory">
 					<ul class="list-unstyled topic-list">
-						<li class="header kbox-hover_header-row clear">
+						<li class="header kbox-hover_header-row kbox-full">
 							<dl>
 								<dd class="kcol-first kid"> # </dd>
 								<dd class="kcol-mid kbanfrom"><?php echo JText::_('COM_KUNENA_BAN_BANNEDFROM'); ?></dd>

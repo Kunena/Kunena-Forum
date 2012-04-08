@@ -20,9 +20,9 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
-					<ul class="kform user-edit-information-list clear" id="kchange-avatar-image">
+					<ul class="kform user-edit-information-list kbox-full" id="kchange-avatar-image">
 						<?php if ($this->profile->avatar): ?>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kavatar-keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP') ?></label>
@@ -34,7 +34,7 @@ defined ( '_JEXEC' ) or die ();
 								</div>
 							</div>
 						</li>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kavatar-delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE') ?></label>
@@ -48,7 +48,7 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 						<?php endif; ?>
 						<?php if ($this->config->allowavatarupload) : ?>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY') ?></label>
@@ -62,7 +62,7 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 						<?php endif ?>
 						<?php if ($this->config->allowavatargallery) : ?>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="avatar_category_select"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY') ?></label>

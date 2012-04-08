@@ -30,7 +30,7 @@ defined ( '_JEXEC' ) or die ();
 					</ul>
 				</div>
 	
-				<div class="postbuttons clear">
+				<div class="postbuttons kbox-full">
 					<div style="display: none;" id="kbbcode-size-options">
 						<span class="kmsgtext-xs hasTip" title="[size=1]" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XS') ?>">
 							<?php echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT') ?>
@@ -167,7 +167,7 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 				<?php endif ?>
 	
-				<div class="kposthint clear">
+				<div class="kposthint kbox-full">
 					<input type="text" value="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT') ?>" maxlength="100" disabled="disabled" class="kbox-width inputbox" size="45" id="helpbox" name="helpbox" />
 				</div>
 			</div>

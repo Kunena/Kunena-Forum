@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="category-row kbox-hover kbox-hover_list-row clear">
+<li class="category-row kbox-hover kbox-hover_list-row kbox-full">
 	<dl class="list-unstyled">
 		<!--<dd class="category-icon">
 		</dd>-->

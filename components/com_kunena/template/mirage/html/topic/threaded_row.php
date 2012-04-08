@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="topic_threaded_tree-row kbox-hover kbox-hover_list-row clear">
+<li class="topic_threaded_tree-row kbox-hover kbox-hover_list-row kbox-full">
 	<dl class="list-unstyled">
 		<dd class="topic_threaded_tree-post">
 			<?php foreach($this->message->indent as $indent) : ?>

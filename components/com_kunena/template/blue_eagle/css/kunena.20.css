@@ -67,3 +67,8 @@
 #Kunena .kgrid-lock a.grid_true {
 	background: url("../images/icon-locked.png") no-repeat left center;
 }
+
+#Kunena .kfooter {
+	clear: both;
+	min-height: 28px;
+}

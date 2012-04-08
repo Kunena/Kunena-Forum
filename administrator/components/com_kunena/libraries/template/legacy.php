@@ -51,7 +51,7 @@ define ('KUNENA_VERSION_NAME', KunenaForum::versionName());
 define ('KUNENA_VERSION_BUILD', 0);
 
 // Joomla URL
-define('KUNENA_JLIVEURL', JURI::root());
+define('KUNENA_JLIVEURL', JURI::base(true).'/');
 
 // Joomla template dir
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH . "/templates/{$app->getTemplate()}");
@@ -77,7 +77,10 @@ class CKunenaTools {
 	function addStyleSheet($filename) {
 		$document = JFactory::getDocument ();
 		$config = KunenaFactory::getConfig ();
+		$template = KunenaFactory::getTemplate();
 
+		if ($template->name != 'default') $filename = preg_replace('#template/default#', 'template/blue_eagle', $filename);
+		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.css)$#', KUNENA_DIRECTURL.'template/blue_eagle/css/\1', $filename);
 		if (JDEBUG || $config->debug || KunenaForum::isDev()) {
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\-min\./u', '.', $filename );
@@ -87,6 +90,18 @@ class CKunenaTools {
 	}
 
 	function addScript($filename) {
-		KunenaFactory::getTemplate()->addScript($filename);
+		$document = JFactory::getDocument ();
+		$config = KunenaFactory::getConfig ();
+		$template = KunenaFactory::getTemplate();
+
+		if ($template->name != 'default') $filename = preg_replace('#/template/default/#', '/template/blue_eagle/', $filename);
+		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.js)$#', KUNENA_DIRECTURL.'template/blue_eagle/js/\1', $filename);
+		if (JDEBUG || $config->debug || KunenaForum::isDev()) {
+			// If we are in debug more, make sure we load the unpacked javascript
+			$filename = preg_replace ( '/\-min\./u', '.', $filename );
+		}
+
+		return $document->addScript( $filename );
 	}
+
 }

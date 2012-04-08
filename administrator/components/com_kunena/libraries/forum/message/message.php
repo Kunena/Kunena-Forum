@@ -67,11 +67,20 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return $this->getTopic()->getUrl($category, $xhtml, $this);
 	}
 
+	public function getUri($category = null) {
+		return $this->getTopic()->getUri($category, $this);
+	}
+
 	public function getPermaUrl($category = null, $xhtml = true) {
+		$uri = $this->getPermaUri($category);
+		return KunenaRoute::_($uri, $xhtml);
+	}
+
+	public function getPermaUri($category = null) {
 		$category = $category ? KunenaForumCategoryHelper::get($category) : $this->getCategory();
 		if (!$this->exists() || !$category->exists()) return null;
 		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
-		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+		return $uri;
 	}
 
 	public function newReply($fields=array(), $user=null, $safefields=null) {

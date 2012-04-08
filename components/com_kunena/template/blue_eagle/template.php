@@ -30,6 +30,12 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 
 		require_once JPATH_SITE. '/' . $this->getFile('initialize.php');
 		$this->addStyleSheet ( 'css/kunena.20.css' );
+
+		// Toggler language strings
+		JFactory::getDocument()->addScriptDeclaration('// <![CDATA[
+var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
+var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
+// ]]>');
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {

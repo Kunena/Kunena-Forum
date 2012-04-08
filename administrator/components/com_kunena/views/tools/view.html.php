@@ -42,9 +42,9 @@ class KunenaAdminViewTools extends KunenaView {
 	}
 
 	function displayMenu() {
-		$this->legacy = KunenaMenuHelper::getLegacy();
-		$this->invalid = KunenaMenuHelper::getInvalid();
-		$this->conflicts = KunenaMenuHelper::getConflicts();
+		$this->legacy = KunenaMenuFix::getLegacy();
+		$this->invalid = KunenaMenuFix::getInvalid();
+		$this->conflicts = KunenaMenuFix::getConflicts();
 
 		$this->setToolBarMenu();
 		$this->display ();
@@ -86,6 +86,7 @@ class KunenaAdminViewTools extends KunenaView {
 	protected function setToolBarMenu() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
+		if (!empty($this->legacy)) JToolBarHelper::custom('fixlegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
 		JToolBarHelper::trash('trashmenu', 'COM_KUNENA_A_TRASH_MENU', false);
 		JToolBarHelper::spacer();
 		JToolBarHelper::back();

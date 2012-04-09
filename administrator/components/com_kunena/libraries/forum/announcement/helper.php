@@ -48,9 +48,14 @@ class KunenaForumAnnouncementHelper {
 	}
 
 	static public function getUrl($layout = null, $xhtml = true) {
+		$uri = self::getUri($layout);
+		return KunenaRoute::_($uri, $xhtml);
+	}
+
+	static public function getUri($layout = null) {
 		$uri = new JURI('index.php?option=com_kunena&view=announcement');
 		if ($layout) $uri->setVar('layout', $layout);
-		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+		return $uri;
 	}
 
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true) {

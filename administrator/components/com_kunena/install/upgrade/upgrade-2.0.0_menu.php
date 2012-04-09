@@ -13,8 +13,8 @@ jimport('joomla.filter.output');
 
 // Kunena 2.0.0: Update menu items
 function kunena_upgrade_200_menu($parent) {
-	$legacy = KunenaMenuHelper::getLegacy();
-	$error = KunenaMenuHelper::fixLegacy();
+	$legacy = KunenaMenuFix::getLegacy();
+	$error = KunenaMenuFix::fixLegacy();
 
 	return array ('action' => '', 'name' => JText::sprintf ( 'COM_KUNENA_INSTALL_200_MENU', count($legacy) ), 'success' => !$error );
 }

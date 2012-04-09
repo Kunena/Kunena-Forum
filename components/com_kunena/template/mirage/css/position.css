@@ -97,9 +97,9 @@
 	display: block;
 	float: none;
 	height: 0;
-	margin: 5px 0;
+	margin: 0;
 	overflow: hidden;
-	width: 95%;
+	width: 100%;
 }
 
 /*#kunena.layout .kcontent-32 > a {
@@ -113,6 +113,10 @@
 	top: 5px;
 	left: 5px;
 }*/
+
+#kunena.layout .kcontent-24 {
+	margin-left: 34px;
+}
 
 #kunena.layout .kcontent-32 {
 	margin-left: 42px;
@@ -217,7 +221,7 @@
 	left: 0;
 	right: auto;
 	margin: 0px;
-	min-width: 140px;
+	min-width: 210px;
 	/*padding: 4px 0;*/
 	position: absolute;
 	top: 99%;
@@ -708,6 +712,23 @@
 
 #kunena.layout .kpost-user-vertical-karma {
 	margin: 0px 0px 5px 0px;
+}
+
+#kunena.layout ul.kcategory-subcat-list {
+	display: block;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+
+#kunena.layout ul.kcategory-subcat-list > li {
+	float: left
+	display: inline;
+	position: relative;
+	vertical-align: bottom;
+	margin: 2px;
+	overflow: hidden;
 }
 
 

@@ -66,8 +66,11 @@ class KunenaView extends JView {
 
 	function displayLayout($layout=null, $tpl = null) {
 		if ($layout) $this->setLayout ($layout);
-		$viewName = ucfirst($this->getName ());
-		$layoutName = ucfirst($this->getLayout ());
+		$view = $this->getName ();
+		$layout = $this->getLayout ();
+		$viewName = ucfirst($view);
+		$layoutName = ucfirst($layout);
+		$layoutFunction = 'display'.$layoutName;
 
 		KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
 
@@ -87,11 +90,15 @@ class KunenaView extends JView {
 				$this->common->display('default');
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
+			} elseif (!method_exists($this, $layoutFunction) && !file_exists(KPATH_SITE."/views/{$view}/{$layout}.php")) {
+				// Layout was not found (don't allow Joomla to raise an error)
+				echo $this->displayNoAccess(array(JText::_('COM_KUNENA_NO_ACCESS')));
+				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
+				return;
 			}
 		}
 
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		$layoutFunction = 'display'.$layoutName;
 		if (method_exists($this, $layoutFunction)) {
 			$contents = $this->$layoutFunction ($tpl);
 		} else {

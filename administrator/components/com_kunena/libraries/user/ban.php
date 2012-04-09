@@ -156,15 +156,15 @@ class KunenaUserBan extends JObject
 		return $create || !empty(self::$_instancesByIP[$identifier]->id) ? self::$_instancesByIP[$identifier] : null;
 	}
 
-	static public function getBannedUsers() {
+	static public function getBannedUsers($start=0, $limit=50) {
 		$c = __CLASS__;
 		$db = JFactory::getDBO ();
 		$now = new JDate();
 		$query = "SELECT *
 			FROM #__kunena_users_banned
 			WHERE (expiration = {$db->quote($db->getNullDate())} OR expiration > {$db->quote($now->toMysql())})
-			ORDER BY id DESC";
-		$db->setQuery ( $query );
+			ORDER BY created_time DESC";
+		$db->setQuery ( $query, $start, $limit );
 		$results = $db->loadAssocList ();
 		KunenaError::checkDatabaseError();
 

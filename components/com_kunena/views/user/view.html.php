@@ -280,7 +280,8 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayBanManager() {
-		$this->bannedusers = KunenaUserBan::getBannedUsers();
+		// TODO: move ban manager somewhere else and add pagination
+		$this->bannedusers = KunenaUserBan::getBannedUsers(0, 50);
 		echo $this->loadTemplateFile('banmanager');
 	}
 

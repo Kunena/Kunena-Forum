@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -22,11 +22,12 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 	</div>
 <?php endif ?>
 
-<?php
-	$this->displayPoll();
-	$this->getModulePosition( 'kunena_poll' );
-	$this->displayTopicActions(0);
-?>
+<?php $this->displayPoll(); ?>
+
+<!-- Module position: kunena_poll -->
+<?php $this->getModulePosition( 'kunena_poll' ); ?>
+
+<?php $this->displayTopicActions(0); ?>
 
 <div class="kblock">
 	<div class="kheader">
@@ -42,7 +43,6 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 </div>
 <?php $this->displayTopicActions(1); ?>
 
-<!-- B: List Actions Bottom -->
 <div class="kcontainer klist-bottom">
 	<div class="kbody">
 		<div class="kmoderatorslist-jump fltrt">
@@ -62,4 +62,3 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 		<?php endif; ?>
 	</div>
 </div>
-<!-- F: List Actions Bottom -->

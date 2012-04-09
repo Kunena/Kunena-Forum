@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -101,31 +101,25 @@ foreach ( $this->sections as $section ) :
 			</td>
 
 			<td class="kcol-mid kcol-kcattopics">
-				<!-- Number of Topics -->
 				<span class="kcat-topics-number"><?php echo $this->formatLargeNumber ( $category->getTopics() ) ?></span>
 				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_GEN_TOPICS');?></span>
-				<!-- /Number of Topics -->
 			</td>
 
 			<td class="kcol-mid kcol-kcatreplies">
-			<!-- Number of Replies -->
-			<span class="kcat-replies-number"><?php echo $this->formatLargeNumber ( $category->getReplies() ) ?></span>
-			<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
-			<!-- /Number of Replies -->
+				<span class="kcat-replies-number"><?php echo $this->formatLargeNumber ( $category->getReplies() ) ?></span>
+				<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
 			</td>
 
 			<?php $last = $category->getLastTopic();
 			if ($last->exists()) { ?>
 			<td class="kcol-mid kcol-kcatlastpost">
 			<?php if ($this->config->avataroncat > 0) : ?>
-			<!-- Avatar -->
 			<?php
 				$profile = KunenaFactory::getUser((int)$last->last_post_userid);
 				$useravatar = $profile->getAvatarImage('klist-avatar', 'list');
 				if ($useravatar) : ?>
 					<span class="klatest-avatar"> <?php echo $last->getLastPostAuthor()->getLink( $useravatar ); ?></span>
 				<?php endif; ?>
-			<!-- /Avatar -->
 			<?php endif; ?>
 			<div class="klatest-subject ks">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. $this->getLastPostLink($category) ?>
@@ -149,7 +143,6 @@ foreach ( $this->sections as $section ) :
 </div>
 </div>
 </div>
-<!-- F: List Cat -->
 <!-- Begin: Category Module Position -->
 	<?php $this->getModulePosition('kunena_section_' . $mmm) ?>
 <!-- Finish: Category Module Position -->

@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Common
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
@@ -10,7 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<!-- ANNOUNCEMENTS BOX -->
 <div class="kblock kannouncement">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kannouncement"></a></span>
@@ -32,5 +31,5 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
+<!-- Module position: kunena_announcement -->
 <?php echo $this->getModulePosition ( 'kunena_announcement' ) ?>
-<!-- / ANNOUNCEMENTS BOX -->

@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
@@ -10,10 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<!-- Subcategories -->
-<?php $this->displayCategories () ?>
-<!-- / Subcategories -->
 
+<?php $this->displayCategories () ?>
 <?php if ($this->category->headerdesc) : ?>
 <div class="kblock">
 	<div class="kheader">
@@ -31,7 +29,6 @@ defined ( '_JEXEC' ) or die ();
 <?php endif; ?>
 
 <?php if (!$this->category->isSection()) : ?>
-<!-- B: List Actions -->
 <table class="klist-actions">
 	<tr>
 		<td class="klist-actions-goto">
@@ -42,7 +39,6 @@ defined ( '_JEXEC' ) or die ();
 		<td class="klist-pages-all"><?php echo $this->getPagination (7); // odd number here (# - 2) ?></td>
 	</tr>
 </table>
-<!-- F: List Actions -->
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="ktopicsform">
 	<input type="hidden" name="view" value="topics" />
@@ -89,7 +85,6 @@ defined ( '_JEXEC' ) or die ();
 </div>
 </form>
 
-<!-- B: List Actions Bottom -->
 <table class="klist-actions-bottom" >
 	<tr>
 		<td class="klist-actions-goto">
@@ -117,5 +112,4 @@ defined ( '_JEXEC' ) or die ();
 		<?php endif; ?>
 	</div>
 </div>
-<!-- F: List Actions Bottom -->
 <?php endif; ?>

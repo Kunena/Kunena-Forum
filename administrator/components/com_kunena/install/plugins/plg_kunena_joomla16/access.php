@@ -16,6 +16,8 @@ defined ( '_JEXEC' ) or die ();
 class KunenaAccessJoomla {
 	protected $params = null;
 
+	static protected $viewlevels = null;
+
 	public function __construct($params) {
 		$this->params = $params;
 	}

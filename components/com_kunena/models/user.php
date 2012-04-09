@@ -23,14 +23,16 @@ class KunenaModelUser extends KunenaModel {
 		$layout = $this->getCmd ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
 
+		$config = KunenaFactory::getConfig();
+
 		// TODO: create state for item
 		if ($layout != 'list') {
 			return;
 		}
 
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_limit", 'limit', 0, 'int' );
-		if ($value < 1 || $value > 100) $value = 100;
+		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_limit", 'limit', $config->get('userlist_rows'), 'int' );
+		if ($value < 1 || $value > 100) $value = $config->get('userlist_rows');
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_ordering", 'filter_order', 'id', 'cmd' );

@@ -22,8 +22,8 @@ JHTML::_('behavior.tooltip');
 			</div>
 			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
-					<ul class="kform user-edit-information-list clear" id="kedit-profile-information">
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+					<ul class="kform user-edit-information-list kbox-full" id="kedit-profile-information">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kpersonaltext"><?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?></label>
@@ -35,7 +35,7 @@ JHTML::_('behavior.tooltip');
 								</div>
 							</div>
 						</li>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<label for="kdisplayname"><?php echo JText::_('COM_KUNENA_MYPROFILE_DISPLAYNAME'); ?></label>
 							</div>
@@ -61,7 +61,7 @@ JHTML::_('behavior.tooltip');
 								</div>
 							</div>
 						</li>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="klocation"><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?></label>
@@ -74,7 +74,7 @@ JHTML::_('behavior.tooltip');
 
 							</div>
 						</li>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kgender"><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER') ?></label>
@@ -93,7 +93,7 @@ JHTML::_('behavior.tooltip');
 								</div>
 							</div>
 						</li>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kwebsitename"><?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME') ?></label>
@@ -105,7 +105,7 @@ JHTML::_('behavior.tooltip');
 								</div>
 							</div>
 						</li>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kwebsiteurl"><?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL') ?></label>
@@ -118,7 +118,7 @@ JHTML::_('behavior.tooltip');
 							</div>
 						</li>
 						<?php foreach ($this->social as $social) : ?>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="k<?php echo $social ?>"><?php echo JText::_('COM_KUNENA_MYPROFILE_'.$social) ?></label>
@@ -131,7 +131,7 @@ JHTML::_('behavior.tooltip');
 							</div>
 						</li>
 						<?php endforeach ?>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="ksignature"><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE') ?></label>

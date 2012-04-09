@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Common
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
@@ -12,14 +12,15 @@
 defined ( '_JEXEC' ) or die ();
 
 // Basic logic has been taken from Joomla! 2.5 (mod_menu)
+// HTML output emulates default Joomla! 1.5 (mod_mainmenu), but only first level is supported
+
 // Note. It is important to remove spaces between elements.
 ?>
 
 <ul class="menu<?php echo $this->class_sfx;?>"<?php echo ($this->parameters->get('tag_id')) ? " id=\"{$this->parameters->get('tag_id')}\"" : '' ?>>
 <?php
 foreach ($this->list as $i => $item) :
-	$class = 'item-'.$item->id;
-	$class .= ($item->id == $this->active_id) ? ' current' : '';
+	$class = 'item'.$item->id;
 
 	if (in_array($item->id, $this->path)) {
 		$class .= ' active';
@@ -35,8 +36,9 @@ foreach ($this->list as $i => $item) :
 	$class .= ($item->deeper) ? ' deeper' : '';
 	$class .= ($item->parent) ? ' parent' : '';
 	$class = !empty($class) ? ' class="'.trim($class) .'"' : '';
+	$id = ($item->id == $this->active_id) ? ' id="current"' : '';
 
-	echo '<li'.$class.'>';
+	echo '<li'.$id.$class.'>';
 
 	$flink = ' href="'.htmlspecialchars($item->flink).'" ';
 	$class = $item->anchor_css ? ' class="'.$item->anchor_css.'" ' : '';
@@ -69,7 +71,7 @@ foreach ($this->list as $i => $item) :
 	if ($item->type == 'separator') {
 		echo "<span class=\"separator\"{$title}>{$linktype}</span>";
 	} else {
-		echo "<a {$flink}{$class}{$title}{$extra}>{$linktype}</a>";
+		echo "<a {$flink}{$class}{$title}{$extra}><span>{$linktype}</span></a>";
 	}
 
 	if ($item->deeper) {

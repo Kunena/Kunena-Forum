@@ -9,6 +9,10 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$this->k = 0;
+$this->rowclass = array ("odd", "even" ); 
+
 ?>
 <?php if (!empty($this->categories [$this->section->id])) : ?>
 	<div class="kmodule category-list_section">
@@ -59,7 +63,7 @@ defined ( '_JEXEC' ) or die ();
 							</li>
 						</ul>
 						<ul class="category-list">
-							<?php foreach ( $this->categories [$this->section->id] as $category ) echo $this->displayCategory($category) ?>
+							<?php foreach ( $this->categories [$this->section->id] as $category ) $this->displayCategory($category) ?>
 						</ul>
 					</div>
 				</div>
@@ -73,5 +77,5 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		</div>
 	</div>
-<div class="spacer"></div>
+
 <?php endif ?>

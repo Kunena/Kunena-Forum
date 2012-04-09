@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -154,10 +154,6 @@ class KunenaView extends JView {
 		return sprintf('%0.3f', $time);
 	}
 
-	function isMenu() {
-		return JDocumentHTML::countModules ( 'kunena_menu' );
-	}
-
 	/**
 	 * This function formats a number to n significant digits when above
 	 * 10,000. Starting at 10,0000 the out put changes to 10k, starting
@@ -187,14 +183,14 @@ class KunenaView extends JView {
 		return $output;
 	}
 
-	public function getCategoryLink($category, $content = null, $title = null, $class = null) {
+	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null) {
 		if (!$content) $content = $this->escape($category->name);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
-		return JHTML::_('kunenaforum.link', $category->getUrl(null, 'object'), $content, $title, $class, 'follow');
+		return JHTML::_('kunenaforum.link', $category->getUri(), $content, $title, $class, 'follow');
 	}
 
-	public function getTopicLink($topic, $action = null, $content = null, $title = null, $class = null, $category = NULL) {
-		$uri = $topic->getUrl($category ? $category : $this->category, 'object', $action);
+	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL) {
+		$uri = $topic->getUri($category ? $category : $this->category, $action);
 		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
 		if ($title === null) {
 			if ($action instanceof KunenaForumMessage) {
@@ -318,7 +314,8 @@ class KunenaView extends JView {
 
 		if (!isset($files[$file])) {
 			$template = JFactory::getApplication()->getTemplate();
-			$layoutTemplate = 'foo'; //$this->getLayoutTemplate();
+			// TODO: what is this?
+			$layoutTemplate = null; // $this->getLayoutTemplate();
 
 			// Clean the file name
 			$file = preg_replace('/[^A-Z0-9_\.-]/i', '', $file);
@@ -348,6 +345,8 @@ class KunenaView extends JView {
 
 		if ($this->_template != false)
 		{
+			$templatefile = preg_replace('%'.JPATH_ROOT.'/%', '', $this->_template);
+
 			// Unset so as not to introduce into template scope
 			unset($tpl);
 			unset($file);
@@ -367,6 +366,11 @@ class KunenaView extends JView {
 			// clear it.
 			$output = ob_get_contents();
 			ob_end_clean();
+
+			if (JDEBUG || $this->config->get('debug')) {
+				$output = trim($output);
+				$output = "\n<!-- START {$templatefile} -->\n{$output}\n<!-- END {$templatefile} -->\n";
+			}
 		} else {
 			$output = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
 		}

@@ -33,6 +33,5 @@ JHTML::_('behavior.tooltip');
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 <?php $this->displayTab(); ?>
-<div class="spacer"></div>

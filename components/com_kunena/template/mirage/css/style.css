@@ -127,10 +127,6 @@
 	font-weight: bold;
 }
 
-#kunena.layout a {
-	
-}
-
 #kunena.layout .display-hidden {
 	display: none
 }
@@ -246,6 +242,20 @@
 
 #kunena.layout .bold {
 	font-weight: bold;
+}
+
+#kunena.layout a {
+	text-decoration: none;
+	background: none;
+	/*color: #555555 !important;*/
+	color: #0088CC;
+}
+
+#kunena.layout a:hover {
+	text-decoration: underline;
+	background: none;
+	/*color: #555555 !important;*/
+	color: #005580;
 }
 
 #kunena.layout .link {
@@ -612,6 +622,13 @@
 	/*box-shadow: 0 1px 0 #FFFFFF;*/
 }
 
+#kunena.layout a.kbutton:focus, #kunena.layout button.kbutton:focus {
+	cursor: pointer;
+	border: 1px solid #D4D4D4;
+	border-radius: 3px;
+	/*box-shadow: 0 1px 0 #FFFFFF;*/
+}
+
 #kunena.layout a.kbutton > span, #kunena.layout button.kbutton > span {
 	background: rgba(0, 0, 0, 0.0);
 }
@@ -622,15 +639,28 @@
 	background: rgba(0, 0, 0, 0.15);
 }
 
+#kunena.layout a.kbutton:focus > span, #kunena.layout button.kbutton:focus > span {
+	/*background: #599bdc;*/
+	/*background-image: linear-gradient(top, #599bdc 0%,#3072b3 100%);*/
+	background: rgba(0, 0, 0, 0.15);
+}
+
 #kunena.layout a.kbutton, #kunena.layout button.kbutton {
-	background: none;
+	/*background: none;*/
 	text-decoration: none;
 	color: #FFFFFF !important;
 	display: block;
 }
 
 #kunena.layout a.kbutton:hover, #kunena.layout button.kbutton:hover {
-	background: none;
+	/*background: none;*/
+	text-decoration: none;
+	color: #FFFFFF !important;
+	display: block;
+}
+
+#kunena.layout a.kbutton:focus, #kunena.layout button.kbutton:focus {
+	/*background: none;*/
 	text-decoration: none;
 	color: #FFFFFF !important;
 	display: block;
@@ -748,11 +778,17 @@
  * START MISC *
  **************/
  
-#kunena.layout .user-admin { color: var(styleForumLegendAdmincolorText) !important; }
-#kunena.layout .user-globalmod { color: var(styleForumLegendGlobalcolorText) !important; }
-#kunena.layout .user-moderator { color: var(styleForumLegendModeratorcolorText) !important;}
-#kunena.layout .user-user { color: var(styleForumLegendUsercolorText) !important; }
-#kunena.layout .user-guest { color: var(styleForumLegendGuestcolorText) !important; }
+#kunena.layout .kuser-admin { color: var(styleForumLegendAdmincolorText) !important; }
+#kunena.layout .kuser-globalmod { color: var(styleForumLegendGlobalcolorText) !important; }
+#kunena.layout .kuser-moderator { color: var(styleForumLegendModeratorcolorText) !important;}
+#kunena.layout .kuser-user { color: var(styleForumLegendUsercolorText) !important; }
+#kunena.layout .kuser-guest { color: var(styleForumLegendGuestcolorText) !important; }
+
+#kunena.layout .kuser-admin:hover { color: var(styleForumLegendAdmincolorText) !important; }
+#kunena.layout .kuser-globalmod:hover { color: var(styleForumLegendGlobalcolorText) !important; }
+#kunena.layout .kuser-moderator:hover { color: var(styleForumLegendModeratorcolorText) !important;}
+#kunena.layout .kuser-user:hover { color: var(styleForumLegendUsercolorText) !important; }
+#kunena.layout .kuser-guest:hover { color: var(styleForumLegendGuestcolorText) !important; }
 
 #kunena.layout .file-input-button, #kunena.layout .file-input-button:hover, #kunena.layout .file-input-button:focus {
 	background-color: #F2F1EE;

@@ -35,7 +35,7 @@ JHTML::_('behavior.tooltip');
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 <?php $this->displayTab(); ?>
 <script type="text/javascript">
 // <![CDATA[

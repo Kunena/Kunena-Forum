@@ -56,7 +56,7 @@ class KunenaViewCommon extends KunenaView {
 			if ($cache->start("{$this->ktemplate->name}.common.announcement", 'com_kunena.template')) return;
 
 			if ($this->announcement && $this->announcement->authorise('read')) {
-				$this->annListUrl = KunenaForumAnnouncementHelper::getUrl('list', 'object');
+				$this->annListUrl = KunenaForumAnnouncementHelper::getUri('list');
 				$this->showdate = $this->announcement->showdate;
 				$result = $this->loadTemplateFile($tpl);
 				if (JError::isError($result)) {

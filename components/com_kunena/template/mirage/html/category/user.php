@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="kdetailsbox krec-posts" id="kposts-detailsbox">
 					<ul class="list-unstyled topic-list">
-						<li class="header kbox-hover_header-row clear">
+						<li class="header kbox-hover_header-row kbox-full">
 							<dl class="list-unstyled">
 								<dd class="subscription-icon">
 								</dd>
@@ -63,4 +63,4 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+

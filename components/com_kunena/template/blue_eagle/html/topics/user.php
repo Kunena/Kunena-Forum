@@ -1,19 +1,20 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topics
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 $this->displayAnnouncement ();
-$this->getModulePosition ( 'kunena_announcement' );
 ?>
-<!-- B: List Actions -->
+<!-- Module position -->
+<?php $this->getModulePosition ( 'kunena_announcement' ) ?>
+
 <table class="klist-actions">
 	<tr>
 		<td class="klist-actions-info-all">
@@ -26,11 +27,9 @@ $this->getModulePosition ( 'kunena_announcement' );
 		<td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
 	</tr>
 </table>
-<!-- F: List Actions -->
 
 <?php echo $this->loadTemplateFile('embed'); ?>
 
-<!-- B: List Actions -->
 <table class="klist-actions">
 	<tr>
 		<td class="klist-actions-info-all">
@@ -40,7 +39,6 @@ $this->getModulePosition ( 'kunena_announcement' );
 		<td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
 	</tr>
 </table>
-<!-- F: List Actions -->
 
 <?php
 $this->displayWhoIsOnline ();

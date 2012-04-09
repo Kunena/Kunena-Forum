@@ -1,9 +1,9 @@
 <?php
 /**
 * Kunena Component
-* @package Kunena.Template.Default
+* @package Kunena.Template.Blue_Eagle
 *
-* @copyright (C) 2011 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
@@ -15,12 +15,6 @@ $template = KunenaFactory::getTemplate();
 
 // Template requires Mootools 1.2 framework
 $template->loadMootools();
-
-// Toggler language strings
-$document->addScriptDeclaration('// <![CDATA[
-var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
-var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
-// ]]>');
 
 // We load mediaxboxadvanced library only if configuration setting allow it
 if ( KunenaFactory::getConfig()->lightbox == 1 ) {
@@ -36,11 +30,11 @@ $skinner = $template->params->get('enableSkinner', 0);
 
 if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.forum.css" )) {
 	// Load css from Joomla template
-	CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.forum.css" );
-	if ($skinner && file_exists ( JPATH_ROOT. "templates/{$app->getTemplate()}css/kunena.skinner.css" )){
-		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.skinner.css" );
-	} elseif (!$skinner && file_exists ( JPATH_ROOT. "templates/{$app->getTemplate()}css/kunena.default.css" )) {
-		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}css/kunena.default.css" );
+	CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}/css/kunena.forum.css" );
+	if ($skinner && file_exists ( JPATH_ROOT. "templates/{$app->getTemplate()}/css/kunena.skinner.css" )){
+		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}/css/kunena.skinner.css" );
+	} elseif (!$skinner && file_exists ( JPATH_ROOT. "templates/{$app->getTemplate()}/css/kunena.default.css" )) {
+		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}/css/kunena.default.css" );
 	}
 } else {
 	// Load css from default template

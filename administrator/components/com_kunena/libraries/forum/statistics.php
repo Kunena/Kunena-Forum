@@ -169,7 +169,7 @@ class KunenaForumStatistics {
 			$top = reset($this->topTopics);
 			foreach ($this->topTopics as $item) {
 				$item->count = $item->posts;
-				$item->link = JHTML::_('kunenaforum.link', $item->getUrl(null, 'object'), KunenaHtmlParser::parseText ($item->subject));
+				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
 				$item->percent = round(100 * $item->count / $top->posts);
 			}
 			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_STAT_POPULAR_USER_KGSG');
@@ -235,7 +235,7 @@ class KunenaForumStatistics {
 			$top = reset($this->topPolls);
 			foreach ($this->topPolls as $item) {
 				$item->count = $polls[$item->id]->count;
-				$item->link = JHTML::_('kunenaforum.link', $item->getUrl(null, 'object'), KunenaHtmlParser::parseText ($item->subject));
+				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_STAT_POPULAR_POLLS_KGSG');

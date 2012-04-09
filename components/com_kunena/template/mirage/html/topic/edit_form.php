@@ -231,7 +231,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 <?php
 if (!$this->message->name) {
 	echo '<script type="text/javascript">document.postform.authorname.focus();</script>';

@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 
 <div class="kmodule topic-threaded_list">
 	<div class="kbox-wrapper">
@@ -54,7 +54,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="detailsbox-wrapper innerspacer box-full">
 				<div class="topic_threaded-detailsbox detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
 					<ul class="list-unstyled topic_threaded_tree-list">
-						<li class="header kbox-hover_header-row clear">
+						<li class="header kbox-hover_header-row kbox-full">
 							<dl class="list-unstyled">
 								<dd class="topic_threaded_tree-post">
 									<span class="bold"><?php echo JText::_('Post') ?></span>
@@ -76,4 +76,4 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+

@@ -20,8 +20,8 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
-					<ul class="kform user-edit-information-list clear" id="kedit-user-information">
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+					<ul class="kform user-edit-information-list kbox-full" id="kedit-user-information">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kusername"><?php echo JText::_( 'COM_KUNENA_UNAME' ) ?></label>
@@ -33,7 +33,7 @@ defined ( '_JEXEC' ) or die ();
 								</div>
 							</div>
 						</li>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kname"><?php echo JText::_( 'COM_KUNENA_USRL_NAME' ) ?></label>
@@ -45,7 +45,7 @@ defined ( '_JEXEC' ) or die ();
 								</div>
 							</div>
 						</li>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kemail"><?php echo JText::_( 'COM_KUNENA_USRL_EMAIL' ) ?></label>
@@ -58,7 +58,7 @@ defined ( '_JEXEC' ) or die ();
 							</div>
 						</li>
 						<?php if($this->user->get('password')) : ?>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kpassword"><?php echo JText::_( 'COM_KUNENA_PASS' ) ?></label>
@@ -70,7 +70,7 @@ defined ( '_JEXEC' ) or die ();
 								</div>
 							</div>
 						</li>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="kpassword2"><?php echo JText::_( 'COM_KUNENA_VPASS' ) ?></label>
@@ -89,7 +89,7 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 <?php if(!empty($this->userparameters)) : ?>
 <div class="kbox-module">
 	<div class="block-wrapper kbox-color kbox-border kbox-border_radius">
@@ -101,9 +101,9 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper innerspacer">
 				<div class="detailsbox kbox-border kbox-border_radius kbox-shadow">
-					<ul class="kform user-edit-information-list clear">
+					<ul class="kform user-edit-information-list kbox-full">
 						<?php foreach ($this->userparameters as $userparam): ?>
-						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<?php echo $userparam->label ?>
@@ -122,5 +122,5 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+
 <?php endif; ?>

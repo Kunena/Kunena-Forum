@@ -180,7 +180,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		$item->body = $item->summary = FinderIndexerHelper::prepareContent(KunenaHtmlParser::parseBBCode($item->body));
 
 		// Build the necessary route and path information.
-		$item->url = $this->getURL($item, $this->extension, $this->layout);
+		$item->url = $this->getUrl($item, $this->extension, $this->layout);
 		$item->route = $item->url.'&Itemid='.KunenaRoute::getItemId($item->url);
 		$item->path = FinderIndexerHelper::getContentPath($item->route);
 
@@ -258,7 +258,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @param	mixed		The id of the item.
 	 * @return	string		The URL of the item.
 	 */
-	protected function getURL($item, $extension, $view) {
+	protected function getUrl($item, $extension, $view) {
 		return "index.php?option=com_kunena&view={$view}&catid={$item->catid}&id={$item->thread}&mesid={$item->id}";
 	}
 }

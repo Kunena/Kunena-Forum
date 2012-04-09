@@ -61,11 +61,11 @@ defined ( '_JEXEC' ) or die ();
 										<li class="legend-title"><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</li>
 										<!-- Loop this LI for each group -->
 										<!-- Can each of these link to a memberlist of that group only?  -->
-										<li class="user-admin"><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></li>
-										<li class="user-globalmod"><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></li>
-										<li class="user-moderator"><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></li>
-										<li class="user-user"><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></li>
-										<li class="user-guest"><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></li>
+										<li><span class="kuser-admin"><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></span></li>
+										<li><span class="kuser-globalmod"><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></span></li>
+										<li><span class="kuser-moderator"><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></span></li>
+										<li><span class="kuser-user"><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></span></li>
+										<li><span class="kuser-guest"><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></span></li>
 									</ul>
 								</li>
 							</ul>
@@ -75,4 +75,4 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<div class="spacer"></div>
+

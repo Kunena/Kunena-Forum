@@ -290,7 +290,7 @@ class KunenaUser extends JObject {
 		return $this->_link[$key];
 	}
 
-	public function GetURL($xhtml = true) {
+	public function getURL($xhtml = true) {
 		if (!$this->exists()) return;
 		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, '', $xhtml );
 	}

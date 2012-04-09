@@ -48,10 +48,22 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 		return KunenaForumAnnouncementHelper::get($identifier, $reload);
 	}
 
+	/**
+	 * Return URL pointing to the Announcement layout.
+	 *
+	 * @param string $layout
+	 * @param bool $xhtml
+	 */
 	public function getUrl($layout = 'default', $xhtml = true) {
 		$uri = $this->getUri($layout);
-		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+		return KunenaRoute::_($uri, $xhtml);
 	}
+
+	/**
+	 * Return JUri object pointing to the Announcement layout.
+	 *
+	 * @param string $layout
+	 */
 	public function getUri($layout = 'default') {
 		$uri = new JURI('index.php?option=com_kunena&view=announcement');
 		if ($layout) $uri->setVar('layout', $layout);
@@ -59,12 +71,28 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 		return $uri;
 	}
 
+	/**
+	 * Return URL pointing to the Announcement task.
+	 *
+	 * @param string $layout
+	 * @param bool $xhtml
+	 */
 	public function getTaskUrl($task = null, $xhtml = true) {
+		$uri = $this->getTaskUri($task);
+		return KunenaRoute::_($uri, $xhtml);
+	}
+
+	/**
+	 * Return JUri object pointing to the Announcement task.
+	 *
+	 * @param string $layout
+	 */
+	public function getTaskUri($task = null) {
 		$uri = new JURI('index.php?option=com_kunena&view=announcement');
 		if ($task) $uri->setVar('task', $task);
 		if ($this->id) $uri->setVar('id', $this->id);
 		if ($task) $uri->setVar(JUtility::getToken(), 1);
-		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+		return $uri;
 	}
 
 	public function displayField($field, $mode=null) {

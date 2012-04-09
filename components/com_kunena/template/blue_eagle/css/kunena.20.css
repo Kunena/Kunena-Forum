@@ -2,7 +2,7 @@
 
 /**
 * Kunena Component
-* @package Kunena.Template.Default
+* @package Kunena.Template.Blue_Eagle
 *
 * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -66,4 +66,9 @@
 }
 #Kunena .kgrid-lock a.grid_true {
 	background: url("../images/icon-locked.png") no-repeat left center;
+}
+
+#Kunena .kfooter {
+	clear: both;
+	min-height: 28px;
 }

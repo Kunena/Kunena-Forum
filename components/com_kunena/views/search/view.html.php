@@ -149,7 +149,7 @@ class KunenaViewSearch extends KunenaView {
 			case 'ROW':
 				return $matches[2].$this->row().($this->topic->ordering ? " {$matches[2]}sticky" : '');
 			case 'TOPIC_ICON':
-				return $this->getTopicLink ( $this->topic, 'last', $this->topic->getIcon() );
+				return $this->topic->getIcon();
 			case 'DATE':
 				$date = new KunenaDate($matches[2]);
 				return $date->toSpan('config_post_dateformat', 'config_post_dateformat_hover');

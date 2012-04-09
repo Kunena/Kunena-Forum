@@ -28,7 +28,7 @@ defined ( '_JEXEC' ) or die ();
 						<li class="kpost-details kdate"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->message->time}]") ?></li>
 					</ul>
 				</td>
-				<td class="ktopic-icon">[K=TOPIC_ICON]</td>
+				<td class="ktopic-icon"><?php echo $this->getTopicLink ( $this->topic, 'unread', '[K=TOPIC_ICON]' ) ?></td>
 				<td class="kpost-topic">
 					<ul>
 						<li class="ktopic-title">

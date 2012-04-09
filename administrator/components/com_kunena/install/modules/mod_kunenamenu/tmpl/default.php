@@ -1,8 +1,8 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Template.Default
- * @subpackage Common
+ * Kunena Menu Module
+ * @package Kunena.Modules
+ * @subpackage Menu
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.

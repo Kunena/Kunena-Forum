@@ -338,6 +338,9 @@
 			<query>ALTER TABLE `#__kunena_categories` CHANGE `pub_access` `pub_access` int(11) NOT NULL default '1',
 			CHANGE `admin_access` `admin_access` int(11) NOT NULL default '1'</query>
 		</version>
+		<version version="2.0.0-DEV14" versiondate="2012-04-09" versionname="Internal">
+			<query>ALTER TABLE `#__kunena_users_banned` ADD KEY `created_time` (created_time);</query>
+		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>

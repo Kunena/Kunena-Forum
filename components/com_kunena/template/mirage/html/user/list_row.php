@@ -24,8 +24,7 @@ defined ( '_JEXEC' ) or die ();
 	<ul class="kuserlist-details">
 		<?php if (!$this->config->username) : ?>
 		<li class="kdetails-username"><span><?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>:</span> <?php echo $this->escape($this->user->username) ?></li>
-		<?php endif; ?>
-		<?php if ($this->config->username) : ?>
+		<?php else : ?>
 		<li class="kdetails-username"><span><?php echo JText::_('COM_KUNENA_USRL_NAME') ?>:</span> <?php echo $this->escape($this->user->name) ?></li>
 		<?php endif; ?>
 		<?php if (!empty($this->email)) : ?>

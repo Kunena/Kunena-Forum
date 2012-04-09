@@ -299,12 +299,14 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 						$mesid = $this->last_post_id;
 						break;
 					case 'unread':
-						$mesid = $this->lastread ? $this->lastread : $this->last_post_id;
+						// Special case, improves caching
+						$uri->setVar('layout', 'unread');
+						// $mesid = $this->lastread ? $this->lastread : $this->last_post_id;
 						break;
 				}
 			}
 			if ($mesid) {
-				if (KunenaUserHelper::getMyself()->getTopicLayout() != 'threaded') {
+				if (KunenaUserHelper::getMyself()->getTopicLayout() != 'threaded' && $mesid > 0) {
 					$uri->setFragment($mesid);
 					$limitstart = intval($this->getPostLocation($mesid) / $limit) * $limit;
 					if ($limitstart) $uri->setVar('limitstart', $limitstart);

@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topics
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -49,23 +49,18 @@ $this->cache = false;
 			?>
 		</div>
 		<div class="ks">
-			<!-- Category -->
 			<span class="ktopic-category">
 				<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->topic->getCategory() ) ?>
 			</span>
-			<!-- /Category -->
 		</div>
 	</td>
 	<td class="kcol-mid kcol-ktopiclastpost">
 		<div class="klatest-post-info">
-			<!--  Sticky   -->
 			<?php
 			if ($this->topic->ordering != 0) :
 				echo $this->getIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') );
 			endif
 			?>
-			<!--  /Sticky   -->
-			<!-- Avatar -->
 			<?php
 			if ($this->config->avataroncat > 0) :
 				$profile = KunenaFactory::getUser((int)$this->message->userid);
@@ -79,8 +74,6 @@ $this->cache = false;
 				endif;
 			endif;
 			?>
-			<!-- /Avatar -->
-			<!-- By -->
 			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_POSTED_AT') . ' ' . KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>&nbsp;
 			</span>
@@ -89,7 +82,6 @@ $this->cache = false;
 			<br />
 			<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->message->getAuthor()->getLink(); ?></span>
 			<?php endif; ?>
-			<!-- /By -->
 		</div>
 	</td>
 

@@ -28,7 +28,7 @@ $this->displayAnnouncement ();
 	</tr>
 </table>
 
-<?php echo $this->loadTemplateFile('embed'); ?>
+<?php $this->displayTemplateFile('topics', 'user', 'embed'); ?>
 
 <table class="klist-actions">
 	<tr>

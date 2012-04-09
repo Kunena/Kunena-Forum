@@ -116,7 +116,7 @@ $this->k=0;
 
 		<?php
 		// Show bbcode editor
-		echo $this->loadTemplateFile('editor');
+		$this->displayTemplateFile('topic', 'edit', 'editor');
 		?>
 
 		<?php if ($this->allowedExtensions) : ?>

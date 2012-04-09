@@ -16,7 +16,7 @@ JHTML::_('behavior.tooltip');
 <div id="kprofile-rightcoltop">
 	<div class="kprofile-rightcol2">
 <?php
-	echo $this->loadTemplateFile('social');
+	$this->displayTemplateFile('user', 'default', 'social');
 ?>
 	</div>
 	<div class="kprofile-rightcol1">

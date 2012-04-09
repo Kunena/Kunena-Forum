@@ -327,7 +327,7 @@ class KunenaViewCategory extends KunenaView {
 	function displayCategories() {
 		if ($this->sections) {
 			$this->subcategories = true;
-			echo $this->loadTemplateFile('subcategories');
+			$this->displayTemplateFile('subcategories');
 		}
 	}
 

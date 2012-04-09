@@ -39,7 +39,7 @@ $this->displayAnnouncement ();
 
 <?php
 if (count ( $this->categories )) {
-	echo $this->loadTemplateFile('embed');
+	$this->displayTemplateFile('category', 'list', 'embed');
 } else {
 	$this->displayInfoMessage ();
 }

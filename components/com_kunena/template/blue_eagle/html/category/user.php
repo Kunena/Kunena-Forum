@@ -27,7 +27,7 @@ defined ( '_JEXEC' ) or die ();
 			<?php
 			else :
 				foreach ($this->categories as $this->category) {
-					echo $this->loadTemplateFile('row');
+					$this->displayTemplateFile('category', 'user', 'row');
 				}
 			endif;
 			?>

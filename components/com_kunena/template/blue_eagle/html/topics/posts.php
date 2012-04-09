@@ -33,7 +33,7 @@ $this->displayAnnouncement ();
 	</tr>
 </table>
 
-<?php echo $this->loadTemplateFile('embed'); ?>
+<?php $this->displayTemplateFile('topics', 'posts', 'embed'); ?>
 
 <table class="klist-actions">
 	<tr>

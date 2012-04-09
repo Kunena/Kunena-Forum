@@ -548,7 +548,7 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function displayMessageContents() {
-		echo $this->loadTemplateFile('message');
+		$this->displayTemplateFile('message');
 	}
 
 	function displayTopicActions($location=0) {
@@ -821,7 +821,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->history, &$params, 0));
 
-		echo $this->loadTemplateFile ( 'history' );
+		$this->displayTemplateFile ( 'history' );
 	}
 
 	function redirectBack() {
@@ -842,7 +842,7 @@ class KunenaViewTopic extends KunenaView {
 	function displayAttachments($message=null) {
 		if ($message instanceof KunenaForumMessage) {
 			$this->attachments = $message->getAttachments();
-			if (!empty($this->attachments)) echo $this->loadTemplateFile ( 'attachments' );
+			if (!empty($this->attachments)) $this->displayTemplateFile ( 'attachments' );
 		} else {
 			echo JText::_('COM_KUNENA_ATTACHMENTS_ERROR_NO_MESSAGE');
 		}

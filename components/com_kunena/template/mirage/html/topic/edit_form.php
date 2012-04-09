@@ -138,7 +138,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 								</div>
 							</li>
 							<?php endif ?>
-							<?php echo $this->loadTemplateFile('editor') ?>
+							<?php $this->displayTemplateFile('topic', 'edit', 'editor') ?>
 							<li class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<div class="innerspacer-left kbox-full">

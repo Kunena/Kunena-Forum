@@ -12,10 +12,10 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <li class="topic-row kbox-hover kbox-hover_list-row box-full">
 	<dl class="list-unstyled">
-		<!--<dd class="topic-icon">[K=TOPIC_ICON]</dd>-->
 		<dd class="topic-subject">
 			<div class="innerspacer-column">
-				<a class="fl" href="<?php echo $this->topic->getUrl() ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_TOPIC_LIST_TOPIC_TITLE', $this->escape($this->topic->subject)) ?>">[K=TOPIC_ICON]</a>
+				<?php // FIXME: broken ?>
+				<?php echo $this->getTopicLink ( $this->topic, 'unread', '[K=TOPIC_ICON]', null, 'fl' ) ?>
 				<ul class="kcontent-32 list-unstyled">
 					<li class="topic-title">
 						<h3 class="link-header3"><?php echo $this->getTopicLink($this->topic, null, null) ?></h3>

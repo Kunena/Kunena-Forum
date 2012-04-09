@@ -291,8 +291,18 @@ class KunenaView extends JView {
 
 	public function displayTemplateFile($view, $layout, $template = null) {
 		$file = "html/{$view}/{$layout}".($template ? "_{$template}" : '').".php";
-		include JPATH_SITE .'/'. $this->ktemplate->getFile($file);
+		$file = $this->ktemplate->getFile($file);
 		// TODO: handle missing file
+
+		ob_start();
+		include JPATH_SITE .'/'. $file;
+		$output = ob_get_contents();
+		ob_end_clean();
+		if (JDEBUG || $this->config->get('debug')) {
+			$output = trim($output);
+			$output = "\n<!-- START {$file} -->\n{$output}\n<!-- END {$file} -->\n";
+		}
+		echo $output;
 	}
 
 	/**

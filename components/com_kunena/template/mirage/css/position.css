@@ -717,8 +717,8 @@
 #kunena.layout ul.kcategory-subcat-list {
 	display: block;
 	list-style-type: none;
-	margin: 0px;
-	padding: 0px;
+	/*margin: 0px;
+	padding: 0px;*/
 }
 
 
@@ -731,6 +731,104 @@
 	overflow: hidden;
 }
 
+
+/*******************
+ * START POST LIST *
+ *******************/
+
+#kunena.layout ul.post-list {
+	display: block;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#kunena.layout ul.post-list div.header {
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+}
+
+#kunena.layout ul.post-list > li {
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+	margin: 0;
+	overflow: hidden;
+	padding: 1px 0 0;
+}
+
+#kunena.layout ul.post-list li.post-row dl, ul.post-list li.header {
+	float: none !important;
+	height: auto;
+	width: auto;
+}
+
+#kunena.layout ul.post-list li.post-row {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+#kunena.layout ul.post-list li.post-row dd {
+	display: block;
+	float: left;
+	margin: 0px;
+	/*padding: 10px 5px;*/
+	position: relative;
+}
+
+#kunena.layout ul.post-list li.header dd {
+	display: block;
+	float: left;
+	margin: 0px;
+	/*padding: 2px 5px;*/
+}
+
+#kunena.layout ul.post-list dd {
+	display: block;
+	float: left;
+	margin: 0px;
+	/*padding: 2px 0;*/
+}
+
+/*#kunena.layout ul.topic-list li.topics-row dl {
+	display: block;
+	position: relative;
+}*/
+
+#kunena.layout ul.post-list li.post-row dd {
+	display: block;
+	float: left;
+	margin: 0px;
+}
+
+#kunena.layout ul.post-list dd.post-checkbox {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 5%;
+}
+
+#kunena.layout ul.post-list dd.post-topic {
+	margin: 0;
+	text-align: left;
+	vertical-align: middle;
+	width: 45%;
+}
+
+#kunena.layout ul.post-list dd.post-category {
+	margin: 0;
+	text-align: left;
+	vertical-align: middle;
+	width: 50%;
+}
+
+/******************
+ * STOP POST LIST *
+ ******************/
 
 /***************************
  * START ANNOUNCEMENT LIST *
@@ -950,14 +1048,14 @@
 	margin: 0;
 	text-align: center;
 	vertical-align: middle;
-	width: 20%;
+	width: 25%;
 }
 
 #kunena.layout ul.banmanager-list dd.banmanager-from {
 	margin: 0;
 	text-align: center;
 	vertical-align: middle;
-	width: 20%;
+	width: 30%;
 }
 
 #kunena.layout ul.banmanager-list dd.banmanager-start {

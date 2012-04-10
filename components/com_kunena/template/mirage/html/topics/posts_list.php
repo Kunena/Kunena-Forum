@@ -23,6 +23,31 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 			<div class="detailsbox-wrapper innerspacer box-full">
 				<div class="rec-posts posts-detailsbox detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
+					<ul class="post-list list-unstyled">
+							<li class="header kbox-hover_header-row">
+								<dl>
+									<!--<dd class="category-icon">
+									</dd>-->
+									<dd class="post-topic">
+										<div class="innerspacer-header">
+											<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span>
+										</div>
+									</dd>
+									<dd class="post-category">
+										<div class="innerspacer-header">
+											<span class="bold"><?php echo JText::_('Category') ?></span>
+										</div>
+									</dd>
+									<?php if ($this->postActions) : ?>
+										<dd class="post-checkbox">
+											<div class="innerspacer-header">
+												<input type="checkbox" value="0" name="" class="kcheckall kmoderate-topic-checkall" />
+											</div>
+										</dd>
+									<?php endif; ?>
+								</dl>
+							</li>
+						</ul>
 					<ul class="list-unstyled post-list">
 						<?php if (empty($this->messages )) : ?>
 							<li class="post-row">
@@ -43,7 +68,6 @@ defined ( '_JEXEC' ) or die ();
 					<div class="modbox">
 						<button class="kbutton button-type-standard fr" type="submit"><span><?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?></span></button>
 						<?php echo JHTML::_('select.genericlist', $this->postActions, 'task', 'class="kinputbox form-horizontal fr" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
-						<input type="checkbox" value="0" name="" class="kcheckall kmoderate-topic-checkall" />
 					</div>
 				</div>
 			<?php endif; ?>

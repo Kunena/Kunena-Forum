@@ -690,7 +690,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->mmm ++;
 		$this->message = $message;
 		$this->profile = $this->message->getAuthor();
-		$this->replynum = $id;
+		$this->replynum = $id+1;
 		$usertype = $this->me->getType($this->category->id, true);
 		if ($usertype == 'user' && $this->message->userid == $this->profile->userid) $usertype = 'owner';
 

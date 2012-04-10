@@ -126,7 +126,7 @@ class KunenaDate extends JDate {
 	}
 
 	public function toSpan($mode = 'datetime_today', $title = 'ago', $offset=false) {
-		return '<span class="kdate" title="'.$this->toKunena($title).'">'.$this->toKunena($mode).'</span>';
+		return '<span class="kdate" title="'.$this->toKunena($title, $offset).'">'.$this->toKunena($mode, $offset).'</span>';
 	}
 
 	public function toKunena($mode = 'datetime_today', $offset=false) {
@@ -178,7 +178,11 @@ class KunenaDate extends JDate {
 			$now->setOffset($offset);
 		} else {
 			// Joomla 1.6 support
-			$offset = new DateTimeZone($offset);
+			try {
+				$offset = new DateTimeZone($offset);
+			} catch (Exception $e) {
+				$offset = new DateTimeZone('UTC');
+			}
 			$this->setTimezone($offset);
 			$now->setTimezone($offset);
 		}

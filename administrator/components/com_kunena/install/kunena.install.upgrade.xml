@@ -341,6 +341,9 @@
 		<version version="2.0.0-DEV14" versiondate="2012-03-15" versionname="Internal">
 			<query>ALTER TABLE `#__kunena_users` ADD `displayname` varchar(50) NOT NULL AFTER `thankyou`;</query>
 		</version>
+		<version version="2.0.0-DEV14" versiondate="2012-04-09" versionname="Internal">
+			<query>ALTER TABLE `#__kunena_users_banned` ADD KEY `created_time` (created_time);</query>
+		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>

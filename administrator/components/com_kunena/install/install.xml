@@ -350,6 +350,7 @@
 		<key name="userid" columns="userid" />
 		<key name="ip" columns="ip" />
 		<key name="expiration" columns="expiration" />
+		<key name="created_time" columns="created_time" />
 	</table>
 	<table name="kunena_version">
 		<field primary_key="yes" name="id" type="int(11)" null="0"

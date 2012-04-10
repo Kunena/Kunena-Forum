@@ -156,15 +156,15 @@ class KunenaUserBan extends JObject
 		return $create || !empty(self::$_instancesByIP[$identifier]->id) ? self::$_instancesByIP[$identifier] : null;
 	}
 
-	static public function getBannedUsers() {
+	static public function getBannedUsers($start=0, $limit=50) {
 		$c = __CLASS__;
 		$db = JFactory::getDBO ();
 		$now = new JDate();
 		$query = "SELECT *
 			FROM #__kunena_users_banned
 			WHERE (expiration = {$db->quote($db->getNullDate())} OR expiration > {$db->quote($now->toMysql())})
-			ORDER BY id DESC";
-		$db->setQuery ( $query );
+			ORDER BY created_time DESC";
+		$db->setQuery ( $query, $start, $limit );
 		$results = $db->loadAssocList ();
 		KunenaError::checkDatabaseError();
 
@@ -322,26 +322,27 @@ class KunenaUserBan extends JObject
 
 	public function canBan() {
 		$userid = $this->userid;
-		$myprofile = KunenaUserHelper::getMyself();
-		$userprofile = KunenaFactory::getUser($userid);
-		if (!$myprofile->isModerator()) {
+		$me = KunenaUserHelper::getMyself();
+		$user = KunenaUserHelper::get($userid);
+		if (!$me->isModerator(false)) {
 			$this->setError(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
 			return false;
 		}
-		if (!$userprofile->exists()) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_BAN_ERROR_NOT_USER', $userid );
+		if (!$user->exists()) {
+			$this->setError( JText::_( 'COM_KUNENA_BAN_ERROR_NOT_USER', $userid ));
 			return false;
 		}
-		if ($userid == $myprofile->userid) {
+		if ($userid == $me->userid) {
 			$this->setError( JText::_( 'COM_KUNENA_BAN_ERROR_YOURSELF' ));
 			return false;
 		}
-		if ($userprofile->isAdmin()) {
-			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_ADMIN', $userprofile->username ));
+		if ($user->isAdmin()) {
+			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_ADMIN', $user->getName() ));
 			return false;
 		}
-		if ($userprofile->isModerator(false)) {
-			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_MODERATOR', $userprofile->username ));
+		if ($user->isModerator(false)) {
+			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_MODERATOR', $user->getName() ));
+			return false;
 		}
 		return true;
 	}

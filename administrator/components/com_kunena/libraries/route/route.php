@@ -280,6 +280,11 @@ abstract class KunenaRoute {
 		if (!$uri || (is_string($uri) && $uri[0] == '&')) {
 			if (!isset($current[$uri])) {
 				$get = array();
+				// If values are both in GET and POST, they are only stored in POST
+				foreach (JRequest::get( 'post' ) as $key=>$value) {
+					if (($key == 'view' || $key == 'layout' || $key == 'task') && !preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+						$get[$key] = $value;
+				}
 				// Make sure that request URI is not broken
 				foreach (JRequest::get( 'get' ) as $key=>$value) {
 					if (preg_match('/[^a-z]/', $key)) continue;

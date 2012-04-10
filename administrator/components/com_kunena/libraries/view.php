@@ -66,8 +66,11 @@ class KunenaView extends JView {
 
 	function displayLayout($layout=null, $tpl = null) {
 		if ($layout) $this->setLayout ($layout);
-		$viewName = ucfirst($this->getName ());
-		$layoutName = ucfirst($this->getLayout ());
+		$view = $this->getName ();
+		$layout = $this->getLayout ();
+		$viewName = ucfirst($view);
+		$layoutName = ucfirst($layout);
+		$layoutFunction = 'display'.$layoutName;
 
 		KUNENA_PROFILER ? $this->profiler->start("display {$viewName}/{$layoutName}") : null;
 
@@ -87,11 +90,15 @@ class KunenaView extends JView {
 				$this->common->display('default');
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
+			} elseif (!method_exists($this, $layoutFunction) && !file_exists(KPATH_SITE."/views/{$view}/{$layout}.php")) {
+				// Layout was not found (don't allow Joomla to raise an error)
+				echo $this->displayNoAccess(array(JText::_('COM_KUNENA_NO_ACCESS')));
+				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
+				return;
 			}
 		}
 
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		$layoutFunction = 'display'.$layoutName;
 		if (method_exists($this, $layoutFunction)) {
 			$contents = $this->$layoutFunction ($tpl);
 		} else {
@@ -291,8 +298,18 @@ class KunenaView extends JView {
 
 	public function displayTemplateFile($view, $layout, $template = null) {
 		$file = "html/{$view}/{$layout}".($template ? "_{$template}" : '').".php";
-		include JPATH_SITE .'/'. $this->ktemplate->getFile($file);
-		// TODO: handle missing file
+		$file = $this->ktemplate->getFile($file);
+		if (!file_exists($file)) JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
+
+		ob_start();
+		include JPATH_SITE .'/'. $file;
+		$output = ob_get_contents();
+		ob_end_clean();
+		if (JDEBUG || $this->config->get('debug')) {
+			$output = trim($output);
+			$output = "\n<!-- START {$file} -->\n{$output}\n<!-- END {$file} -->\n";
+		}
+		echo $output;
 	}
 
 	/**
@@ -335,11 +352,14 @@ class KunenaView extends JView {
 			$files[$file] = JPath::find($path, $filetofind);
 
 			// If alternate layout can't be found, fall back to default layout
+			// TODO: allow alternative layouts from Joomla templates
+/*
 			if ($files[$file] == false)
 			{
 				$filetofind = $this->_createFileName('', array('name' => 'default' . (isset($tpl) ? '_' . $tpl : $tpl)));
 				$files[$file] = JPath::find($this->_path['template'], $filetofind);
 			}
+*/
 		}
 		$this->_template = $files[$file];
 

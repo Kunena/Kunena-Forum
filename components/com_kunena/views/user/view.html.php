@@ -138,14 +138,21 @@ class KunenaViewUser extends KunenaView {
 		$this->canBan = $this->banInfo->canBan();
 		if ( $this->config->showbannedreason ) $this->banReason = $this->banInfo->reason_public;
 
-		$user = JFactory::getUser();
-		if ($user->id != $this->profile->userid)
-		{
+		// Which tabs to show?
+		$this->showUserPosts = true;
+		$this->showSubscriptions = $this->config->allowsubscriptions && $this->me->userid == $this->profile->userid;
+		$this->showFavorites = $this->config->allowfavorites && $this->me->userid == $this->profile->userid;
+		$this->showThankyou = $this->config->showthankyou && $this->me->exists();
+		$this->showUnapprovedPosts = $this->me->isModerator(); // || $this->me->userid == $this->profile->userid;
+		$this->showAttachments = $this->canManageAttachments() && ($this->me->isModerator(false) || $this->me->userid == $this->profile->userid);
+		$this->showBanManager = $this->me->isModerator(false) && $this->me->userid == $this->profile->userid;
+		$this->showBanHistory = $this->me->isModerator(false) && $this->me->userid != $this->profile->userid;
+		$this->showBanUser = $this->canBan;
+
+		if ($this->me->userid != $this->profile->userid) {
 			$this->profile->uhits++;
 			$this->profile->save();
 		}
-
-		$this->canManageAttachs = $this->canManageAttachments ();
 
 		$private = KunenaFactory::getPrivateMessaging();
 		if ($this->me->userid == $this->user->id) {
@@ -273,7 +280,8 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayBanManager() {
-		$this->bannedusers = KunenaUserBan::getBannedUsers();
+		// TODO: move ban manager somewhere else and add pagination
+		$this->bannedusers = KunenaUserBan::getBannedUsers(0, 50);
 		echo $this->loadTemplateFile('banmanager');
 	}
 

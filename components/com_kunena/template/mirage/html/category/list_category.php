@@ -70,7 +70,7 @@ $this->k ^= 1;
 		</dd>
 	</dl>
 	<?php if ($this->subcategories) : ?>
-	<div class="innerspacer-column kbox-full">
+	<div class="innerspacer">
 		<div class="divider-vertical-inline-dotted"></div>
 	</div>
 	<div class="innerspacer-column kbox-full">

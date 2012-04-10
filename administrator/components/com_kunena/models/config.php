@@ -152,9 +152,9 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['showranking'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showranking', 'class="inputbox" size="1"', 'value', 'text', $this->config->showranking );
 		$lists ['rankimages'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $this->config->rankimages );
 		$username_list = array ();
-		$username_list = JHTML::_('select.option', 1,JText::_('COM_KUNENA_COM_A_USERNAME_SHOW_USERNAME')); // username
-		$username_list = JHTML::_('select.option', 0,JText::_('COM_KUNENA_COM_A_USERNAME_SHOW_REALNAME')); //name
-		$username_list = JHTML::_('select.option', 2,JText::_('COM_KUNENA_COM_A_USERNAME_SHOW_DISPLAYNAME'));
+		$username_list [] = JHTML::_('select.option', 0,JText::_('COM_KUNENA_COM_A_USERNAME_SHOW_REALNAME')); //name
+		$username_list [] = JHTML::_('select.option', 1,JText::_('COM_KUNENA_COM_A_USERNAME_SHOW_USERNAME')); // username
+		$username_list [] = JHTML::_('select.option', 2,JText::_('COM_KUNENA_COM_A_USERNAME_SHOW_DISPLAYNAME'));
 		$lists ['username'] = JHTML::_ ( 'select.genericlist', $username_list, 'cfg_username', 'class="inputbox" size="1"', 'value', 'text', $this->config->username );
 		$lists ['shownew'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_shownew', 'class="inputbox" size="1"', 'value', 'text', $this->config->shownew );
 		$lists ['editmarkup'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_editmarkup', 'class="inputbox" size="1"', 'value', 'text', $this->config->editmarkup );

@@ -70,8 +70,6 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
-		$user = KunenaFactory::getUser($this->user->id);
-
 		$this->saveUser();
 
 		$this->saveProfile();

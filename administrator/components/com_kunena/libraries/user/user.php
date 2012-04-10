@@ -254,7 +254,8 @@ class KunenaUser extends JObject {
 			} elseif ( $this->_config->username == 0 ) {
 				$name = $this->name;
 			} else {
-				$name = $this->displayname;
+				if ( !empty($this->displayname) ) $name = $this->displayname;
+				else $name = $this->username;
 			}
 		}
 		if ($escape) $name = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');

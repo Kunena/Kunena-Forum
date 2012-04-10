@@ -154,17 +154,7 @@ document.addEvent('domready', function() {
 						<td class="kcol-mid"><?php echo !empty($uslavatar) ? $profile->getLink($uslavatar) : '&nbsp;' ?></td>
 						<?php endif; ?>
 
-						<?php if ($this->config->username==0) : ?>
-						<td class="kcol-mid"><?php echo $profile->getLink($this->escape($user->name)); ?></td>
-						<?php endif; ?>
-
-						<?php if ($this->config->userusername==1) : ?>
-						<td class="kcol-mid"><?php echo $profile->getLink($this->escape($user->username)); ?></td>
-						<?php endif; ?>
-
-						<?php if ($this->config->userusername==2) : ?>
-						<td class="kcol-mid"><?php echo $profile->getLink($this->escape($user->displayname)); ?></td>
-						<?php endif; ?>
+						<td class="kcol-mid"><?php echo $profile->getName(); ?></td>
 
 						<?php if ($this->config->userlist_posts) : ?>
 						<td class="kcol-mid"><?php echo intval($user->posts); ?></td>

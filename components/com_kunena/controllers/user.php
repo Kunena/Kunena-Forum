@@ -59,6 +59,7 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	public function save() {
+		// TODO: allow moderators to save another users profile (without account info)
 		if (! JRequest::checkToken ()) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
@@ -70,7 +71,9 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
-		$this->saveUser();
+		// FIXME: $this->saveUser() doesn't work either in J!1.5 or J!2.5
+		$this->app->enqueueMessage('TODO: Save changes to user account!', 'error');
+		//$this->saveUser();
 
 		$this->saveProfile();
 		$this->saveAvatar();
@@ -360,7 +363,7 @@ class KunenaControllerUser extends KunenaController {
 
 	protected function saveProfile() {
 		$this->me->personalText = JRequest::getVar ( 'personaltext', '' );
-		$this->me->birthdate = JRequest::getInt ( 'birthdate1', '' ).'-'.JRequest::getInt ( 'birthdate2', '' ).'-'.JRequest::getInt ( 'birthdate3', '' );
+		$this->me->birthdate = JRequest::getInt ( 'birthdate1', '0000' ).'-'.JRequest::getInt ( 'birthdate2', '00' ).'-'.JRequest::getInt ( 'birthdate3', '00' );
 		$this->me->location = trim(JRequest::getVar ( 'location', '' ));
 		$this->me->gender = JRequest::getInt ( 'gender', '' );
 		$this->me->icq = trim(JRequest::getString ( 'icq', '' ));

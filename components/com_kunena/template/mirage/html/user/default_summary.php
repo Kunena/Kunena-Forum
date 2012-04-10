@@ -80,7 +80,7 @@ defined ( '_JEXEC' ) or die ();
 			<ul>
 				<li><span class="kicon-profile kicon-profile-location"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>:</strong> <?php echo $this->locationlink ?></li>
 				<li><span class="kicon-profile kicon-profile-gender-unknown"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER') ?>:</strong> <?php echo $this->gender ?></li>
-				<li><span class="kicon-profile kicon-profile-birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') ?>:</strong> <?php echo KunenaDate::getInstance($this->profile->birthdate)->toKunena('date', 'ago', 'utc') ?></li>
+				<li><span class="kicon-profile kicon-profile-birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') ?>:</strong> <?php echo KunenaDate::getInstance($this->profile->birthdate)->toSpan('date', 'ago', 'utc') ?></li>
 			</ul>
 		</div>
 	</div>

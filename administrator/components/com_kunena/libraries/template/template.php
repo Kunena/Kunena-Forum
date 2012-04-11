@@ -405,7 +405,7 @@ HTML;
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		}
-		return JFactory::getDocument ()->addScript ( $this->getFile($filename, true) );
+		return JFactory::getDocument ()->addScript ( $this->getFile($filename, true, '', null, 'default') );
 	}
 
 	/*
@@ -424,12 +424,13 @@ HTML;
 		return $array;
 	}
 
-	public function getFile($file, $url = false, $basepath = '', $default = null) {
+	public function getFile($file, $url = false, $basepath = '', $default = null, $ignore = null) {
 		if ($basepath) $basepath = '/' . $basepath;
 		$filepath = "{$basepath}/{$file}";
 		if (!isset($this->filecache[$filepath])) {
 			$this->filecache[$filepath] = $default ? "{$default}/{$file}" : KPATH_COMPONENT_RELATIVE."/template/blue_eagle/{$file}";
 			foreach ($this->default as $template) {
+				if ($template == $ignore) continue;
 				$path = "template/{$template}{$basepath}";
 				if (file_exists(KPATH_SITE . "/{$path}/{$file}")) {
 					$this->filecache[$filepath] = KPATH_COMPONENT_RELATIVE."/{$path}/{$file}";

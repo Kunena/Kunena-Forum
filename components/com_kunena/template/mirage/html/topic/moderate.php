@@ -91,7 +91,7 @@ JHTML::_('behavior.tooltip');
 									<label for="kmod_replieschangesubject"><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES') ?>:</label>
 									<input id="kmod_replieschangesubject" type="checkbox" name="changesubject" value="1" title="<?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES') ?> :: <?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES') ?>" />
 									<div class="clr"></div>
-									<?php if (0 && !isset($this->message)) : ?>
+									<?php if (!isset($this->message)) : ?>
 										<label for="kmod_shadow" class="hasTip" title="<?php echo JText::_('COM_KUNENA_MODERATION_TOPIC_SHADOW') ?> :: "><input id="kmod_shadow" type="checkbox" value="1" name="shadow"><?php echo JText::_('COM_KUNENA_MODERATION_TOPIC_SHADOW') ?></label>
 									<?php endif ?>
 								</div>

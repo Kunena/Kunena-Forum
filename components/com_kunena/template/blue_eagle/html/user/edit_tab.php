@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="kuserform" class="form-validate" enctype="multipart/form-data">
 	<input type="hidden" name="view" value="user" />
 	<input type="hidden" name="task" value="save" />
+	<input type="hidden" name="userid" value="<?php echo $this->user->id ?>" />
 	<?php echo JHTML::_( 'form.token' ); ?>
 
 <div id="kprofile-edit">

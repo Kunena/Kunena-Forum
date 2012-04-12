@@ -251,6 +251,7 @@ class KunenaViewTopics extends KunenaView {
 		$pagesTxt = "{$page}/{$total}";
 
 		if ( $type=='default' ){
+
 			switch ($this->state->get ( 'list.mode' )) {
 			case 'topics' :
 				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
@@ -276,13 +277,18 @@ class KunenaViewTopics extends KunenaView {
 			}
 			$this->title = $this->headerText;
 
-			$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$title = "{$this->title} ({$pagesTxt})";
+			$this->setTitle( $title );
+
+			// TODO: add keywords
+
+			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$this->setDescription ( $description );
 
 			$this->document->setMetadata ( 'robots', 'noindex, follow' );
-			$this->document->setDescription ( $metaDesc );
-			$this->setTitle ( "{$this->title} ({$pagesTxt})", $this->headerText );
+
 		} elseif($type=='user'){
+
 			switch ($this->state->get ( 'list.mode' )) {
 				case 'posted' :
 					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
@@ -301,13 +307,18 @@ class KunenaViewTopics extends KunenaView {
 			}
 			$this->title = $this->headerText;
 
-			$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$title = "{$this->title} ({$pagesTxt})";
+			$this->setTitle( $title );
+
+			// TODO: add keywords
+
+			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$this->setDescription ( $description );
 
 			$this->document->setMetadata ( 'robots', 'noindex, follow' );
-			$this->document->setDescription ( $metaDesc );
-			$this->setTitle ( "{$this->title} ({$pagesTxt})", $this->headerText );
+
 		} elseif($type=='posts'){
+
 			switch ($this->state->get ( 'list.mode' )) {
 			case 'unapproved':
 				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
@@ -327,12 +338,16 @@ class KunenaViewTopics extends KunenaView {
 			}
 			$this->title = $this->headerText;
 
-			$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$title = "{$this->title} ({$pagesTxt})";
+			$this->setTitle( $title );
+
+			// TODO: add keywords
+
+			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$this->setDescription ( $description );
 
 			$this->document->setMetadata ( 'robots', 'noindex, follow' );
-			$this->document->setDescription ( $metaDesc );
-			$this->setTitle ( "{$this->title} ({$pagesTxt})", $this->headerText );
+
 		}
 	}
 }

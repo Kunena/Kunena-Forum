@@ -22,8 +22,6 @@ $editor->initialize('id');
 include_once (KPATH_SITE.'/lib/kunena.bbcode.js.php');
 include_once (KPATH_SITE.'/lib/kunena.special.js.php');
 
-$this->setTitle ( $this->title );
-
 $this->k=0;
 ?>
 

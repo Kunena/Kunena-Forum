@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->setTitle ( $this->title );
-
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 JHTML::_('behavior.keepalive');

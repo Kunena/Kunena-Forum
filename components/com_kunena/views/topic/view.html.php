@@ -869,50 +869,42 @@ class KunenaViewTopic extends KunenaView {
 			$this->headerText =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
 			$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 
-			//meta description and keywords
 			$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
 			$pages = intval ( ($this->total-1) / $this->state->get('list.limit') ) + 1;
 
+			$title = JText::sprintf('COM_KUNENA_VIEW_TOPICS_DEFAULT', $this->topic->subject) . " ({$page}/{$pages})";
+			$this->setTitle($title);
+
 			// TODO: use real keywords, too
-			if (version_compare(JVERSION, '2.5','>')) {
-				if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
-					$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') );
-				} else if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 1 ) {
-					$metaKeys = $this->escape ( $this->app->getCfg ( 'sitename' ) . ', ' . "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') );
-				} else {
-					$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
-				}
-			} else {
-				$metaKeys = $this->escape ( "{$this->topic->subject}, {$this->category->getParent()->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
-			}
+			$keywords = $this->escape ( "{$this->topic->subject}, {$this->category->name}, {$this->category->getParent()->name}, {$this->config->board_title}" );
+			$this->setKeywords ( $keywords );
 
 			// Create Meta Description form the content of the first message
 			// better for search results display but NOT for search ranking!
-			$metaDesc = KunenaHtmlParser::stripBBCode($this->topic->first_post_message);
-			$metaDesc = preg_replace('/\s+/', ' ', $metaDesc); // remove newlines
-			$metaDesc = preg_replace('/^[^\w0-9]+/', '', $metaDesc); // remove characters at the beginning that are not letters or numbers
-			$metaDesc = trim($metaDesc); // Remove trailing spaces and beginning
+			$description = KunenaHtmlParser::stripBBCode($this->topic->first_post_message, 182);
+			$description = preg_replace('/\s+/', ' ', $description); // remove newlines
+			$description = preg_replace('/^[^\w0-9]+/', '', $description); // remove characters at the beginning that are not letters or numbers
+			$description = trim($description); // Remove trailing spaces and beginning
+			$this->setDescription ( $description );
 
-			// remove multiple spaces
-			while (strpos($metaDesc, '  ') !== false){
-				$metaDesc = str_replace('  ', ' ', $metaDesc);
-			}
-
-			// limit to 185 characters - google will cut off at ~150
-			if (strlen($metaDesc) > 185){
-				$metaDesc = rtrim(JString::substr($metaDesc, 0, 182)).'...';
-			}
-
-			$this->document->setMetadata ( 'keywords', $metaKeys );
-			$this->document->setDescription ( $this->escape($metaDesc) );
-
-			$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_TOPICS_DEFAULT', $this->topic->subject) . " ({$page}/{$pages})");
 		} elseif($type=='create') {
+
 			$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
+			$this->setTitle($this->title);
+			// TODO: set keywords and description
+
 		} elseif ($type=='reply'){
+
 			$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->topic->subject;
+			$this->setTitle($this->title);
+			// TODO: set keywords and description
+
 		} elseif($type=='edit'){
+
 			$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->topic->subject;
+			$this->setTitle($this->title);
+			// TODO: set keywords and description
+
 		}
 	}
 }

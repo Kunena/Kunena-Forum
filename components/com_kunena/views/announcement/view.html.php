@@ -158,6 +158,8 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 
 	protected function _prepareDocument(){
-		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+		$this->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'));
+
+		// TODO: set keywords and description
 	}
 }

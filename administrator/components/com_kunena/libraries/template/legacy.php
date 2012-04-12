@@ -79,7 +79,7 @@ class CKunenaTools {
 		$config = KunenaFactory::getConfig ();
 		$template = KunenaFactory::getTemplate();
 
-		if ($template->name != 'default') $filename = preg_replace('#template/default#', 'template/blue_eagle', $filename);
+		if ($template->name != 'default') $filename = preg_replace('#/com_kunena/template/default#', '/com_kunena/template/blue_eagle', $filename);
 		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.css)$#', KUNENA_DIRECTURL.'template/blue_eagle/css/\1', $filename);
 		if (JDEBUG || $config->debug || KunenaForum::isDev()) {
 			// If we are in debug more, make sure we load the unpacked css
@@ -94,7 +94,7 @@ class CKunenaTools {
 		$config = KunenaFactory::getConfig ();
 		$template = KunenaFactory::getTemplate();
 
-		$filename = preg_replace('#/template/default/#', '/template/blue_eagle/', $filename);
+		$filename = preg_replace('#/com_kunena/template/default/#', '/com_kunena/template/blue_eagle/', $filename);
 		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.js)$#', KUNENA_DIRECTURL.'template/blue_eagle/js/\1', $filename);
 		if (JDEBUG || $config->debug || KunenaForum::isDev()) {
 			// If we are in debug more, make sure we load the unpacked javascript

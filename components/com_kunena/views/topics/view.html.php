@@ -244,19 +244,6 @@ class KunenaViewTopics extends KunenaView {
 		return $pagination->getPagesLinks();
 	}
 
-	protected function _setJoomla25Title() {
-		if (version_compare(JVERSION, '2.5','>')) {
-			if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
-				return $this->escape ( ", {$this->config->board_title}, " );
-			} else if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 1 ) {
-				return $this->app->getCfg ( 'sitename' ) . $this->escape ( ", {$this->config->board_title}, " );
-			} else {
-				return $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
-			}
-		}
-		return;
-	}
-
 	protected function _prepareDocument($type){
 		$limit = $this->state->get('list.limit');
 		$page = intval($this->state->get('list.start')/$limit)+1;
@@ -264,6 +251,7 @@ class KunenaViewTopics extends KunenaView {
 		$pagesTxt = "{$page}/{$total}";
 
 		if ( $type=='default' ){
+
 			switch ($this->state->get ( 'list.mode' )) {
 			case 'topics' :
 				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
@@ -289,20 +277,18 @@ class KunenaViewTopics extends KunenaView {
 			}
 			$this->title = $this->headerText;
 
-			//meta description and keywords
-			if ( $this->_setJoomla25Title() ) {
-				$metaKeys = $this->headerText . $this->_setJoomla25Title();
-			} else {
-				$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
-			}
-			$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$title = "{$this->title} ({$pagesTxt})";
+			$this->setTitle( $title );
+
+			// TODO: add keywords
+
+			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$this->setDescription ( $description );
 
 			$this->document->setMetadata ( 'robots', 'noindex, follow' );
-			$this->document->setMetadata ( 'keywords', $metaKeys );
-			$this->document->setDescription ( $metaDesc );
-			$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+
 		} elseif($type=='user'){
+
 			switch ($this->state->get ( 'list.mode' )) {
 				case 'posted' :
 					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
@@ -321,20 +307,18 @@ class KunenaViewTopics extends KunenaView {
 			}
 			$this->title = $this->headerText;
 
-			//meta description and keywords
-			if ( $this->_setJoomla25Title() ) {
-				$metaKeys = $this->headerText . $this->_setJoomla25Title();
-			} else {
-				$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
-			}
-			$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$title = "{$this->title} ({$pagesTxt})";
+			$this->setTitle( $title );
+
+			// TODO: add keywords
+
+			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$this->setDescription ( $description );
 
 			$this->document->setMetadata ( 'robots', 'noindex, follow' );
-			$this->document->setMetadata ( 'keywords', $metaKeys );
-			$this->document->setDescription ( $metaDesc );
-			$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+
 		} elseif($type=='posts'){
+
 			switch ($this->state->get ( 'list.mode' )) {
 			case 'unapproved':
 				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
@@ -354,19 +338,16 @@ class KunenaViewTopics extends KunenaView {
 			}
 			$this->title = $this->headerText;
 
-			//meta description and keywords
-			if ( $this->_setJoomla25Title() ) {
-				$metaKeys = $this->headerText . $this->_setJoomla25Title();
-			} else {
-				$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
-			}
-			$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$title = "{$this->title} ({$pagesTxt})";
+			$this->setTitle( $title );
+
+			// TODO: add keywords
+
+			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$this->setDescription ( $description );
 
 			$this->document->setMetadata ( 'robots', 'noindex, follow' );
-			$this->document->setMetadata ( 'keywords', $metaKeys );
-			$this->document->setDescription ( $metaDesc );
-			$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+
 		}
 	}
 }

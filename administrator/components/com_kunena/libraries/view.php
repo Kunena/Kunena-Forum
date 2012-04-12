@@ -285,12 +285,6 @@ class KunenaView extends JView {
 		echo '[K=TOKEN]';
 	}
 
-	function setTitle($title) {
-		if (!$this->state->get('embedded')) {
-			$this->document->setTitle ( KunenaFactory::getConfig()->board_title .' :: '. strip_tags($title) );
-		}
-	}
-
 	function row($start=false) {
 		if ($start) $this->_row = 0;
 		return ++$this->_row & 1 ? 'odd' : 'even';
@@ -412,5 +406,34 @@ class KunenaView extends JView {
 	// Caching
 	function getTemplateMD5() {
 		return md5(serialize($this->_path['template']).'-'.$this->ktemplate->name);
+	}
+
+	function setTitle($title) {
+		if (!$this->state->get('embedded')) {
+			// Check for empty title and add site name if param is set
+			$title = strip_tags($title);
+			if ($this->app->getCfg('sitename_pagetitles', 0) == 1) {
+				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
+			} elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2) {
+				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
+			} else {
+				// TODO: allow translations/overrides (also above)
+				$title = KunenaFactory::getConfig()->board_title .' :: '. $title;
+			}
+			$this->document->setTitle($title);
+		}
+	}
+
+	function setKeywords($keywords) {
+		if (!$this->state->get('embedded')) {
+			if ( !empty($keywords) ) $this->document->setMetadata ( 'keywords', $keywords );
+		}
+	}
+
+	function setDescription($description) {
+		if (!$this->state->get('embedded')) {
+			// TODO: allow translations/overrides
+			$this->document->setMetadata ( 'description', $this->document->get ( 'description' ) . '. ' . $description );
+		}
 	}
 }

@@ -1,0 +1,250 @@
+
+/*
+BBCODE BUTTONS
+-------------------------------------------------------------------- */
+#kunena.layout #kbbcodeeditor img.kbbcode {
+	cursor: pointer;
+	margin-top: 4px;
+	margin-right: 1px;
+	padding: 0px;
+}
+
+#kunena.layout #kbbcodeeditor img.kbbcode:hover {
+	cursor: pointer;
+	margin-top: 4px;
+	margin-right: 1px;
+	padding: 0px;
+}
+
+#kunena.layout #kbbcodeeditor .kbbcode-colortable {
+	cursor: pointer;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#kunena.layout #kbbcodeeditor div#kbbcode-size-options {
+	margin:2px 0 0;
+}
+
+#kunena.layout #kbbcodeeditor div#kbbcode-size-options span {
+	vertical-align: middle;
+	display: inline-block;
+	line-height: 24px;
+}
+
+#kunena.layout #kbbcodeeditor div#kbbcode-size-options span:hover {
+	cursor: pointer;
+	padding: 0px;
+}
+
+#kunena.layout #kbbcodeeditor table.kpostbuttonset tr td.kpostbuttons select.kslcbox {
+	position: relative;
+	bottom: 5px;
+}
+
+#kunena.layout #kbbcodeeditor #kbbcode-toolbar {
+	list-style-position:inside;
+	list-style-type:none;
+	height:18px;
+	margin:2px 0 2px;
+	padding:0;
+	position:relative;
+}
+
+#kunena.layout #kbbcodeeditor #kbbcode-toolbar li {
+	float:left;
+	list-style-image:none !important;
+	list-style-type:none !important;
+	margin:0;
+	padding:0;
+}
+
+#kunena.layout #kbbcodeeditor #kbbcode-toolbar li a {
+	background-repeat: no-repeat;
+	display:block;
+	height:18px;
+	width:18px;
+	margin-right: 2px;
+}
+
+#kunena.layout #kbbcodeeditor #kbbcode-toolbar li a:hover {
+	cursor: pointer;
+	padding: 0px;
+}
+
+#kunena.layout #kbbcodeeditor #kbbcode-toolbar li span {
+	display:none;
+}
+
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-separator1,
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-separator2,
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-separator3,
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-separator4,
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-separator5,
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-separator6,
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-separator7,
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-separator8 {
+	background-position:-400px 0;
+	width: 8px;
+	cursor: default;
+}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-bold-button {background-position:0 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-italic-button {background-position:-18px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-underline-button {background-position:-36px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-strike-button {background-position:-54px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-sub-button {background-position:-72px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-sup-button {background-position:-90px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-size-button {background-position:-108px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-color-button {background-position:-126px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-spoiler-button {background-position:-144px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-hide-button {background-position:-162px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-ulist-button {background-position:-180px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-olist-button {background-position:-198px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-list-button {background-position:-216px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-left-button {background-position:-234px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-center-button {background-position:-252px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-right-button {background-position:-270px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-quote-button {background-position:-288px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-code-button {background-position:-306px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-image-button {background-position:-324px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-link-button {background-position:-342px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-table-button {background-position:0 -18px;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-module-button {background-position:-18px -18px;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-ebay-button {background-position:-360px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-video-button {background-position:-378px 0;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-map-button {background-position:-72px -18px;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-attach-button {background-position:-36px -18px;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-gallery-button {background-position:-54px -18px;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-poll-button {background-position:-90px -18px;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-previewbottom-button {background-position:-252px -18px;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-previewright-button {background-position:-270px -18px;}
+#kunena.layout #kbbcodeeditor ul#kbbcode-toolbar li a#kbbcode-help-button {background-position:-396px -18px;}
+
+#kunena.layout #kbbcodeeditor .kspoiler {
+	cursor:pointer;
+}
+#kunena.layout #kbbcodeeditor .kattachment .hasTip {
+	display: inline;
+}
+
+#kunena.layout #kbbcodeeditor .kattachment .kbutton {
+	/* font-size: 1em;  */
+}
+
+#kunena.layout #kbbcodeeditor #kattachments {
+	line-height:18px;
+}
+
+#kunena.layout #kbbcodeeditor #kattachments a {
+	background-repeat: no-repeat;
+	display:inline-block;
+	height:18px;
+	width:18px;
+	margin-right: 2px;
+}
+
+#kunena.layout #kbbcodeeditor #kattachments a {
+	background-position:-216px -18px;
+}
+
+/* Define default image if not set in admin config */
+#kunena.layout #kbbcodeeditor #kbbcode-toolbar li a,
+#kunena.layout #kbbcodeeditor #kattachments a { 
+	background-image:url("../media/iconsets/editor/default/default.png");
+}
+
+
+/*
+Multi file upload for bbcode editor
+-------------------------------------------------------------------- */
+
+#kfilename {}
+
+#kunena.layout #kbbcodeeditor .kfile-input-textbox {/* float: left; */ display: inline-block; }
+
+#kupload {}
+
+#kunena.layout #kbbcodeeditor .kfile-hide {
+	position: relative; 
+	width: 100px; 
+	height: 23px; 
+	overflow: hidden;
+}
+#kunena.layout #kbbcodeeditor .kfile-input-button,
+#kunena.layout #kbbcodeeditor .kfile-input-button:hover,
+#kunena.layout #kbbcodeeditor .kfile-input-button:focus {
+	top: 0px;
+	background: none;
+	font-size: .833em !important;
+	border: 1px solid;
+	padding: 3px 6px;
+	cursor:pointer;
+}
+#kunena.layout #kbbcodeeditor .kfile-input-button:hover,
+#kunena.layout #kbbcodeeditor .kfile-input-button:focus {
+	background: none;
+	border: 1px solid;
+}
+#kunena.layout #kbbcodeeditor .kattachment-remove,
+#kunena.layout #kbbcodeeditor .kattachment-insert {
+	background: none;
+	font-size: .917em !important;
+	border: 1px solid;
+	padding: 3px 6px;
+}
+#kunena.layout #kbbcodeeditor .kattachment-remove:hover,
+#kunena.layout #kbbcodeeditor .kattachment-insert:hover {
+	font-size:0.917em !important;
+	padding: 3px 6px;
+}
+#kunena.layout #kbbcodeeditor .kattachment-insert {
+	margin-left: 20px;
+}
+#kunena.layout #kbbcodeeditor .kfile-input {
+	font-size: 23px; 
+	position: absolute; 
+	right: 0px; 
+	top: -10px;
+	/* CSS3 standard */
+	opacity: 0;
+	/* For IE */
+	filter:alpha(opacity=0);
+}
+#kunena.layout #kbbcodeeditor #kbbcode-filelist {
+	padding: 0;
+	list-style: none;
+	margin: 0;
+}
+ 
+#kunena.layout #kbbcodeeditor #kbbcode-filelist .file-invalid {
+	cursor: pointer;
+	padding-left: 48px;
+	line-height: 24px;
+	margin-bottom: 1px;
+}
+#kunena.layout #kbbcodeeditor #kbbcode-filelist .file-invalid span {
+	padding: 1px;
+}
+ 
+#kunena.layout #kbbcodeeditor #kbbcode-filelist .file {
+	line-height: 2em;
+	padding-left: 22px;
+}
+ 
+#kunena.layout #kbbcodeeditor #kbbcode-filelist .file span,
+#kunena.layout #kbbcodeeditor #kbbcode-filelist .file a {
+	padding: 0 4px;
+}
+ 
+#kunena.layout #kbbcodeeditor #kbbcode-filelist .file .file-size {
+}
+ 
+#kunena.layout #kbbcodeeditor #kbbcode-filelist .file .file-error {
+}
+ 
+#kunena.layout #kbbcodeeditor #kbbcode-filelist .file .file-progress {
+	width: 125px;
+	height: 12px;
+	vertical-align: middle;
+}

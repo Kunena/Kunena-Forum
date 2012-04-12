@@ -37,7 +37,8 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		//$this->addStyleSheet ( 'css/buttons.css' );
 		$this->addStyleSheet ( 'css/icons-social.css' );
 		//$this->addStyleSheet ( 'css/icons-editor.css' );
-
+		$this->addStyleSheet ( 'css/bbcode.css' );
+		
 		$this->addStyleSheet ( 'css/position.css' );
 		$this->addStyleSheet ( 'css/style.css' );
 		$this->addStyleSheet ( 'css/button.css' );

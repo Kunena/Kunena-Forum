@@ -449,19 +449,6 @@ function getTopicClass($prefix='k', $class='topic') {
 		return $pagination->getPagesLinks();
 	}
 
-	protected function _setJoomla25Title() {
-		if (version_compare(JVERSION, '2.5','>')) {
-			if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
-				return (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title);
-			} else if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 1 ) {
-				return ($this->app->getCfg ( 'sitename' ). ', ' .JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title );
-			} else {
-				return (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
-			}
-		}
-		return;
-	}
-
 	protected function _prepareDocument($type){
 		if ( $type=='default' ) {
 			$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
@@ -478,7 +465,7 @@ function getTopicClass($prefix='k', $class='topic') {
 				$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$this->parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
 			}
 
-		$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setMetadata ( 'keywords', $metaKeys );
 
 			//meta description and keywords
 			$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
@@ -490,33 +477,21 @@ function getTopicClass($prefix='k', $class='topic') {
 		} elseif($type=='list'){
 			// meta description and keywords
 			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
-			if ( $this->_setJoomla25Title() ) {
-				$metaKeys = $this->_setJoomla25Title();
-			} else {
-				$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
-			}
 
 			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-			$this->document->setMetadata ( 'keywords', $metaKeys );
 			$this->document->setDescription ( $metaDesc );
 
-			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT') );
+			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_DEFAULT'), JText::_('COM_KUNENA_CATEGORIES') );
 		} elseif ($type=='user'){
 			$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
 
 			// meta description and keywords
 			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
-			if ( $this->_setJoomla25Title() ) {
-				$metaKeys = $this->_setJoomla25Title();
-			} else {
-				$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
-			}
 
 			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-			$this->document->setMetadata ( 'keywords', $metaKeys );
 			$this->document->setDescription ( $metaDesc );
 
-			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_USER') );
+			$this->setTitle ( JText::_('COM_KUNENA_VIEW_CATEGORIES_USER'), JText::_('COM_KUNENA_CATEGORIES') );
 		}
 	}
 }

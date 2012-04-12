@@ -285,12 +285,6 @@ class KunenaView extends JView {
 		echo '[K=TOKEN]';
 	}
 
-	function setTitle($title) {
-		if (!$this->state->get('embedded')) {
-			$this->document->setTitle ( KunenaFactory::getConfig()->board_title .' :: '. strip_tags($title) );
-		}
-	}
-
 	function row($start=false) {
 		if ($start) $this->_row = 0;
 		return ++$this->_row & 1 ? 'odd' : 'even';
@@ -412,5 +406,27 @@ class KunenaView extends JView {
 	// Caching
 	function getTemplateMD5() {
 		return md5(serialize($this->_path['template']).'-'.$this->ktemplate->name);
+	}
+
+	function setTitle($title, $metakeystitle = null) {
+		if (!$this->state->get('embedded')) {
+			$this->document->setTitle ( KunenaFactory::getConfig()->board_title .' :: '. strip_tags($title) );
+		} else {
+			if (version_compare(JVERSION, '2.5','>')) {
+				if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
+					$metaKeys = ($metakeystitle . ', ' . $this->config->board_title);
+				} else if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 1 ) {
+					$metaKeys = ($this->app->getCfg ( 'sitename' ). ', ' . $metakeystitle . ', ' . $this->config->board_title );
+				} else {
+					$metaKeys = ($metakeystitle . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
+				}
+			} else {
+					$metaKeys = ($metakeystitle . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
+			}
+
+			if ( !empty($metakeystitle) ) $this->document->setMetadata ( 'keywords', $metaKeys );
+
+			$this->document->setTitle($title);
+		}
 	}
 }

@@ -21,8 +21,9 @@ $this->document->addScriptDeclaration ( "// <![CDATA[
 					<div class="detailsbox kbox-full">
 						<input type="hidden" name="view" value="user" />
 						<input type="hidden" name="task" value="save" />
+						<input type="hidden" name="userid" value="<?php echo $this->user->id ?>" />
 						<?php echo JHTML::_( 'form.token' ); ?>
-				
+
 						<dl class="ktabs">
 							<dt class="open"><a class="link-tab" title="<?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER') ?>" href="#tab-edit_user"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER') ?></a></dt>
 							<dd style="display: none;">

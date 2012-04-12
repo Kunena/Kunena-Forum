@@ -94,7 +94,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 					<input type="checkbox" name="changesubject" value="1" />
 					<?php echo JText::_ ( 'COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES' ); ?>
 				</div>
-				<?php if (0 && !isset($this->message)) : ?>
+				<?php if (!isset($this->message)) : ?>
 				<div>
 					<input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="shadow" value="1" />
 					<?php echo JText::_ ( 'COM_KUNENA_MODERATION_TOPIC_SHADOW' ); ?>

@@ -537,12 +537,20 @@ class KunenaViewUser extends KunenaView {
 
 	protected function _prepareDocument($type){
 		if ( $type == 'list' ) {
+
 			$page = intval($this->state->get('list.start')/$this->state->get('list.limit'))+1;
 			$pages = intval(($this->total-1)/$this->state->get('list.limit'))+1;
 
-			$this->setTitle(JText::_('COM_KUNENA_VIEW_USER_LIST'). " ({$page}/{$pages})");
+			$title = JText::_('COM_KUNENA_VIEW_USER_LIST'). " ({$page}/{$pages})";
+			$this->setTitle($title);
+			// TODO: set keywords and description
+
 		} elseif ( $type == 'common' ) {
-			$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName()));
+
+			$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+			$this->setTitle($title);
+			// TODO: set keywords and description
+
 		}
 	}
 }

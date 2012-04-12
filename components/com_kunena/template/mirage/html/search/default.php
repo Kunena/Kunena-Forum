@@ -19,7 +19,6 @@ document.addEvent('domready', function() {
 // ]]>");
 }
 
-$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 ?>
 <div class="kmodule search_adv">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search') ?>" name="adminForm" id="adminForm" method="post">

@@ -18,8 +18,10 @@ class KunenaViewMisc extends KunenaView {
 		$params = JComponentHelper::getParams( 'com_kunena' );
 		$this->header = $params->get( 'page_title' );
 		$this->body = $params->get( 'body' );
+
+		$this->_prepareDocument();
+
 		$format = $params->get( 'body_format' );
-		$this->setTitle ( $this->header );
 
 		$this->header = $this->escape($this->header);
 		if ($format == 'html') {
@@ -30,6 +32,14 @@ class KunenaViewMisc extends KunenaView {
 			$this->body = KunenaHtmlParser::parseBBCode($this->body);
 		}
 
+
 		$this->display ();
 	}
+
+	protected function _prepareDocument(){
+		$this->setTitle($this->header);
+
+		// TODO: set keywords and description
+	}
+
 }

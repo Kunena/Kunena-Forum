@@ -36,6 +36,9 @@ class KunenaViewSearch extends KunenaView {
 		$this->selected=' selected="selected"';
 		$this->checked=' checked="checked"';
 		$this->error = $this->get('Error');
+
+		$this->_prepareDocument();
+
 		$this->display ();
 	}
 
@@ -160,5 +163,11 @@ class KunenaViewSearch extends KunenaView {
 		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
 		$pagination->setDisplay($maxpages);
 		return $pagination->getPagesLinks();
+	}
+
+	protected function _prepareDocument(){
+		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+
+		// TODO: set keywords and description
 	}
 }

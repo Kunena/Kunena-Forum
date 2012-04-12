@@ -18,7 +18,6 @@ document.addEvent('domready', function() {
 });
 // ]]>");
 }
-$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
 ?>
 <div class="kblock kadvsearch">
 	<div class="kheader">

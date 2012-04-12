@@ -71,10 +71,7 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
-		// FIXME: $this->saveUser() doesn't work either in J!1.5 or J!2.5
-		$this->app->enqueueMessage('TODO: Save changes to user account!', 'error');
-		//$this->saveUser();
-
+		$this->saveUser();
 		$this->saveProfile();
 		$this->saveAvatar();
 		$this->saveSettings();
@@ -284,9 +281,8 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	// Mostly copied from Joomla 1.5
-	protected function saveUser()
-	{
-		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
+	protected function saveUser(){
+		$user		= JUser::getInstance(JRequest::getInt ( 'userid', 0 ));
 
 		// we don't want users to edit certain fields so we will ignore them
 		$ignore = array('id', 'gid', 'block', 'usertype', 'registerDate', 'activation');
@@ -334,7 +330,7 @@ class KunenaControllerUser extends KunenaController {
 			}
 		}
 
-		$username = $this->user->username;
+		$username = $this->me->username;
 
 		// Bind the form fields to the user table
 		if (!$user->bind($post)) {
@@ -352,8 +348,7 @@ class KunenaControllerUser extends KunenaController {
 		$session->set('user', $user);
 
 		// update session if username has been changed
-		if ( $username && $username != $user->username )
-		{
+		if ( $username && $username != $user->username ){
 			$table = JTable::getInstance('session', 'JTable' );
 			$table->load($session->getId());
 			$table->username = $user->username;

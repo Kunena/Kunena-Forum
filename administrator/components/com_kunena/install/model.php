@@ -581,7 +581,9 @@ class KunenaModelInstall extends JModel {
 
 	public function stepPlugins() {
 		$this->installPlugin('install/plugins/plg_system_kunena', 'system', 'kunena', true);
-		$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false);
+		// TODO: Complete smart search support
+		$this->uninstallPlugin('finder', 'kunena');
+		//$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false);
 		$this->installPlugin('install/plugins/plg_kunena_kunena', 'kunena', 'kunena', true);
 		$this->installPlugin('install/plugins/plg_kunena_joomla15', 'kunena', 'joomla', true);
 		$this->installPlugin('install/plugins/plg_kunena_joomla16', 'kunena', 'joomla', true);

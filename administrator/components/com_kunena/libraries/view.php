@@ -408,25 +408,32 @@ class KunenaView extends JView {
 		return md5(serialize($this->_path['template']).'-'.$this->ktemplate->name);
 	}
 
-	function setTitle($title, $metakeystitle = null) {
+	function setTitle($title) {
 		if (!$this->state->get('embedded')) {
-			$this->document->setTitle ( KunenaFactory::getConfig()->board_title .' :: '. strip_tags($title) );
-		} else {
-			if (version_compare(JVERSION, '2.5','>')) {
-				if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 0 ) {
-					$metaKeys = ($metakeystitle . ', ' . $this->config->board_title);
-				} else if ( $this->app->getCfg ( 'sitename_pagetitles' ) == 1 ) {
-					$metaKeys = ($this->app->getCfg ( 'sitename' ). ', ' . $metakeystitle . ', ' . $this->config->board_title );
-				} else {
-					$metaKeys = ($metakeystitle . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
-				}
+			// Check for empty title and add site name if param is set
+			$title = strip_tags($title);
+			if ($this->app->getCfg('sitename_pagetitles', 0) == 1) {
+				$title = JText::sprintf('JPAGETITLE', $this->app->getCfg('sitename'), $this->config->board_title .' - '. $title);
+			} elseif ($this->app->getCfg('sitename_pagetitles', 0) == 2) {
+				$title = JText::sprintf('JPAGETITLE', $title .' - '. $this->config->board_title, $this->app->getCfg('sitename'));
 			} else {
-					$metaKeys = ($metakeystitle . ', ' . $this->config->board_title . ', ' . $this->app->getCfg ( 'sitename' ));
+				// TODO: allow translations/overrides (also above)
+				$title = KunenaFactory::getConfig()->board_title .' :: '. $title;
 			}
-
-			if ( !empty($metakeystitle) ) $this->document->setMetadata ( 'keywords', $metaKeys );
-
 			$this->document->setTitle($title);
+		}
+	}
+
+	function setKeywords($keywords) {
+		if (!$this->state->get('embedded')) {
+			if ( !empty($keywords) ) $this->document->setMetadata ( 'keywords', $keywords );
+		}
+	}
+
+	function setDescription($description) {
+		if (!$this->state->get('embedded')) {
+			// TODO: allow translations/overrides
+			$this->document->setMetadata ( 'description', $this->document->get ( 'description' ) . '. ' . $description );
 		}
 	}
 }

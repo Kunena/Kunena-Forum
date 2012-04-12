@@ -16,7 +16,6 @@ defined ( '_JEXEC' ) or die ();
 class KunenaViewCredits extends KunenaView {
 	function displayDefault($tpl = null) {
 
-		$this->setTitle( JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT') );
 		$this->memberList = array(
 				array('name'=>'fxstein', 'url'=>'http://www.kunena.org/people/64-fxstein/profile', 'title'=>JText::sprintf('COM_KUNENA_CREDITS_DEVELOPER_SPECIAL', 'Yamaha Star VMax').' <a href="http://www.starVmax.com/forum/">www.starVmax.com/forum/</a>'),
 				array('name'=>'Matias', 'url'=>'http://www.kunena.org/people/63-matias/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPER')),
@@ -29,6 +28,16 @@ class KunenaViewCredits extends KunenaView {
 				array('name'=>'sozzled', 'url'=>'http://www.kunena.org/people/997-sozzled/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
 		);
 		$this->thanks = JText::sprintf('COM_KUNENA_CREDITS_THANKS_PART_LONG', 'Beat', 'BoardBoss', 'GoremanX', 'madLyfe', 'Mortti',  '<a href="http://www.kunena.org" target="_blank" rel="follow">www.kunena.org</a>').' '.JText::_('COM_KUNENA_CREDITS_THANKS');
+
+		$this->_prepareDocument();
+
 		parent::display ();
 	}
+
+	protected function _prepareDocument(){
+		$this->setTitle(JText::_('COM_KUNENA_VIEW_CREDITS_DEFAULT'));
+
+		// TODO: set keywords and description
+	}
+
 }

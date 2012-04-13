@@ -187,7 +187,7 @@ class KunenaControllerUser extends KunenaController {
 		if (! empty ( $banDelPosts )) {
 			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $user->userid));
 			foreach($messages as $mes) {
-				$mes->trash();
+				$mes->publish(KunenaForum::DELETED);
 			}
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES') );
 		}

@@ -64,6 +64,9 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=report') ?>" title="<?php echo JText::_('COM_KUNENA_REPORT_SYSTEM');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/report.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
+						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_plugins&view=plugins&filter_folder=kunena') ?>" title="<?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/pluginsmanager.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER'); ?> </span></a> </div>
+					</div>
+					<div class="icon-container">
 						<div class="icon"> <a href="http://www.kunena.org" target="_blank" title="<?php echo JText::_('COM_KUNENA_C_SUPPORTDESC');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/support.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?> </span></a> </div>
 					</div>
 				</div>

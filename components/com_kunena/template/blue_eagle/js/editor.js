@@ -36,7 +36,6 @@ Element.implement({
 
 		var scroll_top = this.scrollTop;
 
-		this.focus();
 		if(typeof this.selectionStart != "undefined") {
 			var originalStart = this.selectionStart;
 			var originalEnd = this.selectionEnd;
@@ -46,16 +45,20 @@ Element.implement({
 			} else {
 				var position = originalStart + newtext.length + wrapperLeft.length +  wrapperRight.length;
 				this.setSelectionRange(position, position);
+				this.scrollTop = scroll_top;
 			}
+			this.focus();
+
 		} else if(typeof document.selection != "undefined") {
 			// Something for IE
+			this.focus();
 			var range = document.selection.createRange();
 			range.text = wrapperLeft + newtext + wrapperRight;
 			if(isLast) {
 				range.select();
+				this.scrollTop = scroll_top;
 			}
 		}
-		this.scrollTop = scroll_top;
 	},
 
 	replaceSelectedText: function(newtext, isLast) {

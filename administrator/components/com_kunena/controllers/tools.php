@@ -221,9 +221,9 @@ class KunenaAdminControllerTools extends KunenaController {
 		}
 
 		$legacy = KunenaMenuFix::getLegacy();
-		$error = KunenaMenuFix::fixLegacy();
+		$errors = KunenaMenuFix::fixLegacy();
 
-		if ($error) $this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY_FAILED', $error ), 'notice' );
+		if ($errors) $this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY_FAILED', $errors[0] ), 'notice' );
 		else $this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY', count($legacy) ) );
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}

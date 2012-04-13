@@ -538,12 +538,10 @@ abstract class KunenaRouteLegacy {
 	static public function convertMenuItem($item) {
 		$uri = JURI::getInstance($item->link);
 		$view = $uri->getVar('func', $uri->getVar('view'));
+		$params = new JParameter($item->params);
 
 		if (self::convert($uri, 0)) {
 
-			$item->link = $uri->toString();
-			$item->query = $uri->getQuery(true);
-			$params = new JParameter($item->params);
 			switch ($view) {
 				case 'latest' :
 				case 'mylatest' :
@@ -570,7 +568,9 @@ abstract class KunenaRouteLegacy {
 					$params->set('do', null);
 					break;
 			}
-			$item->params = $params->toString();
 		}
+		$item->link = $uri->toString();
+		$item->query = $uri->getQuery(true);
+		$item->params = $params->toString();
 	}
 }

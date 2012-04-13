@@ -112,6 +112,7 @@ abstract class KunenaMenuFix {
 
 	public static function fixLegacy() {
 		$items = array();
+		$errors = array();
 		foreach (self::$legacy as $itemid) {
 			$item = self::$items[$itemid];
 			KunenaRouteLegacy::convertMenuItem($item);
@@ -122,9 +123,10 @@ abstract class KunenaMenuFix {
 				'params' => $item->params,
 			);
 			if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
-				return $table->getError ();
+				$errors[] = $table->getError ();
 			}
 		}
+		return !empty($errors) ? $errors : null;
 	}
 
 	public static function delete($itemid) {

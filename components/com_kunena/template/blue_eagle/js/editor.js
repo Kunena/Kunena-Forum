@@ -20,11 +20,15 @@
 Element.implement({
 
 	getSelectedText: function() {
-		if(Browser.Engine.trident){
+		if (typeof this.selectionStart != "undefined") {
+			return this.get('value').substring(this.selectionStart, this.selectionEnd);
+		}
+		if(typeof document.selection != "undefined") {
+			// Something for IE
 			this.focus();
 			return document.selection.createRange().text;
 		}
-		return this.get('value').substring(this.selectionStart, this.selectionEnd);
+		return '';
 	},
 
 	wrapSelectedText: function(newtext, wrapperLeft, wrapperRight, isLast) {
@@ -33,23 +37,22 @@ Element.implement({
 		var scroll_top = this.scrollTop;
 
 		this.focus();
-		if(Browser.Engine.trident) {
-			var range = document.selection.createRange();
-			range.text = wrapperLeft + newtext + wrapperRight;
-			if(isLast) {
-				range.select();
-			}
-		}
-		else {
+		if(typeof this.selectionStart != "undefined") {
 			var originalStart = this.selectionStart;
 			var originalEnd = this.selectionEnd;
 			this.value = this.get('value').substring(0, originalStart) + wrapperLeft + newtext + wrapperRight + this.get('value').substring(originalEnd);
 			if(isLast == false) {
 				this.setSelectionRange(originalStart + wrapperLeft.length, originalStart + wrapperLeft.length + newtext.length);
-			}
-			else {
+			} else {
 				var position = originalStart + newtext.length + wrapperLeft.length +  wrapperRight.length;
 				this.setSelectionRange(position, position);
+			}
+		} else if(typeof document.selection != "undefined") {
+			// Something for IE
+			var range = document.selection.createRange();
+			range.text = wrapperLeft + newtext + wrapperRight;
+			if(isLast) {
+				range.select();
 			}
 		}
 		this.scrollTop = scroll_top;

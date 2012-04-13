@@ -558,7 +558,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$access->clearCache();
 
 		$db = JFactory::getDBO ();
-		$queries[] = "DELETE FROM #__kunena_aliases WHERE type='catid' AND c.id={$db->quote($this->id)}";
+		$queries[] = "DELETE FROM #__kunena_aliases WHERE type='catid' AND id={$db->quote($this->id)}";
 		// Delete user topics
 		$queries[] = "DELETE FROM #__kunena_user_topics WHERE category_id={$db->quote($this->id)}";
 		// Delete user categories

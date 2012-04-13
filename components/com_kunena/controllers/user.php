@@ -185,7 +185,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		if (! empty ( $banDelPosts )) {
-			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('user' => $user->userid));
+			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $user->userid));
 			foreach($messages as $mes) {
 				$mes->trash();
 			}

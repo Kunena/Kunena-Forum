@@ -71,12 +71,17 @@ class KunenaControllerUser extends KunenaController {
 			return;
 		}
 
-		$this->saveUser();
-		$this->saveProfile();
-		$this->saveAvatar();
-		$this->saveSettings();
-		if (!$this->me->save()) {
-			$this->app->enqueueMessage($this->me->getError(), 'notice');
+		$this->user = JFactory::getUser();
+		$success = $this->saveUser();
+		if (!$success) {
+			$this->app->enqueueMessage($this->user->getError(), 'notice');
+		} else {
+			$this->saveProfile();
+			$this->saveAvatar();
+			$this->saveSettings();
+			if (!$this->me->save()) {
+				$this->app->enqueueMessage($this->me->getError(), 'notice');
+			}
 		}
 
 		$msg = JText::_( 'COM_KUNENA_PROFILE_SAVED' );
@@ -281,8 +286,6 @@ class KunenaControllerUser extends KunenaController {
 
 	// Mostly copied from Joomla 1.5
 	protected function saveUser(){
-		$user		= JUser::getInstance(JRequest::getInt ( 'userid', 0 ));
-
 		// we don't want users to edit certain fields so we will ignore them
 		$ignore = array('id', 'gid', 'block', 'usertype', 'registerDate', 'activation');
 
@@ -303,7 +306,7 @@ class KunenaControllerUser extends KunenaController {
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
 			jimport('joomla.user.helper');
-			$result = JUserHelper::getUserGroups($user->id);
+			$result = JUserHelper::getUserGroups($this->user->id);
 
 			$groups = array();
 			foreach ( $result as $key => $value ) {
@@ -314,8 +317,8 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		// get the redirect
-		$return = CKunenaLink::GetMyProfileURL($user->id, '', false);
-		$err_return = CKunenaLink::GetMyProfileURL($user->id, 'edit', false);
+		$return = CKunenaLink::GetMyProfileURL($this->user->id, '', false);
+		$err_return = CKunenaLink::GetMyProfileURL($this->user->id, 'edit', false);
 
 		// do a password safety check
 		if ( !empty($post['password']) && !empty($post['password2']) ) {
@@ -329,28 +332,26 @@ class KunenaControllerUser extends KunenaController {
 			}
 		}
 
-		$username = $this->me->username;
+		$username = $this->user->get('username');
 
 		// Bind the form fields to the user table
-		if (!$user->bind($post)) {
-			$this->app->enqueueMessage ( $user->getError(), 'error' );
+		if (!$this->user->bind($post)) {
 			return false;
 		}
 
 		// Store user to the database
-		if (!$user->save(true)) {
-			$this->app->enqueueMessage ( $user->getError(), 'error' );
+		if (!$this->user->save(true)) {
 			return false;
 		}
 
 		$session = JFactory::getSession();
-		$session->set('user', $user);
+		$session->set('user', $this->user);
 
 		// update session if username has been changed
-		if ( $username && $username != $user->username ){
+		if ( $username && $username != $this->user->username ){
 			$table = JTable::getInstance('session', 'JTable' );
 			$table->load($session->getId());
-			$table->username = $user->username;
+			$table->username = $this->user->username;
 			$table->store();
 		}
 	}

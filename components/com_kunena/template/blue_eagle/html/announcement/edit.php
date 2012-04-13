@@ -47,7 +47,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 				<div>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_DATE') ?>:
-						<?php echo $this->displayInput('created', 'addcreated') ?>
+						<?php echo $this->displayInput('created', 'addcreated', 'kanncreated') ?>
 					</label>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_SHOWDATE') ?>:

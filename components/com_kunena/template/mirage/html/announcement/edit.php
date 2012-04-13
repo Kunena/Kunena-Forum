@@ -75,7 +75,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 										</label>
 									</div>
 									<div class="form-field">
-										<?php echo $this->displayInput('created', 'addcreated') ?>
+										<?php echo $this->displayInput('created', 'addcreated', 'kanncreated') ?>
 									</div>
 								</li>
 								<li class="announcement-row kbox-hover kbox-hover_list-row">

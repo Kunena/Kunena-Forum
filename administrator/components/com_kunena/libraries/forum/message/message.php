@@ -461,6 +461,28 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * Method to trash the messages objects from the database
+	 *
+	 * @access	public
+	 * @return	boolean	True on success
+	 * @since 1.6
+	 */
+	public function trash() {
+		if (!$this->exists()) {
+			return true;
+		}
+
+		$db = JFactory::getDBO ();
+		$query = "UPDATE #__kunena_messages SET hold='2' WHERE id={$db->quote($this->id)}";
+
+		$db->setQuery($query);
+		$db->query();
+		KunenaError::checkDatabaseError ();
+
+		return true;
+	}
+
+	/**
 	 * Method to delete the KunenaForumMessage object from the database
 	 *
 	 * @access	public

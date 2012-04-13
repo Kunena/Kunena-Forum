@@ -184,6 +184,8 @@ abstract class KunenaMenuHelper {
 							$tmp->sublevel = $item->sublevel;
 							$tmp->tree = $item->tree;
 							$item = $tmp;
+						} else {
+							$item = clone($item);
 						}
 					} else {
 						$item = clone($item);

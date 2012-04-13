@@ -43,6 +43,7 @@ class KunenaBbcode extends BBCode {
 		$this->SetSmileyURL ( JURI::root(true) );
 		$this->SetDetectURLs ( true );
 		$this->SetURLPattern (array($this, 'parseUrl'));
+		$this->SetURLTarget('_blank');
 	}
 
 	/**
@@ -138,7 +139,7 @@ class KunenaBbcode extends BBCode {
 			}
 		}
 
-		return "<a href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+		return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
 	}
 }
 
@@ -713,11 +714,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				echo "ISVALIDURL<br />";
 			if ($bbcode->url_targetable !== false && isset ( $params ['target'] ))
 				$target = " target=\"" . htmlspecialchars ( $params ['target'] ) . "\"";
-			else
-				$target = "";
-			if ($bbcode->url_target !== false)
-				if (! ($bbcode->url_targetable == 'override' && isset ( $params ['target'] )))
-					$target = " target=\"" . htmlspecialchars ( $bbcode->url_target ) . "\"";
+			elseif ($bbcode->url_target !== false)
+				$target = " target=\"" . htmlspecialchars ( $bbcode->url_target ) . "\"";
 			return '<a href="' . htmlspecialchars ( $url ) . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
 		}
 		return htmlspecialchars ( $params ['_tag'] ) . $content . htmlspecialchars ( $params ['_endtag'] );

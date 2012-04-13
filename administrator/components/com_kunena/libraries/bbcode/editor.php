@@ -289,7 +289,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 						$js .= "\n	this.wrapSelection('[{$tag}]', '[/{$tag}]', false);";
 					} else {
 						$start = $action['start'] ? $action['start'] : "[{$action['tag']}]";
-						$end =  $action['end'] ? $action['end'] : "[{$action['tag']}]";
+						$end =  $action['end'] ? $action['end'] : "[/{$action['tag']}]";
 						$js .= "\nselection = this.getSelection();
 	if (selection) {
 		this.processEachLine(function(line) {

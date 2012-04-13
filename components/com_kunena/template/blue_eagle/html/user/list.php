@@ -153,11 +153,7 @@ document.addEvent('domready', function() {
 						<td class="kcol-mid"><?php echo !empty($uslavatar) ? $profile->getLink($uslavatar) : '&nbsp;' ?></td>
 						<?php endif; ?>
 
-<<<<<<< HEAD
-						<td class="kcol-mid"><?php echo $profile->getName(); ?></td>
-=======
 						<td class="kcol-mid"><?php echo $profile->getLink(); ?></td>
->>>>>>> upstream/master
 
 						<?php if ($this->config->userlist_posts) : ?>
 						<td class="kcol-mid"><?php echo intval($user->posts); ?></td>

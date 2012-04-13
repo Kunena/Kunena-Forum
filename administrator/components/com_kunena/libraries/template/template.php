@@ -589,7 +589,7 @@ HTML;
 					$templatename = 'blue_eagle';
 					$classname = "KunenaTemplate{$templatename}";
 
-					JFactory::getApplication()->enqueueMessage(JText::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename), 'notice');
+					if (is_dir(KPATH_SITE . "/template/{$templatename}")) JFactory::getApplication()->enqueueMessage(JText::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename), 'notice');
 				}
 				$file = KPATH_SITE."/template/{$templatename}/template.php";
 				if (!file_exists($file)) {

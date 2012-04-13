@@ -98,6 +98,7 @@ a.icon-stats-sm { background: url(../icons/small/stats.png) 5px 5px no-repeat; }
 a.icon-systemreport-sm { background: url(../icons/small/report.png) 5px 5px no-repeat; }
 a.icon-support-sm { background: url(../icons/small/support.png) 5px 5px no-repeat; }
 a.icon-editcss-sm { background: url(../icons/small/css.png) 5px 5px no-repeat; }
+a.icon-pluginsmanager-sm { background: url(../icons/small/pluginsmanager.png) 5px 5px no-repeat; }
 
 /* Large icons */
 div.kadmin-functitle.icon-cpanel { background: url(../icons/large/controlpanel.png) 5px 5px no-repeat; }

@@ -142,19 +142,20 @@ class KunenaAdminControllerUsers extends KunenaController {
 		}
 
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$uids = JRequest::getVar( 'uid', '', 'post' );
 
-		$path = KPATH_SITE.'/lib/kunena.moderation.class.php';
-		require_once ($path);
-		$kunena_mod = CKunenaModeration::getInstance();
+		if ($uids) {
+			foreach($uids as $id) {
+				list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $uids));
 
-		$uid = JRequest::getVar( 'uid', '', 'post' );
-		if ($uid) {
-		$db->setQuery ( "SELECT id,thread FROM #__kunena_messages WHERE hold=0 AND userid IN ('$uid')" );
-		$idusermessages = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-			if ( !empty($idusermessages) ) {
-				foreach ($idusermessages as $id) {
-					$kunena_mod->moveMessage($id->id, $cid[0], $TargetSubject = '', $TargetMessageID = 0);
+				if (!$object->authorise ( 'move' )) {
+					$error = $object->getError();
+				} elseif (!$target->authorise ( 'read' )) {
+					$error = $target->getError();
+				} else {
+					if (!$topic->move ( $target, $ids, $shadow, $subject, $changesubject )) {
+						$error = $topic->getError();
+					}
 				}
 			}
 		}  else {
@@ -162,7 +163,11 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$this->app->enqueueMessage ( JText::_('COM_A_KUNENA_USERMES_MOVED_DONE') );
+		if ($error) {
+			$this->app->enqueueMessage ( $error, 'notice' );
+		} else {
+			$this->app->enqueueMessage ( JText::_('COM_A_KUNENA_USERMES_MOVED_DONE') );
+		}
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 

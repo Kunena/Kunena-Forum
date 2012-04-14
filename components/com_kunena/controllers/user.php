@@ -190,12 +190,11 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		if (! empty ( $banDelPosts )) {
-			// FIXME: delete user posts needs new logic (not here)
-			//select only the messages which aren't already in the trash
-/*			$db->setQuery ( "UPDATE #__kunena_messages SET hold=2 WHERE hold!=2 AND userid={$db->Quote($user->userid)}" );
-			$idusermessages = $db->loadObjectList ();
-			KunenaError::checkDatabaseError();
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES') );*/
+			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $user->userid));
+			foreach($messages as $mes) {
+				$mes->publish(KunenaForum::DELETED);
+			}
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES') );
 		}
 
 		$this->app->redirect ( $user->getUrl(false) );

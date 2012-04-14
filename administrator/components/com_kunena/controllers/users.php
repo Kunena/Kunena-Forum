@@ -117,7 +117,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$userids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$userids = JRequest::getVar ( 'uid', array (), 'post', 'array' );
 
 		if ($userids < 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
@@ -136,29 +136,39 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$uids = $this->app->getUserState ( 'kunena.usermove.userid' );
 
-		// TODO : deprecated logic need to be fixed
-		$path = KPATH_SITE.'/lib/kunena.moderation.class.php';
-		require_once ($path);
-		$kunena_mod = CKunenaModeration::getInstance();
+		if ($uids) {
+			foreach($uids as $id) {
+				list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $id));
 
-		$uid = JRequest::getVar( 'uid', '', 'post' );
-		if ($uid) {
-		$db->setQuery ( "SELECT id,thread FROM #__kunena_messages WHERE hold=0 AND userid IN ('$uid')" );
-		$idusermessages = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-			if ( !empty($idusermessages) ) {
-				foreach ($idusermessages as $id) {
-					$kunena_mod->moveMessage($id->id, $cid[0], $TargetSubject = '', $TargetMessageID = 0);
+				foreach($messages as $object) {
+					$topic = $object->getTopic();
+
+					if (!$object->authorise ( 'move' )) {
+						$error = $object->getError();
+					} else {
+						foreach($cids as $cid){
+							$target = KunenaForumCategoryHelper::get( $cid );
+							if (!$topic->move ( $target, false, false, '', false )) {
+								$error = $topic->getError();
+							}
+						}
+					}
 				}
 			}
+
 		}  else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$this->app->enqueueMessage ( JText::_('COM_A_KUNENA_USERMES_MOVED_DONE') );
+		if ($error) {
+			$this->app->enqueueMessage ( $error, 'notice' );
+		} else {
+			$this->app->enqueueMessage ( JText::_('COM_A_KUNENA_USERMES_MOVED_DONE') );
+		}
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 

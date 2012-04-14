@@ -94,18 +94,13 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$path = KPATH_SITE.'/lib/kunena.moderation.class.php';
-		require_once ($path);
-		$kunena_mod = CKunenaModeration::getInstance();
-
 		$uids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		if ($uids) {
-			//select only the messages which aren't already in the trash
-			$db->setQuery ( "SELECT id FROM #__kunena_messages WHERE hold!=2 AND userid IN ('$uids')" );
-			$idusermessages = $db->loadObjectList ();
-			if (KunenaError::checkDatabaseError()) return;
-			foreach ($idusermessages as $messageID) {
-				$kunena_mod->deleteMessage($messageID->id, $DeleteAttachments = false);
+			foreach($uids as $id) {
+				list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $id));
+				foreach($messages as $mes) {
+					$mes->publish(KunenaForum::DELETED);
+				}
 			}
 		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );

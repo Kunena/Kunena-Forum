@@ -122,7 +122,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$userids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$userids = JRequest::getVar ( 'uid', array (), 'post', 'array' );
 
 		if ($userids < 0 ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
@@ -141,23 +141,29 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$uids = JRequest::getVar( 'uid', '', 'post' );
+		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$uids = $this->app->getUserState ( 'kunena.usermove.userid' );
 
 		if ($uids) {
 			foreach($uids as $id) {
-				list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $uids));
+				list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $id));
 
-				if (!$object->authorise ( 'move' )) {
-					$error = $object->getError();
-				} elseif (!$target->authorise ( 'read' )) {
-					$error = $target->getError();
-				} else {
-					if (!$topic->move ( $target, $ids, $shadow, $subject, $changesubject )) {
-						$error = $topic->getError();
+				foreach($messages as $object) {
+					$topic = $object->getTopic();
+
+					if (!$object->authorise ( 'move' )) {
+						$error = $object->getError();
+					} else {
+						foreach($cids as $cid){
+							$target = KunenaForumCategoryHelper::get( $cid );
+							if (!$topic->move ( $target, false, false, '', false )) {
+								$error = $topic->getError();
+							}
+						}
 					}
 				}
 			}
+
 		}  else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );

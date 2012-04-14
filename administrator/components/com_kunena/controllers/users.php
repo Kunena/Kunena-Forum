@@ -96,9 +96,11 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		$uids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		if ($uids) {
-			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $uids));
-			foreach($messages as $mes) {
-				$mes->publish(KunenaForum::DELETED);
+			foreach($uids as $id) {
+				list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $id));
+				foreach($messages as $mes) {
+					$mes->publish(KunenaForum::DELETED);
+				}
 			}
 		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );

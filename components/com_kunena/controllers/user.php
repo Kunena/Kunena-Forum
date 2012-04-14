@@ -354,6 +354,7 @@ class KunenaControllerUser extends KunenaController {
 			$table->username = $this->user->username;
 			$table->store();
 		}
+		return true;
 	}
 
 	protected function saveProfile() {

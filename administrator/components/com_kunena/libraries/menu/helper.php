@@ -38,7 +38,8 @@ abstract class KunenaMenuHelper {
 		asort($levels);
 		$key = 'menu_items'.$params.implode(',', $levels).'.'.$active->id;
 		$cache = JFactory::getCache('com_kunena.menu', '');
-		if (!($items = $cache->get($key))) {
+		// FIXME: enable caching after fixing the issues
+		if (true) { // !($items = $cache->get($key))) {
 			// Initialise variables.
 			$list		= array();
 
@@ -122,7 +123,8 @@ abstract class KunenaMenuHelper {
 				}
 			}
 
-			$cache->store($items, $key);
+			// FIXME: enable caching after fixing the issues
+			//$cache->store($items, $key);
 		}
 		return $items;
 	}
@@ -137,7 +139,8 @@ abstract class KunenaMenuHelper {
 		$level = JFactory::getUser()->get('aid');
 		$key = 'menu_items'.$params->toString().$level.'.'.$active->id;
 		$cache = JFactory::getCache('com_kunena.menu', '');
-		if (!($items = $cache->get($key))) {
+		// FIXME: enable caching after fixing the issues
+		if (true) { // !($items = $cache->get($key))) {
 			// Initialise variables.
 			$list		= array();
 
@@ -255,7 +258,8 @@ abstract class KunenaMenuHelper {
 				}
 			}
 
-			$cache->store($items, $key);
+			// FIXME: enable caching after fixing the issues
+			//$cache->store($items, $key);
 		}
 		return $items;
 	}

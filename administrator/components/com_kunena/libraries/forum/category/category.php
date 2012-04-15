@@ -474,8 +474,10 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		// Clear cache
 		$access = KunenaAccess::getInstance();
 		$access->clearCache();
+
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$cache->clean('categories');
+		// FIXME: enable caching after fixing the issues
+		//$cache->clean('categories');
 
 		return true;
 	}
@@ -638,7 +640,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$this->setProperties ( $table->getProperties () );
 
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$cache->clean('categories');
+		// FIXME: enable caching after fixing the issues
+		//$cache->clean('categories');
 
 		return $result;
 	}

@@ -119,6 +119,7 @@ class KunenaModelInstall extends JModel {
 		$this->uninstallPlugin('kunena', 'uddeim');
 		$this->uninstallPlugin('finder', 'kunena');
 		$this->uninstallPlugin('system', 'kunena');
+
 		$this->uninstallModule('mod_kunenamenu');
 
 		// Remove all Kunena related menu items, including aliases
@@ -592,7 +593,10 @@ class KunenaModelInstall extends JModel {
 		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false);
 		$this->installPlugin('install/plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false);
 		$this->installPlugin('install/plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false);
-		$this->installModule('install/modules/mod_kunenamenu', 'kunenamenu');
+
+		// TODO: install also menu module
+		$this->uninstallModule('mod_kunenamenu');
+		//$this->installModule('install/modules/mod_kunenamenu', 'kunenamenu');
 
 		if (! $this->getError ())
 			$this->setStep ( $this->getStep()+1 );

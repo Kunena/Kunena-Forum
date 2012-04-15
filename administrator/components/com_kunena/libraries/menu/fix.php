@@ -163,7 +163,8 @@ abstract class KunenaMenuFix {
 	public static function getConflicts() {
 		$items = array();
 		foreach (self::$same as $alias=>$list) {
-			if (count($list)>1) {
+			// There are no conflicts in J1.6+ (only multi-lang support)
+			if (count($list)>1 && version_compare(JVERSION, '1.6', '<')) {
 				$items += $list;
 			}
 		}

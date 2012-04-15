@@ -31,8 +31,10 @@ function com_install() {
 	$installer = new KunenaModelInstall();
 	$installer->install();
 
-	// Remove deprecated manifest.xml (K1.5)
+	// Remove deprecated manifest.xml (K1.5) and kunena.j16.xml (K1.7)
 	$manifest = JPATH_ADMINISTRATOR . '/components/com_kunena/manifest.xml';
+	if (JFile::exists($manifest)) JFile::delete($manifest);
+	$manifest = JPATH_ADMINISTRATOR . '/components/com_kunena/kunena.j16.xml';
 	if (JFile::exists($manifest)) JFile::delete($manifest);
 
 	// Redirect to Kunena Installer

@@ -510,7 +510,8 @@ class KunenaViewTopic extends KunenaView {
 				$cachekey = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
 				$cachegroup = 'com_kunena.messages';
 
-				$contents = $cache->get($cachekey, $cachegroup);
+				// FIXME: enable caching after fixing the issues
+				$contents = false; //$cache->get($cachekey, $cachegroup);
 				if (!$contents) {
 					$this->userkarma = "{$this->userkarma_title} {$this->userkarma_minus} {$this->userkarma_plus}";
 					// Use kunena profile
@@ -539,7 +540,8 @@ class KunenaViewTopic extends KunenaView {
 					$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
 
 					$contents = $this->loadTemplateFile('profile');
-					if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+					// FIXME: enable caching after fixing the issues
+					//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 				}
 				$profiles [$key] = $contents;
 			}
@@ -705,7 +707,7 @@ class KunenaViewTopic extends KunenaView {
 		$cachekey = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 
-		$contents = $cache->get($cachekey, $cachegroup);
+		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents) {
 
 			//Show admins the IP address of the user:
@@ -738,7 +740,8 @@ class KunenaViewTopic extends KunenaView {
 
 			$contents = $this->loadTemplateFile($template);
 			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
-			if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+			// FIXME: enable caching after fixing the issues
+			//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 		} elseif ($usertype == 'guest') {
 			echo $contents;
 			$this->setLayout($layout);

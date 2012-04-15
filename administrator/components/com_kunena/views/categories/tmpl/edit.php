@@ -145,6 +145,7 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo $this->options ['allow_polls']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 						</tr>
+						<?php /* TODO: enable features
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:</td>
 							<td valign="top"><?php echo $this->options ['channels']; ?></td>
@@ -155,7 +156,6 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo $this->options ['topic_ordering']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
 						</tr>
-						<?php /*
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
 							<td valign="top"><?php echo $this->options ['category_iconset']; ?></td>

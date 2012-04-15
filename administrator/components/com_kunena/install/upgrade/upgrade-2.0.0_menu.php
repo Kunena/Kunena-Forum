@@ -16,5 +16,5 @@ function kunena_upgrade_200_menu($parent) {
 	$legacy = KunenaMenuFix::getLegacy();
 	$errors = KunenaMenuFix::fixLegacy();
 
-	return array ('action' => '', 'name' => JText::sprintf ( 'COM_KUNENA_INSTALL_200_MENU', count($legacy) ), 'success' => !$errors);
+	if(!empty($legacy)) return array ('action' => '', 'name' => JText::sprintf ( 'COM_KUNENA_INSTALL_200_MENU', count($legacy) ), 'success' => !$errors);
 }

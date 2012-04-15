@@ -20,6 +20,9 @@ class KunenaAdminViewCategories extends KunenaView {
 
 	function displayEdit() {
 		$this->assignRef ( 'category', $this->get ( 'AdminCategory' ) );
+		// FIXME: better access control and gracefully handle no rights
+		// Prevent fatal error if no rights:
+		if (!$this->category) return;
 		$this->assignRef ( 'options', $this->get ( 'AdminOptions' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'AdminModerators' ) );
 		$this->setToolBarEdit();

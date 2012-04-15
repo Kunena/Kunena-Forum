@@ -53,7 +53,8 @@ class KunenaViewCommon extends KunenaView {
 			}
 
 			$cache = JFactory::getCache('com_kunena', 'output');
-			if ($cache->start("{$this->ktemplate->name}.common.announcement", 'com_kunena.template')) return;
+			// FIXME: enable caching after fixing the issues
+			//if ($cache->start("{$this->ktemplate->name}.common.announcement", 'com_kunena.template')) return;
 
 			if ($this->announcement && $this->announcement->authorise('read')) {
 				$this->annListUrl = KunenaForumAnnouncementHelper::getUri('list');
@@ -66,7 +67,8 @@ class KunenaViewCommon extends KunenaView {
 			} else {
 				echo ' ';
 			}
-			$cache->end();
+			// FIXME: enable caching after fixing the issues
+			//$cache->end();
 		} else echo ' ';
 	}
 
@@ -152,7 +154,8 @@ class KunenaViewCommon extends KunenaView {
 
 		$moderator = intval($this->me->isModerator());
 		$cache = JFactory::getCache('com_kunena', 'output');
-		if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
+		// FIXME: enable caching after fixing the issues
+		//if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
 
 		$users = KunenaUserHelper::getOnlineUsers();
 		KunenaUserHelper::loadUsers(array_keys($users));
@@ -194,14 +197,17 @@ class KunenaViewCommon extends KunenaView {
 			return $result;
 		}
 		echo $result;
-		$cache->end();
+
+		// FIXME: enable caching after fixing the issues
+		//$cache->end();
 	}
 
 	function displayStatistics($tpl = null) {
 		if ($this->offline) return;
 
 		$cache = JFactory::getCache('com_kunena', 'output');
-		if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) return;
+		// FIXME: enable caching after fixing the issues
+		//if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) return;
 
 		// FIXME: refactor code
 		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
@@ -217,7 +223,8 @@ class KunenaViewCommon extends KunenaView {
 			return $result;
 		}
 		echo $result;
-		$cache->end();
+		// FIXME: enable caching after fixing the issues
+		//$cache->end();
 	}
 
 	function displayMenu($tpl = null) {
@@ -266,7 +273,8 @@ class KunenaViewCommon extends KunenaView {
 		$cachekey = "{$this->ktemplate->name}.common.loginbox.u{$my->id}";
 		$cachegroup = 'com_kunena.template';
 
-		$contents = $cache->get($cachekey, $cachegroup);
+		// FIXME: enable caching after fixing the issues
+		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents) {
 			$this->assign ( 'moduleHtml', $this->getModulePosition('kunena_profilebox'));
 
@@ -302,7 +310,8 @@ class KunenaViewCommon extends KunenaView {
 			if (JError::isError($contents)) {
 				return $contents;
 			}
-			$cache->store($contents, $cachekey, $cachegroup);
+			// FIXME: enable caching after fixing the issues
+			//$cache->store($contents, $cachekey, $cachegroup);
 		}
 		$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillLoginBoxInfo'), $contents);
 		echo $contents;

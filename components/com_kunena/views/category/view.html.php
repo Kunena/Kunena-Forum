@@ -231,7 +231,8 @@ class KunenaViewCategory extends KunenaView {
 		$cachekey = "list.item.{$this->getTemplateMD5()}.{$usertype}.{$catid}.{$lastPost->last_post_id}";
 		$cachegroup = 'com_kunena.category';
 
-		$contents = $cache->get($cachekey, $cachegroup);
+		// FIXME: enable caching after fixing the issues
+		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents) {
 			$this->categoryURL = KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}");
 			$this->categoryRssURL = $this->config->enablerss ? KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}&format=feed") : '';
@@ -246,7 +247,8 @@ class KunenaViewCategory extends KunenaView {
 			}
 			$contents = $this->loadTemplateFile('category');
 			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillCategoryInfo'), $contents);
-			if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+			// FIXME: enable caching after fixing the issues
+			//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 		} elseif ($usertype == 'guest') {
 			echo $contents;
 			return;
@@ -356,7 +358,8 @@ class KunenaViewCategory extends KunenaView {
 			$cachekey = "{$this->getTemplateMD5()}.{$usertype}.c{$this->category->id}.t{$this->topic->id}.p{$this->topic->last_post_id}";
 			$cachegroup = 'com_kunena.topics';
 
-			$contents = $cache->get($cachekey, $cachegroup);
+			// FIXME: enable caching after fixing the issues
+			$contents = false; //$cache->get($cachekey, $cachegroup);
 			if (!$contents) {
 				if ($this->category->id != $this->topic->category_id) {
 					$this->categoryLink = $this->getCategoryLink($this->topic->getCategory()->getParent()) . ' / ' . $this->getCategoryLink($this->topic->getCategory());
@@ -384,7 +387,8 @@ class KunenaViewCategory extends KunenaView {
 				}
 				$contents = $this->loadTemplateFile('row');
 				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
-				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				// FIXME: enable caching after fixing the issues
+				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
 			if ($usertype != 'guest') {
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);

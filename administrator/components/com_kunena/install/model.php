@@ -333,15 +333,18 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function installModule($path, $name) {
+		$success = false;
+
 		$dest = JPATH_ROOT."/tmp/kinstall_mod_{$name}";
 		if (file_exists($dest)) JFolder::delete($dest);
-		if (is_file(KPATH_ADMIN .'/'. $path)) {
-			// Extract file
-			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
-		} else {
+			if (is_dir(KPATH_ADMIN .'/'. $path)) {
 			// Copy path
 			$success = JFolder::copy(KPATH_ADMIN .'/'. $path, $dest);
+		} elseif (is_file(KPATH_ADMIN .'/'. $path)) {
+			// Extract file
+			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
 		}
+
 		// We need to have only one manifest which is named as kunena.xml
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 2.5+
@@ -383,16 +386,19 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function installPlugin($path, $group, $name, $publish) {
+		$success = false;
+
 		$dest = JPATH_ROOT."/tmp/kinstall_plg_{$group}_{$name}";
 		if (file_exists($dest)) JFolder::delete($dest);
-		if (is_file(KPATH_ADMIN .'/'. $path)) {
-			// Extract file
-			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
-		} else {
+		if (is_dir(KPATH_ADMIN .'/'. $path)) {
 			// Copy path
 			$success = JFolder::copy(KPATH_ADMIN .'/'. $path, $dest);
+		} elseif (is_file(KPATH_ADMIN .'/'. $path)) {
+			// Extract file
+			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
 		}
-		// We need to have only one manifest which is named as kunena.xml
+
+		// We need to have only one manifest which is named as xxx.xml
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
 			if ($success && is_file("{$dest}/{$name}.j15.xml")) {
@@ -411,8 +417,8 @@ class KunenaModelInstall extends JModel {
 			}
 		}
 		// TODO: copy all language files to module directory
-		$success = JFolder::create($dest.'/language/en-GB');
-		$success = JFile::copy(KPATH_ADMIN."/language/index.html", "{$dest}/language/en-GB/index.html");
+		if ($success) $success = JFolder::create($dest.'/language/en-GB');
+		if ($success) $success = JFile::copy(KPATH_ADMIN."/language/index.html", "{$dest}/language/en-GB/index.html");
 		if ($success && is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
 			$success = JFile::copy(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
 		}
@@ -587,7 +593,7 @@ class KunenaModelInstall extends JModel {
 		//$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false);
 		$this->installPlugin('install/plugins/plg_kunena_kunena', 'kunena', 'kunena', true);
 		$this->installPlugin('install/plugins/plg_kunena_joomla15', 'kunena', 'joomla', true);
-		$this->installPlugin('install/plugins/plg_kunena_joomla16', 'kunena', 'joomla', true);
+		$this->installPlugin('install/plugins/plg_kunena_joomla25', 'kunena', 'joomla', true);
 		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false);
 		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false);
 		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false);
@@ -1634,6 +1640,8 @@ class KunenaModelInstall extends JModel {
 			$submenu['help']['params']['body'] = "[article=full]{$config->help_cid}[/article]";
 			$submenu['help']['params']['body_format'] = 'bbcode';
 		}
+		$lang = JFactory::getLanguage();
+		$debug = $lang->setDebug(false);
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
 			$this->createMenuJ25($menu, $submenu);
@@ -1641,6 +1649,7 @@ class KunenaModelInstall extends JModel {
 			// Joomla 1.5
 			$this->createMenuJ15($menu, $submenu);
 		}
+		$lang->setDebug($debug);
 	}
 
 	function createMenuJ15($menu, $submenu) {

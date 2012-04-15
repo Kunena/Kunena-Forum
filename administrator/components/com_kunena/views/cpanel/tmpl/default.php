@@ -74,7 +74,9 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 		</tr>
 	</table>
 </div>
-	<?php if ( $this->config->version_check ) : ?>
+	<?php
+	// FIXME: enable Live Update
+	if (0 && $this->config->version_check ) : ?>
 	<div class="kadmin-welcome">
 		<?php
 		require_once KPATH_ADMIN.'/liveupdate/liveupdate.php';

@@ -614,9 +614,6 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
 
-		$cache = JFactory::getCache('com_kunena', 'output');
-		$cache->clean('categories');
-
 		return $result;
 	}
 

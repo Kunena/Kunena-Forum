@@ -2,7 +2,7 @@
 <!DOCTYPE jupgrade>
 <jupgrade>
 	<installer>
-		<file>administrator/components/com_kunena/install/j16upgrade.php</file>
+		<file>administrator/components/com_kunena/install/j25upgrade.php</file>
 		<class>jUpgradeComponentKunena</class>
 	</installer>
 

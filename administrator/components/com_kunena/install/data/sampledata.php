@@ -19,6 +19,9 @@ class KText {
 
 function installSampleData()
 {
+	$lang = JFactory::getLanguage();
+	$debug = $lang->setDebug(false);
+
 	jimport ( 'joomla.utilities.date' );
 
 	$db = JFactory::getDBO();
@@ -207,5 +210,7 @@ function installSampleData()
 			$counter++;
 		}
 	}
+
+	$lang->setDebug($debug);
 	return $counter;
 }

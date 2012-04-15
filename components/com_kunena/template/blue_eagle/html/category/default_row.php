@@ -57,7 +57,7 @@ $this->cache = false;
 			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat');?>
 			</span>
-			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
+			<span class="ktopic-by ks">&nbsp;<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
 		</div>
 
 		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>

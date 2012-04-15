@@ -75,7 +75,7 @@ class KunenaAccessJoomla {
 		if (!$accesstype || $accesstype == 'joomla.level') {
 			$html ['joomla-level']['access'] = array(
 				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_TITLE'),
-				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC') .'<br /><br />'. JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC_J16'),
+				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC') .'<br /><br />'. JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC_J25'),
 				'input' => JHtml::_('access.assetgrouplist', 'access', $category->accesstype == 'joomla.level' ? $category->access : 1)
 			);
 		}
@@ -88,7 +88,7 @@ class KunenaAccessJoomla {
 				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_TITLE'),
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC') .'<br /><br />'.
 						JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC2') .'<br /><br />'.
-						JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC_J16'),
+						JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC_J25'),
 				'input' => JHTML::_ ( 'access.usergroup', 'pub_access', $category->pub_access, 'class="inputbox" size="10"', false)
 			);
 			$html ['none']['pub_recurse'] = array(
@@ -100,7 +100,7 @@ class KunenaAccessJoomla {
 				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_TITLE'),
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC') .'<br /><br />'.
 						JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC2') .'<br /><br />'.
-						JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC_J16'),
+						JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC_J25'),
 				'input' => JHTML::_ ( 'access.usergroup', 'admin_access', $category->admin_access, 'class="inputbox" size="10"', false)
 			);
 			$html ['none']['admin_recurse'] = array(

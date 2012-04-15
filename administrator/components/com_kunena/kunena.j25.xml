@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension type="component" version="1.6" method="upgrade">
+<extension type="component" version="2.5" method="upgrade">
 	<name>com_kunena</name>
 	<version>@kunenaversion@</version>
 	<versionname>@kunenaversionname@</versionname>

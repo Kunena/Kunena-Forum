@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension version="1.6" type="plugin" group="kunena" method="upgrade">
+<extension version="2.5" type="plugin" group="kunena" method="upgrade">
 	<name>plg_kunena_uddeim</name>
 	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>

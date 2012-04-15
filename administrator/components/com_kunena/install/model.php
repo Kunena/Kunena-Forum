@@ -398,13 +398,13 @@ class KunenaModelInstall extends JModel {
 			if ($success && is_file("{$dest}/{$name}.j15.xml")) {
 				$success = JFile::delete("{$dest}/{$name}.j15.xml");
 			}
-			if ($success && is_file("{$dest}/{$name}.j16.xml")) {
-				$success = JFile::move("{$dest}/{$name}.j16.xml", "{$dest}/{$name}.xml");
+			if ($success && is_file("{$dest}/{$name}.j25.xml")) {
+				$success = JFile::move("{$dest}/{$name}.j25.xml", "{$dest}/{$name}.xml");
 			}
 		} else {
 			// Joomla 1.5
-			if ($success && is_file("{$dest}/{$name}.j16.xml")) {
-				$success = JFile::delete("{$dest}/{$name}.j16.xml");
+			if ($success && is_file("{$dest}/{$name}.j25.xml")) {
+				$success = JFile::delete("{$dest}/{$name}.j25.xml");
 			}
 			if ($success && is_file("{$dest}/{$name}.j15.xml")) {
 				$success = JFile::move("{$dest}/{$name}.j15.xml", "{$dest}/{$name}.xml");
@@ -553,7 +553,7 @@ class KunenaModelInstall extends JModel {
 			array('name'=>'com_kunena-media', 'dest'=>KPATH_MEDIA)
 		);
 		static $ignore = array(
-			KPATH_ADMIN => array('index.html', 'kunena.xml', 'kunena.j16.xml', 'admin.kunena.php', 'api.php', 'archive', 'install', 'language'),
+			KPATH_ADMIN => array('index.html', 'kunena.xml', 'kunena.j25.xml', 'admin.kunena.php', 'api.php', 'archive', 'install', 'language'),
 			KPATH_SITE => array('index.html', 'kunena.php', 'router.php', 'COPYRIGHT.php', 'template', 'language')
 		);
 		$task = $this->getTask();
@@ -1636,7 +1636,7 @@ class KunenaModelInstall extends JModel {
 		}
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
-			$this->createMenuJ16($menu, $submenu);
+			$this->createMenuJ25($menu, $submenu);
 		} else {
 			// Joomla 1.5
 			$this->createMenuJ15($menu, $submenu);
@@ -1796,7 +1796,7 @@ class KunenaModelInstall extends JModel {
 		MenusHelper::cleanCache ();
 	}
 
-	function createMenuJ16($menu, $submenu) {
+	function createMenuJ25($menu, $submenu) {
 		jimport ( 'joomla.utilities.string' );
 		jimport ( 'joomla.application.component.helper' );
 
@@ -1948,14 +1948,14 @@ class KunenaModelInstall extends JModel {
 	function deleteMenu() {
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
-			$this->DeleteMenuJ16();
+			$this->DeleteMenuJ25();
 		} else {
 			// Joomla 1.5
 			$this->DeleteMenuJ15();
 		}
 	}
 
-	function deleteMenuJ16() {
+	function deleteMenuJ25() {
 		$table = JTable::getInstance ( 'menutype' );
 		$table->load(array('menutype'=>'kunenamenu'));
 		if ($table->id) {

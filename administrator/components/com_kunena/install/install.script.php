@@ -21,8 +21,7 @@ class Com_KunenaInstallerScript {
 			'5.0' => '5.0.4',
 		),
 		'Joomla' => array (
-			'2.5' => '2.5',
-			'1.7' => '1.7.3',
+			'2.5' => '2.5.3',
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
@@ -60,6 +59,12 @@ class Com_KunenaInstallerScript {
 			return false;
 		}
 
+		// Remove deprecated manifest.xml (K1.5) and kunena.j16.xml (K1.7)
+		$manifest = JPATH_ADMINISTRATOR . '/components/com_kunena/manifest.xml';
+		if (JFile::exists($manifest)) JFile::delete($manifest);
+		$manifest = JPATH_ADMINISTRATOR . '/components/com_kunena/kunena.j16.xml';
+		if (JFile::exists($manifest)) JFile::delete($manifest);
+
 		// TODO: Before install: we want so store files so that user can cancel action
 
 		$adminpath = KPATH_ADMIN;
@@ -77,12 +82,12 @@ class Com_KunenaInstallerScript {
 
 	public function postflight($type, $parent) {
 		$installer = $parent->getParent();
-
-		// Rename kunena.j16.xml to kunena.xml
 		$adminpath = KPATH_ADMIN;
-		if (JFile::exists("{$adminpath}/kunena.j16.xml")) {
+
+		// Rename kunena.j25.xml to kunena.xml
+		if (JFile::exists("{$adminpath}/kunena.j25.xml")) {
 			if ( JFile::exists("{$adminpath}/kunena.xml")) JFile::delete("{$adminpath}/kunena.xml");
-			JFile::move("{$adminpath}/kunena.j16.xml", "{$adminpath}/kunena.xml");
+			JFile::move("{$adminpath}/kunena.j25.xml", "{$adminpath}/kunena.xml");
 		}
 
 		// Set redirect

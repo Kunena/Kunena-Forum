@@ -3,31 +3,25 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-if (file_exists(JPATH_SITE.'/includes/version.php')) require_once JPATH_SITE.'/includes/version.php';
-
 /**
- * Kunena 1.6 migration class from Joomla 1.5 to Joomla 1.6
+ * Kunena 2.0 jUpgrade migration class from Joomla! 1.5 to Joomla! 2.5
  *
- * You can also put this class into your own extension, which makes jUpgrade to use your own copy instead of this adapter class.
- * In order to do that you should have j16upgrade.xml file somewhere in your extension path containing:
- * 	<jupgrade>
- * 		<!-- Adapter class location and name -->
- * 		<installer>
- * 			<file>administrator/components/com_kunena/install/j16upgrade.php</file>
- * 			<class>jUpgradeComponentKunena</class>
- * 		</installer>
- * 	</jupgrade>
- * For more information, see ./j16upgrade.xml
- *
- * @since		1.6.4
  */
-class jUpgradeComponentKunena extends jUpgrade {
+class jUpgradeComponentKunena extends jUpgradeExtensions {
+
+	public function __construct($step = null) {
+		// Joomla 2.5 support
+		if (file_exists(JPATH_LIBRARIES.'/cms/version/version.php')) require_once JPATH_LIBRARIES.'/cms/version/version.php';
+
+		parent::__construct($step);
+	}
+
 	/**
 	 * Check if Kunena migration is supported.
 	 *
@@ -35,9 +29,8 @@ class jUpgradeComponentKunena extends jUpgrade {
 	 * @since	1.6.4
 	 */
 	protected function detectExtension() {
-		$this->api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-		// Support only JUpgrade 1.2.2+
-		return method_exists($this, 'mapUserGroup');
+		// Install Kunena 2.0 only into Joomla 2.5
+		return version_compare(JVERSION, '2.5', '>=');
 	}
 
 	/**
@@ -47,11 +40,64 @@ class jUpgradeComponentKunena extends jUpgrade {
 	 * @since	1.6.4
 	 */
 	protected function getCopyTables() {
-		require_once $this->api;
+		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 		require_once KPATH_ADMIN . '/install/schema.php';
 		$schema = new KunenaModelSchema();
 		$tables = $schema->getSchemaTables('');
 		return array_values($tables);
+	}
+
+	/**
+	 * Copy kunena_categories table from old site to new site.
+	 *
+	 * You can create custom copy functions for all your tables.
+	 *
+	 * If you want to copy your table in many smaller chunks,
+	 * please store your custom state variables into $this->state and return false.
+	 * Returning false will force jUpgrade to call this function again,
+	 * which allows you to continue import by reading $this->state before continuing.
+	 *
+	 * @return	boolean Ready (true/false)
+	 * @since	1.6.4
+	 * @throws	Exception
+	 */
+	protected function copyTable_kunena_categories($table) {
+		$this->source = $this->destination = "#__{$table}";
+
+		// Clone table
+		$this->cloneTable($this->source, $this->destination);
+
+		// Get data
+		$rows = parent::getSourceData('*');
+
+		// Do some custom post processing on the list.
+		foreach ($rows as &$row) {
+			if (!isset($row['accesstype']) || $row['accesstype'] == 'none' ) {
+				if ($row['admin_access'] != 0) {
+					$row['admin_access'] = $this->mapUserGroup($row['admin_access']);
+				}
+				if ($row['pub_access'] == -1) {
+					// All registered
+					$row['pub_access'] = 2;
+					$row['pub_recurse'] = 1;
+				} elseif ($row['pub_access'] == 0) {
+					// Everybody
+					$row['pub_access'] = 1;
+					$row['pub_recurse'] = 1;
+				} elseif ($row['pub_access'] == 1) {
+					// Nobody
+					$row['pub_access'] = 8;
+				} else {
+					// User groups
+					$row['pub_access'] = $this->mapUserGroup($row['pub_access']);
+				}
+			} elseif ($row['accesstype'] == 'joomla.level') {
+				// Convert Joomla access levels
+				$row['access']++;
+			}
+		}
+		$this->setDestinationData($rows);
+		return true;
 	}
 
 	/**
@@ -69,7 +115,7 @@ class jUpgradeComponentKunena extends jUpgrade {
 	 * @throws	Exception
 	 */
 	protected function migrateExtensionCustom() {
-		require_once $this->api;
+		require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 		// Need to initialize application
 		jimport ('joomla.environment.uri');
@@ -142,18 +188,18 @@ class jUpgradeComponentKunena extends jUpgrade {
 				if (!$success) echo "ERROR";
 			}
 		}
-		// Replace Joomla! 1.5 manifest file with Joomla! 1.6+ version
+		// Replace Joomla! 1.5 manifest file with Joomla! 2.5 version
 		jimport('joomla.filesystem.file');
-		$manifest16 = JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.j16.xml';
+		$manifest25 = JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.j25.xml';
 		$manifest15 = JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.xml';
-		if (file_exists($manifest16)) {
-			$content = file_get_contents($manifest16);
+		if (file_exists($manifest25)) {
+			$content = file_get_contents($manifest25);
 			// Take care of SVN install
 			$content = preg_replace('/@kunenaversion@/', preg_replace('/-SVN/i', '', KunenaForum::version()), $content);
 			$content = preg_replace('/@kunenaversiondate@/', KunenaForum::versionDate(), $content);
 			$content = preg_replace('/@kunenaversionname@/', KunenaForum::versionName(), $content);
 			JFile::write($manifest15, $content);
-			JFile::delete($manifest16);
+			JFile::delete($manifest25);
 		}
 
 		jimport('joomla.plugin.helper');
@@ -173,59 +219,6 @@ class jUpgradeComponentKunena extends jUpgrade {
 		// Install English language
 		$kunena->installLanguage('en-GB', 'English');
 
-		return true;
-	}
-
-	/**
-	 * Copy kunena_categories table from old site to new site.
-	 *
-	 * You can create custom copy functions for all your tables.
-	 *
-	 * If you want to copy your table in many smaller chunks,
-	 * please store your custom state variables into $this->state and return false.
-	 * Returning false will force jUpgrade to call this function again,
-	 * which allows you to continue import by reading $this->state before continuing.
-	 *
-	 * @return	boolean Ready (true/false)
-	 * @since	1.6.4
-	 * @throws	Exception
-	 */
-	protected function copyTable_kunena_categories($table) {
-		$this->source = $this->destination = "#__{$table}";
-
-		// Clone table
-		$this->cloneTable($this->source, $this->destination);
-
-		// Get data
-		$rows = parent::getSourceData('*');
-
-		// Do some custom post processing on the list.
-		foreach ($rows as &$row) {
-			if (isset($row['accesstype']) || $row['accesstype'] == 'none' ) {
-				if ($row['admin_access'] != 0) {
-					$row['admin_access'] = $this->mapUserGroup($row['admin_access']);
-				}
-				if ($row['pub_access'] == -1) {
-					// All registered
-					$row['pub_access'] = 2;
-					$row['pub_recurse'] = 1;
-				} elseif ($row['pub_access'] == 0) {
-					// Everybody
-					$row['pub_access'] = 1;
-					$row['pub_recurse'] = 1;
-				} elseif ($row['pub_access'] == 1) {
-					// Nobody
-					$row['pub_access'] = 8;
-				} else {
-					// User groups
-					$row['pub_access'] = $this->mapUserGroup($row['pub_access']);
-				}
-			} elseif ($row['accesstype'] == 'joomla.level') {
-				// Convert Joomla access levels
-				$row['access']++;
-			}
-		}
-		$this->setDestinationData($rows);
 		return true;
 	}
 }

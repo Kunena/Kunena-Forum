@@ -329,14 +329,14 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `created_by` int(10) NOT NULL AFTER `title`;</query>
 		</version>
 		<version version="2.0.0-DEV12" versiondate="2012-02-03" versionname="Internal">
-			<query>ALTER TABLE `#__kunena_polls_users` CHANGE `lasttime` `lasttime` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_polls_users` CHANGE `lasttime` `lasttime` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'</query>
 		</version>
 		<version version="2.0.0-DEV13" versiondate="2012-03-15" versionname="Internal">
-			<query>ALTER TABLE `#__kunena_categories` CHANGE `pub_access` `pub_access` int(11) NOT NULL default '1',
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE `pub_access` `pub_access` int(11) NOT NULL default '1',
 			CHANGE `admin_access` `admin_access` int(11) NOT NULL default '1'</query>
 		</version>
 		<version version="2.0.0-DEV14" versiondate="2012-04-09" versionname="Internal">
-			<query>ALTER TABLE `#__kunena_users_banned` ADD KEY `created_time` (created_time);</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users_banned` ADD KEY `created_time` (created_time);</query>
 		</version>
 		<version version="2.0.0-DEV15" versiondate="2012-04-13" versionname="Internal">
 			<phpfile name="upgrade-2.0.0_menu"></phpfile>

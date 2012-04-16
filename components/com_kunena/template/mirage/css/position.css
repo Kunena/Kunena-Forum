@@ -115,17 +115,17 @@
 	padding: 0 10px;
 }
 
-#kunena.layout .divider-vertical-inline-solid {
+#kunena.layout .divider-horizontal-inline-solid {
 	border-bottom: 2px solid #EEEEEE;
 	border-top: 2px solid #CCCCCC;
 }
 
-#kunena.layout .divider-vertical-inline-dotted {
+#kunena.layout .divider-horizontal-inline-dotted {
 	border-bottom: 2px dotted #EEEEEE;
 	border-top: 2px dotted #CCCCCC;
 }
 
-#kunena.layout .divider-vertical-inline {
+#kunena.layout .divider-horizontal-inline {
 	display: block;
 	float: none;
 	height: 0;

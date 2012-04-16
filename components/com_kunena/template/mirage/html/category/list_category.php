@@ -73,7 +73,7 @@ $this->k ^= 1;
 	</dl>
 	<?php if ($this->subcategories) : ?>
 	<div class="innerspacer">
-		<div class="divider-vertical-inline divider-vertical-inline-dotted"></div>
+		<div class="divider-horizontal-inline divider-horizontal-inline-dotted"></div>
 	</div>
 	<div class="innerspacer-column kbox-full">
 		<ul class="kcontent-32 list-unstyled kcategory-subcat-list">

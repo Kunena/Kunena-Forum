@@ -42,12 +42,14 @@ $this->k ^= 1;
 		</dd>
 		<dd class="category-topics">
 			<div class="innerspacer-column">
-				<span class="number"><?php echo $this->formatLargeNumber($this->category->getTopics()); ?></span>
+				<span class="number"><?php echo $this->formatLargeNumber($this->category->getTopics()); ?></span><br />
+				<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span>
 			</div>
 		</dd>
 		<dd class="category-replies">
 			<div class="innerspacer-column">
-				<span class="number"><?php echo $this->formatLargeNumber($this->category->getReplies()); ?></span>
+				<span class="number"><?php echo $this->formatLargeNumber($this->category->getReplies()); ?></span><br />
+				<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
 			</div>
 		</dd>
 		<!-- td class="kcategory-subs">944 <span>Subscribers</span></td -->
@@ -71,7 +73,7 @@ $this->k ^= 1;
 	</dl>
 	<?php if ($this->subcategories) : ?>
 	<div class="innerspacer">
-		<div class="divider-vertical-inline-dotted"></div>
+		<div class="divider-vertical-inline divider-vertical-inline-dotted"></div>
 	</div>
 	<div class="innerspacer-column kbox-full">
 		<ul class="kcontent-32 list-unstyled kcategory-subcat-list">

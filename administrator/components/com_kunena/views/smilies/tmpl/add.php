@@ -16,7 +16,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 $document->addScriptDeclaration('function update_smiley(newimage)
 			{
 				document.smiley_image.src = "'.
-				$this->escape(KURL_SITE . $this->smileypath).'" + newimage;
+				$this->escape(JURI::root() . $this->smileypath).'" + newimage;
 			}');
 ?>
 <div id="kadmin">

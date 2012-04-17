@@ -253,6 +253,7 @@
 	left: 0;
 	right: auto;
 	margin: 0px;
+	padding: 10px 0px;
 	min-width: 210px;
 	/*padding: 4px 0;*/
 	position: absolute;
@@ -1114,16 +1115,17 @@
  ********************/
 
 #kunena.layout div.common-breadcrumb-kbox {
-	padding: 4px 8px;
+	/*padding: 4px 8px;*/
 }
 
 #kunena.layout div.common-breadcrumb-kbox ul li {
 	display: inline-block;
 }
 
-#kunena.layout div.common-breadcrumb-kbox ul li a {
+#kunena.layout div.common-breadcrumb-kbox ul li a, #kunena.layout div.common-breadcrumb-kbox ul li span {
 	/*margin: 0px 10px;*/
 	line-height: 32px;
+	padding: 4px 8px;
 }
 
 /*******************

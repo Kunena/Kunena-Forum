@@ -21,6 +21,13 @@ class KunenaViewUser extends KunenaView {
 		$this->displayCommon($tpl);
 	}
 
+	function displayModerate($tpl = null) {
+		// TODO: handle redirect to integrated component
+		$this->layout = 'default';
+		$this->setLayout($this->layout);
+		$this->displayCommon($tpl);
+	}
+
 	function displayEdit($tpl = null) {
 		$userid = JRequest::getInt('userid');
 		if ($userid && $this->me->userid != $userid) {

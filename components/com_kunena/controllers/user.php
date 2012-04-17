@@ -26,7 +26,7 @@ class KunenaControllerUser extends KunenaController {
 			$params = new JParameter($active->params);
 			$redirect = $params->get('integration', 1);
 		}
-		if ($redirect) {
+		if ($redirect && JRequest::getCmd('layout') != 'moderate') {
 			$profileIntegration = KunenaFactory::getProfile();
 			if (!($profileIntegration instanceof KunenaProfileKunena)) {
 				$url = $this->me->getUrl(false);

@@ -16,7 +16,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 $document->addScriptDeclaration('function update_rank(newimage)
 			{
 				document.rank_image.src = "'.
-				$this->escape(KURL_SITE . $this->rankpath).'" + newimage;
+				$this->escape(JURI::root() . $this->rankpath).'" + newimage;
 			}');
 ?>
 <div id="kadmin">

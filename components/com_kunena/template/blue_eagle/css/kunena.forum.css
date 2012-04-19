@@ -140,7 +140,7 @@ PX		EM			PCT			PT
 }
 #Kunena textarea,
 #Kunena textarea.kmedium {
-	font-size: 1em;
+	font-size: 12px;
 	width: 95%;
 	height: 10em;
 }

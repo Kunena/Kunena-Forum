@@ -45,7 +45,7 @@ $document->addScriptDeclaration('function update_rank(newimage)
 					?></td>
 					<td><?php echo $this->listranks?> &nbsp;
 					<?php if ( !$this->state->get('item.id') ): ?><img name="rank_image" src="" border="0" alt="" />
-					<?php else: ?><img name="rank_image" src="<?php echo $this->escape(KURL_SITE .$this->ktemplate->getRankPath( $this->rank_selected->rank_image)); ?>" border="0" alt="" /><?php endif; ?>
+					<?php else: ?><img name="rank_image" src="<?php echo $this->escape(JURI::root().$this->ktemplate->getRankPath( $this->rank_selected->rank_image)); ?>" border="0" alt="" /><?php endif; ?>
 					</td>
 				</tr>
 				<tr>

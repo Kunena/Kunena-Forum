@@ -59,12 +59,9 @@ $document->addScriptDeclaration('function update_smiley(newimage)
 					}
 					?> /></td>
 				</tr>
-				<tr>
-					<td colspan="2" align="center"> </td>
-				</tr>
 			</table>
 		</form>
-	</div>
+        </div>
 	<div class="kadmin-footer">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>

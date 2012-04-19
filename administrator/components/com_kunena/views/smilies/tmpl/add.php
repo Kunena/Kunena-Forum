@@ -38,7 +38,7 @@ $document->addScriptDeclaration('function update_smiley(newimage)
 					<td width="200"><input class="post" type="text" name="smiley_code"
 						value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>" /></td>
 					<td rowspan="3" width="50"><img name="smiley_image"
-						src="<?php echo isset($this->smiley_selected) ? $this->escape(KURL_SITE.$this->ktemplate->getSmileyPath($this->smiley_selected->location)) : '' ?>" border="0" alt="" /> &nbsp;</td>
+						src="<?php echo isset($this->smiley_selected) ? $this->escape(JURI::root().$this->ktemplate->getSmileyPath($this->smiley_selected->location)) : '' ?>" border="0" alt="" /> &nbsp;</td>
 					<td rowspan="3">&nbsp;</td>
 				</tr>
 				<tr align="center">
@@ -59,12 +59,9 @@ $document->addScriptDeclaration('function update_smiley(newimage)
 					}
 					?> /></td>
 				</tr>
-				<tr>
-					<td colspan="2" align="center"> </td>
-				</tr>
 			</table>
 		</form>
-	</div>
+        </div>
 	<div class="kadmin-footer">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>

@@ -210,11 +210,13 @@ abstract class KunenaRouteLegacy {
 				if ($id) $uri->setVar ( 'id', $id );
 				if ($mesid) $uri->setVar ( 'mesid', $mesid );
 				break;
+			case 'moderateuser' :
+				if ($uri->getVar('view') == 'moderateuser') $uri->setVar('layout', 'moderate');
+				// Continue to user profile
 			case 'myprofile' :
 			case 'userprofile' :
 			case 'fbprofile' :
 			case 'profile' :
-			case 'moderateuser' :
 				$changed = true;
 				$uri->setVar('view', 'user');
 				if ($uri->getVar ( 'task' )) {
@@ -225,6 +227,9 @@ abstract class KunenaRouteLegacy {
 				switch ($uri->getVar('layout')) {
 					case 'edit' :
 						$uri->setVar('layout', 'edit');
+						break;
+					case 'moderate' :
+						$uri->setVar('layout', 'moderate');
 						break;
 					default :
 						$uri->delVar('layout');

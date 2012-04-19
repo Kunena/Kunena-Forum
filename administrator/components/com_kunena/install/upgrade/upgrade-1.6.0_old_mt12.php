@@ -13,9 +13,10 @@ defined ( '_JEXEC' ) or die ();
 function kunena_upgrade_160_old_mt12($parent) {
 	if (version_compare(JVERSION, '1.6','<') && is_dir ( JPATH_ROOT . '/plugins/system/mootools12' )) {
 		// Joomla 1.5: Only needed for K1.6.0 ALPHA releases
+		$db = JFactory::getDbo();
 		$query = "SELECT id FROM #__plugins WHERE element='mootools12'";
-		$parent->db->setQuery ( $query );
-		$id = $parent->db->loadResult ();
+		$db->setQuery ( $query );
+		$id = $db->loadResult ();
 		if ($id) {
 			jimport ( 'joomla.installer.installer' );
 			$installer = new JInstaller ();

@@ -16,9 +16,9 @@ defined ( '_JEXEC' ) or die ();
 			<div class="common-breadcrumb-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-shadow">
 				<ul class="list-unstyled breadcrumb-path">
 					<li><a class="link" href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
-					<?php foreach ($this->pathway as $item) : 
+					<?php foreach ($this->pathway as $item) :
 						if(end($this->pathway) != $item) :
-					?>	
+					?>
 							<li><span class="inline-divider">&#47;</span><a class="link" href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
 						<?php else: ?>
 							<li><span class="inline-divider">&#47;</span><span><?php echo $item->name ?></span></li>
@@ -30,4 +30,4 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 
 <?php endif ?>
-<?php echo $this->getModulePosition ( 'kunena_breadcrumb' ) ?>
+<?php $this->displayModulePosition ( 'kunena_breadcrumb' ) ?>

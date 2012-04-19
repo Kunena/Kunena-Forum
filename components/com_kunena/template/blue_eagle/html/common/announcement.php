@@ -32,4 +32,4 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 </div>
 <!-- Module position: kunena_announcement -->
-<?php echo $this->getModulePosition ( 'kunena_announcement' ) ?>
+<?php $this->displayModulePosition ( 'kunena_announcement' ) ?>

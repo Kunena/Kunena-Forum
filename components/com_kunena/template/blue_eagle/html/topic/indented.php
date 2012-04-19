@@ -25,7 +25,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <?php $this->displayPoll(); ?>
 
 <!-- Module position: kunena_poll -->
-<?php $this->getModulePosition( 'kunena_poll' ); ?>
+<?php $this->displayModulePosition( 'kunena_poll' ); ?>
 
 <?php $this->displayTopicActions(0); ?>
 

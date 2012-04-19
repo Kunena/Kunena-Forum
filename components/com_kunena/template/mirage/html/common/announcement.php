@@ -45,4 +45,4 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 </div>
 
-<?php echo $this->getModulePosition ( 'kunena_announcement' ) ?>
+<?php $this->displayModulePosition ( 'kunena_announcement' ) ?>

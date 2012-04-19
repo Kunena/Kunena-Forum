@@ -116,7 +116,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$html .= '<ul class="list-pagination">';
 		$last = 0;
 		foreach($list['pages'] as $i=>$page) {
-			if ($last+1 != $i) $html .= '<li class="page-item kpage-more">...</li>';
+			if ($last+1 != $i) $html .= '<li class="page-item kpage-more"><a>...</a></li>';
 			$html .= $page['data'];
 			$last = $i;
 		}

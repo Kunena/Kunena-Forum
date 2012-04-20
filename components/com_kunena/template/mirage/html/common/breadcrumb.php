@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 <?php if (($item = array_shift($this->pathway)) !== null) : ?>
 	<div class="kmodule common-breadcrumb">
 		<div class="kbox-wrapper kbox-full">
-			<div class="common-breadcrumb-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-shadow">
+			<div class="common-breadcrumb-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-shadow innerspacer-horizontal">
 				<ul class="list-unstyled breadcrumb-path">
 					<li><a class="link" href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
 					<?php foreach ($this->pathway as $item) :

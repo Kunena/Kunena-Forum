@@ -106,4 +106,4 @@ defined ( '_JEXEC' ) or die ();
 		</dl>
 	</div>
 </li>
-<?php if ($this->isModulePosition('kunena_msg_' . $this->mmm)) : ?><li class="kmodules"><?php $this->getModulePosition('kunena_msg_' . $this->mmm) ?></li><?php endif ?>
+<?php if ($this->isModulePosition('kunena_msg_' . $this->mmm)) : ?><li class="kmodules"><?php $this->displayModulePosition('kunena_msg_' . $this->mmm) ?></li><?php endif ?>

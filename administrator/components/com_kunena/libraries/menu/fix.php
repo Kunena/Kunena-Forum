@@ -126,6 +126,7 @@ abstract class KunenaMenuFix {
 				$errors[] = $table->getError ();
 			}
 		}
+		KunenaMenuHelper::cleanCache();
 		return !empty($errors) ? $errors : null;
 	}
 
@@ -133,7 +134,9 @@ abstract class KunenaMenuFix {
 		// Only delete Kunena menu items
 		if (!isset(self::$items[$itemid])) return false;
 		$table = JTable::getInstance ( 'menu' );
-		return $table->delete($itemid);
+		$result = $table->delete($itemid);
+		KunenaMenuHelper::cleanCache();
+		return $result;
 	}
 
 	public static function getAll() {

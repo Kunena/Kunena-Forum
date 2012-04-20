@@ -679,6 +679,10 @@ class KunenaModelInstall extends JModel {
 			}
 		}
 
+		// Clean cache, just in case
+		KunenaMenuHelper::cleanCache();
+		JFactory::getCache('com_kunena')->clean();
+
 		if (! $this->getError ()) {
 			$this->updateVersionState ( '' );
 			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
@@ -1649,6 +1653,7 @@ class KunenaModelInstall extends JModel {
 			// Joomla 1.5
 			$this->createMenuJ15($menu, $submenu);
 		}
+		KunenaMenuHelper::cleanCache();
 		$lang->setDebug($debug);
 	}
 
@@ -1801,8 +1806,6 @@ class KunenaModelInstall extends JModel {
 			if ($this->db->getErrorNum ())
 				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		}
-		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/helpers/helper.php');
-		MenusHelper::cleanCache ();
 	}
 
 	function createMenuJ25($menu, $submenu) {
@@ -1962,6 +1965,7 @@ class KunenaModelInstall extends JModel {
 			// Joomla 1.5
 			$this->DeleteMenuJ15();
 		}
+		KunenaMenuHelper::cleanCache();
 	}
 
 	function deleteMenuJ25() {

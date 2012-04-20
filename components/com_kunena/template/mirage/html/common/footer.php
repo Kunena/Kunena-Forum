@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<?php echo $this->getModulePosition( 'kunena_bottom' ); ?>
+<?php $this->displayModulePosition( 'kunena_bottom' ); ?>
 
 <?php if (($time = $this->getTime()) !== null) : ?>
 <div class="kbox-module common-credit">

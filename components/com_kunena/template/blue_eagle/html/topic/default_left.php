@@ -43,5 +43,5 @@ defined ( '_JEXEC' ) or die ();
 </table>
 
 <!-- Begin: Message Module Position -->
-<?php $this->getModulePosition('kunena_msg_' . $this->mmm) ?>
+<?php $this->displayModulePosition('kunena_msg_' . $this->mmm) ?>
 <!-- Finish: Message Module Position -->

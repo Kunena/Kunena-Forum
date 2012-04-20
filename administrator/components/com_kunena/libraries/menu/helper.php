@@ -12,6 +12,21 @@
 defined ( '_JEXEC' ) or die ();
 
 abstract class KunenaMenuHelper {
+	public static function cleanCache() {
+		if (version_compare(JVERSION, '1.6', '>')) {
+			$cache = JFactory::getCache('mod_menu');
+			$cache->clean();
+		} else {
+			// clean system cache
+			$cache = JFactory::getCache('_system');
+			$cache->clean();
+
+			// clean mod_mainmenu cache
+			$cache = JFactory::getCache('mod_mainmenu');
+			$cache->clean();
+		}
+	}
+
 	/**
 	 * Get a list of the menu items (taken from Joomla 2.5.1).
 	 *

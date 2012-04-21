@@ -142,6 +142,7 @@ class CKunenaFile extends JFile
 			if ($FTPOptions['enabled'] == 1) {
 				if ($ret === true) {
 					jimport('joomla.client.ftp');
+					// FIXME: renamed class JFTP from Joomla! 3.0/Platfrom 12.1
 					$ftp = & JFTP::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
 					@unlink($src);
 					$ret = true;

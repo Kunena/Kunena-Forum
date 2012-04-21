@@ -699,7 +699,12 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ) );
 		}
-		$this->app->redirect ( $topic->getUrl($this->return, false, 'first' ) );
+		$targetobject = KunenaForumTopicHelper::get($topic->targetid);
+		if ($messageId) {
+			$this->app->redirect ( $targetobject->getUrl($this->return, false, 'last' ) );
+		} else {
+			$this->app->redirect ( $topic->getUrl($this->return, false, 'first' ) );
+		}
 	}
 
 	function report() {

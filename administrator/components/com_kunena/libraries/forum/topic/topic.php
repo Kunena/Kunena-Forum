@@ -17,6 +17,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	public $id = null;
 	public $unread = 0;
 	public $lastread = 0;
+	public $targetid = 0;
 
 	protected $_table = 'KunenaTopics';
 	protected $_db = null;
@@ -655,6 +656,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				$this->setError($this->_db->getError());
 				return false;
 			}
+			$this->targetid =  $target->id;
 			$query = "UPDATE #__kunena_messages SET time=IF(time<=@ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread={$target->id} ORDER BY time ASC, id ASC";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();

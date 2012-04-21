@@ -619,7 +619,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 		$location ^= 1;
 		$this->goto = '<a name="forum'.$linklocations[$location].'"></a>';
-		$this->goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$location], $this->getIcon ( 'kforum'.$locations[$location], JText::_('COM_KUNENA_GEN_GOTO'.$locations[$location] ) ), 'nofollow', 'kbuttongoto');
+		$this->goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$location], $this->getIcon ( 'kforum'.$linklocations[$location], JText::_('COM_KUNENA_GEN_GOTO'.$linklocations[$location] ) ), 'nofollow', 'kbuttongoto');
 
 		return $this->loadTemplateFile('actions');
 	}

@@ -85,7 +85,6 @@ $this->cache = false;
 
 	<td class="kcol-mid kcol-ktopiclastpost">
 		<div class="klatest-post-info">
-			<?php if ($this->topic->ordering) echo $this->getIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') ); ?>
 			<?php if (!empty($this->topic->avatar)) : ?>
 			<span class="ktopic-latest-post-avatar"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
 			<?php endif; ?>

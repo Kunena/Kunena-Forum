@@ -1102,7 +1102,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			}
 		}
 		if ($enabled && class_exists('GeSHi')) {
-			$geshi = new GeSHi ( $content, $type );
+			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );
 			$code = $geshi->parse_code ();
 		} else {

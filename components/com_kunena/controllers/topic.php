@@ -101,6 +101,11 @@ class KunenaControllerTopic extends KunenaController {
 			}
 		}
 
+		// Set topic icon if permitted
+		if ($this->config->topicicons && $topic->authorise('edit', null, false)) {
+			$topic->icon_id = $fields['icon_id'];
+		}
+
 		// If requested: Make message to be anonymous
 		if ($fields['anonymous'] && $message->getCategory()->allow_anonymous) {
 			$message->makeAnonymous();

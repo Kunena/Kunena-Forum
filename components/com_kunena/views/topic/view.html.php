@@ -256,7 +256,7 @@ class KunenaViewTopic extends KunenaView {
 		$quote = (bool) JRequest::getBool ( 'quote', false );
 		$this->category = $this->topic->getCategory();
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
-			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
+			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 		list ($this->topic, $this->message) = $parent->newReply($saved ? $saved : $quote);
 		$this->_prepareDocument('reply');

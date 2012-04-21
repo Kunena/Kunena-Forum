@@ -852,12 +852,6 @@ ul.autocompleter-choices {
 #Kunena span.kforumlocked {
 	background-position: right center;
 }
-#Kunena span.ktopicsticky {
-	background-position: right center;
-	float:left;
-	/* TODO: override right rule(?) */
-	margin-left: -5px;
-}
 #Kunena span.kforumbottom {
 	background-position: right center;
 }

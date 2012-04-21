@@ -3262,13 +3262,6 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	width: 16px;
 	height: 16px;
 }
-#Kunena span.ktopicsticky {
-	background: url("../images/icons/tsticky.png") no-repeat left center;
-	width: 27px;
-	height: 44px;
-	float:right;
-	margin-right: -5px;
-}
 #Kunena span.kforumbottom {
 	background: url("../images/icons/bottom_arrow.gif") no-repeat left center;
 	width: 18px;

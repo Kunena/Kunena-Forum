@@ -51,6 +51,10 @@ class KunenaModelInstall extends JModel {
 	public $steps = null;
 
 	public function __construct() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
+		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR) || $lang->load('com_kunena.install',KPATH_ADMIN);
+
 		parent::__construct ();
 		$this->db = JFactory::getDBO ();
 
@@ -80,7 +84,7 @@ class KunenaModelInstall extends JModel {
 			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_INSTALL') ),
 			array ('step' => 'Prepare', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PREPARE') ),
 			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
-			array ('step' => 'Language', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_LANGUAGES') ),
+			// array ('step' => 'Language', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_LANGUAGES') ),
 			array ('step' => 'Plugins', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PLUGINS') ),
 			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
 			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
@@ -107,9 +111,6 @@ class KunenaModelInstall extends JModel {
 	 * Uninstall Kunena, run from Joomla installer.
 	 */
 	public function uninstall() {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR) || $lang->load('com_kunena.install',KPATH_ADMIN);
-
 		$this->uninstallPlugin('kunena', 'alphauserpoints');
 		$this->uninstallPlugin('kunena', 'community');
 		$this->uninstallPlugin('kunena', 'comprofiler');

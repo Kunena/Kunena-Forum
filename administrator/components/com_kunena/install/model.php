@@ -317,20 +317,27 @@ class KunenaModelInstall extends JModel {
 		return $success;
 	}
 
-	function publishPlugin($folder, $name, $enable = 1) {
+	function loadPlugin($group, $element) {
 		if (version_compare(JVERSION, '1.6','>')) {
 			// Joomla 1.6+
-			$query = "UPDATE #__extensions SET enabled='{$enable}' WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
+			$query = $this->db->getQuery(true);
+			$query->select($query->qn('extension_id'))->from($query->qn('#__extensions'));
+			$query->where($query->qn('folder') . ' = ' . $query->q($group));
+			$query->where($query->qn('element') . ' = ' . $query->q($element));
+			$plugin = JTable::getInstance('extension');
 		} else {
 			// Joomla 1.5
-			$query = "UPDATE #__plugins SET published='{$enable}' WHERE folder='{$folder}' AND element='{$name}'";
+			$query = "SELECT id FROM #__plugins WHERE folder='{$group}' AND element='{$element}'";
+			$plugin = JTable::getInstance('plugin');
 		}
-		$this->db->setQuery ( $query );
-		$this->db->query ();
+		$this->db->setQuery($query);
+		$id = $this->db->loadResult();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		return true;
+		$plugin->load($id);
+		return $plugin;
 	}
+
 
 	function installModule($path, $name) {
 		$success = false;
@@ -385,7 +392,7 @@ class KunenaModelInstall extends JModel {
 		return $success;
 	}
 
-	function installPlugin($path, $group, $name, $publish) {
+	function installPlugin($path, $group, $name, $publish, $ordering=0) {
 		$success = false;
 
 		$dest = JPATH_ROOT."/tmp/kinstall_plg_{$group}_{$name}";
@@ -430,8 +437,22 @@ class KunenaModelInstall extends JModel {
 		if ($success && is_file("{$dest}/{$name}.xml")) {
 			$installer = new JInstaller ( );
 			$success = $installer->install ( $dest );
-			if ($success && $publish) {
-				$success = $this->publishPlugin($group, $name);
+			if ($success) {
+				// First change plugin ordering
+				$plugin = $this->loadPlugin($group, $name);
+				if ($ordering && !$plugin->ordering) {
+					$plugin->ordering = $ordering;
+				}
+				if ($publish) {
+					if (version_compare(JVERSION, '1.6','>')) {
+						// Joomla 1.6+
+						$plugin->enabled = $publish;
+					} else {
+						// Joomla 1.5
+						$plugin->published = $publish;
+					}
+				}
+				$success = $plugin->store();
 			}
 			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', ucfirst($group).' - '.ucfirst($name)), $success);
 		} elseif (!$success) {
@@ -590,15 +611,15 @@ class KunenaModelInstall extends JModel {
 		$this->installPlugin('install/plugins/plg_system_kunena', 'system', 'kunena', true);
 		// TODO: Complete smart search support
 		$this->uninstallPlugin('finder', 'kunena');
-		//$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false);
-		$this->installPlugin('install/plugins/plg_kunena_kunena', 'kunena', 'kunena', true);
-		$this->installPlugin('install/plugins/plg_kunena_joomla15', 'kunena', 'joomla', true);
-		$this->installPlugin('install/plugins/plg_kunena_joomla25', 'kunena', 'joomla', true);
-		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false);
-		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false);
-		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false);
-		$this->installPlugin('install/plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false);
-		$this->installPlugin('install/plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false);
+		//$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
+		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false, 1);
+		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 2);
+		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 3);
+		$this->installPlugin('install/plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false, 4);
+		$this->installPlugin('install/plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false, 5);
+		$this->installPlugin('install/plugins/plg_kunena_kunena', 'kunena', 'kunena', true, 6);
+		$this->installPlugin('install/plugins/plg_kunena_joomla15', 'kunena', 'joomla', true, 7);
+		$this->installPlugin('install/plugins/plg_kunena_joomla25', 'kunena', 'joomla', true, 7);
 
 		// TODO: install also menu module
 		$this->uninstallModule('mod_kunenamenu');

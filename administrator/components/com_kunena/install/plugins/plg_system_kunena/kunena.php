@@ -37,7 +37,8 @@ class plgSystemKunena extends JPlugin {
 			$lang = JFactory::getLanguage();
 			if (JFactory::getApplication()->isAdmin()) {
 				// Load the missing language files in administration
-				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR);
+				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR) || $lang->load('com_kunena.menu', KPATH_ADMIN);
+				$lang->load('com_kunena.sys', JPATH_ADMINISTRATOR) || $lang->load('com_kunena.sys', KPATH_ADMIN);
 				if (JRequest::getCmd('option')=='com_plugins' && JRequest::getCmd('view')=='plugin' && JRequest::getCmd('task')=='edit') {
 					// Support for J!1.7 .sys language files
 					$cid = JRequest::getVar( 'cid', array(0), '', 'array' );

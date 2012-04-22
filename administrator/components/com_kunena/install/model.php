@@ -51,9 +51,10 @@ class KunenaModelInstall extends JModel {
 	public $steps = null;
 
 	public function __construct() {
+		// Load installer language file only from the component
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR) || $lang->load('com_kunena.install',KPATH_ADMIN);
+		$lang->load('com_kunena.install',KPATH_ADMIN);
 
 		parent::__construct ();
 		$this->db = JFactory::getDBO ();
@@ -84,7 +85,7 @@ class KunenaModelInstall extends JModel {
 			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_INSTALL') ),
 			array ('step' => 'Prepare', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PREPARE') ),
 			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
-			// array ('step' => 'Language', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_LANGUAGES') ),
+			//array ('step' => 'Language', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_LANGUAGES') ),
 			array ('step' => 'Plugins', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PLUGINS') ),
 			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
 			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
@@ -104,6 +105,9 @@ class KunenaModelInstall extends JModel {
 	 * Initialise Kunena, run from Joomla installer.
 	 */
 	public function install() {
+		// Make sure that we are using the latest English language files
+		$this->installLanguage('en-GB');
+
 		$this->setStep(0);
 	}
 
@@ -520,6 +524,7 @@ class KunenaModelInstall extends JModel {
 		$this->setAvatarStatus();
 		$this->setAttachmentStatus();
 		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true );
+
 		$action = $this->getAction();
 		if ($action == 'install' || $action == 'migrate') {
 			// Let's start from clean database

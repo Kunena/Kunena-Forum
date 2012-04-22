@@ -111,6 +111,8 @@ class KunenaViewTopic extends KunenaView {
 		// Redirect unread layout to the page that contains the first unread message
 		$category = $this->get ( 'Category' );
 		$topic = $this->get ( 'Topic' );
+		KunenaForumTopicHelper::fetchNewStatus(array($topic->id => $topic));
+
 		$message = KunenaForumMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
 		$this->app->redirect($topic->getUrl($category, false, $message));

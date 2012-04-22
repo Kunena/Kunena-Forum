@@ -111,6 +111,8 @@ class KunenaViewTopic extends KunenaView {
 		// Redirect unread layout to the page that contains the first unread message
 		$category = $this->get ( 'Category' );
 		$topic = $this->get ( 'Topic' );
+		KunenaForumTopicHelper::fetchNewStatus(array($topic->id => $topic));
+
 		$message = KunenaForumMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
 		$this->app->redirect($topic->getUrl($category, false, $message));
@@ -553,14 +555,11 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->loadTemplateFile('message');
 	}
 
-	function displayTopicActions($location=0) {
-		echo $this->getTopicActions($location);
+	function displayTopicActions() {
+		echo $this->getTopicActions();
 	}
 
-	function getTopicActions($location=0) {
-		static $linklocations = array('top','bottom');
-		static $locations = array('bottom','top');
-
+	function getTopicActions() {
 		$catid = $this->state->get('item.catid');
 		$id = $this->state->get('item.id');
 
@@ -617,10 +616,6 @@ class KunenaViewTopic extends KunenaView {
 				$this->topicButtons->set('indented', $this->getButton ( sprintf($url, 'indented'), 'indented', 'layout', 'user'));
 			}
 		}
-		$location ^= 1;
-		$this->goto = '<a name="forum'.$linklocations[$location].'"></a>';
-		$this->goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$location], $this->getIcon ( 'kforum'.$linklocations[$location], JText::_('COM_KUNENA_GEN_GOTO'.$linklocations[$location] ) ), 'nofollow', 'kbuttongoto');
-
 		return $this->loadTemplateFile('actions');
 	}
 

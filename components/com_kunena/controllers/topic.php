@@ -185,7 +185,7 @@ class KunenaControllerTopic extends KunenaController {
 				$activity = KunenaFactory::getActivityIntegration();
 				$activity->onAfterSubscribe($topic, 1);
 			} else {
-				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) );
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic->getError() );
 			}
 		}
 
@@ -221,8 +221,7 @@ class KunenaControllerTopic extends KunenaController {
 			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'),
 			'poll_time_to_live' => JRequest::getString ( 'poll_time_to_live', 0 ),
 			'tags' => JRequest::getString ( 'tags', null ),
-			'mytags' => JRequest::getString ( 'mytags', null ),
-			'attach_id' => JRequest::getVar ( 'attach-id', null, 'post', 'array' )
+			'mytags' => JRequest::getString ( 'mytags', null )
 		);
 
 		if (! JRequest::checkToken ()) {
@@ -245,15 +244,10 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Mark attachments to be deleted
-		if ($fields['attach_id'] !== null) {
-			$attachments = $message->getAttachments();
-			$attachkeeplist = $fields['attach_id'];
-			foreach ($attachments as $attachment) {
-				if (!in_array($attachment->id, $attachkeeplist)) {
-					$message->removeAttachment($attachment->id);
-				}
-			}
-		}
+		$attachments = JRequest::getVar ( 'attachments', array(), 'post', 'array' );
+		$attachkeeplist = JRequest::getVar ( 'attachment', array(), 'post', 'array' );
+		$message->removeAttachment(array_keys(array_diff_key($attachments, $attachkeeplist)));
+
 		// Upload new attachments
 		foreach ($_FILES as $key=>$file) {
 			$intkey = 0;

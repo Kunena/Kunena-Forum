@@ -170,6 +170,10 @@ class KunenaHtmlPagination extends JPagination
 		return $this->ktemplate->getPaginationListRender($list);
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see JPagination::_item_active()
+	 */
 	public function _item_active(&$item) {
 		if (JFactory::getApplication()->isAdmin()) {
 			if ($item->base > 0) {
@@ -190,6 +194,10 @@ class KunenaHtmlPagination extends JPagination
 		}
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see JPagination::_item_inactive()
+	 */
 	public function _item_inactive(&$item) {
 		$app = JFactory::getApplication();
 		if ($app->isAdmin()) {

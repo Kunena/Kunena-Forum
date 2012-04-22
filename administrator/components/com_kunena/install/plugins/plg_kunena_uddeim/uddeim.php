@@ -25,6 +25,7 @@ class plgKunenaUddeIM extends JPlugin {
 		if ($uddeim->version() < 1) return;
 
 		parent::__construct ( $subject, $config );
+
 		$this->loadLanguage ( 'plg_kunena_uddeim.sys', JPATH_ADMINISTRATOR );
 
 		$this->path = dirname ( __FILE__ ) . '/uddeim';

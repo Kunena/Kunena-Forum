@@ -354,7 +354,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		if ($ids === false) {
 			$this->_attachments_del = $this->getAttachments();
 		} elseif (is_array($ids)) {
-			$this->_attachments_del += array_combine($ids, $ids);
+			if (!empty($ids)) $this->_attachments_del += array_combine($ids, $ids);
 		} else {
 			$this->_attachments_del[$ids] = $ids;
 		}
@@ -364,7 +364,9 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		if ($ids === false) {
 			return KunenaForumMessageAttachmentHelper::getByMessage($this->id);
 		} else {
-			return KunenaForumMessageAttachmentHelper::getById($ids);
+			$attachments = KunenaForumMessageAttachmentHelper::getById($ids);
+			foreach ($attachments as $id=>$attachment) if ($attachment->mesid != $this->id) unset($attachments[$id]);
+			return $attachments;
 		}
 	}
 

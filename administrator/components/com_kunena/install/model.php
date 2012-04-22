@@ -1987,7 +1987,20 @@ class KunenaModelInstall extends JModel {
 			// Joomla 1.5
 			$this->DeleteMenuJ15();
 		}
-		KunenaMenuHelper::cleanCache();
+
+		// Can be called before installation starts (don't use library):
+		if (version_compare(JVERSION, '1.6', '>')) {
+			$cache = JFactory::getCache('mod_menu');
+			$cache->clean();
+		} else {
+			// clean system cache
+			$cache = JFactory::getCache('_system');
+			$cache->clean();
+
+			// clean mod_mainmenu cache
+			$cache = JFactory::getCache('mod_mainmenu');
+			$cache->clean();
+		}
 	}
 
 	function deleteMenuJ25() {

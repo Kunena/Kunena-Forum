@@ -44,11 +44,6 @@ class KunenaControllerInstall extends JController {
 		$start = JRequest::getBool('start', false);
 		$this->model->setStep ( 0 );
 
-		// Install English and default language
-		$tag = JFactory::getLanguage()->getTag();
-		$this->model->installLanguage('en-GB');
-		if ($tag != 'en-GB') $this->model->installLanguage($tag);
-
 		$this->setRedirect('index.php?option=com_kunena&view=install' . ($start ? '&task=upgrade&'.JUtility::getToken().'=1' : ''));
 	}
 

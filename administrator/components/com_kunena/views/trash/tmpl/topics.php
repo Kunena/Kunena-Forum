@@ -41,10 +41,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<table class="adminlist">
 			<thead>
 				<tr>
-					<th width="5" align="center">#</th>
-					<th width="5" align="left"><input type="checkbox" name="toggle" value=""
-						onclick="checkAll(<?php
-					echo count ( $this->topics );
+					<th width="5" align="left"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->topics );
 					?>);" /></th>
 					<th width="5" align="left"><?php
 					echo  JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering'));
@@ -92,7 +89,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				<tr class="row<?php
 						echo $k;
 						?>">
-					<td align="center"><?php echo JHTML::_('grid.id', $i, intval($row->id)) ?></td>
+					<td align="center"><?php echo JHTML::_('grid.id', $i++, intval($row->id)) ?></td>
 					<td >
 						<?php
 						echo $this->escape($row->id);

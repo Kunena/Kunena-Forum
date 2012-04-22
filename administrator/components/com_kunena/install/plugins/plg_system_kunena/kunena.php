@@ -177,8 +177,8 @@ class plgSystemKunena extends JPlugin {
 			return;
 		}
 		if ($isnew && intval($user ['id'])) {
-			$user = KunenaFactory::getUser(intval($user ['id']));
-			$user->save();
+			$kuser = KunenaFactory::getUser(intval($user ['id']));
+			$kuser->save();
 		}
 
 		/*

@@ -30,7 +30,7 @@ class plgSystemKunena extends JPlugin {
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return false;
 
-		KunenaFactory::loadLanguage('plg_system_kunena.sys', 'admin');
+		$this->loadLanguage('plg_system_kunena.sys', JPATH_ADMINISTRATOR);
 
 		if (version_compare(JVERSION, '1.6','<')) {
 			// Joomla 1.5: Fix bugs and bad performance

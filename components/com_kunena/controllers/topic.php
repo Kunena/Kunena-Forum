@@ -256,16 +256,14 @@ class KunenaControllerTopic extends KunenaController {
 			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key);
 		}
 
+		// Set topic icon if permitted
+		if ($this->config->topicicons && $topic->authorise('edit', null, false)) {
+			$topic->icon_id = $fields['icon_id'];
+		}
+
 		// Check if we are editing first post and update topic if we are!
 		if ($topic->first_post_id == $message->id) {
-			$topic->icon_id = $fields['icon_id'];
 			$topic->subject = $fields['subject'];
-			$success = $topic->save();
-			if (! $success) {
-				$this->app->setUserState('com_kunena.postfields', $fields);
-				$this->app->enqueueMessage ( $topic->getError (), 'error' );
-				$this->redirectBack ();
-			}
 		}
 
 		// Activity integration

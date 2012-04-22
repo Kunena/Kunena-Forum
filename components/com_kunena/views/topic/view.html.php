@@ -553,11 +553,11 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->loadTemplateFile('message');
 	}
 
-	function displayTopicActions($location=0) {
-		echo $this->getTopicActions($location);
+	function displayTopicActions() {
+		echo $this->getTopicActions();
 	}
 
-	function getTopicActions($location=0) {
+	function getTopicActions() {
 		$catid = $this->state->get('item.catid');
 		$id = $this->state->get('item.id');
 

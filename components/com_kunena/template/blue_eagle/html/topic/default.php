@@ -25,7 +25,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <?php
 	$this->displayPoll();
 	$this->displayModulePosition( 'kunena_poll' );
-	$this->displayTopicActions(0);
+	$this->displayTopicActions();
 ?>
 
 <div class="kblock">
@@ -39,7 +39,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 		<div class="kbody"><?php $this->displayMessages() ?></div>
 	</div>
 </div>
-<?php $this->displayTopicActions(1); ?>
+<?php $this->displayTopicActions(); ?>
 
 <div class="kcontainer klist-bottom">
 	<div class="kbody">

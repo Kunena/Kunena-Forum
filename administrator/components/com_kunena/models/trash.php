@@ -64,7 +64,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		foreach ($cats as $cat) {
 			if ( $cat->id ) $cats_array[] = $cat->id;
 		}
-		list($total,$messages) = KunenaForumMessageHelper::getLatestMessages($cats_array, $this->getState('list.start'), $this->getState('list.limit'), array ('starttime'=> '-1','hold' => '2,3'));
+		list($total,$messages) = KunenaForumMessageHelper::getLatestMessages($cats_array, $this->getState('list.start'), $this->getState('list.limit'), array ('starttime'=> '-1','mode' => 'deleted'));
 		$this->setState ( 'list.total', $total );
 		return $messages;
 	}

@@ -29,8 +29,9 @@
 		<icon name="moved" published="1" src="system/moved.png" />
 		<icon name="deleted" published="1" src="system/deleted.png" />
 		<icon name="unapproved" published="1" src="system/unapproved.png" />
-		<icon name="locked" published="0" src="system/locked.png" />
+		<icon name="sticky_locked" published="1" src="system/sticky_locked.png" />
 		<icon name="sticky" published="1" src="system/sticky.png" />
+		<icon name="locked" published="1" src="system/locked.png" />
 	</icons>
 	
 	<!-- icons type="system" width="16" height="16">

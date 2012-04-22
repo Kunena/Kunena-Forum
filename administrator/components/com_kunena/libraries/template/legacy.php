@@ -94,7 +94,10 @@ class CKunenaTools {
 		$config = KunenaFactory::getConfig ();
 		$template = KunenaFactory::getTemplate();
 
+		// Replace everything that points to default template with the new one
 		$filename = preg_replace('#/com_kunena/template/default/#', '/com_kunena/template/blue_eagle/', $filename);
+		// Replace edit.js and mediaboxAdv.js with the new version of the file
+		$filename = preg_replace('#^.*/(editor(-min)?.js)$#', KUNENA_DIRECTURL.'template/blue_eagle/js/\1', $filename);
 		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.js)$#', KUNENA_DIRECTURL.'template/blue_eagle/js/\1', $filename);
 		if (JDEBUG || $config->debug || KunenaForum::isDev()) {
 			// If we are in debug more, make sure we load the unpacked javascript

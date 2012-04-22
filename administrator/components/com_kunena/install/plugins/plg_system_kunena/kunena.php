@@ -30,14 +30,15 @@ class plgSystemKunena extends JPlugin {
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return false;
 
-		KunenaFactory::loadLanguage('plg_system_kunena.sys', 'admin');
+		$this->loadLanguage('plg_system_kunena.sys', JPATH_ADMINISTRATOR);
 
 		if (version_compare(JVERSION, '1.6','<')) {
 			// Joomla 1.5: Fix bugs and bad performance
 			$lang = JFactory::getLanguage();
 			if (JFactory::getApplication()->isAdmin()) {
 				// Load the missing language files in administration
-				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR);
+				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR) || $lang->load('com_kunena.menu', KPATH_ADMIN);
+				$lang->load('com_kunena.sys', JPATH_ADMINISTRATOR) || $lang->load('com_kunena.sys', KPATH_ADMIN);
 				if (JRequest::getCmd('option')=='com_plugins' && JRequest::getCmd('view')=='plugin' && JRequest::getCmd('task')=='edit') {
 					// Support for J!1.7 .sys language files
 					$cid = JRequest::getVar( 'cid', array(0), '', 'array' );

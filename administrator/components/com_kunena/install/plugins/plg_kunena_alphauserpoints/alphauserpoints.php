@@ -15,13 +15,13 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
 
-		KunenaFactory::loadLanguage('plg_kunena_alphauserpoints.sys', 'admin');
 		$aup = JPATH_SITE . '/components/com_alphauserpoints/helper.php';
 		if (! file_exists ( $aup ))
 			return;
 		require_once ($aup);
 
 		parent::__construct ( $subject, $config );
+
 		$this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', JPATH_ADMINISTRATOR );
 
 		$this->path = dirname ( __FILE__ ) . '/alphauserpoints';

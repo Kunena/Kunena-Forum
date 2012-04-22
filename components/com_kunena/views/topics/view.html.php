@@ -25,7 +25,11 @@ class KunenaViewTopics extends KunenaView {
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
-		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode='.$this->state->get ( 'list.mode' );
+		if ($this->embedded) {
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode='.$this->state->get ( 'list.mode' );
+			$userid = $this->state->get ( 'user' );
+			if ($userid) $this->moreUri .= "&userid={$userid}";
+		}
 		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
 
 		$this->_prepareDocument('default');
@@ -44,7 +48,11 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->URL = KunenaRoute::_();
 
-		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=user&mode='.$this->state->get ( 'list.mode' );
+		if ($this->embedded) {
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=user&mode='.$this->state->get ( 'list.mode' );
+			$userid = $this->state->get ( 'user' );
+			if ($userid) $this->moreUri .= "&userid={$userid}";
+		}
 
 		$this->_prepareDocument('user');
 
@@ -63,7 +71,11 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->URL = KunenaRoute::_();
 
-		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=posts&mode='.$this->state->get ( 'list.mode' );
+		if ($this->embedded) {
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=posts&mode='.$this->state->get ( 'list.mode' );
+			$userid = $this->state->get ( 'user' );
+			if ($userid) $this->moreUri .= "&userid={$userid}";
+		}
 
 		$this->_prepareDocument('posts');
 

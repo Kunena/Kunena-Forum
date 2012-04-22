@@ -454,8 +454,8 @@ window.addEvent('domready', function(){
 			foreach ($this->accesstypes[$category->accesstype] as $access) {
 				if (method_exists($access, 'authoriseUsers')) {
 					list ($a, $d) = $access->authoriseUsers($topic, $userids);
-					$allow = array_merge($allow, $a);
-					$deny = array_merge($deny, $d);
+					$allow = array_merge($allow, (array) $a);
+					$deny = array_merge($deny, (array) $d);
 				}
 			}
 		}

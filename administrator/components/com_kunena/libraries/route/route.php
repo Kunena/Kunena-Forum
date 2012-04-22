@@ -507,7 +507,8 @@ abstract class KunenaRoute {
 	protected static function checkCategory($item, $uri) {
 		static $cache = array();
 		$catid = (int) $uri->getVar('catid');
-		if (!$catid) return self::check($item, $uri);
+		$check = self::check($item, $uri);
+		if (!$check || !$catid) return $check;
 		if (!isset($cache[$item->id])) {
 			$cache[$item->id] = array();
 			if (!empty($item->query['catid'])) {

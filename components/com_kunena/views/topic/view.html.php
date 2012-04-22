@@ -558,9 +558,6 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function getTopicActions($location=0) {
-		static $linklocations = array('top','bottom');
-		static $locations = array('bottom','top');
-
 		$catid = $this->state->get('item.catid');
 		$id = $this->state->get('item.id');
 
@@ -617,10 +614,6 @@ class KunenaViewTopic extends KunenaView {
 				$this->topicButtons->set('indented', $this->getButton ( sprintf($url, 'indented'), 'indented', 'layout', 'user'));
 			}
 		}
-		$location ^= 1;
-		$this->goto = '<a name="forum'.$linklocations[$location].'"></a>';
-		$this->goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$location], $this->getIcon ( 'kforum'.$linklocations[$location], JText::_('COM_KUNENA_GEN_GOTO'.$linklocations[$location] ) ), 'nofollow', 'kbuttongoto');
-
 		return $this->loadTemplateFile('actions');
 	}
 

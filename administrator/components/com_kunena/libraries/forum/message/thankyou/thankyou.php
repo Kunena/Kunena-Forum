@@ -163,4 +163,45 @@ class KunenaForumMessageThankyou extends JObject {
 
 		return true;
 	}
+
+	/**
+	 * Perform the recount thankyous in kunena_users table where thankyou = 0
+	 * @return bool true if succes
+	 * @since 2.0
+	 */
+	public function recount($mesid=null) {
+		$db = JFactory::getDBO ();
+		if( $mesid ) {
+			$query = "SELECT targetuserid,COUNT(*) AS totalthankyou FROM #__kunena_thankyou WHERE postid={$db->quote($mesid)}";
+			$db->setQuery ( $query );
+			$countid = $db->loadObject();
+
+			$query = "UPDATE #__kunena_users SET thankyou={$countid->totalthankyou} WHERE userid={$db->quote($countid->targetuserid)}";
+			$db->setQuery ( $query );
+			$db->query ();
+		} else {
+			$query = "SELECT userid FROM #__kunena_users WHERE thankyou=0";
+			$db->setQuery ( $query );
+			$userid =  $db->loadObjectList();
+
+
+			foreach($userid as $id){
+				$query = "SELECT COUNT(*) FROM #__kunena_thankyou WHERE targetuserid={$db->quote($id)}";
+				$db->setQuery ( $query );
+				$countid = $db->loadObjectList();
+
+				$query = "UPDATE #__kunena_users SET thankyou={$countid} WHERE userid={$db->quote($id)}";
+				$db->setQuery ( $query );
+				$db->query ();
+			}
+		}
+
+		// Check for an error message.
+		if ($db->getErrorNum ()) {
+			$this->setError ( $db->getErrorMsg () );
+			return false;
+		}
+
+		return true;
+	}
 }

@@ -647,6 +647,10 @@ class KunenaModelInstall extends JModel {
 				if ($this->recountCategories ())
 					$this->setTask($task+1);
 				break;
+			/*case 9:
+				if ($this->recountThankyou ())
+					$this->setTask($task+1);
+				break;*/
 			default:
 				if (! $this->getError ())
 					$this->setStep ( $this->getStep()+1 );

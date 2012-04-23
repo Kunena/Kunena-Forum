@@ -501,6 +501,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			KunenaError::checkDatabaseError ();
 		}
 
+		KunenaForumMessageThankyou::recount($this->id);
+
 		return true;
 	}
 

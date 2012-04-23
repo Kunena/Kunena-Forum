@@ -144,29 +144,32 @@ function installSampleData()
 	$section = KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE');
 	$cat1 = KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE');
 	$cat2 = KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE');
-	$sectionR = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE'));
-	$cat1R = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE'));
-	$cat2R = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE'));
+	$section_alias = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE'));
+	$cat1_alias = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE'));
+	$cat2_alias = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE'));
+	if (!$section_alias) $section_alias = 'main-forum';
+	if (!$cat1_alias) $section_alias = 'welcome-mat';
+	if (!$cat2_alias) $section_alias = 'suggestion-box';
 
 	$aliasquery = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES
-		({$db->quote($sectionR)}, 'catid', '1', 1),
-		({$db->quote($cat1R)}, 'catid', '2', 1),
-		({$db->quote($cat2R)}, 'catid', '3', 1);";
+		({$db->quote($section_alias)}, 'catid', '1', 1),
+		({$db->quote($cat1_alias)}, 'catid', '2', 1),
+		({$db->quote($cat2_alias)}, 'catid', '3', 1);";
 
 	if (version_compare(JVERSION, '1.6','>')) {
 		// Joomla 1.6+
 		$query="INSERT INTO `#__kunena_categories`
 		(`id`, `parent_id`, `name`, `alias`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`, `last_topic_id`, `last_post_id`, `last_post_time`) VALUES
-		(1, 0, {$db->quote($section)}, {$db->quote($sectionR)}, 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0, 0, 0, 0),
-		(2, 1, {$db->quote($cat1)}, {$db->quote($cat1R)}, 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).", 1 , 1, 0, 1, 1, {$posttime->toUnix()}),
-		(3, 1, {$db->quote($cat2)}, {$db->quote($cat2R)}, 1, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).", 0 , 0, 1, 0, 0, 0);";
+		(1, 0, {$db->quote($section)}, {$db->quote($section_alias)}, 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0, 0, 0, 0),
+		(2, 1, {$db->quote($cat1)}, {$db->quote($cat1_alias)}, 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).", 1 , 1, 0, 1, 1, {$posttime->toUnix()}),
+		(3, 1, {$db->quote($cat2)}, {$db->quote($cat2_alias)}, 1, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).", 0 , 0, 1, 0, 0, 0);";
 	} else {
 		// Joomla 1.5
 		$query="INSERT INTO `#__kunena_categories`
 		(`id`, `parent_id`, `name`, `alias`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`, `last_topic_id`, `last_post_id`, `last_post_time`) VALUES
-		(1, 0, {$db->quote($section)}, {$db->quote($sectionR)}, 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0, 0, 0, 0),
-		(2, 1, {$db->quote($cat1)}, {$db->quote($cat1R)}, 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).", 1 , 1, 0, 1, 1, {$posttime->toUnix()}),
-		(3, 1, {$db->quote($cat2)}, {$db->quote($cat2R)}, 0, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).", 0 , 0, 1, 0, 0, 0);";
+		(1, 0, {$db->quote($section)}, {$db->quote($section_alias)}, 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0, 0, 0, 0),
+		(2, 1, {$db->quote($cat1)}, {$db->quote($cat1_alias)}, 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).", 1 , 1, 0, 1, 1, {$posttime->toUnix()}),
+		(3, 1, {$db->quote($cat2)}, {$db->quote($cat2_alias)}, 0, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).", 0 , 0, 1, 0, 0, 0);";
 	}
 
 	$queries[] = array ('kunena_categories', $query);

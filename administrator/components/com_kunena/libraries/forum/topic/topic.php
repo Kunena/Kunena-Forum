@@ -17,7 +17,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	public $id = null;
 	public $unread = 0;
 	public $lastread = 0;
-	public $targetid = 0;
 
 	protected $_table = 'KunenaTopics';
 	protected $_db = null;
@@ -519,6 +518,17 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return $exists;
 	}
 
+	/**
+	 * Move topic or parts of it into another category or topic.
+	 *
+	 * @param object $target	Target KunenaForumCategory or KunenaForumTopic
+	 * @param mixed $ids		false, array of message Ids or JDate
+	 * @param bool $shadow		Leave visible shadow topic.
+	 * @param string $subject	New subject
+	 * @param bool $subjectall	Change subject from every message
+	 *
+	 * @return object			Target KunenaForumCategory or KunenaForumTopic or false on failure
+	 */
 	public function move($target, $ids=false, $shadow=false, $subject='', $subjectall=false) {
 		// Warning: logic in this function is very complicated and even with full understanding its easy to miss some details!
 
@@ -656,7 +666,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				$this->setError($this->_db->getError());
 				return false;
 			}
-			$this->targetid =  $target->id;
 			$query = "UPDATE #__kunena_messages SET time=IF(time<=@ktime,@ktime:=@ktime+1,@ktime:=time) WHERE thread={$target->id} ORDER BY time ASC, id ASC";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
@@ -736,7 +745,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$target->recount();
 		}
 
-		return true;
+		return $target;
 	}
 
 	/**

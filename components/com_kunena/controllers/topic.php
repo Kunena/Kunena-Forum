@@ -178,7 +178,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		//now try adding any new subscriptions if asked for by the poster
 		if ($fields['subscribe']) {
-			if ($topic->subscribe(1)) {
+			if (!$topic->subscribe(1)) {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
 
 				// Activity integration
@@ -256,16 +256,14 @@ class KunenaControllerTopic extends KunenaController {
 			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key);
 		}
 
+		// Set topic icon if permitted
+		if ($this->config->topicicons && $topic->authorise('edit', null, false)) {
+			$topic->icon_id = $fields['icon_id'];
+		}
+
 		// Check if we are editing first post and update topic if we are!
 		if ($topic->first_post_id == $message->id) {
-			$topic->icon_id = $fields['icon_id'];
 			$topic->subject = $fields['subject'];
-			$success = $topic->save();
-			if (! $success) {
-				$this->app->setUserState('com_kunena.postfields', $fields);
-				$this->app->enqueueMessage ( $topic->getError (), 'error' );
-				$this->redirectBack ();
-			}
 		}
 
 		// Activity integration
@@ -689,7 +687,8 @@ class KunenaControllerTopic extends KunenaController {
 			} else {
 				$ids = false;
 			}
-			if (!$topic->move ( $target, $ids, $shadow, $subject, $changesubject )) {
+			$targetobject = $topic->move ( $target, $ids, $shadow, $subject, $changesubject );
+			if (!$targetobject) {
 				$error = $topic->getError();
 			}
 		}
@@ -698,7 +697,11 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ) );
 		}
-		$this->app->redirect ( $topic->getUrl($this->return, false, 'first' ) );
+		if ($targetobject) {
+			$this->app->redirect ( $targetobject->getUrl($this->return, false, 'last' ) );
+		} else {
+			$this->app->redirect ( $topic->getUrl($this->return, false, 'first' ) );
+		}
 	}
 
 	function report() {

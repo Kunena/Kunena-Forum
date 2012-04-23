@@ -265,50 +265,50 @@
 		
 		<mkdir dir="${tmp_dir}/languages" />
 		<copy file="${project_dir}/${kunena.admin}/language/index.html" todir="${build_dir}/language/" />
-		<language tag="ar-AA" include="false" />
+		<language tag="ar-AA" />
 		<language tag="az-AZ" />
 		<language tag="bg-BG" />
-		<!--language tag="bs-BA" /-->
-		<language tag="ca-ES" include="false" />
+		<language tag="bs-BA" />
+		<language tag="ca-ES" />
 		<language tag="cs-CZ" />
 		<language tag="da-DK" />
-		<language tag="de-DE" include="false" />
-		<language tag="el-GR" include="false" />
+		<language tag="de-DE" />
+		<language tag="el-GR" />
 		<language tag="en-GB" include="true" />
-		<language tag="es-ES" include="false" />
+		<language tag="es-ES" />
 		<language tag="et-EE" />
 		<language tag="fa-IR" />
-		<language tag="fi-FI" include="false" />
-		<language tag="fr-FR" include="false" />
+		<language tag="fi-FI" />
+		<language tag="fr-FR" />
 		<language tag="he-IL" />
 		<language tag="hr-HR" />
 		<language tag="hu-HU" />
 		<language tag="id-ID" />
-		<language tag="it-IT" include="false" />
+		<language tag="it-IT" />
 		<language tag="ja-JP" />
-		<language tag="km-KH" include="false" />
-		<language tag="kz-KZ" include="false" />
-		<language tag="lt-LT" include="false" />
+		<language tag="km-KH" />
+		<language tag="kz-KZ" />
+		<language tag="lt-LT" />
 		<language tag="lv-LV" />
 		<language tag="mk-MK" />
-		<language tag="nb-NO" include="false" />
-		<language tag="nl-NL" include="false" />
+		<language tag="nb-NO" />
+		<language tag="nl-NL" />
 		<language tag="pl-PL" />
-		<language tag="pt-BR" include="false" />
-		<language tag="pt-PT" include="false" />
+		<language tag="pt-BR" />
+		<language tag="pt-PT" />
 		<language tag="ro-RO" />
-		<language tag="ru-RU" include="false" />
+		<language tag="ru-RU" />
 		<language tag="sk-SK" />
 		<language tag="sq-AL" />
 		<language tag="sr-RS" />
 		<language tag="sr-YU" />
 		<language tag="sv-SE" />
-		<language tag="th-TH" include="false" />
+		<language tag="th-TH" />
 		<language tag="tr-TR" />
 		<language tag="ur-PK" />
 		<language tag="vi-VN" />
-		<language tag="zh-CN" include="false" />
-		<language tag="zh-TW" include="false" />
+		<language tag="zh-CN" />
+		<language tag="zh-TW" />
 		<archive destfile="${build_dir}/archive/com_kunena-admin" basedir="${tmp_dir}/admin" />
 		<archive destfile="${build_dir}/archive/com_kunena-site" basedir="${tmp_dir}/site" />
 		<archive destfile="${build_dir}/archive/com_kunena-media" basedir="${tmp_dir}/media" />

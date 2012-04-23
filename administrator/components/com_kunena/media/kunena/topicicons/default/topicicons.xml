@@ -15,7 +15,7 @@
 		<icon id="0" name="default" published="1" title="COM_KUNENA_ICON_DEFAULT" src="user/default.png" />
 		<icon id="1" name="exclamation" published="1" title="COM_KUNENA_ICON_EXCLAMATION" src="user/exclamation.png" />
 		<icon id="2" name="question" published="1" title="COM_KUNENA_ICON_QUESTION" src="user/question.png" />
-		<icon id="3" name="idea" published="1" title="COM_KUNENA_ICON_MARK" src="user/mark.png" />
+		<icon id="3" name="idea" published="1" title="COM_KUNENA_ICON_IDEA" src="user/idea.png" />
 		<icon id="4" name="love" published="1" title="COM_KUNENA_ICON_LOVE" src="user/love.png" />
 		<!-- icon id="5" name="grin" published="1" title="COM_KUNENA_ICON_GRIN" src="user/grin.png" / -->
 		<!-- icon id="6" name="shock" published="1" title="COM_KUNENA_ICON_SHOCK" src="user/shock.png" / -->
@@ -29,8 +29,9 @@
 		<icon name="moved" published="1" src="system/moved.png" />
 		<icon name="deleted" published="1" src="system/deleted.png" />
 		<icon name="unapproved" published="1" src="system/unapproved.png" />
-		<icon name="locked" published="0" src="system/locked.png" />
+		<icon name="sticky_locked" published="1" src="system/sticky_locked.png" />
 		<icon name="sticky" published="1" src="system/sticky.png" />
+		<icon name="locked" published="1" src="system/locked.png" />
 	</icons>
 	
 	<!-- icons type="system" width="16" height="16">

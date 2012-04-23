@@ -14,7 +14,7 @@
 	<description>Latvian (Latvia) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>lv-LV.com_kunena.ini</filename -->
+		<filename>lv-LV.com_kunena.ini</filename>
 		<!-- filename>lv-LV.com_kunena.tpl_blue_eagle.ini</filename -->
 	</files>
 </install>

@@ -533,8 +533,9 @@ HTML;
 			if ($topic->moved_id) $icon = 'system_moved';
 			elseif ($topic->hold == 2 || $topic->hold == 3) $icon = 'system_deleted';
 			elseif ($topic->hold == 1) $icon = 'system_unapproved';
-			//elseif ($topic->locked) $icon = 'system_locked';
+			elseif ($topic->ordering && $topic->locked) $icon = 'system_sticky_locked';
 			elseif ($topic->ordering) $icon = 'system_sticky';
+			elseif ($topic->locked) $icon = 'system_locked';
 			else $icon = $topic->icon_id;
 			$iconurl = $this->getTopicIconIndexPath($icon, true);
 		} else {

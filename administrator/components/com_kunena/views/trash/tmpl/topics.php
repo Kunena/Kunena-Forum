@@ -107,14 +107,10 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					<td><?php $message = KunenaForumMessageHelper::get($row->id);
 						echo $message->ip; ?></td>
 					<td ><?php
-						echo $this->escape($row->last_post_userid);
+						echo $this->escape($row->first_post_userid);
 						?></td>
 					<td ><?php
-						if(empty($row->last_post_userid)){
-							echo JText::_('COM_KUNENA_VIEW_VISITOR');
-						} else {
-							echo $this->escape($row->last_post_guest_name);
-						}
+						echo $this->escape($row->getFirstPostAuthor()->getName());
 						?></td>
 					<td ><?php
 						echo strftime('%Y-%m-%d %H:%M:%S',$row->last_post_time);

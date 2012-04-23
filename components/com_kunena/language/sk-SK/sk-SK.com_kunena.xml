@@ -14,7 +14,7 @@
 	<description>Slovak (Slovakia) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>sk-SK.com_kunena.ini</filename -->
+		<filename>sk-SK.com_kunena.ini</filename>
 		<filename>sk-SK.com_kunena.tpl_blue_eagle.ini</filename>
 	</files>
 </install>

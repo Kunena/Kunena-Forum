@@ -14,7 +14,7 @@
 	<description>Swedish (Sweden) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>sv-SE.com_kunena.ini</filename -->
-		<!-- filename>sv-SE.com_kunena.tpl_blue_eagle.ini</filename -->
+		<filename>sv-SE.com_kunena.ini</filename>
+		<filename>sv-SE.com_kunena.tpl_blue_eagle.ini</filename>
 	</files>
 </install>

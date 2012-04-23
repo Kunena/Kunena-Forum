@@ -104,11 +104,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						echo $this->escape($row->userid);
 						?></td>
 					<td ><?php
-						if(empty($row->username)){
-							echo JText::_('COM_KUNENA_VIEW_VISITOR');
-						} else {
-							echo $this->escape($row->username);
-						}
+						echo $this->escape($row->getAuthor()->getName());
 						?></td>
 					<td ><?php
 						echo strftime('%Y-%m-%d %H:%M:%S',$row->time);

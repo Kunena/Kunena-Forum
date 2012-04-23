@@ -178,7 +178,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		//now try adding any new subscriptions if asked for by the poster
 		if ($fields['subscribe']) {
-			if ($topic->subscribe(1)) {
+			if (!$topic->subscribe(1)) {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
 
 				// Activity integration

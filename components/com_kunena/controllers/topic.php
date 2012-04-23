@@ -178,7 +178,7 @@ class KunenaControllerTopic extends KunenaController {
 
 		//now try adding any new subscriptions if asked for by the poster
 		if ($fields['subscribe']) {
-			if ($topic->subscribe(1)) {
+			if (!$topic->subscribe(1)) {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
 
 				// Activity integration
@@ -687,7 +687,8 @@ class KunenaControllerTopic extends KunenaController {
 			} else {
 				$ids = false;
 			}
-			if (!$topic->move ( $target, $ids, $shadow, $subject, $changesubject )) {
+			$targetobject = $topic->move ( $target, $ids, $shadow, $subject, $changesubject );
+			if (!$targetobject) {
 				$error = $topic->getError();
 			}
 		}
@@ -696,8 +697,7 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ) );
 		}
-		$targetobject = KunenaForumTopicHelper::get($topic->targetid);
-		if ($messageId) {
+		if ($targetobject) {
 			$this->app->redirect ( $targetobject->getUrl($this->return, false, 'last' ) );
 		} else {
 			$this->app->redirect ( $topic->getUrl($this->return, false, 'first' ) );

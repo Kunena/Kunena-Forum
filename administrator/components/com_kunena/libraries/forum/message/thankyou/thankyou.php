@@ -182,7 +182,7 @@ class KunenaForumMessageThankyou extends JObject {
 		} else {
 			$query = "SELECT userid FROM #__kunena_users WHERE thankyou=0";
 			$db->setQuery ( $query );
-			$userid =  $db->loadObjectList();
+			$userid =  $db->loadResultArray();
 
 
 			foreach($userid as $id){

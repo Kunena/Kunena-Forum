@@ -200,7 +200,7 @@ class KunenaControllerTopic extends KunenaController {
 		} elseif ($topic->authorise('read', null, false)) {
 			$this->setRedirect ( $topic->getUrl($category, false) );
 		} else {
-			$this->setRedirect ( $category->getUrl(null, false) );
+			$this->setRedirect ( $topic->getUrl($category, false, 'first') );
 		}
 	}
 

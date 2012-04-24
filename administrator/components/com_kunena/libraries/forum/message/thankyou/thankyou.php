@@ -188,7 +188,7 @@ class KunenaForumMessageThankyou extends JObject {
 			foreach($userid as $id){
 				$query = "SELECT COUNT(*) FROM #__kunena_thankyou WHERE targetuserid={$db->quote($id)}";
 				$db->setQuery ( $query );
-				$countid = $db->loadObjectList();
+				$countid = $db->loadResult();
 
 				$query = "UPDATE #__kunena_users SET thankyou={$countid} WHERE userid={$db->quote($id)}";
 				$db->setQuery ( $query );

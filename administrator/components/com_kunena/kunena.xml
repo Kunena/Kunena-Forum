@@ -2,8 +2,8 @@
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>2.0.0-BETA1-DEV</version>
-	<versionname>Internal</versionname>
+	<version>2.0.0-BETA1</version>
+	<versionname>Newspeak</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>

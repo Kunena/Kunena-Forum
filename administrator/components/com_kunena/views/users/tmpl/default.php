@@ -115,9 +115,9 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				<td align="center">
 					<?php
 					if ($kunena_user->moderator) {
-						echo JText::_('COM_KUNENA_ANN_YES');
+						echo JText::_('COM_KUNENA_YES');
 					} else {
-						echo JText::_('COM_KUNENA_ANN_NO');
+						echo JText::_('COM_KUNENA_NO');
 					}
 					?>
 				</td>

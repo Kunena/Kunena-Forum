@@ -91,9 +91,9 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						?></a></td>
 					<td align="center"><?php
 						if ($row->rank_special == 1) {
-							echo JText::_('COM_KUNENA_ANN_YES');
+							echo JText::_('COM_KUNENA_YES');
 						} else {
-							echo JText::_('COM_KUNENA_ANN_NO');
+							echo JText::_('COM_KUNENA_NO');
 						}
 						?></td>
 					<td align="center"><?php

@@ -25,7 +25,11 @@ class KunenaViewTopics extends KunenaView {
 		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
-		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode='.$this->state->get ( 'list.mode' );
+		if ($this->embedded) {
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode='.$this->state->get ( 'list.mode' );
+			$userid = $this->state->get ( 'user' );
+			if ($userid) $this->moreUri .= "&userid={$userid}";
+		}
 		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
 
 		$this->_prepareDocument('default');
@@ -44,7 +48,11 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->URL = KunenaRoute::_();
 
-		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=user&mode='.$this->state->get ( 'list.mode' );
+		if ($this->embedded) {
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=user&mode='.$this->state->get ( 'list.mode' );
+			$userid = $this->state->get ( 'user' );
+			if ($userid) $this->moreUri .= "&userid={$userid}";
+		}
 
 		$this->_prepareDocument('user');
 
@@ -63,7 +71,11 @@ class KunenaViewTopics extends KunenaView {
 
 		$this->URL = KunenaRoute::_();
 
-		if ($this->embedded) $this->moreUri = 'index.php?option=com_kunena&view=topics&layout=posts&mode='.$this->state->get ( 'list.mode' );
+		if ($this->embedded) {
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=posts&mode='.$this->state->get ( 'list.mode' );
+			$userid = $this->state->get ( 'user' );
+			if ($userid) $this->moreUri .= "&userid={$userid}";
+		}
 
 		$this->_prepareDocument('posts');
 
@@ -104,7 +116,8 @@ class KunenaViewTopics extends KunenaView {
 			$cachekey = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
 			$cachegroup = 'com_kunena.topics';
 
-			$contents = $cache->get($cachekey, $cachegroup);
+			// FIXME: enable caching after fixing the issues
+			$contents = false; //$cache->get($cachekey, $cachegroup);
 			if (!$contents) {
 				$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 				$this->firstPostAuthor = $this->topic->getfirstPostAuthor();
@@ -128,7 +141,8 @@ class KunenaViewTopics extends KunenaView {
 				}
 				$contents = $this->loadTemplateFile('row');
 				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
-				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				// FIXME: enable caching after fixing the issues
+				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
 			if ($usertype != 'guest') {
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
@@ -179,7 +193,8 @@ class KunenaViewTopics extends KunenaView {
 			$cachekey = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
 			$cachegroup = 'com_kunena.posts';
 
-			$contents = $cache->get($cachekey, $cachegroup);
+			// FIXME: enable caching after fixing the issues
+			$contents = false; //$cache->get($cachekey, $cachegroup);
 			if (!$contents) {
 				$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 				$this->postAuthor = KunenaFactory::getUser($this->message->userid);
@@ -195,7 +210,8 @@ class KunenaViewTopics extends KunenaView {
 				}
 				$contents = $this->loadTemplateFile('row');
 				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
-				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				// FIXME: enable caching after fixing the issues
+				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
 			if ($usertype != 'guest') {
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);

@@ -57,11 +57,6 @@ $this->cache = false;
 	<td class="kcol-mid kcol-ktopiclastpost">
 		<div class="klatest-post-info">
 			<?php
-			if ($this->topic->ordering != 0) :
-				echo $this->getIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') );
-			endif
-			?>
-			<?php
 			if ($this->config->avataroncat > 0) :
 				$profile = KunenaFactory::getUser((int)$this->message->userid);
 				$useravatar = $profile->getAvatarImage('klist-avatar', 'list');

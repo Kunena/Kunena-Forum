@@ -11,5 +11,5 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->displayPoll();
-$this->getModulePosition( 'kunena_poll' );
+$this->displayModulePosition( 'kunena_poll' );
 $this->displayTemplateFile('topic', 'indented', 'list');

@@ -15,6 +15,7 @@
 
 	<files>
 		<!-- filename>bs-BA.com_kunena.ini</filename -->
-		<!-- filename>bs-BA.com_kunena.tpl_blue_eagle.ini</filename -->
+		<!-- filename>bs-BA.com_kunena.tpl_default.ini</filename -->
+		<!-- filename>bs-BA.com_kunena.tpl_example.ini</filename -->
 	</files>
 </install>

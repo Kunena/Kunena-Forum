@@ -12,6 +12,21 @@
 defined ( '_JEXEC' ) or die ();
 
 abstract class KunenaMenuHelper {
+	public static function cleanCache() {
+		if (version_compare(JVERSION, '1.6', '>')) {
+			$cache = JFactory::getCache('mod_menu');
+			$cache->clean();
+		} else {
+			// clean system cache
+			$cache = JFactory::getCache('_system');
+			$cache->clean();
+
+			// clean mod_mainmenu cache
+			$cache = JFactory::getCache('mod_mainmenu');
+			$cache->clean();
+		}
+	}
+
 	/**
 	 * Get a list of the menu items (taken from Joomla 2.5.1).
 	 *
@@ -38,7 +53,8 @@ abstract class KunenaMenuHelper {
 		asort($levels);
 		$key = 'menu_items'.$params.implode(',', $levels).'.'.$active->id;
 		$cache = JFactory::getCache('com_kunena.menu', '');
-		if (!($items = $cache->get($key))) {
+		// FIXME: enable caching after fixing the issues
+		if (true) { // !($items = $cache->get($key))) {
 			// Initialise variables.
 			$list		= array();
 
@@ -122,7 +138,8 @@ abstract class KunenaMenuHelper {
 				}
 			}
 
-			$cache->store($items, $key);
+			// FIXME: enable caching after fixing the issues
+			//$cache->store($items, $key);
 		}
 		return $items;
 	}
@@ -137,7 +154,8 @@ abstract class KunenaMenuHelper {
 		$level = JFactory::getUser()->get('aid');
 		$key = 'menu_items'.$params->toString().$level.'.'.$active->id;
 		$cache = JFactory::getCache('com_kunena.menu', '');
-		if (!($items = $cache->get($key))) {
+		// FIXME: enable caching after fixing the issues
+		if (true) { // !($items = $cache->get($key))) {
 			// Initialise variables.
 			$list		= array();
 
@@ -255,7 +273,8 @@ abstract class KunenaMenuHelper {
 				}
 			}
 
-			$cache->store($items, $key);
+			// FIXME: enable caching after fixing the issues
+			//$cache->store($items, $key);
 		}
 		return $items;
 	}

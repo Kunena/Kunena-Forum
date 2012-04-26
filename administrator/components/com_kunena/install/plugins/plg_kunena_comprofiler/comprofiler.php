@@ -17,8 +17,6 @@ class plgKunenaComprofiler extends JPlugin {
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
 
-		KunenaFactory::loadLanguage('plg_kunena_comprofiler.sys', 'admin');
-
 		$app = JFactory::getApplication ();
 
 		// Do not load if CommunityBuilder is not installed
@@ -41,6 +39,8 @@ class plgKunenaComprofiler extends JPlugin {
 			return;
 		}
 		parent::__construct ( $subject, $config );
+
+		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR );
 
 		$this->path = dirname ( __FILE__ ) . '/comprofiler';
 		require_once "{$this->path}/integration.php";

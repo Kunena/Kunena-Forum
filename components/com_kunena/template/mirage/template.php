@@ -116,7 +116,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$html .= '<ul class="list-pagination">';
 		$last = 0;
 		foreach($list['pages'] as $i=>$page) {
-			if ($last+1 != $i) $html .= '<li class="page-item kpage-more">...</li>';
+			if ($last+1 != $i) $html .= '<li class="page-item kpage-more"><a>...</a></li>';
 			$html .= $page['data'];
 			$last = $i;
 		}
@@ -125,11 +125,19 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		return $html;
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see KunenaTemplate::getPaginationItemActive()
+	 */
 	public function getPaginationItemActive(&$item) {
-		return '<li class="page-item page-active"><a class="active" title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></a></li>';
+		return '<li class="page-item"><a class="disabled" title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></a></li>';
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see KunenaTemplate::getPaginationItemInactive()
+	 */
 	public function getPaginationItemInactive(&$item) {
-		return '<li class="page-item"><a class="disabled" title="'.$item->text.'"><span>'.$item->text.'</span></a></li>';
+		return '<li class="page-item page-active"><a class="active" title="'.$item->text.'"><span>'.$item->text.'</span></a></li>';
 	}
 }

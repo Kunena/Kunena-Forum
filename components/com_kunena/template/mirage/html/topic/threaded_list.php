@@ -30,7 +30,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif ?>
 				</div>
 			</div>
-			<?php echo $this->displayTopicActions(0); ?>
+			<?php echo $this->displayTopicActions(); ?>
 			<div class="innerbox-wrapper kbox-full">
 				<div class="topic_threaded-detailsbox detailsbox">
 					<ul class="list-unstyled topic-posts">

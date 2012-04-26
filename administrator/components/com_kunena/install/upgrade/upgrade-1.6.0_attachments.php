@@ -11,8 +11,10 @@ defined ( '_JEXEC' ) or die ();
 
 // Kunena 1.6.0: Convert attachments table to support new multi file attachments
 function kunena_upgrade_160_attachments($parent) {
+	$db = JFactory::getDbo();
+
 	// First check if attachments table has legacy field
-	$fields = array_pop ( $parent->db->getTableFields ( '#__kunena_attachments' ) );
+	$fields = array_pop ( $db->getTableFields ( '#__kunena_attachments' ) );
 	if (! isset ( $fields ['filelocation'] )) {
 		// Already converted, there is nothing to do
 		return;
@@ -22,20 +24,20 @@ function kunena_upgrade_160_attachments($parent) {
 	jimport ( 'joomla.filesystem.folder' );
 
 	$query = "DROP TABLE IF EXISTS `#__kunena_attachments_bak`";
-	$parent->db->setQuery ( $query );
-	$parent->db->query ();
-	if ($parent->db->getErrorNum ())
-		throw new KunenaInstallerException ( $parent->db->getErrorMsg (), $parent->db->getErrorNum () );
+	$db->setQuery ( $query );
+	$db->query ();
+	if ($db->getErrorNum ())
+		throw new KunenaInstallerException ( $db->getErrorMsg (), $db->getErrorNum () );
 
 	// Attachments table has filelocation - assume we have to convert attachments
 	// hash and size ommited -> NULL
 	$query = "RENAME TABLE `#__kunena_attachments` TO `#__kunena_attachments_bak`";
-	$parent->db->setQuery ( $query );
-	$parent->db->query ();
-	if ($parent->db->getErrorNum ())
-		throw new KunenaInstallerException ( $parent->db->getErrorMsg (), $parent->db->getErrorNum () );
+	$db->setQuery ( $query );
+	$db->query ();
+	if ($db->getErrorNum ())
+		throw new KunenaInstallerException ( $db->getErrorMsg (), $db->getErrorNum () );
 
-	$collation = $parent->db->getCollation ();
+	$collation = $db->getCollation ();
 	if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
 	$query = "CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
 				`id` int(11) NOT NULL auto_increment,
@@ -51,10 +53,10 @@ function kunena_upgrade_160_attachments($parent) {
 					KEY `userid` (`userid`),
 					KEY `hash` (`hash`),
 					KEY `filename` (`filename`) ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
-	$parent->db->setQuery ( $query );
-	$parent->db->query ();
-	if ($parent->db->getErrorNum ())
-		throw new KunenaInstallerException ( $parent->db->getErrorMsg (), $parent->db->getErrorNum () );
+	$db->setQuery ( $query );
+	$db->query ();
+	if ($db->getErrorNum ())
+		throw new KunenaInstallerException ( $db->getErrorMsg (), $db->getErrorNum () );
 
 	$query = "INSERT INTO #__kunena_attachments (mesid, userid, folder, filetype, filename)
 				SELECT a.mesid, m.userid,
@@ -63,10 +65,10 @@ function kunena_upgrade_160_attachments($parent) {
 					SUBSTRING_INDEX(a.filelocation, '/', -1) AS filename
 				FROM #__kunena_attachments_bak AS a
 				JOIN #__kunena_messages AS m ON a.mesid = m.id";
-	$parent->db->setQuery ( $query );
-	$parent->db->query ();
-	if ($parent->db->getErrorNum ())
-		throw new KunenaInstallerException ( $parent->db->getErrorMsg (), $parent->db->getErrorNum () );
+	$db->setQuery ( $query );
+	$db->query ();
+	if ($db->getErrorNum ())
+		throw new KunenaInstallerException ( $db->getErrorMsg (), $db->getErrorNum () );
 
 	// By now the old attachmets table has been converted to the new Kunena 1.6 format
 	// with the exception of file size and file hash that cannot be calculated inside

@@ -40,7 +40,7 @@ class KunenaBbcode extends BBCode {
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
 		$this->SetSmileyDir ( JPATH_ROOT );
-		$this->SetSmileyURL ( JURI::root(true) );
+		$this->SetSmileyURL ( JURI::root() );
 		$this->SetDetectURLs ( true );
 		$this->SetURLPattern (array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
@@ -1102,7 +1102,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			}
 		}
 		if ($enabled && class_exists('GeSHi')) {
-			$geshi = new GeSHi ( $content, $type );
+			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );
 			$code = $geshi->parse_code ();
 		} else {

@@ -24,14 +24,14 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 
 <?php
 	$this->displayPoll();
-	$this->getModulePosition( 'kunena_poll' );
-	$this->displayTopicActions(0);
+	$this->displayModulePosition( 'kunena_poll' );
+	$this->displayTopicActions();
 ?>
 
 <div class="kblock">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?></span></h2>
-		<?php $this->getModulePosition( 'kunena_topictitle' ); ?>
+		<?php $this->displayModulePosition( 'kunena_topictitle' ); ?>
 		<?php if ($this->usertopic->favorite) : ?><div class="kfavorite"></div><?php endif ?>
 		<?php if (!empty($this->keywords)) : ?><div class="kkeywords"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?></div><?php endif ?>
 	</div>
@@ -39,7 +39,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 		<div class="kbody"><?php $this->displayMessages() ?></div>
 	</div>
 </div>
-<?php $this->displayTopicActions(1); ?>
+<?php $this->displayTopicActions(); ?>
 
 <div class="kcontainer klist-bottom">
 	<div class="kbody">

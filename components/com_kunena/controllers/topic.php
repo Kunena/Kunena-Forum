@@ -101,6 +101,11 @@ class KunenaControllerTopic extends KunenaController {
 			}
 		}
 
+		// Set topic icon if permitted
+		if ($this->config->topicicons && $topic->authorise('edit', null, false)) {
+			$topic->icon_id = $fields['icon_id'];
+		}
+
 		// If requested: Make message to be anonymous
 		if ($fields['anonymous'] && $message->getCategory()->allow_anonymous) {
 			$message->makeAnonymous();
@@ -173,14 +178,14 @@ class KunenaControllerTopic extends KunenaController {
 
 		//now try adding any new subscriptions if asked for by the poster
 		if ($fields['subscribe']) {
-			if ($topic->subscribe(1)) {
+			if (!$topic->subscribe(1)) {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
 
 				// Activity integration
 				$activity = KunenaFactory::getActivityIntegration();
 				$activity->onAfterSubscribe($topic, 1);
 			} else {
-				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) );
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic->getError() );
 			}
 		}
 
@@ -195,7 +200,7 @@ class KunenaControllerTopic extends KunenaController {
 		} elseif ($topic->authorise('read', null, false)) {
 			$this->setRedirect ( $topic->getUrl($category, false) );
 		} else {
-			$this->setRedirect ( $category->getUrl(null, false) );
+			$this->setRedirect ( $topic->getUrl($category, false, 'first') );
 		}
 	}
 
@@ -216,8 +221,7 @@ class KunenaControllerTopic extends KunenaController {
 			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'),
 			'poll_time_to_live' => JRequest::getString ( 'poll_time_to_live', 0 ),
 			'tags' => JRequest::getString ( 'tags', null ),
-			'mytags' => JRequest::getString ( 'mytags', null ),
-			'attach_id' => JRequest::getVar ( 'attach-id', null, 'post', 'array' )
+			'mytags' => JRequest::getString ( 'mytags', null )
 		);
 
 		if (! JRequest::checkToken ()) {
@@ -240,15 +244,10 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Mark attachments to be deleted
-		if ($fields['attach_id'] !== null) {
-			$attachments = $message->getAttachments();
-			$attachkeeplist = $fields['attach_id'];
-			foreach ($attachments as $attachment) {
-				if (!in_array($attachment->id, $attachkeeplist)) {
-					$message->removeAttachment($attachment->id);
-				}
-			}
-		}
+		$attachments = JRequest::getVar ( 'attachments', array(), 'post', 'array' );
+		$attachkeeplist = JRequest::getVar ( 'attachment', array(), 'post', 'array' );
+		$message->removeAttachment(array_keys(array_diff_key($attachments, $attachkeeplist)));
+
 		// Upload new attachments
 		foreach ($_FILES as $key=>$file) {
 			$intkey = 0;
@@ -257,16 +256,14 @@ class KunenaControllerTopic extends KunenaController {
 			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key);
 		}
 
+		// Set topic icon if permitted
+		if ($this->config->topicicons && $topic->authorise('edit', null, false)) {
+			$topic->icon_id = $fields['icon_id'];
+		}
+
 		// Check if we are editing first post and update topic if we are!
 		if ($topic->first_post_id == $message->id) {
-			$topic->icon_id = $fields['icon_id'];
 			$topic->subject = $fields['subject'];
-			$success = $topic->save();
-			if (! $success) {
-				$this->app->setUserState('com_kunena.postfields', $fields);
-				$this->app->enqueueMessage ( $topic->getError (), 'error' );
-				$this->redirectBack ();
-			}
 		}
 
 		// Activity integration
@@ -690,7 +687,8 @@ class KunenaControllerTopic extends KunenaController {
 			} else {
 				$ids = false;
 			}
-			if (!$topic->move ( $target, $ids, $shadow, $subject, $changesubject )) {
+			$targetobject = $topic->move ( $target, $ids, $shadow, $subject, $changesubject );
+			if (!$targetobject) {
 				$error = $topic->getError();
 			}
 		}
@@ -699,7 +697,11 @@ class KunenaControllerTopic extends KunenaController {
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ) );
 		}
-		$this->app->redirect ( $target->getUrl($this->return, false ) );
+		if ($targetobject) {
+			$this->app->redirect ( $targetobject->getUrl($this->return, false, 'last' ) );
+		} else {
+			$this->app->redirect ( $topic->getUrl($this->return, false, 'first' ) );
+		}
 	}
 
 	function report() {

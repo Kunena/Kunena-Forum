@@ -112,6 +112,7 @@ abstract class KunenaMenuFix {
 
 	public static function fixLegacy() {
 		$items = array();
+		$errors = array();
 		foreach (self::$legacy as $itemid) {
 			$item = self::$items[$itemid];
 			KunenaRouteLegacy::convertMenuItem($item);
@@ -122,16 +123,20 @@ abstract class KunenaMenuFix {
 				'params' => $item->params,
 			);
 			if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
-				return $table->getError ();
+				$errors[] = $table->getError ();
 			}
 		}
+		KunenaMenuHelper::cleanCache();
+		return !empty($errors) ? $errors : null;
 	}
 
 	public static function delete($itemid) {
 		// Only delete Kunena menu items
 		if (!isset(self::$items[$itemid])) return false;
 		$table = JTable::getInstance ( 'menu' );
-		return $table->delete($itemid);
+		$result = $table->delete($itemid);
+		KunenaMenuHelper::cleanCache();
+		return $result;
 	}
 
 	public static function getAll() {
@@ -161,7 +166,8 @@ abstract class KunenaMenuFix {
 	public static function getConflicts() {
 		$items = array();
 		foreach (self::$same as $alias=>$list) {
-			if (count($list)>1) {
+			// There are no conflicts in J1.6+ (only multi-lang support)
+			if (count($list)>1 && version_compare(JVERSION, '1.6', '<')) {
 				$items += $list;
 			}
 		}

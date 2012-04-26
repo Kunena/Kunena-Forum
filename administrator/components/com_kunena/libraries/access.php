@@ -37,7 +37,8 @@ class KunenaAccess {
 
 		// Load administrators and moderators from cache
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$data = $cache->get(self::$cacheKey, 'com_kunena');
+		// FIXME: enable caching after fixing the issues
+		$data = false; //$cache->get(self::$cacheKey, 'com_kunena');
 		if ($data) {
 			$data = unserialize($data);
 			if (isset($data['v']) && $data['v'] == 1) {
@@ -84,6 +85,8 @@ class KunenaAccess {
 
 		// Store new data into cache
 		$cache = JFactory::getCache('com_kunena', 'output');
+		// FIXME: enable caching after fixing the issues
+		/*
 		$cache->store(serialize(array(
 			'v'=>1, // version identifier
 			'ac'=>$this->adminsByCatid,
@@ -91,6 +94,7 @@ class KunenaAccess {
 			'mc'=>$this->moderatorsByCatid,
 			'mu'=>$this->moderatorsByUserid,
 			)), self::$cacheKey, 'com_kunena');
+		*/
 	}
 
 	/**
@@ -450,8 +454,8 @@ window.addEvent('domready', function(){
 			foreach ($this->accesstypes[$category->accesstype] as $access) {
 				if (method_exists($access, 'authoriseUsers')) {
 					list ($a, $d) = $access->authoriseUsers($topic, $userids);
-					$allow = array_merge($allow, $a);
-					$deny = array_merge($deny, $d);
+					$allow = array_merge($allow, (array) $a);
+					$deny = array_merge($deny, (array) $d);
 				}
 			}
 		}

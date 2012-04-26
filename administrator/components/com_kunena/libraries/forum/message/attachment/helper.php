@@ -52,6 +52,7 @@ class KunenaForumMessageAttachmentHelper {
 		} else {
 			$ids = array($ids);
 		}
+		if (empty($ids)) return array();
 		self::loadById($ids);
 
 		$list = array ();
@@ -77,6 +78,7 @@ class KunenaForumMessageAttachmentHelper {
 		} else {
 			$ids = array($ids);
 		}
+		if (empty($ids)) return array();
 		self::loadByMessage($ids);
 
 		$list = array ();

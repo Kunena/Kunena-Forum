@@ -342,7 +342,8 @@ class KunenaForumCategoryHelper {
 		if ($rows) {
 			// If something changed, clean our cache
 			$cache = JFactory::getCache('com_kunena', 'output');
-			$cache->clean('categories');
+			// FIXME: enable caching after fixing the issues
+			//$cache->clean('categories');
 		}
 		return $rows;
 	}

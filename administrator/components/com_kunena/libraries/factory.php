@@ -147,7 +147,10 @@ abstract class KunenaFactory {
 					$loaded[$file] = self::parseLanguage($lang, $filename);
 				}
 			} else {
-				$loaded[$file] = $lang->load($file, $lookup2, null, true);
+				$loaded[$file] = $lang->load($file, $lookup1, null, false, false)
+					|| $lang->load($file, $lookup2, null, false, false)
+					|| $lang->load($file, $lookup1, $lang->getDefault(), false, false)
+					|| $lang->load($file, $lookup2, $lang->getDefault(), false, false);
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

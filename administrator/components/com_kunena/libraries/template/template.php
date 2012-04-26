@@ -529,8 +529,15 @@ HTML;
 	public function getTopicIcon($topic ) {
 		$config = KunenaFactory::getConfig ();
 		if ($config->topicicons) {
-			if ( $topic->moved_id == 0 ) $iconurl = $this->getTopicIconIndexPath($topic->icon_id, true);
-			else $iconurl = $this->getTopicIconPath('user/moved.png', true);
+			// TODO: use xml file instead
+			if ($topic->moved_id) $icon = 'system_moved';
+			elseif ($topic->hold == 2 || $topic->hold == 3) $icon = 'system_deleted';
+			elseif ($topic->hold == 1) $icon = 'system_unapproved';
+			elseif ($topic->ordering && $topic->locked) $icon = 'system_sticky_locked';
+			elseif ($topic->ordering) $icon = 'system_sticky';
+			elseif ($topic->locked) $icon = 'system_locked';
+			else $icon = $topic->icon_id;
+			$iconurl = $this->getTopicIconIndexPath($icon, true);
 		} else {
 			$icon = 'normal';
 			if ($topic->posts < 2) $icon = 'unanswered';
@@ -589,7 +596,7 @@ HTML;
 					$templatename = 'blue_eagle';
 					$classname = "KunenaTemplate{$templatename}";
 
-					JFactory::getApplication()->enqueueMessage(JText::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename), 'notice');
+					if (is_dir(KPATH_SITE . "/template/{$templatename}")) JFactory::getApplication()->enqueueMessage(JText::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename), 'notice');
 				}
 				$file = KPATH_SITE."/template/{$templatename}/template.php";
 				if (!file_exists($file)) {

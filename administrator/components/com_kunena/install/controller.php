@@ -24,13 +24,6 @@ class KunenaControllerInstall extends JController {
 	protected $model = null;
 
 	public function __construct() {
-		$lang = JFactory::getLanguage();
-		// Start by loading English strings and override them by current locale
-		$lang->load('com_kunena.install', JPATH_ADMINISTRATOR, 'en-GB')
-			|| $lang->load('com_kunena.install', KPATH_ADMIN, 'en-GB');
-		$lang->load('com_kunena.install', JPATH_ADMINISTRATOR)
-			|| $lang->load('com_kunena.install', KPATH_ADMIN);
-
 		parent::__construct ();
 		require_once(KPATH_ADMIN.'/install/model.php');
 		$this->model = $this->getModel ( 'Install' );
@@ -43,11 +36,6 @@ class KunenaControllerInstall extends JController {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$start = JRequest::getBool('start', false);
 		$this->model->setStep ( 0 );
-
-		// Install English and default language
-		$tag = JFactory::getLanguage()->getTag();
-		$this->model->installLanguage('en-GB');
-		if ($tag != 'en-GB') $this->model->installLanguage($tag);
 
 		$this->setRedirect('index.php?option=com_kunena&view=install' . ($start ? '&task=upgrade&'.JUtility::getToken().'=1' : ''));
 	}

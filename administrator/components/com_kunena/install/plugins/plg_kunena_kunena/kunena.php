@@ -15,8 +15,8 @@ class plgKunenaKunena extends JPlugin {
 		// Do not load if Kunena version is not supported or Kunena is offline
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
 
-		KunenaFactory::loadLanguage('plg_kunena_kunena.sys', 'admin');
 		parent::__construct ( $subject, $config );
+
 		$this->loadLanguage ( 'plg_kunena_kunena.sys', JPATH_ADMINISTRATOR );
 
 		$this->path = dirname ( __FILE__ ) . '/kunena';

@@ -109,8 +109,11 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	color: #000000;
 }
 #Kunena div.kblock div.kactions {
-	background-color: #737373;
-	color:#FFFFFF ;
+	background-color: #F2F1EE;
+	color:#FFF;
+	border-left:1px solid #BFC3C6;
+	border-bottom:1px solid #BFC3C6;
+	border-right:1px solid #BFC3C6;
 }
 #Kunena div.kblock div.kactions a {
 	color:#FFFFFF !important;
@@ -710,7 +713,7 @@ POST PAGE
 	border-color: #BFC3C6;
 }
 #Kunena div#khistory tr.ksth a {
-	color: #ffffff;
+	color: #fff !important;
 }
 
 /* ---- Post Previews ---- */

@@ -11,8 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->displayPoll();
-$this->getModulePosition( 'kunena_poll' );
-//$this->displayTopicActions(0);
+$this->displayModulePosition( 'kunena_poll' );
+//$this->displayTopicActions();
 //$this->displayTemplateFile('topic', 'default', 'list');
 
 ?>
@@ -37,7 +37,7 @@ $this->getModulePosition( 'kunena_poll' );
 					<?php endif ?>
 				</div>
 			</div>
-			<?php echo $this->displayTopicActions(0); ?>
+			<?php echo $this->displayTopicActions(); ?>
 			<div class="innerbox-wrapper innerspacer">
 				<?php echo $this->getPagination(4); ?>
 			</div>

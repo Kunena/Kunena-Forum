@@ -111,6 +111,8 @@ class KunenaViewTopic extends KunenaView {
 		// Redirect unread layout to the page that contains the first unread message
 		$category = $this->get ( 'Category' );
 		$topic = $this->get ( 'Topic' );
+		KunenaForumTopicHelper::fetchNewStatus(array($topic->id => $topic));
+
 		$message = KunenaForumMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
 		$this->app->redirect($topic->getUrl($category, false, $message));
@@ -256,7 +258,7 @@ class KunenaViewTopic extends KunenaView {
 		$quote = (bool) JRequest::getBool ( 'quote', false );
 		$this->category = $this->topic->getCategory();
 		if ($this->config->topicicons && $this->topic->authorise('edit', null, false)) {
-			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : 0);
+			$this->topicIcons = $this->ktemplate->getTopicIcons(false, $saved ? $saved['icon_id'] : $this->topic->icon_id);
 		}
 		list ($this->topic, $this->message) = $parent->newReply($saved ? $saved : $quote);
 		$this->_prepareDocument('reply');
@@ -510,7 +512,8 @@ class KunenaViewTopic extends KunenaView {
 				$cachekey = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
 				$cachegroup = 'com_kunena.messages';
 
-				$contents = $cache->get($cachekey, $cachegroup);
+				// FIXME: enable caching after fixing the issues
+				$contents = false; //$cache->get($cachekey, $cachegroup);
 				if (!$contents) {
 					$this->userkarma = "{$this->userkarma_title} {$this->userkarma_minus} {$this->userkarma_plus}";
 					// Use kunena profile
@@ -539,7 +542,8 @@ class KunenaViewTopic extends KunenaView {
 					$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
 
 					$contents = $this->loadTemplateFile('profile');
-					if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+					// FIXME: enable caching after fixing the issues
+					//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 				}
 				$profiles [$key] = $contents;
 			}
@@ -551,13 +555,11 @@ class KunenaViewTopic extends KunenaView {
 		echo $this->loadTemplateFile('message');
 	}
 
-	function displayTopicActions($location=0) {
-		echo $this->getTopicActions($location);
+	function displayTopicActions() {
+		echo $this->getTopicActions();
 	}
 
-	function getTopicActions($location=0) {
-		static $locations = array('top', 'bottom');
-
+	function getTopicActions() {
 		$catid = $this->state->get('item.catid');
 		$id = $this->state->get('item.id');
 
@@ -614,10 +616,6 @@ class KunenaViewTopic extends KunenaView {
 				$this->topicButtons->set('indented', $this->getButton ( sprintf($url, 'indented'), 'indented', 'layout', 'user'));
 			}
 		}
-		$location ^= 1;
-		$this->goto = '<a name="forum'.$locations[$location].'"></a>';
-		$this->goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$location], $this->getIcon ( 'kforum'.$locations[$location], JText::_('COM_KUNENA_GEN_GOTO'.$locations[$location] ) ), 'nofollow', 'kbuttongoto');
-
 		return $this->loadTemplateFile('actions');
 	}
 
@@ -705,7 +703,7 @@ class KunenaViewTopic extends KunenaView {
 		$cachekey = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 
-		$contents = $cache->get($cachekey, $cachegroup);
+		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents) {
 
 			//Show admins the IP address of the user:
@@ -738,7 +736,8 @@ class KunenaViewTopic extends KunenaView {
 
 			$contents = $this->loadTemplateFile($template);
 			if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:(\w+))?\]|', array($this, 'fillMessageInfo'), $contents);
-			if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+			// FIXME: enable caching after fixing the issues
+			//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 		} elseif ($usertype == 'guest') {
 			echo $contents;
 			$this->setLayout($layout);

@@ -156,7 +156,8 @@ abstract class KunenaRoute {
 		$user = KunenaUserHelper::getMyself();
 		$cache = self::getCache();
 		// TODO: can use viewlevels instead of userid
-		$data = $cache->get($user->userid, 'com_kunena.route');
+		// FIXME: enable caching after fixing the issues
+		$data = false; // $cache->get($user->userid, 'com_kunena.route');
 		if ($data !== false) {
 			list(self::$subtree, self::$uris) = unserialize($data);
 		}
@@ -170,7 +171,8 @@ abstract class KunenaRoute {
 		$data = array(self::$subtree, self::$uris);
 		$cache = self::getCache();
 		// TODO: can use viewlevels instead of userid
-		$cache->store(serialize($data), $user->userid, 'com_kunena.route');
+		// FIXME: enable caching after fixing the issues
+		//$cache->store(serialize($data), $user->userid, 'com_kunena.route');
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
@@ -392,7 +394,8 @@ abstract class KunenaRoute {
 			$language = JFactory::getDocument()->getLanguage();
 			$cache = self::getCache();
 
-			self::$search = unserialize($cache->get('search', "com_kunena.route.{$language}.{$user->userid}"));
+			// FIXME: enable caching after fixing the issues
+			self::$search = false; //unserialize($cache->get('search', "com_kunena.route.{$language}.{$user->userid}"));
 			if (self::$search === false) {
 				self::$search['home'] = array();
 				foreach ( self::$menu as $item ) {
@@ -412,7 +415,8 @@ abstract class KunenaRoute {
 						self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
 					}
 				}
-				$cache->store(serialize(self::$search), 'search', "com_kunena.route.{$language}.{$user->userid}");
+				// FIXME: enable caching after fixing the issues
+				//$cache->store(serialize(self::$search), 'search', "com_kunena.route.{$language}.{$user->userid}");
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -503,7 +507,8 @@ abstract class KunenaRoute {
 	protected static function checkCategory($item, $uri) {
 		static $cache = array();
 		$catid = (int) $uri->getVar('catid');
-		if (!$catid) return self::check($item, $uri);
+		$check = self::check($item, $uri);
+		if (!$check || !$catid) return $check;
 		if (!isset($cache[$item->id])) {
 			$cache[$item->id] = array();
 			if (!empty($item->query['catid'])) {

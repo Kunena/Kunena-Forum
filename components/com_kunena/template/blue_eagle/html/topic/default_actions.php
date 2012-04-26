@@ -9,11 +9,18 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+// Goto up / down
+$locations = array('top','bottom');
+if (!isset($this->location)) $this->location = 0;
+$goto = '<a name="forum'.$locations[$this->location].'"></a>';
+$this->location ^= 1;
+$goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$this->location], $this->getIcon ( 'kforum'.$locations[$this->location], JText::_('COM_KUNENA_GEN_GOTO'.$locations[$this->location] ) ), 'nofollow', 'kbuttongoto');
 ?>
 <table class="klist-actions">
 	<tr>
 		<td class="klist-actions-goto">
-			<?php echo $this->goto ?>
+			<?php echo $goto ?>
 		</td>
 		<td class="klist-actions-forum">
 		<?php if ($this->topicButtons->get('reply') || $this->topicButtons->get('subscribe') || $this->topicButtons->get('favorite') ) : ?>

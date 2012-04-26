@@ -14,7 +14,7 @@
 	<description>Persian (Iran) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>fa-IR.com_kunena.ini</filename -->
+		<filename>fa-IR.com_kunena.ini</filename>
 		<filename>fa-IR.com_kunena.install.ini</filename>
 		<filename>fa-IR.com_kunena.menu.ini</filename>
 		<filename>fa-IR.com_kunena.sys.ini</filename>

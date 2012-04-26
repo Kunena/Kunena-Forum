@@ -174,4 +174,31 @@ class KunenaForumMessageThankyouHelper {
 		}
 		unset ($results);
 	}
+
+	/**
+	 * Perform the recount thankyous in kunena_users table
+	 * @return bool true if succes
+	 * @since 2.0
+	 */
+	static public function recount() {
+		$db = JFactory::getDBO ();
+
+		$query = "SELECT COUNT(targetuserid) AS countthankyou, targetuserid AS userid FROM `#__kunena_thankyou` GROUP BY `targetuserid`";
+		$db->setQuery ( $query );
+		$userid =  $db->loadResultArray();
+
+		foreach($userid as $id){
+			$query = "UPDATE #__kunena_users SET thankyou={$countthankyou} WHERE userid={$db->quote($id)}";
+			$db->setQuery ( $query );
+			$db->query ();
+		}
+
+		// Check for an error message.
+		if ($db->getErrorNum ()) {
+			$this->setError ( $db->getErrorMsg () );
+			return false;
+		}
+
+		return true;
+	}
 }

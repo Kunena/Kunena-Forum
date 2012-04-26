@@ -843,7 +843,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				KunenaUserHelper::recount();
 				KunenaForumCategoryHelper::recount();
 				KunenaForumMessageAttachmentHelper::cleanup();
-				KunenaForumMessageThankyou::recount();
+				KunenaForumMessageThankyouHelper::recount();
 			}
 		}
 		return true;

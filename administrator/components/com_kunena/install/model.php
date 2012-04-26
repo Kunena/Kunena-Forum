@@ -2063,7 +2063,7 @@ class KunenaModelInstall extends JModel {
 			return true;
 		}
 
-		KunenaForumMessageThankyou::recount();
+		KunenaForumMessageThankyouHelper::recount();
 
 		return true;
 	}

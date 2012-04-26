@@ -79,7 +79,7 @@ $this->k ^= 1;
 		<ul class="kcontent-32 list-unstyled kcategory-subcat-list">
 			<?php foreach ( $this->subcategories as $subcategory ) : ?>
 				<li class="kcategory-smdetails kcategory-smicon[K=CATEGORY_NEW_SUFFIX:<?php echo $subcategory->id ?>]">
-					<h4 class="kcontent-24"><?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?><br />[K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]<span class="kcounts"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_TOPICS_N_REPLIES', $subcategory->getTopics(), $subcategory->getReplies()) ?></span></h4>
+					<h4 class="kcontent-24"><?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?> [K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]<span class="kcounts"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_TOPICS_N_REPLIES', $subcategory->getTopics(), $subcategory->getReplies()) ?></span></h4>
 				</li>
 			<?php endforeach ?>
 		</ul>

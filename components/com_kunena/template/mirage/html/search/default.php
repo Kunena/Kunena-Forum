@@ -20,7 +20,7 @@ document.addEvent('domready', function() {
 }
 
 ?>
-<div class="kmodule search_adv">
+<div class="kmodule search-default">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search') ?>" name="adminForm" id="adminForm" method="post">
 		<input type="hidden" name="task" value="results" />
 		<?php echo JHTML::_( 'form.token' ); ?>
@@ -101,12 +101,16 @@ document.addEvent('domready', function() {
 						</div>
 					</div>
 				</div>
-				<div class="footerkbox-wrapper">
-					<div class="footer">
-						<div class="kost-buttons">
-							<button title="Click here to search" type="submit" class="kbutton"><span><?php echo JText::_('COM_KUNENA_SEARCH_SEND') ?></span></button>
-							<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton"><span><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL') ?></span></button>
-						</div>
+				<div class="footerkbox-wrapper innerspacer-bottom">
+					<div class="footerkbox">
+						<ul class="list-unstyled buttonbar buttons-category hcenter">
+							<li class="item-button">
+								<button title="Click here to search" type="submit" class="kbutton button-type-comm"><span><?php echo JText::_('COM_KUNENA_SEARCH_SEND') ?></span></button>
+							</li>
+							<li class="item-button">
+								<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton button-type-standard"><span><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL') ?></span></button>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>

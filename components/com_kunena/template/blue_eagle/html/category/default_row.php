@@ -44,7 +44,7 @@ $this->cache = false;
 				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
 			}
 			if ($this->topic->locked != 0) {
-				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
+				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC') );
 			}
 			?>
 		</div>
@@ -57,7 +57,7 @@ $this->cache = false;
 			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat');?>
 			</span>
-			<span class="ktopic-by ks">&nbsp;<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
+			<span class="ktopic-by ks">&nbsp;<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
 		</div>
 
 		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
@@ -95,7 +95,7 @@ $this->cache = false;
 			<span class="ktopic-latest-post">
 			<?php
 			echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST') );
-			echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();
+			echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();
 			?>
 			</span>
 

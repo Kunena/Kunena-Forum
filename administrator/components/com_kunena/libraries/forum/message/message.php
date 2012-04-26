@@ -785,7 +785,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . " : " . $this->getAuthor() . "\n\n";
 		$msg .= "URL : $url\n\n";
 		if ($config->mailfull == 1) {
-			$msg .= JText::_ ( 'COM_KUNENA_GEN_MESSAGE' ) . " :\n-----\n";
+			$msg .= JText::_ ( 'COM_KUNENA_MESSAGE' ) . " :\n-----\n";
 			$msg .= $message;
 			$msg .= "\n-----\n\n";
 		}

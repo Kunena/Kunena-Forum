@@ -46,7 +46,7 @@ $this->rowclass = array ("odd", "even" );
 									</dd>
 									<dd class="category-topics">
 										<div class="innerspacer-header">
-											<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span>
+											<span class="bold"><?php echo JText::_('COM_KUNENA_TOPICS') ?></span>
 										</div>
 									</dd>
 									<dd class="category-replies">

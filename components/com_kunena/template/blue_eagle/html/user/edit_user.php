@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 		</tr>
 		<tr class="krow1">
 			<td class="kcol-first">
-				<label for="name"><?php echo JText::_( 'COM_KUNENA_USRL_NAME' ); ?></label>
+				<label for="name"><?php echo JText::_( 'COM_KUNENA_REALNAME' ); ?></label>
 			</td>
 					<td class="kcol-mid">
 				<input class="inputbox required" type="text" id="name" name="name" value="<?php echo $this->escape($this->user->get('name'));?>" size="40" />

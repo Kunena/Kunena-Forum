@@ -68,7 +68,7 @@ defined ( '_JEXEC' ) or die ();
 											<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
 											<br />
 										<?php endif; ?>
-										<input type="submit" class="kbutton kreply-submit" name="submit" value="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
+										<input type="submit" class="kbutton kreply-submit" name="submit" value="<?php echo JText::_('COM_KUNENA_SUBMIT') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
 										<input type="reset" class="kbutton kreply-cancel" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
 										<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE') ?></small>
 									</form>

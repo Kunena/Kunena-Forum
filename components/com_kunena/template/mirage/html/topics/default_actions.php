@@ -19,7 +19,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php // TODO: better place? ?>
 		<li class="kfilter-total">
 			<strong><?php echo intval($this->total) ?></strong>
-			<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>
+			<?php echo JText::_('COM_KUNENA_TOPICS')?>
 		</li>
 		<!-- li class="kfilter-title">Filter posts by:</li>
 		<li>

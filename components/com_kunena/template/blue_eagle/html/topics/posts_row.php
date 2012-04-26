@@ -44,7 +44,7 @@ $this->cache = false;
 				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
 			}
 			if ($this->topic->locked != 0) {
-				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
+				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC') );
 			}
 			?>
 		</div>
@@ -75,7 +75,7 @@ $this->cache = false;
 
 			<?php if ($this->message->userid) : ?>
 			<br />
-			<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->message->getAuthor()->getLink(); ?></span>
+			<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink(); ?></span>
 			<?php endif; ?>
 		</div>
 	</td>

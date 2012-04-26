@@ -105,7 +105,7 @@ document.addEvent('domready', function() {
 					<div class="footer">
 						<div class="kost-buttons">
 							<button title="Click here to search" type="submit" class="kbutton"><span><?php echo JText::_('COM_KUNENA_SEARCH_SEND') ?></span></button>
-							<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton"><span><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL') ?></span></button>
+							<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton"><span><?php echo JText::_('COM_KUNENA_CANCEL') ?></span></button>
 						</div>
 					</div>
 				</div>

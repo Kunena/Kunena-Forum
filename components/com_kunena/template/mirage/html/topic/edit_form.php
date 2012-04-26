@@ -45,7 +45,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 							<li id="kpost-category" class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<div class="innerspacer-left kbox-full">
-										<label for="kpostcatid"><?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY')?></label>
+										<label for="kpostcatid"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY')?></label>
 									</div>
 								</div>
 								<div class="form-field">
@@ -224,8 +224,8 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 					</div>
 				</div>
 				<div class="kpost-buttons">
-					<button class="kbutton hasTip" type="submit" title="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT') ?>"><?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?></button>
-					<button class="kbutton hasTip" type="button" title="<?php echo JText::_('COM_KUNENA_GEN_CANCEL').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL') ?>" onclick="javascript:window.history.back();"><?php echo JText::_('COM_KUNENA_GEN_CANCEL') ?></button>
+					<button class="kbutton hasTip" type="submit" title="<?php echo JText::_('COM_KUNENA_SUBMIT').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT') ?>"><?php echo JText::_('COM_KUNENA_SUBMIT') ?></button>
+					<button class="kbutton hasTip" type="button" title="<?php echo JText::_('COM_KUNENA_CANCEL').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL') ?>" onclick="javascript:window.history.back();"><?php echo JText::_('COM_KUNENA_CANCEL') ?></button>
 				</div>
 			</form>
 		</div>

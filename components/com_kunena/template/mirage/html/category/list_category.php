@@ -30,7 +30,7 @@ $this->k ^= 1;
 					<?php if ($this->moderators) : ?>
 						<li class="kcategory-mods">
 							<ul>
-								<li class="kcategory-modtitle"><?php echo JText::_('COM_KUNENA_GEN_MODERATORS') ?>:</li>
+								<li class="kcategory-modtitle"><?php echo JText::_('COM_KUNENA_MODERATORS') ?>:</li>
 								<?php foreach ($this->moderators as $moderator) : ?>
 									<li class="kcategory-modname kusername-mod"><?php echo $moderator->getLink() ?></li>
 								<?php endforeach ?>
@@ -43,7 +43,7 @@ $this->k ^= 1;
 		<dd class="category-topics">
 			<div class="innerspacer-column">
 				<span class="number"><?php echo $this->formatLargeNumber($this->category->getTopics()); ?></span><br />
-				<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span>
+				<span class="bold"><?php echo JText::_('COM_KUNENA_TOPICS') ?></span>
 			</div>
 		</dd>
 		<dd class="category-replies">

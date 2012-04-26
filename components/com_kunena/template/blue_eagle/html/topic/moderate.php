@@ -31,11 +31,11 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 				<?php echo JHTML::_( 'form.token' ); ?>
 
 				<div>
-					<?php echo JText::_('COM_KUNENA_GEN_TOPIC'); ?>:
+					<?php echo JText::_('COM_KUNENA_TOPIC'); ?>:
 					<strong><?php echo $this->escape( $this->topic->subject ); ?></strong>
 				</div>
 				<div>
-					<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?>:
+					<?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?>:
 					<strong><?php echo $this->escape( $this->category->name ) ?></strong>
 				</div>
 
@@ -49,7 +49,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 							<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>
 						</span>
 						<span class="kmessage-by">
-							<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->message->getAuthor()->getLink() ?>
+							<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink() ?>
 						</span>
 					</div>
 					<div class="kmessage-avatar"><?php echo $this->user->getAvatarImage('', 'list'); ?></div>

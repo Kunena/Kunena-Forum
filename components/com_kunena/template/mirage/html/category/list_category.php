@@ -14,10 +14,10 @@ $this->k ^= 1;
 ?>
 
 <li class="category-row category-row-<?php echo $this->rowclass [$this->k], isset ( $this->category->class_sfx ) ? ' category-row-' . $this->escape($this->rowclass [$this->k]) . $this->escape($this->category->class_sfx) : '' ?> kbox-hover kbox-hover_list-row kbox-full">
-	<dl class="list-unstyled">
+	<dl class="list-unstyled list-column">
 		<!--<dd class="category-icon">
 		</dd>-->
-		<dd class="category-subject">
+		<dd class="category-subject item-column">
 			<div class="innerspacer-column">
 				<a class="fl" href="<?php echo $this->category->getUrl() ?>" title="<?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($this->category->name)) ?>">[K=CATEGORY_ICON]</a>
 				<ul class="kcontent-32 list-unstyled">
@@ -40,20 +40,20 @@ $this->k ^= 1;
 				</ul>
 			</div>
 		</dd>
-		<dd class="category-topics">
+		<dd class="category-topics item-column">
 			<div class="innerspacer-column">
 				<span class="number"><?php echo $this->formatLargeNumber($this->category->getTopics()); ?></span><br />
 				<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span>
 			</div>
 		</dd>
-		<dd class="category-replies">
+		<dd class="category-replies item-column">
 			<div class="innerspacer-column">
 				<span class="number"><?php echo $this->formatLargeNumber($this->category->getReplies()); ?></span><br />
 				<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
 			</div>
 		</dd>
 		<!-- td class="kcategory-subs">944 <span>Subscribers</span></td -->
-		<dd class="category-lastpost">
+		<dd class="category-lastpost item-column">
 			<div class="innerspacer-column">
 			<?php if ($this->lastPost) : ?>
 				<?php if ( $this->config->avataroncat ) : ?><?php echo $this->lastUser->getLink($this->lastUser->getAvatarImage('klist-avatar  kavatar kavatar-32 fl', 'list')) ?><?php endif ?>

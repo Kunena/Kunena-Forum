@@ -24,35 +24,35 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 				<div class="detailsbox-wrapper innerspacer kbox-full">
 					<div class="topics-default_list-detailsbox detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
-						<ul class="list-unstyled topic-list">
-							<li class="header kbox-hover_header-row kbox-full">
-								<dl class="list-unstyled list-unstyled">
+						<ul class="topic-list list-unstyled list-row">
+							<li class="header kbox-hover_header-row kbox-full item-row">
+								<dl class="list-unstyled list-column">
 									<!--<dd class="topic-icon">
 									</dd>-->
-									<dd class="topic-subject">
+									<dd class="topic-subject item-column">
 										<div class="innerspacer-header">
 											<?php //FIXME: Translate ?>
 											<span class="bold"><?php echo JText::_('Subject') ?></span>
 										</div>
 									</dd>
-									<dd class="topic-replies">
+									<dd class="topic-replies item-column">
 										<div class="innerspacer-header">
 											<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
 										</div>
 									</dd>
-									<dd class="topic-views">
+									<dd class="topic-views item-column">
 										<div class="innerspacer-header">
 											<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
 										</div>
 									</dd>
-									<dd class="topic-lastpost">
+									<dd class="topic-lastpost item-column">
 										<div class="innerspacer-header">
 											<?php //FIXME: Translate ?>
 											<span class="bold"><?php echo JText::_('Last Post') ?></span>
 										</div>
 									</dd>
 									<?php if ($this->topicActions) : ?>
-										<dd class="topic-checkbox">
+										<dd class="topic-checkbox item-column">
 											<div class="innerspacer-header">
 												<span><input id="kcheckbox-all" type="checkbox" value="" name="toggle" class="kcheckall" /></span>
 											</div>
@@ -61,7 +61,7 @@ defined ( '_JEXEC' ) or die ();
 								</dl>
 							</li>
 						</ul>
-						<ul class="list-unstyled topic-list">
+						<ul class="topic-list list-unstyled">
 							<?php if (empty($this->topics )) : ?>
 								<li class="topic-row">
 									<dl class="list-unstyled">

@@ -19,6 +19,9 @@ $kunena_profiler->start('Total Time');
 KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 
 KunenaFactory::loadLanguage();
+KunenaFactory::loadLanguage('com_kunena.libraries');
+KunenaFactory::loadLanguage('com_kunena.mvc');
+KunenaFactory::loadLanguage('com_kunena.templates');
 
 // Initialize error handlers
 KunenaError::initialize ();

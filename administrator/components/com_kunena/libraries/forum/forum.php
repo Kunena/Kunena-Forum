@@ -41,8 +41,8 @@ class KunenaForum {
 		if (version_compare($version, '2.0', '<')) {
 			return false;
 		}
-		// Check if future version is needed (remove SVN from the check)
-		if (version_compare($version, preg_replace('/-SVN/i', '', self::version()), '>')) {
+		// Check if future version is needed (remove GIT from the check)
+		if (version_compare($version, preg_replace('/-GIT/i', '', self::version()), '>')) {
 			return false;
 		}
 		return true;
@@ -103,13 +103,13 @@ class KunenaForum {
 			$xml = KPATH_ADMIN . '/kunena.xml';
 			$parser = JFactory::getXMLParser ( 'Simple' );
 			$parser->loadFile ( $xml );
-			self::$version = $parser->document->getElementByPath ( 'version' )->data () . '-SVN';
+			self::$version = $parser->document->getElementByPath ( 'version' )->data () . '-GIT';
 		} else {
 			self::$version = strtoupper ( '@kunenaversion@' );
 		}
 		self::$version_major = substr(self::$version, 0, 3);
 		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toMySQL() : '@kunenaversiondate@';
-		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'SVN Revision' : '@kunenaversionname@';
+		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 
 	public function display($viewName, $layout='default', $template=null, $params = array()) {

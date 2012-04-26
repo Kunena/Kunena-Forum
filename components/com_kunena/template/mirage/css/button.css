@@ -1,27 +1,35 @@
-#kunena.layout a.button-type-standard { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
+#kunena.layout a.button-type-standard { background-image: linear-gradient(top, rgba(223, 223, 223, 1.0) 0%, rgba(191, 191, 191, 1.0) 100%); }
 #kunena.layout a.button-type-comm { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
 #kunena.layout a.button-type-user { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
 #kunena.layout a.button-type-mod { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
 #kunena.layout a.button-type-perm { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%); }
+#kunena.layout a.button-color-light { color: rgba(0, 0, 0, 1.0); }
+#kunena.layout a.button-color-dark { color: rgba(255, 255, 255, 1.0); }
 
-#kunena.layout a.button-type-standard:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
+#kunena.layout a.button-type-standard:hover { background-image: linear-gradient(top, rgba(223, 223, 223, 1.0) 0%, rgba(191, 191, 191, 1.0) 100%); }
 #kunena.layout a.button-type-comm:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
 #kunena.layout a.button-type-user:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
 #kunena.layout a.button-type-mod:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
 #kunena.layout a.button-type-perm:hover { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%); }
+#kunena.layout button.button-color-light { color: rgba(0, 0, 0, 1.0); }
+#kunena.layout a.button-color-dark { color: rgba(255, 255, 255, 1.0); }
 
 
-#kunena.layout button.button-type-standard { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
+#kunena.layout button.button-type-standard { background-image: linear-gradient(top, rgba(223, 223, 223, 1.0) 0%, rgba(191, 191, 191, 1.0) 100%); }
 #kunena.layout button.button-type-comm { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
 #kunena.layout button.button-type-user { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
 #kunena.layout button.button-type-mod { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
 #kunena.layout button.button-type-perm { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%); }
+#kunena.layout button.button-color-light { color: rgba(0, 0, 0, 1.0); }
+#kunena.layout button.button-color-dark { color: rgba(255, 255, 255, 1.0); }
 
-#kunena.layout button.button-type-standard:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
+#kunena.layout button.button-type-standard:hover { background-image: linear-gradient(top, rgba(223, 223, 223, 1.0) 0%, rgba(191, 191, 191, 1.0) 100%); }
 #kunena.layout button.button-type-comm:hover { background-image: linear-gradient(top, rgba(89, 220, 91, 1.0) 0%, rgba(48, 179, 50, 1.0) 100%); }
 #kunena.layout button.button-type-user:hover { background-image: linear-gradient(top, rgba(89, 155, 220, 1.0) 0%, rgba(48, 114, 179, 1.0) 100%); }
 #kunena.layout button.button-type-mod:hover { background-image: linear-gradient(top, rgba(220, 89, 218, 1.0) 0%, rgba(179, 48, 162, 1.0) 100%); }
 #kunena.layout button.button-type-perm:hover { background-image: linear-gradient(top, rgba(220, 89, 89, 1.0) 0%, rgba(179, 48, 50, 1.0) 100%); }
+#kunena.layout button.button-color-light:hover { color: rgba(255, 255, 255, 1.0); }
+#kunena.layout button.button-color-dark { color: rgba(255, 255, 255, 1.0); }
 
 
 /* WARNING: DO NOT REMOVE THESE CLASSES */

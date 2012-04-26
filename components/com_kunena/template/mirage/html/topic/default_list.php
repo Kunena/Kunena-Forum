@@ -37,7 +37,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="innerbox-wrapper">
 				<div class="topic-detailsbox detailsbox">
 					<ul class="list-unstyled topic-posts">
-						<?php $this->displayMessages('message') ?>
+						<?php $this->displayMessages() ?>
 					</ul>
 				</div>
 			</div>

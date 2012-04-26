@@ -4,11 +4,11 @@
 			<ul class="list-unstyled message-list">
 				<li class="header">
 					<a id="<?php echo $this->displayMessageField('id') ?>"></a>
-					<dl class="list-unstyled">
+					<dl class="list-unstyled list-inline-block">
 						<dd class="kposthead-replytitle"><h3>RE: <?php echo $this->displayMessageField('subject') ?></h3></dd>
-						<dd class="kposthead-postid" ><?php echo $this->numLink ?></dd>
-						<?php if (!empty($this->ipLink)) : ?><dd class="kposthead-postip"><?php echo $this->ipLink ?></dd><?php endif ?>
-						<dd class="kposthead-posttime">Posted [K=DATE:<?php echo $this->message->time ?>]</dd>
+						<dd class="kposthead-postid fr"><?php echo $this->numLink ?></dd>
+						<?php if (!empty($this->ipLink)) : ?><dd class="kposthead-postip fr"><?php echo $this->ipLink ?></dd><?php endif ?>
+						<dd class="kposthead-posttime fr">Posted [K=DATE:<?php echo $this->message->time ?>]</dd>
 					</dl>
 				</li>
 			</ul>

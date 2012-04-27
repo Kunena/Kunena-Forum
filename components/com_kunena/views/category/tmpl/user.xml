@@ -7,7 +7,7 @@
 	
 	<!-- Joomla 1.5 Support -->
 	<state>
-		<name>COM_KUNENA_MENU_CATEGORY_USERT_LONG</name>
+		<name>COM_KUNENA_MENU_CATEGORY_USER_LONG</name>
 		<description>COM_KUNENA_MENU_CATEGORY_USER_DESC_LONG</description>
 	</state>
 </metadata>

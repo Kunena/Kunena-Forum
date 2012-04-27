@@ -1959,6 +1959,7 @@ class KunenaModelInstall extends JModel {
 		$moduleid = $module->id;
 
 		// Now publish the module
+		// TODO: no need for the menu module
 		$query = "REPLACE INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES ($moduleid, 0);";
 		$this->db->setQuery ( $query );
 		$this->db->query ();
@@ -1970,11 +1971,11 @@ class KunenaModelInstall extends JModel {
 		$defaultmenu = JMenu::getInstance('site')->getDefault('workaround');
 		if (!$defaultmenu) return true;
 		$table = JTable::getInstance ( 'menu' );
-		$table->load(array('menutype'=>$defaultmenu->menutype, 'type'=>'alias', 'title'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' )));
+		$table->load(array('menutype'=>$defaultmenu->menutype, 'type'=>'alias', 'title'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_FORUM' )));
 		if (!$table->id) {
 			$data = array (
 				'menutype' => $defaultmenu->menutype,
-				'title' => JText::_ ( 'COM_KUNENA_MENU_FORUM' ),
+				'title' => JText::_ ( 'COM_KUNENA_MENU_ITEM_FORUM' ),
 				'link' => 'index.php?Itemid='.$parent->id,
 				'type' => 'alias',
 				'published' => 0,

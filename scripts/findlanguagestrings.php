@@ -166,7 +166,7 @@ function loadTranslations($files) {
 		echo "Load $file\n";
 		$contents = file_get_contents($file);
 		// Put commented out translations back so that we do not loose them
-		$contents = preg_replace('|;\s*(COM_KUNENA_)|','\1',$contents);
+		$contents = preg_replace('|;\s*(COM_)|','\1',$contents);
 		$strings = (array) parse_ini_string($contents, false, INI_SCANNER_RAW);
 		if (!$strings) echo "ERROR LOADING $file!\n";
 		$file = preg_replace(array('|^components/.*/|', '|^administrator/.*/|'), array('site/','admin/'), $file);

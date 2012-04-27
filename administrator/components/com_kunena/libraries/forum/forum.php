@@ -97,7 +97,7 @@ class KunenaForum {
 	}
 
 	public static function setup() {
-		KunenaFactory::loadLanguage('com_kunena.libraries', 'site');
+		KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
 	}
 
 	// Internal functions

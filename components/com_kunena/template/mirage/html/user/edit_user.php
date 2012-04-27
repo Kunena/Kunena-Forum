@@ -36,7 +36,7 @@ defined ( '_JEXEC' ) or die ();
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
-									<label for="kname"><?php echo JText::_( 'COM_KUNENA_USRL_NAME' ) ?></label>
+									<label for="kname"><?php echo JText::_( 'COM_KUNENA_REALNAME' ) ?></label>
 								</div>
 							</div>
 							<div class="form-field">

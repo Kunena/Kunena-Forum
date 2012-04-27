@@ -783,11 +783,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$msg = $msg1 . " " . $config->board_title . "\n\n";
 		// DO NOT REMOVE EXTRA SPACE, JMailHelper::cleanBody() removes "Subject:" from the message body
 		$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . " : " . $subject . "\n";
-		$msg .= JText::_ ( 'COM_KUNENA_GEN_CATEGORY' ) . " : " . $this->getCategory()->name . "\n";
+		$msg .= JText::_ ( 'COM_KUNENA_CATEGORY' ) . " : " . $this->getCategory()->name . "\n";
 		$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . " : " . $this->getAuthor() . "\n\n";
 		$msg .= "URL : $url\n\n";
 		if ($config->mailfull == 1) {
-			$msg .= JText::_ ( 'COM_KUNENA_GEN_MESSAGE' ) . " :\n-----\n";
+			$msg .= JText::_ ( 'COM_KUNENA_MESSAGE' ) . " :\n-----\n";
 			$msg .= $message;
 			$msg .= "\n-----\n\n";
 		}

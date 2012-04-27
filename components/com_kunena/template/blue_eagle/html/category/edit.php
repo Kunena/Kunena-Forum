@@ -174,8 +174,8 @@ function submitbutton(pressbutton)
 							<tr>
 								<th width="5">#</th>
 								<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->moderators ); ?>);" /></th>
-								<th align="left"><?php echo JText::_('COM_KUNENA_USRL_NAME'); ?></th>
-								<th align="left"><?php echo JText::_('COM_KUNENA_USRL_USERNAME'); ?></th>
+								<th align="left"><?php echo JText::_('COM_KUNENA_REALNAME'); ?></th>
+								<th align="left"><?php echo JText::_('COM_KUNENA_USERNAME'); ?></th>
 								<th align="center"><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?></th>
 							</tr>
 						</thead>

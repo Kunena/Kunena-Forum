@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 		<div class="topic-report-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
-					<h2 class="header"><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></h2>
+					<h2 class="header"><?php echo JText::_('COM_KUNENA_REPORT_TO_MODERATOR') ?></h2>
 				</div>
 			</div>
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" class="kform kform-report">

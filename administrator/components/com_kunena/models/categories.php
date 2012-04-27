@@ -211,8 +211,8 @@ class KunenaAdminModelCategories extends KunenaModel {
 
 		// make a standard yes/no list
 		$yesno = array ();
-		$yesno [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_ANN_NO' ) );
-		$yesno [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_ANN_YES' ) );
+		$yesno [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_NO' ) );
+		$yesno [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_YES' ) );
 
 		// Anonymous posts default
 		$post_anonymous = array ();

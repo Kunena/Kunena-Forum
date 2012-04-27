@@ -47,8 +47,8 @@ if (version_compare(JVERSION, '1.7','>')) {
 						<th><?php echo JText::_('COM_KUNENA_FILETYPE'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILENAME'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILESIZE'); ?></th>
-						<th><?php echo JText::_('COM_KUNENA_FILE_PREVIEW'); ?></th>
-						<th><?php echo JText::_('COM_KUNENA_FILE_DELETE'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_PREVIEW'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_DELETE'); ?></th>
 					</tr>
 
 					<?php

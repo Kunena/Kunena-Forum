@@ -500,7 +500,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function deleteFiles($path, $ignore=array()) {
-		$ignore = array_merge($ignore, array('.svn', 'CVS','.DS_Store','__MACOSX'));
+		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS','.DS_Store','__MACOSX'));
 		foreach (JFolder::files($path, '.', false, true, $ignore) as $file) {
 			if ( JFile::exists($file) ) {
 				JFile::delete($file);
@@ -509,7 +509,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function deleteFolders($path, $ignore=array()) {
-		$ignore = array_merge($ignore, array('.svn', 'CVS','.DS_Store','__MACOSX'));
+		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS','.DS_Store','__MACOSX'));
 		foreach (JFolder::folders($path, '.', false, true, $ignore) as $folder) {
 			if ( JFolder::exists($folder) ) {
 				JFolder::delete($folder);
@@ -571,7 +571,7 @@ class KunenaModelInstall extends JModel {
 	public function stepExtract() {
 		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
 		if (KunenaForum::isDev() || !is_file("{$path}/fileformat")) {
-			// SVN install
+			// Git install
 			$dir = JPATH_ADMINISTRATOR.'/components/com_kunena/media/kunena';
 			if (is_dir($dir)) {
 				JFolder::copy($dir, KPATH_MEDIA, false, true);
@@ -872,10 +872,10 @@ class KunenaModelInstall extends JModel {
 			$state[$vernum] = 1;
 
 			if ($version['version'] == '@'.'kunenaversion'.'@') {
-				$svn = 1;
+				$git = 1;
 				$vernum = KunenaForum::version();
 			}
-			if(isset($svn) || version_compare(strtolower($version['version']), strtolower($curversion->version), '>')) {
+			if(isset($git) || version_compare(strtolower($version['version']), strtolower($curversion->version), '>')) {
 				foreach ($version as $action) {
 					$result = $this->processUpgradeXMLNode($action);
 					if ($result) $this->addStatus ( $result ['action'] . ' ' . $result ['name'], $result ['success'] );
@@ -1454,6 +1454,22 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function getActionText($version, $type='', $action=null) {
+		/* Translations generated:
+
+		Installation types: COM_KUNENA_INSTALL_UPGRADE, COM_KUNENA_INSTALL_DOWNGRADE, COM_KUNENA_INSTALL_REINSTALL,
+		COM_KUNENA_INSTALL_MIGRATE, COM_KUNENA_INSTALL_INSTALL, COM_KUNENA_INSTALL_UNINSTALL, COM_KUNENA_INSTALL_RESTORE
+
+		Installation descriptions: COM_KUNENA_INSTALL_UPGRADE_DESC, COM_KUNENA_INSTALL_DOWNGRADE_DESC, COM_KUNENA_INSTALL_REINSTALL_DESC,
+		COM_KUNENA_INSTALL_MIGRATE_DESC, COM_KUNENA_INSTALL_INSTALL_DESC, COM_KUNENA_INSTALL_UNINSTALL_DESC, COM_KUNENA_INSTALL_RESTORE_DESC
+
+		Installation hints: COM_KUNENA_INSTALL_UPGRADE_HINT, COM_KUNENA_INSTALL_DOWNGRADE_HINT, COM_KUNENA_INSTALL_REINSTALL_HINT,
+		COM_KUNENA_INSTALL_MIGRATE_HINT, COM_KUNENA_INSTALL_INSTALL_HINT, COM_KUNENA_INSTALL_UNINSTALL_HINT, COM_KUNENA_INSTALL_RESTORE_HINT
+
+		Installation warnings: COM_KUNENA_INSTALL_UPGRADE_WARN, COM_KUNENA_INSTALL_DOWNGRADE_WARN, COM_KUNENA_INSTALL_REINSTALL_WARN,
+		COM_KUNENA_INSTALL_MIGRATE_WARN, COM_KUNENA_INSTALL_INSTALL_WARN, COM_KUNENA_INSTALL_UNINSTALL_WARN, COM_KUNENA_INSTALL_RESTORE_WARN
+
+		 */
+
 		static $search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#VERSION#');
 		$replace = array ($version->component, $version->version, KunenaForum::version());
 		if (!$action) $action = $version->action;
@@ -1643,26 +1659,26 @@ class KunenaModelInstall extends JModel {
 	 * and if not, adds a forum link in the mainmenu.
 	 */
 	function createMenu() {
-		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' )),
+		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_FORUM' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' )),
 			'link'=>'index.php?option=com_kunena&view=home', 'access'=>0, 'params'=>array('catids'=>0));
 		$submenu = array(
-			'index'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' )),
+			'index'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_INDEX' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=category&layout=list', 'access'=>0, 'default'=>'categories', 'params'=>array()),
-			'recent'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_RECENT' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' )),
+			'recent'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_RECENT' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=topics&mode=replies', 'access'=>0, 'default'=>'recent', 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>720)),
-			'newtopic'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' )),
+			'newtopic'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_NEWTOPIC' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=topic&layout=create', 'access'=>1, 'params'=>array()),
-			'noreplies'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' )),
+			'noreplies'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_NOREPLIES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=topics&mode=noreplies', 'access'=>1, 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>-1)),
-			'mylatest'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' )),
+			'mylatest'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_MYLATEST' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>1, 'default'=>'my' , 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>-1)),
-			'profile'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' )),
+			'profile'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_PROFILE' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=user', 'access'=>1, 'params'=>array('integration'=>1)),
-			'rules'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_RULES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' )),
+			'rules'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_RULES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>0, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_MISC_DEFAULT_BODY' ), 'body_format'=>'text')),
-			'help'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_HELP' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' )),
+			'help'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_HELP' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>0, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_MISC_DEFAULT_BODY' ), 'body_format'=>'text')),
-			'search'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_SEARCH' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' )),
+			'search'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_SEARCH' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=search', 'access'=>0, 'params'=>array()),
 		);
 
@@ -1947,6 +1963,7 @@ class KunenaModelInstall extends JModel {
 		$moduleid = $module->id;
 
 		// Now publish the module
+		// TODO: no need for the menu module
 		$query = "REPLACE INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES ($moduleid, 0);";
 		$this->db->setQuery ( $query );
 		$this->db->query ();
@@ -1958,11 +1975,11 @@ class KunenaModelInstall extends JModel {
 		$defaultmenu = JMenu::getInstance('site')->getDefault('workaround');
 		if (!$defaultmenu) return true;
 		$table = JTable::getInstance ( 'menu' );
-		$table->load(array('menutype'=>$defaultmenu->menutype, 'type'=>'alias', 'title'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' )));
+		$table->load(array('menutype'=>$defaultmenu->menutype, 'type'=>'alias', 'title'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_FORUM' )));
 		if (!$table->id) {
 			$data = array (
 				'menutype' => $defaultmenu->menutype,
-				'title' => JText::_ ( 'COM_KUNENA_MENU_FORUM' ),
+				'title' => JText::_ ( 'COM_KUNENA_MENU_ITEM_FORUM' ),
 				'link' => 'index.php?Itemid='.$parent->id,
 				'type' => 'alias',
 				'published' => 0,

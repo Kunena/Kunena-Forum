@@ -34,7 +34,11 @@
 	float: none;
 }
 
-#kunena.layout .clear {
+#kunena.layout .hcenter {
+	text-align: center;
+}
+
+#kunena.layout .kclear {
 	clear: both;
 }
 
@@ -43,6 +47,10 @@
 }
 
 #kunena.layout .inline-block {
+	display: inline-block;
+}
+
+#kunena.layout .list-inline-block > * {
 	display: inline-block;
 }
 
@@ -58,36 +66,37 @@
 
 }
 
-#kunena.layout .caret-up {
+#kunena.layout .caret {
 	width: 0;
 	height: 0;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+
+#kunena.layout .caret-up {
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	border-bottom: 5px solid #000000;
+	border-bottom: 5px solid #0088CC;
+	display: inline-block;
 }
 
 #kunena.layout .caret-down {
-	width: 0;
-	height: 0;
-	border-left: 2px solid transparent;
-	border-right: 2px solid transparent;
-	border-top: 2px solid #000000;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #0088CC;
 }
 
 #kunena.layout .caret-right {
-	width: 0;
-	height: 0;
-	border-top: 2px solid transparent;
-	border-bottom: 2px solid transparent;
-	border-left: 2px solid #000000;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-left: 5px solid #0088CC;
 }
 
 #kunena.layout .caret-left {
-	width: 0;
-	height: 0;
-	border-top: 2px solid transparent;
-	border-bottom: 2px solid transparent; 
-	border-right: 2px solid #000000;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent; 
+	border-right: 5px solid #0088CC;
 }
 
 #kunena.layout .link-menu {
@@ -116,13 +125,13 @@
 }
 
 #kunena.layout .divider-horizontal-inline-solid {
-	border-bottom: 2px solid #EEEEEE;
 	border-top: 2px solid #CCCCCC;
+	border-bottom: 1px solid #EEEEEE;
 }
 
 #kunena.layout .divider-horizontal-inline-dotted {
-	border-bottom: 2px dotted #EEEEEE;
 	border-top: 2px dotted #CCCCCC;
+	border-bottom: 1px dotted #EEEEEE;
 }
 
 #kunena.layout .divider-horizontal-inline {
@@ -253,7 +262,7 @@
 	left: 0;
 	right: auto;
 	margin: 0px;
-	padding: 10px 0px;
+	padding: 5px 0px;
 	min-width: 210px;
 	/*padding: 4px 0;*/
 	position: absolute;
@@ -343,6 +352,16 @@
 
 #kunena.layout div.kpagination li {
 	display: inline;
+}
+
+#kunena.layout div.kpagination a.active {
+	color: #999999;
+	cursor: default;
+}
+
+#kunena.layout div.kpagination a.disabled {
+	color: #999999;
+	cursor: default;
 }
 
 #kunena.layout div.kpagination li:first-child > a {
@@ -478,6 +497,14 @@
 	overflow: hidden;
 }
 
+#kunena.layout ul.menu li > a > b {
+	/*height: 30px;*/
+	/*line-height: 30px;*/
+	line-height: 32px;
+	margin-left: 4px;
+	padding: 0;
+}
+
 /*#kunena.layout ul.menu li:first-child > a {
 	border-radius: 5px 0px 0px 5px
 }
@@ -585,6 +612,24 @@
 	line-height: normal;
 	padding: 5px 10px;
 	font-size: 13px;
+}
+
+#kunena.layout .list-row > .item-row {
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	position: relative;
+	overflow: hidden;
+}
+
+#kunena.layout .list-column > .item-column {
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	/*padding: 10px 5px;*/
+	position: relative;
+	overflow: hidden;
 }
 
 
@@ -881,7 +926,7 @@
 	vertical-align: bottom;
 }
 
-#kunena.layout ul.announcement-list > li {
+/*#kunena.layout ul.announcement-list > li {
 	clear: both;
 	display: block;
 	position: relative;
@@ -889,7 +934,7 @@
 	margin: 0;
 	overflow: hidden;
 	padding: 1px 0 0;
-}
+}*/
 
 #kunena.layout ul.announcement-list li.announcements-row dl, ul.announcement-list li.header {
 	float: none !important;
@@ -897,19 +942,19 @@
 	width: auto;
 }
 
-#kunena.layout ul.announcement-list li.announcements-row {
+/*#kunena.layout ul.announcement-list li.announcements-row {
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
-}
+}*/
 
-#kunena.layout ul.announcement-list li.announcements-row dd {
+/*#kunena.layout ul.announcement-list li.announcements-row dd {
 	display: block;
 	float: left;
-	margin: 0px;
+	margin: 0px;*/
 	/*padding: 10px 5px;*/
-	position: relative;
-}
+	/*position: relative;
+}*/
 
 #kunena.layout ul.announcement-list li.header dd {
 	display: block;
@@ -918,10 +963,10 @@
 	/*padding: 2px 5px;*/
 }
 
-#kunena.layout ul.announcement-list dd {
+/*#kunena.layout ul.announcement-list dd {
 	display: block;
 	float: left;
-	margin: 0px;
+	margin: 0px;*/
 	/*padding: 2px 0;*/
 }
 
@@ -930,13 +975,14 @@
 	position: relative;
 }*/
 
-#kunena.layout ul.announcement-list li.announcements-row dd {
+/*#kunena.layout ul.announcement-list li.announcements-row dd {
 	display: block;
 	float: left;
 	margin: 0px;
-}
+}*/
 
 #kunena.layout ul.announcement-list dd.announcement-checkbox {
+	padding: 0;
 	margin: 0;
 	text-align: center;
 	vertical-align: middle;
@@ -944,6 +990,7 @@
 }
 
 #kunena.layout ul.announcement-list dd.announcement-id {
+	padding: 0;
 	margin: 0;
 	text-align: center;
 	vertical-align: middle;
@@ -951,6 +998,7 @@
 }
 
 #kunena.layout ul.announcement-list dd.announcement-date {
+	padding: 0;
 	margin: 0;
 	text-align: left;
 	vertical-align: middle;
@@ -958,6 +1006,7 @@
 }
 
 #kunena.layout ul.announcement-list dd.announcement-author {
+	padding: 0;
 	margin: 0;
 	text-align: left;
 	vertical-align: middle;
@@ -965,6 +1014,7 @@
 }
 
 #kunena.layout ul.announcement-list dd.announcement-title {
+	padding: 0;
 	margin: 0;
 	text-align: left;
 	vertical-align: middle;
@@ -972,6 +1022,7 @@
 }
 
 #kunena.layout ul.announcement-list dd.announcement-publish {
+	padding: 0;
 	margin: 0;
 	text-align: center;
 	vertical-align: middle;
@@ -979,6 +1030,7 @@
 }
 
 #kunena.layout ul.announcement-list dd.announcement-edit {
+	padding: 0;
 	margin: 0;
 	text-align: center;
 	vertical-align: middle;
@@ -986,6 +1038,7 @@
 }
 
 #kunena.layout ul.announcement-list dd.announcement-delete {
+	padding: 0;
 	margin: 0;
 	text-align: center;
 	vertical-align: middle;
@@ -1031,19 +1084,19 @@
 	width: auto;
 }
 
-#kunena.layout ul.banmanager-list li.banmanager-row {
+/*#kunena.layout ul.banmanager-list li.banmanager-row {
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
-}
+}*/
 
-#kunena.layout ul.banmanager-list li.banmanager-row dd {
+/*#kunena.layout ul.banmanager-list li.banmanager-row dd {
 	display: block;
 	float: left;
-	margin: 0px;
+	margin: 0px;*/
 	/*padding: 10px 5px;*/
-	position: relative;
-}
+	/*position: relative;
+}*/
 
 #kunena.layout ul.banmanager-list li.header dd {
 	display: block;
@@ -1052,23 +1105,23 @@
 	/*padding: 2px 5px;*/
 }
 
-#kunena.layout ul.banmanager-list dd {
+/*#kunena.layout ul.banmanager-list dd {
 	display: block;
 	float: left;
-	margin: 0px;
+	margin: 0px;*/
 	/*padding: 2px 0;*/
-}
+/*}*/
 
 /*#kunena.layout ul.topic-list li.topics-row dl {
 	display: block;
 	position: relative;
 }*/
 
-#kunena.layout ul.banmanager-list li.banmanager-row dd {
+/*#kunena.layout ul.banmanager-list li.banmanager-row dd {
 	display: block;
 	float: left;
 	margin: 0px;
-}
+}*/
 
 #kunena.layout ul.banmanager-list dd.banmanager-id {
 	margin: 0;
@@ -1167,19 +1220,19 @@
 	width: auto;
 }
 
-#kunena.layout ul.category-list li.category-row {
-	margin: 0px;
+/*#kunena.layout ul.category-list li.category-row {
+	margin: 0px;*/
 	/*padding: 2px;*/
-	overflow: hidden;
-}
+	/*overflow: hidden;
+}*/
 
-#kunena.layout ul.category-list li.category-row dd {
+/*#kunena.layout ul.category-list li.category-row dd {
 	display: block;
 	float: left;
 	margin: 0px;
 	padding: 0px;
 	position: relative;
-}
+}*/
 
 #kunena.layout ul.category-list li.header dd {
 	display: block;
@@ -1188,18 +1241,18 @@
 	/*padding: 2px 5px;*/
 }
 
-#kunena.layout ul.category-list dd {
+/*#kunena.layout ul.category-list dd {
 	display: block;
 	float: left;
-	margin: 0px;
+	margin: 0px;*/
 	/*padding: 2px 0;*/
-}
+/*}*/
 
-#kunena.layout ul.category-list li.category-row dd {
+/*#kunena.layout ul.category-list li.category-row dd {
 	display: block;
 	float: left;
 	margin: 0px;
-}
+}*/
 
 /*#kunena.layout ul.category-list i.category-icon {
 	margin: 0;
@@ -1208,12 +1261,14 @@
 
 #kunena.layout ul.category-list dd.category-subject {
 	margin: 0;
+	padding: 0;
 	text-align: left;
 	width: 55%;
 }
 
 #kunena.layout ul.category-list dd.category-topics, #kunena.layout ul.category-list dd.category-replies {
 	margin: 0;
+	padding: 0;
 	text-align: center;
 	width: 10%;
 }
@@ -1225,6 +1280,7 @@
 
 #kunena.layout ul.category-list dd.category-lastpost {
 	margin: 0;
+	padding: 0;
 	text-align: left;
 	width: 25%;
 }
@@ -1257,7 +1313,7 @@
 }
 
 #kunena.layout span.login-member {
-	display: block;
+	display: inline-block;
 }
 
 #kunena.layout span.login-member span.login-avatar {
@@ -1265,7 +1321,7 @@
 }
 
 #kunena.layout span.login-member span.loginbox {
-	float: left;
+	/*float: left;*/
 	padding-left: 5px;
 }
 
@@ -1601,7 +1657,7 @@
 	vertical-align: bottom;
 }
 
-#kunena.layout ul.popsubstat-list li {
+/*#kunena.layout ul.popsubstat-list li {
 	clear: both;
 	display: block;
 	position: relative;
@@ -1609,7 +1665,7 @@
 	margin: 0;
 	overflow: hidden;
 	padding: 1px 0 0;
-}
+}*/
 
 #kunena.layout ul.popsubstat-list li.popsubstats-row dl, ul.popsubstat-list li.header {
 	float: none !important;
@@ -1617,18 +1673,18 @@
 	width: auto;
 }
 
-#kunena.layout ul.popsubstat-list li.popsubstats-row {
+/*#kunena.layout ul.popsubstat-list li.popsubstats-row {
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
-}
+}*/
 
-#kunena.layout ul.popsubstat-list li.popsubstats-row dd {
+/*#kunena.layout ul.popsubstat-list li.popsubstats-row dd {
 	display: block;
 	float: left;
-	margin: 0px;
+	margin: 0px;*/
 	/*padding: 10px 5px;*/
-}
+/*}*/
 
 #kunena.layout ul.popsubstat-list li.header dd {
 	display: block;
@@ -1637,24 +1693,24 @@
 	/*padding: 2px 5px;*/
 }
 
-#kunena.layout ul.popsubstat-list dd {
+/*#kunena.layout ul.popsubstat-list dd {
 	display: block;
 	float: left;
-	margin: 0px;
+	margin: 0px;*/
 	/*padding: 2px 0;*/
-}
+/*}*/
 
 /*#kunena.layout ul.topic-list li.topics-row dl {
 	display: block;
 	position: relative;
 }*/
 
-#kunena.layout ul.popsubstat-list li.popsubstats-row dd {
+/*#kunena.layout ul.popsubstat-list li.popsubstats-row dd {
 	display: block;
 	float: left;
 	margin: 0px;
 	position: relative;
-}
+}*/
 
 #kunena.layout ul.popsubstat-list dd.popsubstats-col1 {
 	margin: 0;
@@ -1732,6 +1788,7 @@
 }
 
 #kunena.layout div.statistics-default div.stats-bar {
+	background: rgba(139, 190, 242, 1.0);
 	background-image: linear-gradient(center left, rgba(139, 190, 242, 1.0) 0%, rgba(107, 158, 209, 1.0) 100%);
 }
 
@@ -2182,4 +2239,166 @@
 	left: 49%;
 	top: 49%;
 	position: absolute;
+}
+
+/*---------- Profile ------------- */
+
+#kunena.layout .kdetailsbox.kprofilebox,
+#kunena.layout #kmod-detailsbox.kmod-userbox {
+	padding: 10px 10px 30px;
+}
+#kunena.layout #kprofile-leftcol {
+	width: 200px;
+	font-size: 1em;
+	float: left;
+}
+#kunena.layout .kavatar-lg {
+	width: 200px;
+	height: 200px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+#kunena.layout #kprofile-stats ul {
+	float: left;
+	margin: 0 0 0 3px;
+	padding: 0 50px 0 0;
+}
+#kunena.layout #kprofile-stats ul li {
+	list-style-type: none;
+	padding-top: 5px;
+	font-size: .917em;
+}
+#kunena.layout #kprofile-stats ul li span.konline-status-yes {
+	display:block;
+	background: url("../images/icons/online.gif") no-repeat;
+	height: 16px;
+	width: 70px;
+}
+#kunena.layout #kprofile-stats ul li span.konline-status-no {
+	display:block;
+	background: url("../images/icons/offline.gif") no-repeat;
+	height: 16px;
+	width: 70px;
+}
+#kunena.layout #kprofile-stats ul li span.krankname {
+	display:block;
+	margin-right: 5px;
+	font-weight:bold;
+	float:left;
+}
+#kunena.layout #kprofile-stats ul li span.krank-admin {
+	display:block;
+	background: url("../images/ranks/rankadmin.gif") no-repeat;
+	height: 16px;
+	width: 70px;
+	margin-right: 5px;
+	float:right;
+	margin-top: 0;
+}
+#kunena.layout #kprofile-rightcol {
+	margin: 0 0 0 222px;
+	overflow: hidden;
+	zoom: 1;
+}
+#kunena.layout #kprofile-stats .kuserprofile-about {
+	width: 100%;
+	padding-top: 10px;
+}
+#kunena.layout .kprofile-rightcol1 h4 {
+	margin:10px 0 0 0;
+	padding: 0;
+	font-size: 1em;
+	font-weight:bold;
+}
+#kunena.layout .kprofile-rightcol1 p {
+	margin:0;
+	padding: 0;
+}
+#kunena.layout .kprofile-rightcol2 {
+	float: right;
+	width: 60%;
+	margin-left: 10px;
+}
+#kunena.layout .kprofile-rightcol2 ul {
+	margin: 0;
+	padding: 0;
+}
+#kunena.layout .kprofile-rightcol2 ul li {
+	list-style-type: none !important;
+	padding-bottom: 8px;
+}
+#kunena.layout .kprofile-rightcol2 ul li span.email {
+	float:left;
+	display:block;
+	background: url("../images/icons/email.png") no-repeat;
+	height: 16px;
+	width: 16px;
+	margin-right: 5px;
+}
+#kunena.layout .kprofile-rightcol2 ul li span.website {
+	float:left;
+	margin-right: 5px;
+}
+#kunena.layout .kprofile-rightcol1 {
+	width: 45%;
+}
+#kunena.layout .kprofile-rightcol1 ul {
+	margin: 0;
+	padding: 0;
+}
+#kunena.layout .kprofile-rightcol1 ul li,
+#kunena.layout .kprofile-rightcol2 ul li {
+	list-style-type: none !important;
+	background: 0 none;
+	padding-bottom: 8px;
+	padding-left: 0;
+}
+#kunena.layout .kicon-profile {
+	background-image: url("../images/icons-profile.png");
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 16px;
+	margin-right: 3px;
+	vertical-align: text-top;
+	width: 16px;
+}
+#kunena.layout .kiconrow {
+	float: left;
+	padding-bottom: 5px;
+	padding-right: 10px;
+	width: 121px;
+}
+#kunena.layout .kiconrow span,
+#kunena.layout .kiconprofile span {
+	background-repeat: no-repeat;
+	border: 0 none;
+	display: block;
+	float: left;
+	margin: 0 5px 5px 0;
+}
+#kunena.layout .clrline {
+/*	clear:both;*/
+	border-top: 1px solid;
+	margin: 15px 0 20px 0;
+	line-height: 10px;
+}
+#kunena.layout div.kmsgsignature {
+	border-top: 1px dotted;
+	font-size: .833em;
+	margin: 15px 0;
+	padding: 5px 0;
+	text-align: left;
+}
+#kunena.layout div.kmsgsignature img {
+	max-width: 100%;
+	max-height: 100px;
+}
+#kunena.layout #kflattable td {
+	border-bottom: none;
+}
+#kunena.layout #kchange-avatar-image span {
+	display:block;
+	float:left;
+	margin-bottom: 20px;
 }

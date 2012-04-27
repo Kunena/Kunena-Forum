@@ -31,13 +31,13 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 			</div>
 			<?php echo $this->displayTopicActions(); ?>
-			<div class="innerbox-wrapper innerspacer">
+			<div class="innerbox-wrapper innerspacer-top">
 				<?php echo $this->getPagination(4); ?>
 			</div>
 			<div class="innerbox-wrapper">
 				<div class="topic-detailsbox detailsbox">
 					<ul class="list-unstyled topic-posts">
-						<?php $this->displayMessages('message') ?>
+						<?php $this->displayMessages() ?>
 					</ul>
 				</div>
 			</div>

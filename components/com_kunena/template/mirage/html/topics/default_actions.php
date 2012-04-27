@@ -11,9 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kfilterbar">
-	<div class="kpaginationbar">
-		<?php echo $this->getPagination(7) ?>
-	</div>
 	<form action="<?php echo $this->URL ?>" name="kfilter" method="post">
 	<ul class="kfilter-options">
 		<?php // TODO: better place? ?>

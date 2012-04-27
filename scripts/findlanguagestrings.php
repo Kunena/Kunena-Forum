@@ -152,7 +152,7 @@ function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $hea
 	}
 
 	// Saving temporary language file
-	$outfile = preg_replace(array('|^site/|', '|^admin/|'), array('lang/site/','lang/admin/'), $outfile);
+	$outfile = preg_replace(array('|^site/|', '|^admin/|'), array('components/com_kunena/language/en-GB/','administrator/components/com_kunena/language/en-GB/'), $outfile);
 	$fp = fopen($outfile,'w');
 	fwrite($fp,$out);
 	fclose($fp);
@@ -165,6 +165,8 @@ function loadTranslations($files) {
 		if (preg_match('/com_kunena\.menu\.ini$/', $file)) continue;
 		echo "Load $file\n";
 		$contents = file_get_contents($file);
+		// Put commented out translations back so that we do not loose them
+		$contents = preg_replace('|;\s*(COM_KUNENA_)|','\1',$contents);
 		$strings = (array) parse_ini_string($contents, false, INI_SCANNER_RAW);
 		if (!$strings) echo "ERROR LOADING $file!\n";
 		$file = preg_replace(array('|^components/.*/|', '|^administrator/.*/|'), array('site/','admin/'), $file);

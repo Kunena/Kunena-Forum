@@ -40,6 +40,12 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$act->cid = $message->thread;
 		$act->access = $this->getAccess($message->getCategory());
 
+		// Comments and like support
+		$act->comment_id = $message->thread;
+		$act->comment_type = 'kunena.post';
+		$act->like_id = $message->thread;
+		$act->like_type = 'kunena.post';
+
 		// Do not add private activities
 		if ($act->access > 20) return;
 		CFactory::load ( 'libraries', 'activities' );
@@ -67,6 +73,12 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$act->cid = $message->thread;
 		$act->access = $this->getAccess($message->getCategory());
 
+		// Comments and like support
+		$act->comment_id = $message->thread;
+		$act->comment_type = 'kunena.post';
+		$act->like_id = $message->thread;
+		$act->like_type = 'kunena.post';
+
 		// Do not add private activities
 		if ($act->access > 20) return;
 		CFactory::load ( 'libraries', 'activities' );
@@ -86,6 +98,12 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$act->app = 'kunena.thankyou';
 		$act->cid = $thankyoutargetid;
 		$act->access = $this->getAccess($message->getCategory());
+
+		// Comments and like support
+		$act->comment_id = $thankyoutargetid;
+		$act->comment_type = 'kunena.thankyou';
+		$act->like_id = $thankyoutargetid;
+		$act->like_type = 'kunena.thankyou';
 
 		// Do not add private activities
 		if ($act->access > 20) return;

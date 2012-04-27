@@ -34,9 +34,9 @@ $this->rowclass = array ("odd", "even" );
 				</div>
 				<div class="detailsbox-wrapper innerspacer kbox-full">
 					<div class="category detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow" id="category-<?php echo intval($this->section->id) ?>">
-						<ul class="category-list">
+						<ul class="category-list list-unstyled list-header">
 							<li class="header kbox-hover_header-row">
-								<dl>
+								<dl class="list-unstyled">
 									<!--<dd class="category-icon">
 									</dd>-->
 									<dd class="category-subject">

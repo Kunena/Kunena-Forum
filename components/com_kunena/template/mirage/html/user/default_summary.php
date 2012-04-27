@@ -19,7 +19,7 @@ defined ( '_JEXEC' ) or die ();
 <?php endif; ?>
 <div id="kprofile-rightcol">
 	<div id="kprofile-stats" class="clearfix">
-		<ul>
+		<ul class="list-unstyled">
 			<?php if ( !empty($this->banReason) ) : ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO') ?>:</strong> <?php echo $this->escape($this->banReason) ?></li><?php endif ?>
 			<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline('yes', 'no') ?>"><span class="online-<?php echo $this->profile->isOnline('yes', 'no') ?>"><span><?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')) ?></span></span></span></li>
 			<?php if (!empty($this->usertype)): ?><li class="kprofile-usertype"><?php echo $this->escape($this->usertype); ?></li><?php endif; ?>

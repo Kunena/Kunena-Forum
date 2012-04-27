@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 <div class="kmodule">
 	<div class="kbox-wrapper box-full">
 		<div id="kprofile-tabs" class="kbox tabbable">
-			<dl class="ktabs">
+			<dl class="list-unstyled ktabs">
 				<?php if ($this->showUserPosts) : ?>
 				<dt class="open"><a class="link-tab" title="<?php echo JText::_('COM_KUNENA_USERPOSTS') ?>" href="#tab-userposts"><?php echo JText::_('COM_KUNENA_USERPOSTS') ?></a></dt>
 				<dd style="display: none;">

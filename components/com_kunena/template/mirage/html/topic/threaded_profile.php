@@ -10,4 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->displayTemplateFile('topic', 'default', 'profile');
+$this->cache = false;
+$direction = $this->state->get('profile.direction');
+$this->displayTemplateFile('topic', 'default', "profile_{$direction}");
+
+?>

@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 <li class="kpost-body">
 	<?php echo $this->displayMessageField('message') ?>
 </li>
-<li class="clr"></li>
+<li class="kclear"></li>
 <?php if (!empty($this->attachments)) : ?>
 	<li class="kpost-body-attach">
 		<span class="kattach-title"><?php echo JText::_('COM_KUNENA_ATTACHMENTS') ?></span>

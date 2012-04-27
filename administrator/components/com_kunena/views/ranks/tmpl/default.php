@@ -20,7 +20,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></div>
+	<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_A_RANK_MANAGER'); ?></div>
 		<dl class="tabs" id="pane">
 		<dt><?php echo JText::_('COM_KUNENA_A_RANKS'); ?></dt>
 		<dd>

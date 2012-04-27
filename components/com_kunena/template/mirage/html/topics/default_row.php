@@ -26,7 +26,7 @@ defined ( '_JEXEC' ) or die ();
 						</ul>
 					</li>
 					<?php if (!empty($this->categoryLink)) : ?>
-					<li class="topic-category"><?php echo JText::_('COM_KUNENA_CATEGORY') ?> <?php echo $this->categoryLink ?></li>
+					<li class="topic-category"><?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->categoryLink) ?></li>
 					<?php endif ?>
 					<li class="topic-details"><?php echo JText::sprintf('COM_KUNENA_TOPIC_STARTED_ON_DATE_BY_USER', "[K=DATE:{$this->firstPostTime}]", $this->firstPostAuthor->getLink($this->firstUserName)) ?></li>
 					<li>

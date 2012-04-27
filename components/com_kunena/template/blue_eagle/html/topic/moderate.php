@@ -35,7 +35,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 					<strong><?php echo $this->escape( $this->topic->subject ); ?></strong>
 				</div>
 				<div>
-					<?php echo JText::_('COM_KUNENA_GEN_CATEGORY'); ?>:
+					<?php echo JText::_('COM_KUNENA_CATEGORY'); ?>:
 					<strong><?php echo $this->escape( $this->category->name ) ?></strong>
 				</div>
 

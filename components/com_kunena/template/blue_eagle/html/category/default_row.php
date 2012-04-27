@@ -51,7 +51,7 @@ $this->cache = false;
 
 		<div class="ktopic-details">
 			<?php if (!isset($this->category) || $this->category->id != $this->topic->getCategory()->id) : ?>
-			<span class="ktopic-category"> <?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->topic->getCategory() ) ?></span>
+			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
 			<span class="divider fltlft">|</span>
 			<?php endif; ?>
 			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">

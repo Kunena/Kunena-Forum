@@ -49,7 +49,7 @@ $this->k=0;
 	<tbody id="kpost-message">
 		<?php if (isset($this->selectcatlist)): ?>
 		<tr id="kpost-category" class="krow<?php echo 1 + $this->k^=1 ?>">
-			<td class="kcol-first"><strong><?php echo JText::_('COM_KUNENA_GEN_CATEGORY')?></strong></td>
+			<td class="kcol-first"><strong><?php echo JText::_('COM_KUNENA_CATEGORY')?></strong></td>
 			<td class="kcol-mid"><?php echo $this->selectcatlist?></td>
 		</tr>
 		<?php endif; ?>

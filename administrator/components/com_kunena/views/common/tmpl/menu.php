@@ -29,7 +29,7 @@ JHtml::_('behavior.formvalidation');
 	<a class="kadmin-mainmenu icon-profiles-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=users') ?>"><?php echo JText::_('COM_KUNENA_C_USER'); ?></a>
 	<a class="kadmin-mainmenu icon-template-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=templates') ?>"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-smilies-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=smilies') ?>"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></a>
-	<a class="kadmin-mainmenu icon-ranks-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=ranks') ?>"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></a>
+	<a class="kadmin-mainmenu icon-ranks-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=ranks') ?>"><?php echo JText::_('COM_KUNENA_A_RANK_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-files-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=attachments') ?>"><?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW'); ?></a>
 	<!-- a class="kadmin-mainmenu icon-topicicons-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topicicons') ?>"><?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER'); ?></a -->
 	<a class="kadmin-mainmenu icon-trash-sm" href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=trash') ?>"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a>

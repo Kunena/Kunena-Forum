@@ -96,6 +96,10 @@ class KunenaForum {
 		return true;
 	}
 
+	public static function setup() {
+		KunenaFactory::loadLanguage('com_kunena.libraries', 'site');
+	}
+
 	// Internal functions
 
 	protected static function buildVersion() {

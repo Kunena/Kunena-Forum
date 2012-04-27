@@ -81,7 +81,7 @@ class KunenaViewSearch extends KunenaView {
 //		$options[]	= JHTML::_('select.option',  'threadstart', JText::_('COM_KUNENA_SEARCH_SORTBY_START') );
 		$options[]	= JHTML::_('select.option',  'lastpost', JText::_('COM_KUNENA_SEARCH_SORTBY_POST') );
 //		$options[]	= JHTML::_('select.option',  'postusername', JText::_('COM_KUNENA_SEARCH_SORTBY_USER') );
-		$options[]	= JHTML::_('select.option',  'forum', JText::_('COM_KUNENA_GEN_CATEGORY') );
+		$options[]	= JHTML::_('select.option',  'forum', JText::_('COM_KUNENA_CATEGORY') );
 		echo JHTML::_('select.genericlist',  $options, 'sortby', $attributes, 'value', 'text', $this->state->get('query.sortby'), $id );
 	}
 	function displayOrderList($id, $attributes = '') {

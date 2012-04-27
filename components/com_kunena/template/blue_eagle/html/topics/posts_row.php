@@ -50,7 +50,7 @@ $this->cache = false;
 		</div>
 		<div class="ks">
 			<span class="ktopic-category">
-				<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->topic->getCategory() ) ?>
+				<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?>
 			</span>
 		</div>
 	</td>

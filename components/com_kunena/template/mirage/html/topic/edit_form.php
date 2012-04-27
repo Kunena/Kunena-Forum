@@ -45,7 +45,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 							<li id="kpost-category" class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<div class="innerspacer-left kbox-full">
-										<label for="kpostcatid"><?php echo JText::_('COM_KUNENA_GEN_CATEGORY')?></label>
+										<label for="kpostcatid"><?php echo JText::_('COM_KUNENA_CATEGORY')?></label>
 									</div>
 								</div>
 								<div class="form-field">

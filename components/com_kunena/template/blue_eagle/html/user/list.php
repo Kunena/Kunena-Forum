@@ -76,9 +76,9 @@ document.addEvent('domready', function() {
 						<?php endif; ?>
 
 						<?php if ($this->config->username) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 						<?php else : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_NAME', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
+						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_REALNAME', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></th>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_posts) : ?>

@@ -172,7 +172,7 @@ class KunenaForumStatistics {
 				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
 				$item->percent = round(100 * $item->count / $top->posts);
 			}
-			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_STAT_POPULAR_USER_KGSG');
+			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_TOPICS');
 			$top->titleName = JText::_('COM_KUNENA_GEN_SUBJECT');
 			$top->titleCount =  JText::_('COM_KUNENA_USRL_POSTS');
 		}

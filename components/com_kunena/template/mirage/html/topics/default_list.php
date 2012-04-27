@@ -19,7 +19,7 @@ defined ( '_JEXEC' ) or die ();
 				<div class="headerbox-wrapper kbox-full">
 					<div class="header">
 						<h2 class="header"><a class="section link-header2" rel="topic-detailsbox"><?php echo $this->headerText ?></a> (<strong><?php echo intval($this->total) ?></strong>
-						<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>)</h2>
+						<?php echo JText::_('COM_KUNENA_TOPICS')?>)</h2>
 					</div>
 				</div>
 				<div class="innerbox-wrapper innerspacer">

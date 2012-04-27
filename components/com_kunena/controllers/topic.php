@@ -758,8 +758,8 @@ class KunenaControllerTopic extends KunenaController {
 			$emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false, $this->me->userid);
 
 			if (!empty ( $emailToList )) {
-				$mailsender = JMailHelper::cleanAddress ( $this->config->board_title . ' ' . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ': ' . $this->me->getName() );
-				$mailsubject = "[" . $this->config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . JText::_ ( 'COM_KUNENA_REPORT_MSG' ) . ": ";
+				$mailsender = JMailHelper::cleanAddress ( $this->config->board_title . ' ' . JText::_ ( 'COM_KUNENA_FORUM' ) . ': ' . $this->me->getName() );
+				$mailsubject = "[" . $this->config->board_title . " " . JText::_ ( 'COM_KUNENA_FORUM' ) . "] " . JText::_ ( 'COM_KUNENA_REPORT_MSG' ) . ": ";
 				if ($reason) {
 					$mailsubject .= $reason;
 				} else {

@@ -454,8 +454,8 @@ class KunenaViewUser extends KunenaView {
 		$item->name = 'hidemail';
 		$item->label = JText::_('COM_KUNENA_USER_HIDEEMAIL');
 		$options = array();
-		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
-		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
+		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 		$item->field = JHTML::_('select.genericlist', $options, 'hidemail', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->hideEmail), 'khidemail');
 		$this->settings[] = $item;
 
@@ -463,8 +463,8 @@ class KunenaViewUser extends KunenaView {
 		$item->name = 'showonline';
 		$item->label = JText::_('COM_KUNENA_USER_SHOWONLINE');
 		$options = array();
-		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
-		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
+		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 		$item->field = JHTML::_('select.genericlist', $options, 'showonline', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->showOnline), 'kshowonline');
 		$this->settings[] = $item;
 

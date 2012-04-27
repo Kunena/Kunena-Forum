@@ -51,7 +51,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 		<?php if (!empty ( $this->moderators ) ) : ?>
 		<div class="klist-moderators">
 				<?php
-				echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
+				echo '' . JText::_('COM_KUNENA_MODERATORS') . ": ";
 				$modlinks = array();
 				foreach ( $this->moderators as $moderator ) {
 					$modlinks[] = $moderator->getLink();

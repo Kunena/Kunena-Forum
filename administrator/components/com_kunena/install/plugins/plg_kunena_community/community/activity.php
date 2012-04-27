@@ -34,7 +34,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$act->cmd = 'wall.write';
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
-		$act->title = JText::_ ( '{actor} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1' ) . ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2' ) );
+		$act->title = JText::_ ( '{actor} ' . JText::sprintf ( 'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE', ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>') );
 		$act->content = $content;
 		$act->app = 'kunena.post';
 		$act->cid = $message->thread;
@@ -61,7 +61,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$act->cmd = 'wall.write';
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
-		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1' ) . ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
+		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf ( 'PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE', '<a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>' ) );
 		$act->content = $content;
 		$act->app = 'kunena.post';
 		$act->cid = $message->thread;
@@ -81,7 +81,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 		$act->cmd = 'wall.write';
 		$act->actor = JFactory::getUser()->id;
 		$act->target = $thankyoutargetid;
-		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_( 'COM_KUNENA_JS_ACTIVITYSTREAM_THANKYOU' ).' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
+		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf( 'PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE', $username ) );
 		$act->content = NULL;
 		$act->app = 'kunena.thankyou';
 		$act->cid = $thankyoutargetid;

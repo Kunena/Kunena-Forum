@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="topic-row kbox-hover kbox-hover_list-row box-full">
-	<dl class="list-unstyled">
-		<dd class="topic-subject">
+<li class="topic-row kbox-hover kbox-hover_list-row box-full item-row">
+	<dl class="list-unstyled list-column">
+		<dd class="topic-subject item-column">
 			<div class="innerspacer-column">
 				<?php // FIXME: broken ?>
 				<?php echo $this->getTopicLink ( $this->topic, 'unread', '[K=TOPIC_ICON]', null, 'fl' ) ?>
@@ -26,7 +26,7 @@ defined ( '_JEXEC' ) or die ();
 						</ul>
 					</li>
 					<?php if (!empty($this->categoryLink)) : ?>
-					<li class="topic-category"><?php echo JText::_('COM_KUNENA_CATEGORY') ?> <?php echo $this->categoryLink ?></li>
+					<li class="topic-category"><?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->categoryLink) ?></li>
 					<?php endif ?>
 					<li class="topic-details"><?php echo JText::sprintf('COM_KUNENA_TOPIC_STARTED_ON_DATE_BY_USER', "[K=DATE:{$this->firstPostTime}]", $this->firstPostAuthor->getLink($this->firstUserName)) ?></li>
 					<li>
@@ -45,20 +45,20 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		</dd>
 		<!-- <td class="ktopic-status-icons"><span class="ktopic-attach">Attachment</span><span class="ktopic-sticky">Sticky</span></td> -->
-		<dd class="topic-replies">
+		<dd class="topic-replies item-column">
 			<div class="innerspacer-column">
 				<span class="number"><?php echo $this->formatLargeNumber($this->topic->getReplies()); ?></span><br />
 				<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
 			</div>
 		</dd>
-		<dd class="topic-views">
+		<dd class="topic-views item-column">
 			<div class="innerspacer-column">
 				<span class="number"><?php echo $this->formatLargeNumber($this->topic->getHits()); ?></span><br />
 				<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
 			</div>
 		</dd>
 		<!-- td class="ktopic-subs">22 <span>Subscribers</span></td -->
-		<dd class="topic-lastpost">
+		<dd class="topic-lastpost item-column">
 			<div class="innerspacer-column">
 				<?php if ( $this->config->avataroncat ) : ?><?php echo $this->lastPostAuthor->getLink($this->lastPostAuthor->getAvatarImage('klist-avatar kavatar kavatar-32 fl', 'list')) ?><?php endif ?>
 				<ul class="kcontent-32 list-unstyled">
@@ -69,7 +69,7 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		</dd>
 		<?php if ($this->topicActions) : ?>
-		<dd class="topic-checkbox">
+		<dd class="topic-checkbox item-column">
 			<div class="innerspacer-column">
 				<input type="checkbox" class="kcheck kmoderate-topic-checkbox" name="topics[<?php echo $this->topic->id?>]" value="1" />
 			</div>

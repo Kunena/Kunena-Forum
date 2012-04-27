@@ -96,8 +96,8 @@ class KunenaForum {
 		if (version_compare($version, '2.0.0-DEV', '<')) {
 			return false;
 		}
-		// Check if future version is needed (remove SVN from the check)
-		if (version_compare($version, preg_replace('/-SVN/i', '', self::version()), '>')) {
+		// Check if future version is needed (remove GIT from the check)
+		if (version_compare($version, preg_replace('/-GIT/i', '', self::version()), '>')) {
 			return false;
 		}
 		return true;

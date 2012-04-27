@@ -34,9 +34,9 @@ $this->rowclass = array ("odd", "even" );
 				</div>
 				<div class="detailsbox-wrapper innerspacer kbox-full">
 					<div class="category detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow" id="category-<?php echo intval($this->section->id) ?>">
-						<ul class="category-list">
+						<ul class="category-list list-unstyled list-header">
 							<li class="header kbox-hover_header-row">
-								<dl>
+								<dl class="list-unstyled">
 									<!--<dd class="category-icon">
 									</dd>-->
 									<dd class="category-subject">
@@ -46,7 +46,7 @@ $this->rowclass = array ("odd", "even" );
 									</dd>
 									<dd class="category-topics">
 										<div class="innerspacer-header">
-											<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span>
+											<span class="bold"><?php echo JText::_('COM_KUNENA_TOPICS') ?></span>
 										</div>
 									</dd>
 									<dd class="category-replies">

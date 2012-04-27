@@ -129,7 +129,7 @@ class TableKunenaCategories extends KunenaTable
 				}
 				$recurse [] = $id;
 				if (! isset ( $list [$id] )) {
-					$this->setError ( get_class ( $this ) . JText::_ ( 'COM_KUNENA_FORUM_UNKNOWN_ERR' ) );
+					$this->setError ( get_class ( $this ) . JText::_ ( 'COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID' ) );
 					return 0;
 				}
 				$id = $list [$id]->parent_id;

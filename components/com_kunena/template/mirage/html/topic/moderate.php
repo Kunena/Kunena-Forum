@@ -98,7 +98,7 @@ JHTML::_('behavior.tooltip');
 							</li>
 						</ul>
 						<div class="kpost-buttons">
-							<button title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" type="submit" class="kbutton"> <?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?> </button>
+							<button title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" type="submit" class="kbutton"> <?php echo JText::_('COM_KUNENA_SUBMIT') ?> </button>
 							<button onclick="javascript:window.history.back();" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" type="button" class="kbutton"> <?php echo JText::_('COM_KUNENA_CANCEL') ?> </button>
 						</div>
 						<div class="clr"></div>

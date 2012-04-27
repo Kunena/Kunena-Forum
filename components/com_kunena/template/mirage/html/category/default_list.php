@@ -30,40 +30,40 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 			</div>
 			<?php echo $this->displayCategoryActions(); ?>
-			<div class="innerbox-wrapper innerspacer kbox-full">
+			<div class="innerbox-wrapper innerspacer-top kbox-full">
 				<?php echo $this->getPagination(7); ?>
 			</div>
 			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="topic detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">
-					<ul class="list-unstyled topic-list">
-						<li class="header kbox-hover_header-row kbox-full">
-							<dl class="list-unstyled">
+					<ul class="topic-list list-unstyled list-row">
+						<li class="header kbox-hover_header-row kbox-full item-row">
+							<dl class="list-unstyled list-column">
 								<!--<dd class="topic-icon">
 								</dd>-->
-								<dd class="topic-subject">
+								<dd class="topic-subject item-column">
 									<div class="innerspacer-header">
 										<?php // FIXME: translate ?>
 										<span class="bold"><?php echo JText::_('Subject') ?></span>
 									</div>
 								</dd>
-								<dd class="topic-replies">
+								<dd class="topic-replies item-column">
 										<div class="innerspacer-header">
 										<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
 									</div>
 								</dd>
-								<dd class="topic-views">
+								<dd class="topic-views item-column">
 										<div class="innerspacer-header">
 										<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
 									</div>
 								</dd>
-								<dd class="topic-lastpost">
+								<dd class="topic-lastpost item-column">
 									<div class="innerspacer-header">
 										<?php // FIXME: translate ?>
 										<span class="bold"><?php echo JText::_('Last Post') ?></span>
 									</div>
 								</dd>
 								<?php if ($this->topicActions) : ?>
-								<dd class="topic-checkbox">
+								<dd class="topic-checkbox item-column">
 									<div class="innerspacer-header">
 										<input type="checkbox" value="0" name="" class="kcheckall moderate-topic-checkall" />
 									</div>
@@ -72,11 +72,11 @@ defined ( '_JEXEC' ) or die ();
 							</dl>
 						</li>
 					</ul>
-					<ul class="list-unstyled topic-list">
+					<ul class="topic-list list-unstyled list-row">
 						<?php if (empty($this->topics) && !$this->category->isSection()) : ?>
-						<li class="topics-row kbox-hover kbox-hover_list-row">
-							<dl>
-								<dd class="topic-none">
+						<li class="topics-row kbox-hover kbox-hover_list-row item-row">
+							<dl class="list-unstyled list-column">
+								<dd class="topic-none item-column">
 									<div class="innerspacer-column">
 										<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_NO_TOPICS'); ?>
 									</div>
@@ -90,7 +90,7 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->topicActions) : ?>
 			<div class="modbox-wrapper innerspacer-bottom">
 				<div class="modbox">
-					<button class="kbutton button-type-standard fr" type="submit"><span><?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?></span></button>
+					<button class="kbutton button-type-mod fr" type="submit"><span><?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?></span></button>
 					<?php echo $this->displayTopicActions('class="inputbox form-horizontal fr" size="1"', 'kmoderate-select') ?>
 				</div>
 			</div>

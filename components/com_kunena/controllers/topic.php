@@ -200,7 +200,7 @@ class KunenaControllerTopic extends KunenaController {
 		} elseif ($topic->authorise('read', null, false)) {
 			$this->setRedirect ( $topic->getUrl($category, false) );
 		} else {
-			$this->setRedirect ( $category->getUrl(null, false) );
+			$this->setRedirect ( $topic->getUrl($category, false, 'first') );
 		}
 	}
 
@@ -828,7 +828,7 @@ class KunenaControllerTopic extends KunenaController {
 			// Give a new vote
 			$success = $poll->vote($vote);
 			if ( !$success ) {
-				$this->app->enqueueMessage ( $topic->getError(), 'error' );
+				$this->app->enqueueMessage ( $poll->getError(), 'error' );
 			} else {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_SUCCESS' ) );
 			}
@@ -836,7 +836,7 @@ class KunenaControllerTopic extends KunenaController {
 			// Change existing vote
 			$success = $poll->vote($vote, true);
 			if ( !$success ) {
-				$this->app->enqueueMessage ( $topic->getError(), 'error' );
+				$this->app->enqueueMessage ( $poll->getError(), 'error' );
 			} else {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS' ) );
 			}

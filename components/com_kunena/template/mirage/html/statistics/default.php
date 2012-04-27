@@ -74,20 +74,20 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 				<div class="detailsbox-wrapper innerspacer">
 					<div class="statistics-details detailsbox kbox-full kbox-hover kbox-border kbox-border_radius kbox-shadow" id="statistics-detailsbox">
-						<ul class="list-unstyled popsubstat-list">
-							<li class="header kbox-hover_header-row">
-								<dl class="list-unstyled">
-									<dd class="popsubstats-col1">
+						<ul class="popsubstat-list list-unstyled list-row">
+							<li class="header kbox-hover_header-row item-row">
+								<dl class="list-unstyled list-column">
+									<dd class="popsubstats-col1 item-column">
 										<div class="innerspacer-header">
 											<span class="bold"><?php echo $top[0]->titleName ?></span>
 										</div>
 									</dd>
-									<dd class="popsubstats-col2">
+									<dd class="popsubstats-col2 item-column">
 										<div class="innerspacer-header">
 											<span class="bold">&nbsp;</span>
 										</div>
 									</dd>
-									<dd class="popsubstats-col3">
+									<dd class="popsubstats-col3 item-column">
 										<div class="innerspacer-header">
 											<span class="bold"><?php echo $top[0]->titleCount ?></span>
 										</div>
@@ -95,21 +95,21 @@ defined ( '_JEXEC' ) or die ();
 								</dl>
 							</li>
 						</ul>
-						<ul class="list-unstyled popsubstat-list">
+						<ul class="popsubstat-list list-unstyled list-row">
 							<?php foreach ($top as $id=>$item) : ?>
-								<li class="popsubstats-row kbox-hover kbox-hover_list-row">
-									<dl class="list-unstyled">
-										<dd class="popsubstats-col1">
+								<li class="popsubstats-row kbox-hover kbox-hover_list-row item-row">
+									<dl class="list-unstyled list-column">
+										<dd class="popsubstats-col1 item-column">
 											<div class="innerspacer-column">
 												<?php echo $item->link ?>
 											</div>
 										</dd>
-										<dd class="popsubstats-col2">
+										<dd class="popsubstats-col2 item-column">
 											<div class="innerspacer-column">
 												<div class="stats-bar" style="width:<?php echo $item->percent ?>%"></div>
 											</div>
 										</dd>
-										<dd class="popsubstats-col3">
+										<dd class="popsubstats-col3 item-column">
 											<div class="innerspacer-column">
 												<?php echo $item->count ?>
 											</div>

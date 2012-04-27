@@ -20,6 +20,7 @@ defined ( '_JEXEC' ) or die ();
 foreach ($this->list as $i => $item) :
 	$class = 'item-'.$item->id;
 	$class .= ($item->id == $this->active_id) ? ' current' : '';
+	$dropdown_indicator = null;
 
 	if (in_array($item->id, $this->path)) {
 		$class .= ' active';
@@ -64,12 +65,16 @@ foreach ($this->list as $i => $item) :
 			$extra = ' onclick="window.open(this.href,\'targetWindow\',\'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes\');return false;"';
 			break;
 	}
-
+	
+	if ($item->parent) {
+		$dropdown_indicator = '<b class="caret caret-down"></b>';
+	}
+	
 	// Render the menu item.
 	if ($item->type == 'separator') {
 		echo "<span class=\"separator\"{$title}>{$linktype}</span>";
 	} else {
-		echo "<a {$flink}{$class}{$title}{$extra}>{$linktype}</a>";
+		echo "<a {$flink}{$class}{$title}{$extra}>{$linktype}{$dropdown_indicator}</a>";
 	}
 
 	if ($item->deeper) {

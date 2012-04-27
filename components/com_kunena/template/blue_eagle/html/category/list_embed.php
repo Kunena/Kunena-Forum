@@ -19,7 +19,7 @@ foreach ( $this->sections as $section ) :
 ?>
 <div class="kblock kcategories-<?php echo intval($section->id) ?>">
 	<div class="kheader">
-		<?php if (count($this->sections) > 1) : ?>
+		<?php if (count($this->sections) > 0) : ?>
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="catid_<?php echo intval($section->id) ?>"></a></span>
 		<?php endif; ?>
 		<h2><span><?php echo $this->GetCategoryLink ( $section, $this->escape($section->name) ); ?></span></h2>

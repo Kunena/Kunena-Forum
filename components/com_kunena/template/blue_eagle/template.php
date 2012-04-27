@@ -25,6 +25,8 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 	public $categoryIcons = array('kreadforum', 'kunreadforum');
 
 	public function initialize() {
+		KunenaFactory::loadLanguage('com_kunena.tpl_blue_eagle');
+
 		// Enable legacy mode
 		KunenaTemplateLegacy::load();
 
@@ -36,6 +38,7 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
 var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 // ]]>');
+
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {

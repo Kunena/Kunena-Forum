@@ -54,10 +54,10 @@ $this->document->addScriptDeclaration ( "// <![CDATA[
 							<div class="form-field">
 								<ul class="button-list button-user-form">
 									<li class="item-button">
-										<button title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SAVE') ?>" type="submit" class="kbutton button-type-standard"><span><?php echo JText::_('COM_KUNENA_GEN_SAVE') ?></span></button>
+										<button title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SAVE') ?>" type="submit" class="kbutton button-type-standard"><span><?php echo JText::_('COM_KUNENA_SAVE') ?></span></button>
 									</li>
 									<li class="item-button">
-										<button onclick="javascript:window.history.back();" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL') ?>" type="button" class="kbutton button-type-standard"><span><?php echo (JText::_('COM_KUNENA_GEN_CANCEL')) ?></span></button>
+										<button onclick="javascript:window.history.back();" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL') ?>" type="button" class="kbutton button-type-standard"><span><?php echo (JText::_('COM_KUNENA_CANCEL')) ?></span></button>
 									</li>
 								</ul>
 							</div>

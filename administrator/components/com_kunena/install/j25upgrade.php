@@ -194,8 +194,8 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 		$manifest15 = JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.xml';
 		if (file_exists($manifest25)) {
 			$content = file_get_contents($manifest25);
-			// Take care of SVN install
-			$content = preg_replace('/@kunenaversion@/', preg_replace('/-SVN/i', '', KunenaForum::version()), $content);
+			// Take care of Git install
+			$content = preg_replace('/@kunenaversion@/', preg_replace('/-GIT/i', '', KunenaForum::version()), $content);
 			$content = preg_replace('/@kunenaversiondate@/', KunenaForum::versionDate(), $content);
 			$content = preg_replace('/@kunenaversionname@/', KunenaForum::versionName(), $content);
 			JFile::write($manifest15, $content);

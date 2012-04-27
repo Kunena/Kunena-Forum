@@ -60,8 +60,8 @@
 		<param name="paginationTexthovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR_DESC" />
 		
 		<param name="enableSkinner" type="radio" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
-			<option value="0">COM_KUNENA_A_NO</option>
-			<option value="1">COM_KUNENA_A_YES</option>
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
 		</param>
 
 		<param name="templatebyText" type="hidden" default="" />

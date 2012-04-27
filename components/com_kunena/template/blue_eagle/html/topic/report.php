@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kblock kreport">
 	<div class="kheader">
-		<h2><span><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></span></h2>
+		<h2><span><?php echo JText::_('COM_KUNENA_REPORT_TO_MODERATOR') ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">

@@ -49,7 +49,7 @@ $this->k=0;
 	<tbody id="kpost-message">
 		<?php if (isset($this->selectcatlist)): ?>
 		<tr id="kpost-category" class="krow<?php echo 1 + $this->k^=1 ?>">
-			<td class="kcol-first"><strong><?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY')?></strong></td>
+			<td class="kcol-first"><strong><?php echo JText::_('COM_KUNENA_CATEGORY')?></strong></td>
 			<td class="kcol-mid"><?php echo $this->selectcatlist?></td>
 		</tr>
 		<?php endif; ?>
@@ -186,10 +186,10 @@ $this->k=0;
 		<tr id="kpost-buttons" class="krow1">
 			<td id="kpost-buttons" colspan="2">
 				<input type="submit" name="ksubmit" class="kbutton"
-				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CONTINUE') . ' ');?>"
+				value="<?php echo (' ' . JText::_('COM_KUNENA_SUBMIT') . ' ');?>"
 				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" tabindex="3" />
 				<input type="button" name="cancel" class="kbutton"
-				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CANCEL') . ' ');?>"
+				value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' ');?>"
 				onclick="javascript:window.history.back();"
 				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" tabindex="4" />
 			</td>

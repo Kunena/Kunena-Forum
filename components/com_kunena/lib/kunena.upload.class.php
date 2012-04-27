@@ -327,7 +327,7 @@ class CKunenaUpload {
 				// Re-calculate physical file size: image has been shrunk
 				$stat = stat($this->fileTemp);
 				if (! $stat) {
-					$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT').' '.$this->fileTemp);
+					$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', $this->fileTemp));
 					return false;
 				}
 				$this->fileSize = $stat['size'];

@@ -99,8 +99,8 @@ $this->document->addScriptDeclaration('// <![CDATA[
 									</div>
 								</li>
 							</ul>
-						<input name="submit" class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_ANN_SAVE') ?>"/>
-						<input onclick="javascript:window.history.back();" name="cancel" class="kbutton" type="button" value="<?php echo JText::_('COM_KUNENA_ANN_CANCEL') ?>"/>
+						<input name="submit" class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_SAVE') ?>"/>
+						<input onclick="javascript:window.history.back();" name="cancel" class="kbutton" type="button" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>"/>
 					</form>
 				</div>
 			</div>

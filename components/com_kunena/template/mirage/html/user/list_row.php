@@ -22,12 +22,11 @@ defined ( '_JEXEC' ) or die ();
 	<?php endif ?>
 	</div>
 	<ul class="kuserlist-details">
-		<?php if ($this->config->username==1) : ?>
-		<li class="kdetails-username"><span><?php echo JText::_('COM_KUNENA_USRL_USERNAME') ?>:</span> <?php echo $this->escape($this->user->username) ?></li>
-		<?php endif; ?>
-		<?php if (!$this->config->username) : ?>
-		<li class="kdetails-username"><span><?php echo JText::_('COM_KUNENA_USRL_NAME') ?>:</span> <?php echo $this->escape($this->user->name) ?></li>
-		<?php endif; ?>
+		<?php if ($this->config->username) : ?>
+		<li class="kdetails-username"><span><?php echo JText::_('COM_KUNENA_USERNAME') ?>:</span> <?php echo $this->escape($this->user->username) ?></li>
+		<?php elseif (!$this->config->username) : ?>
+		<li class="kdetails-username"><span><?php echo JText::_('COM_KUNENA_REALNAME') ?>:</span> <?php echo $this->escape($this->user->name) ?></li>
+		<?php else ($this->config->username==2) : ?>
 		<?php if ($this->config->username==2) : ?>
 		<li class="kdetails-username"><span><?php echo JText::_('COM_KUNENA_USRL_DISPLAYNAME') ?>:</span> <?php echo $this->escape($this->user->displayname) ?></li>
 		<?php endif; ?>

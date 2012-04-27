@@ -14,6 +14,8 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	public $categoryIcons = array('knonew', 'knew');
 
 	public function initialize() {
+		KunenaFactory::loadLanguage('com_kunena.tpl_mirage');
+
 		// Template requires Mootools 1.2+ framework
 		$this->loadMootools();
 		JHTML::_('behavior.tooltip');
@@ -26,16 +28,15 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/reset.css' );
 
 		// Load all css files (they are combined into one)
-		$this->addStyleSheet ( 'css/global.css' );
-		$this->addStyleSheet ( 'css/main.css' );
-		$this->addStyleSheet ( 'css/menu.css' );
-		$this->addStyleSheet ( 'css/icons.css' );
-		$this->addStyleSheet ( 'css/category.css' );
+		//$this->addStyleSheet ( 'css/global.css' );
+		//$this->addStyleSheet ( 'css/main.css' );
+		//$this->addStyleSheet ( 'css/menu.css' );
+		//$this->addStyleSheet ( 'css/icons.css' );
+		//$this->addStyleSheet ( 'css/category.css' );
 		//$this->addStyleSheet ( 'css/topic.css' );
-		$this->addStyleSheet ( 'css/user.css' );
+		//$this->addStyleSheet ( 'css/user.css' );
 		//$this->addStyleSheet ( 'css/search.css' );
 		//$this->addStyleSheet ( 'css/buttons.css' );
-		$this->addStyleSheet ( 'css/icons-social.css' );
 		//$this->addStyleSheet ( 'css/icons-editor.css' );
 
 		$this->addStyleSheet ( 'css/position.css' );
@@ -47,6 +48,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$this->addStyleSheet ( 'css/icon-general.css' );
 		$this->addStyleSheet ( 'css/icon-editor.css' );
 		$this->addStyleSheet ( 'css/icon-topic.css' );
+		$this->addStyleSheet ( 'css/icons-social.css' );
 		$this->addStyleSheet ( 'css/uploader.css' );
 		$this->addStyleSheet ( 'css/quirks.css' );
 
@@ -116,7 +118,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 		$html .= '<ul class="list-pagination">';
 		$last = 0;
 		foreach($list['pages'] as $i=>$page) {
-			if ($last+1 != $i) $html .= '<li class="page-item kpage-more"><a>...</a></li>';
+			if ($last+1 != $i) $html .= '<li class="page-item kpage-more"><a class="disabled">...</a></li>';
 			$html .= $page['data'];
 			$last = $i;
 		}
@@ -130,7 +132,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	 * @see KunenaTemplate::getPaginationItemActive()
 	 */
 	public function getPaginationItemActive(&$item) {
-		return '<li class="page-item"><a class="disabled" title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></a></li>';
+		return '<li class="page-item"><a title="'.$item->text.'" href="'.$item->link.'"><span>'.$item->text.'</span></a></li>';
 	}
 
 	/**

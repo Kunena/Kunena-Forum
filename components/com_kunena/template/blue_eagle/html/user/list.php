@@ -74,17 +74,17 @@ document.addEvent('domready', function() {
 						<?php if ($this->config->userlist_avatar) : ?>
 						<th><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
 						<?php endif; ?>
-
-						<?php if ($this->config->username==0) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_NAME', 'name', $this->state->get('list.order_dir'), $this->state->get('list.order')); ?></th>
+						<?php if (!$this->config->username) : ?>
+						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_REALNAME', 'name', $this->state->get('list.order_dir'), $this->state->get('list.order')); ?></th>
 						<?php endif; ?>
 
-						<?php if ($this->config->username==1) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.order_dir'), $this->state->get('list.order')); ?></th>
+						<?php if ($this->config->username) : ?>
+						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USERNAME', 'username', $this->state->get('list.order_dir'), $this->state->get('list.order')); ?></th>
 						<?php endif; ?>
 
 						<?php if ($this->config->username==2) : ?>
 						<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_DISPLAYNAME', 'displayname', $this->state->get('list.order_dir'), $this->state->get('list.order')); ?></th>
+
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_posts) : ?>

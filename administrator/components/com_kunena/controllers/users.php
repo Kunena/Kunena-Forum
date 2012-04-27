@@ -117,9 +117,9 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$userids = JRequest::getVar ( 'uid', array (), 'post', 'array' );
+		$userids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
-		if ($userids < 0 ) {
+		if ( empty($userids) ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}

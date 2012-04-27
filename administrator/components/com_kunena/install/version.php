@@ -23,15 +23,15 @@ class KunenaVersion
 	/**
 	 * Get warning for unstable releases
 	 *
-	 * @param	string	Message to be shown containing two %s parameters for version (2.0.0RC) and version type (SVN, RC, BETA etc)
+	 * @param	string	Message to be shown containing two %s parameters for version (2.0.0RC) and version type (GIT, RC, BETA etc)
 	 * @return	string	Warning message
 	 * @since	1.6
 	 */
 	public function getVersionWarning($msg='COM_KUNENA_VERSION_WARNING')
 	{
-		if (strpos(KunenaForum::version(), 'SVN') !== false) {
-			$kn_version_type = JText::_('COM_KUNENA_VERSION_SVN');
-			$kn_version_warning = JText::_('COM_KUNENA_VERSION_SVN_WARNING');
+		if (strpos(KunenaForum::version(), 'GIT') !== false) {
+			$kn_version_type = JText::_('COM_KUNENA_VERSION_GIT');
+			$kn_version_warning = JText::_('COM_KUNENA_VERSION_GIT_WARNING');
 		} else if (strpos(KunenaForum::version(), 'RC') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_RC');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_RC_WARNING');

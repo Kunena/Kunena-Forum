@@ -30,7 +30,7 @@ defined ( '_JEXEC' ) or die ();
 									</dd>-->
 									<dd class="post-topic">
 										<div class="innerspacer-header">
-											<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_TOPICS') ?></span>
+											<span class="bold"><?php echo JText::_('COM_KUNENA_TOPICS') ?></span>
 										</div>
 									</dd>
 									<dd class="post-category">

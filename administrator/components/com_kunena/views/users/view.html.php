@@ -33,8 +33,8 @@ class KunenaAdminViewUsers extends KunenaView {
 		$this->avatar = $avatarint->getLink($this->user, '', 'profile');
 
 		// make the select list for the moderator flag
-		$yesnoMod [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_ANN_YES') );
-		$yesnoMod [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_ANN_NO') );
+		$yesnoMod [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_YES') );
+		$yesnoMod [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_NO') );
 		// build the html select list
 		$this->selectMod = JHTML::_ ( 'select.genericlist', $yesnoMod, 'moderator', 'class="inputbox" size="2"', 'value', 'text', $this->user->moderator );
 		// make the select list for the moderator flag

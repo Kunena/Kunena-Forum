@@ -19,7 +19,7 @@ foreach ( $this->sections as $section ) :
 ?>
 <div class="kblock kcategories-<?php echo intval($section->id) ?>">
 	<div class="kheader">
-		<?php if (count($this->sections) > 1) : ?>
+		<?php if (count($this->sections) > 0) : ?>
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="catid_<?php echo intval($section->id) ?>"></a></span>
 		<?php endif; ?>
 		<h2><span><?php echo $this->GetCategoryLink ( $section, $this->escape($section->name) ); ?></span></h2>
@@ -52,7 +52,7 @@ foreach ( $this->sections as $section ) :
 					echo '<sup class="knewchar">(' . $category->getNewCount() . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
 				}
 				if ($category->locked) {
-					echo $this->getIcon ( 'kforumlocked', JText::_('COM_KUNENA_GEN_LOCKED_FORUM') );
+					echo $this->getIcon ( 'kforumlocked', JText::_('COM_KUNENA_LOCKED_CATEGORY') );
 				}
 				if ($category->review) {
 					echo $this->getIcon ( 'kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED') );
@@ -89,7 +89,7 @@ foreach ( $this->sections as $section ) :
 				foreach ( $category->moderators as $moderator ) {
 					$modslist[] = KunenaFactory::getUser($moderator)->getLink();
 				}
-				echo JText::_('COM_KUNENA_GEN_MODERATORS') . ': ' . implode(', ', $modslist);
+				echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
 		?>
 			</div>
 		<?php endif; ?>
@@ -102,7 +102,7 @@ foreach ( $this->sections as $section ) :
 
 			<td class="kcol-mid kcol-kcattopics">
 				<span class="kcat-topics-number"><?php echo $this->formatLargeNumber ( $category->getTopics() ) ?></span>
-				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_GEN_TOPICS');?></span>
+				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_TOPICS');?></span>
 			</td>
 
 			<td class="kcol-mid kcol-kcatreplies">

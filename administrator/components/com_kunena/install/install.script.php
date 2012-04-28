@@ -100,6 +100,7 @@ class Com_KunenaInstallerScript {
 
 	protected function checkRequirements() {
 		$pass = $this->checkVersion('Joomla', JVERSION);
+		$pass &= $this->checkDbo(JFactory::getDbo()->name, array('mysql', 'mysqli'));
 		$pass &= $this->checkVersion('MySQL', JFactory::getDbo()->getVersion ());
 		$pass &= $this->checkVersion('PHP', phpversion());
 		foreach ($this->extensions as $name) {
@@ -111,6 +112,13 @@ class Com_KunenaInstallerScript {
 		return $pass;
 	}
 
+	protected function checkDbo($name, $types) {
+		if (in_array($name, $types)) {
+			return true;
+		}
+		JFactory::getApplication()->enqueueMessage(sprintf('MySQL database driver required (you have %s).', $name), 'notice');
+		return false;
+	}
 	protected function checkVersion($name, $version) {
 		foreach ($this->versions[$name] as $major=>$minor) {
 			if (version_compare ( $version, $major, "<" )) continue;

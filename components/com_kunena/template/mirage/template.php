@@ -14,6 +14,8 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	public $categoryIcons = array('knonew', 'knew');
 
 	public function initialize() {
+		KunenaFactory::loadLanguage('com_kunena.tpl_mirage');
+
 		// Template requires Mootools 1.2+ framework
 		$this->loadMootools();
 		JHTML::_('behavior.tooltip');

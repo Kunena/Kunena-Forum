@@ -758,8 +758,8 @@ class KunenaControllerTopic extends KunenaController {
 			$emailToList = $acl->getSubscribers($topic->category_id, $topic->id, false, true, false, $this->me->userid);
 
 			if (!empty ( $emailToList )) {
-				$mailsender = JMailHelper::cleanAddress ( $this->config->board_title . ' ' . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ': ' . $this->me->getName() );
-				$mailsubject = "[" . $this->config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . JText::_ ( 'COM_KUNENA_REPORT_MSG' ) . ": ";
+				$mailsender = JMailHelper::cleanAddress ( $this->config->board_title . ' ' . JText::_ ( 'COM_KUNENA_FORUM' ) . ': ' . $this->me->getName() );
+				$mailsubject = "[" . $this->config->board_title . " " . JText::_ ( 'COM_KUNENA_FORUM' ) . "] " . JText::_ ( 'COM_KUNENA_REPORT_MSG' ) . ": ";
 				if ($reason) {
 					$mailsubject .= $reason;
 				} else {
@@ -828,7 +828,7 @@ class KunenaControllerTopic extends KunenaController {
 			// Give a new vote
 			$success = $poll->vote($vote);
 			if ( !$success ) {
-				$this->app->enqueueMessage ( $topic->getError(), 'error' );
+				$this->app->enqueueMessage ( $poll->getError(), 'error' );
 			} else {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_SUCCESS' ) );
 			}
@@ -836,7 +836,7 @@ class KunenaControllerTopic extends KunenaController {
 			// Change existing vote
 			$success = $poll->vote($vote, true);
 			if ( !$success ) {
-				$this->app->enqueueMessage ( $topic->getError(), 'error' );
+				$this->app->enqueueMessage ( $poll->getError(), 'error' );
 			} else {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_VOTE_CHANGED_SUCCESS' ) );
 			}

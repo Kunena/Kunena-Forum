@@ -200,6 +200,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$userid = implode(',', $userid);
 		$db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userid.")" );
 		$userids = $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return;
 
 		return $userids;
 	}

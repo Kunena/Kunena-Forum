@@ -23,7 +23,7 @@ $tabclass = array ("row1", "row2" );
 	<td class="kcol-mid kcol-ktopicviews">
 		<!-- Views -->
 		<span class="ktopic-views-number"><?php echo $this->formatLargeNumber ( ( int ) $this->category->numTopics );?></span>
-		<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_DISCUSSIONS'); ?> </span>
+		<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_TOPICS'); ?> </span>
 		<!-- /Views -->
 	</td>
 

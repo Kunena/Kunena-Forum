@@ -106,7 +106,7 @@ defined ( '_JEXEC' ) or die ();
 				foreach ( $this->moderators as $moderator ) {
 					$modslist[] = $moderator->getLink();
 				}
-				echo JText::_('COM_KUNENA_GEN_MODERATORS') . ': ' . implode(', ', $modslist);
+				echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
 			?>
 		</div>
 		<?php endif; ?>

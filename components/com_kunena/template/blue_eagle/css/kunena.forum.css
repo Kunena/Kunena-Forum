@@ -910,6 +910,7 @@ PX		EM			PCT			PT
 	display: block;
 	float:left;
 	font-size: .917em;
+	padding-right:2px;
 }
 #Kunena span.ktopic-category {
 	float:left; 

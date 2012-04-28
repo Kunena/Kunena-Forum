@@ -108,7 +108,7 @@ document.addEvent('domready', function() {
 								<button title="Click here to search" type="submit" class="kbutton button-type-comm"><span><?php echo JText::_('COM_KUNENA_SEARCH_SEND') ?></span></button>
 							</li>
 							<li class="item-button">
-								<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton button-type-standard"><span><?php echo JText::_('COM_KUNENA_SEARCH_CANCEL') ?></span></button>
+								<button onclick="window.location='<?php echo KunenaRoute::_ ( 'index.php?option=com_kunena' ) ?>';" title="Click here to cancel" type="button" class="kbutton button-type-standard"><span><?php echo JText::_('COM_KUNENA_CANCEL') ?></span></button>
 							</li>
 						</ul>
 					</div>

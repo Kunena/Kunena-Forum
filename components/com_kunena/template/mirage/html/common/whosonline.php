@@ -40,6 +40,7 @@ defined ( '_JEXEC' ) or die ();
 						<ul class="list-unstyled">
 							<li class="whosonline-subtitle"><?php  echo JText::sprintf('COM_KUNENA_VIEW_COMMON_WHO_TOTAL', $this->membersOnline) ?></li>
 							<li class="divider"></li>
+							<?php if($this->onlineList) : ?>
 							<li class="whosonline-usernames">
 								<ul class="list-unstyled">
 									<?php foreach ($this->onlineList as $user) : ?>
@@ -48,6 +49,7 @@ defined ( '_JEXEC' ) or die ();
 								</ul>
 							</li>
 							<li class="divider"></li>
+							<? endif; ?>
 							<?php if ($this->hiddenList) : ?>
 								<li class="whosonline-usernames">
 									<ul class="list-unstyled">

@@ -181,6 +181,7 @@ class KunenaForumMessageThankyouHelper {
 	 * @since 2.0
 	 */
 	static public function recount() {
+		 // FIXME: make this recount function faster
 		$db = JFactory::getDBO ();
 
 		$query = "SELECT COUNT(targetuserid) AS countthankyou, targetuserid AS userid FROM `#__kunena_thankyou` GROUP BY `targetuserid`";

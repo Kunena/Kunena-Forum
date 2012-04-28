@@ -583,6 +583,7 @@ HTML;
 	 * @since	1.6
 	 */
 	static public function getInstance($name=null) {
+		$app = JFactory::getApplication();
 		if (!$name) {
 			$name = JRequest::getString ( 'kunena_template', KunenaFactory::getConfig()->template, 'COOKIE' );
 		}
@@ -590,7 +591,7 @@ HTML;
 			// Find overridden template class (use $templatename to avoid creating new objects if the template doesn't exist)
 			$templatename = $name;
 			$classname = "KunenaTemplate{$templatename}";
-			if (!class_exists($classname)) {
+			if (!class_exists($classname) && $app->isSite() == 1) {
 				if (!file_exists(KPATH_SITE . "/template/{$templatename}/template.xml")) {
 					// If template xml doesn't exist, raise warning and use blue eagle instead
 					$templatename = 'blue_eagle';

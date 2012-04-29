@@ -103,6 +103,9 @@ class KunenaAdminModelReport extends KunenaModel {
 
 		$kconfigsettings = $this->_getKunenaConfiguration();
 
+		// Get Joomla! languages installed
+		$joomlalanguages = $this->_getJoomlaLanguagesInstalled();
+
 		// Check if Mootools plugins and others kunena plugins are enabled, and get the version of this modules
 		jimport( 'joomla.plugin.helper' );
 
@@ -165,9 +168,75 @@ class KunenaAdminModelReport extends KunenaModel {
 	    [confidential][b]Mailer:[/b] '.$this->app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$this->app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$this->app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$this->app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$this->app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$this->app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] '.$kunenaVersionInfo.'
-	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
+	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler]| [u]Joomla! detailled language files installed:[/u][spoiler] '.$joomlalanguages.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
 
 		return $report;
+	}
+
+	/**
+	 * Method to get all languages installed into Joomla! and the default one
+	 *
+	 * @return	string
+	 * @since	2.0
+	 */
+	protected function _getJoomlaLanguagesInstalled() {
+		$db = JFactory::getDBO ();
+
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla 1.6+
+			$query = "SELECT name, client_id, enabled FROM #__extensions WHERE type='language' AND state=0";
+			$db->setQuery($query);
+			$langsinstalled = $db->loadObjectlist();
+			if (KunenaError::checkDatabaseError()) return;
+
+			$table_lang = '[table]';
+			$table_lang .= '[tr][th]Joomla! languages installed:[/th][/tr]';
+			foreach($langsinstalled as $lang) {
+				if ($lang->client_id) $client_id = 'backend';
+				else $client_id = 'frontend';
+				if($lang->enabled) $default ='default';
+				else $default ='';
+				$table_lang .= '[tr][td]'.$lang->name.'[/td][td]'.$client_id.'[/td][td]'.$default.'[/td][/tr]';
+			}
+			$table_lang .= '[/table]';
+		} else {
+			// Joomla 1.5
+			$path = JLanguage::getLanguagePath(JPATH_BASE.'/language');
+			$dirs = JFolder::folders( $path );
+
+			foreach ($dirs as $dir) {
+				$files = JFolder::files( $path.DS.$dir, '^([-_A-Za-z]*)\.xml$' );
+				foreach ($files as $file) {
+					$metas = JApplicationHelper::parseXMLLangMetaFile($path.'/'.$dir.'/'.$file);
+
+					$row 			= new StdClass();
+					$row->id 		= $rowid;
+					$row->language 	= substr($file,0,-4);
+
+					if (!is_array($metas)) {
+						continue;
+					}
+					foreach($metas as $key => $value) {
+						$row->$key = $value;
+					}
+
+					// if current than set published
+					$params = JComponentHelper::getParams('com_languages');
+					if ( $params->get($client->name, 'en-GB') == $row->language) {
+						$row->published	= 1;
+					} else {
+						$row->published = 0;
+					}
+
+					$row->checked_out = 0;
+					$row->mosname = JString::strtolower( str_replace( " ", "_", $row->name ) );
+					$rows[] = $row;
+					$rowid++;
+				}
+			}
+		}
+
+		return $table_lang;
 	}
 
 	/**

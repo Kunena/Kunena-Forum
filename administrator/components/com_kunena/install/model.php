@@ -1298,6 +1298,10 @@ class KunenaModelInstall extends JModel {
 		if(!class_exists('DOMDocument')){
 			$req->fail ['domdocument'] = true;
 		}
+		$kunena = $this->getInstalledVersion('kunena_', $this->_kVersions);
+		if (version_compare ( $kunena->version, 3.0, ">=" )) {
+			$req->fail ['kunenaversion'] = true;
+		}
 
 		$this->_req = $req;
 		return $this->_req;

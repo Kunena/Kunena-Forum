@@ -87,7 +87,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<tr class="row<?php echo $k; ?>">
 			<td class="right"><?php echo $i + $this->navigation->limitstart + 1; ?></td>
 				<td align="center">
-					<?php echo JHTML::_('grid.id', $i, intval($user->id)) ?>
+					<?php echo JHTML::_('grid.id', $user->id, $user->id) ?>
 				</td>
 				<td align="center" width="1%"><?php echo $kunena_user->getAvatarImage('kavatar', 36, 36); ?></td>
 				<td align="center" width="1%"><?php echo $this->escape($kunena_user->userid); ?></td>

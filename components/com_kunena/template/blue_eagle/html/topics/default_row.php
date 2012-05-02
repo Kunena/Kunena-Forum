@@ -49,10 +49,20 @@ $this->cache = false;
 			?>
 		</div>
 
+		<div class="ktopic-details">
+			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
+		</div>
+		<div class="ktopic-details-kcategory" style="clear:both;">
+			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
+				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat');?>
+			</span>
+			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
+            </div>
+            <div class="ktopic-details-kcategory" style="clear:both;">
 		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
 		<ul class="kpagination">
 			<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
-			<li><?php echo $this->getTopicLink ( $this->topic, 0, 1 ) ?></li>
+			<li><?php echo $this->GetTopicLink ( $this->topic, 0, 1 ) ?></li>
 			<?php if ($this->pages > 4) : $startPage = $this->pages - 3; ?>
 			<li class="more">...</li>
 			<?php else: $startPage = 1; endif;
@@ -61,14 +71,6 @@ $this->cache = false;
 			<?php endfor; ?>
 		</ul>
 		<?php endif; ?>
-
-		<div class="ktopic-details">
-			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
-			<span class="divider fltlft">|</span>
-			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
-				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat');?>
-			</span>
-			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
 		</div>
 
 		<?php if (!empty($this->keywords)) : ?>

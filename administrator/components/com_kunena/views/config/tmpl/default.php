@@ -1157,7 +1157,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					</table>
 				</fieldset>
 				</dd>
-				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?></dt>
+				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_EXTRA') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_EXTRA') ?></dt>
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>

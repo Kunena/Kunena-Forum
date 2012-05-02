@@ -146,7 +146,7 @@ defined ( '_JEXEC' ) or die ();
 						?>
 						</select>
 						<?php echo JText::_('COM_KUNENA_EDITOR_VIDEO_ID') ?>
-						<input id="kvideoid" name="videoid" type="text" size="11" maxlength="14" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOID') ?>" />
+						<input id="kvideoid" name="videoid" type="text" size="11" maxlength="30" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOID') ?>" />
 						<input id="kbutton_addvideo1" type="button" name="Video" accesskey="p" onclick="kInsertVideo1()" value="<?php echo JText::_('COM_KUNENA_EDITOR_VIDEO_INSERT') ?>" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1') ?>" />
 						<?php echo JText::_('COM_KUNENA_EDITOR_VIDEO_URL') ?>
 						<input id="kvideourl" name="videourl" type="text" size="30" maxlength="250" value="http://" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOURL') ?>" />

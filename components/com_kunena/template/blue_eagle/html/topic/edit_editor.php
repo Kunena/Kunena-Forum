@@ -190,7 +190,7 @@ defined ( '_JEXEC' ) or die ();
 			</select> <?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_ID');
 			?><input id="kvideoid"
-				name="videoid" type="text" size="11" maxlength="14"
+				name="videoid" type="text" size="11" maxlength="30"
 				onmouseover="javascript:document.id('helpbox').set('value', '<?php
 				echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_VIDEOID');
 				?>')" />

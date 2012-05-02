@@ -138,7 +138,7 @@ defined ( '_JEXEC' ) or die ();
 						<?php echo JText::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER'); ?>
 						<select id="kvideoprovider" name="provider" class="kbutton" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER') ?>">
 						<?php
-						$vid_provider = array ('', 'AnimeEpisodes', 'Biku', 'Bofunk', 'Break', 'Clip.vn', 'Clipfish', 'Clipshack', 'Collegehumor', 'Current', 'DailyMotion', 'DivX,divx]http://', 'DownloadFestival', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'Fliptrack', 'Fliqz', 'Gametrailers', 'Gamevideos', 'Glumbert', 'GMX', 'Google', 'GooglyFoogly', 'iFilm', 'Jumpcut', 'Kewego', 'LiveLeak', 'LiveVideo', 'MediaPlayer,mediaplayer]http://', 'MegaVideo', 'Metacafe', 'Mofile', 'Multiply', 'MySpace', 'MyVideo', 'QuickTime,quicktime]http://', 'Quxiu', 'RealPlayer,realplayer]http://', 'Revver', 'RuTube', 'Sapo', 'Sevenload', 'Sharkle', 'Spikedhumor', 'Stickam', 'Streetfire', 'StupidVideos', 'Toufee', 'Tudou', 'Unf-Unf', 'Uume', 'Veoh', 'VideoclipsDump', 'Videojug', 'VideoTube', 'Vidiac', 'VidiLife', 'Vimeo', 'WangYou', 'WEB.DE', 'Wideo.fr', 'YouKu', 'YouTube' );
+						$vid_provider = array ('', 'Bofunk', 'Break', 'Clipfish', 'DivX,divx]http://', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'MediaPlayer,mediaplayer]http://', 'Metacafe', 'MySpace', 'QuickTime,quicktime]http://', 'RealPlayer,realplayer]http://', 'RuTube', 'Sapo', 'Streetfire', 'Veoh', 'Videojug', 'Vimeo', 'Wideo.fr', 'YouTube' );
 						foreach ( $vid_provider as $vid_type ) {
 							$vid_type = explode ( ',', $vid_type );
 							echo '<option value="' . (! empty ( $vid_type [1] ) ? $this->escape($vid_type [1]) : JString::strtolower ( $this->escape($vid_type [0]) ) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
@@ -146,7 +146,7 @@ defined ( '_JEXEC' ) or die ();
 						?>
 						</select>
 						<?php echo JText::_('COM_KUNENA_EDITOR_VIDEO_ID') ?>
-						<input id="kvideoid" name="videoid" type="text" size="11" maxlength="14" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOID') ?>" />
+						<input id="kvideoid" name="videoid" type="text" size="11" maxlength="30" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOID') ?>" />
 						<input id="kbutton_addvideo1" type="button" name="Video" accesskey="p" onclick="kInsertVideo1()" value="<?php echo JText::_('COM_KUNENA_EDITOR_VIDEO_INSERT') ?>" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1') ?>" />
 						<?php echo JText::_('COM_KUNENA_EDITOR_VIDEO_URL') ?>
 						<input id="kvideourl" name="videourl" type="text" size="30" maxlength="250" value="http://" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOURL') ?>" />

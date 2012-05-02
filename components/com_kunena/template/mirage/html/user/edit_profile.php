@@ -37,6 +37,15 @@ JHTML::_('behavior.tooltip');
 						</li>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
+								<label for="kdisplayname"><?php echo JText::_('COM_KUNENA_MYPROFILE_DISPLAYNAME'); ?></label>
+							</div>
+							<div class="form-field">
+								<input type="text" value="" name="displayname" id="displayname" class="kbox-width inputbox hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_DISPLAYNAME') ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_DISPLAYNAME_DESC') ?>" />
+							</div>
+						</li>
+						<li class="user-edit-information-row kbox-hover kbox-hover_list-row clear">
+							<div class="form-label">
+								<label for="kbirthdate1"><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') ?></label>
 								<div class="innerspacer-left kbox-full">
 									<label for="kbirthdate1"><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') ?></label>
 								</div>
@@ -62,7 +71,7 @@ JHTML::_('behavior.tooltip');
 								<div class="innerspacer kbox-full">
 									<input type="text" value="<?php echo $this->escape($this->profile->location); ?>" name="location" id="klocation" class="kbox-width inputbox hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION') ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION_DESC') ?>" />
 								</div>
-									
+
 							</div>
 						</li>
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">

@@ -342,6 +342,8 @@
 			<phpfile name="upgrade-2.0.0_menu"></phpfile>
 		</version>
 		<version version="2.0.0-BETA1" versiondate="2012-04-24" versionname="Newspeak">
+		<version version="2.0.0-BETA2-DEV" versiondate="2012-04-27" versionname="Internal">
+			<query>ALTER TABLE `#__kunena_users` ADD `displayname` varchar(50) NOT NULL AFTER `thankyou`;</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>

@@ -674,6 +674,10 @@ class KunenaModelInstall extends JModel {
 				if ($this->recountCategories ())
 					$this->setTask($task+1);
 				break;
+			case 9:
+				if ($this->recountThankyou ())
+					$this->setTask($task+1);
+				break;
 			default:
 				if (! $this->getError ())
 					$this->setStep ( $this->getStep()+1 );
@@ -2060,6 +2064,23 @@ class KunenaModelInstall extends JModel {
 		}
 		if ($time - $start < 1)
 			return false;
+
+		return true;
+	}
+
+	public function recountThankyou() {
+		//Only perform this action if upgrading form previous version
+		$version = $this->getVersion();
+		if (version_compare ( $version->version, '2.0.0-DEV', ">" )) {
+			return true;
+		}
+
+		// If the migration is from previous version thant 1.6.0 doesn't need to recount
+		if (version_compare ( $version->version, '1.6.0', "<" )) {
+			return true;
+		}
+
+		KunenaForumMessageThankyouHelper::recount();
 
 		return true;
 	}

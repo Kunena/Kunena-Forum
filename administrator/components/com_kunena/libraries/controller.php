@@ -41,9 +41,10 @@ class KunenaController extends JController {
 	 * @return	object	Kunena Controller
 	 * @since	1.6
 	 */
-	public static function getInstance($reload = false) {
+	public static function getInstance($prefix = 'Kunena', $config = array()) {
 		static $instance = null;
 
+		if (!$prefix) $prefix = 'Kunena';
 		if (! empty ( $instance ) && !isset($instance->home)) {
 			return $instance;
 		}
@@ -53,7 +54,7 @@ class KunenaController extends JController {
 		$app = JFactory::getApplication();
 		if (!$app->isAdmin()) {
 			$home = $app->getMenu ()->getActive ();
-			if (!$reload && !empty ( $home->query ['view'] ) && $home->query ['view'] == 'home' && !JRequest::getWord ( 'task' )) {
+			if (!empty($config['reload']) && !empty ( $home->query ['view'] ) && $home->query ['view'] == 'home' && !JRequest::getWord ( 'task' )) {
 				$view = 'home';
 			}
 		}
@@ -68,9 +69,9 @@ class KunenaController extends JController {
 
 		// Set the name for the controller and instantiate it.
 		if ($app->isAdmin()) {
-			$class = 'KunenaAdminController' . ucfirst ( $view );
+			$class = $prefix . 'AdminController' . ucfirst ( $view );
 		} else {
-			$class = 'KunenaController' . ucfirst ( $view );
+			$class = $prefix . 'Controller' . ucfirst ( $view );
 		}
 		if (class_exists ( $class )) {
 			$instance = new $class ();

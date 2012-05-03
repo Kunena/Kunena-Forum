@@ -37,7 +37,8 @@ abstract class KunenaForumTopicUserHelper {
 			return new KunenaForumTopicUser (null, $user);
 
 		if ($reload || empty ( self::$_instances [$user->userid][$topic] )) {
-			self::$_instances [$user->userid][$topic] = self::$_topics [$topic][$user->userid] = array_pop(KunenaForumTopicUserHelper::getTopics ( $topic, $user ));
+			$topics = KunenaForumTopicUserHelper::getTopics ( $topic, $user );
+			self::$_instances [$user->userid][$topic] = self::$_topics [$topic][$user->userid] = array_pop($topics);
 		}
 
 		return self::$_instances [$user->userid][$topic];

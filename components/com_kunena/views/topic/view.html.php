@@ -68,8 +68,13 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		// FIXME: Joomla 1.6+: Deprecated JParameter
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
@@ -246,8 +251,13 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		// FIXME: Joomla 1.6+: Deprecated JParameter
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -294,8 +304,13 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		// FIXME: Joomla 1.6+: Deprecated JParameter
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -806,8 +821,13 @@ class KunenaViewTopic extends KunenaView {
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
-		// FIXME: Joomla 1.6+: Deprecated JParameter
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');

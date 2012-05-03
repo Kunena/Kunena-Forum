@@ -839,10 +839,12 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				KunenaError::checkDatabaseError ();
 			}
 
+			// FIXME: add recount statistics
 			if ($recount) {
 				KunenaUserHelper::recount();
 				KunenaForumCategoryHelper::recount();
 				KunenaForumMessageAttachmentHelper::cleanup();
+				KunenaForumMessageThankyouHelper::recount();
 			}
 		}
 		return true;

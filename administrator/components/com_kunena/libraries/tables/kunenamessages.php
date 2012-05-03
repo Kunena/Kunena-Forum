@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Tables
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,40 +16,39 @@ require_once (dirname ( __FILE__ ) . '/kunena.php');
  * Kunena Messages
  * Provides access to the #__kunena_messages table
  */
-class TableKunenaMessages extends KunenaTable
-{
-	var $id = null;
-	var $parent = null;
-	var $thread = null;
-	var $catid = null;
-	var $name = null;
-	var $userid = null;
-	var $email = null;
-	var $subject = null;
-	var $time = null;
-	var $ip = null;
-	var $topic_emoticon = null;
-	var $locked = null;
-	var $hold = null;
-	var $ordering = null;
-	var $hits = null;
-	var $moved = null;
-	var $modified_by = null;
-	var $modified_time = null;
-	var $modified_reason = null;
-	var $params = null;
-	var $message = null;
+class TableKunenaMessages extends KunenaTable {
+	public $id = null;
+	public $parent = null;
+	public $thread = null;
+	public $catid = null;
+	public $name = null;
+	public $userid = null;
+	public $email = null;
+	public $subject = null;
+	public $time = null;
+	public $ip = null;
+	public $topic_emoticon = null;
+	public $locked = null;
+	public $hold = null;
+	public $ordering = null;
+	public $hits = null;
+	public $moved = null;
+	public $modified_by = null;
+	public $modified_time = null;
+	public $modified_reason = null;
+	public $params = null;
+	public $message = null;
 
-	function __construct($db) {
+	public function __construct($db) {
 		parent::__construct ( '#__kunena_messages', 'id', $db );
 	}
 
-	function reset() {
+	public function reset() {
 		parent::reset();
 		$this->message = null;
 	}
 
-	function load($id = null)
+	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
 		$k = $this->_tbl_key;
@@ -59,7 +58,7 @@ class TableKunenaMessages extends KunenaTable
 		}
 
 		// Reset the table.
-		$this->reset();
+		if ($reset) $this->reset();
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1) {
@@ -90,7 +89,7 @@ class TableKunenaMessages extends KunenaTable
 		return $this->_exists;
 	}
 
-	function check() {
+	public function check() {
 		$category = KunenaForumCategoryHelper::get($this->catid);
 		if (!$category->exists()) {
 			// TODO: maybe we should have own error message? or not?
@@ -113,7 +112,12 @@ class TableKunenaMessages extends KunenaTable
 		return ($this->getError () == '');
 	}
 
-	function store() {
+	/**
+	 * @param boolean $updateNulls has no effect.
+	 *
+	 * @see KunenaTable::store()
+	 */
+	public function store($updateNulls = false) {
 		$k = $this->_tbl_key;
 		$update = $this->_exists;
 		$message = $this->message;

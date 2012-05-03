@@ -142,7 +142,7 @@ class CKunenaFile extends JFile
 			if ($FTPOptions['enabled'] == 1) {
 				if ($ret === true) {
 					jimport('joomla.client.ftp');
-					$ftp = & JFTP::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
+					$ftp = JFTP::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
 					@unlink($src);
 					$ret = true;
 				} else {

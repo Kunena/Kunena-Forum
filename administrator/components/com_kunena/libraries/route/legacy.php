@@ -540,9 +540,10 @@ abstract class KunenaRouteLegacy {
 		return $changed;
 	}
 
-	static public function convertMenuItem($item) {
+	public static function convertMenuItem($item) {
 		$uri = JURI::getInstance($item->link);
 		$view = $uri->getVar('func', $uri->getVar('view'));
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		$params = new JParameter($item->params);
 
 		if (self::convert($uri, 0)) {

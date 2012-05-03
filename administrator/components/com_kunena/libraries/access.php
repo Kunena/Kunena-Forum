@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -55,7 +55,7 @@ class KunenaAccess {
 		}
 	}
 
-	static public function getInstance() {
+	public static function getInstance() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!self::$instance) {
 			self::$instance = new KunenaAccess();

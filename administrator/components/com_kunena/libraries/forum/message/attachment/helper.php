@@ -13,12 +13,10 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Message Attachment Helper Class
  */
-class KunenaForumMessageAttachmentHelper {
+abstract class KunenaForumMessageAttachmentHelper {
 	// Global for every instance
 	protected static $_instances = array();
 	protected static $_messages = array();
-
-	private function __construct() {}
 
 	/**
 	 * Returns KunenaForumMessageAttachment object

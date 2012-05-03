@@ -14,10 +14,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Topic Helper Class
  */
-class KunenaForumTopicHelper {
+abstract class KunenaForumTopicHelper {
 	protected static $_instances = array();
-
-	private function __construct() {}
 
 	/**
 	 * Returns KunenaForumTopic object
@@ -45,7 +43,7 @@ class KunenaForumTopicHelper {
 		return self::$_instances [$id];
 	}
 
-	public function subscribe($ids, $value=1, $user=null) {
+	public static function subscribe($ids, $value=1, $user=null) {
 		// Pre-load all items
 		$usertopics = KunenaForumTopicUserHelper::getTopics($ids, $user);
 		$count = 0;
@@ -58,7 +56,7 @@ class KunenaForumTopicHelper {
 		return $count;
 	}
 
-	public function favorite($ids, $value=1, $user=null) {
+	public static function favorite($ids, $value=1, $user=null) {
 		// Pre-load all items
 		$usertopics = KunenaForumTopicUserHelper::getTopics($ids, $user);
 		$count = 0;
@@ -220,7 +218,7 @@ class KunenaForumTopicHelper {
 	 * @return	int	Affected rows
 	 * @since 1.6
 	 */
-	public function delete($ids) {
+	public static function delete($ids) {
 		if (empty($ids)) return 0;
 		if (is_array($ids)) {
 			$idlist = implode(',', $ids);
@@ -264,7 +262,7 @@ class KunenaForumTopicHelper {
 	 * @return	int	Affected rows
 	 * @since 1.6
 	 */
-	public function trash($ids) {
+	public static function trash($ids) {
 		if (empty($ids)) return 0;
 		if (is_array($ids)) {
 			$idlist = implode(',', $ids);
@@ -285,7 +283,7 @@ class KunenaForumTopicHelper {
 		return $db->getAffectedRows();
 	}
 
-	static function recount($ids=false, $start=0, $end=0) {
+	public static function recount($ids=false, $start=0, $end=0) {
 		$db = JFactory::getDBO ();
 
 		if ($start < 1) $start = 1;

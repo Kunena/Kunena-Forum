@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Tables
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,26 +16,25 @@ require_once (dirname ( __FILE__ ) . '/kunena.php');
  * Kunena Sessions
  * Provides access to the #__kunena_sessions table
  */
-class TableKunenaSessions extends KunenaTable
-{
-	var $userid = 0;
-	var $allowed = 'na';
-	var $allowedcats = null;
-	var $lasttime = 0;
-	var $readtopics = 0;
-	var $currvisit = 0;
+class TableKunenaSessions extends KunenaTable {
+	public $userid = 0;
+	public $allowed = 'na';
+	public $allowedcats = null;
+	public $lasttime = 0;
+	public $readtopics = 0;
+	public $currvisit = 0;
 	protected $_exists = false;
 
-	function __construct($db) {
+	public function __construct($db) {
 		parent::__construct('#__kunena_sessions', 'userid', $db);
 	}
 
-	function load($oid = null) {
+	public function load($oid = null, $reset = true) {
 		if (!$oid) return false;
-		return parent::load($oid);
+		return parent::load($oid, $reset);
 	}
 
-	function check() {
+	public function check() {
 		$user = KunenaUserHelper::get($this->userid);
 		if (!$user->exists()) {
 			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_USER_INVALID', (int) $user->userid ) );

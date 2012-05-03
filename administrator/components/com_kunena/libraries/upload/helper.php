@@ -45,7 +45,7 @@ class KunenaUploadHelper {
 			if (!MediaHelper::canUpload( $file, $err )) {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
-					$log = &JLog::getInstance('upload.error.php');
+					$log = JLog::getInstance('upload.error.php');
 					$log->addEntry(array('comment' => 'Invalid: '.$filepath.': '.$err));
 					header('HTTP/1.0 415 Unsupported Media Type');
 					jexit('Error. Unsupported Media Type!');
@@ -57,7 +57,7 @@ class KunenaUploadHelper {
 			if (JFile::exists($filepath)) {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
-					$log = &JLog::getInstance('upload.error.php');
+					$log = JLog::getInstance('upload.error.php');
 					$log->addEntry(array('comment' => 'File already exists: '.$filepath));
 					header('HTTP/1.0 409 Conflict');
 					jexit('Error. File already exists');
@@ -69,7 +69,7 @@ class KunenaUploadHelper {
 			if (!JFile::upload($file['tmp_name'], $filepath)) {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
-					$log = &JLog::getInstance('upload.error.php');
+					$log = JLog::getInstance('upload.error.php');
 					$log->addEntry(array('comment' => 'Cannot upload: '.$filepath));
 					header('HTTP/1.0 400 Bad Request');
 					jexit('Error. Unable to upload file');
@@ -79,7 +79,7 @@ class KunenaUploadHelper {
 			} else {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
-					$log = &JLog::getInstance();
+					$log = JLog::getInstance();
 					$log->addEntry(array('comment' => $uploadfolder));
 					jexit('Upload complete');
 				} else {

@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewTopicicons extends KunenaView {
   function display() {
-		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		switch ($this->getLayout ()) {
 			case 'add' :
 			case 'edit' :

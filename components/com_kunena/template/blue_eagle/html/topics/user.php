@@ -19,7 +19,7 @@ $this->displayAnnouncement ();
 	<tr>
 		<td class="klist-actions-info-all">
 			<strong><?php echo intval($this->total) ?></strong>
-			<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>
+			<?php echo JText::_('COM_KUNENA_TOPICS')?>
 		</td>
 
 		<td class="klist-jump-all"><?php $this->displayForumJump () ?></td>
@@ -34,7 +34,7 @@ $this->displayAnnouncement ();
 	<tr>
 		<td class="klist-actions-info-all">
 			<strong><?php echo intval($this->total) ?></strong>
-			<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>
+			<?php echo JText::_('COM_KUNENA_TOPICS')?>
 		</td>
 		<td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
 	</tr>

@@ -329,19 +329,19 @@ class KunenaUserBan extends JObject
 			return false;
 		}
 		if (!$user->exists()) {
-			$this->setError( JText::_( 'COM_KUNENA_BAN_ERROR_NOT_USER', $userid ));
+			$this->setError( JText::_( 'COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid ));
 			return false;
 		}
 		if ($userid == $me->userid) {
-			$this->setError( JText::_( 'COM_KUNENA_BAN_ERROR_YOURSELF' ));
+			$this->setError( JText::_( 'COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF' ));
 			return false;
 		}
 		if ($user->isAdmin()) {
-			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_ADMIN', $user->getName() ));
+			$this->setError(JText::sprintf( 'COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName() ));
 			return false;
 		}
 		if ($user->isModerator(false)) {
-			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_MODERATOR', $user->getName() ));
+			$this->setError(JText::sprintf( 'COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName() ));
 			return false;
 		}
 		return true;

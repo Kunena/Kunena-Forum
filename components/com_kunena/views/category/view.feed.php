@@ -60,7 +60,7 @@ class KunenaViewCategory extends KunenaView {
 	function createItem($title, $url, $description, $category, $date, $userid, $username) {
 		if ($this->config->rss_author_in_title) {
 			// We want author in item titles
-			$title .= ' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $username;
+			$title .= ' - '. JText::_('COM_KUNENA_BY') .': '. $username;
 		}
 		$description = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $description );
 		$description = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $description );

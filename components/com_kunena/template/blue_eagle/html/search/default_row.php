@@ -36,7 +36,7 @@ defined ( '_JEXEC' ) or die ();
 											<?php echo $this->messageHtml ?>
 										</div>
 										<div class="resultcat">
-											<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->category, $this->escape($this->category->name))?>
+											<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->category, $this->escape($this->category->name))) ?>
 										</div>
 									</div>
 								</td>

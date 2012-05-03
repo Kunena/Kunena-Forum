@@ -32,6 +32,7 @@ $this->cache = false;
 	</td>
 
 	<td class="kcol-mid kcol-ktopictitle">
+    <div class="ktopic-details">
 		<?php if ($this->topic->attachments) echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') ); ?>
 
 		<div class="ktopic-title-cover">
@@ -44,22 +45,23 @@ $this->cache = false;
 				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
 			}
 			if ($this->topic->locked != 0) {
-				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
+				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC') );
 			}
 			?>
-		</div>
-
-		<div class="ktopic-details">
+		</div>        
+        <div class="ktopic-details-kcategory">
 			<?php if (!isset($this->category) || $this->category->id != $this->topic->getCategory()->id) : ?>
-			<span class="ktopic-category"> <?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->topic->getCategory() ) ?></span>
-			<span class="divider fltlft">|</span>
+			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span> 
 			<?php endif; ?>
+        </div>
+         <div class="ktopic-details-kcategory">
 			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat');?>
 			</span>
-			<span class="ktopic-by ks">&nbsp;<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
-		</div>
-
+			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
+		  </div>
+        
+        <div class="ktopic-details-kcategory" style="clear:both;">
 		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
 		<ul class="kpagination">
 			<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
@@ -72,13 +74,14 @@ $this->cache = false;
 			<?php endfor; ?>
 		</ul>
 		<?php endif; ?>
+		</div>
 
 		<?php if (!empty($this->keywords)) : ?>
 		<div class="ktopic-keywords">
 			<?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?>
 		</div>
 		<?php endif; ?>
-
+	  </div>
 	</td>
 
 	<td class="kcol-mid kcol-ktopicviews">
@@ -95,11 +98,9 @@ $this->cache = false;
 			<span class="ktopic-latest-post">
 			<?php
 			echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST') );
-			echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();
+			echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();
 			?>
 			</span>
-
-			<br />
 			<span class="ktopic-date" title="<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat'); ?>
 			</span>

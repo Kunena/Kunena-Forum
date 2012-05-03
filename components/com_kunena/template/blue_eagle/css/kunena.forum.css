@@ -228,7 +228,7 @@ PX		EM			PCT			PT
 #Kunena div.kblock span.select-toggle {
 	float: right;
 	top: 5px;
-	right: 13px;
+	right: 8px;
 	height: 1px;
 	position: relative;
 }
@@ -903,13 +903,14 @@ PX		EM			PCT			PT
 	border:solid 1px;
 }
 #Kunena #kflattable ul.kpagination li {
-	margin-right: 5px;
+	margin: 0;
 }
 
 #Kunena span.ktopic-posted-time {
 	display: block;
 	float:left;
 	font-size: .917em;
+	padding-right:2px;
 }
 #Kunena span.ktopic-category {
 	float:left; 
@@ -3098,7 +3099,7 @@ div#kprofile-stats ul li span.krank-admin {
 	border-left: 1px solid;
 	border-right: 1px solid;
 	border-top: 1px solid;
-	margin-left: 3px;
+	margin: 0;
 }
 #Kunena dl.tabs dt.open {
 	border-bottom: 1px solid;

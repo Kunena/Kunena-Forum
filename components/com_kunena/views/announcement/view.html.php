@@ -136,13 +136,13 @@ class KunenaViewAnnouncement extends KunenaView {
 				return JHTML::_('calendar', $this->escape($this->announcement->created), 'created', $id);
 			case 'showdate':
 				$options	= array();
-				$options[]	= JHTML::_('select.option',  '0', JText::_('COM_KUNENA_ANN_NO') );
-				$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_ANN_YES') );
+				$options[]	= JHTML::_('select.option',  '0', JText::_('COM_KUNENA_NO') );
+				$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_YES') );
 				return JHTML::_('select.genericlist',  $options, 'showdate', $attributes, 'value', 'text', $this->announcement->showdate, $id );
 			case 'published':
 				$options	= array();
-				$options[]	= JHTML::_('select.option',  '0', JText::_('COM_KUNENA_ANN_NO') );
-				$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_ANN_YES') );
+				$options[]	= JHTML::_('select.option',  '0', JText::_('COM_KUNENA_NO') );
+				$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_YES') );
 				return JHTML::_('select.genericlist',  $options, 'published', $attributes, 'value', 'text', $this->announcement->published, $id );
 		}
 	}

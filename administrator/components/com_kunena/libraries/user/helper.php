@@ -85,6 +85,9 @@ abstract class KunenaUserHelper {
 		return $user;
 	}
 
+	/**
+	 * @return KunenaUser
+	 */
 	public static function getMyself() {
 		return self::$_me;
 	}

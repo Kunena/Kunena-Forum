@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaAccessJoomla {
 	protected $params = null;
 
-	static protected $viewlevels = null;
+	static protected $viewLevels = null;
 
 	public function __construct($params) {
 		$this->params = $params;
@@ -81,8 +81,8 @@ class KunenaAccessJoomla {
 		}
 		if (!$accesstype || $accesstype == 'none') {
 			$yesno = array ();
-			$yesno [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_ANN_NO' ) );
-			$yesno [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_ANN_YES' ) );
+			$yesno [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_NO' ) );
+			$yesno [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_YES' ) );
 
 			$html ['none']['pub_access'] = array(
 				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_TITLE'),

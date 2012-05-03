@@ -33,7 +33,7 @@ class KunenaBbcodeEditor {
 	 * @param array $config
 	 * @return KunenaBbcodeEditor
 	 */
-	public function &getInstance($config = array()) {
+	public static function getInstance($config = array()) {
 		static $instance = false;
 		if (! $instance) {
 			$instance = new KunenaBbcodeEditor ($config);

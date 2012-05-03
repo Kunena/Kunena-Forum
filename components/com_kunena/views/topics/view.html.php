@@ -95,6 +95,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->position = 0;
 
 		// Run events
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		$params = new JParameter( '' );
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
@@ -171,6 +172,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->position = 0;
 
 		// Run events
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		$params = new JParameter( '' );
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');

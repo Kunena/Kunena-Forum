@@ -608,7 +608,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			return false;
 
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
 		$result = $table->checkout($who);

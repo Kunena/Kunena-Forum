@@ -3,17 +3,17 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-class KunenaError {
+abstract class KunenaError {
 	static $enabled = 0;
 	static $handler = false;
 
-	function initialize() {
+	public static function initialize() {
 		if (!self::$enabled) {
 			$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
 			$admin = JFactory::getApplication()->isAdmin() || KunenaUserHelper::getMyself()->isAdmin();
@@ -21,22 +21,23 @@ class KunenaError {
 			if (!$debug) return;
 
 			@ini_set('display_errors', 1);
-			@error_reporting(E_ALL);
-			set_error_handler('kunenaErrorHandler');
 			self::$handler = true;
 			if (version_compare(JVERSION, '1.7', '>')) {
 				// Joomla 1.7+
+				@error_reporting(E_ALL);
 				JFactory::getDBO()->setDebug(true);
 			} else {
 				// Joomla 1.5 and 1.6
+				@error_reporting(E_ALL & ~E_STRICT);
 				JFactory::getDBO()->debug(1);
 			}
+			set_error_handler('kunenaErrorHandler');
 
 			self::$enabled++;
 		}
 	}
 
-	function cleanup() {
+	public static function cleanup() {
 		if (self::$enabled && (--self::$enabled) == 0) {
 			if (self::$handler) {
 				restore_error_handler ();
@@ -45,21 +46,21 @@ class KunenaError {
 		}
 	}
 
-	function error($msg, $where='default') {
+	public static function error($msg, $where='default') {
 		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_ERROR_'.strtoupper($where), $msg), 'error');
 		}
 	}
 
-	function warning($msg, $where='default') {
+	public static function warning($msg, $where='default') {
 		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_'.strtoupper($where), $msg), 'notice');
 		}
 	}
 
-	function checkDatabaseError() {
+	public static function checkDatabaseError() {
 		$db = JFactory::getDBO();
 		if ($db->getErrorNum ()) {
 			$app = JFactory::getApplication();
@@ -75,7 +76,7 @@ class KunenaError {
 		return false;
 	}
 
-	function getDatabaseError() {
+	public static function getDatabaseError() {
 		$db = JFactory::getDBO();
 		if ($db->getErrorNum ()) {
 			$app = JFactory::getApplication();

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -27,7 +27,7 @@ class KunenaController extends JController {
 	var $_message= null;
 	var $_messageType = null;
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct ();
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->app = JFactory::getApplication();
@@ -87,7 +87,7 @@ class KunenaController extends JController {
 	 * @return	void
 	 * @since	1.6
 	 */
-	public function display() {
+	public function display($cachable = false, $urlparams = false) {
 		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$app = JFactory::getApplication();
@@ -131,7 +131,8 @@ class KunenaController extends JController {
 		if ($view) {
 			if ($app->isSite() && $vFormat=='html') {
 				$common = $this->getView ( 'common', $vFormat );
-				$common->setModel ( $this->getModel ( 'common' ), true );
+				$model = $this->getModel ( 'common' );
+				$common->setModel ( $model, true );
 				$view->ktemplate = $common->ktemplate = KunenaFactory::getTemplate();
 				$view->common = $common;
 
@@ -156,7 +157,7 @@ class KunenaController extends JController {
 			$view->setLayout ( $lName );
 
 			// Push document object into the view.
-			$view->assignRef ( 'document', $document );
+			$view->document = $document;
 
 			// Render the view.
 			if ($vFormat=='html') {
@@ -182,7 +183,7 @@ class KunenaController extends JController {
 	 * @param  mixed $var The output to escape.
 	 * @return mixed The escaped value.
 	 */
-	function escape($var) {
+	public function escape($var) {
 		if (in_array ( $this->_escape, array ('htmlspecialchars', 'htmlentities' ) )) {
 			return call_user_func ( $this->_escape, $var, ENT_COMPAT, 'UTF-8' );
 		}
@@ -194,17 +195,17 @@ class KunenaController extends JController {
 	 *
 	 * @param mixed $spec The callback for _escape() to use.
 	 */
-	function setEscape($spec) {
+	public function setEscape($spec) {
 		$this->_escape = $spec;
 	}
 
-	function getRedirect() {
+	public function getRedirect() {
 		return $this->_redirect;
 	}
-	function getMessage() {
+	public function getMessage() {
 		return $this->_message;
 	}
-	function getMessageType() {
+	public function getMessageType() {
 		return $this->_messageType;
 	}
 

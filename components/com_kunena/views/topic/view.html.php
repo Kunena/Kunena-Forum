@@ -59,7 +59,7 @@ class KunenaViewTopic extends KunenaView {
 			return $this->displayNoAccess($errors);
 		}
 
-		$this->messages	=& $this->get ( 'Messages' ) ;
+		$this->messages	= $this->get ( 'Messages' );
 		$this->total	= $this->get ( 'Total' );
 
 		// If page does not exist, redirect to the last page
@@ -68,6 +68,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		$params = new JParameter( '' );
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
@@ -245,6 +246,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		$params = new JParameter( '' );
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
@@ -292,6 +294,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		$params = new JParameter( '' );
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
@@ -413,7 +416,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$options = array ();
 		$cat_params = array ('sections'=>0, 'catid'=>0);
-		$this->assignRef ( 'categorylist', JHTML::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories'));
+		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories');
 		if (isset($this->message)) $this->user = KunenaFactory::getUser($this->message->userid);
 
 		if ($this->mesid) {
@@ -803,6 +806,7 @@ class KunenaViewTopic extends KunenaView {
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		$params = new JParameter( '' );
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');

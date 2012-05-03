@@ -15,7 +15,7 @@ $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/ad
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
 // FIXME : Deprecated under Joomla! 1.6
 jimport('joomla.html.pane');
-$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
+$myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>

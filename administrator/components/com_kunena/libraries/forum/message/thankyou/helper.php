@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Message Thank You Helper Class
  * @since 2.0
  */
-class KunenaForumMessageThankyouHelper {
+abstract class KunenaForumMessageThankyouHelper {
 	protected static $_instances = array();
 
 	/**

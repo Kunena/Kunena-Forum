@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Class
  */
-class KunenaForum {
+abstract class KunenaForum {
 	protected static $version = false;
 	protected static $version_major = false;
 	protected static $version_date = false;
@@ -26,8 +26,6 @@ class KunenaForum {
 
 	const MODERATOR = 1;
 	const ADMINISTRATOR = 2;
-
-	private function __construct() {}
 
 	public static function isDev() {
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
@@ -112,7 +110,7 @@ class KunenaForum {
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'SVN Revision' : '@kunenaversionname@';
 	}
 
-	public function display($viewName, $layout='default', $template=null, $params = array()) {
+	public static function display($viewName, $layout='default', $template=null, $params = array()) {
 		$viewName = preg_replace( '/[^A-Z0-9_]/i', '', $viewName );
 		$view = "KunenaView{$viewName}";
 		$model = "KunenaModel{$viewName}";
@@ -135,6 +133,8 @@ class KunenaForum {
 		}
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
+
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		if (!($params instanceof JParameter)) {
 			$parameters = new JParameter('');
 			$parameters->bind($params);

@@ -18,20 +18,20 @@ class KunenaViewCategory extends KunenaView {
 
 	function displayDefault($tpl = null) {
 		$this->Itemid = $this->get ( 'Itemid' );
-		$this->assignRef ( 'category', $this->get ( 'Category' ) );
+		$this->category = $this->get ( 'Category' );
 		if (! $this->category->authorise('read')) {
 				$this->setError($this->category->getError());
 		}
 
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
-		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
+		$this->topicActions = $this->get ( 'TopicActions' );
+		$this->actionMove = $this->get ( 'ActionMove' );
+		$this->moderators = $this->get ( 'Moderators' );
 
-		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
-		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
-		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
+		$this->message_ordering = $this->me->getMessageOrdering();
+		$this->categories = $this->get ( 'Categories' );
+		$this->pending = $this->get ( 'UnapprovedCount' );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
 
 		$errors = $this->getErrors();
@@ -49,14 +49,14 @@ class KunenaViewCategory extends KunenaView {
 
 	function displayList($tpl = null) {
 		$this->Itemid = $this->get ( 'Itemid' );
-		$this->assignRef ( 'category', $this->get ( 'Category' ) );
+		$this->category = $this->get ( 'Category' );
 		if ($this->category->id && ! $this->category->authorise('read')) {
 			$this->setError($this->category->getError());
 		}
-		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
-		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
-		$this->assignRef ( 'pending',  $this->get ( 'UnapprovedCount' ) );
-		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
+		$this->message_ordering = $this->me->getMessageOrdering();
+		$this->categories = $this->get ( 'Categories' );
+		$this->pending = $this->get ( 'UnapprovedCount' );
+		$this->moderators = $this->get ( 'Moderators' );
 		$this->sections = isset($this->categories[0]) ? $this->categories[0] : array();
 
 		if ($this->category->isSection()) {
@@ -83,7 +83,7 @@ class KunenaViewCategory extends KunenaView {
 
 	function displayUser($tpl = null) {
 		$this->Itemid = $this->get ( 'Itemid' );
-		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
+		$this->categories = $this->get ( 'Categories' );
 
 		$errors = $this->getErrors();
 		if ($errors) {
@@ -105,10 +105,10 @@ class KunenaViewCategory extends KunenaView {
 
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$this->assignRef ( 'categories', $this->get ( 'AdminCategories' ) );
-		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$this->categories = $this->get ( 'AdminCategories' );
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		$header = JText::_('COM_KUNENA_ADMIN');
-		$this->assign ( 'header', $header );
+		$this->header = $header;
 		$this->setTitle ( $header );
 
 		$this->display ($tpl);
@@ -119,7 +119,7 @@ class KunenaViewCategory extends KunenaView {
 	}
 
 	function displayEdit() {
-		$this->assignRef ( 'category', $this->get ( 'AdminCategory' ) );
+		$this->category = $this->get ( 'AdminCategory' );
 		if ($this->category === false) {
 			$this->setError(JText::_('COM_KUNENA_NO_ACCESS'));
 			$this->displayNoAccess($this->getErrors());
@@ -128,10 +128,10 @@ class KunenaViewCategory extends KunenaView {
 
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		$this->assignRef ( 'options', $this->get ( 'AdminOptions' ) );
-		$this->assignRef ( 'moderators', $this->get ( 'AdminModerators' ) );
+		$this->options = $this->get ( 'AdminOptions' );
+		$this->moderators = $this->get ( 'AdminModerators' );
 		$header = $this->category->exists() ? JText::sprintf('COM_KUNENA_CATEGORY_EDIT', $this->escape($this->category->name)) : JText::_('COM_KUNENA_CATEGORY_NEW');
-		$this->assign ( 'header', $header );
+		$this->header = $header;
 		$this->setTitle ( $header );
 
 		$this->display ();
@@ -338,6 +338,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->position = 0;
 
 		// Run events
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		$params = new JParameter( '' );
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'category');

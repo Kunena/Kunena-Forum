@@ -43,7 +43,7 @@ class KunenaForumStatistics {
 	public $showpopthankyoustats = false;
 
 	public function __construct() {
-		$this->_db = &JFactory::getDBO ();
+		$this->_db = JFactory::getDBO ();
 		$this->_config = KunenaFactory::getConfig ();
 
 		$show = $this->_config->showstats;

@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaControllerHome extends KunenaController {
 	public $home = 1;
 
-	public function display() {
+	public function display($cachable = false, $urlparams = false) {
 		global $Itemid;
 		$menu = $this->app->getMenu ();
 		$home = $menu->getActive ();

@@ -15,6 +15,7 @@ jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.path');
 
+// FIXME: Joomla 1.6+: Deprecated JParameter
 class KunenaParameter extends JParameter {
 	public function getXml() {
 		return $this->_xml;
@@ -225,7 +226,8 @@ HTML;
 			foreach ($this->style_variables as $name=>$value)  {
 				$variables[] = "\t{$name}:{$this->params->get($name)};";
 			}
-			$this->compiled_style_variables = "@variables {\n".implode("\n", $variables)."\n}\n\n";
+			if ($variables) $this->compiled_style_variables = "@variables {\n".implode("\n", $variables)."\n}\n\n";
+			else $this->compiled_style_variables = '';
 
 		}
 		return $this->compiled_style_variables;
@@ -386,6 +388,7 @@ HTML;
 
 		$buffer = preg_replace_callback ( '/url\(([^\)]+)\)/u', array($this, 'findUrl'), $buffer );
 		JFile::write(JPATH_ROOT.'/'.$dest, $buffer);
+		unset($tokens, $buffer, $filters, $plugins);
 		return $dest;
 	}
 
@@ -582,7 +585,7 @@ HTML;
 	 * @return	KunenaTemplate	The template object.
 	 * @since	1.6
 	 */
-	static public function getInstance($name=null) {
+	public static function getInstance($name=null) {
 		if (!$name) {
 			$name = JRequest::getString ( 'kunena_template', KunenaFactory::getConfig()->template, 'COOKIE' );
 		}

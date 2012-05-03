@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewSearch extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
+		$this->message_ordering = $this->me->getMessageOrdering();
 //TODO: Need to move the select markup outside of view.  Otherwise difficult to stylize
 
 		$this->searchwords = $this->get('SearchWords');
@@ -112,6 +112,7 @@ class KunenaViewSearch extends KunenaView {
 		$this->row(true);
 
 		// Run events
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		$params = new JParameter( '' );
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'search');

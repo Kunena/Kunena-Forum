@@ -53,7 +53,7 @@ class KunenaBbcode extends BBCode {
 	 * @return	void
 	 * @since	1.7
 	 */
-	public function &getInstance() {
+	public static function getInstance() {
 		static $instance = false;
 		if (! $instance) {
 			$instance = new KunenaBbcode ();

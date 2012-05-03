@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,7 +15,7 @@ KunenaUserHelper::initialize();
 /**
  * Kunena User Helper Class
  */
-class KunenaUserHelper {
+abstract class KunenaUserHelper {
 	protected static $_instances = array ();
 	protected static $_instances_name = array ();
 	protected static $_online = null;
@@ -24,9 +24,7 @@ class KunenaUserHelper {
 	protected static $_topposters = null;
 	protected static $_me = null;
 
-	private function __construct() {}
-
-	public function initialize() {
+	public static function initialize() {
 		$id = JFactory::getUser()->id;
 		self::$_me = self::$_instances [$id] = new KunenaUser ( $id );
 	}
@@ -38,7 +36,7 @@ class KunenaUserHelper {
 	 * @return	JUser			The User object.
 	 * @since	1.6
 	 */
-	static public function get($identifier = null, $reload = false) {
+	public static function get($identifier = null, $reload = false) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($identifier === null || $identifier === false) {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -71,7 +69,7 @@ class KunenaUserHelper {
 		return self::$_instances [$id];
 	}
 
-	static public function getAuthor($id, $name) {
+	public static function getAuthor($id, $name) {
 		$id = (int) $id;
 		if ($id && !empty ( self::$_instances [$id] )) {
 			return self::$_instances [$id];
@@ -87,11 +85,11 @@ class KunenaUserHelper {
 		return $user;
 	}
 
-	static public function getMyself() {
+	public static function getMyself() {
 		return self::$_me;
 	}
 
-	static public function loadUsers($userids = array()) {
+	public static function loadUsers($userids = array()) {
 		if (!is_array($userids)) {
 			JError::raiseError ( 500, __CLASS__ . '::' . __FUNCTION__.'(): Parameter $userids is not array' );
 		}
@@ -134,14 +132,14 @@ class KunenaUserHelper {
 		return $list;
 	}
 
-	static public function getLastId() {
+	public static function getLastId() {
 		if (self::$_lastid === null) {
 			self::getTotalCount();
 		}
 		return self::$_lastid;
 	}
 
-	static public function getTotalCount() {
+	public static function getTotalCount() {
 		if (self::$_total === null) {
 			$db = JFactory::getDBO ();
 			$config = KunenaFactory::getConfig();
@@ -156,7 +154,7 @@ class KunenaUserHelper {
 		return self::$_total;
 	}
 
-	static public function getTopPosters($limit=0) {
+	public static function getTopPosters($limit=0) {
 		$limit = $limit ? $limit : KunenaFactory::getConfig()->popusercount;
 		if (count(self::$_topposters) < $limit) {
 			$db = JFactory::getDBO ();
@@ -249,7 +247,7 @@ class KunenaUserHelper {
 		return $online;
 	}
 
-	function recount() {
+	public static function recount() {
 		$db = JFactory::getDBO ();
 
 		// If user has no user_topics, set posts into 0

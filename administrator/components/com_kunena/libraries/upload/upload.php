@@ -33,7 +33,7 @@ class KunenaUpload extends JObject {
 		if (is_file($this->fileTemp)) unlink ( $this->fileTemp );
 	}
 
-	function getInstance($extensions = null) {
+	public static function getInstance($extensions = null) {
 		return new KunenaUpload($extensions);
 	}
 	function setValidExtensions($extensions=array()) {

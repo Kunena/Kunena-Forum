@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -280,6 +280,8 @@ abstract class KunenaForum {
 		}
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
+
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		if (!($params instanceof JParameter)) {
 			$parameters = new JParameter('');
 			$parameters->bind($params);

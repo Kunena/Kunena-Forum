@@ -13,12 +13,10 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Topic User Helper Class
  */
-class KunenaForumTopicUserHelper {
+abstract class KunenaForumTopicUserHelper {
 	// Global for every instance
 	protected static $_instances = array();
 	protected static $_topics = array();
-
-	private function __construct() {}
 
 	/**
 	 * Returns KunenaForumTopicUser object
@@ -39,7 +37,8 @@ class KunenaForumTopicUserHelper {
 			return new KunenaForumTopicUser (null, $user);
 
 		if ($reload || empty ( self::$_instances [$user->userid][$topic] )) {
-			self::$_instances [$user->userid][$topic] = self::$_topics [$topic][$user->userid] = array_pop(KunenaForumTopicUserHelper::getTopics ( $topic, $user ));
+			$topics = KunenaForumTopicUserHelper::getTopics ( $topic, $user );
+			self::$_instances [$user->userid][$topic] = self::$_topics [$topic][$user->userid] = array_pop($topics);
 		}
 
 		return self::$_instances [$user->userid][$topic];
@@ -69,7 +68,7 @@ class KunenaForumTopicUserHelper {
 		return $list;
 	}
 
-	static function move($old, $new) {
+	public static function move($old, $new) {
 		// Update database
 		$db = JFactory::getDBO ();
 		$query ="UPDATE #__kunena_user_topics SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
@@ -93,7 +92,7 @@ class KunenaForumTopicUserHelper {
 		return true;
 	}
 
-	static function merge($old, $new) {
+	public static function merge($old, $new) {
 		$db = JFactory::getDBO ();
 
 		// Move all user topics which do not exist in new topic
@@ -130,7 +129,7 @@ class KunenaForumTopicUserHelper {
 		return true;
 	}
 
-	static function recount($topicids=false, $start=0, $end=0) {
+	public static function recount($topicids=false, $start=0, $end=0) {
 		$db = JFactory::getDBO ();
 
 		if (is_array($topicids)) {

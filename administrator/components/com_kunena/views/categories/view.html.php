@@ -19,19 +19,19 @@ class KunenaAdminViewCategories extends KunenaView {
 	}
 
 	function displayEdit() {
-		$this->assignRef ( 'category', $this->get ( 'AdminCategory' ) );
+		$this->category = $this->get ( 'AdminCategory' );
 		// FIXME: better access control and gracefully handle no rights
 		// Prevent fatal error if no rights:
 		if (!$this->category) return;
-		$this->assignRef ( 'options', $this->get ( 'AdminOptions' ) );
-		$this->assignRef ( 'moderators', $this->get ( 'AdminModerators' ) );
+		$this->options = $this->get ( 'AdminOptions' );
+		$this->moderators = $this->get ( 'AdminModerators' );
 		$this->setToolBarEdit();
 		$this->display();
 	}
 
 	function displayDefault() {
-		$this->assignRef ( 'categories', $this->get ( 'AdminCategories' ) );
-		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$this->categories = $this->get ( 'AdminCategories' );
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		$this->setToolBarDefault();
 		$this->display();
 	}

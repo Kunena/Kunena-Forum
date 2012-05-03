@@ -95,7 +95,13 @@ class KunenaViewTopics extends KunenaView {
 		$this->position = 0;
 
 		// Run events
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'topics');
@@ -171,7 +177,13 @@ class KunenaViewTopics extends KunenaView {
 		$this->position = 0;
 
 		// Run events
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'posts');

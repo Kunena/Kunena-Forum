@@ -21,7 +21,7 @@ class KunenaViewCommon extends KunenaView {
 	protected $offline = false;
 
 	function display($layout = null, $tpl = null) {
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
+		$this->state = $this->get ( 'State' );
 
 		if ($this->config->board_offline && ! $this->me->isAdmin ()) {
 			$this->offline = true;
@@ -78,7 +78,7 @@ class KunenaViewCommon extends KunenaView {
 		$options = array ();
 		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
 		$cat_params = array ('sections'=>1, 'catid'=>0);
-		$this->assignRef ( 'categorylist', JHTML::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid));
+		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
@@ -276,7 +276,7 @@ class KunenaViewCommon extends KunenaView {
 		// FIXME: enable caching after fixing the issues
 		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents) {
-			$this->assign ( 'moduleHtml', $this->getModulePosition('kunena_profilebox'));
+			$this->moduleHtml = $this->getModulePosition('kunena_profilebox');
 
 			$login = KunenaLogin::getInstance();
 			if ($my->get ( 'guest' )) {
@@ -291,18 +291,18 @@ class KunenaViewCommon extends KunenaView {
 				}
 			} else {
 				$this->setLayout('logout');
-				if ($login) $this->assignRef ( 'logout', $login );
+				if ($login) $this->logout = $login;
 				$this->lastvisitDate = KunenaDate::getInstance($this->me->lastvisitDate);
 
 				// Private messages
 				$this->getPrivateMessageLink();
 
 				// TODO: Edit profile (need to get link to edit page, even with integration)
-				//$this->assign ( 'editProfileLink', '<a href="' . $url.'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>');
+				//$this->editProfileLink = '<a href="' . $url.'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>';
 
 				// Announcements
 				if ( $this->me->isModerator()) {
-					$this->assign ( 'announcementsLink', '<a href="' . KunenaForumAnnouncementHelper::getUrl('list').'">'. JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS').'</a>');
+					$this->announcementsLink = '<a href="' . KunenaForumAnnouncementHelper::getUrl('list').'">'. JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS').'</a>';
 				}
 
 			}
@@ -344,7 +344,7 @@ class KunenaViewCommon extends KunenaView {
 			if (isset ( $rss_params )) {
 				$document = JFactory::getDocument ();
 				$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_ ( 'COM_KUNENA_LISTCAT_RSS' ) . '" href="' . CKunenaLink::GetRSSURL ( $rss_params ) . '" />' );
-				$this->assign ( 'rss', CKunenaLink::GetRSSLink ( $this->getIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params ));
+				$this->rss = CKunenaLink::GetRSSLink ( $this->getIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
 			}
 		}
 		$result = $this->loadTemplateFile($tpl);
@@ -359,7 +359,7 @@ class KunenaViewCommon extends KunenaView {
 		$private = KunenaFactory::getPrivateMessaging();
 		if ($private) {
 			$count = $private->getUnreadCount($this->me->userid);
-			$this->assign ( 'privateMessagesLink', $private->getInboxLink($count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX')));
+			$this->privateMessagesLink = $private->getInboxLink($count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX'));
 		}
 	}
 }

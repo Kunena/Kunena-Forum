@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,7 +15,7 @@ class KunenaSession extends JObject
 	protected $_sessiontimeout = false;
 	private static $_instance;
 
-	function __construct($identifier)
+	public function __construct($identifier)
 	{
 		$this->load($identifier);
 		if (!$this->currvisit) {
@@ -28,7 +28,7 @@ class KunenaSession extends JObject
 		}
 	}
 
-	static public function getInstance( $update=false, $userid = null )
+	public static function getInstance( $update=false, $userid = null )
 	{
 		if (!self::$_instance) {
 			$my = JFactory::getUser();
@@ -52,7 +52,7 @@ class KunenaSession extends JObject
 	 * @return	object	The session table object
 	 * @since	1.5
 	 */
-	function getTable($type = 'KunenaSessions', $prefix = 'Table')
+	public function getTable($type = 'KunenaSessions', $prefix = 'Table')
 	{
 		static $tabletype = null;
 
@@ -78,7 +78,7 @@ class KunenaSession extends JObject
 	public function load($userid)
 	{
 		// Create the user table object
-		$table	= &$this->getTable();
+		$table	= $this->getTable();
 
 		// Load the KunenaTableUser object based on the user id
 		if ($table->load($userid)) {
@@ -106,14 +106,14 @@ class KunenaSession extends JObject
 	 * @return	boolean True on success
 	 * @since 1.5
 	 */
-	function save($updateOnly = false)
+	public function save($updateOnly = false)
 	{
 		// Do not save session for anonymous users
 		if (!$this->userid) {
 			return false;
 		}
 		// Create the user table object
-		$table	= &$this->getTable();
+		$table	= $this->getTable();
 		$table->bind($this->getProperties());
 		$table->exists($this->_exists);
 
@@ -151,10 +151,10 @@ class KunenaSession extends JObject
 	 * @return	boolean			True on success
 	 * @since 1.5
 	 */
-	function delete()
+	public function delete()
 	{
 		// Create the user table object
-		$table	= &$this->getTable();
+		$table	= $this->getTable();
 
 		$result = $table->delete($this->userid);
 		if (!$result) {
@@ -164,12 +164,12 @@ class KunenaSession extends JObject
 
 	}
 
-	function isNewUser()
+	public function isNewUser()
 	{
 		return !$this->_exists;
 	}
 
-	function isNewSession()
+	public function isNewSession()
 	{
 		// perform session timeout check
 		$lifetime = max(intval(JFactory::getConfig()->getValue( 'config.lifetime' ))*60, intval(KunenaFactory::getConfig ()->fbsessiontimeout));
@@ -177,13 +177,13 @@ class KunenaSession extends JObject
 		return $this->_sessiontimeout;
 	}
 
-	function markAllCategoriesRead()
+	public function markAllCategoriesRead()
 	{
 		$this->lasttime = JFactory::getDate()->toUnix();
 		$this->readtopics = 0;
 	}
 
-	function updateSessionInfo()
+	public function updateSessionInfo()
 	{
 		// If this is a new session, reset the lasttime colum with the timestamp
 		// of the last saved currvisit - only after that can we reset currvisit to now before the store

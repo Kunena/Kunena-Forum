@@ -224,7 +224,9 @@ HTML;
 			$xml = $this->params->getXml();
 			$variables = array();
 			foreach ($this->style_variables as $name=>$value)  {
-				$variables[] = "\t{$name}:{$this->params->get($name)};";
+				$value = $this->params->get($name);
+				if ($value != '')
+					$variables[] = "\t{$name}:{$value};";
 			}
 			if ($variables) $this->compiled_style_variables = "@variables {\n".implode("\n", $variables)."\n}\n\n";
 			else $this->compiled_style_variables = '';
@@ -360,6 +362,7 @@ HTML;
 				'CompressUnitValues' => false,
 				'CompressExpressionValues' => false
 			);
+			CssMin::setVerbose(1);
 			$tokens = CssMin::minify($buffer, $filters, $plugins, false);
 			$buffer = new CssKunenaFormatter($tokens, "\t");
 		} else {

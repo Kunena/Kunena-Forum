@@ -903,7 +903,7 @@ PX		EM			PCT			PT
 	border:solid 1px;
 }
 #Kunena #kflattable ul.kpagination li {
-	margin-right: 5px;
+	margin: 0;
 }
 
 #Kunena span.ktopic-posted-time {

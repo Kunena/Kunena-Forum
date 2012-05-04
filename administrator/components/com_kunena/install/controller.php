@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -40,11 +40,7 @@ class KunenaControllerInstall extends JController {
 		$this->setRedirect('index.php?option=com_kunena&view=install' . ($start ? '&task=upgrade&'.JUtility::getToken().'=1' : ''));
 	}
 
-	public function display()
-	{
-		// Get the document object.
-		$document = JFactory::getDocument();
-
+	public function display($cachable = false, $urlparams = false) {
 		require_once(KPATH_ADMIN.'/install/view.php');
 		$view = $this->getView('install', 'html');
 		if ($view)
@@ -52,7 +48,7 @@ class KunenaControllerInstall extends JController {
 			$view->addTemplatePath(KPATH_ADMIN.'/install/tmpl');
 			$view->setModel($this->model, true);
 			$view->setLayout(JRequest::getWord('layout', 'default'));
-			$view->assignRef('document', $document);
+			$view->document = JFactory::getDocument();
 			$view->display();
 
 			// Display Toolbar. View must have setToolBar method
@@ -99,7 +95,7 @@ class KunenaControllerInstall extends JController {
 		}
 		do {
 			$this->runStep ();
-			$error = $this->model->getError ();
+			$error = $this->model->getInstallError ();
 			$this->step = $this->model->getStep ();
 			$stop = ($this->model->checkTimeout () || !isset($this->steps[$this->step+1]));
 		} while ( ! $stop && ! $error );

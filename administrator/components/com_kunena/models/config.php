@@ -219,8 +219,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists['userdeletetmessage'] = JHTML::_('select.genericlist', $listUserDeleteMessage, 'cfg_userdeletetmessage', 'class="inputbox" size="1"', 'value', 'text', $this->config->userdeletetmessage);
 
 		$latestCategoryIn = array();
-		$latestCategoryIn[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE'));
-		$latestCategoryIn[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW'));
+		$latestCategoryIn[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_A_LATESTCATEGORY_IN_HIDE'));
+		$latestCategoryIn[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_A_LATESTCATEGORY_IN_SHOW'));
 		$lists['latestcategory_in'] = JHTML::_('select.genericlist', $latestCategoryIn, 'cfg_latestcategory_in', 'class="inputbox" size="1"', 'value', 'text', $this->config->latestcategory_in);
 
 		$optionsShowHide = array(JHTML::_('select.option', 0, JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL')));

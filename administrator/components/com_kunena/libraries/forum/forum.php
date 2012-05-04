@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -251,7 +251,7 @@ abstract class KunenaForum {
 	 * @param unknown_type $template Name of the template file.
 	 * @param unknown_type $params Extra parameters to control the model.
 	 */
-	public function display($viewName, $layout='default', $template=null, $params = array()) {
+	public static function display($viewName, $layout='default', $template=null, $params = array()) {
 		// Filter input
 		$viewName = preg_replace( '/[^A-Z0-9_]/i', '', $viewName );
 		$layout = preg_replace( '/[^A-Z0-9_]/i', '', $layout );
@@ -280,6 +280,8 @@ abstract class KunenaForum {
 		}
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
+
+		// FIXME: Joomla 1.6+: Deprecated JParameter
 		if (!($params instanceof JParameter)) {
 			$parameters = new JParameter('');
 			$parameters->bind($params);

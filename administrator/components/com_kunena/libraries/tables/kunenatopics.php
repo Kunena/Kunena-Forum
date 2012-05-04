@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Tables
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,37 +16,36 @@ require_once (dirname ( __FILE__ ) . '/kunena.php');
  * Kunena Topics
  * Provides access to the #__kunena_topics table
  */
-class TableKunenaTopics extends KunenaTable
-{
-	var $id = null;
-	var $category_id = null;
-	var $subject = null;
-	var $icon_id = null;
-	var $locked = null;
-	var $hold = null;
-	var $ordering = null;
-	var $posts = null;
-	var $hits = null;
-	var $attachments = null;
-	var $poll_id = null;
-	var $moved_id = null;
-	var $first_post_id = null;
-	var $first_post_time = null;
-	var $first_post_userid = null;
-	var $first_post_message = null;
-	var $first_post_guest_name = null;
-	var $last_post_id = null;
-	var $last_post_time = null;
-	var $last_post_userid = null;
-	var $last_post_message = null;
-	var $last_post_guest_name = null;
-	var $params = null;
+class TableKunenaTopics extends KunenaTable {
+	public $id = null;
+	public $category_id = null;
+	public $subject = null;
+	public $icon_id = null;
+	public $locked = null;
+	public $hold = null;
+	public $ordering = null;
+	public $posts = null;
+	public $hits = null;
+	public $attachments = null;
+	public $poll_id = null;
+	public $moved_id = null;
+	public $first_post_id = null;
+	public $first_post_time = null;
+	public $first_post_userid = null;
+	public $first_post_message = null;
+	public $first_post_guest_name = null;
+	public $last_post_id = null;
+	public $last_post_time = null;
+	public $last_post_userid = null;
+	public $last_post_message = null;
+	public $last_post_guest_name = null;
+	public $params = null;
 
-	function __construct($db) {
+	public function __construct($db) {
 		parent::__construct ( '#__kunena_topics', 'id', $db );
 	}
 
-	function load($id = null)
+	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
 		$k = $this->_tbl_key;
@@ -56,7 +55,7 @@ class TableKunenaTopics extends KunenaTable
 		}
 
 		// Reset the table.
-		$this->reset();
+		if ($reset) $this->reset();
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1) {
@@ -87,7 +86,7 @@ class TableKunenaTopics extends KunenaTable
 		return $this->_exists;
 	}
 
-	function check() {
+	public function check() {
 		$category = KunenaForumCategoryHelper::get($this->category_id);
 		if (!$category->exists()) {
 			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_CATEGORY_INVALID', $category->id ) );
@@ -100,20 +99,19 @@ class TableKunenaTopics extends KunenaTable
 		}
 		return ($this->getError () == '');
 	}
-	
-	function hit() {
+
+	public function hit() {
 		$k = $this->_tbl_key;
 		$query = "UPDATE #__kunena_topics SET hits=hits+1 WHERE id = {$this->$k}";
 		$this->_db->setQuery($query);
 		$this->_db->Query();
-		
+
 		// Check for an error message.
 		if ($this->_db->getErrorNum()) {
 			$this->setError($this->_db->getErrorMsg());
 			return false;
 		}
-		
+
 		return true;
 	}
-
 }

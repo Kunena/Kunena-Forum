@@ -215,7 +215,7 @@ class KunenaForumMessageAttachment extends JObject {
 	 */
 	public function load($id) {
 		// Create the table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		// Load the KunenaTable object based on id
 		$this->_exists = $table->load ( $id );
@@ -286,7 +286,7 @@ class KunenaForumMessageAttachment extends JObject {
 		}
 
 		// Create the table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		$result = $table->delete ( $this->id );
 		if (! $result) {

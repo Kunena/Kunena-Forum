@@ -18,7 +18,7 @@ class KunenaViewCategory extends KunenaView {
 		$response = array();
 		$response['topiclist'] = array();
 		if ($this->me->exists()) {
-			$this->assignRef ( 'category', $this->get ( 'Category' ) );
+			$this->category = $this->get ( 'Category' );
 			if (! $this->category->authorise('read')) {
 				$response['error'] = $this->category->getError();
 			} else {

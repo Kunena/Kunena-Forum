@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,13 +13,10 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Category Helper Class
  */
-class KunenaForumCategoryHelper {
+abstract class KunenaForumCategoryHelper {
 	// Global for every instance
 	public static $_instances = false;
 	protected static $_tree = array ();
-
-	// Static class
-	private function __construct() {}
 
 	/**
 	 * Returns the global KunenaForumCategory object, only creating it if it doesn't already exist.

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -237,7 +237,7 @@ class KunenaModelInstall extends JModel {
 		$app->setUserState ( 'com_kunena.install.status', $status );
 	}
 
-	function getError() {
+	function getInstallError() {
 		$status = $this->getState ( 'status', array () );
 		$error = 0;
 		foreach ( $status as $cur ) {
@@ -553,7 +553,7 @@ class KunenaModelInstall extends JModel {
 			if ($r)
 				$this->addStatus ( ucfirst($r ['action']) . ' ' . $r ['name'], true );
 		$this->insertVersion ( 'migrateDatabase' );
-		if (! $this->getError ())
+		if (! $this->getInstallError ())
 			$this->setStep ( $this->getStep()+1 );
 		$this->checkTimeout(true);
 	}
@@ -564,7 +564,7 @@ class KunenaModelInstall extends JModel {
 		foreach ($languages as $language) {
 			$this->installLanguage($language['tag'], $language['name']);
 		}
-		if (! $this->getError ())
+		if (! $this->getInstallError ())
 			$this->setStep($this->getStep()+1);
 	}
 
@@ -608,7 +608,7 @@ class KunenaModelInstall extends JModel {
 		} else {
 			// Force page reload to avoid MySQL timeouts after extracting
 			$this->checkTimeout(true);
-			if (! $this->getError ())
+			if (! $this->getInstallError ())
 				$this->setStep($this->getStep()+1);
 		}
 	}
@@ -631,7 +631,7 @@ class KunenaModelInstall extends JModel {
 		$this->uninstallModule('mod_kunenamenu');
 		//$this->installModule('install/modules/mod_kunenamenu', 'kunenamenu');
 
-		if (! $this->getError ())
+		if (! $this->getInstallError ())
 			$this->setStep ( $this->getStep()+1 );
 	}
 
@@ -674,8 +674,12 @@ class KunenaModelInstall extends JModel {
 				if ($this->recountCategories ())
 					$this->setTask($task+1);
 				break;
+			case 9:
+				if ($this->recountThankyou ())
+					$this->setTask($task+1);
+				break;
 			default:
-				if (! $this->getError ())
+				if (! $this->getInstallError ())
 					$this->setStep ( $this->getStep()+1 );
 		}
 	}
@@ -710,7 +714,7 @@ class KunenaModelInstall extends JModel {
 		KunenaMenuHelper::cleanCache();
 		JFactory::getCache('com_kunena')->clean();
 
-		if (! $this->getError ()) {
+		if (! $this->getInstallError ()) {
 			$this->updateVersionState ( '' );
 			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
 
@@ -2068,6 +2072,23 @@ class KunenaModelInstall extends JModel {
 		return true;
 	}
 
+	public function recountThankyou() {
+		//Only perform this action if upgrading form previous version
+		$version = $this->getVersion();
+		if (version_compare ( $version->version, '2.0.0-DEV', ">" )) {
+			return true;
+		}
+
+		// If the migration is from previous version thant 1.6.0 doesn't need to recount
+		if (version_compare ( $version->version, '1.6.0', "<" )) {
+			return true;
+		}
+
+		KunenaForumMessageThankyouHelper::recount();
+
+		return true;
+	}
+
 	protected function _getJoomlaArchiveError($archive) {
 		$error = '';
 		if (version_compare(JVERSION, '1.6','<')) {
@@ -2078,20 +2099,20 @@ class KunenaModelInstall extends JModel {
 			switch ($ext)
 			{
 				case 'zip':
-					$adapter =& JArchive::getAdapter('zip');
+					$adapter = JArchive::getAdapter('zip');
 					break;
 				case 'tar':
-					$adapter =& JArchive::getAdapter('tar');
+					$adapter = JArchive::getAdapter('tar');
 					break;
 				case 'tgz'  :
 				case 'gz'   :	// This may just be an individual file (e.g. sql script)
 				case 'gzip' :
-					$adapter =& JArchive::getAdapter('gzip');
+					$adapter = JArchive::getAdapter('gzip');
 					break;
 				case 'tbz2' :
 				case 'bz2'  :	// This may just be an individual file (e.g. sql script)
 				case 'bzip2':
-					$adapter =& JArchive::getAdapter('bzip2');
+					$adapter = JArchive::getAdapter('bzip2');
 					break;
 				default:
 					$adapter = null;

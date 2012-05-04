@@ -44,9 +44,9 @@ class CKunenaUpload {
 	protected $validFileExts = array();
 
 	function __construct() {
-		$this->_db = &JFactory::getDBO ();
-		$this->_my = &JFactory::getUser ();
-		$this->_session = &KunenaFactory::getSession ();
+		$this->_db = JFactory::getDBO ();
+		$this->_my = JFactory::getUser ();
+		$this->_session = KunenaFactory::getSession ();
 		$this->_config = KunenaFactory::getConfig ();
 		$this->_isimage = false;
 		$this->_isfile = false;

@@ -13,12 +13,10 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Message Helper Class
  */
-class KunenaForumMessageHelper {
+abstract class KunenaForumMessageHelper {
 	// Global for every instance
 	protected static $_instances = array();
 	protected static $_location = false;
-
-	private function __construct() {}
 
 	/**
 	 * Returns KunenaForumMessage object
@@ -197,7 +195,7 @@ class KunenaForumMessageHelper {
 		return array($total, $messages);
 	}
 
-	public function getLocation($mesid, $direction = null, $hold = null) {
+	public static function getLocation($mesid, $direction = null, $hold = null) {
 		if (is_null($direction)) $direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		if (!$hold) {
 			$me = KunenaUserHelper::getMyself();
@@ -218,7 +216,7 @@ class KunenaForumMessageHelper {
 		return $count;
 	}
 
-	static function loadLocation($mesids) {
+	public static function loadLocation($mesids) {
 		// NOTE: if you already know the location using this code just takes resources
 		if (!is_array($mesids)) $mesids = explode ( ',', $mesids );
 		$list = array();
@@ -262,7 +260,7 @@ class KunenaForumMessageHelper {
 		}
 	}
 
-	static function recount($topicids=false) {
+	public static function recount($topicids=false) {
 		$db = JFactory::getDBO ();
 
 		if (is_array($topicids)) {

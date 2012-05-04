@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Tables
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,230 +16,229 @@ require_once (dirname ( __FILE__ ) . '/kunena.php');
 * Kunena Users Table
 * Provides access to the #__kunena_users table
 */
-class TableKunenaUsers extends KunenaTable
-{
+class TableKunenaUsers extends KunenaTable {
 
 	/**
 	* User ID
 	* @var int
 	**/
-	var $userid = null;
+	public $userid = null;
 
 	// From Joomla
-	var $name = null;
-	var $username = null;
-	var $email = null;
-	var $blocked = null;
-	var $registerDate = null;
-	var $lastvisitDate = null;
+	public $name = null;
+	public $username = null;
+	public $email = null;
+	public $blocked = null;
+	public $registerDate = null;
+	public $lastvisitDate = null;
 
-	var $view = null;
+	public $view = null;
 
 	/**
 	* Signature
 	* @var string
 	**/
-	var $signature = null;
+	public $signature = null;
 
 	/**
 	* Is moderator?
 	* @var int
 	**/
-	var $moderator = null;
+	public $moderator = null;
 
 	/**
 	* Banned until timestamp
 	* @var int
 	**/
-	var $banned = null;
+	public $banned = null;
 
 	/**
 	* Ordering of posts
 	* @var int
 	**/
-	var $ordering = null;
+	public $ordering = null;
 
 	/**
 	* User post count
 	* @var int
 	**/
-	var $posts = null;
+	public $posts = null;
 
 	/**
 	* Avatar image file
 	* @var string
 	**/
-	var $avatar = null;
+	public $avatar = null;
 
 	/**
 	* User karma
 	* @var int
 	**/
-	var $karma = null;
+	public $karma = null;
 
-	var $karma_time = null;
+	public $karma_time = null;
 
 	/**
 	* Kunena Group ID
 	* @var int
 	**/
-	var $group_id = null;
+	public $group_id = null;
 
 	/**
 	* Kunena Profile hits
 	* @var int
 	**/
-	var $uhits = null;
+	public $uhits = null;
 
 	/**
 	* Personal text
 	* @var string
 	**/
-	var $personalText = null;
+	public $personalText = null;
 
 	/**
 	* Gender
 	* @var int
 	**/
-	var $gender = null;
+	public $gender = null;
 
 	/**
 	* Birthdate
 	* @var string
 	**/
-	var $birthdate = null;
+	public $birthdate = null;
 
 	/**
 	* User Location
 	* @var string
 	**/
-	var $location = null;
+	public $location = null;
 
 	/**
 	* Name of web site
 	* @var string
 	**/
-	var $websitename = null;
+	public $websitename = null;
 
 	/**
 	* URL to web site
 	* @var string
 	**/
-	var $websiteurl = null;
+	public $websiteurl = null;
 
 	/**
 	* User rank
 	* @var int
 	**/
-	var $rank = null;
+	public $rank = null;
 	/**
 	* Hide Email address
 	* @var int
 	**/
-	var $hideEmail = null;
+	public $hideEmail = null;
 
 	/**
 	* Show online
 	* @var int
 	**/
-	var $showOnline = null;
+	public $showOnline = null;
 	/**
 	* ICQ ID
 	* @var string
 	**/
-	var $icq = null;
+	public $icq = null;
 
 	/**
 	* AIM ID
 	* @var string
 	**/
-	var $aim = null;
+	public $aim = null;
 
 	/**
 	* YIM ID
 	* @var string
 	**/
-	var $yim = null;
+	public $yim = null;
 
 	/**
 	* MSN ID
 	* @var string
 	**/
-	var $msn = null;
+	public $msn = null;
 
 	/**
 	* SKYPE ID
 	* @var string
 	**/
-	var $skype = null;
+	public $skype = null;
 	/**
 	* TWITTER ID
 	* @var string
 	**/
-	var $twitter = null;
+	public $twitter = null;
 	/**
 	* FACEBOOK ID
 	* @var string
 	**/
-	var $facebook = null;
+	public $facebook = null;
 
 	/**
 	* GTALK ID
 	* @var string
 	**/
-	var $gtalk = null;
+	public $gtalk = null;
 
 	/**
 	* MYSPACE ID
 	* @var string
 	**/
-	var $myspace = null;
+	public $myspace = null;
 	/**
 	* LINKEDIN ID
 	* @var string
 	**/
-	var $linkedin = null;
+	public $linkedin = null;
 	/**
 	* DELICIOUS ID
 	* @var string
 	**/
-	var $delicious = null;
+	public $delicious = null;
 	/**
 	* FRIENDFEED ID
 	* @var string
 	**/
-	var $friendfeed = null;
+	public $friendfeed = null;
 	/**
 	* $DIGG ID
 	* @var string
 	**/
-	var $digg = null;
+	public $digg = null;
 	/**
 	* BLOGSPOT ID
 	* @var string
 	**/
-	var $blogspot = null;
+	public $blogspot = null;
 	/**
 	* FLICKR ID
 	* @var string
 	**/
-	var $flickr = null;
+	public $flickr = null;
 	/**
 	* BEBO ID
 	* @var string
 	**/
-	var $bebo = null;
+	public $bebo = null;
 	/**
 	* Thankyou count
 	* @var int
 	**/
-	var $thankyou = null;
+	public $thankyou = null;
 
-	function __construct($db) {
+	public function __construct($db) {
 		parent::__construct('#__kunena_users', 'userid', $db);
 	}
 
-	function load($userid = null)
+	public function load($userid = null, $reset = true)
 	{
 		$this->_exists = false;
 		$k = $this->_tbl_key;
@@ -249,7 +248,7 @@ class TableKunenaUsers extends KunenaTable
 		}
 
 		// Reset the table.
-		$this->reset();
+		if ($reset) $this->reset();
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1) {
@@ -291,7 +290,7 @@ class TableKunenaUsers extends KunenaTable
 		}
 	}
 
-	function check() {
+	public function check() {
 		if (!$this->userid || !JFactory::getUser($this->userid)) {
 			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERS_ERROR_USER_INVALID', (int) $this->userid ) );
 		}

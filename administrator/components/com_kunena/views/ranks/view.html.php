@@ -18,7 +18,7 @@ class KunenaAdminViewRanks extends KunenaView {
 		$this->setToolBarDefault();
 		$this->ranks = $this->get('Ranks');
 		$this->state = $this->get('state');
-		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		$this->display ();
 	}
 

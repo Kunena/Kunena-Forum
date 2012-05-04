@@ -52,7 +52,7 @@ class KunenaPrivateComprofiler extends KunenaPrivate {
 
 		$userid = $_CB_framework->myId();
 
-		$cbUser =& CBuser::getInstance( (int) $userid );
+		$cbUser = CBuser::getInstance( (int) $userid );
 		if($cbUser === null) return;
 
 		$itemid = getCBprofileItemid();

@@ -186,7 +186,7 @@ abstract class KunenaRoute {
 		}
 	}
 
-	function stringURLSafe($string) {
+	public static function stringURLSafe($string) {
 		static $filtered = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!isset($filtered[$string])) {
@@ -490,6 +490,7 @@ abstract class KunenaRoute {
 		static $cache = array();
 		if (!$catid) return true;
 		if (!isset($cache[$item->id])) {
+			// FIXME: Joomla 1.6+: Deprecated JParameter
 			$params = new JParameter($item->params);
 			$catids = $params->get('catids', array());
 			if (!is_array($catids)) {

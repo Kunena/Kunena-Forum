@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Tables
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,26 +16,25 @@ require_once (dirname ( __FILE__ ) . '/kunena.php');
 * Kunena User Bans
 * Provides access to the #__kunena_users_banned table
 */
-class TableKunenaUserBans extends JTable
-{
-	var $id = null;
-	var $userid = null;
-	var $ip = null;
-	var $blocked = null;
-	var $expiration = null;
-	var $created_by = null;
-	var $created_time = null;
-	var $reason_private = null;
-	var $reason_public = null;
-	var $modified_by = null;
-	var $modified_time = null;
-	var $comments = null;
-	var $params = null;
+class TableKunenaUserBans extends JTable {
+	public $id = null;
+	public $userid = null;
+	public $ip = null;
+	public $blocked = null;
+	public $expiration = null;
+	public $created_by = null;
+	public $created_time = null;
+	public $reason_private = null;
+	public $reason_public = null;
+	public $modified_by = null;
+	public $modified_time = null;
+	public $comments = null;
+	public $params = null;
 
 	const ANY = 0;
 	const ACTIVE = 1;
 
-	function __construct($db) {
+	public function __construct($db) {
 		parent::__construct('#__kunena_users_banned', 'id', $db);
 	}
 

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -43,7 +43,7 @@ abstract class KunenaFactory {
 	 *
 	 * @return object KunenaUser
 	 */
-	static public function getUser($id = null, $reload = false) {
+	public static function getUser($id = null, $reload = false) {
 		return KunenaUserHelper::get($id, $reload);
 	}
 

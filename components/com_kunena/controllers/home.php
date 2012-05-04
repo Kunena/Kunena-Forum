@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaControllerHome extends KunenaController {
 	public $home = 1;
 
-	public function display() {
+	public function display($cachable = false, $urlparams = false) {
 		global $Itemid;
 		$menu = $this->app->getMenu ();
 		$home = $menu->getActive ();
@@ -86,7 +86,7 @@ class KunenaControllerHome extends KunenaController {
 
 		if (JRequest::getVar ( 'view' ) != 'home') {
 			// Run display task from our new controller
-			$controller = KunenaController::getInstance(true);
+			$controller = KunenaController::getInstance('Kunena', array('reload'=>true));
 			$controller->execute ('display');
 			// Set redirect and message
 			$this->setRedirect ($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());

@@ -28,7 +28,7 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @return  KunenaDatabaseObject
 	 */
-	abstract static public function getInstance($identifier = null, $reload = false);
+	static public function getInstance($identifier = null, $reload = false) {}
 
 	/**
 	 * Returns true if the object exists in the database.

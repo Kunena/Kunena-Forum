@@ -13,10 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Topic Poll Helper Class
  */
-class KunenaForumTopicPollHelper {
+abstract class KunenaForumTopicPollHelper {
 	protected static $_instances = array();
-
-	private function __construct() {}
 
 	/**
 	 * Returns KunenaForumTopic object

@@ -15,7 +15,7 @@ $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/ad
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
 // FIXME : Deprecated under Joomla! 1.6
 jimport('joomla.html.pane');
-$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
+$myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
@@ -310,21 +310,21 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_IN') ?>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY_IN') ?>
 						</td>
 								<td align="left" valign="top"><?php echo $this->lists ['latestcategory_in'];
 						?>
 						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC') ?>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY_IN_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LATESTCATEGORY') ?>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY') ?>
 						</td>
 								<td align="left" valign="top"><?php echo $this->lists ['latestcategory'];
 						?>
 						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_DESC') ?>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_LATESTCATEGORY_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -1157,7 +1157,7 @@ $myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 					</table>
 				</fieldset>
 				</dd>
-				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?></dt>
+				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_EXTRA') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_EXTRA') ?></dt>
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>

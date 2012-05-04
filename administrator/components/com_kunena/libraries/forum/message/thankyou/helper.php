@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Message Thank You Helper Class
  * @since 2.0
  */
-class KunenaForumMessageThankyouHelper {
+abstract class KunenaForumMessageThankyouHelper {
 	protected static $_instances = array();
 
 	/**
@@ -173,5 +173,33 @@ class KunenaForumMessageThankyouHelper {
 			self::$_instances [$result->postid]->_add($result->userid, $result->time);
 		}
 		unset ($results);
+	}
+
+	/**
+	 * Perform the recount thankyous in kunena_users table
+	 * @return bool true if succes
+	 * @since 2.0
+	 */
+	static public function recount() {
+		 // FIXME: make this recount function faster
+		$db = JFactory::getDBO ();
+
+		$query = "SELECT COUNT(targetuserid) AS count, targetuserid AS userid FROM `#__kunena_thankyou` GROUP BY `targetuserid`";
+		$db->setQuery ( $query );
+		$list = $db->loadObjectList('userid');
+
+		foreach($list as $id => $object){
+			$query = "UPDATE #__kunena_users SET thankyou={$db->quote($object->count)} WHERE userid={$db->quote($id)}";
+			$db->setQuery ( $query );
+			$db->query ();
+		}
+
+		// Check for an error message.
+		if ($db->getErrorNum ()) {
+			$this->setError ( $db->getErrorMsg () );
+			return false;
+		}
+
+		return true;
 	}
 }

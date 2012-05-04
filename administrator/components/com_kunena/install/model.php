@@ -1303,7 +1303,7 @@ class KunenaModelInstall extends JModel {
 			$req->fail ['domdocument'] = true;
 		}
 		$kunena = $this->getInstalledVersion('kunena_', $this->_kVersions);
-		if (version_compare ( $kunena->version, 3.0, ">=" )) {
+		if (version_compare ( $kunena->version, '3.0', ">=" )) {
 			$req->fail ['kunenaversion'] = true;
 		}
 

@@ -251,7 +251,7 @@ abstract class KunenaForum {
 	 * @param unknown_type $template Name of the template file.
 	 * @param unknown_type $params Extra parameters to control the model.
 	 */
-	public function display($viewName, $layout='default', $template=null, $params = array()) {
+	public static function display($viewName, $layout='default', $template=null, $params = array()) {
 		// Filter input
 		$viewName = preg_replace( '/[^A-Z0-9_]/i', '', $viewName );
 		$layout = preg_replace( '/[^A-Z0-9_]/i', '', $layout );

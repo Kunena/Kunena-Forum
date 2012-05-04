@@ -130,6 +130,7 @@ class KunenaAccessComprofiler {
 		if (empty($userids)) {
 			return;
 		}
+		// FIXME:
 		$allow = $deny = array();
 		return array($allow, $deny);
 	}

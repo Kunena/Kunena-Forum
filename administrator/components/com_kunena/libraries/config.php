@@ -314,7 +314,8 @@ class KunenaConfig extends JObject {
 	}
 
 
-	protected function getEmail() {
-		return $this->get('email', JFactory::getApplication()->getCfg('mailfrom', ''));
+	public function getEmail() {
+		$email = $this->get('email');
+		return !empty($email) ? $email : JFactory::getApplication()->getCfg('mailfrom', '');
 	}
 }

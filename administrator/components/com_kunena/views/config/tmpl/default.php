@@ -77,6 +77,11 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CFG_FALLBACK_ENGLISH') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['fallback_english'] ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CFG_FALLBACK_ENGLISH_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_VERSION_CHECK') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['version_check'] ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_VERSION_CHECK_DESC') ?></td>

@@ -25,8 +25,7 @@ class KunenaAdminControllerConfig extends KunenaController {
 	}
 
 	function apply() {
-		$url = $this->baseurl;
-		$this->save($url);
+		$this->save($this->baseurl);
 	}
 
 	function save($url=null) {
@@ -58,7 +57,7 @@ class KunenaAdminControllerConfig extends KunenaController {
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
 		if (empty($url)) $this->app->redirect ( KunenaRoute::_($this->kunenabaseurl, false) );
-		else $this->app->redirect ( $url );
+		else $this->app->redirect ( KunenaRoute::_($url, false) );
 	}
 
 	function setdefault() {

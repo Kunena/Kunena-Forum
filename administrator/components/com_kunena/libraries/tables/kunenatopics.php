@@ -100,9 +100,12 @@ class TableKunenaTopics extends KunenaTable {
 		return ($this->getError () == '');
 	}
 
-	public function hit() {
+	// TODO: Remove hit() when we get rid of J1.5 support
+	public function hit($pk = null) {
 		$k = $this->_tbl_key;
-		$query = "UPDATE #__kunena_topics SET hits=hits+1 WHERE id = {$this->$k}";
+		$pk = (is_null($pk)) ? $this->$k : $pk;
+
+		$query = "UPDATE #__kunena_topics SET hits=hits+1 WHERE id = {$pk}";
 		$this->_db->setQuery($query);
 		$this->_db->Query();
 

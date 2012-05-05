@@ -78,6 +78,10 @@ abstract class KunenaRoute {
 		return $uri->getVar('Itemid');
 	}
 
+	public static function statsLinkAdmin($uri = null, $xhtml = true, $ssl=0) {
+		return JRoute::_(JURI::root().$uri, $xhtml, $ssl);
+	}
+
 	public static function _($uri = null, $xhtml = true, $ssl=0) {
 		if (self::$adminApp) {
 			// Use default routing in administration

@@ -97,7 +97,7 @@ defined ( '_JEXEC' ) or die ();
 		<div class="kprofile-rightcol1">
 			<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE') ?></h4>
 			<div class="kmsgsignature">
-				<div><?php echo KunenaHtmlParser::parseBBCode($this->signature) ?></div>
+				<div><?php echo $this->signatureHtml ?></div>
 			</div>
 		</div>
 		<?php endif ?>

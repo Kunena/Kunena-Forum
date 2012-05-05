@@ -83,13 +83,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 
 		$db = JFactory::getDBO();
 		if ($this->me->exists()) {
-			$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed)
-				VALUES ({$db->quote($this->me->userid)},{$db->quote($category->id)},1)
-				ON DUPLICATE KEY UPDATE subscribed=1";
-			$db->setQuery ( $query );
-			$db->query ();
-			KunenaError::checkDatabaseError();
-			if ($db->getAffectedRows ()) {
+			$success = $category->subscribe(1);
+			if ($success) {
 				$this->app->enqueueMessage ( JText::_('COM_KUNENA_GEN_CATEGORY_SUBCRIBED') );
 			}
 		}
@@ -111,12 +106,8 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 
 		$db = JFactory::getDBO();
 		if ($this->me->exists()) {
-			$query = "UPDATE #__kunena_user_categories SET subscribed=0
-				WHERE user_id={$db->quote($this->me->userid)} AND category_id={$db->quote($category->id)}";
-			$db->setQuery ( $query );
-			$db->query ();
-			KunenaError::checkDatabaseError();
-			if ($db->getAffectedRows ()) {
+			$success = $category->subscribe(0);
+			if ($success) {
 				$this->app->enqueueMessage ( JText::_('COM_KUNENA_GEN_CATEGORY_UNSUBCRIBED') );
 			}
 		}

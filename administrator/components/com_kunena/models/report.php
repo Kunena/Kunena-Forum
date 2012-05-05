@@ -180,61 +180,15 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	2.0
 	 */
 	protected function _getJoomlaLanguagesInstalled() {
-		$db = JFactory::getDBO ();
-
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$query = "SELECT name, client_id, enabled FROM #__extensions WHERE type='language' AND state=0";
-			$db->setQuery($query);
-			$langsinstalled = $db->loadObjectlist();
-			if (KunenaError::checkDatabaseError()) return;
-
-			$table_lang = '[table]';
-			$table_lang .= '[tr][th]Joomla! languages installed:[/th][/tr]';
-			foreach($langsinstalled as $lang) {
-				if ($lang->client_id) $client_id = 'backend';
-				else $client_id = 'frontend';
-				if($lang->enabled) $default ='default';
-				else $default ='';
-				$table_lang .= '[tr][td]'.$lang->name.'[/td][td]'.$client_id.'[/td][td]'.$default.'[/td][/tr]';
-			}
-			$table_lang .= '[/table]';
-		} else {
-			// Joomla 1.5
-			$path = JLanguage::getLanguagePath(JPATH_BASE.'/language');
-			$dirs = JFolder::folders( $path );
-
-			foreach ($dirs as $dir) {
-				$files = JFolder::files( $path.DS.$dir, '^([-_A-Za-z]*)\.xml$' );
-				foreach ($files as $file) {
-					$metas = JApplicationHelper::parseXMLLangMetaFile($path.'/'.$dir.'/'.$file);
-
-					$row 			= new StdClass();
-					$row->id 		= $rowid;
-					$row->language 	= substr($file,0,-4);
-
-					if (!is_array($metas)) {
-						continue;
-					}
-					foreach($metas as $key => $value) {
-						$row->$key = $value;
-					}
-
-					// if current than set published
-					$params = JComponentHelper::getParams('com_languages');
-					if ( $params->get($client->name, 'en-GB') == $row->language) {
-						$row->published	= 1;
-					} else {
-						$row->published = 0;
-					}
-
-					$row->checked_out = 0;
-					$row->mosname = JString::strtolower( str_replace( " ", "_", $row->name ) );
-					$rows[] = $row;
-					$rowid++;
-				}
-			}
+		$lang = JFactory::getLanguage();
+		$languages = $lang->getKnownLanguages();
+		$table_lang = '[table]';
+		$table_lang .= '[tr][th]Joomla! languages installed:[/th][/tr]';
+		foreach ($languages as $language) {
+			$table_lang .= '[tr][td]'. $language['tag'] .'[/td][td]'. $language['name'].'[/td][/tr]';
 		}
+
+		$table_lang .= '[/table]';
 
 		return $table_lang;
 	}

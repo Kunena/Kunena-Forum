@@ -617,7 +617,14 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				$target = $this;
 			}
 			// Did user want to change subject?
-			if ($subject) $target->subject = $subject;
+		// Did user want to change subject?
+			if ($subject) {
+				$target->subject = $subject;
+				// Change subject of first message
+				$firstmessage = KunenaForumMessageHelper::get($target->first_post_id);
+				$firstmessage->subject = $subject;
+				$firstmessage->save();
+			}
 			// Did user want to change category?
 			$target->category_id = $categoryTarget->id;
 

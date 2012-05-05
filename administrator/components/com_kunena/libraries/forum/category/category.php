@@ -110,9 +110,11 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 *
 	 * @param boolean $value 1/true for subscribe, 0/false for unsubscribe.
 	 * @param mixed $user
+	 *
+	 * @since	2.0.0-BETA2
 	 */
 	public function subscribe($value=1, $user=null) {
-		$usercategory = $this->getUserInfo($user);
+		$usercategory = KunenaForumCategoryUserHelper::get($this->id, $user);
 		$usercategory->subscribed = (int)$value;
 		if (!$usercategory->save()) {
 			$this->setError($usercategory->getError());

@@ -111,7 +111,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 								</div>
 								<div class="form-field">
 									<div class="innerspacer kbox-full">
-										<input type="text" value="<?php echo $this->escape($this->topic->subject) ?>" maxlength="<?php echo $this->escape($this->config->maxsubject) ?>" size="35" id="ksubject" name="subject" class="kbox-width inputbox postinput required hasTip" title="<?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ?> :: <?php echo JText::_('COM_KUNENA_ENTER_SUBJECT') ?>" />
+										<input type="text" value="<?php echo $this->escape($this->message->subject) ?>" maxlength="<?php echo $this->escape($this->config->maxsubject) ?>" size="35" id="ksubject" name="subject" class="kbox-width inputbox postinput required hasTip" title="<?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ?> :: <?php echo JText::_('COM_KUNENA_ENTER_SUBJECT') ?>" />
 									</div>
 								</div>
 							</li>

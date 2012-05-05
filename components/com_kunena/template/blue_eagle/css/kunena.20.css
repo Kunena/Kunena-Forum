@@ -72,3 +72,10 @@
 	clear: both;
 	min-height: 28px;
 }
+#Kunena span.ktopicpoll {
+	background: url("../images/icons/poll.png") no-repeat left center;
+	margin: 2px;
+	width: 32px;
+	height: 32px;
+	float:right;
+}

@@ -15,6 +15,7 @@ jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.path');
 
+// FIXME: Joomla 1.6+: Deprecated JParameter
 class KunenaParameter extends JParameter {
 	public function getXml() {
 		return $this->_xml;
@@ -98,6 +99,7 @@ class KunenaTemplate extends JObject
 	public function loadLanguage() {
 		// Loading language strings for the template
 		$lang = JFactory::getLanguage();
+		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
 		foreach (array_reverse($this->default) as $template) {
 			$file = 'com_kunena.tpl_'.$template;
 			$lang->load($file, JPATH_SITE)
@@ -223,9 +225,12 @@ HTML;
 			$xml = $this->params->getXml();
 			$variables = array();
 			foreach ($this->style_variables as $name=>$value)  {
-				$variables[] = "\t{$name}:{$this->params->get($name)};";
+				$value = $this->params->get($name);
+				if ($value != '')
+					$variables[] = "\t{$name}:{$value};";
 			}
-			$this->compiled_style_variables = "@variables {\n".implode("\n", $variables)."\n}\n\n";
+			if ($variables) $this->compiled_style_variables = "@variables {\n".implode("\n", $variables)."\n}\n\n";
+			else $this->compiled_style_variables = '';
 
 		}
 		return $this->compiled_style_variables;
@@ -358,6 +363,7 @@ HTML;
 				'CompressUnitValues' => false,
 				'CompressExpressionValues' => false
 			);
+			CssMin::setVerbose(1);
 			$tokens = CssMin::minify($buffer, $filters, $plugins, false);
 			$buffer = new CssKunenaFormatter($tokens, "\t");
 		} else {
@@ -386,6 +392,7 @@ HTML;
 
 		$buffer = preg_replace_callback ( '/url\(([^\)]+)\)/u', array($this, 'findUrl'), $buffer );
 		JFile::write(JPATH_ROOT.'/'.$dest, $buffer);
+		unset($tokens, $buffer, $filters, $plugins);
 		return $dest;
 	}
 
@@ -582,7 +589,7 @@ HTML;
 	 * @return	KunenaTemplate	The template object.
 	 * @since	1.6
 	 */
-	static public function getInstance($name=null) {
+	public static function getInstance($name=null) {
 		$app = JFactory::getApplication();
 		if (!$name) {
 			$name = JRequest::getString ( 'kunena_template', KunenaFactory::getConfig()->template, 'COOKIE' );

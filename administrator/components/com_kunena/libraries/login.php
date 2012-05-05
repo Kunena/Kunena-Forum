@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -29,7 +29,7 @@ class KunenaLogin {
 		return !empty($this->instances);
 	}
 
-	static public function getInstance($integration = null) {
+	public static function getInstance($integration = null) {
 		if (self::$instance === false) {
 			self::$instance = new KunenaLogin();
 		}

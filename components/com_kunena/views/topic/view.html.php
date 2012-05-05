@@ -59,7 +59,7 @@ class KunenaViewTopic extends KunenaView {
 			return $this->displayNoAccess($errors);
 		}
 
-		$this->messages	=& $this->get ( 'Messages' ) ;
+		$this->messages	= $this->get ( 'Messages' );
 		$this->total	= $this->get ( 'Total' );
 
 		// If page does not exist, redirect to the last page
@@ -68,7 +68,13 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
@@ -245,7 +251,13 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -292,7 +304,13 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -413,7 +431,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$options = array ();
 		$cat_params = array ('sections'=>0, 'catid'=>0);
-		$this->assignRef ( 'categorylist', JHTML::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories'));
+		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories');
 		if (isset($this->message)) $this->user = KunenaFactory::getUser($this->message->userid);
 
 		if ($this->mesid) {
@@ -803,7 +821,13 @@ class KunenaViewTopic extends KunenaView {
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');

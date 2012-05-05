@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -49,7 +49,7 @@ class KunenaUser extends JObject {
 	 * @return	JUser			The User object.
 	 * @since	1.6
 	 */
-	static public function getInstance($identifier = null, $reload = false) {
+	public static function getInstance($identifier = null, $reload = false) {
 		return KunenaUserHelper::get($identifier, $reload);
 	}
 
@@ -78,7 +78,7 @@ class KunenaUser extends JObject {
 	 * @return	object	The user table object
 	 * @since	1.6
 	 */
-	function getTable($type = 'KunenaUsers', $prefix = 'Table') {
+	public function getTable($type = 'KunenaUsers', $prefix = 'Table') {
 		static $tabletype = null;
 
 		//Set a custom table type is defined
@@ -107,7 +107,7 @@ class KunenaUser extends JObject {
 	 */
 	public function load($id) {
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		// Load the KunenaTableUser object based on the user id
 		$this->_exists = $table->load ( $id );
@@ -129,9 +129,9 @@ class KunenaUser extends JObject {
 	 * @return	boolean True on success
 	 * @since 1.6
 	 */
-	function save($updateOnly = false) {
+	public function save($updateOnly = false) {
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 		$ignore = array('name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate');
 		$table->bind ( $this->getProperties (), $ignore );
 		$table->exists ( $this->_exists );
@@ -174,9 +174,9 @@ class KunenaUser extends JObject {
 	 * @return	boolean	True on success
 	 * @since 1.6
 	 */
-	function delete() {
+	public function delete() {
 		// Delete user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		$result = $table->delete ( $this->userid );
 		if (! $result) {
@@ -521,7 +521,7 @@ class KunenaUser extends JObject {
 			return '';
 	}
 
-	function escape($var)
+	public function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}

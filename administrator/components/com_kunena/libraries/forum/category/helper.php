@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,13 +13,10 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Category Helper Class
  */
-class KunenaForumCategoryHelper {
+abstract class KunenaForumCategoryHelper {
 	// Global for every instance
 	public static $_instances = false;
 	protected static $_tree = array ();
-
-	// Static class
-	private function __construct() {}
 
 	/**
 	 * Returns the global KunenaForumCategory object, only creating it if it doesn't already exist.
@@ -81,6 +78,70 @@ class KunenaForumCategoryHelper {
 		$subscribed = (array) $db->loadResultArray ();
 		if (KunenaError::checkDatabaseError()) return;
 		return KunenaForumCategoryHelper::getCategories($subscribed);
+	}
+
+	/**
+	 * Returns KunenaForumCategory object
+	 *
+	 * @access	public
+	 * @param 	mixed	$categories  The categories IDs which need to be loaded
+	 * @param 	array	$userid The userids to be loaded.
+	 * @param	int		$limitstart
+	 * @param	int		$limit
+	 * @param	array	$params The optionals params to more precise output
+	 * @return	KunenaForumCategory		The category object.
+	 * @since	2.0
+	 */
+	static public function getLatestSubscriptions($categories=false, $userid = array(), $limitstart=0, $limit=0, $params=array()) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		$db = JFactory::getDBO ();
+		$config = KunenaFactory::getConfig ();
+		if ($limit < 1) $limit = $config->threads_per_page;
+
+		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'ASC';
+		$reverse = isset($params['reverse']) ? (int) $params['reverse'] : 0;
+		$orderby = ' ORDER BY category_id '.$orderby;
+		$userids = implode(",", $userid);
+
+		$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse);
+		$catlist = array();
+		foreach ($categories as $category) {
+			$catlist += $category->getChannels();
+		}
+		if (empty($catlist)) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return array(0, array());
+		}
+		$catlist = implode(',', array_keys($catlist));
+
+		// Get total count
+		$query = "SELECT COUNT(*) FROM #__kunena_user_categories WHERE user_id IN ({$userids}) AND category_id IN ({$catlist})";
+		$db->setQuery ( $query );
+		$total = ( int ) $db->loadResult ();
+		if (KunenaError::checkDatabaseError() || !$total) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return array(0, array());
+		}
+
+		// If out of range, use last page
+		if ($total < $limitstart)
+			$limitstart = intval($total / $limit) * $limit;
+
+		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id IN ({$userids}) AND subscribed=1 AND category_id IN ({$catlist}) {$orderby}";
+		$db->setQuery ( $query , $limitstart, $limit );
+		$subscribed = (array) $db->loadResultArray ();
+		if (KunenaError::checkDatabaseError()) return;
+
+		$subscriptions = array();
+		foreach ( $subscribed as $id=>$sub ) {
+			$instance = new KunenaForumCategory ($sub);
+			$instance->exists(true);
+			self::$_instances [$id] = $instance;
+			$subscriptions[$id] = $instance;
+		}
+		unset ($subscribed);
+
+		return array($total, $subscriptions);
 	}
 
 	static public function getNewTopics($catids) {

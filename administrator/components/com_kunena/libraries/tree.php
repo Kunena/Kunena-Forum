@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -107,7 +107,7 @@ class KunenaTree implements Iterator {
 		return isset($this->_levels [$id]) ? $this->_levels [$id] : false;
 	}
 
-	static public function getTree($parent = 0) {
+	public static function getTree($parent = 0) {
 		if ($parent === false) {
 			return $this->_tree;
 		}

@@ -18,11 +18,12 @@ require_once KPATH_SITE . '/lib/kunena.link.class.php';
  * @since		2.0
  */
 class KunenaControllerUser extends KunenaController {
-	public function display() {
+	public function display($cachable = false, $urlparams = false) {
 		// Redirect profile to integrated component if profile integration is turned on
 		$redirect = 1;
 		$active = $this->app->getMenu ()->getActive ();
 		if (!empty($active)) {
+			// FIXME: Joomla 1.6+: Deprecated JParameter
 			$params = new JParameter($active->params);
 			$redirect = $params->get('integration', 1);
 		}

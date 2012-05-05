@@ -34,7 +34,8 @@ $this->cache = false;
 	<td class="kcol-mid kcol-ktopictitle">
     <div class="ktopic-details">
 		<?php if ($this->topic->attachments) echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') ); ?>
-
+		<?php if ($this->topic->poll_id) echo $this->getIcon ( 'ktopicpoll', JText::_('COM_KUNENA_ADMIN_POLLS') ); ?>
+		
 		<div class="ktopic-title-cover">
 			<?php
 			echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
@@ -101,9 +102,9 @@ $this->cache = false;
 			echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();
 			?>
 			</span>
-
-			<br />
-			<span class="ktopic-date" title="<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?>">
+         </div>
+         <div class="klatest-post-info">
+			<span class="ktopic-date"  title="<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat'); ?>
 			</span>
 		</div>

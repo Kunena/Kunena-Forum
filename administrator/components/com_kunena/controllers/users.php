@@ -20,7 +20,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->baseurl = 'index.php?option=com_kunena&view=users';
+		$this->baseurl = 'administrator/index.php?option=com_kunena&view=users';
 	}
 
 	function edit() {
@@ -167,7 +167,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 		if ($error) {
 			$this->app->enqueueMessage ( $error, 'notice' );
 		} else {
-			$this->app->enqueueMessage ( JText::_('COM_A_KUNENA_USERMES_MOVED_DONE') );
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_USERMES_MOVED_DONE') );
 		}
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
@@ -190,7 +190,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 		$options['clientid'][] = 0; // site
 		$this->app->logout( (int) $id, $options);
 
-		$this->app->enqueueMessage ( JText::_('COM_A_KUNENA_USER_LOGOUT_DONE'));
+		$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_USER_LOGOUT_DONE'));
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 
@@ -212,7 +212,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$user->delete();
 		}
 
-		$this->app->enqueueMessage (JText::_('COM_A_KUNENA_USER_DELETE_DONE'));
+		$this->app->enqueueMessage (JText::_('COM_KUNENA_A_USER_DELETE_DONE'));
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 

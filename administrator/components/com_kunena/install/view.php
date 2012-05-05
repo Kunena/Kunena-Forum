@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -36,19 +36,19 @@ class KunenaViewInstall extends JView
 		$user = JFactory::getUser();
 
 		// Load the view data.
-		$this->assign('model', $this->get('Model'));
-		$this->assignRef('state', $this->get('State'));
-		$this->assign('step', $this->get('Step'));
-		$this->assignRef('steps', $this->get('Steps'));
-		$this->assignRef('status', $this->get('Status'));
+		$this->model = $this->get('Model');
+		$this->state = $this->get('State');
+		$this->step = $this->get('Step');
+		$this->steps = $this->get('Steps');
+		$this->status = $this->get('Status');
 
-		$this->assign('error', $this->get('Error'));
-		$this->assignRef('requirements', $this->get('Requirements'));
-		$this->assign('versions', $this->get('DetectVersions'));
+		$this->error = $this->get('Error');
+		$this->requirements = $this->get('Requirements');
+		$this->versions = $this->get('DetectVersions');
 
 		require_once(KPATH_ADMIN.'/install/version.php');
 		$version = new KunenaVersion();
-		$this->assignRef('versionWarning', $version->getVersionWarning('COM_KUNENA_INSTALL_WARNING'));
+		$this->versionWarning = $version->getVersionWarning('COM_KUNENA_INSTALL_WARNING');
 
 		// Render the layout.
 		$app = JFactory::getApplication();
@@ -58,7 +58,7 @@ class KunenaViewInstall extends JView
 		else if (!empty($this->versionWarning)) $app->enqueueMessage($this->versionWarning, 'notice');
 		JRequest::setVar('hidemainmenu', 1);
 
-		$this->assign('go', JRequest::getCmd('go', ''));
+		$this->go = JRequest::getCmd('go', '');
 
 		$session = JFactory::getSession();
 		$this->cnt = $session->get('kunena.reload', 1);

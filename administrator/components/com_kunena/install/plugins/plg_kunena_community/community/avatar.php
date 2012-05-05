@@ -33,7 +33,7 @@ class KunenaAvatarCommunity extends KunenaAvatar {
 	{
 		$user = KunenaFactory::getUser($user);
 		// Get CUser object
-		$user =& CFactory::getUser($user->userid);
+		$user = CFactory::getUser($user->userid);
 		if ($sizex<=90)	$avatar = $user->getThumbAvatar();
 		else $avatar = $user->getAvatar();
 		return $avatar;

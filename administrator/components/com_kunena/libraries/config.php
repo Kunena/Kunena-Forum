@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Lib
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -243,12 +243,13 @@ class KunenaConfig extends JObject {
 	public $article_display = 'intro';
 	public $send_emails = 1;
 	public $stopforumspam_key = '';
+	public $fallback_english = 1;
 
 	public function __construct() {
 		parent::__construct ();
 	}
 
-	public function getInstance() {
+	public static function getInstance() {
 		static $instance = NULL;
 		if (! $instance) {
 			$instance = new KunenaConfig ();
@@ -314,7 +315,8 @@ class KunenaConfig extends JObject {
 	}
 
 
-	function getEmail() {
-		return $this->get('email', JFactory::getApplication()->getCfg('mailfrom', ''));
+	public function getEmail() {
+		$email = $this->get('email');
+		return !empty($email) ? $email : JFactory::getApplication()->getCfg('mailfrom', '');
 	}
 }

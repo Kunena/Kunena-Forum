@@ -18,7 +18,7 @@ class KunenaAdminViewSmilies extends KunenaView {
 		$this->setToolBarDefault();
 		$this->smileys = $this->get('Smileys');
 		$this->state = $this->get('state');
-		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		$this->display();
 	}
 

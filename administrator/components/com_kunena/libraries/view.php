@@ -23,7 +23,7 @@ class KunenaView extends JView {
 
 	protected $_row = 0;
 
-	function __construct($config = array()){
+	public function __construct($config = array()){
 		parent::__construct($config);
 		$this->document = JFactory::getDocument();
 		$this->profiler = KunenaProfiler::instance('Kunena');
@@ -33,7 +33,7 @@ class KunenaView extends JView {
 		$this->ktemplate = KunenaFactory::getTemplate();
 	}
 
-	function displayAll() {
+	public function displayAll() {
 		if ($this->me->isAdmin ()) {
 			if ($this->config->board_offline) {
 				$this->app->enqueueMessage ( JText::_('COM_KUNENA_FORUM_IS_OFFLINE'), 'notice');
@@ -51,7 +51,7 @@ class KunenaView extends JView {
 			}
 		}
 
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
+		$this->state = $this->get ( 'State' );
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$this->ktemplate->initialize();
 
@@ -64,7 +64,7 @@ class KunenaView extends JView {
 		}
 	}
 
-	function displayLayout($layout=null, $tpl = null) {
+	public function displayLayout($layout=null, $tpl = null) {
 		if ($layout) $this->setLayout ($layout);
 		$view = $this->getName ();
 		$layout = $this->getLayout ();
@@ -98,7 +98,7 @@ class KunenaView extends JView {
 			}
 		}
 
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
+		$this->state = $this->get ( 'State' );
 		if (method_exists($this, $layoutFunction)) {
 			$contents = $this->$layoutFunction ($tpl);
 		} else {
@@ -108,18 +108,20 @@ class KunenaView extends JView {
 		return $contents;
 	}
 
-	function displayModulePosition($position) {
+	public function displayModulePosition($position) {
 		echo $this->getModulePosition($position);
 	}
 
-	function isModulePosition($position) {
-		return JDocumentHTML::countModules ( $position );
+	public function isModulePosition($position) {
+		$doc = JFactory::getDocument();
+		return method_exists($doc, 'countModules') ? $doc->countModules ( $position ) : 0;
 	}
 
-	function getModulePosition($position) {
+	public function getModulePosition($position) {
 		$html = '';
-		if (JDocumentHTML::countModules ( $position )) {
-			$renderer = JFactory::getDocument ()->loadRenderer ( 'modules' );
+		$doc = JFactory::getDocument();
+		if (method_exists($doc, 'countModules') && $doc->countModules ( $position )) {
+			$renderer = $doc->loadRenderer ( 'modules' );
 			$options = array ('style' => 'xhtml' );
 			$html .= '<div class="'.$position.'">';
 			$html .= $renderer->render ( $position, $options, null );
@@ -128,7 +130,7 @@ class KunenaView extends JView {
 		return $html;
 	}
 
-	function parse($text, $len=0) {
+	public function parse($text, $len=0) {
 		return KunenaHtmlParser::parseBBCode($text, $this, $len);
 	}
 
@@ -136,15 +138,15 @@ class KunenaView extends JView {
 		return $this->ktemplate->getButton($link, $name, $scope, $type, $id);
 	}
 
-	function getIcon($name, $title='') {
+	public function getIcon($name, $title='') {
 		return $this->ktemplate->getIcon($name, $title);
 	}
 
-	function getImage($image, $alt='') {
+	public function getImage($image, $alt='') {
 		return $this->ktemplate->getImage($image, $alt);
 	}
 
-	function getClass($class, $class_sfx='') {
+	public function getClass($class, $class_sfx='') {
 		return $this->ktemplate->getClass($class, $class_sfx);
 	}
 
@@ -155,7 +157,7 @@ class KunenaView extends JView {
 		return $result;
 	}
 
-	function getTime() {
+	public function getTime() {
 		if ( !$this->config->time_to_create_page ) return;
 		$time = $this->profiler->getTime('Total Time');
 		return sprintf('%0.3f', $time);
@@ -171,7 +173,7 @@ class KunenaView extends JView {
 	 * @param int $number 		Number to be formated
 	 * @param int $precision	Significant digits for output
 	 */
-	function formatLargeNumber($number, $precision = 3) {
+	public function formatLargeNumber($number, $precision = 3) {
 		$output = '';
 		// Do we need to reduce the number of significant digits?
 		if ($number >= 10000){
@@ -229,63 +231,63 @@ class KunenaView extends JView {
 		return KunenaFactory::getTemplate()->addScript ( $filename );
 	}
 
-	function displayNoAccess($errors = array()) {
+	public function displayNoAccess($errors = array()) {
 		$output = '';
 		foreach ($errors as $error) $output .= "<p>{$error}</p>";
 		$this->common->setLayout ( 'default' );
-		$this->common->assign ( 'header', JText::_('COM_KUNENA_ACCESS_DENIED'));
-		$this->common->assign ( 'body', $output);
-		$this->common->assign ( 'html', true);
+		$this->common->header = JText::_('COM_KUNENA_ACCESS_DENIED');
+		$this->common->body = $output;
+		$this->common->html = true;
 		$this->common->display();
 		$this->setTitle(JText::_('COM_KUNENA_ACCESS_DENIED'));
 	}
 
-	function displayMenu() {
+	public function displayMenu() {
 		echo $this->common->display('menu');
 	}
 
-	function displayLoginBox() {
+	public function displayLoginBox() {
 		echo $this->common->display('loginbox');
 	}
 
-	function displayFooter() {
+	public function displayFooter() {
 		echo $this->common->display('footer');
 	}
 
-	function displayBreadcrumb() {
+	public function displayBreadcrumb() {
 		echo $this->common->display('breadcrumb');
 	}
 
-	function displayForumJump() {
+	public function displayForumJump() {
 		if (KunenaFactory::getConfig()->enableforumjump) {
 			$this->common->catid = !empty($this->category->id) ? $this->category->id : 0;
 			echo $this->common->display('forumjump');
 		}
 	}
 
-	function displayWhoIsOnline($tpl = null) {
+	public function displayWhoIsOnline($tpl = null) {
 		if (KunenaFactory::getConfig()->showwhoisonline > 0) {
 			echo $this->common->display('whosonline');
 		}
 	}
 
-	function displayStatistics() {
+	public function displayStatistics() {
 		if (KunenaFactory::getConfig()->showstats > 0) {
 			echo $this->common->display('statistics');
 		}
 	}
 
-	function displayAnnouncement() {
+	public function displayAnnouncement() {
 		if (KunenaFactory::getConfig()->showannouncement > 0) {
 			echo $this->common->display('announcement');
 		}
 	}
 
-	function displayFormToken() {
+	public function displayFormToken() {
 		echo '[K=TOKEN]';
 	}
 
-	function row($start=false) {
+	public function row($start=false) {
 		if ($start) $this->_row = 0;
 		return ++$this->_row & 1 ? 'odd' : 'even';
 	}
@@ -404,11 +406,11 @@ class KunenaView extends JView {
 	}
 
 	// Caching
-	function getTemplateMD5() {
+	public function getTemplateMD5() {
 		return md5(serialize($this->_path['template']).'-'.$this->ktemplate->name);
 	}
 
-	function setTitle($title) {
+	public function setTitle($title) {
 		if (!$this->state->get('embedded')) {
 			// Check for empty title and add site name if param is set
 			$title = strip_tags($title);
@@ -424,13 +426,13 @@ class KunenaView extends JView {
 		}
 	}
 
-	function setKeywords($keywords) {
+	public function setKeywords($keywords) {
 		if (!$this->state->get('embedded')) {
 			if ( !empty($keywords) ) $this->document->setMetadata ( 'keywords', $keywords );
 		}
 	}
 
-	function setDescription($description) {
+	public function setDescription($description) {
 		if (!$this->state->get('embedded')) {
 			// TODO: allow translations/overrides
 			$this->document->setMetadata ( 'description', $this->document->get ( 'description' ) . '. ' . $description );

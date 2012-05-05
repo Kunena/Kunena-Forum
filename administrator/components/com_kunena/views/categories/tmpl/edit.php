@@ -35,8 +35,8 @@ function submitbutton(pressbutton)
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN') ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm" name="adminForm">
+	<div class="kadmin-functitle icon-adminforum"><?php echo $this->category->exists() ? JText::sprintf('COM_KUNENA_A_CATEGORY_EDIT_TITLE', $this->escape ( $this->category->name )) : JText::_('COM_KUNENA_A_CATEGORY_CREATE_TITLE') ?></div>
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="task" value="save" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
 		<?php echo JHTML::_( 'form.token' ); ?>

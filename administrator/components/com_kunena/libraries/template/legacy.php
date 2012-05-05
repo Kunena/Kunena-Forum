@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 // Just for loading legacy
 class KunenaTemplateLegacy {
-	public function load() {}
+	public static function load() {}
 }
 
 $app = JFactory::getApplication('Site');
@@ -74,7 +74,7 @@ define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . 'template/'.KUNENA_RELTMPLTP
 define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
 
 class CKunenaTools {
-	function addStyleSheet($filename) {
+	public static function addStyleSheet($filename) {
 		$document = JFactory::getDocument ();
 		$config = KunenaFactory::getConfig ();
 		$template = KunenaFactory::getTemplate();
@@ -89,7 +89,7 @@ class CKunenaTools {
 		return $document->addStyleSheet ( $filename );
 	}
 
-	function addScript($filename) {
+	public static function addScript($filename) {
 		$document = JFactory::getDocument ();
 		$config = KunenaFactory::getConfig ();
 		$template = KunenaFactory::getTemplate();

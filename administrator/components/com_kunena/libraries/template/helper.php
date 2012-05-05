@@ -13,10 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Template Helper Class
  */
-class KunenaTemplateHelper {
+abstract class KunenaTemplateHelper {
 	protected static $_instances = array ();
-
-	private function __construct() {}
 
 	public static function isDefault($template) {
 		$config = KunenaFactory::getConfig ();
@@ -43,7 +41,7 @@ class KunenaTemplateHelper {
 		return $rows;
 	}
 
-	function parseXmlFile($templateDir, $templateBaseDir = null) {
+	public static function parseXmlFile($templateDir, $templateBaseDir = null) {
 		// Check if the xml file exists
 		if (!$templateBaseDir) $templateBaseDir = KPATH_SITE.'/template';
 		if(!is_file($templateBaseDir.'/'.$templateDir.'/template.xml')) {
@@ -57,7 +55,7 @@ class KunenaTemplateHelper {
 		return $data;
 	}
 
-	function parseKunenaInstallFile($path) {
+	public static function parseKunenaInstallFile($path) {
 		// FIXME : deprecated under Joomla! 1.6
 		$xml = JFactory::getXMLParser ( 'Simple' );
 		if (! $xml->loadFile ( $path )) {

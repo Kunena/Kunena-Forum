@@ -22,7 +22,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-config"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
 		<div id="kadmin-configtabs">
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="config" />
 			<input type="hidden" name="task" value="" />
 			<?php echo JHTML::_( 'form.token' ) ?>

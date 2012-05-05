@@ -21,8 +21,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->baseurl = 'index.php?option=com_kunena&view=categories';
-		$this->baseurl2 = 'index.php?option=com_kunena&view=categories';
+		$this->baseurl = 'administrator/index.php?option=com_kunena&view=categories';
+		$this->baseurl2 = 'administrator/index.php?option=com_kunena&view=categories';
 	}
 
 	function lock() {

@@ -27,6 +27,14 @@ defined ( '_JEXEC' ) or die ();
 			color="<?php echo isset($this->requirements->fail['mysql'])?'red':'green'; ?>"><?php echo $this->requirements->mysql; ?></font></td>
 		<td>(<?php echo JText::_('COM_KUNENA_INSTALL_REQUIRED') ?> &gt;= <?php echo KUNENA_MIN_MYSQL; ?>)</td>
 	</tr>
+	<?php if( isset($this->requirements->fail['kunenaversion']) ): ?>
+	<tr>
+		<td><?php echo JText::_('COM_KUNENA_INSTALL_REQ_KUNENAVERSION') ?>:</td>
+		<td><font
+			color="red"><?php echo $this->requirements->kunenaversion; ?></font></td>
+		<td>(<?php echo JText::_('COM_KUNENA_INSTALL_DOWNGRADE_NOT_ALLOWED') ?>)</td>
+	</tr>
+	<?php endif; ?>
 	<tr>
 		<td><?php echo JText::_('COM_KUNENA_INSTALL_REQ_JOOMLA') ?>:</td>
 		<td><font

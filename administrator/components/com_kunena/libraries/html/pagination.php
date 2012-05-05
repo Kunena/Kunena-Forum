@@ -77,11 +77,10 @@ class KunenaHtmlPagination extends JPagination
 	 */
 	public function getPagesLinks()
 	{
-/*
-		if ($this->get('pages.total') <= 1) {
+		if ($this->get('pages.total') < 1) {
 			return;
 		}
-*/
+
 		// Build the page navigation list.
 		$data = $this->_buildDataObject();
 

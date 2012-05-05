@@ -28,7 +28,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<td width="100%" valign="top" class="thisform">
 				<div id="cpanel">
 					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=config') ?>" title="<?php echo JText::_('COM_KUNENA_C_FBCONFIGDESC');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/config.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_FBCONFIG'); ?> </span></a> </div>
+						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=config') ?>" title="<?php echo JText::_('COM_KUNENA_C_KCONFIGDESC');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/config.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_KCONFIG'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
 						<div class="icon"> <a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=categories') ?>" title="<?php echo JText::_('COM_KUNENA_C_FORUMDESC');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/categories.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_FORUM'); ?> </span></a> </div>

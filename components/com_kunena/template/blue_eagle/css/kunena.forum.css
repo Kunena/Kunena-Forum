@@ -268,7 +268,9 @@ PX		EM			PCT			PT
 	clear: both;
 	border-spacing: 0;
 }
-
+#Kunena tr.krow0 td {
+	padding: 4px 8px;
+}
 #Kunena tr.krow1 td {
 	padding: 4px 8px;
 }

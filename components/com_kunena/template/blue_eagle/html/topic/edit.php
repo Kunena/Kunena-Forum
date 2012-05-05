@@ -93,7 +93,7 @@ $this->k=0;
 			</td>
 
 			<td class="kcol-mid"><input type="text" class="kinputbox postinput required" name="subject" id="subject" size="35"
-				maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->message->subject); ?>" tabindex="1" />
+				maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->topic->subject); ?>" tabindex="1" />
 			</td>
 		</tr>
 

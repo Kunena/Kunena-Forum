@@ -48,7 +48,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php else: ?>
 		<input type="hidden" name="authorname" value="<?php echo $this->escape($this->profile->getName()) ?>" />
 		<?php endif; ?>
-		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo  $this->escape($this->message->subject) ?>" /><br />
+		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo  $this->escape($this->topic->subject) ?>" /><br />
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
 		<?php if ($this->topic->authorise('subscribe')) : ?>
 		<input type="checkbox" name="subscribeMe" value="1" <?php echo ($this->config->subscriptionschecked == 1) ? 'checked="checked"' : '' ?> />

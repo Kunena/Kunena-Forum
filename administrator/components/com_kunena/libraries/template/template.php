@@ -99,6 +99,7 @@ class KunenaTemplate extends JObject
 	public function loadLanguage() {
 		// Loading language strings for the template
 		$lang = JFactory::getLanguage();
+		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
 		foreach (array_reverse($this->default) as $template) {
 			$file = 'com_kunena.tpl_'.$template;
 			$lang->load($file, JPATH_SITE)

@@ -185,13 +185,15 @@ $this->k=0;
 		<?php endif; ?>
 		<tr id="kpost-buttons" class="krow1">
 			<td id="kpost-buttons" colspan="2">
+			<input type="button" name="preview" class="kbutton" onclick="kToggleOrSwapPreview('kbbcode-preview-bottom')"
+			value="<?php echo (' ' . JText::_('COM_KUNENA_PREVIEW') . ' ');?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW'));?>:: "tabindex="3" />
 				<input type="submit" name="ksubmit" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_SUBMIT') . ' ');?>"
-				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" tabindex="3" />
+				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" tabindex="4" />
 				<input type="button" name="cancel" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_CANCEL') . ' ');?>"
 				onclick="javascript:window.history.back();"
-				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" tabindex="4" />
+				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" tabindex="5" />
 			</td>
 		</tr>
 	</tbody>

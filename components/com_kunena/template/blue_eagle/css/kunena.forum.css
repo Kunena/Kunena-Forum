@@ -268,7 +268,9 @@ PX		EM			PCT			PT
 	clear: both;
 	border-spacing: 0;
 }
-
+#Kunena tr.krow0 td {
+	padding: 4px 8px;
+}
 #Kunena tr.krow1 td {
 	padding: 4px 8px;
 }
@@ -3242,6 +3244,13 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 
 #Kunena span.ktopicattach {
 	background: url("../images/icons/attachment.png") no-repeat left center;
+	margin: 2px;
+	width: 32px;
+	height: 32px;
+	float:right;
+}
+#Kunena span.ktopicpoll {
+	background: url("../images/icons/poll.png") no-repeat left center;
 	margin: 2px;
 	width: 32px;
 	height: 32px;

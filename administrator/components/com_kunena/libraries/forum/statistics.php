@@ -169,7 +169,7 @@ class KunenaForumStatistics {
 			$top = reset($this->topTopics);
 			foreach ($this->topTopics as $item) {
 				$item->count = $item->posts;
-				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject), '', '', 'nofollow', '', true);
+				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
 				$item->percent = round(100 * $item->count / $top->posts);
 			}
 			$top->title = JText::_('COM_KUNENA_LIB_STAT_TOP_TOPICS');
@@ -236,7 +236,7 @@ class KunenaForumStatistics {
 			if (!$top) return array();
 			foreach ($this->topPolls as $item) {
 				$item->count = $polls[$item->id]->count;
-				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject), '', '', 'nofollow', '', true);
+				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 			$top->title = JText::_('COM_KUNENA_LIB_STAT_TOP_POLLS');

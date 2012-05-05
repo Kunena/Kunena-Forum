@@ -20,7 +20,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->baseurl = 'index.php?option=com_kunena&view=topicicons';
+		$this->baseurl = 'administrator/index.php?option=com_kunena&view=topicicons';
 	}
 
 	function add() {

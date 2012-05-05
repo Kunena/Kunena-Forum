@@ -355,6 +355,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$default_sort[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_OPTION_DEFAULT_SORT_LAST'));
 		$lists ['default_sort'] = JHTML::_('select.genericlist', $default_sort, 'cfg_default_sort', 'class="inputbox" size="1"', 'value', 'text', $this->config->default_sort);
 
+		$lists ['fallback_english'] = JHTML::_('select.genericlist', $yesno, 'cfg_fallback_english', 'class="inputbox" size="1"', 'value', 'text', $this->config->fallback_english);
+
 		return $lists;
 	}
 }

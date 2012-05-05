@@ -13,8 +13,12 @@
 	<description>English language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>en-GB.com_kunena.controllers.ini</filename>
 		<filename>en-GB.com_kunena.ini</filename>
+		<filename>en-GB.com_kunena.models.ini</filename>
+		<filename>en-GB.com_kunena.templates.ini</filename>
 		<filename>en-GB.com_kunena.tpl_blue_eagle.ini</filename>
-		<filename>en-GB.com_kunena.tpl_default20.ini</filename>
+		<filename>en-GB.com_kunena.tpl_mirage.ini</filename>
+		<filename>en-GB.com_kunena.views.ini</filename>
 	</files>
 </install>

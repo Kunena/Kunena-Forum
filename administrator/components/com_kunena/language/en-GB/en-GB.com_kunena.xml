@@ -13,9 +13,12 @@
 	<description>English language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>en-GB.com_kunena.controllers.ini</filename>
 		<filename>en-GB.com_kunena.ini</filename>
 		<filename>en-GB.com_kunena.install.ini</filename>
+		<filename>en-GB.com_kunena.libraries.ini</filename>
 		<filename>en-GB.com_kunena.menu.ini</filename>
+		<filename>en-GB.com_kunena.models.ini</filename>
 		<filename>en-GB.com_kunena.sys.ini</filename>
 		<filename>en-GB.plg_kunena_alphauserpoints.sys.ini</filename>
 		<filename>en-GB.plg_kunena_community.sys.ini</filename>

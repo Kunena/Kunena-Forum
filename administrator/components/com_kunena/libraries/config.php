@@ -243,6 +243,7 @@ class KunenaConfig extends JObject {
 	public $article_display = 'intro';
 	public $send_emails = 1;
 	public $stopforumspam_key = '';
+	public $fallback_english = 1;
 
 	public function __construct() {
 		parent::__construct ();

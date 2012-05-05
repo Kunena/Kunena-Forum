@@ -140,7 +140,7 @@ abstract class KunenaForumCategoryHelper {
 		if (KunenaError::checkDatabaseError()) return;
 
 		$list = array();
-		foreach ( $list as $id ) {
+		foreach ( $subscribed as $id ) {
 			$list[$id] = self::$_instances[$id];
 		}
 		unset ($subscribed);

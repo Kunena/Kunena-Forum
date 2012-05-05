@@ -374,7 +374,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton {
-	background-color: #fff;
+	background-color: transparent;
 }
 #Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:hover {
 	background-color: #609FBF;

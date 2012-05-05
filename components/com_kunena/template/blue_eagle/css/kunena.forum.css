@@ -3250,7 +3250,7 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	float:right;
 }
 #Kunena span.ktopicpoll {
-	background: url("../images/icons/stats.png") no-repeat left center;
+	background: url("../images/icons/poll.png") no-repeat left center;
 	margin: 2px;
 	width: 32px;
 	height: 32px;

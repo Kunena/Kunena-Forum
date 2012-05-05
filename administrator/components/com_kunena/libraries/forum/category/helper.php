@@ -81,6 +81,21 @@ abstract class KunenaForumCategoryHelper {
 	}
 
 	/**
+	 * @since	2.0.0-BETA2
+	 */
+	public static function subscribe($ids, $value=1, $user=null) {
+		$count = 0;
+		// Pre-load all items
+		$usercategories = KunenaForumCategoryUserHelper::getCategories($ids, $user);
+		foreach ($usercategories as $usercategory) {
+			if ($usercategory->subscribed != (int)$value) $count++;
+			$usercategory->subscribed = (int)$value;
+			$usercategory->save();
+		}
+		return $count;
+	}
+
+	/**
 	 * Returns KunenaForumCategory object
 	 *
 	 * @access	public
@@ -90,32 +105,24 @@ abstract class KunenaForumCategoryHelper {
 	 * @param	int		$limit
 	 * @param	array	$params The optionals params to more precise output
 	 * @return	KunenaForumCategory		The category object.
-	 * @since	2.0
+	 *
+	 * @since	2.0.0-BETA2
 	 */
-	static public function getLatestSubscriptions($categories=false, $userid = array(), $limitstart=0, $limit=0, $params=array()) {
+	static public function getLatestSubscriptions($user, $limitstart=0, $limit=0, $params=array()) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$db = JFactory::getDBO ();
 		$config = KunenaFactory::getConfig ();
 		if ($limit < 1) $limit = $config->threads_per_page;
 
-		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'ASC';
-		$reverse = isset($params['reverse']) ? (int) $params['reverse'] : 0;
-		$orderby = ' ORDER BY category_id '.$orderby;
-		$userids = implode(",", $userid);
+		$userids = is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
+		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'c.last_post_time DESC';
+		$where = isset($params['where']) ? (string) $params['where'] : '';
+		$allowed = implode(',', KunenaAccess::getInstance()->getAllowedCategories ());
 
-		$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse);
-		$catlist = array();
-		foreach ($categories as $category) {
-			$catlist += $category->getChannels();
-		}
-		if (empty($catlist)) {
-			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-			return array(0, array());
-		}
-		$catlist = implode(',', array_keys($catlist));
+		if (!$userids || !$allowed) return array(0, array());
 
 		// Get total count
-		$query = "SELECT COUNT(*) FROM #__kunena_user_categories WHERE user_id IN ({$userids}) AND category_id IN ({$catlist})";
+		$query = "SELECT COUNT(*) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id";
 		$db->setQuery ( $query );
 		$total = ( int ) $db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$total) {
@@ -127,21 +134,18 @@ abstract class KunenaForumCategoryHelper {
 		if ($total < $limitstart)
 			$limitstart = intval($total / $limit) * $limit;
 
-		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id IN ({$userids}) AND subscribed=1 AND category_id IN ({$catlist}) {$orderby}";
+		$query = "SELECT c.id FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id ORDER BY {$orderby}";
 		$db->setQuery ( $query , $limitstart, $limit );
 		$subscribed = (array) $db->loadResultArray ();
 		if (KunenaError::checkDatabaseError()) return;
 
-		$subscriptions = array();
-		foreach ( $subscribed as $id=>$sub ) {
-			$instance = new KunenaForumCategory ($sub);
-			$instance->exists(true);
-			self::$_instances [$id] = $instance;
-			$subscriptions[$id] = $instance;
+		$list = array();
+		foreach ( $subscribed as $id ) {
+			$list[$id] = self::$_instances[$id];
 		}
 		unset ($subscribed);
 
-		return array($total, $subscriptions);
+		return array($total, $list);
 	}
 
 	static public function getNewTopics($catids) {

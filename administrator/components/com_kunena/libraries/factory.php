@@ -130,8 +130,13 @@ abstract class KunenaFactory {
 		}
 		if (empty($loaded["{$client}/{$file}"])) {
 			$lang = JFactory::getLanguage();
-			if (version_compare(JVERSION, '1.6','<') && !$lang->getDebug()) {
+			if (version_compare(JVERSION, '1.6','<')) {
 				// Joomla 1.5 hack to make languages to load faster
+				if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
+						&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english')) {
+					$filename = JLanguage::getLanguagePath( $lookup2, 'en-GB')."/en-GB.{$file}.ini";
+					$loaded[$file] = self::parseLanguage($lang, $filename);
+				}
 				$filename = JLanguage::getLanguagePath( $lookup1, $lang->_lang)."/{$lang->_lang}.{$file}.ini";
 				$loaded[$file] = self::parseLanguage($lang, $filename);
 				if (!$loaded[$file]) {
@@ -139,18 +144,24 @@ abstract class KunenaFactory {
 					$loaded[$file] = self::parseLanguage($lang, $filename);
 				}
 				if (!$loaded[$file]) {
-					$filename = JLanguage::getLanguagePath( $lookup1, $lang->_lang)."/{$lang->_default}.{$file}.ini";
+					$filename = JLanguage::getLanguagePath( $lookup1, $lang->_default)."/{$lang->_default}.{$file}.ini";
 					$loaded[$file] = self::parseLanguage($lang, $filename);
 				}
 				if (!$loaded[$file]) {
-					$filename = JLanguage::getLanguagePath( $lookup2, $lang->_lang)."/{$lang->_default}.{$file}.ini";
+					$filename = JLanguage::getLanguagePath( $lookup2, $lang->_default)."/{$lang->_default}.{$file}.ini";
 					$loaded[$file] = self::parseLanguage($lang, $filename);
 				}
 			} else {
-				$loaded[$file] = $lang->load($file, $lookup1, null, false, false)
-					|| $lang->load($file, $lookup2, null, false, false)
-					|| $lang->load($file, $lookup1, $lang->getDefault(), false, false)
-					|| $lang->load($file, $lookup2, $lang->getDefault(), false, false);
+				$english = false;
+				if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
+						&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english')) {
+					$lang->load($file, $lookup2, 'en-GB', true, false);
+					$english = true;
+				}
+				$loaded[$file] = $lang->load($file, $lookup1, null, $english, false)
+					|| $lang->load($file, $lookup2, null, $english, false)
+					|| $lang->load($file, $lookup1, $lang->getDefault(), $english, false)
+					|| $lang->load($file, $lookup2, $lang->getDefault(), $english, false);
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -159,20 +170,35 @@ abstract class KunenaFactory {
 
 	protected static function parseLanguage($lang, $filename) {
 		if (!file_exists($filename)) return false;
+
 		$version = phpversion();
+
+		// Capture hidden PHP errors from the parsing.
+		$php_errormsg = null;
+		$track_errors = ini_get('track_errors');
+		ini_set('track_errors', true);
+
 		if ($version >= '5.3.1') {
 			$contents = file_get_contents($filename);
-			$contents = str_replace('_QQ_','"\""',$contents);
-			$strings = (array) @parse_ini_string($contents);
+			$contents = str_replace('_QQ_', '"\""', $contents);
+			$strings = @parse_ini_string($contents);
 		} else {
-			$strings = (array) @parse_ini_file($filename);
-			// _QQ_ is currently not used in Kunena -- we can ignore the following code for now:
-			/*if ($version == '5.3.0') {
-				foreach($strings as $key => $string) {
-					$strings[$key]=str_replace('_QQ_','"',$string);
+			$strings = @parse_ini_file($filename);
+
+			if ($version == '5.3.0' && is_array($strings)) {
+				foreach ($strings as $key => $string) {
+					$strings[$key] = str_replace('_QQ_', '"', $string);
 				}
-			}*/
+			}
 		}
+
+		// Restore error tracking to what it was before.
+		ini_set('track_errors', $track_errors);
+
+		if (!is_array($strings)) {
+			$strings = array();
+		}
+
 		$lang->_strings = array_merge($lang->_strings, $strings);
 		return !empty($strings);
 	}

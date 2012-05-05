@@ -35,7 +35,7 @@ class KunenaControllerInstall extends JController {
 	function prepare() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$start = JRequest::getBool('start', false);
-		$this->model->setStep ( 0 );
+		$this->model->install ();
 
 		$this->setRedirect('index.php?option=com_kunena&view=install' . ($start ? '&task=upgrade&'.JUtility::getToken().'=1' : ''));
 	}

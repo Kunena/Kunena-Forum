@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -103,6 +103,23 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	public function getUserInfo($user = null) {
 		return KunenaForumCategoryUserHelper::get($this->id, $user);
+	}
+
+	/**
+	 * Subscribe / Unsubscribe user to this category.
+	 *
+	 * @param boolean $value 1/true for subscribe, 0/false for unsubscribe.
+	 * @param mixed $user
+	 *
+	 * @since	2.0.0-BETA2
+	 */
+	public function subscribe($value=1, $user=null) {
+		$usercategory = KunenaForumCategoryUserHelper::get($this->id, $user);
+		$usercategory->subscribed = (int)$value;
+		if (!$usercategory->save()) {
+			$this->setError($usercategory->getError());
+		}
+		return !$this->getError();
 	}
 
 	/**

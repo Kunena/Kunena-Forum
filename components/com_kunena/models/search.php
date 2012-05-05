@@ -86,15 +86,6 @@ class KunenaModelSearch extends KunenaModel {
 		$this->setState ( 'list.limit', $value );
 	}
 
-	public function setError($error) {
-		$this->error = $error;
-	}
-
-	public function getError() {
-		if ($this->error) return $this->error;
-		else return;
-	}
-
 	protected function buildWhere() {
 		$db = JFactory::getDBO ();
 		foreach ( $this->getSearchWords() as $searchword ) {

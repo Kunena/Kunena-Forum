@@ -296,7 +296,7 @@ class KunenaModelInstall extends JModel {
 			// Install language from dest/language/xx-XX
 			if (is_dir($installdir)) {
 				$exists = $success;
-				if (version_compare(JVERSION, '1.6', '>')) {
+				if (version_compare(JVERSION, '1.6', '>') || !file_exists("{$installdir}/{$tag}.com_kunena.xml")) {
 					// Joomla 1.6+
 					// Older versions installed language files into main folders
 					// Those files need to be removed to bring language up to date!
@@ -306,7 +306,7 @@ class KunenaModelInstall extends JModel {
 						if (file_exists(JPATH_SITE."/language/{$tag}/{$filename}")) JFile::delete(JPATH_SITE."/language/{$tag}/{$filename}");
 						if (file_exists(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}")) JFile::delete(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}");
 					}
-				} elseif ($success == true && file_exists("{$installdir}/{$tag}.com_kunena.xml")) {
+				} elseif (file_exists("{$installdir}/{$tag}.com_kunena.xml")) {
 					// Joomla 1.5
 					// Use installer to get files into the right place
 					$installer = new JInstaller ( );
@@ -1302,6 +1302,10 @@ class KunenaModelInstall extends JModel {
 		if(!class_exists('DOMDocument')){
 			$req->fail ['domdocument'] = true;
 		}
+		$kunena = $this->getInstalledVersion('kunena_', $this->_kVersions);
+		if (version_compare ( $kunena->version, '3.0', ">=" )) {
+			$req->fail ['kunenaversion'] = true;
+		}
 
 		$this->_req = $req;
 		return $this->_req;
@@ -1465,14 +1469,15 @@ class KunenaModelInstall extends JModel {
 		Installation hints: COM_KUNENA_INSTALL_UPGRADE_HINT, COM_KUNENA_INSTALL_DOWNGRADE_HINT, COM_KUNENA_INSTALL_REINSTALL_HINT,
 		COM_KUNENA_INSTALL_MIGRATE_HINT, COM_KUNENA_INSTALL_INSTALL_HINT, COM_KUNENA_INSTALL_UNINSTALL_HINT, COM_KUNENA_INSTALL_RESTORE_HINT
 
-		Installation warnings: COM_KUNENA_INSTALL_UPGRADE_WARN, COM_KUNENA_INSTALL_DOWNGRADE_WARN, COM_KUNENA_INSTALL_REINSTALL_WARN,
-		COM_KUNENA_INSTALL_MIGRATE_WARN, COM_KUNENA_INSTALL_INSTALL_WARN, COM_KUNENA_INSTALL_UNINSTALL_WARN, COM_KUNENA_INSTALL_RESTORE_WARN
+		Installation warnings: COM_KUNENA_INSTALL_UPGRADE_WARN, COM_KUNENA_INSTALL_DOWNGRADE_WARN,
+		COM_KUNENA_INSTALL_MIGRATE_WARN, COM_KUNENA_INSTALL_UNINSTALL_WARN, COM_KUNENA_INSTALL_RESTORE_WARN
 
 		 */
 
 		static $search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#VERSION#');
 		$replace = array ($version->component, $version->version, KunenaForum::version());
 		if (!$action) $action = $version->action;
+		if ($type == 'warn' && ($action == 'INSTALL' || $action == 'REINSTALL')) return '';
 		$str = '';
 		if ($type == 'hint' || $type == 'warn') {
 			$str .= '<strong class="k'.$type.'">'.JText::_('COM_KUNENA_INSTALL_'.$type).'</strong> ';

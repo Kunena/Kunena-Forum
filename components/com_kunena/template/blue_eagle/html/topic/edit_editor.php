@@ -257,9 +257,7 @@ defined ( '_JEXEC' ) or die ();
 
 	<td class="kcol-last kcol-editor-field">
 		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50" tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
-		<?php
-		// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
-		?>
+		
 		<!-- Hidden preview placeholder -->
 		<div id="kbbcode-preview" style="display: none;"></div>
 		<?php if ($this->message->exists()) : ?>

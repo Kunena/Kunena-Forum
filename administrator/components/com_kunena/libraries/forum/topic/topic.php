@@ -89,6 +89,12 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return parent::exists($exists);
 	}
 
+	/**
+	 * Subscribe / Unsubscribe user to this topic.
+	 *
+	 * @param boolean $value 1/true for subscribe, 0/false for unsubscribe.
+	 * @param mixed $user
+	 */
 	public function subscribe($value=1, $user=null) {
 		$usertopic = $this->getUserTopic($user);
 		$usertopic->subscribed = (int)$value;
@@ -98,6 +104,12 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return !$this->getError();
 	}
 
+	/**
+	 * Favorite / unfavorite user to this topic.
+	 *
+	 * @param boolean $value 1/true for favorite, 0/false for unfavorite.
+	 * @param mixed $user
+	 */
 	public function favorite($value=1, $user=null) {
 		$usertopic = $this->getUserTopic($user);
 		$usertopic->favorite = (int)$value;
@@ -617,7 +629,14 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				$target = $this;
 			}
 			// Did user want to change subject?
-			if ($subject) $target->subject = $subject;
+		// Did user want to change subject?
+			if ($subject) {
+				$target->subject = $subject;
+				// Change subject of first message
+				$firstmessage = KunenaForumMessageHelper::get($target->first_post_id);
+				$firstmessage->subject = $subject;
+				$firstmessage->save();
+			}
 			// Did user want to change category?
 			$target->category_id = $categoryTarget->id;
 

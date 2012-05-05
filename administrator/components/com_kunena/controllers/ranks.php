@@ -20,7 +20,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->baseurl = 'index.php?option=com_kunena&view=ranks';
+		$this->baseurl = 'administrator/index.php?option=com_kunena&view=ranks';
 	}
 
 	function add() {

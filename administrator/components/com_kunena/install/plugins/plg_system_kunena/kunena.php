@@ -242,4 +242,23 @@ class plgSystemKunena extends JPlugin {
 		$app->enqueueMessage(JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($type))));
 		$app->redirect('index.php?option=com_installer');
 	}
+
+	/**
+	 * Display Kunena backend icon in Joomla 2.5+
+	 *
+	 * @param string $context
+	 */
+	public function onGetIcons($context) {
+		if ($context != 'mod_quickicon') {
+			return;
+		}
+		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+
+		return array( array(
+			'link' => JRoute::_('index.php?option=com_kunena'),
+			'image' => 'kunena/icons/kunena-logo-48.png',
+			'text' => JText::_('COM_KUNENA'),
+			'access' => array('core.manage', 'com_kunena'),
+			'id' => 'com_kunena_icon' ) );
+	}
 }

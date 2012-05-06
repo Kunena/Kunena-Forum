@@ -177,7 +177,7 @@ class Com_KunenaInstallerScript {
 			return true;
 		}
 
-		$app->enqueueMessage(sprintf('Sorry, it is not possible downgrade Kunena %s to version %s.', $installed, $version), 'notice');
+		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version), 'notice');
 		return false;
 	}
 }

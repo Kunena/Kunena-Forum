@@ -343,6 +343,9 @@
 		</version>
 		<version version="2.0.0-BETA1" versiondate="2012-04-24" versionname="Newspeak">
 		</version>
+		<version version="2.0.0-BETA2-DEV2" versiondate="2012-05-06" versionname="Internal">
+			<phpfile name="upgrade-2.0.0_config"></phpfile>
+		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>

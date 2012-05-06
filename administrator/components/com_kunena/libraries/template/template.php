@@ -86,12 +86,14 @@ class KunenaTemplate extends JObject
 		$this->params = new KunenaParameter($content, $xml);
 
 		$xml = $this->params->getXml();
-		foreach ($xml['_default']->children() as $param)  {
-			if ($param->attributes('type') == 'spacer') continue;
-			$this->params->def($param->attributes('name'), $param->attributes('default'));
-			$name = $param->attributes('name');
-			if (substr($name,0,5) == 'style') {
-				$this->style_variables[$name] = $this->params->get($name);
+		if ($xml) {
+			foreach ($xml['_default']->children() as $param)  {
+				if ($param->attributes('type') == 'spacer') continue;
+				$this->params->def($param->attributes('name'), $param->attributes('default'));
+				$name = $param->attributes('name');
+				if (substr($name,0,5) == 'style') {
+					$this->style_variables[$name] = $this->params->get($name);
+				}
 			}
 		}
 	}

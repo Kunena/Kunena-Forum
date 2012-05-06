@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,12 +16,16 @@ class Com_KunenaInstallerScript {
 	protected $versions = array(
 		'PHP' => array (
 			'5.2' => '5.2.4',
+			'0' => '5.3.10' // Preferred version
 		),
 		'MySQL' => array (
 			'5.0' => '5.0.4',
+			'0' => '5.1' // Preferred version
 		),
-		'Joomla' => array (
-			'2.5' => '2.5.3',
+		'Joomla!' => array (
+			'1.5' => '1.5.25',
+			'1.6' => '2.5.3',
+			'0' => '2.5.4' // Preferred version
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
@@ -50,14 +54,8 @@ class Com_KunenaInstallerScript {
 
 	public function preflight($type, $parent) {
 		// Prevent installation if requirements are not met.
-		if (!$this->checkRequirements()) return false;
-
-		// Do not install over Git repository.
-		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())
-			|| (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev())) {
-			JFactory::getApplication()->enqueueMessage('Oops! You should not install Kunena over your Git reporitory!', 'notice');
-			return false;
-		}
+		$version = $parent->getParent()->getManifest()->version;
+		if (!$this->checkRequirements($version)) return false;
 
 		// Remove deprecated manifest.xml (K1.5) and kunena.j16.xml (K1.7)
 		$manifest = JPATH_ADMINISTRATOR . '/components/com_kunena/manifest.xml';
@@ -96,36 +94,90 @@ class Com_KunenaInstallerScript {
 		return true;
 	}
 
+	public function checkRequirements($version) {
+		$db = JFactory::getDbo();
+		$pass  = $this->checkVersion('PHP', phpversion());
+		$pass &= $this->checkVersion('Joomla!', JVERSION);
+		$pass &= $this->checkVersion('MySQL', $db->getVersion ());
+		$pass &= $this->checkDbo($db->name, array('mysql', 'mysqli'));
+		$pass &= $this->checkExtensions($this->extensions);
+		$pass &= $this->checkKunena($version);
+		return $pass;
+	}
+
 	// Internal functions
 
-	protected function checkRequirements() {
-		$pass = $this->checkVersion('Joomla', JVERSION);
-		$pass &= $this->checkDbo(JFactory::getDbo()->name, array('mysql', 'mysqli'));
-		$pass &= $this->checkVersion('MySQL', JFactory::getDbo()->getVersion ());
-		$pass &= $this->checkVersion('PHP', phpversion());
-		foreach ($this->extensions as $name) {
+	protected function checkVersion($name, $version) {
+		$app = JFactory::getApplication();
+
+		foreach ($this->versions[$name] as $major=>$minor) {
+			if (!$major || version_compare ( $version, $major, "<" )) continue;
+			if (version_compare ( $version, $minor, ">=" )) return true;
+			break;
+		}
+		$recommended = end($this->versions[$name]);
+		$app->enqueueMessage(sprintf("%s %s is not supported. Minimum required version is %s %s, but it is higly recommended to use %s %s or later.", $name, $version, $name, $minor, $name, $recommended), 'notice');
+		return false;
+	}
+
+	protected function checkDbo($name, $types) {
+		$app = JFactory::getApplication();
+
+		if (in_array($name, $types)) {
+			return true;
+		}
+		$app->enqueueMessage(sprintf("Database driver '%s' is not supported. Please use MySQL instead.", $name), 'notice');
+		return false;
+	}
+
+	protected function checkExtensions($extensions) {
+		$app = JFactory::getApplication();
+
+		$pass = 1;
+		foreach ($extensions as $name) {
 			if (!extension_loaded($name)) {
-				JFactory::getApplication()->enqueueMessage(sprintf('Missing PHP extension: %s.', $name), 'notice');
-				$pass = false;
+				$pass = 0;
+				$app->enqueueMessage(sprintf("Required PHP extension '%s' is missing. Please install it into your system.", $name), 'notice');
 			}
 		}
 		return $pass;
 	}
 
-	protected function checkDbo($name, $types) {
-		if (in_array($name, $types)) {
+	protected function checkKunena($version) {
+		$app = JFactory::getApplication();
+
+		// Always load Kunena API if it exists.
+		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		if (file_exists ( $api )) require_once $api;
+
+		// Do not install over Git repository (K1.6+).
+		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())
+				|| (class_exists('KunenaForum') && method_exists('KunenaForum', 'isDev') && KunenaForum::isDev())) {
+			$app->enqueueMessage('Oops! You should not install Kunena over your Git reporitory!', 'notice');
+			return false;
+		}
+
+		$db = JFactory::getDBO();
+
+		// Check if Kunena can be found from the database
+		$table = $db->getPrefix().'kunena_version';
+		$db->setQuery ( "SHOW TABLES LIKE {$db->quote($table)}" );
+		if ($db->loadResult () != $table) return true;
+
+		// Get installed Kunena version
+		$db->setQuery("SELECT version FROM {$table} ORDER BY `id` DESC", 0, 1);
+		$installed = $db->loadResult();
+		if (!$installed) return true;
+
+		// Always allow upgrade to the newer version
+		if (version_compare($version, $installed, '>=')) return true;
+
+		// Check if we can downgrade to the current version
+		if (class_exists('KunenaInstaller') && KunenaInstaller::canDowngrade($version)) {
 			return true;
 		}
-		JFactory::getApplication()->enqueueMessage(sprintf('MySQL database driver required (you have %s).', $name), 'notice');
-		return false;
-	}
-	protected function checkVersion($name, $version) {
-		foreach ($this->versions[$name] as $major=>$minor) {
-			if (version_compare ( $version, $major, "<" )) continue;
-			if (version_compare ( $version, $minor, ">=" )) return true;
-			break;
-		}
-		JFactory::getApplication()->enqueueMessage(sprintf('%s %s required (you have %s %s).', $name, $minor, $name, $version), 'notice');
+
+		$app->enqueueMessage(sprintf('Sorry, it is not possible downgrade Kunena %s to version %s.', $installed, $version), 'notice');
 		return false;
 	}
 }

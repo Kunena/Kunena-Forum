@@ -1,8 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Lib
+ * @package Kunena.Framework
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -18,6 +17,7 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaConfig extends JObject {
+
 	// New in Kunena 1.5.2: $id for JoomFish support
 	public $id = 0;
 	public $board_title = 'Kunena';

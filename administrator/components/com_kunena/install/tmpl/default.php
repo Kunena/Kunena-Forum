@@ -76,9 +76,7 @@ window.addEvent('domready', function() {window.location='".JRoute::_("index.php?
 			</div>
 			<div class="n">
 <?php
-if (!empty($this->requirements->fail)):
-	echo $this->loadTemplate('reqfail');
-elseif (!$this->step):
+if (!$this->step):
 	echo $this->loadTemplate('start');
 else:
 	echo $this->loadTemplate('install');

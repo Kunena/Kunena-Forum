@@ -222,22 +222,22 @@ class plgSystemKunena extends JPlugin {
 	public function onExtensionBeforeUpdate($type, $manifest) {
 		if ($type != 'component') return true;
 
+		// Generate component name
 		$name = strtolower(JFilterInput::getInstance()->clean((string) $manifest->name, 'cmd'));
 		$element = (substr($name, 0, 4) == "com_") ? $name : "com_{$name}";
 		if ($element != 'com_kunena') return true;
-		$version = $manifest->version;
 
-		// Always allow upgrade to the newer version
-		if (version_compare($version, KunenaForum::version(), '>=')) return true;
+		// Kunena 2.0.0-BETA2 and later support this feature in their installer
+		if (version_compare($manifest->version, '2.0.0', '>=')) return true;
 
 		// Check if we can downgrade to the current version
-		if (class_exists('KunenaInstaller') && KunenaInstaller::canDowngrade($version)) {
+		if (class_exists('KunenaInstaller') && KunenaInstaller::canDowngrade($manifest->version)) {
 			return true;
 		}
 
-		// Emulate failed installation
+		// Old version detected: emulate failed installation
 		$app = JFactory::getApplication();
-		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', KunenaForum::version(), $version), 'warning');
+		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', KunenaForum::version(), $manifest->version), 'warning');
 		$app->enqueueMessage(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
 		$app->enqueueMessage(JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($type))));
 		$app->redirect('index.php?option=com_installer');

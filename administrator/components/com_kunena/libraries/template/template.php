@@ -628,7 +628,9 @@ HTML;
 	}
 }
 
-require_once KPATH_ADMIN.'/libraries/external/cssmin/jsmin.php';
+if ( !class_exists("JSMin") && !class_exists("JSMinException") ) {
+	require_once KPATH_ADMIN.'/libraries/external/cssmin/jsmin.php';
+}
 require_once KPATH_ADMIN.'/libraries/external/cssmin/cssmin.php';
 
 class CssKunenaFormatter extends aCssFormatter {

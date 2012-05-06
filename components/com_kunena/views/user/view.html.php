@@ -113,6 +113,7 @@ class KunenaViewUser extends KunenaView {
 		$this->avatarlink = $this->profile->getAvatarImage('kavatar','profile');
 		$this->personalText = $this->profile->personalText;
 		$this->signature = $this->profile->signature;
+		$this->signatureHtml = KunenaHtmlParser::parseBBCode($this->signature, null, $this->config->maxsig);
 		$this->localtime = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
 		$this->localtime->setOffset($this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
 		$this->moderator = $this->profile->isModerator();

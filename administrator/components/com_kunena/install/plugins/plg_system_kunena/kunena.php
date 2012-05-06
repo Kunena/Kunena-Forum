@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage System
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -27,8 +27,8 @@ class plgSystemKunena extends JPlugin {
 		// Load Kunena API
 		require_once $api;
 
-		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return false;
+		// Do not load if Kunena version is not supported or Kunena is not installed
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::installed())) return false;
 
 		$this->loadLanguage('plg_system_kunena.sys', JPATH_ADMINISTRATOR);
 
@@ -206,5 +206,59 @@ class plgSystemKunena extends JPlugin {
 				WHERE c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
 		}
 		*/
+	}
+
+	/**
+	 * Prevent downgrades to Kunena 1.7 and older releases
+	 */
+	public function onExtensionBeforeInstall($method, $type, $manifest, $eid) {
+		// We don't want to handle discover install (where there's no manifest provided)
+		if (!$manifest) return;
+		return $this->onExtensionBeforeUpdate($type, $manifest);
+	}
+	/**
+	 * Prevent downgrades to Kunena 1.7 and older releases
+	 */
+	public function onExtensionBeforeUpdate($type, $manifest) {
+		if ($type != 'component') return true;
+
+		// Generate component name
+		$name = strtolower(JFilterInput::getInstance()->clean((string) $manifest->name, 'cmd'));
+		$element = (substr($name, 0, 4) == "com_") ? $name : "com_{$name}";
+		if ($element != 'com_kunena') return true;
+
+		// Kunena 2.0.0-BETA2 and later support this feature in their installer
+		if (version_compare($manifest->version, '2.0.0', '>=')) return true;
+
+		// Check if we can downgrade to the current version
+		if (class_exists('KunenaInstaller') && KunenaInstaller::canDowngrade($manifest->version)) {
+			return true;
+		}
+
+		// Old version detected: emulate failed installation
+		$app = JFactory::getApplication();
+		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', KunenaForum::version(), $manifest->version), 'warning');
+		$app->enqueueMessage(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
+		$app->enqueueMessage(JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($type))));
+		$app->redirect('index.php?option=com_installer');
+	}
+
+	/**
+	 * Display Kunena backend icon in Joomla 2.5+
+	 *
+	 * @param string $context
+	 */
+	public function onGetIcons($context) {
+		if ($context != 'mod_quickicon') {
+			return;
+		}
+		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+
+		return array( array(
+			'link' => JRoute::_('index.php?option=com_kunena'),
+			'image' => 'kunena/icons/kunena-logo-48.png',
+			'text' => JText::_('COM_KUNENA'),
+			'access' => array('core.manage', 'com_kunena'),
+			'id' => 'com_kunena_icon' ) );
 	}
 }

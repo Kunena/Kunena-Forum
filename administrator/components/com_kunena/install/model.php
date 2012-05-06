@@ -9,11 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-// Minimum version requirements for Joomla 1.5
-DEFINE('KUNENA_MIN_PHP', '5.2.4');
-DEFINE('KUNENA_MIN_MYSQL', '5.0.4');
-DEFINE('KUNENA_MIN_JOOMLA', '1.5.25');
-
 jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.folder' );
 jimport ( 'joomla.filesystem.file' );
@@ -37,7 +32,6 @@ class KunenaModelInstall extends JModel {
 	 */
 	protected $__state_set = false;
 
-	protected $_req = false;
 	protected $_versionprefix = false;
 	protected $_installed = array();
 	protected $_versions = array();
@@ -1278,37 +1272,6 @@ class KunenaModelInstall extends JModel {
 		}
 		$app->setUserState ( 'com_kunena.install.recount', $state );
 		return false;
-	}
-
-	// Needed for Joomla 1.5 only
-	public function getRequirements() {
-		if ($this->_req !== false) {
-			return $this->_req;
-		}
-
-		$req = new StdClass ();
-		$req->mysql = $this->db->getVersion ();
-		$req->php = phpversion ();
-		$req->joomla = JVERSION;
-		$req->domdocument = 'DOMDocument';
-
-		$req->fail = array ();
-		if (version_compare ( $req->mysql, KUNENA_MIN_MYSQL, "<" ))
-			$req->fail ['mysql'] = true;
-		if (version_compare ( $req->php, KUNENA_MIN_PHP, "<" ))
-			$req->fail ['php'] = true;
-		if (version_compare ( $req->joomla, KUNENA_MIN_JOOMLA, "<" ))
-			$req->fail ['joomla'] = true;
-		if(!class_exists('DOMDocument')){
-			$req->fail ['domdocument'] = true;
-		}
-		$kunena = $this->getInstalledVersion('kunena_', $this->_kVersions);
-		if (version_compare ( $kunena->version, '3.0', ">=" )) {
-			$req->fail ['kunenaversion'] = true;
-		}
-
-		$this->_req = $req;
-		return $this->_req;
 	}
 
 	public function getVersionPrefix() {

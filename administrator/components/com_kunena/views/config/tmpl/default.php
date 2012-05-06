@@ -65,8 +65,8 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT') ?>
 						</td>
 								<td align="left" valign="top"><input type="text"
-							name="cfg_ksessiontimeout"
-							value="<?php echo $this->escape($this->config->ksessiontimeout);
+							name="cfg_sessiontimeout"
+							value="<?php echo $this->escape($this->config->sessiontimeout);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC') ?>
 						</td>

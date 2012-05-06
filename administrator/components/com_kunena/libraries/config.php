@@ -118,7 +118,7 @@ class KunenaConfig extends JObject {
 	public $autoembedyoutube = 1;
 	public $autoembedebay = 1;
 	public $ebaylanguagecode = 'en-us';
-	public $ksessiontimeout = 1800; // in seconds
+	public $sessiontimeout = 1800; // in seconds
 	// New 1.0.5RC2 config variables
 	public $highlightcode = 0;
 	// New 1.6 rss config vars

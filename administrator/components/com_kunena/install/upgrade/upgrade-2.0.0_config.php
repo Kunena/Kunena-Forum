@@ -13,15 +13,13 @@ defined ( '_JEXEC' ) or die ();
 function kunena_upgrade_200_config($parent) {
 	$config_old = KunenaFactory::getConfig ();
 
-	foreach( $config_old as  $config=>$value ) {
-		if ( $config == 'fbsessiontimeout' ) {
-			$config_old->ksessiontimeout = $value;
-			unset($config_old->fbsessiontimeout);
-		}
-		if ( $config == 'fbdefaultpage' ) {
-			$config_old->defaultpage = $value;
-			unset($config_old->fbdefaultpage);
-		}
+	if (isset($config->fbsessiontimeout)) {
+		$config->set('sessiontimeout', $config->get('fbsessiontimeout', 1800));
+		unset($config->fbsessiontimeout);
+	}
+	if (isset($config->fbdefaultpage)) {
+		$config->set('defaultpage', $config->get('fbdefaultpage', 'recent'));
+		unset($config->fbdefaultpage);
 	}
 	$config_old->save();
 

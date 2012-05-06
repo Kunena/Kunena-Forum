@@ -24,7 +24,7 @@ JHtml::_('behavior.formvalidation');
 ?>
 <div id="kadmin-menu">
 	<a class="kadmin-mainmenu icon-cp-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>"><?php echo JText::_('COM_KUNENA_CP'); ?></a>
-	<a class="kadmin-mainmenu icon-config-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>"><?php echo JText::_('COM_KUNENA_C_FBCONFIG'); ?></a>
+	<a class="kadmin-mainmenu icon-config-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>"><?php echo JText::_('COM_KUNENA_C_KCONFIG'); ?></a>
 	<a class="kadmin-mainmenu icon-adminforum-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>"><?php echo JText::_('COM_KUNENA_C_FORUM'); ?></a>
 	<a class="kadmin-mainmenu icon-profiles-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>"><?php echo JText::_('COM_KUNENA_C_USER'); ?></a>
 	<a class="kadmin-mainmenu icon-template-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></a>

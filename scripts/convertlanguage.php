@@ -60,7 +60,7 @@ function loadTranslations($file) {
 	if (!file_exists($file)) return array();
 	echo "Load $file\n";
 	$contents = file_get_contents($file);
-	$contents = preg_replace('|\r\n|u','\n',$contents);
+	$contents = preg_replace('|\r\n|u',"\n",$contents);
 	// Put commented out translations back so that we do not loose them
 	$contents = preg_replace('|;\s*(COM_)|u','\1',$contents);
 	$strings = (array) parse_ini_string($contents);
@@ -69,7 +69,7 @@ function loadTranslations($file) {
 
 function saveLang($infile, $outfile) {
 	$contents = file_get_contents($infile);
-	$contents = preg_replace_callback('|^(; )?([A-Z0-9_]+)=".*"$|mu', 'translate', $contents);
+	$contents = preg_replace_callback('|^(; )?([A-Z0-9_]+)="(.*)"$|mu', 'translate', $contents);
 	if (!preg_match('|^([A-Z0-9_]+)|mu', $contents)) return;
 
 	echo "Save $outfile\n";
@@ -81,6 +81,7 @@ function saveLang($infile, $outfile) {
 function translate($matches) {
 	global $translations;
 	$string = isset($translations[$matches[2]]) ? $translations[$matches[2]] : '';
+	if ($matches[3] == $string) $string = '';
 	$commentout = ( !empty($matches[1]) ? $matches[1] : ( $string ? '' : '; ' ) );
 	return $commentout.$matches[2].'="'.$string.'"';
 }

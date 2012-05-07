@@ -14,7 +14,9 @@
 	<description>Croatian (Croatia) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>hr-HR.com_kunena.ini</filename -->
-		<!-- filename>hr-HR.com_kunena.tpl_blue_eagle.ini</filename -->
+		<filename>hr-HR.com_kunena.controllers.ini</filename>
+		<filename>hr-HR.com_kunena.ini</filename>
+		<filename>hr-HR.com_kunena.templates.ini</filename>
+		<filename>hr-HR.com_kunena.views.ini</filename>
 	</files>
 </install>

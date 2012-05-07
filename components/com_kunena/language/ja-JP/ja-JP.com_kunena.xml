@@ -14,7 +14,11 @@
 	<description>Japanese (Japan) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>ja-JP.com_kunena.ini</filename -->
-		<!-- filename>ja-JP.com_kunena.tpl_blue_eagle.ini</filename -->
+		<filename>ja-JP.com_kunena.controllers.ini</filename>
+		<filename>ja-JP.com_kunena.ini</filename>
+		<filename>ja-JP.com_kunena.models.ini</filename>
+		<filename>ja-JP.com_kunena.templates.ini</filename>
+		<filename>ja-JP.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>ja-JP.com_kunena.views.ini</filename>
 	</files>
 </install>

@@ -14,10 +14,13 @@
 	<description>Vietnamese language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>vi-VN.com_kunena.controllers.ini</filename>
 		<filename>vi-VN.com_kunena.ini</filename>
-		<!-- filename>vi-VN.com_kunena.install.ini</filename -->
+		<filename>vi-VN.com_kunena.install.ini</filename>
+		<filename>vi-VN.com_kunena.libraries.ini</filename>
 		<filename>vi-VN.com_kunena.menu.ini</filename>
 		<filename>vi-VN.com_kunena.sys.ini</filename>
+		<filename>vi-VN.com_kunena.views.ini</filename>
 		<filename>vi-VN.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

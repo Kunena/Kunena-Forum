@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,26 +13,44 @@ defined ( '_JEXEC' ) or die ();
 function kunena_upgrade_200_configuration($parent) {
 	$config = KunenaFactory::getConfig ();
 
-	if ($config->allowimageupload >= 0) {
-		$config->image_upload = 'nobody';
-		if ($config->allowimageregupload == 1) {
-			$config->image_upload = 'registered';
+	// Unset deprecated configuration options which have been migrated earlier
+	unset($config->board_ofset);
+	unset($config->allowavatar);
+	unset($config->avatar_src);
+	unset($config->fb_profile);
+	unset($config->pm_component);
+	unset($config->js_actstr_integration);
+	unset($config->sefcats);
+
+	if (isset($config->allowimageupload)) {
+		$config->set('image_upload', 'nobody');
+		if ($config->get('allowimageregupload') == 1) {
+			$config->set('image_upload', 'registered');
 		}
-		if ($config->allowimageupload == 1) {
-			$config->image_upload = 'everybody';
+		if ($config->get('allowimageupload') == 1) {
+			$config->set('image_upload', 'everybody');
 		}
-		$config->allowimageupload = $config->allowimageregupload = -1;
+		unset($config->allowimageupload, $config->allowimageregupload);
 	}
 
-	if ($config->allowfileupload >= 0) {
-		$config->file_upload = 'nobody';
-		if ($config->allowfileregupload == 1) {
-			$config->file_upload = 'registered';
+	if (isset($config->allowfileupload)) {
+		$config->set('file_upload', 'nobody');
+		if ($config->get('allowfileregupload') == 1) {
+			$config->set('file_upload', 'registered');
 		}
-		if ($config->allowfileupload == 1) {
-			$config->file_upload = 'everybody';
+		if ($config->get('allowfileupload') == 1) {
+			$config->set('file_upload', 'everybody');
 		}
-		$config->allowfileupload = $config->allowfileregupload = -1;
+		unset($config->allowfileupload, $config->allowfileregupload);
+	}
+
+	if (isset($config->fbsessiontimeout)) {
+		$config->set('sessiontimeout', $config->get('fbsessiontimeout', 1800));
+		unset($config->fbsessiontimeout);
+	}
+	if (isset($config->fbdefaultpage)) {
+		$config->set('defaultpage', $config->get('fbdefaultpage', 'recent'));
+		unset($config->fbdefaultpage);
 	}
 
 	// Save configuration

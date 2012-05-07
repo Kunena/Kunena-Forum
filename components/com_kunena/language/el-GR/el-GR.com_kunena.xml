@@ -14,7 +14,12 @@
 	<description>Greek (Greece) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>el-GR.com_kunena.controllers.ini</filename>
 		<filename>el-GR.com_kunena.ini</filename>
+		<filename>el-GR.com_kunena.models.ini</filename>
+		<filename>el-GR.com_kunena.templates.ini</filename>
 		<filename>el-GR.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>el-GR.com_kunena.tpl_mirage.ini</filename>
+		<filename>el-GR.com_kunena.views.ini</filename>
 	</files>
 </install>

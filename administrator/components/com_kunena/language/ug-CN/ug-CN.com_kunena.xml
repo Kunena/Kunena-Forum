@@ -14,10 +14,14 @@
 	<description>Uyghur language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>ug-CN.com_kunena.controllers.ini</filename>
 		<filename>ug-CN.com_kunena.ini</filename>
 		<filename>ug-CN.com_kunena.install.ini</filename>
+		<filename>ug-CN.com_kunena.libraries.ini</filename>
 		<filename>ug-CN.com_kunena.menu.ini</filename>
+		<filename>ug-CN.com_kunena.models.ini</filename>
 		<filename>ug-CN.com_kunena.sys.ini</filename>
+		<filename>ug-CN.com_kunena.views.ini</filename>
 		<filename>ug-CN.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

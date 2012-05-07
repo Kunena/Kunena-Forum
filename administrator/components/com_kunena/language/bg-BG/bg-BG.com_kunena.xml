@@ -14,10 +14,14 @@
 	<description>Bulgarian (Bulgaria) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>bg-BG.com_kunena.ini</filename -->
-		<!-- filename>bg-BG.com_kunena.install.ini</filename -->
+		<filename>bg-BG.com_kunena.controllers.ini</filename>
+		<filename>bg-BG.com_kunena.ini</filename>
+		<filename>bg-BG.com_kunena.install.ini</filename>
+		<filename>bg-BG.com_kunena.libraries.ini</filename>
 		<filename>bg-BG.com_kunena.menu.ini</filename>
+		<filename>bg-BG.com_kunena.models.ini</filename>
 		<filename>bg-BG.com_kunena.sys.ini</filename>
+		<filename>bg-BG.com_kunena.views.ini</filename>
 		<filename>bg-BG.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

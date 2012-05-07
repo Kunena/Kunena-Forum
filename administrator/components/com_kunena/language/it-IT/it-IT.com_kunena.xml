@@ -14,10 +14,14 @@
 	<description>Italian (Italy) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>it-IT.com_kunena.controllers.ini</filename>
 		<filename>it-IT.com_kunena.ini</filename>
 		<filename>it-IT.com_kunena.install.ini</filename>
+		<filename>it-IT.com_kunena.libraries.ini</filename>
 		<filename>it-IT.com_kunena.menu.ini</filename>
+		<filename>it-IT.com_kunena.models.ini</filename>
 		<filename>it-IT.com_kunena.sys.ini</filename>
+		<filename>it-IT.com_kunena.views.ini</filename>
 		<filename>it-IT.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

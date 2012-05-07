@@ -14,10 +14,14 @@
 	<description>Norwegian Bokmål (Norway) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>nb-NO.com_kunena.controllers.ini</filename>
 		<filename>nb-NO.com_kunena.ini</filename>
 		<filename>nb-NO.com_kunena.install.ini</filename>
+		<filename>nb-NO.com_kunena.libraries.ini</filename>
 		<filename>nb-NO.com_kunena.menu.ini</filename>
+		<filename>nb-NO.com_kunena.models.ini</filename>
 		<filename>nb-NO.com_kunena.sys.ini</filename>
+		<filename>nb-NO.com_kunena.views.ini</filename>
 		<filename>nb-NO.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

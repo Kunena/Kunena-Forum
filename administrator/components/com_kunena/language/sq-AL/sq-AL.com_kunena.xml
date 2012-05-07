@@ -14,10 +14,7 @@
 	<description>Albanian (Albania) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>sq-AL.com_kunena.ini</filename -->
-		<!-- filename>sq-AL.com_kunena.install.ini</filename -->
+		<filename>sq-AL.com_kunena.libraries.ini</filename>
 		<filename>sq-AL.com_kunena.menu.ini</filename>
-		<!-- filename>sq-AL.com_kunena.sys.ini</filename -->
-		<!-- filename>sq-AL.plg_system_kunena.sys.ini</filename -->
 	</files>
 </install>

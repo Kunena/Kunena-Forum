@@ -14,10 +14,14 @@
 	<description>Portuguese (Portugal) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>pt-PT.com_kunena.controllers.ini</filename>
 		<filename>pt-PT.com_kunena.ini</filename>
 		<filename>pt-PT.com_kunena.install.ini</filename>
+		<filename>pt-PT.com_kunena.libraries.ini</filename>
 		<filename>pt-PT.com_kunena.menu.ini</filename>
+		<filename>pt-PT.com_kunena.models.ini</filename>
 		<filename>pt-PT.com_kunena.sys.ini</filename>
+		<filename>pt-PT.com_kunena.views.ini</filename>
 		<filename>pt-PT.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

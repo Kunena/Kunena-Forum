@@ -37,7 +37,7 @@ foreach ($keys as $key => $location) {
 		$files['admin/en-GB.com_kunena.controllers.ini'][$location][$key] = $location;
 	} elseif (preg_match('#^administrator/components/com_kunena/models/#', $location)) {
 		$files['admin/en-GB.com_kunena.models.ini'][$location][$key] = $location;
-	} elseif (preg_match('#^administrator/components/com_kunena/view/s#', $location)) {
+	} elseif (preg_match('#^administrator/components/com_kunena/views/#', $location)) {
 		$files['admin/en-GB.com_kunena.views.ini'][$location][$key] = $location;
 	} elseif (preg_match('#^administrator/components/com_kunena/media/kunena/topicicons/default/topicicons.xml#', $location)) {
 		$files['site/en-GB.com_kunena.templates.ini'][$location][$key] = $location;
@@ -110,7 +110,7 @@ function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $hea
 	ksort($fkeys);
 	foreach ($fkeys as $location=>$list) {
 		$autogen = array();
-		$out.= "\n; {$location}\n\n";
+		$out.= "\n; JROOT/{$location}\n\n";
 		ksort($list);
 		foreach ($list as $key=>$string) {
 			if ($key[strlen($key)-1] == '_') {
@@ -167,7 +167,7 @@ function loadTranslations($files) {
 		$contents = file_get_contents($file);
 		// Put commented out translations back so that we do not loose them
 		$contents = preg_replace('|;\s*(COM_)|','\1',$contents);
-		$strings = (array) parse_ini_string($contents, false, INI_SCANNER_RAW);
+		$strings = (array) parse_ini_string($contents);
 		if (!$strings) echo "ERROR LOADING $file!\n";
 		$file = preg_replace(array('|^components/.*/|', '|^administrator/.*/|'), array('site/','admin/'), $file);
 		foreach ($strings as $key => $str) {

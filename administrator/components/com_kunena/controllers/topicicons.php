@@ -287,7 +287,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
           	// Never overwrite existing topic icon set
 						if (!JFolder::exists($dest.(String)$topicicons->name)) {
 					 	   $error = JFolder::move($tmp, $dest.(String)$topicicons->name);
-						    if ($error !== true) $this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TOPICON_MANAGER_TEMPLATE').': ' . $error, 'notice' );
+						    if ($error !== true) $this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TOPICON_MANAGER_ERROR_INSTALL_FAILED').': ' . $error, 'notice' );
 
 					       JFile::delete($dest.(String)$topicicons->name.'/'.$file['name']);
 
@@ -299,7 +299,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 					$retval = false;
 				}
 			} else {
-				JError::raiseWarning(100, JText::_('COM_KUNENA_A_TOPICON_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TOPICON_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TOPICON_MANAGER_DIR_NOT_EXIST'));
+				JError::raiseWarning(100, JText::_('COM_KUNENA_A_TOPICON_MANAGER_DIR_NOT_EXIST'));
 				$retval = false;
 			}
 		}

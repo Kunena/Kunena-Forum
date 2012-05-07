@@ -14,10 +14,22 @@
 	<description>Finnish (Finland) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>fi-FI.com_kunena.controllers.ini</filename>
 		<filename>fi-FI.com_kunena.ini</filename>
 		<filename>fi-FI.com_kunena.install.ini</filename>
+		<filename>fi-FI.com_kunena.libraries.ini</filename>
 		<filename>fi-FI.com_kunena.menu.ini</filename>
+		<filename>fi-FI.com_kunena.models.ini</filename>
 		<filename>fi-FI.com_kunena.sys.ini</filename>
+		<filename>fi-FI.com_kunena.views.ini</filename>
+		<filename>fi-FI.plg_finder_kunena.sys.ini</filename>
+		<filename>fi-FI.plg_kunena_alphauserpoints.sys.ini</filename>
+		<filename>fi-FI.plg_kunena_community.sys.ini</filename>
+		<filename>fi-FI.plg_kunena_comprofiler.sys.ini</filename>
+		<filename>fi-FI.plg_kunena_gravatar.sys.ini</filename>
+		<filename>fi-FI.plg_kunena_joomla.sys.ini</filename>
+		<filename>fi-FI.plg_kunena_kunena.sys.ini</filename>
+		<filename>fi-FI.plg_kunena_uddeim.sys.ini</filename>
 		<filename>fi-FI.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

@@ -68,7 +68,7 @@ class LiveUpdateStorageComponent extends LiveUpdateStorage
 	{
 		$data = self::$registry->toString('INI');
 		
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		
 		// An interesting discovery: if your component is manually updating its
 		// component parameters before Live Update is called, then calling Live
@@ -79,7 +79,7 @@ class LiveUpdateStorageComponent extends LiveUpdateStorage
 		/*
 		jimport('joomla.html.parameter');
 		jimport('joomla.application.component.helper');
-		$component =& JComponentHelper::getComponent(self::$component);
+		$component = JComponentHelper::getComponent(self::$component);
 		$params = new JParameter($component->params);
 		$params->setValue(self::$key, $data);
 		*/

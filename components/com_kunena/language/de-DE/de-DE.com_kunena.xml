@@ -5,7 +5,6 @@
 	<tag>de-DE</tag>
 	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>
-	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
 	<authorEmail>translations@kunena.org</authorEmail>
 	<authorUrl>https://www.transifex.net/projects/p/Kunena/team/de_DE/</authorUrl>
@@ -14,7 +13,14 @@
 	<description>German (Germany) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>de-DE.com_kunena.controllers.ini</filename>
 		<filename>de-DE.com_kunena.ini</filename>
+		<filename>de-DE.com_kunena.models.ini</filename>
+		<filename>de-DE.com_kunena.templates.ini</filename>
 		<filename>de-DE.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>de-DE.com_kunena.tpl_mirage.ini</filename>
+		<filename>de-DE.com_kunena.views.ini</filename>
+		<filename>de-DE.mod_kunenamenu.ini</filename>
+		<filename>de-DE.mod_kunenamenu.sys.ini</filename>
 	</files>
 </install>

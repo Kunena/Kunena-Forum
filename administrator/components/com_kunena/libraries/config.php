@@ -67,13 +67,9 @@ class KunenaConfig extends JObject {
 	public $allowavatargallery = 1;
 	public $avatarquality = 75;
 	public $avatarsize = 2048;
-	public $allowimageupload = 0; // DEPRECATED, needed in installer
-	public $allowimageregupload = 1; // DEPRECATED, needed in installer
 	public $imageheight = 800;
 	public $imagewidth = 800;
 	public $imagesize = 150;
-	public $allowfileupload = 0; // DEPRECATED, needed in installer
-	public $allowfileregupload = 1; // DEPRECATED, needed in installer
 	public $filetypes = 'txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2';
 	public $filesize = 120;
 	public $showranking = 1;

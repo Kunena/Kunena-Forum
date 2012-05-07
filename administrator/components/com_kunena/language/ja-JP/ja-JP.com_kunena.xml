@@ -14,10 +14,14 @@
 	<description>Japanese (Japan) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>ja-JP.com_kunena.ini</filename -->
-		<!-- filename>ja-JP.com_kunena.install.ini</filename -->
-		<!-- filename>ja-JP.com_kunena.menu.ini</filename -->
-		<!-- filename>ja-JP.com_kunena.sys.ini</filename -->
-		<!-- filename>ja-JP.plg_system_kunena.sys.ini</filename -->
+		<filename>ja-JP.com_kunena.controllers.ini</filename>
+		<filename>ja-JP.com_kunena.ini</filename>
+		<filename>ja-JP.com_kunena.install.ini</filename>
+		<filename>ja-JP.com_kunena.libraries.ini</filename>
+		<filename>ja-JP.com_kunena.menu.ini</filename>
+		<filename>ja-JP.com_kunena.models.ini</filename>
+		<filename>ja-JP.com_kunena.sys.ini</filename>
+		<filename>ja-JP.com_kunena.views.ini</filename>
+		<filename>ja-JP.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

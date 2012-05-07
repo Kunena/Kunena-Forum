@@ -51,12 +51,8 @@ class CKunenaUpload {
 		$this->_isimage = false;
 		$this->_isfile = false;
 		$me = KunenaUserHelper::getMyself();
-		if (($me->isModerator()) || ($this->_my->id && $this->_config->allowimageregupload) || (!$this->_my->id && $this->_config->allowimageupload)) {
-			$this->validImageExts = explode ( ',', $this->_config->imagetypes );
-		}
-		if (($me->isModerator()) || ($this->_my->id && $this->_config->allowfileregupload) || (!$this->_my->id && $this->_config->allowfileupload)) {
-			$this->validFileExts = explode ( ',', $this->_config->filetypes );
-		}
+		$this->validImageExts = (array) KunenaForumMessageAttachmentHelper::getImageExtensions();
+		$this->validFileExts = (array) KunenaForumMessageAttachmentHelper::getFileExtensions();
 		$this->setImageResize(intval($this->_config->imagesize)*1024, intval($this->_config->imagewidth), intval($this->_config->imageheight), intval($this->_config->imagequality));
 	}
 
@@ -170,8 +166,8 @@ class CKunenaUpload {
 		$this->resetStatus();
 
 		// create upload directory if it does not exist
-		if (!CKunenaFolder::exists($uploadPath)) {
-			if (!CKunenaFolder::create($uploadPath)) {
+		if (!JFolder::exists($uploadPath)) {
+			if (!JFolder::create($uploadPath)) {
 				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' ));
 				return false;
 			}

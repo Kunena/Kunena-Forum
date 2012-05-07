@@ -14,7 +14,11 @@
 	<description>Indonesia language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>id-ID.com_kunena.ini</filename -->
-		<!-- filename>id-ID.com_kunena.tpl_blue_eagle.ini</filename -->
+		<filename>id-ID.com_kunena.controllers.ini</filename>
+		<filename>id-ID.com_kunena.ini</filename>
+		<filename>id-ID.com_kunena.models.ini</filename>
+		<filename>id-ID.com_kunena.templates.ini</filename>
+		<filename>id-ID.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>id-ID.com_kunena.views.ini</filename>
 	</files>
 </install>

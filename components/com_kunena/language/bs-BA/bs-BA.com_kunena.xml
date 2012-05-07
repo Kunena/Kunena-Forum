@@ -14,8 +14,7 @@
 	<description>Bosnian (Bosnia and Herzegovina) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>bs-BA.com_kunena.ini</filename -->
-		<!-- filename>bs-BA.com_kunena.tpl_default.ini</filename -->
-		<!-- filename>bs-BA.com_kunena.tpl_example.ini</filename -->
+		<filename>bs-BA.com_kunena.ini</filename>
+		<filename>bs-BA.com_kunena.templates.ini</filename>
 	</files>
 </install>

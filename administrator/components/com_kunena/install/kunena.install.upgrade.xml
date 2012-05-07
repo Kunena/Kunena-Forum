@@ -142,7 +142,6 @@
 			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_banned_users`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` 
 				ADD `banned` DATETIME NULL DEFAULT NULL AFTER `moderator`</query>
-			<phpfile name="upgrade-1.6.0_old_mt12"></phpfile>
 		</version>
 		<version version="1.6.0-RC1" versiondate="2010-08-09" versionname="Kujadili">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `banned` ( `banned` )</query>
@@ -161,7 +160,6 @@
 		<version version="1.6.0" versiondate="2010-10-03" versionname="Spika">
 		</version>
 		<version version="1.6.1" versiondate="2010-11-06" versionname="Timu">
-			<phpfile name="upgrade-1.6.1_delfiles"></phpfile>
 		</version>
 		<version version="1.6.2" versiondate="2010-12-29" versionname="Team">
 		</version>
@@ -285,7 +283,6 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD INDEX `posts` ( `posts` );</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_user_read` MODIFY `time` datetime NOT NULL;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_thankyou` MODIFY `time` datetime NOT NULL;</query>
-			<phpfile name="upgrade-2.0.0_configuration"></phpfile>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` MODIFY `ip` varchar(128) NULL AFTER `time`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `topic_ordering` VARCHAR(16) NOT NULL default 'lastpost' AFTER `allow_polls`;</query>
 		</version>
@@ -344,7 +341,7 @@
 		<version version="2.0.0-BETA1" versiondate="2012-04-24" versionname="Newspeak">
 		</version>
 		<version version="2.0.0-BETA2-DEV2" versiondate="2012-05-06" versionname="Internal">
-			<phpfile name="upgrade-2.0.0_config"></phpfile>
+			<phpfile name="upgrade-2.0.0_configuration"></phpfile>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>

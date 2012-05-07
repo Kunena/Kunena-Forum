@@ -212,9 +212,13 @@
 					</copy>
 				</then>
 				<else>
-					<copy todir="${build_dir}/language/@{tag}">
+					<move todir="${build_dir}/language/@{tag}">
 						<fileset dir="${tmp_dir}/languages/@{tag}/admin">
 							<include name="*.install.ini"/>
+						</fileset>
+					</move>
+					<copy todir="${build_dir}/language/@{tag}">
+						<fileset dir="${tmp_dir}/languages/@{tag}/admin">
 							<include name="index.html"/>
 						</fileset>
 					</copy>
@@ -287,6 +291,7 @@
 		<language tag="it-IT" />
 		<language tag="ja-JP" />
 		<language tag="km-KH" />
+		<language tag="ko-KR" />
 		<language tag="kz-KZ" />
 		<language tag="lt-LT" />
 		<language tag="lv-LV" />
@@ -305,6 +310,7 @@
 		<language tag="sv-SE" />
 		<language tag="th-TH" />
 		<language tag="tr-TR" />
+		<language tag="uk-UA" />
 		<language tag="ur-PK" />
 		<language tag="vi-VN" />
 		<language tag="zh-CN" />

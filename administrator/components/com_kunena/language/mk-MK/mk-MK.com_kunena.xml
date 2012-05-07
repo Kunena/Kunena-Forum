@@ -14,10 +14,9 @@
 	<description>Macedonian (Macedonia) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>mk-MK.com_kunena.ini</filename -->
-		<!-- filename>mk-MK.com_kunena.install.ini</filename -->
-		<!-- filename>mk-MK.com_kunena.menu.ini</filename -->
-		<!-- filename>mk-MK.com_kunena.sys.ini</filename -->
-		<!-- filename>mk-MK.plg_system_kunena.sys.ini</filename -->
+		<filename>mk-MK.com_kunena.ini</filename>
+		<filename>mk-MK.com_kunena.install.ini</filename>
+		<filename>mk-MK.com_kunena.libraries.ini</filename>
+		<filename>mk-MK.com_kunena.views.ini</filename>
 	</files>
 </install>

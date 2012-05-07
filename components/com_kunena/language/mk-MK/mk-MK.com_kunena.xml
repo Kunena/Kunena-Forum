@@ -14,7 +14,12 @@
 	<description>Macedonian (Macedonia) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>mk-MK.com_kunena.controllers.ini</filename>
 		<filename>mk-MK.com_kunena.ini</filename>
-		<!-- filename>mk-MK.com_kunena.tpl_blue_eagle.ini</filename -->
+		<filename>mk-MK.com_kunena.models.ini</filename>
+		<filename>mk-MK.com_kunena.templates.ini</filename>
+		<filename>mk-MK.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>mk-MK.com_kunena.tpl_mirage.ini</filename>
+		<filename>mk-MK.com_kunena.views.ini</filename>
 	</files>
 </install>

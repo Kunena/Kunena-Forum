@@ -14,7 +14,12 @@
 	<description>Dutch (Netherlands) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>nl-NL.com_kunena.controllers.ini</filename>
 		<filename>nl-NL.com_kunena.ini</filename>
+		<filename>nl-NL.com_kunena.models.ini</filename>
+		<filename>nl-NL.com_kunena.templates.ini</filename>
 		<filename>nl-NL.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>nl-NL.com_kunena.tpl_mirage.ini</filename>
+		<filename>nl-NL.com_kunena.views.ini</filename>
 	</files>
 </install>

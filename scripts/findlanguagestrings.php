@@ -124,7 +124,7 @@ function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $hea
 				unset($filestrings[$outfile][$key]);
 				if (!isset($translations[$key])) {
 					// Missing key
-					$translations[$key] ='';
+					$translations[$key] = $key;
 				}
 				$out.= "{$key}=\"{$translations[$key]}\"\n";
 			}

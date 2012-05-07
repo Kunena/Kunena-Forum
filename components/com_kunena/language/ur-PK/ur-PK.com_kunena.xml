@@ -14,7 +14,6 @@
 	<description>Urdu (Pakistan) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>ur-PK.com_kunena.ini</filename -->
-		<!-- filename>ur-PK.com_kunena.tpl_blue_eagle.ini</filename -->
+		<filename>ur-PK.com_kunena.templates.ini</filename>
 	</files>
 </install>

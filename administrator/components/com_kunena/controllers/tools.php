@@ -228,6 +228,40 @@ class KunenaAdminControllerTools extends KunenaController {
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	public function purgeReStatements() {
+		if (!JRequest::checkToken()) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
+		}
+
+		$db	= JFactory::getDBO();
+		$query = "SELECT id, subject FROM #__kunena_messages WHERE parent != 0";
+		$db->setQuery ( $query );
+		$subjects = $db->loadObjectList ();
+		KunenaError::checkDatabaseError();
+
+		if ( is_array($subjects) ) {
+			$total_count = 0;
+			foreach($subjects as $subject) {
+				$subject_origin = $subject->subject;
+				$subject->subject = preg_replace('/Re:/','',$subject->subject, -1, $count);
+				$subject->subject = trim($subject->subject);
+				if ( $count ) $total_count++;
+
+				if ( $subject_origin != $subject->subject ) {
+					$query = "UPDATE #__kunena_messages SET subject={$db->Quote($subject->subject)} WHERE id={$db->Quote($subject->id)}";
+					$db->setQuery ( $query );
+					$db->Query ();
+				}
+			}
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_RE_PURGED', $total_count) );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
+		$this->app->enqueueMessage ( JText::_('COM_KUNENA_MENU_RE_PURGE_FAILED') );
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
 	protected function checkTimeout($stop = false) {
 		static $start = null;
 		if ($stop) $start = 0;

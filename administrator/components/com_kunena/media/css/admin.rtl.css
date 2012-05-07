@@ -61,6 +61,7 @@ div.kadmin-functitle.icon-stats { background-position: right center;margin-right
 div.kadmin-functitle.icon-systemreport { background-position: right center;margin-right:5px;margin-top:5px; }
 div.kadmin-functitle.icon-support { background-position: right center;margin-right:5px;margin-top:5px; }
 div.kadmin-functitle.icon-template { background-position: right center;margin-right:5px;margin-top:5px; }
+div.kadmin-functitle.icon-purgerestatements { background-position: right center;margin-right:5px;margin-top:5px; }
 
 .left 	{ text-align:right; }
 .right 	{ text-align:left; }

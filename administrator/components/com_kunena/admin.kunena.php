@@ -50,7 +50,7 @@ if ($view != 'install' && !$kversion->checkVersion()) {
 	KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 	KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 	KunenaFactory::loadLanguage('com_kunena.models', 'admin');
-	//KunenaFactory::loadLanguage('com_kunena.views', 'admin');
+	KunenaFactory::loadLanguage('com_kunena.views', 'admin');
 
 	KunenaForum::setup();
 

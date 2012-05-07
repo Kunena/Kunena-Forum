@@ -125,7 +125,7 @@ class KunenaAdminModelTopicicons extends KunenaModel {
 	  jimport( 'joomla.filesystem.folder' );
 	  $topicicons = array ();
     $topiciconslist = JFolder::folders(JPATH_ROOT.'/media/kunena/topicicons');
-    $topicicons[] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_A_ICONSET_LIST') );
+    $topicicons[] = JHTML::_ ( 'select.option', '', JText::_('COM_KUNENA_A_ICONSET_LIST') );
     foreach( $topiciconslist as $icon ) {
 			$topicicons[] = JHTML::_ ( 'select.option', $icon, $icon );
 		}

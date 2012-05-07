@@ -14,10 +14,12 @@
 	<description>Estonian (Estonia) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>et-EE.com_kunena.controllers.ini</filename>
 		<filename>et-EE.com_kunena.ini</filename>
 		<filename>et-EE.com_kunena.install.ini</filename>
 		<filename>et-EE.com_kunena.libraries.ini</filename>
 		<filename>et-EE.com_kunena.menu.ini</filename>
+		<filename>et-EE.com_kunena.models.ini</filename>
 		<filename>et-EE.com_kunena.sys.ini</filename>
 		<filename>et-EE.com_kunena.views.ini</filename>
 		<filename>et-EE.plg_system_kunena.sys.ini</filename>

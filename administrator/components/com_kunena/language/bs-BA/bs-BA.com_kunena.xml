@@ -14,10 +14,13 @@
 	<description>Bosnian (Bosnia and Herzegovina) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>bs-BA.com_kunena.ini</filename -->
-		<!-- filename>bs-BA.com_kunena.install.ini</filename -->
-		<!-- filename>bs-BA.com_kunena.menu.ini</filename -->
-		<!-- filename>bs-BA.com_kunena.sys.ini</filename -->
+		<filename>bs-BA.com_kunena.controllers.ini</filename>
+		<filename>bs-BA.com_kunena.ini</filename>
+		<filename>bs-BA.com_kunena.install.ini</filename>
+		<filename>bs-BA.com_kunena.libraries.ini</filename>
+		<filename>bs-BA.com_kunena.models.ini</filename>
+		<filename>bs-BA.com_kunena.sys.ini</filename>
+		<filename>bs-BA.com_kunena.views.ini</filename>
 		<filename>bs-BA.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

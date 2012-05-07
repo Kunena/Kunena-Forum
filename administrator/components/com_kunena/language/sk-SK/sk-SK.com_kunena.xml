@@ -14,6 +14,7 @@
 	<description>Slovak (Slovakia) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>sk-SK.com_kunena.controllers.ini</filename>
 		<filename>sk-SK.com_kunena.ini</filename>
 		<filename>sk-SK.com_kunena.install.ini</filename>
 		<filename>sk-SK.com_kunena.libraries.ini</filename>

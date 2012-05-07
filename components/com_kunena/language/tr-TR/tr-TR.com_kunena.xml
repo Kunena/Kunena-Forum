@@ -14,7 +14,12 @@
 	<description>Turkish (Turkey) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>tr-TR.com_kunena.controllers.ini</filename>
 		<filename>tr-TR.com_kunena.ini</filename>
+		<filename>tr-TR.com_kunena.models.ini</filename>
+		<filename>tr-TR.com_kunena.templates.ini</filename>
 		<filename>tr-TR.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>tr-TR.com_kunena.tpl_mirage.ini</filename>
+		<filename>tr-TR.com_kunena.views.ini</filename>
 	</files>
 </install>

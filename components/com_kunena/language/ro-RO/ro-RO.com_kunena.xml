@@ -15,7 +15,6 @@
 
 	<files>
 		<!-- filename>ro-RO.com_kunena.ini</filename -->
-		<filename>ro-RO.com_kunena.tpl_default.ini</filename>
-		<filename>ro-RO.com_kunena.tpl_example.ini</filename>
+		<filename>ro-RO.com_kunena.tpl_blue_eagle.ini</filename>
 	</files>
 </install>

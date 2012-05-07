@@ -14,7 +14,12 @@
 	<description>French language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>fr-FR.com_kunena.controllers.ini</filename>
 		<filename>fr-FR.com_kunena.ini</filename>
+		<filename>fr-FR.com_kunena.models.ini</filename>
+		<filename>fr-FR.com_kunena.templates.ini</filename>
 		<filename>fr-FR.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>fr-FR.com_kunena.tpl_mirage.ini</filename>
+		<filename>fr-FR.com_kunena.views.ini</filename>
 	</files>
 </install>

@@ -14,7 +14,14 @@
 	<description>Finnish (Finland) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>fi-FI.com_kunena.controllers.ini</filename>
 		<filename>fi-FI.com_kunena.ini</filename>
+		<filename>fi-FI.com_kunena.models.ini</filename>
+		<filename>fi-FI.com_kunena.templates.ini</filename>
 		<filename>fi-FI.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>fi-FI.com_kunena.tpl_mirage.ini</filename>
+		<filename>fi-FI.com_kunena.views.ini</filename>
+		<filename>fi-FI.mod_kunenamenu.ini</filename>
+		<filename>fi-FI.mod_kunenamenu.sys.ini</filename>
 	</files>
 </install>

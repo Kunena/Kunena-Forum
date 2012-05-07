@@ -229,7 +229,7 @@ class LiveUpdateController extends JController
 				$item = $menu->getActive();
 				if ($item)
 				{
-					$params	=& $menu->getParams($item->id);
+					$params	= $menu->getParams($item->id);
 					// Set Default State Data
 					$model->setState( 'parameters.menu', $params );
 				}
@@ -252,7 +252,7 @@ class LiveUpdateController extends JController
 			if (JClientHelper::setCredentials($client, $user, $pass)) {
 				$return = false;
 			} else {
-				$return =& JError::raiseWarning('SOME_ERROR_CODE', 'JClientHelper::setCredentialsFromRequest failed');
+				$return = JError::raiseWarning('SOME_ERROR_CODE', 'JClientHelper::setCredentialsFromRequest failed');
 			}
 		}
 		else

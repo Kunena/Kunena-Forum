@@ -18,11 +18,12 @@ $kunena_profiler = KunenaProfiler::instance('Kunena');
 $kunena_profiler->start('Total Time');
 KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 
-KunenaFactory::loadLanguage('com_kunena');
 KunenaFactory::loadLanguage('com_kunena.controllers');
 KunenaFactory::loadLanguage('com_kunena.models');
 KunenaFactory::loadLanguage('com_kunena.views');
 KunenaFactory::loadLanguage('com_kunena.templates');
+// Load last to get deprecated language files to work
+KunenaFactory::loadLanguage('com_kunena');
 KunenaForum::setup();
 
 // Initialize error handlers

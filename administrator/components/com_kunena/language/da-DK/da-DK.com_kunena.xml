@@ -14,10 +14,14 @@
 	<description>Danish (Denmark) language file for Kunena Forum Component</description>
 
 	<files>
+		<filename>da-DK.com_kunena.controllers.ini</filename>
 		<filename>da-DK.com_kunena.ini</filename>
 		<filename>da-DK.com_kunena.install.ini</filename>
+		<filename>da-DK.com_kunena.libraries.ini</filename>
 		<filename>da-DK.com_kunena.menu.ini</filename>
+		<filename>da-DK.com_kunena.models.ini</filename>
 		<filename>da-DK.com_kunena.sys.ini</filename>
+		<filename>da-DK.com_kunena.views.ini</filename>
 		<filename>da-DK.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

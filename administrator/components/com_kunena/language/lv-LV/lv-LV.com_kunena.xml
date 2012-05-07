@@ -14,10 +14,11 @@
 	<description>Latvian (Latvia) language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>lv-LV.com_kunena.ini</filename -->
-		<!-- filename>lv-LV.com_kunena.install.ini</filename -->
+		<filename>lv-LV.com_kunena.ini</filename>
+		<filename>lv-LV.com_kunena.install.ini</filename>
+		<filename>lv-LV.com_kunena.libraries.ini</filename>
 		<filename>lv-LV.com_kunena.menu.ini</filename>
-		<!-- filename>lv-LV.com_kunena.sys.ini</filename -->
+		<filename>lv-LV.com_kunena.views.ini</filename>
 		<filename>lv-LV.plg_system_kunena.sys.ini</filename>
 	</files>
 </install>

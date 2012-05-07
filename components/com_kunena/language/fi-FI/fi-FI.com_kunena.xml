@@ -16,5 +16,8 @@
 	<files>
 		<filename>fi-FI.com_kunena.ini</filename>
 		<filename>fi-FI.com_kunena.tpl_blue_eagle.ini</filename>
+		<filename>fi-FI.com_kunena.tpl_mirage.ini</filename>
+		<filename>fi-FI.mod_kunenamenu.ini</filename>
+		<filename>fi-FI.mod_kunenamenu.sys.ini</filename>
 	</files>
 </install>

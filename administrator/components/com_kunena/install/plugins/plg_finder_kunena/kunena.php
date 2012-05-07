@@ -235,7 +235,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	protected function getListQuery($sql = null)
 	{
 		// Check if we can use the supplied SQL query.
-		$sql = is_a($sql, 'JDatabaseQuery') ? $sql : $this->db->getQuery(true);
+		$sql = ($sql instanceof JDatabaseQuery) ? $sql : $this->db->getQuery(true);
 		$sql->select('m.id, m.parent, m.thread, m.catid, m.subject AS title');
 		$sql->select('FROM_UNIXTIME(m.time, \'%Y-%m-%d %H:%i:%s\') AS start_date');
 		$sql->select('m.name AS author, t.message AS summary, t.message AS body');

@@ -118,7 +118,7 @@ class KunenaConfig extends JObject {
 	public $autoembedyoutube = 1;
 	public $autoembedebay = 1;
 	public $ebaylanguagecode = 'en-us';
-	public $fbsessiontimeout = 1800; // in seconds
+	public $sessiontimeout = 1800; // in seconds
 	// New 1.0.5RC2 config variables
 	public $highlightcode = 0;
 	// New 1.6 rss config vars
@@ -134,7 +134,7 @@ class KunenaConfig extends JObject {
 	public $rss_word_count = '0';
 	public $rss_old_titles = 1;
 	public $rss_cache = 900;
-	public $fbdefaultpage = 'recent';
+	public $defaultpage = 'recent';
 	// New 1.0.8 config variables
 	public $default_sort = 'asc'; // 'desc' for latest post first
 	// New 1.5.7 config variables

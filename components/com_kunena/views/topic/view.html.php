@@ -728,7 +728,7 @@ class KunenaViewTopic extends KunenaView {
 			if ($this->message->ip && ($this->category->authorise('admin') || ($this->category->authorise('moderate') && !$this->config->hide_ip))) {
 				$this->ipLink = CKunenaLink::GetMessageIPLink ( $this->message->ip );
 			}
-			$this->signatureHtml = KunenaHtmlParser::parseBBCode ( $this->profile->signature );
+			$this->signatureHtml = KunenaHtmlParser::parseBBCode ( $this->profile->signature, null, $this->config->maxsig );
 			$this->attachments = $this->message->getAttachments();
 
 			// Link to individual message

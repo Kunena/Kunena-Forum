@@ -29,7 +29,7 @@ class KunenaAdminViewUsers extends KunenaView {
 		$this->ipslist = $this->get('IPlist');
 
 		$avatarint = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = is_a($avatarint, 'KunenaAvatarKunena') ? true : false;
+		$this->editavatar = ($avatarint instanceof KunenaAvatarKunena) ? true : false;
 		$this->avatar = $avatarint->getLink($this->user, '', 'profile');
 
 		// make the select list for the moderator flag

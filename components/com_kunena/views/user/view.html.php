@@ -140,7 +140,7 @@ class KunenaViewUser extends KunenaView {
 		$this->showUnusedSocial = true;
 
 		$avatar = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
+		$this->editavatar = ($avatar instanceof KunenaAvatarKunena) ? true : false;
 
 		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
 		$this->canBan = $this->banInfo->canBan();

@@ -166,8 +166,8 @@ class CKunenaUpload {
 		$this->resetStatus();
 
 		// create upload directory if it does not exist
-		if (!CKunenaFolder::exists($uploadPath)) {
-			if (!CKunenaFolder::create($uploadPath)) {
+		if (!JFolder::exists($uploadPath)) {
+			if (!JFolder::create($uploadPath)) {
 				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' ));
 				return false;
 			}

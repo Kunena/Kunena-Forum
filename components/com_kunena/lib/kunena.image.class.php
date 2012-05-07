@@ -631,8 +631,8 @@ class CKunenaImageHelper
 		$imageinfo = self::getProperties($file);
 		if (!$imageinfo) return false;
 
-		if (!CKunenaFolder::exists($newpath)) {
-			if (!CKunenaFolder::create($newpath)) {
+		if (!JFolder::exists($newpath)) {
+			if (!JFolder::create($newpath)) {
 				return false;
 			}
 		}

@@ -1,32 +1,44 @@
 <?php
 
-$language = 'fi-FI';
 if ($_SERVER['argc'] > 1) {
-	$language = $_SERVER['argv'][1];
+	$languages = explode(',',$_SERVER['argv'][1]);
+} else {
+	$languages = scandir('components/com_kunena/language');
+	foreach ($languages as $i=>$language) {
+		if ($language[0] == '.') unset($languages[$i]);
+		elseif (!is_dir("components/com_kunena/language/{$language}")) unset($languages[$i]);
+	}
 }
-if (!is_dir("components/com_kunena/language/{$language}")) die("Error: Unknown language '{$language}'\n\n");
 
 // Find all language files
 $filter = '/^en-GB\.com_kunena.*\.ini$/';
 $files = checkdir('administrator', $filter);
 $files += checkdir('components', $filter);
+// Remove incompatible file
+unset($files['administrator/components/com_kunena/language/en-GB/en-GB.com_kunena.menu.ini']);
 
-echo "\nLoading {$language} language strings...\n\n";
-
-// Load all translations
 global $translations;
-$translations = array();
-foreach ($files as $file=>$dummy) {
-	$file = preg_replace('|en-GB|', $language, $file);
-	$translations += loadTranslations($file);
-}
 
-echo "\nSaving {$language} language strings...\n\n";
+foreach ($languages as $language) {
+	if ($language == 'en-GB') continue;
+	if (!is_dir("components/com_kunena/language/{$language}")) die("Error: Unknown language '{$language}'\n\n");
 
-// Save language files
-foreach ($files as $infile=>$dummy) {
-	$outfile = preg_replace('|en-GB|', $language, $infile);
-	saveLang($infile, $outfile);
+	echo "\nLoading {$language} language strings...\n\n";
+
+	// Load all translations
+	$translations = array();
+	foreach ($files as $file=>$dummy) {
+		$file = preg_replace('|en-GB|', $language, $file);
+		$translations += loadTranslations($file);
+	}
+
+	echo "\nSaving {$language} language strings...\n\n";
+
+	// Save language files
+	foreach ($files as $infile=>$dummy) {
+		$outfile = preg_replace('|en-GB|', $language, $infile);
+		saveLang($infile, $outfile);
+	}
 }
 
 function checkdir($dir, $filter = '/(\.php|\.xml|\.js)$/') {
@@ -55,10 +67,11 @@ function loadTranslations($file) {
 }
 
 function saveLang($infile, $outfile) {
-	echo "Save $outfile\n";
 	$contents = file_get_contents($infile);
 	$contents = preg_replace_callback('|^(; )?([A-Z0-9_]+)=".*"$|m', 'translate', $contents);
+	if (!preg_match('|^([A-Z0-9_]+)|m', $contents)) return;
 
+	echo "Save $outfile\n";
 	$fp = fopen($outfile,'w');
 	fwrite($fp, $contents);
 	fclose($fp);

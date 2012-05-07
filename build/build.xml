@@ -212,9 +212,13 @@
 					</copy>
 				</then>
 				<else>
-					<copy todir="${build_dir}/language/@{tag}">
+					<move todir="${build_dir}/language/@{tag}">
 						<fileset dir="${tmp_dir}/languages/@{tag}/admin">
 							<include name="*.install.ini"/>
+						</fileset>
+					</move>
+					<copy todir="${build_dir}/language/@{tag}">
+						<fileset dir="${tmp_dir}/languages/@{tag}/admin">
 							<include name="index.html"/>
 						</fileset>
 					</copy>

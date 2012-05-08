@@ -436,6 +436,33 @@ abstract class KunenaForumCategoryHelper {
 		return $rows;
 	}
 
+	/**
+	 * Method to the alias of category to generate a new title
+	 *
+	 * @access	public
+	 * @param	integer	$category_id
+	 * @param string $alias
+	 * @return	boolean	True if something is found in categories
+	 * @since 2.0.0-BETA2
+	 */
+	static public function getAlias($category_id, $alias) {
+		$db = JFactory::getDbo();
+		$query = "SELECT * FROM #__kunena_categories WHERE id = {$db->quote($category_id)} AND alias = {$db->quote($alias)}";
+		$db->setQuery($query);
+		$category_items = $db->loadAssoc();
+
+		// Check for an error message.
+		if ($db->getErrorNum()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+
+		if ( is_array($category_items) ) {
+			return true;
+		}
+		return false;
+	}
+
 	// Internal functions:
 
 	static protected function loadCategories() {

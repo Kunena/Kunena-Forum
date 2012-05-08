@@ -37,10 +37,13 @@ class KunenaBbcode extends BBCode {
 		JPluginHelper::importPlugin('kunena');
 		$dispatcher->trigger( 'onKunenaBbcodeConstruct', array( $this ) );
 
+		$view = JString::strtolower ( JRequest::getCmd ( 'type', JRequest::getCmd ( 'view', '' )) );
+
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
 		$this->SetSmileyDir ( JPATH_ROOT );
-		$this->SetSmileyURL ( JURI::root() );
+		if ( $view=='rss' ) $this->SetSmileyURL ( JURI::root() );
+		else $this->SetSmileyURL ( JURI::root(true).'/' );
 		$this->SetDetectURLs ( true );
 		$this->SetURLPattern (array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
@@ -1194,7 +1197,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
 		//				'flashvars' => array ('flash', 480, 360, 0, 0, $content, '', array (array (6, 'flashvars', $vid ["param"] ) ) ),
 		//
-		
+
 		'metacafe' => array ('flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
 
 		'myspace' => array ('flash', 430, 346, 0, 0, 'http://lads.myspace.com/videos/vplayer.swf', 'VideoID=(\d*)', array (array (6, 'flashvars', 'm=%vcode%&v=2&type=video' ) ) ),

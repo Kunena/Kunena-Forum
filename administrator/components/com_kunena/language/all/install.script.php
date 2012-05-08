@@ -53,6 +53,8 @@ class Kunena_Language_PackInstallerScript {
 	}
 
 	public function installLanguage($parent, $tag, $name) {
+		$app = JFactory::getApplication();
+
 		if ($tag == 'en-GB') return;
 		$exists = false;
 		$success = true;
@@ -74,7 +76,7 @@ class Kunena_Language_PackInstallerScript {
 			$file .= ".tar.bz2";
 		} else {
 			// File was not found
-			return sprintf('Language %s - %s ... ', $tag, $name) . sprintf('%s NOT FOUND %s', '<span style="color:#cf7f00">', '</span>') . '<br />';;
+			return sprintf('Language %s - %s ... ', $tag, $name) . sprintf('%s NOT FOUND %s', '<span style="color:#cf7f00">', '</span>') . '<br />';
 		}
 
 		// First we need to unzip language file.
@@ -87,15 +89,21 @@ class Kunena_Language_PackInstallerScript {
 
 			$installdir = "{$dest}/language/{$tag}";
 			if (!JFolder::exists($installdir)) $success = JFolder::create($installdir);
-			if ($success) $success = JFolder::move("{$dir}/{$key}", $installdir);
 
-			// Older versions installed language files into main folders
-			// Those files need to be removed to bring language up to date!
-			jimport('joomla.filesystem.folder');
-			$files = JFolder::files($installdir, '\.ini$');
+			if ($success != true) continue;
+
+			$files = JFolder::files("{$dir}/{$key}");
 			foreach ($files as $filename) {
-				if ($key=='site' && file_exists(JPATH_SITE."/language/{$tag}/{$filename}")) JFile::delete(JPATH_SITE."/language/{$tag}/{$filename}");
-				if ($key=='admin' && file_exists(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}")) JFile::delete(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}");
+				if (!JFile::copy("{$dir}/{$key}/{$filename}", "{$installdir}/{$filename}")) {
+					$app->enqueueMessage(sprintf ( 'Copying %s failed!', $filename), 'error');
+					$success = false;
+				}
+				if (preg_match('/\.ini$/', $filename)) {
+					// Older versions installed language files into main folders
+					// Those files need to be removed to bring language up to date!
+					$checkfile = ($key=='site' ? JPATH_SITE : JPATH_ADMINISTRATOR) . "/language/{$tag}/{$filename}";
+					if (JFile::exists($checkfile)) JFile::delete($checkfile);
+				}
 			}
 		}
 		return sprintf('Language %s - %s ... ', $tag, $name) . ($success? sprintf('%s INSTALLED %s', '<span style="color:darkgreen">', '</span>') : sprintf('%s FAILED %s', '<span style="color:darkred">', '</span>')) . '<br />';

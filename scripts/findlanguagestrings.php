@@ -14,21 +14,27 @@ $checklist += checkdir('components');
 $checklist += checkdir('modules');
 
 $keys = array('COM_KUNENA'=>'administrator/components/com_kunena/kunena.j25.xml');
+$files = array();
 foreach ($checklist as $file => $dummy) {
 	$strings = findStrings($file);
 	foreach ($strings as $string) {
 		$prefix = isset($keys[$string]) ? strprefix($keys[$string], $file) : $file;
 		if ($prefix != $file && preg_match('#^components/com_kunena/views/[^\.]+\.xml$#', $file)) {
+			// Special case, use sys.ini file (2 locations if needed)
 			$prefix = 'components/com_kunena/views/**/*.xml';
+			$files['admin/en-GB.com_kunena.sys.ini'][$prefix][$string] = $prefix;
+		} else {
+			$keys[$string] = $prefix;
 		}
-		$keys[$string] = $prefix;
 	}
 }
-$files = array();
-
 foreach ($keys as $key => $location) {
 	if (empty($location)) {
 		$files['site/en-GB.com_kunena.ini']['Common strings for both frontend and backend'][$key] = $location;
+	} elseif (preg_match('#^administrator/components/com_kunena/install/modules/#', $location)) {
+		$files['site/en-GB.com_kunena.ini'][$location][$key] = $location;
+	} elseif (preg_match('#^administrator/components/com_kunena/install/plugins/#', $location)) {
+		$files['site/en-GB.com_kunena.ini'][$location][$key] = $location;
 	} elseif (preg_match('#^administrator/components/com_kunena/install/#', $location)) {
 		$files['admin/en-GB.com_kunena.install.ini'][$location][$key] = $location;
 	} elseif (preg_match('#^administrator/components/com_kunena/libraries/#', $location)) {

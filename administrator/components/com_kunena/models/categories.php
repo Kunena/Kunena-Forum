@@ -94,6 +94,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 				$category->up = $this->me->isAdmin($category->parent_id) && reset($siblings) != $category->id;
 				$category->down = $this->me->isAdmin($category->parent_id) && end($siblings) != $category->id;
 				$category->reorder = $this->me->isAdmin($category->parent_id);
+				// FIXME: stop creating access names manually
 				if ($category->accesstype == 'joomla.level') {
 					$groupname = $acl->getGroupName($category->accesstype, $category->access);
 					if (version_compare(JVERSION, '1.6','>')) {
@@ -104,7 +105,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 						$category->accessname = JText::_('COM_KUNENA_INTEGRATION_JOOMLA_LEVEL').': '.($groupname ? JText::_($groupname) : JText::_('COM_KUNENA_NOBODY'));
 					}
 				} elseif ($category->accesstype != 'none') {
-					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype))).': '.$acl->getGroupName($category->accesstype, $category->access);
+					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype))).': '.$acl->getGroupName($category->accesstype, $category->access);
 				} elseif (version_compare(JVERSION, '1.6','>')) {
 					// Joomla 1.6+
 					$groupname = $acl->getGroupName($category->accesstype, $category->pub_access);

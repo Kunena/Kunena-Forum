@@ -351,8 +351,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['enable_threaded_layouts'] = JHTML::_('select.genericlist', $yesno, 'cfg_enable_threaded_layouts', 'class="inputbox" size="1"', 'value', 'text', $this->config->enable_threaded_layouts);
 
 		$default_sort = array();
-		$default_sort[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_OPTION_DEFAULT_SORT_FIRST'));
-		$default_sort[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_OPTION_DEFAULT_SORT_LAST'));
+		$default_sort[] = JHTML::_('select.option', 'asc', JText::_('COM_KUNENA_OPTION_DEFAULT_SORT_FIRST'));
+		$default_sort[] = JHTML::_('select.option', 'desc', JText::_('COM_KUNENA_OPTION_DEFAULT_SORT_LAST'));
 		$lists ['default_sort'] = JHTML::_('select.genericlist', $default_sort, 'cfg_default_sort', 'class="inputbox" size="1"', 'value', 'text', $this->config->default_sort);
 
 		$lists ['fallback_english'] = JHTML::_('select.genericlist', $yesno, 'cfg_fallback_english', 'class="inputbox" size="1"', 'value', 'text', $this->config->fallback_english);

@@ -152,7 +152,8 @@ window.addEvent('domready', function(){
 			foreach ($list as $access) {
 				if (method_exists($access, 'getAccessOptions')) {
 					// TODO: change none type ->
-					$string = JText::_('COM_KUNENA_INTEGRATION_'.preg_replace('/[^\w\d]/', '_', $type=='none' ? 'joomla.group' : $type));
+					// FIXME: stop getting language from the main file...
+					$string = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.preg_replace('/[^\w\d]/', '_', $type=='none' ? 'joomla.group' : $type));
 					$accesstypes [$string] = JHTML::_ ( 'select.option', $type, $string );
 					$exists |= $type == $category->accesstype;
 					break;

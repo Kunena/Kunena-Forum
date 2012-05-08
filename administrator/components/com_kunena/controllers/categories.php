@@ -123,8 +123,19 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
+	/**
+	 * Method to save a category like a copy of existing one.
+	 *
+	 * @since	2.0.0-BETA2
+	 */
 	function save2copy() {
-		// TODO: add logic
+		$post = JRequest::get('post', JREQUEST_ALLOWRAW);
+
+		list($title, $alias) = $this->_generateNewTitle($post['catid'], $post['alias'], $post['name']);
+		$_POST['name']	= $title;
+		$_POST['alias']	= $alias;
+		$_POST['catid'] = 0;
+
 		$this->_save();
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
@@ -391,5 +402,25 @@ class KunenaAdminControllerCategories extends KunenaController {
 			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVED', $this->escape ( $name ) ) );
 		if ($count > 1)
 			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORIES_SAVED', $count ) );
+	}
+
+	/**
+	 * Method to change the title & alias.
+	 *
+	 * @param   integer  $category_id  The id of the category.
+	 * @param   string   $alias        The alias.
+	 * @param   string   $name        The name.
+	 *
+	 * @return	array  Contains the modified title and alias.
+	 *
+	 * @since	2.0.0-BETA2
+	 */
+	protected function _generateNewTitle($category_id, $alias, $name) {
+		while (  KunenaForumCategoryHelper::getAlias($category_id, $alias) ) {
+			$name = JString::increment($name);
+			$alias = JString::increment($alias, 'dash');
+		}
+
+		return array($name, $alias);
 	}
 }

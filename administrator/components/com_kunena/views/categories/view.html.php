@@ -46,7 +46,7 @@ class KunenaAdminViewCategories extends KunenaView {
 
 			// If an existing item, can save to a copy.
 			if ($this->category->exists()) {
-				//JToolBarHelper::save2copy('save2copy');
+				JToolBarHelper::save2copy('save2copy');
 			}
 		} else {
 			JToolBarHelper::save();

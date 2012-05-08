@@ -5,7 +5,7 @@
 
   @package		Kunena
   @subpackage	com_kunena
-  @copyright	Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+  @copyright	Copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
   				portions (C) 2007 MjazTools. All rights reserved.
   @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
   @link			http://www.kunena.org
@@ -166,9 +166,9 @@
 		</move>
 		
 		<!-- Language pack -->
-		<copy file="${project_dir}/${kunena.admin}/language/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/${kunena.admin}/install/language/kunena_language_pack.xml" tofile="${tmp_dir}/languages_extra/kunena_language_pack.xml" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/${kunena.admin}/install/language/install.script.php" tofile="${tmp_dir}/languages_extra/install.script.php" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.admin}/language/all/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.admin}/language/all/kunena_language_pack.xml" tofile="${tmp_dir}/languages_extra/kunena_language_pack.xml" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.admin}/language/all/install.script.php" tofile="${tmp_dir}/languages_extra/install.script.php" overwrite="true" filtering="true" />
 
 		<!-- Readme -->
 		<copy file="${project_dir}/README.md" tofile="${package_dir}/README.txt" overwrite="true" filtering="true" />
@@ -187,14 +187,13 @@
 		<attribute name="tag" default="en-GB"/>
 		<attribute name="include" default="false"/>
 		<sequential>
-			<copy file="${project_dir}/${kunena.admin}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}/admin" overwrite="true" filtering="true" />
+			<copy file="${project_dir}/${kunena.admin}/language/all/manifests15/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}" overwrite="true" filtering="true" />
 			<copy todir="${tmp_dir}/languages/@{tag}/admin" flatten="yes" includeEmptyDirs="no" overwrite="true">
 				<fileset dir="${project_dir}/${kunena.admin}">
 					<include name="**/@{tag}.*.ini"/>
 					<include name="index.html"/>
 				</fileset>
 			</copy>
-			<copy file="${project_dir}/${kunena.site}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}/site" overwrite="true" filtering="true" />
 			<copy todir="${tmp_dir}/languages/@{tag}/site" flatten="yes" includeEmptyDirs="no" overwrite="true">
 				<fileset dir="${project_dir}/${kunena.site}">
 					<include name="**/@{tag}.*.ini"/>
@@ -222,8 +221,7 @@
 							<include name="index.html"/>
 						</fileset>
 					</copy>
-					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}.admin_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/admin"/>
-					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}.site_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}/site"/>
+					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}"/>
 				</else>
 			</if>
 		</sequential>

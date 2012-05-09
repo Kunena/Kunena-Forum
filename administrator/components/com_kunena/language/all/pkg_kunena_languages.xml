@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE extension>
-<extension type="file" version="2.5" method="upgrade">
-	<name>Kunena language pack</name>
+<extension type="package" version="2.5" method="upgrade">
+	<name>Kunena Language Pack</name>
+	<packagename>kunena_languages</packagename>
 	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
@@ -13,6 +14,6 @@
 	<description>Language pack for Kunena forum component.</description>
 
 	<scriptfile>install.script.php</scriptfile>
-	<fileset>
-	</fileset>
+	<files folder="language">
+	</files>
 </extension>

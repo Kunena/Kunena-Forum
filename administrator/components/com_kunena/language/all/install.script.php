@@ -11,33 +11,25 @@ defined( '_JEXEC' ) or die();
 
 jimport( 'joomla.filesystem.file' );
 jimport( 'joomla.filesystem.folder' );
+jimport( 'joomla.filesystem.archive' );
+jimport( 'joomla.installer.installer' );
 
-class Kunena_Language_PackInstallerScript {
+class pkg_kunena_languagesInstallerScript {
 
-	public function install($parent) {
-		// Install languages
-		$lang = JFactory::getLanguage();
-		$languages = $lang->getKnownLanguages();
+	public function uninstall($parent) {
+		// Remove languages.
+		$languages = JFactory::getLanguage()->getKnownLanguages();
 		foreach ($languages as $language) {
-			echo $this->installLanguage($parent, $language['tag'], $language['name']);
+			echo $this->uninstallLanguage($language['tag'], $language['name']);
 		}
 	}
 
-	public function discover_install($parent) {
-		return self::install($parent);
-	}
-
-	public function update($parent) {
-		self::install($parent);
-	}
-
-	public function uninstall($parent) {
-	}
-
 	public function preflight($type, $parent) {
+		if (!in_array($type, array('install', 'update'))) return true;
+
 		$app = JFactory::getApplication();
 
-		// Do not install if Kunena doesn't exist
+		// Do not install if Kunena doesn't exist.
 		if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('2.0')) {
 			$app->enqueueMessage(sprintf ( 'Kunena %s has not been installed, aborting!', '2.0' ), 'notice');
 			return false;
@@ -46,66 +38,44 @@ class Kunena_Language_PackInstallerScript {
 			$app->enqueueMessage(sprintf ( 'You have installed Kunena from GitHub, aborting!' ), 'notice');
 			return false;
 		}
+
+		// Get list of languages to be installed.
+		$source = $parent->getParent()->getPath('source').'/language';
+		$languages = JFactory::getLanguage()->getKnownLanguages();
+		$files = $parent->manifest->files;
+		foreach ($languages as $language) {
+			$name = "com_kunena_{$language['tag']}";
+			$search = JFolder::files($source, $name);
+			if (empty($search)) continue;
+			// Generate <file type="file" client="site" id="fi-FI">com_kunena_fi-FI_v2.0.0-BETA2-DEV2.zip</file>
+			$file = $files->addChild('file', array_pop($search));
+			$file->addAttribute('type', 'file');
+			$file->addAttribute('client', 'site');
+			$file->addAttribute('id', $name);
+			echo sprintf('Installing language %s - %s ...', $language['tag'], $language['name']) . '<br />';
+		}
+		if (empty($files)) {
+			$app->enqueueMessage(sprintf ( 'Your site is English only. There\'s no need to install Kunena language pack.' ), 'notice');
+			return false;
+		}
+
+		// Remove old K1.7 style language pack.
+		$table = JTable::getInstance('extension');
+		$id = $table->find(array('type'=>'file', 'element'=>"kunena_language_pack"));
+		if ($id) {
+			$installer = new JInstaller();
+			$installer->uninstall ( 'file', $id );
+		}
+
 		return true;
 	}
 
-	public function postflight($type, $parent) {
-	}
+	public function uninstallLanguage($tag, $name) {
+		$table = JTable::getInstance('extension');
+		$id = $table->find(array('type'=>'file', 'element'=>"com_kunena_{$tag}"));
+		if (!$id) return;
 
-	public function installLanguage($parent, $tag, $name) {
-		$app = JFactory::getApplication();
-
-		if ($tag == 'en-GB') return;
-		$exists = false;
-		$success = true;
-		$source = $parent->getParent()->getPath('source').'/language';
-		$destinations = array(
-				'site'=>JPATH_SITE . '/components/com_kunena',
-				'admin'=>JPATH_ADMINISTRATOR . '/components/com_kunena'
-		);
-
-		$version = KunenaForum::version();
-		$file = "{$source}/com_kunena.{$tag}_v{$version}";
-		if (file_exists("{$file}.zip")) {
-			$file .= ".zip";
-		} elseif (file_exists("{$file}.tar")) {
-			$file .= ".tar";
-		} elseif (file_exists("{$file}.tar.gz")) {
-			$file .= ".tar.gz";
-		} elseif (file_exists("{$file}.tar.bz2")) {
-			$file .= ".tar.bz2";
-		} else {
-			// File was not found
-			return sprintf('Language %s - %s ... ', $tag, $name) . sprintf('%s NOT FOUND %s', '<span style="color:#cf7f00">', '</span>') . '<br />';
-		}
-
-		// First we need to unzip language file.
-		$dir ="{$source}/{$tag}";
-		if (!JFolder::exists($dir)) $success = JFolder::create($dir);
-		if ($success) $success = JArchive::extract ( $file, $dir );
-
-		foreach ($destinations as $key=>$dest) {
-			if ($success != true) continue;
-
-			$installdir = "{$dest}/language/{$tag}";
-			if (!JFolder::exists($installdir)) $success = JFolder::create($installdir);
-
-			if ($success != true) continue;
-
-			$files = JFolder::files("{$dir}/{$key}");
-			foreach ($files as $filename) {
-				if (!JFile::copy("{$dir}/{$key}/{$filename}", "{$installdir}/{$filename}")) {
-					$app->enqueueMessage(sprintf ( 'Copying %s failed!', $filename), 'error');
-					$success = false;
-				}
-				if (preg_match('/\.ini$/', $filename)) {
-					// Older versions installed language files into main folders
-					// Those files need to be removed to bring language up to date!
-					$checkfile = ($key=='site' ? JPATH_SITE : JPATH_ADMINISTRATOR) . "/language/{$tag}/{$filename}";
-					if (JFile::exists($checkfile)) JFile::delete($checkfile);
-				}
-			}
-		}
-		return sprintf('Language %s - %s ... ', $tag, $name) . ($success? sprintf('%s INSTALLED %s', '<span style="color:darkgreen">', '</span>') : sprintf('%s FAILED %s', '<span style="color:darkred">', '</span>')) . '<br />';
+		$installer = new JInstaller();
+		$installer->uninstall ( 'file', $id );
 	}
 }

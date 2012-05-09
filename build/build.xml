@@ -87,7 +87,7 @@
 			<istrue value="${cfg.adddate}" />
 		</condition>
 		<property name="str.destfile" value="${package_dir}/${cfg.prefix}${cfg.name}${str.version}${str.date}" />
-		<property name="str.destlangfile" value="${package_dir}/${cfg.prefix}${cfg.name}-languages${str.version}${str.date}" />
+		<property name="str.destlangfile" value="${package_dir}/pkg_${cfg.name}_languages${str.version}${str.date}" />
 
 		<condition property="do.tar">
 			<istrue value="${cfg.tar}" />
@@ -167,7 +167,7 @@
 		
 		<!-- Language pack -->
 		<copy file="${project_dir}/${kunena.admin}/language/all/README.md" tofile="${tmp_dir}/languages_extra/README.txt" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/${kunena.admin}/language/all/kunena_language_pack.xml" tofile="${tmp_dir}/languages_extra/kunena_language_pack.xml" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.admin}/language/all/pkg_kunena_languages.xml" tofile="${tmp_dir}/languages_extra/pkg_kunena_languages.xml" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/${kunena.admin}/language/all/install.script.php" tofile="${tmp_dir}/languages_extra/install.script.php" overwrite="true" filtering="true" />
 
 		<!-- Readme -->
@@ -187,7 +187,8 @@
 		<attribute name="tag" default="en-GB"/>
 		<attribute name="include" default="false"/>
 		<sequential>
-			<copy file="${project_dir}/${kunena.admin}/language/all/manifests15/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}" overwrite="true" filtering="true" />
+			<copy file="${project_dir}/${kunena.admin}/language/all/manifests/com_kunena_@{tag}.xml" todir="${tmp_dir}/languages/@{tag}" overwrite="true" filtering="true" />
+			<copy file="${project_dir}/${kunena.admin}/language/all/manifests15/j15_com_kunena_@{tag}.xml" todir="${tmp_dir}/languages/@{tag}" overwrite="true" filtering="true" />
 			<copy todir="${tmp_dir}/languages/@{tag}/admin" flatten="yes" includeEmptyDirs="no" overwrite="true">
 				<fileset dir="${project_dir}/${kunena.admin}">
 					<include name="**/@{tag}.*.ini"/>
@@ -221,7 +222,7 @@
 							<include name="index.html"/>
 						</fileset>
 					</copy>
-					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena.@{tag}_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}"/>
+					<archive destfile="${tmp_dir}/languages_extra/language/com_kunena_@{tag}_v${xml.version}" basedir="${tmp_dir}/languages/@{tag}"/>
 				</else>
 			</if>
 		</sequential>

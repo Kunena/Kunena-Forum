@@ -6,21 +6,23 @@ This file contains all the languages which are currently available for Kunena Fo
 We recommend that you install the most recent language package every time you have upgraded Kunena.
 
 Kunena distribution package itself includes translations for installation, which will be used during installation process.
+
 You can find the most recent language list from here:
 http://www.kunena.org/download
 
 Installing languages in Joomla! 2.5
 ===================================
 
-Just install this package by using Joomla installer. All the languages installed into your system will be updated during the
-installation process.
+Just install this package by using Joomla installer.
 
-Recommended way for Joomla! 2.5 is to have all language files inside the extension folders. This installer does just that,
-but it also removes all the old Kunena language files from /language and /administrator/language folders.
+Installer will detect which languages have been installed into your system. It will install or update only existing languages,
+so If you add new languages after installing this package, you will need to install this language pack again.
 
-WARNING: Do not attempt to install the language archive files by hand! They are Joomla! 1.5 installer files.
-Installing those files in Joomla! 2.5 has some side effects, which may cause you to accidentally uninstall the whole language.
-If you have already installed Kunena language files by hand, you can fix the issue by installing your Joomla! core language again.
+Every language will be installed separately to allow you to uninstall them one by one if needed. You can find the language
+packages by going to "Extension Manager: Manage", selecting type File and filtering results by "Kunena Language".
+
+Additionally extension manager will have a package called "Kunena Language Pack". Uninstalling this package will also uninstall
+all the languages that were added during installation.
 
 Installing languages in Joomla! 1.5
 ===================================

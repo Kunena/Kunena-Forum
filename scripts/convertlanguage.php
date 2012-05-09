@@ -11,9 +11,9 @@ if ($_SERVER['argc'] > 1) {
 }
 
 // Find all language files
-$filter = '/^en-GB\.com_kunena.*\.ini$/';
-$files = checkdir('administrator', $filter);
-$files += checkdir('components', $filter);
+$filter = '/^en-GB\..*\.ini$/';
+$files = checkdir('administrator/components/com_kunena/language', $filter);
+$files += checkdir('components/com_kunena/language', $filter);
 // Remove incompatible file
 unset($files['administrator/components/com_kunena/language/en-GB/en-GB.com_kunena.menu.ini']);
 
@@ -60,9 +60,9 @@ function loadTranslations($file) {
 	if (!file_exists($file)) return array();
 	echo "Load $file\n";
 	$contents = file_get_contents($file);
-	$contents = preg_replace('|\r\n|u',"\n",$contents);
+	$contents = preg_replace('#\r\n#u',"\n",$contents);
 	// Put commented out translations back so that we do not loose them
-	$contents = preg_replace('|;\s*(COM_)|u','\1',$contents);
+	$contents = preg_replace('#;\s*(COM_|PLG_|PKG_|MOD_)#u','\1',$contents);
 	$strings = (array) parse_ini_string($contents);
 	return $strings;
 }
@@ -70,7 +70,14 @@ function loadTranslations($file) {
 function saveLang($infile, $outfile) {
 	$contents = file_get_contents($infile);
 	$contents = preg_replace_callback('|^(; )?([A-Z0-9_]+)="(.*)"$|mu', 'translate', $contents);
-	if (!preg_match('|^([A-Z0-9_]+)|mu', $contents)) return;
+	if (!preg_match('|^([A-Z0-9_]+)|mu', $contents)) {
+		// Create dummy installation file
+		$contents = '; Sorry, this language file hasn\'t been translated yet.
+;
+; If you want to help us, please start by reading our documentation on translating Kunena:
+; http://docs.kunena.org/index.php/Translating_Kunena
+';
+	}
 
 	echo "Save $outfile\n";
 	$fp = fopen($outfile,'w');

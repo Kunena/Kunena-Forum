@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension type="file" version="2.5" method="upgrade">
-	<name>Kunena Forum - Serbian (Serbia)</name>
+	<name>Kunena Language - Serbian (Serbia)</name>
 	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>

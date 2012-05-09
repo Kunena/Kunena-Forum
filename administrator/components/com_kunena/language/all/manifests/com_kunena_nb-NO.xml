@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension type="file" version="2.5" method="upgrade">
-	<name>Kunena Forum - Norwegian Bokmål (Norway)</name>
+	<name>Kunena Language - Norwegian Bokmål (Norway)</name>
 	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>

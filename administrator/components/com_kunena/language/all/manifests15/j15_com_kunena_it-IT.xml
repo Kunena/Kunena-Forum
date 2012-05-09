@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
 <install type="language" version="1.5" client="both" method="upgrade">
-	<name>Kunena Forum - Italian (Italy)</name>
+	<name>Kunena Language - Italian (Italy)</name>
 	<tag>it-IT</tag>
 	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>

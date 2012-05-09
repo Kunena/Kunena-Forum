@@ -74,11 +74,7 @@ function saveLang($infile, $outfile) {
 		// Create dummy installation file
 		$contents = '; Sorry, this language file hasn\'t been translated yet.
 ;
-; If you want to help us to translate your language, please register into Transifex site and request a membership to a team.
-;
-; Here are our wiki pages for the translators (please read them before starting your work):
-;
-; http://docs.kunena.org/index.php/Transifex
+; If you want to help us, please start by reading our documentation on translating Kunena:
 ; http://docs.kunena.org/index.php/Translating_Kunena
 ';
 	}

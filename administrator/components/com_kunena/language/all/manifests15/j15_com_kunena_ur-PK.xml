@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
 <install type="language" version="1.5" client="both" method="upgrade">
-	<name>Kunena Forum - Urdu (Pakistan)</name>
+	<name>Kunena Language - Urdu (Pakistan)</name>
 	<tag>ur-PK</tag>
 	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>

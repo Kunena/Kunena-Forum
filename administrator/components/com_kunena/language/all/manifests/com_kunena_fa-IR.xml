@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension type="file" version="2.5" method="upgrade">
-	<name>Kunena Forum - Persian (Iran)</name>
+	<name>Kunena Language - Persian (Iran)</name>
 	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>

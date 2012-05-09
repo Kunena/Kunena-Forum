@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE extension>
 <extension type="file" version="2.5" method="upgrade">
-	<name>Kunena Forum - English</name>
+	<name>Kunena Language - English</name>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
 	<author>Kunena Team</author>

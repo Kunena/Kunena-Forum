@@ -23,10 +23,12 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				<?php echo JHTML::_( 'form.token' ); ?>
 
 				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS_SURE'); ?></legend>
+					<legend><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></legend>
 					<table class="kadmin-adminform">
 						<tr>
-							<td><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS_SURE_DESC'); ?></td>
+							<td><?php echo JText::_('COM_KUNENA_A_PURGE_ENTER_RE_STATEMENTS'); ?><br />
+							<input type="text" name="re_string" value="" />
+							</td>
 						</tr>
 					</table>
 				</fieldset>

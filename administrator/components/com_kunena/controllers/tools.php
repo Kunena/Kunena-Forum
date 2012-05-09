@@ -247,10 +247,10 @@ class KunenaAdminControllerTools extends KunenaController {
 			$count = $db->getAffectedRows ();
 
 			if ( $count > 0 ) {
-				$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_RE_PURGED', $count) );
+				$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_RE_PURGED', $count, $re_string ) );
 				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			} else {
-				$this->app->enqueueMessage ( JText::_('COM_KUNENA_MENU_RE_PURGE_FAILED') );
+				$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_RE_PURGE_FAILED', $re_string) );
 				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			}
 		} else {

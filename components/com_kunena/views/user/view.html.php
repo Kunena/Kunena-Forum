@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -140,7 +140,7 @@ class KunenaViewUser extends KunenaView {
 		$this->showUnusedSocial = true;
 
 		$avatar = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
+		$this->editavatar = ($avatar instanceof KunenaAvatarKunena) ? true : false;
 
 		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
 		$this->canBan = $this->banInfo->canBan();

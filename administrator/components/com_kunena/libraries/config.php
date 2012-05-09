@@ -1,8 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Lib
+ * @package Kunena.Framework
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -18,12 +17,12 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaConfig extends JObject {
+
 	// New in Kunena 1.5.2: $id for JoomFish support
 	public $id = 0;
 	public $board_title = 'Kunena';
 	public $email = '';
 	public $board_offline = 0;
-	public $board_ofset = '0.00'; // DEPRECATED, needed in installer
 	public $offline_message = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
 	public $enablerss = 1;
 	public $threads_per_page = 20;
@@ -64,25 +63,17 @@ class KunenaConfig extends JObject {
 	public $mailadmin = 0;
 	public $captcha = 0;
 	public $mailfull = 1;
-	public $allowavatar = 1; // DEPRECATED, needed in installer
 	public $allowavatarupload = 1;
 	public $allowavatargallery = 1;
-	public $avatarquality = 65;
+	public $avatarquality = 75;
 	public $avatarsize = 2048;
-	public $allowimageupload = 0; // DEPRECATED, needed in installer
-	public $allowimageregupload = 1; // DEPRECATED, needed in installer
 	public $imageheight = 800;
 	public $imagewidth = 800;
 	public $imagesize = 150;
-	public $allowfileupload = 0; // DEPRECATED, needed in installer
-	public $allowfileregupload = 1; // DEPRECATED, needed in installer
 	public $filetypes = 'txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2';
 	public $filesize = 120;
 	public $showranking = 1;
 	public $rankimages = 1;
-	public $avatar_src = 'fb'; // DEPRECATED, needed in installer
-	public $fb_profile = 'fb'; // DEPRECATED, needed in installer
-	public $pm_component = 'no'; // DEPRECATED, needed in installer
 	public $userlist_rows = 30;
 	public $userlist_online = 1;
 	public $userlist_avatar = 1;
@@ -103,9 +94,7 @@ class KunenaConfig extends JObject {
 	public $showpopsubjectstats = 1;
 	public $popsubjectcount = 5;
 	public $usernamechange = 0;
-	public $rules_infb = 1; // retired in 1.6 controlled via joommla menu
 	public $rules_cid = 1;
-	public $help_infb = 1; // retired in 1.6 controlled via joommla menu
 	public $help_cid = 1;
 	// New 1.0.5 config variables
 	// bbcode options
@@ -118,7 +107,7 @@ class KunenaConfig extends JObject {
 	public $autoembedyoutube = 1;
 	public $autoembedebay = 1;
 	public $ebaylanguagecode = 'en-us';
-	public $fbsessiontimeout = 1800; // in seconds
+	public $sessiontimeout = 1800; // in seconds
 	// New 1.0.5RC2 config variables
 	public $highlightcode = 0;
 	// New 1.6 rss config vars
@@ -134,14 +123,13 @@ class KunenaConfig extends JObject {
 	public $rss_word_count = '0';
 	public $rss_old_titles = 1;
 	public $rss_cache = 900;
-	public $fbdefaultpage = 'recent';
+	public $defaultpage = 'recent';
 	// New 1.0.8 config variables
 	public $default_sort = 'asc'; // 'desc' for latest post first
 	// New 1.5.7 config variables
 	public $alphauserpointsnumchars = 0; // Integration feature for AlphaUserPoints component
 	// New 1.5.8 config variables
 	public $sef = 1;
-	public $sefcats = 0; // DEPRECATED, needed in installer
 	public $sefutf8 = 0;
 	// New for 1.6 -> Hide images and files for guests
 	public $showimgforguest = 1;
@@ -164,8 +152,6 @@ class KunenaConfig extends JObject {
 	public $post_dateformat_hover = 'datetime'; // See KunenaDate
 	// New for 1.6 -> hide IP
 	public $hide_ip = 1;
-	// New for 1.6 -> disable/enable activity stream
-	public $js_actstr_integration = 0; // DEPRECATED, used in installer
 	// New for 1.6 -> image file types
 	public $imagetypes = 'jpg,jpeg,gif,png';
 	public $checkmimetypes = 1;

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,8 +16,8 @@ function kunena_upgrade_160_timezone($parent) {
 	$db = JFactory::getDbo();
 
 	// We need to fix all timestamps to UTC (if not already done)
-	if ($config->board_ofset != '0.00') {
-		$timeshift = ( float ) date ( 'Z' ) + (( float ) $config->board_ofset * 3600);
+	if ($config->get('board_ofset', '0.00') != '0.00') {
+		$timeshift = ( float ) date ( 'Z' ) + (( float ) $config->get('board_ofset') * 3600);
 
 		$db->setQuery ( "UPDATE #__kunena_categories SET time_last_msg = time_last_msg - {$timeshift}" );
 		$db->query ();
@@ -39,7 +39,7 @@ function kunena_upgrade_160_timezone($parent) {
 		if ($db->getErrorNum ())
 			throw new KunenaInstallerException ( $db->getErrorMsg (), $db->getErrorNum () );
 
-		$config->board_ofset = '0.00';
+		unset($config->board_ofset);
 		$result = array('action'=>'', 'name'=>JText::sprintf ( 'COM_KUNENA_INSTALL_160_TIMEZONE', sprintf('%+d:%02d', $timeshift/3600, ($timeshift/60)%60)), 'success'=>true);
 	}
 

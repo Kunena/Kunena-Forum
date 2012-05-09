@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Attachment
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -101,8 +101,8 @@ abstract class KunenaForumMessageAttachmentHelper {
 		return array_merge((array)$imagetypes, (array)$filetypes);
 	}
 
-	static public function getImageExtensions($category, $user = null) {
-		$category = KunenaForumCategoryHelper::get($category);
+	static public function getImageExtensions($category = null, $user = null) {
+		if ($category !== null) $category = KunenaForumCategoryHelper::get($category);
 		$user = KunenaUserHelper::get($user);
 		$config = KunenaFactory::getConfig();
 		$types = explode(',', $config->imagetypes);
@@ -120,11 +120,11 @@ abstract class KunenaForumMessageAttachmentHelper {
 		if ($config->image_upload == 'registered') return $types;
 
 		// For now on we only allow moderators
-		if (!$user->isModerator($category->id)) return false;
+		if (!$user->isModerator($category ? $category->id : null)) return false;
 		if ($config->image_upload == 'moderator') return $types;
 
 		// For now on we only allow administrators
-		if (!$user->isAdmin($category->id)) return false;
+		if (!$user->isAdmin($category ? $category->id : 0)) return false;
 		if ( $config->image_upload == 'admin') return $types;
 
 		return false;

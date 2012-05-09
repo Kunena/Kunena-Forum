@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -46,7 +46,7 @@ class KunenaAdminViewCategories extends KunenaView {
 
 			// If an existing item, can save to a copy.
 			if ($this->category->exists()) {
-				//JToolBarHelper::save2copy('save2copy');
+				JToolBarHelper::save2copy('save2copy');
 			}
 		} else {
 			JToolBarHelper::save();

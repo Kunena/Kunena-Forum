@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Template
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -86,12 +86,14 @@ class KunenaTemplate extends JObject
 		$this->params = new KunenaParameter($content, $xml);
 
 		$xml = $this->params->getXml();
-		foreach ($xml['_default']->children() as $param)  {
-			if ($param->attributes('type') == 'spacer') continue;
-			$this->params->def($param->attributes('name'), $param->attributes('default'));
-			$name = $param->attributes('name');
-			if (substr($name,0,5) == 'style') {
-				$this->style_variables[$name] = $this->params->get($name);
+		if ($xml) {
+			foreach ($xml['_default']->children() as $param)  {
+				if ($param->attributes('type') == 'spacer') continue;
+				$this->params->def($param->attributes('name'), $param->attributes('default'));
+				$name = $param->attributes('name');
+				if (substr($name,0,5) == 'style') {
+					$this->style_variables[$name] = $this->params->get($name);
+				}
 			}
 		}
 	}
@@ -626,7 +628,9 @@ HTML;
 	}
 }
 
-require_once KPATH_ADMIN.'/libraries/external/cssmin/jsmin.php';
+if ( !class_exists("JSMin") && !class_exists("JSMinException") ) {
+	require_once KPATH_ADMIN.'/libraries/external/cssmin/jsmin.php';
+}
 require_once KPATH_ADMIN.'/libraries/external/cssmin/cssmin.php';
 
 class CssKunenaFormatter extends aCssFormatter {

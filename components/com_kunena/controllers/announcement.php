@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -49,7 +49,6 @@ class KunenaControllerAnnouncement extends KunenaController {
 			if ($announcement->published == 0) continue;
 			$announcement->published = 0;
 			if (!$announcement->authorise('edit') || !$announcement->save()) {
-				print_r($announcement);die();
 				$this->app->enqueueMessage ( $announcement->getError(), 'error');
 			} else {
 				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_ANN_SUCCESS_UNPUBLISH', $this->escape($announcement->title) ) );

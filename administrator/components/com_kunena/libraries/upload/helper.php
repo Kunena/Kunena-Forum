@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Upload
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -25,7 +25,7 @@ class KunenaUploadHelper {
 		JPlugin::loadLanguage( 'com_media' );
 		$params = JComponentHelper::getParams('com_media');
 		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
-		define('COM_KUNENA_MEDIA_BASE', JPATH_ROOT.'/components/com_kunena/template/'.$config->template.'/images');
+		$path = JPATH_ROOT."/components/com_kunena/template/{$config->template}/images";
 
 		$err			= null;
 
@@ -37,10 +37,10 @@ class KunenaUploadHelper {
 		jimport('joomla.filesystem.file');
 		$file['name']	= JFile::makeSafe($file['name']);
 
-		if ( !JFolder::exists(COM_KUNENA_MEDIA_BASE.'/'.$uploadfolder) ) return false;
+		if ( !JFolder::exists($path.'/'.$uploadfolder) ) return false;
 
 		if (isset($file['name'])) {
-			$filepath = JPath::clean(COM_KUNENA_MEDIA_BASE.'/'.$uploadfolder.'/'.strtolower($file['name']));
+			$filepath = JPath::clean($path.'/'.$uploadfolder.'/'.strtolower($file['name']));
 
 			if (!MediaHelper::canUpload( $file, $err )) {
 				if ($format == 'json') {

@@ -209,7 +209,7 @@ class KunenaUser extends JObject {
 			if ($this->ordering != '0') {
 				$ordering = $this->ordering == '1' ? 'desc' : 'asc';
 			} else {
-				$ordering = KunenaFactory::getConfig()->default_sort == 'asc' ? 'asc' : 'desc';
+				$ordering = KunenaFactory::getConfig()->get('default_sort') == 'desc' ? 'desc' : 'asc';
 			}
 			if ($ordering != 'asc') {
 				$ordering = 'desc';

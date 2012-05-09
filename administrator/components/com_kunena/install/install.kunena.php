@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -11,24 +11,24 @@ defined ( '_JEXEC' ) or die ();
 
 jimport( 'joomla.filesystem.file' );
 
-// This isn't called because of redirect
-$this->parent->copyManifest();
+global $installer_object;
+if (isset($this)) $installer_object = $this;
 
 function com_install() {
-	if (version_compare ( phpversion (), '5.0.0', '<' )) {
-		// Installer would fail to load, so let's output an error.
-		echo "ERROR: PHP 5.2 REQUIRED!";
+	global $installer_object;
+
+	if (!isset($installer_object) || version_compare(JVERSION, '1.6','>')) {
+		JFactory::getApplication()->enqueueMessage('Oops, Joomla! 1.5 manifest file loaded! Aborting installation.', 'notice');
 		return false;
 	}
 
-	if (version_compare(JVERSION, '1.6','>')) {
-		echo "ERROR: WRONG MANIFEST FILE LOADED, PLEASE TRY AGAIN WITH THE LATEST VERSION OF JOOMLA!";
-		return false;
-	}
+	// Check requirements
+	require_once dirname(__FILE__) . '/install.script.php';
+	$installer = new Com_KunenaInstallerScript();
+	$version = $installer_object->manifest->getElementByPath('version');
+	if (!$installer->checkRequirements($version->data())) return false;
 
 	// Initialise Kunena installer
-	require_once(JPATH_ADMINISTRATOR . '/components/com_kunena/install/model.php');
-	$installer = new KunenaModelInstall();
 	$installer->install();
 
 	// Remove deprecated manifest.xml (K1.5) and kunena.j16.xml (K1.7)
@@ -36,6 +36,9 @@ function com_install() {
 	if (JFile::exists($manifest)) JFile::delete($manifest);
 	$manifest = JPATH_ADMINISTRATOR . '/components/com_kunena/kunena.j16.xml';
 	if (JFile::exists($manifest)) JFile::delete($manifest);
+
+	// This isn't called because of redirect
+	$installer_object->parent->copyManifest();
 
 	// Redirect to Kunena Installer
 	$redirect_url = JURI::base () . 'index.php?option=com_kunena&view=install';

@@ -9,11 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-// Minimum version requirements for Joomla 1.5
-DEFINE('KUNENA_MIN_PHP', '5.2.4');
-DEFINE('KUNENA_MIN_MYSQL', '5.0.4');
-DEFINE('KUNENA_MIN_JOOMLA', '1.5.25');
-
 jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.folder' );
 jimport ( 'joomla.filesystem.file' );
@@ -37,7 +32,6 @@ class KunenaModelInstall extends JModel {
 	 */
 	protected $__state_set = false;
 
-	protected $_req = false;
 	protected $_versionprefix = false;
 	protected $_installed = array();
 	protected $_versions = array();
@@ -296,25 +290,13 @@ class KunenaModelInstall extends JModel {
 			// Install language from dest/language/xx-XX
 			if (is_dir($installdir)) {
 				$exists = $success;
-				if (version_compare(JVERSION, '1.6', '>') || !file_exists("{$installdir}/{$tag}.com_kunena.xml")) {
-					// Joomla 1.6+
-					// Older versions installed language files into main folders
-					// Those files need to be removed to bring language up to date!
-					jimport('joomla.filesystem.folder');
-					$files = JFolder::files($installdir, '\.ini$');
-					foreach ($files as $filename) {
-						if (file_exists(JPATH_SITE."/language/{$tag}/{$filename}")) JFile::delete(JPATH_SITE."/language/{$tag}/{$filename}");
-						if (file_exists(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}")) JFile::delete(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}");
-					}
-				} elseif (file_exists("{$installdir}/{$tag}.com_kunena.xml")) {
-					// Joomla 1.5
-					// Use installer to get files into the right place
-					$installer = new JInstaller ( );
-					if ($installer->install ( $installdir )) {
-						$success = true;
-					} else {
-						$success = -1;
-					}
+				// Older versions installed language files into main folders
+				// Those files need to be removed to bring language up to date!
+				jimport('joomla.filesystem.folder');
+				$files = JFolder::files($installdir, '\.ini$');
+				foreach ($files as $filename) {
+					if (file_exists(JPATH_SITE."/language/{$tag}/{$filename}")) JFile::delete(JPATH_SITE."/language/{$tag}/{$filename}");
+					if (file_exists(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}")) JFile::delete(JPATH_ADMINISTRATOR."/language/{$tag}/{$filename}");
 				}
 			}
 		}
@@ -1280,37 +1262,6 @@ class KunenaModelInstall extends JModel {
 		return false;
 	}
 
-	// Needed for Joomla 1.5 only
-	public function getRequirements() {
-		if ($this->_req !== false) {
-			return $this->_req;
-		}
-
-		$req = new StdClass ();
-		$req->mysql = $this->db->getVersion ();
-		$req->php = phpversion ();
-		$req->joomla = JVERSION;
-		$req->domdocument = 'DOMDocument';
-
-		$req->fail = array ();
-		if (version_compare ( $req->mysql, KUNENA_MIN_MYSQL, "<" ))
-			$req->fail ['mysql'] = true;
-		if (version_compare ( $req->php, KUNENA_MIN_PHP, "<" ))
-			$req->fail ['php'] = true;
-		if (version_compare ( $req->joomla, KUNENA_MIN_JOOMLA, "<" ))
-			$req->fail ['joomla'] = true;
-		if(!class_exists('DOMDocument')){
-			$req->fail ['domdocument'] = true;
-		}
-		$kunena = $this->getInstalledVersion('kunena_', $this->_kVersions);
-		if (version_compare ( $kunena->version, '3.0', ">=" )) {
-			$req->fail ['kunenaversion'] = true;
-		}
-
-		$this->_req = $req;
-		return $this->_req;
-	}
-
 	public function getVersionPrefix() {
 		if ($this->_versionprefix !== false) {
 			return $this->_versionprefix;
@@ -1793,7 +1744,7 @@ class KunenaModelInstall extends JModel {
 				if ($this->db->getErrorNum ())
 					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 				$id = ( int ) $this->_db->insertId ();
-				if (!$defaultmenu || (isset($menuitem['default']) && $config->fbdefaultpage == $menuitem['default'])) {
+				if (!$defaultmenu || (isset($menuitem['default']) && $config->defaultpage == $menuitem['default'])) {
 					$defaultmenu = $id;
 				}
 			}
@@ -1935,7 +1886,7 @@ class KunenaModelInstall extends JModel {
 			if (! $table->setLocation ( $parent->id, 'last-child' ) || ! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
 				throw new KunenaInstallerException ( $table->getError () );
 			}
-			if (! $defaultmenu || (isset ( $menuitem ['default'] ) && $config->fbdefaultpage == $menuitem ['default'])) {
+			if (! $defaultmenu || (isset ( $menuitem ['default'] ) && $config->defaultpage == $menuitem ['default'])) {
 				$defaultmenu = $table->id;
 			}
 		}

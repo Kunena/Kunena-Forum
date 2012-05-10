@@ -1634,23 +1634,12 @@ class KunenaModelInstall extends JModel {
 				'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>1, 'default'=>'my' , 'params'=>array('topics_catselection'=>1, 'topics_categories'=>0, 'topics_time'=>-1)),
 			'profile'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_PROFILE' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=user', 'access'=>1, 'params'=>array('integration'=>1)),
-			'rules'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_RULES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' )),
-				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>0, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_MISC_DEFAULT_BODY' ), 'body_format'=>'text')),
 			'help'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_HELP' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' )),
-				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>0, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_MISC_DEFAULT_BODY' ), 'body_format'=>'text')),
+				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>2, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_HELP_BODY' ), 'body_format'=>'bbcode')),
 			'search'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_SEARCH' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' )),
 				'link'=>'index.php?option=com_kunena&view=search', 'access'=>0, 'params'=>array()),
 		);
 
-		$config = KunenaFactory::getConfig();
-		if (!empty($config->rules_cid)) {
-			$submenu['rules']['params']['body'] = "[article=full]{$config->rules_cid}[/article]";
-			$submenu['rules']['params']['body_format'] = 'bbcode';
-		}
-		if (!empty($config->help_cid)) {
-			$submenu['help']['params']['body'] = "[article=full]{$config->help_cid}[/article]";
-			$submenu['help']['params']['body_format'] = 'bbcode';
-		}
 		$lang = JFactory::getLanguage();
 		$debug = $lang->setDebug(false);
 		if (version_compare(JVERSION, '1.6','>')) {
@@ -1846,7 +1835,21 @@ class KunenaModelInstall extends JModel {
 
 		$table = JTable::getInstance ( 'menu' );
 		$table->load(array('menutype'=>'kunenamenu', 'link'=>$menu ['link']));
-		$params = '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_text":1,"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0}';
+		$paramdata = array ('menu-anchor_title'=>'',
+				'menu-anchor_css'=>'',
+				'menu_image'=>'',
+				'menu_text'=>1,
+				'page_title'=>'',
+				'show_page_heading'=>0,
+				'page_heading'=>'',
+				'pageclass_sfx'=>'',
+				'menu-meta_description'=>'',
+				'menu-meta_keywords'=>'',
+				'robots'=>'',
+				'secure'=>0);
+
+		$gparams = new JRegistry($paramdata);
+
 		// FIXME: Joomla 1.6: add menu params for current item, too
 		$data = array (
 			'menutype' => 'kunenamenu',
@@ -1858,7 +1861,7 @@ class KunenaModelInstall extends JModel {
 			'parent_id' => 1,
 			'component_id' => $component_id,
 			'access' => $menu ['access'] + 1,
-			'params' => $params,
+			'params' => (string) $gparams,
 			'home' => 0,
 			'language' => '*',
 			'client_id' => 0
@@ -1869,6 +1872,8 @@ class KunenaModelInstall extends JModel {
 		$parent = $table;
 		$defaultmenu = 0;
 		foreach ( $submenu as $menuitem ) {
+			$params = clone $gparams;
+			$params->loadArray($menuitem['params']);
 			$table = JTable::getInstance ( 'menu' );
 			$table->load(array('menutype'=>'kunenamenu', 'link'=>$menuitem ['link']));
 			$data = array (
@@ -1881,7 +1886,7 @@ class KunenaModelInstall extends JModel {
 				'parent_id' => $parent->id,
 				'component_id' => $component_id,
 				'access' => $menuitem ['access'] + 1,
-				'params' => $params,
+				'params' => (string) $params,
 				'home' => 0,
 				'language' => '*',
 				'client_id' => 0

@@ -131,6 +131,10 @@ class KunenaForum {
 		return false;
 	}
 
+	public static function setup() {
+		if (class_exists('KunenaFactory')) KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
+	}
+
 	public function display($viewName, $layout='default', $template=null, $params = array()) {}
 }
 

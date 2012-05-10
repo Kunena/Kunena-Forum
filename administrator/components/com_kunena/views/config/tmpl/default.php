@@ -198,16 +198,6 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TAHEIGHT_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_CID') ?></td>
-						<td align="left" valign="top"><input type="text" name="cfg_rules_cid" value="<?php echo $this->escape($this->config->rules_cid) ?>" /></td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_CID_DESC') ?></td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_CID') ?></td>
-						<td align="left" valign="top"><input type="text" name="cfg_help_cid" value="<?php echo $this->escape($this->config->help_cid) ?>" /></td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_CID_DESC') ?></td>
-					</tr>
-					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FORUM_JUMP') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['enableforumjump'] ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FORUM_JUMP_DESC') ?></td>

@@ -94,8 +94,6 @@ class KunenaConfig extends JObject {
 	public $showpopsubjectstats = 1;
 	public $popsubjectcount = 5;
 	public $usernamechange = 0;
-	public $rules_cid = 1;
-	public $help_cid = 1;
 	// New 1.0.5 config variables
 	// bbcode options
 	public $showspoilertag = 1;

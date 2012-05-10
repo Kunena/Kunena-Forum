@@ -176,19 +176,19 @@ function installSampleData()
 
 	$query="INSERT INTO `#__kunena_messages`
 	(`id`, `parent`, `thread`, `catid`, `userid`, `name`, `subject`, `time`, `ip`) VALUES
-	(1, 0, 1, 2, ".$db->quote($my->id).", 'Kunena', ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_SUBJECT')).", ".$posttime->toUnix().", '127.0.0.1');";
+	(1, 0, 1, 2, ".$db->quote($my->id).", 'Kunena', ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')).", ".$posttime->toUnix().", '127.0.0.1');";
 
 	$queries[] = array ('kunena_messages', $query);
 
 	$query="INSERT INTO `#__kunena_messages_text`
 	(`mesid`, `message`) VALUES
-	(1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT_CONTENT')).");";
+	(1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')).");";
 
 	$queries[] = array ('kunena_messages_text', $query);
 
 	$query="INSERT INTO `#__kunena_topics`
 	(`id`, `category_id`, `subject`, `posts`, `first_post_id`, `first_post_time`, `first_post_userid`, `first_post_message`, `first_post_guest_name`, `last_post_id`, `last_post_time`, `last_post_userid`, `last_post_message`, `last_post_guest_name`) VALUES
-	(1, 2, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_SUBJECT')).", 1, 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT_CONTENT')).", 'Kunena', 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT_CONTENT')).", 'Kunena');";
+	(1, 2, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_SUBJECT')).", 1, 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')).", 'Kunena', 1, ".$posttime->toUnix().", ".$db->quote($my->id).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST_WELCOME_TEXT_CONTENT')).", 'Kunena');";
 
 	$queries[] = array ('kunena_topics', $query);
 

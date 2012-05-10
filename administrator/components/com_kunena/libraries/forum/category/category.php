@@ -734,22 +734,16 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 *
 	 * @since	2.0.0-BETA2
 	 */
-	public function isSubscribed($userid = null ) {
+	public function getSubscribed($userid = null ) {
 		if (!$this->exists()) {
 			return false;
 		}
 
 		if (!$userid ) return false;
 
-		$db = JFactory::getDBO ();
-		$query = "SELECT subscribed
-				FROM #__kunena_user_categories
-				WHERE user_id={$db->Quote($userid)} AND category_id={$db->Quote($this->id)}";
-		$db->setQuery ( $query );
-		$subscribed = $db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return false;
+		$subscribed = KunenaForumCategoryUserHelper::get($this->id,$userid);
 
-		if($subscribed ) return true;
+		if($subscribed->subscribed !=null) return true;
 		else return false;
 	}
 

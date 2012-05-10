@@ -286,7 +286,7 @@ class KunenaViewCategory extends KunenaView {
 
 		// Is user allowed to subscribe category?
 		if ($this->category->authorise ( 'subscribe', null, true )) {
-			$subscribed = $this->category->isSubscribed($this->me->userid);
+			$subscribed = $this->category->getSubscribed($this->me->userid);
 
 			if (!$subscribed) {
 				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=subscribe&catid={$this->category->id}{$token}");

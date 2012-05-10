@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewMisc extends KunenaView {
 	function displayDefault($tpl = null) {
-		$params = JComponentHelper::getParams( 'com_kunena' );
+		$params = $this->app->getParams( 'com_kunena' );
 		$this->header = $params->get( 'page_title' );
 		$this->body = $params->get( 'body' );
 
@@ -31,7 +31,6 @@ class KunenaViewMisc extends KunenaView {
 		} else {
 			$this->body = KunenaHtmlParser::parseBBCode($this->body);
 		}
-
 
 		$this->display ();
 	}

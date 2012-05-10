@@ -21,6 +21,8 @@ function kunena_upgrade_200_configuration($parent) {
 	unset($config->pm_component);
 	unset($config->js_actstr_integration);
 	unset($config->sefcats);
+	unset($config->rules_cid);
+	unset($config->help_cid);
 
 	if (isset($config->allowimageupload)) {
 		$config->set('image_upload', 'nobody');

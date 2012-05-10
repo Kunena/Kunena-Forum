@@ -88,7 +88,7 @@ function saveLang($infile, $outfile) {
 function translate($matches) {
 	global $translations;
 	$string = isset($translations[$matches[2]]) ? $translations[$matches[2]] : '';
-	if ($matches[3] == $string) $string = '';
+	// if ($matches[3] == $string) $string = '';
 	$commentout = ( !empty($matches[1]) ? $matches[1] : ( $string ? '' : '; ' ) );
 	return $commentout.$matches[2].'="'.$string.'"';
 }

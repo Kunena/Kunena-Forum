@@ -15,6 +15,10 @@
 		<filename>index.html</filename>
 		<folder>alphauserpoints</folder>
 	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_kunena_alphauserpoints.sys.ini</language>
+	</languages>
+
 	<params>
 		<param name="activity" type="radio" default="1" label="PLG_KUNENA_ALPHAUSERPOINTS_ACTIVITY" description="PLG_KUNENA_ALPHAUSERPOINTS_ACTIVITY_DESC">
 			<option value="0">NO</option>

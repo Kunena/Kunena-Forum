@@ -606,6 +606,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		}
 
 		KunenaUserHelper::recount();
+		KunenaForumMessageThankyouHelper::recount();
 
 		$this->id = null;
 		KunenaForumCategoryHelper::register($this);

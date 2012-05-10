@@ -12,13 +12,15 @@ defined ( '_JEXEC' ) or die ();
 abstract class KunenaError {
 	static $enabled = 0;
 	static $handler = false;
+	static $debug = false;
+	static $admin = false;
 
 	public static function initialize() {
 		if (!self::$enabled) {
-			$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
-			$admin = JFactory::getApplication()->isAdmin() || KunenaUserHelper::getMyself()->isAdmin();
-			register_shutdown_function('kunenaShutdownHandler', $debug || $admin || KUNENA_PROFILER);
-			if (!$debug) return;
+			self::$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
+			self::$admin = JFactory::getApplication()->isAdmin() || KunenaUserHelper::getMyself()->isAdmin();
+			register_shutdown_function('kunenaShutdownHandler', self::$debug || self::$admin || KUNENA_PROFILER);
+			if (!self::$debug) return;
 
 			@ini_set('display_errors', 1);
 			self::$handler = true;
@@ -47,14 +49,14 @@ abstract class KunenaError {
 	}
 
 	public static function error($msg, $where='default') {
-		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
+		if (self::$debug) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_ERROR_'.strtoupper($where), $msg), 'error');
 		}
 	}
 
 	public static function warning($msg, $where='default') {
-		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
+		if (self::$debug) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_'.strtoupper($where), $msg), 'notice');
 		}
@@ -64,9 +66,7 @@ abstract class KunenaError {
 		$db = JFactory::getDBO();
 		if ($db->getErrorNum ()) {
 			$app = JFactory::getApplication();
-			$my = JFactory::getUser();
-			$acl = KunenaAccess::getInstance();
-			if ($acl->isAdmin ($my->id)) {
+			if (self::$debug || self::$admin) {
 				$app->enqueueMessage ( 'Kunena '.JText::sprintf ( 'COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.org/">www.kunena.org</a>' ), 'error' );
 			} else {
 				$app->enqueueMessage ( 'Kunena '.JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' ), 'error' );
@@ -80,9 +80,7 @@ abstract class KunenaError {
 		$db = JFactory::getDBO();
 		if ($db->getErrorNum ()) {
 			$app = JFactory::getApplication();
-			$my = JFactory::getUser();
-			$acl = KunenaAccess::getInstance();
-			if ($acl->isAdmin ($my)) {
+			if (self::$debug || self::$admin) {
 				return $db->getErrorMsg();
 			} else {
 				return 'Kunena '.JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' );

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage SyncUsers
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,28 +17,18 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></div>
+	<div class="kadmin-functitle icon-purgerestatements"><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></div>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
-				<input type="hidden" name="task" value="syncusers" />
+				<input type="hidden" name="task" value="purgeReStatements" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 
 				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_SYNC_USERS_OPTIONS'); ?></legend>
+					<legend><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></legend>
 					<table class="kadmin-adminform">
 						<tr>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_ADD'); ?></td>
-							<td><input type="checkbox" checked="checked" name="useradd" value="1" /></td>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_ADD_DESC'); ?></td>
-						</tr>
-						<tr>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DEL'); ?></td>
-							<td><input type="checkbox" name="userdel" value="1" /></td>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_DEL_DESC'); ?></td>
-						</tr>
-						<tr>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_RENAME'); ?></td>
-							<td><input type="checkbox" name="userrename" value="1" /></td>
-							<td><?php echo JText::_('COM_KUNENA_SYNC_USERS_RENAME_DESC'); ?></td>
+							<td><?php echo JText::_('COM_KUNENA_A_PURGE_ENTER_RE_STATEMENTS'); ?><br />
+							<input type="text" name="re_string" value="" />
+							</td>
 						</tr>
 					</table>
 				</fieldset>
@@ -48,4 +38,3 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>
 </div>
-<?php

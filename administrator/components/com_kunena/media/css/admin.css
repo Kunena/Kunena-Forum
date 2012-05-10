@@ -2,7 +2,7 @@
  * Kunena Component
  * @package Kunena.Administrator
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -119,6 +119,7 @@ div.kadmin-functitle.icon-stats { background: url(../icons/large/stats.png) 5px 
 div.kadmin-functitle.icon-systemreport { background: url(../icons/large/report.png) 5px 5px no-repeat; }
 div.kadmin-functitle.icon-support { background: url(../icons/large/support.png) 5px 5px no-repeat; }
 div.kadmin-functitle.icon-editcss { background: url(../icons/large/css.png) 5px 5px no-repeat; }
+div.kadmin-functitle.icon-purgerestatements { background: url(../icons/large/purgerestatements.png) 5px 5px no-repeat; }
 
 div.kadmin-functitle.no-icon { text-indent: 5px !important; }
 

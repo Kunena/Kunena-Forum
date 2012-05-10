@@ -15,6 +15,10 @@
 		<filename>index.html</filename>
 		<folder>uddeim</folder>
 	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_kunena_uddeim.sys.ini</language>
+	</languages>
+
 	<params>
 		<param name="private" type="radio" default="1" label="PLG_KUNENA_UDDEIM_PRIVATE" description="PLG_KUNENA_UDDEIM_PRIVATE_DESC">
 			<option value="0">NO</option>

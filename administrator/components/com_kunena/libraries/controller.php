@@ -50,14 +50,6 @@ class KunenaController extends JController {
 		}
 
 		$view = strtolower ( JRequest::getWord ( 'view', 'none' ) );
-
-		$app = JFactory::getApplication();
-		if (!$app->isAdmin()) {
-			$home = $app->getMenu ()->getActive ();
-			if (!empty($config['reload']) && !empty ( $home->query ['view'] ) && $home->query ['view'] == 'home' && !JRequest::getWord ( 'task' )) {
-				$view = 'home';
-			}
-		}
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.
@@ -68,7 +60,7 @@ class KunenaController extends JController {
 		}
 
 		// Set the name for the controller and instantiate it.
-		if ($app->isAdmin()) {
+		if (JFactory::getApplication()->isAdmin()) {
 			$class = $prefix . 'AdminController' . ucfirst ( $view );
 		} else {
 			$class = $prefix . 'Controller' . ucfirst ( $view );
@@ -101,14 +93,23 @@ class KunenaController extends JController {
 				$app->enqueueMessage ( $version_warning, 'notice' );
 			}
 		} else {
-			// Initialize profile integration
-			$integration = KunenaFactory::getProfile();
-			$integration->open();
+			$menu = $app->getMenu ();
+			$active = $menu->getActive ();
 
-			/*if (!$app->getMenu ()->getActive ()) {
-				// FIXME:
+			// Check if menu item was correctly routed
+			$routed = $menu->getItem ( KunenaRoute::getItemID() );
+/*
+			if (!$active) {
+				// FIXME: we may want to resctrict access only to menu items
 				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			}*/
+			}
+*/
+			if ($active->id != $routed->id) {
+				// Routing has been changed, redirect
+				// FIXME: check possible redirect loops!
+				$app->redirect (KunenaRoute::_(null, false));
+			}
+
 			// Joomla 1.6+ multi-language support
 			/* // FIXME:
 			if (isset($active->language) && $active->language != '*') {
@@ -143,13 +144,8 @@ class KunenaController extends JController {
 				}
 			}
 
-			// Do any specific processing for the view.
-			switch ($vName) {
-				default :
-					// Get the appropriate model for the view.
-					$model = $this->getModel ( $vName );
-					break;
-			}
+			// Get the appropriate model for the view.
+			$model = $this->getModel ( $vName );
 
 			// Push the model into the view (as default).
 			$view->setModel ( $model, true );
@@ -162,17 +158,16 @@ class KunenaController extends JController {
 
 			// Render the view.
 			if ($vFormat=='html') {
+				// Initialize profile integration
+				$integration = KunenaFactory::getProfile();
+				$integration->open();
 				$view->displayAll ();
+				$integration->close();
 			} else {
 				$view->displayLayout ();
 			}
 		}
 
-		if ($app->isSite()) {
-			// Close profile integration
-			$integration = KunenaFactory::getProfile();
-			$integration->close();
-		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 

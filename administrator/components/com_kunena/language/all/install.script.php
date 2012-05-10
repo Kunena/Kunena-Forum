@@ -9,11 +9,6 @@
  **/
 defined( '_JEXEC' ) or die();
 
-jimport( 'joomla.filesystem.file' );
-jimport( 'joomla.filesystem.folder' );
-jimport( 'joomla.filesystem.archive' );
-jimport( 'joomla.installer.installer' );
-
 class pkg_kunena_languagesInstallerScript {
 
 	public function uninstall($parent) {

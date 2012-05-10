@@ -15,6 +15,10 @@
 		<filename>index.html</filename>
 		<folder>community</folder>
 	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_kunena_community.sys.ini</language>
+	</languages>
+
 	<params>
 		<param name="access" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_ACCESS" description="PLG_KUNENA_COMMUNITY_ACCESS_DESC">
 			<option value="0">NO</option>

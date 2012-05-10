@@ -1247,7 +1247,7 @@ $info = @getimagesize($this->smiley_dir . '/' . $this->smileys[$token]);
 $this->smiley_info[$token] = $info;
 }
 $alt = htmlspecialchars($token);
-$output .= "<img src=\"" . htmlspecialchars($this->smiley_url .  $this->smileys[$token])
+$output .= "<img src=\"" . htmlspecialchars($this->smiley_url . '/' . $this->smileys[$token])
 . "\" width=\"{$info[0]}\" height=\"{$info[1]}\""
 . " alt=\"$alt\" title=\"$alt\" class=\"bbcode_smiley\" />";
 }

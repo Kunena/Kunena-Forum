@@ -18,6 +18,8 @@ class KunenaViewTopics extends KunenaView {
 		if (!$this->config->enablerss) {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
+
+		KunenaHtmlParser::$relative = false;
 		/*
 		// TODO: caching (this is from old code)
 		$cache = JFactory::getCache( 'com_kunena_rss' );

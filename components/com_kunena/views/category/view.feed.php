@@ -21,6 +21,8 @@ class KunenaViewCategory extends KunenaView {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
 
+		KunenaHtmlParser::$relative = false;
+
 		$this->category = $this->get ( 'Category' );
 		if (! $this->category->authorise('read')) {
 			JError::raiseError ( 404, $this->category->getError() );

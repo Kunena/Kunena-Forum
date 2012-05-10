@@ -286,14 +286,7 @@ class KunenaViewCategory extends KunenaView {
 
 		// Is user allowed to subscribe category?
 		if ($this->category->authorise ( 'subscribe', null, true )) {
-			// FIXME: add into library:
-			$db = JFactory::getDBO();
-			$query = "SELECT subscribed
-				FROM #__kunena_user_categories
-				WHERE user_id={$db->Quote($this->me->userid)} AND category_id={$db->Quote($this->category->id)}";
-			$db->setQuery ( $query );
-			$subscribed = $db->loadResult ();
-			if (KunenaError::checkDatabaseError()) return;
+			$subscribed = $this->category->isSubscribed($this->me->userid);
 
 			if (!$subscribed) {
 				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=subscribe&catid={$this->category->id}{$token}");

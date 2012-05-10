@@ -726,6 +726,33 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return $this->save();
 	}
 
+	/**
+	 * Get if the user has subscribed on this category.
+	 *
+	 * @param boolean $value 1/true for subscribed, 0/false for unsubscribed.
+	 * @param int $userid
+	 *
+	 * @since	2.0.0-BETA2
+	 */
+	public function isSubscribed($userid = null ) {
+		if (!$this->exists()) {
+			return false;
+		}
+
+		if (!$userid ) return false;
+
+		$db = JFactory::getDBO ();
+		$query = "SELECT subscribed
+				FROM #__kunena_user_categories
+				WHERE user_id={$db->Quote($userid)} AND category_id={$db->Quote($this->id)}";
+		$db->setQuery ( $query );
+		$subscribed = $db->loadResult ();
+		if (KunenaError::checkDatabaseError()) return false;
+
+		if($subscribed ) return true;
+		else return false;
+	}
+
 	// Internal functions
 
 	protected function buildInfo() {

@@ -741,10 +741,9 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 		if (!$userid ) return false;
 
-		$subscribed = KunenaForumCategoryUserHelper::get($this->id,$userid);
+		$usercategory = KunenaForumCategoryUserHelper::get($this->id,$userid);
 
-		if($subscribed->subscribed !=null) return true;
-		else return false;
+		return (bool) $usercategory->subscribed;
 	}
 
 	// Internal functions

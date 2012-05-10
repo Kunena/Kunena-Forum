@@ -28,22 +28,24 @@ class KunenaBbcode extends BBCode {
 	 *
 	 * @return	void
 	 */
-	function __construct() {
+	function __construct($relative = true) {
 		parent::__construct ();
 		$this->defaults = new KunenaBbcodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 
-		$dispatcher = JDispatcher::getInstance();
-		JPluginHelper::importPlugin('kunena');
-		$dispatcher->trigger( 'onKunenaBbcodeConstruct', array( $this ) );
+		$view = JString::strtolower ( JRequest::getCmd ( 'type', JRequest::getCmd ( 'view', '' )) );
 
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
 		$this->SetSmileyDir ( JPATH_ROOT );
-		$this->SetSmileyURL ( JURI::root() );
+		$this->SetSmileyURL ( $relative ? JURI::root(true) : rtrim(JURI::root(), '/') );
 		$this->SetDetectURLs ( true );
 		$this->SetURLPattern (array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher->trigger( 'onKunenaBbcodeConstruct', array( $this ) );
 	}
 
 	/**
@@ -53,12 +55,12 @@ class KunenaBbcode extends BBCode {
 	 * @return	void
 	 * @since	1.7
 	 */
-	public static function getInstance() {
+	public static function getInstance($relative = true) {
 		static $instance = false;
-		if (! $instance) {
-			$instance = new KunenaBbcode ();
+		if (!isset($instance[intval($relative)])) {
+			$instance[intval($relative)] = new KunenaBbcode ($relative);
 		}
-		return $instance;
+		return $instance[intval($relative)];
 	}
 
 	public function parseUrl($params) {
@@ -1191,10 +1193,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		'clipfish' => array ('flash', 464, 380, 0, 0, 'http://www.clipfish.de/videoplayer.swf?as=0&videoid=%vcode%&r=1&c=0067B3', 'videoid=([\w\-]*)', '' ),
 
-		// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
-		//				'flashvars' => array ('flash', 480, 360, 0, 0, $content, '', array (array (6, 'flashvars', $vid ["param"] ) ) ),
-		//
-		
 		'metacafe' => array ('flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
 
 		'myspace' => array ('flash', 430, 346, 0, 0, 'http://lads.myspace.com/videos/vplayer.swf', 'VideoID=(\d*)', array (array (6, 'flashvars', 'm=%vcode%&v=2&type=video' ) ) ),

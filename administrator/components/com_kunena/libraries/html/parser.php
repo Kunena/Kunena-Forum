@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 abstract class KunenaHtmlParser {
 	static $emoticons = null;
+	static $relative = true;
 
 	public static function getEmoticons($grayscale = false, $emoticonbar = false) {
 		$db = JFactory::getDBO ();
@@ -56,7 +57,7 @@ abstract class KunenaHtmlParser {
 	public static function parseBBCode($txt, $parent=null, $len=0) {
 		if (!$txt) return;
 
-		$bbcode = KunenaBbcode::getInstance();
+		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(false);
@@ -76,7 +77,7 @@ abstract class KunenaHtmlParser {
 		$txt = preg_replace ( '/\[attachment(.*?)\](.*?)\[\/attachment\]/s', '', $txt );
 		$txt = preg_replace ( '/\[code\](.*?)\[\/code]/s', '', $txt );
 
-		$bbcode = KunenaBbcode::getInstance();
+		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$txt = $bbcode->Parse($txt);
@@ -86,7 +87,7 @@ abstract class KunenaHtmlParser {
 	public static function stripBBCode($txt, $len=0) {
 		if (!$txt) return;
 
-		$bbcode = KunenaBbcode::getInstance();
+		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$txt = strip_tags($bbcode->Parse($txt));

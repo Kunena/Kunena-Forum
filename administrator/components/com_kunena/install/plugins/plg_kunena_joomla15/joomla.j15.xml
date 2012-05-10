@@ -15,6 +15,10 @@
 		<filename>index.html</filename>
 		<folder>joomla</folder>
 	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_kunena_joomla.sys.ini</language>
+	</languages>
+
 	<params>
 		<param name="access" type="radio" default="1" label="PLG_KUNENA_JOOMLA_ACCESS" description="PLG_KUNENA_JOOMLA_ACCESS_DESC">
 			<option value="0">NO</option>

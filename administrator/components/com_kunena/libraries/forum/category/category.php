@@ -727,6 +727,26 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return $this->save();
 	}
 
+	/**
+	 * Get if the user has subscribed on this category.
+	 *
+	 * @param boolean $value 1/true for subscribed, 0/false for unsubscribed.
+	 * @param int $userid
+	 *
+	 * @since	2.0.0-BETA2
+	 */
+	public function getSubscribed($userid = null ) {
+		if (!$this->exists()) {
+			return false;
+		}
+
+		if (!$userid ) return false;
+
+		$usercategory = KunenaForumCategoryUserHelper::get($this->id,$userid);
+
+		return (bool) $usercategory->subscribed;
+	}
+
 	// Internal functions
 
 	protected function buildInfo() {

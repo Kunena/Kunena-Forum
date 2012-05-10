@@ -36,7 +36,7 @@
 * SOFTWARE.
 * --
 *
-* @package JSMin
+* @package KunenaJSMin
 * @author Ryan Grove <ryan@wonko.com>
 * @copyright 2002 Douglas Crockford <douglas@crockford.com> (jsmin.c)
 * @copyright 2008 Ryan Grove <ryan@wonko.com> (PHP port)
@@ -46,7 +46,7 @@
 * @link https://github.com/rgrove/jsmin-php
 */
 
-class JSMin {
+class KunenaJSMin {
 	const ORD_LF = 10;
 	const ORD_SPACE = 32;
 	const ACTION_KEEP_A = 1;
@@ -72,7 +72,7 @@ class JSMin {
 	* @return string
 	*/
 	public static function minify($js) {
-		$jsmin = new JSMin($js);
+		$jsmin = new KunenaJSMin($js);
 		return $jsmin->min();
 	}
 
@@ -98,7 +98,7 @@ class JSMin {
 	*
 	* @uses next()
 	* @uses get()
-	* @throws JSMinException If parser errors are found:
+	* @throws KunenaJSMinException If parser errors are found:
 	* - Unterminated string literal
 	* - Unterminated regular expression set in regex literal
 	* - Unterminated regular expression literal
@@ -125,7 +125,7 @@ class JSMin {
 						}
 
 						if (ord($this->a) <= self::ORD_LF) {
-							throw new JSMinException('Unterminated string literal.');
+							throw new KunenaJSMinException('Unterminated string literal.');
 						}
 
 						if ($this->a === '\\') {
@@ -165,7 +165,7 @@ class JSMin {
 									$this->output .= $this->a;
 									$this->a = $this->get();
 								} elseif (ord($this->a) <= self::ORD_LF) {
-									throw new JSMinException('Unterminated regular expression set in regex literal.');
+									throw new KunenaJSMinException('Unterminated regular expression set in regex literal.');
 								}
 							}
 						} elseif ($this->a === '/') {
@@ -174,7 +174,7 @@ class JSMin {
 							$this->output .= $this->a;
 							$this->a = $this->get();
 						} elseif (ord($this->a) <= self::ORD_LF) {
-							throw new JSMinException('Unterminated regular expression literal.');
+							throw new KunenaJSMinException('Unterminated regular expression literal.');
 						}
 
 						$this->output .= $this->a;
@@ -325,7 +325,7 @@ class JSMin {
 	*
 	* @uses get()
 	* @uses peek()
-	* @throws JSMinException On unterminated comment.
+	* @throws KunenaJSMinException On unterminated comment.
 	* @return string
 	*/
 	protected function next() {
@@ -355,7 +355,7 @@ class JSMin {
 							break;
 
 							case null:
-								throw new JSMinException('Unterminated comment.');
+								throw new KunenaJSMinException('Unterminated comment.');
 						}
 					}
 
@@ -380,4 +380,4 @@ class JSMin {
 }
 
 // -- Exceptions ---------------------------------------------------------------
-class JSMinException extends Exception {}
+class KunenaJSMinException extends Exception {}

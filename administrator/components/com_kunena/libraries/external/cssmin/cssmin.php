@@ -3744,11 +3744,11 @@ class CssCompressExpressionValuesMinifierPlugin extends aCssMinifierPlugin
 	 */
 	public function apply(aCssToken &$token)
 		{
-		if (class_exists("JSMin") && stripos($token->Value, "expression(") !== false)
+		if (class_exists("KunenaJSMin") && stripos($token->Value, "expression(") !== false)
 			{
 			$value	= $token->Value;
 			$value	= substr($token->Value, stripos($token->Value, "expression(") + 10);
-			$value	= trim(JSMin::minify($value));
+			$value	= trim(KunenaJSMin::minify($value));
 			$token->Value = "expression(" . $value . ")";
 			}
 		return false;

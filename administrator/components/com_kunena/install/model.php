@@ -618,6 +618,8 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepDatabase() {
+		KunenaForum::setup();
+
 		$task = $this->getTask();
 		switch ($task) {
 			case 0:
@@ -667,6 +669,8 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepFinish() {
+		KunenaForum::setup();
+
 		$entryfiles = array(
 			array(KPATH_ADMIN, 'api', 'php'),
 			array(KPATH_ADMIN, 'admin.kunena', 'php'),
@@ -2027,7 +2031,7 @@ class KunenaModelInstall extends JModel {
 	public function recountThankyou() {
 		//Only perform this action if upgrading form previous version
 		$version = $this->getVersion();
-		if (version_compare ( $version->version, '2.0.0-DEV', ">" )) {
+		if (version_compare ( $version->version, '2.0.0-BETA2', ">" )) {
 			return true;
 		}
 

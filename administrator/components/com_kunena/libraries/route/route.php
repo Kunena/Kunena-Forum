@@ -495,8 +495,13 @@ abstract class KunenaRoute {
 		static $cache = array();
 		if (!$catid) return true;
 		if (!isset($cache[$item->id])) {
-			// FIXME: Joomla 1.6+: Deprecated JParameter
-			$params = new JParameter($item->params);
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$params = $item->params;
+			} else {
+				// Joomla 1.5
+				$params = new JParameter($item->params);
+			}
 			$catids = $params->get('catids', array());
 			if (!is_array($catids)) {
 				$catids = explode(',', $catids);

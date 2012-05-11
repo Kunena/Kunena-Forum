@@ -70,13 +70,17 @@ class KunenaModel extends JModel {
 		$this->embedded = true;
 		$this->setState('embedded', true);
 
-		// FIXME: Joomla 1.6+: Deprecated JParameter
-		if ($params instanceof JParameter) {
+		if ($params instanceof JRegistry) {
 			$this->params = $params;
 		} else {
-			// FIXME: Joomla 1.6+: Deprecated JParameter
-			$this->params = new JParameter('');
-			$this->params->bind($params);
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$this->params = new JRegistry($params);
+			} else {
+				// Joomla 1.5
+				$this->params = new JParameter('');
+				$this->params->bind($params);
+			}
 		}
 	}
 

@@ -15,12 +15,6 @@ jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.path');
 
-// FIXME: Joomla 1.6+: Deprecated JParameter
-class KunenaParameter extends JParameter {
-	public function getXml() {
-		return $this->_xml;
-	}
-}
 /**
 
 * Kunena Users Table Class
@@ -74,8 +68,7 @@ class KunenaTemplate extends JObject
 		if (!is_array($this->default)) $this->default = (array) $this->default;
 		array_unshift($this->default, $name);
 
-		$xml = KPATH_SITE . "/template/{$name}/template.xml";
-		$this->xml_path = $xml;
+		$this->xml_path = KPATH_SITE . "/template/{$name}/template.xml";
 		$ini = KPATH_SITE . "/template/{$name}/params.ini";
 		$content = '';
 		if (is_readable( $ini ) ) {
@@ -83,17 +76,23 @@ class KunenaTemplate extends JObject
 			$content = file_get_contents($ini);
 		}
 		$this->name = $name;
-		$this->params = new KunenaParameter($content, $xml);
 
-		$xml = $this->params->getXml();
-		if ($xml) {
-			foreach ($xml['_default']->children() as $param)  {
-				if ($param->attributes('type') == 'spacer') continue;
-				$this->params->def($param->attributes('name'), $param->attributes('default'));
-				$name = $param->attributes('name');
-				if (substr($name,0,5) == 'style') {
-					$this->style_variables[$name] = $this->params->get($name);
-				}
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$this->params = new JRegistry($content);
+		} else {
+			// Joomla 1.5
+			$this->params = new JParameter($content);
+		}
+		// Load default values
+		$xml = simplexml_load_file($this->xml_path);
+		foreach ($xml->xpath('params/param') as $node) {
+			if (isset($node['name']) && isset($node['default'])) $this->params->def($node['name'], $node['default']);
+		}
+		// Generate CSS variables
+		foreach ($this->params->toArray() as $key=>$value)  {
+			if (substr($key,0,5) == 'style') {
+				$this->style_variables[$key] = $value;
 			}
 		}
 	}
@@ -224,10 +223,8 @@ HTML;
 
 	public function getStyleVariables() {
 		if ($this->compiled_style_variables === null) {
-			$xml = $this->params->getXml();
 			$variables = array();
 			foreach ($this->style_variables as $name=>$value)  {
-				$value = $this->params->get($name);
 				if ($value != '')
 					$variables[] = "\t{$name}:{$value};";
 			}

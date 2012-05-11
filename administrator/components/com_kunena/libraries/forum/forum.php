@@ -281,17 +281,20 @@ abstract class KunenaForum {
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
 
-		// FIXME: Joomla 1.6+: Deprecated JParameter
-		if (!($params instanceof JParameter)) {
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry($params);
+		} else {
+			// Joomla 1.5
 			$parameters = new JParameter('');
 			$parameters->bind($params);
-		} else {
-			$parameters = $params;
+			$params = $parameters;
 		}
-		$parameters->set('layout', $layout);
+
+		$params->set('layout', $layout);
 		// Push the model into the view (as default).
 		$model = new $model ();
-		$model->initialize($parameters);
+		$model->initialize($params);
 		$view->setModel ( $model, true );
 
 		// Add template path
@@ -299,7 +302,7 @@ abstract class KunenaForum {
 		foreach ($ktemplate->getTemplatePaths() as $templatepath) {
 			$view->addTemplatePath(JPATH_SITE."/{$templatepath}/html/{$viewName}");
 		}
-		if ($parameters->get('templatepath')) $view->addTemplatePath($parameters->get('templatepath'));
+		if ($params->get('templatepath')) $view->addTemplatePath($params->get('templatepath'));
 
 		if ($viewName != 'common') {
 			$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );

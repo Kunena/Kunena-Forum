@@ -22,9 +22,15 @@ class KunenaControllerUser extends KunenaController {
 		// Redirect profile to integrated component if profile integration is turned on
 		$redirect = 1;
 		$active = $this->app->getMenu ()->getActive ();
+
 		if (!empty($active)) {
-			// FIXME: Joomla 1.6+: Deprecated JParameter
-			$params = new JParameter($active->params);
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$params = $active->params;
+			} else {
+				// Joomla 1.5
+				$params = new JParameter($active->params);
+			}
 			$redirect = $params->get('integration', 1);
 		}
 		if ($redirect && JRequest::getCmd('layout') != 'moderate' && JRequest::getCmd('format') == 'html') {

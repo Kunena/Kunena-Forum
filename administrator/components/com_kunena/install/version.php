@@ -12,15 +12,6 @@ defined ( '_JEXEC' ) or die ();
 class KunenaVersion
 {
 	/**
-	 * Contructor
-	 *
-	 * @since	1.6
-	 */
-	public function __construct()
-	{
-	}
-
-	/**
 	 * Get warning for unstable releases
 	 *
 	 * @param	string	Message to be shown containing two %s parameters for version (2.0.0RC) and version type (GIT, RC, BETA etc)
@@ -32,6 +23,9 @@ class KunenaVersion
 		if (strpos(KunenaForum::version(), 'GIT') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_GIT');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_GIT_WARNING');
+		} else if (strpos(KunenaForum::version(), 'DEV') !== false) {
+			$kn_version_type = JText::_('COM_KUNENA_VERSION_DEV');
+			$kn_version_warning = JText::_('COM_KUNENA_VERSION_DEV_WARNING');
 		} else if (strpos(KunenaForum::version(), 'RC') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_RC');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_RC_WARNING');
@@ -41,9 +35,6 @@ class KunenaVersion
 		} else if (strpos(KunenaForum::version(), 'ALPHA') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_ALPHA');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_ALPHA_WARNING');
-		} else if (strpos(KunenaForum::version(), 'DEV') !== false) {
-			$kn_version_type = JText::_('COM_KUNENA_VERSION_DEV');
-			$kn_version_warning = JText::_('COM_KUNENA_VERSION_DEV_WARNING');
 		}
 		if (!empty($kn_version_warning))
 		{

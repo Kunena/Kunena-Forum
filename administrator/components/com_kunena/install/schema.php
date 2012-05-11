@@ -45,15 +45,6 @@ class KunenaModelSchema extends JModel
 	}
 
 	/**
-	 * Installer object destructor
-	 *
-	 * @access public
-	 * @since 1.6
-	 */
-	public function __destruct() {
-	}
-
-	/**
 	 * Overridden method to get model state variables.
 	 *
 	 * @param	string	Optional parameter name.

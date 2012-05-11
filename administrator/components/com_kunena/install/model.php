@@ -79,20 +79,10 @@ class KunenaModelInstall extends JModel {
 			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_INSTALL') ),
 			array ('step' => 'Prepare', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PREPARE') ),
 			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
-			//array ('step' => 'Language', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_LANGUAGES') ),
 			array ('step' => 'Plugins', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PLUGINS') ),
 			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
 			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
 			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_COMPLETE') ) );
-	}
-
-	/**
-	 * Installer object destructor
-	 *
-	 * @access public
-	 * @since 1.6
-	 */
-	public function __destruct() {
 	}
 
 	/**
@@ -130,15 +120,6 @@ class KunenaModelInstall extends JModel {
 		}
 		$this->deleteMenu();
 		return true;
-	}
-
-	/**
-	 * Installer cleanup after installation
-	 *
-	 * @access public
-	 * @since 1.6
-	 */
-	public function cleanup() {
 	}
 
 	public function getModel() {
@@ -538,16 +519,6 @@ class KunenaModelInstall extends JModel {
 		if (! $this->getInstallError ())
 			$this->setStep ( $this->getStep()+1 );
 		$this->checkTimeout(true);
-	}
-
-	public function stepLanguage() {
-		$lang = JFactory::getLanguage();
-		$languages = $lang->getKnownLanguages();
-		foreach ($languages as $language) {
-			$this->installLanguage($language['tag'], $language['name']);
-		}
-		if (! $this->getInstallError ())
-			$this->setStep($this->getStep()+1);
 	}
 
 	public function stepExtract() {

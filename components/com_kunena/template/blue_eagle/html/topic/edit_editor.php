@@ -74,7 +74,7 @@ defined ( '_JEXEC' ) or die ();
 				<input name="text2" id="kbbcode-link_text" type="text" size="30" maxlength="150"
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_LINKTEXT'); ?>')" />
 				<input type="button" name="insterLink" value="<?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?>"
-					onclick="kbbcode.replaceSelection('[url=' + document.id('kbbcode-link_url').get('value') + ']' + document.id('kbbcode-link_text').get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
+					onclick="kbbcode.focus().replaceSelection('[url=' + document.id('kbbcode-link_url').get('value') + ']' + document.id('kbbcode-link_text').get('value') + '[/url]', false); kToggleOrSwap('kbbcode-link-options');"
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_LINKAPPLY'); ?>')" />
 			</div>
 
@@ -228,7 +228,7 @@ defined ( '_JEXEC' ) or die ();
 			<div id="smilie"><?php
 			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
 			foreach ( $emoticons as $emo_code=>$emo_url ) {
-				echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.insert(\' '. $emo_code .' \', \'after\', true);" style="cursor:pointer"/> ';
+				echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
 			}
 			?>
 			</div>
@@ -257,7 +257,7 @@ defined ( '_JEXEC' ) or die ();
 
 	<td class="kcol-last kcol-editor-field">
 		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50" tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
-		
+
 		<!-- Hidden preview placeholder -->
 		<div id="kbbcode-preview" style="display: none;"></div>
 		<?php if ($this->message->exists()) : ?>

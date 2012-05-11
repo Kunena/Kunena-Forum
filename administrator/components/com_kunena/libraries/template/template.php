@@ -411,7 +411,7 @@ HTML;
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		}
-		return JFactory::getDocument ()->addScript ( $this->getFile($filename, true, '', null, 'default') );
+		return JFactory::getDocument ()->addScript ( $this->getFile($filename, true, '', 'media/kunena', 'default') );
 	}
 
 	/*

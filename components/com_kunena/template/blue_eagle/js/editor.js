@@ -412,13 +412,11 @@ var kbbcode = new Class({
 		var lines = this.el.getSelectedText().split("\n");
 		var newlines = [];
 		lines.each(function(line) {
-			if (line != "")
-				newlines.push(callback.attempt(line, this));
-			else
-				newlines.push("");
+			if (line.trim() != "")
+				newlines.push(callback.attempt(line.trim(), this));
 		}.bind(this));
 
-		this.el.insertAtCursor(newlines.join("\n")+"\n", true);
+		this.el.insertAtCursor(newlines.join("\r\n"), true);
 	},
 
 	/*

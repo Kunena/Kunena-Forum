@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 					</ul>
 				</div>
-	
+
 				<div class="postbuttons kbox-full">
 					<div style="display: none;" id="kbbcode-size-options">
 						<span class="kmsgtext-xs hasTip" title="[size=1]" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XS') ?>">
@@ -51,21 +51,21 @@ defined ( '_JEXEC' ) or die ();
 							<?php echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT') ?>
 						</span>
 					</div>
-	
+
 					<div style="display: none;" id="kbbcode-color-options">
 						<script type="text/javascript">kGenerateColorPalette('4%', '15px');</script>
 					</div>
-	
+
 					<div style="display: none;" id="kbbcode-link-options">
 						<?php echo JText::_('COM_KUNENA_EDITOR_LINK_URL') ?>
 						<input class="hasTip" id="kbbcode-link_url" name="url" type="text" size="40" value="http://" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKURL') ?>" />
 						<?php echo JText::_('COM_KUNENA_EDITOR_LINK_TEXT') ?>
 						<input class="hasTip" name="text2" id="kbbcode-link_text" type="text" size="30" maxlength="150" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKTEXT') ?>" />
 						<input class="hasTip" type="button" name="insterLink" value="<?php echo JText::_('COM_KUNENA_EDITOR_INSERT') ?>"
-							onclick="kbbcode.replaceSelection('[url=' + document.id('kbbcode-link_url').get('value') + ']' + document.id('kbbcode-link_text').get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
+							onclick="kbbcode.replaceSelection('[url=' + document.id('kbbcode-link_url').get('value') + ']' + document.id('kbbcode-link_text').get('value') + '[/url]', false); kToggleOrSwap('kbbcode-link-options');"
 							title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKAPPLY') ?>" />
 					</div>
-	
+
 					<div style="display: none;" id="kbbcode-image-options">
 						<?php echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_SIZE') ?>
 						<input class="hasTip" id="kbbcode-image_size" name="size" type="text" size="10" maxlength="10" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE') ?>" />
@@ -73,7 +73,7 @@ defined ( '_JEXEC' ) or die ();
 						<input class="hasTip" name="url2" id="kbbcode-image_url" type="text" size="40" value="http://" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKURL') ?>" />
 						<input class="hasTip" type="button" name="Link" value="<?php echo JText::_('COM_KUNENA_EDITOR_INSERT') ?>" onclick="kInsertImageLink()" title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY') ?>" />
 					</div>
-	
+
 					<?php if (!$this->message->parent && isset($this->poll)) : ?>
 					<div style="display: none;" id="kbbcode-poll-options">
 						<?php JHTML::_('behavior.calendar'); ?>
@@ -86,7 +86,7 @@ defined ( '_JEXEC' ) or die ();
 						<img class="hasTip" id="kbutton-poll-rem"
 							src="<?php echo $this->ktemplate->getImagePath('icons/poll_rem_options.png') ?>"
 							title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
-	
+
 						<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 						<?php echo JHTML::_('calendar', isset($this->poll->polltimetolive) ? $this->escape($this->poll->polltimetolive) : '0000-00-00', 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:document.id(\'helpbox\').set(\'value\', \''.JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN',true).'\')')); ?>
 						<?php
@@ -102,7 +102,7 @@ defined ( '_JEXEC' ) or die ();
 						<input type="hidden" name="number_total_options" id="numbertotal" value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>" />
 					</div>
 					<?php endif; ?>
-	
+
 					<?php
 					if ($this->config->highlightcode) :
 						if (version_compare(JVERSION, '1.6','>')) {
@@ -126,7 +126,7 @@ defined ( '_JEXEC' ) or die ();
 					</div>
 					<?php endif ?>
 					<?php endif ?>
-	
+
 					<?php if ($this->config->showvideotag) : ?>
 					<div style="display: none;" id="kbbcode-video-options">
 						<?php echo JText::_('COM_KUNENA_EDITOR_VIDEO_SIZE') ?>
@@ -154,19 +154,19 @@ defined ( '_JEXEC' ) or die ();
 					</div>
 					<?php endif ?>
 				</div>
-	
+
 				<?php if (!$this->config->disemoticons) : ?>
 				<div class="postbuttons clear ">
 					<div id="ksmiliebar"><?php
 					$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
 					foreach ( $emoticons as $emo_code=>$emo_url ) {
-						echo '<img class="btnImage hasTip" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.insert(\' '. $emo_code .' \', \'after\', true);" style="cursor:pointer"/> ';
+						echo '<img class="btnImage hasTip" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
 					}
 					?>
 					</div>
 				</div>
 				<?php endif ?>
-	
+
 				<div class="kposthint kbox-full">
 					<input type="text" value="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT') ?>" maxlength="100" disabled="disabled" class="kbox-width inputbox" size="45" id="helpbox" name="helpbox" />
 				</div>

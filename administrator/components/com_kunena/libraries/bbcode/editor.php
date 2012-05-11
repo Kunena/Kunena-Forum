@@ -286,19 +286,18 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 					// <wrap-selection />
 					if (!$tag) continue;
 					if (!$action['repeat']) {
-						$js .= "\n	this.wrapSelection('[{$tag}]', '[/{$tag}]', false);";
+						$js .= "\n	this.wrapSelection('[{$tag}]', '[/{$tag}]', true);";
 					} else {
 						$start = $action['start'] ? $action['start'] : "[{$action['tag']}]";
 						$end =  $action['end'] ? $action['end'] : "[/{$action['tag']}]";
 						$js .= "\nselection = this.getSelection();
 	if (selection) {
 		this.processEachLine(function(line) {
-				return '  {$start}' + line + '{$end}';
-			}, false);
-			this.insert('{$action['before']}', 'before', false);
-			this.insert('{$action['after']}', 'after', true);
+			return '  {$start}' + line + '{$end}';
+		}, false);
+		this.wrapSelection('{$action['before']}', '{$action['after']}', false);
 	} else {
-			this.wrapSelection('{$action['empty_before']}', '{$action['empty_after']}', false);
+		this.wrapSelection('{$action['empty_before']}', '{$action['empty_after']}', false);
 	}";
 					}
 					break;

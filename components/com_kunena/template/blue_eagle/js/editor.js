@@ -29,6 +29,7 @@ Element.implement({
 	},
 
 	getSelectedRange: function() {
+		this.focus();
 		if (this.selectionStart != null){
 			return {
 				start: this.selectionStart,
@@ -228,6 +229,7 @@ var kbbcode = new Class({
 	initialize: function(element, list, options) {
 
 		this.el = document.id(element);
+		this.selection = {start:0, end:0};
 
 		this.setOptions(options);
 
@@ -239,8 +241,22 @@ var kbbcode = new Class({
 
 				'blur': function(event) {
 					this.timer = $clear(this.timer);
+				}.bind(this),
+				
+				// Fixing IE
+				'select': function(event) {
+					this.selection = this.el.getSelectedRange();
+				}.bind(this),
+
+				'click': function(event) {
+					this.selection = this.el.getSelectedRange();
+				}.bind(this),
+				
+				'keyup': function(event) {
+					this.selection = this.el.getSelectedRange();
 				}.bind(this)
-			});
+				// End fixing IE
+});
 		}
 		if(this.options.interceptTabs) {
 
@@ -294,6 +310,17 @@ var kbbcode = new Class({
 			this.el.fireEvent('change');
 		}
 	},
+	
+	/*
+			function focus
+				Gets focus in IE7-10
+	*/
+	focus: function() {
+		if(Browser.ie) {
+			this.el.selectRange(this.selection.start, this.selection.end);
+		}
+		return this;
+	},
 
 	/*
 		Function: getSelection
@@ -323,6 +350,7 @@ var kbbcode = new Class({
 		select = (select === null) ? true : select;
 		this.el.insertAroundCursor({before: wrapperLeft, after: wrapperRight, defaultMiddle: ""});
 		if (!select) this.el.selectRange(this.el.getSelectionEnd(), this.el.getSelectionEnd());
+		this.selection = this.el.getSelectedRange();
 	},
 
 	/*
@@ -343,6 +371,7 @@ var kbbcode = new Class({
 		var pos = (where == "before") ? this.el.getSelectionStart() : this.el.getSelectionEnd();
 		this.el.selectRange(pos, pos);
 		this.el.insertAtCursor(newText, select);
+		this.selection = this.el.getSelectedRange();
 	},
 
 	/*
@@ -359,6 +388,7 @@ var kbbcode = new Class({
 	replaceSelection: function(newText, select) {
 		select = (select === null) ? true : select;
 		this.el.insertAtCursor(newText, select);
+		this.selection = this.el.getSelectedRange();
 	},
 
 	/*
@@ -572,7 +602,7 @@ function kGenerateColorPalette(width, height)
 function kInsertCode() {
 	var kcodetype = document.id('kcodetype').get('value');
 	if (kcodetype != '') kcodetype = ' type='+kcodetype;
-	kbbcode.wrapSelection('[code'+kcodetype+']', '[/code]', false); 
+	kbbcode.focus().wrapSelection('[code'+kcodetype+']', '[/code]', false); 
 	kToggleOrSwap("kbbcode-code-options");
 }
 
@@ -584,9 +614,9 @@ function kInsertCode() {
 function kInsertImageLink() {
 	var size = document.id("kbbcode-image_size").get("value");
 	if (size == "") {
-		kbbcode.replaceSelection('[img]'+ document.id("kbbcode-image_url").get("value") +'[/img]', false);
+		kbbcode.focus().replaceSelection('[img]'+ document.id("kbbcode-image_url").get("value") +'[/img]', false);
 	} else {
-		kbbcode.replaceSelection('[img size='+size+']'+ document.id("kbbcode-image_url").get("value") +'[/img]', false);
+		kbbcode.focus().replaceSelection('[img size='+size+']'+ document.id("kbbcode-image_url").get("value") +'[/img]', false);
 	}
 	kToggleOrSwap("kbbcode-image-options");
 }
@@ -645,7 +675,7 @@ function newAttachment() {
 		});
 		__file.getElement('input.kfile-input-textbox').set('value', __filename);
 		
-		__file.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.insert('\n[attachment:'+ __id +']'+ __filename +'[/attachment]\n', 'after', false); return false; } );
+		__file.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.focus().insert('\n[attachment:'+ __id +']'+ __filename +'[/attachment]\n', 'after', false); return false; } );
 		__file.getElement('.kattachment-remove').removeProperty('style').addEvent('click', function() {__file.dispose(); return false; } );
 		newAttachment();
 	});
@@ -655,7 +685,7 @@ function bindAttachments() {
 	var __kattachment = $$('.kattachment-old');
 	if (!__kattachment) return;
 	__kattachment.each(function(el) {
-		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.insert('\n[attachment='+ el.getElement('input').get('value') +']'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', false); return false; } );
+		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.focus().insert('\n[attachment='+ el.getElement('input').get('value') +']'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', false); return false; } );
 	});
 }
 
@@ -702,13 +732,13 @@ function kInsertVideo1() {
 		provider = '';
 	}
 	var videoid = document.id('kvideoid').get('value');
-	kbbcode.insert( '[video'+(videosize ? ' size='+videosize:'')+' width='+videowidth+' height='+videoheigth+' type='+provider+']'+videoid+'[/video]', 'after', false);
+	kbbcode.focus().insert( '[video'+(videosize ? ' size='+videosize:'')+' width='+videowidth+' height='+videoheigth+' type='+provider+']'+videoid+'[/video]', 'after', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
 
 function kInsertVideo2() {
 	var videourl = document.id("kvideourl").get("value");
-	kbbcode.insert('[video]'+ videourl +'[/video]', 'after', false);
+	kbbcode.focus().insert('[video]'+ videourl +'[/video]', 'after', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
 
@@ -725,7 +755,7 @@ function kEditorInitialize() {
 	if (color) {
 		color.addEvent("click", function(){
 			var bg = this.getStyle( "background-color" );
-			kbbcode.wrapSelection('[color='+ bg +']', '[/color]', true);
+			kbbcode.focus().wrapSelection('[color='+ bg +']', '[/color]', true);
 			kToggleOrSwap("kbbcode-color-options");
 		});
 	}
@@ -733,7 +763,7 @@ function kEditorInitialize() {
 	if (size) {
 		size.addEvent("click", function(){
 			var tag = this.get( "title" );
-			kbbcode.wrapSelection(tag , '[/size]', true);
+			kbbcode.focus().wrapSelection(tag , '[/size]', true);
 			kToggleOrSwap("kbbcode-size-options");
 		});
 	}

@@ -277,7 +277,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 					// <display name="kbbcode-color-options" />
 					if (!$tag) continue;
 					if ($action['selection']) {
-						$js .= "\n	sel = this.getSelection();\n	if (sel) {\n		document.id('{$action['selection']}').set('value', sel);\n	}";
+						$js .= "\n	sel = this.focus().getSelection(); if (sel) { document.id('{$action['selection']}').set('value', sel); }";
 					}
 					$js .= "\n	kToggleOrSwap('kbbcode-{$name}-options');";
 
@@ -286,11 +286,11 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 					// <wrap-selection />
 					if (!$tag) continue;
 					if (!$action['repeat']) {
-						$js .= "\n	this.wrapSelection('[{$tag}]', '[/{$tag}]', true);";
+						$js .= "\n	this.focus().wrapSelection('[{$tag}]', '[/{$tag}]', true);";
 					} else {
 						$start = $action['start'] ? $action['start'] : "[{$action['tag']}]";
 						$end =  $action['end'] ? $action['end'] : "[/{$action['tag']}]";
-						$js .= "\nselection = this.getSelection();
+						$js .= "\nselection = this.focus().getSelection();
 	if (selection) {
 		this.processEachLine(function(line) {
 			return '  {$start}' + line + '{$end}';

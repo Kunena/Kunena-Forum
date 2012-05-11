@@ -316,7 +316,9 @@ var kbbcode = new Class({
 				Gets focus in IE7-10
 	*/
 	focus: function() {
-		if(Browser.ie) {
+		// Mootools 1.3+
+		//if (Browser.ie) {
+		if (Browser.Engine.trident) {
 			this.el.selectRange(this.selection.start, this.selection.end);
 		}
 		return this;

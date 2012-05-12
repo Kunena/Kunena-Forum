@@ -23,7 +23,7 @@ defined ( '_JEXEC' ) or die ();
 						<legend class="legend-hide"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></legend>
 						<input class="kbox-width inputbox form-vertical form-field_simple" type="text" name="username" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_USERNAME') ?>"/>
 						<input class="kbox-width inputbox form-vertical form-field_simple" type="password" name="password" placeholder="<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD') ?>" />
-						<button class="kbutton button-type-standard" type="submit"><span><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></span></button>
+						<button class="kbutton button-type-comm" type="submit"><span><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></span></button>
 						<?php if($this->remember) : ?>
 						<input class="klogin-remember" type="checkbox" id="klogin-remember" name="remember" value="yes" />
 						<label for="klogin-remember"><?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME'); ?></label>

@@ -36,6 +36,7 @@ JHTML::_('behavior.tooltip');
 	<div class="kprofile-rightcol2">
 		<ul>
 			<?php if ($this->config->showemail && (!$this->profile->hideEmail || $this->me->isModerator())): ?><li><span class="kicon-profile kicon-profile-email"></span><?php echo JHTML::_('email.cloak', $this->user->email) ?></li><?php endif; ?>
+			<?php if ($this->me->isAdmin()): ?><li><span class="kicon-profile kicon-profile-email"></span><?php echo JHTML::_('email.cloak', $this->user->email) ?></li><?php endif; ?>
 			<?php // FIXME: we need a better way to add http/https ?>
 			<li><?php if (!empty($this->profile->websiteurl)):?><span class="kicon-profile kicon-profile-website"></span><?php endif;?><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename); ?></a></li>
 		</ul>

@@ -340,7 +340,7 @@ class KunenaViewUser extends KunenaView {
 		}
 
 		$selected = JString::trim($this->gallery);
-		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\" onchange=\"switch_avatar_category(this.options[this.selectedIndex].value)\">\n";
+		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\">\n";
 		$str .=  "<option value=\"default\"";
 
 		if ($selected == "") {

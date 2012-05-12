@@ -856,4 +856,13 @@ window.addEvent('domready', function(){
 			}
 		});
 	}
+	
+	if ( document.id('kunena_url_avatargallery') != undefined ) {
+		document.id('avatar_category_select').addEvent('change', function(e){
+			var avatar_selected= document.id('avatar_category_select').getSelected();
+			var url = "";
+			var urlreg = new  RegExp("_GALLERY_","g");
+			location.href=url.replace(urlreg, avatar_selected.get('value'));      
+		});
+	}
 });

@@ -48,6 +48,7 @@ $i=0;
 	</tr>
 <?php endif; ?>
 <?php if ($this->config->allowavatargallery):?>
+		<input id="kunena_url_avatargallery" type="hidden" value="<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' )?>" />
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
 			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
@@ -59,20 +60,6 @@ $i=0;
 				</tr>
 				<tr>
 					<td class="kuadesc">
-					<?php //FIXME: move to js folder ?>
-					<script type="text/javascript">
-						<!--
-						function switch_avatar_category(gallery)
-						{
-						if (gallery == "")
-							return;
-						var url = "<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' )?>";
-						var urlreg = new  RegExp("_GALLERY_","g");
-						location.href=url.replace(urlreg,gallery);
-						}
-						// -->
-					</script>
-
 					<?php
 					$kid = 0;
 					foreach ($this->galleryimg as $avatarimg) : ?>

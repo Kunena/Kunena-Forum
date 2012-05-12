@@ -3,7 +3,8 @@
  * Kunena Component
  * @package Kunena.Site
  * @subpackage Lib
- * @copyright (C) 2011 Kunena All rights reserved.
+ *
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -143,7 +144,7 @@ class CKunenaFile extends JFile
 				if ($ret === true) {
 					jimport('joomla.client.ftp');
 					// FIXME: renamed class JFTP from Joomla! 3.0/Platfrom 12.1
-					$ftp = & JFTP::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
+					$ftp = JFTP::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
 					@unlink($src);
 					$ret = true;
 				} else {

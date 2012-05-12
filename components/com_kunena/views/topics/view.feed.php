@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,6 +18,8 @@ class KunenaViewTopics extends KunenaView {
 		if (!$this->config->enablerss) {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
+
+		KunenaHtmlParser::$relative = false;
 		/*
 		// TODO: caching (this is from old code)
 		$cache = JFactory::getCache( 'com_kunena_rss' );
@@ -29,8 +31,8 @@ class KunenaViewTopics extends KunenaView {
 		*/
 		$this->layout = 'default';
 		$this->params = $this->state->get('params');
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
 
 		// TODO: if start != 0, add information from it into description
 		$this->document->setGenerator('Kunena Forum (Joomla)');
@@ -75,8 +77,8 @@ class KunenaViewTopics extends KunenaView {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
 		$this->layout = 'user';
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
 
 		// TODO: if start != 0, add information from it into description
 		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
@@ -115,9 +117,9 @@ class KunenaViewTopics extends KunenaView {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
 		$this->layout = 'posts';
-		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+		$this->messages = $this->get ( 'Messages' );
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
 
 		// TODO: if start != 0, add information from it into description
 		$title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Lib
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -41,10 +41,6 @@ function kPreviewHelper()
 ?>
 window.addEvent('domready', function() {
 
-kbbcode.addFunction('#', function() {
-}, {'class': 'kbbcode-separator'}
-);
-
 <?php if( $this->poll ){ ?>
 
 kbbcode.addFunction('Poll', function() {
@@ -62,22 +58,6 @@ if (empty($this->category->allow_polls)) {
 }
 ?>
 
-<?php if ($this->me->userid != 0) { ?>
-kbbcode.addFunction('PreviewBottom', function() {
-	kToggleOrSwapPreview("kbbcode-preview-bottom");
-}, {'id': 'kbbcode-previewbottom-button',
-	'class': 'kbbcode-previewbottom-button',
-	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_PREVIEWBOTTOM');?>',
-	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM');?>'});
-
-kbbcode.addFunction('PreviewRight', function() {
-	kToggleOrSwapPreview("kbbcode-preview-right");
-}, {'id': 'kbbcode-previewright-button',
-	'class': 'kbbcode-previewright-button',
-	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_PREVIEWRIGHT');?>',
-	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT');?>'});
-
-<?php } ?>
 kEditorInitialize();
 });
 <?php

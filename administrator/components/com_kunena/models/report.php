@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -103,6 +103,9 @@ class KunenaAdminModelReport extends KunenaModel {
 
 		$kconfigsettings = $this->_getKunenaConfiguration();
 
+		// Get Joomla! languages installed
+		$joomlalanguages = $this->_getJoomlaLanguagesInstalled();
+
 		// Check if Mootools plugins and others kunena plugins are enabled, and get the version of this modules
 		jimport( 'joomla.plugin.helper' );
 
@@ -165,9 +168,29 @@ class KunenaAdminModelReport extends KunenaModel {
 	    [confidential][b]Mailer:[/b] '.$this->app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$this->app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$this->app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$this->app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$this->app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$this->app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] '.$kunenaVersionInfo.'
-	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
+	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler]| [u]Joomla! detailled language files installed:[/u][spoiler] '.$joomlalanguages.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
 
 		return $report;
+	}
+
+	/**
+	 * Method to get all languages installed into Joomla! and the default one
+	 *
+	 * @return	string
+	 * @since	2.0
+	 */
+	protected function _getJoomlaLanguagesInstalled() {
+		$lang = JFactory::getLanguage();
+		$languages = $lang->getKnownLanguages();
+		$table_lang = '[table]';
+		$table_lang .= '[tr][th]Joomla! languages installed:[/th][/tr]';
+		foreach ($languages as $language) {
+			$table_lang .= '[tr][td]'. $language['tag'] .'[/td][td]'. $language['name'].'[/td][/tr]';
+		}
+
+		$table_lang .= '[/table]';
+
+		return $table_lang;
 	}
 
 	/**

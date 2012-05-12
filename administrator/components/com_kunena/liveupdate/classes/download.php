@@ -8,7 +8,7 @@
 defined('_JEXEC') or die();
 
 /**
- * Allows downloading packages over the web to your server
+ * Allows downloading packages over the web to your server 
  */
 class LiveUpdateDownloadHelper
 {
@@ -44,7 +44,7 @@ class LiveUpdateDownloadHelper
 				}
 			}
 		}
-
+		
 		$result = false;
 		if($fp !== false)
 		{
@@ -55,7 +55,7 @@ class LiveUpdateDownloadHelper
 				// Run the current download method
 				$method = 'get' . strtoupper( array_shift($adapters) );
 				$result = self::$method($url, $fp);
-
+				
 				// Check if we have a download
 				if($result === true) {
 					// The download is complete, close the file pointer
@@ -69,7 +69,7 @@ class LiveUpdateDownloadHelper
 					}
 				}
 			}
-
+			
 			// If we have no download, close the file pointer
 			if($result === false) {
 				@fclose($fp);
@@ -87,7 +87,7 @@ class LiveUpdateDownloadHelper
 			// Download and write using JFile::write();
 			$result = JFile::write($target, self::downloadAndReturn($url) );
 		}
-
+		
 		return $result;
 	}
 
@@ -100,13 +100,13 @@ class LiveUpdateDownloadHelper
 	{
 		$adapters = self::getAdapters();
 		$result = false;
-
+		
 		while(!empty($adapters) && ($result === false)) {
 			// Run the current download method
 			$method = 'get' . strtoupper( array_shift($adapters) );
 			$result = self::$method($url, null);
 		}
-
+		
 		return $result;
 	}
 
@@ -125,7 +125,7 @@ class LiveUpdateDownloadHelper
 
 		return $result;
 	}
-
+	
 	/**
 	 * Downloads the contents of a URL and writes them to disk (if $fp is not null)
 	 * or returns them as a string (if $fp is null)
@@ -136,11 +136,11 @@ class LiveUpdateDownloadHelper
 	private static function &getCURL($url, $fp = null, $nofollow = false)
 	{
 		$result = false;
-
+		
 		$ch = curl_init($url);
 		$config = new LiveUpdateConfig();
 		$config->applyCACert($ch);
-
+		
 		if( !@curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1) && !$nofollow ) {
 			// Safe Mode is enabled. We have to fetch the headers and
 			// parse any redirections present in there.
@@ -155,10 +155,10 @@ class LiveUpdateDownloadHelper
 			// Get the headers
 			$data = curl_exec($ch);
 			curl_close($ch);
-
+			
 			// Init
 			$newURL = $url;
-
+			
 			// Parse the headers
 			$lines = explode("\n", $data);
 			foreach($lines as $line) {
@@ -176,7 +176,7 @@ class LiveUpdateDownloadHelper
 		} else {
 			@curl_setopt($ch, CURLOPT_MAXREDIRS, 20);
 		}
-
+		
 		curl_setopt($ch, CURLOPT_AUTOREFERER, true);
 		curl_setopt($ch, CURLOPT_FAILONERROR, true);
 		curl_setopt($ch, CURLOPT_HEADER, false);
@@ -186,14 +186,14 @@ class LiveUpdateDownloadHelper
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		// Pretend we are IE7, so that webservers play nice with us
 		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.0.3705; .NET CLR 1.1.4322; Media Center PC 4.0)');
-
+		
 		if(is_resource($fp)) {
 			curl_setopt($ch, CURLOPT_FILE, $fp);
 		}
-
+		
 		$result = curl_exec($ch);
 		curl_close($ch);
-
+		
 		return $result;
 	}
 
@@ -218,16 +218,16 @@ class LiveUpdateDownloadHelper
 
 		return $result;
 	}
-
+	
 	private static function &getFOPEN($url, $fp = null)
 	{
 		$result = false;
-
+		
 		// Track errors
 		if( function_exists('ini_set') ) {
 			$track_errors = ini_set('track_errors',true);
 		}
-
+		
 		// Open the URL for reading
 		if(function_exists('stream_context_create')) {
 			// PHP 5+ way (best)
@@ -241,12 +241,12 @@ class LiveUpdateDownloadHelper
 			}
 			$ih = @fopen($url, 'r');
 		}
-
+		
 		// If fopen() fails, abort
 		if( !is_resource($ih) ) {
 			return $result;
 		}
-
+		
 		// Try to download
 		$bytes = 0;
 		$result = true;
@@ -268,9 +268,9 @@ class LiveUpdateDownloadHelper
 				}
 			}
 		}
-
+		
 		@fclose($ih);
-
+		
 		if(is_resource($fp)) {
 			return $result;
 		} elseif( $result === true ) {
@@ -316,7 +316,6 @@ class LiveUpdateDownloadHelper
 		if ($ftpOptions['enabled'] == 1) {
 			// Connect the FTP client
 			jimport('joomla.client.ftp');
-			// FIXME: renamed class JFTP from Joomla! 3.0/Platfrom 12.1
 			$ftp = &JFTP::getInstance(
 				$ftpOptions['host'], $ftpOptions['port'], null,
 				$ftpOptions['user'], $ftpOptions['pass']

@@ -44,12 +44,14 @@ if ($view != 'install' && !$kversion->checkVersion()) {
 
 } else {
 	// Load language files
-	KunenaFactory::loadLanguage('com_kunena', 'admin');
-	KunenaFactory::loadLanguage('com_kunena', 'site');
+	KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 	KunenaFactory::loadLanguage('com_kunena.install', 'admin');
 	KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
 	KunenaFactory::loadLanguage('com_kunena.models', 'admin');
 	KunenaFactory::loadLanguage('com_kunena.views', 'admin');
+	// Load last to get deprecated language files to work
+	KunenaFactory::loadLanguage('com_kunena', 'site');
+	KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 	KunenaForum::setup();
 

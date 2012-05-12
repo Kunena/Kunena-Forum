@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -129,6 +129,10 @@ class KunenaForum {
 
 	public static function installed() {
 		return false;
+	}
+
+	public static function setup() {
+		if (class_exists('KunenaFactory')) KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
 	}
 
 	public function display($viewName, $layout='default', $template=null, $params = array()) {}

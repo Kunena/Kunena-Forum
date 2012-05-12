@@ -38,7 +38,7 @@ class LiveUpdate
 	{
 		// Load translations
 		$basePath = dirname(__FILE__);
-		$jlang =& JFactory::getLanguage();
+		$jlang = JFactory::getLanguage();
 		$jlang->load('liveupdate', $basePath, 'en-GB', true); // Load English (British)
 		$jlang->load('liveupdate', $basePath, $jlang->getDefault(), true); // Load the site's default language
 		$jlang->load('liveupdate', $basePath, null, true); // Load the currently selected language

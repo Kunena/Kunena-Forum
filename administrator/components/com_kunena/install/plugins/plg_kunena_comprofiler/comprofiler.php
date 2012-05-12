@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,6 +18,8 @@ class plgKunenaComprofiler extends JPlugin {
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
 
 		$app = JFactory::getApplication ();
+
+		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR );
 
 		// Do not load if CommunityBuilder is not installed
 		$path = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
@@ -39,8 +41,6 @@ class plgKunenaComprofiler extends JPlugin {
 			return;
 		}
 		parent::__construct ( $subject, $config );
-
-		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR );
 
 		$this->path = dirname ( __FILE__ ) . '/comprofiler';
 		require_once "{$this->path}/integration.php";

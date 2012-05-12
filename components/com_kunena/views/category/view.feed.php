@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -21,7 +21,9 @@ class KunenaViewCategory extends KunenaView {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
 
-		$this->assignRef ( 'category', $this->get ( 'Category' ) );
+		KunenaHtmlParser::$relative = false;
+
+		$this->category = $this->get ( 'Category' );
 		if (! $this->category->authorise('read')) {
 			JError::raiseError ( 404, $this->category->getError() );
 		}

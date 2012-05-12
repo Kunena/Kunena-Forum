@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -55,7 +55,7 @@ class KunenaAccess {
 		}
 	}
 
-	static public function getInstance() {
+	public static function getInstance() {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!self::$instance) {
 			self::$instance = new KunenaAccess();
@@ -152,7 +152,8 @@ window.addEvent('domready', function(){
 			foreach ($list as $access) {
 				if (method_exists($access, 'getAccessOptions')) {
 					// TODO: change none type ->
-					$string = JText::_('COM_KUNENA_INTEGRATION_'.preg_replace('/[^\w\d]/', '_', $type=='none' ? 'joomla.group' : $type));
+					// FIXME: stop getting language from the main file...
+					$string = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.preg_replace('/[^\w\d]/', '_', $type=='none' ? 'joomla.group' : $type));
 					$accesstypes [$string] = JHTML::_ ( 'select.option', $type, $string );
 					$exists |= $type == $category->accesstype;
 					break;
@@ -437,9 +438,7 @@ window.addEvent('domready', function(){
 		$query = array();
 		if ($subsriptions == 1 || $subsriptions == 2) {
 			// Get topic subscriptions
-			//FIXME: user topics is missing a column
-			$once = false; //KunenaFactory::getConfig()->topic_subscriptions == 'first' ? 'AND future1=0' : '';
-			$query[] = "SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topic->id} AND subscribed=1 {$once}";
+			$query[] = "SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topic->id} AND subscribed=1";
 		}
 		if ($subsriptions == 1 || $subsriptions == 3) {
 			// Get category subscriptions
@@ -454,8 +453,8 @@ window.addEvent('domready', function(){
 			foreach ($this->accesstypes[$category->accesstype] as $access) {
 				if (method_exists($access, 'authoriseUsers')) {
 					list ($a, $d) = $access->authoriseUsers($topic, $userids);
-					$allow = array_merge($allow, (array) $a);
-					$deny = array_merge($deny, (array) $d);
+					if (!empty($a)) $allow += array_combine($a, $a);
+					if (!empty($d)) $deny += array_combine($d, $d);
 				}
 			}
 		}

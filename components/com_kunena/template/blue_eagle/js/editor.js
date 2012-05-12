@@ -7,168 +7,130 @@
  * @link http://www.kunena.org
  **/
 
-//
-// Element helper functions for the Kunena bbcode editor
-//
-// The code is based on nawte - a generic helper class for mootools to implement
-// simple markup languge editors. The clas has been adopted and expanded to meed the needs
-// of the Kunena bbcode engine. With a wide variety of tags supported, css sprite based
-// toolbar, mouseover helpline, selective sub toolbars for various options and live preview
-// before changes get applied.
-//
+/*
+ * Fix some Mootools bugs
+ * 
+ * provides: [Element.Forms]
+ */
 
 Element.implement({
+	tidy: function() {
+		this.set('value', this.get('value').tidy());
+	},
 
+	getTextInRange: function(start, end) {
+		return this.get('value').substring(start, end);
+	},
+	
 	getSelectedText: function() {
-		if (typeof this.selectionStart != "undefined") {
-			return this.get('value').substring(this.selectionStart, this.selectionEnd);
-		}
-		if(typeof document.selection != "undefined") {
-			// Something for IE
-			this.focus();
-			return document.selection.createRange().text;
-		}
-		return '';
+		if (this.setSelectionRange) return this.getTextInRange(this.getSelectionStart(), this.getSelectionEnd());
+		this.focus();
+		return document.selection.createRange().text;
 	},
 
-	wrapSelectedText: function(newtext, wrapperLeft, wrapperRight, isLast) {
-		isLast = (isLast == null) ? true : isLast;
-
-		var scroll_top = this.scrollTop;
-
-		if(typeof this.selectionStart != "undefined") {
-			var originalStart = this.selectionStart;
-			var originalEnd = this.selectionEnd;
-			this.value = this.get('value').substring(0, originalStart) + wrapperLeft + newtext + wrapperRight + this.get('value').substring(originalEnd);
-			if(isLast == false) {
-				this.setSelectionRange(originalStart + wrapperLeft.length, originalStart + wrapperLeft.length + newtext.length);
-			} else {
-				var position = originalStart + newtext.length + wrapperLeft.length +  wrapperRight.length;
-				this.setSelectionRange(position, position);
-				this.scrollTop = scroll_top;
-			}
-			this.focus();
-
-		} else if(typeof document.selection != "undefined") {
-			// Something for IE
-			this.focus();
-			var range = document.selection.createRange();
-			range.text = wrapperLeft + newtext + wrapperRight;
-			if(isLast) {
-				range.select();
-				this.scrollTop = scroll_top;
-			}
+	getSelectedRange: function() {
+		this.focus();
+		if (this.selectionStart != null){
+			return {
+				start: this.selectionStart,
+				end: this.selectionEnd
+			};
 		}
+
+		var pos = {
+			start: 0,
+			end: 0
+		};
+		var range = this.getDocument().selection.createRange();
+		if (!range || range.parentElement() != this) return pos;
+		var duplicate = range.duplicate();
+
+		if (this.type == 'text') {
+			pos.start = 0 - duplicate.moveStart('character', -100000);
+			pos.end = pos.start + range.text.length;
+		} else {
+			var value = this.get('value');
+			var offset = value.length;
+			duplicate.moveToElementText(this);
+			duplicate.setEndPoint('StartToEnd', range);
+			if (duplicate.text.length) offset -= value.match(/[\n\r]*$/)[0].length;
+			pos.end = offset - duplicate.text.length;
+			duplicate.setEndPoint('StartToStart', range);
+			pos.start = offset - duplicate.text.length;
+		}
+		return pos;
 	},
 
-	replaceSelectedText: function(newtext, isLast) {
-		isLast = (isLast == null) ? true : isLast;
-		this.wrapSelectedText(newtext, '', '', isLast);
+	getSelectionStart: function() {
+		return this.getSelectedRange().start;
+	},
+
+	getSelectionEnd: function() {
+		return this.getSelectedRange().end;
+	},
+
+	setCaretPosition: function(pos) {
+		if (pos == 'end') pos = this.get('value').length;
+		this.selectRange(pos, pos);
+		return this;
+	},
+
+	getCaretPosition: function() {
+		return this.getSelectedRange().start;
+	},
+
+	selectRange: function(start, end) {
+		this.focus();
+		if (this.setSelectionRange) {
+			this.setSelectionRange(start, end);
+		} else {
+			var value = this.get('value');
+			var diff = value.substr(start, end - start).replace(/\r/g, '').length;
+			start = value.substr(0, start).replace(/\r/g, '').length;
+			var range = this.createTextRange();
+			range.collapse(true);
+			range.moveEnd('character', start + diff);
+			range.moveStart('character', start);
+			range.select();
+		}
+		return this;
+	},
+
+	insertAtCursor: function(value, select) {
+		var pos = this.getSelectedRange();
+		var text = this.get('value');
+		this.set('value', text.substring(0, pos.start) + value + text.substring(pos.end, text.length));
+		if (select !== false) this.selectRange(pos.start, pos.start + value.length);
+		else this.setCaretPosition(pos.start + value.length);
+		return this;
+	},
+
+	insertAroundCursor: function(options, select) {
+		// Mootools 1.3+
+		//options = Object.append({
+		options = $extend({
+			before: '',
+			defaultMiddle: '',
+			after: ''
+		}, options);
+
+		var value = this.getSelectedText() || options.defaultMiddle;
+		var pos = this.getSelectedRange();
+		var text = this.get('value');
+
+		if (pos.start == pos.end){
+			this.set('value', text.substring(0, pos.start) + options.before + value + options.after + text.substring(pos.end, text.length));
+			this.selectRange(pos.start + options.before.length, pos.end + options.before.length + value.length);
+		} else {
+			var current = text.substring(pos.start, pos.end);
+			this.set('value', text.substring(0, pos.start) + options.before + current + options.after + text.substring(pos.end, text.length));
+			var selStart = pos.start + options.before.length;
+			if (select !== false) this.selectRange(selStart, selStart + current.length);
+			else this.setCaretPosition(selStart + text.length);
+		}
+		return this;
 	}
 });
-
-// A few variable we use in some of the functions
-var _currentElement="";
-var _previewActive=false;
-
-//
-// function kToggleOrSwap (elementId)
-//
-// Helper function for bbeditor optional/detailed toolbar
-//
-// Toogles the visibility of the element passed by ID. If another element in the
-// optional toolbar is already visible, it hides the prior one before displaying
-// the new option.
-//
-function kToggleOrSwap(id)
-{
-	e = document.id(id);
-	if (e) {
-		if (e.getStyle('display') == "none"){
-			if (_currentElement != "") {_currentElement.setStyle('display', 'none');}
-			e.setStyle('display', 'block');
-			_currentElement=e;
-		}
-		else
-		{
-			e.setStyle('display', 'none');
-			_currentElement = "";
-		}
-	}
-}
-
-//
-// function kToggleOrSwapPreview (className)
-//
-// Helper function for bbeditor optional/detailed toolbar
-//
-// Toogles the visibility of the preview element passed by ID. If another preview
-// is already visible and active, it hides the prior one before displaying
-// the new preview.
-// That way we can not only turn preview on and off, but also switch between horizontal
-// (preview to the right) and vertical (preview at the bottom) modes
-//
-
-function kToggleOrSwapPreview(kunenaclass)
-{
-	e = document.id("kbbcode-preview");
-	f = document.id("kbbcode-message");
-	if (e) {
-		if (e.getStyle('display') == "none" || e.getProperty('class') != kunenaclass){
-			e.setStyle('display', 'block');
-
-			if (kunenaclass=="kbbcode-preview-right"){
-				f.setStyle('width', '47%');
-			} else {
-				f.setStyle('width', '95%');
-			}
-
-			_previewActive=true;
-			kPreviewHelper();
-		}
-		else
-		{
-			e.setStyle('display', 'none');
-			f.setStyle('width', '95%');
-			_previewActive=false;
-		}
-		e.setProperty('class', kunenaclass);
-		var height = f.getStyle('height');
-		e.setStyle('height', f.getStyle('height'));
-	}
-}
-
-//
-// kGenColorPalette(width, height)
-//
-// Helper function to generate the color palette for the bbcode color picker
-//
-function kGenerateColorPalette(width, height)
-{
-	var r = 0, g = 0, b = 0;
-	var numberList = new Array(6);
-	var color = '';
-	numberList[0] = '00';
-	numberList[1] = '44';
-	numberList[2] = '88';
-	numberList[3] = 'BB';
-	numberList[4] = 'FF';
-
-	document.writeln('<table id="kbbcode-colortable" class="kbbcode-colortable" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
-	
-	for (r = 0; r < 5; r++)
-	{
-		document.writeln('<tr>');
-		for (g = 0; g < 5; g++)	{
-			for (b = 0; b < 5; b++)	{
-				color = String(numberList[r]) + String(numberList[g]) + String(numberList[b]);
-				document.writeln('<td style="background-color:#' + color + '; width: ' + width + '; height: ' + height + ';">&nbsp;</td>');
-			  }
-		}
-		document.writeln('</tr>');
-	}
-	document.writeln('</table>');
-}
 
 /*
 	Class: kbbcode (derived from NAWTE)
@@ -267,19 +229,34 @@ var kbbcode = new Class({
 	initialize: function(element, list, options) {
 
 		this.el = document.id(element);
+		this.selection = {start:0, end:0};
 
 		this.setOptions(options);
 
 		if(this.options.dispatchChangeEvent) {
 			this.el.addEvents({
-				'focus': function() {
+				'focus': function(event) {
 					this.timer = this.watchChange.periodical(this.options.changeEventDelay, this);
 				}.bind(this),
 
-				'blur': function() {
+				'blur': function(event) {
 					this.timer = $clear(this.timer);
+				}.bind(this),
+				
+				// Fixing IE
+				'select': function(event) {
+					this.selection = this.el.getSelectedRange();
+				}.bind(this),
+
+				'click': function(event) {
+					this.selection = this.el.getSelectedRange();
+				}.bind(this),
+				
+				'keyup': function(event) {
+					this.selection = this.el.getSelectedRange();
 				}.bind(this)
-			});
+				// End fixing IE
+});
 		}
 		if(this.options.interceptTabs) {
 
@@ -333,6 +310,19 @@ var kbbcode = new Class({
 			this.el.fireEvent('change');
 		}
 	},
+	
+	/*
+			function focus
+				Gets focus in IE7-10
+	*/
+	focus: function() {
+		// Mootools 1.3+
+		//if (Browser.ie) {
+		if (Browser.Engine.trident) {
+			this.el.selectRange(this.selection.start, this.selection.end);
+		}
+		return this;
+	},
 
 	/*
 		Function: getSelection
@@ -350,16 +340,19 @@ var kbbcode = new Class({
 			Wrap the selection with wrapper text
 
 		Arguments:
-			wrapper - a string, this string will wrap the textarea's current selection
-			isLast - see information at the top
+			wrapperLeft - a string, this string will wrap the textarea's current selection
+			wrapperRight - a string, this string will wrap the textarea's current selection
+			select - selects the text after it's been inserted
 
 		Example:
 			>this.wrapSelection("-+", "+-");
 			>//selection will become: -+selection+-
 	*/
-	wrapSelection: function(wrapperLeft, wrapperRight, isLast) {
-		isLast = (isLast == null) ? true : isLast;
-		this.el.wrapSelectedText(this.el.getSelectedText(), wrapperLeft, wrapperRight, isLast);
+	wrapSelection: function(wrapperLeft, wrapperRight, select) {
+		select = (select === null) ? true : select;
+		this.el.insertAroundCursor({before: wrapperLeft, after: wrapperRight, defaultMiddle: ""});
+		if (!select) this.el.selectRange(this.el.getSelectionEnd(), this.el.getSelectionEnd());
+		this.selection = this.el.getSelectedRange();
 	},
 
 	/*
@@ -367,21 +360,20 @@ var kbbcode = new Class({
 			Insert text before or after the current selection. (This is a TextTransform method...)
 
 		Arguments:
-			insertText - a string, the text to insert before the selection
+			newText - a string, the text to insert before the selection
 			where - a string, either "before" or "after" depending on where you want to insert
-			isLast - see information at the top
+			select - selects the text after it's been inserted
 
 		Example:
 			>this.insert("Hello ", 'before');
 			>//selection will become: Hello selection
 	*/
-	insert: function(insertText, where, isLast) {
-		isLast = (isLast == null) ? true : isLast;
-		var wrapperLeft = '';
-		var wrapperRight = '';
-		where = (where == "") ? 'after' : where;
-		var newText = (where == "before") ? wrapperLeft = insertText : wrapperRight = insertText;
-		this.el.wrapSelectedText(this.el.getSelectedText(), wrapperLeft, wrapperRight, isLast);
+	insert: function(newText, where, select) {
+		select = (select === null) ? true : select;
+		var pos = (where == "before") ? this.el.getSelectionStart() : this.el.getSelectionEnd();
+		this.el.selectRange(pos, pos);
+		this.el.insertAtCursor(newText, select);
+		this.selection = this.el.getSelectedRange();
 	},
 
 	/*
@@ -390,15 +382,15 @@ var kbbcode = new Class({
 
 		Arguments:
 			newText - a string, the text that will replace the selection
-			isLast - see information at the top
 
 		Example:
 			>this.replaceSelection("Hello World");
 			>//selection will become: Hello World
 	*/
-	replaceSelection: function(newText, isLast) {
-		isLast = (isLast == null) ? true : isLast;
-		this.el.replaceSelectedText(newText, isLast);
+	replaceSelection: function(newText, select) {
+		select = (select === null) ? true : select;
+		this.el.insertAtCursor(newText, select);
+		this.selection = this.el.getSelectedRange();
 	},
 
 	/*
@@ -407,7 +399,6 @@ var kbbcode = new Class({
 
 		Arguments:
 			callback - a function, will transform each lines of the selection, should accept the "line" parameter, MUST return the new transformed line
-			isLast - see information at the top
 
 		Example:
 			(start code)
@@ -419,18 +410,15 @@ var kbbcode = new Class({
 			(end)
 	*/
 
-	processEachLine: function(callback, isLast) {
-		isLast = (isLast == null) ? true : isLast;
+	processEachLine: function(callback) {
 		var lines = this.el.getSelectedText().split("\n");
 		var newlines = [];
 		lines.each(function(line) {
-			if (line != "")
-				newlines.push(callback.attempt(line, this));
-			else
-				newlines.push("");
+			if (line.trim() != "")
+				newlines.push(callback.attempt(line.trim(), this));
 		}.bind(this));
 
-		this.el.replaceSelectedText(newlines.join("\n"), isLast);
+		this.el.insertAtCursor(newlines.join("\r\n"), true);
 	},
 
 	/*
@@ -510,10 +498,111 @@ var kbbcode = new Class({
 
 });
 
+//A few variable we use in some of the functions
+var _currentElement="";
+var _previewActive=false;
+
+//
+// function kToggleOrSwap (elementId)
+//
+// Helper function for bbeditor optional/detailed toolbar
+//
+// Toogles the visibility of the element passed by ID. If another element in the
+// optional toolbar is already visible, it hides the prior one before displaying
+// the new option.
+//
+function kToggleOrSwap(id)
+{
+	e = document.id(id);
+	if (e) {
+		if (e.getStyle('display') == "none"){
+			if (_currentElement != "") {_currentElement.setStyle('display', 'none');}
+			e.setStyle('display', 'block');
+			_currentElement=e;
+		} else {
+			e.setStyle('display', 'none');
+			_currentElement = "";
+		}
+	}
+}
+
+//
+// function kToggleOrSwapPreview (className)
+//
+// Helper function for bbeditor optional/detailed toolbar
+//
+// Toogles the visibility of the preview element passed by ID. If another preview
+// is already visible and active, it hides the prior one before displaying
+// the new preview.
+// That way we can not only turn preview on and off, but also switch between horizontal
+// (preview to the right) and vertical (preview at the bottom) modes
+//
+
+function kToggleOrSwapPreview(kunenaclass)
+{
+	e = document.id("kbbcode-preview");
+	f = document.id("kbbcode-message");
+	if (e) {
+		if (e.getStyle('display') == "none" || e.getProperty('class') != kunenaclass){
+			e.setStyle('display', 'block');
+
+			if (kunenaclass=="kbbcode-preview-right"){
+				f.setStyle('width', '47%');
+			} else {
+				f.setStyle('width', '95%');
+			}
+
+			_previewActive=true;
+			kPreviewHelper();
+		}
+		else
+		{
+			e.setStyle('display', 'none');
+			f.setStyle('width', '95%');
+			_previewActive=false;
+		}
+		e.setProperty('class', kunenaclass);
+		var height = f.getStyle('height');
+		e.setStyle('height', f.getStyle('height'));
+	}
+}
+
+//
+// kGenColorPalette(width, height)
+//
+// Helper function to generate the color palette for the bbcode color picker
+//
+function kGenerateColorPalette(width, height)
+{
+	var r = 0, g = 0, b = 0;
+	var numberList = new Array(6);
+	var color = '';
+	numberList[0] = '00';
+	numberList[1] = '44';
+	numberList[2] = '88';
+	numberList[3] = 'BB';
+	numberList[4] = 'FF';
+
+	document.writeln('<table id="kbbcode-colortable" class="kbbcode-colortable" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
+	
+	for (r = 0; r < 5; r++)
+	{
+		document.writeln('<tr>');
+		for (g = 0; g < 5; g++)	{
+			for (b = 0; b < 5; b++)	{
+				color = String(numberList[r]) + String(numberList[g]) + String(numberList[b]);
+				document.writeln('<td style="background-color:#' + color + '; width: ' + width + '; height: ' + height + ';">&nbsp;</td>');
+			  }
+		}
+		document.writeln('</tr>');
+	}
+	document.writeln('</table>');
+}
+
 function kInsertCode() {
 	var kcodetype = document.id('kcodetype').get('value');
 	if (kcodetype != '') kcodetype = ' type='+kcodetype;
-	kbbcode.wrapSelection('[code'+kcodetype+']', '[/code]', false); 
+	kbbcode.focus().wrapSelection('[code'+kcodetype+']', '[/code]', false); 
 	kToggleOrSwap("kbbcode-code-options");
 }
 
@@ -525,9 +614,9 @@ function kInsertCode() {
 function kInsertImageLink() {
 	var size = document.id("kbbcode-image_size").get("value");
 	if (size == "") {
-		kbbcode.replaceSelection('[img]'+ document.id("kbbcode-image_url").get("value") +'[/img]');
+		kbbcode.focus().replaceSelection('[img]'+ document.id("kbbcode-image_url").get("value") +'[/img]', false);
 	} else {
-		kbbcode.replaceSelection('[img size='+size+']'+ document.id("kbbcode-image_url").get("value") +'[/img]');
+		kbbcode.focus().replaceSelection('[img size='+size+']'+ document.id("kbbcode-image_url").get("value") +'[/img]', false);
 	}
 	kToggleOrSwap("kbbcode-image-options");
 }
@@ -586,7 +675,7 @@ function newAttachment() {
 		});
 		__file.getElement('input.kfile-input-textbox').set('value', __filename);
 		
-		__file.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.insert('\n[attachment:'+ __id +']'+ __filename +'[/attachment]\n', 'after', true); return false; } );
+		__file.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.focus().insert('\n[attachment:'+ __id +']'+ __filename +'[/attachment]\n', 'after', false); return false; } );
 		__file.getElement('.kattachment-remove').removeProperty('style').addEvent('click', function() {__file.dispose(); return false; } );
 		newAttachment();
 	});
@@ -596,7 +685,7 @@ function bindAttachments() {
 	var __kattachment = $$('.kattachment-old');
 	if (!__kattachment) return;
 	__kattachment.each(function(el) {
-		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.replaceSelection('\n[attachment='+ el.getElement('input').get('value') +']'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', true); return false; } );
+		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.focus().insert('\n[attachment='+ el.getElement('input').get('value') +']'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', false); return false; } );
 	});
 }
 
@@ -643,13 +732,13 @@ function kInsertVideo1() {
 		provider = '';
 	}
 	var videoid = document.id('kvideoid').get('value');
-	kbbcode.replaceSelection( '[video'+(videosize ? ' size='+videosize:'')+' width='+videowidth+' height='+videoheigth+' type='+provider+']'+videoid+'[/video]', false);
+	kbbcode.focus().insert( '[video'+(videosize ? ' size='+videosize:'')+' width='+videowidth+' height='+videoheigth+' type='+provider+']'+videoid+'[/video]', 'after', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
 
 function kInsertVideo2() {
 	var videourl = document.id("kvideourl").get("value");
-	kbbcode.replaceSelection('[video]'+ videourl +'[/video]', false);
+	kbbcode.focus().insert('[video]'+ videourl +'[/video]', 'after', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
 
@@ -666,15 +755,15 @@ function kEditorInitialize() {
 	if (color) {
 		color.addEvent("click", function(){
 			var bg = this.getStyle( "background-color" );
-			kbbcode.wrapSelection('[color='+ bg +']', '[/color]', false);
-			kToggleOrSwap("kbbcode-colorpalette");
+			kbbcode.focus().wrapSelection('[color='+ bg +']', '[/color]', true);
+			kToggleOrSwap("kbbcode-color-options");
 		});
 	}
 	var size = $$("div#kbbcode-size-options span");
 	if (size) {
 		size.addEvent("click", function(){
 			var tag = this.get( "title" );
-			kbbcode.wrapSelection(tag , '[/size]', false);
+			kbbcode.focus().wrapSelection(tag , '[/size]', true);
 			kToggleOrSwap("kbbcode-size-options");
 		});
 	}

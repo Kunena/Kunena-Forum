@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Smilies
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -24,7 +24,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 		<dl class="tabs" id="pane">
 		<dt title="<?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?>"><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></dt>
 		<dd>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="smilies" />
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
@@ -91,7 +91,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 		</dd>
 		<dt title="<?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?>"><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></dt>
 		<dd>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="uploadForm" method="post" enctype="multipart/form-data" >
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" id="uploadForm" method="post" enctype="multipart/form-data" >
 		<input type="hidden" name="view" value="smilies" />
 		<input type="hidden" name="task" value="smileyupload" />
 		<input type="hidden" name="boxchecked" value="0" />

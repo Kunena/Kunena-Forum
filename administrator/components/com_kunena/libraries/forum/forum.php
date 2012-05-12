@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -251,7 +251,7 @@ abstract class KunenaForum {
 	 * @param unknown_type $template Name of the template file.
 	 * @param unknown_type $params Extra parameters to control the model.
 	 */
-	public function display($viewName, $layout='default', $template=null, $params = array()) {
+	public static function display($viewName, $layout='default', $template=null, $params = array()) {
 		// Filter input
 		$viewName = preg_replace( '/[^A-Z0-9_]/i', '', $viewName );
 		$layout = preg_replace( '/[^A-Z0-9_]/i', '', $layout );
@@ -280,16 +280,21 @@ abstract class KunenaForum {
 		}
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
-		if (!($params instanceof JParameter)) {
+
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry($params);
+		} else {
+			// Joomla 1.5
 			$parameters = new JParameter('');
 			$parameters->bind($params);
-		} else {
-			$parameters = $params;
+			$params = $parameters;
 		}
-		$parameters->set('layout', $layout);
+
+		$params->set('layout', $layout);
 		// Push the model into the view (as default).
 		$model = new $model ();
-		$model->initialize($parameters);
+		$model->initialize($params);
 		$view->setModel ( $model, true );
 
 		// Add template path
@@ -297,7 +302,7 @@ abstract class KunenaForum {
 		foreach ($ktemplate->getTemplatePaths() as $templatepath) {
 			$view->addTemplatePath(JPATH_SITE."/{$templatepath}/html/{$viewName}");
 		}
-		if ($parameters->get('templatepath')) $view->addTemplatePath($parameters->get('templatepath'));
+		if ($params->get('templatepath')) $view->addTemplatePath($params->get('templatepath'));
 
 		if ($viewName != 'common') {
 			$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -113,6 +113,7 @@ class KunenaViewUser extends KunenaView {
 		$this->avatarlink = $this->profile->getAvatarImage('kavatar','profile');
 		$this->personalText = $this->profile->personalText;
 		$this->signature = $this->profile->signature;
+		$this->signatureHtml = KunenaHtmlParser::parseBBCode($this->signature, null, $this->config->maxsig);
 		$this->localtime = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
 		$this->localtime->setOffset($this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
 		$this->moderator = $this->profile->isModerator();
@@ -139,7 +140,7 @@ class KunenaViewUser extends KunenaView {
 		$this->showUnusedSocial = true;
 
 		$avatar = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
+		$this->editavatar = ($avatar instanceof KunenaAvatarKunena) ? true : false;
 
 		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
 		$this->canBan = $this->banInfo->canBan();

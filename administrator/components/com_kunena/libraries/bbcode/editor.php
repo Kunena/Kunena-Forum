@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage BBCode
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,7 +33,7 @@ class KunenaBbcodeEditor {
 	 * @param array $config
 	 * @return KunenaBbcodeEditor
 	 */
-	public function &getInstance($config = array()) {
+	public static function getInstance($config = array()) {
 		static $instance = false;
 		if (! $instance) {
 			$instance = new KunenaBbcodeEditor ($config);
@@ -188,7 +188,7 @@ abstract class KunenaBbcodeEditorElement {
 	 * @abstract
 	 * @param $xml
 	 */
-	abstract static function parseXML ($xml);
+	public static function parseXML ($xml) {}
 }
 
 class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
@@ -277,7 +277,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 					// <display name="kbbcode-color-options" />
 					if (!$tag) continue;
 					if ($action['selection']) {
-						$js .= "\n	sel = this.getSelection();\n	if (sel) {\n		document.id('{$action['selection']}').set('value', sel);\n	}";
+						$js .= "\n	sel = this.focus().getSelection(); if (sel) { document.id('{$action['selection']}').set('value', sel); }";
 					}
 					$js .= "\n	kToggleOrSwap('kbbcode-{$name}-options');";
 
@@ -286,19 +286,18 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 					// <wrap-selection />
 					if (!$tag) continue;
 					if (!$action['repeat']) {
-						$js .= "\n	this.wrapSelection('[{$tag}]', '[/{$tag}]', false);";
+						$js .= "\n	this.focus().wrapSelection('[{$tag}]', '[/{$tag}]', true);";
 					} else {
 						$start = $action['start'] ? $action['start'] : "[{$action['tag']}]";
 						$end =  $action['end'] ? $action['end'] : "[/{$action['tag']}]";
-						$js .= "\nselection = this.getSelection();
+						$js .= "\nselection = this.focus().getSelection();
 	if (selection) {
 		this.processEachLine(function(line) {
-				return '  {$start}' + line + '{$end}';
-			}, false);
-			this.insert('{$action['before']}', 'before', false);
-			this.insert('{$action['after']}', 'after', true);
+			return '  {$start}' + line + '{$end}';
+		}, false);
+		this.wrapSelection('{$action['before']}', '{$action['after']}', false);
 	} else {
-			this.wrapSelection('{$action['empty_before']}', '{$action['empty_after']}', false);
+		this.wrapSelection('{$action['empty_before']}', '{$action['empty_after']}', false);
 	}";
 					}
 					break;
@@ -389,7 +388,7 @@ class KunenaBbcodeEditorButton extends KunenaBbcodeEditorElement {
 }
 
 class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement {
-	function generateJs ($identifier) {
+	public function generateJs ($identifier) {
 		$js = "\nkbbcode.addFunction('#', function() {";
 		$js .= "\n}, {";
 		$js .= "\n	'class': 'kbbcode-separator'";
@@ -398,7 +397,7 @@ class KunenaBbcodeEditorSeparator extends KunenaBbcodeEditorElement {
 		return $js;
 	}
 
-	static function parseXML ($xml) {
+	public static function parseXML ($xml) {
 		return new KunenaBbcodeEditorSeparator((string)$xml['name']);
 	}
 }

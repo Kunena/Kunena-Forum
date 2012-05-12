@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -43,7 +43,7 @@ class KunenaForumStatistics {
 	public $showpopthankyoustats = false;
 
 	public function __construct() {
-		$this->_db = &JFactory::getDBO ();
+		$this->_db = JFactory::getDBO ();
 		$this->_config = KunenaFactory::getConfig ();
 
 		$show = $this->_config->showstats;
@@ -172,7 +172,7 @@ class KunenaForumStatistics {
 				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
 				$item->percent = round(100 * $item->count / $top->posts);
 			}
-			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_TOPICS');
+			$top->title = JText::_('COM_KUNENA_LIB_STAT_TOP_TOPICS');
 			$top->titleName = JText::_('COM_KUNENA_GEN_SUBJECT');
 			$top->titleCount =  JText::_('COM_KUNENA_USRL_POSTS');
 		}
@@ -192,8 +192,8 @@ class KunenaForumStatistics {
 				$item->link = KunenaUserHelper::get($item->id)->getLink();
 				$item->percent = round(100 * $item->count / $top->count);
 			}
-			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_STAT_POPULAR_USER_TMSG');
-			$top->titleName = JText::_('COM_KUNENA_USRL_USERNAME');
+			$top->title = JText::_('COM_KUNENA_LIB_STAT_TOP_POSTERS');
+			$top->titleName = JText::_('COM_KUNENA_USERNAME');
 			$top->titleCount =  JText::_('COM_KUNENA_USRL_POSTS');
 		}
 		return array_slice($this->topPosters, 0, $limit);
@@ -212,8 +212,8 @@ class KunenaForumStatistics {
 				$item->link = KunenaUserHelper::get($item->id)->getLink();
 				$item->percent = round(100 * $item->count / $top->count);
 			}
-			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_STAT_POPULAR_USER_GSG');
-			$top->titleName = JText::_('COM_KUNENA_USRL_USERNAME');
+			$top->title = JText::_('COM_KUNENA_LIB_STAT_TOP_PROFILES');
+			$top->titleName = JText::_('COM_KUNENA_USERNAME');
 			$top->titleCount =  JText::_('COM_KUNENA_USRL_HITS');
 		}
 		return array_slice($this->topProfiles, 0, $limit);
@@ -233,12 +233,13 @@ class KunenaForumStatistics {
 			KunenaError::checkDatabaseError();
 			$this->topPolls = KunenaForumTopicHelper::getTopics(array_keys($polls));
 			$top = reset($this->topPolls);
+			if (!$top) return array();
 			foreach ($this->topPolls as $item) {
 				$item->count = $polls[$item->id]->count;
 				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
 				$item->percent = round(100 * $item->count / $top->count);
 			}
-			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_STAT_POPULAR_POLLS_KGSG');
+			$top->title = JText::_('COM_KUNENA_LIB_STAT_TOP_POLLS');
 			$top->titleName = JText::_('COM_KUNENA_POLL_STATS_NAME');
 			$top->titleCount =  JText::_('COM_KUNENA_USRL_VOTES');
 		}
@@ -261,8 +262,8 @@ class KunenaForumStatistics {
 				$item->link = KunenaUserHelper::get($item->id)->getLink();
 				$item->percent = round(100 * $item->count / $top->count);
 			}
-			$top->title = JText::_('COM_KUNENA_STAT_TOP') .' '. $limit .' '. JText::_('COM_KUNENA_STAT_POPULAR') .' '. JText::_('COM_KUNENA_STAT_POPULAR_USER_THANKS_YOU');
-			$top->titleName = JText::_('COM_KUNENA_USRL_USERNAME');
+			$top->title = JText::_('COM_KUNENA_LIB_STAT_TOP_THANKS');
+			$top->titleName = JText::_('COM_KUNENA_USERNAME');
 			$top->titleCount =  JText::_('COM_KUNENA_STAT_THANKS_YOU_RECEIVED');
 		}
 		return array_slice($this->topThanks, 0, $limit);

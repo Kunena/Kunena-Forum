@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Community
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,7 +33,7 @@ class KunenaAvatarCommunity extends KunenaAvatar {
 	{
 		$user = KunenaFactory::getUser($user);
 		// Get CUser object
-		$user =& CFactory::getUser($user->userid);
+		$user = CFactory::getUser($user->userid);
 		if ($sizex<=90)	$avatar = $user->getThumbAvatar();
 		else $avatar = $user->getAvatar();
 		return $avatar;

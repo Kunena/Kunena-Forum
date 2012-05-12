@@ -15,23 +15,22 @@ require_once (dirname ( __FILE__ ) . '/kunena.php');
  * Kunena Announcements
  * Provides access to the #__kunena_announcements table
  */
-class TableKunenaAnnouncements extends KunenaTable
-{
-	var $id = null;
-	var $title = null;
-	var $created_by = null;
-	var $sdescription = null;
-	var $description = null;
-	var $created = null;
-	var $published = null;
-	var $ordering = null;
-	var $showdate = null;
+class TableKunenaAnnouncements extends KunenaTable {
+	public $id = null;
+	public $title = null;
+	public $created_by = null;
+	public $sdescription = null;
+	public $description = null;
+	public $created = null;
+	public $published = null;
+	public $ordering = null;
+	public $showdate = null;
 
-	function __construct($db) {
+	public function __construct($db) {
 		parent::__construct ( '#__kunena_announcement', 'id', $db );
 	}
 
-	function check() {
+	public function check() {
 		if ($this->created_by) {
 			$user = KunenaUserHelper::get($this->created_by);
 			if (!$user->exists()) {

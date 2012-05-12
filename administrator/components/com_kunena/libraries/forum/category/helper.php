@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,13 +13,10 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Category Helper Class
  */
-class KunenaForumCategoryHelper {
+abstract class KunenaForumCategoryHelper {
 	// Global for every instance
 	public static $_instances = false;
 	protected static $_tree = array ();
-
-	// Static class
-	private function __construct() {}
 
 	/**
 	 * Returns the global KunenaForumCategory object, only creating it if it doesn't already exist.
@@ -81,6 +78,74 @@ class KunenaForumCategoryHelper {
 		$subscribed = (array) $db->loadResultArray ();
 		if (KunenaError::checkDatabaseError()) return;
 		return KunenaForumCategoryHelper::getCategories($subscribed);
+	}
+
+	/**
+	 * @since	2.0.0-BETA2
+	 */
+	public static function subscribe($ids, $value=1, $user=null) {
+		$count = 0;
+		// Pre-load all items
+		$usercategories = KunenaForumCategoryUserHelper::getCategories($ids, $user);
+		foreach ($usercategories as $usercategory) {
+			if ($usercategory->subscribed != (int)$value) $count++;
+			$usercategory->subscribed = (int)$value;
+			$usercategory->save();
+		}
+		return $count;
+	}
+
+	/**
+	 * Returns KunenaForumCategory object
+	 *
+	 * @access	public
+	 * @param 	mixed	$categories  The categories IDs which need to be loaded
+	 * @param 	array	$userid The userids to be loaded.
+	 * @param	int		$limitstart
+	 * @param	int		$limit
+	 * @param	array	$params The optionals params to more precise output
+	 * @return	KunenaForumCategory		The category object.
+	 *
+	 * @since	2.0.0-BETA2
+	 */
+	static public function getLatestSubscriptions($user, $limitstart=0, $limit=0, $params=array()) {
+		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+		$db = JFactory::getDBO ();
+		$config = KunenaFactory::getConfig ();
+		if ($limit < 1) $limit = $config->threads_per_page;
+
+		$userids = is_array($user) ? implode(",", $user) : KunenaUserHelper::get($user)->userid;
+		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'c.last_post_time DESC';
+		$where = isset($params['where']) ? (string) $params['where'] : '';
+		$allowed = implode(',', KunenaAccess::getInstance()->getAllowedCategories ());
+
+		if (!$userids || !$allowed) return array(0, array());
+
+		// Get total count
+		$query = "SELECT COUNT(*) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id";
+		$db->setQuery ( $query );
+		$total = ( int ) $db->loadResult ();
+		if (KunenaError::checkDatabaseError() || !$total) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return array(0, array());
+		}
+
+		// If out of range, use last page
+		if ($total < $limitstart)
+			$limitstart = intval($total / $limit) * $limit;
+
+		$query = "SELECT c.id FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id ORDER BY {$orderby}";
+		$db->setQuery ( $query , $limitstart, $limit );
+		$subscribed = (array) $db->loadResultArray ();
+		if (KunenaError::checkDatabaseError()) return;
+
+		$list = array();
+		foreach ( $subscribed as $id ) {
+			$list[$id] = self::$_instances[$id];
+		}
+		unset ($subscribed);
+
+		return array($total, $list);
 	}
 
 	static public function getNewTopics($catids) {
@@ -369,6 +434,33 @@ class KunenaForumCategoryHelper {
 		}
 
 		return $rows;
+	}
+
+	/**
+	 * Method to the alias of category to generate a new title
+	 *
+	 * @access	public
+	 * @param	integer	$category_id
+	 * @param string $alias
+	 * @return	boolean	True if something is found in categories
+	 * @since 2.0.0-BETA2
+	 */
+	static public function getAlias($category_id, $alias) {
+		$db = JFactory::getDbo();
+		$query = "SELECT * FROM #__kunena_categories WHERE id = {$db->quote($category_id)} AND alias = {$db->quote($alias)}";
+		$db->setQuery($query);
+		$category_items = $db->loadAssoc();
+
+		// Check for an error message.
+		if ($db->getErrorNum()) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+
+		if ( is_array($category_items) ) {
+			return true;
+		}
+		return false;
 	}
 
 	// Internal functions:

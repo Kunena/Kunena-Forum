@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -35,7 +35,7 @@ class KunenaIntegrationComprofiler {
 	public function trigger($event, &$params) {
 		global $_PLUGINS;
 		$config = KunenaFactory::getConfig ();
-		$params ['config'] = & $config;
+		$params ['config'] = $config;
 		$_PLUGINS->loadPluginGroup ( 'user' );
 		$_PLUGINS->trigger ( 'kunenaIntegration', array ($event, &$config, &$params ) );
 	}

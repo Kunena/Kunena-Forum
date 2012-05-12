@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,12 +18,19 @@ require_once KPATH_SITE . '/lib/kunena.link.class.php';
  * @since		2.0
  */
 class KunenaControllerUser extends KunenaController {
-	public function display() {
+	public function display($cachable = false, $urlparams = false) {
 		// Redirect profile to integrated component if profile integration is turned on
 		$redirect = 1;
 		$active = $this->app->getMenu ()->getActive ();
+
 		if (!empty($active)) {
-			$params = new JParameter($active->params);
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$params = $active->params;
+			} else {
+				// Joomla 1.5
+				$params = new JParameter($active->params);
+			}
 			$redirect = $params->get('integration', 1);
 		}
 		if ($redirect && JRequest::getCmd('layout') != 'moderate' && JRequest::getCmd('format') == 'html') {

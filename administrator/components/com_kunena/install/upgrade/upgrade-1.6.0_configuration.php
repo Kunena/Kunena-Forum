@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,48 +14,49 @@ function kunena_upgrade_160_configuration($parent) {
 	$config = KunenaFactory::getConfig ();
 
 	// Switch to default template
-	$config->template = 'default';
+	$config->set('template', 'blue_eagle');
 
 	// Keep integration settings
 	$integration = array ('jomsocial' => 'jomsocial', 'cb' => 'communitybuilder', 'uddeim' => 'uddeim', 'aup' => 'alphauserpoints', 'none' => 'none' );
-	if (! $config->allowavatar) {
-		$config->allowavatar = 1;
-		$config->integration_avatar = 'none';
-	} else if ($config->avatar_src) {
-		if (isset ( $integration [$config->avatar_src] )) {
-			$config->integration_avatar = $integration [$config->avatar_src];
+	if (! $config->get('allowavatar')) {
+		$config->set('allowavatar', 1);
+		$config->set('integration_avatar', 'none');
+	} else if ($config->get('avatar_src')) {
+		if (isset ( $integration [$config->get('avatar_src')] )) {
+			$config->set('integration_avatar', $integration [$config->get('avatar_src')]);
 		} else {
-			$config->integration_avatar = 'kunena';
+			$config->set('integration_avatar', 'kunena');
 		}
-		$config->avatar_src = '';
+		unset($config->avatar_src);
 	}
-	if ($config->fb_profile) {
-		if (isset ( $integration [$config->fb_profile] )) {
-			$config->integration_access = $integration [$config->fb_profile];
-			$config->integration_login = $integration [$config->fb_profile];
-			$config->integration_profile = $integration [$config->fb_profile];
-			$config->integration_activity = $integration [$config->fb_profile];
+	if ($config->get('fb_profile')) {
+		if (isset ( $integration [$config->get('fb_profile')] )) {
+			$profile = $integration [$config->get('fb_profile')];
+			$config->set('integration_access', $profile);
+			$config->set('integration_login', $profile);
+			$config->iset('ntegration_profile', $profile);
+			$config->set('integration_activity', $profile);
 		} else {
-			$config->integration_access = 'joomla';
-			$config->integration_login = 'joomla';
-			$config->integration_profile = 'kunena';
-			$config->integration_activity = 'none';
+			$config->set('integration_access', 'joomla');
+			$config->set('integration_login', 'joomla');
+			$config->set('integration_profile', 'kunena');
+			$config->set('integration_activity', 'none');
 		}
-		$config->fb_profile = '';
+		unset($config->fb_profile);
 	}
-	if ($config->js_actstr_integration) {
-		$config->integration_activity = 'jomsocial';
-		$config->js_actstr_integration = 0;
-	} else if ($config->integration_activity == 'jomsocial') {
-		$config->integration_activity = 'none';
+	if ($config->get('js_actstr_integration')) {
+		$config->set('integration_activity', 'jomsocial');
+		unset($config->js_actstr_integration);
+	} else if ($config->get('integration_activity') == 'jomsocial') {
+		$config->set('integration_activity', 'none');
 	}
-	if ($config->pm_component) {
-		if (isset ( $integration [$config->pm_component] )) {
-			$config->integration_private = $integration [$config->pm_component];
+	if ($config->get('pm_component')) {
+		if (isset ( $integration [$config->get('pm_component')] )) {
+			$config->set('integration_private', $integration [$config->get('pm_component')]);
 		} else {
-			$config->integration_private = 'none';
+			$config->set('integration_private', 'none');
 		}
-		$config->pm_component = '';
+		unset($config->pm_component);
 	}
 
 	// Save configuration

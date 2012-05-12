@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Template
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,11 +15,6 @@ jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.path');
 
-class KunenaParameter extends JParameter {
-	public function getXml() {
-		return $this->_xml;
-	}
-}
 /**
 
 * Kunena Users Table Class
@@ -73,8 +68,7 @@ class KunenaTemplate extends JObject
 		if (!is_array($this->default)) $this->default = (array) $this->default;
 		array_unshift($this->default, $name);
 
-		$xml = KPATH_SITE . "/template/{$name}/template.xml";
-		$this->xml_path = $xml;
+		$this->xml_path = KPATH_SITE . "/template/{$name}/template.xml";
 		$ini = KPATH_SITE . "/template/{$name}/params.ini";
 		$content = '';
 		if (is_readable( $ini ) ) {
@@ -82,15 +76,23 @@ class KunenaTemplate extends JObject
 			$content = file_get_contents($ini);
 		}
 		$this->name = $name;
-		$this->params = new KunenaParameter($content, $xml);
 
-		$xml = $this->params->getXml();
-		foreach ($xml['_default']->children() as $param)  {
-			if ($param->attributes('type') == 'spacer') continue;
-			$this->params->def($param->attributes('name'), $param->attributes('default'));
-			$name = $param->attributes('name');
-			if (substr($name,0,5) == 'style') {
-				$this->style_variables[$name] = $this->params->get($name);
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$this->params = new JRegistry($content);
+		} else {
+			// Joomla 1.5
+			$this->params = new JParameter($content);
+		}
+		// Load default values
+		$xml = simplexml_load_file($this->xml_path);
+		foreach ($xml->xpath('params/param') as $node) {
+			if (isset($node['name']) && isset($node['default'])) $this->params->def($node['name'], $node['default']);
+		}
+		// Generate CSS variables
+		foreach ($this->params->toArray() as $key=>$value)  {
+			if (substr($key,0,5) == 'style') {
+				$this->style_variables[$key] = $value;
 			}
 		}
 	}
@@ -98,6 +100,7 @@ class KunenaTemplate extends JObject
 	public function loadLanguage() {
 		// Loading language strings for the template
 		$lang = JFactory::getLanguage();
+		KunenaFactory::loadLanguage('com_kunena.templates', 'site');
 		foreach (array_reverse($this->default) as $template) {
 			$file = 'com_kunena.tpl_'.$template;
 			$lang->load($file, JPATH_SITE)
@@ -220,12 +223,13 @@ HTML;
 
 	public function getStyleVariables() {
 		if ($this->compiled_style_variables === null) {
-			$xml = $this->params->getXml();
 			$variables = array();
 			foreach ($this->style_variables as $name=>$value)  {
-				$variables[] = "\t{$name}:{$this->params->get($name)};";
+				if ($value != '')
+					$variables[] = "\t{$name}:{$value};";
 			}
-			$this->compiled_style_variables = "@variables {\n".implode("\n", $variables)."\n}\n\n";
+			if ($variables) $this->compiled_style_variables = "@variables {\n".implode("\n", $variables)."\n}\n\n";
+			else $this->compiled_style_variables = '';
 
 		}
 		return $this->compiled_style_variables;
@@ -358,6 +362,7 @@ HTML;
 				'CompressUnitValues' => false,
 				'CompressExpressionValues' => false
 			);
+			CssMin::setVerbose(1);
 			$tokens = CssMin::minify($buffer, $filters, $plugins, false);
 			$buffer = new CssKunenaFormatter($tokens, "\t");
 		} else {
@@ -386,6 +391,7 @@ HTML;
 
 		$buffer = preg_replace_callback ( '/url\(([^\)]+)\)/u', array($this, 'findUrl'), $buffer );
 		JFile::write(JPATH_ROOT.'/'.$dest, $buffer);
+		unset($tokens, $buffer, $filters, $plugins);
 		return $dest;
 	}
 
@@ -405,7 +411,7 @@ HTML;
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		}
-		return JFactory::getDocument ()->addScript ( $this->getFile($filename, true, '', null, 'default') );
+		return JFactory::getDocument ()->addScript ( $this->getFile($filename, true, '', 'media/kunena', 'default') );
 	}
 
 	/*
@@ -582,7 +588,7 @@ HTML;
 	 * @return	KunenaTemplate	The template object.
 	 * @since	1.6
 	 */
-	static public function getInstance($name=null) {
+	public static function getInstance($name=null) {
 		$app = JFactory::getApplication();
 		if (!$name) {
 			$name = JRequest::getString ( 'kunena_template', KunenaFactory::getConfig()->template, 'COOKIE' );

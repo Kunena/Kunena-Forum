@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -70,11 +70,17 @@ class KunenaModel extends JModel {
 		$this->embedded = true;
 		$this->setState('embedded', true);
 
-		if ($params instanceof JParameter) {
+		if ($params instanceof JRegistry) {
 			$this->params = $params;
 		} else {
-			$this->params = new JParameter('');
-			$this->params->bind($params);
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$this->params = new JRegistry($params);
+			} else {
+				// Joomla 1.5
+				$this->params = new JParameter('');
+				$this->params->bind($params);
+			}
 		}
 	}
 
@@ -109,7 +115,7 @@ class KunenaModel extends JModel {
 	 * @param  mixed $var The output to escape.
 	 * @return mixed The escaped value.
 	 */
-	function escape($var) {
+	public function escape($var) {
 		if (in_array ( $this->_escape, array ('htmlspecialchars', 'htmlentities' ) )) {
 			return call_user_func ( $this->_escape, $var, ENT_COMPAT, 'UTF-8' );
 		}
@@ -121,7 +127,7 @@ class KunenaModel extends JModel {
 	 *
 	 * @param mixed $spec The callback for _escape() to use.
 	 */
-	function setEscape($spec) {
+	public function setEscape($spec) {
 		$this->_escape = $spec;
 	}
 

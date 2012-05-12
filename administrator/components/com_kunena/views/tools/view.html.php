@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -50,6 +50,11 @@ class KunenaAdminViewTools extends KunenaView {
 		$this->display ();
 	}
 
+	function displayPurgeReStatements() {
+		$this->setToolBarPurgeReStatements();
+		$this->display ();
+	}
+
 	protected function setToolBarDefault() {
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
 		JToolBarHelper::spacer();
@@ -88,6 +93,15 @@ class KunenaAdminViewTools extends KunenaView {
 		JToolBarHelper::spacer();
 		if (!empty($this->legacy)) JToolBarHelper::custom('fixlegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
 		JToolBarHelper::trash('trashmenu', 'COM_KUNENA_A_TRASH_MENU', false);
+		JToolBarHelper::spacer();
+		JToolBarHelper::back();
+		JToolBarHelper::spacer();
+	}
+
+	protected function setToolBarPurgeReStatements() {
+		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::spacer();
+		JToolBarHelper::trash('purgerestatements', 'COM_KUNENA_A_PURGE_RE_MENU_VALIDATE', false);
 		JToolBarHelper::spacer();
 		JToolBarHelper::back();
 		JToolBarHelper::spacer();

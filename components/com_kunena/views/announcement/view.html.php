@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,7 +17,7 @@ jimport ( 'joomla.cache.handler.output' );
  */
 class KunenaViewAnnouncement extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->assignRef ( 'announcement', $this->get ( 'Announcement' ) );
+		$this->announcement = $this->get ( 'Announcement' );
 
 		if (!$this->announcement->authorise('read')) {
 			$this->setError($this->announcement->getError());
@@ -36,7 +36,7 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 
 	function displayCreate($tpl = null) {
-		$this->assignRef ( 'announcement', $this->get ( 'NewAnnouncement' ) );
+		$this->announcement = $this->get ( 'NewAnnouncement' );
 
 		if (!$this->announcement->authorise('create')) {
 			$this->setError($this->announcement->getError());
@@ -55,7 +55,7 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 
 	function displayEdit($tpl = null) {
-		$this->assignRef ( 'announcement', $this->get ( 'Announcement' ) );
+		$this->announcement = $this->get ( 'Announcement' );
 
 		if (!$this->announcement->authorise('edit')) {
 			$this->setError($this->announcement->getError());
@@ -74,7 +74,7 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 
 	function displayList($tpl = null) {
-		$this->assignRef ( 'announcements', $this->get ( 'Announcements' ) );
+		$this->announcements = $this->get ( 'Announcements' );
 		$new = new KunenaForumAnnouncement;
 
 		$this->actions = array();

@@ -13,6 +13,10 @@
 	<files>
 		<filename plugin="kunena">kunena.php</filename>
 	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_system_kunena.sys.ini</language>
+	</languages>
+
 	<params>
 		<param name="jcontentevents" type="radio" default="0" label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS" description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_DESC">
 			<option value="0">NO</option>

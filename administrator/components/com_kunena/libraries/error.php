@@ -3,40 +3,43 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-class KunenaError {
+abstract class KunenaError {
 	static $enabled = 0;
 	static $handler = false;
+	static $debug = false;
+	static $admin = false;
 
-	function initialize() {
+	public static function initialize() {
 		if (!self::$enabled) {
-			$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
-			$admin = JFactory::getApplication()->isAdmin() || KunenaUserHelper::getMyself()->isAdmin();
-			register_shutdown_function('kunenaShutdownHandler', $debug || $admin || KUNENA_PROFILER);
-			if (!$debug) return;
+			self::$debug = JDEBUG || KunenaFactory::getConfig ()->debug;
+			self::$admin = JFactory::getApplication()->isAdmin() || KunenaUserHelper::getMyself()->isAdmin();
+			register_shutdown_function('kunenaShutdownHandler', self::$debug || self::$admin || KUNENA_PROFILER);
+			if (!self::$debug) return;
 
 			@ini_set('display_errors', 1);
-			@error_reporting(E_ALL);
-			set_error_handler('kunenaErrorHandler');
 			self::$handler = true;
 			if (version_compare(JVERSION, '1.7', '>')) {
 				// Joomla 1.7+
+				@error_reporting(E_ALL | E_STRICT);
 				JFactory::getDBO()->setDebug(true);
 			} else {
 				// Joomla 1.5 and 1.6
+				@error_reporting(E_ALL & ~E_STRICT);
 				JFactory::getDBO()->debug(1);
 			}
+			set_error_handler('kunenaErrorHandler');
 
 			self::$enabled++;
 		}
 	}
 
-	function cleanup() {
+	public static function cleanup() {
 		if (self::$enabled && (--self::$enabled) == 0) {
 			if (self::$handler) {
 				restore_error_handler ();
@@ -45,27 +48,25 @@ class KunenaError {
 		}
 	}
 
-	function error($msg, $where='default') {
-		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
+	public static function error($msg, $where='default') {
+		if (self::$debug) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_ERROR_'.strtoupper($where), $msg), 'error');
 		}
 	}
 
-	function warning($msg, $where='default') {
-		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
+	public static function warning($msg, $where='default') {
+		if (self::$debug) {
 			$app = JFactory::getApplication();
 			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_'.strtoupper($where), $msg), 'notice');
 		}
 	}
 
-	function checkDatabaseError() {
+	public static function checkDatabaseError() {
 		$db = JFactory::getDBO();
 		if ($db->getErrorNum ()) {
 			$app = JFactory::getApplication();
-			$my = JFactory::getUser();
-			$acl = KunenaAccess::getInstance();
-			if ($acl->isAdmin ($my->id)) {
+			if (self::$debug || self::$admin) {
 				$app->enqueueMessage ( 'Kunena '.JText::sprintf ( 'COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.org/">www.kunena.org</a>' ), 'error' );
 			} else {
 				$app->enqueueMessage ( 'Kunena '.JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' ), 'error' );
@@ -75,13 +76,11 @@ class KunenaError {
 		return false;
 	}
 
-	function getDatabaseError() {
+	public static function getDatabaseError() {
 		$db = JFactory::getDBO();
 		if ($db->getErrorNum ()) {
 			$app = JFactory::getApplication();
-			$my = JFactory::getUser();
-			$acl = KunenaAccess::getInstance();
-			if ($acl->isAdmin ($my)) {
+			if (self::$debug || self::$admin) {
 				return $db->getErrorMsg();
 			} else {
 				return 'Kunena '.JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' );

@@ -14,21 +14,27 @@ $checklist += checkdir('components');
 $checklist += checkdir('modules');
 
 $keys = array('COM_KUNENA'=>'administrator/components/com_kunena/kunena.j25.xml');
+$files = array();
 foreach ($checklist as $file => $dummy) {
 	$strings = findStrings($file);
 	foreach ($strings as $string) {
 		$prefix = isset($keys[$string]) ? strprefix($keys[$string], $file) : $file;
 		if ($prefix != $file && preg_match('#^components/com_kunena/views/[^\.]+\.xml$#', $file)) {
+			// Special case, use sys.ini file (2 locations if needed)
 			$prefix = 'components/com_kunena/views/**/*.xml';
+			$files['admin/en-GB.com_kunena.sys.ini'][$prefix][$string] = $prefix;
+		} else {
+			$keys[$string] = $prefix;
 		}
-		$keys[$string] = $prefix;
 	}
 }
-$files = array();
-
 foreach ($keys as $key => $location) {
 	if (empty($location)) {
 		$files['site/en-GB.com_kunena.ini']['Common strings for both frontend and backend'][$key] = $location;
+	} elseif (preg_match('#^administrator/components/com_kunena/install/modules/#', $location)) {
+		$files['site/en-GB.com_kunena.ini'][$location][$key] = $location;
+	} elseif (preg_match('#^administrator/components/com_kunena/install/plugins/#', $location)) {
+		$files['site/en-GB.com_kunena.ini'][$location][$key] = $location;
 	} elseif (preg_match('#^administrator/components/com_kunena/install/#', $location)) {
 		$files['admin/en-GB.com_kunena.install.ini'][$location][$key] = $location;
 	} elseif (preg_match('#^administrator/components/com_kunena/libraries/#', $location)) {
@@ -37,7 +43,7 @@ foreach ($keys as $key => $location) {
 		$files['admin/en-GB.com_kunena.controllers.ini'][$location][$key] = $location;
 	} elseif (preg_match('#^administrator/components/com_kunena/models/#', $location)) {
 		$files['admin/en-GB.com_kunena.models.ini'][$location][$key] = $location;
-	} elseif (preg_match('#^administrator/components/com_kunena/view/s#', $location)) {
+	} elseif (preg_match('#^administrator/components/com_kunena/views/#', $location)) {
 		$files['admin/en-GB.com_kunena.views.ini'][$location][$key] = $location;
 	} elseif (preg_match('#^administrator/components/com_kunena/media/kunena/topicicons/default/topicicons.xml#', $location)) {
 		$files['site/en-GB.com_kunena.templates.ini'][$location][$key] = $location;
@@ -110,7 +116,7 @@ function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $hea
 	ksort($fkeys);
 	foreach ($fkeys as $location=>$list) {
 		$autogen = array();
-		$out.= "\n; {$location}\n\n";
+		$out.= "\n; JROOT/{$location}\n\n";
 		ksort($list);
 		foreach ($list as $key=>$string) {
 			if ($key[strlen($key)-1] == '_') {
@@ -124,7 +130,7 @@ function saveLang(&$keys, &$fkeys, &$translations, &$filestrings, $outfile, $hea
 				unset($filestrings[$outfile][$key]);
 				if (!isset($translations[$key])) {
 					// Missing key
-					$translations[$key] ='';
+					$translations[$key] = $key;
 				}
 				$out.= "{$key}=\"{$translations[$key]}\"\n";
 			}
@@ -167,7 +173,7 @@ function loadTranslations($files) {
 		$contents = file_get_contents($file);
 		// Put commented out translations back so that we do not loose them
 		$contents = preg_replace('|;\s*(COM_)|','\1',$contents);
-		$strings = (array) parse_ini_string($contents, false, INI_SCANNER_RAW);
+		$strings = (array) parse_ini_string($contents);
 		if (!$strings) echo "ERROR LOADING $file!\n";
 		$file = preg_replace(array('|^components/.*/|', '|^administrator/.*/|'), array('site/','admin/'), $file);
 		foreach ($strings as $key => $str) {

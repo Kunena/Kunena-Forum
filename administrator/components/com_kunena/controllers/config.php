@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -20,13 +20,12 @@ class KunenaAdminControllerConfig extends KunenaController {
 
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->baseurl = 'index.php?option=com_kunena&view=config';
-		$this->kunenabaseurl = 'index.php?option=com_kunena';
+		$this->baseurl = 'administrator/index.php?option=com_kunena&view=config';
+		$this->kunenabaseurl = 'administrator/index.php?option=com_kunena';
 	}
 
 	function apply() {
-		$url = $this->baseurl;
-		$this->save($url);
+		$this->save($this->baseurl);
 	}
 
 	function save($url=null) {
@@ -58,7 +57,7 @@ class KunenaAdminControllerConfig extends KunenaController {
 
 		$this->app->enqueueMessage ( JText::_('COM_KUNENA_CONFIGSAVED'));
 		if (empty($url)) $this->app->redirect ( KunenaRoute::_($this->kunenabaseurl, false) );
-		else $this->app->redirect ( $url );
+		else $this->app->redirect ( KunenaRoute::_($url, false) );
 	}
 
 	function setdefault() {

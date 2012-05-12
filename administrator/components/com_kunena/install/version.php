@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -11,15 +11,6 @@ defined ( '_JEXEC' ) or die ();
 
 class KunenaVersion
 {
-	/**
-	 * Contructor
-	 *
-	 * @since	1.6
-	 */
-	public function __construct()
-	{
-	}
-
 	/**
 	 * Get warning for unstable releases
 	 *
@@ -32,6 +23,9 @@ class KunenaVersion
 		if (strpos(KunenaForum::version(), 'GIT') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_GIT');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_GIT_WARNING');
+		} else if (strpos(KunenaForum::version(), 'DEV') !== false) {
+			$kn_version_type = JText::_('COM_KUNENA_VERSION_DEV');
+			$kn_version_warning = JText::_('COM_KUNENA_VERSION_DEV_WARNING');
 		} else if (strpos(KunenaForum::version(), 'RC') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_RC');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_RC_WARNING');
@@ -41,9 +35,6 @@ class KunenaVersion
 		} else if (strpos(KunenaForum::version(), 'ALPHA') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_ALPHA');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_ALPHA_WARNING');
-		} else if (strpos(KunenaForum::version(), 'DEV') !== false) {
-			$kn_version_type = JText::_('COM_KUNENA_VERSION_DEV');
-			$kn_version_warning = JText::_('COM_KUNENA_VERSION_DEV_WARNING');
 		}
 		if (!empty($kn_version_warning))
 		{
@@ -98,11 +89,11 @@ class KunenaVersion
 	/**
 	* Retrieve copyright information as string.
 	*
-	* @return string "© 2008-2011 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	* @return string "© 2008 - 2012 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	*/
 	static function getCopyrightHTML()
 	{
-		return ': &copy; 2008-2012 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.org" target = "_blank">'
+		return ': &copy; 2008 - 2012 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.org" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_TEAM').'</a>  | '.JText::_('COM_KUNENA_VERSION_LICENSE')
 			.': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_GPL').'</a>';
@@ -111,7 +102,7 @@ class KunenaVersion
 	/**
 	* Retrieve installed Kunena version, copyright and license as string.
 	*
-	* @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008-2011 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	* @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2012 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	*/
 	static function getLongVersionHTML()
 	{

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -84,15 +84,6 @@ class KunenaModelSearch extends KunenaModel {
 		$value = $this->getInt ( 'limit', 0 );
 		if ($value < 1 || $value > 100) $value = $this->config->messages_per_page_search;
 		$this->setState ( 'list.limit', $value );
-	}
-
-	public function setError($error) {
-		$this->error = $error;
-	}
-
-	public function getError() {
-		if ($this->error) return $this->error;
-		else return;
 	}
 
 	protected function buildWhere() {

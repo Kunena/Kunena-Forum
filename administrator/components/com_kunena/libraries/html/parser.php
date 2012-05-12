@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage HTML
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -12,8 +12,9 @@ defined ( '_JEXEC' ) or die ();
 
 abstract class KunenaHtmlParser {
 	static $emoticons = null;
+	static $relative = true;
 
-	function getEmoticons($grayscale = false, $emoticonbar = false) {
+	public static function getEmoticons($grayscale = false, $emoticonbar = false) {
 		$db = JFactory::getDBO ();
 		$grayscale == true ? $column = "greylocation" : $column = "location";
 		$sql = "SELECT code, `$column` as file FROM #__kunena_smileys";
@@ -38,13 +39,13 @@ abstract class KunenaHtmlParser {
 		return $smileyArray;
 	}
 
-	function JSText($txt) {
+	public static function JSText($txt) {
 		$txt = JText::_($txt);
 		$txt = preg_replace('`\'`','\\\\\'', $txt);
 		return $txt;
 	}
 
-	function parseText($txt, $len=0) {
+	public static function parseText($txt, $len=0) {
 		if (!$txt) return;
 
 		if ($len && JString::strlen($txt) > $len) $txt = JString::substr ( $txt, 0, $len ) . ' ...';
@@ -53,10 +54,10 @@ abstract class KunenaHtmlParser {
 		return $txt;
 	}
 
-	function parseBBCode($txt, $parent=null, $len=0) {
+	public static function parseBBCode($txt, $parent=null, $len=0) {
 		if (!$txt) return;
 
-		$bbcode = KunenaBbcode::getInstance();
+		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(false);
@@ -64,7 +65,7 @@ abstract class KunenaHtmlParser {
 		return $txt;
 	}
 
-	function plainBBCode($txt, $len=0) {
+	public static function plainBBCode($txt, $len=0) {
 		if (!$txt) return;
 
 		// Strip content not allowed for guests
@@ -76,24 +77,24 @@ abstract class KunenaHtmlParser {
 		$txt = preg_replace ( '/\[attachment(.*?)\](.*?)\[\/attachment\]/s', '', $txt );
 		$txt = preg_replace ( '/\[code\](.*?)\[\/code]/s', '', $txt );
 
-		$bbcode = KunenaBbcode::getInstance();
+		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$txt = $bbcode->Parse($txt);
 		return $txt;
 	}
 
-	function stripBBCode($txt, $len=0) {
+	public static function stripBBCode($txt, $len=0) {
 		if (!$txt) return;
 
-		$bbcode = KunenaBbcode::getInstance();
+		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$txt = strip_tags($bbcode->Parse($txt));
 		return $txt;
 	}
 
-	function escape($string) {
+	public static function escape($string) {
 		return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
 	}
 }

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaControllerHome extends KunenaController {
 	public $home = 1;
 
-	public function display() {
+	public function display($cachable = false, $urlparams = false) {
 		global $Itemid;
 		$menu = $this->app->getMenu ();
 		$home = $menu->getActive ();
@@ -28,69 +28,41 @@ class KunenaControllerHome extends KunenaController {
 
 		// Find default menu item
 		$default = $this->_getDefaultMenuItem($menu, $home);
-		if (!$default) {
+		if (!$default || $default->id == $home->id) {
 			// There is no default menu item, use category view instead
-			$default = clone $menu->getItem ( KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=index") );
+			$default = clone $menu->getItem ( KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list") );
+			if (KunenaRoute::getHome($default)->id != $home->id) $default = clone $home;
 			$default->query['view'] = 'category';
-			$default->query['layout'] = 'index';
+			$default->query['layout'] = 'list';
+			unset($default->query['defaultmenu']);
 		}
 		if (!$default) {
 			JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 		}
 
-		// Check if menu item was correctly routed
-		$active = $menu->getItem ( KunenaRoute::getItemID() );
-
-		if (!$active || ($active->id != $home->id && $active->id != $default->id)) {
-			// Routing has been changed, redirect or fail
-			if ($active) {
-				JRequest::setVar ( 'defaultmenu', null );
-				// FIXME: chack possible redirect loops!
-				$this->setRedirect (KunenaRoute::_(null, false));
-			}
-			return;
-		}
-
 		// Remove query variables coming from the home menu item
-		foreach ( $home->query as $var => $value ) {
-			if ( $var != 'Itemid' && $var != 'option' && $value == JRequest::getVar ($var) ) {
-				JRequest::setVar ( $var, null );
-			}
-		}
-		// If view is not set, add query variables from shown menu item
-		if (!JRequest::getVar ('view')) {
-			foreach ( $default->query as $var => $value ) {
-				if (JRequest::getVar ($var) === null)
-					JRequest::setVar ( $var, $value );
-			}
+		JRequest::setVar ( 'defaultmenu', null );
+
+		// Add query variables from shown menu item
+		foreach ( $default->query as $var => $value ) {
+			JRequest::setVar ( $var, $value );
 		}
 
-		// Check if we are using default menu item
-		if (!isset($default->query['layout'])) $default->query['layout'] = 'default';
-		foreach ( $default->query as $var => $value ) {
-			$cmp = JRequest::getVar($var, null);
-			if ($var == 'layout' && !$cmp) $cmp = 'default';
-			if ($var == 'defaultmenu') continue;
-			if ($var == 'view' && $cmp == 'home') continue;
-			if ($cmp !== null && $value != $cmp) {
-				$default = $home;
-				break;
-			}
-		}
 		// Set active menu item to point the real page
 		$menu->setActive ( $default->id );
 
 		// Joomla 1.5 hack:
 		$Itemid = $default->id;
+
+		// Reset our router
 		KunenaRoute::initialize();
 
-		if (JRequest::getVar ( 'view' ) != 'home') {
-			// Run display task from our new controller
-			$controller = KunenaController::getInstance(true);
-			$controller->execute ('display');
-			// Set redirect and message
-			$this->setRedirect ($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());
-		}
+		// Run display task from our new controller
+		$controller = KunenaController::getInstance();
+		$controller->execute ('display');
+
+		// Set redirect and message
+		$this->setRedirect ($controller->getRedirect(), $controller->getMessage(), $controller->getMessageType());
 	}
 
 	protected function _getDefaultMenuItem($menu, $active, $visited=array()) {

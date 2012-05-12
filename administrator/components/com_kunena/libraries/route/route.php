@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Route
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -80,9 +80,13 @@ abstract class KunenaRoute {
 
 	public static function _($uri = null, $xhtml = true, $ssl=0) {
 		if (self::$adminApp) {
-			// Use default routing in administration
 			if ($uri instanceof JURI) $uri = $uri->toString ();
-			return JRoute::_($uri, $xhtml, $ssl);
+			if (substr($uri, 0, 14) == 'administrator/') {
+				// Use default routing in administration
+				return JRoute::_(substr($uri, 14), $xhtml, $ssl);
+			} else {
+				return JUri::root(true)."/{$uri}";
+			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
@@ -133,7 +137,7 @@ abstract class KunenaRoute {
 		return self::$home;
 	}
 
-	protected static function getHome($item) {
+	public static function getHome($item) {
 		if (!$item) return null;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$id = $item->id;
@@ -186,7 +190,7 @@ abstract class KunenaRoute {
 		}
 	}
 
-	function stringURLSafe($string) {
+	public static function stringURLSafe($string) {
 		static $filtered = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!isset($filtered[$string])) {
@@ -399,7 +403,8 @@ abstract class KunenaRoute {
 			if (self::$search === false) {
 				self::$search['home'] = array();
 				foreach ( self::$menu as $item ) {
-					if (! is_object ( $item ))
+					// Joomla! 1.5:
+					if (! is_object ( $item ) || (isset($item->published) && $item->published < 1 ))
 						continue;
 
 					// Do not add menu items for other languages
@@ -436,7 +441,7 @@ abstract class KunenaRoute {
 				// Search from the current home menu
 				$search[self::$home->id] = 1;
 				// Then search from all linked home menus
-				$search += self::$search['home'][self::$home->id];
+				if (isset(self::$search['home'][self::$home->id])) $search += self::$search['home'][self::$home->id];
 			}
 			// Finally search from other home menus
 			$search += self::$search['home'];
@@ -456,17 +461,17 @@ abstract class KunenaRoute {
 			if ($view == 'topic') $candidates[$key] += !empty(self::$search['category'][0]) ? self::$search['category'][0] : array();
 		}
 		$bestid = $bestcount = 0;
-		//echo "$key "; print_r($candidates[$key]);
+		// echo "$key "; print_r($candidates[$key]);
 		foreach ($candidates[$key] as $id) {
 			$item = self::$menu[$id];
-			$authorise = version_compare(JVERSION, '1.6', '>') ? self::$menus->authorise($item->id) : !empty($item->published) && (!isset ( $item->access ) || $item->access <= JFactory::getUser()->aid);
+			$authorise = version_compare(JVERSION, '1.6', '>') ? self::$menus->authorise($item->id) : !isset ( $item->access ) || $item->access <= JFactory::getUser()->aid;
 			if (!$authorise) {
 				continue;
 			}
 
 			switch ($item->query['view']) {
 				case 'home':
-					$matchcount = 1;
+					$matchcount = self::checkHome($item, $catid);
 					break;
 				case 'category':
 				case 'topic':
@@ -490,7 +495,13 @@ abstract class KunenaRoute {
 		static $cache = array();
 		if (!$catid) return true;
 		if (!isset($cache[$item->id])) {
-			$params = new JParameter($item->params);
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$params = $item->params;
+			} else {
+				// Joomla 1.5
+				$params = new JParameter($item->params);
+			}
 			$catids = $params->get('catids', array());
 			if (!is_array($catids)) {
 				$catids = explode(',', $catids);

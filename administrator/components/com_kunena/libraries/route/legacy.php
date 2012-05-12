@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Route
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -540,10 +540,17 @@ abstract class KunenaRouteLegacy {
 		return $changed;
 	}
 
-	static public function convertMenuItem($item) {
+	public static function convertMenuItem($item) {
 		$uri = JURI::getInstance($item->link);
 		$view = $uri->getVar('func', $uri->getVar('view'));
-		$params = new JParameter($item->params);
+
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry($item->params);
+		} else {
+			// Joomla 1.5
+			$params = new JParameter($item->params);
+		}
 
 		if (self::convert($uri, 0)) {
 

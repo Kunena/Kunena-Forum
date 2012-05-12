@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -39,7 +39,7 @@ class KunenaControllerTopic extends KunenaController {
 			'email' => JRequest::getString ( 'email', null ),
 			'subject' => JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW ),
 			'message' => JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW ),
-			'icon_id' => JRequest::getInt ( 'topic_emoticon', 0 ),
+			'icon_id' => JRequest::getInt ( 'topic_emoticon', null ),
 			'anonymous' => JRequest::getInt ( 'anonymous', 0 ),
 			'poll_title' => JRequest::getString ( 'poll_title', '' ),
 			'poll_options' => JRequest::getVar('polloptionsID', array (), 'post', 'array'),
@@ -102,7 +102,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Set topic icon if permitted
-		if ($this->config->topicicons && $topic->authorise('edit', null, false)) {
+		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->authorise('edit', null, false)) {
 			$topic->icon_id = $fields['icon_id'];
 		}
 
@@ -257,7 +257,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Set topic icon if permitted
-		if ($this->config->topicicons && $topic->authorise('edit', null, false)) {
+		if ($this->config->topicicons && isset($fields['icon_id']) && $topic->authorise('edit', null, false)) {
 			$topic->icon_id = $fields['icon_id'];
 		}
 
@@ -783,7 +783,6 @@ class KunenaControllerTopic extends KunenaController {
 				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_MESSAGE' ) . "\n-----\n" . KunenaHtmlParser::stripBBCode($messagetext);
 				$mailmessage .= "\n-----\n\n";
 				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_LINK' ) . " " . $msglink;
-				$mailmessage .= "\n\n\n\n** Powered by Kunena! - http://www.kunena.org **";
 				$mailmessage = JMailHelper::cleanBody ( strtr ( $mailmessage, array ('&#32;' => '' ) ) );
 
 				foreach ( $emailToList as $emailTo ) {

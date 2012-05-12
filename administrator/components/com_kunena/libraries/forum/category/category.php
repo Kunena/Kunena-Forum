@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -103,6 +103,23 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	public function getUserInfo($user = null) {
 		return KunenaForumCategoryUserHelper::get($this->id, $user);
+	}
+
+	/**
+	 * Subscribe / Unsubscribe user to this category.
+	 *
+	 * @param boolean $value 1/true for subscribe, 0/false for unsubscribe.
+	 * @param mixed $user
+	 *
+	 * @since	2.0.0-BETA2
+	 */
+	public function subscribe($value=1, $user=null) {
+		$usercategory = KunenaForumCategoryUserHelper::get($this->id, $user);
+		$usercategory->subscribed = (int)$value;
+		if (!$usercategory->save()) {
+			$this->setError($usercategory->getError());
+		}
+		return !$this->getError();
 	}
 
 	/**
@@ -589,6 +606,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		}
 
 		KunenaUserHelper::recount();
+		KunenaForumMessageThankyouHelper::recount();
 
 		$this->id = null;
 		KunenaForumCategoryHelper::register($this);
@@ -608,7 +626,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			return false;
 
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
 		$result = $table->checkout($who);
@@ -707,6 +725,26 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if (!$update) return true;
 
 		return $this->save();
+	}
+
+	/**
+	 * Get if the user has subscribed on this category.
+	 *
+	 * @param boolean $value 1/true for subscribed, 0/false for unsubscribed.
+	 * @param int $userid
+	 *
+	 * @since	2.0.0-BETA2
+	 */
+	public function getSubscribed($userid = null ) {
+		if (!$this->exists()) {
+			return false;
+		}
+
+		if (!$userid ) return false;
+
+		$usercategory = KunenaForumCategoryUserHelper::get($this->id,$userid);
+
+		return (bool) $usercategory->subscribed;
 	}
 
 	// Internal functions

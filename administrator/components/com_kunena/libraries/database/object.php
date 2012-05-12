@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Object
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,7 +28,7 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @return  KunenaDatabaseObject
 	 */
-	abstract static public function getInstance($identifier = null, $reload = false);
+	static public function getInstance($identifier = null, $reload = false) {}
 
 	/**
 	 * Returns true if the object exists in the database.

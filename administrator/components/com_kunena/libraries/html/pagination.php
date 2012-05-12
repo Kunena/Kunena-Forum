@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage HTML
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -38,7 +38,7 @@ class KunenaHtmlPagination extends JPagination
 	protected $_additionalUrlParams = array();
 	protected $_uri = null;
 
-	function __construct($total, $limitstart, $limit, $prefix = '') {
+	public function __construct($total, $limitstart, $limit, $prefix = '') {
 		// If out of range, use last page
 		if ($total < (int) $limitstart)
 			$limitstart = intval($total / $limit) * $limit;
@@ -49,7 +49,7 @@ class KunenaHtmlPagination extends JPagination
 		$this->ktemplate = KunenaFactory::getTemplate();
 	}
 
-	function setDisplay($displayedPages = 7, $uri = null) {
+	public function setDisplay($displayedPages = 7, $uri = null) {
 		$this->_uri = $uri;
 		// From Joomla 1.6:
 		// Set the pagination iteration loop values.
@@ -77,7 +77,7 @@ class KunenaHtmlPagination extends JPagination
 	 */
 	public function getPagesLinks()
 	{
-		if ($this->get('pages.total') <= 1) {
+		if ($this->get('pages.total') < 1) {
 			return;
 		}
 

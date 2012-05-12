@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Attachment
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -215,7 +215,7 @@ class KunenaForumMessageAttachment extends JObject {
 	 */
 	public function load($id) {
 		// Create the table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		// Load the KunenaTable object based on id
 		$this->_exists = $table->load ( $id );
@@ -286,7 +286,7 @@ class KunenaForumMessageAttachment extends JObject {
 		}
 
 		// Create the table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		$result = $table->delete ( $this->id );
 		if (! $result) {

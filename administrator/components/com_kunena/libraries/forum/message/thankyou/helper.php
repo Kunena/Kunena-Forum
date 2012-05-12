@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Thankyou
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Message Thank You Helper Class
  * @since 2.0
  */
-class KunenaForumMessageThankyouHelper {
+abstract class KunenaForumMessageThankyouHelper {
 	protected static $_instances = array();
 
 	/**
@@ -181,25 +181,31 @@ class KunenaForumMessageThankyouHelper {
 	 * @since 2.0
 	 */
 	static public function recount() {
-		 // FIXME: make this recount function faster
 		$db = JFactory::getDBO ();
 
-		$query = "SELECT COUNT(targetuserid) AS countthankyou, targetuserid AS userid FROM `#__kunena_thankyou` GROUP BY `targetuserid`";
-		$db->setQuery ( $query );
-		$userid =  $db->loadResultArray();
-
-		foreach($userid as $id){
-			$query = "UPDATE #__kunena_users SET thankyou={$countthankyou} WHERE userid={$db->quote($id)}";
-			$db->setQuery ( $query );
-			$db->query ();
-		}
-
-		// Check for an error message.
-		if ($db->getErrorNum ()) {
-			$this->setError ( $db->getErrorMsg () );
+		// Users who have no thank yous, set thankyou count to 0
+		$query ="UPDATE #__kunena_users AS u
+			LEFT JOIN #__kunena_thankyou AS t ON t.targetuserid = u.userid
+			SET u.thankyou = 0
+			WHERE t.targetuserid IS NULL";
+		$db->setQuery($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
 			return false;
-		}
+		$rows = $db->getAffectedRows ();
 
-		return true;
+		// Update user thankyou count
+		$query = "INSERT INTO #__kunena_users (userid, thankyou)
+			SELECT targetuserid AS userid, COUNT(*) AS thankyou
+			FROM #__kunena_thankyou
+			GROUP BY targetuserid
+			ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
+		$db->setQuery ($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		$rows += $db->getAffectedRows ();
+
+		return rows;
 	}
 }

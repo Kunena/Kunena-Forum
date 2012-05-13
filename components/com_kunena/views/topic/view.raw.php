@@ -18,7 +18,6 @@ class KunenaViewTopic extends KunenaView {
 		$body = JRequest::getVar('body', '', 'post', 'string', JREQUEST_ALLOWRAW);
 		$response = array();
 		if ($this->me->exists()) {
-			$this->msg->userid = JFactory::getUser()->id;
 			$msgbody = KunenaHtmlParser::parseBBCode( $body, $this );
 			$response ['preview'] = $msgbody;
 		}

@@ -88,7 +88,7 @@ defined ( '_JEXEC' ) or die ();
 	<div id="kprofile-rightcolbot">
 		<div class="kprofile-rightcol2">
 			<ul>
-				<?php if ($this->config->showemail && (!$this->profile->hideEmail || $this->me->isModerator())) : ?><li><span class="kicon-profile kicon-profile-email"></span><?php echo JHTML::_('email.cloak', $this->user->email) ?></li><?php endif; ?>
+				<?php if ( $this->email ) : ?><li><span class="kicon-profile kicon-profile-email"></span><?php echo $this->email ?></li><?php endif; ?>
 				<?php if (!empty($this->profile->websiteurl)):?><li><span class="kicon-profile kicon-profile-website"></span><a href="http://<?php echo $this->escape($this->profile->websiteurl) ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename) ?></a></li><?php endif ?>
 				<li>&nbsp;</li>
 			</ul>

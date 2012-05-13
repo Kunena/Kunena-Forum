@@ -18,10 +18,12 @@ abstract class KunenaForumCategoryUserHelper {
 	protected static $_instances = array();
 
 	/**
-	 * Returns KunenaForumCategoryUser object
+	 * Get an instance of KunenaForumCategoryUser object
 	 *
 	 * @access	public
-	 * @param	identifier		The user category to load - Can be only an integer.
+	 * @param	int  $id  The category id to load.
+	 * @param	int  $user	The user id to load - Can be only an integer.
+	 * @param	boolean  $reload Define if the instances of categories need to be reloaded.
 	 * @return	KunenaForumCategoryUser		The user category object.
 	 * @since	1.7
 	 */
@@ -36,12 +38,22 @@ abstract class KunenaForumCategoryUserHelper {
 			return new KunenaForumCategoryUser (null, $user);
 
 		if ($reload || empty ( self::$_instances [$user->userid][$category] )) {
-			self::$_instances [$user->userid][$category] = array_pop(KunenaForumCategoryUserHelper::getCategories ( $category, $user ));
+			$user_categories = KunenaForumCategoryUserHelper::getCategories ( $category, $user );
+			self::$_instances [$user->userid][$category] = array_pop( $user_categories );
 		}
 
 		return self::$_instances [$user->userid][$category];
 	}
 
+	/**
+	 * Get categories for a specific user
+	 *
+	 * @access	public
+	 * @param	mixed  $ids  The category ids to load.
+	 * @param	int  $user	The user id to load - Can be only an integer.
+	 * @return	KunenaForumCategoryUser		The user category object.
+	 * @since	1.7
+	 */
 	static public function getCategories($ids = false, $user=null) {
 		$user = KunenaUserHelper::get($user);
 		if ($ids === false) {
@@ -69,6 +81,15 @@ abstract class KunenaForumCategoryUserHelper {
 
 	// Internal functions
 
+	/**
+	 * Load categories for a specific user
+	 *
+	 * @access	protected
+	 * @param	array  $ids  The category ids to load.
+	 * @param	int  $user	The user id to load - Can be only an integer.
+	 * @return	KunenaForumCategoryUser		The user category object.
+	 * @since	1.7
+	 */
 	static protected function loadCategories($ids, $user) {
 		foreach ($ids as $i=>$id) {
 			$iid = intval($id);

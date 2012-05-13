@@ -36,7 +36,8 @@ abstract class KunenaForumCategoryUserHelper {
 			return new KunenaForumCategoryUser (null, $user);
 
 		if ($reload || empty ( self::$_instances [$user->userid][$category] )) {
-			self::$_instances [$user->userid][$category] = array_pop(KunenaForumCategoryUserHelper::getCategories ( $category, $user ));
+			$categories = KunenaForumCategoryUserHelper::getCategories ( $category, $user );
+			self::$_instances [$user->userid][$category] = array_pop( $categories );
 		}
 
 		return self::$_instances [$user->userid][$category];

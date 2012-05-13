@@ -15,6 +15,10 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewTrash extends KunenaView {
 	function displayDefault() {
+		$this->trash_items = $this->get('Trashitems');
+		$this->navigation = $this->get ( 'Navigation' );
+		$this->view_options_list = $this->get ( 'ViewOptions' );
+
 		$this->setToolBarDefault();
 		$this->display();
 	}
@@ -26,23 +30,13 @@ class KunenaAdminViewTrash extends KunenaView {
 		$this->display();
 	}
 
-	function displayTopics () {
-		$this->setToolBarTopics();
-		$this->topics = $this->get('TopicsItems');
-		$this->navigation = $this->get ( 'Navigation' );
-		$this->display();
-	}
-
-	function displayMessages () {
-		$this->setToolBarMessages();
-		$this->messages = $this->get('MessagesItems');
-		$this->navigation = $this->get ( 'Navigation' );
-		$this->display();
-	}
-
 	protected function setToolBarDefault() {
 		// Set the titlebar text
 		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('restore','restore.png','restore_f2.png', 'COM_KUNENA_TRASH_RESTORE');
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('purge','trash.png','trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
 		JToolBarHelper::spacer();
 	}
 
@@ -52,27 +46,5 @@ class KunenaAdminViewTrash extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('purge','delete.png','delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY');
 		JToolBarHelper::spacer();
-	}
-
-	protected function setToolBarTopics() {
-		// Set the titlebar text
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('restore','restore.png','restore_f2.png', 'COM_KUNENA_TRASH_RESTORE');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('purge','trash.png','trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('trash');
-	}
-
-	protected function setToolBarMessages() {
-		// Set the titlebar text
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('restore','restore.png','restore_f2.png', 'COM_KUNENA_TRASH_RESTORE');
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('purge','trash.png','trash_f2.png', 'COM_KUNENA_TRASH_PURGE');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('trash');
 	}
 }

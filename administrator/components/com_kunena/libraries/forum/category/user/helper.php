@@ -49,7 +49,7 @@ abstract class KunenaForumCategoryUserHelper {
 	 * Get categories for a specific user
 	 *
 	 * @access	public
-	 * @param	int  $ids  The category ids to load.
+	 * @param	mixed  $ids  The category ids to load.
 	 * @param	int  $user	The user id to load - Can be only an integer.
 	 * @return	KunenaForumCategoryUser		The user category object.
 	 * @since	1.7
@@ -85,7 +85,7 @@ abstract class KunenaForumCategoryUserHelper {
 	 * Load categories for a specific user
 	 *
 	 * @access	protected
-	 * @param	int  $ids  The category ids to load.
+	 * @param	array  $ids  The category ids to load.
 	 * @param	int  $user	The user id to load - Can be only an integer.
 	 * @return	KunenaForumCategoryUser		The user category object.
 	 * @since	1.7

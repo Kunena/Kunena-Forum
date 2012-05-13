@@ -298,6 +298,13 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayTab() {
+		$this->email = null;
+		if ( $this->config->showemail && ( !$this->profile->hideEmail || $this->me->isModerator() ) ) {
+			$this->email = JHTML::_('email.cloak', $this->user->email);
+		} else if ( $this->config->showemail && ( !$this->profile->hideEmail || $this->me->isAdmin() ) ) {
+			$this->email = JHTML::_('email.cloak', $this->user->email);
+		}
+
 		switch ($this->do) {
 			case 'edit':
 				$user = JFactory::getUser();

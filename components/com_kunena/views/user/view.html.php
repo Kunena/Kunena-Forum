@@ -301,7 +301,7 @@ class KunenaViewUser extends KunenaView {
 		$this->email = null;
 		if ( $this->config->showemail && ( !$this->profile->hideEmail || $this->me->isModerator() ) ) {
 			$this->email = JHTML::_('email.cloak', $this->user->email);
-		} else if ( $this->config->showemail && ( !$this->profile->hideEmail || $this->me->isAdmin() ) ) {
+		} else if ( $this->me->isAdmin() ) {
 			$this->email = JHTML::_('email.cloak', $this->user->email);
 		}
 

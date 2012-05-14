@@ -658,7 +658,7 @@ class KunenaViewTopic extends KunenaView {
 			$this->messageButtons->set('reply', $this->getButton ( sprintf($layout, 'reply'), 'reply', 'message', 'communication'));
 			$this->messageButtons->set('quote', $this->getButton ( sprintf($layout, 'reply&quote=1'), 'quote', 'message', 'communication'));
 
-		} elseif (!$this->me->isModerator ( $this->topic->category_id )) {
+		} elseif (!$this->me->isModerator ( $this->topic->getCategory() )) {
 			// User is not allowed to write a post
 			$this->message_closed = $this->topic->locked ? JText::_('COM_KUNENA_POST_LOCK_SET') : JText::_('COM_KUNENA_VIEW_DISABLED');
 		}
@@ -709,8 +709,8 @@ class KunenaViewTopic extends KunenaView {
 			$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JUtility::getToken() . '=1';
 			$thankyou = $this->message->getThankyou();
 			//TODO: for normal users, show only limited number of thankyou (config->thankyou_max)
-			foreach( $thankyou->getList() as $userid=>$time){
-				$thankyou_delete = $this->me->isModerator() ? ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
+			foreach( $thankyou->getList() as $userid=>$time) {
+				$thankyou_delete = $this->me->isModerator($this->message->getCategory()) ? ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
 				$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;
 			}

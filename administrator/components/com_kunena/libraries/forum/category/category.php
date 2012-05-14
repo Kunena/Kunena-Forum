@@ -776,7 +776,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if (!$this->exists()) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
-		if (empty($catids[$this->id]) && !$user->isModerator($this->id)) {
+		if (empty($catids[$this->id])) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
 	}
@@ -832,19 +832,19 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 	protected function authoriseUnlocked($user) {
 		// Check that category is not locked or that user is a moderator
-		if ($this->locked && (!$user->userid || !$user->isModerator($this->id))) {
+		if ($this->locked && (!$user->userid || !$user->isModerator($this))) {
 			return JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' );
 		}
 	}
 	protected function authoriseModerate($user) {
 		// Check that user is moderator
-		if (!$user->userid || !$user->isModerator($this->id)) {
+		if (!$user->userid || !$user->isModerator($this)) {
 			return JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' );
 		}
 	}
 	protected function authoriseAdmin($user) {
 		// Check that user is admin
-		if (!$user->userid || !$user->isAdmin($this->id)) {
+		if (!$user->userid || !$user->isAdmin($this)) {
 			return JText::_ ( 'COM_KUNENA_MODERATION_ERROR_NOT_ADMIN' );
 		}
 	}

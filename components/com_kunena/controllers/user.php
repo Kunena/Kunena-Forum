@@ -255,7 +255,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$now = JFactory::getDate()->toUnix();
-		if (!$this->me->isModerator($catid) && $now - $this->me->karma_time < $karma_delay) {
+		if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_WAIT' ), 'notice' );
 			$this->redirectBack ();
 		}

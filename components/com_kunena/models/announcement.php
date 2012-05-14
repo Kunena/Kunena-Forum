@@ -39,6 +39,6 @@ class KunenaModelAnnouncement extends KunenaModel {
 	}
 
 	function getAnnouncements() {
-		return KunenaForumAnnouncementHelper::getAnnouncements($this->getState ( 'list.start'), $this->getState ( 'list.limit'), !$this->me->isModerator('global'));
+		return KunenaForumAnnouncementHelper::getAnnouncements($this->getState ( 'list.start'), $this->getState ( 'list.limit'), !$this->me->isModerator());
 	}
 }

@@ -11,6 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaAccess {
+	const CATEGORY_SUBSCRIPTION = 1;
+	const TOPIC_SUBSCRIPTION = 2;
+
 	protected static $instance = null;
 	protected $accesstypes = array('all'=>array());
 
@@ -186,12 +189,28 @@ window.addEvent('domready', function(){
 		}
 	}
 
-	public function getAdmins($catid = 0) {
-		return !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : array();
+	/**
+	 * Get category administrators.
+	 *
+	 * @param int $catid Category Id
+	 * @param bool $all
+	 * @return array
+	 */
+	public function getAdmins($catid = 0, $all = false) {
+		$list = !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : array();
+		return $list;
 	}
 
-	public function getModerators($catid = 0) {
-		return !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : array();
+	/**
+	 * Get category moderators.
+	 *
+	 * @param int $catid Category Id
+	 * @param bool $all
+	 * @return array
+	 */
+	public function getModerators($catid = 0, $all = false) {
+		$list = !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : array();
+		return $list;
 	}
 
 	public function getAdminStatus($user = null) {
@@ -214,9 +233,6 @@ window.addEvent('domready', function(){
 		if (JFactory::getApplication()->isAdmin() && $user->userid == KunenaUserHelper::getMyself()->userid)
 			return true;
 
-		// If $catid is not numeric: Is user administrator in ANY category?
-		if (!is_numeric($catid)) return !empty($this->adminsByUserid[$user->userid]);
-
 		// Is user a global administrator?
 		if (!empty($this->adminsByUserid[$user->userid][0])) return true;
 		// Is user a category administrator?
@@ -237,10 +253,6 @@ window.addEvent('domready', function(){
 		if (!empty($this->moderatorsByUserid[$user->userid])) {
 			// Is user a global moderator?
 			if (!empty($this->moderatorsByUserid[$user->userid][0])) return true;
-			// Were we looking only for global moderator?
-			if (!is_numeric($catid)) return false;
-			// Is user moderator in ANY category?
-			if ($catid == 0) return true;
 			// Is user a category moderator?
 			if (!empty($this->moderatorsByUserid[$user->userid][$catid])) return true;
 		}
@@ -344,26 +356,45 @@ window.addEvent('domready', function(){
 		return $hold;
 	}
 
-	public function getSubscribers($catid, $topic, $subscriptions = false, $moderators = false, $admins = false, $excludeList = null) {
+	public function getSubscribers($catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null) {
 		$topic = KunenaForumTopicHelper::get($topic);
+		$category = $topic->getCategory();
 		if (!$topic->exists())
 			return array();
 
-		if ($subscriptions) {
-			$subslist = $this->loadSubscribers($topic, (int)$subscriptions);
-		}
-		if ($moderators) {
-			$modlist = array();
-			if (!empty($this->moderatorsByCatid[0])) $modlist += $this->moderatorsByCatid[0];
-			if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
+		$modlist = array();
+		if (!empty($this->moderatorsByCatid[0])) $modlist += $this->moderatorsByCatid[0];
+		if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
 
+		$adminlist = array();
+		if (!empty($this->adminsByCatid[0])) $adminlist += $this->adminsByCatid[0];
+		if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
+
+		if ($type) {
+			$subscribers = $this->loadSubscribers($topic, $type);
+			$allow = $deny = array();
+			if (!empty($subscribers)) {
+				foreach ($this->accesstypes[$category->accesstype] as $access) {
+					if (method_exists($access, 'authoriseUsers')) {
+						list ($a, $d) = $access->authoriseUsers($topic, $subscribers);
+						if (!empty($a)) $allow += array_combine($a, $a);
+						if (!empty($d)) $deny += array_combine($d, $d);
+					}
+				}
+			}
+			$subslist = array_diff($allow, $deny);
+			// Category administrators and moderators override ACL
+			$subslist += array_intersect_key($adminlist, array_flip($subscribers));
+			$subslist += array_intersect_key($modlist, array_flip($subscribers));
+		}
+		if (!$moderators) {
+			$modlist = array();
+		} else {
 			// If category has no moderators, send email to admins instead
 			if (empty($modlist)) $admins = true;
 		}
-		if ($admins) {
+		if (!$admins) {
 			$adminlist = array();
-			if (!empty($this->adminsByCatid[0])) $adminlist += $this->adminsByCatid[0];
-			if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
 		}
 
 		$query = new KunenaDatabaseQuery();
@@ -372,7 +403,7 @@ window.addEvent('domready', function(){
 		$query->where("u.block=0");
 		$userlist = array();
 		if (!empty($subslist)) {
-			$userlist = $subslist;
+			$userlist += $subslist;
 			$subslist = implode(',', array_keys($subslist));
 			$query->select("IF( u.id IN ({$subslist}), 1, 0 ) AS subscription");
 		} else {
@@ -432,15 +463,15 @@ window.addEvent('domready', function(){
 		}
 	}
 
-	protected function loadSubscribers($topic, $subsriptions) {
+	protected function loadSubscribers(KunenaForumTopic $topic, $type) {
 		$category = $topic->getCategory();
 		$db = JFactory::getDBO ();
 		$query = array();
-		if ($subsriptions == 1 || $subsriptions == 2) {
+		if ($type & self::TOPIC_SUBSCRIPTION) {
 			// Get topic subscriptions
 			$query[] = "SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topic->id} AND subscribed=1";
 		}
-		if ($subsriptions == 1 || $subsriptions == 3) {
+		if ($type & self::CATEGORY_SUBSCRIPTION) {
 			// Get category subscriptions
 			$query[] = "SELECT user_id FROM #__kunena_user_categories WHERE category_id={$category->id} AND subscribed=1";
 		}
@@ -448,16 +479,6 @@ window.addEvent('domready', function(){
 		$db->setQuery ($query);
 		$userids = (array) $db->loadResultArray();
 		KunenaError::checkDatabaseError();
-		$allow = $deny = array();
-		if (!empty($userids)) {
-			foreach ($this->accesstypes[$category->accesstype] as $access) {
-				if (method_exists($access, 'authoriseUsers')) {
-					list ($a, $d) = $access->authoriseUsers($topic, $userids);
-					if (!empty($a)) $allow += array_combine($a, $a);
-					if (!empty($d)) $deny += array_combine($d, $d);
-				}
-			}
-		}
-		return array_diff($allow, $deny);
+		return $userids;
 	}
 }

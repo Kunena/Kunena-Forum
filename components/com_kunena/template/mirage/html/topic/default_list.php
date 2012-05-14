@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 							<?php else: ?>
 								<li class="topic-taglist-title"><?php echo JText::_('COM_KUNENA_TOPIC_NO_TAGS') ?></li>
 							<?php endif ?>
-							<?php if ( $this->me->userid == $this->topic->first_post_userid || intval($this->me->isModerator('global')) ): ?><li class="topic-taglist-edit"><a id="edit_keywords" class="link"><?php echo JText::_('COM_KUNENA_TOPIC_TAGS_ADD_EDIT') ?></a></li><?php endif ?>
+							<?php if ( $this->me->userid == $this->topic->first_post_userid || $this->me->isModerator($this->topic->getCategory()) ): ?><li class="topic-taglist-edit"><a id="edit_keywords" class="link"><?php echo JText::_('COM_KUNENA_TOPIC_TAGS_ADD_EDIT') ?></a></li><?php endif ?>
 						</ul>
 					<?php endif ?>
 				</div>

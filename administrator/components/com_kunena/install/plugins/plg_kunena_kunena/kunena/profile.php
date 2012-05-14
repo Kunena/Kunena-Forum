@@ -45,5 +45,5 @@ class KunenaProfileKunena extends KunenaProfile {
 		return $top;
 	}
 
-	public function showProfile($userid, &$msg_params) {}
+	public function showProfile($view, &$params) {}
 }

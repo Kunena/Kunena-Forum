@@ -485,10 +485,22 @@ class KunenaViewTopic extends KunenaView {
 
 		$key = $this->profile->userid.'.'.$this->profile->username;
 		if (! isset ( $profiles [$key] )) {
+			// Run events
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$params = new JRegistry();
+			} else {
+				// Joomla 1.5
+				$params = new JParameter( '' );
+			}
 			// Modify profile values by integration
-			$triggerParams = array ('userid' => $this->profile->userid, 'userinfo' => &$this->profile );
-			$integration = KunenaFactory::getProfile();
-			$integration->trigger ( 'profileIntegration', $triggerParams );
+			$params->set('ksource', 'kunena');
+			$params->set('kunena_view', 'topic');
+			$params->set('kunena_layout', $this->state->get('layout'));
+
+			JPluginHelper::importPlugin('kunena');
+			$dispatcher = JDispatcher::getInstance();
+			$dispatcher->trigger('onKunenaPrepare', array ('kunena.user', &$this->profile, &$params, 0));
 
 			//karma points and buttons
 			$this->userkarma_title = $this->userkarma_minus = $this->userkarma_plus = '';
@@ -500,71 +512,51 @@ class KunenaViewTopic extends KunenaView {
 				}
 			}
 
-			// FIXME: we need to change how profilebox integration works
-			/*
-			$integration = KunenaFactory::getProfile();
-			$triggerParams = array(
-				'username' => &$this->username,
-				'messageobject' => &$this->msg,
-				'subject' => &$this->subjectHtml,
-				'messagetext' => &$this->messageHtml,
-				'signature' => &$this->signatureHtml,
-				'karma' => &$this->userkarma_title,
-				'karmaplus' => &$this->userkarma_plus,
-				'karmaminus' => &$this->userkarma_minus,
-				'layout' => $direction
-			);
+			if ($this->me->exists() && $this->message->userid == $this->me->userid) $usertype = 'me';
+			else $usertype = $this->profile->getType($this->category->id, true);
 
-			$profileHtml = $integration->showProfile($this->msg->userid, $triggerParams);
-			*/
-			$profileHtml = '';
-			if ($profileHtml) {
-				// Use integration
-				$profiles [$key] = $profileHtml;
-			} else {
-				$usertype = $this->profile->getType($this->category->id, true);
-				if ($this->me->exists() && $this->message->userid == $this->me->userid) $usertype = 'me';
+			// TODO: add context (options) to caching
+			$cache = JFactory::getCache('com_kunena', 'output');
+			$cachekey = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
+			$cachegroup = 'com_kunena.messages';
 
-				// TODO: add context (options, template) to caching
-				$cache = JFactory::getCache('com_kunena', 'output');
-				$cachekey = "profile.{$this->getTemplateMD5()}.{$this->profile->userid}.{$usertype}";
-				$cachegroup = 'com_kunena.messages';
-
-				// FIXME: enable caching after fixing the issues
-				$contents = false; //$cache->get($cachekey, $cachegroup);
-				if (!$contents) {
-					$this->userkarma = "{$this->userkarma_title} {$this->userkarma_minus} {$this->userkarma_plus}";
-					// Use kunena profile
-					if ($this->config->showuserstats) {
-						if ($this->config->userlist_usertype) {
-							$this->usertype = $this->profile->getType ( $this->topic->category_id );
-						} else {
-							$this->usertype = null;
-						}
-						$this->userrankimage = $this->profile->getRank ( $this->topic->category_id, 'image' );
-						$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
-						$this->userposts = $this->profile->posts;
-						$activityIntegration = KunenaFactory::getActivityIntegration ();
-						$this->userthankyou = $this->profile->thankyou;
-						$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
-						$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
+			// FIXME: enable caching after fixing the issues
+			$contents = false; //$cache->get($cachekey, $cachegroup);
+			if (!$contents) {
+				$this->userkarma = "{$this->userkarma_title} {$this->userkarma_minus} {$this->userkarma_plus}";
+				// Use kunena profile
+				if ($this->config->showuserstats) {
+					if ($this->config->userlist_usertype) {
+						$this->usertype = $this->profile->getType ( $this->topic->category_id );
 					} else {
 						$this->usertype = null;
-						$this->userrankimage = null;
-						$this->userranktitle = null;
-						$this->userposts = null;
-						$this->userthankyou = null;
-						$this->userpoints = null;
-						$this->usermedals = null;
 					}
-					$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
-
-					$contents = $this->loadTemplateFile('profile');
-					// FIXME: enable caching after fixing the issues
-					//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+					$this->userrankimage = $this->profile->getRank ( $this->topic->category_id, 'image' );
+					$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
+					$this->userposts = $this->profile->posts;
+					$activityIntegration = KunenaFactory::getActivityIntegration ();
+					$this->userthankyou = $this->profile->thankyou;
+					$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
+					$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
+				} else {
+					$this->usertype = null;
+					$this->userrankimage = null;
+					$this->userranktitle = null;
+					$this->userposts = null;
+					$this->userthankyou = null;
+					$this->userpoints = null;
+					$this->usermedals = null;
 				}
-				$profiles [$key] = $contents;
+				$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
+
+				$contents = KunenaFactory::getProfile()->showProfile($this, $params);
+				if (!$contents) $contents = $this->loadTemplateFile('profile');
+				$contents .= implode(' ', $dispatcher->trigger('onKunenaDisplay', array ('topic.profile', $this, $params)));
+
+				// FIXME: enable caching after fixing the issues (also external profile stuff affects this)
+				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
+			$profiles [$key] = $contents;
 		}
 		return $profiles [$key];
 	}

@@ -115,6 +115,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return array($topic, $message);
 	}
 
+	/**
+	 * Send email notifications from the message.
+	 *
+	 * @param string $url
+	 */
 	public function sendNotification($url=null) {
 		$config = KunenaFactory::getConfig();
 		if (!$config->get('send_emails')) {
@@ -137,15 +142,15 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		if ($mailsubs) {
 			if (!$this->parent) {
 				// New topic: Send email only to category subscribers
-				$mailsubs = $config->category_subscriptions != 'disabled' ? 3 : 0;
+				$mailsubs = $config->category_subscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
 				$once = $config->category_subscriptions == 'topic';
 			} elseif ($config->category_subscriptions != 'post') {
 				// Existing topic: Send email only to topic subscribers
-				$mailsubs = $config->topic_subscriptions != 'disabled' ? 2 : 0;
+				$mailsubs = $config->topic_subscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
 				$once = $config->topic_subscriptions == 'first';
 			} else {
 				// Existing topic: Send email to both category and topic subscribers
-				$mailsubs = $config->topic_subscriptions == 'disabled' ? 3 : 1;
+				$mailsubs = $config->topic_subscriptions == 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 				// FIXME: category subcription can override topic
 				$once = $config->topic_subscriptions == 'first';
 			}

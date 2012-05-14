@@ -188,6 +188,17 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return $this->recount();
 	}
 
+	/**
+	 * Send email notifications from the first post in the topic.
+	 *
+	 * @param string $url
+	 *
+	 * @since 2.0.0-BETA2
+	 */
+	public function sendNotification($url=null) {
+		KunenaForumMessageHelper::get($this->first_post_id)->sendNotification($url);
+	}
+
 	public function getUserTopic($user=null) {
 		$usertopic = KunenaForumTopicUserHelper::get($this->id, $user);
 		return $usertopic;

@@ -356,19 +356,12 @@ window.addEvent('domready', function(){
 		return $hold;
 	}
 
-	public function getSubscribers($catid, $topic, $subscriptions = false, $moderators = false, $admins = false, $excludeList = null) {
+	public function getSubscribers($catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null) {
 		$topic = KunenaForumTopicHelper::get($topic);
 		if (!$topic->exists())
 			return array();
 
-		if ($subscriptions) {
-			$type = 0;
-			if ($subscriptions == 1 || $subscriptions == 2) {
-				$type &= self::TOPIC_SUBSCRIPTION;
-			}
-			if ($subscriptions == 1 || $subscriptions == 3) {
-				$type &= self::CATEGORY_SUBSCRIPTION;
-			}
+		if ($type) {
 			$subslist = $this->loadSubscribers($topic, $type);
 		}
 		if ($moderators) {

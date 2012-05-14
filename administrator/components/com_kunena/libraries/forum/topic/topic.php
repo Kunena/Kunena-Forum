@@ -188,6 +188,17 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return $this->recount();
 	}
 
+	/**
+	 * Send email notifications from the first post in the topic.
+	 *
+	 * @param string $url
+	 *
+	 * @since 2.0.0-BETA2
+	 */
+	public function sendNotification($url=null) {
+		KunenaForumMessageHelper::get($this->first_post_id)->sendNotification($url);
+	}
+
 	public function getUserTopic($user=null) {
 		$usertopic = KunenaForumTopicUserHelper::get($this->id, $user);
 		return $usertopic;
@@ -270,7 +281,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	public function getReplies($hold=null) {
-		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->category_id)) {
+		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory())) {
 			return max($this->posts - 1, 0);
 		}
 		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold);
@@ -337,7 +348,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$this->unread = 0;
 		}
 		if ($mesid == 'unread') $mesid = $this->lastread;
-		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->category_id)) {
+		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory())) {
 			if ($mesid == 'first' || $mesid == $this->first_post_id) return $direction = 'asc' ? 0 : $this->posts-1;
 			if ($mesid == 'last' || $mesid == $this->last_post_id) return $direction = 'asc' ? $this->posts-1 : 0;
 			if ($mesid == $this->unread) return $direction = 'asc' ? $this->posts - max($this->unread, 1) : 0;
@@ -1054,14 +1065,14 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 	protected function authoriseUnlocked($user) {
 		// Check that topic is not locked or user is a moderator
-		if ($this->locked && !$user->isModerator($this->category_id)) {
+		if ($this->locked && !$user->isModerator($this->getCategory())) {
 			return JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' );
 		}
 	}
 	protected function authoriseOwn($user) {
 		// Check that topic owned by the user or user is a moderator
 		$usertopic = $this->getUserTopic($user);
-		if (!$user->exists() || (!$usertopic->owner && !$user->isModerator($this->category_id))) {
+		if (!$user->exists() || (!$usertopic->owner && !$user->isModerator($this->getCategory()))) {
 			return JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' );
 		}
 	}

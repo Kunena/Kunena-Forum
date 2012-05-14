@@ -120,11 +120,11 @@ abstract class KunenaForumMessageAttachmentHelper {
 		if ($config->image_upload == 'registered') return $types;
 
 		// For now on we only allow moderators
-		if (!$user->isModerator($category ? $category->id : null)) return false;
+		if (!$user->isModerator($category)) return false;
 		if ($config->image_upload == 'moderator') return $types;
 
 		// For now on we only allow administrators
-		if (!$user->isAdmin($category ? $category->id : 0)) return false;
+		if (!$user->isAdmin($category)) return false;
 		if ( $config->image_upload == 'admin') return $types;
 
 		return false;
@@ -149,11 +149,11 @@ abstract class KunenaForumMessageAttachmentHelper {
 		if ($config->file_upload == 'registered') return $types;
 
 		// For now on we only allow moderators
-		if (!$user->isModerator($category->id)) return false;
+		if (!$user->isModerator($category)) return false;
 		if ($config->file_upload == 'moderator') return $types;
 
 		// For now on we only allow administrators
-		if (!$user->isAdmin($category->id)) return false;
+		if (!$user->isAdmin($category)) return false;
 		if ( $config->file_upload == 'admin') return $types;
 
 		return false;

@@ -93,7 +93,7 @@ defined ( '_JEXEC' ) or die ();
 				<li>&nbsp;</li>
 			</ul>
 		</div>
-		<?php if ($this->signature) : ?>
+		<?php if ($this->signatureHtml) : ?>
 		<div class="kprofile-rightcol1">
 			<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE') ?></h4>
 			<div class="kmsgsignature">

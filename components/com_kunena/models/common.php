@@ -22,7 +22,7 @@ class KunenaModelCommon extends KunenaModel {
 	}
 
 	public function getAnnouncement() {
-		$items = KunenaForumAnnouncementHelper::getAnnouncements(0, 1, $this->me->isModerator('global'));
+		$items = KunenaForumAnnouncementHelper::getAnnouncements(0, 1, $this->me->isModerator());
 		return array_pop($items);
 	}
 }

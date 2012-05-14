@@ -265,14 +265,17 @@ abstract class KunenaRouteLegacy {
 				$mode = $config->rss_type;
 				switch ($mode) {
 					case 'topic' :
-						$uri->getVar('mode', 'topics');
+						$uri->setVar('layout', 'default');
+						$uri->setVar('mode', 'topics');
 						break;
 					case 'recent' :
-						$uri->getVar('mode', 'replies');
+						$uri->setVar('layout', 'default');
+						$uri->setVar('mode', 'replies');
 						break;
 					case 'post' :
 					default :
-						$uri->getVar('mode', 'posts');
+						$uri->setVar('layout', 'posts');
+						$uri->setVar('mode', 'latest');
 						break;
 				}
 				switch ($config->rss_timelimit) {

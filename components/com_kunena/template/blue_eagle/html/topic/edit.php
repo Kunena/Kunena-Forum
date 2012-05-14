@@ -140,7 +140,7 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
-		<?php if ($this->config->keywords && $this->me->isModerator ( $this->message->catid ) ) : ?>
+		<?php if ($this->config->keywords && $this->me->isModerator ( $this->topic->getCategory() ) ) : ?>
 		<tr id="kpost-tags" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?></strong>

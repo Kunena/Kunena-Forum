@@ -91,9 +91,10 @@ class KunenaAdminModelCategories extends KunenaModel {
 					$category->parent_id = 0;
 					$category->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $category->name;
 				}
-				$category->up = $this->me->isAdmin($category->parent_id) && reset($siblings) != $category->id;
-				$category->down = $this->me->isAdmin($category->parent_id) && end($siblings) != $category->id;
-				$category->reorder = $this->me->isAdmin($category->parent_id);
+				$parent = $category->getParent();
+				$category->up = $this->me->isAdmin($parent) && reset($siblings) != $category->id;
+				$category->down = $this->me->isAdmin($parent) && end($siblings) != $category->id;
+				$category->reorder = $this->me->isAdmin($parent);
 				// FIXME: stop creating access names manually
 				if ($category->accesstype == 'joomla.level') {
 					$groupname = $acl->getGroupName($category->accesstype, $category->access);
@@ -136,13 +137,13 @@ class KunenaAdminModelCategories extends KunenaModel {
 				} else {
 					$category->admin_group = JText::_ ( $acl->getGroupName($category->accesstype, $category->admin_access ));
 				}
-				if ($this->me->isAdmin($category->id) && $category->isCheckedOut(0)) {
+				if ($this->me->isAdmin($category) && $category->isCheckedOut(0)) {
 					$category->editor = KunenaFactory::getUser($category->checked_out)->getName();
 				} else {
 					$category->checked_out = 0;
 					$category->editor = '';
 				}
-				$admin += $this->me->isAdmin($category->id);
+				$admin += $this->me->isAdmin($category);
 			}
 			$this->setState ( 'list.count.admin', $admin );
 		}
@@ -158,13 +159,11 @@ class KunenaAdminModelCategories extends KunenaModel {
 	}
 
 	public function getAdminCategory() {
-		$parent_id = $this->getState ( 'item.parent_id' );
-		$catid = $this->getState ( 'item.id' );
-		if (!$this->me->isAdmin(null) && !$this->me->isAdmin($catid)) {
+		$category = KunenaForumCategoryHelper::get ( $this->getState ( 'item.id' ) );
+		if (!$this->me->isAdmin($category)) {
 			return false;
 		}
 		if ($this->_admincategory === false) {
-			$category = KunenaForumCategoryHelper::get ( $catid );
 			if ($category->exists ()) {
 				if (!$category->isCheckedOut ( $this->me->userid ))
 					$category->checkout ( $this->me->userid );
@@ -174,7 +173,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 				$db->setQuery ( "SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent_id='0' AND id!='$category->id' ORDER BY ordering" );
 				$sections = $db->loadObjectList ();
 				KunenaError::checkDatabaseError ();
-				$category->parent_id = $parent_id;
+				$category->parent_id = $this->getState ( 'item.parent_id' );
 				$category->published = 0;
 				$category->ordering = 9999;
 				$category->pub_recurse = 1;

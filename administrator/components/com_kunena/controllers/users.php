@@ -51,7 +51,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		$newview = JRequest::getVar ( 'newview' );
 		$newrank = JRequest::getVar ( 'newrank' );
-		$signature = JRequest::getVar ( 'message' );
+		$signature = JRequest::getVar ( 'signature' );
 		$deleteSig = JRequest::getVar ( 'deleteSig' );
 		$moderator = JRequest::getInt ( 'moderator' );
 		$uid = JRequest::getInt ( 'uid' );

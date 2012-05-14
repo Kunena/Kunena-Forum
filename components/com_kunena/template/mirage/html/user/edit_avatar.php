@@ -62,6 +62,7 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 						<?php endif ?>
 						<?php if ($this->config->allowavatargallery) : ?>
+						<input id="kunena_url_avatargallery" type="hidden" value="<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' )?>" />
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
@@ -72,15 +73,6 @@ defined ( '_JEXEC' ) or die ();
 								<div class="innerspacer kbox-full">
 									<?php echo $this->galleries ?>
 									<div class="clr"></div>
-									<script type="text/javascript">
-										function switch_avatar_category(gallery) {
-											if (gallery == "")
-												return;
-											var url = "<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' ) ?>";
-											var urlreg = new RegExp("_GALLERY_","g");
-											location.href=url.replace(urlreg,gallery);
-										}
-									</script>
 									<ul class="list-unstyled checkbox-outline">
 									<?php foreach ($this->galleryimg as $id=>$avatarimg) : ?>
 										<li class="checkbox-outline-item">

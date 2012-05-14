@@ -298,6 +298,13 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayTab() {
+		$this->email = null;
+		if ( $this->config->showemail && ( !$this->profile->hideEmail || $this->me->isModerator() ) ) {
+			$this->email = JHTML::_('email.cloak', $this->user->email);
+		} else if ( $this->me->isAdmin() ) {
+			$this->email = JHTML::_('email.cloak', $this->user->email);
+		}
+
 		switch ($this->do) {
 			case 'edit':
 				$user = JFactory::getUser();
@@ -340,7 +347,7 @@ class KunenaViewUser extends KunenaView {
 		}
 
 		$selected = JString::trim($this->gallery);
-		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\" onchange=\"switch_avatar_category(this.options[this.selectedIndex].value)\">\n";
+		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\">\n";
 		$str .=  "<option value=\"default\"";
 
 		if ($selected == "") {

@@ -171,7 +171,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 		}
 	}
 	protected function authoriseRead($user) {
-		if (!$this->exists() || ($this->published == 0 && !$user->isModerator('global'))) {
+		if (!$this->exists() || ($this->published != 1 && !$user->isModerator())) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
 	}
@@ -188,7 +188,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	}
 	protected function authoriseWrite($user) {
 		// Check that user is global moderator
-		if (!$user->userid || !$user->isModerator('global')) {
+		if (!$user->userid || !$user->isModerator()) {
 			return JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' );
 		}
 	}

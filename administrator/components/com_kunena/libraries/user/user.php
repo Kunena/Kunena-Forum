@@ -38,7 +38,6 @@ class KunenaUser extends JObject {
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = KunenaFactory::getConfig ();
-		$this->_session_timeout = time() - $this->_app->getCfg ( 'lifetime', 15 ) * 60;
 	}
 
 	/**
@@ -218,14 +217,28 @@ class KunenaUser extends JObject {
 		return $ordering;
 	}
 
-	public function isAdmin($catid = 0) {
-		$acl = KunenaAccess::getInstance();
-		return $acl->isAdmin ( $this, $catid );
+	/**
+	 * Checks if user has administrator permissions in the category.
+	 *
+	 * If no category is given, check is against global administrator permissions.
+	 *
+	 * @param KunenaForumCategory $category
+	 * @return bool
+	 */
+	public function isAdmin(KunenaForumCategory $category = null) {
+		return KunenaAccess::getInstance()->isAdmin ( $this, !empty($category->id) ? $category->id : null );
 	}
 
-	public function isModerator($catid = 0) {
-		$acl = KunenaAccess::getInstance();
-		return $acl->isModerator ( $this, $catid );
+	/**
+	 * Checks if user has moderator permissions in the category.
+	 *
+	 * If no category is given, check is against global moderator permissions.
+	 *
+	 * @param KunenaForumCategory $category
+	 * @return bool
+	 */
+	public function isModerator(KunenaForumCategory $category = null) {
+		return KunenaAccess::getInstance()->isModerator ( $this, !empty($category->id) ? $category->id : null );
 	}
 
 	public function isBanned() {
@@ -299,16 +312,17 @@ class KunenaUser extends JObject {
 			'banned'=>'COM_KUNENA_VIEW_BANNED',
 			'blocked'=>'COM_KUNENA_VIEW_BANNED'
 		);
+		$category = KunenaForumCategoryHelper::get($catid);
 		if (!$this->_type) {
 			if ($this->userid == 0) {
 				$this->_type = 'guest';
 			} elseif ($this->isBanned ()) {
 				$this->_type = 'banned';
-			} elseif ($this->isAdmin ( $catid )) {
+			} elseif ($this->isAdmin ( $category )) {
 				$this->_type = 'admin';
 			} elseif ($this->isModerator ( null )) {
 				$this->_type = 'globalmod';
-			} elseif ($this->isModerator ( $catid )) {
+			} elseif ($catid && $this->isModerator ( $category )) {
 				$this->_type = 'moderator';
 			} else {
 				$this->_type = 'user';
@@ -329,6 +343,8 @@ class KunenaUser extends JObject {
 		$rank->rank_image = null;
 
 		$config = KunenaFactory::getConfig ();
+		$category = KunenaForumCategoryHelper::get($catid);
+
 		if (! $config->showranking)
 			return;
 		if (self::$_ranks === null) {
@@ -357,7 +373,7 @@ class KunenaUser extends JObject {
 			}
 		} else if ($this->rank != 0 && isset ( self::$_ranks [$this->rank] )) {
 			$rank = self::$_ranks [$this->rank];
-		} else if ($this->rank == 0 && $this->isAdmin ( $catid )) {
+		} else if ($this->rank == 0 && $this->isAdmin ( $category )) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_ ( 'COM_KUNENA_RANK_ADMINISTRATOR' );
 			$rank->rank_special = 1;
@@ -368,7 +384,7 @@ class KunenaUser extends JObject {
 					break;
 				}
 			}
-		} else if ($this->rank == 0 && $this->isModerator ( $catid )) {
+		} else if ($this->rank == 0 && $this->isModerator ( $category )) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_ ( 'COM_KUNENA_RANK_MODERATOR' );
 			$rank->rank_special = 1;

@@ -244,7 +244,7 @@ abstract class KunenaUserHelper {
 			if (self::$_online === null) {
 				self::getOnlineUsers();
 			}
-			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > $user->_session_timeout) : false;
+			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time >  time() - $this->_app->getCfg ( 'lifetime', 15 ) * 60) : false;
 		}
 		if ($yes) return $online ? $yes : $no;
 		return $online;

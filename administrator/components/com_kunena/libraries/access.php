@@ -11,6 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaAccess {
+	const CATEGORY_SUBSCRIPTION = 1;
+	const TOPIC_SUBSCRIPTION = 2;
+
 	protected static $instance = null;
 	protected $accesstypes = array('all'=>array());
 
@@ -186,12 +189,28 @@ window.addEvent('domready', function(){
 		}
 	}
 
-	public function getAdmins($catid = 0) {
-		return !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : array();
+	/**
+	 * Get category administrators.
+	 *
+	 * @param int $catid Category Id
+	 * @param bool $all
+	 * @return array
+	 */
+	public function getAdmins($catid = 0, $all = false) {
+		$list = !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : array();
+		return $list;
 	}
 
-	public function getModerators($catid = 0) {
-		return !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : array();
+	/**
+	 * Get category moderators.
+	 *
+	 * @param int $catid Category Id
+	 * @param bool $all
+	 * @return array
+	 */
+	public function getModerators($catid = 0, $all = false) {
+		$list = !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : array();
+		return $list;
 	}
 
 	public function getAdminStatus($user = null) {
@@ -214,9 +233,6 @@ window.addEvent('domready', function(){
 		if (JFactory::getApplication()->isAdmin() && $user->userid == KunenaUserHelper::getMyself()->userid)
 			return true;
 
-		// If $catid is not numeric: Is user administrator in ANY category?
-		if (!is_numeric($catid)) return !empty($this->adminsByUserid[$user->userid]);
-
 		// Is user a global administrator?
 		if (!empty($this->adminsByUserid[$user->userid][0])) return true;
 		// Is user a category administrator?
@@ -237,10 +253,6 @@ window.addEvent('domready', function(){
 		if (!empty($this->moderatorsByUserid[$user->userid])) {
 			// Is user a global moderator?
 			if (!empty($this->moderatorsByUserid[$user->userid][0])) return true;
-			// Were we looking only for global moderator?
-			if (!is_numeric($catid)) return false;
-			// Is user moderator in ANY category?
-			if ($catid == 0) return true;
 			// Is user a category moderator?
 			if (!empty($this->moderatorsByUserid[$user->userid][$catid])) return true;
 		}
@@ -350,7 +362,14 @@ window.addEvent('domready', function(){
 			return array();
 
 		if ($subscriptions) {
-			$subslist = $this->loadSubscribers($topic, (int)$subscriptions);
+			$type = 0;
+			if ($subscriptions == 1 || $subscriptions == 2) {
+				$type &= self::TOPIC_SUBSCRIPTION;
+			}
+			if ($subscriptions == 1 || $subscriptions == 3) {
+				$type &= self::CATEGORY_SUBSCRIPTION;
+			}
+			$subslist = $this->loadSubscribers($topic, $type);
 		}
 		if ($moderators) {
 			$modlist = array();
@@ -372,7 +391,7 @@ window.addEvent('domready', function(){
 		$query->where("u.block=0");
 		$userlist = array();
 		if (!empty($subslist)) {
-			$userlist = $subslist;
+			$userlist += $subslist;
 			$subslist = implode(',', array_keys($subslist));
 			$query->select("IF( u.id IN ({$subslist}), 1, 0 ) AS subscription");
 		} else {
@@ -432,15 +451,15 @@ window.addEvent('domready', function(){
 		}
 	}
 
-	protected function loadSubscribers($topic, $subsriptions) {
+	protected function loadSubscribers(KunenaForumTopic $topic, $type) {
 		$category = $topic->getCategory();
 		$db = JFactory::getDBO ();
 		$query = array();
-		if ($subsriptions == 1 || $subsriptions == 2) {
+		if ($type & self::TOPIC_SUBSCRIPTION) {
 			// Get topic subscriptions
 			$query[] = "SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topic->id} AND subscribed=1";
 		}
-		if ($subsriptions == 1 || $subsriptions == 3) {
+		if ($type & self::CATEGORY_SUBSCRIPTION) {
 			// Get category subscriptions
 			$query[] = "SELECT user_id FROM #__kunena_user_categories WHERE category_id={$category->id} AND subscribed=1";
 		}
@@ -450,6 +469,7 @@ window.addEvent('domready', function(){
 		KunenaError::checkDatabaseError();
 		$allow = $deny = array();
 		if (!empty($userids)) {
+			// FIXME: subscriptions are broken for moderators who don't have ACL permissions to category
 			foreach ($this->accesstypes[$category->accesstype] as $access) {
 				if (method_exists($access, 'authoriseUsers')) {
 					list ($a, $d) = $access->authoriseUsers($topic, $userids);

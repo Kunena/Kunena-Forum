@@ -87,7 +87,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		// Flood protection
-		if ($this->config->floodprotection && ! $this->me->isModerator($category->id)) {
+		if ($this->config->floodprotection && ! $this->me->isModerator($category)) {
 			$timelimit = JFactory::getDate()->toUnix() - $this->config->floodprotection;
 			$ip = $_SERVER ["REMOTE_ADDR"];
 
@@ -116,7 +116,7 @@ class KunenaControllerTopic extends KunenaController {
 			$message->hold = 1;
 		}
 		// If configured: Hold posts from users
-		if ( !$this->me->isModerator() && $this->me->posts < $this->config->hold_newusers_posts ) {
+		if ( !$this->me->isModerator($category) && $this->me->posts < $this->config->hold_newusers_posts ) {
 			$message->hold = 1;
 		}
 

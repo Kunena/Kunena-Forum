@@ -61,7 +61,7 @@ class KunenaViewCategory extends KunenaView {
 
 		if ($this->category->isSection()) {
 // TODO: turn this on:
-/*			if ($this->me->isAdmin(null)) {
+/*			if ($this->me->isAdmin($this->category)) {
 				$url = KunenaRoute::_("index.php?option=com_kunena&view=category&layout=manage&catid={$this->category->id}");
 				$this->category_manage = $this->getButton($url, 'manage', 'category', 'moderation');
 			}*/

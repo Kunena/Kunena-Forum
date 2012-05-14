@@ -153,7 +153,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 									</div>
 								</div>
 							</li>
-							<?php if ($this->config->keywords && $this->me->isModerator ( $this->message->catid ) ) : ?>
+							<?php if ($this->config->keywords && $this->me->isModerator ( $this->topic->getCategory() ) ) : ?>
 							<li class="postmessage-row kbox-hover kbox-hover_list-row">
 								<div class="form-label">
 									<div class="innerspacer-left kbox-full">

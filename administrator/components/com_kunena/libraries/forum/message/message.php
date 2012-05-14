@@ -664,7 +664,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	protected function authoriseOwn($user) {
 		// Check that topic owned by the user or user is a moderator
 		// TODO: check #__kunena_user_topics
-		if ((!$this->userid || $this->userid != $user->userid) && !$user->isModerator($this->catid)) {
+		if ((!$this->userid || $this->userid != $user->userid) && !$user->isModerator($this->getCategory())) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
 			return false;
 		}
@@ -695,7 +695,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 */
 	protected function authoriseEditTime($user) {
 		// Do not perform rest of the checks to moderators and admins
-		if ($user->isModerator($this->catid)) {
+		if ($user->isModerator($this->getCategory())) {
 			return true;
 		}
 		// User is only allowed to edit post within time specified in the configuration
@@ -722,7 +722,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 	protected function authoriseDelete($user) {
 		$config = KunenaFactory::getConfig();
-		if (!$user->isModerator($this->catid)
+		if (!$user->isModerator($this->getCategory())
 				&& $config->userdeletetmessage != '2' && ($config->userdeletetmessage == '0' || $this->getTopic()->last_post_id != $this->id)) {
 			$this->setError (JText::_ ( 'COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER' ) );
 			return false;

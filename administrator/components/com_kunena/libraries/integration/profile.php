@@ -43,6 +43,6 @@ class KunenaProfile
 
 	public function getUserListURL($action='', $xhtml = true) {}
 	public function getProfileURL($user, $task='', $xhtml = true) {}
-	public function showProfile($userid, &$msg_params) {}
+	public function showProfile($view, &$params) {}
 	protected function _getTopHits($limit=0) {}
 }

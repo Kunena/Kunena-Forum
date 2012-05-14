@@ -158,11 +158,11 @@ class KunenaController extends JController {
 
 			// Render the view.
 			if ($vFormat=='html') {
-				// Initialize profile integration
-				$integration = KunenaFactory::getProfile();
-				$integration->open();
+				JPluginHelper::importPlugin('kunena');
+				$dispatcher = JDispatcher::getInstance();
+				$dispatcher->trigger('onKunenaDisplay', array('start', $view));
 				$view->displayAll ();
-				$integration->close();
+				$dispatcher->trigger('onKunenaDisplay', array('end', $view));
 			} else {
 				$view->displayLayout ();
 			}

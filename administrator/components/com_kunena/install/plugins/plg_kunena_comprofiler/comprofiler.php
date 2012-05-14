@@ -46,6 +46,24 @@ class plgKunenaComprofiler extends JPlugin {
 		require_once "{$this->path}/integration.php";
 	}
 
+	public function onKunenaDisplay($type, $view = null, $params = null) {
+		$integration = KunenaFactory::getProfile();
+		switch ($type) {
+			case 'start':
+				return $integration->open();
+			case 'end':
+				return $integration->close();
+		}
+	}
+
+	public function onKunenaPrepare($context, &$item, &$params, $page = 0) {
+		if ($context == 'kunena.user') {
+			$triggerParams = array ('userid' => $item->userid, 'userinfo' => &$item );
+			$integration = KunenaFactory::getProfile();
+			$integration->trigger ( 'profileIntegration', $triggerParams );
+		}
+	}
+
 	/*
 	 * Get Kunena access control object.
 	 *

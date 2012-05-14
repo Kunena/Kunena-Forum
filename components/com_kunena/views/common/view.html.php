@@ -301,7 +301,7 @@ class KunenaViewCommon extends KunenaView {
 				//$this->editProfileLink = '<a href="' . $url.'">'. JText::_('COM_KUNENA_PROFILE_EDIT').'</a>';
 
 				// Announcements
-				if ( $this->me->isAdmin()) {
+				if ( $this->me->isModerator()) {
 					$this->announcementsLink = '<a href="' . KunenaForumAnnouncementHelper::getUrl('list').'">'. JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS').'</a>';
 				}
 

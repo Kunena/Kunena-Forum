@@ -44,6 +44,14 @@ class KunenaLoginComprofiler {
 		return $resultError ? $resultError : null;
 	}
 
+	public function getRememberMe() {
+		$db = JFactory::getDbo();
+		$db->setQuery( "SELECT params from #__modules WHERE module = 'mod_cblogin' ORDER BY ordering", 0, 1 );
+		$raw_params = $db->loadResult();
+		$params = new cbParamsBase( $raw_params );
+		return $params->get( 'remember_enabled', 1);
+	}
+
 	public function getLoginURL() {
 		return cbSef ( 'index.php?option=com_comprofiler&task=login' );
 	}

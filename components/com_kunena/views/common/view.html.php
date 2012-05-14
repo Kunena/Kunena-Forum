@@ -286,8 +286,7 @@ class KunenaViewCommon extends KunenaView {
 					$this->registerUrl = $login->getRegistrationUrl();
 					$this->lostPasswordUrl = $login->getResetUrl();
 					$this->lostUsernameUrl = $login->getRemindUrl();
-					// FIXME: find a better way to remember
-					$this->remember = (bool) JPluginHelper::isEnabled('system', 'remember');
+					$this->remember = $login->getRememberMe();
 				}
 			} else {
 				$this->setLayout('logout');

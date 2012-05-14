@@ -24,6 +24,7 @@ function getLangDefinition($var) {}
 class CBUser {}
 class CBAuthentication {}
 function selectTemplate() {}
+class cbParamsBase {}
 
 // JomSocial dummies
 class CFactory {}

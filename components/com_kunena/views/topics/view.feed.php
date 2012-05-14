@@ -31,8 +31,6 @@ class KunenaViewTopics extends KunenaView {
 		*/
 		$this->layout = 'default';
 		$this->params = $this->state->get('params');
-		$this->topics = $this->get ( 'Topics' );
-		$this->total = $this->get ( 'Total' );
 
 		// TODO: if start != 0, add information from it into description
 		$this->document->setGenerator('Kunena Forum (Joomla)');
@@ -69,7 +67,40 @@ class KunenaViewTopics extends KunenaView {
 		$image->description = $this->document->getDescription();
 		$this->document->image = $image;
 
-		$this->displayTopicRows();
+		if ( $this->config->rss_type == "topic" OR $this->config->rss_type == "recent" ) {
+			$this->displayTopicRows();
+		} else {
+			$this->displayPosts();
+		}
+	}
+
+	function displayTopicRows() {
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
+
+		$firstpost = $this->state->get ( 'list.mode' ) == 'topics';
+		foreach ( $this->topics as $topic ) {
+			if ($firstpost) {
+				$id = $topic->first_post_id;
+				$page = 'first';
+				$description = $topic->first_post_message;
+				$date = new JDate($topic->first_post_time);
+				$userid = $topic->first_post_userid;
+				$username = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
+			} else {
+				$id = $topic->last_post_id;
+				$page = 'last';
+				$description = $topic->last_post_message;
+				$date = new JDate($topic->last_post_time);
+				$userid = $topic->last_post_userid;
+				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
+			}
+			$title = $topic->subject;
+			$category = $topic->getCategory();
+			$url = $topic->getUrl($category, true, $page);
+
+			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
+		}
 	}
 
 	function displayUser($tpl = null) {
@@ -154,38 +185,10 @@ class KunenaViewTopics extends KunenaView {
 		$this->displayPostRows();
 	}
 
-	function displayTopicRows() {
-		require_once KPATH_SITE.'/lib/kunena.link.class.php';
-		$firstpost = $this->state->get ( 'list.mode' ) == 'topics';
-		foreach ( $this->topics as $topic ) {
-			if ($firstpost) {
-				$id = $topic->first_post_id;
-				$page = 'first';
-				$description = $topic->first_post_message;
-				$date = new JDate($topic->first_post_time);
-				$userid = $topic->first_post_userid;
-				$username = KunenaFactory::getUser($userid)->getName($topic->first_post_guest_name);
-			} else {
-				$id = $topic->last_post_id;
-				$page = 'last';
-				$description = $topic->last_post_message;
-				$date = new JDate($topic->last_post_time);
-				$userid = $topic->last_post_userid;
-				$username = KunenaFactory::getUser($userid)->getName($topic->last_post_guest_name);
-			}
-			$title = $topic->subject;
-			$category = $topic->getCategory();
-			$url = $topic->getUrl($category, true, $page);
-
-			$this->createItem($title, $url, $description, $category->name, $date, $userid, $username);
-		}
-	}
-
 	function displayPostRows() {
-		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 		foreach ( $this->messages as $message ) {
 			if (!isset($this->topics[$message->thread])) {
-				// TODO: INTERNAL ERROR
+				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_RSS_MESSAGES_DONT_EXIST' ) );
 				return;
 			}
 			$topic = $this->topics[$message->thread];

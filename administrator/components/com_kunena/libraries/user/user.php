@@ -220,25 +220,29 @@ class KunenaUser extends JObject {
 	/**
 	 * Checks if user has administrator permissions in the category.
 	 *
-	 * If no category is given, check is against global administrator permissions.
+	 * If no category is given or it doesn't exist, check will be done against global administrator permissions.
 	 *
 	 * @param KunenaForumCategory $category
 	 * @return bool
+	 *
+	 * @since 2.0.0-BETA2
 	 */
 	public function isAdmin(KunenaForumCategory $category = null) {
-		return KunenaAccess::getInstance()->isAdmin ( $this, !empty($category->id) ? $category->id : null );
+		return KunenaAccess::getInstance()->isAdmin ( $this, $category && $category->exists() ? $category->id : null );
 	}
 
 	/**
 	 * Checks if user has moderator permissions in the category.
 	 *
-	 * If no category is given, check is against global moderator permissions.
+	 * If no category is given or it doesn't exist, check will be done against global moderator permissions.
 	 *
 	 * @param KunenaForumCategory $category
 	 * @return bool
+	 *
+	 * @since 2.0.0-BETA2
 	 */
 	public function isModerator(KunenaForumCategory $category = null) {
-		return KunenaAccess::getInstance()->isModerator ( $this, !empty($category->id) ? $category->id : null );
+		return KunenaAccess::getInstance()->isModerator ( $this, $category && $category->exists() ? $category->id : null );
 	}
 
 	public function isBanned() {

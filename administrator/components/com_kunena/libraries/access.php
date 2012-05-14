@@ -358,24 +358,43 @@ window.addEvent('domready', function(){
 
 	public function getSubscribers($catid, $topic, $type = false, $moderators = false, $admins = false, $excludeList = null) {
 		$topic = KunenaForumTopicHelper::get($topic);
+		$category = $topic->getCategory();
 		if (!$topic->exists())
 			return array();
 
-		if ($type) {
-			$subslist = $this->loadSubscribers($topic, $type);
-		}
-		if ($moderators) {
-			$modlist = array();
-			if (!empty($this->moderatorsByCatid[0])) $modlist += $this->moderatorsByCatid[0];
-			if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
+		$modlist = array();
+		if (!empty($this->moderatorsByCatid[0])) $modlist += $this->moderatorsByCatid[0];
+		if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
 
+		$adminlist = array();
+		if (!empty($this->adminsByCatid[0])) $adminlist += $this->adminsByCatid[0];
+		if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
+
+		if ($type) {
+			$subscribers = $this->loadSubscribers($topic, $type);
+			$allow = $deny = array();
+			if (!empty($subscribers)) {
+				foreach ($this->accesstypes[$category->accesstype] as $access) {
+					if (method_exists($access, 'authoriseUsers')) {
+						list ($a, $d) = $access->authoriseUsers($topic, $subscribers);
+						if (!empty($a)) $allow += array_combine($a, $a);
+						if (!empty($d)) $deny += array_combine($d, $d);
+					}
+				}
+			}
+			$subslist = array_diff($allow, $deny);
+			// Category administrators and moderators override ACL
+			$subslist += array_intersect_key($adminlist, array_flip($subscribers));
+			$subslist += array_intersect_key($modlist, array_flip($subscribers));
+		}
+		if (!$moderators) {
+			$modlist = array();
+		} else {
 			// If category has no moderators, send email to admins instead
 			if (empty($modlist)) $admins = true;
 		}
-		if ($admins) {
-			$adminlist = array();
-			if (!empty($this->adminsByCatid[0])) $adminlist += $this->adminsByCatid[0];
-			if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
+		if (!$admins) {
+			$modlist = array();
 		}
 
 		$query = new KunenaDatabaseQuery();
@@ -460,17 +479,6 @@ window.addEvent('domready', function(){
 		$db->setQuery ($query);
 		$userids = (array) $db->loadResultArray();
 		KunenaError::checkDatabaseError();
-		$allow = $deny = array();
-		if (!empty($userids)) {
-			// FIXME: subscriptions are broken for moderators who don't have ACL permissions to category
-			foreach ($this->accesstypes[$category->accesstype] as $access) {
-				if (method_exists($access, 'authoriseUsers')) {
-					list ($a, $d) = $access->authoriseUsers($topic, $userids);
-					if (!empty($a)) $allow += array_combine($a, $a);
-					if (!empty($d)) $deny += array_combine($d, $d);
-				}
-			}
-		}
-		return array_diff($allow, $deny);
+		return $userids;
 	}
 }

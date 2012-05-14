@@ -394,7 +394,7 @@ window.addEvent('domready', function(){
 			if (empty($modlist)) $admins = true;
 		}
 		if (!$admins) {
-			$admins = array();
+			$adminlist = array();
 		}
 
 		$query = new KunenaDatabaseQuery();

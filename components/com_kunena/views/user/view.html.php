@@ -116,8 +116,7 @@ class KunenaViewUser extends KunenaView {
 		$this->signatureHtml = KunenaHtmlParser::parseBBCode($this->signature, null, $this->config->maxsig);
 		$this->localtime = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
 		$this->localtime->setOffset($this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
-		// FIXME: isModerator()
-		$this->moderator = $this->profile->isModerator();
+		$this->moderator = KunenaAccess::getInstance()->getModeratorStatus($this->profile);
 		$this->admin = $this->profile->isAdmin();
 		switch ($this->profile->gender) {
 			case 1:
@@ -152,8 +151,7 @@ class KunenaViewUser extends KunenaView {
 		$this->showSubscriptions = $this->config->allowsubscriptions && $this->me->userid == $this->profile->userid;
 		$this->showFavorites = $this->config->allowfavorites && $this->me->userid == $this->profile->userid;
 		$this->showThankyou = $this->config->showthankyou && $this->me->exists();
-		// FIXME: isModerator()
-		$this->showUnapprovedPosts = $this->me->isModerator(); // || $this->me->userid == $this->profile->userid;
+		$this->showUnapprovedPosts = KunenaAccess::getInstance()->getModeratorStatus(); // || $this->me->userid == $this->profile->userid;
 		$this->showAttachments = $this->canManageAttachments() && ($this->me->isModerator() || $this->me->userid == $this->profile->userid);
 		$this->showBanManager = $this->me->isModerator() && $this->me->userid == $this->profile->userid;
 		$this->showBanHistory = $this->me->isModerator() && $this->me->userid != $this->profile->userid;

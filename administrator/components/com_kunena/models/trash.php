@@ -84,7 +84,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$db = JFactory::getDBO();
 		$where = '';
 		if ($this->getState ( 'list.search')) {
-			$where = ' m.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false );
+			$where = ' AND ( m.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ) . ' )';
 		}
 
 		$orderby = '';
@@ -98,7 +98,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$params = array ('starttime'=> '-1',
 			'orderby'=> $orderby,
 			'mode' => 'deleted',
-			'where'=>$where);
+			'where'=> $where);
 
 		$cats = KunenaForumCategoryHelper::getCategories();
 		$cats_array =array();
@@ -137,7 +137,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$db = JFactory::getDBO();
 		$where = '';
 		if ($this->getState ( 'list.search')) {
-			$where = ' tt.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.first_post_userid LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false );
+			$where = ' AND (tt.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.first_post_userid LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ) . ')';
 		}
 
 		$orderby = '';

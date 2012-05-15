@@ -12,8 +12,6 @@ defined ( '_JEXEC' ) or die ();
 
 class plgKunenaComprofiler extends JPlugin {
 	public $minCBVersion = '1.8.1';
-	protected $_name = 'comprofiler';
-	protected $_type = 'kunena';
 
 	public function __construct(&$subject, $config) {
 		// Do not load if Kunena version is not supported or Kunena is offline

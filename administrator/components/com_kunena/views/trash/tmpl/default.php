@@ -144,7 +144,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	</div>
-	</div>
 	<div class="kadmin-footer">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>

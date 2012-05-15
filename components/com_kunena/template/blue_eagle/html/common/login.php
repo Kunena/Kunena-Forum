@@ -38,7 +38,7 @@ defined ( '_JEXEC' ) or die ();
 						<span>
 							<?php if($this->remember) : ?>
 							<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME'); ?>
-							<input type="checkbox" name="remember" alt="" value="yes" />
+							<input type="checkbox" name="remember" alt="" value="1" />
 							<?php endif; ?>
 							<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
 						</span>

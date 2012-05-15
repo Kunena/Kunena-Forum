@@ -11,7 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 
 class plgKunenaComprofiler extends JPlugin {
-	public $minCBVersion = '1.7';
+	public $minCBVersion = '1.8.1';
+	protected $_name = 'comprofiler';
+	protected $_type = 'kunena';
 
 	public function __construct(&$subject, $config) {
 		// Do not load if Kunena version is not supported or Kunena is offline
@@ -19,12 +21,9 @@ class plgKunenaComprofiler extends JPlugin {
 
 		$app = JFactory::getApplication ();
 
-		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR );
-
 		// Do not load if CommunityBuilder is not installed
 		$path = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
 		if (!is_file ( $path )) {
-			$app->enqueueMessage ( JText::sprintf ( 'PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion ), 'notice' );
 			return;
 		}
 
@@ -36,14 +35,17 @@ class plgKunenaComprofiler extends JPlugin {
 		cbimport ( 'cb.field' );
 		global $ueConfig;
 
+		parent::__construct ( $subject, $config );
+
+		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR );
+
+		$this->path = dirname ( __FILE__ ) . '/comprofiler';
+		require_once "{$this->path}/integration.php";
+
 		if (! isset ( $ueConfig ['version'] ) || version_compare ( $ueConfig ['version'], $this->minCBVersion ) < 0) {
 			$app->enqueueMessage ( JText::sprintf ( 'PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion ), 'notice' );
 			return;
 		}
-		parent::__construct ( $subject, $config );
-
-		$this->path = dirname ( __FILE__ ) . '/comprofiler';
-		require_once "{$this->path}/integration.php";
 	}
 
 	public function onKunenaDisplay($type, $view = null, $params = null) {

@@ -129,7 +129,12 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					}
 					?>
 			</table>
-
+			<?php
+				if ( $this->state->get( 'list.view_selected') ) { ?>
+					<input type="hidden" name="topics" value="1" />
+				<?php } else { ?>
+					<input type="hidden" name="messages" value="1" />
+				<?php } ?>
 			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />

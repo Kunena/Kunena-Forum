@@ -87,8 +87,16 @@ class KunenaAdminModelTrash extends KunenaModel {
 			$where = ' m.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false );
 		}
 
+		$orderby = '';
+		$ordering = $this->state->get('list.ordering');
+		if ( !empty($ordering) ) {
+			$orderby = $this->state->get('list.ordering').' '.$this->state->get('list.direction');
+		} else {
+			$orderby = 'm.id '.$this->state->get('list.direction');
+		}
+
 		$params = array ('starttime'=> '-1',
-			//'orderby'=> $this->state->get('list.ordering').' '.$this->state->get('list.direction'),
+			'orderby'=> $orderby,
 			'mode' => 'deleted',
 			'where'=>$where);
 
@@ -132,8 +140,16 @@ class KunenaAdminModelTrash extends KunenaModel {
 			$where = ' tt.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.first_post_userid LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false );
 		}
 
+		$orderby = '';
+		$ordering = $this->state->get('list.ordering');
+		if ( !empty($ordering) ) {
+			$orderby = $this->state->get('list.ordering').' '.$this->state->get('list.direction');
+		} else {
+			$orderby = 'tt.id '.$this->state->get('list.direction');
+		}
+
 		$params = array ('hold' => '2,3',
-			//'orderby'=> $this->state->get('list.ordering').' '.$this->state->get('list.direction'),
+			'orderby'=> $orderby,
 			'where' => $where);
 
 		$cats = KunenaForumCategoryHelper::getCategories();

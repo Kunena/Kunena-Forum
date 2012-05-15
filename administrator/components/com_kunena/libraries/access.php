@@ -73,6 +73,10 @@ class KunenaAccess {
 		$this->moderatorsByCatid = array();
 		$this->moderatorsByUserid = array();
 
+		// Reset read access for the current session
+		$me = KunenaUserHelper::getMyself();
+		JFactory::getApplication()->setUserState("com_kunena.user{$me->userid}_read", null);
+
 		$roles = array();
 		foreach ($this->accesstypes['all'] as $access) {
 			if (method_exists($access, 'loadCategoryRoles')) {

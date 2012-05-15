@@ -204,9 +204,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	public function addAlias($alias) {
 		if (!$this->exists()) return false;
 
-		if ($alias) {
-			$alias = KunenaRoute::stringURLSafe($alias);
-		} else {
+		$alias = KunenaRoute::stringURLSafe($alias);
+		if (!$alias) {
 			$alias = $this->id;
 		}
 		$check = $this->checkAlias($alias);
@@ -482,7 +481,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$table->exists ( $this->_exists );
 
 		// Update alias
-		$success = $this->addAlias($this->alias);
+		$success = $this->addAlias($this->get(alias));
 		if ($success) $this->_alias = $this->alias;
 
 		$table->reorder ();
@@ -577,7 +576,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$access->clearCache();
 
 		$db = JFactory::getDBO ();
-		$queries[] = "DELETE FROM #__kunena_aliases WHERE type='catid' AND id={$db->quote($this->id)}";
+		$queries[] = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->quote($this->id)}";
 		// Delete user topics
 		$queries[] = "DELETE FROM #__kunena_user_topics WHERE category_id={$db->quote($this->id)}";
 		// Delete user categories

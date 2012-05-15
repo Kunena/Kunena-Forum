@@ -228,6 +228,8 @@ class KunenaConfig extends JObject {
 	public $send_emails = 1;
 	public $stopforumspam_key = '';
 	public $fallback_english = 1;
+	public $cache = 1;
+	public $cache_time = 60; // 1 minute
 
 	public function __construct() {
 		parent::__construct ();

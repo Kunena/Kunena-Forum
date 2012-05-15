@@ -38,7 +38,9 @@ abstract class KunenaForumCategoryHelper {
 		}
 		if (!is_numeric($identifier)) {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-			return new KunenaForumCategory ();
+			$category = new KunenaForumCategory ();
+			$category->load();
+			return $category;
 		}
 
 		$id = intval ( $identifier );
@@ -183,7 +185,7 @@ abstract class KunenaForumCategoryHelper {
 		}
 	}
 
-	static public function getCategoriesByAccess($accesstype='joomla', $groupids = false) {
+	static public function getCategoriesByAccess($accesstype='joomla.level', $groupids = false) {
 		if (self::$_instances === false) {
 			self::loadCategories();
 		}

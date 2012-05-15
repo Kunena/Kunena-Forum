@@ -114,7 +114,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 	protected function getAccess($category) {
 		// Activity access level: 0 = public, 20 = registered, 30 = friend, 40 = private
 		$accesstype = $category->accesstype;
-		if ($accesstype != 'none' && $accesstype != 'joomla.level') {
+		if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level') {
 			// Private
 			return 40;
 		}
@@ -122,11 +122,11 @@ class KunenaActivityCommunity extends KunenaActivity {
 			// Joomla 1.6+
 			// FIXME: Joomla 1.6 can mix up groups and access levels
 			if (($accesstype == 'joomla.level' && $category->access == 1)
-					|| ($accesstype == 'none' && ($category->pub_access == 1 || $category->admin_access == 1))) {
+					|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))) {
 				// Public
 				$access = 0;
 			} elseif (($accesstype == 'joomla.level' && $category->access == 2)
-					|| ($accesstype == 'none' && ($category->pub_access == 2 || $category->admin_access == 2))) {
+					|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))) {
 				// Registered
 				$access = 20;
 			} else {
@@ -138,11 +138,11 @@ class KunenaActivityCommunity extends KunenaActivity {
 			// Joomla access levels: 0 = public,  1 = registered
 			// Joomla user groups:  29 = public, 18 = registered
 			if (($accesstype == 'joomla.level' && $category->access == 0)
-					|| ($accesstype == 'none' && ($category->pub_access == 0 || $category->pub_access == 29 || $category->admin_access == 29))) {
+					|| ($accesstype == 'joomla.group' && ($category->pub_access == 0 || $category->pub_access == 29 || $category->admin_access == 29))) {
 				// Public
 				$access = 0;
 			} elseif (($accesstype == 'joomla.level' && $category->access == 1)
-					|| ($accesstype == 'none' && ($category->pub_access == -1 || $category->pub_access == 18 || $category->admin_access == 18))) {
+					|| ($accesstype == 'joomla.group' && ($category->pub_access == -1 || $category->pub_access == 18 || $category->admin_access == 18))) {
 				// Registered
 				$access = 20;
 			} else {

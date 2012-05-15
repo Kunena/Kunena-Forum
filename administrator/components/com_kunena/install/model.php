@@ -1841,8 +1841,7 @@ class KunenaModelInstall extends JModel {
 		}
 
 		// Finally create alias
-		// TODO: contains workaround for J1.6.1 bug:
-		$defaultmenu = JMenu::getInstance('site')->getDefault('workaround');
+		$defaultmenu = JMenu::getInstance('site')->getDefault();
 		if (!$defaultmenu) return true;
 		$table = JTable::getInstance ( 'menu' );
 		$table->load(array('menutype'=>$defaultmenu->menutype, 'type'=>'alias', 'title'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_FORUM' )));

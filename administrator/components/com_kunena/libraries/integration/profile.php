@@ -36,11 +36,6 @@ class KunenaProfile
 		return $this->_getTopHits($limit);
 	}
 
-	// TODO: remove these when we have right event
-	public function open() {}
-	public function close() {}
-	public function trigger() {}
-
 	public function getUserListURL($action='', $xhtml = true) {}
 	public function getProfileURL($user, $task='', $xhtml = true) {}
 	public function showProfile($view, &$params) {}

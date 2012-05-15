@@ -178,7 +178,6 @@ window.addEvent('domready', function(){
 	 * @param mixed		Group id.
 	 */
 	public function getGroupName($accesstype, $id) {
-		// TODO: unknown type, maybe we should output something?
 		if (!isset($this->accesstypes[$accesstype])) return JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
 		foreach ($this->accesstypes[$accesstype] as $access) {
 			if (method_exists($access, 'getGroupName')) {

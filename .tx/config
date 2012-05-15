@@ -99,8 +99,8 @@ source_lang = en-GB
 minimum_perc = 80
 
 [Kunena.kunena-plugin-system-sys]
-file_filter = administrator/components/com_kunena/language/<lang>/<lang>.plg_kunena_system.sys.ini
-source_file = administrator/components/com_kunena/language/en-GB/en-GB.plg_kunena_system.sys.ini
+file_filter = administrator/components/com_kunena/language/<lang>/<lang>.plg_system_kunena.sys.ini
+source_file = administrator/components/com_kunena/language/en-GB/en-GB.plg_system_kunena.sys.ini
 source_lang = en-GB
 minimum_perc = 80
 
@@ -147,13 +147,13 @@ source_lang = en-GB
 minimum_perc = 80
 
 [Kunena.kunena-menu-site]
-file_filter = components/com_kunena/language/<lang>/<lang>.com_kunenamenu.ini
-source_file = components/com_kunena/language/en-GB/en-GB.com_kunenamenu.ini
+file_filter = components/com_kunena/language/<lang>/<lang>.mod_kunenamenu.ini
+source_file = components/com_kunena/language/en-GB/en-GB.mod_kunenamenu.ini
 source_lang = en-GB
 minimum_perc = 80
 
 [Kunena.kunena-menu-sys-site]
-file_filter = components/com_kunena/language/<lang>/<lang>.com_kunenamenu.sys.ini
-source_file = components/com_kunena/language/en-GB/en-GB.com_kunenamenu.sys.ini
+file_filter = components/com_kunena/language/<lang>/<lang>.mod_kunenamenu.sys.ini
+source_file = components/com_kunena/language/en-GB/en-GB.mod_kunenamenu.sys.ini
 source_lang = en-GB
 minimum_perc = 80

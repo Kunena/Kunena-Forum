@@ -105,8 +105,7 @@ class KunenaControllerTopics extends KunenaController {
 			foreach ( $topics as $topic ) {
 				if ($topic->authorise('approve') && $topic->publish(KunenaForum::PUBLISHED)) {
 					$message = JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' );
-					// FIXME: send emails on approve
-					//$topic->sendNotification();
+					$topic->sendNotification();
 				} else {
 					$this->app->enqueueMessage ( $topic->getError (), 'notice' );
 				}

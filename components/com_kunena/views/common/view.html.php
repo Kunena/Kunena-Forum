@@ -152,7 +152,6 @@ class KunenaViewCommon extends KunenaView {
 	function displayWhosonline($tpl = null) {
 		if ($this->offline) return;
 
-		$moderator = intval($this->me->isModerator());
 		$cache = JFactory::getCache('com_kunena', 'output');
 		// FIXME: enable caching after fixing the issues
 		//if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
@@ -179,10 +178,11 @@ class KunenaViewCommon extends KunenaView {
 
 		$this->onlineList = array();
 		$this->hiddenList = array();
+		$moderator = $this->me->isModerator();
 		foreach ($users as $userid=>$usertime) {
 			$user = KunenaUserHelper::get($userid);
 			if ( !$user->showOnline ) {
-				if ($this->me->isModerator()) $this->hiddenList[$user->getName()] = $user;
+				if ($moderator) $this->hiddenList[$user->getName()] = $user;
 			} else {
 				$this->onlineList[$user->getName()] = $user;
 			}
@@ -286,8 +286,7 @@ class KunenaViewCommon extends KunenaView {
 					$this->registerUrl = $login->getRegistrationUrl();
 					$this->lostPasswordUrl = $login->getResetUrl();
 					$this->lostUsernameUrl = $login->getRemindUrl();
-					// FIXME: find a better way to remember
-					$this->remember = (bool) JPluginHelper::isEnabled('system', 'remember');
+					$this->remember = $login->getRememberMe();
 				}
 			} else {
 				$this->setLayout('logout');

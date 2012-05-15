@@ -1821,7 +1821,8 @@ class KunenaModelInstall extends JModel {
 
 		$gparams = new JRegistry($paramdata);
 
-		// FIXME: Joomla 1.6: add menu params for current item, too
+		$params = clone $gparams;
+		$params->loadArray($menu['params']);
 		$data = array (
 			'menutype' => 'kunenamenu',
 			'title' => $menu ['name'],
@@ -1832,7 +1833,7 @@ class KunenaModelInstall extends JModel {
 			'parent_id' => 1,
 			'component_id' => $component_id,
 			'access' => $menu ['access'] + 1,
-			'params' => (string) $gparams,
+			'params' => (string) $params,
 			'home' => 0,
 			'language' => '*',
 			'client_id' => 0

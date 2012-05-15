@@ -115,6 +115,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return array($topic, $message);
 	}
 
+	/**
+	 * Send email notifications from the message.
+	 *
+	 * @param string $url
+	 */
 	public function sendNotification($url=null) {
 		$config = KunenaFactory::getConfig();
 		if (!$config->get('send_emails')) {
@@ -137,15 +142,15 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		if ($mailsubs) {
 			if (!$this->parent) {
 				// New topic: Send email only to category subscribers
-				$mailsubs = $config->category_subscriptions != 'disabled' ? 3 : 0;
+				$mailsubs = $config->category_subscriptions != 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : 0;
 				$once = $config->category_subscriptions == 'topic';
 			} elseif ($config->category_subscriptions != 'post') {
 				// Existing topic: Send email only to topic subscribers
-				$mailsubs = $config->topic_subscriptions != 'disabled' ? 2 : 0;
+				$mailsubs = $config->topic_subscriptions != 'disabled' ? KunenaAccess::TOPIC_SUBSCRIPTION : 0;
 				$once = $config->topic_subscriptions == 'first';
 			} else {
 				// Existing topic: Send email to both category and topic subscribers
-				$mailsubs = $config->topic_subscriptions == 'disabled' ? 3 : 1;
+				$mailsubs = $config->topic_subscriptions == 'disabled' ? KunenaAccess::CATEGORY_SUBSCRIPTION : KunenaAccess::CATEGORY_SUBSCRIPTION | KunenaAccess::TOPIC_SUBSCRIPTION;
 				// FIXME: category subcription can override topic
 				$once = $config->topic_subscriptions == 'first';
 			}
@@ -664,7 +669,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	protected function authoriseOwn($user) {
 		// Check that topic owned by the user or user is a moderator
 		// TODO: check #__kunena_user_topics
-		if ((!$this->userid || $this->userid != $user->userid) && !$user->isModerator($this->catid)) {
+		if ((!$this->userid || $this->userid != $user->userid) && !$user->isModerator($this->getCategory())) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
 			return false;
 		}
@@ -695,7 +700,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	 */
 	protected function authoriseEditTime($user) {
 		// Do not perform rest of the checks to moderators and admins
-		if ($user->isModerator($this->catid)) {
+		if ($user->isModerator($this->getCategory())) {
 			return true;
 		}
 		// User is only allowed to edit post within time specified in the configuration
@@ -722,7 +727,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 	protected function authoriseDelete($user) {
 		$config = KunenaFactory::getConfig();
-		if (!$user->isModerator($this->catid)
+		if (!$user->isModerator($this->getCategory())
 				&& $config->userdeletetmessage != '2' && ($config->userdeletetmessage == '0' || $this->getTopic()->last_post_id != $this->id)) {
 			$this->setError (JText::_ ( 'COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER' ) );
 			return false;

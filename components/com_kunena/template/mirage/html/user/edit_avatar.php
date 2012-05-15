@@ -62,11 +62,11 @@ defined ( '_JEXEC' ) or die ();
 						</li>
 						<?php endif ?>
 						<?php if ($this->config->allowavatargallery) : ?>
-						<input id="kunena_url_avatargallery" type="hidden" value="<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' )?>" />
 						<li class="user-edit-information-row kbox-hover kbox-hover_list-row kbox-full">
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="avatar_category_select"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY') ?></label>
+									<input id="kunena_url_avatargallery" type="hidden" value="<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' )?>" />
 								</div>
 							</div>
 							<div class="form-field">

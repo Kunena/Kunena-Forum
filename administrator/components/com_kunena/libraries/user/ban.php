@@ -324,7 +324,7 @@ class KunenaUserBan extends JObject
 		$userid = $this->userid;
 		$me = KunenaUserHelper::getMyself();
 		$user = KunenaUserHelper::get($userid);
-		if (!$me->isModerator(false)) {
+		if (!$me->isModerator()) {
 			$this->setError(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
 			return false;
 		}
@@ -340,7 +340,7 @@ class KunenaUserBan extends JObject
 			$this->setError(JText::sprintf( 'COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName() ));
 			return false;
 		}
-		if ($user->isModerator(false)) {
+		if ($user->isModerator()) {
 			$this->setError(JText::sprintf( 'COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName() ));
 			return false;
 		}

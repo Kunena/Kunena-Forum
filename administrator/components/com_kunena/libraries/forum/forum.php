@@ -123,7 +123,15 @@ abstract class KunenaForum {
 	 * @since 2.0.0-BETA2
 	 */
 	public static function setup() {
+		$config = KunenaFactory::getConfig();
+
+		// Load language file for libraries.
 		KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
+
+		// Setup output caching.
+		$cache = JFactory::getCache('com_kunena', 'output');
+		if (!$config->get('cache')) $cache->setCaching(0);
+		$cache->setLifeTime($config->get('cache_time', 60));
 	}
 
 	/**

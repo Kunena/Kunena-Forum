@@ -73,6 +73,10 @@ class KunenaAccess {
 		$this->moderatorsByCatid = array();
 		$this->moderatorsByUserid = array();
 
+		// Reset read access for the current session
+		$me = KunenaUserHelper::getMyself();
+		JFactory::getApplication()->setUserState("com_kunena.user{$me->userid}_read", null);
+
 		$roles = array();
 		foreach ($this->accesstypes['all'] as $access) {
 			if (method_exists($access, 'loadCategoryRoles')) {
@@ -154,9 +158,7 @@ window.addEvent('domready', function(){
 			if ($type == 'all') continue;
 			foreach ($list as $access) {
 				if (method_exists($access, 'getAccessOptions')) {
-					// TODO: change none type ->
-					// FIXME: stop getting language from the main file...
-					$string = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.preg_replace('/[^\w\d]/', '_', $type=='none' ? 'joomla.group' : $type));
+					$string = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.preg_replace('/[^\w\d]/', '_', $type));
 					$accesstypes [$string] = JHTML::_ ( 'select.option', $type, $string );
 					$exists |= $type == $category->accesstype;
 					break;
@@ -180,7 +182,6 @@ window.addEvent('domready', function(){
 	 * @param mixed		Group id.
 	 */
 	public function getGroupName($accesstype, $id) {
-		// TODO: unknown type, maybe we should output something?
 		if (!isset($this->accesstypes[$accesstype])) return JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $id);
 		foreach ($this->accesstypes[$accesstype] as $access) {
 			if (method_exists($access, 'getGroupName')) {

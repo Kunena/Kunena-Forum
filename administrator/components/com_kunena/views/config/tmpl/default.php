@@ -116,6 +116,23 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					<?php endif ?>
 				</table>
 			</fieldset>
+
+			<fieldset>
+				<legend><?php echo JText::_('COM_KUNENA_CACHING_SETTINGS') ?></legend>
+				<table class="kadmin-adminform">
+					<tr align="center" valign="middle">
+						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_CFG_CACHE') ?></td>
+						<td align="left" valign="top" width="25%"><?php echo $this->lists ['cache'] ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CFG_CACHE_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_CFG_CACHE_TIME') ?></td>
+						<td align="left" valign="top" width="25%"><?php echo $this->lists ['cache_time'] ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CFG_CACHE_TIME_DESC') ?></td>
+					</tr>
+				</table>
+			</fieldset>
+
 			</dd>
 			<dt title="<?php echo JText::_('COM_KUNENA_A_FRONTEND') ?>"><?php echo JText::_('COM_KUNENA_A_FRONTEND') ?></dt>
 			<dd>

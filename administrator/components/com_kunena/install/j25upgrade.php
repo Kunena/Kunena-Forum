@@ -72,7 +72,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 
 		// Do some custom post processing on the list.
 		foreach ($rows as &$row) {
-			if (!isset($row['accesstype']) || $row['accesstype'] == 'none' ) {
+			if (!isset($row['accesstype']) || $row['accesstype'] == 'joomla.group' ) {
 				if ($row['admin_access'] != 0) {
 					$row['admin_access'] = $this->mapUserGroup($row['admin_access']);
 				}

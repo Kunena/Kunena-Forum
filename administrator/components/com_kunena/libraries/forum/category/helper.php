@@ -183,7 +183,7 @@ abstract class KunenaForumCategoryHelper {
 		}
 	}
 
-	static public function getCategoriesByAccess($accesstype='joomla', $groupids = false) {
+	static public function getCategoriesByAccess($accesstype='joomla.level', $groupids = false) {
 		if (self::$_instances === false) {
 			self::loadCategories();
 		}

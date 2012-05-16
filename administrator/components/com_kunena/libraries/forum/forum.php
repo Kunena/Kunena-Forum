@@ -290,7 +290,9 @@ abstract class KunenaForum {
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
 
-		if (version_compare(JVERSION, '1.6', '>')) {
+		if ($params instanceof JRegistry) {
+			// Do nothing
+		} elseif (version_compare(JVERSION, '1.6', '>')) {
 			// Joomla 1.6+
 			$params = new JRegistry($params);
 		} else {

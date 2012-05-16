@@ -25,11 +25,16 @@ class KunenaAdminModelTrash extends KunenaModel {
 
 	/**
 	 * Method to auto-populate the model state.
-	 *
-	 * @return	void
-	 * @since	1.6
 	 */
 	protected function populateState() {
+		static $t_ordering = array('tt.id', 'tt.subject', 'm.ip', 'tt.first_post_userid', 'tt.first_post_guest_name', 'tt.first_post_time');
+		static $m_ordering = array('m.id', 'm.subject', 'm.ip', 'm.userid', 'm.name', 'm.time');
+
+		$mode = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.view_selected", 'view_selected', 0, 'int' );
+		// Set default view on messages
+		if ( $mode=='none' ) $mode=0;
+		$this->setState ( 'list.view_selected', $mode );
+
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
@@ -38,6 +43,11 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$this->setState ( 'list.start', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.ordering', 'filter_order', '', 'cmd' );
+		if ($mode) {
+			if (!in_array($value, $t_ordering)) $value = 'tt.id';
+		} else {
+			if (!in_array($value, $m_ordering)) $value = 'm.id';
+		}
 		$this->setState ( 'list.ordering', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.direction', 'filter_order_Dir', 'asc', 'word' );
@@ -50,11 +60,6 @@ class KunenaAdminModelTrash extends KunenaModel {
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.levels", 'levellimit', 10, 'int' );
 		$this->setState ( 'list.levels', $value );
-
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.view_selected", 'view_selected', 0, 'int' );
-		// Set default view on messages
-		if ( $value=='none' ) $value=0;
-		$this->setState ( 'list.view_selected', $value );
 	}
 
 	/**
@@ -84,7 +89,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$db = JFactory::getDBO();
 		$where = '';
 		if ($this->getState ( 'list.search')) {
-			$where = ' AND ( m.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ) . ' )';
+			$where = '( m.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ) . ' )';
 		}
 
 		$orderby = '';
@@ -137,7 +142,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$db = JFactory::getDBO();
 		$where = '';
 		if ($this->getState ( 'list.search')) {
-			$where = ' AND (tt.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.first_post_userid LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ) . ')';
+			$where = '(tt.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.first_post_userid LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ) . ')';
 		}
 
 		$orderby = '';

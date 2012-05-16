@@ -100,9 +100,9 @@ class KunenaView extends JView {
 
 		$this->state = $this->get ( 'State' );
 		if (method_exists($this, $layoutFunction)) {
-			$contents = $this->$layoutFunction ($tpl);
+			$contents = $this->$layoutFunction ($tpl ? $tpl : null);
 		} else {
-			$contents = $this->display($tpl);
+			$contents = $this->display($tpl ? $tpl : null);
 		}
 		KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 		return $contents;

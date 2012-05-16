@@ -264,6 +264,7 @@ abstract class KunenaForum {
 		$viewName = preg_replace( '/[^A-Z0-9_]/i', '', $viewName );
 		$layout = preg_replace( '/[^A-Z0-9_]/i', '', $layout );
 		$template = preg_replace( '/[^A-Z0-9_]/i', '', $template );
+		$template = $template ? $template : null;
 
 		$view = "KunenaView{$viewName}";
 		$model = "KunenaModel{$viewName}";

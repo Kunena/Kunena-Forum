@@ -293,12 +293,22 @@ class KunenaView extends JView {
 	}
 
 	public function displayTemplateFile($view, $layout, $template = null) {
-		$file = "html/{$view}/{$layout}".($template ? "_{$template}" : '').".php";
-		$file = $this->ktemplate->getFile($file);
+		static $files = array();
+
+		if ($template) $template = '_'.$template;
+		$file = "{$layout}{$template}.php";
+		if (!isset($files[$file])) {
+			if (!isset($this->_path[$view])) {
+				$this->_path[$view] = $this->_path['template'];
+				foreach ($this->_path[$view] as &$dir) preg_replace("#/{$this->_name}/$#", "/{$view}/", $dir);
+			}
+			$files[$file] = JPath::find($this->_path[$view], $file);
+		}
+		$file = $files[$file];
 		if (!file_exists($file)) JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
 
 		ob_start();
-		include JPATH_SITE .'/'. $file;
+		include $file;
 		$output = ob_get_contents();
 		ob_end_clean();
 		if (JDEBUG || $this->config->get('debug')) {
@@ -326,36 +336,18 @@ class KunenaView extends JView {
 		$file = isset($tpl) ? $layout.'_'.$tpl : $layout;
 
 		if (!isset($files[$file])) {
-			$template = JFactory::getApplication()->getTemplate();
-			// TODO: what is this?
-			$layoutTemplate = null; // $this->getLayoutTemplate();
-
 			// Clean the file name
 			$file = preg_replace('/[^A-Z0-9_\.-]/i', '', $file);
 			$tpl  = isset($tpl)? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
 
-			// Change the template folder if alternative layout is in different template
-			if (isset($layoutTemplate) && $layoutTemplate != '_' && $layoutTemplate != $template)
-			{
-				$path = str_replace($template, $layoutTemplate, $this->_path['template']);
-			} else {
-				$path = $this->_path['template'];
-			}
-
 			// Load the template script
 			jimport('joomla.filesystem.path');
 			$filetofind	= $this->_createFileName('template', array('name' => $file));
-			$files[$file] = JPath::find($path, $filetofind);
-
-			// If alternate layout can't be found, fall back to default layout
-			// TODO: allow alternative layouts from Joomla templates
-/*
-			if ($files[$file] == false)
+			if (!isset($files[$file]))
 			{
-				$filetofind = $this->_createFileName('', array('name' => 'default' . (isset($tpl) ? '_' . $tpl : $tpl)));
 				$files[$file] = JPath::find($this->_path['template'], $filetofind);
 			}
-*/
+
 		}
 		$this->_template = $files[$file];
 

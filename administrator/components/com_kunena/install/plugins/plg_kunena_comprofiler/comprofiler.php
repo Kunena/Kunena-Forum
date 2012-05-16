@@ -40,9 +40,8 @@ class plgKunenaComprofiler extends JPlugin {
 		$this->path = dirname ( __FILE__ ) . '/comprofiler';
 		require_once "{$this->path}/integration.php";
 
-		if (! isset ( $ueConfig ['version'] ) || version_compare ( $ueConfig ['version'], $this->minCBVersion ) < 0) {
+		if ($app->isAdmin() && (! isset ( $ueConfig ['version'] ) || version_compare ( $ueConfig ['version'], $this->minCBVersion ) < 0)) {
 			$app->enqueueMessage ( JText::sprintf ( 'PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion ), 'notice' );
-			return;
 		}
 	}
 
@@ -50,9 +49,9 @@ class plgKunenaComprofiler extends JPlugin {
 		$integration = KunenaFactory::getProfile();
 		switch ($type) {
 			case 'start':
-				return $integration->open();
+				return method_exists($integration, 'open') ? $integration->open() : null;
 			case 'end':
-				return $integration->close();
+				return method_exists($integration, 'close') ? $integration->close() : null;
 		}
 	}
 

@@ -264,6 +264,7 @@ abstract class KunenaForum {
 		$viewName = preg_replace( '/[^A-Z0-9_]/i', '', $viewName );
 		$layout = preg_replace( '/[^A-Z0-9_]/i', '', $layout );
 		$template = preg_replace( '/[^A-Z0-9_]/i', '', $template );
+		$template = $template ? $template : null;
 
 		$view = "KunenaView{$viewName}";
 		$model = "KunenaModel{$viewName}";
@@ -289,7 +290,9 @@ abstract class KunenaForum {
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
 
-		if (version_compare(JVERSION, '1.6', '>')) {
+		if ($params instanceof JRegistry) {
+			// Do nothing
+		} elseif (version_compare(JVERSION, '1.6', '>')) {
 			// Joomla 1.6+
 			$params = new JRegistry($params);
 		} else {

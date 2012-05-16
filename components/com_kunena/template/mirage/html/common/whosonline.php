@@ -50,7 +50,6 @@ defined ( '_JEXEC' ) or die ();
 							</li>
 							<li class="divider"></li>
 							<?php endif ?>
-							<? endif; ?>
 							<?php if ($this->hiddenList) : ?>
 								<li class="whosonline-usernames">
 									<ul class="list-unstyled">

@@ -571,9 +571,9 @@ class KunenaModelInstall extends JModel {
 		// TODO: Complete smart search support
 		$this->uninstallPlugin('finder', 'kunena');
 		//$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
-		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false, 1);
-		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 2);
-		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 3);
+		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 1);
+		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false, 2);
+		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 3);
 		$this->installPlugin('install/plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false, 4);
 		$this->installPlugin('install/plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false, 5);
 		$this->installPlugin('install/plugins/plg_kunena_kunena', 'kunena', 'kunena', true, 6);

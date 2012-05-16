@@ -49,9 +49,9 @@ class plgKunenaComprofiler extends JPlugin {
 		$integration = KunenaFactory::getProfile();
 		switch ($type) {
 			case 'start':
-				return $integration->open();
+				return method_exists($integration, 'open') ? $integration->open() : null;
 			case 'end':
-				return $integration->close();
+				return method_exists($integration, 'close') ? $integration->close() : null;
 		}
 	}
 

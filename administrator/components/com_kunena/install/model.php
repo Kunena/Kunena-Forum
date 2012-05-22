@@ -514,7 +514,7 @@ class KunenaModelInstall extends JModel {
 
 		foreach ( $results as $i => $r )
 			if ($r)
-				$this->addStatus ( ucfirst($r ['action']) . ' ' . $r ['name'], true );
+				$this->addStatus ( JText::_('COM_KUNENA_INSTALL_CREATE') . ' ' . $r ['name'], true );
 		$this->insertVersion ( 'migrateDatabase' );
 		if (! $this->getInstallError ())
 			$this->setStep ( $this->getStep()+1 );
@@ -742,7 +742,7 @@ class KunenaModelInstall extends JModel {
 			if (!isset($tables[$table])) {
 				$result = $schema->updateSchemaTable($table);
 				if ($result) {
-					$this->addStatus ( ucfirst($result ['action']) . ' ' . $result ['name'], $result ['success'] );
+					$this->addStatus ( JText::_('COM_KUNENA_INSTALL_CREATE') . ' ' . $result ['name'], $result ['success'] );
 				}
 			}
 			// Save user state with remaining tables
@@ -1540,7 +1540,7 @@ class KunenaModelInstall extends JModel {
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		$this->tables ['kunena_'] ['kunena_version'] = 'kunena_version';
-		return array('action'=>'create', 'name'=>'kunena_version', 'sql'=>$query);
+		return array('action'=>JText::_('COM_KUNENA_INSTALL_CREATE'), 'name'=>'kunena_version', 'sql'=>$query);
 	}
 
 	// also insert old version if not in the table

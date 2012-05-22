@@ -208,4 +208,36 @@ abstract class KunenaForumMessageThankyouHelper {
 
 		return rows;
 	}
+
+	/**
+	 * Returns KunenaForumMessageThankyou object
+	 *
+	 * @access	public
+	 * @param	ids		The message to load - Can be only an instance of KunenaForumMessage.
+	 * @return	KunenaForumMessageThankyou		The thankyou object.
+	 * @since	2.0-BETA2
+	 */
+	static public function getByMessage($ids = false) {
+		if ($ids === false) {
+			return self::$_instances;
+		} elseif ( is_array($ids) ) {
+			foreach ($ids as $id) {
+				if ($id instanceof KunenaForumMessage) $id = $id->id;
+				$ids2[(int)$id] = (int)$id;
+			}
+			$ids = $ids2;
+		} else {
+			$ids = array($ids);
+		}
+
+		self::loadMessages ( $ids );
+
+		$list = array();
+		foreach($ids as $id) {
+			if ( !empty(self::$_instances [$id]) ) {
+				$list[$id] =self::$_instances [$id];
+			}
+		}
+		return $list;
+	}
 }

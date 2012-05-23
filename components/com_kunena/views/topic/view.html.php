@@ -664,8 +664,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Thank you
-		$thankyou = $this->message->getThankyou();
-		if($this->message->authorise('thankyou') && !$thankyou->exists($this->me->userid)) {
+		if($this->message->authorise('thankyou') && !array_key_exists($this->me->userid, $this->message->thankyou)) {
 			$this->messageButtons->set('thankyou', $this->getButton ( sprintf($task, 'thankyou'), 'thankyou', 'message', 'user'));
 		}
 
@@ -709,8 +708,10 @@ class KunenaViewTopic extends KunenaView {
 			if ($this->config->showthankyou && $this->profile->userid) {
 				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JUtility::getToken() . '=1';
 
-				//TODO: for normal users, show only limited number of thankyou (config->thankyou_max)
-				//$message->thankyou = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
+				// for normal users, show only limited number of thankyou (config->thankyou_max)
+				if ( !$this->me->isAdmin() || !$this->me->isModerator() ) {
+					$message->thankyou = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
+				}
 
 				foreach( $message->thankyou as $userid=>$time){
 					$thankyou_delete = $this->me->isModerator() ? ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'

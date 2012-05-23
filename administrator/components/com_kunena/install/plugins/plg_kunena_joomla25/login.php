@@ -2,7 +2,7 @@
 /**
  * Kunena Plugin
  * @package Kunena.Plugins
- * @subpackage Joomla16
+ * @subpackage Joomla25
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -28,6 +28,10 @@ class KunenaLoginJoomla {
 	public function logoutUser() {
 		$error = JFactory::getApplication()->logout ();
 		return is_bool($error) ? '' : $error;
+	}
+
+	public function getRememberMe() {
+		return (bool) JPluginHelper::isEnabled('system', 'remember');
 	}
 
 	public function getLoginURL() {

@@ -123,7 +123,15 @@ abstract class KunenaForum {
 	 * @since 2.0.0-BETA2
 	 */
 	public static function setup() {
+		$config = KunenaFactory::getConfig();
+
+		// Load language file for libraries.
 		KunenaFactory::loadLanguage('com_kunena.libraries', 'admin');
+
+		// Setup output caching.
+		$cache = JFactory::getCache('com_kunena', 'output');
+		if (!$config->get('cache')) $cache->setCaching(0);
+		$cache->setLifeTime($config->get('cache_time', 60));
 	}
 
 	/**
@@ -256,6 +264,7 @@ abstract class KunenaForum {
 		$viewName = preg_replace( '/[^A-Z0-9_]/i', '', $viewName );
 		$layout = preg_replace( '/[^A-Z0-9_]/i', '', $layout );
 		$template = preg_replace( '/[^A-Z0-9_]/i', '', $template );
+		$template = $template ? $template : null;
 
 		$view = "KunenaView{$viewName}";
 		$model = "KunenaModel{$viewName}";
@@ -281,7 +290,9 @@ abstract class KunenaForum {
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
 
-		if (version_compare(JVERSION, '1.6', '>')) {
+		if ($params instanceof JRegistry) {
+			// Do nothing
+		} elseif (version_compare(JVERSION, '1.6', '>')) {
 			// Joomla 1.6+
 			$params = new JRegistry($params);
 		} else {

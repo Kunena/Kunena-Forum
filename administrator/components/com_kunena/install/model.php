@@ -338,7 +338,7 @@ class KunenaModelInstall extends JModel {
 				$success = JFile::move("{$dest}/mod_{$name}.j15.xml", "{$dest}/mod_{$name}.xml");
 			}
 		}
-		// TODO: copy all language files to module directory
+
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
 		if ($success) $success = JFile::copy(KPATH_SITE."/language/index.html", "{$dest}/language/en-GB/index.html");
 		if ($success && is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.ini")) {
@@ -391,7 +391,7 @@ class KunenaModelInstall extends JModel {
 				$success = JFile::move("{$dest}/{$name}.j15.xml", "{$dest}/{$name}.xml");
 			}
 		}
-		// TODO: copy all language files to module directory
+
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
 		if ($success) $success = JFile::copy(KPATH_ADMIN."/language/index.html", "{$dest}/language/en-GB/index.html");
 		if ($success && is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
@@ -571,9 +571,9 @@ class KunenaModelInstall extends JModel {
 		// TODO: Complete smart search support
 		$this->uninstallPlugin('finder', 'kunena');
 		//$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
-		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false, 1);
-		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 2);
-		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 3);
+		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 1);
+		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false, 2);
+		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 3);
 		$this->installPlugin('install/plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false, 4);
 		$this->installPlugin('install/plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false, 5);
 		$this->installPlugin('install/plugins/plg_kunena_kunena', 'kunena', 'kunena', true, 6);
@@ -1660,13 +1660,6 @@ class KunenaModelInstall extends JModel {
 			$this->db->query ();
 			if ($this->db->getErrorNum ())
 				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-
-			// Now get the menu id again, we need it, in order to publish the menu module
-			$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
-			$this->db->setQuery ( $query );
-			$moduleid = ( int ) $this->db->loadResult ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		}
 
 		// Forum
@@ -1719,37 +1712,6 @@ class KunenaModelInstall extends JModel {
 			$this->db->query ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		}
-
-		$query = "SELECT id FROM `#__modules` WHERE `position`='kunena_menu';";
-		$this->db->setQuery ( $query );
-		$moduleid = ( int ) $this->db->loadResult ();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-
-		// Check if it exists, if not create it
-		if (! $moduleid) {
-			// Create a module for the Kunena menu
-			$query = "REPLACE INTO `#__modules` (`id`, `title`, `content`, `ordering`, `position`, `checked_out`, `checked_out_time`, `published`, `module`, `numnews`, `access`, `showtitle`, `params`, `iscore`, `client_id`, `control`) VALUES
-					($moduleid, {$this->db->quote(JText::_ ( 'COM_KUNENA_MENU_TITLE' ))}, '', 0, 'kunena_menu', 0, '0000-00-00 00:00:00', 1, 'mod_mainmenu', 0, 0, 0, 'menutype=kunenamenu\nmenu_style=list\nstartLevel=1\nendLevel=2\nshowAllChildren=1\nwindow_open=\nshow_whitespace=0\ncache=1\ntag_id=\nclass_sfx=\nmoduleclass_sfx=\nmaxdepth=10\nmenu_images=0\nmenu_images_align=0\nmenu_images_link=0\nexpand_menu=0\nactivate_parent=0\nfull_active_id=0\nindent_image=0\nindent_image1=\nindent_image2=\nindent_image3=\nindent_image4=\nindent_image5=\nindent_image6=\nspacer=\nend_spacer=\n\n', 0, 0, '');";
-			$this->db->setQuery ( $query );
-			$this->db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-
-			// Now get the module id again, we need it, in order to publish the menu module
-			$query = "SELECT id FROM `#__modules` WHERE `position`='kunena_menu';";
-			$this->db->setQuery ( $query );
-			$moduleid = ( int ) $this->db->loadResult ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-
-			// Now publish the module
-			$query = "REPLACE INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES ($moduleid, 0);";
-			$this->db->setQuery ( $query );
-			$this->db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		}
 
 		// Finally add forum menu link to default menu
@@ -1821,7 +1783,8 @@ class KunenaModelInstall extends JModel {
 
 		$gparams = new JRegistry($paramdata);
 
-		// FIXME: Joomla 1.6: add menu params for current item, too
+		$params = clone $gparams;
+		$params->loadArray($menu['params']);
 		$data = array (
 			'menutype' => 'kunenamenu',
 			'title' => $menu ['name'],
@@ -1832,7 +1795,7 @@ class KunenaModelInstall extends JModel {
 			'parent_id' => 1,
 			'component_id' => $component_id,
 			'access' => $menu ['access'] + 1,
-			'params' => (string) $gparams,
+			'params' => (string) $params,
 			'home' => 0,
 			'language' => '*',
 			'client_id' => 0
@@ -1877,38 +1840,8 @@ class KunenaModelInstall extends JModel {
 			throw new KunenaInstallerException ( $table->getError () );
 		}
 
-		$module = JTable::getInstance ( 'module' );
-		$data = array (
-			'title' => JText::_ ( 'COM_KUNENA_MENU_TITLE' ),
-			'ordering' => 1,
-			'position' => 'kunena_menu',
-			'published' => 1,
-			'module' => 'mod_menu',
-			'access' => 1,
-			'showtitle' => 0,
-			'params' => '{"menutype":"kunenamenu","startLevel":"2","endLevel":"3","showAllChildren":"0","tag_id":"","class_sfx":"","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid"}',
-			'client_id' => 0,
-			'language' => '*' );
-		if (! $module->bind ( $data ) || ! $module->check ()) {
-			// Menu already exists, do nothing
-			return true;
-		}
-		if (! $module->store ()) {
-			throw new KunenaInstallerException ( $module->getError () );
-		}
-		$moduleid = $module->id;
-
-		// Now publish the module
-		// TODO: no need for the menu module
-		$query = "REPLACE INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES ($moduleid, 0);";
-		$this->db->setQuery ( $query );
-		$this->db->query ();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-
 		// Finally create alias
-		// TODO: contains workaround for J1.6.1 bug:
-		$defaultmenu = JMenu::getInstance('site')->getDefault('workaround');
+		$defaultmenu = JMenu::getInstance('site')->getDefault();
 		if (!$defaultmenu) return true;
 		$table = JTable::getInstance ( 'menu' );
 		$table->load(array('menutype'=>$defaultmenu->menutype, 'type'=>'alias', 'title'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_FORUM' )));

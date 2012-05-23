@@ -535,6 +535,7 @@ class KunenaModelSchema extends JModel
 
 	protected function upgradeNewAction($dbschema, $node, $table='')
 	{
+		if (!$node) return;
 		foreach ($node->childNodes as $action)
 		{
 			if (!($action instanceof DOMElement)) continue;

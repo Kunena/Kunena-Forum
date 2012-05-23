@@ -46,15 +46,15 @@ class KunenaViewCommon extends KunenaView {
 
 		if ($this->config->showannouncement > 0) {
 			$new = new KunenaForumAnnouncement;
-			$this->announcement = $this->get('Announcement');
+			$items = KunenaForumAnnouncementHelper::getAnnouncements();
+			$this->announcement = array_pop($items);
 			if (!$this->announcement) {
 				echo ' ';
 				return;
 			}
 
 			$cache = JFactory::getCache('com_kunena', 'output');
-			// FIXME: enable caching after fixing the issues
-			//if ($cache->start("{$this->ktemplate->name}.common.announcement", 'com_kunena.template')) return;
+			if ($cache->start("{$this->ktemplate->name}.common.announcement", 'com_kunena.template')) return;
 
 			if ($this->announcement && $this->announcement->authorise('read')) {
 				$this->annListUrl = KunenaForumAnnouncementHelper::getUri('list');
@@ -67,8 +67,7 @@ class KunenaViewCommon extends KunenaView {
 			} else {
 				echo ' ';
 			}
-			// FIXME: enable caching after fixing the issues
-			//$cache->end();
+			$cache->end();
 		} else echo ' ';
 	}
 
@@ -152,10 +151,9 @@ class KunenaViewCommon extends KunenaView {
 	function displayWhosonline($tpl = null) {
 		if ($this->offline) return;
 
-		$moderator = intval($this->me->isModerator());
+		$moderator = intval($this->me->isModerator())+intval($this->me->isAdmin());
 		$cache = JFactory::getCache('com_kunena', 'output');
-		// FIXME: enable caching after fixing the issues
-		//if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
+		if ($cache->start("{$this->ktemplate->name}.common.whosonline.{$moderator}", "com_kunena.template")) return;
 
 		$users = KunenaUserHelper::getOnlineUsers();
 		KunenaUserHelper::loadUsers(array_keys($users));
@@ -182,7 +180,7 @@ class KunenaViewCommon extends KunenaView {
 		foreach ($users as $userid=>$usertime) {
 			$user = KunenaUserHelper::get($userid);
 			if ( !$user->showOnline ) {
-				if ($this->me->isModerator()) $this->hiddenList[$user->getName()] = $user;
+				if ($moderator) $this->hiddenList[$user->getName()] = $user;
 			} else {
 				$this->onlineList[$user->getName()] = $user;
 			}
@@ -198,16 +196,14 @@ class KunenaViewCommon extends KunenaView {
 		}
 		echo $result;
 
-		// FIXME: enable caching after fixing the issues
-		//$cache->end();
+		$cache->end();
 	}
 
 	function displayStatistics($tpl = null) {
 		if ($this->offline) return;
 
 		$cache = JFactory::getCache('com_kunena', 'output');
-		// FIXME: enable caching after fixing the issues
-		//if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) return;
+		if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) return;
 
 		// FIXME: refactor code
 		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
@@ -223,8 +219,7 @@ class KunenaViewCommon extends KunenaView {
 			return $result;
 		}
 		echo $result;
-		// FIXME: enable caching after fixing the issues
-		//$cache->end();
+		$cache->end();
 	}
 
 	function displayMenu($tpl = null) {
@@ -286,8 +281,7 @@ class KunenaViewCommon extends KunenaView {
 					$this->registerUrl = $login->getRegistrationUrl();
 					$this->lostPasswordUrl = $login->getResetUrl();
 					$this->lostUsernameUrl = $login->getRemindUrl();
-					// FIXME: find a better way to remember
-					$this->remember = (bool) JPluginHelper::isEnabled('system', 'remember');
+					$this->remember = $login->getRememberMe();
 				}
 			} else {
 				$this->setLayout('logout');

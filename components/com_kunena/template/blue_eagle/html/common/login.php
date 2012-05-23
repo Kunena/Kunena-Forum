@@ -36,10 +36,9 @@ defined ( '_JEXEC' ) or die ();
 							<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD'); ?>
 							<input type="password" name="password" class="inputbox ks" size="18" alt="password" /></span>
 						<span>
-							<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>
-							<?php // FIXME: need a better way ?>
+							<?php if($this->remember) : ?>
 							<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME'); ?>
-							<input type="checkbox" name="remember" alt="" value="yes" />
+							<input type="checkbox" name="remember" alt="" value="1" />
 							<?php endif; ?>
 							<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
 						</span>

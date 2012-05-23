@@ -38,7 +38,9 @@ abstract class KunenaForumCategoryHelper {
 		}
 		if (!is_numeric($identifier)) {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-			return new KunenaForumCategory ();
+			$category = new KunenaForumCategory ();
+			$category->load();
+			return $category;
 		}
 
 		$id = intval ( $identifier );
@@ -122,7 +124,7 @@ abstract class KunenaForumCategoryHelper {
 		if (!$userids || !$allowed) return array(0, array());
 
 		// Get total count
-		$query = "SELECT COUNT(*) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id";
+		$query = "SELECT COUNT(*) FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id";
 		$db->setQuery ( $query );
 		$total = ( int ) $db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$total) {
@@ -134,7 +136,7 @@ abstract class KunenaForumCategoryHelper {
 		if ($total < $limitstart)
 			$limitstart = intval($total / $limit) * $limit;
 
-		$query = "SELECT c.id FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id ORDER BY {$orderby}";
+		$query = "SELECT c.id FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id ORDER BY {$orderby}";
 		$db->setQuery ( $query , $limitstart, $limit );
 		$subscribed = (array) $db->loadResultArray ();
 		if (KunenaError::checkDatabaseError()) return;
@@ -183,7 +185,7 @@ abstract class KunenaForumCategoryHelper {
 		}
 	}
 
-	static public function getCategoriesByAccess($accesstype='joomla', $groupids = false) {
+	static public function getCategoriesByAccess($accesstype='joomla.level', $groupids = false) {
 		if (self::$_instances === false) {
 			self::loadCategories();
 		}

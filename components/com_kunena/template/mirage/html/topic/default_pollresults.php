@@ -57,7 +57,7 @@ $row = 0;
 								<?php endif; ?>
 							</li>
 							<li>
-								<?php if( $this->me->isModerator() ) : ?>
+								<?php if( $this->me->isModerator($this->topic->getCategory()) ) : ?>
 								<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&id={$this->topic->id}&catid={$this->category->id}&pollid={$this->poll->id}&task=resetvotes&".JUtility::getToken() .'=1') ?>">Reset votes</a>
 								<?php endif; ?>
 							</li>

@@ -124,8 +124,6 @@ class KunenaConfig extends JObject {
 	public $defaultpage = 'recent';
 	// New 1.0.8 config variables
 	public $default_sort = 'asc'; // 'desc' for latest post first
-	// New 1.5.7 config variables
-	public $alphauserpointsnumchars = 0; // Integration feature for AlphaUserPoints component
 	// New 1.5.8 config variables
 	public $sef = 1;
 	public $sefutf8 = 0;
@@ -159,13 +157,6 @@ class KunenaConfig extends JObject {
 	public $thumbwidth = 32;
 	// New for 1.6: hide profile info when user is deleted from joomla!
 	public $hideuserprofileinfo = 'put_empty';
-	// New for 1.6 -> New integration options
-	public $integration_access = 'auto';
-	public $integration_login = 'auto';
-	public $integration_avatar = 'auto';
-	public $integration_profile = 'auto';
-	public $integration_private = 'auto';
-	public $integration_activity = 'auto';
 	//New for 1.6: choose if you want that ghost message box checked by default
 	public $boxghostmessage = 0;
 	public $userdeletetmessage = 0;
@@ -186,8 +177,6 @@ class KunenaConfig extends JObject {
 	public $listcat_show_moderators = 1;
 	//New for 1.6.1: allow the admin to disable lightbox
 	public $lightbox = 1;
-	//New for 1.6.1: allow the admin to limit the length of the activity stream
-	public $activity_limit = 0;
 	//New for 1.6.2: choose the time since which to show the topics
 	public $show_list_time = 720;
 	//New for 1.6.2: configuration option to show online users by minutes or session time
@@ -228,6 +217,8 @@ class KunenaConfig extends JObject {
 	public $send_emails = 1;
 	public $stopforumspam_key = '';
 	public $fallback_english = 1;
+	public $cache = 1;
+	public $cache_time = 60; // 1 minute
 
 	public function __construct() {
 		parent::__construct ();

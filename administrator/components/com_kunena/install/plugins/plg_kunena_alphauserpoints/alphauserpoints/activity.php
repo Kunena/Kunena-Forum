@@ -136,7 +136,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 	private function _checkPermissions($message) {
 		$category = $message->getCategory();
 		$accesstype = $category->accesstype;
-		if ($accesstype != 'none' && $accesstype != 'joomla.level') {
+		if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level') {
 			return false;
 		}
 		if (version_compare(JVERSION, '1.6','>')) {

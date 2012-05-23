@@ -19,26 +19,22 @@ class KunenaProfileComprofiler extends KunenaProfile {
 		$this->params = $params;
 	}
 
-	public function open()
-	{
+	public function open() {
 		KunenaIntegrationComprofiler::open();
 	}
 
-	public function close()
-	{
+	public function close() {
 		KunenaIntegrationComprofiler::close();
 	}
 
-	public function getUserListURL($action='', $xhtml = true)
-	{
+	public function getUserListURL($action='', $xhtml = true) {
 		$config = KunenaFactory::getConfig ();
 		$my = JFactory::getUser();
 		if ( $config->userlist_allowed == 1 && $my->id == 0  ) return false;
 		return cbSef( 'index.php?option=com_comprofiler&amp;task=usersList', $xhtml );
 	}
 
-	public function getProfileURL($user, $task='', $xhtml = true)
-	{
+	public function getProfileURL($user, $task='', $xhtml = true) {
 		$user = KunenaFactory::getUser($user);
 		if ($user->userid == 0) return false;
 		// Get CUser object
@@ -47,19 +43,15 @@ class KunenaProfileComprofiler extends KunenaProfile {
 		return cbSef( 'index.php?option=com_comprofiler&task=userProfile&user=' . $user->userid. getCBprofileItemid(), $xhtml );
 	}
 
-	public function showProfile($user, &$msg_params)
-	{
+	public function showProfile($view, &$params) {
 		global $_PLUGINS;
 
-		$kunenaConfig = KunenaFactory::getConfig();
-		$user = KunenaFactory::getUser($user);
 		$_PLUGINS->loadPluginGroup('user');
-		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $user->userid,
-			array( 'config'=> &$kunenaConfig, 'userprofile'=> &$user, 'msg_params'=>&$msg_params) ) ) );
+		return implode( ' ', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', $view, $view->profile->userid,
+			array( 'config'=> &$view->config, 'userprofile'=> &$view->profile, 'params'=>&$params) ) ) );
 	}
 
-	public function trigger($event, &$params)
-	{
+	public function trigger($event, &$params) {
 		return KunenaIntegrationComprofiler::trigger($event, $params);
 	}
 

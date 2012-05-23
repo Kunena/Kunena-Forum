@@ -31,7 +31,7 @@ class KunenaAccessJoomla {
 	 * @return array	Supported access types.
 	 */
 	public function getAccessTypes() {
-		static $accesstypes = array('joomla.level', 'none');
+		static $accesstypes = array('joomla.level', 'joomla.group');
 		return $accesstypes;
 	}
 
@@ -48,7 +48,7 @@ class KunenaAccessJoomla {
 			$db = JFactory::getDBO ();
 			$query = $db->getQuery(true);
 			$query->select('id, title');
-			if ($accesstype == 'none') {
+			if ($accesstype == 'joomla.group') {
 				$query->from('#__usergroups');
 				$db->setQuery((string)$query);
 			} elseif ($accesstype == 'joomla.level') {
@@ -79,31 +79,31 @@ class KunenaAccessJoomla {
 				'input' => JHtml::_('access.assetgrouplist', 'access', $category->accesstype == 'joomla.level' ? $category->access : 1)
 			);
 		}
-		if (!$accesstype || $accesstype == 'none') {
+		if (!$accesstype || $accesstype == 'joomla.group') {
 			$yesno = array ();
 			$yesno [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_NO' ) );
 			$yesno [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_YES' ) );
 
-			$html ['none']['pub_access'] = array(
+			$html ['joomla-group']['pub_access'] = array(
 				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_TITLE'),
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC') .'<br /><br />'.
 						JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC2') .'<br /><br />'.
 						JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_DESC_J25'),
 				'input' => JHTML::_ ( 'access.usergroup', 'pub_access', $category->pub_access, 'class="inputbox" size="10"', false)
 			);
-			$html ['none']['pub_recurse'] = array(
+			$html ['joomla-group']['pub_recurse'] = array(
 				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_TITLE'),
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_PRIMARY_CHILDS_DESC'),
 				'input' => JHTML::_ ( 'select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->pub_recurse )
 			);
-			$html ['none']['admin_access'] = array(
+			$html ['joomla-group']['admin_access'] = array(
 				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_TITLE'),
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC') .'<br /><br />'.
 						JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC2') .'<br /><br />'.
 						JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_DESC_J25'),
 				'input' => JHTML::_ ( 'access.usergroup', 'admin_access', $category->admin_access, 'class="inputbox" size="10"', false)
 			);
-			$html ['none']['admin_recurse'] = array(
+			$html ['joomla-group']['admin_recurse'] = array(
 				'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_TITLE'),
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_DESC'),
 				'input' => JHTML::_ ( 'select.genericlist', $yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->admin_recurse )
@@ -168,7 +168,7 @@ class KunenaAccessJoomla {
 				}
 			}
 			// Check against Joomla user group
-			elseif ($category->accesstype == 'none') {
+			elseif ($category->accesstype == 'joomla.group') {
 				$pub_access = in_array($category->pub_access, $category->pub_recurse ? $groups_r : $groups);
 				$admin_access = in_array($category->admin_access, $category->admin_recurse ? $groups_r : $groups);
 				if ($pub_access || $admin_access) {
@@ -196,7 +196,7 @@ class KunenaAccessJoomla {
 			// Check against Joomla access levels
 			$groups = $this->getGroupsByViewLevel($category->access);
 			$allow = $this->getUsersByGroup($groups, true, $userids);
-		} elseif ($category->accesstype == 'none') {
+		} elseif ($category->accesstype == 'joomla.group') {
 			if ($category->pub_access <= 0) return;
 			// Check against Joomla user groups
 			$public = $this->getUsersByGroup($category->pub_access, $category->pub_recurse, $userids);

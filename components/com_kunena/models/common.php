@@ -20,9 +20,4 @@ class KunenaModelCommon extends KunenaModel {
 		$params = $this->getParameters();
 		$this->setState ( 'params', $params );
 	}
-
-	public function getAnnouncement() {
-		$items = KunenaForumAnnouncementHelper::getAnnouncements(0, 1, $this->me->isModerator('global'));
-		return array_pop($items);
-	}
 }

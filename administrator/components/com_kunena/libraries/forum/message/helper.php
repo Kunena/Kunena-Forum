@@ -199,8 +199,7 @@ abstract class KunenaForumMessageHelper {
 		if (is_null($direction)) $direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		if (!$hold) {
 			$me = KunenaUserHelper::getMyself();
-			$access = KunenaAccess::getInstance();
-			$hold = $access->getAllowedHold($me->userid, $mesid, false);
+			$hold = KunenaAccess::getInstance()->getAllowedHold($me->userid, $mesid, false);
 		}
 		if (!isset(self::$_location [$mesid])) {
 			self::loadLocation(array($mesid));

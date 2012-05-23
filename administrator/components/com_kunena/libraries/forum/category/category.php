@@ -204,9 +204,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	public function addAlias($alias) {
 		if (!$this->exists()) return false;
 
-		if ($alias) {
-			$alias = KunenaRoute::stringURLSafe($alias);
-		} else {
+		$alias = KunenaRoute::stringURLSafe($alias);
+		if (!$alias) {
 			$alias = $this->id;
 		}
 		$check = $this->checkAlias($alias);
@@ -482,7 +481,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$table->exists ( $this->_exists );
 
 		// Update alias
-		$success = $this->addAlias($this->alias);
+		$success = $this->addAlias($this->get(alias));
 		if ($success) $this->_alias = $this->alias;
 
 		$table->reorder ();
@@ -577,7 +576,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$access->clearCache();
 
 		$db = JFactory::getDBO ();
-		$queries[] = "DELETE FROM #__kunena_aliases WHERE type='catid' AND id={$db->quote($this->id)}";
+		$queries[] = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->quote($this->id)}";
 		// Delete user topics
 		$queries[] = "DELETE FROM #__kunena_user_topics WHERE category_id={$db->quote($this->id)}";
 		// Delete user categories
@@ -776,7 +775,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if (!$this->exists()) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
-		if (empty($catids[$this->id]) && !$user->isModerator($this->id)) {
+		if (empty($catids[$this->id])) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
 	}
@@ -832,19 +831,19 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 	protected function authoriseUnlocked($user) {
 		// Check that category is not locked or that user is a moderator
-		if ($this->locked && (!$user->userid || !$user->isModerator($this->id))) {
+		if ($this->locked && (!$user->userid || !$user->isModerator($this))) {
 			return JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' );
 		}
 	}
 	protected function authoriseModerate($user) {
 		// Check that user is moderator
-		if (!$user->userid || !$user->isModerator($this->id)) {
+		if (!$user->userid || !$user->isModerator($this)) {
 			return JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' );
 		}
 	}
 	protected function authoriseAdmin($user) {
 		// Check that user is admin
-		if (!$user->userid || !$user->isAdmin($this->id)) {
+		if (!$user->userid || !$user->isAdmin($this)) {
 			return JText::_ ( 'COM_KUNENA_MODERATION_ERROR_NOT_ADMIN' );
 		}
 	}

@@ -55,6 +55,66 @@ function kunena_upgrade_200_configuration($parent) {
 		unset($config->fbdefaultpage);
 	}
 
+	// Move integration settings into plugins
+	if (isset($config->integration_access)) {
+		// Load configuration options
+		$types = array('access'=>'', 'login'=>'', 'avatar'=>'', 'profile'=>'', 'private'=>'', 'activity'=>'');
+		foreach ($types as $type=>&$value) {
+			$field = "integration_{$type}";
+			$value = $config->get($field, 'auto');
+			unset($config->$field);
+		}
+		$integration = array('alphauserpoints' => 'alphauserpoints', 'jomsocial' => 'community', 'communitybuilder' => 'comprofiler', 'uddeim' => 'uddeim');
+
+		$plugins = array();
+		foreach ($integration as $cfgname => $pluginname) {
+			$plugin = $parent->loadPlugin('kunena', $pluginname);
+			if ($plugin) {
+					if (version_compare(JVERSION, '1.6', '>')) {
+					// Joomla 1.6+
+					$params = new JRegistry($plugin->params);
+				} else {
+					// Joomla 1.5
+					$params = new JParameter($plugin->params);
+				}
+				$plugin->params = $params;
+				$plugins[$cfgname] = $plugin;
+			}
+		}
+
+		foreach ($types as $type=>$value) {
+			foreach ($plugins as $name => $plugin) {
+				if ($plugin->params->get($type, null) === null) continue;
+				if ($value == 'auto' || $value == $name) {
+					if (version_compare(JVERSION, '1.6','>')) {
+						// Joomla 1.6+
+						$plugin->enabled = 1;
+					} else {
+						// Joomla 1.5
+						$plugin->published = 1;
+					}
+					$plugin->params->set($type, 1);
+				} else {
+					$plugin->params->set($type, 0);
+				}
+			}
+		}
+		if (isset($plugins['alphauserpoints'])) {
+			$plugins['alphauserpoints']->params->set('activity_points_limit', $config->get('alphauserpointsnumchars', 0));
+		}
+		if (isset($plugins['jomsocial'])) {
+			$plugins['jomsocial']->params->set('activity_stream_limit', $config->get('activity_limit', 0));
+		}
+		unset($config->activity_limit, $config->alphauserpointsnumchars);
+		foreach ($plugins as $name => $plugin) {
+			$plugin->params = $plugin->params->toString();
+			// TODO: J!1.5: $plugin->published
+			if (!empty($plugin->enabled) || !empty($plugin->published)) {
+				$plugin->store();
+			}
+		}
+	}
+
 	// Save configuration
 	$config->save ();
 

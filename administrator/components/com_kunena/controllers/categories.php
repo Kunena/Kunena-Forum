@@ -149,33 +149,34 @@ class KunenaAdminControllerCategories extends KunenaController {
 		}
 
 		$post = JRequest::get('post', JREQUEST_ALLOWRAW);
-		$accesstype = JRequest::getCmd('accesstype', 'none');
+		$accesstype = JRequest::getCmd('accesstype', 'joomla.level');
 		$post['access'] = JRequest::getInt("access-{$accesstype}", JRequest::getInt('access', 0));
 		$success = false;
 
 		$category = KunenaForumCategoryHelper::get ( intval ( $post ['catid'] ) );
+		$parent = KunenaForumCategoryHelper::get (intval ( $post ['parent_id'] ) );
 
 		if ($category->exists() && !$category->authorise ( 'admin' )) {
 			// Category exists and user is not admin in category
 			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
-		} elseif (!$category->exists() && !$this->me->isAdmin ( intval ( $post ['parent_id'] ) )) {
+
+		} elseif (!$category->exists() && !$this->me->isAdmin ( $parent )) {
 			// Category doesn't exist and user is not admin in parent, parent_id=0 needs global admin rights
-			$parent = KunenaForumCategoryHelper::get ( intval ( $post ['parent_id'] ) );
 			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $parent->name ) ), 'notice' );
+
 		} elseif (! $category->isCheckedOut ( $this->me->userid )) {
 			// Nobody can change id or statistics
 			$ignore = array('option', 'view', 'task', 'catid', 'id', 'id_last_msg', 'numTopics', 'numPosts', 'time_last_msg', 'aliases', 'aliases_all');
 			// User needs to be admin in parent (both new and old) in order to move category, parent_id=0 needs global admin rights
-			if (!$this->me->isAdmin ( intval ( $post ['parent_id'] )) || ($category->exists() && !$this->me->isAdmin ( $category->parent_id ))) {
+			if (!$this->me->isAdmin ( $parent ) || ($category->exists() && !$this->me->isAdmin ( $category->getParent() ))) {
 				$ignore = array_merge($ignore, array('parent_id', 'ordering'));
 				$post ['parent_id'] = $category->parent_id;
 			}
 			// Only global admin can change access control and class_sfx (others are inherited from parent)
 			if (!$this->me->isAdmin ()) {
 				$access = array('accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'channels', 'class_sfx');
-				if (!$category->exists() || intval ($post ['parent_id']) != $category->parent_id) {
+				if (!$category->exists() || $parent->id != $category->parent_id) {
 					// If category didn't exist or is moved, copy access and class_sfx from parent
-					$parent = KunenaForumCategoryHelper::get (intval ( $post ['parent_id']));
 					$category->bind($parent->getProperties(), $access, true);
 				}
 				$ignore = array_merge($ignore, $access);
@@ -203,7 +204,9 @@ class KunenaAdminControllerCategories extends KunenaController {
 				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_SAVE_FAILED', $category->id, $this->escape ( $category->getError () ) ), 'notice' );
 			}
 			$category->checkin();
+
 		} else {
+			// Category was checked out by someone else.
 			$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_X_CHECKED_OUT', $this->escape ( $category->name ) ), 'notice' );
 		}
 

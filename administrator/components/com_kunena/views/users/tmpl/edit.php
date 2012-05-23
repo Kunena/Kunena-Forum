@@ -64,7 +64,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 				<td width="150" valign="top" class="contentpane"><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:
 				</td>
 				<td align="left" valign="top" class="contentpane">
-	<textarea class="inputbox" name="message" cols="50" rows="6"
+	<textarea class="inputbox" name="signature" cols="50" rows="6"
 	onkeyup="textCounter(this, this.form.current_count);"><?php echo $this->escape( $this->user->signature ); ?></textarea>
 	<br /><br />
 	<div><?php echo JText::sprintf('COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($this->config->maxsig),
@@ -131,10 +131,10 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 				</table>
 			</fieldset>
 		</dd>
-		<dt title="<?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') ?></dt>
 			<dd>
 			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></legend>
+				<legend><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') ?></legend>
 				<table class="kadmin-adminform">
 					<tr>
 						<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></th>
@@ -165,10 +165,10 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 				</table>
 			</fieldset>
 			</dd>
-			<dt title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS') ?></dt>
 			<dd>
 			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
+				<legend><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS') ?></legend>
 				<table class="kadmin-adminform">
 					<tr>
 						<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_SUBFOR') . ' ' . $this->escape($this->user->username); ?></th>

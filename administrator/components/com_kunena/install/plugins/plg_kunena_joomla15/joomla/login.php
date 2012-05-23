@@ -29,6 +29,10 @@ class KunenaLoginJoomla {
 		return is_bool($error) ? '' : $error;
 	}
 
+	public function getRememberMe() {
+		return (bool) JPluginHelper::isEnabled('system', 'remember');
+	}
+
 	public function getLoginURL() {
 		$Itemid = $this->getRoute('login');
 		return JRoute::_('index.php?option=com_user&view=login'.($Itemid ? "&Itemid={$Itemid}" : ''));

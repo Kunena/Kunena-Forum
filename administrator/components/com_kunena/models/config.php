@@ -357,6 +357,22 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$lists ['fallback_english'] = JHTML::_('select.genericlist', $yesno, 'cfg_fallback_english', 'class="inputbox" size="1"', 'value', 'text', $this->config->fallback_english);
 
+		$cache = array();
+		$cachetime[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_CFG_OPTION_USE_GLOBAL'));
+		$cachetime[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_CFG_OPTION_NO_CACHING'));
+
+		$cachetime = array();
+		$cachetime[] = JHTML::_('select.option', '60', JText::_('COM_KUNENA_CFG_OPTION_1_MINUTE'));
+		$cachetime[] = JHTML::_('select.option', '120', JText::_('COM_KUNENA_CFG_OPTION_2_MINUTES'));
+		$cachetime[] = JHTML::_('select.option', '180', JText::_('COM_KUNENA_CFG_OPTION_3_MINUTES'));
+		$cachetime[] = JHTML::_('select.option', '300', JText::_('COM_KUNENA_CFG_OPTION_5_MINUTES'));
+		$cachetime[] = JHTML::_('select.option', '600', JText::_('COM_KUNENA_CFG_OPTION_10_MINUTES'));
+		$cachetime[] = JHTML::_('select.option', '900', JText::_('COM_KUNENA_CFG_OPTION_15_MINUTES'));
+		$cachetime[] = JHTML::_('select.option', '1800', JText::_('COM_KUNENA_CFG_OPTION_30_MINUTES'));
+		$cachetime[] = JHTML::_('select.option', '3600', JText::_('COM_KUNENA_CFG_OPTION_60_MINUTES'));
+		$lists ['cache'] = JHTML::_('select.genericlist', $yesno, 'cfg_cache', 'class="inputbox" size="1"', 'value', 'text', $this->config->cache);
+		$lists ['cache_time'] = JHTML::_('select.genericlist', $cachetime, 'cfg_cache_time', 'class="inputbox" size="1"', 'value', 'text', $this->config->cache_time);
+
 		return $lists;
 	}
 }

@@ -116,6 +116,9 @@ class KunenaModelTopic extends KunenaModel {
 			$this->messages = KunenaForumMessageHelper::getMessagesByTopic($this->getState ( 'item.id'),
 				$this->getState ( 'list.start'), $this->getState ( 'list.limit'), $this->getState ( 'list.direction'), $this->getState ( 'hold'), $threaded);
 
+			// Get thankyous for all messages in the page
+			$thankyous = KunenaForumMessageThankyouHelper::getByMessage($this->messages);
+
 			// First collect ids and users
 			$userlist = array();
 			$this->threaded = array();
@@ -130,6 +133,12 @@ class KunenaModelTopic extends KunenaModel {
 				}
 				$userlist[intval($message->userid)] = intval($message->userid);
 				$userlist[intval($message->modified_by)] = intval($message->modified_by);
+
+				$thankyou_list = $thankyous[$message->id]->getList();
+				$message->thankyou = array();
+				if(!empty($thankyou_list)) {
+					$message->thankyou = $thankyou_list;
+				}
 			}
 			if (!isset($this->messages[$this->getState ( 'item.mesid')]) && !empty($this->messages)) $this->setState ( 'item.mesid', reset($this->messages)->id);
 			if ($threaded) {

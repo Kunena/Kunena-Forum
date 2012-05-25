@@ -29,8 +29,6 @@ $this->rowclass = array ("odd", "even" );
 							<div class="header-desc"><?php echo $this->displaySectionField('description') ?></div>
 						<?php endif ?>
 					</div>
-					<div class="header fr">
-					</div>
 				</div>
 				<div class="detailsbox-wrapper innerspacer kbox-full">
 					<div class="category detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow" id="category-<?php echo intval($this->section->id) ?>">

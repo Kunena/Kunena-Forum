@@ -66,7 +66,7 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->postActions) : ?>
 				<div class="modbox-wrapper innerspacer-bottom">
 					<div class="modbox">
-						<button class="kbutton button-type-standard fr" type="submit"><span><?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?></span></button>
+						<button class="kbutton button-type-mod fr" type="submit"><span><?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?></span></button>
 						<?php echo JHTML::_('select.genericlist', $this->postActions, 'task', 'class="kinputbox form-horizontal fr" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
 					</div>
 				</div>

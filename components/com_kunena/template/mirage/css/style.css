@@ -405,7 +405,7 @@
 
 #kunena.layout h2 > a {
 	font-size: 18px !important;
-	line-height: 24px !important;
+	line-height: 20px !important;
 	font-family: Georgia,"Times New Roman",Times,serif !important;
 	font-weight: bold !important;
 	color: #555555 !important;
@@ -413,9 +413,14 @@
 
 #kunena.layout h3 > a {
  	font-size: 15px !important;
+ 	line-height: 17px !important;
  	font-family: Georgia,"Times New Roman",Times,serif !important;
  	font-weight: bold !important;
  	color: #555555 !important;
+}
+
+#kunena.layout h4 > a {
+	font-size: 12px !important;
 }
 
 #kunena.layout .spacer {
@@ -427,7 +432,8 @@
 }
 
 #kunena.layout div.footerkbox-wrapper {
-    background: none repeat scroll 0 0 transparent;}
+    background: none repeat scroll 0 0 transparent;
+}
 
 #kunena.layout dl.ktabs {
 	border-bottom: 1px solid #DDDDDD;

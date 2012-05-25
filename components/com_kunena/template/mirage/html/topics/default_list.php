@@ -23,9 +23,9 @@ defined ( '_JEXEC' ) or die ();
 					</div>
 				</div>
 				<?php if ($this->getPagination(7)) : ?>
-				<div class="innerbox-wrapper innerspacer-top">
-					<?php echo $this->getPagination(7) ?>
-				</div>
+					<div class="innerbox-wrapper innerspacer-top">
+						<?php echo $this->getPagination(7) ?>
+					</div>
 				<?php endif; ?>
 				<div class="detailsbox-wrapper innerspacer kbox-full">
 					<div class="topics-default_list-detailsbox detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">

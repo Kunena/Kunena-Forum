@@ -31,9 +31,11 @@ defined ( '_JEXEC' ) or die ();
 				</div>
 			</div>
 			<?php echo $this->displayTopicActions(); ?>
-			<div class="innerbox-wrapper innerspacer-top">
-				<?php echo $this->getPagination(4); ?>
-			</div>
+			<?php if ($this->getPagination(4)) : ?>
+				<div class="innerbox-wrapper innerspacer-top kbox-full">
+					<?php echo $this->getPagination(4); ?>
+				</div>
+			<?php endif; ?>
 			<div class="innerbox-wrapper">
 				<div class="topic-detailsbox detailsbox">
 					<ul class="list-unstyled topic-posts">

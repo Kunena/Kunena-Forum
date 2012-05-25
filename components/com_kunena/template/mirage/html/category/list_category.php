@@ -14,7 +14,7 @@ $this->k ^= 1;
 ?>
 
 <li class="category-row category-row-<?php echo $this->rowclass [$this->k], isset ( $this->category->class_sfx ) ? ' category-row-' . $this->escape($this->rowclass [$this->k]) . $this->escape($this->category->class_sfx) : '' ?> kbox-hover kbox-hover_list-row kbox-full">
-	<dl class="list-unstyled list-column">
+	<dl class="list-unstyled list-column kbox-full">
 		<!--<dd class="category-icon">
 		</dd>-->
 		<dd class="category-subject item-column">
@@ -72,14 +72,14 @@ $this->k ^= 1;
 		</dd>
 	</dl>
 	<?php if ($this->subcategories) : ?>
-	<div class="innerspacer">
+	<div class="innerspacer-horizontal">
 		<div class="divider-horizontal-inline divider-horizontal-inline-dotted"></div>
 	</div>
 	<div class="innerspacer-column kbox-full">
 		<ul class="kcontent-32 list-unstyled kcategory-subcat-list">
 			<?php foreach ( $this->subcategories as $subcategory ) : ?>
 				<li class="kcategory-smdetails kcategory-smicon[K=CATEGORY_NEW_SUFFIX:<?php echo $subcategory->id ?>]">
-					<h4 class="kcontent-24"><?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?> [K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]<span class="kcounts"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_TOPICS_N_REPLIES', $subcategory->getTopics(), $subcategory->getReplies()) ?></span></h4>
+					<h4 class="kcontent-16"><?php echo $this->getCategoryLink($subcategory, null, JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_SUBCATEGORY_TITLE', $this->escape($subcategory->name))) ?> [K=CATEGORY_NEW_COUNT:<?php echo $subcategory->id ?>]<span class="kcounts"><?php echo JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_TOPICS_N_REPLIES', $subcategory->getTopics(), $subcategory->getReplies()) ?></span></h4>
 				</li>
 			<?php endforeach ?>
 		</ul>

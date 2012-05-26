@@ -68,6 +68,7 @@ defined ( '_JEXEC' ) or die ();
 									<li><span class="kuser-admin"><?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></span></li>
 									<li><span class="kuser-globalmod"><?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></span></li>
 									<li><span class="kuser-moderator"><?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></span></li>
+									<li><span class="kuser-banned"><?php echo JText::_('COM_KUNENA_COLOR_BANNED'); ?></span></li>
 									<li><span class="kuser-user"><?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></span></li>
 									<li><span class="kuser-guest"><?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></span></li>
 								</ul>

@@ -67,6 +67,7 @@
 		<param name="styleForumLegendAdmincolorText" type="text" default="#FF0000" label="COM_KUNENA_TEMPLATE_LEGEND_ADMIN_COLOR" description="COM_KUNENA_TEMPLATE_LEGEND_ADMIN_DESC" />
 		<param name="styleForumLegendGlobalcolorText" type="text" default="#800000" label="COM_KUNENA_TEMPLATE_LEGEND_GLOBAL_COLOR" description="COM_KUNENA_TEMPLATE_LEGEND_GLOBAL_DESC" />
 		<param name="styleForumLegendModeratorcolorText" type="text" default="#0000FF" label="COM_KUNENA_TEMPLATE_LEGEND_MODERATOR_COLOR" description="COM_KUNENA_TEMPLATE_LEGEND_MODERATOR_DESC" />
+		<param name="styleForumLegendBannedcolorText" type="text" default="#A39D49" label="COM_KUNENA_TEMPLATE_LEGEND_USER_COLOR" description="COM_KUNENA_TEMPLATE_LEGEND_USER_DESC" />
 		<param name="styleForumLegendUSERcolorText" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_LEGEND_USER_COLOR" description="COM_KUNENA_TEMPLATE_LEGEND_USER_DESC" />
 		<param name="styleForumLegendGuestcolorText" type="text" default="#666666" label="COM_KUNENA_TEMPLATE_LEGEND_GUEST_COLOR" description="COM_KUNENA_TEMPLATE_LEGEND_GUEST_DESC" />
 		<!--

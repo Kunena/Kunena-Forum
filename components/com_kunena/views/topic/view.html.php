@@ -51,7 +51,10 @@ class KunenaViewTopic extends KunenaView {
 				$mesid = $this->topic->first_post_id;
 			}
 			$message = KunenaForumMessageHelper::get($mesid);
-			if ($message->exists()) $this->app->redirect($message->getUrl(null, false));
+			if ($message->exists()) {
+				while (@ob_end_clean());
+				$this->app->redirect($message->getUrl(null, false));
+			}
 		}
 
 		$errors = $this->getErrors();
@@ -64,6 +67,7 @@ class KunenaViewTopic extends KunenaView {
 
 		// If page does not exist, redirect to the last page
 		if ($this->total <= $this->state->get('list.start')) {
+			while (@ob_end_clean());
 			$this->app->redirect($this->topic->getUrl(null, false, (int)($this->total / $this->state->get('list.limit'))));
 		}
 
@@ -121,6 +125,7 @@ class KunenaViewTopic extends KunenaView {
 
 		$message = KunenaForumMessage::getInstance($topic->lastread ? $topic->lastread : $topic->last_post_id);
 
+		while (@ob_end_clean());
 		$this->app->redirect($topic->getUrl($category, false, $message));
 	}
 
@@ -840,6 +845,7 @@ class KunenaViewTopic extends KunenaView {
 
 	function redirectBack() {
 		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
+		while (@ob_end_clean());
 		$this->app->redirect ( $httpReferer );
 	}
 

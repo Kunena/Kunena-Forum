@@ -293,18 +293,14 @@ class KunenaView extends JView {
 	}
 
 	public function displayTemplateFile($view, $layout, $template = null) {
-		static $files = array();
-
+		if (!isset($this->_path['template_'.$view])) {
+			$this->_path['template_'.$view] = $this->_path['template'];
+			foreach ($this->_path['template_'.$view] as &$dir) $dir = preg_replace("#/{$this->_name}/$#", "/{$view}/", $dir);
+		}
+		
 		if ($template) $template = '_'.$template;
 		$file = "{$layout}{$template}.php";
-		if (!isset($files[$file])) {
-			if (!isset($this->_path[$view])) {
-				$this->_path[$view] = $this->_path['template'];
-				foreach ($this->_path[$view] as &$dir) preg_replace("#/{$this->_name}/$#", "/{$view}/", $dir);
-			}
-			$files[$file] = JPath::find($this->_path[$view], $file);
-		}
-		$file = $files[$file];
+		$file = JPath::find($this->_path['template_'.$view], $file);
 		if (!file_exists($file)) JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
 
 		ob_start();

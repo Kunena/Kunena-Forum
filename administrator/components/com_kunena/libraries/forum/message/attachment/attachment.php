@@ -298,6 +298,17 @@ class KunenaForumMessageAttachment extends JObject {
 		return $result;
 	}
 
+	/**
+	 * Method to get the state of attachment if it can seen by guests
+	 *
+	 * @access	public
+	 * @return	boolean	True on success
+	 * @since 2.0-RC1
+	 */
+	public function getState() {
+		return $this->_disabled;
+	}
+
 	// Internal functions
 
 	protected function check() {

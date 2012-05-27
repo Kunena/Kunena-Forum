@@ -1358,9 +1358,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			}
 		}
 
-		if (is_object ( $attachment ) && ! empty ( $attachment->disabled )) {
+		if (is_object ( $attachment ) && $attachment->getState()==false) {
 			// Hide between content from non registered users
-			return '<div class="kmsgattach">' . $attachment->textLink . '</div>';
+			$link = $attachment->getTextLink();
+			return '<div class="kmsgattach">' . $link . '</div>';
 		} else {
 			if (is_object ( $attachment ) && is_file ( JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}" )) {
 				$bbcode->parent->inline_attachments [$attachment->id] = $attachment;

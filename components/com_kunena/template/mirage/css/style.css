@@ -798,6 +798,13 @@
 #kunena.layout .kuser-user:hover { color: var(styleForumLegendUsercolorText) !important; }
 #kunena.layout .kuser-guest:hover { color: var(styleForumLegendGuestcolorText) !important; }
 
+#kunena.layout .kbox-color-red { background-color: rgba(255, 175, 175, 0.25) !important; }
+#kunena.layout .kbox-color-orange { background-color: rgba(255, 211, 175, 0.25) !important; }
+#kunena.layout .kbox-color-yellow { background-color: rgba(255, 255, 170, 0.25) !important; }
+#kunena.layout .kbox-color-green { background-color: rgba(191, 229, 199, 0.25) !important; }
+#kunena.layout .kbox-color-blue { background-color: rgba(177, 227, 255, 0.25) !important; }
+#kunena.layout .kbox-color-purple { background-color: rgba(255, 175, 255, 0.25) !important; }
+
 #kunena.layout ul.category-list li.category-row-odd-red { background-color: rgba(255, 175, 175, 0.25) !important; }
 #kunena.layout ul.category-list li.category-row-even-red { background-color: rgba(255, 175, 175, 0.25) !important; }
 #kunena.layout ul.category-list li.category-row-odd-orange { background-color: rgba(255, 211, 175, 0.25) !important; }

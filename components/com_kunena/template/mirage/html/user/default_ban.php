@@ -17,7 +17,7 @@ JHTML::_('behavior.tooltip');
 ?>
 <div class="kmodule user-default_ban">
 	<div class="kbox-wrapper kbox-full">
-		<div class="user-default_ban-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="user-default_ban-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kform-ban" name="kformban" method="post">
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="ban" />

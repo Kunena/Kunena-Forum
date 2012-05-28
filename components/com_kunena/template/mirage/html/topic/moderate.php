@@ -15,7 +15,7 @@ JHTML::_('behavior.tooltip');
 ?>
 <div class="kmodule topic-moderate">
 	<div class="kbox-wrapper kbox-full">
-		<div class="topic-moderate-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="topic-moderate-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="kheader"><a rel="kmod-detailsbox"><?php echo !isset($this->mesid) ? JText::_('COM_KUNENA_BUTTON_MODERATE_MESSAGE') : JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') ?></a></h2>

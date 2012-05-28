@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 
 <div class="kmodule common-announcement">
 	<div class="kbox-wrapper kbox-full">
-		<div class="common-announcement-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="common-announcement-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header fl">
 					<h2 class="header link-header2">

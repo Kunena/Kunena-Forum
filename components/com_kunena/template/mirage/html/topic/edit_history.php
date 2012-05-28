@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmodule topic-edit_history">
 	<div class="kbox-wrapper kbox-full">
-		<div class="topic-edit_history-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="topic-edit_history-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="khistory">Topic History of: <?php echo $this->escape($this->topic->subject)?></a></h2>

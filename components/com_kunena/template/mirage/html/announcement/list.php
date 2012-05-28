@@ -36,44 +36,46 @@ defined ( '_JEXEC' ) or die ();
 								<dl class="announcements-list list-unstyled">
 									<dd class="announcements-id">
 										<div class="innerspacer-header">
-											<span><?php echo JText::_('COM_KUNENA_ANN_ID') ?></span>
+											<span class="bold"><?php echo JText::_('COM_KUNENA_ANN_ID') ?></span>
 										</div>
 									</dd>
 									<dd class="announcements-date">
 										<div class="innerspacer-header">
-											<span><?php echo JText::_('COM_KUNENA_ANN_DATE') ?></span>
+											<span class="bold"><?php echo JText::_('COM_KUNENA_ANN_DATE') ?></span>
 										</div>
 									</dd>
 									<dd class="announcements-author">
 										<div class="innerspacer-header">
-											<span><?php echo JText::_('COM_KUNENA_ANN_AUTHOR') ?></span>
+											<span class="bold"><?php echo JText::_('COM_KUNENA_ANN_AUTHOR') ?></span>
 										</div>
 									</dd>
 									<dd class="announcements-title">
 										<div class="innerspacer-header">
-											<span><?php echo JText::_('COM_KUNENA_ANN_TITLE') ?></span>
+											<span class="bold"><?php echo JText::_('COM_KUNENA_ANN_TITLE') ?></span>
 										</div>
 									</dd>
 									<?php if ($this->actions): ?>
 									<dd class="announcements-publish">
 										<div class="innerspacer-header">
-											<span><?php echo JText::_('COM_KUNENA_ANN_PUBLISH') ?></span>
+											<span class="bold"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH') ?></span>
 										</div>
 									</dd>
 									<dd class="announcements-edit">
 										<div class="innerspacer-header">
-											<span><?php echo JText::_('COM_KUNENA_ANN_EDIT') ?></span>
+											<span class="bold"><?php echo JText::_('COM_KUNENA_ANN_EDIT') ?></span>
 										</div>
 									</dd>
 									<dd class="announcements-delete">
 										<div class="innerspacer-header">
-											<span><?php echo JText::_('COM_KUNENA_ANN_DELETE') ?></span>
+											<span class="bold"><?php echo JText::_('COM_KUNENA_ANN_DELETE') ?></span>
 										</div>
 									</dd>
 									<?php endif ?>
 									<?php if ($this->actions): ?>
 										<dd class="announcements-checkbox">
-											<div class="innerspacer-header">#</div>
+											<div class="innerspacer-header">
+												<span class="bold">#</span>
+											</div>
 										</dd>
 									<?php endif ?>
 								</dl>

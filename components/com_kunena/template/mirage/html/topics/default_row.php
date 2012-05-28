@@ -48,20 +48,20 @@ defined ( '_JEXEC' ) or die ();
 		<dd class="topic-replies item-column">
 			<div class="innerspacer-column">
 				<span class="number"><?php echo $this->formatLargeNumber($this->topic->getReplies()); ?></span><br />
-				<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
+				<span class=""><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
 			</div>
 		</dd>
 		<dd class="topic-views item-column">
 			<div class="innerspacer-column">
 				<span class="number"><?php echo $this->formatLargeNumber($this->topic->getHits()); ?></span><br />
-				<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
+				<span class=""><?php echo JText::_('COM_KUNENA_GEN_HITS') ?></span>
 			</div>
 		</dd>
 		<!-- td class="ktopic-subs">22 <span>Subscribers</span></td -->
 		<dd class="topic-lastpost item-column">
 			<div class="innerspacer-column">
 				<?php if ( $this->config->avataroncat ) : ?><?php echo $this->lastPostAuthor->getLink($this->lastPostAuthor->getAvatarImage('klist-avatar kavatar kavatar-32 fl', 'list')) ?><?php endif ?>
-				<ul class="kcontent-32 list-unstyled">
+				<ul class="kcontent-36 list-unstyled">
 					<li class="topic-lastpost-post"><?php echo $this->getTopicLink ( $this->topic, 'last', 'Last post' ) ?></li>
 					<li class="topic-author-post"><?php echo JText::_('COM_KUNENA_BY').' '.$this->lastPostAuthor->getLink($this->lastUserName) ?></li>
 					<li class="topic-date-post"><?php echo JText::sprintf('COM_KUNENA_ON_DATE', "[K=DATE:{$this->lastPostTime}]") ?></li>

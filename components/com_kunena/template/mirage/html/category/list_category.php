@@ -13,8 +13,8 @@ defined ( '_JEXEC' ) or die ();
 $this->k ^= 1;
 ?>
 
-<li class="category-row category-row-<?php echo $this->rowclass [$this->k], isset ( $this->category->class_sfx ) ? ' category-row-' . $this->escape($this->rowclass [$this->k]) . $this->escape($this->category->class_sfx) : '' ?> kbox-hover kbox-hover_list-row kbox-full">
-	<dl class="list-unstyled list-column kbox-full">
+<li class="category-row category-row-<?php echo $this->rowclass [$this->k], isset ( $this->category->class_sfx ) ? ' category-row-' . $this->escape($this->rowclass [$this->k]) . '-' . $this->escape($this->category->class_sfx) : '' ?> kbox-hover kbox-hover_list-row kbox-full">
+	<dl class="category-list list-unstyled list-column kbox-full">
 		<!--<dd class="category-icon">
 		</dd>-->
 		<dd class="category-subject item-column">
@@ -43,13 +43,13 @@ $this->k ^= 1;
 		<dd class="category-topics item-column">
 			<div class="innerspacer-column">
 				<span class="number"><?php echo $this->formatLargeNumber($this->category->getTopics()); ?></span><br />
-				<span class="bold"><?php echo JText::_('COM_KUNENA_TOPICS') ?></span>
+				<span class=""><?php echo JText::_('COM_KUNENA_TOPICS') ?></span>
 			</div>
 		</dd>
 		<dd class="category-replies item-column">
 			<div class="innerspacer-column">
 				<span class="number"><?php echo $this->formatLargeNumber($this->category->getReplies()); ?></span><br />
-				<span class="bold"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
+				<span class=""><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span>
 			</div>
 		</dd>
 		<!-- td class="kcategory-subs">944 <span>Subscribers</span></td -->
@@ -57,7 +57,7 @@ $this->k ^= 1;
 			<div class="innerspacer-column">
 			<?php if ($this->lastPost) : ?>
 				<?php if ( $this->config->avataroncat ) : ?><?php echo $this->lastUser->getLink($this->lastUser->getAvatarImage('klist-avatar  kavatar kavatar-32 fl', 'list')) ?><?php endif ?>
-				<ul class="kcontent-32 list-unstyled">
+				<ul class="kcontent-36 list-unstyled">
 					<?php //TODO: Fix KunenaHtmlParser function reference. ?>
 					<li class="category-lastpost-topic"><?php echo $this->getLastPostLink($this->category, null, KunenaHtmlParser::parseText($this->category->getLastTopic()->subject, 40), 'link') ?></li>
 					<li class="category-lastpost-author"><?php echo JText::_('COM_KUNENA_BY').' '.$this->lastUser->getLink($this->lastUserName) ?></li>
@@ -72,7 +72,7 @@ $this->k ^= 1;
 		</dd>
 	</dl>
 	<?php if ($this->subcategories) : ?>
-	<div class="innerspacer-horizontal">
+	<div class="innerspacer-horizontal-inline">
 		<div class="divider-horizontal-inline divider-horizontal-inline-dotted"></div>
 	</div>
 	<div class="innerspacer-column kbox-full">

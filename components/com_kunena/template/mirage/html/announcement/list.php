@@ -31,55 +31,55 @@ defined ( '_JEXEC' ) or die ();
 						<input type="hidden" name="boxchecked" value="0" />
 						<input type="hidden" name="task" value="" />
 						<?php echo JHTML::_( 'form.token' ) ?>
-						<ul class="list-unstyled announcement-list">
+						<ul class="announcements-list list-unstyled list-header">
 							<li class="header kbox-hover_header-row">
-								<dl>
-									<?php if ($this->actions): ?>
-									<dd class="announcement-checkbox">
-										<div class="innerspacer-header">#</div>
-									</dd>
-									<?php endif ?>
-									<dd class="announcement-id">
+								<dl class="announcements-list list-unstyled">
+									<dd class="announcements-id">
 										<div class="innerspacer-header">
 											<span><?php echo JText::_('COM_KUNENA_ANN_ID') ?></span>
 										</div>
 									</dd>
-									<dd class="announcement-date">
+									<dd class="announcements-date">
 										<div class="innerspacer-header">
 											<span><?php echo JText::_('COM_KUNENA_ANN_DATE') ?></span>
 										</div>
 									</dd>
-									<dd class="announcement-author">
+									<dd class="announcements-author">
 										<div class="innerspacer-header">
 											<span><?php echo JText::_('COM_KUNENA_ANN_AUTHOR') ?></span>
 										</div>
 									</dd>
-									<dd class="announcement-title">
+									<dd class="announcements-title">
 										<div class="innerspacer-header">
 											<span><?php echo JText::_('COM_KUNENA_ANN_TITLE') ?></span>
 										</div>
 									</dd>
 									<?php if ($this->actions): ?>
-									<dd class="announcement-publish">
+									<dd class="announcements-publish">
 										<div class="innerspacer-header">
 											<span><?php echo JText::_('COM_KUNENA_ANN_PUBLISH') ?></span>
 										</div>
 									</dd>
-									<dd class="announcement-edit">
+									<dd class="announcements-edit">
 										<div class="innerspacer-header">
 											<span><?php echo JText::_('COM_KUNENA_ANN_EDIT') ?></span>
 										</div>
 									</dd>
-									<dd class="announcement-delete">
+									<dd class="announcements-delete">
 										<div class="innerspacer-header">
 											<span><?php echo JText::_('COM_KUNENA_ANN_DELETE') ?></span>
 										</div>
 									</dd>
 									<?php endif ?>
+									<?php if ($this->actions): ?>
+										<dd class="announcements-checkbox">
+											<div class="innerspacer-header">#</div>
+										</dd>
+									<?php endif ?>
 								</dl>
 							</li>
 						</ul>
-						<ul class="list-unstyled announcement-list">
+						<ul class="list-unstyled announcements-list">
 							<?php $this->displayItems() ?>
 						</ul>
 					</form>

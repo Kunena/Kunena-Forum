@@ -47,7 +47,7 @@ defined ( '_JEXEC' ) or die ();
 		</ul>
 		<?php endif ?>
 	</div>
-	<div class="clrline"></div>
+	<!--<div class="clrline"></div>-->
 	<div id="kprofile-rightcoltop">
 		<div class="kprofile-rightcol2">
 			<div class="kiconrow">
@@ -84,7 +84,7 @@ defined ( '_JEXEC' ) or die ();
 			</ul>
 		</div>
 	</div>
-	<div class="clrline"></div>
+	<!--<div class="clrline"></div>-->
 	<div id="kprofile-rightcolbot">
 		<div class="kprofile-rightcol2">
 			<ul>

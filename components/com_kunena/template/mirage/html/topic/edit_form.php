@@ -230,10 +230,10 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 								<button class="kbutton button-type-comm button-type-standard hasTip" type="submit" title="<?php echo JText::_('COM_KUNENA_SUBMIT').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT') ?>"><span><?php echo JText::_('COM_KUNENA_SUBMIT') ?></span></button>
 							</li>
 							<li class="item-button">
-								<button class="kbutton hasTip" type="button" title="<?php echo JText::_('COM_KUNENA_PREVIEW').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW') ?>" onclick="kToggleOrSwapPreview('kbbcode-preview-bottom')"><span><?php echo JText::_('COM_KUNENA_PREVIEW') ?></span></button>
+								<button class="kbutton button-type-user hasTip" type="button" title="<?php echo JText::_('COM_KUNENA_PREVIEW').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEW') ?>" onclick="kToggleOrSwapPreview('kbbcode-preview-bottom')"><span><?php echo JText::_('COM_KUNENA_PREVIEW') ?></span></button>
 							</li>
 							<li  class="item-button">
-								<button class="kbutton hasTip" type="button" title="<?php echo JText::_('COM_KUNENA_CANCEL').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL') ?>" onclick="javascript:window.history.back();"><span><?php echo JText::_('COM_KUNENA_CANCEL') ?></span></button>
+								<button class="kbutton button-type-standard hasTip" type="button" title="<?php echo JText::_('COM_KUNENA_CANCEL').' :: '.JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL') ?>" onclick="javascript:window.history.back();"><span><?php echo JText::_('COM_KUNENA_CANCEL') ?></span></button>
 							</li>
 						</ul>
 					</div>

@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 $this->k ^= 1;
 ?>
 
-<li class="category-row category-row-<?php echo $this->rowclass [$this->k], !empty($this->category->class_sfx) ? ' category-row-' . $this->escape($this->rowclass [$this->k]) . '-' . $this->escape($this->category->class_sfx) : '' ?> kbox-animate kbox-full">
+<li class="category-row category-row-<?php echo $this->rowclass [$this->k], !empty($this->category->class_sfx) ? ' category-row-' . $this->escape($this->rowclass [$this->k]) . $this->escape($this->category->class_sfx) : '' ?> kbox-animate kbox-full">
 	<div class="kbox-hover_list-row kbox-animate">
 		<dl class="category-list list-unstyled list-column kbox-full">
 			<!--<dd class="category-icon">

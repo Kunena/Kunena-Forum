@@ -89,6 +89,17 @@ function submitbutton(pressbutton)
 					</tr>
 				</table>
 			</fieldset>
+
+			<fieldset>
+				<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>
+				<table class="kadmin-adminform">
+					<tr>
+						<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
+						<td><input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $this->escape ( $this->category->class_sfx ); ?>" /></td>
+						<td><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></td>
+					</tr>
+				</table>
+			</fieldset>
 			</dd>
 			<dt title="<?php echo JText::_('COM_KUNENA_PERMISSIONS'); ?>"><?php echo JText::_('COM_KUNENA_PERMISSIONS'); ?></dt>
 			<dd>
@@ -162,17 +173,6 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 						</tr>
 						*/ ?>
-					</table>
-				</fieldset>
-
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>
-					<table class="kadmin-adminform">
-						<tr>
-							<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
-							<td><input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $this->escape ( $this->category->class_sfx ); ?>" /></td>
-							<td><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></td>
-						</tr>
 					</table>
 				</fieldset>
 				</dd>

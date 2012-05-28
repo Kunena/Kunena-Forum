@@ -11,13 +11,13 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->k = 0;
-$this->rowclass = array ("odd", "even" ); 
+$this->rowclass = array ("odd", "even" );
 
 ?>
 <?php if (!empty($this->categories [$this->section->id])) : ?>
 	<div class="kmodule category-list_section">
 		<div class="kbox-wrapper kbox-full">
-			<div class="category-list_section-kbox kbox kbox-full<?php echo !empty($this->section->class_sfx) ? ' kbox-color-' . $this->escape($this->category->class_sfx) : ' kbox-color' ?> kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate" id="block-<?php echo $this->displaySectionField('id') ?>">
+			<div class="category-list_section-kbox kbox kbox-full <?php echo 'kbox-color' . $this->escape($this->section->class_sfx) ?> kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate" id="block-<?php echo $this->displaySectionField('id') ?>">
 				<div class="headerbox-wrapper kbox-full">
 					<div class="header fl">
 						<h2 class="header link-header2">

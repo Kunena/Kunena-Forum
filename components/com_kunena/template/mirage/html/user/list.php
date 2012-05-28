@@ -33,7 +33,7 @@ document.addEvent('domready', function() {
 </div>
 <div class="kmodule user-list_list">
 	<div class="kbox-wrapper kbox-full">
-		<div class="user-list_list-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="user-list_list-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header fl">
 					<h2 class="header"><a href="#" class="ksection-headericon"><?php echo $this->getImage('icon-whosonline-sm.png') ?></a><a href="#" rel="ksection-detailsbox"><?php echo JText::_('COM_KUNENA_USRL_USERLIST') ?></a></h2>

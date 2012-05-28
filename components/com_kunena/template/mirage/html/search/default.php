@@ -25,7 +25,7 @@ document.addEvent('domready', function() {
 		<input type="hidden" name="task" value="results" />
 		<?php echo JHTML::_( 'form.token' ); ?>
 		<div class="kbox-wrapper kbox-full">
-			<div class="search_adv-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+			<div class="search_adv-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 				<div class="headerbox-wrapper kbox-full">
 					<div class="header">
 						<h2 class="header"><a title="Advanced Search" rel="kadvsearch-detailsbox"><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH') ?></a></h2>

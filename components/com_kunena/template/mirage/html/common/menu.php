@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmodule common-menu">
 	<div class="kbox-wrapper kbox-full">
-		<div class="common-menu-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-shadow innerspacer-horizontal">
+		<div class="common-menu-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-shadow kbox-animate innerspacer-horizontal">
 				<?php echo $this->getMenu() ?>
 
 				<ul class="list-unstyled menu fr">

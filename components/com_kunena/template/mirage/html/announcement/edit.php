@@ -17,7 +17,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 ?>
 <div class="kmodule announcement-edit">
 	<div class="kbox-wrapper kbox-full">
-		<div class="announcement-edit-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="announcement-edit-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header fl">
 					<h2 class="header">

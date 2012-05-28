@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kbox-module user-edit_settings">
+<div class="kmodule user-edit_settings">
 	<div class="kbox-wrapper kbox-full">
 		<div class="user-edit_settings-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 			<div class="headerbox-wrapper kbox-full">

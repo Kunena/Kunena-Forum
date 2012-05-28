@@ -37,65 +37,89 @@ $this->document->addScriptDeclaration('// <![CDATA[
 						<?php echo $this->displayInput('id') ?>
 						<?php echo JHtml::_( 'form.token' ) ?>
 
-							<ul class="list-unstyled kform announcement-list clearfix">
+							<ul class="announcements-list list-unstyled kform">
 								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
-										<label>
-											<?php echo JText::_('COM_KUNENA_ANN_TITLE') ?>:
-										</label>
+										<div class="innerspacer-left kbox-full">
+											<label>
+												<?php echo JText::_('COM_KUNENA_ANN_TITLE') ?>:
+											</label>
+										</div>
 									</div>
 									<div class="form-field">
-										<?php echo $this->displayInput('title', 'class="kbox-width inputbox required"') ?>
+										<div class="innerspacer kbox-full">
+											<?php echo $this->displayInput('title', 'class="kbox-width inputbox required"') ?>
+										</div>
 									</div>
 								</li>
 								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
-										<label>
-											<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT') ?>:
-										</label>
+										<div class="innerspacer-left kbox-full">
+											<label>
+												<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT') ?>:
+											</label>
+										</div>
 									</div>
 									<div class="form-field">
-										<?php echo $this->displayInput('sdescription', 'class="kbox-width textbox required" rows="80" cols="4"') ?>
+										<div class="innerspacer kbox-full">
+											<?php echo $this->displayInput('description', 'class="kbox-width txtarea hasTip required" rows="80" cols="4"') ?>
+										</div>
 									</div>
 								</li>
 								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
-										<label>
-											<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT') ?>:
-										</label>
+										<div class="innerspacer-left kbox-full">
+											<label>
+												<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT') ?>:
+											</label>
+										</div>
 									</div>
 									<div class="form-field">
-										<?php echo $this->displayInput('description', 'class="kbox-width textbox" rows="80" cols="16"') ?>
+										<div class="innerspacer kbox-full">
+											<?php echo $this->displayInput('description', 'class="kbox-width txtarea hasTip" rows="80" cols="16"') ?>
+										</div>
 									</div>
 								</li>
 								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
-										<label>
-											<?php echo JText::_('COM_KUNENA_ANN_DATE') ?>:
-										</label>
+										<div class="innerspacer-left kbox-full">
+											<label>
+												<?php echo JText::_('COM_KUNENA_ANN_DATE') ?>:
+											</label>
+										</div>
 									</div>
 									<div class="form-field">
-										<?php echo $this->displayInput('created', 'addcreated', 'kanncreated') ?>
+										<div class="innerspacer kbox-full">
+											<?php echo $this->displayInput('created', 'addcreated', 'kanncreated') ?>
+										</div>
 									</div>
 								</li>
 								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
-										<label>
-											<?php echo JText::_('COM_KUNENA_ANN_SHOWDATE') ?>:
-										</label>
+										<div class="innerspacer-left kbox-full">
+											<label>
+												<?php echo JText::_('COM_KUNENA_ANN_SHOWDATE') ?>:
+											</label>
+										</div>
 									</div>
 									<div class="form-field">
-										<?php echo $this->displayInput('showdate') ?>
+										<div class="innerspacer kbox-full">
+											<?php echo $this->displayInput('showdate') ?>
+										</div>
 									</div>
 								</li>
 								<li class="announcement-row kbox-hover kbox-hover_list-row">
 									<div class="form-label">
-										<label>
-											<?php echo JText::_('COM_KUNENA_ANN_PUBLISH') ?>:
-										</label>
+										<div class="innerspacer-left kbox-full">
+											<label>
+												<?php echo JText::_('COM_KUNENA_ANN_PUBLISH') ?>:
+											</label>
+										</div>
 									</div>
 									<div class="form-field">
-										<?php echo $this->displayInput('published') ?>
+										<div class="innerspacer kbox-full">
+											<?php echo $this->displayInput('published') ?>
+										</div>
 									</div>
 								</li>
 							</ul>

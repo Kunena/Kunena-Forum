@@ -16,7 +16,7 @@ $j=0;
 ?>
 <div class="kmodule user-default_banmanager">
 	<div class="kbox-wrapper">
-		<div class="user-default_banmanager-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="user-default_banmanager-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="kbanmanager-detailsbox"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></a></h2>

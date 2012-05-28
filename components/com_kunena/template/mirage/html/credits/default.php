@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmodule credits-default">
 	<div class="kbox-wrapper kbox-full">
-		<div class="credits-default-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="credits-default-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></h2>

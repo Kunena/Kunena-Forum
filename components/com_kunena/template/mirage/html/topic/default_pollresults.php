@@ -13,7 +13,7 @@ $row = 0;
 ?>
 <div class="kmodule topic-default_pollresults">
 	<div class="kbox-wrapper kbox-full">
-		<div class="topic-default_pollresults-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="topic-default_pollresults-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpolls_tbody"></a></span>

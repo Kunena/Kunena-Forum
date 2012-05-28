@@ -15,13 +15,13 @@ defined ( '_JEXEC' ) or die ();
 		<?php echo JHTML::_( 'form.token' ); ?>
 
 	<div class="kbox-wrapper kbox-full">
-		<div class="category-default_list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="category-default_list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header link-header2">
 						CATEGORY:
 						<a class="categories" title="Category Header" rel="ksection-detailsbox">
-							<?php echo JText::_('COM_KUNENA_VIEW_CATEGORY_DEFAULT_TOPICS') ?>
+							<?php echo $this->displayCategoryField('name') ?>
 						</a>
 					</h2>
 					<?php if ($this->category->headerdesc) : ?>

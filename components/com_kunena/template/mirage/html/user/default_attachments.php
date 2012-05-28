@@ -23,7 +23,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 ?>
 <div class="kmodule user-default_attachments">
 	<div class="kbox-wrapper kbox-full">
-		<div class="user-default_attachments-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="user-default_attachments-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2><span><?php echo $this->title;?></span></h2>

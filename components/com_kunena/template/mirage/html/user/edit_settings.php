@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmodule user-edit_settings">
 	<div class="kbox-wrapper kbox-full">
-		<div class="user-edit_settings-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="user-edit_settings-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="kedit-user-forum-settings"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE') ?></a></h2>

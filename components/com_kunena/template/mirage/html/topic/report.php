@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmodule topic-report">
 	<div class="kbox-wrapper kbox-full">
-		<div class="topic-report-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
+		<div class="topic-report-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><?php echo JText::_('COM_KUNENA_REPORT_TO_MODERATOR') ?></h2>

@@ -83,7 +83,7 @@ class KunenaViewCategory extends KunenaView {
 
 	function displayUser($tpl = null) {
 		$this->Itemid = $this->get ( 'Itemid' );
-		$this->categories = $this->get ( 'Categories' );
+		$this->categories = $this->get ( 'LastestCategories' );
 
 		$errors = $this->getErrors();
 		if ($errors) {

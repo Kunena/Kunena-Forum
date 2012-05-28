@@ -59,6 +59,16 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		$this->setState ( 'list.direction', $value );
 	}
 
+	public function getLastestCategories() {
+		if ( $this->items === false ) {
+			$this->items = array();
+			$user = KunenaFactory::getUser();
+			list($total,$categories) = KunenaForumCategoryHelper::getLatestSubscriptions($user->userid);
+			$this->items = $categories;
+		}
+		return $this->items;
+	}
+
 	public function getCategories() {
 		if ( $this->items === false ) {
 			$this->items = array();

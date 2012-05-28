@@ -798,18 +798,18 @@
 #kunena.layout .kuser-user:hover { color: var(styleForumLegendUsercolorText) !important; }
 #kunena.layout .kuser-guest:hover { color: var(styleForumLegendGuestcolorText) !important; }
 
-#kunena.layout ul.category-list li.category-row-odd-red dl.category-list { background-color: rgba(255, 175, 175, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-even-red  dl.category-list { background-color: rgba(255, 175, 175, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-odd-orange dl.category-list { background-color: rgba(255, 211, 175, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-even-orage  dl.category-list { background-color: rgba(255, 211, 175, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-odd-yellow dl.category-list { background-color: rgba(255, 255, 170, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-even-yellow dl.category-list { background-color: rgba(255, 255, 170, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-odd-green dl.category-list { background-color: rgba(191, 229, 199, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-even-green dl.category-list { background-color: rgba(191, 229, 199, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-odd-blue dl.category-list { background-color: rgba(177, 227, 255, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-even-blue dl.category-list { background-color: rgba(177, 227, 255, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-odd-purple dl.category-list { background-color: rgba(255, 175, 255, 0.25) !important; }
-#kunena.layout ul.category-list li.category-row-even-purple dl.category-list { background-color: rgba(255, 175, 255, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-odd-red { background-color: rgba(255, 175, 175, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-even-red { background-color: rgba(255, 175, 175, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-odd-orange { background-color: rgba(255, 211, 175, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-even-orage  { background-color: rgba(255, 211, 175, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-odd-yellow { background-color: rgba(255, 255, 170, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-even-yellow { background-color: rgba(255, 255, 170, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-odd-green { background-color: rgba(191, 229, 199, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-even-green { background-color: rgba(191, 229, 199, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-odd-blue { background-color: rgba(177, 227, 255, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-even-blue { background-color: rgba(177, 227, 255, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-odd-purple { background-color: rgba(255, 175, 255, 0.25) !important; }
+#kunena.layout ul.category-list li.category-row-even-purple { background-color: rgba(255, 175, 255, 0.25) !important; }
 
 #kunena.layout .file-input-button, #kunena.layout .file-input-button:hover, #kunena.layout .file-input-button:focus {
 	background-color: #F2F1EE;

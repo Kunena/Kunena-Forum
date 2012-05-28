@@ -20,7 +20,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php if (!empty($this->topicActions)) : ?>
 		<span class="kcheckbox select-toggle"><input class="kcheckall" type="checkbox" name="toggle" value="" /></span>
 		<?php endif; ?>
-		<h2><span><?php echo $this->escape($this->headerText); ?></span></h2>
+		<h2><span><?php echo $this->escape($this->header); ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">

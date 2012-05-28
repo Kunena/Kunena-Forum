@@ -23,7 +23,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php if ($this->showSubscriptions) : ?>
 				<dt class="closed"><a class="link-tab" title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?>" href="#tab-subscriptions"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></a></dt>
 				<dd style="display: none;">
-					<?php //$this->displayCategoriesSubscriptions() ?>
+					<?php $this->displayCategoriesSubscriptions() ?>
 					<?php $this->displaySubscriptions() ?>
 				</dd>
 				<?php endif ?>

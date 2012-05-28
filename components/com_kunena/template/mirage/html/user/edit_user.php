@@ -91,9 +91,9 @@ defined ( '_JEXEC' ) or die ();
 </div>
 
 <?php if(!empty($this->userparameters)) : ?>
-<div class="kbox-module">
-	<div class="block-wrapper kbox-color kbox-border kbox-border_radius">
-		<div class="edituser block">
+<div class="kmodule user-edit_user">
+	<div class="kbox-wrapper kbox-fuls">
+		<div class="user-edit_user-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 			<div class="headerbox-wrapper kbox-full">
 				<div class="header">
 					<h2 class="header"><a rel="kflattable"><?php echo JText::_('COM_KUNENA_GLOBAL_SETTINGS'); ?></a></h2>

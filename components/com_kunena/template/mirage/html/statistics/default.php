@@ -64,7 +64,7 @@ defined ( '_JEXEC' ) or die ();
 
 
 <?php foreach ($this->top as $top) : ?>
-	<div class="kbox-module statistics-default">
+	<div class="kmodule statistics-default">
 		<div class="kbox-wrapper kbox-full">
 			<div class="statistics-default-kbox kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow">
 				<div class="headerbox-wrapper kbox-full">

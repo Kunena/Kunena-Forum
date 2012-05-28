@@ -167,6 +167,10 @@
 	margin-left: 37px;
 }
 
+#kunena.layout .kcontent-36 {
+	margin-left: 41px;
+}
+
 #kunena.layout .kcontent-48 {
 	margin-left: 53px;
 }
@@ -473,6 +477,11 @@
 #kunena.layout .innerspacer-horizontal {
 	/*padding: 5px 10px 10px 10px;*/
 	padding: 0px 10px 0px 10px;
+}
+
+#kunena.layout .innerspacer-horizontal-inline {
+	/*padding: 5px 10px 10px 10px;*/
+	padding: 0px 20px 0px 20px;
 }
 
 #kunena.layout div.modbox {
@@ -916,31 +925,31 @@
  * START ANNOUNCEMENT LIST *
  ***************************/
 
-#kunena.layout ul.announcement-list {
+#kunena.layout ul.announcements-list {
 	display: block;
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
 }
 
-#kunena.layout ul.announcement-list div.header {
+#kunena.layout ul.announcements-list div.header {
 	clear: both;
 	display: block;
 	position: relative;
 	vertical-align: bottom;
 }
 
-/*#kunena.layout ul.announcement-list > li {
+#kunena.layout ul.announcements-list > li {
 	clear: both;
 	display: block;
 	position: relative;
 	vertical-align: bottom;
 	margin: 0;
 	overflow: hidden;
-	padding: 1px 0 0;
-}*/
+	padding: 0;
+}
 
-#kunena.layout ul.announcement-list li.announcements-row dl, ul.announcement-list li.header {
+#kunena.layout ul.announcements-list li.announcements-row dl, ul.announcements-list li.header {
 	float: none !important;
 	height: auto;
 	width: auto;
@@ -960,10 +969,10 @@
 	/*position: relative;
 }*/
 
-#kunena.layout ul.announcement-list li.header dd {
+#kunena.layout ul.announcements-list li.header dd {
 	display: block;
 	float: left;
-	margin: 0px;
+	margin: 0;
 	/*padding: 2px 5px;*/
 }
 
@@ -972,7 +981,7 @@
 	float: left;
 	margin: 0px;*/
 	/*padding: 2px 0;*/
-}
+/*}*/
 
 /*#kunena.layout ul.topic-list li.topics-row dl {
 	display: block;
@@ -985,7 +994,7 @@
 	margin: 0px;
 }*/
 
-#kunena.layout ul.announcement-list dd.announcement-checkbox {
+#kunena.layout dl.announcements-list dd.announcements-id {
 	padding: 0;
 	margin: 0;
 	text-align: center;
@@ -993,15 +1002,7 @@
 	width: 5%;
 }
 
-#kunena.layout ul.announcement-list dd.announcement-id {
-	padding: 0;
-	margin: 0;
-	text-align: center;
-	vertical-align: middle;
-	width: 5%;
-}
-
-#kunena.layout ul.announcement-list dd.announcement-date {
+#kunena.layout dl.announcements-list dd.announcements-date {
 	padding: 0;
 	margin: 0;
 	text-align: left;
@@ -1009,7 +1010,7 @@
 	width: 10%;
 }
 
-#kunena.layout ul.announcement-list dd.announcement-author {
+#kunena.layout dl.announcements-list dd.announcements-author {
 	padding: 0;
 	margin: 0;
 	text-align: left;
@@ -1017,7 +1018,7 @@
 	width: 15%;
 }
 
-#kunena.layout ul.announcement-list dd.announcement-title {
+#kunena.layout dl.announcements-list dd.announcements-title {
 	padding: 0;
 	margin: 0;
 	text-align: left;
@@ -1025,7 +1026,7 @@
 	width: 45%;
 }
 
-#kunena.layout ul.announcement-list dd.announcement-publish {
+#kunena.layout dl.announcements-list dd.announcements-publish {
 	padding: 0;
 	margin: 0;
 	text-align: center;
@@ -1033,7 +1034,7 @@
 	width: 10%;
 }
 
-#kunena.layout ul.announcement-list dd.announcement-edit {
+#kunena.layout dl.announcements-list dd.announcements-edit {
 	padding: 0;
 	margin: 0;
 	text-align: center;
@@ -1041,7 +1042,15 @@
 	width: 5%;
 }
 
-#kunena.layout ul.announcement-list dd.announcement-delete {
+#kunena.layout dl.announcements-list dd.announcements-delete {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 5%;
+}
+
+#kunena.layout dl.announcements-list dd.announcements-checkbox {
 	padding: 0;
 	margin: 0;
 	text-align: center;
@@ -1215,7 +1224,7 @@
 	vertical-align: bottom;
 	margin: 0;
 	overflow: hidden;
-	padding: 1px 0 0;
+	padding: 0;
 }
 
 #kunena.layout ul.category-list li.row dl, ul.category-list li.header {
@@ -1765,7 +1774,7 @@
 }
 
 #kunena.layout div.common-statistics-kbox .statistics-totals {
-	padding: 5px 10px 10px 10px;
+	padding: 5px 10px 5px 10px;
 	line-height: 20px;
 	/*min-height: 80px;*/
 	width: 25%;
@@ -2072,6 +2081,152 @@
 /*******************
  * START USER LIST *
  *******************/
+
+#kunena.layout ul.user-list {
+	display: block;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#kunena.layout ul.user-list div.header {
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+}
+
+#kunena.layout ul.user-list > li {
+	clear: both;
+	display: block;
+	position: relative;
+	vertical-align: bottom;
+	margin: 0;
+	overflow: hidden;
+	padding: 1px 0 0;
+}
+
+#kunena.layout ul.user-list li.user-row dl, ul.user-list li.header {
+	float: none !important;
+	height: auto;
+	width: auto;
+}
+
+/*#kunena.layout ul.banmanager-list li.banmanager-row {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}*/
+
+/*#kunena.layout ul.banmanager-list li.banmanager-row dd {
+	display: block;
+	float: left;
+	margin: 0px;*/
+	/*padding: 10px 5px;*/
+	/*position: relative;
+}*/
+
+#kunena.layout ul.user-list li.header dd {
+	display: block;
+	float: left;
+	margin: 0px;
+	/*padding: 2px 5px;*/
+}
+
+/*#kunena.layout ul.banmanager-list dd {
+	display: block;
+	float: left;
+	margin: 0px;*/
+	/*padding: 2px 0;*/
+/*}*/
+
+/*#kunena.layout ul.topic-list li.topics-row dl {
+	display: block;
+	position: relative;
+}*/
+
+/*#kunena.layout ul.banmanager-list li.banmanager-row dd {
+	display: block;
+	float: left;
+	margin: 0px;
+}*/
+
+#kunena.layout dl.user-list dd.user-id {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 5%;
+}
+
+#kunena.layout dl.user-list dd.user-online {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 10%;
+}
+
+#kunena.layout dl.user-list dd.user-avatar {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 10%;
+}
+
+#kunena.layout dl.user-list dd.user-username, #kunena.layout dl.user-list dd.user-realname {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 24%;
+}
+
+#kunena.layout dl.user-list dd.user-posts {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 7%;
+}
+
+#kunena.layout dl.user-list dd.user-karma {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 7%;
+}
+
+#kunena.layout dl.user-list dd.user-email {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 15%;
+}
+
+#kunena.layout dl.user-list dd.user-usertype {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 10%;
+}
+
+#kunena.layout dl.user-list dd.user-joindate {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 15%;
+}
+
+#kunena.layout dl.user-list dd.user-lastvisitdate {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 15%;
+}
+
+#kunena.layout dl.user-list dd.user-hits {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 7%;
+}
 
 #kunena.layout .userlist-items {
 	padding-left: 10px;

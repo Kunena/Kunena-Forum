@@ -10,8 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->k = 0;
-$this->rowclass = array ("odd", "even" );
+$this->category_interval = 0;
+$this->category_rowclass = array ("even", "odd" );
 
 ?>
 <?php if (!empty($this->categories [$this->section->id])) : ?>

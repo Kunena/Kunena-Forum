@@ -9,8 +9,10 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$this->topic_interval ^= 1;
 ?>
-<li class="topic-row kbox-hover kbox-hover_list-row box-full item-row">
+<li class="topic-row topic-row-<?php echo $this->topic_rowclass [$this->topic_interval], !empty($this->topic->class_sfx) ? ' topic-row-' . $this->escape($this->topic_rowclass [$this->topic_interval]) . $this->escape($this->topic->class_sfx) : '' ?> kbox-hover kbox-hover_list-row box-full item-row">
 	<dl class="list-unstyled list-column">
 		<dd class="topic-subject item-column">
 			<div class="innerspacer-column">

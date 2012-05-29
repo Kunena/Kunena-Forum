@@ -9,6 +9,9 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$this->topic_interval = 0;
+$this->topic_rowclass = array ("even", "odd" );
 ?>
 <div class="kmodule topics_default_list">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics') ?>" method="post">

@@ -131,9 +131,9 @@ class KunenaForumMessageAttachment extends JObject {
 
 	public function authorise($action='read', $user=null, $silent=false) {
 		static $actions  = array(
-			'read'=>array(),
+			'read'=>array('Read'),
 			'create'=>array(),
-			'delete'=>array(),
+			'delete'=>array('Read'),
 		);
 		$user = KunenaUserHelper::get($user);
 		if (!isset($actions[$action])) {
@@ -298,17 +298,6 @@ class KunenaForumMessageAttachment extends JObject {
 		return $result;
 	}
 
-	/**
-	 * Method to get the state of attachment if it can seen by guests
-	 *
-	 * @access	public
-	 * @return	boolean	True on success
-	 * @since 2.0-RC1
-	 */
-	public function getState() {
-		return $this->_disabled;
-	}
-
 	// Internal functions
 
 	protected function check() {
@@ -336,5 +325,19 @@ class KunenaForumMessageAttachment extends JObject {
 
 	protected function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	protected function authoriseRead($user) {
+		// Checks if attachment exists
+		if (!$this->exists()) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+			return false;
+		}
+		$this->generate();
+		if ($this->_disabled) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+			return false;
+		}
+		return true;
 	}
 }

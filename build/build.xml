@@ -135,6 +135,9 @@
 				<exclude name="language/**/*.xml"/>
 			</fileset>
 		</copy>
+		
+		<!-- Remove Mirage template -->
+		<delete dir="${tmp_dir}/site/template/mirage" />
 
 		<!-- Move media files -->
 		<move todir="${tmp_dir}/media">

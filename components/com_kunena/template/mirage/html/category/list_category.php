@@ -10,10 +10,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->k ^= 1;
+$this->category_interval ^= 1;
 ?>
 
-<li class="category-row category-row-<?php echo $this->rowclass [$this->k], !empty($this->category->class_sfx) ? ' category-row-' . $this->escape($this->rowclass [$this->k]) . $this->escape($this->category->class_sfx) : '' ?> kbox-animate kbox-full">
+<li class="category-row category-row-<?php echo $this->category_rowclass [$this->category_interval], !empty($this->category->class_sfx) ? ' category-row-' . $this->escape($this->category_rowclass [$this->category_interval]) . $this->escape($this->category->class_sfx) : '' ?> kbox-animate kbox-full">
 	<div class="kbox-hover_list-row kbox-animate">
 		<dl class="category-list list-unstyled list-column kbox-full">
 			<!--<dd class="category-icon">

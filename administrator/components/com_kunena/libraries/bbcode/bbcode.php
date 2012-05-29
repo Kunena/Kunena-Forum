@@ -1358,23 +1358,27 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			}
 		}
 
-		if (is_object ( $attachment ) && $attachment->getState()==false) {
+		if (!is_object ( $attachment )) {
+			return htmlspecialchars($content);
+
+		} elseif (!$attachment->authorise()) {
 			// Hide between content from non registered users
 			$link = $attachment->getTextLink();
 			return '<div class="kmsgattach">' . $link . '</div>';
-		} else {
-			if (is_object ( $attachment ) && is_file ( JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}" )) {
-				$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
-				$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
-				$image = $attachment->getImageLink();
-				if (empty ( $image )) {
-					return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
-				} else {
-					return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
-				}
+
+		} elseif (is_file ( JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}" )) {
+			$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
+			$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
+			$image = $attachment->getImageLink();
+			if (empty ( $image )) {
+				return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
 			} else {
-				return '<div class="kmsgattach"><h4>' . JText::sprintf ( 'COM_KUNENA_ATTACHMENT_DELETED', htmlspecialchars($content) ) . '</h4></div>';
+				return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
 			}
+
+		} else {
+			return '<div class="kmsgattach"><h4>' . JText::sprintf ( 'COM_KUNENA_ATTACHMENT_DELETED', htmlspecialchars($content) ) . '</h4></div>';
+
 		}
 	}
 

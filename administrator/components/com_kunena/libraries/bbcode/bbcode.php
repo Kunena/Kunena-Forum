@@ -813,30 +813,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$spoiler_image2 = $template->getImagePath('emoticons/pinch.png');
 		if ( $config->spoiler_image ) $spoiler_image1 = $spoiler_image2 = $template->getImagePath($config->spoiler_image);
 
-		static $spoilerid = 0;
-		if (empty ( $spoilerid )) {
-			// Only need the script for the first spoiler we find
-			$document = JFactory::getDocument();
-			$document->addCustomTag (
-			'<script language = "JavaScript" type = "text/javascript">
-			function kShowDetail(srcElement) {
-				var targetID, srcElement, targetElement, imgElementID, imgElement;
-				targetID = srcElement.id + "_details";
-				imgElementID = srcElement.id + "_img";
-				targetElement = document.getElementById(targetID);
-				imgElement = document.getElementById(imgElementID);
-				if (targetElement.style.display == "none") {
-					targetElement.style.display = "";
-					imgElement.src = "' . $spoiler_image1 . '";
-				} else {
-					targetElement.style.display = "none";
-					imgElement.src = "' . $spoiler_image2 . '";
-				}
-			} </script>' );
-		}
-		$spoilerid ++;
 		$randomid = 'spoiler_' . rand ();
-		return '<div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" class = "kspoiler" ><img id="' . $randomid . '_img"' . ' src="'.$spoiler_image2.'" border="0" alt=":pinch:" /> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $content . '</span></div>';
+		// FIXME: need to put the two following input somewherelse to avoid to load it multiple times
+		return '<input id="kspoiler-img1" type="hidden" value="'.$spoiler_image1.'" /><input id="kspoiler-img2" type="hidden" value="'.$spoiler_image2.'" /><div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" class = "kspoiler" ><img id="' . $randomid . '_img"' . ' src="'.$spoiler_image2.'" border="0" alt=":pinch:" /> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $content . '</span></div>';
 	}
 
 	function DoHide($bbcode, $action, $name, $default, $params, $content) {

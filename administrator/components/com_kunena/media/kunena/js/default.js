@@ -716,6 +716,21 @@ function kunenaSelectUsernameView(kobj, kuser) {
 	}
 }
 
+function kShowDetail(srcElement) {
+	var targetID, srcElement, targetElement, imgElementID, imgElement;
+	targetID = srcElement.id + "_details";
+	imgElementID = srcElement.id + "_img";
+	targetElement = document.id(targetID);
+	imgElement = document.id(imgElementID);
+	if (targetElement.style.display == "none") {
+		targetElement.setStyle('display', '');
+		imgElement.setProperty('src', document.id('kspoiler-img1').get('value'));
+	} else {
+		targetElement.setStyle('display', 'none');
+		imgElement.setProperty('src', document.id('kspoiler-img2').get('value'));
+	}
+}
+
 //----------------- New Mootools based behaviors ----------------------
 
 window.addEvent('domready', function(){	

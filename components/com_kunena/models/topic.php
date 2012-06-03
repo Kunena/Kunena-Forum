@@ -219,7 +219,7 @@ class KunenaModelTopic extends KunenaModel {
 	}
 
 	public function getModerators() {
-		$moderators = $this->getCategory()->getModerators(false);
+		$moderators = $this->getCategory()->getModerators(true);
 		return $moderators;
 	}
 

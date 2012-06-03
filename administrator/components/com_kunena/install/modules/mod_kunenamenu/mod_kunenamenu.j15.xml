@@ -9,7 +9,7 @@
 	<authorEmail>kunena@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>(C) 2008 - 2012 Kunena Team. All rights reserved.</copyright>
-	<license>GNU/GPL</license>
+	<license>GNU/GPLv3 or later</license>
 	<description>MOD_KUNENAMENU_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_kunenamenu">mod_kunenamenu.php</filename>

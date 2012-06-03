@@ -14,7 +14,7 @@
 
     Joomla! 1.5: version 1.5.25 or greater (>= 1.5.26 recommended)
     Joomla! 2.5: version 2.5.3 or greater (>= 2.5.4 recommended)
-    PHP: version 5.2.4 or greater (>= 5.3.10 recommended)
+    PHP: version 5.2.4 or greater (>= 5.3.13 recommended)
     MySQL: version 5.0.4 or greater (>= 5.1 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.
@@ -77,4 +77,4 @@ The *Kunena* projects thrives on contributions from the community. Our dedicated
 
 ## LICENSE
 
-[GNU General Public License v2](http://opensource.org/licenses/gpl-2.0.php)
+[GNU General Public License v3 or later](http://www.gnu.org/copyleft/gpl.html)

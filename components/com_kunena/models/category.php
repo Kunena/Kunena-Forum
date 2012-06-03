@@ -278,7 +278,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 
 	public function getCategoryActions() {
 		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$actionDropdown[] = JHTML::_('select.option', 'unsubscribeprofile', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		$actionDropdown[] = JHTML::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
 		if (count($actionDropdown) == 1) return null;
 		return $actionDropdown;

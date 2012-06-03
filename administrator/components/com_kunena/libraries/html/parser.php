@@ -72,8 +72,6 @@ abstract class KunenaHtmlParser {
 		// TODO: do this in a better way inside BBCode parser..
 		$txt = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $txt );
 		$txt = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $txt );
-		$txt = preg_replace ( '/\[spoiler\]/s', '[spoilerlight]', $txt );
-		$txt = preg_replace ( '/\[\/spoiler\]/s', '[/spoilerlight]', $txt );
 		$txt = preg_replace ( '/\[attachment(.*?)\](.*?)\[\/attachment\]/s', '', $txt );
 		$txt = preg_replace ( '/\[code\](.*?)\[\/code]/s', '', $txt );
 

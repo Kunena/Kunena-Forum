@@ -253,7 +253,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'mode' => BBCODE_MODE_LIBRARY,
 				'method' => 'DoSpoiler',
 				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns')
+				'allow_in' => array('listitem', 'block', 'columns'),
+				'plain_start' => "<i>",
+				'plain_end' => "</i>"
 			),
 
 			'hide' => array(

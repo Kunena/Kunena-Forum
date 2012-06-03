@@ -275,4 +275,12 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		$moderators = $this->getCategory()->getModerators(false);
 		return $moderators;
 	}
+
+	public function getCategoryActions() {
+		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actionDropdown[] = JHTML::_('select.option', 'unsubscribeprofile', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+
+		if (count($actionDropdown) == 1) return null;
+		return $actionDropdown;
+	}
 }

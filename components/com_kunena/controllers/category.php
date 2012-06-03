@@ -114,4 +114,26 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 
 		$this->redirectBack ();
 	}
+
+	function unsubscribeprofile() {
+		if (!JRequest::checkToken() ) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack ();
+		}
+
+		$db = JFactory::getDBO();
+		$category = KunenaForumCategoryHelper::getCategories(array_keys(JRequest::getVar('categories', array ( 0 ), 'post', 'array')));
+		foreach($category as $cat) {
+			if ($cat->authorise('read')) {
+				if ($this->me->exists()) {
+					$success = $cat->subscribe(0);
+					if ($success) {
+						$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $cat->name) );
+					}
+				}
+			}
+		}
+
+		$this->redirectBack ();
+	}
 }

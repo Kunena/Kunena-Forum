@@ -220,14 +220,15 @@ class KunenaHtmlPagination extends JPagination
 
 		// Build the additional URL parameters string.
 		$uri = KunenaRoute::normalize($this->_uri, true);
-		if ($uri) {
-			$uri->delVar('start');
-			$uri->delVar('limitstart');
-			$uri->delVar('limit');
-			if (!empty($this->_additionalUrlParams)) {
-				foreach($this->_additionalUrlParams as $key => $value) {
-					$uri->setVar($key, $value);
-				}
+		if (!$uri) {
+			$uri = JUri::getInstance();
+		}
+		$uri->delVar('start');
+		$uri->delVar('limitstart');
+		$uri->delVar('limit');
+		if (!empty($this->_additionalUrlParams)) {
+			foreach($this->_additionalUrlParams as $key => $value) {
+				$uri->setVar($key, $value);
 			}
 		}
 

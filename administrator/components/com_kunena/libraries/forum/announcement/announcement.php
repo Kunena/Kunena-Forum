@@ -165,6 +165,11 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 
 	// Internal functions
 
+	protected function saveInternal() {
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$cache->remove('announcement', 'global');
+	}
+
 	protected function authoriseNew($user) {
 		if ($this->exists()) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );

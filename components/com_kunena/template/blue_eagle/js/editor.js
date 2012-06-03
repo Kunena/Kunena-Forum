@@ -685,7 +685,7 @@ function bindAttachments() {
 	var __kattachment = $$('.kattachment-old');
 	if (!__kattachment) return;
 	__kattachment.each(function(el) {
-		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.focus().insert('\n[attachment='+ el.getElement('input').get('value') +']'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', false); return false; } );
+		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.focus().insert('\n[attachment='+ el.getElement('input[type="checkbox"]').get('value') +']'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', false); return false; } );
 	});
 }
 

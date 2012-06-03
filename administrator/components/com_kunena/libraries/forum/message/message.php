@@ -175,7 +175,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 				return false;
 			}
 			// clean up the message for review
-			$message = KunenaHtmlParser::plainBBCode ( $this->message );
+			$message = KunenaHtmlParser::stripBBCode ( $this->message );
 
 			$mailsender = JMailHelper::cleanAddress ( $config->board_title );
 			$mailsubject = JMailHelper::cleanSubject ( "[" . $config->board_title . "] " . $topic->subject . " (" . $this->getCategory()->name . ")" );

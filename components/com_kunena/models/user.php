@@ -33,6 +33,7 @@ class KunenaModelUser extends KunenaModel {
 		// List state information
 		$limit = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_limit", 'limit', $config->get('userlist_rows'), 'int' );
 		if ($limit < 1 || $limit > 100) $limit = $config->get('userlist_rows');
+		if ($limit < 1) $limit = 30;
 		$this->setState ( 'list.limit', $limit );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_start", 'limitstart', 0, 'int' );

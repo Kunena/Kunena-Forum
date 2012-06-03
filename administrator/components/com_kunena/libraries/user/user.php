@@ -316,17 +316,19 @@ class KunenaUser extends JObject {
 			'banned'=>'COM_KUNENA_VIEW_BANNED',
 			'blocked'=>'COM_KUNENA_VIEW_BANNED'
 		);
-		$category = KunenaForumCategoryHelper::get($catid);
+		$moderatedCategories = KunenaAccess::getInstance()->getModeratorStatus($this);
 		if (!$this->_type) {
 			if ($this->userid == 0) {
 				$this->_type = 'guest';
 			} elseif ($this->isBanned ()) {
 				$this->_type = 'banned';
-			} elseif ($this->isAdmin ( $category )) {
+			} elseif ($this->isAdmin ( KunenaForumCategoryHelper::get($catid) )) {
 				$this->_type = 'admin';
 			} elseif ($this->isModerator ( null )) {
 				$this->_type = 'globalmod';
-			} elseif ($catid && $this->isModerator ( $category )) {
+			} elseif (!$catid && !empty($moderatedCategories)) {
+				$this->_type = 'moderator';
+			} elseif ($catid && isset($moderatedCategories[$catid])) {
 				$this->_type = 'moderator';
 			} else {
 				$this->_type = 'user';

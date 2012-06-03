@@ -8,7 +8,7 @@
 	<authorEmail>Kunena@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>www.kunena.org</copyright>
-	<license>GNU/GPL</license>
+	<license>GNU/GPLv3 or later</license>
 	<description>PLG_SYSTEM_KUNENA_DESC</description>
 	<files>
 		<filename plugin="kunena">kunena.php</filename>

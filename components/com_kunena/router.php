@@ -187,6 +187,7 @@ function KunenaParseRoute($segments) {
 			$alias = strtr ( $segment, ':', '-' );
 			$variables = KunenaRoute::resolveAlias($alias);
 			if ($variables) {
+				$sefcats = false;
 				$vars = $variables + $vars;
 				continue;
 			}
@@ -249,5 +250,6 @@ function KunenaParseRoute($segments) {
 	}
 	if (empty($vars ['layout'])) $vars ['layout'] = 'default';
 	KunenaRoute::$time = $profiler->getmicrotime() - $starttime;
+
 	return $vars;
 }

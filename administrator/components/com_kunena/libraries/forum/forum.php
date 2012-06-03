@@ -162,7 +162,7 @@ abstract class KunenaForum {
 			return false;
 		}
 		// Check if future version is needed (remove GIT and DEVn from the current version)
-		if (version_compare($version, preg_replace('/(-GIT|-DEV\d+)/i', '', self::version()), '>')) {
+		if (version_compare($version, preg_replace('/(-DEV\d*)?(-GIT)?/i', '', self::version()), '>')) {
 			return false;
 		}
 		return true;

@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 abstract class KunenaForumMessageHelper {
 	// Global for every instance
 	protected static $_instances = array();
-	protected static $_location = false;
+	protected static $_location = array();
 
 	/**
 	 * Returns KunenaForumMessage object
@@ -229,7 +229,7 @@ abstract class KunenaForumMessageHelper {
 			if (!isset(self::$_location [$id])) {
 				$ids[$id] = $id;
 				self::$_location [$id] = new stdClass();
-				self::$_location [$id]->hold = array();
+				self::$_location [$id]->hold = array('before'=>0, 'after'=>0);
 			}
 		}
 		if (empty($ids))

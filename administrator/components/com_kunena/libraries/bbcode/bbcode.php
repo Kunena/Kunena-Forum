@@ -253,7 +253,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'mode' => BBCODE_MODE_LIBRARY,
 				'method' => 'DoSpoiler',
 				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns')
+				'allow_in' => array('listitem', 'block', 'columns'),
+				'plain_start' => "<i>",
+				'plain_end' => "</i>"
 			),
 
 			'hide' => array(
@@ -807,6 +809,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		$document = JFactory::getDocument();
+		if (!($document instanceof JDocumentHTML)) {
+			return '[SPOILER]';
+		}
+
 		$config = KunenaFactory::getConfig();
 		$template = KunenaFactory::getTemplate();
 		$spoiler_image1 = $template->getImagePath('emoticons/w00t.png');
@@ -816,7 +823,6 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		static $spoilerid = 0;
 		if (empty ( $spoilerid )) {
 			// Only need the script for the first spoiler we find
-			$document = JFactory::getDocument();
 			$document->addCustomTag (
 			'<script language = "JavaScript" type = "text/javascript">
 			function kShowDetail(srcElement) {
@@ -872,6 +878,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$content = htmlspecialchars($content);
 		$document = JFactory::getDocument();
+		if (!($document instanceof JDocumentHTML)) {
+			return '[MAP]';
+		}
 
 		if ($id === false) {
 			$document->addScript('http://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));

@@ -17,7 +17,7 @@ defined ( '_JEXEC' ) or die ();
 			<li class="kattachment-old">
 				<span>
 					<input type="hidden" name="attachments[<?php echo $attachment->id ?>]" value="<?php echo $this->escape($attachment->filename) ?>" />
-					<input type="checkbox" name="attachment[<?php echo $attachment->id ?>]" checked="checked" value="1" />
+					<input type="checkbox" name="attachment[<?php echo $attachment->id ?>]" checked="checked" value="<?php echo $attachment->id ?>" />
 					<a href="#" class="kattachment-insert" style="display: none;"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
 				</span>
 				<?php echo $attachment->getThumbnailLink(); ?>

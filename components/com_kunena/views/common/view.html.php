@@ -54,6 +54,8 @@ class KunenaViewCommon extends KunenaView {
 			}
 
 			$cache = JFactory::getCache('com_kunena', 'output');
+			$annCache = $cache->get('announcement', 'global');
+			if (!$annCache) $cache->remove("{$this->ktemplate->name}.common.announcement", 'com_kunena.template');
 			if ($cache->start("{$this->ktemplate->name}.common.announcement", 'com_kunena.template')) return;
 
 			if ($this->announcement && $this->announcement->authorise('read')) {
@@ -67,6 +69,7 @@ class KunenaViewCommon extends KunenaView {
 			} else {
 				echo ' ';
 			}
+			$cache->set($this->announcement->id, 'announcement', 'global');
 			$cache->end();
 		} else echo ' ';
 	}

@@ -77,4 +77,4 @@ The *Kunena* projects thrives on contributions from the community. Our dedicated
 
 ## LICENSE
 
-[GNU General Public License v2 or later](http://opensource.org/licenses/gpl-2.0.php)
+[GNU General Public License v3 or later](http://www.gnu.org/copyleft/gpl.html)

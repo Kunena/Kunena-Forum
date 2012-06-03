@@ -32,7 +32,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			'read'=>array('Read'),
 			'subscribe'=>array('Read', 'CatSubscribe', 'NotBanned', 'NotSection'),
 			'moderate'=>array('Read', 'NotBanned', 'Moderate'),
-			'admin'=>array('Read', 'NotBanned', 'Admin'),
+			'admin'=>array('NotBanned', 'Admin'),
 			'topic.read'=>array('Read'),
 			'topic.create'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked', 'Channel'),
 			'topic.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
@@ -328,7 +328,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	public function getParent() {
-		$parent = KunenaForumCategoryHelper::get($this->parent_id);
+		$parent = KunenaForumCategoryHelper::get(intval($this->parent_id));
 		if (!$parent->exists()) {
 			$parent->name = JText::_ ( 'COM_KUNENA_TOPLEVEL' );
 			$parent->_exists = true;

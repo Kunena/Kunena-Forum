@@ -821,8 +821,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ( $config->spoiler_image ) $spoiler_image1 = $spoiler_image2 = $template->getImagePath($config->spoiler_image);
 
 		$randomid = 'spoiler_' . rand ();
-		// FIXME: need to put the two following input somewherelse to avoid to load it multiple times
-		return '<input id="kspoiler-img1" type="hidden" value="'.$spoiler_image1.'" /><input id="kspoiler-img2" type="hidden" value="'.$spoiler_image2.'" /><div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" class = "kspoiler" ><img id="' . $randomid . '_img"' . ' src="'.$spoiler_image2.'" border="0" alt=":pinch:" /> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $content . '</span></div>';
+		return '<div id="' . $randomid . '" class = "kspoiler" ><img id="' . $randomid . '_img"' . ' src="'.$spoiler_image2.'" border="0" alt=":pinch:" /> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $content . '</span></div>';
 	}
 
 	function DoHide($bbcode, $action, $name, $default, $params, $content) {

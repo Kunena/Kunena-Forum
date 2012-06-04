@@ -716,21 +716,6 @@ function kunenaSelectUsernameView(kobj, kuser) {
 	}
 }
 
-function kShowDetail(srcElement) {
-	var targetID, srcElement, targetElement, imgElementID, imgElement;
-	targetID = srcElement.id + "_details";
-	imgElementID = srcElement.id + "_img";
-	targetElement = document.id(targetID);
-	imgElement = document.id(imgElementID);
-	if (targetElement.style.display == "none") {
-		targetElement.setStyle('display', '');
-		imgElement.setProperty('src', document.id('kspoiler-img1').get('value'));
-	} else {
-		targetElement.setStyle('display', 'none');
-		imgElement.setProperty('src', document.id('kspoiler-img2').get('value'));
-	}
-}
-
 //----------------- New Mootools based behaviors ----------------------
 
 window.addEvent('domready', function(){	
@@ -880,4 +865,22 @@ window.addEvent('domready', function(){
 			location.href=url.replace(urlreg, avatar_selected.get('value'));      
 		});
 	}
+	
+	$$('.kspoiler').each(function(item){
+		var item_id = item.get('id');
+		var targetID = item_id + "_details";
+		var imgElementID = item_id + "_img";
+		var targetElement = document.id(targetID);
+		var imgElement = document.id(imgElementID);
+	
+		item.addEvent('click', function(e){
+			if (targetElement.style.display == "none") {
+				targetElement.setStyle('display', '');
+				imgElement.setProperty('src', document.id('kspoiler-img1').get('value'));
+			} else {
+				targetElement.setStyle('display', 'none');
+				imgElement.setProperty('src', document.id('kspoiler-img2').get('value'));
+			}
+		});
+	});
 });

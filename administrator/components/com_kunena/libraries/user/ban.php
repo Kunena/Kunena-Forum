@@ -174,7 +174,7 @@ class KunenaUserBan extends JObject
 			$instance->bind($ban);
 			$instance->_exists = true;
 			self::storeInstance($instance);
-			$list[] = $instance;
+			$list[$instance->userid] = $instance;
 		}
 		return $list;
 	}

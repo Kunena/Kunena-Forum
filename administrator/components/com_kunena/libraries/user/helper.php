@@ -92,43 +92,42 @@ abstract class KunenaUserHelper {
 		return self::$_me;
 	}
 
-	public static function loadUsers($userids = array()) {
-		if (!is_array($userids)) {
-			JError::raiseError ( 500, __CLASS__ . '::' . __FUNCTION__.'(): Parameter $userids is not array' );
-		}
-
+	public static function loadUsers(array $userids = array()) {
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
-		foreach($userids as $userid){
-			if (empty ( self::$_instances [intval($userid)] )) $e_userids[intval($userid)] = intval($userid);
+		foreach($userids as &$userid){
+			if (!$userid || $userid != intval($userid)) {
+				unset($userid);
+			} elseif (empty ( self::$_instances [$userid] )) {
+				$e_userids[$userid] = $userid;
+			}
 		}
-		unset($e_userids[0]);
-		if (empty($e_userids)) return array();
 
-		$userlist = implode ( ',', $e_userids );
+		if (!empty($e_userids)) {
+			$userlist = implode ( ',', $e_userids );
 
-		$db = JFactory::getDBO ();
-		$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*
-			FROM #__users AS u
-			LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
-			WHERE u.id IN ({$userlist})";
-		$db->setQuery ( $query );
-		$results = $db->loadAssocList ();
-		KunenaError::checkDatabaseError ();
+			$db = JFactory::getDBO ();
+			$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*
+				FROM #__users AS u
+				LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
+				WHERE u.id IN ({$userlist})";
+			$db->setQuery ( $query );
+			$results = $db->loadAssocList ();
+			KunenaError::checkDatabaseError ();
+
+			foreach ( $results as $user ) {
+				$instance = new KunenaUser (false);
+				$instance->setProperties ( $user );
+				$instance->exists(true);
+				self::$_instances [$instance->userid] = $instance;
+			}
+
+			// Preload avatars if configured
+			$avatars = KunenaFactory::getAvatarIntegration();
+			$avatars->load($e_userids);
+		}
 
 		$list = array ();
-		foreach ( $results as $user ) {
-			$instance = new KunenaUser (false);
-			$instance->setProperties ( $user );
-			$instance->exists(true);
-			self::$_instances [$instance->userid] = $instance;
-		}
-
-		// Finally call integration preload as well
-		// Preload avatars if configured
-		$avatars = KunenaFactory::getAvatarIntegration();
-		$avatars->load($userids);
-
 		foreach ($userids as $userid) {
 			if (isset(self::$_instances [$userid])) $list [$userid] = self::$_instances [$userid];
 		}

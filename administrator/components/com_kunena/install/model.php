@@ -1801,7 +1801,10 @@ class KunenaModelInstall extends JModel {
 			'client_id' => 0
 		);
 		if (! $table->setLocation ( 1, 'last-child' ) || ! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
-			throw new KunenaInstallerException ( $table->getError () );
+			$table->alias = 'kunena';
+			if (! $table->check () || ! $table->store ()) {
+				throw new KunenaInstallerException ( $table->getError () );
+			}
 		}
 		$parent = $table;
 		$defaultmenu = 0;
@@ -1849,6 +1852,7 @@ class KunenaModelInstall extends JModel {
 			$data = array (
 				'menutype' => $defaultmenu->menutype,
 				'title' => JText::_ ( 'COM_KUNENA_MENU_ITEM_FORUM' ),
+				'alias' => 'kunena-'.JFactory::getDate()->format('Y-m-d'),
 				'link' => 'index.php?Itemid='.$parent->id,
 				'type' => 'alias',
 				'published' => 0,
@@ -1865,6 +1869,7 @@ class KunenaModelInstall extends JModel {
 			}
 		} else {
 			$data = array (
+				'alias' => 'kunena-'.JFactory::getDate()->format('Y-m-d'),
 				'link' => 'index.php?Itemid='.$parent->id,
 				'params' => '{"aliasoptions":"'.(int)$parent->id.'","menu-anchor_title":"","menu-anchor_css":"","menu_image":""}',
 			);

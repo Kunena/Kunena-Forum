@@ -116,7 +116,7 @@ class KunenaViewTopic extends KunenaView {
 		$template = KunenaFactory::getTemplate();
 		$this->spoiler_image1 = $template->getImagePath('emoticons/w00t.png');
 		$this->spoiler_image2 = $template->getImagePath('emoticons/pinch.png');
-		if ( $thsi->config->spoiler_image ) $spoiler_image1 = $this->spoiler_image2 = $this->template->getImagePath($this->config->spoiler_image);
+		if ( $this->config->spoiler_image ) $spoiler_image1 = $this->spoiler_image2 = $this->template->getImagePath($this->config->spoiler_image);
 
 		$this->_prepareDocument('default');
 

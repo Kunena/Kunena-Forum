@@ -86,13 +86,15 @@ class KunenaTemplate extends JObject
 		}
 		// Load default values
 		$xml = simplexml_load_file($this->xml_path);
-		foreach ($xml->xpath('params/param') as $node) {
-			if (isset($node['name']) && isset($node['default'])) $this->params->def($node['name'], $node['default']);
-		}
-		// Generate CSS variables
-		foreach ($this->params->toArray() as $key=>$value)  {
-			if (substr($key,0,5) == 'style') {
-				$this->style_variables[$key] = $value;
+		if ($xml) {
+			foreach ($xml->xpath('params/param') as $node) {
+				if (isset($node['name']) && isset($node['default'])) $this->params->def($node['name'], $node['default']);
+			}
+			// Generate CSS variables
+			foreach ($this->params->toArray() as $key=>$value)  {
+				if (substr($key,0,5) == 'style') {
+					$this->style_variables[$key] = $value;
+				}
 			}
 		}
 	}

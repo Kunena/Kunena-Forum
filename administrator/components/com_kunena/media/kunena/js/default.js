@@ -876,10 +876,10 @@ window.addEvent('domready', function(){
 		item.addEvent('click', function(e){
 			if (targetElement.style.display == "none") {
 				targetElement.setStyle('display', '');
-				imgElement.setProperty('src', document.id('kspoiler-img1').get('value'));
+				imgElement.setProperty('class', 'kspoiler-image-open');
 			} else {
 				targetElement.setStyle('display', 'none');
-				imgElement.setProperty('src', document.id('kspoiler-img2').get('value'));
+				imgElement.setProperty('class', 'kspoiler-image-close');
 			}
 		});
 	});

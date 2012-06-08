@@ -10,7 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-
 <div class="kmodule topic-default_list">
 	<div class="kbox-wrapper kbox-full">
 		<div class="topic-default_list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">

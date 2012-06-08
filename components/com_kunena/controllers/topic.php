@@ -178,18 +178,14 @@ class KunenaControllerTopic extends KunenaController {
 
 		//now try adding any new subscriptions if asked for by the poster
 		if ($fields['subscribe']) {
-			if (!$topic->subscribe(1)) {
+			if ($topic->subscribe(1)) {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
 
 				// Activity integration
 				$activity = KunenaFactory::getActivityIntegration();
 				$activity->onAfterSubscribe($topic, 1);
 			} else {
-				if( empty($topic_error)){
-					$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ALREADY_SUBSCRIBED_TOPIC' ) );
-				} else {
-					$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic_error );
-				}
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic->getError() );
 			}
 		}
 

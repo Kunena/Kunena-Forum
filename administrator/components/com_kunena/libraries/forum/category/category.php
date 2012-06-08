@@ -481,7 +481,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$table->exists ( $this->_exists );
 
 		// Update alias
-		$success = $this->addAlias($this->get(alias));
+		$success = $this->addAlias($this->get('alias'));
 		if ($success) $this->_alias = $this->alias;
 
 		$table->reorder ();

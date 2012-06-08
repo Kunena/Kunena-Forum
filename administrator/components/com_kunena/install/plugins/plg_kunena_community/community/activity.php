@@ -85,9 +85,10 @@ class KunenaActivityCommunity extends KunenaActivity {
 		CActivityStream::add ( $act );
 	}
 
-	public function onAfterThankyou($thankyoutargetid, $username , $message) {
+	public function onAfterThankyou($thankyoutargetid, $userid, $message) {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $thankyoutargetid );
+		$username = KunenaFactory::getUser($userid)->username;
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';

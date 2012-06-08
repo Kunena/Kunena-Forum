@@ -62,7 +62,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 									</div>
 									<div class="form-field">
 										<div class="innerspacer kbox-full">
-											<?php echo $this->displayInput('description', 'class="kbox-width txtarea hasTip required" rows="80" cols="4"') ?>
+											<?php echo $this->displayInput('sdescription', 'class="kbox-width txtarea hasTip required" rows="80" cols="4"') ?>
 										</div>
 									</div>
 								</li>

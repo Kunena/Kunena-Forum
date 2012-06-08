@@ -74,7 +74,7 @@ defined ( '_JEXEC' ) or die ();
 									<?php if ($this->actions): ?>
 										<dd class="announcements-checkbox">
 											<div class="innerspacer-header">
-												<span class="bold">#</span>
+												<span class="bold"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->announcements ); ?>);" /></span>
 											</div>
 										</dd>
 									<?php endif ?>
@@ -84,6 +84,14 @@ defined ( '_JEXEC' ) or die ();
 						<ul class="list-unstyled announcements-list">
 							<?php $this->displayItems() ?>
 						</ul>
+						<?php  if ( !empty($this->announcementActions) ) : ?>
+						<div class="modbox-wrapper innerspacer-bottom">
+							<div class="modbox">
+								<?php echo JHTML::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+								<input type="submit" name="kcheckgo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+							</div>
+						</div>
+						<?php endif; ?>
 					</form>
 				</div>
 			</div>

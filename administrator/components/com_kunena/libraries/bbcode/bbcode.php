@@ -30,6 +30,7 @@ class KunenaBbcode extends BBCode {
 	 */
 	function __construct($relative = true) {
 		parent::__construct ();
+
 		$this->defaults = new KunenaBbcodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 
@@ -255,21 +256,24 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'class' => 'block',
 				'allow_in' => array('listitem', 'block', 'columns'),
 				'plain_start' => "<i>",
-				'plain_end' => "</i>"
+				'plain_end' => "</i>",
+				'content' => BBCODE_REQUIRED
 			),
 
 			'hide' => array(
 				'mode' => BBCODE_MODE_LIBRARY,
 				'method' => 'DoHide',
 				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns')
+				'allow_in' => array('listitem', 'block', 'columns'),
+				'content' => BBCODE_REQUIRED
 			),
 
 			'confidential' => array(
 				'mode' => BBCODE_MODE_LIBRARY,
 				'method' => 'DoConfidential',
 				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns')
+				'allow_in' => array('listitem', 'block', 'columns'),
+				'content' => BBCODE_REQUIRED
 			),
 
 			'map' => array(
@@ -809,6 +813,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		if (!empty($bbcode->lost_start_tags[$name])) {
+			return "[{$name}]{$content}";
+		}
 		$document = JFactory::getDocument();
 		if (!($document instanceof JDocumentHTML)) {
 			return '[SPOILER]';
@@ -849,6 +856,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		if (!empty($bbcode->lost_start_tags[$name])) {
+			return "[{$name}]{$content}";
+		}
 		if (JFactory::getUser ()->id == 0) {
 			// Hide between content from non registered users
 			return JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
@@ -862,6 +872,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		if (!empty($bbcode->lost_start_tags[$name])) {
+			return "[{$name}]{$content}";
+		}
 		$me = KunenaUserHelper::getMyself();
 		if (($me->userid && $bbcode->parent->message->userid == $me->userid) || $me->isModerator(isset($bbcode->parent->message) ? $bbcode->parent->message->getCategory() : null)) {
 			// Display but highlight the fact that it is hidden from everyone except admins and mods

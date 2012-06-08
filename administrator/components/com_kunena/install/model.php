@@ -49,6 +49,8 @@ class KunenaModelInstall extends JModel {
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
 		$lang->load('com_kunena.install',KPATH_ADMIN);
+		$lang->load('com_kunena.libraries',KPATH_ADMIN, 'en-GB');
+		$lang->load('com_kunena.libraries',KPATH_ADMIN);
 
 		parent::__construct ();
 		$this->db = JFactory::getDBO ();
@@ -589,8 +591,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepDatabase() {
-		KunenaForum::setup();
-
 		$task = $this->getTask();
 		switch ($task) {
 			case 0:

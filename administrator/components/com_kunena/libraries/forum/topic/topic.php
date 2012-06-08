@@ -100,8 +100,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		$usertopic->subscribed = (int)$value;
 		if (!$usertopic->save()) {
 			$this->setError($usertopic->getError());
+			return false;
 		}
-		return !$this->getError();
+		return true;
 	}
 
 	/**
@@ -115,8 +116,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		$usertopic->favorite = (int)$value;
 		if (!$usertopic->save()) {
 			$this->setError($usertopic->getError());
+			return false;
 		}
-		return !$this->getError();
+		return true;
 	}
 
 	public function sticky($value=1) {

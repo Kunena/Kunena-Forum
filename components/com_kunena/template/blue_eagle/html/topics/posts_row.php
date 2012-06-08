@@ -28,9 +28,8 @@ $this->cache = false;
 		}*/
 	?>
 		<div class="ktopic-title-cover">
-			<?php echo $this->getTopicLink ( $this->topic, $this->message, KunenaHtmlParser::parseText ($this->message->subject, 30), KunenaHtmlParser::stripBBCode ($this->message->message), 'ktopic-title km' ) ?>
+			<?php echo $this->getTopicLink ( $this->topic, $this->message, KunenaHtmlParser::parseText ($this->message->subject, 30), KunenaHtmlParser::stripBBCode ($this->message->message, 500), 'ktopic-title km' ) ?>
 		</div>
-		<div style="display:none"><?php echo KunenaHtmlParser::parseBBCode ($this->message->message);?></div>
 	</td>
 
 	<td class="kcol-mid ktopictittle">

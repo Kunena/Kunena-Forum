@@ -93,38 +93,25 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 	}
 
 	function unsubscribe() {
-		if (! JRequest::checkToken ('get') && !JRequest::checkToken() ) {
+		if (! JRequest::checkToken ('request') ) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$db = JFactory::getDBO();
-		$cat_seltected = array_keys(JRequest::getVar('categories', array (), 'post', 'array'));
+		$catid = JRequest::getInt('catid', 0);
+		$catids = $catid ? array($catid) : array_keys(JRequest::getVar('categories', array(), 'post', 'array'));
 
-		if ( !empty($cat_seltected) ) {
-			$category = KunenaForumCategoryHelper::getCategories($cat_seltected);
-			foreach($category as $cat) {
-				if ($cat->authorise('read')) {
-					if ($this->me->exists()) {
-						$success = $cat->subscribe(0);
-						if ($success) {
-							$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $cat->name) );
-						}
-					}
-				}
-			}
-		} else {
-			$category = KunenaForumCategoryHelper::get(JRequest::getInt('catid', 0));
+		$categories = KunenaForumCategoryHelper::getCategories($catids);
+		foreach($categories as $category) {
 			if (!$category->authorise('read')) {
 				$this->app->enqueueMessage ( $category->getError(), 'error' );
-				$this->redirectBack ();
+				continue;
 			}
-
-
 			if ($this->me->exists()) {
 				$success = $category->subscribe(0);
 				if ($success) {
-					$this->app->enqueueMessage ( JText::_('COM_KUNENA_GEN_CATEGORY_UNSUBCRIBED') );
+					$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_GEN_CATEGORY_NAME_UNSUBCRIBED', $category->name) );
 				}
 			}
 		}

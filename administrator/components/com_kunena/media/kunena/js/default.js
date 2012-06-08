@@ -865,4 +865,22 @@ window.addEvent('domready', function(){
 			location.href=url.replace(urlreg, avatar_selected.get('value'));      
 		});
 	}
+	
+	$$('.kspoiler').each(function(item){
+		var item_id = item.get('id');
+		var targetID = item_id + "_details";
+		var imgElementID = item_id + "_img";
+		var targetElement = document.id(targetID);
+		var imgElement = document.id(imgElementID);
+	
+		item.addEvent('click', function(e){
+			if (targetElement.style.display == "none") {
+				targetElement.setStyle('display', '');
+				imgElement.setProperty('class', 'kspoiler-image-open');
+			} else {
+				targetElement.setStyle('display', 'none');
+				imgElement.setProperty('class', 'kspoiler-image-close');
+			}
+		});
+	});
 });

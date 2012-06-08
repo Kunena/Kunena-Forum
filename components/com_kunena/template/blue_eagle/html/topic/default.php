@@ -15,8 +15,6 @@ $this->document->addScriptDeclaration('// <![CDATA[
 var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
 ?>
-<input id="kspoiler-img1" type="hidden" value="<?php echo $this->spoiler_image1 ?>" />
-<input id="kspoiler-img2" type="hidden" value="<?php echo $this->spoiler_image2 ?>" />
 
 <?php if ($this->category->headerdesc) : ?>
 	<div id="kforum-head" class="<?php echo isset ( $this->category->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>">

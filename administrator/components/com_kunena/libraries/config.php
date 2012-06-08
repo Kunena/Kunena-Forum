@@ -201,7 +201,6 @@ class KunenaConfig extends JObject {
 	public $recaptcha_privatekey = '';
 	public $recaptcha_theme = 'white';
 	// New for 2.0.0
-	public $spoiler_image = '';
 	public $keywords = 1;
 	public $userkeywords = 0;
 	public $image_upload = 'registered';

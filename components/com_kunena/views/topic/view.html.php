@@ -112,12 +112,6 @@ class KunenaViewTopic extends KunenaView {
 		$this->quickreply = ($this->topic->authorise('reply',null, false) && $this->me->exists() && !$this->captcha->enabled());
 		$this->keywords = $this->topic->getKeywords(false, ', ');
 
-		// Get spoiler images
-		$template = KunenaFactory::getTemplate();
-		$this->spoiler_image1 = $template->getImagePath('emoticons/w00t.png');
-		$this->spoiler_image2 = $template->getImagePath('emoticons/pinch.png');
-		if ( $this->config->spoiler_image ) $spoiler_image1 = $this->spoiler_image2 = $this->template->getImagePath($this->config->spoiler_image);
-
 		$this->_prepareDocument('default');
 
 		$this->display($tpl);

@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<input id="kspoiler-img1" type="hidden" value="<?php echo $this->spoiler_image1 ?>" />
-<input id="kspoiler-img2" type="hidden" value="<?php echo $this->spoiler_image2 ?>" />
 
 <div class="kmodule topic-default_list">
 	<div class="kbox-wrapper kbox-full">

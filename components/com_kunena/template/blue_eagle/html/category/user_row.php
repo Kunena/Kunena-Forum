@@ -65,8 +65,8 @@ $tabclass = array ("row1", "row2" );
 	<td class="kcol-mid kcol-knoposts"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
 	<?php } ?>
 
-	<td class="kcol-mid">
-		<?php echo CKunenaLink::GetCategoryActionLink ( 'unsubscribe', $this->category->id, JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY'), 'nofollow', '', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG'), '&userid='.$this->me->userid ); ?>
+	<td class="kcol-mid ktopicmoderation">
+		<input class ="kcheck" type="checkbox" name="categories[<?php echo $this->category->id?>]" value="1" />
 	</td>
 
 </tr>

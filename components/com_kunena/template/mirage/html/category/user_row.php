@@ -60,8 +60,8 @@ defined ( '_JEXEC' ) or die ();
 				<?php else : ?>
 				<td class="kcol-mid kcol-knoposts"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
 				<?php endif ?>
-				<td class="kcategory-actions">
-					<?php echo CKunenaLink::GetCategoryActionLink ( 'unsubscribe', $this->category->id, JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY'), 'nofollow', '', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG'), '&userid='.$this->me->userid ); ?>
+				<td class="kcol-mid ktopicmoderation">
+					<input class ="kcheck" type="checkbox" name="categories[<?php echo $this->category->id?>]" value="1" />
 				</td>
 			</tr>
 		</tbody>

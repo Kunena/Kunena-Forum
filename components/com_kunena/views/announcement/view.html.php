@@ -81,6 +81,8 @@ class KunenaViewAnnouncement extends KunenaView {
 		if ($new->authorise('create')) $this->actions['add'] = $new->getUri('create');
 		if ($this->actions) $this->actions['cpanel'] = KunenaForumAnnouncementHelper::getUri('list');
 
+		$this->announcementActions = $this->get ( 'announcementActions' );
+
 		$this->_prepareDocument();
 
 		$errors = $this->getErrors();

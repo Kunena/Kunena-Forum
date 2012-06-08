@@ -85,25 +85,25 @@ class KunenaActivityCommunity extends KunenaActivity {
 		CActivityStream::add ( $act );
 	}
 
-	public function onAfterThankyou($thankyoutargetid, $userid, $message) {
+	public function onAfterThankyou($target, $actor, $message) {
 		CFactory::load ( 'libraries', 'userpoints' );
-		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $thankyoutargetid );
-		$username = KunenaFactory::getUser($userid)->username;
+		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $target );
+		$username = KunenaFactory::getUser($actor)->username;
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
 		$act->actor = JFactory::getUser()->id;
-		$act->target = $thankyoutargetid;
+		$act->target = $target;
 		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf( 'PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE', $username ) );
 		$act->content = NULL;
 		$act->app = 'kunena.thankyou';
-		$act->cid = $thankyoutargetid;
+		$act->cid = $target;
 		$act->access = $this->getAccess($message->getCategory());
 
 		// Comments and like support
-		$act->comment_id = $thankyoutargetid;
+		$act->comment_id = $target;
 		$act->comment_type = 'kunena.thankyou';
-		$act->like_id = $thankyoutargetid;
+		$act->like_id = $target;
 		$act->like_type = 'kunena.thankyou';
 
 		// Do not add private activities

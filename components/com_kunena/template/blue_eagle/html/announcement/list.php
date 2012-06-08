@@ -34,7 +34,7 @@ defined ( '_JEXEC' ) or die ();
 	<tbody id="kannouncement_body">
 		<tr class="ksth">
 			<?php if ($this->actions): ?>
-			<th class="kcol-annid"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->announcement ); ?>);" /></th>
+			<th class="kcol-annid"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->announcements ); ?>);" /></th>
 			<?php endif; ?>
 			<th class="kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
 			<th class="kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>

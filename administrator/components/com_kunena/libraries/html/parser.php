@@ -82,12 +82,13 @@ abstract class KunenaHtmlParser {
 		return $txt;
 	}
 
-	public static function stripBBCode($txt, $len=0) {
+	public static function stripBBCode($txt, $len=0, $html = true) {
 		if (!$txt) return;
 
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
+		$bbcode->SetAllowAmpersand(!$html);
 		$txt = strip_tags($bbcode->Parse($txt));
 		return $txt;
 	}

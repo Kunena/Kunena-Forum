@@ -64,7 +64,7 @@ class CKunenaLink {
 
 	static function GetReportMessageLink($catid, $id, $name, $rel = 'nofollow', $class = '', $title = '') {
 		$message = KunenaForumMessageHelper::get($id);
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=report&catid={$catid}&id={$message->thread}&mesid={$message->id}", $name, $title, $rel, $class );
+		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=topic&layout=report&catid={$catid}&id={$message->thread}&mesid={$message->id}", $name, $title, $rel, $class );
 	}
 
 	static function GetMessageIPLink($msg_ip, $rel = 'nofollow') {

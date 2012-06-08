@@ -177,19 +177,16 @@ class KunenaControllerTopic extends KunenaController {
 		$message->sendNotification();
 
 		//now try adding any new subscriptions if asked for by the poster
-		if ($fields['subscribe']) {
-			if (!$topic->subscribe(1)) {
+		$usertopic = $topic->getUserTopic();
+		if ($fields['subscribe'] && !$usertopic->subscribed) {
+			if ($topic->subscribe(1)) {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
 
 				// Activity integration
 				$activity = KunenaFactory::getActivityIntegration();
 				$activity->onAfterSubscribe($topic, 1);
 			} else {
-				if( empty($topic_error)){
-					$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ALREADY_SUBSCRIBED_TOPIC' ) );
-				} else {
-					$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic_error );
-				}
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic->getError() );
 			}
 		}
 
@@ -735,13 +732,13 @@ class KunenaControllerTopic extends KunenaController {
 		if ($this->mesid) {
 			$message = $target = KunenaForumMessageHelper::get($this->mesid);
 			$topic = $target->getTopic();
-			$messagetext = $message->message;
-			$baduser = KunenaFactory::getUser($message->userid);
 		} else {
 			$topic = $target = KunenaForumTopicHelper::get($this->id);
-			$messagetext = $topic->first_post_message;
-			$baduser = KunenaFactory::getUser($topic->first_post_userid);
+			$message = KunenaForumMessageHelper::get($topic->first_post_id);
 		}
+		$messagetext = $message->message;
+		$baduser = KunenaFactory::getUser($message->userid);
+
 		if (!$target->authorise('read')) {
 			// Deny access if user cannot read target
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
@@ -783,7 +780,7 @@ class KunenaControllerTopic extends KunenaController {
 				$mailmessage .= "\n";
 				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_SUBJECT' ) . ": " . $topic->subject;
 				$mailmessage .= "\n";
-				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_MESSAGE' ) . "\n-----\n" . KunenaHtmlParser::stripBBCode($messagetext);
+				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_MESSAGE' ) . "\n-----\n" . KunenaHtmlParser::stripBBCode($messagetext, 0, false);
 				$mailmessage .= "\n-----\n\n";
 				$mailmessage .= "" . JText::_ ( 'COM_KUNENA_REPORT_POST_LINK' ) . " " . $msglink;
 				$mailmessage = JMailHelper::cleanBody ( strtr ( $mailmessage, array ('&#32;' => '' ) ) );

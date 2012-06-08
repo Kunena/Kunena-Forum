@@ -176,7 +176,6 @@ class KunenaControllerInstall extends JController {
 		}
 		$this->model->setAction ( 'uninstall' );
 		$this->model->deleteTables('kunena_');
-		$this->model->deleteMenu();
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
 		if (!KunenaForum::isDev()) {

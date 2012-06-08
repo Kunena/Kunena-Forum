@@ -63,7 +63,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 		$where = '';
 		if ( $this->getState('list.search') ) {
-		  $where = ' WHERE LOWER( u.username ) LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR LOWER( u.email ) LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR LOWER( u.name ) LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false );
+		  $where = ' WHERE u.username LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.email LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false );
 
 		}
 

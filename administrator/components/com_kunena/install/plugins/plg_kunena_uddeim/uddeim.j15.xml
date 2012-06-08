@@ -12,7 +12,6 @@
 	<description>PLG_KUNENA_UDDEIM_DESCRIPTION</description>
 	<files>
 		<filename plugin="uddeim">uddeim.php</filename>
-		<filename>index.html</filename>
 		<folder>uddeim</folder>
 	</files>
 	<languages folder="language">

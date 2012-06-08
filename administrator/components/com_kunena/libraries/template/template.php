@@ -52,6 +52,7 @@ class KunenaTemplate extends JObject
 	protected $style_variables = array();
 	protected $compiled_style_variables = null;
 	protected $scripts = array();
+	protected $xml = null;
 
 	/**
 	* Constructor
@@ -85,9 +86,9 @@ class KunenaTemplate extends JObject
 			$this->params = new JParameter($content);
 		}
 		// Load default values
-		$xml = simplexml_load_file($this->xml_path);
-		if ($xml) {
-			foreach ($xml->xpath('params/param') as $node) {
+		$this->xml = simplexml_load_file($this->xml_path);
+		if ($this->xml) {
+			foreach ($this->xml->xpath('params/param') as $node) {
 				if (isset($node['name']) && isset($node['default'])) $this->params->def($node['name'], $node['default']);
 			}
 			// Generate CSS variables
@@ -570,16 +571,7 @@ HTML;
 	}
 
 	public function getTemplateDetails() {
-		$templatedetails = new stdClass();
-		$xml_tmpl = JFactory::getXMLparser('Simple');
-		$xml_tmpl->loadFile($this->xml_path);
-
-		$templatedetails->creationDate = $xml_tmpl->document->creationDate[0]->data();
-		$templatedetails->author = $xml_tmpl->document->author[0]->data();
-		$templatedetails->version = $xml_tmpl->document->version[0]->data();
-		$templatedetails->name = $xml_tmpl->document->name[0]->data();
-
-		return $templatedetails;
+		return $this->xml;
 	}
 
 	/**
@@ -599,14 +591,14 @@ HTML;
 			// Find overridden template class (use $templatename to avoid creating new objects if the template doesn't exist)
 			$templatename = $name;
 			$classname = "KunenaTemplate{$templatename}";
-			if (!class_exists($classname) && $app->isSite() == 1) {
-				if (!file_exists(KPATH_SITE . "/template/{$templatename}/template.xml")) {
-					// If template xml doesn't exist, raise warning and use blue eagle instead
-					$templatename = 'blue_eagle';
-					$classname = "KunenaTemplate{$templatename}";
+			if (!file_exists(KPATH_SITE . "/template/{$templatename}/template.xml")) {
+				// If template xml doesn't exist, raise warning and use blue eagle instead
+				$templatename = 'blue_eagle';
+				$classname = "KunenaTemplate{$templatename}";
 
-					if (is_dir(KPATH_SITE . "/template/{$templatename}")) JFactory::getApplication()->enqueueMessage(JText::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename), 'notice');
-				}
+				if (is_dir(KPATH_SITE . "/template/{$templatename}")) KunenaError::warning(JText::sprintf('COM_KUNENA_LIB_TEMPLATE_NOTICE_INCOMPATIBLE', $name, $templatename));
+			}
+			if (!class_exists($classname) && $app->isSite()) {
 				$file = KPATH_SITE."/template/{$templatename}/template.php";
 				if (!file_exists($file)) {
 					$classname = "KunenaTemplateBlue_Eagle";

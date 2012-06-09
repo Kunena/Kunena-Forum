@@ -35,8 +35,9 @@ defined ( '_JEXEC' ) or die ();
 										</div>
 									</dd>
 									<?php if (!empty($this->categoryActions)) : ?>
-										<div><span class="kcheckbox select-toggle"><input class="kcheckall" type="checkbox" name="toggle" value="" /></span></div>
+									<dd><span class="kcheckbox select-toggle"><input class="kcheckall" type="checkbox" name="toggle" value="" /></span></dd>
 									<?php endif; ?>
+								</dl>
 							</li>
 						</ul>
 					<ul class="list-unstyled post-list">

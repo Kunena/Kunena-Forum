@@ -33,7 +33,9 @@ defined ( '_JEXEC' ) or die ();
 			<?php echo $this->displayTopicActions(); ?>
 			<?php if ($this->getPagination(4)) : ?>
 				<div class="innerbox-wrapper innerspacer-top kbox-full">
-					<?php echo $this->getPagination(4); ?>
+					<div class="topic-default_list-kpagination kpagination">
+						<?php echo $this->getPagination(4); ?>
+					</div>
 				</div>
 			<?php endif; ?>
 			<div class="innerbox-wrapper">

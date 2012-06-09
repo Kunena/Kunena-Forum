@@ -114,8 +114,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 	}
 
 	public function getPaginationListRender($list) {
-		$html = '<div class="kpagination kbox-full">';
-		$html .= '<ul class="list-pagination">';
+		$html = '<ul class="kpagination-list list-unstlyed">';
 		$last = 0;
 		foreach($list['pages'] as $i=>$page) {
 			if ($last+1 != $i) $html .= '<li class="page-item kpage-more"><a class="disabled">...</a></li>';
@@ -123,7 +122,6 @@ class KunenaTemplateMirage extends KunenaTemplate {
 			$last = $i;
 		}
 		$html .= '</ul>';
-		$html .= '</div>';
 		return $html;
 	}
 

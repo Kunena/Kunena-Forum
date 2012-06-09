@@ -136,7 +136,7 @@
 }
 
 #kunena.layout .kbox-hover:hover {
-	background-color: rgba(0, 0, 0, 0.03);
+	background-color: rgba(0, 0, 0, 0.04);
 }
 
 #kunena.layout .kbox-focus {
@@ -224,7 +224,7 @@
 	border-top: 1px solid rgba(255, 255, 255, 0.8);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
 	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
-	background-color: rgba(0, 0, 0, 0.03);
+	background-color: rgba(0, 0, 0, 0.04);
 }
 
 #kunena.layout .list-unstyled {

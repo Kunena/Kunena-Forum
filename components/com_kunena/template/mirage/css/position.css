@@ -377,6 +377,16 @@
 	border-radius: 3px 0 0 3px;
 }
 
+#kunena.layout .kpagination ul.kpagination-list li.page-item:last-child > a {
+	border-left-width: 1px;
+	border-radius: 0 3px 3px 0;
+}
+
+#kunena.layout .kpagination ul.kpagination-list li.page-item:only-child > a {
+	border-left-width: 1px;
+	border-radius: 3px 3px 3px 3px;
+}
+
 #kunena.layout .kpagination ul.kpagination-list li.page-item a {
 	border-bottom-colors: none;
 	border-image: none;

@@ -872,12 +872,12 @@ window.addEvent('domready', function(){
 		var hideElement = el.getElement('.kspoiler-hide');
 		el.addEvent('click', function(e){
 			if (contentElement.style.display == "none") {
-				contentElement.setStyle('display', '');
+				contentElement.setStyle('display');
 				expandElement.setStyle('display', 'none');
-				hideElement.setStyle('display', '');
+				hideElement.setStyle('display');
 			} else {
 				contentElement.setStyle('display', 'none');
-				expandElement.setStyle('display', '');
+				expandElement.setStyle('display');
 				hideElement.setStyle('display', 'none');
 			}
 		});

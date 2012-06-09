@@ -821,8 +821,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return '[SPOILER]';
 		}
 
-		$randomid = 'spoiler_' . rand ();
-		return '<div id="' . $randomid . '" class = "kspoiler" ><span id="' . $randomid . '_img"' . ' class="kspoiler-image-close"></span> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span>' . $content . '</span></div>';
+		return '<div class="kspoiler"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))
+			. '</span> <span class="kspoiler-expand">' . JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND' ) . '</span><span class="kspoiler-hide" style="display:none">'
+			. JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_HIDE' ) . '</span><div class="kspoiler-wrapper"><div class="kspoiler-content" style="display:none">' . $content . '</div></div></div>';
 	}
 
 	function DoHide($bbcode, $action, $name, $default, $params, $content) {

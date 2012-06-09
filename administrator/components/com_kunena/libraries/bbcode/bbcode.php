@@ -818,7 +818,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		$document = JFactory::getDocument();
 		if (!($document instanceof JDocumentHTML)) {
-			return '[SPOILER]';
+			// Static version
+			return '<div class="kspoiler"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))
+				. '</span> <span class="kspoiler-hide">' . JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_HIDE' )
+				. '</span><div class="kspoiler-wrapper"><div class="kspoiler-content">' . $content . '</div></div></div>';
 		}
 
 		return '<div class="kspoiler"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))

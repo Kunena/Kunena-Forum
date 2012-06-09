@@ -12,6 +12,13 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <li class="announcements-row kbox-hover kbox-hover_list-row kbox-full">
 	<dl class="announcements-list list-unstyled list-column">
+		<?php if ($this->actions): ?>
+		<dd class="announcements-id item-column">
+			<div class="innerspacer-column">
+				<?php echo JHTML::_('kunenagrid.id', $this->row, $this->announcement->id) ?>
+			</div>
+		</dd>
+		<?php endif ?>
 		<dd class="announcements-id item-column">
 			<div class="innerspacer-column">
 				<?php echo $this->displayField('id') ?>

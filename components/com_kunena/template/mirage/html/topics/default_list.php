@@ -27,7 +27,9 @@ $this->topic_rowclass = array ("even", "odd" );
 				</div>
 				<?php if ($this->getPagination(7)) : ?>
 					<div class="innerbox-wrapper innerspacer-top">
-						<?php echo $this->getPagination(7) ?>
+						<div class="topics_default_list-kpagination kpagination"
+							<?php echo $this->getPagination(7) ?>
+						</div>
 					</div>
 				<?php endif; ?>
 				<div class="detailsbox-wrapper innerspacer kbox-full">

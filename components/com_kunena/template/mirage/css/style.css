@@ -136,7 +136,7 @@
 }
 
 #kunena.layout .kbox-hover:hover {
-	background-color: rgba(0, 0, 0, 0.03);
+	background-color: rgba(0, 0, 0, 0.04);
 }
 
 #kunena.layout .kbox-focus {
@@ -209,6 +209,20 @@
 	border-bottom-right-radius: 5px;
 }
 
+#kunena.layout .kbox-border_radius-vchild > :only-child {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+#kunena.layout .kbox-border_radius-vchild > :only-child:hover {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
 #kunena.layout .kbox-hover_header-row {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -224,7 +238,7 @@
 	border-top: 1px solid rgba(255, 255, 255, 0.8);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.8);
 	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.8);
-	background-color: rgba(0, 0, 0, 0.03);
+	background-color: rgba(0, 0, 0, 0.04);
 }
 
 #kunena.layout .list-unstyled {

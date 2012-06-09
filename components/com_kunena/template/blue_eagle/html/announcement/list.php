@@ -34,7 +34,7 @@ defined ( '_JEXEC' ) or die ();
 	<tbody id="kannouncement_body">
 		<tr class="ksth">
 			<?php if ($this->actions): ?>
-			<th class="kcol-annid">#</th>
+			<th class="kcol-annid"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->announcements ); ?>);" /></th>
 			<?php endif; ?>
 			<th class="kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
 			<th class="kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
@@ -47,6 +47,17 @@ defined ( '_JEXEC' ) or die ();
 		</tr>
 
 		<?php $this->displayItems() ?>
+
+		<?php  if ( !empty($this->announcementActions) ) : ?>
+		<!-- Bulk Actions -->
+			<tr class="krow1">
+				<td colspan="<?php echo empty($this->announcementActions) ? 5 : 7 ?>" class="kcol-first krowmoderation">
+							<?php echo JHTML::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+							<input type="submit" name="kcheckgo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+					</td>
+				</tr>
+			<!-- /Bulk Actions -->
+		<?php endif; ?>
 	</tbody>
 </table>
 		</form>

@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<li class="posts-row [K=ROW:krow-]">
+<li class="posts-row [K=ROW:krow-] kbox-hover kbox-hover_list-row box-full item-row">
 	<dl class="list-unstyled">
 		<dd class="post-topic">
 			<div class="innerspacer-column">

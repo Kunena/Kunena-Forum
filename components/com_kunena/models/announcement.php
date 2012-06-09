@@ -41,4 +41,14 @@ class KunenaModelAnnouncement extends KunenaModel {
 	function getAnnouncements() {
 		return KunenaForumAnnouncementHelper::getAnnouncements($this->getState ( 'list.start'), $this->getState ( 'list.limit'), !$this->me->isModerator());
 	}
+
+	public function getannouncementActions() {
+		$actions = array();
+		$actions[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actions[] = JHTML::_('select.option', 'unpublish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_UNPUBLISH'));
+		$actions[] = JHTML::_('select.option', 'publish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_PUBLISH'));
+		$actions[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA__BULK_ANNOUNCEMENT_DELETE'));
+
+		return $actions;
+	}
 }

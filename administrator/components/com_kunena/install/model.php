@@ -555,6 +555,10 @@ class KunenaModelInstall extends JModel {
 					// Delete all files and folders (cleanup)
 					$this->deleteFiles($dest, $ignore[$dest]);
 					$this->deleteFolders($dest, $ignore[$dest]);
+					if ($dest == KPATH_SITE) {
+						$this->deleteFolders("$dest/template/blue_eagle");
+						$this->deleteFolders("$dest/template/mirage");
+					}
 				}
 				// Copy new files into folder
 				$this->extract ( $path, $file['name'] . $ext, $dest, KunenaForum::isDev() );

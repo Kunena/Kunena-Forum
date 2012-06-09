@@ -78,6 +78,18 @@ class KunenaAccessJoomla {
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC') .'<br /><br />'. JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC_J25'),
 				'input' => JHtml::_('access.assetgrouplist', 'access', $category->accesstype == 'joomla.level' ? $category->access : 1)
 			);
+			if (!$category->isSection()) {
+				$html ['joomla-level']['post'] = array(
+					'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
+					'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
+					'input' => JHtml::_('access.usergroup', 'params-joomla-level[access_post][]', $category->params->get('access_post', array(2,6,8)), 'multiple="multiple" class="inputbox" size="10"', false)
+				);
+				$html ['joomla-level']['reply'] = array(
+					'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
+					'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
+					'input' => JHtml::_('access.usergroup', 'params-joomla-level[access_reply][]', $category->params->get('access_reply', array(2,6,8)), 'multiple="multiple" class="inputbox" size="10"', false)
+				);
+			}
 		}
 		if (!$accesstype || $accesstype == 'joomla.group') {
 			$yesno = array ();
@@ -108,6 +120,18 @@ class KunenaAccessJoomla {
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_DESC'),
 				'input' => JHTML::_ ( 'select.genericlist', $yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->admin_recurse )
 			);
+			if (!$category->isSection()) {
+				$html ['joomla-group']['post'] = array(
+					'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
+					'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
+					'input' => JHtml::_('access.usergroup', 'params-joomla-group[access_post][]', $category->params->get('access_post', array(2,6,8)), 'multiple="multiple" class="inputbox" size="10"', false)
+				);
+				$html ['joomla-group']['reply'] = array(
+					'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
+					'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
+					'input' => JHtml::_('access.usergroup', 'params-joomla-group[access_reply][]', $category->params->get('access_reply', array(2,6,8)), 'multiple="multiple" class="inputbox" size="10"', false)
+				);
+			}
 		}
 		return $html;
 	}
@@ -140,6 +164,23 @@ class KunenaAccessJoomla {
 	}
 
 	/**
+	 * Authorise user actions in a category.
+	 *
+	 * Function returns a list of authorized actions. Missing actions are threaded as inherit.
+	 *
+	 * @param KunenaForumCategory $category
+	 * @param int $userid
+	 *
+	 * @return array
+	 */
+	public function getAuthoriseActions(KunenaForumCategory $category, $userid) {
+		$groups = (array) JAccess::getGroupsByUser($userid, true);
+		$post = array_intersect($groups, $category->params->get('access_post', array(2,6,8)));
+		$reply = array_intersect($groups, $category->params->get('access_reply', array(2,6,8)));
+		return array ('topic.create'=>!empty($post), 'topic.reply'=>!empty($reply), 'topic.post.reply'=>!empty($reply));
+	}
+
+	/**
 	 * Authorise list of categories.
 	 *
 	 * Function accepts array of id indexed KunenaForumCategory objects and removes unauthorised
@@ -150,7 +191,7 @@ class KunenaAccessJoomla {
 	 * @param int $userid			User who needs the authorisation (null=current user, 0=visitor).
 	 * @param array $categories		List of categories in access type.
 	 *
-	 * @return array, where category ids are in the keys.
+	 * @return array where category ids are in the keys.
 	 */
 	public function authoriseCategories($userid, array &$categories) {
 		$user = JFactory::getUser($userid);

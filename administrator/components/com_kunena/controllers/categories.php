@@ -149,8 +149,10 @@ class KunenaAdminControllerCategories extends KunenaController {
 		}
 
 		$post = JRequest::get('post', JREQUEST_ALLOWRAW);
-		$accesstype = JRequest::getCmd('accesstype', 'joomla.level');
-		$post['access'] = JRequest::getInt("access-{$accesstype}", JRequest::getInt('access', 0));
+		$accesstype = strtr(JRequest::getCmd('accesstype', 'joomla.level'), '.', '-');
+
+		$post['access'] = JRequest::getInt("access-{$accesstype}", JRequest::getInt('access', null));
+		$post['params'] = JRequest::getVar("params-{$accesstype}", array(), 'post', 'array');
 		$success = false;
 
 		$category = KunenaForumCategoryHelper::get ( intval ( $post ['catid'] ) );
@@ -174,7 +176,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 			}
 			// Only global admin can change access control and class_sfx (others are inherited from parent)
 			if (!$this->me->isAdmin ()) {
-				$access = array('accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'channels', 'class_sfx');
+				$access = array('accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'channels', 'class_sfx', 'params');
 				if (!$category->exists() || $parent->id != $category->parent_id) {
 					// If category didn't exist or is moved, copy access and class_sfx from parent
 					$category->bind($parent->getProperties(), $access, true);

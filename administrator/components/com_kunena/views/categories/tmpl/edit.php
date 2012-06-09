@@ -116,9 +116,9 @@ function submitbutton(pressbutton)
 							foreach ($accesslist as $accessinput) :
 						?>
 						<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
-							<td class="nowrap" valign="top"><?php echo $accessinput['title'] ?></td>
-							<td valign="top"><?php echo $accessinput['input'] ?></td>
-							<td valign="top"><?php echo $accessinput['desc'] ?></td>
+							<td width="30%" class="nowrap" valign="top"><?php echo $accessinput['title'] ?></td>
+							<td width="35%" valign="top"><?php echo $accessinput['input'] ?></td>
+							<td width="35%" valign="top"><?php echo $accessinput['desc'] ?></td>
 						</tr>
 						<?php endforeach; endforeach ?>
 					</table>

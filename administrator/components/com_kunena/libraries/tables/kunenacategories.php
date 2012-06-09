@@ -54,6 +54,20 @@ class TableKunenaCategories extends KunenaTable {
 		parent::__construct ( '#__kunena_categories', 'id', $db );
 	}
 
+	public function bind($array, $ignore = '') {
+		if (isset($array['params']) && !is_string($array['params'])) {
+			if ($array['params'] instanceof JRegistry) {
+				$registry = $array['params'];
+			} elseif (is_array($array['params'])) {
+				$registry = new JRegistry;
+				$registry->loadArray($array['params']);
+			}
+			// TODO: convert to J!2.5: (string) $registry
+			$array['params'] = $registry->toString();
+		}
+		return parent::bind($array, $ignore);
+	}
+
 	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
@@ -107,6 +121,9 @@ class TableKunenaCategories extends KunenaTable {
 		$this->name = trim($this->name);
 		if (!$this->name) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME' ) );
+		}
+		if ($this->params instanceof JRegistry) {
+			$this->params = $this->params->toString();
 		}
 		return ($this->getError () == '');
 	}

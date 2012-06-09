@@ -79,3 +79,21 @@
 	height: 32px;
 	float:right;
 }
+
+#Kunena .kspoiler-title {
+	font-weight: bold;
+}
+#Kunena .kspoiler-expand,
+#Kunena .kspoiler-hide {
+	color: #888;
+}
+#Kunena .kspoiler-wrapper {
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+	min-height: 5px;
+	width: 100%;
+	background-color: #ffc;
+}
+#Kunena .kspoiler-content {
+	margin: 10px 5px;
+}

@@ -657,7 +657,7 @@ class KunenaViewTopic extends KunenaView {
 
 		} elseif (!$this->me->isModerator ( $this->topic->getCategory() )) {
 			// User is not allowed to write a post
-			$this->message_closed = $this->topic->locked ? JText::_('COM_KUNENA_POST_LOCK_SET') : JText::_('COM_KUNENA_VIEW_DISABLED');
+			$this->message_closed = $this->topic->locked ? JText::_('COM_KUNENA_POST_LOCK_SET') : ($this->me->exists() ? JText::_('COM_KUNENA_REPLY_USER_REPLY_DISABLED') : JText::_('COM_KUNENA_VIEW_DISABLED'));
 		}
 
 		// Thank you

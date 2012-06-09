@@ -778,11 +778,6 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo $this->lists ['bbcode_img_secure'] ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_DESC') ?></td>
 					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CUSTOM_SPOILER_IMAGE') ?></td>
-						<td align="left" valign="top"><input type="text" name="cfg_spoiler_image" value="<?php echo $this->escape($this->config->spoiler_image) ?>" /></td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CUSTOM_SPOILER_IMAGE_DESC') ?></td>
-					</tr>
 					<?php /*
 					// TODO: If you uncomment this feature, please remove forced disable from the KunenaConfig class.
 					<tr align="center" valign="middle">

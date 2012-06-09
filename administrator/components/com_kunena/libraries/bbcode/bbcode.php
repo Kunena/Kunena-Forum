@@ -818,38 +818,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		$document = JFactory::getDocument();
 		if (!($document instanceof JDocumentHTML)) {
-			return '[SPOILER]';
+			// Static version
+			return '<div class="kspoiler"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))
+				. '</span> <span class="kspoiler-hide">' . JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_HIDE' )
+				. '</span><div class="kspoiler-wrapper"><div class="kspoiler-content">' . $content . '</div></div></div>';
 		}
 
-		$config = KunenaFactory::getConfig();
-		$template = KunenaFactory::getTemplate();
-		$spoiler_image1 = $template->getImagePath('emoticons/w00t.png');
-		$spoiler_image2 = $template->getImagePath('emoticons/pinch.png');
-		if ( $config->spoiler_image ) $spoiler_image1 = $spoiler_image2 = $template->getImagePath($config->spoiler_image);
-
-		static $spoilerid = 0;
-		if (empty ( $spoilerid )) {
-			// Only need the script for the first spoiler we find
-			$document->addCustomTag (
-			'<script language = "JavaScript" type = "text/javascript">
-			function kShowDetail(srcElement) {
-				var targetID, srcElement, targetElement, imgElementID, imgElement;
-				targetID = srcElement.id + "_details";
-				imgElementID = srcElement.id + "_img";
-				targetElement = document.getElementById(targetID);
-				imgElement = document.getElementById(imgElementID);
-				if (targetElement.style.display == "none") {
-					targetElement.style.display = "";
-					imgElement.src = "' . $spoiler_image1 . '";
-				} else {
-					targetElement.style.display = "none";
-					imgElement.src = "' . $spoiler_image2 . '";
-				}
-			} </script>' );
-		}
-		$spoilerid ++;
-		$randomid = 'spoiler_' . rand ();
-		return '<div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" class = "kspoiler" ><img id="' . $randomid . '_img"' . ' src="'.$spoiler_image2.'" border="0" alt=":pinch:" /> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $content . '</span></div>';
+		return '<div class="kspoiler"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))
+			. '</span> <span class="kspoiler-expand">' . JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND' ) . '</span><span class="kspoiler-hide" style="display:none">'
+			. JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_HIDE' ) . '</span><div class="kspoiler-wrapper"><div class="kspoiler-content" style="display:none">' . $content . '</div></div></div>';
 	}
 
 	function DoHide($bbcode, $action, $name, $default, $params, $content) {

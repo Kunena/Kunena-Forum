@@ -350,7 +350,7 @@
 	/*margin: 12px 0;*/
 }
 
-#kunena.layout div.kpagination ul {
+#kunena.layout ul.kpagination-list {
 	border-radius: 3px 3px 3px 3px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 	display: inline-block;
@@ -358,26 +358,26 @@
 	margin-left: 0;
 }
 
-#kunena.layout div.kpagination li {
+#kunena.layout ul.kpagination-list li.page-item {
 	display: inline;
 }
 
-#kunena.layout div.kpagination a.active {
+#kunena.layout ul.kpagination-list li.page-item a.active {
 	color: #999999;
 	cursor: default;
 }
 
-#kunena.layout div.kpagination a.disabled {
+#kunena.layout ul.kpagination-list li.page-item a.disabled {
 	color: #999999;
 	cursor: default;
 }
 
-#kunena.layout div.kpagination li:first-child > a {
+#kunena.layout ul.kpagination-list li.page-item:first-child > a {
 	border-left-width: 1px;
 	border-radius: 3px 0 0 3px;
 }
 
-#kunena.layout div.kpagination a {
+#kunena.layout ul.kpagination-list li.page-item a {
 	border-bottom-colors: none;
 	border-image: none;
 	border-left-colors: none;

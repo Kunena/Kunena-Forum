@@ -337,6 +337,30 @@ window.addEvent('domready', function(){
 		return $allowed;
 	}
 
+	/**
+	 * Authorise user actions in a category.
+	 *
+	 * Function returns a list of authorized actions. Missing actions are threaded as inherit.
+	 *
+	 * @param KunenaForumCategory $category
+	 * @param int $userid
+	 *
+	 * @return array
+	 */
+	public function authoriseActions(KunenaForumCategory $category, $userid) {
+		$list = array();
+		if (empty($this->accesstypes[$category->accesstype])) return $list;
+		foreach ($this->accesstypes[$category->accesstype] as $access) {
+			if (method_exists($access, 'getAuthoriseActions')) {
+				$sublist = $access->getAuthoriseActions($category, $userid);
+				foreach ($sublist as $key=>$value) {
+					$list[$key] = !empty($list[$key]) || $value;
+				}
+			}
+		}
+		return $list;
+	}
+
 	public function getAllowedHold($user, $catid, $string=true) {
 		// hold = 0: normal
 		// hold = 1: unapproved

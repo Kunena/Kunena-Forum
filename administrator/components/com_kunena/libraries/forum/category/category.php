@@ -16,6 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaForumCategory extends KunenaDatabaseObject {
 	public $id = null;
 	public $level = 0;
+	protected $authorised = array();
 
 	protected $_aliases = null;
 	protected $_alias = null;
@@ -70,6 +71,14 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if ($properties !== null) {
 			$this->setProperties($properties);
 		}
+		$registry = new JRegistry();
+		if (version_compare(JVERSION, '1.6', '>')) {
+			if (!empty($this->params)) $registry->loadString($this->params);
+		} else {
+			if (!empty($this->params)) $registry->loadINI($this->params);
+		}
+		$this->params = $registry;
+
 		$this->_alias = $this->get('alias', '');
 	}
 
@@ -344,7 +353,6 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		} elseif (!($user instanceof KunenaUser)) {
 			$user = KunenaUserHelper::get($user);
 		}
-
 		if (empty($this->_authcache[$user->userid][$action])) {
 			if (!isset(self::$actions[$action])) {
 				JError::raiseError(500, JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
@@ -352,16 +360,21 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 				return false;
 			}
 
-			$this->_authcache[$user->userid][$action] = null;
-			foreach (self::$actions[$action] as $function) {
-				if (!isset($this->_authfcache[$user->userid][$function])) {
-					$authFunction = 'authorise'.$function;
-					$this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
-				}
-				$error = $this->_authfcache[$user->userid][$function];
-				if ($error) {
-					$this->_authcache[$user->userid][$action] = $error;
-					break;
+			if (!isset($this->authorised[$user->userid])) $this->authorised[$user->userid] = KunenaAccess::getInstance()->authoriseActions($this, $user->userid);
+			if (isset($this->authorised[$user->userid][$action]) && $this->authorised[$user->userid][$action] === false) {
+				$this->_authcache[$user->userid][$action] = JText::_ ( 'COM_KUNENA_NO_ACCESS' );
+			} else {
+				$this->_authcache[$user->userid][$action] = null;
+				foreach (self::$actions[$action] as $function) {
+					if (!isset($this->_authfcache[$user->userid][$function])) {
+						$authFunction = 'authorise'.$function;
+						$this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
+					}
+					$error = $this->_authfcache[$user->userid][$function];
+					if ($error) {
+						$this->_authcache[$user->userid][$action] = $error;
+						break;
+					}
 				}
 			}
 		}
@@ -437,7 +450,21 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	public function bind(array $src = null, array $fields = null, $include = false) {
 		if (isset($src['channels']) && is_array($src['channels'])) $src['channels'] = implode(',', $src['channels']);
-		return parent::bind($src, $fields, $include);
+		$result = parent::bind($src, $fields, $include);
+
+		if (!($this->params instanceof JRegistry)) {
+			$registry = new JRegistry();
+			if (is_array($this->params)) {
+				$registry->loadArray($this->params);
+			} elseif (version_compare(JVERSION, '1.6', '>')) {
+				$registry->loadString($this->params);
+			} else {
+				$registry->loadINI($this->params);
+			}
+			$this->params = $registry;
+		}
+
+		return $result;
 	}
 
 	/**
@@ -449,6 +476,14 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 		if (!$this->_saving)
 			$this->_alias = $this->get('alias', '');
+
+		$registry = new JRegistry();
+		if (version_compare(JVERSION, '1.6', '>')) {
+			if ($this->params) $registry->loadString($this->params);
+		} else {
+			if ($this->params) $registry->loadINI($this->params);
+		}
+		$this->params = $registry;
 
 		// Register category if it exists
 		if ($exists) KunenaForumCategoryHelper::register($this);
@@ -631,7 +666,9 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$result = $table->checkout($who);
 
 		// Assuming all is well at this point lets bind the data
+		$params = $this->params;
 		$this->setProperties ( $table->getProperties () );
+		$this->params = $params;
 
 		return $result;
 	}
@@ -654,7 +691,9 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$result = $table->checkin();
 
 		// Assuming all is well at this point lets bind the data
+		$params = $this->params;
 		$this->setProperties ( $table->getProperties () );
+		$this->params = $params;
 
 		$cache = JFactory::getCache('com_kunena', 'output');
 		// FIXME: enable caching after fixing the issues

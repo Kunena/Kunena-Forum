@@ -346,6 +346,7 @@
 			<phpfile name="upgrade-2.0.0_configuration"></phpfile>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+			<phpfile name="upgrade-2.0.0_pubwrite"></phpfile>
 		</version>
 	</upgrade>
 </comupgrade>

@@ -64,6 +64,7 @@ class KunenaAccessJoomla {
 	 * @param int		Group id.
 	 */
 	public function getAccessOptions($accesstype, $category) {
+
 		if (!$accesstype || $accesstype == 'joomla.level') {
 			$object = new StdClass();
 			$object->access = 'joomla.level' == $category->accesstype ? $category->access : 0;
@@ -72,6 +73,19 @@ class KunenaAccessJoomla {
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC') .'<br /><br />'. JText::_('PLG_KUNENA_JOOMLA_ACCESS_LEVEL_DESC_J15'),
 				'input' => JHTML::_('list.accesslevel', $object)
 			);
+			if (!$category->isSection()) {
+				$joomlagroups = $this->_getJoomlaGroups();
+				$html ['joomla-level']['post'] = array(
+					'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
+					'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
+					'input' => JHtml::_('select.genericlist', $joomlagroups, 'params-joomla-level[access_post][]', 'multiple="multiple" class="inputbox" size="9"', 'value', 'text', $category->params->getValue('access_post', array(18,30)))
+				);
+				$html ['joomla-level']['reply'] = array(
+					'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
+					'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
+					'input' => JHtml::_('select.genericlist', $joomlagroups, 'params-joomla-level[access_reply][]', 'multiple="multiple" class="inputbox" size="9"', 'value', 'text', $category->params->getValue('access_reply', array(18,30)))
+				);
+			}
 		}
 		if (!$accesstype || $accesstype == 'joomla.group') {
 			$yesno = array ();
@@ -84,11 +98,8 @@ class KunenaAccessJoomla {
 			$pub_groups [] = JHTML::_ ( 'select.option', - 1, JText::_('COM_KUNENA_ALLREGISTERED') );
 			$adm_groups = array ();
 			$adm_groups [] = JHTML::_ ( 'select.option', 0, JText::_('COM_KUNENA_NOBODY') );
-			$acl = JFactory::getACL ();
-			$joomlagroups = $acl->get_group_children_tree ( null, 'USERS', false );
-			foreach ($joomlagroups as &$group) {
-				$group->text = preg_replace('/(^&nbsp; |\.&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)/', '- ', $group->text);
-			}
+
+			$joomlagroups = $this->_getJoomlaGroups();
 			$pub_groups = array_merge ( $pub_groups, $joomlagroups );
 			$adm_groups = array_merge ( $adm_groups, $joomlagroups );
 
@@ -116,6 +127,18 @@ class KunenaAccessJoomla {
 				'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUP_SECONDARY_CHILDS_DESC'),
 				'input' => JHTML::_ ( 'select.genericlist', $yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->admin_recurse )
 			);
+			if (!$category->isSection()) {
+				$html ['joomla-group']['post'] = array(
+						'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_TITLE'),
+						'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_POST_DESC'),
+						'input' => JHtml::_('select.genericlist', $joomlagroups, 'params-joomla-group[access_post][]', 'multiple="multiple" class="inputbox" size="9"', 'value', 'text', $category->params->getValue('access_post', array(18,30)))
+				);
+				$html ['joomla-group']['reply'] = array(
+						'title' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_TITLE'),
+						'desc' => JText::_('PLG_KUNENA_JOOMLA_ACCESS_GROUPS_REPLY_DESC'),
+						'input' => JHtml::_('select.genericlist', $joomlagroups, 'params-joomla-group[access_reply][]', 'multiple="multiple" class="inputbox" size="9"', 'value', 'text', $category->params->getValue('access_reply', array(18,30)))
+				);
+			}
 		}
 		return $html;
 	}
@@ -141,6 +164,31 @@ class KunenaAccessJoomla {
 		$list = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
 		return $list;
+	}
+
+	/**
+	 * Authorise user actions in a category.
+	 *
+	 * Function returns a list of authorized actions. Missing actions are threaded as inherit.
+	 *
+	 * @param KunenaForumCategory $category
+	 * @param int $userid
+	 *
+	 * @return array
+	 */
+	public function getAuthoriseActions(KunenaForumCategory $category, $userid) {
+		$usergroups = $this->_get_user_groups($userid);
+		$postg = (array) $category->params->getValue('access_post', array(18,30));
+		$replyg = (array) $category->params->getValue('access_reply', array(18,30));
+		foreach ($postg as $group) {
+			$post = (bool) $this->_has_rights($usergroups, $group, true);
+			if ($post) break;
+		}
+		foreach ($replyg as $group) {
+			$reply = (bool) $this->_has_rights($usergroups, $group, true);
+			if ($reply) break;
+		}
+		return array ('topic.create'=>$post, 'topic.reply'=>$reply, 'topic.post.reply'=>$reply);
 	}
 
 	/**
@@ -192,8 +240,8 @@ class KunenaAccessJoomla {
 				// admin_access: 0 = Nobody, >1 = Group ID
 				if ($category->pub_access == 0
 					|| ($user->id > 0 && $category->pub_access == - 1)
-					|| ($category->pub_access > 1 && self::_has_rights ( $usergroups, $category->pub_access, $category->pub_recurse ))
-					|| ($category->pub_access > 0 && $category->admin_access > 0 && $category->admin_access != $category->pub_access && self::_has_rights ( $usergroups, $category->admin_access, $category->admin_recurse ))
+					|| ($category->pub_access > 1 && $this->_has_rights ( $usergroups, $category->pub_access, $category->pub_recurse ))
+					|| ($category->pub_access > 0 && $category->admin_access > 0 && $category->admin_access != $category->pub_access && $this->_has_rights ( $usergroups, $category->admin_access, $category->admin_recurse ))
 				) {
 					$catlist[$category->id] = $category->id;
 				}
@@ -308,5 +356,18 @@ class KunenaAccessJoomla {
 			$cache[$userid] = $db->loadResultArray();
 		}
 		return $cache[$userid];
+	}
+
+	protected function _getJoomlaGroups() {
+		static $joomlagroups = null;
+
+		if (!isset($joomlagroups)) {
+			$acl = JFactory::getACL ();
+			$joomlagroups = $acl->get_group_children_tree ( null, 'USERS', false );
+			foreach ($joomlagroups as &$group) {
+				$group->text = preg_replace('/(^&nbsp; |\.&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)/', '- ', $group->text);
+			}
+		}
+		return $joomlagroups;
 	}
 }

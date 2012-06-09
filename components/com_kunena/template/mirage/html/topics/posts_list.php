@@ -48,7 +48,7 @@ defined ( '_JEXEC' ) or die ();
 								</dl>
 							</li>
 						</ul>
-					<ul class="list-unstyled post-list">
+					<ul class="post-list list-unstyled list-row">
 						<?php if (empty($this->messages )) : ?>
 							<li class="post-row">
 								<dl class="list-unstyled">

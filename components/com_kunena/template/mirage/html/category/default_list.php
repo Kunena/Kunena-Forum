@@ -34,7 +34,9 @@ $this->topic_rowclass = array ("even", "odd");
 			</div>
 			<?php echo $this->displayCategoryActions(); ?>
 			<div class="innerbox-wrapper innerspacer-top kbox-full">
-				<?php echo $this->getPagination(7); ?>
+				<div class="topic-default_list-kpagination kpagination">
+					<?php echo $this->getPagination(7); ?>
+				</div>
 			</div>
 			<div class="detailsbox-wrapper innerspacer kbox-full">
 				<div class="topic detailsbox kbox-full kbox-border kbox-border_radius kbox-shadow">

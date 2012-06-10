@@ -2,8 +2,8 @@
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>2.0.0-RC2-DEV2</version>
-	<versionname>Internal</versionname>
+	<version>2.0.0-RC2</version>
+	<versionname>E-Prime</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>

@@ -297,7 +297,7 @@ class KunenaView extends JView {
 			$this->_path['template_'.$view] = $this->_path['template'];
 			foreach ($this->_path['template_'.$view] as &$dir) $dir = preg_replace("#/{$this->_name}/$#", "/{$view}/", $dir);
 		}
-		
+
 		if ($template) $template = '_'.$template;
 		$file = "{$layout}{$template}.php";
 		$file = JPath::find($this->_path['template_'.$view], $file);
@@ -383,7 +383,7 @@ class KunenaView extends JView {
 	}
 
 	final public function poweredBy() {
-			$credits = '<div style="text-align:center">';
+			$credits = '<div class="kpoweredby">';
 			$credits .= JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=credits', JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow', array('style'=>'display: inline; visibility: visible; text-decoration: none;'));
 			$credits .= ' <a href="http://www.kunena.org" rel="follow" target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'.JText::_('COM_KUNENA').'</a>';
 			if ($this->ktemplate->params->get('templatebyText')) {

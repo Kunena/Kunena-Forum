@@ -340,13 +340,15 @@
 		</version>
 		<version version="2.0.0-BETA1" versiondate="2012-04-24" versionname="Newspeak">
 		</version>
-		<version version="2.0.0-RC1-DEV" versiondate="2012-05-16" versionname="Internal">
+		<version version="2.0.0-RC1" versiondate="2012-05-30" versionname="Orwell">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `accesstype` varchar(20) NOT NULL default 'joomla.level' AFTER `locked`;</query>
 			<query>UPDATE `#__kunena_categories` SET accesstype='joomla.group' WHERE accesstype='none';</query>
 			<phpfile name="upgrade-2.0.0_configuration"></phpfile>
 		</version>
-		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+		<version version="2.0.0-RC2" versiondate="2012-06-10" versionname="E-Prime">
 			<phpfile name="upgrade-2.0.0_pubwrite"></phpfile>
+		</version>
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

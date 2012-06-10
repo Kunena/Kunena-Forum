@@ -10,6 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+if (version_compare(JVERSION, '1.6','<')) {
 $this->document->addScriptDeclaration( "// <![CDATA[
 function tableOrdering( order, dir, task ) {
 	var form=document.adminForm;
@@ -18,6 +19,7 @@ function tableOrdering( order, dir, task ) {
 	document.adminForm.submit( task );
 }
 // ]]>");
+}
 if ($this->me->exists()) {
 	$this->document->addScriptDeclaration( "// <![CDATA[
 document.addEvent('domready', function() {

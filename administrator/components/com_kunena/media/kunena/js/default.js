@@ -866,6 +866,10 @@ window.addEvent('domready', function(){
 		});
 	}
 	
+	if ( document.id('adminForm') != undefined ) {
+		
+	}
+	
 	$$('.kspoiler').each(function(el){
 		var contentElement = el.getElement('.kspoiler-content');
 		var expandElement = el.getElement('.kspoiler-expand');

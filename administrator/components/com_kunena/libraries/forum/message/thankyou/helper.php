@@ -206,7 +206,7 @@ abstract class KunenaForumMessageThankyouHelper {
 			return false;
 		$rows += $db->getAffectedRows ();
 
-		return rows;
+		return $rows;
 	}
 
 	/**

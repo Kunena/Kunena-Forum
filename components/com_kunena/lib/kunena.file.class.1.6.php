@@ -18,7 +18,7 @@ jimport('joomla.filesystem.file');
 
 class CKunenaPath extends JPath
 {
-	function tmpdir()
+	public static function tmpdir()
 	{
 		static $tmpdir=false;
 		if ($tmpdir) return realpath($tmpdir);
@@ -65,7 +65,7 @@ class CKunenaFolder extends JFolder
 class CKunenaFile extends JFile
 {
 
-	static function copy($src, $dest, $path = null)
+	static function copy($src, $dest, $path = null, $use_streams = false)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -86,7 +86,7 @@ class CKunenaFile extends JFile
 		return $ret;
 	}
 
-	static function move($src, $dest, $path = null)
+	static function move($src, $dest, $path = null, $use_streams = false)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -115,7 +115,7 @@ class CKunenaFile extends JFile
 		return $ret;
 	}
 
-	static function write($file, $buffer)
+	static function write($file, $buffer, $use_streams = false)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -131,7 +131,7 @@ class CKunenaFile extends JFile
 		return $ret;
 	}
 
-	static function upload($src, $dest)
+	static function upload($src, $dest, $use_streams = false)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');

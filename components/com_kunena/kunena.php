@@ -22,6 +22,7 @@ KunenaFactory::loadLanguage('com_kunena.controllers');
 KunenaFactory::loadLanguage('com_kunena.models');
 KunenaFactory::loadLanguage('com_kunena.views');
 KunenaFactory::loadLanguage('com_kunena.templates');
+KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 // Load last to get deprecated language files to work
 KunenaFactory::loadLanguage('com_kunena');
 KunenaForum::setup();

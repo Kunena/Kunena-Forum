@@ -870,7 +870,7 @@ window.addEvent('domready', function(){
 		var contentElement = el.getElement('.kspoiler-content');
 		var expandElement = el.getElement('.kspoiler-expand');
 		var hideElement = el.getElement('.kspoiler-hide');
-		el.addEvent('click', function(e){
+		el.getElement('.kspoiler-header').addEvent('click', function(e){
 			if (contentElement.style.display == "none") {
 				contentElement.setStyle('display');
 				expandElement.setStyle('display', 'none');

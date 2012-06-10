@@ -819,14 +819,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$document = JFactory::getDocument();
 		if (!($document instanceof JDocumentHTML)) {
 			// Static version
-			return '<div class="kspoiler"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))
+			return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))
 				. '</span> <span class="kspoiler-hide">' . JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_HIDE' )
-				. '</span><div class="kspoiler-wrapper"><div class="kspoiler-content">' . $content . '</div></div></div>';
+				. '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content">' . $content . '</div></div></div>';
 		}
 
-		return '<div class="kspoiler"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))
+		return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))
 			. '</span> <span class="kspoiler-expand">' . JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND' ) . '</span><span class="kspoiler-hide" style="display:none">'
-			. JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_HIDE' ) . '</span><div class="kspoiler-wrapper"><div class="kspoiler-content" style="display:none">' . $content . '</div></div></div>';
+			. JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_HIDE' ) . '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content" style="display:none">' . $content . '</div></div></div>';
 	}
 
 	function DoHide($bbcode, $action, $name, $default, $params, $content) {

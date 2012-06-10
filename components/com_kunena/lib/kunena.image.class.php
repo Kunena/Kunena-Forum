@@ -625,7 +625,7 @@ class CKunenaImageHelper
 		return $result;
 	}
 
-	function version($file, $newpath, $newfile, $maxwidth = 800, $maxheight = 800, $quality = 70, $scale = CKunenaImage::SCALE_INSIDE) {
+	public static function version($file, $newpath, $newfile, $maxwidth = 800, $maxheight = 800, $quality = 70, $scale = CKunenaImage::SCALE_INSIDE) {
 		require_once(KPATH_SITE.'/lib/kunena.file.class.php');
 		// create upload directory if it does not exist
 		$imageinfo = self::getProperties($file);

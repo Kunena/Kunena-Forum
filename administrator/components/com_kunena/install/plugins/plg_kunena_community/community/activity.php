@@ -112,6 +112,11 @@ class KunenaActivityCommunity extends KunenaActivity {
 		CActivityStream::add ( $act );
 	}
 
+	public function onAfterDeleteTopic($target) {
+		CFactory::load ( 'libraries', 'activities' );
+		CActivityStream::remove ('kunena.post', $target->id );
+	}
+
 	protected function getAccess($category) {
 		// Activity access level: 0 = public, 20 = registered, 30 = friend, 40 = private
 		$accesstype = $category->accesstype;

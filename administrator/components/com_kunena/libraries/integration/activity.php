@@ -45,6 +45,7 @@ class KunenaActivity
 	public function onAfterUndelete($message) {}
 	public function onAfterThankyou($target, $actor, $message) {}
 	public function onAfterUnThankyou($target, $actor, $message) {}
+	public function onAfterDeleteTopic($message) {}
 
 	public function onAfterSubscribe($topicid, $action) {}
 	public function onAfterFavorite($topicid, $action) {}

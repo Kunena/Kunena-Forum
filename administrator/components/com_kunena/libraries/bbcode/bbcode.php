@@ -813,7 +813,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
-		if (!empty($bbcode->lost_start_tags[$name])) {
+		if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
 			return "[{$name}]{$content}";
 		}
 		$document = JFactory::getDocument();
@@ -833,7 +833,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
-		if (!empty($bbcode->lost_start_tags[$name])) {
+		if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
 			return "[{$name}]{$content}";
 		}
 		if (JFactory::getUser ()->id == 0) {
@@ -849,7 +849,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
-		if (!empty($bbcode->lost_start_tags[$name])) {
+		if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
 			return "[{$name}]{$content}";
 		}
 		$me = KunenaUserHelper::getMyself();

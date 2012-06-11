@@ -32,7 +32,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			'create'=>array('NotExists'),
 			'reply'=>array('Read','NotHold','NotMoved','Unlocked'),
 			'edit'=>array('Read','NotMoved','Unlocked','Own'),
-			'move'=>array('Read','NotMoved'),
+			'move'=>array('Read'),
 			'approve'=>array('Read','NotMoved'),
 			'delete'=>array('Read','Unlocked','Own'),
 			'undelete'=>array('Read'),
@@ -632,6 +632,14 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$categoryTarget = $target;
 			$categoryFrom = $this->getCategory();
 
+			if ($this->moved_id) {
+				// Move shadow topic and we are done
+				$this->category_id = $categoryTarget->id;
+				if ($subject) $this->subject = $subject;
+				$this->save(false);
+				return $target;
+			}
+
 			if ($shadow || $ids) {
 				// Create new topic for the moved messages
 				$target = clone $this;
@@ -642,7 +650,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				$target = $this;
 			}
 			// Did user want to change subject?
-		// Did user want to change subject?
 			if ($subject) {
 				$target->subject = $subject;
 				// Change subject of first message

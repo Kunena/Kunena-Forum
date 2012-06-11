@@ -174,12 +174,52 @@ if ($toggleButton) {
 EOF;
 }
 
-
 $styles .= <<<EOF
 	#Kunena .kicon-profile { background-image: url("{$mediaurl}/iconsets/profile/{$template->params->get('profileIconset', 'default')}/default.png"); }
 	#Kunena .kicon-button { background-image: url("{$mediaurl}/iconsets/buttons/{$template->params->get('buttonIconset', 'default')}/default.png") !important; }
 	#Kunena #kbbcode-toolbar li a,#Kunena #kattachments a { background-image:url("{$mediaurl}/iconsets/editor/{$template->params->get('editorIconset', 'default')}/default.png"); }
-	/* End of Kunena Custom CSS */
 EOF;
 
+/*allButtoncolor*/
+$styles .= <<<EOF
+#Kunena .button, #Kunena .kbutton { color: #000000; }
+EOF;
+/*allButtonhovercolor*/
+/*allButtonbordercolor*/
+$styles .= <<<EOF
+#Kunena .button, #Kunena .kbutton { color: #000000; }
+EOF;
+/*allButtontextcolor*/
+/*allButtontexthovercolor*/
+$styles .= <<<EOF
+#Kunena .button:hover, #Kunena .kbutton:focus { color: #000000; }
+EOF;
+
+$paginationLinkcolor = $template->params->get('paginationLinkcolor', $skinner ? '' : '#5388B4');
+$styles .= <<<EOF
+	#Kunena .kpagination a:link, #Kunena .kpagination a:visited { color: {$paginationLinkcolor}; }
+EOF;
+
+$paginationLinkhovercolor = $template->params->get('paginationLinkhovercolor', $skinner ? '' : '#ffffff');
+$styles .= <<<EOF
+	#Kunena .kpagination a:hover { color : {$paginationLinkhovercolor}; }
+EOF;
+
+$paginationBordercolor = $template->params->get('activeFontcolor', $skinner ? '' : 'solid 1px');
+if ( $paginationBordercolor ) {
+	$styles .= <<<EOF
+		#Kunena .kpagination a { border-color:{$paginationBordercolor}; }
+	EOF;
+}
+
+$paginationBorderhovercolor = $template->params->get('activeFontcolor', $skinner ? '' : 'solid 1px');
+if ( $paginationBorderhovercolor ) {
+	$styles .= <<<EOF
+		#Kunena .kpagination a:hover { border-color:{$paginationBorderhovercolor}; }
+	EOF;
+}
+
+$styles .= <<<EOF
+	/* End of Kunena Custom CSS */
+EOF;
 $document->addStyleDeclaration($styles);

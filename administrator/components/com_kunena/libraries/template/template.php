@@ -68,6 +68,7 @@ class KunenaTemplate extends JObject
 		// Create template inheritance
 		if (!is_array($this->default)) $this->default = (array) $this->default;
 		array_unshift($this->default, $name);
+		$this->default = array_unique($this->default);
 
 		$this->xml_path = KPATH_SITE . "/template/{$name}/template.xml";
 		$ini = KPATH_SITE . "/template/{$name}/params.ini";
@@ -427,9 +428,12 @@ HTML;
 	}
 	*/
 
-	public function getTemplatePaths() {
+	public function getTemplatePaths($path = '', $fullpath = false) {
+		if ($path) $path = JPath::clean("/$path");
 		$array = array();
-		foreach (array_reverse($this->default) as $template) $array[] = KPATH_COMPONENT_RELATIVE.'/template/'.$template;
+		foreach (array_reverse($this->default) as $template) {
+			$array[] = ($fullpath ? KPATH_SITE : KPATH_COMPONENT_RELATIVE).'/template/'.$template.$path;
+		}
 		return $array;
 	}
 
@@ -587,6 +591,7 @@ HTML;
 		if (!$name) {
 			$name = JRequest::getString ( 'kunena_template', KunenaFactory::getConfig()->template, 'COOKIE' );
 		}
+		$name = JPath::clean($name);
 		if (empty(self::$_instances[$name])) {
 			// Find overridden template class (use $templatename to avoid creating new objects if the template doesn't exist)
 			$templatename = $name;

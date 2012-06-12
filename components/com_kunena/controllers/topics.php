@@ -35,6 +35,9 @@ class KunenaControllerTopics extends KunenaController {
 		} else {
 			foreach ( $topics as $topic ) {
 				if ($topic->authorise('permdelete') && $topic->delete()) {
+					// Activity integration
+					$activity = KunenaFactory::getActivityIntegration();
+					$activity->onAfterDeleteTopic($topic);
 					$message = JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' );
 				} else {
 					$this->app->enqueueMessage ( $topic->getError (), 'notice' );

@@ -556,8 +556,10 @@ class KunenaModelInstall extends JModel {
 					$this->deleteFiles($dest, $ignore[$dest]);
 					$this->deleteFolders($dest, $ignore[$dest]);
 					if ($dest == KPATH_SITE) {
-						$this->deleteFolders("$dest/template/blue_eagle");
-						$this->deleteFolders("$dest/template/mirage");
+						$folder = "$dest/template/blue_eagle";
+						if ( JFolder::exists($folder) ) JFolder::delete($folder);
+						$folder = "$dest/template/mirage";
+						if ( JFolder::exists($folder) ) JFolder::delete($folder);
 					}
 				}
 				// Copy new files into folder

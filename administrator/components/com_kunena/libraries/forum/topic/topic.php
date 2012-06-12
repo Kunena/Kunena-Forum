@@ -279,14 +279,14 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	public function getTotal($hold=null) {
-		return $this->getReplies($hold) + 1;
+		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory())) {
+			return max($this->posts, 0);
+		}
+		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold) + 1;
 	}
 
 	public function getReplies($hold=null) {
-		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory())) {
-			return max($this->posts - 1, 0);
-		}
-		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold);
+		return max($this->getTotal() - 1, 0);
 	}
 
 	public function getUrl($category = null, $xhtml = true, $action = null) {

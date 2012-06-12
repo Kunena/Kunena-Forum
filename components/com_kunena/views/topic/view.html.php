@@ -65,7 +65,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->messages	= $this->get ( 'Messages' );
 		$this->total	= $this->get ( 'Total' );
 
-		if (!$this->messages) {
+		if (!$this->total) {
 			return $this->displayNoAccess(array(JText::_('COM_KUNENA_NO_ACCESS')));
 		}
 

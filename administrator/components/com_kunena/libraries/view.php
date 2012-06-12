@@ -32,7 +32,7 @@ class KunenaView extends JView {
 		$this->config = KunenaFactory::getConfig();
 		$this->ktemplate = KunenaFactory::getTemplate();
 		// Set the default template search path
-		if (!isset($config['template_path'])) $config['template_path'] = $this->ktemplate->getTemplatePaths("html/$name", true);
+		if ($this->app->isSite() && !isset($config['template_path'])) $config['template_path'] = $this->ktemplate->getTemplatePaths("html/$name", true);
 
 		parent::__construct($config);
 	}

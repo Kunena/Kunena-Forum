@@ -282,7 +282,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory())) {
 			return max($this->posts, 0);
 		}
-		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold);
+		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold) + 1;
 	}
 
 	public function getReplies($hold=null) {

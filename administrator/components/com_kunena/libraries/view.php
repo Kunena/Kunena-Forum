@@ -24,13 +24,17 @@ class KunenaView extends JView {
 	protected $_row = 0;
 
 	public function __construct($config = array()){
-		parent::__construct($config);
+		$name = isset($config['name']) ? $config['name'] : $this->getName();
 		$this->document = JFactory::getDocument();
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->app = JFactory::getApplication ();
 		$this->me = KunenaUserHelper::getMyself();
 		$this->config = KunenaFactory::getConfig();
 		$this->ktemplate = KunenaFactory::getTemplate();
+		// Set the default template search path
+		if (!isset($config['template_path'])) $config['template_path'] = $this->ktemplate->getTemplatePaths("html/$name", true);
+
+		parent::__construct($config);
 	}
 
 	public function displayAll() {
@@ -297,7 +301,7 @@ class KunenaView extends JView {
 			$this->_path['template_'.$view] = $this->_path['template'];
 			foreach ($this->_path['template_'.$view] as &$dir) $dir = preg_replace("#/{$this->_name}/$#", "/{$view}/", $dir);
 		}
-		
+
 		if ($template) $template = '_'.$template;
 		$file = "{$layout}{$template}.php";
 		$file = JPath::find($this->_path['template_'.$view], $file);
@@ -347,8 +351,7 @@ class KunenaView extends JView {
 		}
 		$this->_template = $files[$file];
 
-		if ($this->_template != false)
-		{
+		if ($this->_template != false) {
 			$templatefile = preg_replace('%'.JPATH_ROOT.'/%', '', $this->_template);
 
 			// Unset so as not to introduce into template scope
@@ -376,7 +379,7 @@ class KunenaView extends JView {
 				$output = "\n<!-- START {$templatefile} -->\n{$output}\n<!-- END {$templatefile} -->\n";
 			}
 		} else {
-			$output = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file));
+			$output = JError::raiseError(500, JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $this->getName().'/'.$file));
 		}
 		KUNENA_PROFILER ? $this->profiler->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $output;

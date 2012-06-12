@@ -137,11 +137,6 @@ class KunenaController extends JController {
 				$common->setModel ( $model, true );
 				$view->ktemplate = $common->ktemplate = KunenaFactory::getTemplate();
 				$view->common = $common;
-
-				foreach ($view->ktemplate->getTemplatePaths() as $templatepath) {
-					$view->addTemplatePath(JPATH_SITE."/{$templatepath}/html/{$vName}" );
-					$view->common->addTemplatePath(JPATH_SITE."/{$templatepath}/html/common");
-				}
 			}
 
 			// Get the appropriate model for the view.

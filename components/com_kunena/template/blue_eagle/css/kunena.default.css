@@ -341,8 +341,13 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	background-color:#5388B4;
 	color:#FFFFFF;
 }
+#Kunena .kpagination a:link,
+#Kunena .kpagination a:visited {
+	color:#5388B4;
+}
 #Kunena .kpagination a:hover{
 	border-color:#5388B4;
+	color: #ffffff;
 	background-color: #609FBF;
 }
 #Kunena div.ktopic-title-cover ul.kpagination li.page {

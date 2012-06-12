@@ -32,7 +32,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			'create'=>array('NotExists'),
 			'reply'=>array('Read','NotHold','NotMoved','Unlocked'),
 			'edit'=>array('Read','NotMoved','Unlocked','Own'),
-			'move'=>array('Read','NotMoved'),
+			'move'=>array('Read'),
 			'approve'=>array('Read','NotMoved'),
 			'delete'=>array('Read','Unlocked','Own'),
 			'undelete'=>array('Read'),
@@ -279,14 +279,14 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	public function getTotal($hold=null) {
-		return $this->getReplies($hold) + 1;
+		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory())) {
+			return max($this->posts, 0);
+		}
+		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold) + 1;
 	}
 
 	public function getReplies($hold=null) {
-		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory())) {
-			return max($this->posts - 1, 0);
-		}
-		return KunenaForumMessageHelper::getLocation($this->last_post_id, 'both', $hold);
+		return max($this->getTotal() - 1, 0);
 	}
 
 	public function getUrl($category = null, $xhtml = true, $action = null) {
@@ -632,6 +632,14 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$categoryTarget = $target;
 			$categoryFrom = $this->getCategory();
 
+			if ($this->moved_id) {
+				// Move shadow topic and we are done
+				$this->category_id = $categoryTarget->id;
+				if ($subject) $this->subject = $subject;
+				$this->save(false);
+				return $target;
+			}
+
 			if ($shadow || $ids) {
 				// Create new topic for the moved messages
 				$target = clone $this;
@@ -642,7 +650,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				$target = $this;
 			}
 			// Did user want to change subject?
-		// Did user want to change subject?
 			if ($subject) {
 				$target->subject = $subject;
 				// Change subject of first message
@@ -961,13 +968,16 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 					$this->updatePostInfo(false);
 				}
 			}
-			if ($this->hold != KunenaForum::TOPIC_DELETED && (!$this->first_post_id || !$this->last_post_id)) {
-				// If topic has no visible posts, mark it deleted and recount
-				$this->hold = $exists ? $message->hold : KunenaForum::TOPIC_DELETED;
-				$this->recount();
-			}
 		}
 
+		if (!$this->first_post_id || !$this->last_post_id) {
+			// If topic has no visible posts, mark it deleted and recount
+			$this->hold = $exists ? $message->hold : KunenaForum::TOPIC_DELETED;
+			$this->recount();
+		}
+		if (!$this->posts) {
+			return $this->delete();
+		}
 		if(!$this->save()) {
 			return false;
 		}
@@ -1006,7 +1016,22 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			if (KunenaError::checkDatabaseError ())
 				return false;
 			if (!$result) {
-				$result = array('posts'=>0, 'attachments'=>0);
+				$this->posts = 0;
+				// Double check if all posts have been removed from the database
+				$query ="SELECT COUNT(m.id) AS posts, MIN(m.hold) AS hold
+						FROM #__kunena_messages AS m
+						WHERE m.thread={$this->_db->quote($this->id)}
+						GROUP BY m.thread";
+				$this->_db->setQuery($query);
+				$result = $this->_db->loadAssoc ();
+				if (KunenaError::checkDatabaseError ())
+					return false;
+				if ($result) {
+					// Information in the database was wrong, recount topic
+					$this->hold = $result->hold;
+					$this->recount();
+				}
+				return true;
 			}
 			$this->bind($result);
 		}

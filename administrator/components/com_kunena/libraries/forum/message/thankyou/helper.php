@@ -221,6 +221,7 @@ abstract class KunenaForumMessageThankyouHelper {
 		if ($ids === false) {
 			return self::$_instances;
 		} elseif ( is_array($ids) ) {
+			$ids2 = array();
 			foreach ($ids as $id) {
 				if ($id instanceof KunenaForumMessage) $id = $id->id;
 				$ids2[(int)$id] = (int)$id;

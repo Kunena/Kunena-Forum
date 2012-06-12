@@ -39,6 +39,7 @@ class TableKunenaAttachments extends KunenaTable {
 		if (!$message->exists()) {
 			$this->setError(JText::sprintf('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_MESSAGE_INVALID', (int) $message->id));
 		}
+		$this->folder = trim($this->folder, '/');
 		if (!$this->folder) {
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_FOLDER'));
 		}

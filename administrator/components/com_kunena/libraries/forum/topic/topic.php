@@ -968,13 +968,16 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 					$this->updatePostInfo(false);
 				}
 			}
-			if ($this->hold != KunenaForum::TOPIC_DELETED && (!$this->first_post_id || !$this->last_post_id)) {
-				// If topic has no visible posts, mark it deleted and recount
-				$this->hold = $exists ? $message->hold : KunenaForum::TOPIC_DELETED;
-				$this->recount();
-			}
 		}
 
+		if (!$this->first_post_id || !$this->last_post_id) {
+			// If topic has no visible posts, mark it deleted and recount
+			$this->hold = $exists ? $message->hold : KunenaForum::TOPIC_DELETED;
+			$this->recount();
+		}
+		if (!$this->posts) {
+			return $this->delete();
+		}
 		if(!$this->save()) {
 			return false;
 		}
@@ -1013,7 +1016,22 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			if (KunenaError::checkDatabaseError ())
 				return false;
 			if (!$result) {
-				$result = array('posts'=>0, 'attachments'=>0);
+				$this->posts = 0;
+				// Double check if all posts have been removed from the database
+				$query ="SELECT COUNT(m.id) AS posts, MIN(m.hold) AS hold
+						FROM #__kunena_messages AS m
+						WHERE m.thread={$this->_db->quote($this->id)}
+						GROUP BY m.thread";
+				$this->_db->setQuery($query);
+				$result = $this->_db->loadAssoc ();
+				if (KunenaError::checkDatabaseError ())
+					return false;
+				if ($result) {
+					// Information in the database was wrong, recount topic
+					$this->hold = $result->hold;
+					$this->recount();
+				}
+				return true;
 			}
 			$this->bind($result);
 		}

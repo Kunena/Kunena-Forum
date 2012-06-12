@@ -75,7 +75,6 @@ class plgSystemKunena extends JPlugin {
 	 *
 	 * @return array of KunenaForumMessage objects
 	 */
-	//
 	public function onKunenaPrepare($context, &$items, &$params, $page = 0) {
 		$jcontentevent			= (int) $this->params->get('jcontentevents', false);
 		$jcontentevent_target	= (array) $this->params->get('jcontentevent_target', array('body'));
@@ -85,7 +84,14 @@ class plgSystemKunena extends JPlugin {
 
 				// Object KunenaForumTopic
 				case 'kunena.topic':
-					$items = array( $items );
+					if ( in_array('title', $jcontentevent_target) ) {
+						$this->runJoomlaContentEvent( $item->subject, $params, $page );
+					}
+					if ( in_array('body', $jcontentevent_target) ) {
+						$this->runJoomlaContentEvent( $item->first_post_message, $params, $page );
+						$this->runJoomlaContentEvent( $item->last_post_message, $params, $page );
+					}
+					break;
 
 				// Array of KunenaForumTopic
 				case 'kunena.topics':
@@ -95,18 +101,24 @@ class plgSystemKunena extends JPlugin {
 					// Run events on all objects
 					foreach ( $items as $item ) {
 						if ( in_array('title', $jcontentevent_target) ) {
-								$this->runJoomlaContentEvent( $item->subject, $params, $page );
+							$this->runJoomlaContentEvent( $item->subject, $params, $page );
 						}
 						if ( in_array('body', $jcontentevent_target) ) {
-								$this->runJoomlaContentEvent( $item->first_post_message, $params, $page );
-								$this->runJoomlaContentEvent( $item->last_post_message, $params, $page );
+							$this->runJoomlaContentEvent( $item->first_post_message, $params, $page );
+							$this->runJoomlaContentEvent( $item->last_post_message, $params, $page );
 						}
 					}
 					break;
 
 				// Object KunenaForumMessage
 				case 'kunena.message':
-					$items = array( $items );
+					if ( in_array('title', $jcontentevent_target) ) {
+						$this->runJoomlaContentEvent( $items->subject, $params, $page );
+					}
+					if ( in_array('body', $jcontentevent_target) ) {
+						$this->runJoomlaContentEvent( $items->message, $params, $page );
+					}
+					break;
 
 				// Array of KunenaForumMessage
 				case 'kunena.messages':

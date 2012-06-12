@@ -57,6 +57,10 @@ class KunenaViewTopic extends KunenaView {
 			}
 		}
 
+		if (!KunenaForumMessageHelper::get($this->topic->first_post_id)->exists()) {
+			return $this->displayNoAccess(array(JText::_('COM_KUNENA_NO_ACCESS')));
+		}
+
 		$errors = $this->getErrors();
 		if ($errors) {
 			return $this->displayNoAccess($errors);
@@ -64,10 +68,6 @@ class KunenaViewTopic extends KunenaView {
 
 		$this->messages	= $this->get ( 'Messages' );
 		$this->total	= $this->get ( 'Total' );
-
-		if (!$this->messages) {
-			return $this->displayNoAccess(array(JText::_('COM_KUNENA_NO_ACCESS')));
-		}
 
 		// If page does not exist, redirect to the last page
 		if ($this->total <= $this->state->get('list.start')) {

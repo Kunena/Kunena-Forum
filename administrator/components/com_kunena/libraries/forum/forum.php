@@ -309,18 +309,11 @@ abstract class KunenaForum {
 		$view->setModel ( $model, true );
 
 		// Add template path
-		$ktemplate = KunenaFactory::getTemplate();
-		foreach ($ktemplate->getTemplatePaths() as $templatepath) {
-			$view->addTemplatePath(JPATH_SITE."/{$templatepath}/html/{$viewName}");
-		}
 		if ($params->get('templatepath')) $view->addTemplatePath($params->get('templatepath'));
 
 		if ($viewName != 'common') {
 			$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );
 			$view->common->embedded = true;
-			foreach ($ktemplate->getTemplatePaths() as $templatepath) {
-				$view->common->addTemplatePath(JPATH_SITE."/{$templatepath}/html/common");
-			}
 		}
 		// Flag view as being embedded
 		$view->embedded = true;

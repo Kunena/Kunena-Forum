@@ -265,8 +265,10 @@ HTML;
 			return true;
 		} else {
 			// For other templates use the old way
-			$filename = $this->getFile($filename);
-			$filemin = preg_replace ( '/\.css$/u', '-min.css', $filename );
+			$filemin = $filename = $this->getFile($filename);
+			if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev ()) {
+				$filemin = preg_replace ( '/\.css$/u', '-min.css', $filename );
+			}
 			if (JFile::exists(JPATH_ROOT."/$filemin")) {
 				$filename = $filemin;
 			}

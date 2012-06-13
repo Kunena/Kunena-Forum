@@ -18,6 +18,7 @@ function tableOrdering( order, dir, task ) {
 	document.adminForm.submit( task );
 }
 // ]]>");
+
 if ($this->me->exists()) {
 	$this->document->addScriptDeclaration( "// <![CDATA[
 document.addEvent('domready', function() {

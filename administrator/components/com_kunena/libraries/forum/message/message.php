@@ -278,6 +278,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	public function authorise($action='read', $user=null, $silent=false) {
+		if ($action == 'none') return true;
 		static $actions  = array(
 			'none'=>array(),
 			'read'=>array('Read'),

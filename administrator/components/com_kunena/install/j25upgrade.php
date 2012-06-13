@@ -19,6 +19,11 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 		// Joomla 2.5 support
 		if (file_exists(JPATH_LIBRARIES.'/cms/version/version.php')) require_once JPATH_LIBRARIES.'/cms/version/version.php';
 
+		if (!defined('JVERSION')) {
+			$version = new JVersion();
+			define('JVERSION', $version->getShortVersion());
+		}
+
 		parent::__construct($step);
 	}
 
@@ -72,6 +77,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 
 		// Do some custom post processing on the list.
 		foreach ($rows as &$row) {
+			$row['params'] = $this->convertParams($row['params']);
 			if (!isset($row['accesstype']) || $row['accesstype'] == 'joomla.group' ) {
 				if ($row['admin_access'] != 0) {
 					$row['admin_access'] = $this->mapUserGroup($row['admin_access']);
@@ -98,6 +104,30 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 		}
 		$this->setDestinationData($rows);
 		return true;
+	}
+
+	/**
+	 * A hook to be able to modify params prior as they are converted to JSON.
+	 *
+	 * @param	object	$object	A reference to the parameters as an object.
+	 *
+	 * @return	void
+	 * @since	0.4.
+	 * @throws	Exception
+	 */
+	protected function convertParamsHook(&$object) {
+		if (isset($object->access_post)) $object->access_post = $this->mapUserGroups($object->access_post);
+		if (isset($object->access_reply)) $object->access_reply = $this->mapUserGroups($object->access_reply);
+	}
+
+	protected function mapUserGroups($list) {
+		if (!is_array($list)) $list = explode('|', $list);
+		foreach ($list as &$groupid) {
+			$groupid = $this->mapUserGroup($groupid);
+		}
+		// Always give Super Users group access
+		if (!in_array(8, $list)) $list[] = 8;
+		return $list;
 	}
 
 	/**
@@ -165,7 +195,7 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 				case 'home':
 					// Update default menu item
 					if (!empty($menuitem->query['defaultmenu'])) {
-						$menuitem->query['defaultmenu'] = $menumap[$menuitem->query['defaultmenu']]->new;
+						$menuitem->query['defaultmenu'] = isset($menumap[$menuitem->query['defaultmenu']]) ? $menumap[$menuitem->query['defaultmenu']]->new : 0;
 						$update = true;
 					}
 					break;

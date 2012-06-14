@@ -259,6 +259,11 @@ abstract class KunenaForumMessageHelper {
 		}
 	}
 
+	public static function cleanup() {
+		self::$_instances = array();
+		self::$_location = array();
+	}
+
 	public static function recount($topicids=false) {
 		$db = JFactory::getDBO ();
 

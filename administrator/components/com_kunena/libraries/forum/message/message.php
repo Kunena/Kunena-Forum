@@ -37,6 +37,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		parent::__construct($properties);
 	}
 
+	public function __destruct() {
+		unset($this->_db);
+		unset($this->_topic);
+	}
+
 	/**
 	 * Returns KunenaForumMessage object
 	 *

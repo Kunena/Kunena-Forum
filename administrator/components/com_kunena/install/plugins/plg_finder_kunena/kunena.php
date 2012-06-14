@@ -44,12 +44,28 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	protected $layout = 'topic';
 
 	/**
+	 * The mime type of the content the adapter indexes.
+	 *
+	 * @var    string
+	 * @since  2.5
+	 */
+	protected $mime = 'txt';
+
+	/**
 	 * The type of content that the adapter indexes.
 	 *
 	 * @var    string
 	 * @since  2.5
 	 */
 	protected $type_title = 'Forum Post';
+
+	/**
+	 * The field the published state is stored in.
+	 *
+	 * @var    string
+	 * @since  2.5
+	 */
+	protected $state_field = 'published';
 
 	/**
 	 * Method to reindex the link information for an item that has been saved.
@@ -154,6 +170,54 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	}
 
 	/**
+	 * Method to index a batch of content items. This method can be called by
+	 * the indexer many times throughout the indexing process depending on how
+	 * much content is available for indexing. It is important to track the
+	 * progress correctly so we can display it to the user.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   2.5
+	 * @throws  Exception on error.
+	 */
+	public function onBuildIndex()
+	{
+		JLog::add('FinderIndexerAdapter::onBuildIndex', JLog::INFO);
+
+		// Get the indexer and adapter state.
+		$iState = FinderIndexer::getState();
+		$aState = $iState->pluginState[$this->context];
+
+		// Check the progress of the indexer and the adapter.
+		if ($iState->batchOffset == $iState->batchSize || $aState['offset'] == $aState['total'])
+		{
+			return true;
+		}
+
+		// Get the batch offset and size.
+		$offset = (int) $aState['offset'];
+		$limit = (int) ($iState->batchSize - $iState->batchOffset);
+
+		// Get the content items to index.
+		$items = $this->getItems($offset, $limit);
+
+		// Iterate through the items and index them.
+		foreach ($items as $item) $this->index($item);
+
+		// Adjust the offsets.
+		$iState->batchOffset = $iState->batchSize;
+		$iState->totalItems -= $item->id - $offset;
+
+		// Update the indexer state.
+		$aState['offset'] = $item->id;
+		$iState->pluginState[$this->context] = $aState;
+		FinderIndexer::setState($iState);
+
+		unset($items, $item);
+		return true;
+	}
+
+	/**
 	 * Method to index an item. The item must be a FinderIndexerResult object.
 	 *
 	 * @param   FinderIndexerResult  $item  The item to index as an FinderIndexerResult object.
@@ -168,21 +232,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		if (JComponentHelper::isEnabled($this->extension) == false) {
 			return;
 		}
-
-		// Translate the access group to an access level.
-		// FIXME:
-		$item->access = $item->cat_access = 1; // $this->getAccessLevel($item->cat_access);
-
-		// Set the language.
-		$item->language = FinderIndexerHelper::getDefaultLanguage();
-
-		// Trigger the onContentPrepare event.
-		$item->body = $item->summary = FinderIndexerHelper::prepareContent(KunenaHtmlParser::parseBBCode($item->body));
-
-		// Build the necessary route and path information.
-		$item->url = $this->getUrl($item, $this->extension, $this->layout);
-		$item->route = $item->url.'&Itemid='.KunenaRoute::getItemId($item->url);
-		$item->path = FinderIndexerHelper::getContentPath($item->route);
 
 		// Add the meta-data processing instructions.
 		$item->addInstruction(FinderIndexer::META_CONTEXT, 'author');
@@ -216,39 +265,156 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @since   2.5
 	 */
 	protected function setup() {
+		// Initialize CLI
+		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		if (file_exists($api)) {
+			require_once $api;
+		}
+
 		// Check if Kunena has been installed.
-		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::installed()) {
+		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible('2.0') || ! KunenaForum::installed()) {
 			return false;
 		}
+		KunenaForum::setup();
 		return true;
 	}
 
 	/**
-	 * Method to get the SQL query used to retrieve the list of content items.
+	 * Method to get the number of content items available to index.
 	 *
-	 * @param   mixed  $sql  A JDatabaseQuery object or null.
-	 *
-	 * @return  JDatabaseQuery  A database object.
+	 * @return  integer  The number of content items available to index.
 	 *
 	 * @since   2.5
+	 * @throws  Exception on database error.
 	 */
-	protected function getListQuery($sql = null)
+	protected function getContentCount() {
+		JLog::add('FinderIndexerAdapter::getContentCount', JLog::INFO);
+
+		// Get the list query.
+		$sql = $this->db->getQuery(true);
+		$sql->select('MAX(id)')->from('#__kunena_messages');
+
+		// Get the total number of content items to index.
+		$this->db->setQuery($sql);
+		$return = (int) $this->db->loadResult();
+
+		// Check for a database error.
+		if ($this->db->getErrorNum())
+		{
+			// Throw database error exception.
+			throw new Exception($this->db->getErrorMsg(), 500);
+		}
+
+		return $return;
+	}
+
+
+	/**
+	 * Method to get a content item to index.
+	 *
+	 * @param   integer  $id  The id of the content item.
+	 *
+	 * @return  FinderIndexerResult  A FinderIndexerResult object.
+	 *
+	 * @since   2.5
+	 * @throws  Exception on database error.
+	 */
+	protected function getItem($id)
 	{
-		// Check if we can use the supplied SQL query.
-		$sql = ($sql instanceof JDatabaseQuery) ? $sql : $this->db->getQuery(true);
-		$sql->select('m.id, m.parent, m.thread, m.catid, m.subject AS title');
-		$sql->select('FROM_UNIXTIME(m.time, \'%Y-%m-%d %H:%i:%s\') AS start_date');
-		$sql->select('m.name AS author, t.message AS summary, t.message AS body');
-		$sql->select('c.name AS category, 1 AS state, c.published AS cat_state, c.pub_access AS access, c.pub_access AS cat_access');
-		$sql->from('#__kunena_messages AS m');
-		$sql->join('INNER', '#__kunena_messages_text AS t ON t.mesid = m.id');
-		$sql->join('INNER', '#__kunena_categories AS c ON c.id = m.catid');
-		$sql->join('LEFT', '#__users AS u ON u.id = m.userid');
+		JLog::add('FinderIndexerAdapter::getItem', JLog::INFO);
 
-		// Only include posts that have been approved.
-		$sql->where('m.hold=0 AND m.moved=0');
+		$message = KunenaForumMessageHelper::get($id);
 
-		return $sql;
+		// Convert the item to a result object.
+		$item = $this->$this->createIndexerResult($message);
+		unset($message);
+		KunenaForumMessageHelper::clean();
+
+		return $item;
+	}
+
+	/**
+	 * Method to get a list of content items to index.
+	 *
+	 * @param   integer         $offset  The list offset.
+	 * @param   integer         $limit   The list limit.
+	 * @param   JDatabaseQuery  $sql     A JDatabaseQuery object. [optional]
+	 *
+	 * @return  array  An array of FinderIndexerResult objects.
+	 *
+	 * @since   2.5
+	 * @throws  Exception on database error.
+	 */
+	protected function getItems($offset, $limit, $sql = null)
+	{
+		JLog::add("FinderIndexerAdapter::getItems({$offset}, {$limit})", JLog::INFO);
+
+		// Get the list query.
+		$sql = $this->db->getQuery(true);
+		$sql->select('id')->from('#__kunena_messages')->where('id>'.$this->db->quote($offset));
+
+		// Get the content items to index.
+		$this->db->setQuery($sql, 0, $limit);
+		$ids = $this->db->loadColumn();
+
+		// Check for a database error.
+		if ($this->db->getErrorNum())
+		{
+			// Throw database error exception.
+			throw new Exception($this->db->getErrorMsg(), 500);
+		}
+
+		// Convert the items to result objects.
+		$messages = KunenaForumMessageHelper::getMessages($ids, 'none');
+		$items = array();
+		foreach ($messages as &$message)
+		{
+			$items[] = $this->createIndexerResult($message);
+		}
+		KunenaForumMessageHelper::cleanup();
+		KunenaRoute::cleanup();
+
+		return $items;
+	}
+
+	protected function createIndexerResult($message) {
+		// Convert the item to a result object.
+		$item = new FinderIndexerResult;
+		$item->id = $message->id;
+		$item->catid = $message->catid;
+
+		// Set title context.
+		$item->title = $message->subject;
+
+		// Build the necessary url, route, path and alias information.
+		$item->url = $this->getUrl($message, $this->extension, $this->layout);
+//		$item->route = $item->url.'&Itemid='.KunenaRoute::getItemId($item->url);
+		$item->path = FinderIndexerHelper::getContentPath($item->uri);//route);
+		$item->alias = KunenaRoute::stringURLSafe($message->subject);
+
+		// Set body context.
+//		$item->body = KunenaHtmlParser::stripBBCode($message->message);
+
+		// Set other information.
+		$item->published = intval($message->hold == 1);
+		// TODO: add topic state
+		$item->state = intval($message->getCategory()->published == 1);
+		$item->language = '*';
+		$item->publish_start_date = date($this->db->getDateFormat(), $message->time);
+		$item->start_date = $item->publish_start_date;
+		// TODO: add access control
+		$item->access = 1; // $this->getAccessLevel($item->cat_access);
+
+		// Set the item type.
+		$item->type_id = $this->type_id;
+
+		// Set the mime type.
+		$item->mime = $this->mime;
+
+		// Set the item layout.
+		$item->layout = $this->layout;
+
+		return $item;
 	}
 
 	/**
@@ -260,5 +426,31 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 */
 	protected function getUrl($item, $extension, $view) {
 		return "index.php?option=com_kunena&view={$view}&catid={$item->catid}&id={$item->thread}&mesid={$item->id}";
+	}
+
+	/**
+	 * Method to translate the native content states into states that the
+	 * indexer can use.
+	 *
+	 * @param   integer  $item      The item state.
+	 * @param   integer  $category  The category state. [optional]
+	 *
+	 * @return  integer  The translated indexer state.
+	 *
+	 * @since   2.5
+	 */
+	protected function translateState($item, $category = null)
+	{
+		// If category is present, factor in its states as well
+		if ($category !== null)
+		{
+			if ($category != 1)
+			{
+				$item = 0;
+			}
+		}
+
+		// Translate the state
+		return intval($item == 1);
 	}
 }

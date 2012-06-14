@@ -53,6 +53,8 @@ abstract class KunenaRoute {
 	static $uris = array();
 	static $urisSave = false;
 
+	static protected $filtered = array();
+
 	public static function current($object = false) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$uri = self::prepare();
@@ -191,19 +193,18 @@ abstract class KunenaRoute {
 	}
 
 	public static function stringURLSafe($string) {
-		static $filtered = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		if (!isset($filtered[$string])) {
+		if (!isset(self::$filtered[$string])) {
 			if (version_compare(JVERSION, '1.6', '>')) {
 				// Joomla 1.6+
-				$filtered[$string] = JApplication::stringURLSafe($string);
+				self::$filtered[$string] = JApplication::stringURLSafe($string);
 			} else {
 				// Joomla 1.5
-				$filtered[$string] =  self::$config->get('sefutf8') ? self::stringURLUnicodeSlug($string) : JFilterOutput::stringURLSafe($string);
+				self::$filtered[$string] =  self::$config->get('sefutf8') ? self::stringURLUnicodeSlug($string) : JFilterOutput::stringURLSafe($string);
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		return $filtered[$string];
+		return self::$filtered[$string];
 	}
 
 	/**
@@ -278,6 +279,10 @@ abstract class KunenaRoute {
 		}
 		self::$home = self::getHome(self::$active);
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+	}
+
+	public static function cleanup() {
+		self::$filtered = array();
 	}
 
 	protected static function prepare($uri = null) {

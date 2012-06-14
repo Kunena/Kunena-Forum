@@ -37,6 +37,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		parent::__construct($properties);
 	}
 
+	public function __destruct() {
+		unset($this->_db);
+		unset($this->_topic);
+	}
+
 	/**
 	 * Returns KunenaForumMessage object
 	 *
@@ -278,6 +283,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	public function authorise($action='read', $user=null, $silent=false) {
+		if ($action == 'none') return true;
 		static $actions  = array(
 			'none'=>array(),
 			'read'=>array('Read'),

@@ -26,7 +26,7 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" id="adminForm" name="adminForm"">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="boxchecked" value="0" />
 			<input type="hidden" name="task" value="" />
 			<?php echo JHTML::_( 'form.token' ); ?>

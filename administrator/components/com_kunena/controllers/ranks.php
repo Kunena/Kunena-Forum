@@ -87,11 +87,10 @@ class KunenaAdminControllerRanks extends KunenaController {
 		}
 
 		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
-		$uploadfolder	= JRequest::getVar( 'folderranks', 'ranks', '', 'path' );
 		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
 		$view			= JRequest::getVar( 'view', '');
 
-		$upload = KunenaUploadHelper::upload($file, $uploadfolder, $format, $view);
+		$upload = KunenaUploadHelper::upload($file, 'ranks', $format, $view);
 		if ( $upload ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_RANKS_UPLOAD_SUCCESS') );
 		} else {

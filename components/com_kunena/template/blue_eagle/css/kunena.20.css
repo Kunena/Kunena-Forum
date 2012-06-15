@@ -103,3 +103,10 @@
 #Kunena .kspoiler-content {
 	margin: 10px 5px;
 }
+
+#Kunena span.ktopicmy {
+	background-image: url("../images/icons/myflag.png");
+	width: 16px;
+	height: 16px;
+	margin-left: 2px;
+}

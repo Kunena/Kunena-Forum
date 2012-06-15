@@ -298,7 +298,7 @@ abstract class KunenaRoute {
 				}
 				// Make sure that request URI is not broken
 				foreach (JRequest::get( 'get' ) as $key=>$value) {
-					if (preg_match('/[^a-z]/', $key)) continue;
+					if (preg_match('/[^a-zA-Z]/', $key)) continue;
 					if ($key == 'q' || $key == 'searchuser') {
 						// Allow all values
 					} elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
@@ -307,12 +307,13 @@ abstract class KunenaRoute {
 					}
 					$get[$key] = $value;
 				}
-				$current[$uri] = JURI::getInstance('index.php?'.http_build_query($get).$uri);
-				$current[$uri]->delVar ( 'Itemid' );
-				$current[$uri]->delVar ( 'defaultmenu' );
-				$current[$uri]->delVar ( 'language' );
+				$uri = $current[$uri] = JURI::getInstance('index.php?'.http_build_query($get).$uri);
+				self::setItemID($uri);
+				$uri->delVar ( 'defaultmenu' );
+				$uri->delVar ( 'language' );
+			} else {
+				$uri = $current[$uri];
 			}
-			$uri = $current[$uri];
 		} elseif (is_numeric($uri)) {
 			if (!isset(self::$menu[intval($uri)])) {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -438,6 +439,7 @@ abstract class KunenaRoute {
 
 		$view = $uri->getVar('view');
 		$catid = (int) $uri->getVar('catid');
+		$Itemid = (int) $uri->getVar('Itemid');
 		$key = $view.$catid;
 		if (!isset($candidates[$key])) {
 			if (self::$search === false) self::build();
@@ -465,26 +467,15 @@ abstract class KunenaRoute {
 			$candidates[$key] += !empty(self::$search[$view][0]) ? self::$search[$view][0] : array();
 			if ($view == 'topic') $candidates[$key] += !empty(self::$search['category'][0]) ? self::$search['category'][0] : array();
 		}
-		$bestid = $bestcount = 0;
-		// echo "$key "; print_r($candidates[$key]);
+
+		// Check current menu item first
+		$bestcount = ($Itemid && isset(self::$menu[$Itemid])) ? self::checkItem(self::$menu[$Itemid], $uri) : 0;
+		$bestid = $bestcount ? $Itemid : 0;
+
+		// Then go through all candidates
 		foreach ($candidates[$key] as $id) {
 			$item = self::$menu[$id];
-			$authorise = version_compare(JVERSION, '1.6', '>') ? self::$menus->authorise($item->id) : !isset ( $item->access ) || $item->access <= JFactory::getUser()->aid;
-			if (!$authorise) {
-				continue;
-			}
-
-			switch ($item->query['view']) {
-				case 'home':
-					$matchcount = self::checkHome($item, $catid);
-					break;
-				case 'category':
-				case 'topic':
-					$matchcount = self::checkCategory($item, $uri);
-					break;
-				default:
-					$matchcount = self::check($item, $uri);
-			}
+			$matchcount = self::checkItem($item, $uri);
 			if ($matchcount > $bestcount) {
 				// This is our best candidate this far
 				$bestid = $item->id;
@@ -494,6 +485,26 @@ abstract class KunenaRoute {
 		$uri->setVar('Itemid', $bestid);
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $bestid;
+	}
+
+	protected static function checkItem($item, $uri) {
+		$authorise = version_compare(JVERSION, '1.6', '>') ? self::$menus->authorise($item->id) : !isset ( $item->access ) || $item->access <= JFactory::getUser()->aid;
+		if (!$authorise) {
+			return 0;
+		}
+		$catid = (int) $uri->getVar('catid');
+		switch ($item->query['view']) {
+			case 'home':
+				$matchcount = self::checkHome($item, $catid);
+				break;
+			case 'category':
+			case 'topic':
+				$matchcount = self::checkCategory($item, $uri);
+				break;
+			default:
+				$matchcount = self::check($item, $uri);
+		}
+		return $matchcount;
 	}
 
 	protected static function checkHome($item, $catid) {

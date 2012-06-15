@@ -293,8 +293,9 @@ class KunenaControllerUser extends KunenaController {
 
 	// Mostly copied from Joomla 1.5
 	protected function saveUser(){
-		// we don't want users to edit certain fields so we will ignore them
-		$ignore = array('id', 'gid', 'block', 'usertype', 'registerDate', 'activation');
+		// we only allow users to edit few fields
+		$allow = array('name', 'email', 'password', 'password2', 'params');
+		if ($this->config->usernamechange) $allow[] = 'username';
 
 		//clean request
 		$post = JRequest::get( 'post' );
@@ -303,25 +304,7 @@ class KunenaControllerUser extends KunenaController {
 		if (empty($post['password']) || empty($post['password2'])) {
 			unset($post['password'], $post['password2']);
 		}
-		if ($this->config->usernamechange) $post['username'] = JRequest::getVar('username', '', 'post', 'username');
-		else $ignore[] = 'username';
-		foreach ($ignore as $field) {
-			if (isset($post[$field]))
-				unset($post[$field]);
-		}
-
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			jimport('joomla.user.helper');
-			$result = JUserHelper::getUserGroups($this->user->id);
-
-			$groups = array();
-			foreach ( $result as $key => $value ) {
-				$groups[]= $key;
-			}
-
-			$post['groups'] = $groups;
-		}
+		$post = array_intersect_key($post, array_flip($allow));
 
 		// get the redirect
 		$return = CKunenaLink::GetMyProfileURL($this->user->id, '', false);

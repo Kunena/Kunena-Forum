@@ -25,7 +25,7 @@ class KunenaUploadHelper {
 		JPlugin::loadLanguage( 'com_media' );
 		$params = JComponentHelper::getParams('com_media');
 		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
-		$path = JPATH_ROOT."/components/com_kunena/template/{$config->template}/images";
+		$path = KPATH_MEDIA;
 
 		$err			= null;
 

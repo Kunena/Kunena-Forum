@@ -35,24 +35,24 @@ $this->cache = false;
     <div class="ktopic-details">
 		<?php if ($this->topic->attachments) echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') ); ?>
 		<?php if ($this->topic->poll_id) echo $this->getIcon ( 'ktopicpoll', JText::_('COM_KUNENA_ADMIN_POLLS') ); ?>
-		
+
 		<div class="ktopic-title-cover">
 			<?php
 			echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
 			if ($this->topic->getUserTopic()->favorite) {
 				echo $this->getIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
 			}
+			if ($this->me->exists() && $this->topic->getUserTopic()->posts) {
+				echo $this->getIcon ( 'ktopicmy', JText::_('COM_KUNENA_MYPOSTS') );
+			}
 			if ($this->topic->unread) {
 				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
 			}
-			if ($this->topic->locked != 0) {
-				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_LOCKED_TOPIC') );
-			}
 			?>
-		</div>        
+		</div>
         <div class="ktopic-details-kcategory">
 			<?php if (!isset($this->category) || $this->category->id != $this->topic->getCategory()->id) : ?>
-			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span> 
+			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
 			<?php endif; ?>
         </div>
          <div class="ktopic-details-kcategory">
@@ -61,7 +61,7 @@ $this->cache = false;
 			</span>
 			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
 		  </div>
-        
+
         <div class="ktopic-details-kcategory" style="clear:both;">
 		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
 		<ul class="kpagination">

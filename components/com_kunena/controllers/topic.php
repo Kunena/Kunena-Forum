@@ -341,7 +341,6 @@ class KunenaControllerTopic extends KunenaController {
 		$this->setThankyou($type);
 
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_SUCCESS' ) );
-		$this->redirectBack ();
 	}
 
 	public function unthankyou() {
@@ -349,7 +348,6 @@ class KunenaControllerTopic extends KunenaController {
 		$this->setThankyou($type);
 
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_REMOVED_SUCCESS' ) );
-		$this->redirectBack ();
 	}
 
 	protected function setThankyou($type){
@@ -364,6 +362,7 @@ class KunenaControllerTopic extends KunenaController {
 			$this->redirectBack ();
 		}
 
+		$category = KunenaForumCategoryHelper::get($this->catid);
 		$thankyou = KunenaForumMessageThankyouHelper::get($this->mesid);
 		$activityIntegration = KunenaFactory::getActivityIntegration();
 		if ( $type== 'thankyou') {
@@ -380,6 +379,7 @@ class KunenaControllerTopic extends KunenaController {
 			}
 			$activityIntegration->onAfterUnThankyou($userid, $this->me->userid, $message);
 		}
+		$this->setRedirect($message->getUrl($category->exists() ? $category->id : $message->catid, false));
 	}
 
 	public function subscribe() {

@@ -26,7 +26,7 @@ document.addEvent('domready', function() {
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="searchform" id="adminForm" name="adminForm">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="searchform" id="searchform">
 	<input type="hidden" name="view" value="search" />
 	<input type="hidden" name="task" value="results" />
 	<?php echo JHTML::_( 'form.token' ); ?>
@@ -120,7 +120,7 @@ document.addEvent('domready', function() {
 						<?php $this->displayCategoryList('categorylist', 'class="inputbox" size="8" multiple="multiple"') ?>
 						<label id="childforums-lbl">
 							<input type="checkbox" name="childforums" value="1" <?php if ($this->state->get('query.childforums')) echo 'checked="checked"'; ?> />
-							<span onclick="document.adminForm.childforums.checked=(! document.adminForm.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>
+							<span onclick="document.searchform.childforums.checked=(! document.searchform.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>
 						</label>
 					</fieldset>
 					<?php if ( KunenaAccess::getInstance()->getModeratorStatus() ) : ?>

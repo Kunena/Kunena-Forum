@@ -62,7 +62,7 @@ abstract class JHtmlKunenaGrid
 	 *
 	 * @return  string
 	 */
-	public static function sort($title, $order, $direction = 'asc', $selected = 0, $task=NULL, $new_direction='asc') {
+	public static function sort($title, $order, $direction = 'asc', $selected = 0, $task=NULL, $new_direction='asc', $form=null) {
 		$direction	= strtolower($direction);
 		if ($order != $selected) {
 			$direction = $new_direction;
@@ -70,7 +70,11 @@ abstract class JHtmlKunenaGrid
 			$direction	= ($direction == 'desc') ? 'asc' : 'desc';
 		}
 
-		$html = '<a href="javascript:tableOrdering(\''.$order.'\',\''.$direction.'\',\''.$task.'\');" title="'.JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN').'">';
+		if (version_compare(JVERSION, '2.5','>')) {
+			$html = '<a href="javascript:Joomla.tableOrdering(\''.$order.'\',\''.$direction.'\',\''.$task.'\',\''.$form.'\');" title="'.JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN').'">';
+		} else {
+			$html = '<a href="javascript:kunenatableOrdering(\''.$order.'\',\''.$direction.'\',\''.$task.'\',\''.$form.'\');" title="'.JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN').'">';
+		}
 		$html .= JText::_($title);
 
 		if ($order == $selected) {

@@ -99,7 +99,6 @@ class KunenaViewTopic extends KunenaView {
 		$this->pagination = $this->getPagination ( 5 );
 
 		// Mark topic read
-		$this->topic->markRead ();
 		$this->topic->hit ();
 
 		// Check is subscriptions have been sent and reset the value
@@ -119,6 +118,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->_prepareDocument('default');
 
 		$this->display($tpl);
+		$this->topic->markRead ();
 	}
 
 	public function displayUnread($tpl = null) {

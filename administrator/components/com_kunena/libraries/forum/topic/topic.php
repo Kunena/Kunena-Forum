@@ -391,98 +391,45 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return $message;
 	}
 
-	public function hasNew() {
-		static $readtopics = false;
-
-		if (!KunenaFactory::getConfig()->shownew) {
-			return false;
-		}
-		$session = KunenaFactory::getSession ();
-		if (!$session->userid)
-			return false;
-		if ($readtopics === false)
-			$readtopics = explode(',', $session->readtopics);
-		return $this->last_post_time > $session->lasttime && !in_array($this->id, $readtopics);
-	}
-
-	function markRead($user = null) {
+	public function hasNew($user = null) {
 		$user = KunenaUserHelper::get($user);
-		if (! $user->exists() || !KunenaFactory::getConfig()->shownew) {
-			return;
+		if (!KunenaFactory::getConfig()->shownew || !$user->exists()) {
+			return false;
 		}
-
-		$db = JFactory::getDBO ();
 		$session = KunenaFactory::getSession ();
-
-		$readTopics = explode ( ',', $session->readtopics );
-		if (! in_array ( $this->id, $readTopics )) {
-			$readTopics[] = $this->id;
-			$readTopics = implode ( ',', $readTopics );
-		} else {
-			$readTopics = false; // do not update session
+		if ($this->last_post_time <= $session->lasttime) {
+			return false;
+		}
+		$userinfo = KunenaForumCategoryUserHelper::get($this->getCategory(), $user);
+		if ($userinfo->allreadtime && $this->last_post_time <= JFactory::getDate($userinfo->allreadtime)->toUnix()) {
+			return false;
+		}
+		$read = KunenaForumTopicUserReadHelper::get($this, $user);
+		if ($this->last_post_time <= $read->time) {
+			return false;
 		}
 
-		if ($readTopics) {
-			$db->setQuery ( "UPDATE #__kunena_sessions SET readtopics={$db->Quote($readTopics)} WHERE userid={$db->Quote($user->userid)}" );
-			$db->query ();
-			KunenaError::checkDatabaseError();
-		}
+		return true;
 	}
 
-	// TODO: this code needs to be removed after new indication handling is in its place
-	function markNew() {
-		if (!KunenaFactory::getConfig()->shownew) {
-			return true;
-		}
-
-		// Mark topic read for current user
-		$this->markRead ();
-
-		// Mark topic unread for others
-
-		// First take care of old sessions to make our job easier and faster
-		$lasttime = $this->get ( 'time' ) - max(intval(JFactory::getConfig()->getValue( 'config.lifetime' ))*60, intval(KunenaFactory::getConfig ()->sessiontimeout)) - 60;
-		$query = "UPDATE #__kunena_sessions SET readtopics='0' WHERE currvisit<{$this->_db->quote($lasttime)}";
-		$this->_db->setQuery ( $query );
-		$this->_db->query ();
-		$dberror = KunenaError::checkDatabaseError ();
-		if ($dberror) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
+	public function markRead($user = null) {
+		$user = KunenaUserHelper::get($user);
+		if (!KunenaFactory::getConfig()->shownew || !$user->exists()) {
 			return false;
 		}
+		$read = KunenaForumTopicUserReadHelper::get($this, $user);
+		$read->time = JFactory::getDate()->toUnix();
+		$read->message_id = $this->last_post_id;
+		$read->save();
 
-		// Then look at users who have read the thread
-		$query = "SELECT userid, readtopics FROM #__kunena_sessions WHERE readtopics LIKE '%{$this->id}%' AND userid!={$this->_db->quote(KunenaUserHelper::getMyself()->userid)}";
-		$this->_db->setQuery ( $query );
-		$sessions = $this->_db->loadObjectList ();
-		$dberror = KunenaError::checkDatabaseError ();
-		if ($dberror) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
-			return false;
-		}
-
-		// And clear current thread
-		$errcount = 0;
-		foreach ( $sessions as $session ) {
-			$readtopics = $session->readtopics;
-			$rt = explode ( ",", $readtopics );
-			$key = array_search ( $this->id, $rt );
-			if ($key !== false) {
-				unset ( $rt [$key] );
-				$readtopics = implode ( ",", $rt );
-				$query = "UPDATE #__kunena_sessions SET readtopics={$this->_db->quote($readtopics)} WHERE userid={$this->_db->quote($session->userid)}";
-				$this->_db->setQuery ( $query );
-				$this->_db->query ();
-				$dberror = KunenaError::checkDatabaseError ();
-				if ($dberror)
-					$errcount ++;
-			}
-		}
-		if ($errcount) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
-			return false;
-		}
 		return true;
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public function markNew($user = null) {
+		return $this->markRead ($user);
 	}
 
 	public function authorise($action='read', $user=null, $silent=false) {
@@ -747,6 +694,8 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 
 			// Update user topic information (topic, category)
 			KunenaForumTopicUserHelper::move($this, $target);
+			// TODO: do we need this?
+			//KunenaForumTopicUserReadHelper::move($this, $target);
 			// Remove topic and posts from the old category
 			$categoryFrom->update($this, -1, -$this->posts);
 			// Add topic and posts into the new category
@@ -772,6 +721,8 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 
 			// Update user topic information (topic, category)
 			KunenaForumTopicUserHelper::merge($this, $target);
+			// TODO: do we need this?
+			//KunenaForumTopicUserReadHelper::merge($this, $target);
 			// Remove topic and posts from the old category
 			$this->getCategory()->update($this, -1, -$this->posts);
 			// Add posts into the new category
@@ -799,6 +750,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		$topicDelta = $this->delta();
 		$postDelta = $this->posts-$this->_posts;
 
+		$isNew = !$this->exists();
 		if (!parent::save()) {
 			return false;
 		}
@@ -809,6 +761,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			if (! $category->update($this, $topicDelta, $postDelta)) {
 				$this->setError ( $category->getError () );
 			}
+		}
+		if ($isNew) {
+			KunenaForumTopicUserReadHelper::purge();
 		}
 
 		return true;

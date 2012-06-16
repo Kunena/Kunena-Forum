@@ -18,13 +18,16 @@ class KunenaSession extends JObject
 	public function __construct($identifier)
 	{
 		$this->load($identifier);
+		$now = JFactory::getDate()->toUnix();
 		if (!$this->currvisit) {
-			$this->lasttime = $this->currvisit = JFactory::getDate()->toUnix();
+			// For new users new indication displays 14 days
+			$this->lasttime = $now - 14*24*60*60; // 14 days ago
+			$this->currvisit = $now;
 			$this->readtopics = 0;
-			// New user gets 14 days of unread messages
-			if ($identifier) {
-				$this->lasttime -= 14*24*60*60; // 14 days
-			}
+		} else {
+			// For existing users new indication expires after 2 months
+			$monthAgo = $now - 61*24*60*60;
+			$this->lasttime = ($this->lasttime > $monthAgo ? $this->lasttime : $monthAgo);
 		}
 	}
 
@@ -88,12 +91,6 @@ class KunenaSession extends JObject
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties($table->getProperties());
 		$this->userid = $userid;
-
-		jimport('joomla.utilities.arrayhelper');
-		$readtopics = explode(',', $this->readtopics);
-		JArrayHelper::toInteger($readtopics);
-		if (empty($readtopics)) $readtopics = array(0);
-		$this->readtopics = implode(',', $readtopics);
 
 		return true;
 	}

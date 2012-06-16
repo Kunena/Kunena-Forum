@@ -153,7 +153,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			}
 		}
 		// Fix last post position when user can see unapproved or deleted posts
-		if ($lastpostlist && !$topic_ordering && $this->me->userid && KunenaAccess::getInstance()->getModeratorStatus()) {
+		if ($lastpostlist && !$topic_ordering && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())) {
 			KunenaForumMessageHelper::loadLocation($lastpostlist);
 		}
 
@@ -226,7 +226,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 				$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
 				// Fetch last / new post positions when user can see unapproved or deleted posts
-				if (($lastpostlist || $lastreadlist) && $this->me->userid && KunenaAccess::getInstance()->getModeratorStatus()) {
+				if (($lastpostlist || $lastreadlist) && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())) {
 					KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 				}
 

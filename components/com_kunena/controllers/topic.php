@@ -601,16 +601,19 @@ class KunenaControllerTopic extends KunenaController {
 		if ($this->mesid) {
 			// Delete message
 			$target = KunenaForumMessageHelper::get($this->mesid);
-			$msg = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
-			$url = $target->getUrl($this->return, false);
+			$topic = KunenaForumTopicHelper::get($target->getTopic());
 		} else {
 			// Delete topic
-			$target = KunenaForumTopicHelper::get($this->id);
-			$msg = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' );
-			$url = KunenaForumCategory::getInstance($this->return)->getUrl(null, false);
+			$target = $topic = KunenaForumTopicHelper::get($this->id);
 		}
 		if ($target->authorise('permdelete') && $target->delete()) {
-			$this->app->enqueueMessage ( $msg );
+			if ($topic->exists()) {
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ) );
+				$url = $topic->getUrl($this->return, false);
+			} else {
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' ) );
+				$url = KunenaForumCategory::getInstance($this->return)->getUrl(null, false);
+			}
 		} else {
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}

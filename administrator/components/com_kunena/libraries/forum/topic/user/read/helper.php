@@ -2,7 +2,7 @@
 /**
  * Kunena Component
  * @package Kunena.Framework
- * @subpackage Forum.Topic.User
+ * @subpackage Forum.Topic.User.Read
  *
  * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -11,19 +11,19 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Forum Topic User Helper Class
+ * Kunena Forum Topic User Read Helper Class
  */
-abstract class KunenaForumTopicUserHelper {
+abstract class KunenaForumTopicUserReadHelper {
 	// Global for every instance
 	protected static $_instances = array();
 	protected static $_topics = array();
 
 	/**
-	 * Returns KunenaForumTopicUser object
+	 * Returns KunenaForumTopicUserRead object
 	 *
 	 * @access	public
 	 * @param	identifier		The user topic to load - Can be only an integer.
-	 * @return	KunenaForumTopicUser		The user topic object.
+	 * @return	KunenaForumTopicUserRead		The user read topic object.
 	 * @since	1.7
 	 */
 	static public function get($topic = null, $user = null, $reload = false) {
@@ -34,7 +34,7 @@ abstract class KunenaForumTopicUserHelper {
 		$user = KunenaUserHelper::get($user);
 
 		if ($topic < 1)
-			return new KunenaForumTopicUser (null, $user);
+			return new KunenaForumTopicUserRead (null, $user);
 
 		if ($reload || empty ( self::$_instances [$user->userid][$topic] )) {
 			$topics = self::getTopics ( $topic, $user );
@@ -71,7 +71,7 @@ abstract class KunenaForumTopicUserHelper {
 	public static function move($old, $new) {
 		// Update database
 		$db = JFactory::getDBO ();
-		$query ="UPDATE #__kunena_user_topics SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
+		$query ="UPDATE #__kunena_user_read SET topic_id={$db->quote($new->id)}, category_id={$db->quote($new->category_id)} WHERE topic_id={$db->quote($old->id)}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
@@ -96,24 +96,21 @@ abstract class KunenaForumTopicUserHelper {
 		$db = JFactory::getDBO ();
 
 		// Move all user topics which do not exist in new topic
-		$queries[] = "UPDATE #__kunena_user_topics AS ut
-			INNER JOIN #__kunena_user_topics AS o ON o.user_id = ut.user_id
-			SET ut.topic_id={$db->quote($new->id)}, ut.category_id={$db->quote($new->category_id)}
-			WHERE o.topic_id={$db->quote($old->id)} AND ut.topic_id IS NULL";
+		$queries[] = "UPDATE #__kunena_user_read AS ur
+			INNER JOIN #__kunena_user_read AS o ON o.user_id = ur.user_id
+			SET ur.topic_id={$db->quote($new->id)}, ur.category_id={$db->quote($new->category_id)}
+			WHERE o.topic_id={$db->quote($old->id)} AND ur.topic_id IS NULL";
 
 		// Merge user topics information that exists in both topics
-		$queries[] = "UPDATE #__kunena_user_topics AS ut
-			INNER JOIN #__kunena_user_topics AS o ON o.user_id = ut.user_id
-			SET ut.posts = o.posts + ut.posts,
-				ut.last_post_id = GREATEST( o.last_post_id, ut.last_post_id ),
-				ut.owner = GREATEST( o.owner, ut.owner ),
-				ut.favorite = GREATEST( o.favorite, ut.favorite ),
-				ut.subscribed = GREATEST( o.subscribed, ut.subscribed )
-				WHERE ut.topic_id = {$db->quote($new->id)}
+		$queries[] = "UPDATE #__kunena_user_read AS ur
+			INNER JOIN #__kunena_user_read AS o ON o.user_id = ur.user_id
+			SET ur.message_id = LEAST( o.message_id, ur.message_id ),
+				ur.time = LEAST( o.time, ur.time )
+				WHERE ur.topic_id = {$db->quote($new->id)}
 				AND o.topic_id = {$db->quote($old->id)}";
 
 		// Delete all user topics from the shadow topic
-		$queries[] = "DELETE FROM #__kunena_user_topics WHERE topic_id={$db->quote($old->id)}";
+		$queries[] = "DELETE FROM #__kunena_user_read WHERE topic_id={$db->quote($old->id)}";
 
 		foreach ($queries as $query) {
 			$db->setQuery($query);
@@ -129,56 +126,30 @@ abstract class KunenaForumTopicUserHelper {
 		return true;
 	}
 
-	public static function recount($topicids=false, $start=0, $end=0) {
+	static public function recount() {
 		$db = JFactory::getDBO ();
-
-		if (is_array($topicids)) {
-			$where = 'AND m.thread IN ('.implode(',', $topicids).')';
-			$where2 = 'AND ut.topic_id IN ('.implode(',', $topicids).')';
-		} elseif ((int)$topicids) {
-			$where = 'AND m.thread='.(int)$topicids;
-			$where2 = 'AND ut.topic_id='.(int)$topicids;
-		} else {
-			$where = '';
-			$where2 = '';
-		}
-		if ($end) {
-			$where .= " AND (m.thread BETWEEN {$start} AND {$end})";
-			$where2 .= " AND (ut.topic_id BETWEEN {$start} AND {$end})";
-		}
-
-		// Create missing user topics and update post count and last post if there are posts by that user
-		$query ="INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, posts, last_post_id, owner)
-					SELECT m.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, SUM(m.hold=0) AS posts, MAX(IF(m.hold=0,m.id,0)) AS last_post_id, MAX(IF(m.parent=0,1,0)) AS owner
-					FROM #__kunena_messages AS m
-					WHERE m.userid>0 AND m.moved=0 {$where}
-					GROUP BY m.userid, m.thread
-				ON DUPLICATE KEY UPDATE category_id=VALUES(category_id), posts=VALUES(posts), last_post_id=VALUES(last_post_id)";
+		$query = "UPDATE #__kunena_user_read AS ur
+			INNER JOIN #__kunena_topics AS t ON t.id=ur.topic_id
+			SET ur.category_id=t.category_id";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return false;
-		$rows = $db->getAffectedRows ();
 
-		// Find user topics where last post doesn't exist and reset values in it
-		$query ="UPDATE #__kunena_user_topics AS ut
-			LEFT JOIN #__kunena_messages AS m ON ut.last_post_id=m.id AND m.hold=0
-			SET posts=0, last_post_id=0
-			WHERE m.id IS NULL {$where2}";
+		return true;
+	}
+
+	static public function purge($days = 2) {
+		// Purge items that are older than x days (defaulting to 2)
+		$db = JFactory::getDBO ();
+		$timestamp = JFactory::getDate()->toUnix() - 60*60*24*$days;
+		$query = "DELETE FROM #__kunena_user_read WHERE time<{$db->quote($timestamp)}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return false;
-		$rows += $db->getAffectedRows ();
 
-		// Delete entries that have default values
-		$query ="DELETE ut FROM #__kunena_user_topics AS ut WHERE ut.posts=0 AND ut.owner=0 AND ut.favorite=0 AND ut.subscribed=0 AND ut.params='' {$where2}";
-		$db->setQuery($query);
-		$db->query ();
-		if (KunenaError::checkDatabaseError ())
-			return false;
-		$rows += $db->getAffectedRows ();
-		return $rows;
+		return true;
 	}
 
 	// Internal functions
@@ -194,19 +165,19 @@ abstract class KunenaForumTopicUserHelper {
 
 		$idlist = implode(',', $ids);
 		$db = JFactory::getDBO ();
-		$query = "SELECT * FROM #__kunena_user_topics WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
+		$query = "SELECT * FROM #__kunena_user_read WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
 		$db->setQuery ( $query );
 		$results = (array) $db->loadAssocList ('topic_id');
 		KunenaError::checkDatabaseError ();
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new KunenaForumTopicUser ();
+				$instance = new KunenaForumTopicUserRead ();
 				$instance->bind ( $results[$id] );
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = $instance;
 			} else {
-				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new KunenaForumTopicUser ($id, $user->userid);
+				self::$_instances [$user->userid][$id] = self::$_topics [$id][$user->userid] = new KunenaForumTopicUserRead ($id, $user->userid);
 			}
 		}
 		unset ($results);
@@ -217,7 +188,7 @@ abstract class KunenaForumTopicUserHelper {
 
 		$idlist = implode(',', array_keys(self::$_topics [$id]));
 		$db = JFactory::getDBO ();
-		$query = "SELECT * FROM #__kunena_user_topics WHERE user_id IN ({$idlist}) AND topic_id={$id}";
+		$query = "SELECT * FROM #__kunena_user_read WHERE user_id IN ({$idlist}) AND topic_id={$id}";
 		$db->setQuery ( $query );
 		$results = (array) $db->loadAssocList ('user_id');
 		KunenaError::checkDatabaseError ();

@@ -260,9 +260,10 @@
 		<field primary_key="yes" name="topic_id" type="int(11)" null="0" />
 		<field name="category_id" type="int(11)" null="0" />
 		<field name="message_id" type="int(11)" null="0" />
-		<field name="time" type="datetime" null="0" />
+		<field name="time" type="int(11)" null="0" />
 		<key name="user_topic_id" unique="1" columns="user_id,topic_id" />
 		<key name="category_user_id" columns="category_id,user_id" />
+		<key name="time" columns="time" />
 	</table>
 	<table name="kunena_user_topics">
 		<field primary_key="yes" name="user_id" type="int(11)" null="0"

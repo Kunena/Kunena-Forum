@@ -358,23 +358,33 @@ abstract class KunenaForumTopicHelper {
 
 	static public function fetchNewStatus($topics, $user = null) {
 		$user = KunenaUserHelper::get($user);
-		if (empty($topics) || !$user->exists() || !KunenaFactory::getConfig()->shownew) {
+		if (!KunenaFactory::getConfig()->shownew || empty($topics) || !$user->exists()) {
 			return array();
 		}
+		$session = KunenaFactory::getSession ();
 
-		// TODO: Need to convert to topics table design
-		if ($user->userid) {
-			$idstr = implode ( ",", array_keys ( $topics ) );
-			$readlist = KunenaFactory::getSession ()->readtopics;
-			$prevCheck = KunenaFactory::getSession ()->lasttime;
+		$ids = array();
+		foreach ($topics as $topic) {
+			if ($topic->last_post_time < $session->lasttime) continue;
+			$allreadtime = $topic->getCategory()->getUserInfo()->allreadtime;
+			if ($allreadtime && $topic->last_post_time < JFactory::getDate($allreadtime)->toUnix()) continue;
+			$ids[] = $topic->id;
+		}
+
+		if ($ids) {
+			$topiclist = array();
+			$idstr = implode ( ",", $ids );
+
 			$db = JFactory::getDBO ();
-			$db->setQuery ( "SELECT thread AS id, MIN(id) AS lastread, SUM(1) AS unread
-				FROM #__kunena_messages
-				WHERE hold=0 AND moved=0 AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>{$db->Quote($prevCheck)}
+			$db->setQuery ( "SELECT m.thread AS id, MIN(m.id) AS lastread, SUM(1) AS unread
+				FROM #__kunena_messages AS m
+				LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=m.thread AND user_id={$db->Quote($user->userid)}
+				WHERE m.hold=0 AND m.moved=0 AND m.thread IN ({$idstr}) AND m.time>{$db->Quote($session->lasttime)} AND (ur.time IS NULL OR m.time>ur.time)
 				GROUP BY thread" );
 			$topiclist = (array) $db->loadObjectList ('id');
 			KunenaError::checkDatabaseError ();
 		}
+
 		$list = array();
 		foreach ( $topics as $topic ) {
 			if (isset($topiclist[$topic->id])) {

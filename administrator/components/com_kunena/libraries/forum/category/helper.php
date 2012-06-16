@@ -151,12 +151,11 @@ abstract class KunenaForumCategoryHelper {
 	}
 
 	static public function getNewTopics($catids) {
-		$session = KunenaFactory::getSession ();
-		if (!$session->userid || !KunenaFactory::getConfig()->shownew) {
+		$user = KunenaUserHelper::getMyself();
+		if (!KunenaFactory::getConfig()->shownew || !$user->exists()) {
 			return;
 		}
-		$readlist = $session->readtopics;
-		$prevCheck = $session->lasttime;
+		$session = KunenaFactory::getSession ();
 		$categories = self::getCategories($catids);
 		$catlist = array();
 		foreach ($categories as $category) {
@@ -166,9 +165,13 @@ abstract class KunenaForumCategoryHelper {
 		if (empty($catlist)) return;
 		$catlist = implode(',', array_keys($catlist));
 		$db = JFactory::getDBO ();
-		$query = "SELECT DISTINCT(category_id), COUNT(*) AS new
-			FROM #__kunena_topics
-			WHERE category_id IN ($catlist) AND hold='0' AND last_post_time>{$db->Quote($prevCheck)} AND id NOT IN ({$readlist})
+		$query = "SELECT DISTINCT(ut.category_id), COUNT(*) AS new
+			FROM #__kunena_topics AS ut
+			LEFT JOIN #__kunena_user_categories AS uc ON uc.category_id=ut.category_id AND uc.user_id={$db->Quote($user->userid)}
+			LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=ut.id AND ur.user_id={$db->Quote($user->userid)}
+			WHERE ut.category_id IN ($catlist) AND ut.hold='0' AND ut.last_post_time>{$db->Quote($session->lasttime)}
+				AND (uc.category_id IS NULL OR ut.last_post_time>UNIX_TIMESTAMP(uc.allreadtime))
+				AND (ur.topic_id IS NULL OR ut.last_post_id != ur.message_id)
 			GROUP BY category_id";
 		$db->setQuery ( $query );
 		$newlist = (array) $db->loadObjectList ('category_id');
@@ -178,6 +181,7 @@ abstract class KunenaForumCategoryHelper {
 		foreach ($newlist AS $id=>$item) {
 			$new[$id] = (int) $item->new;
 		}
+
 		foreach ($categories as $category) {
 			$channels = $category->getChannels();
 			$channels += $category->getChildren();

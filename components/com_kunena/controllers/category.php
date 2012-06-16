@@ -52,14 +52,10 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 			$session = KunenaFactory::getSession();
 			if ($session->userid) {
 				// Mark all unread topics in the category to read
-				$readTopics = $session->readtopics;
-				$db->setQuery ( "SELECT id FROM #__kunena_topics WHERE category_id={$db->quote($category->id)} AND id NOT IN ({$readTopics}) AND last_post_time>={$db->quote($session->lasttime)}" );
-				$readForum = $db->loadResultArray ();
-				if (KunenaError::checkDatabaseError()) $this->redirectBack ();
-				$readTopics = implode(',', array_merge(explode(',', $readTopics), $readForum));
-
-				$session->readtopics = $readTopics;
-				if (!$session->save ()) {
+				$userinfo = $category->getUserInfo();
+				// FIXME: Joomla 2.5 ->toSql()
+				$userinfo->allreadtime = JFactory::getDate()->toMySQL();
+				if (!$userinfo->save()) {
 					$this->app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
 				} else {
 					$this->app->enqueueMessage ( JText::_('COM_KUNENA_GEN_FORUM_MARKED') );

@@ -1071,6 +1071,12 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function migrateAttachments() {
+		// Only perform this stage if we are upgrading from older version
+		$version = $this->getVersion();
+		if (version_compare ( $version->version, '1.7.0', ">" )) {
+			return true;
+		}
+
 		$app = JFactory::getApplication ();
 		$stats = $this->getAttachmentStatus();
 

@@ -54,18 +54,25 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return KunenaForumMessageHelper::get($identifier, $reload);
 	}
 
-	public function isNew() {
-		static $readtopics = false;
-
-		if (!KunenaFactory::getConfig()->shownew) {
+	public function isNew($user = null) {
+		$user = KunenaUserHelper::get($user);
+		if (!KunenaFactory::getConfig()->shownew || !$user->exists()) {
 			return false;
 		}
 		$session = KunenaFactory::getSession ();
-		if (!$session->userid)
+		if ($this->time < $session->lasttime) {
 			return false;
-		if ($readtopics === false)
-			$readtopics = explode(',', $session->readtopics);
-		return $this->time > $session->lasttime && !in_array($this->thread, $readtopics);
+		}
+		$allreadtime = KunenaForumCategoryUserHelper::get($this->getCategory(), $user)->allreadtime;
+		if ($allreadtime && $this->time < JFactory::getDate($allreadtime)->toUnix()) {
+			return false;
+		}
+		$read = KunenaForumTopicUserReadHelper::get($this->getTopic(), $user);
+		if ($this->id == $read->message_id || $this->time < $read->time) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public function getUrl($category = null, $xhtml = true) {
@@ -641,12 +648,10 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			$dispatcher->trigger('onDeleteKunenaPost', array(array($this->id)));
 			$activity->onAfterDelete($this);
 		} elseif ($postDelta > 0) {
+			$topic->markRead();
 			if ($this->parent == 0) {
-				$me = KunenaUserHelper::getMyself();
-				$topic->markRead();
 				$activity->onAfterPost($this);
 			} else {
-				$topic->markNew();
 				$activity->onAfterReply($this);
 			}
 		}

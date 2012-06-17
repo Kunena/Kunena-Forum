@@ -509,44 +509,22 @@ class KunenaViewUser extends KunenaView {
 
 	function canManageAttachments () {
 		if ( $this->config->show_imgfiles_manage_profile ) {
-			$file = null;
-			$image = null;
-
-			if ( $this->config->image_upload=='all' && empty($this->config->file_upload)  ) $image = 1;
-			elseif (  $this->config->file_upload=='all' && empty($this->config->image_upload) ) $file = 1;
-			elseif ( $this->config->image_upload=='all' && $this->config->file_upload=='all' ) { $file = 1; $image = 1; }
-
-			if ( $this->me->userid != 0 ) {
-				if ( $this->config->image_upload=='user' && empty($this->config->file_upload)  ) $image = 1;
-				elseif (  $this->config->file_upload=='user' && empty($this->config->image_upload) ) $file = 1;
-				elseif ( $this->config->image_upload=='user' && $this->config->file_upload=='user' ) { $file = 1; $image = 1; }
-			}
-
-			if ( $this->me->isModerator() && ($this->config->image_upload=='moderator' || $this->config->file_upload=='moderator')  ) {
-				if (  $this->config->image_upload=='moderator' && empty($this->config->file_upload)  ) $filetype = 'images';
-				elseif ( empty($this->config->image_upload) && $this->config->file_upload=='moderator' ) $filetype = 'files';
-				elseif ( $this->config->image_upload=='moderator' && $this->config->file_upload=='moderator' ) { $file = 1; $image = 1; }
-			}
-
-			if ( $this->me->isAdmin() &&  ($this->config->image_upload=='admin' || $this->config->file_upload=='admin') ) {
-				if ( $this->config->image_upload=='admin' && empty($this->config->file_upload)  ) $filetype = 'images';
-				elseif ( empty($this->config->image_upload) && $this->config->file_upload=='admin' ) $filetype = 'files';
-				elseif ( $this->config->image_upload=='admin' && $this->config->file_upload=='admin' ) { $file = 1; $image = 1; }
-			}
-
-			$params = array('file' => $file, 'image' => $image, 'orderby' => 'ASC', 'limit' => '6');
+			$params = array('file' => '1', 'image' => '1', 'orderby' => 'ASC', 'limit' => '30');
 			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->me, $params);
 
 			if ($this->userattachs) {
-				return true;
+				 if ( $this->me->isModerator() || $this->profile->userid = $this->me->userid ) return true;
+				 else return false;
+			} else {
+				return false;
 			}
 		}
-		return false;
 	}
 
 	function displayAttachments() {
 		$this->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 		$this->items = $this->userattachs;
+
 
 		echo $this->loadTemplateFile('attachments');
 	}

@@ -446,21 +446,31 @@ class KunenaControllerUser extends KunenaController {
 		return true;
 	}
 
-	function delfile() {
+	public function delfile() {
 		if (! JRequest::checkToken ()) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
-		$number = count($cids);
+		if ( !empty($cids) ) {
+			$number = 0;
 
-		foreach( $cids as $id ) {
-			$attachment = KunenaForumMessageAttachmentHelper::get($id);
-			$attachment->delete();
+			foreach( $cids as $id ) {
+				$attachment = KunenaForumMessageAttachmentHelper::get($id);
+				if ($attachment->authorise('delete') && $attachment->delete()) $number++;
+			}
+
+			if ( $number > 0 ) {
+				$this->app->enqueueMessage ( JText::sprintf( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number) );
+				$this->redirectBack ();
+			} else {
+				$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_DELETE_FAILED') );
+				$this->redirectBack ();
+			}
+		} else {
+			$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED') );
+			$this->redirectBack ();
 		}
-
-		$this->app->enqueueMessage ( JText::sprintf( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number) );
-		$this->redirectBack ();
 	}
 }

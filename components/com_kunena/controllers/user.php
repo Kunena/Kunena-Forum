@@ -463,6 +463,9 @@ class KunenaControllerUser extends KunenaController {
 
 			$this->app->enqueueMessage ( JText::sprintf( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number) );
 			$this->redirectBack ();
+		} else {
+			$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED') );
+			$this->redirectBack ();
 		}
 	}
 }

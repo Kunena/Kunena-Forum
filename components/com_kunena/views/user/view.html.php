@@ -509,52 +509,22 @@ class KunenaViewUser extends KunenaView {
 
 	function canManageAttachments () {
 		if ( $this->config->show_imgfiles_manage_profile ) {
-			$file = null;
-			$image = null;
-
-			if( $this->config->image_upload=='everybody' ) {
-				$image = 1;
-			} elseif( $this->config->image_upload=='registred' ) {
-				if ( $this->me->userid != 0 ) $image = 1;
-				else $image = 0;
-			} elseif( $this->config->image_upload=='moderator' ) {
-				if ( $this->me->isModerator() ) $image = 1;
-				else $image = 0;
-			} elseif( $this->config->image_upload=='admin' ) {
-				if ( $this->me->isAdmin() ) $image = 1;
-				else $image = 0;
-			} elseif( empty($this->config->image_upload) ) {
-				$image = 0;
-			}
-
-			if( $this->config->file_upload=='everybody' ) {
-				$file = 1;
-			} elseif( $this->config->file_upload=='registred' ) {
-				if ( $this->me->userid != 0 ) $file = 1;
-				else $file = 0;
-			} elseif( $this->config->file_upload=='moderator' ) {
-				if ( $this->me->isModerator() ) $file = 1;
-				else $file = 0;
-			} elseif( $this->config->file_upload=='admin' ) {
-				if ( $this->me->isAdmin() ) $file = 1;
-				else $file = 0;
-			} elseif( empty($this->config->file_upload) ) {
-				$file = 0;
-			}
-
-			$params = array('file' => $file, 'image' => $image, 'orderby' => 'ASC', 'limit' => '6');
+			$params = array('file' => '1', 'image' => '1', 'orderby' => 'ASC', 'limit' => '30');
 			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->me, $params);
 
 			if ($this->userattachs) {
-				return true;
+				 if ( $this->me->isModerator() || $this->profile->userid = $this->me->userid ) return true;
+				 else return false;
+			} else {
+				return false;
 			}
 		}
-		return false;
 	}
 
 	function displayAttachments() {
 		$this->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 		$this->items = $this->userattachs;
+
 
 		echo $this->loadTemplateFile('attachments');
 	}

@@ -58,6 +58,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 					$i=0;
 					$y=1;
 					foreach ($this->items as $file) :
+						// move this into view.html.php outside of foreach
 						$instance = KunenaForumMessageAttachmentHelper::get($file->id);
 
 						$evenodd = $i % 2;

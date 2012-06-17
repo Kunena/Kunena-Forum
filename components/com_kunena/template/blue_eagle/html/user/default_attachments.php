@@ -69,7 +69,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 					<tr class="k<?php echo $usrl_class ;?>">
 						<td class="kcol-first"><?php echo $y; ?></td>
-						<td class="kcol-mid"><?php echo JHTML::_('grid.id', $i, intval($file->id)) ?></td>
+						<td class="kcol-mid"><?php if ($instance->authorise('delete')) echo JHTML::_('grid.id', $i, intval($file->id)) ?></td>
 						<td align="center" class="kcol-mid"><img src="<?php echo $file->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
 
 						<td class="kcol-mid"><?php echo $file->filename; ?></td>
@@ -78,9 +78,13 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 						<td align="center" class="kcol-mid"><?php echo $instance->getThumbnailLink() ; ?></td>
 
-						<td align="center" class="kcol-mid"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php
-						echo $i;
-						?>','delfile')"><img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
+						<td align="center" class="kcol-mid">
+							<?php if ($instance->authorise('delete')) : ?>
+							<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile')">
+								<img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" />
+							</a>
+							<?php endif ?>
+						</td>
 
 					</tr>
 					<?php

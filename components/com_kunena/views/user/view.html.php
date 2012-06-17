@@ -512,26 +512,34 @@ class KunenaViewUser extends KunenaView {
 			$file = null;
 			$image = null;
 
-			if ( $this->config->image_upload=='all' && empty($this->config->file_upload)  ) $image = 1;
-			elseif (  $this->config->file_upload=='all' && empty($this->config->image_upload) ) $file = 1;
-			elseif ( $this->config->image_upload=='all' && $this->config->file_upload=='all' ) { $file = 1; $image = 1; }
-
-			if ( $this->me->userid != 0 ) {
-				if ( $this->config->image_upload=='user' && empty($this->config->file_upload)  ) $image = 1;
-				elseif (  $this->config->file_upload=='user' && empty($this->config->image_upload) ) $file = 1;
-				elseif ( $this->config->image_upload=='user' && $this->config->file_upload=='user' ) { $file = 1; $image = 1; }
+			if( $this->config->image_upload=='everybody' ) {
+				$image = 1;
+			} elseif( $this->config->image_upload=='registred' ) {
+				if ( $this->me->userid != 0 ) $image = 1;
+				else $image = 0;
+			} elseif( $this->config->image_upload=='moderator' ) {
+				if ( $this->me->isModerator() ) $image = 1;
+				else $image = 0;
+			} elseif( $this->config->image_upload=='admin' ) {
+				if ( $this->me->isAdmin() ) $image = 1;
+				else $image = 0;
+			} elseif( empty($this->config->image_upload) ) {
+				$image = 0;
 			}
 
-			if ( $this->me->isModerator() && ($this->config->image_upload=='moderator' || $this->config->file_upload=='moderator')  ) {
-				if (  $this->config->image_upload=='moderator' && empty($this->config->file_upload)  ) $filetype = 'images';
-				elseif ( empty($this->config->image_upload) && $this->config->file_upload=='moderator' ) $filetype = 'files';
-				elseif ( $this->config->image_upload=='moderator' && $this->config->file_upload=='moderator' ) { $file = 1; $image = 1; }
-			}
-
-			if ( $this->me->isAdmin() &&  ($this->config->image_upload=='admin' || $this->config->file_upload=='admin') ) {
-				if ( $this->config->image_upload=='admin' && empty($this->config->file_upload)  ) $filetype = 'images';
-				elseif ( empty($this->config->image_upload) && $this->config->file_upload=='admin' ) $filetype = 'files';
-				elseif ( $this->config->image_upload=='admin' && $this->config->file_upload=='admin' ) { $file = 1; $image = 1; }
+			if( $this->config->file_upload=='everybody' ) {
+				$file = 1;
+			} elseif( $this->config->file_upload=='registred' ) {
+				if ( $this->me->userid != 0 ) $file = 1;
+				else $file = 0;
+			} elseif( $this->config->file_upload=='moderator' ) {
+				if ( $this->me->isModerator() ) $file = 1;
+				else $file = 0;
+			} elseif( $this->config->file_upload=='admin' ) {
+				if ( $this->me->isAdmin() ) $file = 1;
+				else $file = 0;
+			} elseif( empty($this->config->file_upload) ) {
+				$file = 0;
 			}
 
 			$params = array('file' => $file, 'image' => $image, 'orderby' => 'ASC', 'limit' => '6');

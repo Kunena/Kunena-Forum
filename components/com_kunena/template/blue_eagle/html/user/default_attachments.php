@@ -39,9 +39,9 @@ if (version_compare(JVERSION, '1.7','>')) {
 						<th class="frst"> # </th>
 						<th width="5">
 							<?php if (version_compare(JVERSION, '1.6','>')): ?>
-							<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+							<input type="checkbox" name="checkall-toggle" value="cid" title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 							<?php else: ?>
-							<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" />
+							<input type="checkbox" name="toggle" value="cid" onclick="checkAll(<?php echo count ( $this->items ); ?>);" />
 							<?php endif; ?>
 						</th>
 						<th><?php echo JText::_('COM_KUNENA_FILETYPE'); ?></th>
@@ -79,7 +79,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 						<td align="center" class="kcol-mid"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php
 						echo $i;
-						?>','delete')"><img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
+						?>','delfile')"><img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
 
 					</tr>
 					<?php

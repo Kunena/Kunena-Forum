@@ -532,6 +532,11 @@ class KunenaViewUser extends KunenaView {
 			}
 
 			$this->attach_instances =  KunenaForumMessageAttachmentHelper::getById($attach_ids);
+
+			// Preload messages
+			KunenaForumMessageHelper::getMessages($attach_ids, 'none');
+			// Preload topics
+			KunenaForumTopicHelper::getTopics($attach_ids, 'none');
 		}
 
 		echo $this->loadTemplateFile('attachments');

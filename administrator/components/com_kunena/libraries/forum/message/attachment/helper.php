@@ -214,7 +214,12 @@ abstract class KunenaForumMessageAttachmentHelper {
 		$results = $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
 
-		return $results;
+		$list = array();
+		foreach ( $results as $result ) {
+				$list [$result->id] = new KunenaForumMessageAttachment ( $result->id );
+		}
+
+		return $list;
 	}
 
 	// Internal functions

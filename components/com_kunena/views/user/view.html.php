@@ -526,23 +526,24 @@ class KunenaViewUser extends KunenaView {
 		$this->items = $this->userattachs;
 
 		if (!empty($this->userattachs)) {
-			$attach_ids = array();
+			// Preload messages
 			$attach_mesids = array();
 			foreach ($this->userattachs as $attach) {
-				$attach_ids[] = (int)$attach->id;
 				$attach_mesids[] = (int)$attach->mesid;
 			}
-
-			$this->attach_instances =  KunenaForumMessageAttachmentHelper::getById($attach_ids);
-
-			// Preload messages
 			$this->messages = KunenaForumMessageHelper::getMessages($attach_mesids, 'none');
+			// Preload topics
 			$topic_ids = array();
 			foreach ($this->messages as $message ) {
 				$topic_ids[] = $message->thread;
 			}
-			// Preload topics
 			$this->topics = KunenaForumTopicHelper::getTopics($topic_ids, 'none');
+			// Preload categories
+			$categories_ids = array();
+			foreach ($this->topics as $topic ) {
+				$categories_ids[] = $topic->category_id;
+			}
+			$this->categories = KunenaForumCategoryHelper::getCategories($categories_ids, false, 'none');
 		}
 
 		echo $this->loadTemplateFile('attachments');

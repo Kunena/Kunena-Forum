@@ -510,10 +510,10 @@ class KunenaViewUser extends KunenaView {
 	function canManageAttachments () {
 		if ( $this->config->show_imgfiles_manage_profile ) {
 			$params = array('file' => '1', 'image' => '1', 'orderby' => 'ASC', 'limit' => '30');
-			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->me, $params);
+			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->profile, $params);
 
 			if ($this->userattachs) {
-				 if ( $this->me->isModerator() || $this->profile->userid = $this->me->userid ) return true;
+				 if ( $this->me->isModerator() || $this->profile->userid == $this->me->userid ) return true;
 				 else return false;
 			} else {
 				return false;

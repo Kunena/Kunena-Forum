@@ -57,8 +57,8 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			'post.undelete'=>array('Read'),
 			'post.permdelete'=>array('Read'),
 			'post.attachment.read'=>array('Read'),
-			'post.attachment.create'=>array('Read','Unlocked','Own'),
-			'post.attachment.delete'=>array('Read','Unlocked','Own'),
+			'post.attachment.create'=>array('Read','Unlocked'),
+			'post.attachment.delete'=>array(), // TODO: In the future we might want to restrict this: array('Read','Unlocked'),
 		);
 
 	/**

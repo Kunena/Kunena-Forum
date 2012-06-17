@@ -133,7 +133,7 @@ class KunenaForumMessageAttachment extends JObject {
 		static $actions  = array(
 			'read'=>array('Read'),
 			'create'=>array(),
-			'delete'=>array('Read'),
+			'delete'=>array('Exists', 'Own'),
 		);
 		$user = KunenaUserHelper::get($user);
 		if (!isset($actions[$action])) {
@@ -327,6 +327,15 @@ class KunenaForumMessageAttachment extends JObject {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
+	protected function authoriseExists($user) {
+		// Checks if attachment exists
+		if (!$this->exists()) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+			return false;
+		}
+		return true;
+	}
+
 	protected function authoriseRead($user) {
 		// Checks if attachment exists
 		if (!$this->exists()) {
@@ -335,6 +344,15 @@ class KunenaForumMessageAttachment extends JObject {
 		}
 		$this->generate();
 		if ($this->_disabled) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+			return false;
+		}
+		return true;
+	}
+
+	protected function authoriseOwn(KunenaUser $user) {
+		// Checks if attachment is users own or user is moderator in the category (or global)
+		if (($user->userid && $this->userid != $user->userid) && !$user->isModerator($this->getMessage()->getCategory())) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			return false;
 		}

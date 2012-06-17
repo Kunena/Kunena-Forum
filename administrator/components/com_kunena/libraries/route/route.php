@@ -192,7 +192,7 @@ abstract class KunenaRoute {
 		}
 	}
 
-	public static function stringURLSafe($string) {
+	public static function stringURLSafe($string, $default = null) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!isset(self::$filtered[$string])) {
 			if (version_compare(JVERSION, '1.6', '>')) {
@@ -202,6 +202,7 @@ abstract class KunenaRoute {
 				// Joomla 1.5
 				self::$filtered[$string] =  self::$config->get('sefutf8') ? self::stringURLUnicodeSlug($string) : JFilterOutput::stringURLSafe($string);
 			}
+			if ($default && empty(self::$filtered[$string])) self::$filtered[$string] = $default;
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return self::$filtered[$string];

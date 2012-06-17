@@ -144,12 +144,9 @@ function installSampleData()
 	$section = KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE');
 	$cat1 = KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE');
 	$cat2 = KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE');
-	$section_alias = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE'));
-	$cat1_alias = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE'));
-	$cat2_alias = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE'));
-	if (!$section_alias) $section_alias = 'main-forum';
-	if (!$cat1_alias) $cat1_alias = 'welcome-mat';
-	if (!$cat2_alias) $cat2_alias = 'suggestion-box';
+	$section_alias = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE'), 'main-forum');
+	$cat1_alias = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE'), 'welcome-mat');
+	$cat2_alias = KunenaRoute::stringURLSafe(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE'), 'suggestion-box');
 
 	$aliasquery = "INSERT INTO `#__kunena_aliases` (`alias`, `type`, `item`, `state`) VALUES
 		({$db->quote($section_alias)}, 'catid', '1', 1),

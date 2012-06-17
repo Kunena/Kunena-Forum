@@ -509,7 +509,7 @@ class KunenaViewUser extends KunenaView {
 
 	function canManageAttachments () {
 		if ( $this->config->show_imgfiles_manage_profile ) {
-			$params = array('file' => '1', 'image' => '1', 'orderby' => 'ASC', 'limit' => '30');
+			$params = array('file' => '1', 'image' => '1', 'orderby' => 'desc', 'limit' => '30');
 			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->profile, $params);
 
 			if ($this->userattachs) {
@@ -525,9 +525,18 @@ class KunenaViewUser extends KunenaView {
 		$this->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 		$this->items = $this->userattachs;
 
+		if (!empty($this->userattachs)) {
+			$attach_ids = array();
+			foreach ($this->userattachs as $attach) {
+				$attach_ids[] = (int)$attach->id;
+			}
+
+			$this->attach_instances =  KunenaForumMessageAttachmentHelper::getById($attach_ids);
+		}
 
 		echo $this->loadTemplateFile('attachments');
 	}
+
 
 	protected function _prepareDocument($type){
 		if ( $type == 'list' ) {

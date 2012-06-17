@@ -81,5 +81,5 @@ function kunena_upgrade_200_newindication($parent) {
 	if ($db->getErrorNum ())
 		throw new KunenaInstallerException ( $db->getErrorMsg (), $db->getErrorNum () );
 
-	return array ('action' => '', 'name' => JText::_ ( 'COM_KUNENA_INSTALL_200_CONFIGURATION' ), 'success' => true );
+	return array ('action' => '', 'name' => JText::_ ( 'COM_KUNENA_INSTALL_200_NEW_INDICATION' ), 'success' => true );
 }

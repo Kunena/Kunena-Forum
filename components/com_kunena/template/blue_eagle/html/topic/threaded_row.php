@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php if ($this->message->id == $this->state->get('item.mesid')) : ?>
 		<?php echo $this->escape($this->message->subject) ?>
 		<?php else : ?>
-		<?php echo $this->getTopicLink($this->topic, $this->message) ?>
+		<?php echo $this->getTopicLink($this->topic, $this->message, $this->escape($this->message->subject)) ?>
 		<?php endif; ?>
 	</td>
 	<td class="kcol-mid kprofile kprofile-list"><?php echo $this->message->getAuthor()->getLink() ?></td>

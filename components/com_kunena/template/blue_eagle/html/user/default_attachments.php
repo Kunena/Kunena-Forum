@@ -47,6 +47,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 						<th><?php echo JText::_('COM_KUNENA_FILETYPE'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILENAME'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILESIZE'); ?></th>
+						<th>Topic link</th>
 						<th><?php echo JText::_('COM_KUNENA_PREVIEW'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_DELETE'); ?></th>
 					</tr>
@@ -72,6 +73,8 @@ if (version_compare(JVERSION, '1.7','>')) {
 						<td class="kcol-mid"><?php echo $file->filename; ?></td>
 
 						<td class="kcol-mid"><?php echo number_format ( intval ( $file->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?></td>
+
+						<td class="kcol-mid"><?php echo $this->getTopicLink($this->topics); ?></td>
 
 						<td align="center" class="kcol-mid"><?php echo $this->attach_instances[$file->id]->getThumbnailLink() ; ?></td>
 

@@ -201,9 +201,6 @@ class KunenaAdminControllerTools extends KunenaController {
 	}
 
 	public function trashmenu() {
-		// Start by loading English strings and override them by current locale
-		KunenaFactory::loadLanguage('com_kunena.install', 'admin');
-
 		require_once(KPATH_ADMIN . '/install/model.php');
 		$installer = new KunenaModelInstall();
 		$installer->deleteMenu();

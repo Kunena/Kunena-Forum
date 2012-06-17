@@ -24,7 +24,7 @@ abstract class KunenaForumTopicUserReadHelper {
 	 * @access	public
 	 * @param	identifier		The user topic to load - Can be only an integer.
 	 * @return	KunenaForumTopicUserRead		The user read topic object.
-	 * @since	1.7
+	 * @since	2.0.0
 	 */
 	static public function get($topic = null, $user = null, $reload = false) {
 		if ($topic instanceof KunenaForumTopic) {

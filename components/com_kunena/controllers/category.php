@@ -24,6 +24,12 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 		$this->baseurl2 = 'index.php?option=com_kunena&view=category';
 	}
 
+	function jump() {
+		$catid = JRequest::getInt('catid', 0);
+		if (!$catid) $this->setRedirect(KunenaRoute::_('index.php?option=com_kunena&view=category&layout=list'));
+		else $this->setRedirect(KunenaRoute::_("index.php?option=com_kunena&view=category&catid={$catid}"));
+	}
+
 	function markread() {
 		if (! JRequest::checkToken ('request')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );

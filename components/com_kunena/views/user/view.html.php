@@ -537,7 +537,6 @@ class KunenaViewUser extends KunenaView {
 		echo $this->loadTemplateFile('attachments');
 	}
 
-
 	protected function _prepareDocument($type){
 		if ( $type == 'list' ) {
 

@@ -488,7 +488,7 @@ window.addEvent('domready', function(){
 		}
 	}
 
-	protected function loadSubscribers(KunenaForumTopic $topic, $type) {
+	public function loadSubscribers(KunenaForumTopic $topic, $type) {
 		$category = $topic->getCategory();
 		$db = JFactory::getDBO ();
 		$query = array();

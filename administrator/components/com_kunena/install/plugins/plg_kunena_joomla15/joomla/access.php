@@ -279,7 +279,7 @@ class KunenaAccessJoomla {
 			}
 		} elseif ($category->accesstype == 'joomla.group') {
 			// All users are allowed to see Public (0) or All Registered (-1) categories
-			if ($category->pub_access <= 0) return;
+			if ($category->pub_access <= 0) return array($userids, array());
 			// Check against Joomla user groups
 			$public = $this->_get_groups($category->pub_access, $category->pub_recurse);
 			// Ignore admin_access if pub_access has the same group

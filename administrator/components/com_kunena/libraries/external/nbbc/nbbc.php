@@ -1793,7 +1793,9 @@ $end_tag = $this->lexer->tagmarker . "/" . $tag_name . $this->lexer->end_tagmark
 $start = count($this->stack);
 $this->lexer->verbatim = true;
 while (($token_type = $this->lexer->NextToken()) != BBCODE_EOI) {
-if ($this->lexer->text == $end_tag) {
+// START FIX
+if (strtolower($this->lexer->text) == $end_tag) {
+// END FIX
 $end_tag_params = $this->lexer->tag;
 break;
 }

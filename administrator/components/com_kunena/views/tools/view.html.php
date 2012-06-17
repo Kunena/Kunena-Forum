@@ -31,6 +31,12 @@ class KunenaAdminViewTools extends KunenaView {
 		$this->display ();
 	}
 
+	function displaySubscriptions() {
+		$this->id = JRequest::getInt('id');
+
+		$this->display ();
+	}
+
 	function displaySyncUsers() {
 		$this->setToolBarSyncUsers();
 		$this->display ();

@@ -64,7 +64,7 @@ class KunenaForumTopicUserRead extends JObject {
 	 * @param	string	The topics table name to be used
 	 * @param	string	The topics table prefix to be used
 	 * @return	object	The topics table object
-	 * @since	1.6
+	 * @since	2.0.0
 	 */
 	public function getTable($type = 'KunenaUserRead', $prefix = 'Table') {
 		static $tabletype = null;
@@ -95,7 +95,7 @@ class KunenaForumTopicUserRead extends JObject {
 	 * @access	public
 	 * @param	mixed	$id The topic id to be loaded
 	 * @return	boolean			True on success
-	 * @since 1.6
+	 * @since 2.0.0
 	 */
 	public function load($topic_id = null, $user = null) {
 		if ($topic_id === null) {
@@ -124,7 +124,7 @@ class KunenaForumTopicUserRead extends JObject {
 	 * @access	public
 	 * @param	boolean $updateOnly Save the object only if not a new topic
 	 * @return	boolean True on success
-	 * @since 1.6
+	 * @since 2.0.0
 	 */
 	public function save($updateOnly = false) {
 		// Create the topics table object
@@ -164,7 +164,7 @@ class KunenaForumTopicUserRead extends JObject {
 	 *
 	 * @access	public
 	 * @return	boolean	True on success
-	 * @since 1.6
+	 * @since 2.0.0
 	 */
 	public function delete() {
 		if (!$this->exists()) {

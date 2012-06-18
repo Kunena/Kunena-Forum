@@ -23,8 +23,11 @@ foreach ($files as $file) {
 	if (!strpos($file, 'menu')) foreach ($lines as $line) {
 		if (!preg_match('/^(;.*|\s*|[A-Z0-9_\.]+="[^"]*")$/u', $line)) echo $line."\n";
 	}
-	$strings = (array) parse_ini_string($contents, false, INI_SCANNER_RAW);
-	if (!$strings) echo "ERROR!\n";
+	$strings = parse_ini_string($contents, false, INI_SCANNER_RAW);
+	if ($strings === false) {
+		echo "ERROR!\n";
+		continue;
+	}
 	foreach ($strings as $key => $str) {
 		if (preg_match('/[^A-Z0-9_\.]+/u', $key)) echo "ERROR: $key!\n";
 		//if (preg_match('/"/u', $str)) echo "ERROR: $key=\"$str\"\n";
@@ -39,8 +42,11 @@ foreach ($files as $file) {
 	if (!strpos($file, 'menu')) foreach ($lines as $line) {
 		if (!preg_match('/^(;.*|\s*|[A-Z0-9_\.]+="[^"]*")$/u', $line)) echo $line."\n";
 	}
-	$strings = (array) parse_ini_string($contents, false, INI_SCANNER_RAW);
-	if (!$strings) echo "ERROR!\n";
+	$strings = parse_ini_string($contents, false, INI_SCANNER_RAW);
+	if ($strings === false) {
+		echo "ERROR!\n";
+		continue;
+	}
 	foreach ($strings as $key => $str) {
 		if (preg_match('/[^A-Z0-9_]+/u', $key)) echo "ERROR: $key!\n";
 		//if (preg_match('/"/u', $str)) echo "ERROR: $key=\"$str\"\n";

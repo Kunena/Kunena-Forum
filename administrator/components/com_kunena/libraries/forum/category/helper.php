@@ -165,13 +165,13 @@ abstract class KunenaForumCategoryHelper {
 		if (empty($catlist)) return;
 		$catlist = implode(',', array_keys($catlist));
 		$db = JFactory::getDBO ();
-		$query = "SELECT DISTINCT(ut.category_id), COUNT(*) AS new
-			FROM #__kunena_topics AS ut
-			LEFT JOIN #__kunena_user_categories AS uc ON uc.category_id=ut.category_id AND uc.user_id={$db->Quote($user->userid)}
-			LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=ut.id AND ur.user_id={$db->Quote($user->userid)}
-			WHERE ut.category_id IN ($catlist) AND ut.hold='0' AND ut.last_post_time>{$db->Quote($session->lasttime)}
-				AND (uc.category_id IS NULL OR ut.last_post_time>UNIX_TIMESTAMP(uc.allreadtime))
-				AND (ur.topic_id IS NULL OR ut.last_post_id != ur.message_id)
+		$query = "SELECT t.category_id, COUNT(*) AS new
+			FROM #__kunena_topics AS t
+			LEFT JOIN #__kunena_user_categories AS uc ON uc.category_id=t.category_id AND uc.user_id={$db->Quote($user->userid)}
+			LEFT JOIN #__kunena_user_read AS ur ON ur.topic_id=t.id AND ur.user_id={$db->Quote($user->userid)}
+			WHERE t.category_id IN ($catlist) AND t.hold='0' AND t.last_post_time>{$db->Quote($session->lasttime)}
+				AND (uc.allreadtime IS NULL OR t.last_post_time>UNIX_TIMESTAMP(uc.allreadtime))
+				AND (ur.topic_id IS NULL OR t.last_post_id != ur.message_id)
 			GROUP BY category_id";
 		$db->setQuery ( $query );
 		$newlist = (array) $db->loadObjectList ('category_id');

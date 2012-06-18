@@ -47,6 +47,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 						<th><?php echo JText::_('COM_KUNENA_FILETYPE'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILENAME'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILESIZE'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_ATTACHMENT_MANAGER_TOPIC'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_PREVIEW'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_DELETE'); ?></th>
 					</tr>
@@ -57,10 +58,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 					else :
 					$i=0;
 					$y=1;
-					foreach ($this->items as $file) :
-						// move this into view.html.php outside of foreach
-						$instance = KunenaForumMessageAttachmentHelper::get($file->id);
-
+					foreach ($this->items as $attach) :
 						$evenodd = $i % 2;
 
 						if ($evenodd == 0)	$usrl_class="row1";
@@ -69,17 +67,19 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 					<tr class="k<?php echo $usrl_class ;?>">
 						<td class="kcol-first"><?php echo $y; ?></td>
-						<td class="kcol-mid"><?php if ($instance->authorise('delete')) echo JHTML::_('grid.id', $i, intval($file->id)) ?></td>
-						<td align="center" class="kcol-mid"><img src="<?php echo $file->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
+						<td class="kcol-mid"><?php if ($attach->authorise('delete')) echo JHTML::_('grid.id', $i, intval($attach->id)) ?></td>
+						<td align="center" class="kcol-mid"><img src="<?php echo $attach->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
 
-						<td class="kcol-mid"><?php echo $file->filename; ?></td>
+						<td class="kcol-mid"><?php echo $attach->filename; ?></td>
 
-						<td class="kcol-mid"><?php echo number_format ( intval ( $file->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
+						<td class="kcol-mid"><?php echo number_format ( intval ( $attach->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?></td>
 
-						<td align="center" class="kcol-mid"><?php echo $instance->getThumbnailLink() ; ?></td>
+						<td class="kcol-mid"><?php echo $this->getTopicLink($this->topics[$this->messages[$attach->mesid]->thread], $this->messages[$attach->mesid], '', '', '', $this->categories[$this->topics[$this->messages[$attach->mesid]->thread]->category_id]); ?></td>
+
+						<td align="center" class="kcol-mid"><?php echo $attach->getThumbnailLink() ; ?></td>
 
 						<td align="center" class="kcol-mid">
-							<?php if ($instance->authorise('delete')) : ?>
+							<?php if ($attach->authorise('delete')) : ?>
 							<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile')">
 								<img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" />
 							</a>

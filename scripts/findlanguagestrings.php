@@ -1,9 +1,14 @@
 <?php
 
-$header = '; License GNU General Public License version 2 or later; see LICENSE.txt, see LICENSE.php
+$header = '; Kunena Forum translation
+;
+; All translations can be found from https://www.transifex.net/projects/p/Kunena/r/Kunena2/
+; Please join the translation team if you want to contribute your changes to the next release.
+;
+; License GNU General Public License version 3 or later; see LICENSE.txt
 ; Note : All ini files need to be saved as UTF-8 - No BOM
 
-; Using new string format for Joomla 1.6.x
+; Using new INI string format for Joomla! 2.5
 
 ';
 

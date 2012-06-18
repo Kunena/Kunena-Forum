@@ -203,7 +203,7 @@ class KunenaView extends JView {
 	}
 
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL) {
-		$uri = $topic->getUri($category ? $category : $this->category, $action);
+		$uri = $topic->getUri($category ? $category : (isset($this->category) ? $this->category : $topic->category_id), $action);
 		if (!$content) $content = KunenaHtmlParser::parseText($topic->subject);
 		if ($title === null) {
 			if ($action instanceof KunenaForumMessage) {

@@ -58,7 +58,8 @@ if (version_compare(JVERSION, '1.7','>')) {
 					else :
 					$i=0;
 					$y=1;
-					foreach ($this->items as $attach) :
+					foreach ($this->items as $item) :
+						$message = $item->getMessage();
 						$evenodd = $i % 2;
 
 						if ($evenodd == 0)	$usrl_class="row1";
@@ -67,19 +68,19 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 					<tr class="k<?php echo $usrl_class ;?>">
 						<td class="kcol-first"><?php echo $y; ?></td>
-						<td class="kcol-mid"><?php if ($attach->authorise('delete')) echo JHTML::_('grid.id', $i, intval($attach->id)) ?></td>
-						<td align="center" class="kcol-mid"><img src="<?php echo $attach->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
+						<td class="kcol-mid"><?php if ($item->authorise('delete')) echo JHTML::_('grid.id', $i, intval($item->id)) ?></td>
+						<td align="center" class="kcol-mid"><img src="<?php echo $item->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
 
-						<td class="kcol-mid"><?php echo $attach->filename; ?></td>
+						<td class="kcol-mid"><?php echo $item->filename; ?></td>
 
-						<td class="kcol-mid"><?php echo number_format ( intval ( $attach->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?></td>
+						<td class="kcol-mid"><?php echo number_format ( intval ( $item->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?></td>
 
-						<td class="kcol-mid"><?php echo $this->getTopicLink($this->topics[$this->messages[$attach->mesid]->thread], $this->messages[$attach->mesid], '', '', '', $this->categories[$this->topics[$this->messages[$attach->mesid]->thread]->category_id]); ?></td>
+						<td class="kcol-mid"><?php echo $this->getTopicLink($message->getTopic(), $message); ?></td>
 
-						<td align="center" class="kcol-mid"><?php echo $attach->getThumbnailLink() ; ?></td>
+						<td align="center" class="kcol-mid"><?php echo $item->getThumbnailLink() ; ?></td>
 
 						<td align="center" class="kcol-mid">
-							<?php if ($attach->authorise('delete')) : ?>
+							<?php if ($item->authorise('delete')) : ?>
 							<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile')">
 								<img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" />
 							</a>

@@ -509,7 +509,7 @@ class KunenaViewUser extends KunenaView {
 
 	function canManageAttachments () {
 		if ( $this->config->show_imgfiles_manage_profile ) {
-			$params = array('file' => '1', 'image' => '1', 'orderby' => 'ASC', 'limit' => '30');
+			$params = array('file' => '1', 'image' => '1', 'orderby' => 'desc', 'limit' => '30');
 			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->profile, $params);
 
 			if ($this->userattachs) {
@@ -525,6 +525,26 @@ class KunenaViewUser extends KunenaView {
 		$this->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 		$this->items = $this->userattachs;
 
+		if (!empty($this->userattachs)) {
+			// Preload messages
+			$attach_mesids = array();
+			foreach ($this->userattachs as $attach) {
+				$attach_mesids[] = (int)$attach->mesid;
+			}
+			$this->messages = KunenaForumMessageHelper::getMessages($attach_mesids, 'none');
+			// Preload topics
+			$topic_ids = array();
+			foreach ($this->messages as $message ) {
+				$topic_ids[] = $message->thread;
+			}
+			$this->topics = KunenaForumTopicHelper::getTopics($topic_ids, 'none');
+			// Preload categories
+			$categories_ids = array();
+			foreach ($this->topics as $topic ) {
+				$categories_ids[] = $topic->category_id;
+			}
+			$this->categories = KunenaForumCategoryHelper::getCategories($categories_ids, false, 'none');
+		}
 
 		echo $this->loadTemplateFile('attachments');
 	}

@@ -202,7 +202,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 		if ( $params['file'] == '1' && $params['image'] != '1'  ) $filetype = " AND filetype=''";
 		elseif ( $params['image'] == '1' && $params['file'] != '1'  ) $filetype = " AND filetype!=''";
 		elseif ( $params['file'] == '1' && $params['image'] == '1' ) $filetype = '';
-		else return;
+		else return array();
 
 		$orderby = '';
 		if ( $params['orderby'] == 'desc' ) $orderby = ' ORDER BY id DESC';
@@ -211,12 +211,20 @@ abstract class KunenaForumMessageAttachmentHelper {
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_attachments WHERE userid='$user->userid' $filetype $orderby";
 		$db->setQuery ( $query, 0, $params['limit'] );
-		$results = $db->loadObjectList ();
+		$results = $db->loadAssocList ('id');
 		KunenaError::checkDatabaseError ();
 
 		$list = array();
 		foreach ( $results as $result ) {
-				$list [$result->id] = new KunenaForumMessageAttachment ( $result->id );
+			$id = $result['id'];
+			if (!isset(self::$_instances [$id])) {
+				$instance = new KunenaForumMessageAttachment ();
+				$instance->bind ( $result );
+				$instance->exists(true);
+				self::$_instances [$id] = $instance;
+				self::$_messages [$instance->mesid][$id] = $instance;
+			}
+			$list[] = $instance;
 		}
 
 		return $list;

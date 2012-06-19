@@ -358,7 +358,7 @@ class KunenaView extends JView {
 		$this->_template = $files[$file];
 
 		if ($this->_template != false) {
-			$templatefile = preg_replace('%'.JPATH_ROOT.'/%', '', $this->_template);
+			$templatefile = preg_replace('%'.JPath::clean(JPATH_ROOT,'/').'/%', '', JPath::clean($this->_template, '/'));
 
 			// Unset so as not to introduce into template scope
 			unset($tpl);

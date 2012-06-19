@@ -35,6 +35,12 @@ class KunenaView extends JView {
 		if ($this->app->isSite() && !isset($config['template_path'])) $config['template_path'] = $this->ktemplate->getTemplatePaths("html/$name", true);
 
 		parent::__construct($config);
+
+		if ($this->app->isSite()) {
+			// Add another template file lookup path specific to the current template
+			$fallback = JPATH_THEMES . "/{$this->app->getTemplate()}/html/com_kunena/{$this->ktemplate->name}/{$this->getName()}";
+			$this->addTemplatePath($fallback);
+		}
 	}
 
 	public function displayAll() {

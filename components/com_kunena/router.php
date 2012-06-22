@@ -9,7 +9,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+// Initialize Kunena (if Kunena System Plugin isn't enabled).
+$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+if (file_exists($api)) require_once $api;
 
 jimport('joomla.error.profiler');
 
@@ -31,15 +33,14 @@ jimport('joomla.error.profiler');
  * @return segments
  */
 function KunenaBuildRoute(&$query) {
-	KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__FUNCTION__.'()') : null;
-
 	$segments = array ();
 
-	// If Kunena SEF is not enabled, do nothing
-	if (! KunenaRoute::$config->sef) {
-		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__FUNCTION__.'()') : null;
+	// If Kunena Forum isn't installed or SEF is not enabled, do nothing
+	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('2.0') || !KunenaForum::installed() || !KunenaRoute::$config->sef) {
 		return $segments;
 	}
+
+	KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__FUNCTION__.'()') : null;
 
 	// Get menu item
 	if (isset ( $query ['Itemid'] )) {
@@ -160,6 +161,11 @@ function KunenaBuildRoute(&$query) {
 }
 
 function KunenaParseRoute($segments) {
+	// If Kunena Forum isn't installed do nothing
+	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('2.0') || !KunenaForum::installed()) {
+		return array();
+	}
+
 	$profiler = JProfiler::getInstance('Application');
 	KUNENA_PROFILER ? $profiler->mark('kunenaRoute') : null;
 	$starttime = $profiler->getmicrotime();

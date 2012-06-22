@@ -238,11 +238,11 @@ class KunenaModelInstall extends JModel {
 		$text = '';
 
 		if (file_exists ( $file )) {
+			$success = true;
 			if (!JFolder::exists($dest)) {
 				$success = JFolder::create($dest);
 			}
 			if ($success) $success = JArchive::extract ( $file, $dest );
-			$success = JArchive::extract ( $file, $dest );
 			if (! $success) {
 				$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file);
 
@@ -514,9 +514,11 @@ class KunenaModelInstall extends JModel {
 			$this->insertVersionData ( $version->version, $version->versiondate, $version->versionname, null );
 		}
 
-		foreach ( $results as $i => $r )
-			if ($r)
-				$this->addStatus ( JText::_('COM_KUNENA_INSTALL_CREATE') . ' ' . $r ['name'], true );
+/*
+		foreach ( $results as $result )
+			if (!empty($result['action']) && empty($result['success']))
+				$this->addStatus ( JText::_('COM_KUNENA_INSTALL_'.strtoupper($result['action'])) . ' ' . $result ['name'], $result ['success'] );
+*/
 		$this->insertVersion ( 'migrateDatabase' );
 		if (! $this->getInstallError ())
 			$this->setStep ( $this->getStep()+1 );
@@ -567,6 +569,8 @@ class KunenaModelInstall extends JModel {
 			}
 			$this->setTask($task+1);
 		} else {
+			if (function_exists('apc_clear_cache')) apc_clear_cache('system');
+
 			// Force page reload to avoid MySQL timeouts after extracting
 			$this->checkTimeout(true);
 			if (! $this->getInstallError ())
@@ -591,6 +595,8 @@ class KunenaModelInstall extends JModel {
 		// TODO: install also menu module
 		$this->uninstallModule('mod_kunenamenu');
 		//$this->installModule('install/modules/mod_kunenamenu', 'kunenamenu');
+
+		if (function_exists('apc_clear_cache')) apc_clear_cache('system');
 
 		if (! $this->getInstallError ())
 			$this->setStep ( $this->getStep()+1 );

@@ -57,7 +57,7 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	protected function setToolBarDefault() {
 		// Set the titlebar text
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
 		JToolBarHelper::spacer();
@@ -73,7 +73,7 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	protected function setToolBarEdit() {
 		// Set the titlebar text
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
@@ -83,7 +83,7 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	protected function setToolBarMove() {
 		// Set the titlebar text
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 		JToolBarHelper::spacer();

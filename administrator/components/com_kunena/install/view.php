@@ -67,7 +67,7 @@ class KunenaViewInstall extends JView
 			// Output enqueued messages from previous reloads (to show Joomla warnings)
 			$queue = (array) $session->get('kunena.queue');
 			foreach ($queue as $item) {
-				if (is_array($item)) {
+				if (is_array($item) && $item['type'] != 'message') {
 					$app->enqueueMessage($item['message'], $item['type']);
 				}
 			}
@@ -86,7 +86,7 @@ class KunenaViewInstall extends JView
 	function setToolBar()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title('<span>'.KunenaForum::version().'</span> '. JText::_( 'COM_KUNENA_INSTALLER' ), 'kunena.png' );
+		JToolBarHelper::title('<span>Kunena '.KunenaForum::version().'</span> '. JText::_( 'COM_KUNENA_INSTALLER' ), 'kunena.png' );
 
 	}
 

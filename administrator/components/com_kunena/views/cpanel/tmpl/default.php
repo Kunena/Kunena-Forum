@@ -85,4 +85,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	</div>
 	<?php endif; ?>
 </div>
+<div class="kadmin-footer">
+	<?php echo KunenaVersion::getLongVersionHTML (); ?>
+</div>
 </div>

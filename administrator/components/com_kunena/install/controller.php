@@ -37,10 +37,38 @@ class KunenaControllerInstall extends JController {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
+
 		$start = JRequest::getBool('start', false);
+
+		// Workaround situation where KunenaForum class doesn't exist (api.php was cached)
+		if (!class_exists('KunenaForum')) {
+			// TODO: add version check
+			$app = JFactory::getApplication();
+			$try = $app->getUserState('kunena-prepare', 0) + 1;
+			clearstatcache();
+			if (function_exists('apc_clear_cache')) apc_clear_cache('system');
+			sleep(1);
+			$app->setUserState('kunena-prepare', $try);
+			$start = $start? '&start=1' : '';
+			$this->setRedirect('index.php?option=com_kunena&view=install&task=prepare&try='.$try.$start.'&'.JUtility::getToken().'=1');
+			$this->redirect();
+		}
+
 		$this->model->install ();
 
-		$this->setRedirect('index.php?option=com_kunena&view=install' . ($start ? '&task=upgrade&'.JUtility::getToken().'=1' : ''));
+		if ($start) {
+			// Make sure that the code is identical to the installer (we can improve it later on)
+			$versions = $this->model->getDetectVersions();
+			$version = reset($versions);
+			if (!empty($version->state) || ($version->version == KunenaForum::version() && $version->versiondate == KunenaForum::versionDate())) {
+				unset($version);
+			}
+		}
+		if (isset($version)) {
+			$this->setRedirect($version->link);
+		} else {
+			$this->setRedirect('index.php?option=com_kunena&view=install');
+		}
 	}
 
 	public function display($cachable = false, $urlparams = false) {

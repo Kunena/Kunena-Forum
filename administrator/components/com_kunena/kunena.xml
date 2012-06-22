@@ -2,8 +2,8 @@
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>2.0.0-RC3-DEV3</version>
-	<versionname>Internal</versionname>
+	<version>2.0.0-RC3</version>
+	<versionname>Diplomatia</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
@@ -14,8 +14,6 @@
 	<installfile>install/install.kunena.php</installfile>
 	<uninstallfile>install/uninstall.kunena.php</uninstallfile>
 	<files>
-		<filename>kunena.php</filename>
-		<filename>router.php</filename>
 		<filename>COPYRIGHT.php</filename>
 	</files>
 	<administration>
@@ -31,8 +29,6 @@
 		</submenu>
 		<files>
 			<filename>kunena.j25.xml</filename>
-			<filename>api.php</filename>
-			<filename>admin.kunena.php</filename>
 			<folder>install</folder>
 			<folder>archive</folder>
 			<folder>language</folder>

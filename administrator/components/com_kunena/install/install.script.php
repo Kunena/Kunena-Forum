@@ -31,10 +31,14 @@ class Com_KunenaInstallerScript {
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	public function install($parent) {
-		require_once(JPATH_ADMINISTRATOR . '/components/com_kunena/install/model.php');
-		$installer = new KunenaModelInstall();
-		$installer->install();
-		return true;
+		// Reset installer state.
+		$app = JFactory::getApplication();
+		$app->setUserState('kunena-old', 0);
+
+		$success = JFile::copy(
+				JPATH_ADMINISTRATOR . '/components/com_kunena/install/entrypoints/admin.kunena.php',
+				JPATH_ADMINISTRATOR . '/components/com_kunena/admin.kunena.php');
+		return $success;
 	}
 
 	public function discover_install($parent) {
@@ -46,41 +50,76 @@ class Com_KunenaInstallerScript {
 	}
 
 	public function uninstall($parent) {
-		require_once(JPATH_ADMINISTRATOR . '/components/com_kunena/install/model.php');
-		$installer = new KunenaModelInstall();
-		$installer->uninstall();
+		$adminpath = $parent->getParent()->getPath('extension_administrator');
+		$model = "{$adminpath}/install/model.php";
+		if (file_exists($model)) {
+			require_once($model);
+			$installer = new KunenaModelInstall();
+			$installer->uninstall();
+		}
 		return true;
 	}
 
 	public function preflight($type, $parent) {
+		$manifest = $parent->getParent()->getManifest();
+
 		// Prevent installation if requirements are not met.
-		$version = $parent->getParent()->getManifest()->version;
-		if (!$this->checkRequirements($version)) return false;
+		if (!$this->checkRequirements($manifest->version)) return false;
 
-		// Remove deprecated manifest.xml (K1.5) and kunena.j16.xml (K1.7)
-		$manifest = JPATH_ADMINISTRATOR . '/components/com_kunena/manifest.xml';
-		if (JFile::exists($manifest)) JFile::delete($manifest);
-		$manifest = JPATH_ADMINISTRATOR . '/components/com_kunena/kunena.j16.xml';
-		if (JFile::exists($manifest)) JFile::delete($manifest);
+// TODO: If we do not need to display the warning (but only after dropping J1.5 support)
+//		if (version_compare($manifest->version, '2.0', '>')) return true;
 
-		// TODO: Before install: we want so store files so that user can cancel action
+		$adminpath = $parent->getParent()->getPath('extension_administrator');
+		$sitepath = $parent->getParent()->getPath('extension_site');
 
-		$adminpath = KPATH_ADMIN;
-		if ( JFolder::exists($adminpath)) {
-			// Delete old zip files
-			$archive = "{$adminpath}/archive";
-			if ( JFolder::exists($archive)) {
-				JFolder::delete($archive);
-				// We want to keep empty directory (it is defined in manifest file)
-				JFolder::create($archive);
+		// If Kunena wasn't installed, there's nothing to do.
+		if(!file_exists($adminpath)) return true;
+
+		// Find the old manifest file.
+		$tmpInstaller = new JInstaller;
+		$tmpInstaller->setPath('source', $adminpath);
+		$obj_manifest = $tmpInstaller->findManifest() ? $tmpInstaller->getManifest() : null;
+		$old_manifest = basename($tmpInstaller->getPath('manifest'));
+		if ($obj_manifest) {
+			$this->oldAdminFiles = $this->findFilesFromManifest($obj_manifest->administration->files) + array($old_manifest=>$old_manifest);
+			$this->oldAdminFiles += $this->findFilesFromManifest($manifest->administration->files);
+			$this->oldFiles = $this->findFilesFromManifest($obj_manifest->files);
+			$this->oldFiles += $this->findFilesFromManifest($manifest->files);
+		}
+
+		// Detect existing installation.
+		if ($old_manifest && JFile::exists("{$adminpath}/admin.kunena.php")) {
+			$contents = file_get_contents("{$adminpath}/admin.kunena.php");
+			if (!strstr($contents, '/* KUNENA FORUM INSTALLER */')) {
+
+				// If we don't find Kunena 2.0 installer, backup existing files...
+				$backuppath = "{$adminpath}/bak";
+				if (JFolder::exists($backuppath)) JFolder::delete($backuppath);
+				$this->backup($adminpath, $backuppath, $this->oldAdminFiles);
+
+				$backuppath = "{$sitepath}/bak";
+				if (JFolder::exists($backuppath)) JFolder::delete($backuppath);
+				$this->backup($sitepath, $backuppath, $this->oldFiles);
+
 			}
 		}
+
+		// Remove old manifest files, excluding the current one.
+		$manifests = array('manifest.xml', 'kunena.j16.xml', 'kunena.j25.xml', 'kunena.xml');
+		foreach ($manifests as $filename) {
+			if ($filename == $old_manifest) continue;
+			if (JFile::exists("{$adminpath}/{$filename}")) JFile::delete("{$adminpath}/{$filename}");
+		}
+
+		clearstatcache();
 		return true;
 	}
 
 	public function postflight($type, $parent) {
 		$installer = $parent->getParent();
-		$adminpath = KPATH_ADMIN;
+		$manifest = $installer->getManifest();
+		$adminpath = $installer->getPath('extension_administrator');
+		$sitepath = $installer->getPath('extension_site');
 
 		// Rename kunena.j25.xml to kunena.xml
 		if (JFile::exists("{$adminpath}/kunena.j25.xml")) {
@@ -88,8 +127,20 @@ class Com_KunenaInstallerScript {
 			JFile::move("{$adminpath}/kunena.j25.xml", "{$adminpath}/kunena.xml");
 		}
 
-		// Set redirect
-		$installer->set('redirect_url', JURI::base () . 'index.php?option=com_kunena&view=install');
+		if (isset($this->oldAdminFiles)) {
+			// Backup the new installation.
+			if (file_exists("{$adminpath}/new")) JFolder::delete("{$adminpath}/new");
+			$this->backup($adminpath, "{$adminpath}/new", $this->findFilesFromManifest($manifest->administration->files) + array('kunena.xml'=>'kunena.xml'));
+			$this->backup($sitepath, "{$sitepath}/new", $this->findFilesFromManifest($manifest->files));
+
+			// Copy back files removed by Joomla installer (except admin.kunena.php).
+			unset ($this->oldAdminFiles['admin.kunena.php']);
+			$this->backup("{$adminpath}/bak", $adminpath, $this->oldAdminFiles);
+			$this->backup("{$sitepath}/bak", $sitepath, $this->oldFiles);
+		}
+
+		// Set redirect.
+		$installer->set('redirect_url', JURI::base () . 'index.php?option=com_kunena');
 
 		return true;
 	}
@@ -179,5 +230,42 @@ class Com_KunenaInstallerScript {
 
 		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', $installed, $version), 'notice');
 		return false;
+	}
+
+	protected function backup($from, $to, $list, $replace = true) {
+		if (!JFolder::exists($to)) JFolder::create($to);
+		if ($replace) {
+			// Delete all existing entries
+			clearstatcache();
+			foreach ($list as $filename) {
+				if (is_dir("{$from}/{$filename}")) {
+					if (file_exists("{$to}/{$filename}")) JFolder::delete("{$to}/{$filename}");
+				} elseif (is_file("{$from}/{$filename}")) {
+					if (file_exists("{$to}/{$filename}")) JFile::delete("{$to}/{$filename}");
+				}
+			}
+		}
+		clearstatcache();
+		// Copy all entries
+		foreach ($list as $filename) {
+			if (file_exists("{$to}/{$filename}")) continue;
+			if (is_dir("{$from}/{$filename}")) {
+				JFolder::copy("{$from}/{$filename}", "{$to}/{$filename}");
+			} elseif (is_file("{$from}/{$filename}")) {
+				JFile::copy("{$from}/{$filename}", "{$to}/{$filename}");
+			}
+		}
+	}
+
+	protected function findFilesFromManifest($files) {
+		$list = array();
+		if ($files && ($files instanceof SimpleXMLElement)) {
+			$entries = $files->children();
+			foreach($entries as $entry) {
+				$list[(string) $entry] = (string) $entry;
+			}
+		}
+
+		return $list;
 	}
 }

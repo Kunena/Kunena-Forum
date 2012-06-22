@@ -16,13 +16,9 @@ if (version_compare(JVERSION, '1.6', '>')) {
 	}
 }
 
-// Initialize Kunena (if Kunena System Plugin isn't enabled)
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-
 // Get view and task
-$view = JRequest::getCmd ( 'view', 'cpanel' );
+$view = JRequest::getCmd ( 'view' );
 $task = JRequest::getCmd ( 'task' );
-JRequest::setVar( 'view', $view );
 
 // Akeeba Live Update
 if($view == 'liveupdate') {
@@ -31,36 +27,51 @@ if($view == 'liveupdate') {
 	return;
 }
 
-// Start by checking if Kunena has been installed -- if not, redirect to our installer
-require_once(KPATH_ADMIN.'/install/version.php');
-$kversion = new KunenaVersion();
-if ($view != 'install' && !$kversion->checkVersion()) {
-	JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
+// Initialize Kunena (if Kunena System Plugin isn't enabled).
+$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+if (file_exists($api)) require_once $api;
 
-} elseif ($view == 'install') {
-	// Load our installer (special case)
+if ($view == 'install') {
+	// Run Kunena installer.
 	require_once (KPATH_ADMIN . '/install/controller.php');
 	$controller = new KunenaControllerInstall();
+	$controller->execute( $task );
+	$controller->redirect();
+	return;
+
+} elseif (!class_exists('KunenaForum') || !KunenaForum::isCompatible('2.0') || !KunenaForum::installed()) {
+	// Prapare installation if Kunena hasn't been fully installed.
+	JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
 
 } else {
-	// Load language files
-	KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
-	KunenaFactory::loadLanguage('com_kunena.install', 'admin');
-	KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
-	KunenaFactory::loadLanguage('com_kunena.models', 'admin');
-	KunenaFactory::loadLanguage('com_kunena.views', 'admin');
-	// Load last to get deprecated language files to work
-	KunenaFactory::loadLanguage('com_kunena', 'site');
-	KunenaFactory::loadLanguage('com_kunena', 'admin');
-
-	KunenaForum::setup();
-
-	// Initialize error handlers
-	KunenaError::initialize ();
-
-	// Kunena has been successfully installed: Load our main controller
-	$controller = KunenaController::getInstance();
+	// Check if latest version of Kunena has been installed. If not, prepare installation.
+	require_once(KPATH_ADMIN.'/install/version.php');
+	$kversion = new KunenaVersion();
+	if (!$kversion->checkVersion()) {
+		JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
+	}
 }
+
+// Load language files
+KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+KunenaFactory::loadLanguage('com_kunena.install', 'admin');
+KunenaFactory::loadLanguage('com_kunena.controllers', 'admin');
+KunenaFactory::loadLanguage('com_kunena.models', 'admin');
+KunenaFactory::loadLanguage('com_kunena.views', 'admin');
+// Load last to get deprecated language files to work
+KunenaFactory::loadLanguage('com_kunena', 'site');
+KunenaFactory::loadLanguage('com_kunena', 'admin');
+
+KunenaForum::setup();
+
+// Initialize error handlers
+KunenaError::initialize ();
+
+// Set default view
+if (!$view) JRequest::setVar( 'view', 'cpanel' );
+
+// Kunena has been successfully installed: Load our main controller
+$controller = KunenaController::getInstance();
 $controller->execute( $task );
 $controller->redirect();
 

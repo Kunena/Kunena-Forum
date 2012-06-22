@@ -268,7 +268,7 @@ class plgSystemKunena extends JPlugin {
 
 		return array( array(
 			'link' => JRoute::_('index.php?option=com_kunena'),
-			'image' => 'kunena/icons/kunena-logo-48.png',
+			'image' => 'kunena/icons/kunena-logo-48-black.png',
 			'text' => JText::_('COM_KUNENA'),
 			'access' => array('core.manage', 'com_kunena'),
 			'id' => 'com_kunena_icon' ) );

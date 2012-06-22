@@ -26,11 +26,8 @@ display: block !important;
 }
 /** end Joomla 1.6 backend fix **/
 
-div.header {
-	padding-left:148px !important;
-}
 div.icon-48-kunena {
-	background-image:url(../icons/kunena-logo-48.png);
+	background-image:url(../icons/kunena-logo-48-black.png);
 }
 
 .hideable {

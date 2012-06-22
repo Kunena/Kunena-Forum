@@ -2,7 +2,7 @@
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>2.0.0</version>
+	<version>2.0.0-RC3</version>
 	<versionname>Diplomatia</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>

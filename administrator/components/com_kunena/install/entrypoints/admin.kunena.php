@@ -9,14 +9,27 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-
-JToolBarHelper::title('&nbsp;', 'kunena.png');
+/**************************/
+/* KUNENA FORUM INSTALLER */
+/**************************/
 
 $view = JRequest::getCmd ( 'view' );
 $task = JRequest::getCmd ( 'task' );
 
-require_once (KPATH_ADMIN.'/install/controller.php');
+clearstatcache();
+if (file_exists(JPATH_COMPONENT.'/new/install/entrypoints/controller.php')) {
+	// Pre-install controller (if there's existing installation)
+	require_once (JPATH_COMPONENT.'/new/install/entrypoints/controller.php');
+
+} elseif (file_exists(JPATH_COMPONENT.'/install/entrypoints/controller.php')) {
+	// Pre-install controller (for new installations)
+	require_once (JPATH_COMPONENT.'/install/entrypoints/controller.php');
+
+} else {
+	// Install controller
+	require_once (JPATH_COMPONENT.'/install/controller.php');
+
+}
 $controller = new KunenaControllerInstall();
 $controller->execute( $task );
 $controller->redirect();

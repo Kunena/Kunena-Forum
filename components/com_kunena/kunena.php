@@ -10,7 +10,22 @@
 defined ( '_JEXEC' ) or die ();
 
 // Initialize Kunena (if Kunena System Plugin isn't enabled)
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+if (file_exists($api)) require_once $api;
+
+// Display offline message if Kunena hasn't been fully installed
+if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('2.0') || !KunenaForum::installed()) {
+	$lang = JFactory::getLanguage();
+	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
+	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
+	?>
+	<h2><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC')?></h2>
+	<div><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_DESC')?></div>
+<?php
+	return;
+}
+
+// Load router
 require_once KPATH_SITE . '/router.php';
 
 // Display time it took to create the entire page in the footer

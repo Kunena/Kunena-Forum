@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaAdminViewReport extends KunenaView {
 	function displayDefault() {
 		$this->systemreport = $this->get('SystemReport');
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		$this->display ();
 	}
 }

@@ -13,8 +13,6 @@
 	<description>COM_KUNENA_XML_DESCRIPTION</description>
 	<scriptfile>install/install.script.php</scriptfile>
 	<files>
-		<filename>kunena.php</filename>
-		<filename>router.php</filename>
 		<filename>COPYRIGHT.php</filename>
 	</files>
 	<administration>
@@ -29,8 +27,6 @@
 			<menu view="trash" img="components/com_kunena/media/icons/favicons/kunena-trash.png">COM_KUNENA_TRASH_MANAGER</menu>
 		</submenu>
 		<files>
-			<filename>api.php</filename>
-			<filename>admin.kunena.php</filename>
 			<folder>install</folder>
 			<folder>archive</folder>
 			<folder>language</folder>

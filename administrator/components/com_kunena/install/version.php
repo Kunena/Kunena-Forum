@@ -47,7 +47,6 @@ class KunenaVersion
 		$version = $this->getDBVersion();
 		if (!isset($version->version)) return false;
 		if ($version->state) return false;
-		if ($version->version != KunenaForum::version()) return false;
 		return true;
 	}
 

@@ -250,7 +250,8 @@ class Com_KunenaInstallerScript {
 		foreach ($list as $filename) {
 			if (file_exists("{$to}/{$filename}")) continue;
 			if (is_dir("{$from}/{$filename}")) {
-				JFolder::copy("{$from}/{$filename}", "{$to}/{$filename}");
+				JFolder::move("{$from}/{$filename}", "{$to}/{$filename}");
+				JFolder::create("{$from}/{$filename}");
 			} elseif (is_file("{$from}/{$filename}")) {
 				JFile::copy("{$from}/{$filename}", "{$to}/{$filename}");
 			}

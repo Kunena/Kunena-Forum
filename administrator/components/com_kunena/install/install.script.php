@@ -61,6 +61,13 @@ class Com_KunenaInstallerScript {
 	}
 
 	public function preflight($type, $parent) {
+		// Bugfix for "Can not build admin menus"
+		if(in_array($type, array('install','discover_install'))) {
+			$this->bugfixDBFunctionReturnedNoError();
+		} else {
+			$this->bugfixCantBuildAdminMenus();
+		}
+
 		$manifest = $parent->getParent()->getManifest();
 
 		// Prevent installation if requirements are not met.
@@ -268,5 +275,136 @@ class Com_KunenaInstallerScript {
 		}
 
 		return $list;
+	}
+
+	/**
+	 * Joomla! 1.6+ bugfix for "DB function returned no error"
+	 * Taken from Akeeba components
+	 */
+	protected function bugfixDBFunctionReturnedNoError() {
+		$db = JFactory::getDbo();
+
+		// Fix broken #__assets records
+		$query = $db->getQuery(true);
+		$query->select('id')
+			->from('#__assets')
+			->where($db->qn('name').' = '.$db->q($this->_akeeba_extension));
+		$db->setQuery($query);
+		$ids = $db->loadColumn();
+		if(!empty($ids)) foreach($ids as $id) {
+			$query = $db->getQuery(true);
+			$query->delete('#__assets')
+				->where($db->qn('id').' = '.$db->q($id));
+			$db->setQuery($query);
+			$db->query();
+		}
+
+		// Fix broken #__extensions records
+		$query = $db->getQuery(true);
+		$query->select('extension_id')
+			->from('#__extensions')
+			->where($db->qn('element').' = '.$db->q($this->_akeeba_extension));
+		$db->setQuery($query);
+		$ids = $db->loadColumn();
+		if(!empty($ids)) foreach($ids as $id) {
+			$query = $db->getQuery(true);
+			$query->delete('#__extensions')
+				->where($db->qn('extension_id').' = '.$db->q($id));
+			$db->setQuery($query);
+			$db->query();
+		}
+
+		// Fix broken #__menu records
+		$query = $db->getQuery(true);
+		$query->select('id')
+			->from('#__menu')
+			->where($db->qn('type').' = '.$db->q('component'))
+			->where($db->qn('menutype').' = '.$db->q('main'))
+			->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_akeeba_extension));
+		$db->setQuery($query);
+		$ids = $db->loadColumn();
+		if(!empty($ids)) foreach($ids as $id) {
+			$query = $db->getQuery(true);
+			$query->delete('#__menu')
+				->where($db->qn('id').' = '.$db->q($id));
+			$db->setQuery($query);
+			$db->query();
+		}
+	}
+
+	/**
+	 * Joomla! 1.6+ bugfix for "Can not build admin menus"
+	 * Taken from Akeeba components
+	 */
+	protected function bugfixCantBuildAdminMenus() {
+		$db = JFactory::getDbo();
+
+		// If there are multiple #__extensions record, keep one of them
+		$query = $db->getQuery(true);
+		$query->select('extension_id')
+		->from('#__extensions')
+		->where($db->qn('element').' = '.$db->q($this->_akeeba_extension));
+		$db->setQuery($query);
+		$ids = $db->loadColumn();
+		if(count($ids) > 1) {
+			asort($ids);
+			$extension_id = array_shift($ids); // Keep the oldest id
+
+			foreach($ids as $id) {
+				$query = $db->getQuery(true);
+				$query->delete('#__extensions')
+				->where($db->qn('extension_id').' = '.$db->q($id));
+				$db->setQuery($query);
+				$db->query();
+			}
+		}
+
+		// If there are multiple assets records, delete all except the oldest one
+		$query = $db->getQuery(true);
+		$query->select('id')
+		->from('#__assets')
+		->where($db->qn('name').' = '.$db->q($this->_akeeba_extension));
+		$db->setQuery($query);
+		$ids = $db->loadObjectList();
+		if(count($ids) > 1) {
+			asort($ids);
+			$asset_id = array_shift($ids); // Keep the oldest id
+
+			foreach($ids as $id) {
+				$query = $db->getQuery(true);
+				$query->delete('#__assets')
+				->where($db->qn('id').' = '.$db->q($id));
+				$db->setQuery($query);
+				$db->query();
+			}
+		}
+
+		// Remove #__menu records for good measure!
+		$query = $db->getQuery(true);
+		$query->select('id')
+		->from('#__menu')
+		->where($db->qn('type').' = '.$db->q('component'))
+		->where($db->qn('menutype').' = '.$db->q('main'))
+		->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_akeeba_extension));
+		$db->setQuery($query);
+		$ids1 = $db->loadColumn();
+		if(empty($ids1)) $ids1 = array();
+		$query = $db->getQuery(true);
+		$query->select('id')
+		->from('#__menu')
+		->where($db->qn('type').' = '.$db->q('component'))
+		->where($db->qn('menutype').' = '.$db->q('main'))
+		->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_akeeba_extension.'&%'));
+		$db->setQuery($query);
+		$ids2 = $db->loadColumn();
+		if(empty($ids2)) $ids2 = array();
+		$ids = array_merge($ids1, $ids2);
+		if(!empty($ids)) foreach($ids as $id) {
+			$query = $db->getQuery(true);
+			$query->delete('#__menu')
+			->where($db->qn('id').' = '.$db->q($id));
+			$db->setQuery($query);
+			$db->query();
+		}
 	}
 }

@@ -241,7 +241,8 @@ class LiveUpdateController extends JController
 			$menu	= $app->getMenu();
 			if (is_object( $menu ))
 			{
-				if ($item = $menu->getActive())
+				$item = $menu->getActive();
+				if ($item)
 				{
 					$params	= $menu->getParams($item->id);
 					// Set Default State Data

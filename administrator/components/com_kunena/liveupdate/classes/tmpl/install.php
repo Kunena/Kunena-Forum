@@ -7,7 +7,7 @@
 
 defined( '_JEXEC' ) or die();
 
-$state			= &$this->get('State');
+$state			= $this->get('State');
 $message1		= $state->get('message');
 $message2		= $state->get('extmessage');
 ?>

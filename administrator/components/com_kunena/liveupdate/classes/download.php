@@ -37,7 +37,8 @@ class LiveUpdateDownloadHelper
 		$fp = @fopen($target, 'wb');
 		if($fp === false) {
 			// The file can not be opened for writing. Let's try a hack.
-			if( JFile::write($target, '') ) {
+			$empty = '';
+			if( JFile::write($target, $empty) ) {
 				if( self::chmod($target, 511) ) {
 					$fp = @fopen($target, 'wb');
 					$hackPermissions = true;
@@ -316,7 +317,7 @@ class LiveUpdateDownloadHelper
 		if ($ftpOptions['enabled'] == 1) {
 			// Connect the FTP client
 			jimport('joomla.client.ftp');
-			$ftp = &JFTP::getInstance(
+			$ftp = JFTP::getInstance(
 				$ftpOptions['host'], $ftpOptions['port'], null,
 				$ftpOptions['user'], $ftpOptions['pass']
 			);

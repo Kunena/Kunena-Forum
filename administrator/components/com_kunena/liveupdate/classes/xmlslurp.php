@@ -85,7 +85,7 @@ class LiveUpdateXMLSlurp extends JObject
 			return array('version' => '', 'date' => '', 'xmlfile' => '');
 		}
 		
-		$xml = & JFactory::getXMLParser('Simple');
+		$xml = JFactory::getXMLParser('Simple');
 		if (!$xml->loadFile($filename)) {
 			unset($xml);
 			return array('version' => '', 'date' => '', 'xmlfile' => '');
@@ -97,9 +97,9 @@ class LiveUpdateXMLSlurp extends JObject
 		}
 		
 		$data = array();
-		$element = & $xml->document->version[0];
+		$element = $xml->document->version[0];
 		$data['version'] = $element ? $element->data() : '';		
-		$element = & $xml->document->creationDate[0];
+		$element = $xml->document->creationDate[0];
 		$data['date'] = $element ? $element->data() : '';
 		
 		$data['xmlfile'] = $filename;
@@ -166,7 +166,7 @@ class LiveUpdateXMLSlurp extends JObject
 			return array('version' => '', 'date' => '', 'xmlfile' => '');
 		}
 		
-		$xml = & JFactory::getXMLParser('Simple');
+		$xml = JFactory::getXMLParser('Simple');
 		if (!$xml->loadFile($filename)) {
 			unset($xml);
 			return array('version' => '', 'date' => '', 'xmlfile' => '');
@@ -178,9 +178,9 @@ class LiveUpdateXMLSlurp extends JObject
 		}
 		
 		$data = array();
-		$element = & $xml->document->version[0];
+		$element = $xml->document->version[0];
 		$data['version'] = $element ? $element->data() : '';		
-		$element = & $xml->document->creationDate[0];
+		$element = $xml->document->creationDate[0];
 		$data['date'] = $element ? $element->data() : '';
 		
 		$data['xmlfile'] = $filename;
@@ -219,7 +219,7 @@ class LiveUpdateXMLSlurp extends JObject
 			return array('version' => '', 'date' => '', 'xmlfile' => '');
 		}
 
-		$xml = & JFactory::getXMLParser('Simple');
+		$xml = JFactory::getXMLParser('Simple');
 		if (!$xml->loadFile($filename)) {
 			unset($xml);
 			return array('version' => '', 'date' => '', 'xmlfile' => '');
@@ -231,9 +231,9 @@ class LiveUpdateXMLSlurp extends JObject
 		}
 		
 		$data = array();
-		$element = & $xml->document->version[0];
+		$element = $xml->document->version[0];
 		$data['version'] = $element ? $element->data() : '';		
-		$element = & $xml->document->creationDate[0];
+		$element = $xml->document->creationDate[0];
 		$data['date'] = $element ? $element->data() : '';
 		
 		$data['xmlfile'] = $filename;
@@ -276,7 +276,7 @@ class LiveUpdateXMLSlurp extends JObject
 			return array('version' => '', 'date' => '', 'xmlfile' => '');
 		}
 		
-		$xml = & JFactory::getXMLParser('Simple');
+		$xml = JFactory::getXMLParser('Simple');
 		if (!$xml->loadFile($filename)) {
 			unset($xml);
 			return array('version' => '', 'date' => '', 'xmlfile' => '');
@@ -288,9 +288,9 @@ class LiveUpdateXMLSlurp extends JObject
 		}
 		
 		$data = array();
-		$element = & $xml->document->version[0];
+		$element = $xml->document->version[0];
 		$data['version'] = $element ? $element->data() : '';		
-		$element = & $xml->document->creationDate[0];
+		$element = $xml->document->creationDate[0];
 		$data['date'] = $element ? $element->data() : '';
 		
 		$data['xmlfile'] = $filename;
@@ -332,7 +332,7 @@ class LiveUpdateXMLSlurp extends JObject
 			return array('version' => '', 'date' => '', 'xmlfile' => '');
 		}
 
-		$xml = & JFactory::getXMLParser('Simple');
+		$xml = JFactory::getXMLParser('Simple');
 		if (!$xml->loadFile($filename)) {
 			unset($xml);
 			return array('version' => '', 'date' => '', 'xmlfile' => '');
@@ -344,9 +344,9 @@ class LiveUpdateXMLSlurp extends JObject
 		}
 
 		$data = array();
-		$element = & $xml->document->version[0];
+		$element = $xml->document->version[0];
 		$data['version'] = $element ? $element->data() : '';
-		$element = & $xml->document->creationDate[0];
+		$element = $xml->document->creationDate[0];
 		$data['date'] = $element ? $element->data() : '';
 
 		$data['xmlfile'] = $filename;
@@ -367,12 +367,24 @@ class LiveUpdateXMLSlurp extends JObject
 		jimport('joomla.filesystem.folder');
 		$files = JFolder::files($path, '\.xml$', false, true);
 		if(!empty($files)) foreach($files as $filename) {
-			$xml = JFactory::getXMLParser('simple');
-			$result = $xml->loadFile($filename);
-			if(!$result) continue;
-			if(($xml->document->name() != 'install') && ($xml->document->name() != 'extension') && ($xml->document->name() != 'mosinstall')) continue;
-			unset($xml);
-			return $filename;
+			if(version_compare(JVERSION, '3.0.0', 'ge')) {
+				try {
+					$xml = new JXMLElement($filename, LIBXML_NONET, true);
+				} catch(Exception $e) {
+					continue;
+				}
+				if(($xml->getName() != 'extension')) continue;
+				unset($xml);
+				return $filename;
+				
+			} else {
+				$xml = JFactory::getXMLParser('simple');
+				$result = $xml->loadFile($filename);
+				if(!$result) continue;
+				if(($xml->document->name() != 'install') && ($xml->document->name() != 'extension') && ($xml->document->name() != 'mosinstall')) continue;
+				unset($xml);
+				return $filename;
+			}
 		}
 		
 		return false;

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package LiveUpdate
- * @copyright Copyright ©2011 Nicholas K. Dionysopoulos / AkeebaBackup.com
+ * @copyright Copyright (c)2010-2012 Nicholas K. Dionysopoulos / AkeebaBackup.com
  * @license GNU LGPLv3 or later <http://www.gnu.org/copyleft/lesser.html>
  * 
  * One-click updater for Joomla! extensions
@@ -76,7 +76,7 @@ class LiveUpdate
 		$extInfo = $config->getExtensionInformation();
 		
 		$info->extInfo = (object)$extInfo;
-		
+
 		return $info;
 	}
 	

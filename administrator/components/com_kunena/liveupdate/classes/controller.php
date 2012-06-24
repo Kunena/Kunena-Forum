@@ -151,7 +151,13 @@ class LiveUpdateController extends JController
 				$cache->clean();
 			}
 
-			$this->display();
+			$model->cleanup();
+
+			// Force reload update information
+			$dummy = LiveUpdate::getUpdateInformation(true);
+			
+			$this->setRedirect('index.php?option='.JRequest::getCmd('option',''));
+			$this->redirect();
 		}
 	}
 

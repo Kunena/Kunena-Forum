@@ -26,6 +26,12 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		return '1.5';
 	}
 
+	protected function _buildKeyreference( $plugin_function, $spc='' ) {
+		if (class_exists('AlphaUserPointsHelper') && method_exists('AlphaUserPointsHelper', 'buildKeyreference')) {
+			return AlphaUserPointsHelper::buildKeyreference($plugin_function, $spc);
+		}
+	}
+
 	public function onAfterPost($message) {
 		// Check for permisions of the current category - activity only if public or registered
 		if ( $this->_checkPermissions($message) ) {
@@ -33,8 +39,14 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 			$referreid = AlphaUserPointsHelper::getReferreid( $message->userid );
 			if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 				if ( $this->_checkRuleEnabled( 'plgaup_kunena_topic_create' ) ) {
-					// AUP >= 1.5.12
-					AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_create', $referreid, $message->id, $datareference );
+					if( $this->_getAUPversion() >= 1.6 ){
+						// AUP >= 1.6
+						$keyreference = $this->_buildKeyreference( 'plgaup_kunena_topic_create', $message->id ) ;
+						AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_create', $referreid, $keyreference, $datareference );
+					} else {
+						// AUP >= 1.5.12
+						AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_create', $referreid, $message->id, $datareference );
+					}
 				} elseif ( $this->_checkRuleEnabled( 'plgaup_newtopic_kunena' ) ) {
 					// AUP <= 1.5.11
 					AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', $referreid, $message->id, $datareference );
@@ -51,8 +63,14 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 			$referreid = AlphaUserPointsHelper::getReferreid( $message->userid );
 			if (JString::strlen($message->message) > $this->params->get('activity_points_limit', 0)) {
 				if ( $this->_checkRuleEnabled( 'plgaup_kunena_topic_reply' ) ) {
-					// AUP >= 1.5.12
-					AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_reply', $referreid, $message->id, $datareference );
+					if( $this->_getAUPversion() >= 1.6 ){
+						// AUP >= 1.6
+						$keyreference = $this->_buildKeyreference( 'plgaup_kunena_topic_reply', $message->id ) ;
+						AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_reply', $referreid, $keyreference, $datareference );
+					} else {
+						// AUP >= 1.5.12
+						AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_reply', $referreid, $message->id, $datareference );
+					}
 				} elseif ( $this->_checkRuleEnabled( 'plgaup_reply_kunena' ) ) {
 					// AUP <= 1.5.11
 					AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', $referreid, $message->id, $datareference );

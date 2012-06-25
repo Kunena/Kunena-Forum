@@ -121,9 +121,7 @@ class LiveUpdateFetch extends JObject
 			$this->storage->set('lastcheck', 0);
 			$this->storage->set('updatedata', '');
 			$this->storage->save();
-			$registry = $storage->getRegistry();
-			$registry->set('update.lastcheck', null);
-			$registry->set('update.updatedata', null);
+			$registry = new JRegistry('update');
 			$storage->setRegistry($registry);
 		}
 

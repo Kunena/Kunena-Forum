@@ -30,7 +30,7 @@ class plgSystemKunena extends JPlugin {
 		// Do not load if Kunena version is not supported or Kunena is not installed
 		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::installed())) return false;
 
-		$this->loadLanguage('plg_system_kunena.sys', JPATH_ADMINISTRATOR);
+		$this->loadLanguage('plg_system_kunena.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_system_kunena.sys', KPATH_ADMIN);
 
 		if (version_compare(JVERSION, '1.6','<')) {
 			// Joomla 1.5: Fix bugs and bad performance
@@ -253,24 +253,5 @@ class plgSystemKunena extends JPlugin {
 		$app->enqueueMessage(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
 		$app->enqueueMessage(JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($type))));
 		$app->redirect('index.php?option=com_installer');
-	}
-
-	/**
-	 * Display Kunena backend icon in Joomla 2.5+
-	 *
-	 * @param string $context
-	 */
-	public function onGetIcons($context) {
-		if ($context != 'mod_quickicon') {
-			return;
-		}
-		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
-
-		return array( array(
-			'link' => JRoute::_('index.php?option=com_kunena'),
-			'image' => 'kunena/icons/kunena-logo-48-black.png',
-			'text' => JText::_('COM_KUNENA'),
-			'access' => array('core.manage', 'com_kunena'),
-			'id' => 'com_kunena_icon' ) );
 	}
 }

@@ -64,28 +64,27 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=report') ?>" title="<?php echo JText::_('COM_KUNENA_REPORT_SYSTEM');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/report.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?> </span></a> </div>
 					</div>
 					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo JRoute::_('index.php?option=com_plugins&view=plugins&filter_'.(version_compare(JVERSION, '1.6', '>') ? 'folder' : 'type').'=kunena') ?>" title="<?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/pluginsmanager.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER'); ?> </span></a> </div>
+						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=liveupdate') ?>" title="<?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/pluginsmanager.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER'); ?> </span></a> </div>
 					</div>
+					<?php if ( $this->config->version_check && (version_compare(JVERSION, '1.6', '<') || JFactory::getUser()->authorise('core.manage', 'com_installer'))) : ?>
+					<div class="icon-container">
+					<?php
+						require_once KPATH_ADMIN.'/liveupdate/liveupdate.php';
+						echo LiveUpdate::getIcon();
+					?>
+					</div>
+					<?php endif ?>
 					<div class="icon-container">
 						<div class="icon"> <a href="http://www.kunena.org" target="_blank" title="<?php echo JText::_('COM_KUNENA_C_SUPPORTDESC');?>"> <img src="<?php echo JURI::base(true); ?>/components/com_kunena/media/icons/large/support.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?> </span></a> </div>
 					</div>
 				</div>
-		</td>
+			</td>
 		</tr>
 	</table>
-</div>
-	<?php
-	// FIXME: enable Live Update
-	if (0 && $this->config->version_check ) : ?>
-	<div class="kadmin-welcome">
-		<?php
-		require_once KPATH_ADMIN.'/liveupdate/liveupdate.php';
-		echo LiveUpdate::getIcon();
-		?>
 	</div>
-	<?php endif; ?>
-</div>
-<div class="kadmin-footer">
-	<?php echo KunenaVersion::getLongVersionHTML (); ?>
-</div>
+	</div>
+
+	<div class="kadmin-footer">
+		<?php echo KunenaVersion::getLongVersionHTML (); ?>
+	</div>
 </div>

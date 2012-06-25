@@ -22,7 +22,7 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 
 		parent::__construct ( $subject, $config );
 
-		$this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', JPATH_ADMINISTRATOR );
+		$this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', KPATH_ADMIN );
 
 		$this->path = dirname ( __FILE__ ) . '/alphauserpoints';
 	}

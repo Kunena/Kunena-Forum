@@ -19,10 +19,12 @@ class LiveUpdateConfig extends LiveUpdateAbstractConfig
 	var $_versionStrategy		= 'vcompare';
 	var $_storageAdapter		= 'component';
 	var $_storageConfig			= array('component' => 'com_kunena', 'key' => 'liveupdate');
+	var $_minStability			= 'stable';
 
 	function __construct()
 	{
 		$this->_cacerts = dirname(__FILE__).'/../assets/cacert.pem';
+		$this->_extensionTitle = JText::_('COM_KUNENA');
 
 		parent::__construct();
 	}

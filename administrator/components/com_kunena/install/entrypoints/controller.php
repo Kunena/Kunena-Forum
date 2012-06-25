@@ -95,7 +95,7 @@ class KunenaControllerInstall extends JController {
 
 		JFactory::getDocument()->addStyleDeclaration("
 	div.icon-48-kunena {
-		background-image:url('components/com_kunena$new/install/media/kunena-logo-48-black.png');
+		background-image:url('components/com_kunena$new/install/media/kunena-logo-48-white.png');
 	}
 	.kunena {
 	font-size: 15px;

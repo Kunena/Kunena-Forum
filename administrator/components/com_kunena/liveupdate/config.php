@@ -14,8 +14,7 @@ class LiveUpdateConfig extends LiveUpdateAbstractConfig
 {
 	var $_extensionName			= 'com_kunena';
 	var $_extensionTitle		= 'Kunena Forum';
-	//var $_updateURL				= 'http://update.kunena.org/kunena/kunena20.ini';
-	var $_updateURL				= 'http://www.kunena.org/index.php?option=com_ars&view=update&format=ini&id=1';
+	var $_updateURL				= 'http://update.kunena.org/com_kunena.ini';
 	var $_requiresAuthorization	= false;
 	var $_versionStrategy		= 'vcompare';
 	var $_storageAdapter		= 'component';

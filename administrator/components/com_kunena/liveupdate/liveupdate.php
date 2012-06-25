@@ -50,6 +50,10 @@ class LiveUpdate
 	 */
 	public static function handleRequest()
 	{
+		if (JRequest::getCmd('task') == 'ajax') {
+			self::ajax();
+		}
+
 		// Load language strings
 		self::loadLanguage();
 
@@ -78,6 +82,48 @@ class LiveUpdate
 		$info->extInfo = (object)$extInfo;
 
 		return $info;
+	}
+
+	function ajax()
+	{
+		// Note: we don't do a token check as we're fetching information
+		// asynchronously. This means that between requests the token might
+		// change, making it impossible for AJAX to work.
+
+		$info = self::getUpdateInformation();
+
+		$lang = JFactory::getLanguage();
+		$lang->load( 'plg_quickicon_kunena.sys', JPATH_ADMINISTRATOR ) || $lang->load( 'plg_quickicon_kunena.sys', KPATH_ADMIN );
+
+		$obj = new stdClass();
+		$obj->link = 'index.php?option=com_kunena';
+		if (empty($info->supported)) {
+			// Unsupported
+			$obj->img = 'kunena/images/icons/kunena-logo-48-white.png';
+			$obj->html = JText::_('COM_KUNENA');
+
+		} elseif ($info->stuck) {
+			// Stuck
+			$obj->img = 'kunena/images/icons/icon-48-kupdate-alert-white.png';
+			$obj->html = JText::_('COM_KUNENA') . '<br />' . JText::_('PLG_QUICKICON_KUNENA_UPDATE_CRASH');
+
+		} elseif (version_compare(KunenaForum::version(), $info->version, '<')) {
+			// Has updates
+			$obj->img = 'kunena/images/icons/icon-48-kupdate-update-white.png';
+			$obj->html = 'Kunena ' . $info->version . '<br />' . JText::_('PLG_QUICKICON_KUNENA_UPDATE_AVAILABLE');
+			$obj->link .= '&view=liveupdate';
+
+		} else {
+			// Already in the latest release
+			$obj->img = 'kunena/images/icons/icon-48-kupdate-good-white.png';
+			$obj->html = JText::_('COM_KUNENA');
+		}
+		$obj->img = JUri::root() .'/media/'. $obj->img;
+		$obj->link = JRoute::_($obj->link, false);
+
+		echo json_encode($obj);
+
+		JFactory::getApplication()->close();
 	}
 
 	public static function getIcon($config=array())

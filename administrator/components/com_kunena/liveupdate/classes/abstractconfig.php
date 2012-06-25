@@ -196,10 +196,10 @@ abstract class LiveUpdateAbstractConfig extends JObject
 		$db = JFactory::getDbo();
 		if( version_compare(JVERSION,'1.6.0','ge') ) {
 			$sql = $db->getQuery(true)
-				->select($db->nq('params'))
-				->from($db->nq('#__extensions'))
-				->where($db->nq('type').' = '.$db->q('component'))
-				->where($db->nq('element').' = '.$db->q($this->_extensionName));
+				->select($db->qn('params'))
+				->from($db->qn('#__extensions'))
+				->where($db->qn('type').' = '.$db->q('component'))
+				->where($db->qn('element').' = '.$db->q($this->_extensionName));
 		} else {
 			$sql = 'SELECT '.$db->nameQuote('params').' FROM '.$db->nameQuote('#__components').
 				' WHERE '.$db->nameQuote('option').' = '.$db->Quote($this->_extensionName).
@@ -209,14 +209,24 @@ abstract class LiveUpdateAbstractConfig extends JObject
 		$rawparams = $db->loadResult();
 		if(version_compare(JVERSION, '1.6.0', 'ge')) {
 			$params = new JRegistry();
-			$params->loadJSON($rawparams);
+			if(version_compare(JVERSION, '3.0.0', 'ge')) {
+				$params->loadString($rawparams);
+			} else {
+				$params->loadJSON($rawparams);
+			}
 		} else {
 			$params = new JParameter($rawparams);
 		}
 		
-		$this->_username	= $params->getValue('username','');
-		$this->_password	= $params->getValue('password','');
-		$this->_downloadID	= $params->getValue('downloadid','');
+		if(version_compare(JVERSION, '3.0.0', 'ge')) {
+			$this->_username	= $params->get('username','');
+			$this->_password	= $params->get('password','');
+			$this->_downloadID	= $params->get('downloadid','');
+		} else {
+			$this->_username	= $params->getValue('username','');
+			$this->_password	= $params->getValue('password','');
+			$this->_downloadID	= $params->getValue('downloadid','');
+		}
 	}
 	
 	public function applyCACert(&$ch)

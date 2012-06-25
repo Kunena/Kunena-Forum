@@ -51,7 +51,7 @@ class LiveUpdateView extends JView
 				$this->setLayout('install');
 
 				// Get data from the model
-				$state		= &$this->get('State');
+				$state		= $this->get('State');
 		
 				// Are there messages to display ?
 				$showMessage	= false;
@@ -67,6 +67,12 @@ class LiveUpdateView extends JView
 				
 				break;
 				
+			case 'nagscreen':
+				$this->setLayout('nagscreen');
+				$this->assign('updateInfo', LiveUpdate::getUpdateInformation());
+				$this->assign('runUpdateURL','index.php?option='.JRequest::getCmd('option','').'&view='.JRequest::getCmd('view','liveupdate').'&task=startupdate&skipnag=1');
+				break;
+			
 			case 'overview':
 			default:
 				$this->setLayout('overview');

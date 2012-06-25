@@ -18,7 +18,11 @@ class LiveUpdateModel extends JModel
 	{
 		// Get the path to Joomla!'s temporary directory
 		$jreg = JFactory::getConfig();
-		$tmpdir = $jreg->getValue('config.tmp_path');
+		if(version_compare(JVERSION, '3.0.0', 'ge')) {
+			$tmpdir = $jreg->get('tmp_path');
+		} else {
+			$tmpdir = $jreg->getValue('config.tmp_path');
+		}
 
 		jimport('joomla.filesystem.folder');
 		// Make sure the user doesn't use the system-wide tmp directory. You know, the one that's

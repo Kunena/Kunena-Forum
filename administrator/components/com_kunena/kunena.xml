@@ -17,7 +17,7 @@
 		<filename>COPYRIGHT.php</filename>
 	</files>
 	<administration>
-		<menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena.png">COM_KUNENA</menu>
+		<menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA</menu>
 		<submenu>
 			<menu view="config" img="components/com_kunena/media/icons/favicons/kunena-config.png">COM_KUNENA_CONFIGURATION</menu>
 			<menu view="categories" img="components/com_kunena/media/icons/favicons/kunena-categories.png">COM_KUNENA_CATEGORY_MANAGER</menu>

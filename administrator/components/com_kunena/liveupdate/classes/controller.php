@@ -54,6 +54,15 @@ class LiveUpdateController extends JController
 	 */
 	public function startupdate()
 	{
+		$updateInfo = LiveUpdate::getUpdateInformation();
+		if($updateInfo->stability != 'stable') {
+			$skipNag = JRequest::getBool('skipnag', false);
+			if(!$skipNag) {
+				$this->setRedirect('index.php?option='.JRequest::getCmd('option','').'&view='.JRequest::getCmd('view','liveupdate').'&task=nagscreen');
+				$this->redirect();
+			}
+		}
+
 		$ftp = $this->setCredentialsFromRequest('ftp');
 		if($ftp === true) {
 			// The user needs to supply the FTP credentials
@@ -151,7 +160,13 @@ class LiveUpdateController extends JController
 				$cache->clean();
 			}
 
-			$this->display();
+			$model->cleanup();
+
+			// Force reload update information
+			$dummy = LiveUpdate::getUpdateInformation(true);
+
+			$this->setRedirect('index.php?option='.JRequest::getCmd('option',''));
+			$this->redirect();
 		}
 	}
 
@@ -172,7 +187,7 @@ class LiveUpdateController extends JController
 	 * Displays the current view
 	 * @param bool $cachable Ignored!
 	 */
-	public final function display($cachable = false)
+	public final function display($cachable = false, $urlparams = false)
 	{
 		$viewLayout	= JRequest::getCmd( 'layout', 'default' );
 

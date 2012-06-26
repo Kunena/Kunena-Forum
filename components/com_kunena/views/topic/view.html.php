@@ -558,7 +558,7 @@ class KunenaViewTopic extends KunenaView {
 				}
 				$this->personalText = KunenaHtmlParser::parseText ( $this->profile->personalText );
 
-				$contents = KunenaFactory::getProfile()->showProfile($this, $params);
+				$contents = trim(KunenaFactory::getProfile()->showProfile($this, $params));
 				if (!$contents) $contents = $this->loadTemplateFile('profile');
 				$contents .= implode(' ', $dispatcher->trigger('onKunenaDisplay', array ('topic.profile', $this, $params)));
 

@@ -115,7 +115,7 @@ class CKunenaFile extends JFile
 		return $ret;
 	}
 
-	static function write($file, $buffer, $use_streams = false)
+	static function write($file, &$buffer, $use_streams = false)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');

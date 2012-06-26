@@ -102,7 +102,7 @@ class KunenaForumMessageAttachment extends JObject {
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
-					$img = '<img src="' . $template->getImagePath('icons/attach_generic.png') . '" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+					$img = '<img src="' . JURI::root(). 'media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
 					$this->_thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), 'nofollow' );
 					$this->_textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
 			}
@@ -117,7 +117,7 @@ class KunenaForumMessageAttachment extends JObject {
 					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' );
 				}
 				if ($this->_disabled) {
-					$this->_thumblink = '<img src="' . $template->getImagePath('icons/attach_generic.png') . '" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+					$this->_thumblink = '<img src="' . JURI::root() .'media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
 					$this->_imagelink = null;
 					$this->size = 0;
 				}

@@ -97,7 +97,7 @@ $k = 0;
 				<?php echo $item->link ?>
 			</td>
 			<td>
-				<img class="kstats-bar" src="<?php echo $this->ktemplate->getImagePath('bar.png') ?>" alt="" height="15" width="<?php echo $item->percent ?>%" />
+				<img class="kstats-bar" src="<?php echo JURI::root().'media/kunena/images/bar.png' ?>" alt="" height="15" width="<?php echo $item->percent ?>%" />
 			</td>
 			<td>
 				<?php echo $item->count ?>

@@ -283,7 +283,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			case 'id':
 				return intval($this->id);
 			case 'subject':
-				return KunenaHtmlParser::parseBBCode($this->subject);
+				return KunenaHtmlParser::parseText($this->subject);
 			case 'message':
 				return KunenaHtmlParser::parseBBCode($this->message);
 		}

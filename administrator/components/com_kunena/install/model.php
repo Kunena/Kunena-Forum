@@ -467,7 +467,7 @@ class KunenaModelInstall extends JModel {
 
 	public function deleteFiles($path, $ignore=array()) {
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS','.DS_Store','__MACOSX'));
-		foreach (JFolder::files($path, '.', false, true, $ignore) as $file) {
+		if ( JFolder::exists($path) ) foreach (JFolder::files($path, '.', false, true, $ignore) as $file) {
 			if ( JFile::exists($file) ) {
 				JFile::delete($file);
 			}
@@ -476,11 +476,16 @@ class KunenaModelInstall extends JModel {
 
 	public function deleteFolders($path, $ignore=array()) {
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS','.DS_Store','__MACOSX'));
-		foreach (JFolder::folders($path, '.', false, true, $ignore) as $folder) {
+		if ( JFolder::exists($path) ) foreach (JFolder::folders($path, '.', false, true, $ignore) as $folder) {
 			if ( JFolder::exists($folder) ) {
 				JFolder::delete($folder);
 			}
 		}
+	}
+
+	public function deleteFolder($path, $ignore=array()) {
+		$this->deleteFiles($path, $ignore);
+		$this->deleteFolders($path, $ignore);
 	}
 
 	public function stepPrepare() {
@@ -556,13 +561,10 @@ class KunenaModelInstall extends JModel {
 				$dest = $file['dest'];
 				if (!empty($ignore[$dest])) {
 					// Delete all files and folders (cleanup)
-					$this->deleteFiles($dest, $ignore[$dest]);
-					$this->deleteFolders($dest, $ignore[$dest]);
+					$this->deleteFolder($dest, $ignore[$dest]);
 					if ($dest == KPATH_SITE) {
-						$folder = "$dest/template/blue_eagle";
-						if ( JFolder::exists($folder) ) JFolder::delete($folder);
-						$folder = "$dest/template/mirage";
-						if ( JFolder::exists($folder) ) JFolder::delete($folder);
+						$this->deleteFolder("$dest/template/blue_eagle", array('params.ini'));
+						$this->deleteFolder("$dest/template/mirage", array('params.ini'));
 					}
 				}
 				// Copy new files into folder

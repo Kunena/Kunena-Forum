@@ -157,3 +157,15 @@ file_filter = components/com_kunena/language/<lang>/<lang>.mod_kunenamenu.sys.in
 source_file = components/com_kunena/language/en-GB/en-GB.mod_kunenamenu.sys.ini
 source_lang = en-GB
 minimum_perc = 80
+
+[Kunena.kunena-plugin-quickicon-sys]
+file_filter = administrator/components/com_kunena/language/<lang>/<lang>.plg_quickicon_kunena.sys.ini
+source_file = administrator/components/com_kunena/language/en-GB/en-GB.plg_quickicon_kunena.sys.ini
+source_lang = en-GB
+minimum_perc = 80
+
+[Kunena.liveupdate]
+file_filter = administrator/components/com_kunena/liveupdate/language/<lang>/<lang>.liveupdate.ini
+source_file = administrator/components/com_kunena/liveupdate/language/en-GB/en-GB.liveupdate.ini
+source_lang = en-GB
+minimum_perc = 80

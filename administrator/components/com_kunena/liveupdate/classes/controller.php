@@ -165,7 +165,7 @@ class LiveUpdateController extends JController
 			// Force reload update information
 			$dummy = LiveUpdate::getUpdateInformation(true);
 
-			$this->setRedirect('index.php?option='.JRequest::getCmd('option',''));
+			$this->setRedirect('index.php?option=com_kunena&view=install');
 			$this->redirect();
 		}
 	}

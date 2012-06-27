@@ -34,7 +34,7 @@ function kunena_upgrade_160_configuration($parent) {
 			$profile = $integration [$config->get('fb_profile')];
 			$config->set('integration_access', $profile);
 			$config->set('integration_login', $profile);
-			$config->iset('ntegration_profile', $profile);
+			$config->set('ntegration_profile', $profile);
 			$config->set('integration_activity', $profile);
 		} else {
 			$config->set('integration_access', 'joomla');

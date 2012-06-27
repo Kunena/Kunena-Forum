@@ -40,7 +40,7 @@ Translating languages
 =====================
 
 Many of the languages in this package are missing translations. To see the status of your language, please visit our Transifex status page:
-https://www.transifex.net/projects/p/Kunena/r/Core/
+https://www.transifex.com/projects/p/Kunena/r/Kunena2/
 
 If you want to help us to translate your language, please register into Transifex site and request a membership to a team.
 

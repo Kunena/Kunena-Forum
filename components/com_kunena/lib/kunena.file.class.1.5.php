@@ -57,7 +57,8 @@ class CKunenaFolder extends JFolder
 	public function createIndex($folder) {
 		// Make sure we have an index.html file in the current folder
 		if (!CKunenaFile::exists($folder.'/index.html')) {
-			CKunenaFile::write($folder.'/index.html','<html><body></body></html>');
+			$contents = '<html><body></body></html>';
+			CKunenaFile::write($folder.'/index.html', $contents);
 		}
 	}
 }

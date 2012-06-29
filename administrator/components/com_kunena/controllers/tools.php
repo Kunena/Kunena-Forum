@@ -100,7 +100,7 @@ class KunenaAdminControllerTools extends KunenaController {
 		}
 
 		if ($useradd) {
-			$db->setQuery ( "INSERT INTO #__kunena_users (userid) SELECT a.id FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL" );
+			$db->setQuery ( "INSERT INTO #__kunena_users (userid, showOnline) SELECT a.id AS userid, 1 AS showOnline FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_ADD') . ' ' . $db->getAffectedRows () );

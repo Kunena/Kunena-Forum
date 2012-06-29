@@ -67,6 +67,12 @@ KunenaForum::setup();
 // Initialize error handlers
 KunenaError::initialize ();
 
+// Create Kunena user if current user doesn't have one
+$kuser = KunenaUserHelper::getMyself ();
+if (! $kuser->exists ()) {
+	$kuser->save ();
+}
+
 // Set default view
 if (!$view) JRequest::setVar( 'view', 'cpanel' );
 

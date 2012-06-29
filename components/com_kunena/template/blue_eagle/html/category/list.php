@@ -12,7 +12,8 @@ defined ( '_JEXEC' ) or die ();
 
 $this->displayAnnouncement ();
 ?>
-
+<!-- Module position: kunena_announcement -->
+<?php $this->displayModulePosition ( 'kunena_announcement' ) ?>
 <div class="klist-markallcatsread kcontainer">
 	<div class="ksectionbody">
 		<div class="fltlft">

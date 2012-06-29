@@ -80,13 +80,16 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		}
 
 		$smileypath = $template->getSmileyPath();
-		$smiley_images = (array)JFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
+		$smiley_images = (array)JFolder::Files(JPATH_SITE.'/media/kunena/emoticons',false,false,false,array('index.php','index.html'));
+		// TODO: need to add lookup for template smileys, too
+		//$smiley_images = array_merge($smiley_images, (array)JFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html')));
 
 		$smiley_list = array();
 		$i = 0;
-		foreach ( $smiley_images as $id => $row ) {
-			$smiley_list[] = JHTML::_ ( 'select.option', $smiley_images [$id], $smiley_images [$id] );
+		foreach ( $smiley_images as $row ) {
+			$smiley_list[$row] = JHTML::_ ( 'select.option', $row, $row );
 		}
+		sort($smiley_list);
 		$list = JHTML::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected) ? $selected->location : '' );
 
 		return $list;

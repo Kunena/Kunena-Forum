@@ -212,5 +212,13 @@ function installSampleData()
 	}
 
 	$lang->setDebug($debug);
+
+	// Insert missing users
+	$query = "INSERT INTO #__kunena_users (userid, showOnline) SELECT a.id AS userid, 1 AS showOnline FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL";
+	$db->setQuery($query);
+	$db->query();
+	if ($db->getErrorNum ())
+		throw new KunenaInstallerException ( $db->getErrorMsg (), $db->getErrorNum () );
+
 	return $counter;
 }

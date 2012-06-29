@@ -596,13 +596,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				// If we just move into another category, we can keep using the old topic
 				$target = $this;
 			}
-			// Did user want to change subject?
+			// Did user want to change the subject?
 			if ($subject) {
 				$target->subject = $subject;
-				// Change subject of first message
-				$firstmessage = KunenaForumMessageHelper::get($target->first_post_id);
-				$firstmessage->subject = $subject;
-				$firstmessage->save();
 			}
 			// Did user want to change category?
 			$target->category_id = $categoryTarget->id;
@@ -734,6 +730,15 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$this->recount();
 			$target->recount();
 		}
+		if ($subject) {
+			// Change subject of first message (if needed)
+			$firstmessage = KunenaForumMessageHelper::get($target->first_post_id, true);
+			if ($firstmessage->subject != $subject) {
+				$firstmessage->subject = $subject;
+				$firstmessage->save();
+			}
+		}
+
 
 		return $target;
 	}

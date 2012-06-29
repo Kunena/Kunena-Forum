@@ -31,5 +31,3 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 	</div>
 </div>
-<!-- Module position: kunena_announcement -->
-<?php $this->displayModulePosition ( 'kunena_announcement' ) ?>

@@ -439,7 +439,8 @@ class KunenaAdminModelReport extends KunenaModel {
 		$plugins_value = array();
 		foreach($plugins_list as $name=>$desc) {
 			$state = JPluginHelper::getPlugin('kunena', $name);
-			if ($state) $plugins_value[] = '[u]'.$desc.'[/u]';
+			if ($state) $plugins_value[] = '[u]'.$desc.'[/u] Enabled';
+			else $plugins_value[] = '[u]'.$desc.'[/u] Disabled';
 		}
 
 		return $plugins_value;

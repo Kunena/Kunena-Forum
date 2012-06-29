@@ -83,11 +83,10 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		}
 
 		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
-		$uploadfolder	= JRequest::getVar( 'foldersmiley', 'emoticons', '', 'path' );
 		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
 		$view 			= JRequest::getVar( 'view', '' );
 
-		$upload = KunenaUploadHelper::upload($file, $uploadfolder, $format, $view);
+		$upload = KunenaUploadHelper::upload($file, 'emoticons', $format, $view);
 		if ( $upload ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS') );
 		} else {

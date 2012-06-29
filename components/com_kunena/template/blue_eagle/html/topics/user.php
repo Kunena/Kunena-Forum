@@ -12,9 +12,8 @@ defined ( '_JEXEC' ) or die ();
 
 $this->displayAnnouncement ();
 ?>
-<!-- Module position -->
+<!-- Module position: kunena_announcement -->
 <?php $this->displayModulePosition ( 'kunena_announcement' ) ?>
-
 <table class="klist-actions">
 	<tr>
 		<td class="klist-actions-info-all">

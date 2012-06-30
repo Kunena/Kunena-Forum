@@ -160,6 +160,9 @@ class KunenaAdminModelReport extends KunenaModel {
 		if (!empty($sef)) $seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
 		else $seftext = '[quote][b]Third-party SEF components:[/b] None [/quote]';
 
+		// Get integration settings
+		$integration_settings = $this->getIntegrationSettings();
+
 		$report = '[confidential][b]Joomla! version:[/b] '.JVERSION.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
 	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().' | [b]Base URL:[/b]' .JURI::root(). '[/confidential][quote][b]Database collation check:[/b] '.$collation.'
@@ -168,7 +171,7 @@ class KunenaAdminModelReport extends KunenaModel {
 	    [confidential][b]Mailer:[/b] '.$this->app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$this->app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$this->app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$this->app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$this->app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$this->app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/quote][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] '.$kunenaVersionInfo.'
-	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler]| [u]Joomla! detailled language files installed:[/u][spoiler] '.$joomlalanguages.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
+	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler]| [u]Kunena integration settings:[/u][spoiler] '.implode(' | ', $integration_settings).'[/spoiler]| [u]Joomla! detailled language files installed:[/u][spoiler] '.$joomlalanguages.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
 
 		return $report;
 	}
@@ -429,5 +432,17 @@ class KunenaAdminModelReport extends KunenaModel {
 			}
 		}
 		return $version;
+	}
+
+	public function getIntegrationSettings() {
+		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints Integration','comprofiler' => 'Kunena - Community Builder Integration','gravatar' => 'Kunena - Gravatar Integration','community' => 'Kunena - JomSocial Integration','joomla' => 'Kunena - Joomla Integration', 'kunena' => 'Kunena - Kunena Integration', 'uddeim' => 'Kunena - UddeIM Integration');
+		$plugins_value = array();
+		foreach($plugins_list as $name=>$desc) {
+			$state = JPluginHelper::getPlugin('kunena', $name);
+			if ($state) $plugins_value[] = '[u]'.$desc.'[/u] Enabled';
+			else $plugins_value[] = '[u]'.$desc.'[/u] Disabled';
+		}
+
+		return $plugins_value;
 	}
 }

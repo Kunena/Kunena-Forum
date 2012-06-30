@@ -68,13 +68,6 @@ abstract class KunenaHtmlParser {
 	public static function plainBBCode($txt, $len=0) {
 		if (!$txt) return;
 
-		// Strip content not allowed for guests
-		// TODO: do this in a better way inside BBCode parser..
-		$txt = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $txt );
-		$txt = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $txt );
-		$txt = preg_replace ( '/\[attachment(.*?)\](.*?)\[\/attachment\]/s', '', $txt );
-		$txt = preg_replace ( '/\[code\](.*?)\[\/code]/s', '', $txt );
-
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);

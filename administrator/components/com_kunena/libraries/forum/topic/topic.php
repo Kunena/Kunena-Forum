@@ -504,6 +504,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	public function move($target, $ids=false, $shadow=false, $subject='', $subjectall=false) {
 		// Warning: logic in this function is very complicated and even with full understanding its easy to miss some details!
 
+		// Clear authentication cache
+		$this->_authfcache = $this->_authccache = $this->_authcache = array();
+
 		// Cleanup input
 		if (!($ids instanceof JDate)) {
 			if (!is_array($ids)) {
@@ -761,6 +764,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		}
 		$this->_posts = $this->posts;
 
+		// Clear authentication cache
+		$this->_authfcache = $this->_authccache = $this->_authcache = array();
+
 		if ($cascade) {
 			$category = $this->getCategory();
 			if (! $category->update($this, $topicDelta, $postDelta)) {
@@ -785,6 +791,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		if (!$this->exists()) {
 			return true;
 		}
+
+		// Clear authentication cache
+		$this->_authfcache = $this->_authccache = $this->_authcache = array();
 
 		$db = JFactory::getDBO ();
 		$queries[] = "UPDATE #__kunena_messages SET hold='2' WHERE thread={$db->quote($this->id)}";
@@ -813,6 +822,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		if (!parent::delete()) {
 			return false;
 		}
+
+		// Clear authentication cache
+		$this->_authfcache = $this->_authccache = $this->_authcache = array();
 
 		// NOTE: shadow topic doesn't exist, DO NOT DELETE OR CHANGE ANY EXTERNAL INFORMATION
 		if ($this->moved_id == 0) {

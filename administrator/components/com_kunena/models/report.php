@@ -171,7 +171,7 @@ class KunenaAdminModelReport extends KunenaModel {
 	    [confidential][b]Mailer:[/b] '.$this->app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$this->app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$this->app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$this->app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$this->app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$this->app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/quote][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] '.$kunenaVersionInfo.'
-	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler]| [u]Kunena integration settings:[/u][spoiler] '.implode(' | ', $integration_settings).'[/spoiler]| [u]Joomla! detailled language files installed:[/u][spoiler] '.$joomlalanguages.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
+	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler]| [u]Kunena integration settings:[/u][spoiler] '.implode(' ', $integration_settings).'[/spoiler]| [u]Joomla! detailled language files installed:[/u][spoiler] '.$joomlalanguages.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
 
 		return $report;
 	}
@@ -436,13 +436,36 @@ class KunenaAdminModelReport extends KunenaModel {
 
 	public function getIntegrationSettings() {
 		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints Integration','comprofiler' => 'Kunena - Community Builder Integration','gravatar' => 'Kunena - Gravatar Integration','community' => 'Kunena - JomSocial Integration','joomla' => 'Kunena - Joomla Integration', 'kunena' => 'Kunena - Kunena Integration', 'uddeim' => 'Kunena - UddeIM Integration');
-		$plugins_value = array();
+		$plugin_final = array();
+
 		foreach($plugins_list as $name=>$desc) {
-			$state = JPluginHelper::getPlugin('kunena', $name);
-			if ($state) $plugins_value[] = '[u]'.$desc.'[/u] Enabled';
-			else $plugins_value[] = '[u]'.$desc.'[/u] Disabled';
+		$plugin = JPluginHelper::getPlugin('kunena', $name);
+
+		if ($plugin) {
+			$pluginParams = new JRegistry();
+			$params = $pluginParams->loadString($plugin->params);
+			$plugin_final[] = '[u]'.$desc.'[/u] Enabled || ';
+			if ( $name == 'alpahuserpoints' ) {
+				$plugin_final[] = ' Activity '.$pluginParams->get('activity').' Avatar '.$pluginParams->get('avatar').' Profile '.$pluginParams->get('profile').' Activity Points limit '.$pluginParams->get('activity_points_limit');
+			} elseif ( $name == 'comprofiler' ) {
+				$plugin_final[] = ' Access '.$pluginParams->get('access').' Login '.$pluginParams->get('login').' Activity '.$pluginParams->get('activity').' Avatar '.$pluginParams->get('avatar').' Profile '.$pluginParams->get('profile').' Private '.$pluginParams->get('private');
+			} elseif ( $name == 'gravatar' ) {
+				$plugin_final[] = ' Avatar '.$pluginParams->get('avatar');
+			} elseif ( $name == 'community' ) {
+				$plugin_final[] = ' Access '.$pluginParams->get('access').' Login '.$pluginParams->get('login').' Activity '.$pluginParams->get('activity').' Avatar '.$pluginParams->get('avatar').' Profile '.$pluginParams->get('profile').' Private '.$pluginParams->get('private').' Activity Points limit '.$pluginParams->get('activity_points_limit').' Activity Stream limit '.$pluginParams->get('activity_stream_limit');
+			} elseif ( $name == 'joomla' ) {
+				$plugin_final[] = ' Access '.$pluginParams->get('access').' | Login '.$pluginParams->get('login');
+			} elseif ( $name == 'kunena' ) {
+				$plugin_final[] = ' Avatar '.$pluginParams->get('avatar').' | Profile '.$pluginParams->get('profile');
+			} elseif ( $name == 'uddeim' ) {
+				$plugin_final[] = ' Private '.$pluginParams->get('private');
+			}
+		} else {
+			$plugin_final[] = '[u]'.$desc.'[/u] Disabled || ';
 		}
 
-		return $plugins_value;
+		}
+
+		return $plugin_final;
 	}
 }

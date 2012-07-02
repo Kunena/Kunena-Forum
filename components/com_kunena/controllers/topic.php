@@ -553,20 +553,27 @@ class KunenaControllerTopic extends KunenaController {
 			$target = KunenaForumMessageHelper::get($this->mesid);
 			$hold = KunenaForum::DELETED;
 			$msg = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
-			$url = $target->getUrl($this->return, false);
 		} else {
 			// Delete topic
 			$target = KunenaForumTopicHelper::get($this->id);
 			$hold = KunenaForum::TOPIC_DELETED;
 			$msg = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' );
-			$url = KunenaForumCategory::getInstance($this->return)->getUrl(null, false);
 		}
 		if ($target->authorise('delete') && $target->publish($hold)) {
 			$this->app->enqueueMessage ( $msg );
 		} else {
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}
-		$this->app->redirect ( $url );
+		if (!$target->authorise('read')) {
+			$target = $target->getTopic();
+			if ($target->authorise('read')) {
+				// TODO: need to get closest message
+				$target = KunenaForumMessageHelper::get($target->last_post_id);
+			} else {
+				$target = $target->getCategory();
+			}
+		}
+		$this->app->redirect ( $target->getUrl($this->return, false) );
 	}
 
 	public function undelete() {
@@ -612,7 +619,7 @@ class KunenaControllerTopic extends KunenaController {
 				$url = $topic->getUrl($this->return, false);
 			} else {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' ) );
-				$url = KunenaForumCategory::getInstance($this->return)->getUrl(null, false);
+				$url = $topic->getCategory()->getUrl($this->return, false);
 			}
 		} else {
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );

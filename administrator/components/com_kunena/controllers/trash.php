@@ -51,16 +51,16 @@ class KunenaAdminControllerTrash extends KunenaController {
 						$topic->authorise('delete');
 						$topic->delete();
 					}
-					$this->app->enqueueMessage (JText::_('COM_KUNENA_TRASH_DELETE_DONE'));
-					$this->app->redirect ( KunenaRoute::_($this->baseurl."&layout=topics", false) );
+					$this->app->enqueueMessage (JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
+					$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 				} elseif ( $message ) {
 					$messages = KunenaForumMessageHelper::getMessages($ids);
 					foreach ( $messages as $message ) {
 						$message->authorise('delete');
 						$message->delete();
 					}
-					$this->app->enqueueMessage (JText::_('COM_KUNENA_TRASH_DELETE_DONE'));
-					$this->app->redirect ( KunenaRoute::_($this->baseurl."&layout=messages", false) );
+					$this->app->enqueueMessage (JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
+					$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 				} else {
 					// error
 				}
@@ -118,23 +118,5 @@ class KunenaAdminControllerTrash extends KunenaController {
 		KunenaForumCategoryHelper::recount ();
 
 		$this->app->redirect(KunenaRoute::_($this->baseurl, false));
-	}
-
-	function messages() {
-		if (! JRequest::checkToken ()) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
-		}
-
-		$this->app->redirect(KunenaRoute::_($this->baseurl."&layout=messages", false));
-	}
-
-	function topics() {
-		if (! JRequest::checkToken ()) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
-		}
-
-		$this->app->redirect(KunenaRoute::_($this->baseurl."&layout=topics", false));
 	}
 }

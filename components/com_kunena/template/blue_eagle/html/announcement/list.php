@@ -26,10 +26,10 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="boxchecked" value="0" />
-			<input type="hidden" name="task" value="" />
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" id="adminForm" name="adminForm">
+				<input type="hidden" name="boxchecked" value="0" />
+				<?php echo JHTML::_( 'form.token' ); ?>
+
 <table class="kannouncement">
 	<tbody id="kannouncement_body">
 		<tr class="ksth">
@@ -45,25 +45,22 @@ defined ( '_JEXEC' ) or die ();
 				<th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
 			<?php endif; ?>
 		</tr>
-		</form>
 		<?php $this->displayItems() ?>
 
 		<?php  if ( !empty($this->announcementActions) ) : ?>
 		<!-- Bulk Actions -->
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post">
-			<?php echo JHTML::_( 'form.token' ); ?>
-			<tr class="krow1">
-				<td colspan="<?php echo empty($this->announcementActions) ? 5 : 7 ?>" class="kcol-first krowmoderation">
-							<?php echo JHTML::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
-							<input type="submit" name="kcheckgo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-					</td>
-				</tr>
-			</form>
-			<!-- /Bulk Actions -->
+		<tr class="krow1">
+			<td colspan="<?php echo empty($this->announcementActions) ? 5 : 7 ?>" class="kcol-first krowmoderation">
+				<?php echo JHTML::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+				<input type="submit" name="kcheckgo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+			</td>
+		</tr>
+		<!-- /Bulk Actions -->
 		<?php endif; ?>
 	</tbody>
 </table>
 
+			</form>
 		</div>
 	</div>
 </div>

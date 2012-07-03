@@ -58,7 +58,7 @@ class KunenaModelSearch extends KunenaModel {
 		$value = JRequest::getWord ( 'order', 'dec' );
 		$this->setState ( 'query.order', $value );
 
-		$value = JRequest::getInt ( 'childforums', 0 );
+		$value = JRequest::getInt ( 'childforums', 1 );
 		$this->setState ( 'query.childforums', $value );
 
 		$value = JRequest::getInt ( 'topic_id', 0 );

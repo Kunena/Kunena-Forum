@@ -517,14 +517,14 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FLOOD_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MODERATION') ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MAILMOD') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['mailmod'] ?></td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MODERATION_DESC') ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MAILMOD_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MAIL_ADMIN') ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MAILADMIN') ?></td>
 						<td align="left" valign="top"><?php echo $this->lists ['mailadmin'] ?></td>
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MAIL_ADMIN_DESC') ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MAILADMIN_DESC') ?></td>
 					</tr>
 				</table>
 			</fieldset>

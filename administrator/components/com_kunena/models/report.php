@@ -170,9 +170,9 @@ class KunenaAdminModelReport extends KunenaModel {
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |
 	    [confidential][b]Mailer:[/b] '.$this->app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$this->app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$this->app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$this->app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$this->app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$this->app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
-	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/quote][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] '.$kunenaVersionInfo.'
-	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler]| [u]Kunena integration settings:[/u][spoiler] '.implode(' ', $integration_settings).'[/spoiler]| [u]Joomla! detailled language files installed:[/u][spoiler] '.$joomlalanguages.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
-
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/quote][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailed:[/b] '.$kunenaVersionInfo.'
+	    | [u]Kunena detailed configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler]| [u]Kunena integration settings:[/u][spoiler] '.implode(' ', $integration_settings).'[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] '.$joomlalanguages.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
+		$report = str_replace('@', '(at)', $report);
 		return $report;
 	}
 
@@ -212,7 +212,7 @@ class KunenaAdminModelReport extends KunenaModel {
 
 				if ($key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
 					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_addres'
-					&& $key != 'recaptcha_theme') {
+					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id') {
 					$kconfigsettings .= '[tr][td]'.$key.'[/td][td]'.$value.'[/td][/tr]';
 				}
 		}
@@ -265,58 +265,12 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function _getJoomlaMenuDetails() {
-		$kunena_db = JFactory::getDBO ();
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			// Get Kunena extension id
-			$query = "SELECT extension_id "
-				." FROM #__extensions "
-				." WHERE name='com_kunena' AND type='component'";
-			$kunena_db->setQuery($query);
-			$kextensionid = $kunena_db->loadResult();
-			if (KunenaError::checkDatabaseError()) return;
+		$items = KunenaMenuFix::getAll();
 
-			// Get Kunena menu items
-			$query = "SELECT id "
-				." FROM #__menu "
-				." WHERE component_id='$kextensionid' AND published='1' AND parent_id='1' AND level='1' ORDER BY id ASC";
-			$kunena_db->setQuery($query);
-			$kmenuparentid = $kunena_db->loadResult();
-			if (KunenaError::checkDatabaseError()) return;
-
-			$query = "SELECT id, menutype, title, alias, link, path "
-				." FROM #__menu "
-				." WHERE parent_id={$kunena_db->Quote($kmenuparentid)} AND type='component' OR title='Kunena Forum' OR title='Kunena' ORDER BY id ASC";
-			$kunena_db->setQuery($query);
-			$kmenustype = $kunena_db->loadObjectlist();
-			if (KunenaError::checkDatabaseError()) return;
-
-			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
-			foreach($kmenustype as $item) {
-				$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->title.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->path.'[/td][/tr] ';
-			}
-		} else {
-			// Joomla 1.5
-			// Get Kunena aliases
-			$query = "SELECT m.id, m.menutype, m.name, m.alias, m.link, m.parent
-					FROM #__menu AS m
-					INNER JOIN #__menu AS mm ON m.link LIKE CONCAT( '%Itemid=', mm.id )
-					WHERE m.published=1 AND m.type = 'menulink' AND mm.link LIKE '%com_kunena%'
-					ORDER BY m.menutype, m.parent, m.ordering ASC";
-			$kunena_db->setQuery($query);
-			$kmenustype = (array) $kunena_db->loadObjectlist('id');
-			// Get Kunena menu items
-			$query = "SELECT id, menutype, name, alias, link, parent "
-				." FROM #__menu "
-				." WHERE published=1 AND link LIKE '%com_kunena%' ORDER BY menutype, parent, ordering";
-			$kunena_db->setQuery($query);
-			$kmenustype += (array) $kunena_db->loadObjectlist('id');
-			if (KunenaError::checkDatabaseError()) return;
-
-			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
-			foreach($kmenustype as $item) {
-				$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
-			}
+		$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
+		foreach($items as $item) {
+			$link = preg_replace('/^.*\?(option=com_kunena&)?/', '', $item->link);
+			$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->title.' [/td][td] '.$item->menutype.' [/td][td] '.$link.' [/td][td] '.$item->route.'[/td][/tr] ';
 		}
 		$joomlamenudetails .='[/table]';
 
@@ -435,33 +389,26 @@ class KunenaAdminModelReport extends KunenaModel {
 	}
 
 	public function getIntegrationSettings() {
-		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints Integration','comprofiler' => 'Kunena - Community Builder Integration','gravatar' => 'Kunena - Gravatar Integration','community' => 'Kunena - JomSocial Integration','joomla' => 'Kunena - Joomla Integration', 'kunena' => 'Kunena - Kunena Integration', 'uddeim' => 'Kunena - UddeIM Integration');
+		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints','comprofiler' => 'Kunena - Community Builder','gravatar' => 'Kunena - Gravatar','community' => 'Kunena - JomSocial','joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
 		$plugin_final = array();
 
 		foreach($plugins_list as $name=>$desc) {
 		$plugin = JPluginHelper::getPlugin('kunena', $name);
 
 		if ($plugin) {
-			$pluginParams = new JRegistry();
-			$params = $pluginParams->loadString($plugin->params);
-			$plugin_final[] = '[u]'.$desc.'[/u] Enabled || ';
-			if ( $name == 'alpahuserpoints' ) {
-				$plugin_final[] = ' Activity '.$pluginParams->get('activity').' Avatar '.$pluginParams->get('avatar').' Profile '.$pluginParams->get('profile').' Activity Points limit '.$pluginParams->get('activity_points_limit');
-			} elseif ( $name == 'comprofiler' ) {
-				$plugin_final[] = ' Access '.$pluginParams->get('access').' Login '.$pluginParams->get('login').' Activity '.$pluginParams->get('activity').' Avatar '.$pluginParams->get('avatar').' Profile '.$pluginParams->get('profile').' Private '.$pluginParams->get('private');
-			} elseif ( $name == 'gravatar' ) {
-				$plugin_final[] = ' Avatar '.$pluginParams->get('avatar');
-			} elseif ( $name == 'community' ) {
-				$plugin_final[] = ' Access '.$pluginParams->get('access').' Login '.$pluginParams->get('login').' Activity '.$pluginParams->get('activity').' Avatar '.$pluginParams->get('avatar').' Profile '.$pluginParams->get('profile').' Private '.$pluginParams->get('private').' Activity Points limit '.$pluginParams->get('activity_points_limit').' Activity Stream limit '.$pluginParams->get('activity_stream_limit');
-			} elseif ( $name == 'joomla' ) {
-				$plugin_final[] = ' Access '.$pluginParams->get('access').' | Login '.$pluginParams->get('login');
-			} elseif ( $name == 'kunena' ) {
-				$plugin_final[] = ' Avatar '.$pluginParams->get('avatar').' | Profile '.$pluginParams->get('profile');
-			} elseif ( $name == 'uddeim' ) {
-				$plugin_final[] = ' Private '.$pluginParams->get('private');
+			if (version_compare(JVERSION, '1.6', '>')) {
+				$pluginParams = new JRegistry($plugin->params);
+			} else {
+				$pluginParams = new JParameter($plugin->params);
 			}
+			$params = $pluginParams->toArray();
+			$plugin_final[] = '[b]'.$desc.'[/b] Enabled: ';
+			foreach ($params as $name=>$value) {
+				$plugin_final[] = "{$name}={$value} ";
+			}
+			$plugin_final[] = "\n";
 		} else {
-			$plugin_final[] = '[u]'.$desc.'[/u] Disabled || ';
+			$plugin_final[] = "[b]{$desc}[/b] Disabled\n";
 		}
 
 		}

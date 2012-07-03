@@ -142,12 +142,12 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			return;
 		} elseif ($this->hold == 1) {
 			$mailsubs = 0;
-			$mailmods = (bool) $config->mailmod;
-			$mailadmins = (bool) $config->mailadmin;
+			$mailmods = $config->mailmod >= 0;
+			$mailadmins = $config->mailadmin >= 0;
 		} else {
 			$mailsubs = (bool) $config->allowsubscriptions;
-			$mailmods = 0;
-			$mailadmins = 0;
+			$mailmods = $config->mailmod >= 1;
+			$mailadmins = $config->mailadmin >= 1;
 		}
 
 		$once = false;

@@ -141,8 +141,6 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['allowsubscriptions'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowsubscriptions', 'class="inputbox" size="1"', 'value', 'text', $this->config->allowsubscriptions );
 		$lists ['subscriptionschecked'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_subscriptionschecked', 'class="inputbox" size="1"', 'value', 'text', $this->config->subscriptionschecked );
 		$lists ['allowfavorites'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowfavorites', 'class="inputbox" size="1"', 'value', 'text', $this->config->allowfavorites );
-		$lists ['mailmod'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_mailmod', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailmod );
-		$lists ['mailadmin'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_mailadmin', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailadmin );
 		$lists ['showemail'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showemail', 'class="inputbox" size="1"', 'value', 'text', $this->config->showemail );
 		$lists ['askemail'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_askemail', 'class="inputbox" size="1"', 'value', 'text', $this->config->askemail );
 		$lists ['changename'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_changename', 'class="inputbox" size="1"', 'value', 'text', $this->config->changename );
@@ -316,7 +314,7 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$recaptcha_theme[] = JHTML::_('select.option', 'clean', JText::_('COM_KUNENA_A_RECAPTCHA_THEME_OPTION_CLEAN'));
 		$lists ['recaptcha_theme'] = JHTML::_ ( 'select.genericlist', $recaptcha_theme, 'cfg_recaptcha_theme', 'class="inputbox" size="1"', 'value', 'text', $this->config->recaptcha_theme );
 
-		// Kunena 2.0.0
+		// Added new options into Kunena 2.0.0
 		$lists ['keywords'] = JHTML::_('select.genericlist', $yesno, 'cfg_keywords', 'class="inputbox" size="1"', 'value', 'text', $this->config->keywords);
 		$lists ['userkeywords'] = JHTML::_('select.genericlist', $yesno, 'cfg_userkeywords', 'class="inputbox" size="1"', 'value', 'text', $this->config->userkeywords);
 
@@ -372,6 +370,15 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$cachetime[] = JHTML::_('select.option', '3600', JText::_('COM_KUNENA_CFG_OPTION_60_MINUTES'));
 		$lists ['cache'] = JHTML::_('select.genericlist', $yesno, 'cfg_cache', 'class="inputbox" size="1"', 'value', 'text', $this->config->cache);
 		$lists ['cache_time'] = JHTML::_('select.genericlist', $cachetime, 'cfg_cache_time', 'class="inputbox" size="1"', 'value', 'text', $this->config->cache_time);
+
+		// Added new options into Kunena 2.0.1
+		$mailoptions = array();
+		$mailoptions[] = JHTML::_('select.option', '-1', JText::_('COM_KUNENA_NO'));
+		$mailoptions[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_CFG_OPTION_UNAPPROVED_POSTS'));
+		$mailoptions[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_CFG_OPTION_ALL_NEW_POSTS'));
+
+		$lists ['mailmod'] = JHTML::_ ( 'select.genericlist', $mailoptions, 'cfg_mailmod', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailmod );
+		$lists ['mailadmin'] = JHTML::_ ( 'select.genericlist', $mailoptions, 'cfg_mailadmin', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailadmin );
 
 		return $lists;
 	}

@@ -35,6 +35,8 @@ abstract class KunenaForumTopicUserReadHelper {
 
 		if ($topic < 1)
 			return new KunenaForumTopicUserRead (null, $user);
+		if (!$user->userid)
+			return new KunenaForumTopicUserRead ($topic, 0);
 
 		if ($reload || empty ( self::$_instances [$user->userid][$topic] )) {
 			$topics = self::getTopics ( $topic, $user );

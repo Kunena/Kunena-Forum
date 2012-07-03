@@ -228,12 +228,17 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	public function hit() {
+		$app = JFactory::getApplication();
+		$lasthit = $app->getUserState('com_kunena.topic.lasthit');
+		if ($lasthit == $this->id) return;
+
 		// Update only hit - not entire object
 		$table = $this->getTable();
 		$table->id = $this->id;
 
 		if ( $table->hit() ) {
 			$this->hits++;
+			$app->setUserState('com_kunena.topic.lasthit', $this->id);
 		}
 	}
 

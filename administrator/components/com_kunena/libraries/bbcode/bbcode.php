@@ -932,10 +932,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				if (status == google.maps.GeocoderStatus.OK) {
 					$mapid.setCenter(results[0].geometry.location);
 					var marker = new google.maps.Marker({
-						zoom: $map_zoom,
-						disableDefaultUI: $map_control,
-						center: latlng,
-						mapTypeId: google.maps.MapTypeId.$map_type
+						position: results[0].geometry.location,
+						map: $mapid
 					});
 				} else {
 					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$content</i></strong></p>';

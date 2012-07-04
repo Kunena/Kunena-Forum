@@ -10,6 +10,7 @@
 defined( '_JEXEC' ) or die();
 
 class KunenaTemplateBlue_Eagle extends KunenaTemplate {
+	// Try to find missing files from the following parent templates:
 	protected $default = array('blue_eagle');
 	protected $css_compile = false;
 	protected $userClasses = array(

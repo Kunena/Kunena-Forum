@@ -20,6 +20,7 @@ class KunenaView extends JView {
 	public $me = null;
 	public $config = null;
 	public $embedded = false;
+	public $templatefiles = array();
 
 	protected $_row = 0;
 
@@ -335,13 +336,11 @@ class KunenaView extends JView {
 	{
 		KUNENA_PROFILER ? $this->profiler->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
-		static $files = array();
-
 		// Create the template file name based on the layout
 		$layout = $this->getLayout();
 		$file = isset($tpl) ? $layout.'_'.$tpl : $layout;
 
-		if (!isset($files[$file])) {
+		if (!isset($this->templatefiles[$file])) {
 			// Clean the file name
 			$file = preg_replace('/[^A-Z0-9_\.-]/i', '', $file);
 			$tpl  = isset($tpl)? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
@@ -349,13 +348,9 @@ class KunenaView extends JView {
 			// Load the template script
 			jimport('joomla.filesystem.path');
 			$filetofind	= $this->_createFileName('template', array('name' => $file));
-			if (!isset($files[$file]))
-			{
-				$files[$file] = JPath::find($this->_path['template'], $filetofind);
-			}
-
+			$this->templatefiles[$file] = JPath::find($this->_path['template'], $filetofind);
 		}
-		$this->_template = $files[$file];
+		$this->_template = $this->templatefiles[$file];
 
 		if ($this->_template != false) {
 			$templatefile = preg_replace('%'.JPath::clean(JPATH_ROOT,'/').'/%', '', JPath::clean($this->_template, '/'));

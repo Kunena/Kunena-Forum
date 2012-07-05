@@ -327,12 +327,15 @@ abstract class KunenaForumMessageHelper {
 		$results = (array) $db->loadAssocList ('id');
 		KunenaError::checkDatabaseError ();
 
+		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaForumTopicHelper::get($topic_id)->getTotal($hold);
+		$order = ($ordering == 'ASC') ? 1 : -1;
 		$list = array();
 		foreach ( $results as $id=>$result ) {
 			$instance = new KunenaForumMessage ($result);
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;
-			$list[$orderbyid ? $id : $start++] = $instance;
+			$list[$orderbyid ? $id : $location] = $instance;
+			$location += $order;
 		}
 		unset ($results);
 		return $list;

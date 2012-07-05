@@ -15,7 +15,7 @@
 		<field primary_key="yes" name="id" type="int(3)" null="0"
 			extra="auto_increment" />
 		<field name="title" type="tinytext" null="0" />
-		<field name="created_by" type="int(10)" null="0" default="0" />
+		<field name="created_by" type="int(11)" null="0" default="0" />
 		<field name="sdescription" type="text" null="0" />
 		<field name="description" type="text" null="0" />
 		<field name="created" type="datetime" null="0" default="0000-00-00 00:00:00" />
@@ -50,9 +50,9 @@
 		<field name="locked" type="tinyint(4)" null="0" default="0" />
 		<field name="accesstype" type="varchar(20)" null="0" default="joomla.level" />
 		<field name="access" type="int(11)" null="0" default="0" />
-		<field name="pub_access" type="int(11)" null="1" default="1" />
+		<field name="pub_access" type="int(11)" null="0" default="1" />
 		<field name="pub_recurse" type="tinyint(4)" null="1" default="1" />
-		<field name="admin_access" type="int(11)" null="1" default="0" />
+		<field name="admin_access" type="int(11)" null="0" default="0" />
 		<field name="admin_recurse" type="tinyint(4)" null="1" default="1" />
 		<field name="ordering" type="smallint(6)" null="0" default="0" />
 		<field name="published" type="tinyint(4)" null="0" default="0" />

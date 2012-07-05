@@ -370,6 +370,10 @@
 			<query>DELETE FROM #__kunena_messages WHERE moved>0</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` 
+				MODIFY `created_by` int(11) NOT NULL default '0' AFTER `title`;</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` 
+				MODIFY `admin_access` int(11) NOT NULL default '0' AFTER `pub_recurse`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_user_read` 
 				MODIFY `time` int(11) NOT NULL AFTER `message_id`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_user_read` ADD KEY `time` (time);</query>

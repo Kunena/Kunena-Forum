@@ -202,7 +202,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	public function getUserTopic($user=null) {
-		$usertopic = KunenaForumTopicUserHelper::get($this->id, $user);
+		$usertopic = KunenaForumTopicUserHelper::get($this, $user);
 		return $usertopic;
 	}
 
@@ -952,7 +952,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$this->hold = $exists ? $message->hold : KunenaForum::TOPIC_DELETED;
 			$this->recount();
 		}
-		if (!$this->posts) {
+		if (!($message && $message->exists()) && !$this->posts) {
 			return $this->delete();
 		}
 		if(!$this->save()) {
@@ -1047,7 +1047,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		if (!$this->exists()) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
-		if ($this->hold > 1 || ($this->hold && !$this->getUserTopic($user)->owner)) {
+		if ($this->hold > 1 || ($this->hold)) { // && !$this->getUserTopic($user)->owner)) {
 			$access = KunenaAccess::getInstance();
 			$hold = $access->getAllowedHold($user->userid, $this->category_id, false);
 			if (!in_array($this->hold, $hold)) {

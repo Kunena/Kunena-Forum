@@ -48,9 +48,9 @@ class KunenaControllerTopic extends KunenaController {
 			'mytags' => JRequest::getString ( 'mytags', null ),
 			'subscribe' => JRequest::getInt ( 'subscribeMe', 0 )
 		);
+		$this->app->setUserState('com_kunena.postfields', $fields);
 
 		if (! JRequest::checkToken ()) {
-			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -59,7 +59,6 @@ class KunenaControllerTopic extends KunenaController {
 		if ($captcha->enabled()) {
 			$success = $captcha->verify();
 			if ( !$success ) {
-				$this->app->setUserState('com_kunena.postfields', $fields);
 				$this->app->enqueueMessage ( $captcha->getError(), 'error' );
 				$this->redirectBack ();
 			}
@@ -69,7 +68,6 @@ class KunenaControllerTopic extends KunenaController {
 			// Create topic
 			$category = KunenaForumCategoryHelper::get($this->catid);
 			if (!$category->authorise('topic.create')) {
-				$this->app->setUserState('com_kunena.postfields', $fields);
 				$this->app->enqueueMessage ( $category->getError(), 'notice' );
 				$this->redirectBack ();
 			}
@@ -78,7 +76,6 @@ class KunenaControllerTopic extends KunenaController {
 			// Reply topic
 			$parent = KunenaForumMessageHelper::get($this->id);
 			if (!$parent->authorise('reply')) {
-				$this->app->setUserState('com_kunena.postfields', $fields);
 				$this->app->enqueueMessage ( $parent->getError(), 'notice' );
 				$this->redirectBack ();
 			}
@@ -95,7 +92,6 @@ class KunenaControllerTopic extends KunenaController {
 			$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE ip={$db->Quote($ip)} AND time>{$db->quote($timelimit)}" );
 			$count = $db->loadResult ();
 			if (KunenaError::checkDatabaseError() || $count) {
-				$this->app->setUserState('com_kunena.postfields', $fields);
 				$this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_TOPIC_FLOOD', $this->config->floodprotection) );
 				$this->redirectBack ();
 			}
@@ -142,9 +138,12 @@ class KunenaControllerTopic extends KunenaController {
 		$success = $message->save ();
 		if (! $success) {
 			$this->app->enqueueMessage ( $message->getError (), 'error' );
-			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->redirectBack ();
 		}
+
+		// Message has been sent, we can now clear saved form
+		$this->app->setUserState('com_kunena.postfields', null);
+
 		// Display possible warnings (upload failed etc)
 		foreach ( $message->getErrors () as $warning ) {
 			$this->app->enqueueMessage ( $warning, 'notice' );
@@ -201,7 +200,7 @@ class KunenaControllerTopic extends KunenaController {
 		} elseif ($topic->authorise('read', null, false)) {
 			$this->setRedirect ( $topic->getUrl($category, false) );
 		} else {
-			$this->setRedirect ( $topic->getUrl($category, false, 'first') );
+			$this->setRedirect ( $category->getUrl(null, false) );
 		}
 	}
 

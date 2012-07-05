@@ -925,9 +925,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				geocoder = new google.maps.Geocoder();
 			var latlng = new google.maps.LatLng(37.333586,-121.894684);
 			var myOptions = {
-				zoom: 10,
+				zoom: $map_zoom,
+				disableDefaultUI: $map_control,
 				center: latlng,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
+				mapTypeId: google.maps.MapTypeId.$map_type
 			};
 			$mapid = new google.maps.Map(document.id('".$mapid."'), myOptions);
 
@@ -937,10 +938,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				if (status == google.maps.GeocoderStatus.OK) {
 					$mapid.setCenter(results[0].geometry.location);
 					var marker = new google.maps.Marker({
-						zoom: $map_zoom,
-						disableDefaultUI: $map_control,
-						center: latlng,
-						mapTypeId: google.maps.MapTypeId.$map_type
+						position: results[0].geometry.location,
+				 		map: $mapid
 					});
 				} else {
 					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$content</i></strong></p>';

@@ -68,6 +68,11 @@ class KunenaBbcode extends BBCode {
 		$url = $params['url'];
 		$text = $params['text'];
 
+		if (preg_match('#^mailto:#u', $url)) {
+			// Cloak email addresses
+			return JHTML::_('email.cloak', $text, $params['isurl']);
+		}
+
 		if (preg_match('#^https?://#u', $text)) {
 			// Remove http(s):// from the text
 			$text = preg_replace ( '#^http(s?)://#u', '', $text );

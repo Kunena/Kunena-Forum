@@ -574,6 +574,8 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 				return false;
 			}
 
+			if ($subjectall) $subject = $target->subject;
+
 		} elseif ($target instanceof KunenaForumCategory) {
 			// Move messages into category
 
@@ -738,15 +740,6 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$this->recount();
 			$target->recount();
 		}
-		if ($subject) {
-			// Change subject of first message (if needed)
-			$firstmessage = KunenaForumMessageHelper::get($target->first_post_id, true);
-			if ($firstmessage->subject != $subject) {
-				$firstmessage->subject = $subject;
-				$firstmessage->save();
-			}
-		}
-
 
 		return $target;
 	}

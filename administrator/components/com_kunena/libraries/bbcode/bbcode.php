@@ -331,7 +331,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'allow' => array( 'type' => '/^[\w\d.-_]*$/', 'param' => '/^[\w]*$/', 'size' => '/^\d*$/', 'width' => '/^\d*$/', 'height' => '/^\d*$/' ),
 				'class' => 'block',
 				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_REQUIRED,
+				'content' => BBCODE_VERBATIM,
 				'plain_start' => "[video]",
 				'plain_end' => "",
 				'plain_content' => array(),
@@ -740,11 +740,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// We can't check this with BBCODE_CHECK because we may have no URL before the content
 		// has been processed.
 		if ($action == BBCODE_CHECK) {
-			$bbcode->autolink_disable = 1;
+			$bbcode->autolink_disable++;
 			return true;
 		}
 
-		$bbcode->autolink_disable = 0;
+		$bbcode->autolink_disable--;
 		$url = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode ( strip_tags ( $content ) );
 		// FIXME: add support for local (relative) URIs
 		if ($bbcode->IsValidURL ( $url )) {
@@ -1108,10 +1108,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		static $enabled = false;
 
 		if ($action == BBCODE_CHECK) {
-			$bbcode->autolink_disable = 1;
+			$bbcode->autolink_disable++;
 			return true;
 		}
-		$bbcode->autolink_disable = 0;
+		$bbcode->autolink_disable--;
 
 		$type = isset ( $params ["type"] ) ? $params ["type"] : "php";
 		if ($type == 'js') {
@@ -1145,11 +1145,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 	function doTableau($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK) {
-			$bbcode->autolink_disable = 1;
+			$bbcode->autolink_disable++;
 			return true;
 		}
 
-		$bbcode->autolink_disable = 0;
+		$bbcode->autolink_disable--;
 		if (!$content)
 			return;
 
@@ -1171,9 +1171,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	}
 
 	function DoVideo($bbcode, $action, $name, $default, $params, $content) {
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCODE_CHECK) {
+			$bbcode->autolink_disable++;
 			return true;
+		}
 
+		$bbcode->autolink_disable--;
 		if (! $content)
 			return;
 
@@ -1197,16 +1200,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			unset ( $vid_players );
 		}
 		if (! $vid ["type"]) {
-			$vid_auto = (preg_match ( '/^http:\/\/.*?([^.]*)\.[^.]*(\/|$)/', $content, $vid_regs ) > 0);
+			$vid_auto = preg_match ( '#^http://.*?([^.]*)\.[^.]*(/|$)#u', $content, $vid_regs );
 			if ($vid_auto) {
 				$vid ["type"] = JString::strtolower ( $vid_regs [1] );
 				switch ($vid ["type"]) {
-					case 'clip' :
-						$vid ["type"] = 'clip.vn';
-						break;
-					case 'web' :
-						$vid ["type"] = 'web.de';
-						break;
 					case 'wideo' :
 						$vid ["type"] = 'wideo.fr';
 						break;

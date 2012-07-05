@@ -243,10 +243,10 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	}
 
 	public function getTopic() {
-		if ($this->_topic) {
-			return $this->_topic;
+		if (!$this->_topic) {
+			$this->_topic = KunenaForumTopicHelper::get($this->thread);
 		}
-		return KunenaForumTopicHelper::get($this->thread);
+		return $this->_topic;
 	}
 
 	public function setTopic($topic) {
@@ -442,10 +442,10 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	public function save() {
 		$isNew = ! $this->_exists;
 
-		if (!$this->thread) {
+		$topic = $this->getTopic();
+		if (!$topic->exists()) {
 			// Create topic
-			$topic = $this->getTopic();
-			if (!$topic->exists() && !$topic->save()) {
+			if (!$topic->save()) {
 				$this->setError ( $topic->getError () );
 				return false;
 			}

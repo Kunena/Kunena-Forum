@@ -19,6 +19,9 @@ abstract class KunenaForumDiagnostics {
 			'topicsMissingCategory',
 			'messagesInWrongCategory',
 			'messagesOrphaned',
+			'pollsOrphaned',
+			'pollOptionsOrphaned',
+			'pollUsersOrphaned',
 		);
 	}
 
@@ -76,6 +79,24 @@ abstract class KunenaForumDiagnostics {
 		$query->from("#__kunena_messages AS a")->leftJoin("#__kunena_topics AS t ON t.id=a.thread")->where("t.id IS NULL");
 		return $query;
 	}
+	protected static function pollsOrphaned() {
+		// Query to find messages which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery();
+		$query->from("#__kunena_polls AS a")->leftJoin("#__kunena_topics AS t ON t.poll_id=a.id")->where("t.id IS NULL");
+		return $query;
+	}
+	protected static function pollOptionsOrphaned() {
+		// Query to find messages which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery();
+		$query->from("#__kunena_polls_options AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
+		return $query;
+	}
+	protected static function pollUsersOrphaned() {
+		// Query to find messages which do not belong in any existing topic
+		$query = new KunenaDatabaseQuery();
+		$query->from("#__kunena_polls_users AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.pollid")->where("p.id IS NULL");
+		return $query;
+	}
 }
 /*
 -- Find orphan attachments (to delete them):
@@ -84,11 +105,6 @@ SELECT a.* FROM jos_kunena_attachments AS a LEFT JOIN jos_kunena_messages AS m O
 -- Delete orphan favorites/subscriptions:
 DELETE f FROM jos_kunena_favorites AS f LEFT JOIN jos_kunena_messages AS m ON m.id=f.thread LEFT JOIN jos_users AS u ON u.id=f.userid WHERE m.id IS NULL OR u.id IS NULL
 DELETE s FROM jos_kunena_subscriptions AS s LEFT JOIN jos_kunena_messages AS m ON m.id=s.thread LEFT JOIN jos_users AS u ON u.id=s.userid WHERE m.id IS NULL OR u.id IS NULL
-
--- Delete orphan polls and poll options:
-DELETE p FROM jos_kunena_polls AS p LEFT JOIN jos_kunena_messages AS m ON m.id = p.threadid WHERE m.id IS NULL
-DELETE po FROM jos_kunena_polls_options AS po LEFT JOIN jos_kunena_polls AS p ON po.pollid = p.id WHERE p.id IS NULL
-DELETE pu FROM jos_kunena_polls_users AS pu LEFT JOIN jos_kunena_polls AS p ON pu.pollid = p.id WHERE p.id IS NULL
 
 -- Fix category channels (category selection bug):
 UPDATE jos_kunena_categories SET channels='THIS' WHERE channels='none' OR channels=NULL

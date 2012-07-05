@@ -34,8 +34,8 @@ class KunenaForumTopicUser extends JObject {
 		// Lets bind the data
 		$this->setProperties ( $table->getProperties () );
 		$this->_exists = false;
-		$this->topic_id = $topic->exists() ? $topic->id : null;
-		$this->category_id = $topic->exists() ? $topic->category_id : null;
+		$this->topic_id = $topic->id;
+		$this->category_id = $topic->category_id;
 		$this->user_id = KunenaUserHelper::get($user)->userid;
 	}
 

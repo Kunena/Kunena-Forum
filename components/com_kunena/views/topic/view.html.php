@@ -70,7 +70,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->total	= $this->get ( 'Total' );
 
 		// If page does not exist, redirect to the last page
-		if ($this->total <= $this->state->get('list.start')) {
+		if ($this->total && $this->total <= $this->state->get('list.start')) {
 			while (@ob_end_clean());
 			$this->app->redirect($this->topic->getUrl(null, false, (int)($this->total / $this->state->get('list.limit'))));
 		}

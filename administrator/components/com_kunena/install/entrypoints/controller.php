@@ -32,7 +32,9 @@ class KunenaControllerInstall extends JController {
 		$lang->load('com_kunena.install', JPATH_COMPONENT.$new);
 
 		if ($new && file_exists(JPATH_COMPONENT.'/new/install')) {
+			$md5 = md5_file(JPATH_COMPONENT.'/new/install/entrypoints/tmpl.update.php');
 			$this->restore(JPATH_COMPONENT.'/new/install', JPATH_COMPONENT.'/install');
+			$this->waitFile(JPATH_COMPONENT.'/install/entrypoints/tmpl.update.php', $md5);
 			JFolder::delete(JPATH_COMPONENT.'/new/install');
 		}
 		$this->app = JFactory::getApplication();
@@ -46,6 +48,7 @@ class KunenaControllerInstall extends JController {
 		jimport('joomla.filesystem.archive');
 		if (file_exists(JPATH_COMPONENT.'/bak')) JFolder::delete(JPATH_COMPONENT.'/bak');
 		if (file_exists(JPATH_COMPONENT.'/new')) {
+			$md5 = md5_file(JPATH_COMPONENT.'/new/install/entrypoints/api.php');
 			$this->restore(JPATH_COMPONENT.'/new', JPATH_COMPONENT);
 			JFolder::delete(JPATH_COMPONENT.'/new');
 		}
@@ -53,6 +56,7 @@ class KunenaControllerInstall extends JController {
 		JFile::copy(JPATH_COMPONENT.'/install/entrypoints/api.php', JPATH_COMPONENT.'/api.php');
 		JFile::copy(JPATH_COMPONENT.'/install/entrypoints/kunena.php', JPATH_ROOT.'/components/com_kunena/kunena.php');
 		JFile::copy(JPATH_COMPONENT.'/install/entrypoints/router.php', JPATH_ROOT.'/components/com_kunena/router.php');
+		if (!empty($md5)) $this->waitFile(JPATH_COMPONENT.'/api.php', $md5);
 		JFolder::delete(JPATH_COMPONENT.'/install/entrypoints');
 		$success = JArchive::extract ( JPATH_COMPONENT.'/archive/com_kunena-install.zip', JPATH_COMPONENT.'/install' );
 		clearstatcache();
@@ -303,6 +307,16 @@ class KunenaControllerInstall extends JController {
 			JFolder::move("{$from}/{$foldername}", "{$to}/{$foldername}");
 		}
 		clearstatcache();
+	}
+
+	protected function waitFile($file, $md5) {
+		// Test if file has been fully copied and wait if not
+		for ($i=0; $i<10; $i++) {
+			if (is_file($file) && md5_file($file) == $md5) return true;
+			sleep(1);
+			clearstatcache();
+		}
+		return false;
 	}
 
 	protected function getUrl() {

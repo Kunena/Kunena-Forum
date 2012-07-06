@@ -130,7 +130,7 @@ abstract class KunenaForumMessageAttachmentHelper {
 		return false;
 	}
 
-	static public function getFileExtensions($category, $user = null) {
+	static public function getFileExtensions($category = null, $user = null) {
 		$category = KunenaForumCategoryHelper::get($category);
 		$user = KunenaUserHelper::get($user);
 		$config = KunenaFactory::getConfig();

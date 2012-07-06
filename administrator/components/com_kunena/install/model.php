@@ -673,6 +673,7 @@ class KunenaModelInstall extends JModel {
 		// Fix broken category aliases (workaround for < 2.0-DEV12 bug)
 		$count = KunenaForumCategoryHelper::fixAliases();
 
+		$md5 = md5_file(KPATH_ADMIN.'/api.new.php');
 		foreach ($entryfiles as $fileparts) {
 			list($path, $filename, $ext) = $fileparts;
 			if (is_file("{$path}/{$filename}.new.{$ext}")) {
@@ -687,12 +688,25 @@ class KunenaModelInstall extends JModel {
 		KunenaMenuHelper::cleanCache();
 		JFactory::getCache('com_kunena')->clean();
 
+		// Test if api file has been fully copied
+		$this->waitFile(KPATH_ADMIN."/api.php", $md5);
+
 		if (! $this->getInstallError ()) {
 			$this->updateVersionState ( '' );
 			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
 
 			$this->setStep ( $this->getStep()+1 );
 		}
+	}
+
+	protected function waitFile($file, $md5) {
+		// Test if file has been fully copied and wait if not
+		for ($i=0; $i<10; $i++) {
+			if (is_file($file) && md5_file($file) == $md5) return true;
+			sleep(1);
+			clearstatcache();
+		}
+		return false;
 	}
 
 	public function migrateDatabase() {

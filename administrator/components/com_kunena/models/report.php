@@ -172,7 +172,6 @@ class KunenaAdminModelReport extends KunenaModel {
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/quote][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailed:[/b] '.$kunenaVersionInfo.'
 	    | [u]Kunena detailed configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler]| [u]Kunena integration settings:[/u][spoiler] '.implode(' ', $integration_settings).'[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] '.$joomlalanguages.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
-		$report = str_replace('@', '(at)', $report);
 		return $report;
 	}
 

@@ -143,7 +143,7 @@ class KunenaAccessComprofiler {
 		$allow = $deny = array();
 
 		if ($category->accesstype == 'communitybuilder') {
-			$params = array ('category'=>$category, 'topic'=>$topic, 'userids'=>&$userids);
+			$params = array ('category'=>$category, 'topic'=>$topic, 'userids'=>$userids, 'allow'=>&$allow, 'deny'=>&$deny);
 			KunenaIntegrationComprofiler::trigger ( 'authoriseUsers', $params );
 		}
 		return array($allow, $deny);

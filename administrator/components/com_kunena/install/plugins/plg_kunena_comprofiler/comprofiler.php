@@ -59,7 +59,7 @@ class plgKunenaComprofiler extends JPlugin {
 		if ($context == 'kunena.user') {
 			$triggerParams = array ('userid' => $item->userid, 'userinfo' => &$item );
 			$integration = KunenaFactory::getProfile();
-			if ( $integration instanceof KunenaProfileComprofiler) $integration->trigger ( 'profileIntegration', $triggerParams );
+			if ( $integration instanceof KunenaProfileComprofiler) KunenaProfileComprofiler::trigger ( 'profileIntegration', $triggerParams );
 		}
 	}
 

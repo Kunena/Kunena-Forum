@@ -35,6 +35,7 @@ class Com_KunenaInstallerScript {
 		$app = JFactory::getApplication();
 		$app->setUserState('kunena-old', 0);
 
+		$this->md5 = md5_file(JPATH_ADMINISTRATOR . '/components/com_kunena/install/entrypoints/admin.kunena.php');
 		$success = JFile::copy(
 				JPATH_ADMINISTRATOR . '/components/com_kunena/install/entrypoints/admin.kunena.php',
 				JPATH_ADMINISTRATOR . '/components/com_kunena/admin.kunena.php');
@@ -145,6 +146,9 @@ class Com_KunenaInstallerScript {
 			$this->backup("{$adminpath}/bak", $adminpath, $this->oldAdminFiles);
 			$this->backup("{$sitepath}/bak", $sitepath, $this->oldFiles);
 		}
+
+		// Test if bootstrap file has been fully copied
+		$this->waitFile("{$adminpath}/admin.kunena.php", $this->md5);
 
 		// Set redirect.
 		$installer->set('redirect_url', JURI::base () . 'index.php?option=com_kunena');
@@ -406,5 +410,15 @@ class Com_KunenaInstallerScript {
 			$db->setQuery($query);
 			$db->query();
 		}
+	}
+
+	protected function waitFile($file, $md5) {
+		// Test if file has been fully copied and wait if not
+		for ($i=0; $i<10; $i++) {
+			if (is_file($file) && md5_file($file) == $md5) return true;
+			sleep(1);
+			clearstatcache();
+		}
+		return false;
 	}
 }

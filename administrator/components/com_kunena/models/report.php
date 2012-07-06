@@ -211,7 +211,7 @@ class KunenaAdminModelReport extends KunenaModel {
 
 				if ($key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
 					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_addres'
-					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id') {
+					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id' && $key != 'email_visible_address') {
 					$kconfigsettings .= '[tr][td]'.$key.'[/td][td]'.$value.'[/td][/tr]';
 				}
 		}

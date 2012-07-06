@@ -32,7 +32,7 @@ class KunenaIntegrationComprofiler {
 	 *
 	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
 	 **/
-	public function trigger($event, &$params) {
+	public static function trigger($event, &$params) {
 		global $_PLUGINS;
 		$config = KunenaFactory::getConfig ();
 		$params ['config'] = $config;

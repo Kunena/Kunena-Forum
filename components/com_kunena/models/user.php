@@ -51,22 +51,30 @@ class KunenaModelUser extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_search", 'search', '' );
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH')) $this->setState ( 'list.search', $value );
 
-		// FIXME: doesn't work: Super administrator id may vary (JUpgrade 1.5 -> 1.6, migrations etc)
-		$this->setState ( 'list.exclude', version_compare(JVERSION, '1.6','>') ? '42' : '62');
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla! 2.5:
+			$db = JFactory::getDBO();
+			$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
+			$db->setQuery ( $query );
+			$superadmins = (array) $db->loadResultArray();
+			if (!$superadmins) $superadmins = array(0);
+			$this->setState ( 'list.exclude', implode(',', $superadmins));
+		}
 	}
 
 	public function getQueryWhere() {
-		if ($this->config->userlist_count_users == '1' ) $where = '(block=0 OR activation="")';
-		elseif ($this->config->userlist_count_users == '2' ) $where = '(block=0 AND activation="")';
-		elseif ($this->config->userlist_count_users == '3' ) $where = 'block=0';
+		if ($this->config->userlist_count_users == '1' ) $where = '(u.block=0 OR u.activation="")';
+		elseif ($this->config->userlist_count_users == '2' ) $where = '(u.block=0 AND u.activation="")';
+		elseif ($this->config->userlist_count_users == '3' ) $where = 'u.block=0';
 		else $where = '1';
+		// Hide super admins from the list
+		$where .= version_compare(JVERSION, '1.6','>') ? ' AND u.id NOT IN ('.$this->getState ( 'list.exclude' ).')' : ' AND u.gid!=25';
 		return $where;
 	}
 
 	public function getQuerySearch() {
 		// TODO: add strict search from the beginning of the name
 		$search = $this->getState ( 'list.search');
-		$exclude = $this->getState ( 'list.exclude');
 		$where = array();
 		if ($search) {
 			$db = JFactory::getDBO();
@@ -77,7 +85,7 @@ class KunenaModelUser extends KunenaModel {
 			$where = '';
 		}
 
-		return "{$where} AND u.id NOT IN ({$exclude})";
+		return $where;
 	}
 
 	public function getTotal() {
@@ -85,7 +93,7 @@ class KunenaModelUser extends KunenaModel {
 		if ($total === false) {
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
-			$db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE {$where}" );
+			$db->setQuery ( "SELECT COUNT(*) FROM #__users AS u WHERE {$where}" );
 			$total = $db->loadResult ();
 			KunenaError::checkDatabaseError();
 		}

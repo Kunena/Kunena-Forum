@@ -45,9 +45,9 @@ class KunenaAccessComprofiler {
 	 */
 	public function getGroupName($accesstype, $id=null) {
 		if ($accesstype == 'communitybuilder') {
-			//$this->loadGroups();
+			$this->loadGroups();
 			if ($id !== null) {
-				return isset($this->groups[$id]) ? $this->groups[$id]->name : '';
+				return isset($this->groups[$id]) ? $this->groups[$id]->name : $id;
 			}
 			return $this->groups;
 		}
@@ -70,6 +70,11 @@ class KunenaAccessComprofiler {
 				if (!$selected && is_numeric($item->id)) $selected = $item->id;
 				$options[] = JHTML::_ ( 'select.option', $item->id, str_repeat('- ', $item->level).$item->name, 'value', 'text', !is_numeric($item->id));
 			}
+			if (!$options) {
+				$selected = 0;
+				$options[] = JHTML::_ ( 'select.option', 0, JText::_('PLG_KUNENA_COMPROFILER_NO_GROUPS_FOUND'), 'value', 'text');
+			}
+
 			$html ['communitybuilder']['access'] = array(
 				'title' => JText::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_TITLE'),
 				'desc' => JText::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_DESC'),
@@ -93,13 +98,10 @@ class KunenaAccessComprofiler {
 	 * @return array(array('user_id'=>u, 'category_id'=>c, 'role'=>r))
 	 */
 	public function loadCategoryRoles(array $categories = null) {
-		// FIXME:
-		return array();
-
-		$list = array();
-		$params = array ('list'=>&$list);
-		KunenaIntegrationComprofiler::trigger ( 'loadAdmins', $params );
-		KunenaIntegrationComprofiler::trigger ( 'loadModerators', $params );
+		$roles = array();
+		$params = array ('categories'=>$categories, 'roles'=>&$roles);
+		KunenaIntegrationComprofiler::trigger ( 'loadCategoryRoles', $params );
+		return $roles;
 	}
 
 	/**
@@ -116,7 +118,14 @@ class KunenaAccessComprofiler {
 	 * @return array, where category ids are in the keys.
 	 */
 	public function authoriseCategories($userid, array &$categories) {
-		$allowed = array();
+		$allowed = '0';
+		$params = array ($userid, &$allowed);
+		KunenaIntegrationComprofiler::trigger ( 'getAllowedForumsRead', $params );
+
+		if (is_string($allowed)) $allowed = explode(',', $allowed);
+		$allowed = (array) array_flip($allowed);
+		foreach ($allowed as $id=>&$value) $value = $id;
+
 		return $allowed;
 	}
 
@@ -130,8 +139,13 @@ class KunenaAccessComprofiler {
 		if (empty($userids)) {
 			return;
 		}
-		// FIXME:
+		$category = $topic->getCategory();
 		$allow = $deny = array();
+
+		if ($category->accesstype == 'communitybuilder') {
+			$params = array ('category'=>$category, 'topic'=>$topic, 'userids'=>&$userids);
+			KunenaIntegrationComprofiler::trigger ( 'authoriseUsers', $params );
+		}
 		return array($allow, $deny);
 	}
 

@@ -279,9 +279,9 @@
 		<mkdir dir="${tmp_dir}/languages" />
 		<copy file="${project_dir}/${kunena.admin}/language/index.html" todir="${build_dir}/language/" />
 		<language tag="ar-AA" />
-		<language tag="az-AZ" />
+		<!--language tag="az-AZ" /-->
 		<language tag="bg-BG" />
-		<language tag="bs-BA" />
+		<!--language tag="bs-BA" /-->
 		<language tag="ca-ES" />
 		<language tag="cs-CZ" />
 		<language tag="da-DK" />
@@ -313,14 +313,14 @@
 		<language tag="ro-RO" />
 		<language tag="ru-RU" />
 		<language tag="sk-SK" />
-		<language tag="sq-AL" />
+		<!--language tag="sq-AL" /-->
 		<language tag="sr-RS" />
 		<language tag="sr-YU" />
 		<language tag="sv-SE" />
 		<language tag="th-TH" />
 		<language tag="tr-TR" />
-		<language tag="uk-UA" />
-		<language tag="ur-PK" />
+		<!--language tag="uk-UA" /-->
+		<!--language tag="ur-PK" /-->
 		<language tag="vi-VN" />
 		<language tag="zh-CN" />
 		<language tag="zh-TW" />

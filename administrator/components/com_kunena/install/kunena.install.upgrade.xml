@@ -369,7 +369,7 @@
 			<query>DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.moved>0</query>
 			<query>DELETE FROM #__kunena_messages WHERE moved>0</query>
 		</version>
-		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+		<version version="2.0.1" versiondate="2012-07-07" versionname="Balozi">
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` 
 				MODIFY `created_by` int(11) NOT NULL default '0' AFTER `title`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` 
@@ -387,6 +387,8 @@
 				LEFT JOIN #__kunena_polls AS p ON p.id=a.pollid 
 				SET a.pollid=t.poll_id 
 				WHERE t.poll_id>0 AND p.id IS NULL</query>
+		</version>
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

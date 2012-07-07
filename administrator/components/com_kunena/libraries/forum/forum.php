@@ -317,6 +317,9 @@ abstract class KunenaForum {
 		}
 		// Flag view as being embedded
 		$view->embedded = true;
+		
+		// Flag view as being teaser
+		$view->teaser = $params->get('teaser',0);
 
 		// Render the view.
 		$view->displayLayout ($layout, $template);

@@ -359,26 +359,4 @@ class KunenaViewCommon extends KunenaView {
 			$this->privateMessagesLink = $private->getInboxLink($count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX'));
 		}
 	}
-
-	function getOnlineList() {
-		$onlinelist = array();
-		foreach ($this->onlineList as $user) {
-			$onlinelist[] = $user->getLink();
-		}
-
-		$onlinelist = implode(', ', $onlinelist);
-
-		return $onlinelist;
-	}
-
-	function getHiddenList() {
-		$hiddenlist = array();
-		foreach ($this->hiddenList as $user) {
-			$hiddenlist[] = $user->getLink();
-		}
-
-		$hiddenlist = implode(', ', $hiddenlist);
-
-		return $hiddenlist;
-	}
 }

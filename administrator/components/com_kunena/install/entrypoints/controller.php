@@ -248,7 +248,7 @@ class KunenaControllerInstall extends JController {
 		<?php echo sprintf("Please read %s Kunena %s Release notes %s to get more detailed information from the new release.", '<a href="http://docs.kunena.org/index.php/Kunena_@kunenaversion@_Read_Me">', $version, '</a>') ?>
 	</p>
 	<p>
-		<?php echo sprintf("<strong>Important notice:</strong> Upgrading from your current installation to Kunena %s is irreversible. Downgrade is only possible by restoring backups.", $shortversion) ?>
+		<?php echo sprintf("<strong style='color:red'>Important notice:</strong> Upgrading from your current installation to Kunena %s is irreversible. Downgrade is only possible by restoring backups.", $shortversion) ?>
 	</p>
 		<a class="btn btn-large btn-primary" href="index.php?option=com_kunena&view=update"><?php echo sprintf("Upgrade now") ?></a>
 		<?php $kunenaBackupPhp = JPATH_ADMINISTRATOR . '/components/com_kunena/bak/admin.kunena.php';

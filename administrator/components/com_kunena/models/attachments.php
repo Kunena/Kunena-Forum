@@ -57,12 +57,16 @@ class KunenaAdminModelAttachments extends KunenaModel {
 
 		$orderby = ' ORDER BY '. $this->getState ( 'list.ordering' ) .' '. $this->getState ( 'list.direction' );
 
+		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS b ON a.mesid=b.id".$where.$orderby);
+		$total = $db->loadResult ();
+		KunenaError::checkDatabaseError();
+
+		$this->setState ( 'list.total', $total );
+
 		$query = "SELECT a.*, b.catid, b.thread FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS b ON a.mesid=b.id".$where.$orderby;
 		$db->setQuery ( $query, $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
 		$uploaded = $db->loadObjectlist();
 		if (KunenaError::checkDatabaseError()) return;
-
-		$this->setState ( 'list.total', count($uploaded) );
 
 		return $uploaded;
 	}

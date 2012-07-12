@@ -34,7 +34,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			'edit'=>array('Read','NotMoved','Unlocked','Own'),
 			'move'=>array('Read'),
 			'approve'=>array('Read','NotMoved'),
-			'delete'=>array('Read','Unlocked','Own'),
+			'delete'=>array('Read'),
 			'undelete'=>array('Read'),
 			'permdelete'=>array('Read'),
 			'favorite'=>array('Read'),

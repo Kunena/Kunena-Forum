@@ -404,7 +404,9 @@ class KunenaViewTopic extends KunenaView {
 		$this->id = $this->state->get('item.id');
 		$this->catid = $this->state->get('item.catid');
 
-		$this->topicIcons = $this->ktemplate->getTopicIcons(false);
+		if ($this->config->topicicons) {
+			$this->topicIcons = $this->ktemplate->getTopicIcons(false);
+		}
 
 		if (!$this->mesid) {
 			$this->topic = KunenaForumTopicHelper::get($this->id);

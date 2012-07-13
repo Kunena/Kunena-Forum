@@ -17,7 +17,7 @@ class KunenaViewTopic extends KunenaView {
 	function displayEdit($tpl = null) {
 		$body = JRequest::getVar('body', '', 'post', 'string', JREQUEST_ALLOWRAW);
 		$response = array();
-		if ($this->me->exists()) {
+		if ($this->me->exists() || $this->config->pubwrite) {
 			$msgbody = KunenaHtmlParser::parseBBCode( $body, $this );
 			$response ['preview'] = $msgbody;
 		}

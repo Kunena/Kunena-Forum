@@ -39,6 +39,13 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 					<strong><?php echo $this->escape( $this->category->name ) ?></strong>
 				</div>
 
+				<div><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
+				<div class="kmoderate-topicicons">
+					<?php foreach ($this->topicIcons as $id=>$icon): ?>
+					<input type="radio" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo (!empty($this->topic->icon_id) && $icon->id==$this->topic->icon_id) ? ' checked="checked" ':'' ?> />
+					<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" />
+					<?php endforeach; ?>
+				</div>
 				<br />
 				<?php if (isset($this->message)) : ?>
 				<div><?php echo JText::_('COM_KUNENA_MODERATION_TITLE_SELECTED'); ?>:</div>

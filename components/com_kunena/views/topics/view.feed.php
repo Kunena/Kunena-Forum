@@ -223,6 +223,7 @@ class KunenaViewTopics extends KunenaView {
 		$item->description	= $description;
 		$item->date			= $date->toMySQL();
 		$item->author		= $username;
+		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
 		if ($this->config->rss_author_format != 'name') $item->authorEmail = JFactory::getUser($userid)->email;
 		$item->category		= $category;
 

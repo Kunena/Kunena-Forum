@@ -510,7 +510,7 @@ abstract class KunenaRoute {
 
 	protected static function checkHome($item, $catid) {
 		static $cache = array();
-		if (!$catid) return true;
+		if (!$catid) return 1;
 		if (!isset($cache[$item->id])) {
 			if (version_compare(JVERSION, '1.6', '>')) {
 				// Joomla 1.6+
@@ -529,7 +529,7 @@ abstract class KunenaRoute {
 			unset($catids[0], $catids['']);
 			$cache[$item->id] = (array) $catids;
 		}
-		return empty($cache[$item->id]) || isset($cache[$item->id][$catid]);
+		return intval(empty($cache[$item->id]) || isset($cache[$item->id][$catid]));
 	}
 
 	protected static function checkCategory($item, $uri) {
@@ -544,7 +544,7 @@ abstract class KunenaRoute {
 				$cache[$item->id][$item->query['catid']] = KunenaForumCategoryHelper::get($item->query['catid']);
 			}
 		}
-		return isset($cache[$item->id][$catid]) * 8;
+		return intval(isset($cache[$item->id][$catid])) * 8;
 	}
 
 	protected static function check($item, $uri) {

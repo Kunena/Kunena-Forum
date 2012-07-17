@@ -60,7 +60,7 @@ if ($ksession->userid > 0) {
 }
 
 // Support legacy urls (they need to be redirected)
-$view = JRequest::getWord ( 'func', JRequest::getWord ( 'view' ) );
+$view = JRequest::getWord ( 'func', JRequest::getWord ( 'view', 'home' ) );
 $task = JRequest::getCmd ( 'task' );
 
 if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {

@@ -49,7 +49,7 @@ class KunenaController extends JController {
 			return $instance;
 		}
 
-		$view = strtolower ( JRequest::getWord ( 'view', 'none' ) );
+		$view = strtolower ( JRequest::getWord ( 'view', 'home' ) );
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.
@@ -89,7 +89,7 @@ class KunenaController extends JController {
 		$document = JFactory::getDocument ();
 
 		// Set the default view name and format from the Request.
-		$vName = JRequest::getWord ( 'view', 'none' );
+		$vName = JRequest::getWord ( 'view', 'home' );
 		$lName = JRequest::getWord ( 'layout', 'default' );
 		$vFormat = $document->getType ();
 

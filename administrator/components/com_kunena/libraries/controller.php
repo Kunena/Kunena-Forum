@@ -84,6 +84,15 @@ class KunenaController extends JController {
 		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$app = JFactory::getApplication();
+
+		// Get the document object.
+		$document = JFactory::getDocument ();
+
+		// Set the default view name and format from the Request.
+		$vName = JRequest::getWord ( 'view', 'none' );
+		$lName = JRequest::getWord ( 'layout', 'default' );
+		$vFormat = $document->getType ();
+
 		if ($app->isAdmin()) {
 			// Version warning
 			require_once KPATH_ADMIN . '/install/version.php';
@@ -104,7 +113,7 @@ class KunenaController extends JController {
 				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			}
 */
-			if (!empty($routed->id) && (empty($active->id) || $active->id != $routed->id)) {
+			if ($vFormat=='html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id)) {
 				// Routing has been changed, redirect
 				// FIXME: check possible redirect loops!
 				$app->redirect (KunenaRoute::_(null, false));
@@ -120,14 +129,6 @@ class KunenaController extends JController {
 			}
 			*/
 		}
-
-		// Get the document object.
-		$document = JFactory::getDocument ();
-
-		// Set the default view name and format from the Request.
-		$vName = JRequest::getWord ( 'view', 'none' );
-		$lName = JRequest::getWord ( 'layout', 'default' );
-		$vFormat = $document->getType ();
 
 		$view = $this->getView ( $vName, $vFormat );
 		if ($view) {

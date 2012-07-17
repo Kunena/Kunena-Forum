@@ -104,7 +104,7 @@ class KunenaController extends JController {
 				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			}
 */
-			if ($active->id != $routed->id) {
+			if (!empty($routed->id) && (empty($active->id) || $active->id != $routed->id)) {
 				// Routing has been changed, redirect
 				// FIXME: check possible redirect loops!
 				$app->redirect (KunenaRoute::_(null, false));

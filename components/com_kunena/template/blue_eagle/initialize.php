@@ -174,11 +174,14 @@ if ($toggleButton) {
 EOF;
 }
 
+$profileIcons = $template->getFile("media/iconsets/profile/{$template->params->get('profileIconset', 'default')}/default.png", true);
+$buttonIcons = $template->getFile("media/iconsets/buttons/{$template->params->get('buttonIconset', 'default')}/default.png", true);
+$editorIcons = $template->getFile("media/iconsets/editor/{$template->params->get('editorIconset', 'default')}/default.png", true);
 
 $styles .= <<<EOF
-	#Kunena .kicon-profile { background-image: url("{$mediaurl}/iconsets/profile/{$template->params->get('profileIconset', 'default')}/default.png"); }
-	#Kunena .kicon-button { background-image: url("{$mediaurl}/iconsets/buttons/{$template->params->get('buttonIconset', 'default')}/default.png") !important; }
-	#Kunena #kbbcode-toolbar li a,#Kunena #kattachments a { background-image:url("{$mediaurl}/iconsets/editor/{$template->params->get('editorIconset', 'default')}/default.png"); }
+	#Kunena .kicon-profile { background-image: url("{$profileIcons}"); }
+	#Kunena .kicon-button { background-image: url("{$buttonIcons}") !important; }
+	#Kunena #kbbcode-toolbar li a,#Kunena #kattachments a { background-image:url("{$editorIcons}"); }
 	/* End of Kunena Custom CSS */
 EOF;
 

@@ -55,6 +55,9 @@ class TableKunenaCategories extends KunenaTable {
 	}
 
 	public function bind($array, $ignore = '') {
+		if (is_object($array)) {
+			$array = get_object_vars($array);
+		}
 		if (isset($array['params']) && !is_string($array['params'])) {
 			if ($array['params'] instanceof JRegistry) {
 				$registry = $array['params'];
@@ -86,7 +89,7 @@ class TableKunenaCategories extends KunenaTable {
 			return false;
 		}
 
-		// Load the user data.
+		// Load the data.
 		$query = "SELECT * FROM #__kunena_categories WHERE id = {$this->$k}";
 		$this->_db->setQuery($query);
 		$data = $this->_db->loadAssoc();
@@ -152,7 +155,6 @@ class TableKunenaCategories extends KunenaTable {
 				if ($id != 0 and $id == $this->id)
 					return 1;
 			}
-			;
 		}
 		return 0;
 	}

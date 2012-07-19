@@ -23,36 +23,39 @@ class KunenaControllerHome extends KunenaController {
 		$menu = $this->app->getMenu ();
 		$home = $menu->getActive ();
 		if (!$home) {
-			JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+			JRequest::setVar ( 'view', 'category' );
+			JRequest::setVar ( 'layout', 'list' );
+			//JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+
+		} else {
+			// Find default menu item
+			$default = $this->_getDefaultMenuItem($menu, $home);
+			if (!$default || $default->id == $home->id) {
+				// There is no default menu item, use category view instead
+				$default = clone $menu->getItem ( KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list") );
+				$defhome = KunenaRoute::getHome($default);
+				if (!$defhome || $defhome->id != $home->id) $default = clone $home;
+				$default->query['view'] = 'category';
+				$default->query['layout'] = 'list';
+			}
+			if (!$default) {
+				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+			}
+
+			// Add query variables from shown menu item
+			foreach ( $default->query as $var => $value ) {
+				JRequest::setVar ( $var, $value );
+			}
+
+			// Remove query variables coming from the home menu item
+			JRequest::setVar ( 'defaultmenu', null );
+
+			// Set active menu item to point the real page
+			$menu->setActive ( $default->id );
+
+			// Joomla 1.5 hack:
+			$Itemid = $default->id;
 		}
-
-		// Find default menu item
-		$default = $this->_getDefaultMenuItem($menu, $home);
-		if (!$default || $default->id == $home->id) {
-			// There is no default menu item, use category view instead
-			$default = clone $menu->getItem ( KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list") );
-			if (KunenaRoute::getHome($default)->id != $home->id) $default = clone $home;
-			$default->query['view'] = 'category';
-			$default->query['layout'] = 'list';
-			unset($default->query['defaultmenu']);
-		}
-		if (!$default) {
-			JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-		}
-
-		// Remove query variables coming from the home menu item
-		JRequest::setVar ( 'defaultmenu', null );
-
-		// Add query variables from shown menu item
-		foreach ( $default->query as $var => $value ) {
-			JRequest::setVar ( $var, $value );
-		}
-
-		// Set active menu item to point the real page
-		$menu->setActive ( $default->id );
-
-		// Joomla 1.5 hack:
-		$Itemid = $default->id;
 
 		// Reset our router
 		KunenaRoute::initialize();

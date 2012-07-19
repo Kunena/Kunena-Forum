@@ -27,6 +27,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					$acl = KunenaAccess::getInstance();
 					$subscribers = $acl->loadSubscribers($topic, KunenaAccess::CATEGORY_SUBSCRIPTION);
 					foreach ($subscribers as $sub) :
+						// FIXME: inefficient to load users one by one
 						$user = JFactory::getUser($sub);
 				?>
 				<tr>

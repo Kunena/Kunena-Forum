@@ -360,6 +360,12 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$this->email = '';
 	}
 
+	public function removeIPTracking() {
+		$config = KunenaFactory::getConfig();
+		// Remove ip address
+		if ( $config->iptracking ) $this->ip = '';
+	}
+
 	public function uploadAttachment($tmpid, $postvar) {
 		$attachment = new KunenaForumMessageAttachment();
 		$attachment->mesid = $this->id;

@@ -219,6 +219,7 @@ class KunenaConfig extends JObject {
 	public $cache = 1;
 	public $cache_time = 60; // 1 minute
 	public $ebay_affiliate_id = 5337089937;
+	public $iptracking = 0;
 
 	public function __construct() {
 		parent::__construct ();

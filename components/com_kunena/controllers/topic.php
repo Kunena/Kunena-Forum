@@ -102,6 +102,8 @@ class KunenaControllerTopic extends KunenaController {
 			$topic->icon_id = $fields['icon_id'];
 		}
 
+		$message->removeIPTracking();
+
 		// If requested: Make message to be anonymous
 		if ($fields['anonymous'] && $message->getCategory()->allow_anonymous) {
 			$message->makeAnonymous();

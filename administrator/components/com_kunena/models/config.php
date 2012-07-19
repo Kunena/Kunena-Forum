@@ -380,6 +380,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 		$lists ['mailmod'] = JHTML::_ ( 'select.genericlist', $mailoptions, 'cfg_mailmod', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailmod );
 		$lists ['mailadmin'] = JHTML::_ ( 'select.genericlist', $mailoptions, 'cfg_mailadmin', 'class="inputbox" size="1"', 'value', 'text', $this->config->mailadmin );
 
+		$lists ['iptracking'] = JHTML::_('select.genericlist', $yesno, 'cfg_iptracking', 'class="inputbox" size="1"', 'value', 'text', $this->config->iptracking);
+
 		return $lists;
 	}
 }

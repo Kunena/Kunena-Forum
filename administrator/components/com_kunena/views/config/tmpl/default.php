@@ -526,6 +526,11 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						<td align="left" valign="top"><?php echo $this->lists ['mailadmin'] ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MAILADMIN_DESC') ?></td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IP_TRACKING') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['iptracking'] ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IP_TRACKING_DESC') ?></td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>

@@ -35,7 +35,7 @@ class KunenaViewCommon extends KunenaView {
 			$this->body = KunenaHtmlParser::parseBBCode($this->body);
 		}
 		$result = $this->loadTemplateFile($tpl);
-		if (JError::isError($result)) {
+		if ($result instanceof Exception) {
 			return $result;
 		}
 		echo $result;
@@ -62,7 +62,7 @@ class KunenaViewCommon extends KunenaView {
 				$this->annListUrl = KunenaForumAnnouncementHelper::getUri('list');
 				$this->showdate = $this->announcement->showdate;
 				$result = $this->loadTemplateFile($tpl);
-				if (JError::isError($result)) {
+				if ($result instanceof Exception) {
 					return $result;
 				}
 				echo $result;
@@ -83,7 +83,7 @@ class KunenaViewCommon extends KunenaView {
 		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
 		$result = $this->loadTemplateFile($tpl);
-		if (JError::isError($result)) {
+		if ($result instanceof Exception) {
 			return $result;
 		}
 		echo $result;
@@ -145,7 +145,7 @@ class KunenaViewCommon extends KunenaView {
 		}
 
 		$result = $this->loadTemplateFile($tpl);
-		if (JError::isError($result)) {
+		if ($result instanceof Exception) {
 			return $result;
 		}
 		echo $result;
@@ -194,7 +194,7 @@ class KunenaViewCommon extends KunenaView {
 		$this->usersUrl = CKunenaLink::GetUserlistURL('');
 
 		$result = $this->loadTemplateFile($tpl);
-		if (JError::isError($result)) {
+		if ($result instanceof Exception) {
 			return $result;
 		}
 		echo $result;
@@ -218,7 +218,7 @@ class KunenaViewCommon extends KunenaView {
 		$this->statisticsUrl = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
 
 		$result = $this->loadTemplateFile($tpl);
-		if (JError::isError($result)) {
+		if ($result instanceof Exception) {
 			return $result;
 		}
 		echo $result;
@@ -231,7 +231,7 @@ class KunenaViewCommon extends KunenaView {
 		$this->params = $this->state->get('params');
 		$this->getPrivateMessageLink();
 		$result = $this->loadTemplateFile($tpl);
-		if (JError::isError($result)) {
+		if ($result instanceof Exception) {
 			return $result;
 		}
 		echo $result;
@@ -304,7 +304,7 @@ class KunenaViewCommon extends KunenaView {
 
 			}
 			$contents = $this->loadTemplateFile($tpl);
-			if (JError::isError($contents)) {
+			if ($contents instanceof Exception) {
 				return $contents;
 			}
 			// FIXME: enable caching after fixing the issues
@@ -345,7 +345,7 @@ class KunenaViewCommon extends KunenaView {
 			}
 		}
 		$result = $this->loadTemplateFile($tpl);
-		if (JError::isError($result)) {
+		if ($result instanceof Exception) {
 			return $result;
 		}
 		echo $result;

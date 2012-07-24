@@ -285,7 +285,19 @@ abstract class KunenaForumMessageHelper {
 		if (KunenaError::checkDatabaseError ())
 			return false;
 		return $db->getAffectedRows ();
-		}
+	}
+
+	public static function getHoldMessagesByUser($userid) {
+		$db = JFactory::getDBO ();
+
+		$db->setQuery ( "SELECT COUNT(*)
+				FROM #__kunena_messages
+				WHERE userid ={$db->Quote($userid)} AND hold='1'" );
+		$result = (array) $db->loadResult ();
+		KunenaError::checkDatabaseError();
+
+		return $result;
+	}
 
 	// Internal functions
 

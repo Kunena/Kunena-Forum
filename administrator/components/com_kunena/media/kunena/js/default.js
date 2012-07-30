@@ -716,14 +716,12 @@ function kunenaSelectUsernameView(kobj, kuser) {
 	}
 }
 
-//Legacy to keep compatiblity with Joomla! 1.5
 function kunenatableOrdering( order, dir, task, form ) {
 	var form=document.getElementById(form);
 	form.filter_order.value=order;
 	form.filter_order_Dir.value=dir;
 	form.submit( task );
 }
-
 
 //----------------- New Mootools based behaviors ----------------------
 

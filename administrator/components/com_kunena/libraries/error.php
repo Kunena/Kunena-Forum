@@ -73,7 +73,6 @@ abstract class KunenaError {
 			} else {
 				$app->enqueueMessage ( 'Kunena '.JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' ), 'error' );
 			}
-			debug_print_backtrace();die();
 			return true;
 		}
 		return false;

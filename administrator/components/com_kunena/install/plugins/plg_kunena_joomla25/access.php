@@ -195,6 +195,10 @@ class KunenaAccessJoomla {
 	 */
 	public function authoriseCategories($userid, array &$categories) {
 		$user = JFactory::getUser($userid);
+		// WORKAROUND: Joomla! 2.5.6 bug returning NULL if $userid = 0 and session is corrupted.
+		if (!($user instanceof JUser)) {
+			$user = JUser::getInstance();
+		}
 
 		$accesslevels = (array) $user->authorisedLevels();
 		$groups_r = (array) JAccess::getGroupsByUser($user->id, true);

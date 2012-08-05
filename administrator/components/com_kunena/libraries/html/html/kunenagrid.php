@@ -70,11 +70,7 @@ abstract class JHtmlKunenaGrid
 			$direction	= ($direction == 'desc') ? 'asc' : 'desc';
 		}
 
-		if (version_compare(JVERSION, '2.5','>')) {
-			$html = '<a href="javascript:Joomla.tableOrdering(\''.$order.'\',\''.$direction.'\',\''.$task.'\',\''.$form.'\');" title="'.JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN').'">';
-		} else {
-			$html = '<a href="javascript:kunenatableOrdering(\''.$order.'\',\''.$direction.'\',\''.$task.'\',\''.$form.'\');" title="'.JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN').'">';
-		}
+		$html = '<a href="javascript:kunenatableOrdering(\''.$order.'\',\''.$direction.'\',\''.$task.'\',\''.$form.'\');" title="'.JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN').'">';
 		$html .= JText::_($title);
 
 		if ($order == $selected) {

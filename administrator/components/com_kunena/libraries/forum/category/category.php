@@ -40,7 +40,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			'topic.edit'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
 			'topic.approve'=>array('Read','NotBanned', 'Moderate'),
-			'topic.delete'=>array('Read', 'NotBanned', 'Unlocked'),
+			'topic.delete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.undelete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.permdelete'=>array('Read', 'NotBanned', 'Admin'),
 			'topic.favorite'=>array('Read','NotBanned', 'Favorite'),

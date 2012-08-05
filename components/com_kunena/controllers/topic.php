@@ -681,6 +681,8 @@ class KunenaControllerTopic extends KunenaController {
 			$changesubject = JRequest::getBool ( 'changesubject', false );
 			$subject = JRequest::getString ( 'subject', '' );
 			$shadow = JRequest::getBool ( 'shadow', false );
+			$topic_emoticon = JRequest::getInt ( 'topic_emoticon', null );
+			if (!is_null($topic_emoticon)) $topic->icon_id = $topic_emoticon;
 
 			if ($object instanceof KunenaForumMessage) {
 				$mode = JRequest::getWord ( 'mode', 'selected' );

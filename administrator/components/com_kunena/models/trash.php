@@ -179,6 +179,8 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$topic = $this->app->getUserState('com_kunena.topic');
 		$message = $this->app->getUserState('com_kunena.message');
 
+		$ids = implode ( ',', $ids );
+
 		if ( $topic ) {
 			$items = KunenaForumTopicHelper::getTopics($ids);
 		} elseif ( $message ) {

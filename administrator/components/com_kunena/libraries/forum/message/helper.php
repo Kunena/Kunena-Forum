@@ -96,7 +96,7 @@ abstract class KunenaForumMessageHelper {
 
 		$db = JFactory::getDBO();
 		// FIXME: use right config setting
-		if ($limit < 1) (JPATH_BASE == JPATH_ADMINISTRATOR) ? $limit = '' : $limit = KunenaFactory::getConfig ()->threads_per_page;
+		if ($limit < 1) $limit = KunenaFactory::getConfig ()->threads_per_page;
 		$cquery = new KunenaDatabaseQuery();
 		$cquery->select('COUNT(*)')
 			->from('#__kunena_messages AS m')

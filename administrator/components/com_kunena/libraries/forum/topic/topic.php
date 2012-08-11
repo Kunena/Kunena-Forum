@@ -905,6 +905,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			// If message belongs into this topic and has same state, we may need to update cache
 			$this->updatePostInfo($message->id, $message->time, $message->userid, $message->message, $message->name);
 		} elseif (!$this->moved_id) {
+			if(!isset($this->hold)) $this->hold=KunenaForum::TOPIC_DELETED;
 			// If message isn't visible anymore, check if we need to update cache
 			if (!$exists || $this->first_post_id == $message->id) {
 				// If message got deleted and was cached, we need to find new first post

@@ -209,7 +209,7 @@ abstract class KunenaForumMessageHelper {
 		$count = 0;
 		foreach ($location->hold as $meshold=>$values) {
 			if (isset($hold[$meshold])) {
-				$count += $values[$direction == 'asc' ? 'before' : 'after'];
+				$count += $values[$direction = 'asc' ? 'before' : 'after'];
 				if ($direction == 'both') $count += $values['before'];
 			}
 		}

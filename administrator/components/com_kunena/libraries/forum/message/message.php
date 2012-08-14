@@ -314,7 +314,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 			return false;
 		}
 		$topic = $this->getTopic();
-		$auth = ($topic->category_id==0 || $topic->authorise('post.'.$action, $user, $silent) ); // Category_id == 0 if topic is not exists anymore
+		$auth = ((!$topic->exists()) || $topic->authorise('post.'.$action, $user, $silent) );
 		if (!$auth) {
 			if (!$silent) $this->setError ( $topic->getError() );
 			return false;

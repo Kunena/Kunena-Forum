@@ -5,3 +5,4 @@ components/com_kunena/template/**/params.ini
 .externalToolBuilders/build.kunena.2.0.launch
 /build
 .idea/
+.DS_Store

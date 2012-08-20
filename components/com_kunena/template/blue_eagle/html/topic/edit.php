@@ -129,7 +129,7 @@ $this->k=0;
 					<input class="kfile-input-textbox" type="text" readonly="readonly" />
 					<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>" >
 						<input type="button" value="<?php echo  JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button kbutton" />
-						<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" />
+						<input id="kupload" class="kfile-input" name="kattachment" type="file" />
 					</div>
 					<a href="#" class="kattachment-remove kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a>
 					<a href="#" class="kattachment-insert kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>

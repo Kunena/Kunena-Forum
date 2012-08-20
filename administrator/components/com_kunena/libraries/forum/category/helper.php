@@ -480,6 +480,13 @@ abstract class KunenaForumCategoryHelper {
 		KunenaError::checkDatabaseError ();
 
 		self::$_instances = array();
+		self::$_tree = array();
+
+		if (empty($results)) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return;
+		}
+
 		foreach ( $results as $category ) {
 			$instance = new KunenaForumCategory ($category);
 			$instance->exists (true);

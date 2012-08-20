@@ -112,9 +112,7 @@
 }
 
 /* Fix broken file input box for Yootheme Warp 6 templates */
-#Kunena .hidden {
-	visibility: visible;
-}
 #Kunena .kfile-input {
 	display: block;
+	overflow: hidden;
 }

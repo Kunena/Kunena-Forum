@@ -24,7 +24,7 @@ $this->document->addScriptDeclaration('// <![CDATA[
 		<div class="kbody">
 			<div class="kanndesc">
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" class="form-validate" method="post" name="editform" onsubmit="return kunenaValidate(this);">
-					<input type='hidden' name="task" value="save" />
+					<input type="hidden" name="task" value="save" />
 					<?php echo $this->displayInput('id') ?>
 					<?php echo JHtml::_( 'form.token' ) ?>
 

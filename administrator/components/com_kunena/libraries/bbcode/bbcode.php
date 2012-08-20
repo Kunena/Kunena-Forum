@@ -21,7 +21,7 @@ require_once KPATH_ADMIN . '/libraries/external/nbbc/nbbc.php';
  * @version		2.0
  */
 class KunenaBbcode extends BBCode {
-	public $autolink_disable = false;
+	public $autolink_disable = 0;
 
 	/**
 	 * Object Constructor
@@ -1461,7 +1461,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$fileurl = trim(strip_tags($content));
 
 		if ($config->bbcode_img_secure != 'image') {
-			if (!preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl)) {
+			if ($bbcode->autolink_disable == 0 && !preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl)) {
 				// If the image has not legal extension, return it as link or text
 				$fileurl = $bbcode->HTMLEncode ( $fileurl );
 				if ($config->bbcode_img_secure == 'link') {

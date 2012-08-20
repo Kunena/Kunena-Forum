@@ -94,7 +94,7 @@ class KunenaView extends JView {
 				$this->common->display('default');
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
-			} elseif ($this->config->regonly && ! $this->me->exists()) {
+			} elseif ($this->config->regonly && ! $this->me->exists() && ! $this->teaser) {
 				// Forum is for registered users only
 				$this->common->header = JText::_('COM_KUNENA_LOGIN_NOTIFICATION');
 				$this->common->body = JText::_('COM_KUNENA_LOGIN_FORUM');

@@ -105,8 +105,10 @@ $this->k=0;
 
 			<td class="kcol-mid">
 				<?php foreach ($this->topicIcons as $id=>$icon): ?>
+				<span class="kiconsel">
 				<input type="radio" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
 				<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" />
+				</span>
 				<?php endforeach; ?>
 			</td>
 		</tr>

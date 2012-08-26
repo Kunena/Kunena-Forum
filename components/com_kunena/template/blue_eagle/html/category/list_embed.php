@@ -24,7 +24,7 @@ foreach ( $this->sections as $section ) :
 		<?php endif; ?>
 		<h2><span><?php echo $this->GetCategoryLink ( $section, $this->escape($section->name) ); ?></span></h2>
 		<?php if (!empty($section->description)) : ?>
-		<div class="ktitle-desc km">
+		<div class="ktitle-desc km hidden-phone">
 			<?php echo KunenaHtmlParser::parseBBCode ( $section->description ); ?>
 		</div>
 		<?php endif; ?>
@@ -61,7 +61,7 @@ foreach ( $this->sections as $section ) :
 			</div>
 
 		<?php if (!empty($category->description)) : ?>
-			<div class="kthead-desc km"><?php echo KunenaHtmlParser::parseBBCode ($category->description) ?> </div>
+			<div class="kthead-desc km hidden-phone"><?php echo KunenaHtmlParser::parseBBCode ($category->description) ?> </div>
 		<?php endif; ?>
 		<?php
 			// Display subcategories
@@ -100,12 +100,12 @@ foreach ( $this->sections as $section ) :
 		<?php endif; ?>
 			</td>
 
-			<td class="kcol-mid kcol-kcattopics">
+			<td class="kcol-mid kcol-kcattopics visible-desktop">
 				<span class="kcat-topics-number"><?php echo $this->formatLargeNumber ( $category->getTopics() ) ?></span>
 				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_TOPICS');?></span>
 			</td>
 
-			<td class="kcol-mid kcol-kcatreplies">
+			<td class="kcol-mid kcol-kcatreplies visible-desktop">
 				<span class="kcat-replies-number"><?php echo $this->formatLargeNumber ( $category->getReplies() ) ?></span>
 				<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
 			</td>
@@ -118,7 +118,7 @@ foreach ( $this->sections as $section ) :
 				$profile = KunenaFactory::getUser((int)$last->last_post_userid);
 				$useravatar = $profile->getAvatarImage('klist-avatar', 'list');
 				if ($useravatar) : ?>
-					<span class="klatest-avatar"> <?php echo $last->getLastPostAuthor()->getLink( $useravatar ); ?></span>
+					<span class="klatest-avatar hidden-phone"> <?php echo $last->getLastPostAuthor()->getLink( $useravatar ); ?></span>
 				<?php endif; ?>
 			<?php endif; ?>
 			<div class="klatest-subject ks">

@@ -95,10 +95,8 @@ abstract class KunenaUserHelper {
 	public static function loadUsers(array $userids = array()) {
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
-		foreach($userids as &$userid){
-			if (!$userid || $userid != intval($userid)) {
-				unset($userid);
-			} elseif (empty ( self::$_instances [$userid] )) {
+		foreach($userids as $userid){
+			if (intval($userid) && empty ( self::$_instances [$userid] )) {
 				$e_userids[$userid] = $userid;
 			}
 		}

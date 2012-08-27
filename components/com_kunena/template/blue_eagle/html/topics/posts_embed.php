@@ -33,7 +33,7 @@ defined ( '_JEXEC' ) or die ();
 
 					<?php  if ( !empty($this->postActions) || !empty($this->embedded) ) : ?>
 					<tr class="krow1">
-						<td colspan="<?php echo empty($this->postActions) ? 5 : 6 ?>" class="kcol-first krowmoderation">
+						<td colspan="<?php echo empty($this->postActions) ? 5 : 6 ?>" class="kcol krowmoderation">
 							<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
 							<?php if (!empty($this->postActions)) : ?>
 							<?php echo JHTML::_('select.genericlist', $this->postActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>

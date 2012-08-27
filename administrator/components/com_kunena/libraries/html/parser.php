@@ -81,8 +81,11 @@ abstract class KunenaHtmlParser {
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
-		$bbcode->SetAllowAmpersand(!$html);
+		$bbcode->SetAllowAmpersand($html);
 		$txt = strip_tags($bbcode->Parse($txt));
+		if (!$html)
+			$bbcode->UnHTMLEncode($txt);
+
 		return $txt;
 	}
 

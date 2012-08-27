@@ -116,3 +116,19 @@
 	display: block;
 	overflow: hidden;
 }
+
+#Kunena #jumpto .inputbox {
+	max-width: 90%;
+}
+
+#Kunena #postcatid {
+	width: 50%;
+}
+
+#Kunena .krowmoderation select {
+	max-width: 40%;
+}
+
+#Kunena .kiconsel {
+	white-space: nowrap;
+}

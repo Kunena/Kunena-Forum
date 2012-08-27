@@ -24,7 +24,7 @@ $this->displayAnnouncement ();
 				<input type="hidden" name="task" value="markread" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 
-				<input type="submit" class="kbutton button ks" value="<?php echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ'); ?>" />
+				<input type="submit" class="kbutton ks" value="<?php echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ'); ?>" />
 			</form>
 			</div>
 			<div class="kmessage-buttons-row">

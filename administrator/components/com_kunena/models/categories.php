@@ -89,10 +89,6 @@ class KunenaAdminModelCategories extends KunenaModel {
 			$admin = 0;
 			$acl = KunenaAccess::getInstance();
 			foreach ($this->_admincategories as $category) {
-				if (isset($orphans[$category->id])) {
-					// Found orphaned category.
-					$category->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $category->name;
-				}
 				$parent = $category->getParent();
 				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
 				$category->up = $this->me->isAdmin($parent) && reset($siblings) != $category->id;

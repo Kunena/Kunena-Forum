@@ -359,7 +359,12 @@ abstract class KunenaForumCategoryHelper {
 		$list = array();
 		foreach (self::getCategoryTree(false) as $catid => $children) {
 			if ($catid && !self::get($catid)->exists()) {
-				$list += self::getChildren($catid, $levels, $params);
+				foreach (self::getChildren($catid, $levels, $params) as $category) {
+					if ($category->parent_id == $catid) {
+						$category->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $category->name;
+					}
+					$list[$category->id] = $category;
+				}
 			}
 		}
 		return $list;

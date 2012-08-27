@@ -80,7 +80,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 			<tr <?php echo 'class = "row' . $k . '"';?>>
 				<td class="right"><?php echo $i + $this->navigation->limitstart + 1; ?></td>
 				<td><?php echo JHTML::_('grid.id', $i, intval($category->id)) ?></td>
-				<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat  ( '...', $category->level  ).' '.$category->name; ?> </a></td>
+				<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat  ( '...', count($category->indent)-1 ).' '.$category->name; ?> </a></td>
 				<td class="center"><?php echo intval($category->id); ?></td>
 
 				<?php if ($category->isSection()): ?>

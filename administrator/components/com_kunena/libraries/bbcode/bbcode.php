@@ -53,7 +53,7 @@ class KunenaBbcode extends BBCode {
 	 * Get Singleton Instance
 	 *
 	 * @param
-	 * @return	void
+	 * @return	KunenaBbcode
 	 * @since	1.7
 	 */
 	public static function getInstance($relative = true) {

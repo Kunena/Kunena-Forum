@@ -47,7 +47,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 						<th width="100" class="center nowrap">
 						<small>
 							<?php echo JHTML::_('grid.sort', 'COM_KUNENA_REORDER', 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
-							<?php echo JHTML::_('grid.order',  $this->categories, 'filesave.png', 'items.saveorder' ); ?></small>
+							<?php echo JHTML::_('grid.order',  $this->categories, 'filesave.png', 'saveorder' ); ?></small>
 						</th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_REVIEW'); ?></small></th>

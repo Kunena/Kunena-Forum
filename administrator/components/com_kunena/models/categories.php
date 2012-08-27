@@ -72,11 +72,16 @@ class KunenaAdminModelCategories extends KunenaModel {
 				'action'=>'admin');
 			$catid = $this->getState ( 'item.id', 0 );
 			$categories = array();
+			$orphans = array();
 			if ($catid) {
 				$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'list.levels' ), array('unpublished'=>1, 'action'=>'none'));
 				$categories[] = KunenaForumCategoryHelper::get($catid);
+			} else {
+				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'list.levels' ), $params);
 			}
 			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'list.levels' ), $params));
+			$categories = array_merge($orphans, $categories);
+
 			$categories = KunenaForumCategoryHelper::getIndentation($categories);
 			$this->setState ( 'list.total', count($categories) );
 			if ($this->getState ( 'list.limit' )) $this->_admincategories = array_slice ( $categories, $this->getState ( 'list.start' ), $this->getState ( 'list.limit' ) );
@@ -84,14 +89,12 @@ class KunenaAdminModelCategories extends KunenaModel {
 			$admin = 0;
 			$acl = KunenaAccess::getInstance();
 			foreach ($this->_admincategories as $category) {
-				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
-				if (empty($siblings)) {
-					// FIXME: deal with orphaned categories
-					$orphans = true;
-					$category->parent_id = 0;
+				if (isset($orphans[$category->id])) {
+					// Found orphaned category.
 					$category->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $category->name;
 				}
 				$parent = $category->getParent();
+				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
 				$category->up = $this->me->isAdmin($parent) && reset($siblings) != $category->id;
 				$category->down = $this->me->isAdmin($parent) && end($siblings) != $category->id;
 				$category->reorder = $this->me->isAdmin($parent);
@@ -147,7 +150,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 			}
 			$this->setState ( 'list.count.admin', $admin );
 		}
-		if (isset($orphans)) {
+		if (!empty($orphans)) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN_DESC' ), 'notice' );
 		}
 		return $this->_admincategories;

@@ -355,6 +355,16 @@ abstract class KunenaForumCategoryHelper {
 		return $list;
 	}
 
+	static public function getOrphaned($levels = 0, $params = array()) {
+		$list = array();
+		foreach (self::getCategoryTree(false) as $catid => $children) {
+			if ($catid && !self::get($catid)->exists()) {
+				$list += self::getChildren($catid, $levels, $params);
+			}
+		}
+		return $list;
+	}
+
 	static public function getCategoryTree($parent = 0) {
 		if (self::$_instances === false) {
 			self::loadCategories();

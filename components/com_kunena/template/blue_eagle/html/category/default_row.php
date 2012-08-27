@@ -63,7 +63,7 @@ $this->cache = false;
 		  </div>
 
         <div class="ktopic-details-kcategory" style="clear:both;">
-		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
+		<?php if ($this->pages > 1) : ?>
 		<ul class="kpagination">
 			<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
 			<li><?php echo $this->GetTopicLink ( $this->topic, 0, 1 ) ?></li>

@@ -355,6 +355,21 @@ abstract class KunenaForumCategoryHelper {
 		return $list;
 	}
 
+	static public function getOrphaned($levels = 0, $params = array()) {
+		$list = array();
+		foreach (self::getCategoryTree(false) as $catid => $children) {
+			if ($catid && !self::get($catid)->exists()) {
+				foreach (self::getChildren($catid, $levels, $params) as $category) {
+					if ($category->parent_id == $catid) {
+						$category->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $category->name;
+					}
+					$list[$category->id] = $category;
+				}
+			}
+		}
+		return $list;
+	}
+
 	static public function getCategoryTree($parent = 0) {
 		if (self::$_instances === false) {
 			self::loadCategories();

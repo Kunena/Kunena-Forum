@@ -107,7 +107,7 @@ abstract class KunenaForumTopicHelper {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$db = JFactory::getDBO ();
 		$config = KunenaFactory::getConfig ();
-		if ($limit < 1) $limit = $config->threads_per_page;
+		if ($limit < 1 && empty($params['nolimit'])) $limit = $config->threads_per_page;
 
 		$reverse = isset($params['reverse']) ? (int) $params['reverse'] : 0;
 		$orderby = isset($params['orderby']) ? (string) $params['orderby'] : 'tt.last_post_time DESC';
@@ -178,7 +178,7 @@ abstract class KunenaForumTopicHelper {
 		}
 
 		// If out of range, use last page
-		if ($total < $limitstart)
+		if ($limit && $total < $limitstart)
 			$limitstart = intval($total / $limit) * $limit;
 
 		// Get items

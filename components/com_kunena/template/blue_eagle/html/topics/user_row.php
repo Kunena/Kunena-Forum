@@ -34,7 +34,7 @@ $this->cache = false;
 	<td class="kcol-mid kcol-ktopictitle">
 		<?php if ($this->topic->attachments) echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') ); ?>
 		<?php if ($this->topic->poll_id) echo $this->getIcon ( 'ktopicpoll', JText::_('COM_KUNENA_ADMIN_POLLS') ); ?>
-		
+
 		<div class="ktopic-title-cover">
 			<?php
 			echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
@@ -49,7 +49,7 @@ $this->cache = false;
 			}
 			?>
 		</div>
-        
+
 		<div class="ktopic-details">
 			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
 		</div>
@@ -60,7 +60,7 @@ $this->cache = false;
 			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
             </div>
             <div class="ktopic-details-kcategory" style="clear:both;">
-		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
+		<?php if ($this->pages > 1) : ?>
 		<ul class="kpagination">
 			<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
 			<li><?php echo $this->GetTopicLink ( $this->topic, 0, 1 ) ?></li>

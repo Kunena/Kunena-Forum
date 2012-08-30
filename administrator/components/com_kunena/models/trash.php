@@ -101,9 +101,10 @@ class KunenaAdminModelTrash extends KunenaModel {
 		}
 
 		$params = array ('starttime'=> '-1',
-			'orderby'=> $orderby,
+			'orderby' => $orderby,
 			'mode' => 'deleted',
-			'where'=> $where);
+			'where' => $where,
+			'nolimit' => true);
 
 		$cats = KunenaForumCategoryHelper::getCategories();
 		$cats_array =array();
@@ -154,8 +155,9 @@ class KunenaAdminModelTrash extends KunenaModel {
 		}
 
 		$params = array ('hold' => '2,3',
-			'orderby'=> $orderby,
-			'where' => $where);
+			'orderby' => $orderby,
+			'where' => $where,
+			'nolimit' => true);
 
 		$cats = KunenaForumCategoryHelper::getCategories();
 		$cats_array =array();

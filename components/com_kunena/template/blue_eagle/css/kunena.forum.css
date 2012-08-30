@@ -3358,3 +3358,5 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 /* Fix Joomla 1.6 & 1.7 image border */
 #Kunena a img {border:none;}
 /* --------------------------------------------------------------- */
+/* Fix ol li numbers */
+#Kunena ol li {list-style-position:inside;}

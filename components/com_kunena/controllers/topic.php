@@ -288,6 +288,11 @@ class KunenaControllerTopic extends KunenaController {
 			$poll_title = $fields['poll_title'];
 			if ($poll_title !== null) {
 				// Save changes into poll
+				/*
+				 *  The poll is saved in database only if the options and the title of poll are filled, the lifetime of the poll is stored too.
+				 *  The poll is displayed only when you create a new topic or when you edit the first message of a topic. If you set the poll time to live, the poll
+				 *  won't get any new votes after this date.
+				 */
 				$poll_options = $fields['poll_options'];
 				$poll = $topic->getPoll();
 				if (! empty ( $poll_options ) && ! empty ( $poll_title )) {

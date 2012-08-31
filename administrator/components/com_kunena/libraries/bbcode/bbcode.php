@@ -62,6 +62,7 @@ class KunenaBbcode extends BBCode {
 		if (!isset($instance[intval($relative)])) {
 			$instance[intval($relative)] = new KunenaBbcode ($relative);
 		}
+		$instance[intval($relative)]->autolink_disable = 0;
 		return $instance[intval($relative)];
 	}
 
@@ -175,28 +176,28 @@ class KunenaBbcode extends BBCode {
 		foreach ($search as $index => $token) {
 			if ($index & 1) {
 				if (preg_match("/^(https?|ftp|mailto):/ui", $token)) {
-					// Protocol has been provided, so just use it as-is (but fix
-					// up any forgotten slashes).
+					// Protocol has been provided, so just use it as-is.
 					$url = $token;
-				}
-				else {
+				} else {
 					// Add scheme to emails and raw domain URLs.
 					$url = (strpos($token, '@') ? 'mailto:' : 'http://') . $token;
 				}
-				// Never start URL in the middle of text (except for punctuation).
+				// Never start URL from the middle of text (except for punctuation).
 				$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index-1]);
+				$invalid |= !$this->IsValidURL($url, true);
 
 				// We have a full, complete, and properly-formatted URL, with protocol.
 				// Now we need to apply the $this->url_pattern template to turn it into HTML.
 				// TODO: report Joomla bug (silence it for now)
 				$params = $this->parse_url($url);
-				if (isset($params['scheme']) && $params['scheme'] == 'mailto' && !$invalid) {
+				if (!$invalid && substr($url, 0, 7) == 'mailto:') {
 					$email = JString::substr($url, 7);
 					$output[$index] = JHTML::_('email.cloak', $email, $this->IsValidEmail($email));
-				} elseif ($invalid || empty($params['host']) || !empty($params['pass'])
-						|| !preg_match('#^(([^.]+\.)+.*[a-z]{2,4})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})$#ui', $params['host'])) {
+
+				} elseif ($invalid || empty($params['host']) || !empty($params['pass'])) {
 					$output[$index-1] .= $token;
 					$output[$index] = '';
+
 				} else {
 					$params['url'] = $url;
 					$params['link'] = $url;
@@ -209,6 +210,21 @@ class KunenaBbcode extends BBCode {
 		}
 		return $output;
 	}
+
+	/**
+	 * @see BBCode::IsValidURL()
+	 * Regular expression taken from https://gist.github.com/729294
+	 */
+	public function IsValidURL($string, $email_too = true, $local_too = false) {
+		static $re = '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS';
+
+		if (empty($string)) return false;
+		if ($local_too && $string[0] == '/') $string = 'http://www.domain.com' . $string;
+		if ($email_too && substr($string, 0, 7) == "mailto:") return $this->IsValidEmail(substr($string, 7));
+		if (preg_match($re, $string)) return true;
+		return false;
+	}
+
 
 	/**
 	 * @see JString::parse_url()
@@ -837,8 +853,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$bbcode->autolink_disable--;
 		$url = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode ( strip_tags ( $content ) );
-		// FIXME: add support for local (relative) URIs
-		if ($bbcode->IsValidURL ( $url )) {
+		$url = preg_replace('# #u', '%20', $url);
+		if (!preg_match('#^(/|https?:|ftp:)#ui', $url)) {
+			// Add scheme to raw domain URLs.
+			$url = "http://{$url}";
+		}
+
+		if ($bbcode->IsValidURL ( $url, false, true )) {
 			if ($bbcode->debug)
 				echo "ISVALIDURL<br />";
 			if ($bbcode->url_targetable !== false && isset ( $params ['target'] ))
@@ -1198,10 +1219,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		static $enabled = false;
 
 		if ($action == BBCODE_CHECK) {
-			$bbcode->autolink_disable++;
 			return true;
 		}
-		$bbcode->autolink_disable--;
 
 		$type = isset ( $params ["type"] ) ? $params ["type"] : "php";
 		if ($type == 'js') {

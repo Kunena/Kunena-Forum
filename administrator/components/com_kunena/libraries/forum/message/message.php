@@ -83,6 +83,17 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return $this->getTopic()->getUri($category, $this);
 	}
 
+	/**
+	 * Get permament topic URL without domain.
+	 *
+	 * If you want to add domain (for email etc), you can prepend the output with this:
+	 * JUri::getInstance()->toString(array('scheme', 'host', 'port'))
+	 *
+	 * @param KunenaForumCategory $category
+	 * @param bool $xhtml
+	 * @param mixed $action
+	 * @return string
+	 */
 	public function getPermaUrl($category = null, $xhtml = true) {
 		$uri = $this->getPermaUri($category);
 		return KunenaRoute::_($uri, $xhtml);
@@ -169,7 +180,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 
 		if (!$url) {
-			$url = JURI::root().trim($this->getPermaUrl(null), '/');
+			$url = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getPermaUrl(null);
 		}
 		//get all subscribers, moderators and admins who will get the email
 		$me = KunenaUserHelper::get();
@@ -358,14 +369,6 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$this->userid = 0;
 		$this->ip = '';
 		$this->email = '';
-	}
-
-	public function removeIPTracking() {
-		$config = KunenaFactory::getConfig();
-		// Remove IP address.
-		if ( $config->iptracking ) $this->ip = '';
-
-		// TODO: Add administrator tool to remove all tracked IP addresses (from the database)
 	}
 
 	public function uploadAttachment($tmpid, $postvar) {

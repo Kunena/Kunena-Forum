@@ -159,6 +159,22 @@ class TableKunenaCategories extends KunenaTable {
 		return 0;
 	}
 
+	public function reorder($where='') {
+		if (!$where) {
+			$db = JFactory::getDbo();
+			$query = "SELECT parent_id FROM #__kunena_categories GROUP BY parent_id";
+			$db->setQuery($query);
+			$parents = $db->loadResultArray();
+			$success = true;
+			foreach ($parents as $parent_id) {
+				$success &= parent::reorder("parent_id={$db->quote($parent_id)}");
+			}
+			return $success;
+		} else {
+			return parent::reorder($where);
+		}
+	}
+
 	public function store($updateNulls = false) {
 		$ret = parent::store ( $updateNulls );
 		return $ret;

@@ -114,7 +114,7 @@ class KunenaControllerTopic extends KunenaController {
 			$message->hold = 1;
 		}
 		// If configured: Hold posts from users
-		if ( !$this->me->isModerator($category) && $this->me->posts < $this->config->hold_newusers_posts ) {
+		if ( $this->me->userid && !$this->me->isModerator($category) && $this->me->posts < $this->config->hold_newusers_posts ) {
 			$message->hold = 1;
 		}
 

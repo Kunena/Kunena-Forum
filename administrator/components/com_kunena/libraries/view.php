@@ -42,6 +42,12 @@ class KunenaView extends JView {
 			$fallback = JPATH_THEMES . "/{$this->app->getTemplate()}/html/com_kunena/{$this->ktemplate->name}/{$this->getName()}";
 			$this->addTemplatePath($fallback);
 		}
+
+		// Use our own browser side cache settings.
+		JResponse::allowCache(false);
+		JResponse::setHeader( 'Expires', 'Mon, 1 Jan 2001 00:00:00 GMT', true );
+		JResponse::setHeader( 'Last-Modified', gmdate("D, d M Y H:i:s") . ' GMT', true );
+		JResponse::setHeader( 'Cache-Control', 'no-store, must-revalidate, post-check=0, pre-check=0', true );
 	}
 
 	public function displayAll() {

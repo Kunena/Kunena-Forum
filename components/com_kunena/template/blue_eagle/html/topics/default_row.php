@@ -60,7 +60,7 @@ $this->cache = false;
 			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
             </div>
             <div class="ktopic-details-kcategory" style="clear:both;">
-		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
+		<?php if ($this->pages > 1) : ?>
 		<ul class="kpagination">
 			<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
 			<li><?php echo $this->GetTopicLink ( $this->topic, 0, 1 ) ?></li>
@@ -81,7 +81,7 @@ $this->cache = false;
 		<?php endif; ?>
 	</td>
 
-	<td class="kcol-mid kcol-ktopicviews">
+	<td class="kcol-mid kcol-ktopicviews visible-desktop">
 		<span class="ktopic-views-number"><?php echo $this->formatLargeNumber ( $this->topic->hits );?></span>
 		<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_GEN_HITS');?> </span>
 	</td>
@@ -89,7 +89,7 @@ $this->cache = false;
 	<td class="kcol-mid kcol-ktopiclastpost">
 		<div class="klatest-post-info">
 			<?php if (!empty($this->topic->avatar)) : ?>
-			<span class="ktopic-latest-post-avatar"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
+			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
 			<?php endif; ?>
 
 			<span class="ktopic-latest-post">

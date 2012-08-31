@@ -367,9 +367,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		}
 		if ($mesid == 'unread') $mesid = $this->lastread;
 		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory())) {
-			if ($mesid == 'first' || $mesid == $this->first_post_id) return $direction = 'asc' ? 0 : $this->posts-1;
-			if ($mesid == 'last' || $mesid == $this->last_post_id) return $direction = 'asc' ? $this->posts-1 : 0;
-			if ($mesid == $this->unread) return $direction = 'asc' ? $this->posts - max($this->unread, 1) : 0;
+			if ($mesid == 'first' || $mesid == $this->first_post_id) return $direction == 'asc' ? 0 : $this->posts-1;
+			if ($mesid == 'last' || $mesid == $this->last_post_id) return $direction == 'asc' ? $this->posts-1 : 0;
+			if ($mesid == $this->unread) return $direction == 'asc' ? $this->posts - max($this->unread, 1) : 0;
 		}
 		if ($mesid == 'first') $direction == 'asc' ? 0 : 'both';
 		if ($mesid == 'last') $direction == 'asc' ? 'both' : 0;

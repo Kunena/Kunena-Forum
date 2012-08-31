@@ -102,8 +102,11 @@ class KunenaControllerTopic extends KunenaController {
 			$topic->icon_id = $fields['icon_id'];
 		}
 
-		$message->removeIPTracking();
-
+		// Remove IP address
+		// TODO: Add administrator tool to remove all tracked IP addresses (from the database)
+		if (!$this->config->iptracking) {
+			$message->ip = '';
+		}
 		// If requested: Make message to be anonymous
 		if ($fields['anonymous'] && $message->getCategory()->allow_anonymous) {
 			$message->makeAnonymous();
@@ -780,8 +783,7 @@ class KunenaControllerTopic extends KunenaController {
 				}
 
 				jimport ( 'joomla.environment.uri' );
-				$uri = JURI::getInstance ( JURI::base () );
-				$msglink = $uri->toString ( array ('scheme', 'host', 'port' ) ) . $target->getPermaUrl(null, false);
+				$msglink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
 
 				$mailmessage = "" . JText::_ ( 'COM_KUNENA_REPORT_RSENDER' ) . " {$this->me->username} ({$this->me->name})";
 				$mailmessage .= "\n";

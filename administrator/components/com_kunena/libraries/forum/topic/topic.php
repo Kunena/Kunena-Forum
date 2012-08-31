@@ -299,6 +299,17 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return KunenaRoute::_($uri, $xhtml);
 	}
 
+	/**
+	 * Get permament topic URL without domain.
+	 *
+	 * If you want to add domain (for email etc), you can prepend the output with this:
+	 * JUri::getInstance()->toString(array('scheme', 'host', 'port'))
+	 *
+	 * @param KunenaForumCategory $category
+	 * @param bool $xhtml
+	 * @param mixed $action
+	 * @return string
+	 */
 	public function getPermaUrl($category = null, $xhtml = true, $action = null) {
 		return $this->getUrl($category, $xhtml, $action);
 	}

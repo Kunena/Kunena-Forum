@@ -780,8 +780,7 @@ class KunenaControllerTopic extends KunenaController {
 				}
 
 				jimport ( 'joomla.environment.uri' );
-				$uri = JURI::getInstance ( JURI::base () );
-				$msglink = $uri->toString ( array ('scheme', 'host', 'port' ) ) . $target->getPermaUrl(null, false);
+				$msglink = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $target->getPermaUrl(null, false);
 
 				$mailmessage = "" . JText::_ ( 'COM_KUNENA_REPORT_RSENDER' ) . " {$this->me->username} ({$this->me->name})";
 				$mailmessage .= "\n";

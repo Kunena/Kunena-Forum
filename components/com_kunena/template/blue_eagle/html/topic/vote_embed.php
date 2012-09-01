@@ -32,10 +32,10 @@ defined ( '_JEXEC' ) or die ();
 							<fieldset>
 								<legend><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
 								<ul>
-									<?php foreach ($this->poll->getOptions() as $key=>$option) : ?>
+									<?php foreach ($this->poll->getOptions() as $key=>$poll_option) : ?>
 									<li>
-										<input class="kpoll-boxvote" type="radio" name="kpollradio" id="radio_name<?php echo intval($key) ?>" value="<?php echo intval($option->id) ?>" <?php if ($this->voted && $this->voted->lastvote == $option->id) echo 'checked="checked"' ?> />
-										<?php echo KunenaHtmlParser::parseText ($option->text ) ?>
+										<input class="kpoll-boxvote" type="radio" name="kpollradio" id="radio_name<?php echo intval($key) ?>" value="<?php echo intval($poll_option->id) ?>" <?php if ($this->voted && $this->voted->lastvote == $poll_option->id) echo 'checked="checked"' ?> />
+										<?php echo KunenaHtmlParser::parseText ($poll_option->text ) ?>
 									</li>
 									<?php endforeach; ?>
 								</ul>

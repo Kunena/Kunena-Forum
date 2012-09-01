@@ -43,7 +43,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			'lock'=>array('Read'),
 			'poll.read'=>array('Read'),
 			'poll.create'=>array('Own'),
-			'poll.edit'=>array('Read','Own'),
+			'poll.edit'=>array('Read','Own','NoVotes'),
 			'poll.delete'=>array('Read','Own'),
 			'poll.vote'=>array('Read', 'Vote'),
 			'post.read'=>array('Read'),
@@ -1100,6 +1100,13 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY' );
 		}
 	}
+	protected function authoriseNoVotes($user) {
+		$poll = $this->getPoll();
+		if ($poll->exists() && $poll->getUserCount()) {
+			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_ONGOING_POLL' );
+		}
+	}
+
 	protected function delta() {
 		if (!$this->hold && $this->_hold) {
 			// Create or publish topic

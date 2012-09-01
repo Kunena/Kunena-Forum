@@ -287,52 +287,45 @@ class KunenaControllerTopic extends KunenaController {
 			$this->app->enqueueMessage ( $warning, 'notice' );
 		}
 
-		if ( $message->parent == 0 ) {
-			$poll_title = $fields['poll_title'];
-			if ($poll_title !== null) {
-				// Save changes into poll
-				/*
-				 *  The poll is saved in database only if the options and the title of poll are filled, the lifetime of the poll is stored too.
-				 *  The poll is displayed only when you create a new topic or when you edit the first message of a topic. If you set the poll time to live, the poll
-				 *  won't get any new votes after this date.
-				 */
-				$poll_options = $fields['poll_options'];
-				$poll = $topic->getPoll();
-				if (! empty ( $poll_options ) && ! empty ( $poll_title )) {
-					$poll->title = $poll_title;
-					$poll->polltimetolive = $fields['poll_time_to_live'];
-					$poll->setOptions($poll_options);
-					if (!$topic->poll_id) {
-						// Create a new poll
-						if (!$topic->authorise('poll.create')) {
-							$this->app->enqueueMessage ( $topic->getError(), 'notice' );
-						} elseif (!$poll->save()) {
-							$this->app->enqueueMessage ( $poll->getError(), 'notice' );
-						} else {
-							$topic->poll_id = $poll->id;
-							$topic->save();
-							$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_CREATED' ) );
-						}
-					} else {
-						// Edit existing poll
-						if (!$topic->authorise('poll.edit')) {
-							$this->app->enqueueMessage ( $topic->getError(), 'notice' );
-						} elseif (!$poll->save()) {
-							$this->app->enqueueMessage ( $poll->getError(), 'notice' );
-						} else {
-							$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_EDITED' ) );
-						}
-					}
-				} elseif ($poll->exists()) {
-					// Delete poll
-					if (!$topic->authorise('poll.delete')) {
-						// Error: No permissions to delete poll
+		$poll_title = $fields['poll_title'];
+		if ($poll_title !== null) {
+			// Save changes into poll
+			$poll_options = $fields['poll_options'];
+			$poll = $topic->getPoll();
+			if (! empty ( $poll_options ) && ! empty ( $poll_title )) {
+				$poll->title = $poll_title;
+				$poll->polltimetolive = $fields['poll_time_to_live'];
+				$poll->setOptions($poll_options);
+				if (!$topic->poll_id) {
+					// Create a new poll
+					if (!$topic->authorise('poll.create')) {
 						$this->app->enqueueMessage ( $topic->getError(), 'notice' );
-					} elseif (!$poll->delete()) {
+					} elseif (!$poll->save()) {
 						$this->app->enqueueMessage ( $poll->getError(), 'notice' );
 					} else {
-						$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_DELETED' ) );
+						$topic->poll_id = $poll->id;
+						$topic->save();
+						$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_CREATED' ) );
 					}
+				} else {
+					// Edit existing poll
+					if (!$topic->authorise('poll.edit')) {
+						$this->app->enqueueMessage ( $topic->getError(), 'notice' );
+					} elseif (!$poll->save()) {
+						$this->app->enqueueMessage ( $poll->getError(), 'notice' );
+					} else {
+						$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_EDITED' ) );
+					}
+				}
+			} elseif ($poll->exists() && $topic->authorise('poll.edit')) {
+				// Delete poll
+				if (!$topic->authorise('poll.delete')) {
+					// Error: No permissions to delete poll
+					$this->app->enqueueMessage ( $topic->getError(), 'notice' );
+				} elseif (!$poll->delete()) {
+					$this->app->enqueueMessage ( $poll->getError(), 'notice' );
+				} else {
+					$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_DELETED' ) );
 				}
 			}
 		}

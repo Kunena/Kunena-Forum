@@ -160,7 +160,7 @@ abstract class KunenaForumCategoryHelper {
 		$catlist = array();
 		foreach ($categories as $category) {
 			$catlist += $category->getChannels();
-			$catlist += $category->getChildren();
+			$catlist += $category->getChildren(100);
 		}
 		if (empty($catlist)) return;
 		$catlist = implode(',', array_keys($catlist));
@@ -184,7 +184,7 @@ abstract class KunenaForumCategoryHelper {
 
 		foreach ($categories as $category) {
 			$channels = $category->getChannels();
-			$channels += $category->getChildren();
+			$channels += $category->getChildren(100);
 			$category->getNewCount(array_sum(array_intersect_key($new, $channels)));
 		}
 	}

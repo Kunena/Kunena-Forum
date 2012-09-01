@@ -132,3 +132,7 @@
 #Kunena .kiconsel {
 	white-space: nowrap;
 }
+
+#Kunena .jr-forum-stat-bar {
+	height: 10px;
+}

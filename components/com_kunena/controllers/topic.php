@@ -317,7 +317,7 @@ class KunenaControllerTopic extends KunenaController {
 						$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POLL_EDITED' ) );
 					}
 				}
-			} elseif ($poll->exists()) {
+			} elseif ($poll->exists() && $topic->authorise('poll.edit')) {
 				// Delete poll
 				if (!$topic->authorise('poll.delete')) {
 					// Error: No permissions to delete poll

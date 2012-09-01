@@ -58,6 +58,15 @@ class plgSystemKunena extends JPlugin {
 	}
 
 	/**
+	 * @internal
+	 */
+	public function onKunenaGetConfiguration($context, &$params) {
+		if ($context == 'kunena.configuration') {
+			$params["plg_{$this->_type}_{$this->_name}"] = $this->params;
+		}
+	}
+
+	/**
 	 * Map Kunena's ContentPrepare to Joomla's ContentPrepare event
 	 *
 	 * This is done to be able to use Joomla plugins on Kunena postings.
@@ -75,6 +84,8 @@ class plgSystemKunena extends JPlugin {
 	 *
 	 * @return array of KunenaForumMessage objects
 	 */
+// FIXME: function below was totally broken, so it's currently turned off
+/*
 	public function onKunenaPrepare($context, &$items, &$params, $page = 0) {
 		$jcontentevent			= (int) $this->params->get('jcontentevents', false);
 		$jcontentevent_target	= (array) $this->params->get('jcontentevent_target', array('body'));
@@ -139,9 +150,9 @@ class plgSystemKunena extends JPlugin {
 				default:
 			}
 		}
-
 		return $items;
 	}
+*/
 
 
 	/**

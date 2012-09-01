@@ -30,7 +30,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 		<fieldset title="<?php echo JText::_('DESCFTPTITLE'); ?>">
 			<legend><?php echo JText::_('DESCFTPTITLE'); ?></legend>
 			<?php echo JText::_('DESCFTP'); ?>
-			<?php if(JError::isError($this->ftp)): ?>
+			<?php if ($this->ftp instanceof Exception): ?>
 				<p><?php echo JText::_($this->ftp->message); ?></p>
 			<?php endif; ?>
 			<table class="adminform nospace">

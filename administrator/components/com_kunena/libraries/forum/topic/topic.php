@@ -43,7 +43,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			'lock'=>array('Read'),
 			'poll.read'=>array('Read'),
 			'poll.create'=>array('Own'),
-			'poll.edit'=>array('Read','Own'),
+			'poll.edit'=>array('Read','Own','NoVotes'),
 			'poll.delete'=>array('Read','Own'),
 			'poll.vote'=>array('Read', 'Vote'),
 			'post.read'=>array('Read'),
@@ -299,6 +299,17 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		return KunenaRoute::_($uri, $xhtml);
 	}
 
+	/**
+	 * Get permament topic URL without domain.
+	 *
+	 * If you want to add domain (for email etc), you can prepend the output with this:
+	 * JUri::getInstance()->toString(array('scheme', 'host', 'port'))
+	 *
+	 * @param KunenaForumCategory $category
+	 * @param bool $xhtml
+	 * @param mixed $action
+	 * @return string
+	 */
 	public function getPermaUrl($category = null, $xhtml = true, $action = null) {
 		return $this->getUrl($category, $xhtml, $action);
 	}
@@ -356,9 +367,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		}
 		if ($mesid == 'unread') $mesid = $this->lastread;
 		if ($this->moved_id || !KunenaUserHelper::getMyself()->isModerator($this->getCategory())) {
-			if ($mesid == 'first' || $mesid == $this->first_post_id) return $direction = 'asc' ? 0 : $this->posts-1;
-			if ($mesid == 'last' || $mesid == $this->last_post_id) return $direction = 'asc' ? $this->posts-1 : 0;
-			if ($mesid == $this->unread) return $direction = 'asc' ? $this->posts - max($this->unread, 1) : 0;
+			if ($mesid == 'first' || $mesid == $this->first_post_id) return $direction == 'asc' ? 0 : $this->posts-1;
+			if ($mesid == 'last' || $mesid == $this->last_post_id) return $direction == 'asc' ? $this->posts-1 : 0;
+			if ($mesid == $this->unread) return $direction == 'asc' ? $this->posts - max($this->unread, 1) : 0;
 		}
 		if ($mesid == 'first') $direction == 'asc' ? 0 : 'both';
 		if ($mesid == 'last') $direction == 'asc' ? 'both' : 0;
@@ -1089,6 +1100,13 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY' );
 		}
 	}
+	protected function authoriseNoVotes($user) {
+		$poll = $this->getPoll();
+		if ($poll->exists() && $poll->getUserCount()) {
+			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_ONGOING_POLL' );
+		}
+	}
+
 	protected function delta() {
 		if (!$this->hold && $this->_hold) {
 			// Create or publish topic

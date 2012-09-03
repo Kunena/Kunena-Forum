@@ -236,6 +236,7 @@ abstract class KunenaUserHelper {
 
 	public static function isOnline($user, $yes = false, $no = 'offline') {
 		$user = self::get($user);
+		if (!$user->showOnline && !self::getMyself()->isModerator()) return $yes ? $no : false;
 		$online = false;
 		if (intval($user->userid) > 0) {
 			if (self::$_online === null) {

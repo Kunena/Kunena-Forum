@@ -328,7 +328,7 @@ abstract class KunenaForumMessageHelper {
 		$results = (array) $db->loadAssocList ('id');
 		KunenaError::checkDatabaseError ();
 
-		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaForumTopicHelper::get($topic_id)->getTotal($hold);
+		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaForumTopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
 		$order = ($ordering == 'ASC') ? 1 : -1;
 		$list = array();
 		foreach ( $results as $id=>$result ) {

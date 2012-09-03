@@ -51,6 +51,8 @@ abstract class KunenaHtmlParser {
 		if ($len && JString::strlen($txt) > $len) $txt = JString::substr ( $txt, 0, $len ) . ' ...';
 		$txt = self::escape ( $txt );
 		$txt = preg_replace('/(\S{30})/u', '\1&#8203;', $txt);
+		$txt = self::prepareContent ( $txt, 'title' );
+
 		return $txt;
 	}
 
@@ -62,6 +64,8 @@ abstract class KunenaHtmlParser {
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(false);
 		$txt = $bbcode->Parse($txt);
+		$txt = self::prepareContent ( $txt );
+
 		return $txt;
 	}
 
@@ -72,6 +76,8 @@ abstract class KunenaHtmlParser {
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$txt = $bbcode->Parse($txt);
+		$txt = self::prepareContent ( $txt );
+
 		return $txt;
 	}
 
@@ -81,9 +87,47 @@ abstract class KunenaHtmlParser {
 		$bbcode = KunenaBbcode::getInstance(self::$relative);
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
-		$bbcode->SetAllowAmpersand(!$html);
+		$bbcode->SetAllowAmpersand($html);
 		$txt = strip_tags($bbcode->Parse($txt));
+		if (!$html)
+			$bbcode->UnHTMLEncode($txt);
+		$txt = self::prepareContent ( $txt );
+
 		return $txt;
+	}
+
+
+	public static function &prepareContent(&$content, $target='body')
+	{
+		$config = KunenaFactory::getConfig()->getPlugin('plg_system_kunena');
+		$events			= (int) $config->get('jcontentevents', false);
+		$event_target	= (array) $config->get('jcontentevent_target', array('body'));
+
+		if ($events && in_array($target, $event_target)) {
+			$row = new stdClass();
+			$row->text =& $content;
+			// Run events
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$params = new JRegistry();
+			} else {
+				// Joomla 1.5
+				$params = new JParameter( '' );
+			}
+			$params->set('ksource', 'kunena');
+
+			$dispatcher = JDispatcher::getInstance();
+			JPluginHelper::importPlugin('content');
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
+			} else {
+				// Joomla 1.5
+				$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
+			}
+			$content = $row->text;
+		}
+		return $content;
 	}
 
 	public static function escape($string) {

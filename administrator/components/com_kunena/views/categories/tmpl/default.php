@@ -47,7 +47,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 						<th width="100" class="center nowrap">
 						<small>
 							<?php echo JHTML::_('grid.sort', 'COM_KUNENA_REORDER', 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
-							<?php echo JHTML::_('grid.order',  $this->categories, 'filesave.png', 'items.saveorder' ); ?></small>
+							<?php echo JHTML::_('grid.order',  $this->categories, 'filesave.png', 'saveorder' ); ?></small>
 						</th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_REVIEW'); ?></small></th>
@@ -80,7 +80,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 			<tr <?php echo 'class = "row' . $k . '"';?>>
 				<td class="right"><?php echo $i + $this->navigation->limitstart + 1; ?></td>
 				<td><?php echo JHTML::_('grid.id', $i, intval($category->id)) ?></td>
-				<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat  ( '...', $category->level  ).' '.$category->name; ?> </a></td>
+				<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat  ( '...', count($category->indent)-1 ).' '.$category->name; ?> </a></td>
 				<td class="center"><?php echo intval($category->id); ?></td>
 
 				<?php if ($category->isSection()): ?>

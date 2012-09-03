@@ -112,9 +112,27 @@
 }
 
 /* Fix broken file input box for Yootheme Warp 6 templates */
-#Kunena .hidden {
-	visibility: visible;
-}
 #Kunena .kfile-input {
 	display: block;
+	overflow: hidden;
+}
+
+#Kunena #jumpto .inputbox {
+	max-width: 90%;
+}
+
+#Kunena #postcatid {
+	width: 50%;
+}
+
+#Kunena .krowmoderation select {
+	max-width: 40%;
+}
+
+#Kunena .kiconsel {
+	white-space: nowrap;
+}
+
+#Kunena .jr-forum-stat-bar {
+	height: 10px;
 }

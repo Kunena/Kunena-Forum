@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_ADMIN . '/libraries/external/nbbc/nbbc.php';
+jimport('joomla.utilities.string');
 
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
@@ -21,7 +22,7 @@ require_once KPATH_ADMIN . '/libraries/external/nbbc/nbbc.php';
  * @version		2.0
  */
 class KunenaBbcode extends BBCode {
-	public $autolink_disable = false;
+	public $autolink_disable = 0;
 
 	/**
 	 * Object Constructor
@@ -53,7 +54,7 @@ class KunenaBbcode extends BBCode {
 	 * Get Singleton Instance
 	 *
 	 * @param
-	 * @return	void
+	 * @return	KunenaBbcode
 	 * @since	1.7
 	 */
 	public static function getInstance($relative = true) {
@@ -61,6 +62,7 @@ class KunenaBbcode extends BBCode {
 		if (!isset($instance[intval($relative)])) {
 			$instance[intval($relative)] = new KunenaBbcode ($relative);
 		}
+		$instance[intval($relative)]->autolink_disable = 0;
 		return $instance[intval($relative)];
 	}
 
@@ -68,21 +70,14 @@ class KunenaBbcode extends BBCode {
 		$url = $params['url'];
 		$text = $params['text'];
 
-		if (preg_match('#^mailto:#u', $url)) {
+		if (preg_match('#^mailto:#ui', $url)) {
 			// Cloak email addresses
-			return JHTML::_('email.cloak', $text, $params['isurl']);
+			$email = substr($text, 7);
+			return JHTML::_('email.cloak', $email, $this->IsValidEmail($email));
 		}
 
-		if (preg_match('#^https?://#u', $text)) {
-			// Remove http(s):// from the text
-			$text = preg_replace ( '#^http(s?)://#u', '', $text );
-		} elseif (isset($params['host']) && substr($params['host'], -3) == '.gz') {
-			return $text;
-		}
-
-		// Remove natural language punctuation from the url
-		$url = preg_replace ( '#[\.,!?\)]+$#u', '', $url );
-		$url = preg_match('#^https?://#u', $url) ? $url : 'http://'.$url;
+		// Remove http(s):// from the text
+		$text = preg_replace ( '#^http(s?)://#ui', '', $text );
 
 		$config = KunenaFactory::getConfig ();
 		if ($config->trimlongurls) {
@@ -148,6 +143,118 @@ class KunenaBbcode extends BBCode {
 		}
 
 		return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+	}
+
+	function Internal_AutoDetectURLs($string) {
+		$search = preg_split('/(?xi)
+		\b
+		(
+			(?:
+				(?:https?|ftp):\/\/
+				|
+				www\d{0,3}\.
+				|
+				[a-z0-9\.\-]+\.[a-z]{2,4}\/
+				|
+				mailto:
+				|
+				(?:[a-zA-Z0-9._-]{2,}@)
+			)
+			(?:
+				[^\s()<>]+
+				|
+				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
+			)+
+			(?:
+				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
+				|
+				[^\s`!()\[\]{};:\'"\.,<>?«»“”‘’]
+			)
+		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE );
+
+		$output = array();
+		foreach ($search as $index => $token) {
+			if ($index & 1) {
+				if (preg_match("/^(https?|ftp|mailto):/ui", $token)) {
+					// Protocol has been provided, so just use it as-is.
+					$url = $token;
+				} else {
+					// Add scheme to emails and raw domain URLs.
+					$url = (strpos($token, '@') ? 'mailto:' : 'http://') . $token;
+				}
+				// Never start URL from the middle of text (except for punctuation).
+				$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index-1]);
+				$invalid |= !$this->IsValidURL($url, true);
+
+				// We have a full, complete, and properly-formatted URL, with protocol.
+				// Now we need to apply the $this->url_pattern template to turn it into HTML.
+				// TODO: report Joomla bug (silence it for now)
+				$params = $this->parse_url($url);
+				if (!$invalid && substr($url, 0, 7) == 'mailto:') {
+					$email = JString::substr($url, 7);
+					$output[$index] = JHTML::_('email.cloak', $email, $this->IsValidEmail($email));
+
+				} elseif ($invalid || empty($params['host']) || !empty($params['pass'])) {
+					$output[$index-1] .= $token;
+					$output[$index] = '';
+
+				} else {
+					$params['url'] = $url;
+					$params['link'] = $url;
+					$params['text'] = $token;
+					$output[$index] = $this->FillTemplate($this->url_pattern, $params);
+				}
+			} else {
+				$output[$index] = $token;
+			}
+		}
+		return $output;
+	}
+
+	/**
+	 * @see BBCode::IsValidURL()
+	 * Regular expression taken from https://gist.github.com/729294
+	 */
+	public function IsValidURL($string, $email_too = true, $local_too = false) {
+		static $re = '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS';
+
+		if (empty($string)) return false;
+		if ($local_too && $string[0] == '/') $string = 'http://www.domain.com' . $string;
+		if ($email_too && substr($string, 0, 7) == "mailto:") return $this->IsValidEmail(substr($string, 7));
+		if (preg_match($re, $string)) return true;
+		return false;
+	}
+
+
+	/**
+	 * @see JString::parse_url()
+	 * @todo remove when dropping J!1.5 support
+	 * FYI: there's a bug in J!2.5.6 which has been fixed in GitHub
+	 */
+	public static function parse_url($url)
+	{
+		$result = false;
+
+		// Build arrays of values we need to decode before parsing
+		$entities = array('%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%24', '%2C', '%2F', '%3F', '%23', '%5B', '%5D');
+		$replacements = array('!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "$", ",", "/", "?", "#", "[", "]");
+
+		// Create encoded URL with special URL characters decoded so it can be parsed
+		// All other characters will be encoded
+		$encodedURL = str_replace($entities, $replacements, urlencode($url));
+
+		// Parse the encoded URL
+		$encodedParts = parse_url($encodedURL);
+
+		// Now, decode each value of the resulting array
+		if ($encodedParts)
+		{
+			foreach ($encodedParts as $key => $value)
+			{
+				$result[$key] = urldecode(str_replace($replacements, $entities, $value));
+			}
+		}
+		return $result;
 	}
 }
 
@@ -746,8 +853,13 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$bbcode->autolink_disable--;
 		$url = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode ( strip_tags ( $content ) );
-		// FIXME: add support for local (relative) URIs
-		if ($bbcode->IsValidURL ( $url )) {
+		$url = preg_replace('# #u', '%20', $url);
+		if (!preg_match('#^(/|https?:|ftp:)#ui', $url)) {
+			// Add scheme to raw domain URLs.
+			$url = "http://{$url}";
+		}
+
+		if ($bbcode->IsValidURL ( $url, false, true )) {
 			if ($bbcode->debug)
 				echo "ISVALIDURL<br />";
 			if ($bbcode->url_targetable !== false && isset ( $params ['target'] ))
@@ -1107,10 +1219,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		static $enabled = false;
 
 		if ($action == BBCODE_CHECK) {
-			$bbcode->autolink_disable++;
 			return true;
 		}
-		$bbcode->autolink_disable--;
 
 		$type = isset ( $params ["type"] ) ? $params ["type"] : "php";
 		if ($type == 'js') {
@@ -1461,7 +1571,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$fileurl = trim(strip_tags($content));
 
 		if ($config->bbcode_img_secure != 'image') {
-			if (!preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl)) {
+			if ($bbcode->autolink_disable == 0 && !preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl)) {
 				// If the image has not legal extension, return it as link or text
 				$fileurl = $bbcode->HTMLEncode ( $fileurl );
 				if ($config->bbcode_img_secure == 'link') {

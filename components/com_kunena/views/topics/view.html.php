@@ -313,8 +313,6 @@ class KunenaViewTopics extends KunenaView {
 			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
 			$this->setDescription ( $description );
 
-			$this->document->setMetadata ( 'robots', 'noindex, follow' );
-
 		} elseif($type=='user'){
 
 			switch ($this->state->get ( 'list.mode' )) {
@@ -342,8 +340,6 @@ class KunenaViewTopics extends KunenaView {
 
 			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
 			$this->setDescription ( $description );
-
-			$this->document->setMetadata ( 'robots', 'noindex, follow' );
 
 		} elseif($type=='posts'){
 
@@ -373,9 +369,6 @@ class KunenaViewTopics extends KunenaView {
 
 			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
 			$this->setDescription ( $description );
-
-			$this->document->setMetadata ( 'robots', 'noindex, follow' );
-
 		}
 	}
 }

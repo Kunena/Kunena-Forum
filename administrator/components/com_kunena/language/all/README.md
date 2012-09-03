@@ -13,7 +13,8 @@ http://www.kunena.org/download
 Installing languages in Joomla! 2.5
 ===================================
 
-Just install this package by using Joomla installer.
+Just install this package by using Joomla installer. If you cannot install the package because of 2MB upload limit, you can either
+install the package from URL or make the file smaller by removing a few languages you do not need.
 
 Installer will detect which languages have been installed into your system. It will install or update only existing languages,
 so If you add new languages after installing this package, you will need to install this language pack again.

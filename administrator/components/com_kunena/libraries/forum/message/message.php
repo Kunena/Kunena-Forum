@@ -83,6 +83,17 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		return $this->getTopic()->getUri($category, $this);
 	}
 
+	/**
+	 * Get permament topic URL without domain.
+	 *
+	 * If you want to add domain (for email etc), you can prepend the output with this:
+	 * JUri::getInstance()->toString(array('scheme', 'host', 'port'))
+	 *
+	 * @param KunenaForumCategory $category
+	 * @param bool $xhtml
+	 * @param mixed $action
+	 * @return string
+	 */
 	public function getPermaUrl($category = null, $xhtml = true) {
 		$uri = $this->getPermaUri($category);
 		return KunenaRoute::_($uri, $xhtml);
@@ -169,7 +180,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		}
 
 		if (!$url) {
-			$url = JURI::root().trim($this->getPermaUrl(null), '/');
+			$url = JUri::getInstance()->toString(array('scheme', 'host', 'port')) . $this->getPermaUrl(null);
 		}
 		//get all subscribers, moderators and admins who will get the email
 		$me = KunenaUserHelper::get();
@@ -801,7 +812,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		// DO NOT REMOVE EXTRA SPACE, JMailHelper::cleanBody() removes "Subject:" from the message body
 		$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . " : " . $subject . "\n";
 		$msg .= JText::_ ( 'COM_KUNENA_CATEGORY' ) . " : " . $this->getCategory()->name . "\n";
-		$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . " : " . $this->getAuthor()->getName() . "\n\n";
+		$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . " : " . $this->getAuthor()->getName('???', false) . "\n\n";
 		$msg .= "URL : $url\n\n";
 		if ($config->mailfull == 1) {
 			$msg .= JText::_ ( 'COM_KUNENA_MESSAGE' ) . " :\n-----\n";

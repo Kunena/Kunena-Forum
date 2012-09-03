@@ -366,7 +366,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		// Ensure that we have the right ordering
 		$where = 'parent_id=' . $db->quote ( $row->parent_id );
-		$row->reorder ( $where );
+		$row->reorder ();
 		$row->move ( $direction, $where );
 	}
 

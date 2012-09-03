@@ -45,7 +45,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif; ?>
 				</div>
 				<div class="kwholegend ks">
-					<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?> :: </span>&nbsp;
+					<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?>:</span>&nbsp;
 					<span class = "kwho-admin" title = "<?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></span>,&nbsp;
 					<span class = "kwho-globalmoderator" title = "<?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></span>,&nbsp;
 					<span class = "kwho-moderator" title = "<?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></span>,&nbsp;

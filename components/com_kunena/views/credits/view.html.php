@@ -17,20 +17,20 @@ class KunenaViewCredits extends KunenaView {
 	function displayDefault($tpl = null) {
 
 		$this->memberList = array(
-				array('name'=>'Matias', 'url'=>'http://www.kunena.org/people/63-matias/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPER')),
-				array('name'=>'coder4life', 'url'=>'http://www.kunena.org/people/10809-coder4life/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPER')),
-				array('name'=>'xillibit', 'url'=>'http://www.kunena.org/people/1288-xillibit/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPER')),
-				array('name'=>'fxstein', 'url'=>'http://www.kunena.org/people/64-fxstein/profile', 'title'=>JText::sprintf('COM_KUNENA_CREDITS_DEVELOPER_SPECIAL', 'Yamaha Star VMax').' <a href="http://www.starVmax.com/forum/">www.starVmax.com/forum/</a>'),
-				array('name'=>'severdia', 'url'=>'http://www.kunena.org/people/114-severdia/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPER')),
-				array('name'=>'810', 'url'=>'http://www.kunena.org/people/634-810/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR')),
-				array('name'=>'svanschu', 'url'=>'http://www.kunena.org/people/2171-lda/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR')),
-				array('name'=>'LittleJohn', 'url'=>'http://www.kunena.org/people/10133-littlejohn/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR')),
-				array('name'=>'sozzled', 'url'=>'http://www.kunena.org/people/997-sozzled/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
-				array('name'=>'Mortti', 'url'=>'http://www.kunena.org/people/151-mortti/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
-				array('name'=>'Rich', 'url'=>'http://www.kunena.org/people/2198-rich/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
-				array('name'=>'GoremanX', 'url'=>'http://www.kunena.org/people/1362-goremanx/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
-				array('name'=>'CheechDogg', 'url'=>'http://www.kunena.org/people/9085-cheechdogg/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
-				array('name'=>'Jiminimonka', 'url'=>'http://www.kunena.org/people/26335-jiminimonka/profile', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
+				array('name'=>'Matias', 'url'=>'http://www.kunena.org/forum/profile/63-matias', 'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPER')),
+				array('name'=>'coder4life', 'url'=>'http://www.kunena.org/forum/profile/10809-coder4life', 'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPER')),
+				array('name'=>'xillibit', 'url'=>'http://www.kunena.org/forum/profile/1288-xillibit', 'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPER')),
+				array('name'=>'fxstein', 'url'=>'http://www.kunena.org/forum/profile/64-fxstein', 'title'=>JText::sprintf('COM_KUNENA_CREDITS_DEVELOPER_SPECIAL', 'Yamaha Star VMax').' <a href="http://www.starVmax.com/forum/">www.starVmax.com/forum/</a>'),
+				array('name'=>'severdia', 'url'=>'http://www.kunena.org/forum/profile/114-severdia', 'title'=>JText::_('COM_KUNENA_CREDITS_DEVELOPER')),
+				array('name'=>'810', 'url'=>'http://www.kunena.org/forum/profile/634-810', 'title'=>JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR')),
+				array('name'=>'svanschu', 'url'=>'http://www.kunena.org/forum/profile/2171-lda', 'title'=>JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR')),
+				array('name'=>'LittleJohn', 'url'=>'http://www.kunena.org/forum/profile/10133-littlejohn', 'title'=>JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR')),
+				array('name'=>'sozzled', 'url'=>'http://www.kunena.org/forum/profile/997-sozzled', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
+				array('name'=>'Mortti', 'url'=>'http://www.kunena.org/forum/profile/151-mortti', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
+				array('name'=>'Rich', 'url'=>'http://www.kunena.org/forum/profile/2198-rich', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
+				array('name'=>'GoremanX', 'url'=>'http://www.kunena.org/forum/profile/1362-goremanx', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
+				array('name'=>'CheechDogg', 'url'=>'http://www.kunena.org/forum/profile/9085-cheechdogg', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
+				array('name'=>'Jiminimonka', 'url'=>'http://www.kunena.org/forum/profile/26335-jiminimonka', 'title'=>JText::_('COM_KUNENA_CREDITS_MODERATOR')),
 		);
 		$this->thanks = JText::sprintf('COM_KUNENA_CREDITS_THANKS_PART_LONG', 'Beat', 'BoardBoss', 'madLyfe', 'infograf768','Joomla!', '<a href="http://www.kunena.org" target="_blank" rel="follow">www.kunena.org</a>').' '.JText::_('COM_KUNENA_CREDITS_THANKS');
 

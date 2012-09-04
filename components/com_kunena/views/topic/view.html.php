@@ -336,7 +336,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->attachments = $this->message->getAttachments();
 
 		// Get poll
-		if ($this->message->parent == 0 && ($this->topic->authorise('poll.create', null, false) || $this->topic->authorise('poll.edit', null, false))) {
+		if ($this->message->parent == 0 && ((!$this->topic->poll_id && $this->topic->authorise('poll.create', null, false)) || ($this->topic->poll_id && $this->topic->authorise('poll.edit', null, false)))) {
 			$this->poll = $this->topic->getPoll();
 		}
 
@@ -736,8 +736,8 @@ class KunenaViewTopic extends KunenaView {
 		if (!$contents) {
 
 			//Show admins the IP address of the user:
-			if ($this->message->ip && ($this->category->authorise('admin') || ($this->category->authorise('moderate') && !$this->config->hide_ip))) {
-				$this->ipLink = CKunenaLink::GetMessageIPLink ( $this->message->ip );
+			if ($this->category->authorise('admin') || ($this->category->authorise('moderate') && !$this->config->hide_ip)) {
+				$this->ipLink = $this->message->ip ? CKunenaLink::GetMessageIPLink ( $this->message->ip ) : null;
 			}
 			$this->signatureHtml = KunenaHtmlParser::parseBBCode ( $this->profile->signature, null, $this->config->maxsig );
 			$this->attachments = $this->message->getAttachments();

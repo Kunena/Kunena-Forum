@@ -117,12 +117,8 @@ class KunenaControllerTopic extends KunenaController {
 			$message->hold = 1;
 		}
 		// If configured: Hold posts from users
-		if ( !$this->me->isModerator($category) ) {
-
-			$messages_review = KunenaForumMessageHelper::getHoldMessagesByUser($this->me->userid);
-			if ( $this->me->posts < $this->config->hold_newusers_posts && $messages_review > 0 ) {
-				$message->hold = 1;
-			}
+		if ( $this->me->userid && !$this->me->isModerator($category) && $this->me->posts < $this->config->hold_newusers_posts ) {
+			$message->hold = 1;
 		}
 
 		// Upload new attachments

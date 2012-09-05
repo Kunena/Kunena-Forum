@@ -209,7 +209,7 @@ class KunenaAdminModelReport extends KunenaModel {
 			$kconfigsettings .= '[tr][th]Kunena config settings:[/th][/tr]';
 			foreach ($params as $key => $value ) {
 
-				if ($key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
+				if (!is_array($value) && $key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
 					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_address'
 					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id') {
 					$kconfigsettings .= '[tr][td]'.$key.'[/td][td]'.$value.'[/td][/tr]';

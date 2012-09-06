@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Access Control for Joomla 1.6+
+ * Kunena Access Control for Joomla 2.5+
  */
 class KunenaAccessJoomla {
 	protected $params = null;

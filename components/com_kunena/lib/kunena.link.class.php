@@ -49,7 +49,7 @@ class CKunenaLink {
 	}
 
 	static function GetCategoryActionLink($task, $catid, $catname, $rel = 'follow', $class = '', $title = '', $extra = '') {
-		$token = '&' . JUtility::getToken() . '=1';
+		$token = '&' . JSession::getFormToken() . '=1';
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=category&task={$task}&catid={$catid}{$extra}{$token}", $catname, $title, $rel, $class );
 	}
 
@@ -119,7 +119,7 @@ class CKunenaLink {
 	}
 
 	static function GetKarmaLink($do, $catid, $pid, $userid, $name, $rel = 'nofollow') {
-		$token = '&'.JUtility::getToken().'=1';
+		$token = '&'.JSession::getFormToken().'=1';
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=karma&do={$do}&userid={$userid}&catid={$catid}&pid={$pid}{$token}", $name, '', $rel );
 	}
 

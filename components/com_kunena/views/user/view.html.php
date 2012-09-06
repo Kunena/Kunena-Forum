@@ -377,8 +377,7 @@ class KunenaViewUser extends KunenaView {
 		$this->user = JFactory::getUser();
 
 		// check to see if Frontend User Params have been enabled
-		if (version_compare(JVERSION, '1.6','>') && JComponentHelper::getParams('com_users')->get('frontend_userparams')) {
-			// Joomla 1.6
+		if (JComponentHelper::getParams('com_users')->get('frontend_userparams')) {
 			$usersConfig = JComponentHelper::getParams( 'com_users' );
 			if ($usersConfig->get('frontend_userparams', 0)) {
 				$lang = JFactory::getLanguage();
@@ -397,20 +396,6 @@ class KunenaViewUser extends KunenaView {
 				$form->bind($data);
 				// this get only the fields for user settings (template, editor, language...)
 				$this->userparameters = $form->getFieldset('params');
-			}
-		} elseif (version_compare(JVERSION, '1.6','<') && JComponentHelper::getParams('com_users')->get('frontend_userparams')) {
-			// Joomla 1.5
-			$lang = JFactory::getLanguage();
-			$lang->load('com_user', JPATH_SITE);
-			$params = $this->user->getParameters(true);
-			// Legacy template support:
-			$this->userparams = $params->renderToArray();
-			$i=0;
-			// New templates use this:
-			foreach ($this->userparams as $userparam) {
-				$this->userparameters[$i]->input = $userparam[1];
-				$this->userparameters[$i]->label = '<label for="params'.$userparam[5].'" title="'.$userparam[2].'">'.$userparam[0].'</label>';
-				$i++;
 			}
 		}
 		echo $this->loadTemplateFile('user');
@@ -496,14 +481,7 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function getLastvisitdate($date) {
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$lastvisit = JHTML::_('date', $date, 'Y-m-d\TH:i:sP ');
-		} else {
-			// Joomla 1.5
-			$lastvisit = JHTML::_('date', $date, '%Y-%m-%d %H:%M:%S');
-		}
-
+		$lastvisit = JHTML::_('date', $date, 'Y-m-d\TH:i:sP ');
 		return $lastvisit;
 	}
 

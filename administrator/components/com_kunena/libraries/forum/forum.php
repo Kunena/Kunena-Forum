@@ -292,14 +292,8 @@ abstract class KunenaForum {
 
 		if ($params instanceof JRegistry) {
 			// Do nothing
-		} elseif (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry($params);
 		} else {
-			// Joomla 1.5
-			$parameters = new JParameter('');
-			$parameters->bind($params);
-			$params = $parameters;
+			$params = new JRegistry($params);
 		}
 
 		$params->set('layout', $layout);
@@ -317,7 +311,7 @@ abstract class KunenaForum {
 		}
 		// Flag view as being embedded
 		$view->embedded = true;
-		
+
 		// Flag view as being teaser
 		$view->teaser = $params->get('teaser',0);
 

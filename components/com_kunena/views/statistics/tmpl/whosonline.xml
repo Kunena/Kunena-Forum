@@ -4,10 +4,4 @@
 	<layout hidden="true" title="COM_KUNENA_MENU_STATISTICS_WHOSONLINE">
 		<message>COM_KUNENA_MENU_STATISTICS_WHOSONLINE_DESC</message>
 	</layout>
-	
-	<!-- Joomla 1.5 Support -->
-	<state>
-		<name>COM_KUNENA_MENU_STATISTICS_WHOSONLINE_LONG</name>
-		<description>COM_KUNENA_MENU_STATISTICS_WHOSONLINE_DESC_LONG</description>
-	</state>
 </metadata>

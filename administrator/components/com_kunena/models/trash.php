@@ -89,7 +89,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$db = JFactory::getDBO();
 		$where = '';
 		if ($this->getState ( 'list.search')) {
-			$where = '( m.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR m.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ) . ' )';
+			$where = '( m.subject LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ).' OR m.name LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ).' OR m.id LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ) . ' )';
 		}
 
 		$orderby = '';
@@ -143,7 +143,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$db = JFactory::getDBO();
 		$where = '';
 		if ($this->getState ( 'list.search')) {
-			$where = '(tt.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.first_post_userid LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ) . ')';
+			$where = '(tt.subject LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.first_post_userid LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.id LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ) . ')';
 		}
 
 		$orderby = '';

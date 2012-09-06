@@ -91,7 +91,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 		$uri = new JURI('index.php?option=com_kunena&view=announcement');
 		if ($task) $uri->setVar('task', $task);
 		if ($this->id) $uri->setVar('id', $this->id);
-		if ($task) $uri->setVar(JUtility::getToken(), 1);
+		if ($task) $uri->setVar(JSession::getFormToken(), 1);
 		return $uri;
 	}
 

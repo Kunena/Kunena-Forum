@@ -10,16 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-if (version_compare(JVERSION, '1.7','>')) {
-	// Joomla 1.7+
-	JHtml::_('behavior.multiselect');
-} elseif (version_compare(JVERSION, '1.6','>')) {
-	// Joomla 1.6
-	JHtml::_('script','system/multiselect.js',false,true);
-} else {
-	// Joomla 1.5
-	$this->document->addScript(JURI::Root(true).'/includes/js/joomla.javascript.js');
-}
+JHtml::_('behavior.multiselect');
 ?>
 <div class="kmodule user-default_attachments">
 	<div class="kbox-wrapper kbox-full">
@@ -85,11 +76,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 							<?php $i++; $y++; endforeach; endif; ?>
 						<div id="ksection-modbox">
 							<input class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>" style="float:right;" />
-							<?php if (version_compare(JVERSION, '1.6','>')): ?>
 							<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
-							<?php else: ?>
-							<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" />
-							<?php endif; ?>
 						</div>
 					</form>
 				</div>

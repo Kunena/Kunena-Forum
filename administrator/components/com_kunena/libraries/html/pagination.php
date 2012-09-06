@@ -148,13 +148,7 @@ class KunenaHtmlPagination extends JPagination
 
 		// Build the select list.
 		if ($app->isAdmin()) {
-			if (version_compare(JVERSION, '1.6','>')) {
-				// Joomla 1.6+
-				$html = JHtml::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="Joomla.submitform();"', 'value', 'text', $selected);
-			} else {
-				// Joomla 1.5
-				$html = JHTML::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="submitform();"', 'value', 'text', $selected);
-			}
+			$html = JHtml::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="Joomla.submitform();"', 'value', 'text', $selected);
 		}
 		else {
 			$html = JHtml::_('select.genericlist',  $limits, $this->prefix . 'limit', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $selected);
@@ -177,15 +171,8 @@ class KunenaHtmlPagination extends JPagination
 	public function _item_active(&$item) {
 		if (JFactory::getApplication()->isAdmin()) {
 			if ($item->base > 0) {
-				if (version_compare(JVERSION, '1.6','>')) {
-					// Joomla 1.6+
-					return "<a title=\"".$item->text."\" onclick=\"javascript: document.adminForm.." . $this->prefix . "limitstart.value=".$item->base."; Joomla.submitform();return false;\">".$item->text."</a>";
-				} else {
-					// Joomla 1.5
-					return "<a title=\"".$item->text."\" onclick=\"javascript: document.adminForm.." . $this->prefix . "limitstart.value=".$item->base."; submitform();return false;\">".$item->text."</a>";
-				}
-			}
-			else {
+				return "<a title=\"".$item->text."\" onclick=\"javascript: document.adminForm.." . $this->prefix . "limitstart.value=".$item->base."; Joomla.submitform();return false;\">".$item->text."</a>";
+			} else {
 				return "<a title=\"".$item->text."\" onclick=\"javascript: document.adminForm.." . $this->prefix . "limitstart.value=0; Joomla.submitform();return false;\">".$item->text."</a>";
 			}
 		}

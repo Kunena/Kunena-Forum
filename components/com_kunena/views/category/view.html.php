@@ -209,7 +209,7 @@ class KunenaViewCategory extends KunenaView {
 
 		$this->sectionButtons = array();
 		if ($this->me->exists()) {
-			$token = '&' . JUtility::getToken() . '=1';
+			$token = '&' . JSession::getFormToken() . '=1';
 			$this->sectionButtons['markread'] = $this->getButton(KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->section->id}{$token}"), 'markread', 'section', 'user');
 		}
 		echo $this->loadTemplateFile('section');
@@ -270,7 +270,7 @@ class KunenaViewCategory extends KunenaView {
 	}
 
 	function getCategoryActions() {
-		$token = '&' . JUtility::getToken() . '=1';
+		$token = '&' . JSession::getFormToken() . '=1';
 		$this->categoryButtons = array();
 
 		// Is user allowed to post new topic?
@@ -332,13 +332,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->position = 0;
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'category');
 		$params->set('kunena_layout', 'default');

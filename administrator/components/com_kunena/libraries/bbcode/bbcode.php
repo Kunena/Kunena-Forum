@@ -1096,53 +1096,27 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$user = JFactory::getUser ();
 		$db = JFactory::getDBO ();
 		$site = JFactory::getApplication('site');
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category,
-				0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access
-				FROM #__content AS a
-				LEFT JOIN #__categories AS cc ON cc.id = a.catid
-				LEFT JOIN #__users AS u ON u.id = a.created_by
-				WHERE a.id='.$db->quote($articleid);
-			$db->setQuery($query);
-			$article = $db->loadObject();
-			if ($article) {
-				// Get credentials to check if the user has right to see the article
-				$params = $site->getParams('com_content');
-				$registry = new JRegistry();
-				$registry->loadJSON($article->attribs);
-				$article->params = clone $params;
-				$article->params->merge($registry);
-				$params = $article->params;
 
-				$viewlevels = $user->getAuthorisedViewLevels();
-				if ( !in_array($article->access, $viewlevels) ) {
-					$denied = true;
-				}
-			}
-		} else {
-			// Joomla 1.5
-			$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, s.title AS section,
-				s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access
-				FROM #__content AS a
-				LEFT JOIN #__categories AS cc ON cc.id = a.catid
-				LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = "content"
-				LEFT JOIN #__users AS u ON u.id = a.created_by
-				WHERE a.id=' . $db->quote ( $articleid );
+		$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category,
+			0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access
+			FROM #__content AS a
+			LEFT JOIN #__categories AS cc ON cc.id = a.catid
+			LEFT JOIN #__users AS u ON u.id = a.created_by
+			WHERE a.id='.$db->quote($articleid);
+		$db->setQuery($query);
+		$article = $db->loadObject();
+		if ($article) {
+			// Get credentials to check if the user has right to see the article
+			$params = $site->getParams('com_content');
+			$registry = new JRegistry();
+			$registry->loadJSON($article->attribs);
+			$article->params = clone $params;
+			$article->params->merge($registry);
+			$params = $article->params;
 
-			$db->setQuery ( $query );
-			$article = $db->loadObject ();
-			if ($article) {
-				// Get credentials to check if the user has right to see the article
-				$params = clone($site->getParams('com_content'));
-				$aparams = new JParameter($article->attribs);
-				$params->merge($aparams);
-
-				if (($article->catid && $article->cat_access > $user->get('aid', 0))
-					|| ($article->sectionid && $article->sec_access > $user->get('aid', 0))
-					|| ($article->access > $user->get('aid', 0))) {
-					$denied = true;
-				}
+			$viewlevels = $user->getAuthorisedViewLevels();
+			if ( !in_array($article->access, $viewlevels) ) {
+				$denied = true;
 			}
 		}
 
@@ -1153,15 +1127,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$html = JText::_( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS' );
 		} else {
 			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
-			if (version_compare(JVERSION, '1.6','>')) {
-				// Joomla 1.6+
-				$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
-				$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
-				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
-			} else {
-				// Joomla 1.5
-				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
-			}
+			$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
+			$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
+			$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
 
 			if (!$default) $default = $config->article_display;
 			switch ($default) {
@@ -1190,13 +1158,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$params->set('ksource', 'kunena');
 				JPluginHelper::importPlugin('content');
 				$dispatcher = JDispatcher::getInstance();
-				if (version_compare(JVERSION, '1.6','>')) {
-					// Joomla 1.6+
-					$results = $dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
-				} else {
-					// Joomla 1.5
-					$results = $dispatcher->trigger('onPrepareContent', array (&$article, &$params, 0));
-				}
+				$results = $dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
 				$html = $article->text;
 			}
 		}
@@ -1230,16 +1192,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		if ($enabled === false && KunenaFactory::getConfig ()->highlightcode) {
 			$enabled = true;
-			if (version_compare(JVERSION, '1.6','>')) {
-				// Joomla 1.6+
-				$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
-				if (file_exists($path)) {
-					require_once $path;
-				}
-			} else {
-				// Joomla 1.5
-				jimport ( 'geshi.geshi' );
+
+			$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
+			if (file_exists($path)) {
+				require_once $path;
 			}
+
 		}
 		if ($enabled && class_exists('GeSHi')) {
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );

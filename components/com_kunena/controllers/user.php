@@ -24,13 +24,7 @@ class KunenaControllerUser extends KunenaController {
 		$active = $this->app->getMenu ()->getActive ();
 
 		if (!empty($active)) {
-			if (version_compare(JVERSION, '1.6', '>')) {
-				// Joomla 1.6+
-				$params = $active->params;
-			} else {
-				// Joomla 1.5
-				$params = new JParameter($active->params);
-			}
+			$params = $active->params;
 			$redirect = $params->get('integration', 1);
 		}
 		if ($redirect && JRequest::getCmd('format') == 'html') {

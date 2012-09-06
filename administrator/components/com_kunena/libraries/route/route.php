@@ -147,8 +147,7 @@ abstract class KunenaRoute {
 			if ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view']) && $item->query['view'] == 'home') {
 				self::$parent[$id] = $item;
 			} else {
-				// Support both Joomla 1.5 and 1.6
-				$parentid = isset($item->parent_id) ? $item->parent_id : $item->parent;
+				$parentid = $item->parent_id;
 				$parent = isset(self::$menu[$parentid]) ? self::$menu[$parentid] : null;
 				self::$parent[$id] = self::getHome($parent);
 			}
@@ -183,25 +182,13 @@ abstract class KunenaRoute {
 	}
 
 	protected static function getCache() {
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			return JFactory::getCache('mod_menu', 'output');
-		} else {
-			// Joomla 1.5
-			return JFactory::getCache('_system', 'output');
-		}
+		return JFactory::getCache('mod_menu', 'output');
 	}
 
 	public static function stringURLSafe($string, $default = null) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!isset(self::$filtered[$string])) {
-			if (version_compare(JVERSION, '1.6', '>')) {
-				// Joomla 1.6+
-				self::$filtered[$string] = JApplication::stringURLSafe($string);
-			} else {
-				// Joomla 1.5
-				self::$filtered[$string] =  self::$config->get('sefutf8') ? self::stringURLUnicodeSlug($string) : JFilterOutput::stringURLSafe($string);
-			}
+			self::$filtered[$string] = JApplication::stringURLSafe($string);
 			if ($default && empty(self::$filtered[$string])) self::$filtered[$string] = $default;
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -489,7 +476,7 @@ abstract class KunenaRoute {
 	}
 
 	protected static function checkItem($item, $uri) {
-		$authorise = version_compare(JVERSION, '1.6', '>') ? self::$menus->authorise($item->id) : !isset ( $item->access ) || $item->access <= JFactory::getUser()->aid;
+		$authorise = self::$menus->authorise($item->id);
 		if (!$authorise) {
 			return 0;
 		}
@@ -512,13 +499,7 @@ abstract class KunenaRoute {
 		static $cache = array();
 		if (!$catid) return 1;
 		if (!isset($cache[$item->id])) {
-			if (version_compare(JVERSION, '1.6', '>')) {
-				// Joomla 1.6+
-				$params = $item->params;
-			} else {
-				// Joomla 1.5
-				$params = new JParameter($item->params);
-			}
+			$params = $item->params;
 			$catids = $params->get('catids', array());
 			if (!is_array($catids)) {
 				$catids = explode(',', $catids);

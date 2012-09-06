@@ -11,14 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 // Load Mootools
-if (version_compare(JVERSION, '1.6','>')) {
-	// Joomla 1.6+
-	JHtml::_('behavior.framework', true);
-	JHtml::_('script','system/multiselect.js',false,true);
-} else {
-	// Joomla 1.5
-	JHtml::_('behavior.mootools');
-}
+JHtml::_('behavior.framework', true);
+JHtml::_('script','system/multiselect.js',false,true);
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
 ?>
@@ -36,6 +30,6 @@ JHtml::_('behavior.formvalidation');
 	<a class="kadmin-mainmenu icon-prune-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>"><?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS'); ?></a>
 	<a class="kadmin-mainmenu icon-stats-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=stats') ?>"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></a>
 	<a class="kadmin-mainmenu icon-systemreport-sm" href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=report') ?>"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>
-	<a class="kadmin-mainmenu icon-pluginsmanager-sm" href="<?php echo JRoute::_('index.php?option=com_plugins&view=plugins&filter_'.(version_compare(JVERSION, '1.6', '>') ? 'folder' : 'type').'=kunena') ?>"><?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER'); ?></a>
+	<a class="kadmin-mainmenu icon-pluginsmanager-sm" href="<?php echo JRoute::_('index.php?option=com_plugins&view=plugins&filter_folder=kunena') ?>"><?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER'); ?></a>
 	<a class="kadmin-mainmenu icon-support-sm" href="http://www.kunena.org" target="_blank"><?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?></a>
 </div>

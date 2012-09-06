@@ -112,13 +112,7 @@ class KunenaViewSearch extends KunenaView {
 		$this->row(true);
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'search');
 		$params->set('kunena_layout', 'default');

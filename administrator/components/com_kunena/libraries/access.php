@@ -502,7 +502,7 @@ window.addEvent('domready', function(){
 		}
 		$query = implode(' UNION ', $query);
 		$db->setQuery ($query);
-		$userids = (array) $db->loadResultArray();
+		$userids = (array) $db->loadColumn();
 		KunenaError::checkDatabaseError();
 		return $userids;
 	}

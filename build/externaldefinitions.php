@@ -39,7 +39,7 @@ class AlphaUserPointsHelper {}
 // UddeIM
 class uddeIMAPI {}
 
-// Joomla 1.5
+// Joomla
 class MenusModelMenutype {}
 
 // JXtended

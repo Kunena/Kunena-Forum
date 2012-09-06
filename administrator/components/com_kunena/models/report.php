@@ -233,13 +233,7 @@ class KunenaAdminModelReport extends KunenaModel {
 		$db = JFactory::getDBO ();
 
 		// Get Joomla! frontend assigned template
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$query = "SELECT template FROM #__template_styles WHERE client_id=0 AND home=1";
-		} else {
-			// Joomla 1.5
-			$query = "SELECT template FROM #__templates_menu WHERE client_id=0 AND menuid=0";
-		}
+		$query = "SELECT template FROM #__template_styles WHERE client_id=0 AND home=1";
 
 		$db->setQuery($query);
 		$template = $db->loadResult();
@@ -336,13 +330,7 @@ class KunenaAdminModelReport extends KunenaModel {
 			$path = JPATH_SITE . "/modules/{$extension}";
 		} else {
 			list($folder, $element) = explode('/', $extension, 2);
-			if (version_compare(JVERSION, '1.6','>')) {
-				// Joomla 1.6+
-				$path = JPATH_PLUGINS . "/{$folder}/{$element}";
-			} else {
-				// Joomla 1.5
-				$path = JPATH_PLUGINS . "/{$folder}/{$element}.xml";
-			}
+			$path = JPATH_PLUGINS . "/{$folder}/{$element}";
 		}
 		$version = $this->findExtensionVersion($path);
 		return $version ? '[u]'.$name.'[/u] '.$version : '';
@@ -369,15 +357,9 @@ class KunenaAdminModelReport extends KunenaModel {
 
 			foreach ($xmlfiles as $file) {
 				// Is it a valid Joomla installation manifest file?
-				if (version_compare(JVERSION, '1.6','>')) {
-					// Joomla 1.6+
-					$manifest = $installer->isManifest($file);
-					$newversion = $manifest ? (string) $manifest->version[0] : null;
-				} else {
-					// Joomla 1.5
-					$manifest = $installer->_isManifest($file);
-					$newversion = $manifest ? (string) $manifest->document->version[0]->data() : null;
-				}
+				$manifest = $installer->isManifest($file);
+				$newversion = $manifest ? (string) $manifest->version[0] : null;
+
 				// We check all files just in case if there are more than one manifest file
 				if (version_compare($newversion, $version, '>')) {
 					$version = $newversion;
@@ -395,11 +377,7 @@ class KunenaAdminModelReport extends KunenaModel {
 		$plugin = JPluginHelper::getPlugin('kunena', $name);
 
 		if ($plugin) {
-			if (version_compare(JVERSION, '1.6', '>')) {
-				$pluginParams = new JRegistry($plugin->params);
-			} else {
-				$pluginParams = new JParameter($plugin->params);
-			}
+			$pluginParams = new JRegistry($plugin->params);
 			$params = $pluginParams->toArray();
 			$plugin_final[] = '[b]'.$desc.'[/b] Enabled: ';
 			foreach ($params as $name=>$value) {

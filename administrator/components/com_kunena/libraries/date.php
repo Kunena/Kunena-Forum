@@ -117,11 +117,7 @@ class KunenaDate extends JDate {
 	}
 
 	public function toTimezone() {
-		if (version_compare(JVERSION, '1.6', '>')) {
-			$timezone = $this->getOffsetFromGMT(true);
-		} else {
-			$timezone = $this->getOffset();
-		}
+		$timezone = $this->getOffsetFromGMT(true);
 		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);
 	}
 
@@ -172,12 +168,11 @@ class KunenaDate extends JDate {
 			if ($offset == 'utc') $offset = 0;
 		}
 		$now = JFactory::getDate ( 'now' );
-		if (version_compare(JVERSION, '1.6', '<') || is_numeric($offset)) {
-			// Joomla 1.5 and Kunena timezone
+		if (is_numeric($offset)) {
+			// FIXME: Kunena timezone doesn't work in J!3.0
 			$this->setOffset($offset);
 			$now->setOffset($offset);
 		} else {
-			// Joomla 1.6 support
 			try {
 				$offset = new DateTimeZone($offset);
 			} catch (Exception $e) {

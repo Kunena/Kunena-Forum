@@ -97,37 +97,14 @@ class KunenaAdminModelCategories extends KunenaModel {
 				// FIXME: stop creating access names manually
 				if ($category->accesstype == 'joomla.level') {
 					$groupname = $acl->getGroupName($category->accesstype, $category->access);
-					if (version_compare(JVERSION, '1.6','>')) {
-						// Joomla 1.6+
-						$category->accessname = JText::_('COM_KUNENA_INTEGRATION_JOOMLA_LEVEL').': '.($groupname ? $groupname : JText::_('COM_KUNENA_NOBODY'));
-					} else {
-						// Joomla 1.5
-						$category->accessname = JText::_('COM_KUNENA_INTEGRATION_JOOMLA_LEVEL').': '.($groupname ? JText::_($groupname) : JText::_('COM_KUNENA_NOBODY'));
-					}
+					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_JOOMLA_LEVEL').': '.($groupname ? $groupname : JText::_('COM_KUNENA_NOBODY'));
 				} elseif ($category->accesstype != 'joomla.group') {
 					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype))).': '.$acl->getGroupName($category->accesstype, $category->access);
-				} elseif (version_compare(JVERSION, '1.6','>')) {
-					// Joomla 1.6+
+				} else {
 					$groupname = $acl->getGroupName($category->accesstype, $category->pub_access);
 					$category->accessname = JText::sprintf( $category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', $groupname ? JText::_( $groupname ) : JText::_('COM_KUNENA_NOBODY') );
 					$groupname = $acl->getGroupName($category->accesstype, $category->admin_access);
 					if ($groupname && $category->pub_access != $category->admin_access) {
-						$category->accessname .= ' / '.JText::sprintf( $category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', JText::_( $groupname ));
-					}
-				} else {
-					// Joomla 1.5
-					$groupname = $acl->getGroupName($category->accesstype, $category->pub_access);
-					if ($category->pub_access == 0) {
-						$category->accessname = JText::_('COM_KUNENA_PUBLIC');
-					} else if ($category->pub_access == - 1) {
-						$category->accessname = JText::_('COM_KUNENA_ALLREGISTERED');
-					} else if ($category->pub_access == 1 || !$groupname) {
-						$category->accessname = JText::_('COM_KUNENA_NOBODY');
-					} else {
-						$category->accessname = JText::sprintf( $category->pub_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', JText::_( $groupname ));
-					}
-					$groupname = $acl->getGroupName($category->accesstype, $category->admin_access);
-					if ($category->pub_access > 0 && $groupname && $category->pub_access != $category->admin_access) {
 						$category->accessname .= ' / '.JText::sprintf( $category->admin_recurse ? 'COM_KUNENA_A_GROUP_X_PLUS' : 'COM_KUNENA_A_GROUP_X_ONLY', JText::_( $groupname ));
 					}
 				}
@@ -177,19 +154,11 @@ class KunenaAdminModelCategories extends KunenaModel {
 				$category->ordering = 9999;
 				$category->pub_recurse = 1;
 				$category->admin_recurse = 1;
-				if (version_compare(JVERSION, '1.6','>')) {
-					// Joomla 1.6+
-					$category->accesstype = 'joomla.level';
-					$category->access = 1;
-					$category->pub_access = 1;
-					$category->admin_access = 8;
-				} else {
-					// Joomla 1.5
-					$category->accesstype = 'joomla.group';
-					$category->access = 0;
-					$category->pub_access = 0;
-					$category->admin_access = 0;
-				}
+				$category->accesstype = 'joomla.level';
+				$category->access = 1;
+				$category->pub_access = 1;
+				$category->admin_access = 8;
+
 			}
 			$this->_admincategory = $category;
 		}

@@ -63,7 +63,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 		$where = '';
 		if ( $this->getState('list.search') ) {
-		  $where = ' WHERE u.username LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.email LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false );
+		  $where = ' WHERE u.username LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.email LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.name LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search' ), true ).'%', false );
 
 		}
 
@@ -122,7 +122,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$userid = $this->app->getUserState ( 'kunena.user.userid');
 
 		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip" );
-		$iplist = implode("','", $db->loadResultArray ());
+		$iplist = implode("','", $db->loadColumn ());
 		if (KunenaError::checkDatabaseError()) return;
 
 		$list = array();

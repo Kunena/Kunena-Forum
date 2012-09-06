@@ -125,7 +125,7 @@ class KunenaActivityCommunity extends KunenaActivity {
 			return 40;
 		}
 
-		// FIXME: Joomla 1.6 can mix up groups and access levels
+		// FIXME: Joomla 2.5 can mix up groups and access levels
 		if (($accesstype == 'joomla.level' && $category->access == 1)
 				|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))) {
 			// Public

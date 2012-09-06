@@ -125,7 +125,6 @@ class KunenaConfig extends JObject {
 	public $default_sort = 'asc'; // 'desc' for latest post first
 	// New 1.5.8 config variables
 	public $sef = 1;
-	public $sefutf8 = 0;
 	// New for 1.6 -> Hide images and files for guests
 	public $showimgforguest = 1;
 	public $showfileforguest = 1;

@@ -547,13 +547,7 @@ abstract class KunenaRouteLegacy {
 		$uri = JURI::getInstance($item->link);
 		$view = $uri->getVar('func', $uri->getVar('view'));
 
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry($item->params);
-		} else {
-			// Joomla 1.5
-			$params = new JParameter($item->params);
-		}
+		$params = new JRegistry($item->params);
 
 		if (self::convert($uri, 0)) {
 

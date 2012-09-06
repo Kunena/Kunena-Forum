@@ -118,7 +118,7 @@ class KunenaController extends JControllerLegacy {
 				$app->redirect (KunenaRoute::_(null, false));
 			}
 
-			// Joomla 1.6+ multi-language support
+			// Joomla 2.5+ multi-language support
 			/* // FIXME:
 			if (isset($active->language) && $active->language != '*') {
 				$language = JFactory::getDocument()->getLanguage();

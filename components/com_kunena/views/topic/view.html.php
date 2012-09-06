@@ -76,13 +76,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
@@ -260,13 +254,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -313,13 +301,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -499,13 +481,7 @@ class KunenaViewTopic extends KunenaView {
 		$key = $this->profile->userid.'.'.$this->profile->username;
 		if (! isset ( $profiles [$key] )) {
 			// Run events
-			if (version_compare(JVERSION, '1.6', '>')) {
-				// Joomla 1.6+
-				$params = new JRegistry();
-			} else {
-				// Joomla 1.5
-				$params = new JParameter( '' );
-			}
+			$params = new JRegistry();
 			// Modify profile values by integration
 			$params->set('ksource', 'kunena');
 			$params->set('kunena_view', 'topic');
@@ -586,7 +562,7 @@ class KunenaViewTopic extends KunenaView {
 		$catid = $this->state->get('item.catid');
 		$id = $this->state->get('item.id');
 
-		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . JUtility::getToken() . '=1';
+		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . JSession::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
 
 		$this->topicButtons = new JObject();
@@ -628,7 +604,7 @@ class KunenaViewTopic extends KunenaView {
 
 		if ($this->config->enable_threaded_layouts) {
 
-			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . JUtility::getToken() . '=1';
+			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . JSession::getFormToken() . '=1';
 			if ($this->layout != 'default') {
 				$this->topicButtons->set('flat', $this->getButton ( sprintf($url, 'flat'), 'flat', 'layout', 'user'));
 			}
@@ -651,7 +627,7 @@ class KunenaViewTopic extends KunenaView {
 		$id = $this->topic->id;
 		$mesid = $this->message->id;
 
-		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&" . JUtility::getToken() . '=1';
+		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&" . JSession::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
 		$this->messageButtons = new JObject();
@@ -712,7 +688,7 @@ class KunenaViewTopic extends KunenaView {
 
 		if ( isset($message->thankyou) ) {
 			if ($this->config->showthankyou && $this->profile->userid) {
-				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JUtility::getToken() . '=1';
+				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JSession::getFormToken() . '=1';
 
 				// for normal users, show only limited number of thankyou (config->thankyou_max)
 				if ( !$this->me->isAdmin() || !$this->me->isModerator() ) {
@@ -832,13 +808,7 @@ class KunenaViewTopic extends KunenaView {
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');

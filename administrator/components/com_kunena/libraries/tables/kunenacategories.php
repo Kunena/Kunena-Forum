@@ -164,7 +164,7 @@ class TableKunenaCategories extends KunenaTable {
 			$db = JFactory::getDbo();
 			$query = "SELECT parent_id FROM #__kunena_categories GROUP BY parent_id";
 			$db->setQuery($query);
-			$parents = $db->loadResultArray();
+			$parents = $db->loadColumn();
 			$success = true;
 			foreach ($parents as $parent_id) {
 				$success &= parent::reorder("parent_id={$db->quote($parent_id)}");

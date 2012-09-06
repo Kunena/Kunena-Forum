@@ -10,10 +10,8 @@
 defined ( '_JEXEC' ) or die ();
 
 // Access check.
-if (version_compare(JVERSION, '1.6', '>')) {
-	if (!JFactory::getUser()->authorise('core.manage', 'com_kunena')) {
-		return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-	}
+if (!JFactory::getUser()->authorise('core.manage', 'com_kunena')) {
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
 // Get view and task
@@ -41,14 +39,14 @@ if ($view == 'install') {
 
 } elseif (!class_exists('KunenaForum') || !KunenaForum::isCompatible('2.0') || !KunenaForum::installed()) {
 	// Prapare installation if Kunena hasn't been fully installed.
-	JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
+	JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JSession::getFormToken().'=1');
 
 } else {
 	// Check if latest version of Kunena has been installed. If not, prepare installation.
 	require_once(KPATH_ADMIN.'/install/version.php');
 	$kversion = new KunenaVersion();
 	if (!$kversion->checkVersion()) {
-		JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JUtility::getToken().'=1');
+		JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JSession::getFormToken().'=1');
 	}
 }
 

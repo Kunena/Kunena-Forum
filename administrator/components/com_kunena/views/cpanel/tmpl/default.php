@@ -69,8 +69,11 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					<?php if ( $this->config->version_check && (version_compare(JVERSION, '1.6', '<') || JFactory::getUser()->authorise('core.manage', 'com_installer'))) : ?>
 					<div class="icon-container">
 					<?php
+					// FIXME: add LiveUpdate back
+					/*
 						require_once KPATH_ADMIN.'/liveupdate/liveupdate.php';
 						echo LiveUpdate::getIcon();
+					*/
 					?>
 					</div>
 					<?php endif ?>

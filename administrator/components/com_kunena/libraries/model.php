@@ -9,14 +9,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.model' );
-
 /**
  * Model for Kunena
  *
  * @since		2.0
  */
-class KunenaModel extends JModel {
+class KunenaModel extends JModelLegacy {
 	public $app = null;
 	public $me = null;
 	public $config = null;

@@ -9,7 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.controller' );
 jimport ( 'joomla.application.component.helper' );
 
 /**
@@ -17,7 +16,7 @@ jimport ( 'joomla.application.component.helper' );
  *
  * @since		2.0
  */
-class KunenaController extends JController {
+class KunenaController extends JControllerLegacy {
 	public $app = null;
 	public $me = null;
 	public $config = null;

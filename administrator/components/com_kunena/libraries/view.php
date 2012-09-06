@@ -9,12 +9,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.view' );
-
 /**
  * Kunena View Class
  */
-class KunenaView extends JView {
+class KunenaView extends JViewLegacy {
 	public $document = null;
 	public $app = null;
 	public $me = null;

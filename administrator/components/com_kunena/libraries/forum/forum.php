@@ -323,15 +323,14 @@ abstract class KunenaForum {
 
 	protected static function buildVersion() {
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
-			$xml = KPATH_ADMIN . '/kunena.xml';
-			$parser = JFactory::getXMLParser ( 'Simple' );
-			$parser->loadFile ( $xml );
-			self::$version = $parser->document->getElementByPath ( 'version' )->data () . '-GIT';
+			$file = KPATH_ADMIN . '/kunena.xml';
+			$manifest = simplexml_load_file($file);
+			self::$version = (string) $manifest->version . '-GIT';
 		} else {
 			self::$version = strtoupper ( '@kunenaversion@' );
 		}
 		self::$version_major = substr(self::$version, 0, 3);
-		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toMySQL() : '@kunenaversiondate@';
+		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toSql() : '@kunenaversiondate@';
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 }

@@ -37,7 +37,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 					</td>
 				</tr>
 			</table>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 				<thead>
 					<tr>
 						<th align="center" width="5">#</th>

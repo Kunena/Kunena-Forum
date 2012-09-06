@@ -43,7 +43,7 @@ $this->addStyleSheet ( 'css/kunena.manage.css' );
 			</td>
 		</tr>
 	</table>
-	<table class="adminlist">
+	<table class="adminlist table table-striped">
 		<thead>
 			<tr>
 				<th class="kcenter" width="5">#</th>

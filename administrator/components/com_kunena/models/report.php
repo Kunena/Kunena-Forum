@@ -239,16 +239,27 @@ class KunenaAdminModelReport extends KunenaModel {
 		$template = $db->loadResult();
 		if (KunenaError::checkDatabaseError()) return;
 
-		$xml = JFactory::getXMLparser('Simple');
-		$xml->loadFile(JPATH_SITE.'/templates/'.$template.'/templateDetails.xml');
+		$xml = simplexml_load_file(JPATH_SITE.'/templates/'.$template.'/templateDetails.xml');
+		if (!$xml || $xml->getName() != 'extension') {
+			return false;
+		}
 
-		$templatedetails = new stdClass();
-		$templatedetails->name = $template;
-		$templatedetails->creationdate = $xml->document->creationDate[0]->data();
-		$templatedetails->author = $xml->document->author[0]->data();
-		$templatedetails->version = $xml->document->version[0]->data();
+		$data = new stdClass();
+		$data->name = (string) $xml->name;
+		$data->type = (string) $xml->attributes()->type;
+		$data->creationdate = (string) $xml->creationdate;
+		$data->author = (string) $xml->author;
+		$data->copyright = (string) $xml->copyright;
+		$data->authorEmail = (string) $xml->authorEmail;
+		$data->authorUrl = (string) $xml->authorUrl;
+		$data->version = (string) $xml->version;
+		$data->description = (string) $xml->description;
+		$data->thumbnail = (string) $xml->thumbnail;
 
-		return $templatedetails;
+		if (!$data->creationdate) $data->creationdate = JText::_('Unknown');
+		if (!$data->author) JText::_('Unknown');
+
+		return $data;
 	}
 
 	/**

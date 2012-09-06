@@ -34,7 +34,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					</td>
 				</tr>
 			</table>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th width="5" align="left"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->trash_items ); ?>);" /></th>

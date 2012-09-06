@@ -25,7 +25,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<?php echo JHTML::_( 'form.token' ); ?>
 
 			<table class="adminheading"></table>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 				<tr>
 					<td><strong><?php echo JText::_('COM_KUNENA_NUMBER_ITEMS'); ?>:</strong>
 						<br />

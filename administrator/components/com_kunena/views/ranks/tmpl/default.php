@@ -13,17 +13,28 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
-// FIXME : Deprecated under Joomla! 1.6
-jimport('joomla.html.pane');
-$myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
+
+$paneOptions = array(
+		'onActive' => 'function(title, description){
+		description.setStyle("display", "block");
+		title.addClass("open").removeClass("closed");
+}',
+		'onBackground' => 'function(title, description){
+		description.setStyle("display", "none");
+		title.addClass("closed").removeClass("open");
+}',
+		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
+		'useCookie' => true, // this must not be a string. Don't use quotes.
+);
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_A_RANK_MANAGER'); ?></div>
-		<dl class="tabs" id="pane">
-		<dt><?php echo JText::_('COM_KUNENA_A_RANKS'); ?></dt>
-		<dd>
+		<?php
+			echo JHtml::_('tabs.start', 'pane', $paneOptions);
+			echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_RANKS'), 'panel_ranks');
+		?>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="ranks" />
 			<input type="hidden" name="task" value="" />
@@ -31,7 +42,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 			<?php echo JHTML::_( 'form.token' ); ?>
 
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th width="5" align="center">#</th>
@@ -105,9 +116,9 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					?>
 			</table>
 		</form>
-		</dd>
-		<dt title="<?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?>"><?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></dt>
-		<dd>
+
+		<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_RANKS_UPLOAD'), 'panel_upload'); ?>
+
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" id="uploadForm" method="post" enctype="multipart/form-data" >
 		<input type="hidden" name="view" value="ranks" />
 		<input type="hidden" name="task" value="rankupload" />
@@ -123,8 +134,8 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<li style="display: none" />
 		</ul>
 		</form>
-		</dd>
-		</dl>
+
+		<?php echo JHtml::_('tabs.end'); ?>
 	</div>
 	<div class="kadmin-footer">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>

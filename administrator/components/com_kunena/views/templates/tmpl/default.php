@@ -25,7 +25,7 @@ JHTML::_('behavior.tooltip');
 			<input type="hidden" name="boxchecked" value="0" />
 			<?php echo JHTML::_( 'form.token' ); ?>
 
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th width="5" class="title"> # </th>

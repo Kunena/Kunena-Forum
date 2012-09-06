@@ -30,7 +30,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<td width="220"><span class="componentheading">&nbsp;</span></td>
 		</tr>
 		</table>
-		<table class="adminlist">
+		<table class="adminlist table table-striped">
 		<tr>
 			<th width="1%" align="left"> </th>
 			<th width="85%" align="left"><?php echo $this->escape($this->dir); ?></th>

@@ -37,7 +37,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					</td>-->
 				</tr>
 			</table>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 				<thead>
 					<tr>
 						<th align="center" width="5">#</th>

@@ -24,7 +24,7 @@ abstract class KunenaError {
 
 			@ini_set('display_errors', 1);
 			self::$handler = true;
-			@error_reporting(E_ALL & ~E_STRICT);
+			@error_reporting(E_ALL | E_STRICT);
 			JFactory::getDbo()->setDebug(true);
 			set_error_handler('kunenaErrorHandler');
 

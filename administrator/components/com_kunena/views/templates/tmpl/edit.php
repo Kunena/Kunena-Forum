@@ -62,9 +62,9 @@ JHTML::_('behavior.tooltip');
 				</tr>
 				<tr>
 					<td class="kparameters">
-						<?php if (!is_null($this->params) && $this->params instanceof JRegistry) : ?>
+						<?php if ($this->form instanceof JForm) : ?>
 						<table class="paramlist admintable">
-							<?php foreach ($this->params->getParams() as $item): ?>
+							<?php foreach ($this->params->toArray() as $item): ?>
 							<tr>
 								<?php if ($item[0]) : ?>
 								<td width="40%" class="paramlist_key">

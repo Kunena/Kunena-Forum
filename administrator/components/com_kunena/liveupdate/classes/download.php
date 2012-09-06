@@ -317,7 +317,7 @@ class LiveUpdateDownloadHelper
 		if ($ftpOptions['enabled'] == 1) {
 			// Connect the FTP client
 			jimport('joomla.client.ftp');
-			$ftp = JFTP::getInstance(
+			$ftp = JClientFtp::getInstance(
 				$ftpOptions['host'], $ftpOptions['port'], null,
 				$ftpOptions['user'], $ftpOptions['pass']
 			);

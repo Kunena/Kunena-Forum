@@ -11,14 +11,12 @@ defined ( '_JEXEC' ) or die ();
 
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
-jimport('joomla.application.component.controller');
-
 /**
  * The Kunena Installer Controller
  *
  * @since		1.6
  */
-class KunenaControllerInstall extends JController {
+class KunenaControllerInstall extends JControllerLegacy {
 	protected $step = null;
 	protected $steps = null;
 	protected $model = null;
@@ -50,7 +48,7 @@ class KunenaControllerInstall extends JController {
 			sleep(1);
 			$app->setUserState('kunena-prepare', $try);
 			$start = $start? '&start=1' : '';
-			$this->setRedirect('index.php?option=com_kunena&view=install&task=prepare&try='.$try.$start.'&'.JUtility::getToken().'=1');
+			$this->setRedirect('index.php?option=com_kunena&view=install&task=prepare&try='.$try.$start.'&'.JSession::getFormToken().'=1');
 			$this->redirect();
 		}
 
@@ -242,7 +240,7 @@ class KunenaControllerInstall extends JController {
 }
 
 function kunenaInstallerError($type, $errstr) {
-	$model = JModel::getInstance('Install', 'KunenaModel');
+	$model = JModelLegacy::getInstance('Install', 'KunenaModel');
 	$model->addStatus($type, false, $errstr);
 	$app = JFactory::getApplication();
 	$app->redirect ( 'index.php?option=com_kunena&view=install' );

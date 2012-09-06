@@ -46,7 +46,8 @@ class KunenaLoginComprofiler {
 
 	public function getRememberMe() {
 		$db = JFactory::getDbo();
-		$db->setQuery( "SELECT params from #__modules WHERE module = 'mod_cblogin' ORDER BY ordering", 0, 1 );
+		// TODO: test if works (see #1079)
+		$db->setQuery( "SELECT params FROM #__extensions WHERE element='mod_cblogin' AND type='module'", 0, 1 );
 		$raw_params = $db->loadResult();
 		$params = new cbParamsBase( $raw_params );
 		return $params->get( 'remember_enabled', 1);

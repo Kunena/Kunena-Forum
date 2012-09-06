@@ -124,38 +124,21 @@ class KunenaActivityCommunity extends KunenaActivity {
 			// Private
 			return 40;
 		}
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			// FIXME: Joomla 1.6 can mix up groups and access levels
-			if (($accesstype == 'joomla.level' && $category->access == 1)
-					|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))) {
-				// Public
-				$access = 0;
-			} elseif (($accesstype == 'joomla.level' && $category->access == 2)
-					|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))) {
-				// Registered
-				$access = 20;
-			} else {
-				// Other groups (=private)
-				$access = 40;
-			}
+
+		// FIXME: Joomla 1.6 can mix up groups and access levels
+		if (($accesstype == 'joomla.level' && $category->access == 1)
+				|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))) {
+			// Public
+			$access = 0;
+		} elseif (($accesstype == 'joomla.level' && $category->access == 2)
+				|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))) {
+			// Registered
+			$access = 20;
 		} else {
-			// Joomla 1.5
-			// Joomla access levels: 0 = public,  1 = registered
-			// Joomla user groups:  29 = public, 18 = registered
-			if (($accesstype == 'joomla.level' && $category->access == 0)
-					|| ($accesstype == 'joomla.group' && ($category->pub_access == 0 || $category->pub_access == 29 || $category->admin_access == 29))) {
-				// Public
-				$access = 0;
-			} elseif (($accesstype == 'joomla.level' && $category->access == 1)
-					|| ($accesstype == 'joomla.group' && ($category->pub_access == -1 || $category->pub_access == 18 || $category->admin_access == 18))) {
-				// Registered
-				$access = 20;
-			} else {
-				// Other groups (=private)
-				$access = 40;
-			}
+			// Other groups (=private)
+			$access = 40;
 		}
+
 		return $access;
 	}
 }

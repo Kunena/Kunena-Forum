@@ -12,8 +12,13 @@
 	<description>PLG_KUNENA_COMPROFILER_DESCRIPTION</description>
 	<files>
 		<filename plugin="comprofiler">comprofiler.php</filename>
+		<filename>access.php</filename>
+		<filename>activity.php</filename>
+		<filename>avatar.php</filename>
+		<filename>login.php</filename>
+		<filename>private.php</filename>
+		<filename>profile.php</filename>
 		<filename>index.html</filename>
-		<folder>comprofiler</folder>
 		<folder>language</folder>
 	</files>
 	<config>

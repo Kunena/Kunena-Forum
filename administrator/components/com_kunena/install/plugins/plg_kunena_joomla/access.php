@@ -315,7 +315,7 @@ class KunenaAccessJoomla {
 
 		$db->setQuery($query);
 
-		$result = (array) $db->loadResultArray();
+		$result = (array) $db->loadColumn();
 
 		// Clean up any NULL values, just in case
 		JArrayHelper::toInteger($result);

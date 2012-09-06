@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
 <extension version="2.5" type="plugin" group="kunena" method="upgrade">
-	<name>plg_kunena_uddeim</name>
+	<name>plg_kunena_gravatar</name>
 	<version>@kunenaversion@</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
@@ -9,17 +9,17 @@
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>www.kunena.org</copyright>
 	<license>GNU/GPLv3 or later</license>
-	<description>PLG_KUNENA_UDDEIM_DESCRIPTION</description>
+	<description>PLG_KUNENA_GRAVATAR_DESCRIPTION</description>
 	<files>
-		<filename plugin="uddeim">uddeim.php</filename>
+		<filename plugin="gravatar">gravatar.php</filename>
 		<filename>index.html</filename>
-		<folder>uddeim</folder>
+		<filename>avatar.php</filename>
 		<folder>language</folder>
 	</files>
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="private" type="radio" default="1" label="PLG_KUNENA_UDDEIM_PRIVATE" description="PLG_KUNENA_UDDEIM_PRIVATE_DESC">
+				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_GRAVATAR_AVATAR" description="PLG_KUNENA_GRAVATAR_AVATAR_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>

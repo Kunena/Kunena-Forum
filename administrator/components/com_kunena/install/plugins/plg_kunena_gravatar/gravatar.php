@@ -19,7 +19,7 @@ class plgKunenaGravatar extends JPlugin {
 
 		$this->loadLanguage ( 'plg_kunena_gravatar.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_gravatar.sys', KPATH_ADMIN );
 
-		$this->path = dirname ( __FILE__ ) . '/gravatar';
+		$this->path = dirname ( __FILE__ );
 	}
 
 	/*

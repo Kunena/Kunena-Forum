@@ -12,16 +12,11 @@ defined ( '_JEXEC' ) or die ();
 
 $this->document->addStyleSheet ( JURI::base(true).'/components/com_kunena/install/media/install.css' );
 if ($this->go == 'next') {
-	if (version_compare(JVERSION, '1.6','>')) {
-		// Joomla 1.6+
-		JHtml::_('behavior.framework', true);
-	} else {
-		// Joomla 1.5
-		JHtml::_('behavior.mootools');
-	}
+	JHtml::_('behavior.framework', true);
+
 	$this->document = JFactory::getDocument();
 	$this->document->addScriptDeclaration(" // <![CDATA[
-window.addEvent('domready', function() {window.location='".JRoute::_("index.php?option=com_kunena&view=install&task=run&n={$this->cnt}&".JUtility::getToken() .'=1', false)."';});
+window.addEvent('domready', function() {window.location='".JRoute::_("index.php?option=com_kunena&view=install&task=run&n={$this->cnt}&".JSession::getFormToken() .'=1', false)."';});
 // ]]>");
 }
 ?>

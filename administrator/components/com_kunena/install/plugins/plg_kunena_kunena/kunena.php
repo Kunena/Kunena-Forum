@@ -19,7 +19,7 @@ class plgKunenaKunena extends JPlugin {
 
 		$this->loadLanguage ( 'plg_kunena_kunena.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_kunena.sys', KPATH_ADMIN );
 
-		$this->path = dirname ( __FILE__ ) . '/kunena';
+		$this->path = dirname ( __FILE__ );
 	}
 
 	/*

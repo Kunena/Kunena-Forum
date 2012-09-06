@@ -38,7 +38,7 @@ class Com_KunenaInstallerScript {
 		$this->md5 = md5_file(JPATH_ADMINISTRATOR . '/components/com_kunena/install/entrypoints/admin.kunena.php');
 		$success = JFile::copy(
 				JPATH_ADMINISTRATOR . '/components/com_kunena/install/entrypoints/admin.kunena.php',
-				JPATH_ADMINISTRATOR . '/components/com_kunena/admin.kunena.php');
+				JPATH_ADMINISTRATOR . '/components/com_kunena/kunena.php');
 		return $success;
 	}
 
@@ -96,20 +96,23 @@ class Com_KunenaInstallerScript {
 		}
 
 		// Detect existing installation.
-		if ($old_manifest && JFile::exists("{$adminpath}/admin.kunena.php")) {
+		if ($old_manifest && JFile::exists("{$adminpath}/kunena.php")) {
+			$contents = file_get_contents("{$adminpath}/kunena.php");
+		} elseif ($old_manifest && JFile::exists("{$adminpath}/admin.kunena.php")) {
 			$contents = file_get_contents("{$adminpath}/admin.kunena.php");
-			if (!strstr($contents, '/* KUNENA FORUM INSTALLER */')) {
+			$rename = true;
+		}
 
-				// If we don't find Kunena 2.0 installer, backup existing files...
-				$backuppath = "{$adminpath}/bak";
-				if (JFolder::exists($backuppath)) JFolder::delete($backuppath);
-				$this->backup($adminpath, $backuppath, $this->oldAdminFiles);
+		if (!empty($contents) && !strstr($contents, '/* KUNENA FORUM INSTALLER */')) {
 
-				$backuppath = "{$sitepath}/bak";
-				if (JFolder::exists($backuppath)) JFolder::delete($backuppath);
-				$this->backup($sitepath, $backuppath, $this->oldFiles);
+			// If we don't find Kunena 2.0 installer, backup existing files...
+			$backuppath = "{$adminpath}/bak";
+			if (JFolder::exists($backuppath)) JFolder::delete($backuppath);
+			$this->backup($adminpath, $backuppath, $this->oldAdminFiles);
 
-			}
+			$backuppath = "{$sitepath}/bak";
+			if (JFolder::exists($backuppath)) JFolder::delete($backuppath);
+			$this->backup($sitepath, $backuppath, $this->oldFiles);
 		}
 
 		// Remove old manifest files, excluding the current one.
@@ -129,26 +132,20 @@ class Com_KunenaInstallerScript {
 		$adminpath = $installer->getPath('extension_administrator');
 		$sitepath = $installer->getPath('extension_site');
 
-		// Rename kunena.j25.xml to kunena.xml
-		if (JFile::exists("{$adminpath}/kunena.j25.xml")) {
-			if ( JFile::exists("{$adminpath}/kunena.xml")) JFile::delete("{$adminpath}/kunena.xml");
-			JFile::move("{$adminpath}/kunena.j25.xml", "{$adminpath}/kunena.xml");
-		}
-
 		if (isset($this->oldAdminFiles)) {
 			// Backup the new installation.
 			if (file_exists("{$adminpath}/new")) JFolder::delete("{$adminpath}/new");
 			$this->backup($adminpath, "{$adminpath}/new", $this->findFilesFromManifest($manifest->administration->files) + array('kunena.xml'=>'kunena.xml'));
 			$this->backup($sitepath, "{$sitepath}/new", $this->findFilesFromManifest($manifest->files));
 
-			// Copy back files removed by Joomla installer (except admin.kunena.php).
-			unset ($this->oldAdminFiles['admin.kunena.php']);
+			// Copy back files removed by Joomla installer (except for kunena.php).
+			unset ($this->oldAdminFiles['kunena.php']);
 			$this->backup("{$adminpath}/bak", $adminpath, $this->oldAdminFiles);
 			$this->backup("{$sitepath}/bak", $sitepath, $this->oldFiles);
 		}
 
 		// Test if bootstrap file has been fully copied
-		$this->waitFile("{$adminpath}/admin.kunena.php", $this->md5);
+		$this->waitFile("{$adminpath}/kunena.php", $this->md5);
 
 		// Set redirect.
 		$installer->set('redirect_url', JURI::base () . 'index.php?option=com_kunena');
@@ -292,7 +289,7 @@ class Com_KunenaInstallerScript {
 		$query = $db->getQuery(true);
 		$query->select('id')
 			->from('#__assets')
-			->where($db->qn('name').' = '.$db->q($this->_akeeba_extension));
+			->where($db->qn('name').' = '.$db->q('com_kunena'));
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 		if(!empty($ids)) foreach($ids as $id) {
@@ -307,7 +304,7 @@ class Com_KunenaInstallerScript {
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
 			->from('#__extensions')
-			->where($db->qn('element').' = '.$db->q($this->_akeeba_extension));
+			->where($db->qn('element').' = '.$db->q('com_kunena'));
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 		if(!empty($ids)) foreach($ids as $id) {
@@ -324,7 +321,7 @@ class Com_KunenaInstallerScript {
 			->from('#__menu')
 			->where($db->qn('type').' = '.$db->q('component'))
 			->where($db->qn('menutype').' = '.$db->q('main'))
-			->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_akeeba_extension));
+			->where($db->qn('link').' LIKE '.$db->q('index.php?option='.'com_kunena'));
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 		if(!empty($ids)) foreach($ids as $id) {
@@ -347,7 +344,7 @@ class Com_KunenaInstallerScript {
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
 		->from('#__extensions')
-		->where($db->qn('element').' = '.$db->q($this->_akeeba_extension));
+		->where($db->qn('element').' = '.$db->q('com_kunena'));
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 		if(count($ids) > 1) {
@@ -367,7 +364,7 @@ class Com_KunenaInstallerScript {
 		$query = $db->getQuery(true);
 		$query->select('id')
 		->from('#__assets')
-		->where($db->qn('name').' = '.$db->q($this->_akeeba_extension));
+		->where($db->qn('name').' = '.$db->q('com_kunena'));
 		$db->setQuery($query);
 		$ids = $db->loadObjectList();
 		if(count($ids) > 1) {
@@ -389,7 +386,7 @@ class Com_KunenaInstallerScript {
 		->from('#__menu')
 		->where($db->qn('type').' = '.$db->q('component'))
 		->where($db->qn('menutype').' = '.$db->q('main'))
-		->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_akeeba_extension));
+		->where($db->qn('link').' LIKE '.$db->q('index.php?option='.'com_kunena'));
 		$db->setQuery($query);
 		$ids1 = $db->loadColumn();
 		if(empty($ids1)) $ids1 = array();
@@ -398,7 +395,7 @@ class Com_KunenaInstallerScript {
 		->from('#__menu')
 		->where($db->qn('type').' = '.$db->q('component'))
 		->where($db->qn('menutype').' = '.$db->q('main'))
-		->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_akeeba_extension.'&%'));
+		->where($db->qn('link').' LIKE '.$db->q('index.php?option='.'com_kunena'.'&%'));
 		$db->setQuery($query);
 		$ids2 = $db->loadColumn();
 		if(empty($ids2)) $ids2 = array();

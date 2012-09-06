@@ -121,7 +121,7 @@ class KunenaAccessCommunity {
 				INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 				WHERE c.published=1 AND g.approved=1 AND g.memberid={$db->quote($userid)}";
 			$db->setQuery( $query );
-			$list = (array) $db->loadResultArray ();
+			$list = (array) $db->loadColumn ();
 			KunenaError::checkDatabaseError ();
 
 			foreach ( $list as $catid ) {
@@ -150,7 +150,7 @@ class KunenaAccessCommunity {
 			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
 			WHERE c.id={$category->id} AND g.approved=1 AND g.memberid IN ({$userlist})";
 		$db->setQuery( $query );
-		$allow = (array) $db->loadResultArray ();
+		$allow = (array) $db->loadColumn ();
 		$deny = array();
 		KunenaError::checkDatabaseError ();
 

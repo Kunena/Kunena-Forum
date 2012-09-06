@@ -21,19 +21,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile {
 		$config = KunenaFactory::getConfig ();
 		$my = JFactory::getUser();
 		if ( $config->userlist_allowed == 1 && $my->id == 0  ) return false;
-		if (class_exists('AlphaUserPointsHelper') && method_exists ( 'AlphaUserPointsHelper', 'getAupUsersURL' ))
-			return AlphaUserPointsHelper::getAupUsersURL ();
-		else {
-			// For AUP 1.5.3 etc..
-			static $AUP_itemid = false;
-			if ($AUP_itemid === false) {
-				$db = JFactory::getDBO ();
-				$query = "SELECT id FROM #__menu WHERE `link`='index.php?option=com_alphauserpoints&view=users' AND `type`='component' AND `published`='1'";
-				$db->setQuery ( $query );
-				$AUP_itemid = intval ( $db->loadResult () );
-			}
-			return JRoute::_ ( 'index.php?option=com_alphauserpoints&view=users&Itemid=' . $AUP_itemid, $xhtml );
-		}
+		return AlphaUserPointsHelper::getAupUsersURL ();
 	}
 
 	public function getProfileURL($user, $task = '', $xhtml = true) {
@@ -44,14 +32,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile {
 		if ($user === false)
 			return false;
 		$userid = $my->id != $user->userid ? '&userid=' . AlphaUserPointsHelper::getAnyUserReferreID ( $user->userid ) : '';
-		if (class_exists('AlphaUserPointsHelper') && method_exists ( 'AlphaUserPointsHelper', 'getItemidAupProfil' )) {
-			$AUP_itemid = AlphaUserPointsHelper::getItemidAupProfil ();
-		} else {
-			$db = JFactory::getDBO ();
-			$query = "SELECT id FROM #__menu WHERE link='index.php?option=com_alphauserpoints&view=account' AND type='component' AND published='1'";
-			$db->setQuery ( $query );
-			$AUP_itemid = intval ( $db->loadResult () );
-		}
+		$AUP_itemid = AlphaUserPointsHelper::getItemidAupProfil ();
 		return JRoute::_ ( 'index.php?option=com_alphauserpoints&view=account' . $userid . '&Itemid=' . $AUP_itemid, $xhtml );
 	}
 

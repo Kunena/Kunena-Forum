@@ -34,11 +34,6 @@ define ( 'KURL_SITE', JURI::Root () . KPATH_COMPONENT_RELATIVE . '/' );
 define ( 'KURL_MEDIA', JURI::Root () . 'media/' . KUNENA_NAME . '/' );
 
 // We need following when upgrading from Kunena 1.6.5:
-// Joomla 1.7 compatibility (class already exists)
-if (!class_exists('JVersion')) {
-	// Joomla 1.5 and 1.6 compatibility (jimport needed)
-	jimport ( 'joomla.version' );
-}
 $jversion = new JVersion();
 define ( 'KUNENA_JOOMLA_COMPAT', $jversion->RELEASE);
 

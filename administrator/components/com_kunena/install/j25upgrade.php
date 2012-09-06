@@ -218,36 +218,6 @@ class jUpgradeComponentKunena extends jUpgradeExtensions {
 				if (!$success) echo "ERROR";
 			}
 		}
-		// Replace Joomla! 1.5 manifest file with Joomla! 2.5 version
-		jimport('joomla.filesystem.file');
-		$manifest25 = JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.j25.xml';
-		$manifest15 = JPATH_ADMINISTRATOR.'/components/com_kunena/kunena.xml';
-		if (file_exists($manifest25)) {
-			$content = file_get_contents($manifest25);
-			// Take care of Git install
-			$content = preg_replace('/@kunenaversion@/', preg_replace('/-GIT/i', '', KunenaForum::version()), $content);
-			$content = preg_replace('/@kunenaversiondate@/', KunenaForum::versionDate(), $content);
-			$content = preg_replace('/@kunenaversionname@/', KunenaForum::versionName(), $content);
-			JFile::write($manifest15, $content);
-			JFile::delete($manifest25);
-		}
-
-		jimport('joomla.plugin.helper');
-
-		// Mark Kunena as discovered and install it
-		$component->client_id = 1;
-		$component->state = -1;
-		$component->store();
-		jimport('joomla.installer.installer');
-		$installer = JInstaller::getInstance();
-		$installer->discover_install($component->extension_id);
-		// Start Kunena installer
-		require_once dirname ( __FILE__ ) . '/model.php';
-		$kunena = new KunenaModelInstall();
-		// Install all plugins
-		$kunena->stepPlugins();
-		// Install English language
-		$kunena->installLanguage('en-GB', 'English');
 
 		return true;
 	}

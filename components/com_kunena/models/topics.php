@@ -52,7 +52,13 @@ class KunenaModelTopics extends KunenaModel {
 			$latestcategory = array($catid);
 			$latestcategory_in = true;
 		} else {
-			$latestcategory = $params->get('topics_categories', $this->config->latestcategory );
+			if ( $params->get('topics_categories') == 0 && $this->config->latestcategory == 0 ) {
+				$latestcategory = 0;
+			} elseif ( $params->get('topics_categories') != 0 ) {
+				$latestcategory = $params->get('topics_categories');
+			} elseif ( $this->config->latestcategory != 0  ) {
+				$latestcategory = $this->config->latestcategory;
+			}
 			if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
 			if (empty($latestcategory) || in_array(0, $latestcategory)) {
 				$latestcategory = false;

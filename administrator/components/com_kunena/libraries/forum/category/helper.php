@@ -160,7 +160,7 @@ abstract class KunenaForumCategoryHelper {
 		$catlist = array();
 		foreach ($categories as $category) {
 			$catlist += $category->getChannels();
-			$catlist += $category->getChildren();
+			$catlist += $category->getChildren(-1);
 		}
 		if (empty($catlist)) return;
 		$catlist = implode(',', array_keys($catlist));
@@ -184,7 +184,7 @@ abstract class KunenaForumCategoryHelper {
 
 		foreach ($categories as $category) {
 			$channels = $category->getChannels();
-			$channels += $category->getChildren();
+			$channels += $category->getChildren(-1);
 			$category->getNewCount(array_sum(array_intersect_key($new, $channels)));
 		}
 	}
@@ -355,6 +355,21 @@ abstract class KunenaForumCategoryHelper {
 		return $list;
 	}
 
+	static public function getOrphaned($levels = 0, $params = array()) {
+		$list = array();
+		foreach (self::getCategoryTree(false) as $catid => $children) {
+			if ($catid && !self::get($catid)->exists()) {
+				foreach (self::getChildren($catid, $levels, $params) as $category) {
+					if ($category->parent_id == $catid) {
+						$category->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $category->name;
+					}
+					$list[$category->id] = $category;
+				}
+			}
+		}
+		return $list;
+	}
+
 	static public function getCategoryTree($parent = 0) {
 		if (self::$_instances === false) {
 			self::loadCategories();
@@ -480,6 +495,13 @@ abstract class KunenaForumCategoryHelper {
 		KunenaError::checkDatabaseError ();
 
 		self::$_instances = array();
+		self::$_tree = array();
+
+		if (empty($results)) {
+			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
+			return;
+		}
+
 		foreach ( $results as $category ) {
 			$instance = new KunenaForumCategory ($category);
 			$instance->exists (true);

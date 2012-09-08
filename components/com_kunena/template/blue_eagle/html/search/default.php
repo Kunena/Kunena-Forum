@@ -34,7 +34,7 @@ document.addEvent('domready', function() {
 	<table id="kforumsearch">
 		<tbody id="advsearch"<?php echo $this->search_style; ?>>
 			<tr class="krow1">
-				<td class="kcol-first">
+				<td class="kcol">
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?></legend>
 						<label class="searchlabel" for="keywords"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:</label>
@@ -42,7 +42,7 @@ document.addEvent('domready', function() {
 						<?php $this->displayModeList('mode', 'class="ks"') ?>
 					</fieldset>
 				</td>
-				<td class="kcol-mid">
+				<td class="kcol">
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
 						<label class="searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
@@ -71,7 +71,7 @@ document.addEvent('domready', function() {
 				</th>
 			</tr>
 			<tr class="krow1" id="advsearch_options">
-				<td class="kcol-first">
+				<td class="kcol">
 <?php /*
 					<fieldset class="fieldset">
 						<legend style="padding:0px">
@@ -114,7 +114,7 @@ document.addEvent('domready', function() {
 						<?php $this->displayLimitlist('limit', 'class="ks"') ?>
 					</fieldset>
 				</td>
-				<td class="kcol-mid">
+				<td class="kcol">
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?></legend>
 						<?php $this->displayCategoryList('categorylist', 'class="inputbox" size="8" multiple="multiple"') ?>

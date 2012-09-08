@@ -32,9 +32,9 @@ defined ( '_JEXEC' ) or die ();
 			<?php endif ?>
 			</div>
 		</li>
-		<?php if (!empty($this->personaltext)) : ?>
+		<?php if (!empty($this->personalText)) : ?>
 		<li class="kpost-personal">
-			<?php echo $this->personaltext ?>
+			<?php echo $this->personalText ?>
 		</li>
 		<?php endif ?>
 		<?php endif; ?>

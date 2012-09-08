@@ -67,7 +67,7 @@ $this->k=0;
 		<?php endif; ?>
 
 		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check-name"
-		<?php if ( $this->me->userid && !$this->config->changename && !$this->category->allow_anonymous ): ?>style="display:none;"<?php endif; ?>>
+		<?php if ( $this->me->userid && !$this->category->allow_anonymous ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>
 			</td>
@@ -105,8 +105,10 @@ $this->k=0;
 
 			<td class="kcol-mid">
 				<?php foreach ($this->topicIcons as $id=>$icon): ?>
+				<span class="kiconsel">
 				<input type="radio" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo !empty($icon->checked) ? ' checked="checked" ':'' ?> />
 				<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" />
+				</span>
 				<?php endforeach; ?>
 			</td>
 		</tr>
@@ -129,7 +131,7 @@ $this->k=0;
 					<input class="kfile-input-textbox" type="text" readonly="readonly" />
 					<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>" >
 						<input type="button" value="<?php echo  JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button kbutton" />
-						<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" />
+						<input id="kupload" class="kfile-input" name="kattachment" type="file" />
 					</div>
 					<a href="#" class="kattachment-remove kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a>
 					<a href="#" class="kattachment-insert kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>

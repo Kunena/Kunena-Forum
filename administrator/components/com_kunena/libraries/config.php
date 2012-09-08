@@ -56,7 +56,6 @@ class KunenaConfig extends JObject {
 	public $maxsubject = 50;
 	public $maxsig = 300;
 	public $regonly = 0;
-	public $changename = 0;
 	public $pubwrite = 0;
 	public $floodprotection = 0;
 	public $mailmod = 0;
@@ -278,6 +277,22 @@ class KunenaConfig extends JObject {
 
 		// Perform custom validation of config data before we let anybody access it.
 		$this->check ();
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+		$plugins = array();
+		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
+		$this->plugins = array();
+		foreach ($plugins as $name => $registry) {
+			if ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
+		}
+	}
+
+	/**
+	 * @internal
+	 */
+	public function getPlugin($name) {
+		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry();
 	}
 
 	public function check() {

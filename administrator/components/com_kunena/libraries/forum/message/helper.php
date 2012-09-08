@@ -96,7 +96,8 @@ abstract class KunenaForumMessageHelper {
 
 		$db = JFactory::getDBO();
 		// FIXME: use right config setting
-		if ($limit < 1) $limit = KunenaFactory::getConfig ()->threads_per_page;
+		if ($limit < 1 && empty($params['nolimit'])) $limit = KunenaFactory::getConfig ()->threads_per_page;
+
 		$cquery = new KunenaDatabaseQuery();
 		$cquery->select('COUNT(*)')
 			->from('#__kunena_messages AS m')
@@ -178,7 +179,7 @@ abstract class KunenaForumMessageHelper {
 		if (KunenaError::checkDatabaseError() || !$total) return array(0, array());
 
 		// If out of range, use last page
-		if ($total < $limitstart)
+		if ($limit && $total < $limitstart)
 			$limitstart = intval($total / $limit) * $limit;
 
 		$db->setQuery ( $rquery, $limitstart, $limit );
@@ -209,7 +210,7 @@ abstract class KunenaForumMessageHelper {
 		$count = 0;
 		foreach ($location->hold as $meshold=>$values) {
 			if (isset($hold[$meshold])) {
-				$count += $values[$direction = 'asc' ? 'before' : 'after'];
+				$count += $values[$direction == 'asc' ? 'before' : 'after'];
 				if ($direction == 'both') $count += $values['before'];
 			}
 		}
@@ -327,7 +328,7 @@ abstract class KunenaForumMessageHelper {
 		$results = (array) $db->loadAssocList ('id');
 		KunenaError::checkDatabaseError ();
 
-		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaForumTopicHelper::get($topic_id)->getTotal($hold);
+		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaForumTopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
 		$order = ($ordering == 'ASC') ? 1 : -1;
 		$list = array();
 		foreach ( $results as $id=>$result ) {

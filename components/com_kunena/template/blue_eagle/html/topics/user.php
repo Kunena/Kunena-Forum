@@ -21,7 +21,7 @@ $this->displayAnnouncement ();
 			<?php echo JText::_('COM_KUNENA_TOPICS')?>
 		</td>
 
-		<td class="klist-jump-all"><?php $this->displayForumJump () ?></td>
+		<td class="klist-jump-all visible-desktop"><?php $this->displayForumJump () ?></td>
 
 		<td class="klist-pages-all"><?php echo $this->getPagination ( 5 ); ?></td>
 	</tr>

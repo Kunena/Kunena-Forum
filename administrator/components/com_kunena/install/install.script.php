@@ -29,6 +29,7 @@ class Com_KunenaInstallerScript {
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
+	protected $_akeeba_extension = null;
 
 	public function install($parent) {
 		// Reset installer state.

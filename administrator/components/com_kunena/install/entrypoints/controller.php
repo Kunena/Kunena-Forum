@@ -275,7 +275,7 @@ class KunenaControllerInstall extends JController {
 		$table = str_replace('_', '\_', "{$db->getPrefix()}%_version");
 		$query = "SHOW TABLES LIKE {$db->quote($table)}";
 		$db->setQuery ( $query );
-		$tables = $db->loadResultArray();
+		$tables = (array)$db->loadResultArray();
 		if (in_array("{$db->getPrefix()}kunena_version", $tables)) {
 			$table = '#__kunena_version';
 		} elseif (in_array("{$db->getPrefix()}fb_version", $tables)) {

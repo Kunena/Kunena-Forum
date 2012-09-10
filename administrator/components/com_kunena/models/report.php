@@ -116,7 +116,7 @@ class KunenaAdminModelReport extends KunenaModel {
 		else $plg_mt = '[u]System - Mootools12:[/u] Disabled';
 
 		$plg['jfirephp'] = $this->getExtensionVersion('system/jfirephp', 'System - JFirePHP');
-		$plg['ksearch'] = $this->getExtensionVersion('search/kunenasearch', 'Search - Kunena Search');
+		$plg['ksearch'] = $this->getExtensionVersion('search/kunena', 'Search - Kunena Search');
 		$plg['kdiscuss'] = $this->getExtensionVersion('content/kunenadiscuss', 'Content - Kunena Discuss');
 		$plg['jxfinderkunena'] = $this->getExtensionVersion('finder/plg_jxfinder_kunena', 'Finder - Kunena Posts');
 		$plg['kjomsocialmenu'] = $this->getExtensionVersion('community/kunenamenu', 'JomSocial - My Kunena Forum Menu');

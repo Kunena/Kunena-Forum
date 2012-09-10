@@ -1597,7 +1597,7 @@ class KunenaModelInstall extends JModel {
 			return $this->tables [$prefix];
 		}
 		$this->db->setQuery ( "SHOW TABLES LIKE " . $this->db->quote ( $this->db->getPrefix () . $prefix . '%' ) );
-		$list = $this->db->loadResultArray ();
+		$list = (array)$this->db->loadResultArray ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		$this->tables [$prefix] = array ();

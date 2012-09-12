@@ -166,7 +166,7 @@ class KunenaAccessJoomla {
 	/**
 	 * Authorise user actions in a category.
 	 *
-	 * Function returns a list of authorized actions. Missing actions are threaded as inherit.
+	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
 	 * @param KunenaForumCategory $category
 	 * @param int $userid
@@ -200,7 +200,7 @@ class KunenaAccessJoomla {
 			$user = JUser::getInstance();
 		}
 
-		$accesslevels = (array) $user->authorisedLevels();
+		$accesslevels = (array) $user->getAuthorisedViewLevels();
 		$groups_r = (array) JAccess::getGroupsByUser($user->id, true);
 		$groups = (array) JAccess::getGroupsByUser($user->id, false);
 

@@ -33,7 +33,7 @@ class KunenaViewCategory extends KunenaView {
 		$title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 		$this->setTitle ( $title );
 
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$this->category->name} - {$this->config->board_title}" );
+		$metaDesc = $this->document->getDescription() . '. ' . $this->escape ( "{$this->category->name} - {$this->config->board_title}" );
 		$this->document->setDescription ( $metaDesc );
 
 		// Create image for feed

@@ -24,7 +24,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 	}
 
 	function add() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -33,7 +33,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 	}
 
 	function edit() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -50,7 +50,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 
 	function save() {
 		$db = JFactory::getDBO ();
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;
@@ -95,7 +95,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 
 		if (!$id) return;
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return;
 		}
@@ -125,7 +125,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
 		$db = JFactory::getDBO ();
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return;
 		}
@@ -163,7 +163,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 
 	protected function setDefault($cid, $value) {
 		$db = JFactory::getDBO ();
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return;
 		}
@@ -246,7 +246,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		$dest = JPATH_ROOT . '/media/kunena/topicicons/';
 		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -264,15 +264,15 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 			if (JFolder::exists($tmp)) {
 				$topicicons = $this->parseXMLTopiciconFile($tmp);
 				if (!empty($topicicons)) {
-          	// Never overwrite existing topic icon set
-						if (!JFolder::exists($dest.(String)$topicicons->name)) {
-					 	   $error = JFolder::move($tmp, $dest.(String)$topicicons->name);
-						    if ($error !== true) $this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TOPICON_MANAGER_ERROR_INSTALL_FAILED').': ' . $error, 'notice' );
+					// Never overwrite existing topic icon set
+					if (!JFolder::exists($dest.(String)$topicicons->name)) {
+						$error = JFolder::move($tmp, $dest.(String)$topicicons->name);
+						if ($error !== true) $this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TOPICON_MANAGER_ERROR_INSTALL_FAILED').': ' . $error, 'notice' );
 
-					       JFile::delete($dest.(String)$topicicons->name.'/'.$file['name']);
+						JFile::delete($dest.(String)$topicicons->name.'/'.$file['name']);
 
-				        	if(JFolder::exists ($tmp)) $retval = JFolder::delete($tmp);
-					       $this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
+						if(JFolder::exists ($tmp)) $retval = JFolder::delete($tmp);
+						$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TOPICON_MANAGER_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
 					}
 				} else {
 					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TOPICON_MANAGER_TEMPLATE_MISSING_FILE'));
@@ -289,7 +289,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 	function delete() {
 		$db = JFactory::getDBO ();
 
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;
@@ -315,7 +315,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		$db = JFactory::getDBO ();
 		require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/tables/kunenatopicicons.php');
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}

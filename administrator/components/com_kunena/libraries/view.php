@@ -128,15 +128,15 @@ class KunenaView extends JViewLegacy {
 	}
 
 	public function isModulePosition($position) {
-		$doc = JFactory::getDocument();
-		return method_exists($doc, 'countModules') ? $doc->countModules ( $position ) : 0;
+		$document = JFactory::getDocument();
+		return method_exists($document, 'countModules') ? $document->countModules ( $position ) : 0;
 	}
 
 	public function getModulePosition($position) {
 		$html = '';
-		$doc = JFactory::getDocument();
-		if (method_exists($doc, 'countModules') && $doc->countModules ( $position )) {
-			$renderer = $doc->loadRenderer ( 'modules' );
+		$document = JFactory::getDocument();
+		if (method_exists($document, 'countModules') && $document->countModules ( $position )) {
+			$renderer = $document->loadRenderer ( 'modules' );
 			$options = array ('style' => 'xhtml' );
 			$html .= '<div class="'.$position.'">';
 			$html .= $renderer->render ( $position, $options, null );
@@ -431,7 +431,7 @@ class KunenaView extends JViewLegacy {
 	public function setDescription($description) {
 		if (!$this->state->get('embedded')) {
 			// TODO: allow translations/overrides
-			$this->document->setMetadata ( 'description', $this->document->get ( 'description' ) . '. ' . $description );
+			$this->document->setMetadata ( 'description', $this->document->getDescription() . '. ' . $description );
 		}
 	}
 }

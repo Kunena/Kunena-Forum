@@ -31,7 +31,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 
 	// Run from administrator installer
 	function prepare() {
-		if (!JRequest::checkToken( 'get' )) {
+		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
@@ -89,7 +89,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 	}
 
 	public function run() {
-		if (!JRequest::checkToken( 'get' )) {
+		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
@@ -148,7 +148,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 	}
 
 	public function restart() {
-		if (!JRequest::checkToken( 'get' )) {
+		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
@@ -156,7 +156,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$this->run();
 	}
 	function install() {
-		if (!JRequest::checkToken( 'get' )) {
+		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
@@ -164,7 +164,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$this->run();
 	}
 	function upgrade() {
-		if (!JRequest::checkToken( 'get' )) {
+		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
@@ -172,7 +172,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$this->run();
 	}
 	function downgrade() {
-		if (!JRequest::checkToken( 'get' )) {
+		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
@@ -180,7 +180,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$this->run();
 	}
 	function reinstall() {
-		if (!JRequest::checkToken( 'get' )) {
+		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
@@ -188,7 +188,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$this->run();
 	}
 	function migrate() {
-		if (!JRequest::checkToken( 'get' )) {
+		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
@@ -196,7 +196,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$this->run();
 	}
 	function uninstall() {
-		if (!JRequest::checkToken( 'get' )) {
+		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
@@ -218,7 +218,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 		}
 	}
 	function restore() {
-		if (!JRequest::checkToken( 'get' )) {
+		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}

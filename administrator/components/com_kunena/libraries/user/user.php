@@ -473,7 +473,7 @@ class KunenaUser extends JObject {
 				break;
 			case 'birthdate' :
 				if ($this->birthdate) {
-					$date = new JDate ( $this->birthdate, 0 );
+					$date = new JDate ( $this->birthdate );
 					if ($date->format('%Y')<1902) break;
 					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . KunenaDate::getInstance($this->birthdate)->toKunena( 'date', 0 ) . '"></span>';
 				}

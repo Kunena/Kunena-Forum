@@ -51,9 +51,8 @@ class KunenaAccess {
 				$this->moderatorsByUserid = (array)$data['mu'];
 			}
 		}
-		//$my = JFactory::getUser();
 		// If values were not cached (or users permissions have been changed), force reload
-		if (!isset($this->adminsByCatid)) { // || ($my->id && $my->authorize('com_kunena', 'administrator') == empty($this->adminsByUserid[$my->id][0]) )) {
+		if (!isset($this->adminsByCatid)) {
 			$this->clearCache();
 		}
 	}
@@ -340,7 +339,7 @@ window.addEvent('domready', function(){
 	/**
 	 * Authorise user actions in a category.
 	 *
-	 * Function returns a list of authorized actions. Missing actions are threaded as inherit.
+	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
 	 * @param KunenaForumCategory $category
 	 * @param int $userid

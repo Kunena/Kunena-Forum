@@ -18,7 +18,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaControllerAnnouncement extends KunenaController {
 
 	public function publish() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -38,7 +38,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 	}
 
 	public function unpublish() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -65,7 +65,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 	}
 
 	public function delete() {
-		if (! JRequest::checkToken ('request')) {
+		if (! JSession::checkToken ('request')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -83,7 +83,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 	}
 
 	public function save() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}

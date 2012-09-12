@@ -804,7 +804,7 @@ class KunenaControllerTopic extends KunenaController {
 					if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
 						continue;
 
-					JUtility::sendMail ( $this->config->getEmail(), $mailsender, $emailTo->email, $mailsubject, $mailmessage );
+					JMail::sendMail ( $this->config->getEmail(), $mailsender, $emailTo->email, $mailsubject, $mailmessage );
 				}
 
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );

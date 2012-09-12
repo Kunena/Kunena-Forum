@@ -1109,7 +1109,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			// Get credentials to check if the user has right to see the article
 			$params = $site->getParams('com_content');
 			$registry = new JRegistry();
-			$registry->loadJSON($article->attribs);
+			$registry->loadString($article->attribs);
 			$article->params = clone $params;
 			$article->params->merge($registry);
 			$params = $article->params;

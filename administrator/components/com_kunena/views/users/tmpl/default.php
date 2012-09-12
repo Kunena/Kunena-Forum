@@ -109,8 +109,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 <?php /*
 				<td width="100"><?php echo $this->escape($kunena_user->email);
 						?>&nbsp;</td>
-				<td width="100"><?php echo $this->escape($kunena_user->usertype);
-						?>&nbsp;</td>
 */ ?>
 				<td align="center">
 					<?php

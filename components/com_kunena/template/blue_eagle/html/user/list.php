@@ -154,7 +154,7 @@ document.addEvent('domready', function() {
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_usertype) : ?>
-						<td class="kcol-mid"><?php echo $this->escape($user->usertype) ?></td>
+						<td class="kcol-mid"><?php echo JText::_($profile->getType()) ?></td>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_joindate) : ?>

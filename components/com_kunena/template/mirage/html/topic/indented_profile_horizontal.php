@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 		</li>
 		<?php if (!empty($this->usertype)) : ?>
 			<li class="kpost-user-type">
-				<span class="kmsgusertype">( <?php echo JText::_($this->escape($this->usertype)) ?> )</span>
+				<span class="kmsgusertype">( <?php echo JText::_($this->usertype) ?> )</span>
 			</li>
 		<?php endif ?>
 		<?php if ($this->profile->exists()): ?>

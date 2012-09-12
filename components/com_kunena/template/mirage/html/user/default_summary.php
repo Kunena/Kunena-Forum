@@ -22,7 +22,7 @@ defined ( '_JEXEC' ) or die ();
 		<ul class="list-unstyled">
 			<?php if ( !empty($this->banReason) ) : ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO') ?>:</strong> <?php echo $this->escape($this->banReason) ?></li><?php endif ?>
 			<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline('yes', 'no') ?>"><span class="online-<?php echo $this->profile->isOnline('yes', 'no') ?>"><span><?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')) ?></span></span></span></li>
-			<?php if (!empty($this->usertype)): ?><li class="kprofile-usertype"><?php echo $this->escape($this->usertype); ?></li><?php endif; ?>
+			<?php if (!empty($this->usertype)): ?><li class="kprofile-usertype"><?php echo JText::_($this->usertype); ?></li><?php endif; ?>
 			<?php if (!empty($this->rank_title)): ?><li class="kprofile-ranktitle"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_RANK') ?>: </strong><?php echo $this->escape($this->rank_title); ?></li><?php endif; ?>
 			<?php if (!empty($this->rank_image)): ?><li class="kprofile-rankimage"><?php echo $this->rank_image; ?></li><?php endif; ?>
 		</ul>

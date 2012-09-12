@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 		</li>
 		<?php if (!empty($this->usertype)) : ?>
 		<li class="kpost-usertype">
-			<span class = "kmsgusertype">( <?php echo JText::_($this->escape($this->usertype)) ?> )</span>
+			<span class = "kmsgusertype">( <?php echo JText::_($this->usertype) ?> )</span>
 		</li>
 		<?php endif ?>
 		<?php $avatar = $this->profile->getAvatarImage ('kavatar', 'post'); if ($avatar) : ?>

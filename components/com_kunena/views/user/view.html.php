@@ -99,7 +99,7 @@ class KunenaViewUser extends KunenaView {
 		$this->name = $this->user->username;
 		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
 		if ($this->config->showuserstats) {
-			if ($this->config->userlist_usertype) $this->usertype = $this->user->usertype;
+			$this->usertype = $this->config->userlist_usertype ? $this->user->getType() : null;
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');
 			$this->posts = $this->profile->posts;

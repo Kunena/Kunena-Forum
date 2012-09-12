@@ -3,7 +3,7 @@
 		<?php echo $this->profile->getLink($this->message->name) ?>
 	</li>
 	<?php if (!empty($this->usertype)) : ?>
-		<li class="kpost-user-vertical-type">( <?php echo JText::_($this->escape($this->usertype)) ?> )</li>
+		<li class="kpost-user-vertical-type">( <?php echo JText::_($this->usertype) ?> )</li>
 	<?php endif ?>
 	<?php $avatar = $this->profile->getAvatarImage ('kavatar kavatar-128', 'post'); if ($avatar) : ?>
 		<li class="kpost-user-vertical-avatar">

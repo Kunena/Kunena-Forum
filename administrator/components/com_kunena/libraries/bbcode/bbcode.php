@@ -1097,7 +1097,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$db = JFactory::getDBO ();
 		$site = JFactory::getApplication('site');
 
-		$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category,
+		$query = 'SELECT a.*, u.name AS author, cc.title AS category,
 			0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access
 			FROM #__content AS a
 			LEFT JOIN #__categories AS cc ON cc.id = a.catid

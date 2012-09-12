@@ -212,7 +212,7 @@ class KunenaControllerUser extends KunenaController {
 
 	function login() {
 		if(!JFactory::getUser()->guest || !JSession::checkToken('post')) {
-			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
 		}
 
 		$username = JRequest::getString ( 'username', '', 'POST' );
@@ -226,7 +226,7 @@ class KunenaControllerUser extends KunenaController {
 
 	function logout() {
 		if(!JSession::checkToken('request')) {
-			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
 		}
 
 		$login = KunenaLogin::getInstance();

@@ -11,8 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 
 $paneOptions = array(
 		'onActive' => 'function(title, description){
@@ -107,7 +107,7 @@ $paneOptions = array(
 						echo $y;
 						?>','edit')"><img
 						src="<?php
-						echo $this->escape(JURI::root() . $this->ktemplate->getTopicsIconPath($row->filename, 'default'))
+						echo $this->escape(JUri::root(true) .'/'. $this->ktemplate->getTopicsIconPath($row->filename, 'default'))
 						?>"
 						alt="<?php
 						echo $this->escape($row->title);

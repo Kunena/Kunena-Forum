@@ -156,7 +156,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		} else {
 			$category = KunenaForumCategoryHelper::get($category);
 		}
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
+		$uri = JUri::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
 		if ((string)$action === (string)(int)$action) {
 			$uri->setVar('limitstart', $action);
 		}

@@ -40,7 +40,7 @@ class KunenaBbcode extends BBCode {
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
 		$this->SetSmileyDir ( JPATH_ROOT );
-		$this->SetSmileyURL ( $relative ? JURI::root(true) : rtrim(JURI::root(), '/') );
+		$this->SetSmileyURL ( $relative ? JUri::root(true) : rtrim(JUri::root(), '/') );
 		$this->SetDetectURLs ( true );
 		$this->SetURLPattern (array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
@@ -1461,7 +1461,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		} elseif ($attachment->exists() && is_file ( JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}" )) {
 			$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
-			$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
+			// TODO: use absolute / relative url depending on where BBCode is shown
+			$link = JUri::root() . "{$attachment->folder}/{$attachment->filename}";
 			$image = $attachment->getImageLink();
 			if (empty ( $image )) {
 				return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";

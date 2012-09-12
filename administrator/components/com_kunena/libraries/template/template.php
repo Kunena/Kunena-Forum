@@ -243,7 +243,7 @@ HTML;
 				$filename = $filemin;
 			}
 		}
-		return JFactory::getDocument ()->addStyleSheet ( JURI::root(true)."/{$filename}" );
+		return JFactory::getDocument ()->addStyleSheet ( JUri::root(true)."/{$filename}" );
 	}
 
 	public function addIEStyleSheet($filename, $condition='IE') {
@@ -259,7 +259,7 @@ HTML;
 		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
 			foreach ($this->stylesheets as $list) {
 				foreach ($list as $stylesheet=>$time) {
-					JFactory::getDocument ()->addStyleSheet ( JURI::root(true)."/{$stylesheet}" );
+					JFactory::getDocument ()->addStyleSheet ( JUri::root(true)."/{$stylesheet}" );
 				}
 			}
 		} else {
@@ -267,7 +267,7 @@ HTML;
 			foreach ($this->stylesheets as $group=>$list) {
 				if ($group[0] == '_') {
 					foreach ($list as $stylesheet=>$time) {
-						JFactory::getDocument ()->addStyleSheet ( JURI::root(true)."/{$stylesheet}" );
+						JFactory::getDocument ()->addStyleSheet ( JUri::root(true)."/{$stylesheet}" );
 					}
 				} else {
 					$cssfile = "{$path}/{$group}.css";
@@ -286,7 +286,7 @@ HTML;
 							JFile::write($hashfile, $hash);
 						}
 					}
-					JFactory::getDocument ()->addStyleSheet ( JURI::root(true).'/'.$cssfile );
+					JFactory::getDocument ()->addStyleSheet ( JUri::root(true).'/'.$cssfile );
 				}
 			}
 		}
@@ -423,7 +423,7 @@ HTML;
 				}
 			}
 		}
-		return ($url ? JURI::root(true).'/' : '').$this->filecache[$filepath];
+		return ($url ? JUri::root(true).'/' : '').$this->filecache[$filepath];
 	}
 
 	public function getSmileyPath($filename='', $url = false) {

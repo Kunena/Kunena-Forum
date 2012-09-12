@@ -11,12 +11,12 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 $document->addScriptDeclaration('function update_topicicon(newimage)
 			{
 				document.topicicon_image.src = "'.
-				$this->escape(JURI::root() ).'media/kunena/topic_icons/" + newimage;
+				$this->escape(JUri::root() ).'media/kunena/topic_icons/" + newimage;
 			}');
 ?>
 <div id="kadmin">
@@ -38,7 +38,7 @@ $document->addScriptDeclaration('function update_topicicon(newimage)
 					<td width="200"><input class="post" type="text" name="topiciconname"
 						value="<?php echo isset($this->topicicon->name) ? $this->topicicon->name : '' ?>" /></td>
 					<td rowspan="3" width="50"><img name="topicicon_image"
-						src="<?php echo isset($this->topicicon) ? $this->escape(JURI::root().$this->ktemplate->getTopicsIconPath($this->topicicon->filename)) : '' ?>" border="0" alt="" /> &nbsp;</td>
+						src="<?php echo isset($this->topicicon) ? $this->escape(JUri::root(true).'/'.$this->ktemplate->getTopicsIconPath($this->topicicon->filename)) : '' ?>" border="0" alt="" /> &nbsp;</td>
 					<td rowspan="3">&nbsp;</td>
 				</tr>
 				<tr align="center">

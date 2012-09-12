@@ -110,7 +110,7 @@ abstract class JHTMLKunenaForum {
 	 *
 	 * Creates link pointing to a Kunena page
 	 *
-	 * @param mixed $uri Kunena URI, either as string, JURI or array
+	 * @param mixed $uri Kunena URI, either as string, JUri or array
 	 * @param string $content
 	 * @param string $class Link class
 	 * @param string $title Link title

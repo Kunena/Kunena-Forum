@@ -97,7 +97,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 			return false;
 
 		if (! defined ( "_AUP_MEDALS_LIVE_PATH" )) {
-			define ( '_AUP_MEDALS_LIVE_PATH', JURI::base ( true ) . '/components/com_alphauserpoints/assets/images/awards/icons/' );
+			define ( '_AUP_MEDALS_LIVE_PATH', JUri::root(true) . '/components/com_alphauserpoints/assets/images/awards/icons/' );
 		}
 
 		$aupmedals = AlphaUserPointsHelper::getUserMedals ( '', $userid );

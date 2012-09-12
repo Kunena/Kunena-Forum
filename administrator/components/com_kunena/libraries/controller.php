@@ -201,7 +201,7 @@ class KunenaController extends JControllerLegacy {
 	}
 
 	protected function redirectBack($fragment = '') {
-		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
+		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
 		JFactory::getApplication ()->redirect ( $httpReferer.($fragment ? '#'.$fragment : '') );
 	}
 

@@ -102,7 +102,7 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 	public function getPermaUri($category = null) {
 		$category = $category ? KunenaForumCategoryHelper::get($category) : $this->getCategory();
 		if (!$this->exists() || !$category->exists()) return null;
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
+		$uri = JUri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->thread}&mesid={$this->id}");
 		return $uri;
 	}
 

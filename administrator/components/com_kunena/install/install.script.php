@@ -148,7 +148,7 @@ class Com_KunenaInstallerScript {
 		$this->waitFile("{$adminpath}/kunena.php", $this->md5);
 
 		// Set redirect.
-		$installer->set('redirect_url', JURI::base () . 'index.php?option=com_kunena');
+		$installer->set('redirect_url', JRoute::_('index.php?option=com_kunena', false));
 
 		return true;
 	}

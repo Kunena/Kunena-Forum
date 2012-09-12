@@ -30,8 +30,8 @@ define ( 'KPATH_MEDIA', JPATH_ROOT .'/media/'. KUNENA_NAME );
 
 // URLs
 define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
-define ( 'KURL_SITE', JURI::Root () . KPATH_COMPONENT_RELATIVE . '/' );
-define ( 'KURL_MEDIA', JURI::Root () . 'media/' . KUNENA_NAME . '/' );
+define ( 'KURL_SITE', JUri::Root () . KPATH_COMPONENT_RELATIVE . '/' );
+define ( 'KURL_MEDIA', JUri::Root () . 'media/' . KUNENA_NAME . '/' );
 
 // We need following when upgrading from Kunena 1.6.5:
 $jversion = new JVersion();

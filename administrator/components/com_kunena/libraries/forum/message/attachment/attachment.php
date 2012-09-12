@@ -94,15 +94,16 @@ class KunenaForumMessageAttachment extends JObject {
 						$imgsize = 'width="' . $config->thumbwidth . 'px" height="' . $config->thumbheight . 'px"';
 					}
 
-					$img = '<img title="' . $this->escape ( $this->filename ) . '" ' . $imgsize . ' src="' . JURI::ROOT () . $thumb . '" alt="' . $this->escape ( $this->filename ) . '" />';
+					// TODO: use absolute / relative path depending where attachment is shown
+					$img = '<img title="' . $this->escape ( $this->filename ) . '" ' . $imgsize . ' src="' . JUri::root () . $thumb . '" alt="' . $this->escape ( $this->filename ) . '" />';
 					$this->_thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)? 'lightbox[thumb' . intval ( $this->mesid ). ']':'' );
-					$img = '<img title="' . $this->escape ( $this->filename ) . '" src="' . JURI::ROOT () . $this->escape ( $this->folder ) . '/' . $this->escape ( $this->filename ) . '" alt="' . $this->escape ( $this->filename ) . '" />';
+					$img = '<img title="' . $this->escape ( $this->filename ) . '" src="' . JUri::root () . $this->escape ( $this->folder ) . '/' . $this->escape ( $this->filename ) . '" alt="' . $this->escape ( $this->filename ) . '" />';
 					$this->_imagelink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[imagelink' . intval ( $this->mesid ) .']':'' );
 					$this->_textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[simple' . $this->mesid . ']' . ' nofollow':' nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
-					$img = '<img src="' . JURI::root(). 'media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+					$img = '<img src="' . JUri::root(). 'media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
 					$this->_thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), 'nofollow' );
 					$this->_textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
 			}
@@ -117,7 +118,7 @@ class KunenaForumMessageAttachment extends JObject {
 					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' );
 				}
 				if ($this->_disabled) {
-					$this->_thumblink = '<img src="' . JURI::root() .'media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+					$this->_thumblink = '<img src="' . JUri::root() .'media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
 					$this->_imagelink = null;
 					$this->size = 0;
 				}

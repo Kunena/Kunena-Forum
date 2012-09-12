@@ -82,7 +82,7 @@ abstract class KunenaRoute {
 
 	public static function _($uri = null, $xhtml = true, $ssl=0) {
 		if (self::$adminApp) {
-			if ($uri instanceof JURI) $uri = $uri->toString ();
+			if ($uri instanceof JUri) $uri = $uri->toString ();
 			if (substr($uri, 0, 14) == 'administrator/') {
 				// Use default routing in administration
 				return JRoute::_(substr($uri, 14), $xhtml, $ssl);
@@ -92,7 +92,7 @@ abstract class KunenaRoute {
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
-		$key = (self::$home ? self::$home->id : 0) .'-'.(int)$xhtml.(int)$ssl. ($uri instanceof JURI ? $uri->toString () : (string) $uri);
+		$key = (self::$home ? self::$home->id : 0) .'-'.(int)$xhtml.(int)$ssl. ($uri instanceof JUri ? $uri->toString () : (string) $uri);
 		if (!$uri || (is_string($uri) && $uri[0]=='&')) {
 			$key = 'a'.(self::$active ? self::$active->id : '') . '-' . $key;
 		}
@@ -295,7 +295,7 @@ abstract class KunenaRoute {
 					}
 					$get[$key] = $value;
 				}
-				$uri = $current[$uri] = JURI::getInstance('index.php?'.http_build_query($get).$uri);
+				$uri = $current[$uri] = JUri::getInstance('index.php?'.http_build_query($get).$uri);
 				self::setItemID($uri);
 				$uri->delVar ( 'defaultmenu' );
 				$uri->delVar ( 'language' );
@@ -308,11 +308,11 @@ abstract class KunenaRoute {
 				return false;
 			}
 			$item = self::$menu[intval($uri)];
-			$uri = JURI::getInstance ( "{$item->link}&Itemid={$item->id}" );
-		} elseif ($uri instanceof JURI) {
+			$uri = JUri::getInstance ( "{$item->link}&Itemid={$item->id}" );
+		} elseif ($uri instanceof JUri) {
 			// Nothing to do
 		} else {
-			$uri = JURI::getInstance ( (string)$uri );
+			$uri = JUri::getInstance ( (string)$uri );
 		}
 		$option = $uri->getVar('option');
 		$Itemid = $uri->getVar('Itemid');

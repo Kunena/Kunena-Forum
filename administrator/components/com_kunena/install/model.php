@@ -1237,7 +1237,7 @@ class KunenaModelInstall extends JModelLegacy {
 			$version->description = $this->getActionText($version, 'desc');
 			$version->hint = $this->getActionText($version, 'hint');
 			$version->warning = $this->getActionText($version, 'warn');
-			$version->link = JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task='.strtolower($version->action).'&'.JSession::getFormToken() .'=1';
+			$version->link = JUri::base(true).'/index.php?option=com_kunena&view=install&task='.strtolower($version->action).'&'.JSession::getFormToken() .'=1';
 		}
 		if ($migrate) {
 			$kunena->warning = $this->getActionText($fireboard, 'warn', 'upgrade');

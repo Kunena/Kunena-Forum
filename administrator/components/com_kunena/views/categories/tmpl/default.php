@@ -11,8 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->state->get('list.direction') == 'asc');
 ?>
 <div id="kadmin">
@@ -73,8 +73,8 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 			$k = 0;
 			$i = 0;
 			$n = count($this->categories);
-			$img_yes = '<img src="'.JURI::root().'administrator/components/com_kunena/images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
-			$img_no = '<img src="'.JURI::root().'administrator/components/com_kunena/images/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
+			$img_yes = '<img src="'.JUri::base(true).'/components/com_kunena/images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
+			$img_no = '<img src="'.JUri::base(true).'/components/com_kunena/images/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
 			foreach($this->categories as $category) {
 		?>
 			<tr <?php echo 'class = "row' . $k . '"';?>>

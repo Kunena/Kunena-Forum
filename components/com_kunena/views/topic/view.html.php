@@ -822,7 +822,7 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function redirectBack() {
-		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
+		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
 		while (@ob_end_clean());
 		$this->app->redirect ( $httpReferer );
 	}

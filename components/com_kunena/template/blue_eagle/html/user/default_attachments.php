@@ -56,7 +56,7 @@ JHtml::_('behavior.multiselect');
 					<tr class="k<?php echo $usrl_class ;?>">
 						<td class="kcol-first"><?php echo $y; ?></td>
 						<td class="kcol-mid"><?php if ($item->authorise('delete')) echo JHTML::_('grid.id', $i, intval($item->id)) ?></td>
-						<td align="center" class="kcol-mid"><img src="<?php echo $item->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
+						<td align="center" class="kcol-mid"><img src="<?php echo $item->filetype != '' ? JUri::root(true).'/media/kunena/icons/image.png' : JUri::root(true).'/media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
 
 						<td class="kcol-mid"><?php echo $item->filename; ?></td>
 

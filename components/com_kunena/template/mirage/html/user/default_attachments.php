@@ -52,7 +52,7 @@ JHtml::_('behavior.multiselect');
 											</td>
 											<td class="ktopic-icon"><?php echo JHTML::_('grid.id', $i, intval($file->id)) ?></td>
 											<td class="kpost-topic">
-												<img src="<?php echo $file->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" />
+												<img src="<?php echo $file->filetype != '' ? JUri::root(true).'/media/kunena/icons/image.png' : JUri::root(true).'/media/kunena/icons/file.png'; ?>" alt="" title="" />
 											</td>
 											<td class="kpost-topic">
 											 <?php echo $file->filename; ?>

@@ -430,7 +430,7 @@ class KunenaViewUser extends KunenaView {
 			$this->gallery = '';
 		}
 		$path = JPATH_ROOT . '/media/kunena/avatars/gallery';
-		$this->galleryurl = JURI::root(true) . '/media/kunena/avatars/gallery';
+		$this->galleryurl = JUri::root(true) . '/media/kunena/avatars/gallery';
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 

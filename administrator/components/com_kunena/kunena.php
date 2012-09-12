@@ -39,14 +39,14 @@ if ($view == 'install') {
 
 } elseif (!class_exists('KunenaForum') || !KunenaForum::isCompatible('2.0') || !KunenaForum::installed()) {
 	// Prapare installation if Kunena hasn't been fully installed.
-	JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JSession::getFormToken().'=1');
+	JFactory::getApplication ()->redirect(JUri::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JSession::getFormToken().'=1');
 
 } else {
 	// Check if latest version of Kunena has been installed. If not, prepare installation.
 	require_once(KPATH_ADMIN.'/install/version.php');
 	$kversion = new KunenaVersion();
 	if (!$kversion->checkVersion()) {
-		JFactory::getApplication ()->redirect(JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JSession::getFormToken().'=1');
+		JFactory::getApplication ()->redirect(JUri::root(true).'/administrator/index.php?option=com_kunena&view=install&task=prepare&'.JSession::getFormToken().'=1');
 	}
 }
 

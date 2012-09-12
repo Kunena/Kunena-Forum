@@ -18,7 +18,7 @@ class KunenaTemplateMirage extends KunenaTemplate {
 
 		// Template requires Mootools 1.2+ framework
 		$this->loadMootools();
-		JHTML::_('behavior.tooltip');
+		JHtml::_('behavior.tooltip');
 
 		// New Kunena JS for default template
 		$this->addScript ( 'js/default.js' );

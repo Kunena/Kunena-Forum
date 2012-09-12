@@ -42,7 +42,7 @@ $paneOptions = array(
 			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<?php echo $this->iconsetlist; ?>
 			<table class="adminlist table table-striped">
@@ -54,7 +54,7 @@ $paneOptions = array(
 					<th width="20%" align="left"><?php echo JText::_('COM_KUNENA_TOPICICON_ID'); ?></th>
 					<th width="50%" align="left" ><?php echo JText::_('COM_KUNENA_TOPICICON_IMAGE'); ?></th>
 					<th width="10%" align="center" ><?php echo JText::_('COM_KUNENA_TOPICICON_PUBLISHED'); ?></th>
-					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_ORDERING'); ?><?php echo JHTML::_('grid.order',$this->topicicons); ?></th>
+					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_ORDERING'); ?><?php echo JHtml::_('grid.order',$this->topicicons); ?></th>
 					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_DEFAULT'); ?></th>
 				</tr>
 			</thead>
@@ -85,7 +85,7 @@ $paneOptions = array(
 					<td align="center"><?php
 						echo ($id + $this->navigation->limitstart + 1);
 						?></td>
-					<td><?php echo JHTML::_('grid.id',  $y, $y) ?></td>
+					<td><?php echo JHtml::_('grid.id',  $y, $y) ?></td>
 					<td align="center">
 					<a href="#edit"
 						onclick="return listItemTask('cb<?php
@@ -142,7 +142,7 @@ $paneOptions = array(
 		<input type="hidden" name="view" value="topicicons" />
 		<input type="hidden" name="task" value="topiciconupload" />
 		<input type="hidden" name="boxchecked" value="0" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<div style="padding:10px;">
 			<input type="file" id="file-upload" name="Filedata" />

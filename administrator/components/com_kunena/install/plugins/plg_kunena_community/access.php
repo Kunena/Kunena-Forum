@@ -64,12 +64,12 @@ class KunenaAccessCommunity {
 			$selected = 'jomsocial' == $category->accesstype && isset($this->groups[$category->access]) ? $category->access : null;
 			foreach ($this->tree as $item) {
 				if (!$selected && is_numeric($item->id)) $selected = $item->id;
-				$options[] = JHTML::_ ( 'select.option', $item->id, str_repeat('- ', $item->level).$item->name, 'value', 'text', !is_numeric($item->id));
+				$options[] = JHtml::_ ( 'select.option', $item->id, str_repeat('- ', $item->level).$item->name, 'value', 'text', !is_numeric($item->id));
 			}
 			$html ['jomsocial']['access'] = array(
 				'title' => JText::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_TITLE'),
 				'desc' => JText::_('PLG_KUNENA_COMMUNITY_ACCESS_GROUP_DESC'),
-				'input' => JHTML::_ ( 'select.genericlist', $options, 'access-jomsocial', 'class="inputbox" size="10"', 'value', 'text', $selected )
+				'input' => JHtml::_ ( 'select.genericlist', $options, 'access-jomsocial', 'class="inputbox" size="10"', 'value', 'text', $selected )
 			);
 		}
 		return $html;

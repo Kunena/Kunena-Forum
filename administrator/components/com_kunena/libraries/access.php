@@ -158,7 +158,7 @@ window.addEvent('domready', function(){
 			foreach ($list as $access) {
 				if (method_exists($access, 'getAccessOptions')) {
 					$string = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.preg_replace('/[^\w\d]/', '_', $type));
-					$accesstypes [$string] = JHTML::_ ( 'select.option', $type, $string );
+					$accesstypes [$string] = JHtml::_ ( 'select.option', $type, $string );
 					$exists |= $type == $category->accesstype;
 					break;
 				}
@@ -168,9 +168,9 @@ window.addEvent('domready', function(){
 		// User has disabled access control
 		if (!$exists) {
 			$string = JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $category->accesstype);
-			$accesstypes [$string] = JHTML::_ ( 'select.option', $category->accesstype, $string );
+			$accesstypes [$string] = JHtml::_ ( 'select.option', $category->accesstype, $string );
 		}
-		return JHTML::_ ( 'select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="'.count($accesstypes).'" onchange="javascript:kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype );
+		return JHtml::_ ( 'select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="'.count($accesstypes).'" onchange="javascript:kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype );
 	}
 
 

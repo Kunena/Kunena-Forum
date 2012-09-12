@@ -306,9 +306,9 @@ class KunenaViewUser extends KunenaView {
 	function displayTab() {
 		$this->email = null;
 		if ( $this->config->showemail && ( !$this->profile->hideEmail || $this->me->isModerator() ) ) {
-			$this->email = JHTML::_('email.cloak', $this->user->email);
+			$this->email = JHtml::_('email.cloak', $this->user->email);
 		} else if ( $this->me->isAdmin() ) {
-			$this->email = JHTML::_('email.cloak', $this->user->email);
+			$this->email = JHtml::_('email.cloak', $this->user->email);
 		}
 
 		switch ($this->do) {
@@ -413,9 +413,9 @@ class KunenaViewUser extends KunenaView {
 		$this->birthdate["month"] = $bd[1];
 		$this->birthdate["day"] = $bd[2];
 
-		$this->genders[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
-		$this->genders[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
-		$this->genders[] = JHTML::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+		$this->genders[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+		$this->genders[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+		$this->genders[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
 		$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
 			'friendfeed', 'digg', 'yim', 'aim', 'gtalk', 'icq', 'msn', 'blogspot', 'flickr', 'bebo');
@@ -443,28 +443,28 @@ class KunenaViewUser extends KunenaView {
 		$item->name = 'messageordering';
 		$item->label = JText::_('COM_KUNENA_USER_ORDER');
 		$options = array();
-		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
-		$options[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_USER_ORDER_ASC'));
-		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_DESC'));
-		$item->field = JHTML::_('select.genericlist', $options, 'messageordering', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->ordering), 'kmessageordering');
+		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+		$options[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_USER_ORDER_ASC'));
+		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_DESC'));
+		$item->field = JHtml::_('select.genericlist', $options, 'messageordering', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->ordering), 'kmessageordering');
 		$this->settings[] = $item;
 
 		$item = new StdClass();
 		$item->name = 'hidemail';
 		$item->label = JText::_('COM_KUNENA_USER_HIDEEMAIL');
 		$options = array();
-		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-		$item->field = JHTML::_('select.genericlist', $options, 'hidemail', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->hideEmail), 'khidemail');
+		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$item->field = JHtml::_('select.genericlist', $options, 'hidemail', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->hideEmail), 'khidemail');
 		$this->settings[] = $item;
 
 		$item = new StdClass();
 		$item->name = 'showonline';
 		$item->label = JText::_('COM_KUNENA_USER_SHOWONLINE');
 		$options = array();
-		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-		$item->field = JHTML::_('select.genericlist', $options, 'showonline', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->showOnline), 'kshowonline');
+		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$item->field = JHtml::_('select.genericlist', $options, 'showonline', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->showOnline), 'kshowonline');
 		$this->settings[] = $item;
 
 		$this->row(true);
@@ -478,7 +478,7 @@ class KunenaViewUser extends KunenaView {
 	function displayUserRow($user) {
 		$this->user = KunenaFactory::getUser($user->id);
 		if ($this->config->userlist_email && (!$this->user->hideEmail || $this->me->isModerator())) {
-			$this->email = JHTML::_('email.cloak', $this->user->email);
+			$this->email = JHtml::_('email.cloak', $this->user->email);
 		}
 		$this->rank_image = $this->user->getRank (0, 'image');
 		$this->rank_title = $this->user->getRank (0, 'title');
@@ -486,7 +486,7 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function getLastvisitdate($date) {
-		$lastvisit = JHTML::_('date', $date, 'Y-m-d\TH:i:sP ');
+		$lastvisit = JHtml::_('date', $date, 'Y-m-d\TH:i:sP ');
 		return $lastvisit;
 	}
 

@@ -29,7 +29,7 @@ class CKunenaLink {
 	static function GetSefHrefLink($link, $name, $title = '', $rel = 'nofollow', $class = '', $anker = '', $attr = '') {
 		$uri = $link instanceof JUri ? $link : JUri::getInstance($link);
 		if ($anker) $uri->setFragment($anker);
-		return JHTML::_('kunenaforum.link', $uri, $name, $title, $class, $rel, $attr);
+		return JHtml::_('kunenaforum.link', $uri, $name, $title, $class, $rel, $attr);
 	}
 
 	//

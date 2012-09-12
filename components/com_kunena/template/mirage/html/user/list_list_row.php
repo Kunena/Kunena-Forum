@@ -40,7 +40,7 @@
 	<?php if ($this->config->userddst_email) : ?>
 		<dd class="user-email item-column">
 			<div class="innerspacer-column">
-				<?php echo $user->email ? JHTML::_('email.cloak', $user->email) : '' ?>
+				<?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?>
 			</div>
 		</dd>
 	<?php endif; ?>

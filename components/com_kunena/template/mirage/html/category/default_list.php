@@ -15,7 +15,7 @@ $this->topic_rowclass = array ("even", "odd");
 ?>
 <div class="kmodule category-default_list">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics') ?>" method="post">
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 	<div class="kbox-wrapper kbox-full">
 		<div class="category-default_list-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">

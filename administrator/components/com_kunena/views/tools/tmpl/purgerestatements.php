@@ -20,7 +20,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 	<div class="kadmin-functitle icon-purgerestatements"><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></div>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="task" value="purgeReStatements" />
-				<?php echo JHTML::_( 'form.token' ); ?>
+				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></legend>

@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 					<input type="hidden" name="catid" value="<?php echo intval($this->catid); ?>"/>
 					<input type="hidden" name="id" value="<?php echo intval($this->id); ?>"/>
 					<input type="hidden" name="mesid" value="<?php echo intval($this->mesid); ?>"/>
-					<?php echo JHTML::_( 'form.token' ); ?>
+					<?php echo JHtml::_( 'form.token' ); ?>
 
 					<label for="kreport-reason"><?php echo JText::_('COM_KUNENA_REPORT_REASON') ?>:</label>
 					<input type="text" name="reason" class="inputbox" size="30" id="kreport-reason"/>

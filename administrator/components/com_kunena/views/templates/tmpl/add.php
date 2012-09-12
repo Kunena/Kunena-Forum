@@ -22,7 +22,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			<input type="hidden" name="view" value="templates" />
 			<input type="hidden" name="task" value="install" />
 			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<table class="adminform">
 				<tr>

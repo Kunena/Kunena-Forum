@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
-JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
+JHtml::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
 
 class JFormFieldKunenaCategoryList extends JFormField {
 	protected $type = 'KunenaCategoryList';
@@ -47,7 +47,7 @@ class JFormFieldKunenaCategoryList extends JFormField {
 		// Get the field options.
 		$options = $this->getOptions();
 
-		return JHTML::_('kunenaforum.categorylist', $this->name, 0, $options, $this->element, $attribs, 'value', 'text', $this->value);
+		return JHtml::_('kunenaforum.categorylist', $this->name, 0, $options, $this->element, $attribs, 'value', 'text', $this->value);
 	}
 
 	/**

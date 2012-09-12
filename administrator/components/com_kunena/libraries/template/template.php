@@ -187,7 +187,7 @@ HTML;
 	}
 
 	public function loadMootools() {
-		JHTML::_ ( 'behavior.framework', true );
+		JHtml::_ ( 'behavior.framework', true );
 
 		if (JDEBUG || KunenaFactory::getConfig()->debug) {
 			// Debugging Mootools issues

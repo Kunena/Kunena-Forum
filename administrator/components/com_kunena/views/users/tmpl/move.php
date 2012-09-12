@@ -28,7 +28,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 							<input type="hidden" name="task" value="" />
 							<input type="hidden" name="boxchecked" value="1" />
 							<input type="hidden" name="uid[]" value="<?php echo $this->userid; ?>" />
-							<?php echo JHTML::_( 'form.token' ); ?>
+							<?php echo JHtml::_( 'form.token' ); ?>
 
 							<?php
 								echo $this->catslist;

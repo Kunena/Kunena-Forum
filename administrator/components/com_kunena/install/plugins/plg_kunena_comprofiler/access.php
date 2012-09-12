@@ -68,17 +68,17 @@ class KunenaAccessComprofiler {
 			$selected = 'communitybuilder' == $category->accesstype && isset($this->groups[$category->access]) ? $category->access : null;
 			foreach ($this->tree as $item) {
 				if (!$selected && is_numeric($item->id)) $selected = $item->id;
-				$options[] = JHTML::_ ( 'select.option', $item->id, str_repeat('- ', $item->level).$item->name, 'value', 'text', !is_numeric($item->id));
+				$options[] = JHtml::_ ( 'select.option', $item->id, str_repeat('- ', $item->level).$item->name, 'value', 'text', !is_numeric($item->id));
 			}
 			if (!$options) {
 				$selected = 0;
-				$options[] = JHTML::_ ( 'select.option', 0, JText::_('PLG_KUNENA_COMPROFILER_NO_GROUPS_FOUND'), 'value', 'text');
+				$options[] = JHtml::_ ( 'select.option', 0, JText::_('PLG_KUNENA_COMPROFILER_NO_GROUPS_FOUND'), 'value', 'text');
 			}
 
 			$html ['communitybuilder']['access'] = array(
 				'title' => JText::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_TITLE'),
 				'desc' => JText::_('PLG_KUNENA_COMPROFILER_ACCESS_GROUP_DESC'),
-				'input' => JHTML::_ ( 'select.genericlist', $options, 'access-communitybuilder', 'class="inputbox" size="10"', 'value', 'text', $selected )
+				'input' => JHtml::_ ( 'select.genericlist', $options, 'access-communitybuilder', 'class="inputbox" size="10"', 'value', 'text', $selected )
 			);
 		}
 		return $html;

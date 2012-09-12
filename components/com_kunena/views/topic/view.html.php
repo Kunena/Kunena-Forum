@@ -202,12 +202,12 @@ class KunenaViewTopic extends KunenaView {
 		$options = array();
 		$selected = $this->topic->category_id;
 		if ( $this->config->pickup_category ) {
-			$options[] = JHTML::_ ( 'select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text' );
+			$options[] = JHtml::_ ( 'select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text' );
 			$selected = 0;
 		}
 		if ($saved) $selected = $saved['catid'];
 
-		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', $this->catid, $options, $cat_params, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
+		$this->selectcatlist = JHtml::_('kunenaforum.categorylist', 'catid', $this->catid, $options, $cat_params, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->_prepareDocument('create');
 
@@ -408,11 +408,11 @@ class KunenaViewTopic extends KunenaView {
 
 		$options =array ();
 		if (!$this->mesid) {
-			$options [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_MOVE_TOPIC' ) );
+			$options [] = JHtml::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_MOVE_TOPIC' ) );
 		} else {
-			$options [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_CREATE_TOPIC' ) );
+			$options [] = JHtml::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_CREATE_TOPIC' ) );
 		}
-		$options [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
+		$options [] = JHtml::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
 
 		$db = JFactory::getDBO();
 		$params = array(
@@ -420,13 +420,13 @@ class KunenaViewTopic extends KunenaView {
 			'where'=>" AND tt.id != {$db->Quote($this->topic->id)} ");
 		list ($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->catid, 0, 30, $params);
 		foreach ( $topics as $cur ) {
-			$options [] = JHTML::_ ( 'select.option', $cur->id, $this->escape ( $cur->subject ) );
+			$options [] = JHtml::_ ( 'select.option', $cur->id, $this->escape ( $cur->subject ) );
 		}
-		$this->topiclist = JHTML::_ ( 'select.genericlist', $options, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_topics' );
+		$this->topiclist = JHtml::_ ( 'select.genericlist', $options, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_topics' );
 
 		$options = array ();
 		$cat_params = array ('sections'=>0, 'catid'=>0);
-		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories');
+		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories');
 		if (isset($this->message)) $this->user = KunenaFactory::getUser($this->message->userid);
 
 		if ($this->mesid) {

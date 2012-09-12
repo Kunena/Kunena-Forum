@@ -27,7 +27,7 @@ defined ( '_JEXEC' ) or die ();
 							<input type="hidden" name="task" value="vote" />
 							<input type="hidden" name="catid" value="<?php echo $this->topic->category_id ?>" />
 							<input type="hidden" name="id" value="<?php echo $this->topic->id ?>" />
-							<?php echo JHTML::_( 'form.token' ); ?>
+							<?php echo JHtml::_( 'form.token' ); ?>
 
 							<fieldset>
 								<legend><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>

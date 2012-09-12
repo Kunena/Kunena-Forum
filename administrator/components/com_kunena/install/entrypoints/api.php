@@ -44,9 +44,9 @@ spl_autoload_register('KunenaAutoload');
 // Give access to all Kunena tables
 jimport('joomla.database.table');
 JTable::addIncludePath(KPATH_ADMIN.'/libraries/tables');
-// Give access to all JHTML functions
+// Give access to all JHtml functions
 jimport('joomla.html.html');
-JHTML::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
+JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
 
 /**
  * Intelligent library importer.

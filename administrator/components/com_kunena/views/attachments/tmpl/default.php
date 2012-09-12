@@ -25,7 +25,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<table class="kadmin-sort">
 			<tr>
@@ -42,10 +42,10 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					<tr>
 						<th align="center" width="5">#</th>
 						<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
-						<th class="title"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_FILENAME', 'filename', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-						<th class="center"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-						<th class="center"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FILETYPE', 'filetype', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-						<th class="center"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_FILESIZE', 'size', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+						<th class="title"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_FILENAME', 'filename', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+						<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+						<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FILETYPE', 'filetype', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+						<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_FILESIZE', 'size', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
 						<th class="center"><?php echo JText::_('COM_KUNENA_A_IMGB_DIMS'); ?>	</th>
 						<th class="center"><?php echo JText::_('COM_KUNENA_ATTACHMENTS_USERNAME'); ?></th>
 						<th class="center"><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></th>
@@ -74,7 +74,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 		?>
 			<tr <?php echo 'class = "row' . $k . '"';?>>
 				<td class="right"><?php echo $i + $this->navigation->limitstart + 1; ?></td>
-				<td><?php echo JHTML::_('grid.id', $i, intval($attachment->id)) ?></td>
+				<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
 				<td class="left" width="70%"><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->filename, 10, 15) ?></td>
 				<td class="center"><?php echo intval($attachment->id); ?></td>
 				<td class="center"><?php echo $attachment->filetype; ?></td>

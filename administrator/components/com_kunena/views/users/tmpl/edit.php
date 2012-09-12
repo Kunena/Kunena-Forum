@@ -48,7 +48,7 @@ $paneOptions = array(
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="1" />
 		<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<?php
 			echo JHtml::_('tabs.start', 'pane', $paneOptions);

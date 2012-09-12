@@ -26,7 +26,7 @@ JHtml::_('behavior.multiselect');
 						<input type="hidden" name="view" value="user" />
 						<input type="hidden" name="task" value="delfile" />
 						<input type="hidden" name="boxchecked" value="0" />
-						<?php echo JHTML::_( 'form.token' ); ?>
+						<?php echo JHtml::_( 'form.token' ); ?>
 
 						<ul class="list-unstyled">
 						<?php
@@ -50,7 +50,7 @@ JHtml::_('behavior.multiselect');
 											<td class="kposts-topic">
 												<h3><?php echo $y; ?></h3>
 											</td>
-											<td class="ktopic-icon"><?php echo JHTML::_('grid.id', $i, intval($file->id)) ?></td>
+											<td class="ktopic-icon"><?php echo JHtml::_('grid.id', $i, intval($file->id)) ?></td>
 											<td class="kpost-topic">
 												<img src="<?php echo $file->filetype != '' ? JUri::root(true).'/media/kunena/icons/image.png' : JUri::root(true).'/media/kunena/icons/file.png'; ?>" alt="" title="" />
 											</td>

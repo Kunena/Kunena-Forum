@@ -35,7 +35,7 @@ $paneOptions = array(
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="config" />
 			<input type="hidden" name="task" value="" />
-			<?php echo JHTML::_( 'form.token' ) ?>
+			<?php echo JHtml::_( 'form.token' ) ?>
 
 			<?php
 				echo JHtml::_('tabs.start', 'pane', $paneOptions);
@@ -441,7 +441,7 @@ $paneOptions = array(
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT') ?></td>
-						<td align="left" valign="top"><?php echo JHTML::_('select.integerlist',0, 100, 5, 'cfg_email_recipient_count', null, $this->escape($this->config->email_recipient_count)) ?></td>
+						<td align="left" valign="top"><?php echo JHtml::_('select.integerlist',0, 100, 5, 'cfg_email_recipient_count', null, $this->escape($this->config->email_recipient_count)) ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_EMAIL_RECIPIENT_COUNT_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">

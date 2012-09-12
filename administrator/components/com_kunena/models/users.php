@@ -147,11 +147,11 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$modCatList = array_keys(KunenaAccess::getInstance()->getModeratorStatus($user));
 		if (empty($modCatList)) $modCatList[] = 0;
 
-		$categoryList = array(JHTML::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR')));
+		$categoryList = array(JHtml::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR')));
 		$params = array (
 			'sections' => false,
 			'action' => 'read');
-		$modCats = JHTML::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
+		$modCats = JHtml::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
 
 		return $modCats;
 	}
@@ -164,12 +164,12 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$specialRanks = $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
-		$yesnoRank [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_RANK_NO_ASSIGNED') );
+		$yesnoRank [] = JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_RANK_NO_ASSIGNED') );
 		foreach ( $specialRanks as $ranks ) {
-			$yesnoRank [] = JHTML::_ ( 'select.option', $ranks->rank_id, $ranks->rank_title );
+			$yesnoRank [] = JHtml::_ ( 'select.option', $ranks->rank_id, $ranks->rank_title );
 		}
 		//build special ranks select list
-		$selectRank = JHTML::_ ( 'select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $user->rank );
+		$selectRank = JHtml::_ ( 'select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $user->rank );
 		return $selectRank;
 	}
 
@@ -183,12 +183,12 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$category = array();
 		foreach ($catsList as $cat) {
 			if ($cat->parent_id) {
-				$category[] = JHTML::_('select.option', $cat->id, '...'.$cat->name);
+				$category[] = JHtml::_('select.option', $cat->id, '...'.$cat->name);
 			} else {
-				$category[] = JHTML::_('select.option', $cat->id, $cat->name);
+				$category[] = JHtml::_('select.option', $cat->id, $cat->name);
 			}
 		}
-		$catslist = JHTML::_('select.genericlist', $category, 'cid[]', 'class="inputbox" multiple="multiple" size="5"', 'value', 'text');
+		$catslist = JHtml::_('select.genericlist', $category, 'cid[]', 'class="inputbox" multiple="multiple" size="5"', 'value', 'text');
 		return $catslist;
 	}
 

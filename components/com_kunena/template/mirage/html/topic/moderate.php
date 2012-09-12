@@ -10,8 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.formvalidation');
-JHTML::_('behavior.tooltip');
+JHtml::_('behavior.formvalidation');
+JHtml::_('behavior.tooltip');
 ?>
 <div class="kmodule topic-moderate">
 	<div class="kbox-wrapper kbox-full">
@@ -32,7 +32,7 @@ JHTML::_('behavior.tooltip');
 						<?php if (isset($this->message)) : ?>
 						<input type="hidden" name="mesid" value="<?php echo $this->message->id; ?>" />
 						<?php endif; ?>
-						<?php echo JHTML::_( 'form.token' ); ?>
+						<?php echo JHtml::_( 'form.token' ); ?>
 
 						<ul class="kmod-postlist">
 							<li>

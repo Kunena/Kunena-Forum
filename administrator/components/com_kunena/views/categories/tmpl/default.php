@@ -25,7 +25,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<table class="kadmin-sort">
 				<tr>
@@ -42,12 +42,12 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 					<tr>
 						<th align="center" width="5">#</th>
 						<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->categories ); ?>);" /></th>
-						<th class="title"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORY', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-						<th><small><?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATID', 'catid', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></small></th>
+						<th class="title"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+						<th><small><?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATID', 'catid', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></small></th>
 						<th width="100" class="center nowrap">
 						<small>
-							<?php echo JHTML::_('grid.sort', 'COM_KUNENA_REORDER', 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
-							<?php echo JHTML::_('grid.order',  $this->categories, 'filesave.png', 'saveorder' ); ?></small>
+							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REORDER', 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+							<?php echo JHtml::_('grid.order',  $this->categories, 'filesave.png', 'saveorder' ); ?></small>
 						</th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_REVIEW'); ?></small></th>
@@ -79,7 +79,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 		?>
 			<tr <?php echo 'class = "row' . $k . '"';?>>
 				<td class="right"><?php echo $i + $this->navigation->limitstart + 1; ?></td>
-				<td><?php echo JHTML::_('grid.id', $i, intval($category->id)) ?></td>
+				<td><?php echo JHtml::_('grid.id', $i, intval($category->id)) ?></td>
 				<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat  ( '...', count($category->indent)-1 ).' '.$category->name; ?> </a></td>
 				<td class="center"><?php echo intval($category->id); ?></td>
 
@@ -131,7 +131,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 
 				<?php endif; ?>
 
-				<td class="center"><?php echo JHTML::_('grid.published', $category, $i) ?></td>
+				<td class="center"><?php echo JHtml::_('grid.published', $category, $i) ?></td>
 				<td width="" align="center"><?php echo $this->escape ( $category->accessname ); ?></td>
 				<td width="15%" align="center"><?php echo $this->escape ( $category->editor ); ?></td>
 			</tr>

@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.tooltip');
+JHtml::_('behavior.tooltip');
 ?>
 <div class="kmodule user-default">
 	<div class="kbox-wrapper kbox-full">

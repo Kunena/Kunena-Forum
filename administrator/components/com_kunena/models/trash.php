@@ -125,10 +125,10 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 */
 	public function getViewOptions() {
 		$view_options = array();
-		$view_options[] = JHTML::_ ( 'select.option', 'none',JText::_('COM_KUNENA_SELECT_VIEW'));
-		$view_options[] = JHTML::_ ( 'select.option', '0',JText::_( 'COM_KUNENA_TRASH_MESSAGES'));
-		$view_options[] = JHTML::_ ( 'select.option', '1',JText::_( 'COM_KUNENA_TRASH_TOPICS' ));
-		$this->view_options_list = JHTML::_ ( 'select.genericlist', $view_options, 'view_selected', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $this->state->get('list.view_selected') );
+		$view_options[] = JHtml::_ ( 'select.option', 'none',JText::_('COM_KUNENA_SELECT_VIEW'));
+		$view_options[] = JHtml::_ ( 'select.option', '0',JText::_( 'COM_KUNENA_TRASH_MESSAGES'));
+		$view_options[] = JHtml::_ ( 'select.option', '1',JText::_( 'COM_KUNENA_TRASH_TOPICS' ));
+		$this->view_options_list = JHtml::_ ( 'select.genericlist', $view_options, 'view_selected', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $this->state->get('list.view_selected') );
 
 		return $this->view_options_list;
 	}

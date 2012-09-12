@@ -51,7 +51,7 @@ $paneOptions = array(
 		<input type="hidden" name="view" value="category" />
 		<input type="hidden" name="task" value="save" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<div class="kbuttons">
 			<button onclick="javascript: submitbutton('save')"><?php echo JText::_( 'Save' ); ?></button>

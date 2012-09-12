@@ -40,7 +40,7 @@ $paneOptions = array(
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<table class="adminlist table table-striped">
 			<thead>
@@ -123,7 +123,7 @@ $paneOptions = array(
 		<input type="hidden" name="view" value="ranks" />
 		<input type="hidden" name="task" value="rankupload" />
 		<input type="hidden" name="boxchecked" value="0" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<div style="padding:10px;">
 			<input type="file" id="file-upload" name="Filedata" />

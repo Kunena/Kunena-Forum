@@ -78,9 +78,9 @@ class KunenaViewCommon extends KunenaView {
 		if ($this->offline) return;
 
 		$options = array ();
-		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
+		$options [] = JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
 		$cat_params = array ('sections'=>1, 'catid'=>0);
-		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
+		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
@@ -314,7 +314,7 @@ class KunenaViewCommon extends KunenaView {
 			case 'RETURN_URL':
 				return base64_encode ( JFactory::getURI ()->toString ( array ('path', 'query', 'fragment' ) ) );
 			case 'TOKEN':
-				return JHTML::_ ( 'form.token' );
+				return JHtml::_ ( 'form.token' );
 			case 'MODULE':
 				return $this->getModulePosition('kunena_profilebox');
 		}

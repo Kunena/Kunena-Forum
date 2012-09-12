@@ -22,7 +22,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			<input type="hidden" name="task" value="purge" />
 			<input type="hidden" name="boxchecked" value="1" />
 			<input type="hidden" name="md5" value="<?php echo $this->md5Calculated ?>" />
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<table class="adminheading"></table>
 			<table class="adminlist table table-striped">

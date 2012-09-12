@@ -73,7 +73,7 @@ class KunenaBbcode extends BBCode {
 		if (preg_match('#^mailto:#ui', $url)) {
 			// Cloak email addresses
 			$email = substr($text, 7);
-			return JHTML::_('email.cloak', $email, $this->IsValidEmail($email));
+			return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
 		}
 
 		// Remove http(s):// from the text
@@ -192,7 +192,7 @@ class KunenaBbcode extends BBCode {
 				$params = $this->parse_url($url);
 				if (!$invalid && substr($url, 0, 7) == 'mailto:') {
 					$email = JString::substr($url, 7);
-					$output[$index] = JHTML::_('email.cloak', $email, $this->IsValidEmail($email));
+					$output[$index] = JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
 
 				} elseif ($invalid || empty($params['host']) || !empty($params['pass'])) {
 					$output[$index-1] .= $token;
@@ -838,7 +838,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		$email = is_string ( $default ) ? $default : $content;
 		$text = is_string ( $default ) ? $content : $default;
-		return JHTML::_('email.cloak', htmlspecialchars ( $email ), $bbcode->IsValidEmail ( $email ), $text, $bbcode->IsValidEmail ( $text ));
+		return JHtml::_('email.cloak', htmlspecialchars ( $email ), $bbcode->IsValidEmail ( $email ), $text, $bbcode->IsValidEmail ( $text ));
 	}
 
 	// Format a [url] tag by producing an <a>...</a> element.

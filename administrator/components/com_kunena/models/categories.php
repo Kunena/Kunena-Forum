@@ -170,22 +170,22 @@ class KunenaAdminModelCategories extends KunenaModel {
 		if (!$category) return false;
 
 		$catList = array ();
-		$catList [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_TOPLEVEL' ) );
+		$catList [] = JHtml::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_TOPLEVEL' ) );
 
 		// make a standard yes/no list
 		$published = array ();
-		$published [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_PUBLISHED' ) );
-		$published [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_UNPUBLISHED' ) );
+		$published [] = JHtml::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_PUBLISHED' ) );
+		$published [] = JHtml::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_UNPUBLISHED' ) );
 
 		// make a standard yes/no list
 		$yesno = array ();
-		$yesno [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_NO' ) );
-		$yesno [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_YES' ) );
+		$yesno [] = JHtml::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_NO' ) );
+		$yesno [] = JHtml::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_YES' ) );
 
 		// Anonymous posts default
 		$post_anonymous = array ();
-		$post_anonymous [] = JHTML::_ ( 'select.option', '0', JText::_ ( 'COM_KUNENA_CATEGORY_ANONYMOUS_X_REG' ) );
-		$post_anonymous [] = JHTML::_ ( 'select.option', '1', JText::_ ( 'COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO' ) );
+		$post_anonymous [] = JHtml::_ ( 'select.option', '0', JText::_ ( 'COM_KUNENA_CATEGORY_ANONYMOUS_X_REG' ) );
+		$post_anonymous [] = JHtml::_ ( 'select.option', '1', JText::_ ( 'COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO' ) );
 
 		$cat_params = array ();
 		$cat_params['ordering'] = 'ordering';
@@ -199,30 +199,30 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$channels_params['catid'] = $category->id;
 		$channels_params['action'] = 'admin';
 		$channels_options = array();
-		$channels_options [] = JHTML::_ ( 'select.option', 'THIS', JText::_ ( 'COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS' ) );
-		$channels_options [] = JHTML::_ ( 'select.option', 'CHILDREN', JText::_ ( 'COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN' ) );
+		$channels_options [] = JHtml::_ ( 'select.option', 'THIS', JText::_ ( 'COM_KUNENA_CATEGORY_CHANNELS_OPTION_THIS' ) );
+		$channels_options [] = JHtml::_ ( 'select.option', 'CHILDREN', JText::_ ( 'COM_KUNENA_CATEGORY_CHANNELS_OPTION_CHILDREN' ) );
 		if (empty($category->channels)) $category->channels = 'THIS';
 
 		$topic_ordering_options = array();
-		$topic_ordering_options[] = JHTML::_ ( 'select.option', 'lastpost', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST' ) );
-		$topic_ordering_options[] = JHTML::_ ( 'select.option', 'creation', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION' ) );
-		$topic_ordering_options[] = JHTML::_ ( 'select.option', 'alpha', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA' ) );
+		$topic_ordering_options[] = JHtml::_ ( 'select.option', 'lastpost', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_LASTPOST' ) );
+		$topic_ordering_options[] = JHtml::_ ( 'select.option', 'creation', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_CREATION' ) );
+		$topic_ordering_options[] = JHtml::_ ( 'select.option', 'alpha', JText::_ ( 'COM_KUNENA_CATEGORY_TOPIC_ORDERING_OPTION_ALPHA' ) );
 
 		$aliases = array_keys($category->getAliases());
 
 		$lists = array ();
 		$lists ['accesstypes'] = KunenaAccess::getInstance()->getAccessTypesList($category);
 		$lists ['accesslists'] = KunenaAccess::getInstance()->getAccessOptions($category);
-		$lists ['categories'] = JHTML::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
-		$lists ['channels'] = JHTML::_('kunenaforum.categorylist', 'channels[]', 0, $channels_options, $channels_params, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
-		$lists ['aliases'] = $aliases ? JHTML::_ ( 'kunenaforum.checklist', 'aliases', $aliases, true) : null;
-		$lists ['published'] = JHTML::_ ( 'select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published );
-		$lists ['forumLocked'] = JHTML::_ ( 'select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $category->locked );
-		$lists ['forumReview'] = JHTML::_ ( 'select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $category->review );
-		$lists ['allow_polls'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $category->allow_polls );
-		$lists ['allow_anonymous'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->allow_anonymous );
-		$lists ['post_anonymous'] = JHTML::_ ( 'select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->post_anonymous );
-		$lists ['topic_ordering'] = JHTML::_ ( 'select.genericlist', $topic_ordering_options, 'topic_ordering', 'class="inputbox" size="1"', 'value', 'text', $category->topic_ordering );
+		$lists ['categories'] = JHtml::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
+		$lists ['channels'] = JHtml::_('kunenaforum.categorylist', 'channels[]', 0, $channels_options, $channels_params, 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',', $category->channels));
+		$lists ['aliases'] = $aliases ? JHtml::_ ( 'kunenaforum.checklist', 'aliases', $aliases, true) : null;
+		$lists ['published'] = JHtml::_ ( 'select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published );
+		$lists ['forumLocked'] = JHtml::_ ( 'select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $category->locked );
+		$lists ['forumReview'] = JHtml::_ ( 'select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $category->review );
+		$lists ['allow_polls'] = JHtml::_ ( 'select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $category->allow_polls );
+		$lists ['allow_anonymous'] = JHtml::_ ( 'select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->allow_anonymous );
+		$lists ['post_anonymous'] = JHtml::_ ( 'select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->post_anonymous );
+		$lists ['topic_ordering'] = JHtml::_ ( 'select.genericlist', $topic_ordering_options, 'topic_ordering', 'class="inputbox" size="1"', 'value', 'text', $category->topic_ordering );
 
 		// TODO:
 		/*
@@ -230,9 +230,9 @@ class KunenaAdminModelCategories extends KunenaModel {
 		jimport( 'joomla.filesystem.folder' );
 		$topiciconslist = JFolder::folders(JPATH_ROOT.'/media/kunena/topicicons');
 		foreach( $topiciconslist as $icon ) {
-			$topicicons[] = JHTML::_ ( 'select.option', $icon, $icon );
+			$topicicons[] = JHtml::_ ( 'select.option', $icon, $icon );
 		}
-		$lists ['category_iconset'] = JHTML::_ ( 'select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $category->iconset );
+		$lists ['category_iconset'] = JHtml::_ ( 'select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1"', 'value', 'text', $category->iconset );
 		*/
 
 		return $lists;

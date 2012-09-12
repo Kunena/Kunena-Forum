@@ -24,7 +24,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 		<input type="hidden" name="id" value="<?php echo $this->templatename; ?>" />
 		<input type="hidden" name="cid[]" value="<?php echo $this->templatename; ?>" />
 		<input type="hidden" name="filename" value="<?php echo $this->filename; ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<?php if($this->ftp): ?>
 		<fieldset title="<?php echo JText::_('DESCFTPTITLE'); ?>">

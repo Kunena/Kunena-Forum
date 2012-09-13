@@ -56,7 +56,8 @@ JHTML::_('behavior.tooltip');
 				<tr>
 					<td colspan="2" class="key" style="text-align:left; padding: 10px">
 						<?php $templatefile = KPATH_SITE.'/template/'.$this->templatename.'/params.ini';
-							echo is_writable($templatefile) ? JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($templatefile)):JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($templatefile));
+							if(JFile::exists($templatefile)) echo is_writable($templatefile) ? JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($templatefile)):JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($templatefile));
+							else echo JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSFILENOTHERE', $this->escape($templatefile));
 						?>
 					</td>
 				</tr>

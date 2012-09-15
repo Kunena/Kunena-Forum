@@ -30,6 +30,11 @@ class KunenaViewUser extends KunenaView {
 
 	function displayEdit($tpl = null) {
 		$userid = JRequest::getInt('userid');
+		if ( version_compare(JVERSION, '2.5.4','>') ) {
+			$com_users_params = JComponentHelper::getParams('com_users');
+			$com_users_change_login = $com_users_params->get('change_login_name')
+			if ( isset($com_users_change_login) && $com_users_change_login ) $this->com_users->change_login_name = $com_users_change_login;
+		}
 		if ($userid && $this->me->userid != $userid) {
 			$user = KunenaFactory::getUser( $userid );
 			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $user->getName()), 'notice' );

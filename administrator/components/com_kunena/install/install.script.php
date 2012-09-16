@@ -13,6 +13,8 @@ jimport( 'joomla.filesystem.folder' );
 jimport( 'joomla.filesystem.file' );
 
 class Com_KunenaInstallerScript {
+	/** @var string The component's name */
+	protected $_kunena_extension = 'com_kunena';
 	protected $versions = array(
 		'PHP' => array (
 			'5.2' => '5.2.4',
@@ -29,7 +31,6 @@ class Com_KunenaInstallerScript {
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
-	protected $_akeeba_extension = null;
 
 	public function install($parent) {
 		// Reset installer state.
@@ -293,7 +294,7 @@ class Com_KunenaInstallerScript {
 		$query = $db->getQuery(true);
 		$query->select('id')
 			->from('#__assets')
-			->where($db->qn('name').' = '.$db->q($this->_akeeba_extension));
+			->where($db->qn('name').' = '.$db->q($this->_kunena_extension));
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 		if(!empty($ids)) foreach($ids as $id) {
@@ -308,7 +309,7 @@ class Com_KunenaInstallerScript {
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
 			->from('#__extensions')
-			->where($db->qn('element').' = '.$db->q($this->_akeeba_extension));
+			->where($db->qn('element').' = '.$db->q($this->_kunena_extension));
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 		if(!empty($ids)) foreach($ids as $id) {
@@ -325,7 +326,7 @@ class Com_KunenaInstallerScript {
 			->from('#__menu')
 			->where($db->qn('type').' = '.$db->q('component'))
 			->where($db->qn('menutype').' = '.$db->q('main'))
-			->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_akeeba_extension));
+			->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_kunena_extension));
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 		if(!empty($ids)) foreach($ids as $id) {
@@ -348,7 +349,7 @@ class Com_KunenaInstallerScript {
 		$query = $db->getQuery(true);
 		$query->select('extension_id')
 		->from('#__extensions')
-		->where($db->qn('element').' = '.$db->q($this->_akeeba_extension));
+		->where($db->qn('element').' = '.$db->q($this->_kunena_extension));
 		$db->setQuery($query);
 		$ids = $db->loadColumn();
 		if(count($ids) > 1) {
@@ -368,7 +369,7 @@ class Com_KunenaInstallerScript {
 		$query = $db->getQuery(true);
 		$query->select('id')
 		->from('#__assets')
-		->where($db->qn('name').' = '.$db->q($this->_akeeba_extension));
+		->where($db->qn('name').' = '.$db->q($this->_kunena_extension));
 		$db->setQuery($query);
 		$ids = $db->loadObjectList();
 		if(count($ids) > 1) {
@@ -390,7 +391,7 @@ class Com_KunenaInstallerScript {
 		->from('#__menu')
 		->where($db->qn('type').' = '.$db->q('component'))
 		->where($db->qn('menutype').' = '.$db->q('main'))
-		->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_akeeba_extension));
+		->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_kunena_extension));
 		$db->setQuery($query);
 		$ids1 = $db->loadColumn();
 		if(empty($ids1)) $ids1 = array();
@@ -399,7 +400,7 @@ class Com_KunenaInstallerScript {
 		->from('#__menu')
 		->where($db->qn('type').' = '.$db->q('component'))
 		->where($db->qn('menutype').' = '.$db->q('main'))
-		->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_akeeba_extension.'&%'));
+		->where($db->qn('link').' LIKE '.$db->q('index.php?option='.$this->_kunena_extension.'&%'));
 		$db->setQuery($query);
 		$ids2 = $db->loadColumn();
 		if(empty($ids2)) $ids2 = array();

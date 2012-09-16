@@ -46,15 +46,19 @@ window.addEvent('domready', function(){
 	}
 
 	function kunenaCheckAnonymousAllowed(catid) {
-		if ( arrayanynomousbox[catid] !== undefined ) {
-			document.id('kanynomous-check').setStyle('display');
-		} else {
-			document.id('kanynomous-check').setStyle('display','none');
-			kbutton.removeProperty('checked');
+		if(document.id('kanynomous-check') !== null) {
+			if ( arrayanynomousbox[catid] !== undefined ) {
+				document.id('kanynomous-check').setStyle('display');
+			} else {
+				document.id('kanynomous-check').setStyle('display','none');
+				kbutton.removeProperty('checked');
+			}
 		}
 
-		if ( arrayanynomousbox[catid] ) {
-			document.id('kanonymous').set('checked','checked');
+		if(document.id('kanonymous') !== null) {
+			if ( arrayanynomousbox[catid] ) {
+				document.id('kanonymous').set('checked','checked');
+			}
 		}
 		<?php if ($this->me->userid != 0) : ?>
 		kunenaSelectUsername(kbutton,kuser);

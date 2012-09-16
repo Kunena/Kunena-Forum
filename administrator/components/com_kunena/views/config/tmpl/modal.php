@@ -14,13 +14,13 @@ $script[] = '    }';
 JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 ?>
 <fieldset>
-	<legend> Confirmation de la restauration par défaut de vos paramétres de configuration </legend>
+	<legend> <?php echo JText::_('COM_KUNENA_CONFIG_MODAL_TITLE') ?> </legend>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" method="post" name="adminFormModal" id="adminFormModal">
 			<a onclick="javascript:RestoreConfig();" href="#">
-				<img src="<?php echo Juri::root().'administrator/components/com_kunena/images/button_validate.png' ?>" title="valider" />
+				<img src="<?php echo Juri::root().'administrator/components/com_kunena/images/button_validate.png' ?>" title="<?php echo JText::_('COM_KUNENA_CONFIG_MODAL_VALIDATE') ?>" alt="<?php echo JText::_('COM_KUNENA_CONFIG_MODAL_VALIDATE') ?>" />
 			</a>
 			<a onclick="parent.SqueezeBox.close();" href="#">
-				<img src="<?php echo Juri::root().'administrator/components/com_kunena/images/button_cancel.png' ?>" title="annuler" />
+				<img src="<?php echo Juri::root().'administrator/components/com_kunena/images/button_cancel.png' ?>" title="<?php echo JText::_('COM_KUNENA_CONFIG_MODAL_CANCEL') ?>" alt="<?php echo JText::_('COM_KUNENA_CONFIG_MODAL_CANCEL') ?>" />
 			</a>
 			<input type="hidden" name="task" value="setdefault" />
 			<input type="hidden" name="boxchecked" value="0" />

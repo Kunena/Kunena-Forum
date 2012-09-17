@@ -178,14 +178,12 @@ class KunenaForumTopicPoll extends JObject {
 			$votes = new StdClass();
 			$votes->new = true;
 			$votes->pollid = $this->id;
-			$votes->userid = $user->userid;
 			$votes->votes = 1;
 		} elseif ($change && isset($lastVoteId)) {
 			$votes = new StdClass();
 			$votes->new = false;
 			$votes->lasttime = null;
 			$votes->lastvote = null;
-			$votes->userid = $user->userid;
 			$votes->votes = 1;
 			// Change vote: decrease votes in the last option
 			if (!$this->changeOptionVotes($lastVoteId, -1)) {
@@ -193,12 +191,15 @@ class KunenaForumTopicPoll extends JObject {
 				$votes->votes++;
 			}
 		} else {
+			$votes = new StdClass();
+			$votes->new = false;
 			// Add a vote to the user
 			$votes->votes++;
 		}
 
 		$votes->lasttime = JFactory::getDate()->toMySQL();
 		$votes->lastvote = $option;
+		$votes->userid = (int)$user->userid;
 
 		// Increase vote count from current option
 		$this->changeOptionVotes($votes->lastvote, 1);

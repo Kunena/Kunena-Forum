@@ -28,8 +28,8 @@ defined ( '_JEXEC' ) or die ();
 		<?php if ($this->profile->exists()): ?>
 
 		<li>
-			<span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline('yes', 'no') ?>">
-				<span class="online-<?php echo $this->profile->isOnline('yes', 'no') ?>">
+			<span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline('yes', 'yes') ?>">
+				<span class="online-<?php echo $this->profile->isOnline('yes', 'yes') ?>">
 					<span><?php echo $this->profile->isOnline(JText::_('COM_KUNENA_ONLINE'), JText::_('COM_KUNENA_OFFLINE')); ?></span>
 				</span>
 			</span>

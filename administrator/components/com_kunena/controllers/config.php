@@ -71,7 +71,6 @@ class KunenaAdminControllerConfig extends KunenaController {
 		$this->config->reset();
 		$this->config->save();
 
-		$this->app->enqueueMessage ( JText::_('COM_KUNENA_CONFIG_DEFAULT'));
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+		$this->app->redirect ( 'index.php?option=com_kunena&view=config&layout=modal&tmpl=component', JText::_('COM_KUNENA_CONFIG_DEFAULT') );
 	}
 }

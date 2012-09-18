@@ -21,6 +21,7 @@ class KunenaView extends JView {
 	public $config = null;
 	public $embedded = false;
 	public $templatefiles = array();
+	public $teaser = null;
 
 	protected $_row = 0;
 

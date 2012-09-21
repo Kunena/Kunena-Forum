@@ -15,8 +15,12 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewConfig extends KunenaView {
 	function displayDefault() {
-		$this->setToolBarDefault();
 		$this->lists = $this->get('Configlists');
+
+		// Only set the toolbar if not modal
+		if ($this->getLayout() !== 'modal') {
+			$this->setToolBarDefault();
+		}
 
 		$this->display ();
 	}
@@ -28,7 +32,8 @@ class KunenaAdminViewConfig extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
-		JToolBarHelper::custom('setdefault', 'restore.png','restore_f2.png', 'COM_KUNENA_RESET_CONFIG', false);
+		$bar = JToolBar::getInstance('toolbar');
+		$bar->appendButton('Popup', 'restore', 'COM_KUNENA_RESET_CONFIG', 'index.php?option=com_kunena&amp;view=config&amp;layout=modal&amp;tmpl=component', 450, 200);
 		JToolBarHelper::spacer();
 		JToolBarHelper::back();
 	}

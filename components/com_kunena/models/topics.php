@@ -52,13 +52,15 @@ class KunenaModelTopics extends KunenaModel {
 			$latestcategory = array($catid);
 			$latestcategory_in = true;
 		} else {
-		if ( $params->get('topics_categories') == 0 && $this->config->latestcategory == 0 && JFactory::getDocument()->getType() != 'feed' ) {
-				$latestcategory = 0;
-			} elseif ( $params->get('topics_categories') != 0 && JFactory::getDocument()->getType() != 'feed'  ) {
-				$latestcategory = $params->get('topics_categories');
-			} elseif ( $this->config->latestcategory != 0  ) {
-				$latestcategory = $this->config->latestcategory;
-			} elseif ( JFactory::getDocument()->getType() == 'feed' ) {
+			if ( JFactory::getDocument()->getType() != 'feed' ) {
+				if ($params->get('topics_categories') == 0 && $this->config->latestcategory == 0) {
+					$latestcategory = 0;
+				} elseif ( $params->get('topics_categories') != 0 ) {
+					$latestcategory = $params->get('topics_categories');
+				} else {
+					$latestcategory = $this->config->latestcategory;
+				}
+			}  elseif ( JFactory::getDocument()->getType() == 'feed' ) {
 				if ( !empty($this->config->rss_included_categories) ) {
 					$latestcategory = $this->config->rss_included_categories;
 				}

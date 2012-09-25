@@ -33,6 +33,14 @@ class KunenaAdminViewTemplates extends KunenaView {
 		$this->templatename = $this->app->getUserState ( 'kunena.edit.template');
 		$template = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
+
+		$this->templatefile = KPATH_SITE.'/template/'.$this->templatename.'/params.ini';
+
+		if ( !JFile::exists($this->templatefile))  {
+			$ourFileHandle = fopen($this->templatefile, 'w');
+			fclose($ourFileHandle);
+		}
+
 		$this->display();
 	}
 

@@ -27,6 +27,19 @@ defined ( '_JEXEC' ) or die ();
 										<li class="kpost-username">
 											<?php echo $this->message->getAuthor()->getLink() ?>
 										</li>
+										<li>
+											<?php
+											if ($this->useravatar) :
+											?>
+
+											<span class="kavatar">
+											<?php echo $this->message->getAuthor()->getLink( $this->useravatar ) ?>
+											</span>
+
+											<?php
+												endif;
+											?>
+										</li>
 									</ul>
 								</td>
 								<td class="kmessage-left resultmsg">

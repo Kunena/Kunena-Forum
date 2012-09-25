@@ -135,6 +135,9 @@ class KunenaViewSearch extends KunenaView {
 			$ressubject = KunenaHtmlParser::parseText ($this->message->subject);
 			$resmessage = $this->parse ($this->message->message, 500);
 
+			$profile = KunenaFactory::getUser((int)$this->message->userid);
+			$this->useravatar = $profile->getAvatarImage('kavatar', 'post');
+
 			foreach ( $this->searchwords as $searchword ) {
 				if (empty ( $searchword )) continue;
 				$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );

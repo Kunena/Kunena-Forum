@@ -286,7 +286,7 @@ abstract class KunenaForumMessageHelper {
 		if (KunenaError::checkDatabaseError ())
 			return false;
 		return $db->getAffectedRows ();
-		}
+	}
 
 	// Internal functions
 

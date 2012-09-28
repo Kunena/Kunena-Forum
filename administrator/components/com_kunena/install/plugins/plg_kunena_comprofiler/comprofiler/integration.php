@@ -13,14 +13,14 @@ defined ( '_JEXEC' ) or die ();
 class KunenaIntegrationComprofiler {
 	protected static $open = false;
 
-	public function open() {
+	public static function open() {
 		if (self::$open) return;
 		self::$open = true;
 		$params = array ();
 		self::trigger ( 'onStart', $params );
 	}
 
-	public function close() {
+	public static function close() {
 		if (!self::$open) return;
 		self::$open = false;
 		$params = array ();

@@ -52,7 +52,7 @@ class KunenaPrivate
 		return '<a href="' . $url . '"' .$onclick. ' title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><span class="kicon-profile kicon-profile-pm" alt="' .JText::_('COM_KUNENA_VIEW_PMS'). '"></span></a>';
 	}
 
-	public function getInboxLink() {}
+	public function getInboxLink($text) {}
 
 	public function getUnreadCount() {}
 }

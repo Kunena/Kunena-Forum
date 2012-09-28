@@ -37,8 +37,8 @@ class KunenaAdminViewTemplates extends KunenaView {
 		$this->templatefile = KPATH_SITE.'/template/'.$this->templatename.'/params.ini';
 
 		if ( !JFile::exists($this->templatefile))  {
-			$ourFileHandle = fopen($this->templatefile, 'w');
-			fclose($ourFileHandle);
+			$ourFileHandle = @fopen($this->templatefile, 'w');
+			if ($ourFileHandle) fclose($ourFileHandle);
 		}
 
 		$this->display();

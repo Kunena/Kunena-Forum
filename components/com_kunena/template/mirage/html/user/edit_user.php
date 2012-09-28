@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 							</div>
 							<div class="form-field">
 								<div class="innerspacer kbox-full">
-									<input type="text" value="<?php echo $this->escape($this->user->get('username'));?>" id="kusername" name="username" class="kbox-width inputbox required" <?php echo !$this->config->usernamechange && !$this->com_users->change_login_name ? 'disabled="disabled" ' : ''?>/>
+									<input type="text" value="<?php echo $this->escape($this->user->get('username'));?>" id="kusername" name="username" class="kbox-width inputbox required" <?php echo !$this->usernamechange ? 'disabled="disabled" ' : '' ?>/>
 								</div>
 							</div>
 						</li>

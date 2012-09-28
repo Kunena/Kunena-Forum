@@ -222,7 +222,7 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$username = JRequest::getString ( 'username', '', 'POST' );
-		$password = JRequest::getString ( 'password', '', 'POST' );
+		$password = JRequest::getString ( 'password', '', 'POST', JREQUEST_ALLOWRAW );
 		$remember = JRequest::getBool ( 'remember', false, 'POST');
 
 		$login = KunenaLogin::getInstance();

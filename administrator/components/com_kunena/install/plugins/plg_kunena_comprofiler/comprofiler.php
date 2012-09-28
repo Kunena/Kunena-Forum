@@ -47,11 +47,12 @@ class plgKunenaComprofiler extends JPlugin {
 
 	public function onKunenaDisplay($type, $view = null, $params = null) {
 		$integration = KunenaFactory::getProfile();
+		if (!$integration instanceof KunenaProfileComprofiler) return;
 		switch ($type) {
 			case 'start':
-				return method_exists($integration, 'open') ? KunenaIntegrationComprofiler::open() : null;
+				return $integration->open();
 			case 'end':
-				return method_exists($integration, 'close') ? KunenaIntegrationComprofiler::close() : null;
+				return $integration->close();
 		}
 	}
 

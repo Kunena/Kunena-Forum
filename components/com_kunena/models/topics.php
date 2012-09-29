@@ -52,7 +52,22 @@ class KunenaModelTopics extends KunenaModel {
 			$latestcategory = array($catid);
 			$latestcategory_in = true;
 		} else {
-			$latestcategory = $params->get('topics_categories', $this->config->latestcategory );
+			if ( JFactory::getDocument()->getType() != 'feed' ) {
+				if ($params->get('topics_categories') == 0 && $this->config->latestcategory == 0) {
+					$latestcategory = 0;
+				} elseif ( $params->get('topics_categories') != 0 ) {
+					$latestcategory = $params->get('topics_categories');
+				} else {
+					$latestcategory = $this->config->latestcategory;
+				}
+			}  elseif ( JFactory::getDocument()->getType() == 'feed' ) {
+				if ( !empty($this->config->rss_included_categories) ) {
+					$latestcategory = $this->config->rss_included_categories;
+				}
+				/*if( !empty($this->config->rss_excluded_categories) ) {
+					$latestcategory_out = $this->config->rss_excluded_categories;
+				}*/
+			}
 			if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
 			if (empty($latestcategory) || in_array(0, $latestcategory)) {
 				$latestcategory = false;
@@ -61,6 +76,7 @@ class KunenaModelTopics extends KunenaModel {
 		}
 		$this->setState ( 'list.categories', $latestcategory );
 		$this->setState ( 'list.categories.in', $latestcategory_in );
+		//$this->setState ( 'list.categories.out', $latestcategory_out );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
 		$this->setState ( 'list.time', $value );

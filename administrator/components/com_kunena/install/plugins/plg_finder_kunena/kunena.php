@@ -108,7 +108,10 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	public function onFinderAfterSave($context, $row, $isNew) {
 		//If a category has been changed, we want to check if the access has been changed
 		if(($row instanceof TableKunenaCategories) && !$isNew){
-			if($row->accesstype == 'joomla.group' && $this->old_cataccesstype == 'joomla.group') return true;
+			//Access type of Category is still not the joomla access level system. 
+			//We didn't show them before and we don't show them now. No reindex necessary
+			if($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level') return true;
+			//Access level did not change. We do not need to reindex
 			if($row->accesstype == 'joomla.level' && $this->old_cataccesstype == 'joomla.level' && $row->access == $this->old_cataccess) return true;
 
 			//Well, seems like an access level change has occured. So we need to reindex all messages within this category
@@ -509,16 +512,16 @@ class plgFinderKunena extends FinderIndexerAdapter {
 			}
 			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/category/helper.php';
 			$category = KunenaForumCategoryHelper::get($item->catid);
-			//@TODO We can't quite handle access restrictions by joomla group yet. So we set the access level to a high number
-			//and hope, that there is no access level wo actually has this. I think this is a todo
-			if($category->accesstype == 'joomla.group'){
+			//@TODO We can't quite handle access restrictions by joomla group or other plugins yet. So we set the access level to 0
+			//This is a todo
+			if($category->accesstype != 'joomla.level'){
 				return 0;
 			}
 			return $category->access;
 		}elseif(($item instanceof TableKunenaCategories) || ($item instanceof KunenaForumCategory)){
 			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/category/helper.php';
 			$category = KunenaForumCategoryHelper::get($item->id);
-			if($category->accesstype == 'joomla.group'){
+			if($category->accesstype != 'joomla.level'){
 				return 0;
 			}
 			return $category->access;

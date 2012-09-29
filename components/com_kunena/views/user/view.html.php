@@ -17,12 +17,10 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewUser extends KunenaView {
 	function displayDefault($tpl = null) {
-		// TODO: handle redirect to integrated component
 		$this->displayCommon($tpl);
 	}
 
 	function displayModerate($tpl = null) {
-		// TODO: handle redirect to integrated component
 		$this->layout = 'default';
 		$this->setLayout($this->layout);
 		$this->displayCommon($tpl);

@@ -52,12 +52,27 @@ class KunenaModelTopics extends KunenaModel {
 			$latestcategory = array($catid);
 			$latestcategory_in = true;
 		} else {
-			$latestcategory = $params->get('topics_categories', $this->config->latestcategory );
+			if (JFactory::getDocument()->getType() != 'feed') {
+				// Get configuration from menu item
+				$latestcategory = $params->get('topics_categories', '');
+				$latestcategory_in = $params->get('topics_catselection', '');
+				// Default to global configuration
+				if ($latestcategory == '') $latestcategory = $this->config->latestcategory;
+				if ($latestcategory_in == '') $latestcategory_in = $this->config->latestcategory_in;
+			} else {
+				if(!empty($this->config->rss_excluded_categories)) {
+					$latestcategory = $this->config->rss_excluded_categories;
+					$latestcategory_in = 0;
+				} else {
+					$latestcategory = $this->config->rss_included_categories;
+					$latestcategory_in = 1;
+				}
+			}
 			if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
 			if (empty($latestcategory) || in_array(0, $latestcategory)) {
 				$latestcategory = false;
 			}
-			$latestcategory_in = (bool)$params->get('topics_catselection', $this->config->latestcategory_in);
+
 		}
 		$this->setState ( 'list.categories', $latestcategory );
 		$this->setState ( 'list.categories.in', $latestcategory_in );

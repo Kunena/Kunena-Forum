@@ -151,7 +151,7 @@ class KunenaViewUser extends KunenaView {
 		$this->showSubscriptions = $this->config->allowsubscriptions && $this->me->userid == $this->profile->userid;
 		$this->showFavorites = $this->config->allowfavorites && $this->me->userid == $this->profile->userid;
 		$this->showThankyou = $this->config->showthankyou && $this->me->exists();
-		$this->showUnapprovedPosts = KunenaAccess::getInstance()->getModeratorStatus(); // || $this->me->userid == $this->profile->userid;
+		$this->showUnapprovedPosts = $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus(); // || $this->me->userid == $this->profile->userid;
 		$this->showAttachments = $this->canManageAttachments() && ($this->me->isModerator() || $this->me->userid == $this->profile->userid);
 		$this->showBanManager = $this->me->isModerator() && $this->me->userid == $this->profile->userid;
 		$this->showBanHistory = $this->me->isModerator() && $this->me->userid != $this->profile->userid;

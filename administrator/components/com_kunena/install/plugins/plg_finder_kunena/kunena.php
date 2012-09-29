@@ -83,7 +83,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 */
 	public function onFinderBeforeSave($context, $row, $isNew) {
 		// If a category will be change, we want to see, if the accesstype and access level has changed
-		if(($row instanceof TableKunenaCategories) && !$isNews){
+		if(($row instanceof TableKunenaCategories) && !$isNew){
 			$old_table = clone($row);
 			$old_table->load();
 			$this->old_cataccess = $old_table->access;

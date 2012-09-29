@@ -268,7 +268,7 @@ class KunenaModelTopics extends KunenaModel {
 			$lastpostlist += KunenaForumTopicHelper::fetchNewStatus($this->topics);
 			// Fetch last / new post positions when user can see unapproved or deleted posts
 			$me = KunenaUserHelper::get();
-			if ($postlist || ($lastpostlist && $me->userid && KunenaAccess::getInstance()->getModeratorStatus())) {
+			if ($postlist || ($lastpostlist && $me->userid && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()))) {
 				KunenaForumMessageHelper::loadLocation($postlist + $lastpostlist);
 			}
 		}

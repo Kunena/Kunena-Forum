@@ -33,13 +33,14 @@ class KunenaControllerUser extends KunenaController {
 			}
 			$redirect = $params->get('integration', 1);
 		}
-		if ($redirect && JRequest::getCmd('format') == 'html') {
+		if ($redirect && JRequest::getCmd('format', 'html') == 'html') {
 			$profileIntegration = KunenaFactory::getProfile();
+			$layout = JRequest::getCmd('layout', 'default');
 			if ($profileIntegration instanceof KunenaProfileKunena) {
 				// Continue
-			} elseif (JRequest::getCmd('layout', 'default') == 'default') {
+			} elseif ($layout == 'default') {
 				$url = $this->me->getUrl(false);
-			} elseif (JRequest::getCmd('layout') == 'list') {
+			} elseif ($layout == 'list') {
 				$url = $profileIntegration->getUserListURL('', false);
 			}
 			if (!empty($url)) {

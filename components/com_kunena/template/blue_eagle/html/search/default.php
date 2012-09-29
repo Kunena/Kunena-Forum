@@ -123,7 +123,7 @@ document.addEvent('domready', function() {
 							<span onclick="document.searchform.childforums.checked=(! document.searchform.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>
 						</label>
 					</fieldset>
-					<?php if ( KunenaAccess::getInstance()->getModeratorStatus() ) : ?>
+					<?php if ($this->isModerator) : ?>
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?></legend>
 						<input id="show0" type="radio" name="show" value="0" <?php if ($this->state->get('query.show') == 0) echo 'checked="checked"'; ?> />

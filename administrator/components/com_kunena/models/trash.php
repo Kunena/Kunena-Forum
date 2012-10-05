@@ -143,7 +143,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$db = JFactory::getDBO();
 		$where = '';
 		if ($this->getState ( 'list.search')) {
-			$where = '(tt.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.first_post_userid LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ) . ')';
+			$where = ' AND (tt.subject LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.first_post_userid LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.id LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search'), true ).'%', false ) . ')';
 		}
 
 		$orderby = '';

@@ -198,10 +198,10 @@ class KunenaForumTopicUser extends JObject {
 					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
 					GROUP BY userid, thread";
 			$this->_db->setQuery($query, 0, 1);
-			$info = $this->_db->loadObject ();
+			$info = $this->_db->loadAssocList();
 			if (KunenaError::checkDatabaseError ())
 				return;
-			$this->bind($info);
+			$this->bind($info[0]);
 		}
 		return $this->save();
 	}

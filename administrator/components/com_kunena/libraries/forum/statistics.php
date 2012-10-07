@@ -46,24 +46,20 @@ class KunenaForumStatistics {
 		$this->_db = JFactory::getDBO ();
 		$this->_config = KunenaFactory::getConfig ();
 
-		$show = $this->_config->showstats;
-		if ($show) {
-			$this->showgenstats = (bool) $this->_config->showgenstats;
-			$this->showpopuserstats = (bool) $this->_config->showpopuserstats;
-			$this->showpopsubjectstats = (bool) $this->_config->showpopsubjectstats;
-			$this->showpoppollstats = (bool) $this->_config->showpoppollstats;
-			$this->showpopthankyoustats = (bool) $this->_config->showpopthankyoustats;
-		}
+		$this->showgenstats = (bool) $this->_config->showgenstats;
+		$this->showpopuserstats = (bool) $this->_config->showpopuserstats;
+		$this->showpopsubjectstats = (bool) $this->_config->showpopsubjectstats;
+		$this->showpoppollstats = (bool) $this->_config->showpoppollstats;
+		$this->showpopthankyoustats = (bool) $this->_config->showpopthankyoustats;
+
 
 		// TODO: deprecated
 		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 	}
 
-	public static function getInstance()
-	{
-		if (self::$_instance === null) {
-			self::$_instance = new KunenaForumStatistics();
-		}
+	public static function getInstance() {
+		self::$_instance = new KunenaForumStatistics();
+
 		return self::$_instance;
 	}
 
@@ -85,27 +81,24 @@ class KunenaForumStatistics {
 	}
 
 	public function loadUserStats($override=false) {
-		if ($this->showpopuserstats || $override) {
-			$this->top[] = $this->loadTopPosters();
-			if (!end($this->top)) array_pop($this->top);
-			$this->top[] = $this->loadTopProfiles();
-			if (!end($this->top)) array_pop($this->top);
-		}
-		if ($this->showpopthankyoustats || $override) {
-			$this->top[] = $this->loadTopThankyous();
-			if (!end($this->top)) array_pop($this->top);
-		}
+
+		$this->top[] = $this->loadTopPosters();
+		if (!end($this->top)) array_pop($this->top);
+		$this->top[] = $this->loadTopProfiles();
+		if (!end($this->top)) array_pop($this->top);
+
+		$this->top[] = $this->loadTopThankyous();
+		if (!end($this->top)) array_pop($this->top);
+
 	}
 
 	public function loadTopicStats($override=false) {
-		if ($this->showpopsubjectstats || $override) {
-			$this->top[] = $this->loadTopTopics();
-			if (!end($this->top)) array_pop($this->top);
-		}
-		if ($this->showpoppollstats || $override) {
-			$this->top[] = $this->loadTopPolls();
-			if (!end($this->top)) array_pop($this->top);
-		}
+		$this->top[] = $this->loadTopTopics();
+		if (!end($this->top)) array_pop($this->top);
+
+		$this->top[] = $this->loadTopPolls();
+		if (!end($this->top)) array_pop($this->top);
+
 	}
 
 	public function loadLastUserId() {

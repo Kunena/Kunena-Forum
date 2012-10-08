@@ -166,7 +166,7 @@ class KunenaForumStatistics {
 		if (count($this->topTopics) < $limit) {
 			$params = array('orderby'=>'posts DESC');
 			list($total, $this->topTopics) = KunenaForumTopicHelper::getLatestTopics(false, 0, $limit, $params);
-			$top = reset($this->topTopics);
+			if ( is_array($this->topTopics) )  $top = reset($this->topTopics);
 			foreach ($this->topTopics as $item) {
 				$item->count = $item->posts;
 				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
@@ -183,7 +183,7 @@ class KunenaForumStatistics {
 		$limit = $limit ? $limit : $this->_config->popusercount;
 		if (count($this->topPosters) < $limit) {
 			$this->topPosters = KunenaUserHelper::getTopPosters($limit);
-			$top = reset($this->topPosters);
+			if ( is_array($this->topPosters) ) $top = reset($this->topPosters);
 			if (empty($top->count)) {
 				$this->topPosters = array();
 				return;
@@ -203,7 +203,7 @@ class KunenaForumStatistics {
 		$limit = $limit ? $limit : $this->_config->popusercount;
 		if (count($this->topProfiles) < $limit) {
 			$this->topProfiles = KunenaFactory::getProfile()->getTopHits($limit);
-			$top = reset($this->topProfiles);
+			if ( is_array($this->topProfiles) ) $top = reset($this->topProfiles);
 			if (empty($top->count)) {
 				$this->topProfiles = array();
 				return;
@@ -232,7 +232,7 @@ class KunenaForumStatistics {
 			$polls = (array) $this->_db->loadObjectList('id');
 			KunenaError::checkDatabaseError();
 			$this->topPolls = KunenaForumTopicHelper::getTopics(array_keys($polls));
-			$top = reset($this->topPolls);
+			if ( is_array() ) $top = reset($this->topPolls);
 			if (!$top) return array();
 			foreach ($this->topPolls as $item) {
 				$item->count = $polls[$item->id]->count;

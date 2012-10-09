@@ -687,6 +687,8 @@ class KunenaViewTopic extends KunenaView {
 		} elseif ($this->message->hold == 2 || $this->message->hold == 3) {
 			$this->message->authorise('undelete') ? $this->messageButtons->set('undelete', $this->getButton ( sprintf($task, 'undelete'), 'undelete', 'message', 'moderation')) : null;
 			$this->message->authorise('permdelete') ? $this->messageButtons->set('permdelete', $this->getButton ( sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent')) : null;
+		} else {
+			$this->message->authorise('delete') ? $this->messageButtons->set('delete', $this->getButton ( sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		}
 
 		return $this->loadTemplateFile("message_actions");

@@ -569,14 +569,12 @@ class KunenaControllerTopic extends KunenaController {
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}
 		if (!$target->authorise('read')) {
-			if ($target instanceof KunenaForumMessage) {
+			if ($target instanceof KunenaForumMessage && $target->getTopic()->authorise('read')) {
 				$target = $target->getTopic();
-				if ($target->authorise('read')) {
-					// TODO: need to get closest message
-					$target = KunenaForumMessageHelper::get($target->last_post_id);
-				} else {
-					$target = $target->getCategory();
-				}
+				// TODO: need to get closest message
+				$target = KunenaForumMessageHelper::get($target->last_post_id);
+			} else {
+				$target = $target->getCategory();
 			}
 		}
 		$this->app->redirect ( $target->getUrl($this->return, false) );

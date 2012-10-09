@@ -201,7 +201,7 @@ class KunenaForumTopicUser extends JObject {
 			$info = $this->_db->loadAssocList();
 			if (KunenaError::checkDatabaseError ())
 				return;
-			$this->bind($info[0]);
+			if ($info) $this->bind($info);
 		}
 		return $this->save();
 	}

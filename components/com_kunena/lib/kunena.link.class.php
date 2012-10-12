@@ -45,7 +45,12 @@ class CKunenaLink {
 	}
 
 	static function GetRSSURL($params = '', $xhtml = true) {
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+		$config = KunenaFactory::getConfig ();
+		if (($config->rss_feedburner_url) && ($params =='')) {            // do it only for the basic generic rss. 
+			return $config->rss_feedburner_url;
+		} else {
+			return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+		}
 	}
 
 	static function GetCategoryActionLink($task, $catid, $catname, $rel = 'follow', $class = '', $title = '', $extra = '') {

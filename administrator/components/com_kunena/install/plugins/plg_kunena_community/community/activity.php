@@ -27,15 +27,14 @@ class KunenaActivityCommunity extends KunenaActivity {
 
 		$content = KunenaHtmlParser::plainBBCode($message->message, $this->params->get('activity_stream_limit', 0));
 
-		// Add readmore permalink
-		$content .= '<br /><a rel="nofollow" href="'.$message->getTopic()->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
-
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
 		$act->title = JText::_ ( '{actor} ' . JText::sprintf ( 'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE', ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>') );
-		$act->content = $content;
+		$act->content = KunenaHtmlParser::stripBBCode ($content, 300);
+		// Add readmore permalink
+		$act->content .= '<br /><a rel="nofollow" href="'.$message->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 		$act->app = 'kunena.post';
 		$act->cid = $message->thread;
 		$act->access = $this->getAccess($message->getCategory());
@@ -60,15 +59,14 @@ class KunenaActivityCommunity extends KunenaActivity {
 
 		$content = KunenaHtmlParser::plainBBCode($message->message, $this->params->get('activity_stream_limit', 0));
 
-		// Add readmore permalink
-		$content .= '<br /><a rel="nofollow" href="'.$message->getTopic()->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
-
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
 		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf ( 'PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE', '<a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>' ) );
-		$act->content = $content;
+		$act->content = KunenaHtmlParser::stripBBCode ($content, 300);;
+		// Add readmore permalink
+		$act->content .= '<br /><a rel="nofollow" href="'.$message->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 		$act->app = 'kunena.post';
 		$act->cid = $message->thread;
 		$act->access = $this->getAccess($message->getCategory());

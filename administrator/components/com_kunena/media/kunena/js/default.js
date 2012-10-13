@@ -889,12 +889,4 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
-	
-	if ( document.id('kunena_announ_edit') != undefined ) {
-		document.id('kunena_announ_edit').addEvent('click', function(){
-			document.id('kchecktask').set('name', 'temp');
-			document.id('kunena_announ_edit_task').set('name', 'task');
-			document.id('adminForm').submit();
-		});
-	}
 });

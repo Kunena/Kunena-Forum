@@ -220,6 +220,9 @@ class KunenaConfig extends JObject {
 	public $ebay_affiliate_id = 5337089937;
 	public $iptracking = 1;
 
+	public $rss_feedburner_url = '';
+	
+	
 	public function __construct() {
 		parent::__construct ();
 	}

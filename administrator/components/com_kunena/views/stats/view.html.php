@@ -21,7 +21,7 @@ class KunenaAdminViewStats extends KunenaView {
 		$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' .      $this->config->board_title);
 
 		$kunena_stats = KunenaForumStatistics::getInstance ( );
-		$kunena_stats->loadAll();
+		$kunena_stats->loadAll(true);
 		$this->assign($kunena_stats);
 
 		$this->display ();

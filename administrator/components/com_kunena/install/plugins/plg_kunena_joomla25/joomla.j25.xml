@@ -9,7 +9,7 @@
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>www.kunena.org</copyright>
 	<license>GNU/GPLv3 or later</license>
-	<description>PLG_KUNENA_JOOMLA_17_DESCRIPTION</description>
+	<description>PLG_KUNENA_JOOMLA_25_DESCRIPTION</description>
 	<files>
 		<filename plugin="joomla">joomla.php</filename>
 		<filename>access.php</filename>

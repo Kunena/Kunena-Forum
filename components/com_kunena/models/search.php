@@ -282,4 +282,16 @@ class KunenaModelSearch extends KunenaModel {
 		}
 		return $url_params;
 	}
+
+	public function getSearchURL($view, $searchword='', $limitstart=0, $limit=0, $params = '', $xhtml=true) {
+		$config = KunenaFactory::getConfig ();
+		$limitstr = "";
+		if ($limitstart > 0)
+			$limitstr .= "&limitstart=$limitstart";
+		if ($limit > 0 && $limit != $config->messages_per_page_search)
+			$limitstr .= "&limit=$limit";
+		if ($searchword)
+			$searchword = '&q=' . urlencode ( $searchword );
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$searchword}{$params}{$limitstr}", $xhtml );
+	}
 }

@@ -75,7 +75,6 @@ class KunenaForumMessageAttachment extends JObject {
 	}
 
 	protected function generate() {
-		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 		if (!isset($this->_shorttype)) {
 			$this->_shorttype = $this->isImage($this->filetype) ? 'image' : $this->filetype;
 			$this->_shortname = KunenaForumMessageAttachmentHelper::shortenFileName($this->filename);
@@ -95,16 +94,16 @@ class KunenaForumMessageAttachment extends JObject {
 					}
 
 					$img = '<img title="' . $this->escape ( $this->filename ) . '" ' . $imgsize . ' src="' . JURI::ROOT () . $thumb . '" alt="' . $this->escape ( $this->filename ) . '" />';
-					$this->_thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)? 'lightbox[thumb' . intval ( $this->mesid ). ']':'' );
+					$this->_thumblink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)? 'lightbox[thumb' . intval ( $this->mesid ). ']':'' );
 					$img = '<img title="' . $this->escape ( $this->filename ) . '" src="' . JURI::ROOT () . $this->escape ( $this->folder ) . '/' . $this->escape ( $this->filename ) . '" alt="' . $this->escape ( $this->filename ) . '" />';
-					$this->_imagelink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[imagelink' . intval ( $this->mesid ) .']':'' );
-					$this->_textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[simple' . $this->mesid . ']' . ' nofollow':' nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
+					$this->_imagelink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[imagelink' . intval ( $this->mesid ) .']':'' );
+					$this->_textLink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[simple' . $this->mesid . ']' . ' nofollow':' nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
 					$img = '<img src="' . JURI::root(). 'media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
-					$this->_thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), 'nofollow' );
-					$this->_textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
+					$this->_thumblink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), 'nofollow' );
+					$this->_textLink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
 			}
 			$this->_disabled = false;
 			if (! KunenaUserHelper::getMyself()->exists()) {
@@ -357,5 +356,10 @@ class KunenaForumMessageAttachment extends JObject {
 			return false;
 		}
 		return true;
+	}
+
+	protected function _getAttachementLink($folder,$filename,$name,$title = '', $rel = 'nofollow') {
+		$link = JURI::ROOT()."{$folder}/{$filename}";
+		return '<a href="'.$link.'" title="'.$title.'" rel="'.$rel.'">'.$name.'</a>';
 	}
 }

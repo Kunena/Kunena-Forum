@@ -21,7 +21,7 @@ jimport('joomla.utilities.string');
  *
  * @version		2.0
  */
-class KunenaBbcode extends BBCode {
+class KunenaBbcode extends NBBC_BBCode {
 	public $autolink_disable = 0;
 
 	/**

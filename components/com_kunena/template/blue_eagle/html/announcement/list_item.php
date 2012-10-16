@@ -27,7 +27,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php if ($this->canEdit()): ?>
 				<a id="kunena_announ_edit" href="javascript:void(0);">
 				<input id="kunena_announ_edit_task" type="hidden" name="task_temp" value="edit" />
-				<img title="<?php echo JText::_('COM_KUNENA_ANN_EDIT') ?>" alt="<?php echo JText::_('COM_KUNENA_ANN_EDIT') ?>" src="/joomla_2.5.6/components/com_kunena/template/blue_eagle/images/tick.png">
+				<img title="<?php echo JText::_('COM_KUNENA_ANN_EDIT') ?>" alt="<?php echo JText::_('COM_KUNENA_ANN_EDIT') ?>" src="<?php echo JUri::root() ?>components/com_kunena/template/blue_eagle/images/tick.png">
 				</a>
 				<?php endif; ?>
 			</td>

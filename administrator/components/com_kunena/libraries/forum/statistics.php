@@ -54,9 +54,6 @@ class KunenaForumStatistics {
 			$this->showpoppollstats = (bool) $this->_config->showpoppollstats;
 			$this->showpopthankyoustats = (bool) $this->_config->showpopthankyoustats;
 		}
-
-		// TODO: deprecated
-		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 	}
 
 	public static function getInstance() {

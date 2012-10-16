@@ -864,6 +864,11 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 							<td align="left" valign="top" width="25%"><?php echo $this->lists ['rss_cache'] ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_CACHE_DESC') ?></td>
 						</tr>
+						<tr align="center" valign="middle">
+							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_FEEDBURNER_URL') ?></td>
+							<td align="left" valign="top" width="25%"><input type="text" class="ksm-field-large" name="cfg_rss_feedburner_url" value="<?php echo $this->escape($this->config->rss_feedburner_url) ?>"/></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_FEEDBURNER_URL_DESC') ?></td>
+						</tr>						
 					</table>
 				</fieldset>
 				</dd>

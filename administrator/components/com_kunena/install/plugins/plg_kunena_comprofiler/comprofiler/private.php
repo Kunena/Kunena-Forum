@@ -57,6 +57,6 @@ class KunenaPrivateComprofiler extends KunenaPrivate {
 
 		$itemid = getCBprofileItemid();
 
-		return CKunenaLink::GetHrefLink ( cbSef ('index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid), $text, '', 'follow');
+		return '<a href="'. cbSef ('index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid).'" rel="follow">'. $text.'</a>';
 	}
 }

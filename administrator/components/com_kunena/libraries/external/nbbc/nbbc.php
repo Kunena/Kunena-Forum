@@ -976,7 +976,7 @@ return true;
 }
 }
 
-class BBCode {
+class NBBC_BBCode {
 var $tag_rules;
 var $defaults;
 var $current_class;
@@ -1008,7 +1008,7 @@ var $rule_html;
 var $pre_trim;
 var $post_trim;
 var $debug;
-function BBCode() {
+function NBBC_BBCode() {
 $this->defaults = new BBCodeLibrary;
 $this->tag_rules = $this->defaults->default_tag_rules;
 $this->smileys = $this->defaults->default_smileys;

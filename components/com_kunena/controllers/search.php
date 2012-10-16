@@ -21,10 +21,8 @@ class KunenaControllerSearch extends KunenaController {
 	}
 
 	public function results() {
-		require_once KPATH_SITE . '/lib/kunena.link.class.php';
-
 		$model = $this->getModel('Search');
-		$this->app->redirect ( CKunenaLink::GetSearchURL('advsearch', $model->getState('searchwords'),
+		$this->app->redirect ( $model->getSearchURL('advsearch', $model->getState('searchwords'),
 			$model->getState('list.start'), $model->getState('list.limit'), $model->getUrlParams(), false) );
 	}
 }

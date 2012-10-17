@@ -51,7 +51,7 @@ class KunenaProfileComprofiler extends KunenaProfile {
 			array( 'config'=> &$view->config, 'userprofile'=> &$view->profile, 'params'=>&$params) ) ) );
 	}
 
-	public function trigger($event, &$params) {
+	public static function trigger($event, &$params) {
 		return KunenaIntegrationComprofiler::trigger($event, $params);
 	}
 

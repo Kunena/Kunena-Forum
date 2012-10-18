@@ -33,11 +33,11 @@ class KunenaProfile
 
 	public function getTopHits($limit=0) {
 		if (!$limit) $limit = KunenaFactory::getConfig ()->popusercount;
-		return $this->_getTopHits($limit);
+		return (array) $this->_getTopHits($limit);
 	}
 
 	public function getUserListURL($action='', $xhtml = true) {}
 	public function getProfileURL($user, $task='', $xhtml = true) {}
 	public function showProfile($view, &$params) {}
-	protected function _getTopHits($limit=0) {}
+	protected function _getTopHits($limit=0) { return array(); }
 }

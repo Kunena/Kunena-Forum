@@ -38,7 +38,7 @@ class KunenaProfileCommunity extends KunenaProfile {
 		$db = JFactory::getDBO ();
 		$query = "SELECT userid AS id, view AS count FROM #__community_users WHERE view>0 ORDER BY view DESC";
 		$db->setQuery ( $query, 0, $limit );
-		$top = $db->loadObjectList ();
+		$top = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 		return $top;
 	}

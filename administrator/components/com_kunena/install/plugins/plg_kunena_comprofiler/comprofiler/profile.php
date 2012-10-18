@@ -59,7 +59,7 @@ class KunenaProfileComprofiler extends KunenaProfile {
 		$db = JFactory::getDBO ();
 		$query = "SELECT user_id AS id, hits AS count FROM #__comprofiler WHERE hits>0 ORDER BY hits DESC";
 		$db->setQuery ( $query, 0, $limit );
-		$top = $db->loadObjectList ();
+		$top = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 		return $top;
 	}

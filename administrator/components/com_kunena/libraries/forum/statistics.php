@@ -165,7 +165,6 @@ class KunenaForumStatistics {
 		if (count($this->topTopics) < $limit) {
 			$params = array('orderby'=>'posts DESC');
 			list($total, $this->topTopics) = KunenaForumTopicHelper::getLatestTopics(false, 0, $limit, $params);
-			$this->topTopics = (array) $this->topTopics;
 			$top = reset($this->topTopics);
 			foreach ($this->topTopics as $item) {
 				$item->count = $item->posts;
@@ -183,7 +182,6 @@ class KunenaForumStatistics {
 		$limit = $limit ? $limit : $this->_config->popusercount;
 		if (count($this->topPosters) < $limit) {
 			$this->topPosters = KunenaUserHelper::getTopPosters($limit);
-			$this->topPosters = (array) $this->topPosters;
 			$top = reset($this->topPosters);
 			if (empty($top->count)) {
 				$this->topPosters = array();
@@ -204,7 +202,6 @@ class KunenaForumStatistics {
 		$limit = $limit ? $limit : $this->_config->popusercount;
 		if (count($this->topProfiles) < $limit) {
 			$this->topProfiles = KunenaFactory::getProfile()->getTopHits($limit);
-			$this->topPosters = (array) $this->topPosters;
 			$top = reset($this->topProfiles);
 			if (empty($top->count)) {
 				$this->topProfiles = array();
@@ -234,7 +231,6 @@ class KunenaForumStatistics {
 			$polls = (array) $this->_db->loadObjectList('id');
 			KunenaError::checkDatabaseError();
 			$this->topPolls = KunenaForumTopicHelper::getTopics(array_keys($polls));
-			$this->topPolls = (array) $this->topPosters;
 			$top = reset($this->topPolls);
 			if (!$top) return array();
 			foreach ($this->topPolls as $item) {

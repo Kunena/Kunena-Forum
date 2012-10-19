@@ -31,7 +31,7 @@ if ($this->message->modified_time) {
 	</span>
 	<?php endif ?>
 	<?php if ($this->config->reportmsg && $this->me->exists()) :?>
-	<span class="kmessage-informmarkup"><?php echo CKunenaLink::GetReportMessageLink ( intval($this->category->id), intval($this->message->id), JText::_('COM_KUNENA_REPORT') ) ?></span>
+	<span class="kmessage-informmarkup"><?php echo $this->reportMessageLink ?></span>
 	<?php endif ?>
 	<?php if (!empty ( $this->ipLink )) : ?>
 	<span class="kmessage-informmarkup"><?php echo $this->ipLink ?></span>

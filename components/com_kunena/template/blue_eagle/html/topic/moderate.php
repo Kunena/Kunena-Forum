@@ -66,7 +66,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 					<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER');
 					if ( $this->message->userid) : ?>:
 					<strong>
-						<?php echo CKunenaLink::GetModerateUserLink( intval($this->message->userid), $this->escape($this->message->name).' ('.intval($this->message->userid).')' ); ?>
+						<?php echo JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=moderateuser&userid='.intval($this->message->userid), $this->escape($this->message->name).' ('.intval($this->message->userid).')' ,$this->escape($this->message->name).' ('.intval($this->message->userid).')' ); ?>
 					</strong>
 					<?php else : ?>:
 					<strong><?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS'); ?></strong>

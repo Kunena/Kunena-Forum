@@ -370,7 +370,7 @@ PX		EM			PCT			PT
 #Kunena .klatest-avatar,
 #Kunena .ktopic-latest-post-avatar {
 	display: block;
-	height: auto;
+	height: 36px;
 	width: 36px;
 	padding: 1px;
 	margin: 4px 6px 2px 0;
@@ -2541,7 +2541,7 @@ label.kpoll-term-lbl {
 	list-style: none !important;
 }
 #kpoll-btns {
-	margin: 5px 0 20px 20px;
+	margin: 0;
 }
 #Kunena div.kpolldesc td.kpoll-option {
 	text-align: left;

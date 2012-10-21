@@ -33,9 +33,6 @@ if ($this->message->modified_time) {
 	<?php if ($this->config->reportmsg && $this->me->exists()) :?>
 	<span class="kmessage-informmarkup"><?php echo $this->reportMessageLink ?></span>
 	<?php endif ?>
-	<?php if (!empty ( $this->ipLink )) : ?>
-	<span class="kmessage-informmarkup"><?php echo $this->ipLink ?></span>
-	<?php endif ?>
 </div>
 <div class="kmessage-buttons-cover">
 	<div class="kmessage-buttons-row">

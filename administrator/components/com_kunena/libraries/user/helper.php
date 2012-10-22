@@ -136,7 +136,7 @@ abstract class KunenaUserHelper {
 		if (self::$_lastid === null) {
 			self::getTotalCount();
 		}
-		return self::$_lastid;
+		return (int) self::$_lastid;
 	}
 
 	public static function getTotalCount() {
@@ -151,7 +151,7 @@ abstract class KunenaUserHelper {
 			list (self::$_total, self::$_lastid) = $db->loadRow ();
 			KunenaError::checkDatabaseError();
 		}
-		return self::$_total;
+		return (int) self::$_total;
 	}
 
 	public static function getTopPosters($limit=0) {
@@ -160,7 +160,7 @@ abstract class KunenaUserHelper {
 			$db = JFactory::getDBO ();
 			$query = "SELECT userid as id, posts AS count FROM #__kunena_users WHERE posts>0 ORDER BY posts DESC";
 			$db->setQuery ( $query, 0, $limit );
-			self::$_topposters = $db->loadObjectList ();
+			self::$_topposters = (array) $db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 		}
 		return self::$_topposters;
@@ -176,7 +176,7 @@ abstract class KunenaUserHelper {
 				ORDER BY s.time DESC";
 
 			$db->setQuery($query);
-			self::$_online = $db->loadObjectList('userid');
+			self::$_online = (array) $db->loadObjectList('userid');
 			KunenaError::checkDatabaseError();
 		}
 		return self::$_online;
@@ -204,7 +204,7 @@ abstract class KunenaUserHelper {
 				FROM #__session
 				WHERE client_id = 0 ' . $querytime;
 			$db->setQuery ( $query );
-			$sessions = $db->loadObjectList ();
+			$sessions = (array) $db->loadObjectList ();
 			KunenaError::checkDatabaseError ();
 
 			// need to calculate the joomla session lifetime in timestamp, to check if the sessions haven't expired

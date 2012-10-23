@@ -47,12 +47,12 @@ defined ( '_JEXEC' ) or die ();
 		</dd>
 		<dd class="announcements-edit item-column">
 			<div class="innerspacer-column">
-				<?php if ($this->canEdit()) echo JHTML::_('kunenagrid.task', $this->announcement->id, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'), 'edit') ?>
+				<?php if ($this->canEdit()) echo JHTML::_('kunenagrid.task', $this->row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'), 'edit') ?>
 			</div>
 		</dd>
 		<dd class="announcements-delete item-column">
 			<div class="innerspacer-column">
-				<?php if ($this->canDelete()) echo JHTML::_('kunenagrid.task', $this->announcement->id, 'publish_x.png', JText::_('COM_KUNENA_ANN_DELETE'), 'delete') ?>
+				<?php if ($this->canDelete()) echo JHTML::_('kunenagrid.task', $this->row, 'publish_x.png', JText::_('COM_KUNENA_ANN_DELETE'), 'delete') ?>
 			</div>
 		</dd>
 		<?php endif ?>

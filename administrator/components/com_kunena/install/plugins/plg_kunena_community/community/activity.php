@@ -25,10 +25,14 @@ class KunenaActivityCommunity extends KunenaActivity {
 			CUserPoints::assignPoint ( 'com_kunena.thread.new' );
 		}
 
-		$content = KunenaHtmlParser::plainBBCode($message->message, $this->params->get('activity_stream_limit', 0));
+		$parent = new stdClass();
+		$parent->forceSecure = true;
+		$parent->forceMinimal = true;
+
+		$content = KunenaHtmlParser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
-		$content .= '<br /><a rel="nofollow" href="'.$message->getTopic()->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
+		$content .= '<br /><a rel="nofollow" href="'.$message->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
@@ -58,10 +62,14 @@ class KunenaActivityCommunity extends KunenaActivity {
 			CUserPoints::assignPoint ( 'com_kunena.thread.reply' );
 		}
 
-		$content = KunenaHtmlParser::plainBBCode($message->message, $this->params->get('activity_stream_limit', 0));
+		$parent = new stdClass();
+		$parent->forceSecure = true;
+		$parent->forceMinimal = true;
+
+		$content = KunenaHtmlParser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
-		$content .= '<br /><a rel="nofollow" href="'.$message->getTopic()->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
+		$content .= '<br /><a rel="nofollow" href="'.$message->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';

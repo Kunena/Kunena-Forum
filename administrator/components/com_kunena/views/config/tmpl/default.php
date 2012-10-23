@@ -1027,11 +1027,6 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 							<td align="left" valign="top" width="25%"><?php echo $this->lists ['pollresultsuserslist'] ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_SHOW_USER_LIST_DESC') ?></td>
 						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_POLL_BUTTON_CHANGE_VOTE') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $this->lists ['pollchangevote'] ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_BUTTON_CHANGE_VOTE_DESC') ?></td>
-						</tr>
 					</table>
 				</fieldset>
 				</dd>

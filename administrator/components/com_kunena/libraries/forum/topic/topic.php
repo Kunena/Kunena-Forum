@@ -1089,11 +1089,11 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		// Check that user can vote
 		$config = KunenaFactory::getConfig();
 		$poll = $this->getPoll();
-// TODO: allow support for only one vote without possibility to change it
-//		if ($voted && $config->pollallowvoteone) {
-//			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE' );
-//		}
-		if ( $poll->getMyVotes($user) >= $config->pollnbvotesbyuser) {
+		$votes = $poll->getMyVotes($user);
+		if ($votes && $config->pollallowvoteone && !$config->pollchangevote) {
+			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE' );
+		}
+		if ($votes >= $config->pollnbvotesbyuser) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_MANY_TIMES' );
 		}
 		if ($config->polltimebtvotes && $poll->getMyTime($user) + $config->polltimebtvotes > JFactory::getDate()->toUnix()) {

@@ -792,15 +792,16 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			return;
 		$this->_topics = 0;
 		$this->_posts = 0;
-		$this->_lastid = 0;
+		$this->_lastid = $this->id;
 		$categories = $this->getChannels();
 		$categories += KunenaForumCategoryHelper::getChildren($this->id);
 		foreach ($categories as $category) {
 			$category->buildInfo();
+			$lastCategory = $category->getLastCategory();
 			$this->_topics += max($category->numTopics, 0);
 			$this->_posts += max($category->numPosts, 0);
-			if (KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $category->last_post_time)
-				$this->_lastid = $category->id;
+			if ($lastCategory->last_post_time && KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $lastCategory->last_post_time)
+				$this->_lastid = $lastCategory->id;
 		}
 	}
 

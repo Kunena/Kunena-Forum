@@ -50,10 +50,6 @@ $row = 0;
 								<a href="<?php echo CKunenaLink::GetPollURL('vote', $this->topic->id, $this->category->id);?>">
 								<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
 								</a>
-								<?php elseif( $this->config->pollchangevote ) : ?>
-								<a href="<?php echo CKunenaLink::GetPollURL('changevote', $this->topic->id, $this->category->id); ?>">
-								<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>
-								</a>
 								<?php endif; ?>
 							</li>
 							<li>

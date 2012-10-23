@@ -158,8 +158,7 @@ abstract class JHtmlKunenaGrid
 	 * @return  string
 	 */
 	public static function task($i, $img, $alt, $task, $prefix='') {
-		$href = '<a href="javascript:void(0);" onclick="return listItemTask(\'cb' . $i .'\',\''. $prefix.$task .'\')"><img src="'. KunenaFactory::getTemplate()->getImagePath($img) .'" alt="'. $alt .'" title="'. $alt .'" /></a>';
-
+		$href ='<a href="'.KunenaRoute::_('index.php?option=com_kunena&view=announcement&do='.$task.'&id='.$i).'"><img src="'. KunenaFactory::getTemplate()->getImagePath($img) .'" alt="'. $alt .'" title="'. $alt .'" /></a>';
 		return $href;
 	}
 

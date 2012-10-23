@@ -221,8 +221,10 @@ class KunenaConfig extends JObject {
 	public $iptracking = 1;
 
 	public $rss_feedburner_url = '';
-	
-	
+
+	public $pollchangevote = 1;
+
+
 	public function __construct() {
 		parent::__construct ();
 	}

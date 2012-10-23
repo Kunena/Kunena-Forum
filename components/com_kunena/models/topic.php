@@ -122,7 +122,9 @@ class KunenaModelTopic extends KunenaModel {
 			// First collect ids and users
 			$userlist = array();
 			$this->threaded = array();
-			foreach($this->messages AS $message){
+			$location = $this->getState ( 'list.start');
+			foreach ($this->messages AS $message) {
+				$message->replynum = ++$location;
 				if ($threaded) {
 					// Threaded ordering
 					if (isset($this->messages[$message->parent])) {

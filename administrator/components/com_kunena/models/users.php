@@ -174,31 +174,17 @@ class KunenaAdminModelUsers extends KunenaModel {
 	}
 
 	public function getMovecatslist() {
-		$db = JFactory::getDBO ();
-
-		$db->setQuery ( "SELECT id,parent_id,name FROM #__kunena_categories" );
-		$catsList = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		$category = array();
-		foreach ($catsList as $cat) {
-			if ($cat->parent_id) {
-				$category[] = JHTML::_('select.option', $cat->id, '...'.$cat->name);
-			} else {
-				$category[] = JHTML::_('select.option', $cat->id, $cat->name);
-			}
-		}
-		$catslist = JHTML::_('select.genericlist', $category, 'cid[]', 'class="inputbox" multiple="multiple" size="5"', 'value', 'text');
-		return $catslist;
+		return JHTML::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox"', 'value', 'text');
 	}
 
 	public function getMoveuser() {
 		$db = JFactory::getDBO ();
 
-		$userid = $this->app->getUserState ( 'kunena.usermove.userid');
+		$userids = (array) $this->app->getUserState ( 'kunena.usermove.userids');
+		if (!$userids) return $userids;
 
-		$userid = implode(',', $userid);
-		$db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userid.")" );
+		$userids = implode(',', $userids);
+		$db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userids.")" );
 		$userids = $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 

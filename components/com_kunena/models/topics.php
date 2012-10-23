@@ -54,10 +54,10 @@ class KunenaModelTopics extends KunenaModel {
 		} else {
 			if (JFactory::getDocument()->getType() != 'feed') {
 				// Get configuration from menu item
-				$latestcategory = $params->get('topics_categories', '');
+				$latestcategory = (array) $params->get('topics_categories', '');
 				$latestcategory_in = $params->get('topics_catselection', '');
 				// Default to global configuration
-				if ($latestcategory == '') $latestcategory = $this->config->latestcategory;
+				if (in_array('', $latestcategory, true)) $latestcategory = $this->config->latestcategory;
 				if ($latestcategory_in == '') $latestcategory_in = $this->config->latestcategory_in;
 			} else {
 				if(!empty($this->config->rss_excluded_categories)) {

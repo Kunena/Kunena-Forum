@@ -50,8 +50,7 @@ class KunenaAdminViewUsers extends KunenaView {
 	function displayMove() {
 		$this->setToolBarMove();
 		$this->catslist = $this->get('movecatslist');
-		$this->userid = $this->app->getUserState ( 'kunena.usermove.userid');
-		$this->user = $this->get('moveuser');
+		$this->users = $this->get('moveuser');
 		$this->display();
 	}
 

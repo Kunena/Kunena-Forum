@@ -1090,7 +1090,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		$config = KunenaFactory::getConfig();
 		$poll = $this->getPoll();
 		$votes = $poll->getMyVotes($user);
-		if ($votes && $config->pollallowvoteone && !$config->pollchangevote) {
+		if ($votes && $config->pollallowvoteone) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE' );
 		}
 		if ($votes >= $config->pollnbvotesbyuser) {

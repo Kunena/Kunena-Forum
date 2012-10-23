@@ -381,9 +381,6 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$lists ['iptracking'] = JHTML::_('select.genericlist', $yesno, 'cfg_iptracking', 'class="inputbox" size="1"', 'value', 'text', $this->config->iptracking);
 
-		// Added new option into Kunena 2.0.2
-		$lists ['pollchangevote'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollchangevote', 'class="inputbox" size="1"', 'value', 'text', $this->config->pollchangevote);
-
 		return $lists;
 	}
 }

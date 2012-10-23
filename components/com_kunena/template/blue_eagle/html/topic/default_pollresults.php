@@ -49,10 +49,6 @@ $row = 0;
 									<a href="<?php echo CKunenaLink::GetPollURL('vote', $this->topic->id, $this->category->id);?>">
 										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
 									</a>
-									<?php elseif( $this->config->pollchangevote ) : ?>
-									<a href="<?php echo CKunenaLink::GetPollURL('changevote', $this->topic->id, $this->category->id); ?>">
-										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>
-									</a>
 									<?php endif; ?>
 									<?php if( $this->me->isModerator($this->topic->getCategory()) ) : ?>
 									<a href="<?php echo KunenaRoute::_("index.php?option=com_kunena&view=topic&id={$this->topic->id}&catid={$this->category->id}&pollid={$this->poll->id}&task=resetvotes&".JUtility::getToken() .'=1') ?>"><?php echo JText::_('COM_KUNENA_TOPIC_VOTE_RESET'); ?></a>

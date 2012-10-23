@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php if ($this->canPublish()) echo JHTML::_('kunenagrid.published', $this->row, $this->announcement->published) ?>
 			</td>
 			<td class="kcol-mid kcol-annedit">
-				<?php if ($this->canEdit()) echo JHTML::_('kunenagrid.task', $this->row, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'), 'edit') ?>
+				<?php if ($this->canEdit()) echo JHTML::_('kunenagrid.task', $this->announcement->id, 'tick.png', JText::_('COM_KUNENA_ANN_EDIT'), 'edit') ?>
 			</td>
 			<td class="kcol-mid kcol-anndelete">
 				<?php if ($this->canDelete()) echo JHTML::_('kunenagrid.task', $this->row, 'publish_x.png', JText::_('COM_KUNENA_ANN_DELETE'), 'delete') ?>

@@ -888,5 +888,5 @@ window.addEvent('domready', function(){
 				hideElement.setStyle('display', 'none');
 			}
 		});
-	});
+	});	
 });

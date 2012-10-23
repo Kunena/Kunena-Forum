@@ -59,7 +59,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile {
 		$db = JFactory::getDBO ();
 		$query = "SELECT userid AS id, profileviews AS count FROM #__alpha_userpoints WHERE profileviews>0 ORDER BY profileviews DESC";
 		$db->setQuery ( $query, 0, $limit );
-		$top = $db->loadObjectList ();
+		$top = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
 		return $top;
 	}

@@ -50,10 +50,6 @@ $row = 0;
 								<a href="<?php echo $this->getPollURL('vote', $this->topic->id, $this->category->id);?>">
 								<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
 								</a>
-								<?php else : ?>
-								<a href="<?php echo $this->getPollURL('changevote', $this->topic->id, $this->category->id); ?>">
-								<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>
-								</a>
 								<?php endif; ?>
 							</li>
 							<li>

@@ -55,7 +55,7 @@ JHTML::_('behavior.tooltip');
 									</div>
 									<p>
 									<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER') ?>:
-										<strong><?php echo CKunenaLink::GetModerateUserLink( intval($this->message->userid), $this->escape($this->message->name).' ('.intval($this->message->userid).')' ) ?></strong>
+										<strong><?php echo JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=moderateuser&userid='.intval($this->message->userid), $this->escape($this->message->name).' ('.intval($this->message->userid).')' ,$this->escape($this->message->name).' ('.intval($this->message->userid).')' ); ?></strong>
 									</p>
 									<ul>
 										<li>

@@ -733,13 +733,20 @@ class KunenaViewTopic extends KunenaView {
 		$cachekey = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 
+		$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid='.intval($this->category->id).'&id='.intval($this->message->thread).'&mesid='.intval($this->message->id),  JText::_('COM_KUNENA_REPORT'),  JText::_('COM_KUNENA_REPORT') );
+
 		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents) {
-
 			//Show admins the IP address of the user:
 			if ($this->category->authorise('admin') || ($this->category->authorise('moderate') && !$this->config->hide_ip)) {
-				$this->ipLink = $this->message->ip ? CKunenaLink::GetMessageIPLink ( $this->message->ip ) : null;
+				if ( $this->message->ip ) {
+					if ( ! empty ( $this->message->ip ) ) $this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip . '" target="_blank"> IP: ' . $this->message->ip . '</a>';
+					else $this->ipLink = '&nbsp;';
+				} else {
+					$this->ipLink = null;
+				}
 			}
+
 			$this->signatureHtml = KunenaHtmlParser::parseBBCode ( $this->profile->signature, null, $this->config->maxsig );
 			$this->attachments = $this->message->getAttachments();
 
@@ -938,5 +945,13 @@ class KunenaViewTopic extends KunenaView {
 			// TODO: set keywords and description
 
 		}
+	}
+
+	public function getPollURL($do, $id = NULL, $catid) {
+		$idstring = '';
+		if ($id)
+			$idstring .= "&id=$id";
+		$catidstr = "&catid=$catid";
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view=poll&do={$do}{$catidstr}{$idstring}" );
 	}
 }

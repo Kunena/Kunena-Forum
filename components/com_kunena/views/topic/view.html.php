@@ -737,6 +737,15 @@ class KunenaViewTopic extends KunenaView {
 
 		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents) {
+			//Show admins the IP address of the user:
+			if ($this->category->authorise('admin') || ($this->category->authorise('moderate') && !$this->config->hide_ip)) {
+				if ( $this->message->ip ) {
+					if ( ! empty ( $this->message->ip ) ) $this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip . '" target="_blank"> IP: ' . $this->message->ip . '</a>';
+					else $this->ipLink = '&nbsp;';
+				} else {
+					$this->ipLink = null;
+				}
+			}
 
 			$this->signatureHtml = KunenaHtmlParser::parseBBCode ( $this->profile->signature, null, $this->config->maxsig );
 			$this->attachments = $this->message->getAttachments();

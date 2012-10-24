@@ -27,7 +27,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 							<input type="hidden" name="view" value="users" />
 							<input type="hidden" name="task" value="" />
 							<input type="hidden" name="boxchecked" value="1" />
-							<input type="hidden" name="uid[]" value="<?php echo $this->userid; ?>" />
 							<?php echo JHTML::_( 'form.token' ); ?>
 
 							<?php
@@ -38,8 +37,8 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						<td><strong><?php echo JText::_('COM_KUNENA_MOVEUSERMESSAGES_USERS_CURRENT'); ?></strong>
 						<ol>
 						<?php
-						foreach($this->user as $id){
-							echo '<li>'.$this->escape($id->username).' ('.JText::_('COM_KUNENA_TRASH_AUTHOR_USERID').' '.$this->escape($id->id).')</li> ';
+						foreach($this->users as $user) {
+							echo '<li>'.$this->escape($user->username).' ('.JText::_('COM_KUNENA_TRASH_AUTHOR_USERID').' '.$this->escape($user->id).')</li> ';
 						}
 
 						?>

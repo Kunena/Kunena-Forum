@@ -389,6 +389,8 @@
 				WHERE t.poll_id>0 AND p.id IS NULL</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+			<query>ALTER TABLE `#__kunena_users` MODIFY `view` varchar(8) NOT NULL default '' AFTER `userid`</query>
+			<query>UPDATE `#__kunena_users` SET view=''</query>
 		</version>
 	</upgrade>
 </comupgrade>

@@ -30,9 +30,9 @@ if ($this->message->modified_time) {
 		<?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
 	</span>
 	<?php endif ?>
-	<?php if ($this->config->reportmsg && $this->me->exists()) :?>
+	<?php if (!empty($this->reportMessageLink)) :?>
 	<span class="kmessage-informmarkup"><?php echo $this->reportMessageLink ?></span>
-	<?php if (!empty ( $this->ipLink )) : ?>
+	<?php if (!empty($this->ipLink)) : ?>
 	<span class="kmessage-informmarkup"><?php echo $this->ipLink ?></span>
 	<?php endif ?>
 	<?php endif ?>

@@ -54,8 +54,12 @@ JHTML::_('behavior.tooltip');
 										<div class="clr"></div>
 									</div>
 									<p>
-									<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER') ?>:
-										<strong><?php echo CKunenaLink::GetModerateUserLink( intval($this->message->userid), $this->escape($this->message->name).' ('.intval($this->message->userid).')' ) ?></strong>
+										<?php if ($this->userLink) :
+										echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?>:
+										<strong>
+											<?php echo $this->userLink; ?>
+										</strong>
+										<?php endif; ?>
 									</p>
 									<ul>
 										<li>

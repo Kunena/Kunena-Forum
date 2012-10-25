@@ -496,18 +496,22 @@ abstract class KunenaRoute {
 			return 0;
 		}
 		$catid = (int) $uri->getVar('catid');
-		switch ($item->query['view']) {
-			case 'home':
-				$matchcount = self::checkHome($item, $catid);
-				break;
-			case 'category':
-			case 'topic':
-				$matchcount = self::checkCategory($item, $uri);
-				break;
-			default:
-				$matchcount = self::check($item, $uri);
+		if ( !empty($item->query['view']) ) {
+			switch ($item->query['view']) {
+				case 'home':
+					$matchcount = self::checkHome($item, $catid);
+					break;
+				case 'category':
+				case 'topic':
+					$matchcount = self::checkCategory($item, $uri);
+					break;
+				default:
+					$matchcount = self::check($item, $uri);
+			}
+			return $matchcount;
+		} else {
+			return 1;
 		}
-		return $matchcount;
 	}
 
 	protected static function checkHome($item, $catid) {

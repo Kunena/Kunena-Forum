@@ -457,6 +457,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->replies = $db->loadResult ();
 			if (KunenaError::checkDatabaseError()) return;
 		}
+		$username = $this->message->getAuthor()->getName();
+		$this->userLink = $this->message->userid ? JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&layout=moderate&userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
 
 		$this->display($tpl);
 	}

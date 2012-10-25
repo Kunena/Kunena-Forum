@@ -63,13 +63,11 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 					<div class="kmessage-msgtext"><?php echo KunenaHtmlParser::stripBBCode ($this->message->message, 300) ?></div>
 				</div>
 				<div>
-					<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER');
-					if ( $this->message->userid) : ?>:
+					<?php if ($this->userLink) :
+					echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?>:
 					<strong>
-						<?php echo JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=moderateuser&userid='.intval($this->message->userid), $this->escape($this->message->name).' ('.intval($this->message->userid).')' ,$this->escape($this->message->name).' ('.intval($this->message->userid).')' ); ?>
+						<?php echo $this->userLink; ?>
 					</strong>
-					<?php else : ?>:
-					<strong><?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS'); ?></strong>
 					<?php endif; ?>
 				</div>
 				<?php if (!empty($this->replies)) : ?>

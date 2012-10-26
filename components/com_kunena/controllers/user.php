@@ -103,7 +103,7 @@ class KunenaControllerUser extends KunenaController {
 	function ban() {
 		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 		if(!$user->exists() || !JRequest::checkToken()) {
-			$this->app->redirect ( $user->getUrl(false), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( $user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 			return;
 		}
 
@@ -219,7 +219,7 @@ class KunenaControllerUser extends KunenaController {
 
 	function login() {
 		if(!JFactory::getUser()->guest || !JRequest::checkToken()) {
-			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 		}
 
 		$username = JRequest::getString ( 'username', '', 'POST' );
@@ -233,7 +233,7 @@ class KunenaControllerUser extends KunenaController {
 
 	function logout() {
 		if(!JRequest::checkToken('request')) {
-			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 		}
 
 		$login = KunenaLogin::getInstance();

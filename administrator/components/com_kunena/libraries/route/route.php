@@ -200,8 +200,10 @@ abstract class KunenaRoute {
 				self::$filtered[$string] = JApplication::stringURLSafe($string);
 			} else {
 				// Joomla 1.5
-				self::$filtered[$string] =  self::$config->get('sefutf8') ? self::stringURLUnicodeSlug($string) : JFilterOutput::stringURLSafe($string);
+				self::$filtered[$string] = self::$config->get('sefutf8') ? self::stringURLUnicodeSlug($string) : JFilterOutput::stringURLSafe($string);
 			}
+			// Remove beginning and trailing "whitespace", fixes #1130 where category alias creation fails on error: Duplicate entry '-'.
+			self::$filtered[$string] = trim(self::$filtered[$string], '-_ ');
 			if ($default && empty(self::$filtered[$string])) self::$filtered[$string] = $default;
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;

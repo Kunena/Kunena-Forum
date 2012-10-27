@@ -46,7 +46,7 @@ class CKunenaLink {
 
 	static function GetRSSURL($params = '', $xhtml = true) {
 		$config = KunenaFactory::getConfig ();
-		if (($config->rss_feedburner_url) && ($params =='')) {            // do it only for the basic generic rss. 
+		if (($config->rss_feedburner_url) && ($params =='')) {            // do it only for the basic generic rss.
 			return $config->rss_feedburner_url;
 		} else {
 			return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
@@ -63,8 +63,7 @@ class CKunenaLink {
 	}
 
 	static function GetSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '') {
-		jimport ( 'joomla.environment.request' );
-		return self::GetHrefLink ( htmlspecialchars(JRequest::getURI (), ENT_COMPAT, 'UTF-8'), $name, '', $rel, $class, $anker );
+		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker .'"'. ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
 	}
 
 	static function GetReportMessageLink($catid, $id, $name, $rel = 'nofollow', $class = '', $title = '') {

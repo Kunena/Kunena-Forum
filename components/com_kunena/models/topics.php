@@ -54,8 +54,12 @@ class KunenaModelTopics extends KunenaModel {
 		} else {
 			if (JFactory::getDocument()->getType() != 'feed') {
 				// Get configuration from menu item
-				$latestcategory = (array) $params->get('topics_categories', '');
+				$latestcategory = $params->get('topics_categories', '');
 				$latestcategory_in = $params->get('topics_catselection', '');
+
+				// Make sure that category list is an array.
+				if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
+
 				// Default to global configuration
 				if (in_array('', $latestcategory, true)) $latestcategory = $this->config->latestcategory;
 				if ($latestcategory_in == '') $latestcategory_in = $this->config->latestcategory_in;

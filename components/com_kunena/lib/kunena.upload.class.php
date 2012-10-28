@@ -106,6 +106,8 @@ class CKunenaUpload {
 			$result['width'] = $this->imageInfo->width;
 			$result['height'] = $this->imageInfo->height;
 			$result['mime'] = $this->imageInfo->mime;
+		} else {
+			$result['mime'] = '';
 		}
 		if ($this->error) {
 			$result['error'] = $this->error;

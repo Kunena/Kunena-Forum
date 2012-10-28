@@ -138,10 +138,10 @@ class KunenaController extends JController {
 				$common->setModel ( $model, true );
 				$view->ktemplate = $common->ktemplate = KunenaFactory::getTemplate();
 				$view->common = $common;
-
-				// Set the view layout.
-				$view->setLayout ( $lName );
 			}
+
+			// Set the view layout.
+			$view->setLayout ( $lName );
 
 			// Get the appropriate model for the view.
 			$model = $this->getModel ( $vName );

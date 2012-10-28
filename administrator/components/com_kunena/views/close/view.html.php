@@ -17,8 +17,7 @@ class KunenaAdminViewClose extends KunenaView {
 	/**
 	 * Display the view
 	 */
-	public function display($tpl = null)
-	{
+	public function displayDefault($tpl = null) {
 		// Close modal window.
 		JFactory::getDocument()->addScriptDeclaration('
 			window.parent.location.href=window.parent.location.href;

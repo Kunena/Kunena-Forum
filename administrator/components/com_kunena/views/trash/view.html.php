@@ -24,9 +24,10 @@ class KunenaAdminViewTrash extends KunenaView {
 	}
 
 	function displayPurge() {
-		$this->setToolBarPurge();
 		$this->purgeitems = $this->get('PurgeItems');
 		$this->md5Calculated = $this->get('Md5');
+
+		$this->setToolBarPurge();
 		$this->display();
 	}
 

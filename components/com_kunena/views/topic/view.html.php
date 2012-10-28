@@ -445,7 +445,11 @@ class KunenaViewTopic extends KunenaView {
 		$options = array ();
 		$cat_params = array ('sections'=>0, 'catid'=>0);
 		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories');
-		if (isset($this->message)) $this->user = KunenaFactory::getUser($this->message->userid);
+		if (isset($this->message)) {
+			$this->user = KunenaFactory::getUser($this->message->userid);
+			$username = $this->message->getAuthor()->getName();
+			$this->userLink = $this->message->userid ? JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&layout=moderate&userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
+		}
 
 		if ($this->mesid) {
 			// Get thread and reply count from current message:
@@ -457,8 +461,6 @@ class KunenaViewTopic extends KunenaView {
 			$this->replies = $db->loadResult ();
 			if (KunenaError::checkDatabaseError()) return;
 		}
-		$username = $this->message->getAuthor()->getName();
-		$this->userLink = $this->message->userid ? JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&layout=moderate&userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
 
 		$this->display($tpl);
 	}

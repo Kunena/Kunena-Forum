@@ -8,6 +8,9 @@ authors:
 license:
   - MIT-style license
 
+version
+  -2.2
+
 requires:
   core/1.2.1:   "*"
 
@@ -46,10 +49,11 @@ var LazyLoad = new Class({
 		var axis = (this.options.mode == "vertical" ? "y": "x");
 		
 		// Calculate the offset
-		var offset = (this.container != document.body && this.container != document.body ? this.container : "");
+		var offset = (this.container != window && this.container != document.body ? this.container : "");
 
 		// Find elements remember and hold on to
-		this.elements = this.elements.filter(function(el) {
+		// For Kunena : This has been modified to apply on only on specified CSS class and to don't break others images 
+		this.elements = $$(this.options.classtoApply).filter(function(el) {
 			// Make opacity 0 if fadeIn should be done
 			if(this.options.useFade) el.setStyle("opacity", 0);
 			// Get the image position

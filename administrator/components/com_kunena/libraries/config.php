@@ -212,9 +212,6 @@ class KunenaConfig extends JObject {
 	public $attachment_limit = 8;
 	public $pickup_category = 0;
 	public $article_display = 'intro';
-<<<<<<< HEAD
-	public $lazyload = 0;
-=======
 	public $send_emails = 1;
 	public $stopforumspam_key = '';
 	public $fallback_english = 1;
@@ -224,7 +221,7 @@ class KunenaConfig extends JObject {
 	public $iptracking = 1;
 	// New for 2.0.3
 	public $rss_feedburner_url = '';
->>>>>>> upstream/master
+	public $lazyload = 0;
 
 	public function __construct() {
 		parent::__construct ();

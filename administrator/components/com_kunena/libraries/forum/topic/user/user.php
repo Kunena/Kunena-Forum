@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Topic.User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -34,8 +34,8 @@ class KunenaForumTopicUser extends JObject {
 		// Lets bind the data
 		$this->setProperties ( $table->getProperties () );
 		$this->_exists = false;
-		$this->topic_id = $topic->exists() ? $topic->id : null;
-		$this->category_id = $topic->exists() ? $topic->category_id : null;
+		$this->topic_id = $topic->id;
+		$this->category_id = $topic->category_id;
 		$this->user_id = KunenaUserHelper::get($user)->userid;
 	}
 
@@ -198,10 +198,10 @@ class KunenaForumTopicUser extends JObject {
 					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
 					GROUP BY userid, thread";
 			$this->_db->setQuery($query, 0, 1);
-			$info = $this->_db->loadObject ();
+			$info = $this->_db->loadAssocList();
 			if (KunenaError::checkDatabaseError ())
 				return;
-			$this->bind($info);
+			if ($info) $this->bind($info);
 		}
 		return $this->save();
 	}

@@ -44,12 +44,28 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	protected $layout = 'topic';
 
 	/**
+	 * The mime type of the content the adapter indexes.
+	 *
+	 * @var    string
+	 * @since  2.5
+	 */
+	protected $mime = 'txt';
+
+	/**
 	 * The type of content that the adapter indexes.
 	 *
 	 * @var    string
 	 * @since  2.5
 	 */
 	protected $type_title = 'Forum Post';
+
+	/**
+	 * The field the published state is stored in.
+	 *
+	 * @var    string
+	 * @since  2.5
+	 */
+	protected $state_field = 'published';
 
 	/**
 	 * Method to reindex the link information for an item that has been saved.
@@ -66,19 +82,12 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @throws  Exception on database error.
 	 */
 	public function onFinderBeforeSave($context, $row, $isNew) {
-		// We only want to handle articles here
-		if ($context == 'com_kunena.message') {
-			// Query the database for the old access level if the item isn't new
-			if (!$isNew) {
-				$query = $this->db->getQuery(true);
-				$query->select($this->db->quoteName('access'));
-				$query->from($this->db->quoteName('#__content'));
-				$query->where($this->db->quoteName('id') . ' = ' . (int)$row->id);
-				$this->db->setQuery($query);
-
-				// Store the access level to determine if it changes
-				$this->old_access = $this->db->loadResult();
-			}
+		// If a category will be change, we want to see, if the accesstype and access level has changed
+		if(($row instanceof TableKunenaCategories) && !$isNew){
+			$old_table = clone($row);
+			$old_table->load();
+			$this->old_cataccess = $old_table->access;
+			$this->old_cataccesstype = $old_table->accesstype;
 		}
 
 		return true;
@@ -97,35 +106,58 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @throws  Exception on database error.
 	 */
 	public function onFinderAfterSave($context, $row, $isNew) {
-		// We only want to handle Kunena messages in here
-		if ($context == 'com_kunena.message') {
-			// Check if the access levels are different
-			if (!$isNew && $this->old_access != $row->access) {
-				$sql = clone($this->_getStateQuery());
-				$sql->where('a.id = ' . (int) $row->id);
+		//If a category has been changed, we want to check if the access has been changed
+		if(($row instanceof TableKunenaCategories) && !$isNew){
+			//Access type of Category is still not the joomla access level system. 
+			//We didn't show them before and we don't show them now. No reindex necessary
+			if($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level') return true;
+			//Access level did not change. We do not need to reindex
+			if($row->accesstype == 'joomla.level' && $this->old_cataccesstype == 'joomla.level' && $row->access == $this->old_cataccess) return true;
 
-				// Get the access level.
-				$this->db->setQuery($sql);
-				$item = $this->db->loadObject();
-
-				// Set the access level.
-				$temp = max($row->access, $item->cat_access);
-
-				// Update the item.
-				$this->change((int) $row->id, 'access', $temp);
+			//Well, seems like an access level change has occured. So we need to reindex all messages within this category
+			$messages = $this->getMessagesByCategory($row->id);
+			foreach($messages as $message){
+				$this->reindex($message->id);
 			}
-
-			// Run the setup method.
-			$this->setup();
-
-			// Get the item.
-			$item = $this->getItem($row->id);
-
-			// Index the item.
-			$this->index($item);
-
+			return true;
+		}
+		// We only want to handle Kunena messages in here
+		if ($row instanceof TableKunenaMessages) {
+			// Reindex the item.
+			$this->reindex($row->id);
 		}
 
+		return true;
+	}
+	
+	/**
+	 * Method to remove the link information for items that have been deleted.
+	 * Since Messages are getting deleted in process of deleting categories or messages, we 
+	 * delete the finderresults before those objects are deleted.
+	 *
+	 * @param   string  $context  The context of the action being performed.
+	 * @param   JTable  $table    A JTable object containing the record to be deleted
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   2.5
+	 * @throws  Exception on database error.
+	 */
+	public function onFinderBeforeDelete($context, $table)
+	{
+		if($table instanceof TableKunenaCategories){
+			$messages = $this->getMessagesByCategory($table->id);
+			foreach($messages as $message){
+				$this->remove($message->id);
+			}
+			return true;
+		}elseif($table instanceof TableKunenaTopics){
+			$messages = $this->getMessagesByTopic($table->id);
+			foreach($messages as $message){
+				$this->remove($message->id);
+			}
+			return true;
+		}
 		return true;
 	}
 
@@ -142,15 +174,60 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 */
 	public function onFinderAfterDelete($context, $table)
 	{
-		if ($context == 'com_kunena.message') {
-			$id = $table->id;
-		} elseif ($context == 'com_finder.index') {
-			$id = $table->link_id;
-		} else {
+		if($context == 'com_finder.index'){
+			return $this->remove($table->link_id);
+		}elseif($table instanceof TableKunenaMessages){
+			return $this->remove($table->id);
+		}
+		return true;
+	}
+
+	/**
+	 * Method to index a batch of content items. This method can be called by
+	 * the indexer many times throughout the indexing process depending on how
+	 * much content is available for indexing. It is important to track the
+	 * progress correctly so we can display it to the user.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   2.5
+	 * @throws  Exception on error.
+	 */
+	public function onBuildIndex()
+	{
+		JLog::add('FinderIndexerAdapter::onBuildIndex', JLog::INFO);
+
+		// Get the indexer and adapter state.
+		$iState = FinderIndexer::getState();
+		$aState = $iState->pluginState[$this->context];
+
+		// Check the progress of the indexer and the adapter.
+		if ($iState->batchOffset == $iState->batchSize || $aState['offset'] == $aState['total'])
+		{
 			return true;
 		}
-		// Remove the items.
-		return $this->remove($id);
+
+		// Get the batch offset and size.
+		$offset = (int) $aState['offset'];
+		$limit = (int) ($iState->batchSize - $iState->batchOffset);
+
+		// Get the content items to index.
+		$items = $this->getItems($offset, $limit);
+
+		// Iterate through the items and index them.
+		foreach ($items as $item) $this->index($item);
+
+		// Adjust the offsets.
+		$iState->batchOffset = $iState->batchSize;
+		$iState->totalItems -= $item->id - $offset;
+
+		// Update the indexer state.
+		$aState['offset'] = $item->id;
+		$iState->pluginState[$this->context] = $aState;
+		FinderIndexer::setState($iState);
+
+		unset($items, $item);
+		return true;
 	}
 
 	/**
@@ -168,21 +245,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		if (JComponentHelper::isEnabled($this->extension) == false) {
 			return;
 		}
-
-		// Translate the access group to an access level.
-		// FIXME:
-		$item->access = $item->cat_access = 1; // $this->getAccessLevel($item->cat_access);
-
-		// Set the language.
-		$item->language = FinderIndexerHelper::getDefaultLanguage();
-
-		// Trigger the onContentPrepare event.
-		$item->body = $item->summary = FinderIndexerHelper::prepareContent(KunenaHtmlParser::parseBBCode($item->body));
-
-		// Build the necessary route and path information.
-		$item->url = $this->getURL($item, $this->extension, $this->layout);
-		$item->route = $item->url.'&Itemid='.KunenaRoute::getItemId($item->url);
-		$item->path = FinderIndexerHelper::getContentPath($item->route);
 
 		// Add the meta-data processing instructions.
 		$item->addInstruction(FinderIndexer::META_CONTEXT, 'author');
@@ -216,39 +278,157 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @since   2.5
 	 */
 	protected function setup() {
+		// Initialize CLI
+		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+		if (file_exists($api)) {
+			require_once $api;
+		}
+
 		// Check if Kunena has been installed.
-		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::installed()) {
+		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible('2.0') || ! KunenaForum::installed()) {
 			return false;
 		}
+		KunenaForum::setup();
 		return true;
 	}
 
 	/**
-	 * Method to get the SQL query used to retrieve the list of content items.
+	 * Method to get the number of content items available to index.
 	 *
-	 * @param   mixed  $sql  A JDatabaseQuery object or null.
-	 *
-	 * @return  JDatabaseQuery  A database object.
+	 * @return  integer  The number of content items available to index.
 	 *
 	 * @since   2.5
+	 * @throws  Exception on database error.
 	 */
-	protected function getListQuery($sql = null)
+	protected function getContentCount() {
+		JLog::add('FinderIndexerAdapter::getContentCount', JLog::INFO);
+
+		// Get the list query.
+		$sql = $this->db->getQuery(true);
+		$sql->select('MAX(id)')->from('#__kunena_messages');
+
+		// Get the total number of content items to index.
+		$this->db->setQuery($sql);
+		$return = (int) $this->db->loadResult();
+
+		// Check for a database error.
+		if ($this->db->getErrorNum())
+		{
+			// Throw database error exception.
+			throw new Exception($this->db->getErrorMsg(), 500);
+		}
+
+		return $return;
+	}
+
+
+	/**
+	 * Method to get a content item to index.
+	 *
+	 * @param   integer  $id  The id of the content item.
+	 *
+	 * @return  FinderIndexerResult  A FinderIndexerResult object.
+	 *
+	 * @since   2.5
+	 * @throws  Exception on database error.
+	 */
+	protected function getItem($id)
 	{
-		// Check if we can use the supplied SQL query.
-		$sql = is_a($sql, 'JDatabaseQuery') ? $sql : $this->db->getQuery(true);
-		$sql->select('m.id, m.parent, m.thread, m.catid, m.subject AS title');
-		$sql->select('FROM_UNIXTIME(m.time, \'%Y-%m-%d %H:%i:%s\') AS start_date');
-		$sql->select('m.name AS author, t.message AS summary, t.message AS body');
-		$sql->select('c.name AS category, 1 AS state, c.published AS cat_state, c.pub_access AS access, c.pub_access AS cat_access');
-		$sql->from('#__kunena_messages AS m');
-		$sql->join('INNER', '#__kunena_messages_text AS t ON t.mesid = m.id');
-		$sql->join('INNER', '#__kunena_categories AS c ON c.id = m.catid');
-		$sql->join('LEFT', '#__users AS u ON u.id = m.userid');
+		JLog::add('FinderIndexerAdapter::getItem', JLog::INFO);
 
-		// Only include posts that have been approved.
-		$sql->where('m.hold=0 AND m.moved=0');
+		$message = KunenaForumMessageHelper::get($id);
 
-		return $sql;
+		// Convert the item to a result object.
+		$item = $this->createIndexerResult($message);
+		unset($message);
+		//Why should we cleanup here? Maybe we need the instances later on?!
+		//KunenaForumMessageHelper::cleanup();
+
+		return $item;
+	}
+
+	/**
+	 * Method to get a list of content items to index.
+	 *
+	 * @param   integer         $offset  The list offset.
+	 * @param   integer         $limit   The list limit.
+	 * @param   JDatabaseQuery  $sql     A JDatabaseQuery object. [optional]
+	 *
+	 * @return  array  An array of FinderIndexerResult objects.
+	 *
+	 * @since   2.5
+	 * @throws  Exception on database error.
+	 */
+	protected function getItems($offset, $limit, $sql = null)
+	{
+		JLog::add("FinderIndexerAdapter::getItems({$offset}, {$limit})", JLog::INFO);
+
+		// Get the list query.
+		$sql = $this->db->getQuery(true);
+		$sql->select('id')->from('#__kunena_messages')->where('id>'.$this->db->quote($offset));
+
+		// Get the content items to index.
+		$this->db->setQuery($sql, 0, $limit);
+		$ids = $this->db->loadColumn();
+		// Check for a database error.
+		if ($this->db->getErrorNum())
+		{
+			// Throw database error exception.
+			throw new Exception($this->db->getErrorMsg(), 500);
+		}
+
+		// Convert the items to result objects.
+		$messages = KunenaForumMessageHelper::getMessages($ids, 'none');
+		$items = array();
+		foreach ($messages as &$message)
+		{
+			$items[] = $this->createIndexerResult($message);
+		}
+		KunenaForumMessageHelper::cleanup();
+		KunenaRoute::cleanup();
+
+		return $items;
+	}
+
+	protected function createIndexerResult($message) {
+		// Convert the item to a result object.
+		$item = new FinderIndexerResult;
+		$item->id = $message->id;
+		$item->catid = $message->catid;
+
+		// Set title context.
+		$item->title = $message->subject;
+
+		// Build the necessary url, route, path and alias information.
+		$item->url = $this->getUrl($message->id, $this->extension, $this->layout);
+		$item->route = $item->url.'&Itemid='.KunenaRoute::getItemId($item->url);
+		$item->path = FinderIndexerHelper::getContentPath($item->url);//route);
+		$item->alias = KunenaRoute::stringURLSafe($message->subject);
+
+		// Set body context.
+		$item->body = KunenaHtmlParser::stripBBCode($message->message);
+		$item->summary = $item->body;
+
+		// Set other information.
+		$item->published = intval($message->hold == 0);
+		// TODO: add topic state
+		//$item->state = intval($message->getCategory()->published == 1);
+		$item->state = $item->published;
+		$item->language = '*';
+
+		// TODO: add access control
+		$item->access =  $this->getAccessLevel($item);
+
+		// Set the item type.
+		$item->type_id = $this->type_id;
+
+		// Set the mime type.
+		$item->mime = $this->mime;
+
+		// Set the item layout.
+		$item->layout = $this->layout;
+
+		return $item;
 	}
 
 	/**
@@ -258,7 +438,94 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @param	mixed		The id of the item.
 	 * @return	string		The URL of the item.
 	 */
-	protected function getURL($item, $extension, $view) {
+	protected function getUrl($id, $extension, $view) {
+		require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/message/helper.php';
+		$item = KunenaForumMessageHelper::get($id);
 		return "index.php?option=com_kunena&view={$view}&catid={$item->catid}&id={$item->thread}&mesid={$item->id}";
+	}
+
+	/**
+	 * Method to translate the native content states into states that the
+	 * indexer can use.
+	 *
+	 * @param   integer  $item      The item state.
+	 * @param   integer  $category  The category state. [optional]
+	 *
+	 * @return  integer  The translated indexer state.
+	 *
+	 * @since   2.5
+	 */
+	protected function translateState($item, $category = null)
+	{
+		// If category is present, factor in its states as well
+		if ($category !== null)
+		{
+			if ($category != 1)
+			{
+				$item = 0;
+			}
+		}
+
+		// Translate the state
+		return intval($item == 1);
+	}
+	protected function getMessagesByCategory($cat_id){
+		static $messages = array();
+		if(!$messages[$cat_id]){
+			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/message/helper.php';
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('m.id');
+			$query->from('#__kunena_messages as m');
+			$query->join('INNER', '#__kunena_categories as c on m.catid = c.id');
+			$query->where('c.id = '.$db->quote($cat_id));
+			$db->setQuery($query);
+			$ids = $db->loadColumn();
+			$messages[$cat_id] = KunenaForumMessageHelper::getMessages($ids);
+		}
+		return $messages[$cat_id];
+	}
+	protected function getMessagesByTopic($topic_id){
+		static $messages = array();
+		if(!$messages[$topic_id]){
+			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/message/message.php';
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('m.*, t.message');
+			$query->from('#__kunena_messages AS m');
+			$query->join('INNER', '#__kunena_messages_text as t ON m.id = t.mesid');
+			$query->where('m.thread = '.$db->quote($topic_id));
+			$db->setQuery($query);
+			$results = $db->loadAssocList();
+			$list = array();
+			foreach($results as $result){
+				$list[] = new KunenaFormMessage($result);
+			}
+			$messages[$topic_id] = $list;
+		}
+		return $messages[$topic_id];
+	}
+	protected function getAccessLevel($item){
+		if(($item instanceof KunenaForumMessage) || ($item instanceof FinderIndexerResult) || ($item instanceof TableKunenaMessages)){
+			if(!$item->catid){
+				return 0;
+			}
+			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/category/helper.php';
+			$category = KunenaForumCategoryHelper::get($item->catid);
+			//@TODO We can't quite handle access restrictions by joomla group or other plugins yet. So we set the access level to 0
+			//This is a todo
+			if($category->accesstype != 'joomla.level'){
+				return 0;
+			}
+			return $category->access;
+		}elseif(($item instanceof TableKunenaCategories) || ($item instanceof KunenaForumCategory)){
+			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/category/helper.php';
+			$category = KunenaForumCategoryHelper::get($item->id);
+			if($category->accesstype != 'joomla.level'){
+				return 0;
+			}
+			return $category->access;
+		}
+		return 0;
 	}
 }

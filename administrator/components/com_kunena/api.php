@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -63,7 +63,8 @@ function KunenaAutoload($class) {
 	if (substr($class, 0, 6) != 'Kunena') return;
 	$file = KPATH_ADMIN . '/libraries' . strtolower(preg_replace( '/([A-Z])/', '/\\1', substr($class, 6)));
 	if (is_dir($file)) {
-		$file .= '/'.array_pop( explode( '/', $file ) );
+		$fileparts = explode( '/', $file );
+		$file .= '/'.array_pop( $fileparts );
 	}
 	$file .= '.php';
 	if (file_exists($file)) {

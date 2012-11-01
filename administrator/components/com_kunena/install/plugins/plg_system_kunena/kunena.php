@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage System
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -27,18 +27,25 @@ class plgSystemKunena extends JPlugin {
 		// Load Kunena API
 		require_once $api;
 
+		// Do not load if Kunena version is not supported or Kunena is not installed
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::installed())) return false;
+
+		$this->loadLanguage('plg_system_kunena.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_system_kunena.sys', KPATH_ADMIN);
+
 		if (version_compare(JVERSION, '1.6','<')) {
 			// Joomla 1.5: Fix bugs and bad performance
 			$lang = JFactory::getLanguage();
 			if (JFactory::getApplication()->isAdmin()) {
 				// Load the missing language files in administration
-				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR);
+				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR) || $lang->load('com_kunena.menu', KPATH_ADMIN);
+				$lang->load('com_kunena.sys', JPATH_ADMINISTRATOR) || $lang->load('com_kunena.sys', KPATH_ADMIN);
 				if (JRequest::getCmd('option')=='com_plugins' && JRequest::getCmd('view')=='plugin' && JRequest::getCmd('task')=='edit') {
 					// Support for J!1.7 .sys language files
 					$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 					$row = JTable::getInstance('plugin');
 					$row->load( (int) $cid[0] );
-					$lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', JPATH_ADMINISTRATOR );
+					$lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', JPATH_ADMINISTRATOR )
+						|| $lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', KPATH_ADMIN );
 				}
 			} else {
 				// Never load language file
@@ -48,6 +55,15 @@ class plgSystemKunena extends JPlugin {
 		}
 
 		parent::__construct ( $subject, $config );
+	}
+
+	/**
+	 * @internal
+	 */
+	public function onKunenaGetConfiguration($context, &$params) {
+		if ($context == 'kunena.configuration') {
+			$params["plg_{$this->_type}_{$this->_name}"] = $this->params;
+		}
 	}
 
 	/**
@@ -68,8 +84,9 @@ class plgSystemKunena extends JPlugin {
 	 *
 	 * @return array of KunenaForumMessage objects
 	 */
-	//
-	public function onKunenaContentPrepare($context, &$items, &$params, $page = 0) {
+// FIXME: function below was totally broken, so it's currently turned off
+/*
+	public function onKunenaPrepare($context, &$items, &$params, $page = 0) {
 		$jcontentevent			= (int) $this->params->get('jcontentevents', false);
 		$jcontentevent_target	= (array) $this->params->get('jcontentevent_target', array('body'));
 
@@ -78,7 +95,14 @@ class plgSystemKunena extends JPlugin {
 
 				// Object KunenaForumTopic
 				case 'kunena.topic':
-					$items = array( $items );
+					if ( in_array('title', $jcontentevent_target) ) {
+						$this->runJoomlaContentEvent( $item->subject, $params, $page );
+					}
+					if ( in_array('body', $jcontentevent_target) ) {
+						$this->runJoomlaContentEvent( $item->first_post_message, $params, $page );
+						$this->runJoomlaContentEvent( $item->last_post_message, $params, $page );
+					}
+					break;
 
 				// Array of KunenaForumTopic
 				case 'kunena.topics':
@@ -88,18 +112,24 @@ class plgSystemKunena extends JPlugin {
 					// Run events on all objects
 					foreach ( $items as $item ) {
 						if ( in_array('title', $jcontentevent_target) ) {
-								$this->runJoomlaContentEvent( $item->subject, $params, $page );
+							$this->runJoomlaContentEvent( $item->subject, $params, $page );
 						}
 						if ( in_array('body', $jcontentevent_target) ) {
-								$this->runJoomlaContentEvent( $item->first_post_message, $params, $page );
-								$this->runJoomlaContentEvent( $item->last_post_message, $params, $page );
+							$this->runJoomlaContentEvent( $item->first_post_message, $params, $page );
+							$this->runJoomlaContentEvent( $item->last_post_message, $params, $page );
 						}
 					}
 					break;
 
 				// Object KunenaForumMessage
 				case 'kunena.message':
-					$items = array( $items );
+					if ( in_array('title', $jcontentevent_target) ) {
+						$this->runJoomlaContentEvent( $items->subject, $params, $page );
+					}
+					if ( in_array('body', $jcontentevent_target) ) {
+						$this->runJoomlaContentEvent( $items->message, $params, $page );
+					}
+					break;
 
 				// Array of KunenaForumMessage
 				case 'kunena.messages':
@@ -120,16 +150,16 @@ class plgSystemKunena extends JPlugin {
 				default:
 			}
 		}
-
 		return $items;
 	}
+*/
 
 
 	/**
 	 * Runs all Joomla content plugins on a single KunenaForumMessage
 	 *
 	 * @access protected
-	 * @see self::onKunenaContentPrepare()
+	 * @see self::onKunenaPrepare()
 	 * @since Kunena 2.0
 	 *
 	 * @param	string	$text		String to run events on
@@ -171,8 +201,8 @@ class plgSystemKunena extends JPlugin {
 			return;
 		}
 		if ($isnew && intval($user ['id'])) {
-			$user = KunenaFactory::getUser(intval($user ['id']));
-			$user->save();
+			$kuser = KunenaFactory::getUser(intval($user ['id']));
+			$kuser->save();
 		}
 
 		/*
@@ -199,5 +229,40 @@ class plgSystemKunena extends JPlugin {
 				WHERE c.id IN ({$subscribedCategories}) AND s.user_id IS NULL";
 		}
 		*/
+	}
+
+	/**
+	 * Prevent downgrades to Kunena 1.7 and older releases
+	 */
+	public function onExtensionBeforeInstall($method, $type, $manifest, $eid) {
+		// We don't want to handle discover install (where there's no manifest provided)
+		if (!$manifest) return;
+		return $this->onExtensionBeforeUpdate($type, $manifest);
+	}
+	/**
+	 * Prevent downgrades to Kunena 1.7 and older releases
+	 */
+	public function onExtensionBeforeUpdate($type, $manifest) {
+		if ($type != 'component') return true;
+
+		// Generate component name
+		$name = strtolower(JFilterInput::getInstance()->clean((string) $manifest->name, 'cmd'));
+		$element = (substr($name, 0, 4) == "com_") ? $name : "com_{$name}";
+		if ($element != 'com_kunena') return true;
+
+		// Kunena 2.0.0-BETA2 and later support this feature in their installer
+		if (version_compare($manifest->version, '2.0.0', '>=')) return true;
+
+		// Check if we can downgrade to the current version
+		if (class_exists('KunenaInstaller') && KunenaInstaller::canDowngrade($manifest->version)) {
+			return true;
+		}
+
+		// Old version detected: emulate failed installation
+		$app = JFactory::getApplication();
+		$app->enqueueMessage(sprintf('Sorry, it is not possible to downgrade Kunena %s to version %s.', KunenaForum::version(), $manifest->version), 'warning');
+		$app->enqueueMessage(JText::_('JLIB_INSTALLER_ABORT_COMP_INSTALL_CUSTOM_INSTALL_FAILURE'), 'error');
+		$app->enqueueMessage(JText::sprintf('COM_INSTALLER_MSG_UPDATE_ERROR', JText::_('COM_INSTALLER_TYPE_TYPE_'.strtoupper($type))));
+		$app->redirect('index.php?option=com_installer');
 	}
 }

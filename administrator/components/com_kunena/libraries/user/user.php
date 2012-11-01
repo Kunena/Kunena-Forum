@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -38,7 +38,6 @@ class KunenaUser extends JObject {
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = KunenaFactory::getConfig ();
-		$this->_session_timeout = time() - $this->_app->getCfg ( 'lifetime', 15 ) * 60;
 	}
 
 	/**
@@ -49,7 +48,7 @@ class KunenaUser extends JObject {
 	 * @return	JUser			The User object.
 	 * @since	1.6
 	 */
-	static public function getInstance($identifier = null, $reload = false) {
+	public static function getInstance($identifier = null, $reload = false) {
 		return KunenaUserHelper::get($identifier, $reload);
 	}
 
@@ -78,7 +77,7 @@ class KunenaUser extends JObject {
 	 * @return	object	The user table object
 	 * @since	1.6
 	 */
-	function getTable($type = 'KunenaUsers', $prefix = 'Table') {
+	public function getTable($type = 'KunenaUsers', $prefix = 'Table') {
 		static $tabletype = null;
 
 		//Set a custom table type is defined
@@ -107,7 +106,7 @@ class KunenaUser extends JObject {
 	 */
 	public function load($id) {
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		// Load the KunenaTableUser object based on the user id
 		$this->_exists = $table->load ( $id );
@@ -129,9 +128,9 @@ class KunenaUser extends JObject {
 	 * @return	boolean True on success
 	 * @since 1.6
 	 */
-	function save($updateOnly = false) {
+	public function save($updateOnly = false) {
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 		$ignore = array('name', 'username', 'email', 'blocked', 'registerDate', 'lastvisitDate');
 		$table->bind ( $this->getProperties (), $ignore );
 		$table->exists ( $this->_exists );
@@ -174,9 +173,9 @@ class KunenaUser extends JObject {
 	 * @return	boolean	True on success
 	 * @since 1.6
 	 */
-	function delete() {
+	public function delete() {
 		// Delete user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		$result = $table->delete ( $this->userid );
 		if (! $result) {
@@ -209,7 +208,7 @@ class KunenaUser extends JObject {
 			if ($this->ordering != '0') {
 				$ordering = $this->ordering == '1' ? 'desc' : 'asc';
 			} else {
-				$ordering = KunenaFactory::getConfig()->default_sort == 'asc' ? 'asc' : 'desc';
+				$ordering = KunenaFactory::getConfig()->get('default_sort') == 'desc' ? 'desc' : 'asc';
 			}
 			if ($ordering != 'asc') {
 				$ordering = 'desc';
@@ -218,14 +217,32 @@ class KunenaUser extends JObject {
 		return $ordering;
 	}
 
-	public function isAdmin($catid = 0) {
-		$acl = KunenaAccess::getInstance();
-		return $acl->isAdmin ( $this, $catid );
+	/**
+	 * Checks if user has administrator permissions in the category.
+	 *
+	 * If no category is given or it doesn't exist, check will be done against global administrator permissions.
+	 *
+	 * @param KunenaForumCategory $category
+	 * @return bool
+	 *
+	 * @since 2.0.0-BETA2
+	 */
+	public function isAdmin(KunenaForumCategory $category = null) {
+		return KunenaAccess::getInstance()->isAdmin ( $this, $category && $category->exists() ? $category->id : null );
 	}
 
-	public function isModerator($catid = 0) {
-		$acl = KunenaAccess::getInstance();
-		return $acl->isModerator ( $this, $catid );
+	/**
+	 * Checks if user has moderator permissions in the category.
+	 *
+	 * If no category is given or it doesn't exist, check will be done against global moderator permissions.
+	 *
+	 * @param KunenaForumCategory $category
+	 * @return bool
+	 *
+	 * @since 2.0.0-BETA2
+	 */
+	public function isModerator(KunenaForumCategory $category = null) {
+		return KunenaAccess::getInstance()->isModerator ( $this, $category && $category->exists() ? $category->id : null );
 	}
 
 	public function isBanned() {
@@ -284,7 +301,7 @@ class KunenaUser extends JObject {
 		return $this->_link[$key];
 	}
 
-	public function GetURL($xhtml = true) {
+	public function getURL($xhtml = true) {
 		if (!$this->exists()) return;
 		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, '', $xhtml );
 	}
@@ -299,16 +316,19 @@ class KunenaUser extends JObject {
 			'banned'=>'COM_KUNENA_VIEW_BANNED',
 			'blocked'=>'COM_KUNENA_VIEW_BANNED'
 		);
+		$moderatedCategories = KunenaAccess::getInstance()->getModeratorStatus($this);
 		if (!$this->_type) {
 			if ($this->userid == 0) {
 				$this->_type = 'guest';
 			} elseif ($this->isBanned ()) {
 				$this->_type = 'banned';
-			} elseif ($this->isAdmin ( $catid )) {
+			} elseif ($this->isAdmin ( KunenaForumCategoryHelper::get($catid) )) {
 				$this->_type = 'admin';
 			} elseif ($this->isModerator ( null )) {
 				$this->_type = 'globalmod';
-			} elseif ($this->isModerator ( $catid )) {
+			} elseif (!$catid && !empty($moderatedCategories)) {
+				$this->_type = 'moderator';
+			} elseif ($catid && isset($moderatedCategories[$catid])) {
 				$this->_type = 'moderator';
 			} else {
 				$this->_type = 'user';
@@ -329,6 +349,8 @@ class KunenaUser extends JObject {
 		$rank->rank_image = null;
 
 		$config = KunenaFactory::getConfig ();
+		$category = KunenaForumCategoryHelper::get($catid);
+
 		if (! $config->showranking)
 			return;
 		if (self::$_ranks === null) {
@@ -357,7 +379,7 @@ class KunenaUser extends JObject {
 			}
 		} else if ($this->rank != 0 && isset ( self::$_ranks [$this->rank] )) {
 			$rank = self::$_ranks [$this->rank];
-		} else if ($this->rank == 0 && $this->isAdmin ( $catid )) {
+		} else if ($this->rank == 0 && $this->isAdmin ( $category )) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_ ( 'COM_KUNENA_RANK_ADMINISTRATOR' );
 			$rank->rank_special = 1;
@@ -368,7 +390,7 @@ class KunenaUser extends JObject {
 					break;
 				}
 			}
-		} else if ($this->rank == 0 && $this->isModerator ( $catid )) {
+		} else if ($this->rank == 0 && $this->isModerator ( $category )) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_ ( 'COM_KUNENA_RANK_MODERATOR' );
 			$rank->rank_special = 1;
@@ -429,7 +451,7 @@ class KunenaUser extends JObject {
 
 		if ($this->userid) {
 			$this->view = $layout;
-			$this->save();
+			$this->save(true);
 		}
 	}
 
@@ -521,7 +543,7 @@ class KunenaUser extends JObject {
 			return '';
 	}
 
-	function escape($var)
+	public function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}

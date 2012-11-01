@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage AlphaUserPoints
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 class plgKunenaAlphaUserPoints extends JPlugin {
 	public function __construct(&$subject, $config) {
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::installed())) return;
 
 		$aup = JPATH_SITE . '/components/com_alphauserpoints/helper.php';
 		if (! file_exists ( $aup ))
@@ -21,7 +21,8 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 		require_once ($aup);
 
 		parent::__construct ( $subject, $config );
-		$this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', JPATH_ADMINISTRATOR );
+
+		$this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', KPATH_ADMIN );
 
 		$this->path = dirname ( __FILE__ ) . '/alphauserpoints';
 	}

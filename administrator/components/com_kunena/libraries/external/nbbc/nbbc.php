@@ -976,7 +976,7 @@ return true;
 }
 }
 
-class BBCode {
+class NBBC_BBCode {
 var $tag_rules;
 var $defaults;
 var $current_class;
@@ -1008,7 +1008,7 @@ var $rule_html;
 var $pre_trim;
 var $post_trim;
 var $debug;
-function BBCode() {
+function NBBC_BBCode() {
 $this->defaults = new BBCodeLibrary;
 $this->tag_rules = $this->defaults->default_tag_rules;
 $this->smileys = $this->defaults->default_smileys;
@@ -1197,7 +1197,9 @@ else return str_replace(Array('<', '>', '"'),
 Array('&lt;', '&gt;', '&quot;'), $string);
 }
 function FixupOutput($string) {
-if (!$this->detect_urls) {
+/*HACK >*/
+if (!$this->detect_urls || $this->autolink_disable) {
+/*< HACK*/
 $output = $this->Internal_ProcessSmileys($string);
 }
 else {
@@ -1267,11 +1269,6 @@ $regex[] = ")(?![\\w])/";
 $this->smiley_regex = implode("", $regex);
 }
 function Internal_AutoDetectURLs($string) {
-/*HACK >*/
-if ($this->autolink_disable) {
-	return array($string);
-}
-/*< HACK*/
 $output = preg_split("/( (?:
 (?:https?|ftp) : \\/*
 (?:
@@ -1326,9 +1323,6 @@ foreach ($output as $index => $token) {
 if ($is_a_url) {
 if (preg_match("/^[a-zA-Z0-9._-]{2,}@/", $token)) {
 $url = "mailto:" . $token;
-/*HACK >*/
-$email = $token;
-/*< HACK*/
 }
 else if (preg_match("/^(https?:|ftp:)\\/*([^\\/&?#]+)\\/*(.*)\$/", $token, $matches)) {
 $url = $matches[1] . '/' . '/' . $matches[2] . "/" . $matches[3];
@@ -1338,15 +1332,18 @@ preg_match("/^([^\\/&?#]+)\\/*(.*)\$/", $token, $matches);
 $url = "http:/" . "/" . $matches[1] . "/" . $matches[2];
 }
 $params = @parse_url($url);
-if (!is_array($params)) $params = Array();
+/*HACK >*/
+if (!is_array($params)) {
+	$output[$index] = $token;
+	continue;
+}
+/*< HACK*/
 $params['url'] = $url;
+$params['isurl'] = $this->IsValidURL($url);
 $params['link'] = $url;
 $params['text'] = $token;
 /*HACK >*/
-if (!isset($email))
 $output[$index] = $this->FillTemplate($this->url_pattern, $params);
-else
-$output[$index] = JHTML::_('email.cloak', $email, $this->IsValidEmail ( $email ));
 /*< HACK*/
 }
 $is_a_url = !$is_a_url;
@@ -1355,6 +1352,9 @@ $is_a_url = !$is_a_url;
 return $output;
 }
 function FillTemplate($template, $insert_array, $default_array = Array()) {
+/*HACK >*/
+if (is_array($template)) return call_user_func($template, $insert_array);
+/*< HACK*/
 $pieces = preg_split('/(\{\$[a-zA-Z0-9_.:\/-]+\})/', $template,
 -1, PREG_SPLIT_DELIM_CAPTURE);
 if (count($pieces) <= 1)
@@ -1752,7 +1752,7 @@ $params['_content'] = $contents;
 $params['_defaultcontent'] = strlen(@$params['_default']) ? $params['_default'] : $contents;
 return $this->FillTemplate(@$tag_rule['template'], $params, @$tag_rule['default']);
 }
-function Internal_UpdateParamsForMissingEndTag(&$params) {
+function Internal_UpdateParamsForMissingEndTag($params) {
 switch ($this->tag_marker) {
 case '[': $tail_marker = ']'; break;
 case '<': $tail_marker = '>'; break;
@@ -1788,7 +1788,9 @@ $end_tag = $this->lexer->tagmarker . "/" . $tag_name . $this->lexer->end_tagmark
 $start = count($this->stack);
 $this->lexer->verbatim = true;
 while (($token_type = $this->lexer->NextToken()) != BBCODE_EOI) {
-if ($this->lexer->text == $end_tag) {
+// START FIX
+if (strtolower($this->lexer->text) == $end_tag) {
+// END FIX
 $end_tag_params = $this->lexer->tag;
 break;
 }
@@ -1945,6 +1947,7 @@ function Parse($string) {
 $this->lexer = new BBCodeLexer($string, $this->tag_marker);
 $this->lexer->debug = $this->debug;
 $old_output_limit = $this->output_limit;
+/** HACK >
 if ($this->output_limit > 0) {
 if (strlen($string) < $this->output_limit) {
 $this->output_limit = 0;
@@ -1958,6 +1961,7 @@ else {
 }
 }
 }
+< HACK */
 $this->stack = Array();
 $this->start_tags = Array();
 $this->lost_start_tags = Array();

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -52,7 +52,19 @@ class KunenaUserBan extends JObject
 		$this->_db = JFactory::getDBO ();
 	}
 
-	static private function storeInstance($instance) {
+	public function getUser() {
+		return KunenaUserHelper::get((int) $this->userid);
+	}
+
+	public function getCreator() {
+		return KunenaUserHelper::get((int) $this->created_by);
+	}
+
+	public function getModifier() {
+		return KunenaUserHelper::get((int) $this->modified_by);
+	}
+
+	private static function storeInstance($instance) {
 		// Fill userid cache
 		self::cacheUserid($instance->userid);
 		self::cacheUserid($instance->created_by);
@@ -70,7 +82,7 @@ class KunenaUserBan extends JObject
 		}
 	}
 
-	static private function cacheUserid($userid) {
+	private static function cacheUserid($userid) {
 		if ($userid > 0) self::$_useridcache[$userid] = $userid;
 	}
 
@@ -82,7 +94,7 @@ class KunenaUserBan extends JObject
 	 * @return	KunenaUserBan			The ban object.
 	 * @since	1.6
 	 */
-	static public function getInstance($identifier = null)
+	public static function getInstance($identifier = null)
 	{
 		$c = __CLASS__;
 
@@ -105,7 +117,7 @@ class KunenaUserBan extends JObject
 	 * @return	KunenaUserBan			The ban object.
 	 * @since	1.6
 	 */
-	static public function getInstanceByUserid($identifier = null, $create = false)
+	public static function getInstanceByUserid($identifier = null, $create = false)
 	{
 		$c = __CLASS__;
 
@@ -129,7 +141,7 @@ class KunenaUserBan extends JObject
 	 * @return	KunenaUserBan			The ban object.
 	 * @since	1.6
 	 */
-	static public function getInstanceByIP($identifier = null, $create = false)
+	public static function getInstanceByIP($identifier = null, $create = false)
 	{
 		$c = __CLASS__;
 
@@ -144,15 +156,15 @@ class KunenaUserBan extends JObject
 		return $create || !empty(self::$_instancesByIP[$identifier]->id) ? self::$_instancesByIP[$identifier] : null;
 	}
 
-	static public function getBannedUsers() {
+	public static function getBannedUsers($start=0, $limit=50) {
 		$c = __CLASS__;
 		$db = JFactory::getDBO ();
 		$now = new JDate();
 		$query = "SELECT *
 			FROM #__kunena_users_banned
 			WHERE (expiration = {$db->quote($db->getNullDate())} OR expiration > {$db->quote($now->toMysql())})
-			ORDER BY id DESC";
-		$db->setQuery ( $query );
+			ORDER BY created_time DESC";
+		$db->setQuery ( $query, $start, $limit );
 		$results = $db->loadAssocList ();
 		KunenaError::checkDatabaseError();
 
@@ -162,12 +174,12 @@ class KunenaUserBan extends JObject
 			$instance->bind($ban);
 			$instance->_exists = true;
 			self::storeInstance($instance);
-			$list[] = $instance;
+			$list[$instance->userid] = $instance;
 		}
 		return $list;
 	}
 
-	static public function getUserHistory($userid) {
+	public static function getUserHistory($userid) {
 		if (!$userid) return array();
 		$c = __CLASS__;
 		$db = JFactory::getDBO ();
@@ -310,26 +322,27 @@ class KunenaUserBan extends JObject
 
 	public function canBan() {
 		$userid = $this->userid;
-		$myprofile = KunenaUserHelper::getMyself();
-		$userprofile = KunenaFactory::getUser($userid);
-		if (!$myprofile->isModerator()) {
+		$me = KunenaUserHelper::getMyself();
+		$user = KunenaUserHelper::get($userid);
+		if (!$me->isModerator()) {
 			$this->setError(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR'));
 			return false;
 		}
-		if (!$userprofile->exists()) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_BAN_ERROR_NOT_USER', $userid );
+		if (!$user->exists()) {
+			$this->setError( JText::_( 'COM_KUNENA_LIB_USER_BAN_ERROR_NOT_USER', $userid ));
 			return false;
 		}
-		if ($userid == $myprofile->userid) {
-			$this->setError( JText::_( 'COM_KUNENA_BAN_ERROR_YOURSELF' ));
+		if ($userid == $me->userid) {
+			$this->setError( JText::_( 'COM_KUNENA_LIB_USER_BAN_ERROR_YOURSELF' ));
 			return false;
 		}
-		if ($userprofile->isAdmin()) {
-			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_ADMIN', $userprofile->username ));
+		if ($user->isAdmin()) {
+			$this->setError(JText::sprintf( 'COM_KUNENA_LIB_USER_BAN_ERROR_ADMIN', $user->getName() ));
 			return false;
 		}
-		if ($userprofile->isModerator(false)) {
-			$this->setError(JText::sprintf( 'COM_KUNENA_BAN_ERROR_MODERATOR', $userprofile->username ));
+		if ($user->isModerator()) {
+			$this->setError(JText::sprintf( 'COM_KUNENA_LIB_USER_BAN_ERROR_MODERATOR', $user->getName() ));
+			return false;
 		}
 		return true;
 	}
@@ -489,7 +502,7 @@ class KunenaUserBan extends JObject
 	public function delete()
 	{
 		// Create the user table object
-		$table	= &$this->getTable();
+		$table	= $this->getTable();
 
 		$result = $table->delete($this->id);
 		if (!$result) {

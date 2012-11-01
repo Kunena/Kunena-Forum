@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Community
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -20,7 +20,7 @@ class KunenaAvatarCommunity extends KunenaAvatar {
 	public function load($userlist)
 	{
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		if (method_exists('CFactory', 'loadUsers')) CFactory::loadUsers($userlist);
+		if (class_exists('CFactory') && method_exists('CFactory', 'loadUsers')) CFactory::loadUsers($userlist);
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
@@ -33,7 +33,7 @@ class KunenaAvatarCommunity extends KunenaAvatar {
 	{
 		$user = KunenaFactory::getUser($user);
 		// Get CUser object
-		$user =& CFactory::getUser($user->userid);
+		$user = CFactory::getUser($user->userid);
 		if ($sizex<=90)	$avatar = $user->getThumbAvatar();
 		else $avatar = $user->getAvatar();
 		return $avatar;

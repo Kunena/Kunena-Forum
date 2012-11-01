@@ -1,59 +1,50 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+// Goto up / down
+$locations = array('top','bottom');
+if (!isset($this->location)) $this->location = 0;
+$goto = '<a name="forum'.$locations[$this->location].'"></a>';
+$this->location ^= 1;
+$goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$this->location], $this->getIcon ( 'kforum'.$locations[$this->location], JText::_('COM_KUNENA_GEN_GOTO'.strtoupper($locations[$this->location] )) ), 'nofollow', 'kbuttongoto');
 ?>
-<!-- B: Topic Actions -->
 <table class="klist-actions">
 	<tr>
 		<td class="klist-actions-goto">
-			<?php echo $this->goto ?>
+			<?php echo $goto ?>
 		</td>
 		<td class="klist-actions-forum">
-		<?php if ($this->topic_reply || $this->topic_subscribe || $this->topic_favorite ) : ?>
+		<?php if ($this->topicButtons->get('reply') || $this->topicButtons->get('subscribe') || $this->topicButtons->get('favorite') ) : ?>
 			<div class="kmessage-buttons-row">
-			<?php echo $this->topic_reply ?>
-			<?php echo $this->topic_subscribe ?>
-			<?php echo $this->topic_favorite ?>
+			<?php echo $this->topicButtons->get('reply') ?>
+			<?php echo $this->topicButtons->get('subscribe') ?>
+			<?php echo $this->topicButtons->get('favorite') ?>
 			</div>
 		<?php endif ?>
-		<?php if ($this->topic_delete || $this->topic_sticky || $this->topic_lock) : ?>
+		<?php if ($this->topicButtons->get('delete') || $this->topicButtons->get('moderate') || $this->topicButtons->get('sticky') || $this->topicButtons->get('lock')) : ?>
 			<div class="kmessage-buttons-row">
-			<?php echo $this->topic_delete ?>
-			<?php echo $this->topic_sticky ?>
-			<?php echo $this->topic_lock ?>
-			</div>
-		<?php endif ?>
-		</td>
-
-		<td class="klist-actions-forum">
-		<?php if (isset ( $this->topic_new )) : ?>
-			<div class="kmessage-buttons-row">
-			<?php echo $this->topic_new; ?>
-			</div>
-		<?php endif ?>
-		<?php if (isset ( $this->topic_moderate )) : ?>
-			<div class="kmessage-buttons-row">
-			<?php echo $this->topic_moderate; ?>
-			</div>
-		<?php endif ?>
-		<?php if (isset ( $this->topic_merge )) : ?>
-			<div class="kmessage-buttons-row">
-				<?php echo $this->topic_merge; ?>
+			<?php echo $this->topicButtons->get('delete') ?>
+			<?php echo $this->topicButtons->get('moderate') ?>
+			<?php echo $this->topicButtons->get('sticky') ?>
+			<?php echo $this->topicButtons->get('lock') ?>
 			</div>
 		<?php endif ?>
 		</td>
-		<?php if (!empty($this->layout_buttons)) : ?>
+		<?php if ($this->topicButtons->get('flat') || $this->topicButtons->get('threaded') || $this->topicButtons->get('indented')) : ?>
 		<td class="klist-actions-forum">
 			<div class="kmessage-buttons-row">
-			<?php echo implode(' ', $this->layout_buttons) ?>
+			<?php echo $this->topicButtons->get('flat') ?>
+			<?php echo $this->topicButtons->get('threaded') ?>
+			<?php echo $this->topicButtons->get('indented') ?>
 			</div>
 		</td>
 		<?php endif ?>
@@ -63,4 +54,3 @@ defined ( '_JEXEC' ) or die ();
 		</td>
 	</tr>
 </table>
-<!-- F: Topic Actions -->

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Users
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,11 +23,10 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					<tr>
 						<td>
 						<strong><?php echo JText::_('COM_KUNENA_CATEGORY_TARGET'); ?></strong>
-						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+						<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 							<input type="hidden" name="view" value="users" />
 							<input type="hidden" name="task" value="" />
 							<input type="hidden" name="boxchecked" value="1" />
-							<input type="hidden" name="uid[]" value="<?php echo $this->userid; ?>" />
 							<?php echo JHTML::_( 'form.token' ); ?>
 
 							<?php
@@ -38,8 +37,8 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						<td><strong><?php echo JText::_('COM_KUNENA_MOVEUSERMESSAGES_USERS_CURRENT'); ?></strong>
 						<ol>
 						<?php
-						foreach($this->user as $id){
-							echo '<li>'.$this->escape($id->username).' ('.JText::_('COM_KUNENA_TRASH_AUTHOR_USERID').' '.$this->escape($id->id).')</li> ';
+						foreach($this->users as $user) {
+							echo '<li>'.$this->escape($user->username).' ('.JText::_('COM_KUNENA_TRASH_AUTHOR_USERID').' '.$this->escape($user->id).')</li> ';
 						}
 
 						?>

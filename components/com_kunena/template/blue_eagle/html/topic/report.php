@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kblock kreport">
 	<div class="kheader">
-		<h2><span><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></span></h2>
+		<h2><span><?php echo JText::_('COM_KUNENA_REPORT_TO_MODERATOR') ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">

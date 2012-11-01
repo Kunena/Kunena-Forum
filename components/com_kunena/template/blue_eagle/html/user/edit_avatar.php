@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -19,7 +19,7 @@ $i=0;
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : ''; ?>">
+<table>
 <?php if ($this->profile->avatar): ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
@@ -51,6 +51,7 @@ $i=0;
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
 			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
+			<input id="kunena_url_avatargallery" type="hidden" value="<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' )?>" />
 		</td>
 		<td class="kcol-mid">
 			<table class="kblocktable" id ="kforumua_gal">
@@ -59,20 +60,6 @@ $i=0;
 				</tr>
 				<tr>
 					<td class="kuadesc">
-					<?php //FIXME: move to js folder ?>
-					<script type="text/javascript">
-						<!--
-						function switch_avatar_category(gallery)
-						{
-						if (gallery == "")
-							return;
-						var url = "<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' )?>";
-						var urlreg = new  RegExp("_GALLERY_","g");
-						location.href=url.replace(urlreg,gallery);
-						}
-						// -->
-					</script>
-
 					<?php
 					$kid = 0;
 					foreach ($this->galleryimg as $avatarimg) : ?>

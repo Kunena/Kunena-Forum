@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Route
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -210,11 +210,13 @@ abstract class KunenaRouteLegacy {
 				if ($id) $uri->setVar ( 'id', $id );
 				if ($mesid) $uri->setVar ( 'mesid', $mesid );
 				break;
+			case 'moderateuser' :
+				if ($uri->getVar('view') == 'moderateuser') $uri->setVar('layout', 'moderate');
+				// Continue to user profile
 			case 'myprofile' :
 			case 'userprofile' :
 			case 'fbprofile' :
 			case 'profile' :
-			case 'moderateuser' :
 				$changed = true;
 				$uri->setVar('view', 'user');
 				if ($uri->getVar ( 'task' )) {
@@ -225,6 +227,9 @@ abstract class KunenaRouteLegacy {
 				switch ($uri->getVar('layout')) {
 					case 'edit' :
 						$uri->setVar('layout', 'edit');
+						break;
+					case 'moderate' :
+						$uri->setVar('layout', 'moderate');
 						break;
 					default :
 						$uri->delVar('layout');
@@ -260,14 +265,17 @@ abstract class KunenaRouteLegacy {
 				$mode = $config->rss_type;
 				switch ($mode) {
 					case 'topic' :
-						$uri->getVar('mode', 'topics');
+						$uri->setVar('layout', 'default');
+						$uri->setVar('mode', 'topics');
 						break;
 					case 'recent' :
-						$uri->getVar('mode', 'replies');
+						$uri->setVar('layout', 'default');
+						$uri->setVar('mode', 'replies');
 						break;
 					case 'post' :
 					default :
-						$uri->getVar('mode', 'posts');
+						$uri->setVar('layout', 'posts');
+						$uri->setVar('mode', 'latest');
 						break;
 				}
 				switch ($config->rss_timelimit) {
@@ -535,15 +543,20 @@ abstract class KunenaRouteLegacy {
 		return $changed;
 	}
 
-	static public function convertMenuItem($item) {
+	public static function convertMenuItem($item) {
 		$uri = JURI::getInstance($item->link);
 		$view = $uri->getVar('func', $uri->getVar('view'));
 
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry($item->params);
+		} else {
+			// Joomla 1.5
+			$params = new JParameter($item->params);
+		}
+
 		if (self::convert($uri, 0)) {
 
-			$item->link = $uri->toString();
-			$item->query = $uri->getQuery(true);
-			$params = new JParameter($item->params);
 			switch ($view) {
 				case 'latest' :
 				case 'mylatest' :
@@ -570,7 +583,9 @@ abstract class KunenaRouteLegacy {
 					$params->set('do', null);
 					break;
 			}
-			$item->params = $params->toString();
 		}
+		$item->link = $uri->toString();
+		$item->query = $uri->getQuery(true);
+		$item->params = $params->toString();
 	}
 }

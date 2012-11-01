@@ -1,19 +1,19 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 $this->displayAnnouncement ();
-$this->displayBreadcrumb ();
 ?>
-
+<!-- Module position: kunena_announcement -->
+<?php $this->displayModulePosition ( 'kunena_announcement' ) ?>
 <div class="klist-markallcatsread kcontainer">
 	<div class="ksectionbody">
 		<div class="fltlft">
@@ -24,7 +24,7 @@ $this->displayBreadcrumb ();
 				<input type="hidden" name="task" value="markread" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 
-				<input type="submit" class="kbutton button ks" value="<?php echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ'); ?>" />
+				<input type="submit" class="kbutton ks" value="<?php echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ'); ?>" />
 			</form>
 			</div>
 			<div class="kmessage-buttons-row">
@@ -40,7 +40,7 @@ $this->displayBreadcrumb ();
 
 <?php
 if (count ( $this->categories )) {
-	echo $this->loadTemplateFile('embed');
+	$this->displayTemplateFile('category', 'list', 'embed');
 } else {
 	$this->displayInfoMessage ();
 }

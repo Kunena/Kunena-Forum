@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,8 +15,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewCpanel extends KunenaView {
 	function displayDefault() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
-		$this->config = KunenaFactory::getConfig ();
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		$this->versioncheck = $this->get('latestversion');
 
 		if (version_compare(JVERSION, '1.6', '>')) {

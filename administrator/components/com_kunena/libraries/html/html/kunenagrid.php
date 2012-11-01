@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage HTML
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -62,7 +62,7 @@ abstract class JHtmlKunenaGrid
 	 *
 	 * @return  string
 	 */
-	public static function sort($title, $order, $direction = 'asc', $selected = 0, $task=NULL, $new_direction='asc') {
+	public static function sort($title, $order, $direction = 'asc', $selected = 0, $task=NULL, $new_direction='asc', $form=null) {
 		$direction	= strtolower($direction);
 		if ($order != $selected) {
 			$direction = $new_direction;
@@ -70,7 +70,7 @@ abstract class JHtmlKunenaGrid
 			$direction	= ($direction == 'desc') ? 'asc' : 'desc';
 		}
 
-		$html = '<a href="javascript:tableOrdering(\''.$order.'\',\''.$direction.'\',\''.$task.'\');" title="'.JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN').'">';
+		$html = '<a href="javascript:kunenatableOrdering(\''.$order.'\',\''.$direction.'\',\''.$task.'\',\''.$form.'\');" title="'.JText::_('COM_KUNENA_LIB_CLICK_TO_SORT_THIS_COLUMN').'">';
 		$html .= JText::_($title);
 
 		if ($order == $selected) {
@@ -145,6 +145,20 @@ abstract class JHtmlKunenaGrid
 		$action = $value ? JText::_('COM_KUNENA_LIB_UNPUBLISH_ITEM') : JText::_('COM_KUNENA_LIB_PUBLISH_ITEM');
 
 		$href = '<a class="grid_'.$task.' hasTip" href="#" onclick="return listItemTask(\'cb'. $i .'\',\''. $prefix.$task .'\')" alt="'.$alt.'" title="'. $alt .'::'. $action .'"></a>';
+
+		return $href;
+	}
+
+	/**
+	 * @param   integer  $i
+	 * @param   string   $img	Image for a positive or on value
+	 * @param   string   $img0	Image for the empty or off value
+	 * @param   string   $prefix	An optional prefix for the task
+	 *
+	 * @return  string
+	 */
+	public static function task($i, $img, $alt, $task, $prefix='') {
+		$href = '<a href="javascript:void(0);" onclick="return listItemTask(\'cb' . $i .'\',\''. $prefix.$task .'\')"><img src="'. KunenaFactory::getTemplate()->getImagePath($img) .'" alt="'. $alt .'" title="'. $alt .'" /></a>';
 
 		return $href;
 	}

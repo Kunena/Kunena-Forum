@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Template
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,10 +13,8 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Template Helper Class
  */
-class KunenaTemplateHelper {
+abstract class KunenaTemplateHelper {
 	protected static $_instances = array ();
-
-	private function __construct() {}
 
 	public static function isDefault($template) {
 		$config = KunenaFactory::getConfig ();
@@ -24,25 +22,28 @@ class KunenaTemplateHelper {
 		return $defaultemplate == $template ? 1 : 0;
 	}
 
-	public static function parseXmlFiles($templateBaseDir) {
+	public static function parseXmlFiles($templateBaseDir = null) {
 		// Read the template folder to find templates
+		if (!$templateBaseDir) $templateBaseDir = KPATH_SITE.'/template';
 		jimport('joomla.filesystem.folder');
 		$templateDirs = JFolder::folders($templateBaseDir);
 		$rows = array();
 		// Check that the directory contains an xml file
 		foreach ($templateDirs as $templateDir)
 		{
-			if(!$data = self::parseXmlFile($templateBaseDir, $templateDir)){
+			if(!$data = self::parseXmlFile($templateDir, $templateBaseDir)){
 				continue;
 			} else {
-				$rows[] = $data;
+				$rows[$templateDir] = $data;
 			}
 		}
+		ksort($rows);
 		return $rows;
 	}
 
-	function parseXmlFile($templateBaseDir, $templateDir) {
+	public static function parseXmlFile($templateDir, $templateBaseDir = null) {
 		// Check if the xml file exists
+		if (!$templateBaseDir) $templateBaseDir = KPATH_SITE.'/template';
 		if(!is_file($templateBaseDir.'/'.$templateDir.'/template.xml')) {
 			return false;
 		}
@@ -54,7 +55,7 @@ class KunenaTemplateHelper {
 		return $data;
 	}
 
-	function parseKunenaInstallFile($path) {
+	public static function parseKunenaInstallFile($path) {
 		// FIXME : deprecated under Joomla! 1.6
 		$xml = JFactory::getXMLParser ( 'Simple' );
 		if (! $xml->loadFile ( $path )) {

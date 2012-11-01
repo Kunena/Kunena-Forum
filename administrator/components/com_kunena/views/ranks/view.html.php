@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,7 +18,7 @@ class KunenaAdminViewRanks extends KunenaView {
 		$this->setToolBarDefault();
 		$this->ranks = $this->get('Ranks');
 		$this->state = $this->get('state');
-		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		$this->display ();
 	}
 
@@ -36,7 +36,7 @@ class KunenaAdminViewRanks extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
 		JToolBarHelper::spacer();
@@ -47,7 +47,7 @@ class KunenaAdminViewRanks extends KunenaView {
 	}
 
 	protected function setToolBarEdit() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();

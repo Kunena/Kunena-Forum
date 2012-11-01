@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,12 +17,13 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaModelUser extends KunenaModel {
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-		$active = $app->getMenu ()->getActive ();
+		$active = $this->app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
 
 		$layout = $this->getCmd ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
+
+		$config = KunenaFactory::getConfig();
 
 		// TODO: create state for item
 		if ($layout != 'list') {
@@ -30,17 +31,18 @@ class KunenaModelUser extends KunenaModel {
 		}
 
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_limit", 'limit', 0, 'int' );
-		if ($value < 1 || $value > 100) $value = 30;
-		$this->setState ( 'list.limit', $value );
+		$limit = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_limit", 'limit', $config->get('userlist_rows'), 'int' );
+		if ($limit < 1 || $limit > 100) $limit = $config->get('userlist_rows');
+		if ($limit < 1) $limit = 30;
+		$this->setState ( 'list.limit', $limit );
+
+		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_start", 'limitstart', 0, 'int' );
+		$value -= $value % $limit;
+		$this->setState ( 'list.start', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_ordering", 'filter_order', 'id', 'cmd' );
 		$this->setState ( 'list.ordering', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_start", 'limitstart', 0, 'int' );
-		$this->setState ( 'list.start', $value );
-
-		// FIXME: doesn't seem to work yet
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_direction", 'filter_order_Dir', 'asc', 'word' );
 		if ($value != 'asc')
 			$value = 'desc';
@@ -49,35 +51,41 @@ class KunenaModelUser extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_search", 'search', '' );
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH')) $this->setState ( 'list.search', $value );
 
-		// FIXME: doesn't work: Super administrator id may vary (JUpgrade 1.5 -> 1.6, migrations etc)
-		$this->setState ( 'list.exclude', version_compare(JVERSION, '1.6','>') ? '42' : '62');
+		if (version_compare(JVERSION, '1.6','>')) {
+			// Joomla! 2.5:
+			$db = JFactory::getDBO();
+			$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
+			$db->setQuery ( $query );
+			$superadmins = (array) $db->loadResultArray();
+			if (!$superadmins) $superadmins = array(0);
+			$this->setState ( 'list.exclude', implode(',', $superadmins));
+		}
 	}
 
 	public function getQueryWhere() {
-		$config = KunenaFactory::getConfig();
-		if ($config->userlist_count_users == '1' ) $where = '(block=0 OR activation="")';
-		elseif ($config->userlist_count_users == '2' ) $where = '(block=0 AND activation="")';
-		elseif ($config->userlist_count_users == '3' ) $where = 'block=0';
+		if ($this->config->userlist_count_users == '1' ) $where = '(u.block=0 OR u.activation="")';
+		elseif ($this->config->userlist_count_users == '2' ) $where = '(u.block=0 AND u.activation="")';
+		elseif ($this->config->userlist_count_users == '3' ) $where = 'u.block=0';
 		else $where = '1';
+		// Hide super admins from the list
+		$where .= version_compare(JVERSION, '1.6','>') ? ' AND u.id NOT IN ('.$this->getState ( 'list.exclude' ).')' : ' AND u.gid!=25';
 		return $where;
 	}
 
 	public function getQuerySearch() {
 		// TODO: add strict search from the beginning of the name
-		$config = KunenaFactory::getConfig();
 		$search = $this->getState ( 'list.search');
-		$exclude = $this->getState ( 'list.exclude');
 		$where = array();
 		if ($search) {
 			$db = JFactory::getDBO();
-			if ($config->userlist_name) $where[] = "u.name LIKE '%{$db->getEscaped($search)}%'";
-			if ($config->userlist_username || !$where) $where[] = "u.username LIKE '%{$db->getEscaped($search)}%'";
+			if ($this->config->username) $where[] = "u.username LIKE '%{$db->getEscaped($search)}%'";
+			else $where[] = "u.name LIKE '%{$db->getEscaped($search)}%'";
 			$where = 'AND ('.implode(' OR ', $where).')';
 		} else {
 			$where = '';
 		}
 
-		return "{$where} AND u.id NOT IN ({$exclude})";
+		return $where;
 	}
 
 	public function getTotal() {
@@ -85,7 +93,7 @@ class KunenaModelUser extends KunenaModel {
 		if ($total === false) {
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
-			$db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE {$where}" );
+			$db->setQuery ( "SELECT COUNT(*) FROM #__users AS u WHERE {$where}" );
 			$total = $db->loadResult ();
 			KunenaError::checkDatabaseError();
 		}
@@ -98,7 +106,10 @@ class KunenaModelUser extends KunenaModel {
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
-			$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE {$where} {$search}";
+			$query = "SELECT COUNT(*)
+				FROM #__users AS u
+				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
+				WHERE {$where} {$search}";
 			$db->setQuery ( $query );
 			$total = $db->loadResult ();
 			KunenaError::checkDatabaseError();
@@ -107,19 +118,29 @@ class KunenaModelUser extends KunenaModel {
 	}
 
 	public function getItems() {
+		// FIXME: use pagination object and redirect on illegal page (maybe in the view)
+		// TODO: should we reset to page 1 when user makes a new search?
 		static $items = false;
 		if ($items === false) {
+			$limitstart = $this->getState ( 'list.start');
+			$limit = $this->getState ( 'list.limit');
+			$count = $this->getCount();
+			if ($count < $limitstart) {
+				$limitstart = $count - ($count % $limit);
+				$this->setState ( 'list.start', $limitstart );
+			}
+
 			$db = JFactory::getDBO();
 			$where = $this->getQueryWhere();
 			$search = $this->getQuerySearch();
-			$moderator = intval(KunenaUserHelper::getMyself()->isModerator());
+			$moderator = intval($this->me->isModerator());
 			$query = "SELECT *, IF(ku.hideEmail=0 OR {$moderator},u.email,'') AS email
 				FROM #__users AS u
 				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
 				WHERE {$where} {$search}";
 			$query .= " ORDER BY {$db->nameQuote($this->getState ( 'list.ordering'))} {$this->getState ( 'list.direction')}";
 
-			$db->setQuery ( $query, $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
+			$db->setQuery ( $query, $limitstart, $limit );
 			$items = $db->loadObjectList ('id');
 			KunenaError::checkDatabaseError();
 

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -69,6 +69,7 @@ class KunenaSpamRecaptcha {
 		if ($config->captcha && !$me->exists())
 			return true;
 		// Enabled if user is moderator or has more posts than the threshold
+		// FIXME: we need a better logic for trusted users
 		if ($me->exists() && !$me->isModerator() && $me->posts < $config->captcha_post_limit)
 			return true;
 		// Captcha is disabled

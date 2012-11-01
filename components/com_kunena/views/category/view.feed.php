@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,12 +17,13 @@ require_once KPATH_SITE.'/lib/kunena.link.class.php';
  */
 class KunenaViewCategory extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->config = KunenaFactory::getConfig();
 		if (!$this->config->enablerss) {
 			JError::raiseError ( 404, JText::_ ( 'COM_KUNENA_RSS_DISABLED' ) );
 		}
 
-		$this->assignRef ( 'category', $this->get ( 'Category' ) );
+		KunenaHtmlParser::$relative = false;
+
+		$this->category = $this->get ( 'Category' );
 		if (! $this->category->authorise('read')) {
 			JError::raiseError ( 404, $this->category->getError() );
 		}
@@ -61,7 +62,7 @@ class KunenaViewCategory extends KunenaView {
 	function createItem($title, $url, $description, $category, $date, $userid, $username) {
 		if ($this->config->rss_author_in_title) {
 			// We want author in item titles
-			$title .= ' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $username;
+			$title .= ' - '. JText::_('COM_KUNENA_BY') .': '. $username;
 		}
 		$description = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $description );
 		$description = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $description );
@@ -80,6 +81,7 @@ class KunenaViewCategory extends KunenaView {
 		$item->description	= $description;
 		$item->date			= $date->toMySQL();
 		$item->author		= $username;
+		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
 		if ($this->config->rss_author_format != 'name') $item->authorEmail = JFactory::getUser($userid)->email;
 		$item->category		= $category;
 

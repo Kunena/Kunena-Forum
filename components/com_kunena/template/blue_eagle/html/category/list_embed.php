@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -19,12 +19,12 @@ foreach ( $this->sections as $section ) :
 ?>
 <div class="kblock kcategories-<?php echo intval($section->id) ?>">
 	<div class="kheader">
-		<?php if (count($this->sections) > 1) : ?>
+		<?php if (count($this->sections) > 0) : ?>
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="catid_<?php echo intval($section->id) ?>"></a></span>
 		<?php endif; ?>
 		<h2><span><?php echo $this->GetCategoryLink ( $section, $this->escape($section->name) ); ?></span></h2>
 		<?php if (!empty($section->description)) : ?>
-		<div class="ktitle-desc km">
+		<div class="ktitle-desc km hidden-phone">
 			<?php echo KunenaHtmlParser::parseBBCode ( $section->description ); ?>
 		</div>
 		<?php endif; ?>
@@ -52,7 +52,7 @@ foreach ( $this->sections as $section ) :
 					echo '<sup class="knewchar">(' . $category->getNewCount() . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
 				}
 				if ($category->locked) {
-					echo $this->getIcon ( 'kforumlocked', JText::_('COM_KUNENA_GEN_LOCKED_FORUM') );
+					echo $this->getIcon ( 'kforumlocked', JText::_('COM_KUNENA_LOCKED_CATEGORY') );
 				}
 				if ($category->review) {
 					echo $this->getIcon ( 'kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED') );
@@ -61,7 +61,7 @@ foreach ( $this->sections as $section ) :
 			</div>
 
 		<?php if (!empty($category->description)) : ?>
-			<div class="kthead-desc km"><?php echo KunenaHtmlParser::parseBBCode ($category->description) ?> </div>
+			<div class="kthead-desc km hidden-phone"><?php echo KunenaHtmlParser::parseBBCode ($category->description) ?> </div>
 		<?php endif; ?>
 		<?php
 			// Display subcategories
@@ -74,7 +74,7 @@ foreach ( $this->sections as $section ) :
 			<?php
 				echo $this->getCategoryIcon($childforum, true);
 				echo $this->getCategoryLink($childforum);
-				echo '<span class="kchildcount ks">(' . $childforum->getTopics() . "/" . $childforum->getPosts() . ')</span>';
+				echo '<span class="kchildcount ks">(' . $childforum->getTopics() . "/" . $childforum->getReplies() . ')</span>';
 			?>
 			</div>
 			<?php endforeach; ?>
@@ -89,7 +89,7 @@ foreach ( $this->sections as $section ) :
 				foreach ( $category->moderators as $moderator ) {
 					$modslist[] = KunenaFactory::getUser($moderator)->getLink();
 				}
-				echo JText::_('COM_KUNENA_GEN_MODERATORS') . ': ' . implode(', ', $modslist);
+				echo JText::_('COM_KUNENA_MODERATORS') . ': ' . implode(', ', $modslist);
 		?>
 			</div>
 		<?php endif; ?>
@@ -100,32 +100,26 @@ foreach ( $this->sections as $section ) :
 		<?php endif; ?>
 			</td>
 
-			<td class="kcol-mid kcol-kcattopics">
-				<!-- Number of Topics -->
+			<td class="kcol-mid kcol-kcattopics visible-desktop">
 				<span class="kcat-topics-number"><?php echo $this->formatLargeNumber ( $category->getTopics() ) ?></span>
-				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_GEN_TOPICS');?></span>
-				<!-- /Number of Topics -->
+				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_TOPICS');?></span>
 			</td>
 
-			<td class="kcol-mid kcol-kcatreplies">
-			<!-- Number of Replies -->
-			<span class="kcat-replies-number"><?php echo $this->formatLargeNumber ( $category->getPosts() ) ?></span>
-			<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
-			<!-- /Number of Replies -->
+			<td class="kcol-mid kcol-kcatreplies visible-desktop">
+				<span class="kcat-replies-number"><?php echo $this->formatLargeNumber ( $category->getReplies() ) ?></span>
+				<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
 			</td>
 
 			<?php $last = $category->getLastTopic();
 			if ($last->exists()) { ?>
 			<td class="kcol-mid kcol-kcatlastpost">
 			<?php if ($this->config->avataroncat > 0) : ?>
-			<!-- Avatar -->
 			<?php
 				$profile = KunenaFactory::getUser((int)$last->last_post_userid);
 				$useravatar = $profile->getAvatarImage('klist-avatar', 'list');
 				if ($useravatar) : ?>
-					<span class="klatest-avatar"> <?php echo $last->getLastPostAuthor()->getLink( $useravatar ); ?></span>
+					<span class="klatest-avatar hidden-phone"> <?php echo $last->getLastPostAuthor()->getLink( $useravatar ); ?></span>
 				<?php endif; ?>
-			<!-- /Avatar -->
 			<?php endif; ?>
 			<div class="klatest-subject ks">
 				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. $this->getLastPostLink($category) ?>
@@ -149,8 +143,7 @@ foreach ( $this->sections as $section ) :
 </div>
 </div>
 </div>
-<!-- F: List Cat -->
 <!-- Begin: Category Module Position -->
-	<?php $this->getModulePosition('kunena_section_' . $mmm) ?>
+	<?php $this->displayModulePosition('kunena_section_' . ++$mmm) ?>
 <!-- Finish: Category Module Position -->
 <?php endforeach; ?>

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,14 +18,11 @@ defined ( '_JEXEC' ) or die ();
 class KunenaControllerSearch extends KunenaController {
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->app = JFactory::getApplication ();
 	}
 
 	public function results() {
-		require_once KPATH_SITE . '/lib/kunena.link.class.php';
-
 		$model = $this->getModel('Search');
-		$this->app->redirect ( CKunenaLink::GetSearchURL('advsearch', $model->getState('searchwords'),
+		$this->app->redirect ( $model->getSearchURL('advsearch', $model->getState('searchwords'),
 			$model->getState('list.start'), $model->getState('list.limit'), $model->getUrlParams(), false) );
 	}
 }

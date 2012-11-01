@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Common
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 					<?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>,
 					<b><?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST'); ?></b>
 				</div>
-				<?php if ($this->login) : ?>
+				<?php if ($this->login->enabled()) : ?>
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">
 					<input type="hidden" name="view" value="user" />
 					<input type="hidden" name="task" value="login" />
@@ -36,34 +36,35 @@ defined ( '_JEXEC' ) or die ();
 							<?php echo JText::_('COM_KUNENA_LOGIN_PASSWORD'); ?>
 							<input type="password" name="password" class="inputbox ks" size="18" alt="password" /></span>
 						<span>
-							<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>
-							<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME');  ?>
-							<input type="checkbox" name="remember" alt="" value="yes" />
+							<?php if($this->remember) : ?>
+							<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME'); ?>
+							<input type="checkbox" name="remember" alt="" value="1" />
 							<?php endif; ?>
 							<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
 						</span>
 					</div>
 					<div class="klink-block">
 						<span class="kprofilebox-pass">
-							<?php echo CKunenaLink::GetHrefLink($this->lostpassword, JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD')) ?>
+							<a href="<?php echo $this->lostPasswordUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD') ?></a>
 						</span>
 						<span class="kprofilebox-user">
-							<?php echo CKunenaLink::GetHrefLink($this->lostusername, JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME')) ?>
+							<a href="<?php echo $this->lostUsernameUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME') ?></a>
 						</span>
 						<?php
-						if ($this->register) : ?>
+						if ($this->registerUrl) : ?>
 						<span class="kprofilebox-register">
-							<?php echo CKunenaLink::GetHrefLink($this->register, JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT')) ?>
+							<a href="<?php echo $this->registerUrl ?>" rel="nofollow"><?php echo JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT') ?></a>
 						</span>
 						<?php endif; ?>
 					</div>
 				</form>
 				<?php endif; ?>
 			</td>
+			<!-- Module position -->
 			<?php if ($this->moduleHtml) : ?>
 			<td class = "kprofilebox-right">
 				<div class="kprofilebox-modul">
-					<?php $this->moduleHtml; ?>
+					<?php echo $this->moduleHtml; ?>
 				</div>
 			</td>
 			<?php endif; ?>

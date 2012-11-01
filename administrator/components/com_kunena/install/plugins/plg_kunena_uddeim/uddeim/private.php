@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage UddeIM
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,6 +16,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate {
 
 	public function __construct($params) {
 		$this->params = $params;
+		if (! class_exists('uddeIMAPI')) return;
 		$this->uddeim = new uddeIMAPI();
 		if ($this->uddeim->version() < 1) return;
 	}
@@ -38,6 +39,6 @@ class KunenaPrivateUddeIM extends KunenaPrivate {
 
 	public function getInboxLink ($text) {
 		if (!$text) $text = JText::_('COM_KUNENA_PMS_INBOX');
-		return CKunenaLink::GetHrefLink ( JRoute::_($this->uddeim->getLinkToBox('inbox',false)), $text, '', 'follow');
+		return '<a href="'. JRoute::_($this->uddeim->getLinkToBox('inbox',false)).'" rel="follow">'. $text.'</a>';
 	}
 }

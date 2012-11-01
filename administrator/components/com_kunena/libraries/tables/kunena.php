@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Tables
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 abstract class KunenaTable extends JTable {
 	protected $_exists = false;
 
-	function exists($exists = null) {
+	public function exists($exists = null) {
 		$return = $this->_exists;
 		if ($exists !== null) $this->_exists = $exists;
 		return $return;
@@ -93,7 +93,7 @@ abstract class KunenaTable extends JTable {
 		return $this->_exists = $this->bind($row);
 	}
 
-	function store($updateNulls = false) {
+	public function store($updateNulls = false) {
 		if ($this->exists()) {
 			$ret = $this->updateObject ( $updateNulls );
 		} else {

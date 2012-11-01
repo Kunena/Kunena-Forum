@@ -15,7 +15,7 @@
 		<field primary_key="yes" name="id" type="int(3)" null="0"
 			extra="auto_increment" />
 		<field name="title" type="tinytext" null="0" />
-		<field name="created_by" type="int(10)" null="0" default="0" />
+		<field name="created_by" type="int(11)" null="0" default="0" />
 		<field name="sdescription" type="text" null="0" />
 		<field name="description" type="text" null="0" />
 		<field name="created" type="datetime" null="0" default="0000-00-00 00:00:00" />
@@ -48,11 +48,11 @@
 		<field name="alias" type="varchar(255)" null="0" />
 		<field name="icon_id" type="tinyint(4)" null="0" default="0" />
 		<field name="locked" type="tinyint(4)" null="0" default="0" />
-		<field name="accesstype" type="varchar(20)" null="0" default="none" />
+		<field name="accesstype" type="varchar(20)" null="0" default="joomla.level" />
 		<field name="access" type="int(11)" null="0" default="0" />
-		<field name="pub_access" type="tinyint(4)" null="1" default="1" />
+		<field name="pub_access" type="int(11)" null="0" default="1" />
 		<field name="pub_recurse" type="tinyint(4)" null="1" default="1" />
-		<field name="admin_access" type="tinyint(4)" null="1" default="0" />
+		<field name="admin_access" type="int(11)" null="0" default="0" />
 		<field name="admin_recurse" type="tinyint(4)" null="1" default="1" />
 		<field name="ordering" type="smallint(6)" null="0" default="0" />
 		<field name="published" type="tinyint(4)" null="0" default="0" />
@@ -201,8 +201,7 @@
 		<field name="pollid" type="int(11)" null="1" />
 		<field name="userid" type="int(11)" null="1" />
 		<field name="votes" type="int(11)" null="1" />
-		<field name="lasttime" type="timestamp" null="0"
-			extra="on update CURRENT_TIMESTAMP" />
+		<field name="lasttime" type="timestamp" null="0" default="0000-00-00 00:00:00"/>
 		<field name="lastvote" type="int(11)" null="1" />
 		<key name="pollid" unique="1" columns="pollid,userid" />
 	</table>
@@ -261,9 +260,10 @@
 		<field primary_key="yes" name="topic_id" type="int(11)" null="0" />
 		<field name="category_id" type="int(11)" null="0" />
 		<field name="message_id" type="int(11)" null="0" />
-		<field name="time" type="datetime" null="0" />
+		<field name="time" type="int(11)" null="0" />
 		<key name="user_topic_id" unique="1" columns="user_id,topic_id" />
 		<key name="category_user_id" columns="category_id,user_id" />
+		<key name="time" columns="time" />
 	</table>
 	<table name="kunena_user_topics">
 		<field primary_key="yes" name="user_id" type="int(11)" null="0"
@@ -287,7 +287,7 @@
 	<table name="kunena_users">
 		<field primary_key="yes" name="userid" type="int(11)" null="0"
 			default="0" />
-		<field name="view" type="varchar(8)" null="0" default="flat" />
+		<field name="view" type="varchar(8)" null="0" default="" />
 		<field name="signature" type="text" null="1" />
 		<field name="moderator" type="int(11)" null="1" default="0" />
 		<field name="banned" type="datetime" null="1" />
@@ -350,6 +350,7 @@
 		<key name="userid" columns="userid" />
 		<key name="ip" columns="ip" />
 		<key name="expiration" columns="expiration" />
+		<key name="created_time" columns="created_time" />
 	</table>
 	<table name="kunena_version">
 		<field primary_key="yes" name="id" type="int(11)" null="0"

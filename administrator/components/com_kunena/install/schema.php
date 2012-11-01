@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -42,15 +42,6 @@ class KunenaModelSchema extends JModel
 	{
 		parent::__construct();
 		$this->db = JFactory::getDBO();
-	}
-
-	/**
-	 * Installer object destructor
-	 *
-	 * @access public
-	 * @since 1.6
-	 */
-	public function __destruct() {
 	}
 
 	/**
@@ -303,8 +294,8 @@ class KunenaModelSchema extends JModel
 		$list = array();
 		foreach ($nodeLists as $k=>$nl) foreach ($nl as $n)
 		{
-			if (is_a($n, 'DOMAttr')) $list[$n->name][$k] = $n;
-			else if (is_a($n, 'DOMElement')) $list[$n->tagName][$n->getAttribute('name')][$k] = $n;
+			if ($n instanceof DOMAttr) $list[$n->name][$k] = $n;
+			else if ($n instanceof DOMElement) $list[$n->tagName][$n->getAttribute('name')][$k] = $n;
 		}
 		return $list;
 	}
@@ -320,7 +311,7 @@ class KunenaModelSchema extends JModel
 			if (!$action) $node->setAttribute('action', 'create');
 
 			$prev = $loc['new']->previousSibling;
-			while ($prev && !is_a($prev, 'DOMElement')) {
+			while ($prev && !($prev instanceof DOMElement)) {
 				$prev = $prev->previousSibling;
 			}
 			if ($prev && $tag == 'field' && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
@@ -382,7 +373,7 @@ class KunenaModelSchema extends JModel
 			$node->setAttribute('action', $action);
 
 			$prev = $loc['new']->previousSibling;
-			while ($prev && !is_a($prev, 'DOMElement')) {
+			while ($prev && !($prev instanceof DOMElement)) {
 				$prev = $prev->previousSibling;
 			}
 			if ($prev && $tag == 'field' && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
@@ -396,7 +387,7 @@ class KunenaModelSchema extends JModel
 
 	protected function getDOMDocument($input)
 	{
-		if (is_a($input, 'DOMNode')) $schema = $input;
+		if (($input instanceof DOMNode)) $schema = $input;
 		else if ($input === KUNENA_INPUT_DATABASE) $schema = $this->getSchemaFromDatabase();
 		else if (is_string($input) && file_exists($input)) $schema = $this->getSchemaFromFile($input);
 		else if (is_string($input)) { $schema = new DOMDocument('1.0', 'utf-8'); $schema->loadXML($input); }
@@ -501,7 +492,7 @@ class KunenaModelSchema extends JModel
 
 	protected function getSchemaSQLField($field, $after='')
 	{
-		if (!is_a($field, 'DOMElement')) return '';
+		if (!($field instanceof DOMElement)) return '';
 
 		$str = '';
 		if ($field->tagName == 'field')
@@ -544,9 +535,10 @@ class KunenaModelSchema extends JModel
 
 	protected function upgradeNewAction($dbschema, $node, $table='')
 	{
+		if (!$node) return;
 		foreach ($node->childNodes as $action)
 		{
-			if (!is_a($action, 'DOMElement')) continue;
+			if (!($action instanceof DOMElement)) continue;
 			switch ($action->tagName) {
 				case 'table':
 					$this->upgradeNewAction($dbschema, $action, $action->getAttribute('name'));
@@ -576,13 +568,13 @@ class KunenaModelSchema extends JModel
 		$rootNode = $schema->documentElement;
 		foreach ($rootNode->childNodes as $tableNode)
 		{
-			if (!is_a($tableNode, 'DOMElement')) continue;
+			if (!($tableNode instanceof DOMElement)) continue;
 			if ($tableNode->tagName == 'table' && $table == $tableNode->getAttribute('name'))
 			{
 				if ($type == 'table') return $tableNode;
 				foreach ($tableNode->childNodes as $fieldNode)
 				{
-					if (!is_a($fieldNode, 'DOMElement')) continue;
+					if (!($fieldNode instanceof DOMElement)) continue;
 					if ($fieldNode->tagName == $type && $field == $fieldNode->getAttribute('name'))
 					{
 						return $fieldNode;

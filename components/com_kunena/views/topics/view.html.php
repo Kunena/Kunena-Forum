@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,56 +18,21 @@ class KunenaViewTopics extends KunenaView {
 		$this->layout = 'default';
 		$this->params = $this->state->get('params');
 		$this->Itemid = $this->get('Itemid');
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
-		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->me = KunenaUserHelper::getMyself();
-		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
-		$this->config = KunenaFactory::getConfig();
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
+		$this->topicActions = $this->get ( 'TopicActions' );
+		$this->actionMove = $this->get ( 'ActionMove' );
+		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
+		if ($this->embedded) {
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=default&mode='.$this->state->get ( 'list.mode' );
+			$userid = $this->state->get ( 'user' );
+			if ($userid) $this->moreUri .= "&userid={$userid}";
+		}
 		$this->rssURL = $this->config->enablerss ? KunenaRoute::_('&format=feed') : '';
 
-		switch ($this->state->get ( 'list.mode' )) {
-			case 'topics' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
-				break;
-			case 'sticky' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
-				break;
-			case 'locked' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
-				break;
-			case 'noreplies' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
-				break;
-			case 'unapproved' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
-				break;
-			case 'deleted' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
-				break;
-			case 'replies' :
-			default :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
-		}
-		$this->title = $this->headerText;
-
-		//meta description and keywords
-		$limit = $this->state->get('list.limit');
-		$page = intval($this->state->get('list.start')/$limit)+1;
-		$total = intval(($this->total-1)/$limit)+1;
-		$pagesTxt = "{$page}/{$total}";
-		$app = JFactory::getApplication();
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $app->getCfg ( 'sitename' );
-		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-
-		$this->document->setMetadata ( 'robots', 'noindex, follow' );
-		$this->document->setMetadata ( 'keywords', $metaKeys );
-		$this->document->setDescription ( $metaDesc );
-		$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+		$this->_prepareDocument('default');
 
 		$this->display($tpl);
 	}
@@ -75,47 +40,21 @@ class KunenaViewTopics extends KunenaView {
 	function displayUser($tpl = null) {
 		$this->layout = 'user';
 		$this->params = $this->state->get('params');
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->assignRef ( 'topicActions', $this->get ( 'TopicActions' ) );
-		$this->assignRef ( 'actionMove', $this->get ( 'ActionMove' ) );
-		$this->me = KunenaUserHelper::getMyself();
-		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
-		$this->config = KunenaFactory::getConfig();
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
+		$this->topicActions = $this->get ( 'TopicActions' );
+		$this->actionMove = $this->get ( 'ActionMove' );
+		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
-		switch ($this->state->get ( 'list.mode' )) {
-			case 'posted' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
-				break;
-			case 'started' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
-				break;
-			case 'favorites' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
-				break;
-			case 'subscriptions' :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
-				break;
-			default :
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
+
+		if ($this->embedded) {
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=user&mode='.$this->state->get ( 'list.mode' );
+			$userid = $this->state->get ( 'user' );
+			if ($userid) $this->moreUri .= "&userid={$userid}";
 		}
-		$this->title = $this->headerText;
 
-		//meta description and keywords
-		$limit = $this->state->get('list.limit');
-		$page = intval($this->state->get('list.start')/$limit)+1;
-		$total = intval($this->total/$limit)+1;
-		$pagesTxt = "{$page}/{$total}";
-		$app = JFactory::getApplication();
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $app->getCfg ( 'sitename' );
-		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-
-		$this->document->setMetadata ( 'robots', 'noindex, follow' );
-		$this->document->setMetadata ( 'keywords', $metaKeys );
-		$this->document->setDescription ( $metaDesc );
-		$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+		$this->_prepareDocument('user');
 
 		$this->display($tpl);
 	}
@@ -123,49 +62,22 @@ class KunenaViewTopics extends KunenaView {
 	function displayPosts($tpl = null) {
 		$this->layout = 'posts';
 		$this->params = $this->state->get('params');
-		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
-		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
-		$this->assignRef ( 'total', $this->get ( 'Total' ) );
-		$this->assignRef ( 'postActions', $this->get ( 'PostActions' ) );
+		$this->messages = $this->get ( 'Messages' );
+		$this->topics = $this->get ( 'Topics' );
+		$this->total = $this->get ( 'Total' );
+		$this->postActions = $this->get ( 'PostActions' );
 		$this->actionMove = false;
-		$this->me = KunenaUserHelper::getMyself();
-		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
-		$this->config = KunenaFactory::getConfig();
+		$this->message_ordering = $this->me->getMessageOrdering();
 
 		$this->URL = KunenaRoute::_();
-		switch ($this->state->get ( 'list.mode' )) {
-			case 'unapproved':
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
-				break;
-			case 'deleted':
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
-				break;
-			case 'mythanks':
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
-				break;
-			case 'thankyou':
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
-				break;
-			case 'recent':
-			default:
-				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+
+		if ($this->embedded) {
+			$this->moreUri = 'index.php?option=com_kunena&view=topics&layout=posts&mode='.$this->state->get ( 'list.mode' );
+			$userid = $this->state->get ( 'user' );
+			if ($userid) $this->moreUri .= "&userid={$userid}";
 		}
-		$this->title = $this->headerText;
 
-		//meta description and keywords
-		$limit = $this->state->get('list.limit');
-		$page = intval($this->state->get('list.start')/$limit)+1;
-		$total = intval($this->total/$limit)+1;
-		$pagesTxt = "{$page}/{$total}";
-		$app = JFactory::getApplication();
-		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $app->getCfg ( 'sitename' );
-		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
-
-		$this->document->setMetadata ( 'robots', 'noindex, follow' );
-		$this->document->setMetadata ( 'keywords', $metaKeys );
-		$this->document->setDescription ( $metaDesc );
-		$this->setTitle ( "{$this->title} ({$pagesTxt})" );
+		$this->_prepareDocument('posts');
 
 		$this->display($tpl);
 	}
@@ -183,7 +95,13 @@ class KunenaViewTopics extends KunenaView {
 		$this->position = 0;
 
 		// Run events
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'topics');
@@ -191,7 +109,7 @@ class KunenaViewTopics extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.topics', &$this->topics, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array ('kunena.topics', &$this->topics, &$params, 0));
 
 		foreach ( $this->topics as $this->topic ) {
 			$this->position++;
@@ -204,7 +122,8 @@ class KunenaViewTopics extends KunenaView {
 			$cachekey = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->topic->last_post_id}";
 			$cachegroup = 'com_kunena.topics';
 
-			$contents = $cache->get($cachekey, $cachegroup);
+			// FIXME: enable caching after fixing the issues
+			$contents = false; //$cache->get($cachekey, $cachegroup);
 			if (!$contents) {
 				$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 				$this->firstPostAuthor = $this->topic->getfirstPostAuthor();
@@ -228,7 +147,8 @@ class KunenaViewTopics extends KunenaView {
 				}
 				$contents = $this->loadTemplateFile('row');
 				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
-				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				// FIXME: enable caching after fixing the issues
+				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
 			if ($usertype != 'guest') {
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
@@ -243,7 +163,7 @@ class KunenaViewTopics extends KunenaView {
 			case 'ROW':
 				return $matches[2].($this->position & 1 ? 'odd' : 'even').($this->topic->ordering ? " {$matches[2]}sticky" : '');
 			case 'TOPIC_ICON':
-				return $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() );
+				return $this->topic->getIcon();
 			case 'TOPIC_NEW_COUNT':
 				return $this->topic->unread ? $this->getTopicLink ( $this->topic, 'unread', '<sup class="kindicator-new">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' ) : '';
 			case 'DATE':
@@ -257,7 +177,13 @@ class KunenaViewTopics extends KunenaView {
 		$this->position = 0;
 
 		// Run events
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'user');
 		$params->set('kunena_layout', 'posts');
@@ -265,7 +191,7 @@ class KunenaViewTopics extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->messages, &$params, 0));
+		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->messages, &$params, 0));
 
 		foreach ( $this->messages as $this->message ) {
 			$this->position++;
@@ -279,7 +205,8 @@ class KunenaViewTopics extends KunenaView {
 			$cachekey = "{$this->getTemplateMD5()}.{$usertype}.t{$this->topic->id}.p{$this->message->id}";
 			$cachegroup = 'com_kunena.posts';
 
-			$contents = $cache->get($cachekey, $cachegroup);
+			// FIXME: enable caching after fixing the issues
+			$contents = false; //$cache->get($cachekey, $cachegroup);
 			if (!$contents) {
 				$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 				$this->postAuthor = KunenaFactory::getUser($this->message->userid);
@@ -295,7 +222,8 @@ class KunenaViewTopics extends KunenaView {
 				}
 				$contents = $this->loadTemplateFile('row');
 				if ($usertype == 'guest') $contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
-				if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
+				// FIXME: enable caching after fixing the issues
+				//if ($this->cache) $cache->store($contents, $cachekey, $cachegroup);
 			}
 			if ($usertype != 'guest') {
 				$contents = preg_replace_callback('|\[K=(\w+)(?:\:([\w-_]+))?\]|', array($this, 'fillTopicInfo'), $contents);
@@ -323,9 +251,124 @@ class KunenaViewTopics extends KunenaView {
 		return $txt;
 	}
 
+	function displayTimeFilter($id = 'kfilter-select-time', $attrib = 'class="kinputbox" onchange="this.form.submit()" size="1"') {
+		// make the select list for time selection
+		$timesel[] = JHTML::_('select.option', -1, JText::_('COM_KUNENA_SHOW_ALL'));
+		$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
+		$timesel[] = JHTML::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
+		$timesel[] = JHTML::_('select.option', 8, JText::_('COM_KUNENA_SHOW_8_HOURS'));
+		$timesel[] = JHTML::_('select.option', 12, JText::_('COM_KUNENA_SHOW_12_HOURS'));
+		$timesel[] = JHTML::_('select.option', 24, JText::_('COM_KUNENA_SHOW_24_HOURS'));
+		$timesel[] = JHTML::_('select.option', 48, JText::_('COM_KUNENA_SHOW_48_HOURS'));
+		$timesel[] = JHTML::_('select.option', 168, JText::_('COM_KUNENA_SHOW_WEEK'));
+		$timesel[] = JHTML::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
+		$timesel[] = JHTML::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
+		echo JHTML::_('select.genericlist', $timesel, 'sel', $attrib, 'value', 'text', $this->state->get('list.time'), $id);
+	}
+
 	function getPagination($maxpages) {
 		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
 		$pagination->setDisplay($maxpages);
 		return $pagination->getPagesLinks();
+	}
+
+	protected function _prepareDocument($type){
+		$limit = $this->state->get('list.limit');
+		$page = intval($this->state->get('list.start')/$limit)+1;
+		$total = intval(($this->total-1)/$limit)+1;
+		$pagesTxt = "{$page}/{$total}";
+
+		if ( $type=='default' ){
+
+			switch ($this->state->get ( 'list.mode' )) {
+			case 'topics' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_TOPICS');
+				break;
+			case 'sticky' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_STICKY');
+				break;
+			case 'locked' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_LOCKED');
+				break;
+			case 'noreplies' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_NOREPLIES');
+				break;
+			case 'unapproved' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_UNAPPROVED');
+				break;
+			case 'deleted' :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DELETED');
+				break;
+			case 'replies' :
+			default :
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_DEFAULT_MODE_DEFAULT');
+			}
+			$this->title = $this->headerText;
+
+			$title = "{$this->title} ({$pagesTxt})";
+			$this->setTitle( $title );
+
+			// TODO: add keywords
+
+			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$this->setDescription ( $description );
+
+		} elseif($type=='user'){
+
+			switch ($this->state->get ( 'list.mode' )) {
+				case 'posted' :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_POSTED');
+					break;
+				case 'started' :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_STARTED');
+					break;
+				case 'favorites' :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_FAVORITES');
+					break;
+				case 'subscriptions' :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
+					break;
+				default :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
+			}
+			$this->title = $this->headerText;
+
+			$title = "{$this->title} ({$pagesTxt})";
+			$this->setTitle( $title );
+
+			// TODO: add keywords
+
+			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$this->setDescription ( $description );
+
+		} elseif($type=='posts'){
+
+			switch ($this->state->get ( 'list.mode' )) {
+			case 'unapproved':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_UNAPPROVED');
+				break;
+			case 'deleted':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DELETED');
+				break;
+			case 'mythanks':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_MYTHANKS');
+				break;
+			case 'thankyou':
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_THANKYOU');
+				break;
+			case 'recent':
+			default:
+				$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_POSTS_MODE_DEFAULT');
+			}
+			$this->title = $this->headerText;
+
+			$title = "{$this->title} ({$pagesTxt})";
+			$this->setTitle( $title );
+
+			// TODO: add keywords
+
+			$description = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+			$this->setDescription ( $description );
+		}
 	}
 }

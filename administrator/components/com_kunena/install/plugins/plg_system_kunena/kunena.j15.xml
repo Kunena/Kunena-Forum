@@ -8,17 +8,21 @@
 	<authorEmail>Kunena@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>www.kunena.org</copyright>
-	<license>GNU/GPL</license>
+	<license>GNU/GPLv3 or later</license>
 	<description>PLG_SYSTEM_KUNENA_DESC</description>
 	<files>
 		<filename plugin="kunena">kunena.php</filename>
 	</files>
-	<params>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_system_kunena.sys.ini</language>
+	</languages>
+
+	<params addPath="/administrator/components/com_kunena/libraries/form/elements">
 		<param name="jcontentevents" type="radio" default="0" label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS" description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_DESC">
 			<option value="0">NO</option>
 			<option value="1">YES</option>
 		</param>
-		<param name="jcontentevent_target" type="list" multiple="true" default="body" label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET" description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_DESC">
+		<param name="jcontentevent_target" type="kunenalist" multiple="multiple" default="body" size="2" label="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET" description="PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_DESC">
 			<option value="title">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_TITLES</option>
 			<option value="body">PLG_SYSTEM_KUNENA_JCONTENTPLUGINS_TARGET_BODIES</option>
 		</param>

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,11 +33,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			return parent::populateState();
 		}
 
-		$app = JFactory::getApplication ();
-		$this->config = KunenaFactory::getConfig ();
-		$this->me = KunenaUserHelper::getMyself();
-
-		$active = $app->getMenu ()->getActive ();
+		$active = $this->app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
 		$catid = $this->getInt ( 'catid', 0 );
 		$this->setState ( 'item.id', $catid );
@@ -61,6 +57,16 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
+	}
+
+	public function getLastestCategories() {
+		if ( $this->items === false ) {
+			$this->items = array();
+			$user = KunenaFactory::getUser();
+			list($total,$categories) = KunenaForumCategoryHelper::getLatestSubscriptions($user->userid);
+			$this->items = $categories;
+		}
+		return $this->items;
 	}
 
 	public function getCategories() {
@@ -112,7 +118,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 					$userlist += $subcat->moderators;
 				}
 
-				if ($this->me->isModerator ( $subcat->id ))
+				if ($this->me->isModerator ( $subcat ))
 					$modcats [] = $subcat->id;
 			}
 			$categories [$subcat->parent_id] [] = $subcat;
@@ -147,7 +153,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			}
 		}
 		// Fix last post position when user can see unapproved or deleted posts
-		if ($lastpostlist && !$topic_ordering && $this->me->userid && $this->me->isModerator()) {
+		if ($lastpostlist && !$topic_ordering && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())) {
 			KunenaForumMessageHelper::loadLocation($lastpostlist);
 		}
 
@@ -220,7 +226,7 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 				$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
 
 				// Fetch last / new post positions when user can see unapproved or deleted posts
-				if (($lastpostlist || $lastreadlist) && $this->me->userid && $this->me->isModerator()) {
+				if (($lastpostlist || $lastreadlist) && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus())) {
 					KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
 				}
 
@@ -268,5 +274,13 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 	public function getModerators() {
 		$moderators = $this->getCategory()->getModerators(false);
 		return $moderators;
+	}
+
+	public function getCategoryActions() {
+		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actionDropdown[] = JHTML::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+
+		if (count($actionDropdown) == 1) return null;
+		return $actionDropdown;
 	}
 }

@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Build
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -24,6 +24,7 @@ function getLangDefinition($var) {}
 class CBUser {}
 class CBAuthentication {}
 function selectTemplate() {}
+class cbParamsBase {}
 
 // JomSocial dummies
 class CFactory {}
@@ -48,6 +49,7 @@ class JxAcl {};
 
 // JUpgrage
 class jUpgrade {};
+class jUpgradeExtensions {};
 
 // PHP 5.3
 function parse_ini_string($str) {}

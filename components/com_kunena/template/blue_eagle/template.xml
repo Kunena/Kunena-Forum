@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
-<kinstall type="kunena-template" version="1.6">
-	<name>Blue Eagle (Kunena 1.6)</name>
+<kinstall type="kunena-template" version="2.0">
+	<name>Blue Eagle 2.0</name>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<version>@kunenaversion@</version>
 	<author>Kunena Team</author>
@@ -9,7 +9,7 @@
 	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>Kunena Team</copyright>
 	<license>GNU/GPL</license>
-	<description>COM_KUNENA_TEMPLATE_BLUE_EAGLE_TEMPLATE_DESC</description>
+	<description>COM_KUNENA_TEMPLATE_BLUE_EAGLE_DESC</description>
 	<thumbnail>template_thumbnail.png</thumbnail>
 	<params>
 		<param name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
@@ -45,7 +45,8 @@
 		<param name="activeFontcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR" description="COM_KUNENA_TEMPLATE_ACTIVE_FONT_COLOR_DESC" />
 		<param name="toggleButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_TOGGLER_COLOR" description="COM_KUNENA_TEMPLATE_TOGGLER_COLOR_DESC" />
 		
-		<param name="allButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_COLOR_DESC" />
+	 <!--	
+   <param name="allButtoncolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_COLOR_DESC" />
 		<param name="allButtonhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_HOVER_COLOR_DESC" />
 		<param name="allButtonbordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_BORDER_COLOR_DESC" />
 		<param name="allButtonborderhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_BUTTON_BORDER_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_BUTTON_BORDER_HOVER_COLOR_DESC" />
@@ -57,11 +58,11 @@
 		<param name="paginationBordercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_COLOR_DESC" />
 		<param name="paginationBorderhovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_BORDER_HOVER_COLOR_DESC" />
 		<param name="paginationTextcolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_COLOR_DESC" />
-		<param name="paginationTexthovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR_DESC" />
+		<param name="paginationTexthovercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR" description="COM_KUNENA_TEMPLATE_PAGINATION_TEXT_HOVER_COLOR_DESC" />-->
 		
-		<param name="enableSkinner" type="radio" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
-			<option value="0">COM_KUNENA_A_NO</option>
-			<option value="1">COM_KUNENA_A_YES</option>
+		<param name="enableSkinner" type="list" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
 		</param>
 
 		<param name="templatebyText" type="hidden" default="" />

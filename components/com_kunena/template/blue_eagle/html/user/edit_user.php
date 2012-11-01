@@ -1,16 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-$kunena_config = KunenaFactory::getConfig ();
 ?>
 <div class="kblock kedituser">
 	<div class="kheader">
@@ -18,19 +17,19 @@ $kunena_config = KunenaFactory::getConfig ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : '' ?>">
+<table>
 	<tbody class="kmyprofile_general">
 		<tr class="krow2">
 			<td class="kcol-first">
 				<label for="username"><?php echo JText::_( 'COM_KUNENA_UNAME' ); ?></label>
 			</td>
 			<td class="kcol-mid">
-				<input type="text" name="username" id="username" value="<?php echo $this->escape($this->user->get('username'));?>" <?php echo !$this->config->usernamechange ? 'disabled="disabled" ' : ''?>/>
+				<input type="text" name="username" id="username" value="<?php echo $this->escape($this->user->get('username'));?>" <?php echo !$this->usernamechange ? 'disabled="disabled" ' : '' ?>/>
 			</td>
 		</tr>
 		<tr class="krow1">
 			<td class="kcol-first">
-				<label for="name"><?php echo JText::_( 'COM_KUNENA_USRL_NAME' ); ?></label>
+				<label for="name"><?php echo JText::_( 'COM_KUNENA_REALNAME' ); ?></label>
 			</td>
 					<td class="kcol-mid">
 				<input class="inputbox required" type="text" id="name" name="name" value="<?php echo $this->escape($this->user->get('name'));?>" size="40" />
@@ -74,7 +73,7 @@ $kunena_config = KunenaFactory::getConfig ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : '' ?>" id="kflattable">
+			<table>
 				<tbody class="kmyprofile_params">
 					<?php $i=0; foreach ($this->userparameters as $userparam): ?>
 					<tr class="krow<?php echo ($i^=1)+1;?>">

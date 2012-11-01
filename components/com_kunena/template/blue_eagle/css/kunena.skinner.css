@@ -2,9 +2,9 @@
 
 /**
 * Kunena Component
-* @package Kunena.Template.Default
+* @package Kunena.Template.Blue_Eagle
 *
-* @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+* @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 *
@@ -13,8 +13,8 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
 * 
-**/ 
-* 
+**/
+
 /* --------------------------------------------------------
 
 	This is the skinner override file for the default 
@@ -34,7 +34,6 @@
 #Kunena #ktab a span {
 	font-family: inherit;
 }
-
 #Kunena a.kicon-button:hover {text-decoration: none;}
 #Kunena .kicon-button span span { color: #FFFFFF; }
 #Kunena table.kmsg {
@@ -124,7 +123,6 @@
 #Kunena select:focus,
 #Kunena select:hover {
 	border: 1px solid rgba(0, 0, 0, 0.2);
-	color: inherit;
 	background-color: inherit;
 }
 #Kunena option {
@@ -231,7 +229,6 @@
 }
 #Kunena input#keywords, #Kunena input#kusername,#Kunena input {
 	background-color: inherit;
-	color: inherit;
 }
 #Kunena div#ksearchresult div.kresult-title {
 	border-bottom: 0 none;
@@ -319,11 +316,6 @@
 #Kunena div.kmsgsignature,
 #Kunena div.kmessage-thankyou {
 	border-top: 0 none;
-}
-#Kunena .kreply-form .inputbox {
-	background-color: rgba(0, 0, 0, 0.01);
-	border: 0 none;
-	color: inherit;
 }
 #Kunena .kreply-form .inputbox {
 	background-color: rgba(0, 0, 0, 0.01);

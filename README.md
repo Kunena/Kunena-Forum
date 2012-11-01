@@ -12,10 +12,9 @@
 
 *Kunena* 2.0 requires (this section is work in progress until Kunena 2.0 has been released)
 
-    Joomla! 1.5: version 1.5.25 or greater
-    Joomla! 1.7: version 1.7.3 or greater
-    Joomla! 2.5: version 2.5.0 or greater
-    PHP: version 5.2.4 or greater (>= 5.3.6 recommended)
+    Joomla! 1.5: version 1.5.25 or greater (>= 1.5.26 recommended)
+    Joomla! 2.5: version 2.5.3 or greater (>= 2.5.7 recommended)
+    PHP: version 5.2.4 or greater (>= 5.3.17 recommended)
     MySQL: version 5.0.4 or greater (>= 5.1 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.
@@ -30,8 +29,8 @@ In addition we recommend the following PHP settings:
 
 *Kunena* requires the following Joomla settings:
 
-    * Mootools 1.2 or 1.3 compatible template
-    * Upgraded to latest versions all extensions that claim to integrate with Kunena 1.6
+    * Mootools 1.2 or 1.4 compatible template
+    * Upgraded to latest versions all extensions that claim to integrate with Kunena 2.0
     * No plugins or modules that were developed for previous versions of Kunena or Fireboard
 
 
@@ -70,7 +69,7 @@ The *Kunena* projects thrives on contributions from the community. Our dedicated
 
 1. [Create an account on kunena.org](http://www.kunena.org/component/community/register)
 2. [Create a topic (unless there already is one)](http://www.kunena.org/forum/newtopic)
-3. [Checkout our GIT repository on github](https://github.com/Kunena)
+3. [Checkout our Git repository on github](https://github.com/Kunena)
 4. [Read our documentation](http://docs.kunena.org)
 5. [Read our developer wiki](https://github.com/Kunena/Kunena-2.0/wiki)
 6. Send us a pull request
@@ -78,4 +77,4 @@ The *Kunena* projects thrives on contributions from the community. Our dedicated
 
 ## LICENSE
 
-[GNU General Public License v2](http://opensource.org/licenses/gpl-2.0.php)
+[GNU General Public License v3 or later](http://www.gnu.org/copyleft/gpl.html)

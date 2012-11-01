@@ -3,7 +3,8 @@
  * Kunena Component
  * @package Kunena.Site
  * @subpackage Lib
- * @copyright (C) 2011 Kunena All rights reserved.
+ *
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,7 +18,7 @@ jimport('joomla.filesystem.file');
 
 class CKunenaPath extends JPath
 {
-	function tmpdir()
+	public static function tmpdir()
 	{
 		static $tmpdir=false;
 		if ($tmpdir) return realpath($tmpdir);
@@ -56,7 +57,8 @@ class CKunenaFolder extends JFolder
 	static function createIndex($folder) {
 		// Make sure we have an index.html file in the current folder
 		if (!CKunenaFile::exists($folder.'/index.html')) {
-			CKunenaFile::write($folder.'/index.html','<html><body></body></html>');
+			$contents = '<html><body></body></html>';
+			CKunenaFile::write($folder.'/index.html', $contents);
 		}
 	}
 }
@@ -64,7 +66,7 @@ class CKunenaFolder extends JFolder
 class CKunenaFile extends JFile
 {
 
-	static function copy($src, $dest, $path = null)
+	static function copy($src, $dest, $path = null, $use_streams = false)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -85,7 +87,7 @@ class CKunenaFile extends JFile
 		return $ret;
 	}
 
-	static function move($src, $dest, $path = null)
+	static function move($src, $dest, $path = null, $use_streams = false)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -114,7 +116,7 @@ class CKunenaFile extends JFile
 		return $ret;
 	}
 
-	static function write($file, $buffer)
+	static function write($file, &$buffer, $use_streams = false)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -130,7 +132,7 @@ class CKunenaFile extends JFile
 		return $ret;
 	}
 
-	static function upload($src, $dest)
+	static function upload($src, $dest, $use_streams = false)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -142,7 +144,8 @@ class CKunenaFile extends JFile
 			if ($FTPOptions['enabled'] == 1) {
 				if ($ret === true) {
 					jimport('joomla.client.ftp');
-					$ftp = & JFTP::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
+					// FIXME: renamed class JFTP from Joomla! 3.0/Platfrom 12.1
+					$ftp = JFTP::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
 					@unlink($src);
 					$ret = true;
 				} else {

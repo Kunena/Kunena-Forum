@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Object
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,6 +18,7 @@ abstract class KunenaDatabaseObject extends JObject {
 	protected $_name = null;
 	protected $_table = null;
 	protected $_exists = false;
+	protected $_saving = false;
 
 	/**
 	 * Returns the global object.
@@ -27,7 +28,7 @@ abstract class KunenaDatabaseObject extends JObject {
 	 *
 	 * @return  KunenaDatabaseObject
 	 */
-	abstract static public function getInstance($identifier = null, $reload = false);
+	static public function getInstance($identifier = null, $reload = false) {}
 
 	/**
 	 * Returns true if the object exists in the database.
@@ -97,9 +98,11 @@ abstract class KunenaDatabaseObject extends JObject {
 	 * @return  boolean  True on success.
 	 */
 	public function save() {
+		$this->_saving = true;
+
 		// Check the object.
 		if (! $this->check ()) {
-			return false;
+			return $this->_saving = false;
 		}
 
 		// Initialize table object.
@@ -111,7 +114,7 @@ abstract class KunenaDatabaseObject extends JObject {
 		// Check the table object.
 		if (! $table->check ()) {
 			$this->setError ( $table->getError () );
-			return false;
+			return $this->_saving = false;
 		}
 
 		// Include the Kunena plugins for the on save events.
@@ -122,25 +125,26 @@ abstract class KunenaDatabaseObject extends JObject {
 		$result = $dispatcher->trigger('onKunenaBeforeSave', array("com_kunena.{$this->_name}", &$table, $isNew));
 		if (in_array(false, $result, true)) {
 			$this->setError($table->getError());
-			return false;
+			return $this->_saving = false;
 		}
 
 		// Store the data.
 		if (!$table->store()) {
 			$this->setError($table->getError());
-			return false;
+			return $this->_saving = false;
 		}
-
-		$this->saveInternal();
 
 		// If item was created, load the object.
 		if ($isNew) {
 			$this->load ( $table->id );
 		}
 
+		$this->saveInternal();
+
 		// Trigger the onKunenaAfterSave event.
 		$dispatcher->trigger('onKunenaAfterSave', array("com_kunena.{$this->_name}", &$table, $isNew));
 
+		$this->_saving = false;
 		return true;
 	}
 

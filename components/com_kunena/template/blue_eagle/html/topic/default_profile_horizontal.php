@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -24,17 +24,17 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->userposts) : ?>
 				<span class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') . intval($this->userposts); ?></span>
 			<?php endif ?>
-			<?php if ($this->thankyou) : ?>
-				<span class="kpost-userposts"><?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') .' '. intval($this->thankyou); ?></span>
+			<?php if ($this->userthankyou) : ?>
+				<span class="kpost-userposts"><?php echo JText::_('COM_KUNENA_MYPROFILE_THANKYOU_RECEIVED') .' '. intval($this->userthankyou); ?></span>
 			<?php endif ?>
 			<?php if ($this->userpoints) : ?>
 				<span class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . intval($this->userpoints); ?></span>
 			<?php endif ?>
 			</div>
 		</li>
-		<?php if (!empty($this->personaltext)) : ?>
+		<?php if (!empty($this->personalText)) : ?>
 		<li class="kpost-personal">
-			<?php echo $this->personaltext ?>
+			<?php echo $this->personalText ?>
 		</li>
 		<?php endif ?>
 		<?php endif; ?>

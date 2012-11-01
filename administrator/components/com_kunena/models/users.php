@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,10 +28,8 @@ class KunenaAdminModelUsers extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.users.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.admin.users.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.ordering', 'filter_order', 'username', 'cmd' );
@@ -65,7 +63,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 		$where = '';
 		if ( $this->getState('list.search') ) {
-		  $where = ' WHERE LOWER( u.username ) LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR LOWER( u.email ) LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR LOWER( u.name ) LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false );
+		  $where = ' WHERE u.username LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.email LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false );
 
 		}
 
@@ -90,9 +88,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 	}
 
 	public function getUser() {
-		$app = JFactory::getApplication ();
-
-		$userid = $app->getUserState ( 'kunena.user.userid');
+		$userid = $this->app->getUserState ( 'kunena.user.userid');
 
 		$user = KunenaUserHelper::get($userid);
 
@@ -101,8 +97,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 	public function getSubscriptions() {
 		$db = JFactory::getDBO ();
-		$app = JFactory::getApplication ();
-		$userid = $app->getUserState ( 'kunena.user.userid');
+		$userid = $this->app->getUserState ( 'kunena.user.userid');
 
 		$db->setQuery ( "SELECT topic_id AS thread FROM #__kunena_user_topics WHERE user_id='$userid' AND subscribed=1" );
 		$subslist = $db->loadObjectList ();
@@ -113,8 +108,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 	public function getCatsubcriptions() {
 		$db = JFactory::getDBO ();
-		$app = JFactory::getApplication ();
-		$userid = $app->getUserState ( 'kunena.user.userid');
+		$userid = $this->app->getUserState ( 'kunena.user.userid');
 
 		$db->setQuery ( "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$userid}" );
 		$subscatslist = $db->loadObjectList ();
@@ -125,8 +119,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 	public function getIPlist() {
 		$db = JFactory::getDBO ();
-		$app = JFactory::getApplication ();
-		$userid = $app->getUserState ( 'kunena.user.userid');
+		$userid = $this->app->getUserState ( 'kunena.user.userid');
 
 		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip" );
 		$iplist = implode("','", $db->loadResultArray ());
@@ -181,33 +174,19 @@ class KunenaAdminModelUsers extends KunenaModel {
 	}
 
 	public function getMovecatslist() {
-		$db = JFactory::getDBO ();
-
-		$db->setQuery ( "SELECT id,parent_id,name FROM #__kunena_categories" );
-		$catsList = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		$category = array();
-		foreach ($catsList as $cat) {
-			if ($cat->parent_id) {
-				$category[] = JHTML::_('select.option', $cat->id, '...'.$cat->name);
-			} else {
-				$category[] = JHTML::_('select.option', $cat->id, $cat->name);
-			}
-		}
-		$catslist = JHTML::_('select.genericlist', $category, 'cid[]', 'class="inputbox" multiple="multiple" size="5"', 'value', 'text');
-		return $catslist;
+		return JHTML::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox"', 'value', 'text');
 	}
 
 	public function getMoveuser() {
 		$db = JFactory::getDBO ();
 
-		$app = JFactory::getApplication ();
-		$userid = $app->getUserState ( 'kunena.usermove.userid');
+		$userids = (array) $this->app->getUserState ( 'kunena.usermove.userids');
+		if (!$userids) return $userids;
 
-		$userid = implode(',', $userid);
-		$db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userid.")" );
+		$userids = implode(',', $userids);
+		$db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userids.")" );
 		$userids = $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return;
 
 		return $userids;
 	}

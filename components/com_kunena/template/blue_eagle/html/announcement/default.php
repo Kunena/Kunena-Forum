@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Announcement
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,26 +14,19 @@ defined ( '_JEXEC' ) or die ();
 <div class="kblock kannouncement">
 	<div class="kheader">
 		<h2>
-			<span><?php echo KunenaHtmlParser::parseText($this->announcement->title); ?></span>
+			<span><?php echo $this->displayField('title') ?></span>
 		</h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
-		<?php if ($this->canEdit) : ?>
-		<div class="kactions">
-			<?php echo CKunenaLink::GetAnnouncementLink( 'edit', $this->announcement->id, JText::_('COM_KUNENA_ANN_EDIT'), JText::_('COM_KUNENA_ANN_EDIT')); ?> |
-			<?php echo CKunenaLink::GetAnnouncementLink( 'delete', $this->announcement->id, JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?> |
-			<?php echo CKunenaLink::GetAnnouncementLink( 'add',NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?> |
-			<?php echo CKunenaLink::GetAnnouncementLink( 'show', NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?>
-		</div>
-		<?php endif; ?>
+		<?php echo $this->displayActions() ?>
 		<div class="kbody">
 			<div class="kanndesc">
-				<?php if ($this->announcement->showdate > 0) : ?>
-				<div class="anncreated" title="<?php echo KunenaDate::getInstance($this->announcement->created)->toKunena('ago'); ?>">
-					<?php echo KunenaDate::getInstance($this->announcement->created)->toKunena('date_today'); ?>
+				<?php if ($this->showdate) : ?>
+				<div class="anncreated" title="<?php echo $this->displayField('created', 'ago'); ?>">
+					<?php echo $this->displayField('created', 'date_today') ?>
 				</div>
 				<?php endif; ?>
-				<div class="anndesc"><?php echo !empty($this->announcement->description) ? KunenaHtmlParser::parseBBCode($this->announcement->description) : KunenaHtmlParser::parseBBCode($this->announcement->sdescription); ?></div>
+				<div class="anndesc"><?php echo $this->displayField('description') ?></div>
 			</div>
 		</div>
 	</div>

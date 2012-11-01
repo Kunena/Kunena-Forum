@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Thankyou
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
  * Kunena Forum Message Thank You Helper Class
  * @since 2.0
  */
-class KunenaForumMessageThankyouHelper {
+abstract class KunenaForumMessageThankyouHelper {
 	protected static $_instances = array();
 
 	/**
@@ -173,5 +173,72 @@ class KunenaForumMessageThankyouHelper {
 			self::$_instances [$result->postid]->_add($result->userid, $result->time);
 		}
 		unset ($results);
+	}
+
+	/**
+	 * Perform the recount thankyous in kunena_users table
+	 * @return bool true if succes
+	 * @since 2.0
+	 */
+	static public function recount() {
+		$db = JFactory::getDBO ();
+
+		// Users who have no thank yous, set thankyou count to 0
+		$query ="UPDATE #__kunena_users AS u
+			LEFT JOIN #__kunena_thankyou AS t ON t.targetuserid = u.userid
+			SET u.thankyou = 0
+			WHERE t.targetuserid IS NULL";
+		$db->setQuery($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		$rows = $db->getAffectedRows ();
+
+		// Update user thankyou count
+		$query = "INSERT INTO #__kunena_users (userid, thankyou)
+			SELECT targetuserid AS userid, COUNT(*) AS thankyou
+			FROM #__kunena_thankyou
+			GROUP BY targetuserid
+			ON DUPLICATE KEY UPDATE thankyou=VALUES(thankyou)";
+		$db->setQuery ($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		$rows += $db->getAffectedRows ();
+
+		return $rows;
+	}
+
+	/**
+	 * Returns KunenaForumMessageThankyou object
+	 *
+	 * @access	public
+	 * @param	ids		The message to load - Can be only an instance of KunenaForumMessage.
+	 * @return	KunenaForumMessageThankyou		The thankyou object.
+	 * @since	2.0-BETA2
+	 */
+	static public function getByMessage($ids = false) {
+		if ($ids === false) {
+			return self::$_instances;
+		} elseif ( is_array($ids) ) {
+			$ids2 = array();
+			foreach ($ids as $id) {
+				if ($id instanceof KunenaForumMessage) $id = $id->id;
+				$ids2[(int)$id] = (int)$id;
+			}
+			$ids = $ids2;
+		} else {
+			$ids = array($ids);
+		}
+
+		self::loadMessages ( $ids );
+
+		$list = array();
+		foreach($ids as $id) {
+			if ( !empty(self::$_instances [$id]) ) {
+				$list[$id] =self::$_instances [$id];
+			}
+		}
+		return $list;
 	}
 }

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -27,10 +27,8 @@ class KunenaAdminModelTopicicons extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.topicicons.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.admin.topicicons.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.topicicons.list.ordering', 'filter_order', 'name', 'cmd' );
@@ -49,12 +47,11 @@ class KunenaAdminModelTopicicons extends KunenaModel {
 
 		$iconset = $this->getString ( 'iconset' );
 		$this->setState ( 'list.iconset', $iconset );
-		if ($id == '0') $app->setUserState('com_kunena.iconset',$iconset );
+		if ($id == '0') $this->app->setUserState('com_kunena.iconset',$iconset );
 	}
 
 	public function getTopicicons() {
-  $app = JFactory::getApplication ();
-	  $iconset = $app->getUserState('com_kunena.iconset');
+	  $iconset = $this->app->getUserState('com_kunena.iconset');
 
 	  $set = 'default';
 	  if ( $iconset != '0' ) $set = $iconset;
@@ -86,13 +83,12 @@ class KunenaAdminModelTopicicons extends KunenaModel {
 	}
 
 	public function getTopicicon() {
-	$app = JFactory::getApplication ();
 		$id = $this->getState ( 'item.id' );
 		if ( $id ) {
 		$topicicon_details = new stdClass();
 		$id = (Int) $id;
 
-		$iconset = $app->getUserState('com_kunena.iconset');
+		$iconset = $this->app->getUserState('com_kunena.iconset');
 		$set = 'default';
 	  if ( $iconset != '0' ) $set = $iconset;
 		$topicicons_xml = simplexml_load_file(JPATH_ROOT."/media/kunena/topicicons/{$set}/topicicons.xml");
@@ -129,7 +125,7 @@ class KunenaAdminModelTopicicons extends KunenaModel {
 	  jimport( 'joomla.filesystem.folder' );
 	  $topicicons = array ();
     $topiciconslist = JFolder::folders(JPATH_ROOT.'/media/kunena/topicicons');
-    $topicicons[] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_A_ICONSET_LIST') );
+    $topicicons[] = JHTML::_ ( 'select.option', '', JText::_('COM_KUNENA_A_ICONSET_LIST') );
     foreach( $topiciconslist as $icon ) {
 			$topicicons[] = JHTML::_ ( 'select.option', $icon, $icon );
 		}

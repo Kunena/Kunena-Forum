@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Community
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -25,22 +25,30 @@ class KunenaActivityCommunity extends KunenaActivity {
 			CUserPoints::assignPoint ( 'com_kunena.thread.new' );
 		}
 
-		$content = KunenaHtmlParser::plainBBCode($message->message, $this->params->get('activity_stream_limit', 0));
+		$parent = new stdClass();
+		$parent->forceSecure = true;
+		$parent->forceMinimal = true;
+
+		$content = KunenaHtmlParser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
-		$content .= '<br /><a rel="nofollow" href="'.
-				KunenaRoute::_($message->getPermaUrl()).
-				'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
+		$content .= '<br /><a rel="nofollow" href="'.$message->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
-		$act->title = JText::_ ( '{actor} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1' ) . ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2' ) );
+		$act->title = JText::_ ( '{actor} ' . JText::sprintf ( 'PLG_KUNENA_COMMUNITY_ACTIVITY_POST_TITLE', ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>') );
 		$act->content = $content;
 		$act->app = 'kunena.post';
 		$act->cid = $message->thread;
 		$act->access = $this->getAccess($message->getCategory());
+
+		// Comments and like support
+		$act->comment_id = $message->thread;
+		$act->comment_type = 'kunena.post';
+		$act->like_id = $message->thread;
+		$act->like_type = 'kunena.post';
 
 		// Do not add private activities
 		if ($act->access > 20) return;
@@ -54,53 +62,73 @@ class KunenaActivityCommunity extends KunenaActivity {
 			CUserPoints::assignPoint ( 'com_kunena.thread.reply' );
 		}
 
-		$content = KunenaHtmlParser::plainBBCode($message->message, $this->params->get('activity_stream_limit', 0));
+		$parent = new stdClass();
+		$parent->forceSecure = true;
+		$parent->forceMinimal = true;
+
+		$content = KunenaHtmlParser::parseBBCode($message->message, $parent, $this->params->get('activity_stream_limit', 0));
 
 		// Add readmore permalink
-		$content .= '<br /><a rel="nofollow" href="'.
-				KunenaRoute::_($message->getPermaUrl()).
-				'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
+		$content .= '<br /><a rel="nofollow" href="'.$message->getPermaUrl().'" class="small profile-newsfeed-item-action">'.JText::_('COM_KUNENA_READMORE').'</a>';
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
 		$act->actor = $message->userid;
 		$act->target = 0; // no target
-		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1' ) . ' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
+		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf ( 'PLG_KUNENA_COMMUNITY_ACTIVITY_REPLY_TITLE', '<a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a>' ) );
 		$act->content = $content;
 		$act->app = 'kunena.post';
 		$act->cid = $message->thread;
 		$act->access = $this->getAccess($message->getCategory());
 
+		// Comments and like support
+		$act->comment_id = $message->thread;
+		$act->comment_type = 'kunena.post';
+		$act->like_id = $message->thread;
+		$act->like_type = 'kunena.post';
+
 		// Do not add private activities
 		if ($act->access > 20) return;
 		CFactory::load ( 'libraries', 'activities' );
 		CActivityStream::add ( $act );
 	}
 
-	public function onAfterThankyou($thankyoutargetid, $username , $message) {
+	public function onAfterThankyou($target, $actor, $message) {
 		CFactory::load ( 'libraries', 'userpoints' );
-		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $thankyoutargetid );
+		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $target );
+		$username = KunenaFactory::getUser($actor)->username;
 
 		$act = new stdClass ();
 		$act->cmd = 'wall.write';
 		$act->actor = JFactory::getUser()->id;
-		$act->target = $thankyoutargetid;
-		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_( 'COM_KUNENA_JS_ACTIVITYSTREAM_THANKYOU' ).' <a href="' . $message->getTopic()->getUrl() . '">' . $message->subject . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
+		$act->target = $target;
+		$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::sprintf( 'PLG_KUNENA_COMMUNITY_ACTIVITY_THANKYOU_TITLE', $username, ' <a href="' . $message->getPermaUrl() . '">' . $message->subject . '</a>' ) );
 		$act->content = NULL;
 		$act->app = 'kunena.thankyou';
-		$act->cid = $thankyoutargetid;
+		$act->cid = $target;
 		$act->access = $this->getAccess($message->getCategory());
+
+		// Comments and like support
+		$act->comment_id = $target;
+		$act->comment_type = 'kunena.thankyou';
+		$act->like_id = $target;
+		$act->like_type = 'kunena.thankyou';
 
 		// Do not add private activities
 		if ($act->access > 20) return;
 		CFactory::load ( 'libraries', 'activities' );
 		CActivityStream::add ( $act );
+	}
+
+	public function onAfterDeleteTopic($target) {
+		CFactory::load ( 'libraries', 'activities' );
+		CActivityStream::remove ('kunena.post', $target->id );
 	}
 
 	protected function getAccess($category) {
 		// Activity access level: 0 = public, 20 = registered, 30 = friend, 40 = private
 		$accesstype = $category->accesstype;
-		if ($accesstype != 'none' && $accesstype != 'joomla.level') {
+		if ($accesstype != 'joomla.group' && $accesstype != 'joomla.level') {
 			// Private
 			return 40;
 		}
@@ -108,11 +136,11 @@ class KunenaActivityCommunity extends KunenaActivity {
 			// Joomla 1.6+
 			// FIXME: Joomla 1.6 can mix up groups and access levels
 			if (($accesstype == 'joomla.level' && $category->access == 1)
-					|| ($accesstype == 'none' && ($category->pub_access == 1 || $category->admin_access == 1))) {
+					|| ($accesstype == 'joomla.group' && ($category->pub_access == 1 || $category->admin_access == 1))) {
 				// Public
 				$access = 0;
 			} elseif (($accesstype == 'joomla.level' && $category->access == 2)
-					|| ($accesstype == 'none' && ($category->pub_access == 2 || $category->admin_access == 2))) {
+					|| ($accesstype == 'joomla.group' && ($category->pub_access == 2 || $category->admin_access == 2))) {
 				// Registered
 				$access = 20;
 			} else {
@@ -124,11 +152,11 @@ class KunenaActivityCommunity extends KunenaActivity {
 			// Joomla access levels: 0 = public,  1 = registered
 			// Joomla user groups:  29 = public, 18 = registered
 			if (($accesstype == 'joomla.level' && $category->access == 0)
-					|| ($accesstype == 'none' && ($category->pub_access == 0 || $category->pub_access == 29 || $category->admin_access == 29))) {
+					|| ($accesstype == 'joomla.group' && ($category->pub_access == 0 || $category->pub_access == 29 || $category->admin_access == 29))) {
 				// Public
 				$access = 0;
 			} elseif (($accesstype == 'joomla.level' && $category->access == 1)
-					|| ($accesstype == 'none' && ($category->pub_access == -1 || $category->pub_access == 18 || $category->admin_access == 18))) {
+					|| ($accesstype == 'joomla.group' && ($category->pub_access == -1 || $category->pub_access == 18 || $category->admin_access == 18))) {
 				// Registered
 				$access = 20;
 			} else {

@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topics
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,10 +33,9 @@ defined ( '_JEXEC' ) or die ();
 						<?php $this->displayRows (); ?>
 
 					<?php  if ( !empty($this->topicActions) || !empty($this->embedded) ) : ?>
-					<!-- Bulk Actions -->
 					<tr class="krow1">
-						<td colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>" class="kcol-first krowmoderation">
-							<?php if (!empty($this->embedded)) echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow'); ?>
+						<td colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>" class="kcol krowmoderation">
+							<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
 							<?php if (!empty($this->topicActions)) : ?>
 							<?php echo JHTML::_('select.genericlist', $this->topicActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 							<?php if ($this->actionMove) :
@@ -47,7 +46,6 @@ defined ( '_JEXEC' ) or die ();
 							<?php endif; ?>
 						</td>
 					</tr>
-					<!-- /Bulk Actions -->
 					<?php endif; ?>
 					<?php endif; ?>
 				</table>

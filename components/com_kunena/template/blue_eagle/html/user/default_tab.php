@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,7 +16,7 @@ JHTML::_('behavior.tooltip');
 <div id="kprofile-rightcoltop">
 	<div class="kprofile-rightcol2">
 <?php
-	echo $this->loadTemplateFile('social');
+	$this->displayTemplateFile('user', 'default', 'social');
 ?>
 	</div>
 	<div class="kprofile-rightcol1">
@@ -35,14 +35,14 @@ JHTML::_('behavior.tooltip');
 <div id="kprofile-rightcolbot">
 	<div class="kprofile-rightcol2">
 		<ul>
-			<?php if ($this->config->showemail && (!$this->profile->hideEmail || $this->me->isModerator())): ?><li><span class="kicon-profile kicon-profile-email"></span><?php echo JHTML::_('email.cloak', $this->user->email) ?></li><?php endif; ?>
+			<?php if ( $this->email ): ?><li><span class="kicon-profile kicon-profile-email"></span><?php echo $this->email ?></li><?php endif; ?>
 			<?php // FIXME: we need a better way to add http/https ?>
 			<li><?php if (!empty($this->profile->websiteurl)):?><span class="kicon-profile kicon-profile-website"></span><?php endif;?><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename); ?></a></li>
 		</ul>
 	</div>
 	<div class="kprofile-rightcol1">
 		<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?></h4>
-		<div class="kmsgsignature"><div><?php echo KunenaHtmlParser::parseBBCode($this->signature); ?></div></div>
+		<div class="kmsgsignature"><div><?php echo $this->signatureHtml ?></div></div>
 	</div>
 
 </div>
@@ -51,59 +51,57 @@ JHTML::_('behavior.tooltip');
 
 <div id="kprofile-tabs">
 	<dl class="tabs">
-		<?php if ($this->me->isModerator()): ?>
-		<dt class="open" title="<?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?>"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?></dt>
-		<dd style="display: none;">
-			<?php $this->displayUnapprovedPosts(); ?>
-		</dd>
-		<?php endif; ?>
+		<?php if($this->showUserPosts) : ?>
 		<dt class="open" title="<?php echo JText::_('COM_KUNENA_USERPOSTS'); ?>"><?php echo JText::_('COM_KUNENA_USERPOSTS'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayUserPosts(); ?>
 		</dd>
-		<?php if($this->config->showthankyou && $this->my->id != 0) : ?>
-		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_THANK_YOU'); ?>"><?php echo JText::_('COM_KUNENA_THANK_YOU'); ?></dt>
-		<dd style="display: none;">
-			<?php $this->displayGotThankyou(); ?>
-			<?php $this->displaySaidThankyou(); ?>
-		</dd>
 		<?php endif; ?>
-		<?php if ($this->my->id == $this->user->id || $this->me->isAdmin()): ?>
-		<?php if ($this->config->allowsubscriptions) :?>
+		<?php if ($this->showSubscriptions) :?>
 		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?>"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayCategoriesSubscriptions(); ?>
 			<?php $this->displaySubscriptions(); ?>
 		</dd>
 		<?php endif; ?>
-		<?php if ($this->config->allowfavorites) : ?>
+		<?php if ($this->showFavorites) : ?>
 		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_FAVORITES'); ?>"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayFavorites(); ?>
 		</dd>
 		<?php endif; ?>
-		<?php endif;?>
-		<?php if ($this->me->isModerator() && $this->my->id == $this->profile->userid ): ?>
-		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?>"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></dt>
+		<?php if($this->showThankyou) : ?>
+		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_THANK_YOU'); ?>"><?php echo JText::_('COM_KUNENA_THANK_YOU'); ?></dt>
 		<dd style="display: none;">
-			<?php $this->displayBanManager(); ?>
+			<?php $this->displayGotThankyou(); ?>
+			<?php $this->displaySaidThankyou(); ?>
 		</dd>
-		<?php endif;?>
-		<?php if ($this->me->isModerator() && $this->my->id != $this->user->id):?>
-		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?>"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?></dt>
+		<?php endif; ?>
+		<?php if ($this->showUnapprovedPosts): ?>
+		<dt class="open" title="<?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?>"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?></dt>
 		<dd style="display: none;">
-			<?php $this->displayBanHistory(); ?>
+			<?php $this->displayUnapprovedPosts(); ?>
 		</dd>
-		<?php endif;?>
-		<?php if ( $this->canManageAttachs ): ?>
-		<?php if ($this->me->isModerator() || $this->my->id == $this->profile->userid ): ?>
+		<?php endif; ?>
+		<?php if ($this->showAttachments): ?>
 		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_MANAGE_ATTACHMENTS'); ?>"><?php echo JText::_('COM_KUNENA_MANAGE_ATTACHMENTS'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayAttachments(); ?>
 		</dd>
 		<?php endif;?>
+		<?php if ($this->showBanManager): ?>
+		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?>"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></dt>
+		<dd style="display: none;">
+			<?php $this->displayBanManager(); ?>
+		</dd>
 		<?php endif;?>
-		<?php if ($this->canBan) : ?>
+		<?php if ($this->showBanHistory):?>
+		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?>"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?></dt>
+		<dd style="display: none;">
+			<?php $this->displayBanHistory(); ?>
+		</dd>
+		<?php endif;?>
+		<?php if ($this->showBanUser) : ?>
 		<dt class="closed" title="<?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?>"><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayBanUser(); ?>

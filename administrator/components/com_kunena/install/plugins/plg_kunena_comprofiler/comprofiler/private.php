@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -52,11 +52,11 @@ class KunenaPrivateComprofiler extends KunenaPrivate {
 
 		$userid = $_CB_framework->myId();
 
-		$cbUser =& CBuser::getInstance( (int) $userid );
+		$cbUser = CBuser::getInstance( (int) $userid );
 		if($cbUser === null) return;
 
 		$itemid = getCBprofileItemid();
 
-		return CKunenaLink::GetHrefLink ( cbSef ('index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid), $text, '', 'follow');
+		return '<a href="'. cbSef ('index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid).'" rel="follow">'. $text.'</a>';
 	}
 }

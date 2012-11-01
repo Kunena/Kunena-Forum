@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Upload
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -25,7 +25,7 @@ class KunenaUploadHelper {
 		JPlugin::loadLanguage( 'com_media' );
 		$params = JComponentHelper::getParams('com_media');
 		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
-		define('COM_KUNENA_MEDIA_BASE', JPATH_ROOT.'/components/com_kunena/template/'.$config->template.'/images');
+		$path = KPATH_MEDIA;
 
 		$err			= null;
 
@@ -37,15 +37,15 @@ class KunenaUploadHelper {
 		jimport('joomla.filesystem.file');
 		$file['name']	= JFile::makeSafe($file['name']);
 
-		if ( !JFolder::exists(COM_KUNENA_MEDIA_BASE.'/'.$uploadfolder) ) return false;
+		if ( !JFolder::exists($path.'/'.$uploadfolder) ) return false;
 
 		if (isset($file['name'])) {
-			$filepath = JPath::clean(COM_KUNENA_MEDIA_BASE.'/'.$uploadfolder.'/'.strtolower($file['name']));
+			$filepath = JPath::clean($path.'/'.$uploadfolder.'/'.strtolower($file['name']));
 
 			if (!MediaHelper::canUpload( $file, $err )) {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
-					$log = &JLog::getInstance('upload.error.php');
+					$log = JLog::getInstance('upload.error.php');
 					$log->addEntry(array('comment' => 'Invalid: '.$filepath.': '.$err));
 					header('HTTP/1.0 415 Unsupported Media Type');
 					jexit('Error. Unsupported Media Type!');
@@ -57,7 +57,7 @@ class KunenaUploadHelper {
 			if (JFile::exists($filepath)) {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
-					$log = &JLog::getInstance('upload.error.php');
+					$log = JLog::getInstance('upload.error.php');
 					$log->addEntry(array('comment' => 'File already exists: '.$filepath));
 					header('HTTP/1.0 409 Conflict');
 					jexit('Error. File already exists');
@@ -69,7 +69,7 @@ class KunenaUploadHelper {
 			if (!JFile::upload($file['tmp_name'], $filepath)) {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
-					$log = &JLog::getInstance('upload.error.php');
+					$log = JLog::getInstance('upload.error.php');
 					$log->addEntry(array('comment' => 'Cannot upload: '.$filepath));
 					header('HTTP/1.0 400 Bad Request');
 					jexit('Error. Unable to upload file');
@@ -79,7 +79,7 @@ class KunenaUploadHelper {
 			} else {
 				if ($format == 'json') {
 					jimport('joomla.error.log');
-					$log = &JLog::getInstance();
+					$log = JLog::getInstance();
 					$log->addEntry(array('comment' => $uploadfolder));
 					jexit('Upload complete');
 				} else {

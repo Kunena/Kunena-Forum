@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+	<name>plg_kunena_finder</name>
+	<version>2.0.1</version>
+	<creationDate>2012-07-07</creationDate>
+	<author>Alexander Bachmann</author>
+	<authorEmail>bachmann@genova.de</authorEmail>
+	<authorUrl>http://www.genova.de</authorUrl>
+	<copyright>www.genova.de</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>PLG_KUNENA_FINDER_DESCRIPTION</description>
+	<files>
+		<filename plugin="finder">finder.php</filename>
+		<filename>index.html</filename>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+		</fields>
+	</config>
+</extension>

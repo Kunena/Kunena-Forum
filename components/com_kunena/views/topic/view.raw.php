@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,8 +17,7 @@ class KunenaViewTopic extends KunenaView {
 	function displayEdit($tpl = null) {
 		$body = JRequest::getVar('body', '', 'post', 'string', JREQUEST_ALLOWRAW);
 		$response = array();
-		if ($this->me->exists()) {
-			$this->msg->userid = JFactory::getUser()->id;
+		if ($this->me->exists() || $this->config->pubwrite) {
 			$msgbody = KunenaHtmlParser::parseBBCode( $body, $this );
 			$response ['preview'] = $msgbody;
 		}

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,30 +28,29 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	public function getSystemReport () {
-		$kunena_app = JFactory::getApplication ();
 		$kunena_db = JFactory::getDBO ();
 
-		if($kunena_app->getCfg('legacy' )) {
+		if($this->app->getCfg('legacy' )) {
 			$jconfig_legacy = '[color=#FF0000]Enabled[/color]';
 		} else {
 			$jconfig_legacy = 'Disabled';
 		}
-		if(!$kunena_app->getCfg('smtpuser' )) {
+		if(!$this->app->getCfg('smtpuser' )) {
 			$jconfig_smtpuser = 'Empty';
 		} else {
-			$jconfig_smtpuser = $kunena_app->getCfg('smtpuser' );
+			$jconfig_smtpuser = $this->app->getCfg('smtpuser' );
 		}
-		if($kunena_app->getCfg('ftp_enable' )) {
+		if($this->app->getCfg('ftp_enable' )) {
 			$jconfig_ftp = 'Enabled';
 		} else {
 			$jconfig_ftp = 'Disabled';
 		}
-		if($kunena_app->getCfg('sef' )) {
+		if($this->app->getCfg('sef' )) {
 			$jconfig_sef = 'Enabled';
 		} else {
 			$jconfig_sef = 'Disabled';
 		}
-		if($kunena_app->getCfg('sef_rewrite' )) {
+		if($this->app->getCfg('sef_rewrite' )) {
 			$jconfig_sef_rewrite = 'Enabled';
 		} else {
 			$jconfig_sef_rewrite = 'Disabled';
@@ -104,6 +103,9 @@ class KunenaAdminModelReport extends KunenaModel {
 
 		$kconfigsettings = $this->_getKunenaConfiguration();
 
+		// Get Joomla! languages installed
+		$joomlalanguages = $this->_getJoomlaLanguagesInstalled();
+
 		// Check if Mootools plugins and others kunena plugins are enabled, and get the version of this modules
 		jimport( 'joomla.plugin.helper' );
 
@@ -114,7 +116,7 @@ class KunenaAdminModelReport extends KunenaModel {
 		else $plg_mt = '[u]System - Mootools12:[/u] Disabled';
 
 		$plg['jfirephp'] = $this->getExtensionVersion('system/jfirephp', 'System - JFirePHP');
-		$plg['ksearch'] = $this->getExtensionVersion('search/kunenasearch', 'Search - Kunena Search');
+		$plg['ksearch'] = $this->getExtensionVersion('search/kunena', 'Search - Kunena Search');
 		$plg['kdiscuss'] = $this->getExtensionVersion('content/kunenadiscuss', 'Content - Kunena Discuss');
 		$plg['jxfinderkunena'] = $this->getExtensionVersion('finder/plg_jxfinder_kunena', 'Finder - Kunena Posts');
 		$plg['kjomsocialmenu'] = $this->getExtensionVersion('community/kunenamenu', 'JomSocial - My Kunena Forum Menu');
@@ -158,16 +160,39 @@ class KunenaAdminModelReport extends KunenaModel {
 		if (!empty($sef)) $seftext = '[quote][b]Third-party SEF components:[/b] ' . implode(' | ', $sef) . ' [/quote]';
 		else $seftext = '[quote][b]Third-party SEF components:[/b] None [/quote]';
 
+		// Get integration settings
+		$integration_settings = $this->getIntegrationSettings();
+
 		$report = '[confidential][b]Joomla! version:[/b] '.JVERSION.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
-	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().'[/confidential][quote][b]Database collation check:[/b] '.$collation.'
+	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().' | [b]Base URL:[/b]' .JURI::root(). '[/confidential][quote][b]Database collation check:[/b] '.$collation.'
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
-	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
+	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |
+	    [confidential][b]Mailer:[/b] '.$this->app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$this->app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$this->app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$this->app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$this->app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$this->app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
-	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] '.$kunenaVersionInfo.'
-	    | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
-
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote] [quote][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/quote][quote][b]Joomla default template details :[/b] '.$jtemplatedetails->name.' | [u]author:[/u] '.$jtemplatedetails->author.' | [u]version:[/u] '.$jtemplatedetails->version.' | [u]creationdate:[/u] '.$jtemplatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailed:[/b] '.$kunenaVersionInfo.'
+	    | [u]Kunena detailed configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler]| [u]Kunena integration settings:[/u][spoiler] '.implode(' ', $integration_settings).'[/spoiler]| [u]Joomla! detailed language files installed:[/u][spoiler] '.$joomlalanguages.'[/spoiler][/quote]'.$thirdpartytext.' '.$seftext.' '.$plgtext.' '.$modtext;
 		return $report;
+	}
+
+	/**
+	 * Method to get all languages installed into Joomla! and the default one
+	 *
+	 * @return	string
+	 * @since	2.0
+	 */
+	protected function _getJoomlaLanguagesInstalled() {
+		$lang = JFactory::getLanguage();
+		$languages = $lang->getKnownLanguages();
+		$table_lang = '[table]';
+		$table_lang .= '[tr][th]Joomla! languages installed:[/th][/tr]';
+		foreach ($languages as $language) {
+			$table_lang .= '[tr][td]'. $language['tag'] .'[/td][td]'. $language['name'].'[/td][/tr]';
+		}
+
+		$table_lang .= '[/table]';
+
+		return $table_lang;
 	}
 
 	/**
@@ -177,22 +202,16 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function _getKunenaConfiguration() {
-		$kunena_db = JFactory::getDBO ();
-		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."kunena_config'" );
-		$table_config = $kunena_db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		if ($table_config) {
-			$kunena_db->setQuery("SELECT * FROM #__kunena_config");
-			$kconfig = (object)$kunena_db->loadObject ();
-			if (KunenaError::checkDatabaseError()) return;
+		if ($this->config) {
+			$params = $this->config->getProperties();
 
 			$kconfigsettings = '[table]';
-			$kconfigsettings .= '[th]Kunena config settings:[/th]';
-			foreach ($kconfig as $key => $value ) {
-				if ($key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
-					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_addres'
-					&& $key != 'recaptcha_theme') {
+			$kconfigsettings .= '[tr][th]Kunena config settings:[/th][/tr]';
+			foreach ($params as $key => $value ) {
+
+				if (!is_array($value) && $key != 'id' && $key != 'board_title' && $key != 'email' && $key != 'offline_message'
+					&& $key != 'recaptcha_publickey' && $key != 'recaptcha_privatekey' && $key != 'email_visible_address'
+					&& $key != 'recaptcha_theme' && $key != 'stopforumspam_key' && $key != 'ebay_affiliate_id') {
 					$kconfigsettings .= '[tr][td]'.$key.'[/td][td]'.$value.'[/td][/tr]';
 				}
 		}
@@ -200,6 +219,7 @@ class KunenaAdminModelReport extends KunenaModel {
 		} else {
 			$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
 		}
+
 		return $kconfigsettings;
 	}
 
@@ -244,58 +264,12 @@ class KunenaAdminModelReport extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function _getJoomlaMenuDetails() {
-		$kunena_db = JFactory::getDBO ();
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			// Get Kunena extension id
-			$query = "SELECT extension_id "
-				." FROM #__extensions "
-				." WHERE name='com_kunena' AND type='component'";
-			$kunena_db->setQuery($query);
-			$kextensionid = $kunena_db->loadResult();
-			if (KunenaError::checkDatabaseError()) return;
+		$items = KunenaMenuFix::getAll();
 
-			// Get Kunena menu items
-			$query = "SELECT id "
-				." FROM #__menu "
-				." WHERE component_id='$kextensionid' AND published='1' AND parent_id='1' AND level='1' ORDER BY id ASC";
-			$kunena_db->setQuery($query);
-			$kmenuparentid = $kunena_db->loadResult();
-			if (KunenaError::checkDatabaseError()) return;
-
-			$query = "SELECT id, menutype, title, alias, link, path "
-				." FROM #__menu "
-				." WHERE parent_id={$kunena_db->Quote($kmenuparentid)} AND type='component' OR title='Kunena Forum' OR title='Kunena' ORDER BY id ASC";
-			$kunena_db->setQuery($query);
-			$kmenustype = $kunena_db->loadObjectlist();
-			if (KunenaError::checkDatabaseError()) return;
-
-			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
-			foreach($kmenustype as $item) {
-				$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->title.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->path.'[/td][/tr] ';
-			}
-		} else {
-			// Joomla 1.5
-			// Get Kunena aliases
-			$query = "SELECT m.id, m.menutype, m.name, m.alias, m.link, m.parent
-					FROM #__menu AS m
-					INNER JOIN #__menu AS mm ON m.link LIKE CONCAT( '%Itemid=', mm.id )
-					WHERE m.published=1 AND m.type = 'menulink' AND mm.link LIKE '%com_kunena%'
-					ORDER BY m.menutype, m.parent, m.ordering ASC";
-			$kunena_db->setQuery($query);
-			$kmenustype = (array) $kunena_db->loadObjectlist('id');
-			// Get Kunena menu items
-			$query = "SELECT id, menutype, name, alias, link, parent "
-				." FROM #__menu "
-				." WHERE published=1 AND link LIKE '%com_kunena%' ORDER BY menutype, parent, ordering";
-			$kunena_db->setQuery($query);
-			$kmenustype += (array) $kunena_db->loadObjectlist('id');
-			if (KunenaError::checkDatabaseError()) return;
-
-			$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
-			foreach($kmenustype as $item) {
-				$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
-			}
+		$joomlamenudetails = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
+		foreach($items as $item) {
+			$link = preg_replace('/^.*\?(option=com_kunena&)?/', '', $item->link);
+			$joomlamenudetails .= '[tr][td]'.$item->id.' [/td][td] '.$item->title.' [/td][td] '.$item->menutype.' [/td][td] '.$link.' [/td][td] '.$item->route.'[/td][/tr] ';
 		}
 		$joomlamenudetails .='[/table]';
 
@@ -411,5 +385,33 @@ class KunenaAdminModelReport extends KunenaModel {
 			}
 		}
 		return $version;
+	}
+
+	public function getIntegrationSettings() {
+		$plugins_list = array('alphauserpoints' => 'Kunena - AlphaUserPoints','comprofiler' => 'Kunena - Community Builder','gravatar' => 'Kunena - Gravatar','community' => 'Kunena - JomSocial','joomla' => 'Kunena - Joomla', 'kunena' => 'Kunena - Kunena', 'uddeim' => 'Kunena - UddeIM');
+		$plugin_final = array();
+
+		foreach($plugins_list as $name=>$desc) {
+		$plugin = JPluginHelper::getPlugin('kunena', $name);
+
+		if ($plugin) {
+			if (version_compare(JVERSION, '1.6', '>')) {
+				$pluginParams = new JRegistry($plugin->params);
+			} else {
+				$pluginParams = new JParameter($plugin->params);
+			}
+			$params = $pluginParams->toArray();
+			$plugin_final[] = '[b]'.$desc.'[/b] Enabled: ';
+			foreach ($params as $name=>$value) {
+				$plugin_final[] = "{$name}={$value} ";
+			}
+			$plugin_final[] = "\n";
+		} else {
+			$plugin_final[] = "[b]{$desc}[/b] Disabled\n";
+		}
+
+		}
+
+		return $plugin_final;
 	}
 }

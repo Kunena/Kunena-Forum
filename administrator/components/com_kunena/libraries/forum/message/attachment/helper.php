@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message.Attachment
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,12 +13,10 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Message Attachment Helper Class
  */
-class KunenaForumMessageAttachmentHelper {
+abstract class KunenaForumMessageAttachmentHelper {
 	// Global for every instance
 	protected static $_instances = array();
 	protected static $_messages = array();
-
-	private function __construct() {}
 
 	/**
 	 * Returns KunenaForumMessageAttachment object
@@ -52,6 +50,7 @@ class KunenaForumMessageAttachmentHelper {
 		} else {
 			$ids = array($ids);
 		}
+		if (empty($ids)) return array();
 		self::loadById($ids);
 
 		$list = array ();
@@ -77,6 +76,7 @@ class KunenaForumMessageAttachmentHelper {
 		} else {
 			$ids = array($ids);
 		}
+		if (empty($ids)) return array();
 		self::loadByMessage($ids);
 
 		$list = array ();
@@ -101,8 +101,8 @@ class KunenaForumMessageAttachmentHelper {
 		return array_merge((array)$imagetypes, (array)$filetypes);
 	}
 
-	static public function getImageExtensions($category, $user = null) {
-		$category = KunenaForumCategoryHelper::get($category);
+	static public function getImageExtensions($category = null, $user = null) {
+		if ($category !== null) $category = KunenaForumCategoryHelper::get($category);
 		$user = KunenaUserHelper::get($user);
 		$config = KunenaFactory::getConfig();
 		$types = explode(',', $config->imagetypes);
@@ -120,17 +120,17 @@ class KunenaForumMessageAttachmentHelper {
 		if ($config->image_upload == 'registered') return $types;
 
 		// For now on we only allow moderators
-		if (!$user->isModerator($category->id)) return false;
+		if (!$user->isModerator($category)) return false;
 		if ($config->image_upload == 'moderator') return $types;
 
 		// For now on we only allow administrators
-		if (!$user->isAdmin($category->id)) return false;
+		if (!$user->isAdmin($category)) return false;
 		if ( $config->image_upload == 'admin') return $types;
 
 		return false;
 	}
 
-	static public function getFileExtensions($category, $user = null) {
+	static public function getFileExtensions($category = null, $user = null) {
 		$category = KunenaForumCategoryHelper::get($category);
 		$user = KunenaUserHelper::get($user);
 		$config = KunenaFactory::getConfig();
@@ -149,11 +149,11 @@ class KunenaForumMessageAttachmentHelper {
 		if ($config->file_upload == 'registered') return $types;
 
 		// For now on we only allow moderators
-		if (!$user->isModerator($category->id)) return false;
+		if (!$user->isModerator($category)) return false;
 		if ($config->file_upload == 'moderator') return $types;
 
 		// For now on we only allow administrators
-		if (!$user->isAdmin($category->id)) return false;
+		if (!$user->isAdmin($category)) return false;
 		if ( $config->file_upload == 'admin') return $types;
 
 		return false;
@@ -202,7 +202,7 @@ class KunenaForumMessageAttachmentHelper {
 		if ( $params['file'] == '1' && $params['image'] != '1'  ) $filetype = " AND filetype=''";
 		elseif ( $params['image'] == '1' && $params['file'] != '1'  ) $filetype = " AND filetype!=''";
 		elseif ( $params['file'] == '1' && $params['image'] == '1' ) $filetype = '';
-		else return;
+		else return array();
 
 		$orderby = '';
 		if ( $params['orderby'] == 'desc' ) $orderby = ' ORDER BY id DESC';
@@ -211,10 +211,23 @@ class KunenaForumMessageAttachmentHelper {
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_attachments WHERE userid='$user->userid' $filetype $orderby";
 		$db->setQuery ( $query, 0, $params['limit'] );
-		$results = $db->loadObjectList ();
+		$results = $db->loadAssocList ('id');
 		KunenaError::checkDatabaseError ();
 
-		return $results;
+		$list = array();
+		foreach ( $results as $result ) {
+			$id = $result['id'];
+			if (!isset(self::$_instances [$id])) {
+				$instance = new KunenaForumMessageAttachment ();
+				$instance->bind ( $result );
+				$instance->exists(true);
+				self::$_instances [$id] = $instance;
+				self::$_messages [$instance->mesid][$id] = $instance;
+			}
+			$list[] = $instance;
+		}
+
+		return $list;
 	}
 
 	// Internal functions

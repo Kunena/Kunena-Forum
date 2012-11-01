@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -20,7 +20,7 @@ function submitbutton(pressbutton)
 	// do field validation
 	if (typeof form.onsubmit == 'function') form.onsubmit();
 	if (form.name.value == '') {
-		alert('<?php echo JText::_('COM_KUNENA_ERROR1'); ?>');
+		alert('".JText::_('COM_KUNENA_ERROR1')."');
 	} else {
 		submitform(pressbutton);
 	}
@@ -34,7 +34,7 @@ function submitbutton(pressbutton)
 
 	<div class="kcontainer">
 		<div class="kbody">
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="view" value="category" />
 		<input type="hidden" name="task" value="save" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
@@ -75,6 +75,17 @@ function submitbutton(pressbutton)
 						<td>
 							<textarea class="inputbox" cols="50" rows="6" name="headerdesc" id="headerdesc" style="width: 500px"><?php echo $this->escape ( $this->category->headerdesc ); ?></textarea>
 						</td>
+					</tr>
+				</table>
+			</fieldset>
+
+			<fieldset>
+				<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>
+				<table class="kadmin-adminform">
+					<tr>
+						<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
+						<td><input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $this->escape ( $this->category->class_sfx ); ?>" /></td>
+						<td><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></td>
 					</tr>
 				</table>
 			</fieldset>
@@ -150,17 +161,6 @@ function submitbutton(pressbutton)
 				</fieldset>
 
 				<?php if (!$this->category->id || !$this->category->isSection()): ?>
-
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>
-					<table class="kadmin-adminform">
-						<tr>
-							<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
-							<td><input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $this->escape ( $this->category->class_sfx ); ?>" /></td>
-							<td><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></td>
-						</tr>
-					</table>
-				</fieldset>
 				</dd>
 				<dt title="<?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?>"><?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?></dt>
 				<dd>
@@ -174,8 +174,8 @@ function submitbutton(pressbutton)
 							<tr>
 								<th width="5">#</th>
 								<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->moderators ); ?>);" /></th>
-								<th align="left"><?php echo JText::_('COM_KUNENA_USRL_NAME'); ?></th>
-								<th align="left"><?php echo JText::_('COM_KUNENA_USRL_USERNAME'); ?></th>
+								<th align="left"><?php echo JText::_('COM_KUNENA_REALNAME'); ?></th>
+								<th align="left"><?php echo JText::_('COM_KUNENA_USERNAME'); ?></th>
 								<th align="center"><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?></th>
 							</tr>
 						</thead>

@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,7 +23,7 @@ $tabclass = array ("row1", "row2" );
 	<td class="kcol-mid kcol-ktopicviews">
 		<!-- Views -->
 		<span class="ktopic-views-number"><?php echo $this->formatLargeNumber ( ( int ) $this->category->numTopics );?></span>
-		<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_DISCUSSIONS'); ?> </span>
+		<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_TOPICS'); ?> </span>
 		<!-- /Views -->
 	</td>
 
@@ -65,8 +65,8 @@ $tabclass = array ("row1", "row2" );
 	<td class="kcol-mid kcol-knoposts"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
 	<?php } ?>
 
-	<td class="kcol-mid">
-		<?php echo CKunenaLink::GetCategoryActionLink ( 'unsubscribe', $this->category->id, JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY'), 'nofollow', '', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG'), '&userid='.$this->me->userid ); ?>
+	<td class="kcol-mid ktopicmoderation">
+		<input class ="kcheck" type="checkbox" name="categories[<?php echo $this->category->id?>]" value="1" />
 	</td>
 
 </tr>

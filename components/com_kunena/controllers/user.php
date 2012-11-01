@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,36 +18,47 @@ require_once KPATH_SITE . '/lib/kunena.link.class.php';
  * @since		2.0
  */
 class KunenaControllerUser extends KunenaController {
-	public function display() {
+	public function display($cachable = false, $urlparams = false) {
 		// Redirect profile to integrated component if profile integration is turned on
 		$redirect = 1;
-		$active = JFactory::getApplication ()->getMenu ()->getActive ();
+		$active = $this->app->getMenu ()->getActive ();
+
 		if (!empty($active)) {
-			$params = new JParameter($active->params);
-			$redirect = $params->get('integration');
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$params = $active->params;
+			} else {
+				// Joomla 1.5
+				$params = new JParameter($active->params);
+			}
+			$redirect = $params->get('integration', 1);
 		}
-		if ($redirect) {
+		if ($redirect && JRequest::getCmd('format', 'html') == 'html') {
 			$profileIntegration = KunenaFactory::getProfile();
-			if (!($profileIntegration instanceof KunenaProfileKunena)) {
-				$url = CKunenaLink::GetProfileURL(KunenaUserHelper::getMyself()->userid, false);
-				if ($url) {
-					$this->setRedirect($url);
-					return;
-				}
+			$layout = JRequest::getCmd('layout', 'default');
+			if ($profileIntegration instanceof KunenaProfileKunena) {
+				// Continue
+			} elseif ($layout == 'default') {
+				$url = $this->me->getUrl(false);
+			} elseif ($layout == 'list') {
+				$url = $profileIntegration->getUserListURL('', false);
+			}
+			if (!empty($url)) {
+				$this->setRedirect($url);
+				return;
 			}
 		}
 		parent::display();
 	}
 
 	public function change() {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$layout = JRequest::getString ( 'topic_layout', 'default' );
-		KunenaUserHelper::getMyself()->setTopicLayout ( $layout );
+		$this->me->setTopicLayout ( $layout );
 		$this->redirectBack ();
 	}
 
@@ -60,41 +71,39 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	public function save() {
-		$app = JFactory::getApplication ();
+		// TODO: allow moderators to save another users profile (without account info)
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		// perform security checks
-		$this->user = JFactory::getUser();
-		if ($this->user->id == 0) {
+		if (!$this->me->exists()) {
 			JError::raiseError( 403, JText::_('Access Forbidden') );
 			return;
 		}
 
-		$this->config = KunenaFactory::getConfig();
-
-		$this->saveUser();
-
-		$this->me = KunenaUserHelper::getMyself();
-		$this->saveProfile();
-		$this->saveAvatar();
-		$this->saveSettings();
-		if (!$this->me->save()) {
-			$app = JFactory::getApplication();
-			$app->enqueueMessage($this->me->getError(), 'notice');
+		$this->user = JFactory::getUser();
+		$success = $this->saveUser();
+		if (!$success) {
+			$this->app->enqueueMessage($this->user->getError(), 'notice');
+		} else {
+			$this->saveProfile();
+			$this->saveAvatar();
+			$this->saveSettings();
+			if (!$this->me->save()) {
+				$this->app->enqueueMessage($this->me->getError(), 'notice');
+			}
 		}
 
 		$msg = JText::_( 'COM_KUNENA_PROFILE_SAVED' );
-		$this->setRedirect ( CKunenaLink::GetMyProfileURL($this->user->get('id'), '', false), $msg );
+		$this->setRedirect ( $this->me->getUrl(false), $msg );
 	}
 
 	function ban() {
-		$app = JFactory::getApplication();
 		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 		if(!$user->exists() || !JRequest::checkToken()) {
-			$app->redirect ( CKunenaLink::GetProfileURL($user->userid, false), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( $user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 			return;
 		}
 
@@ -109,6 +118,7 @@ class KunenaControllerUser extends KunenaController {
 		if (! $ban->id) {
 			$ban->ban ( $user->userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
 			$success = $ban->save ();
+			$this->report($user->userid);
 		} else {
 			$delban = JRequest::getString ( 'delban', '' );
 
@@ -136,9 +146,9 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		if (! $success) {
-			$app->enqueueMessage ( $ban->getError (), 'error' );
+			$this->app->enqueueMessage ( $ban->getError (), 'error' );
 		} else {
-			$app->enqueueMessage ( $message );
+			$this->app->enqueueMessage ( $message );
 		}
 
 		$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
@@ -153,11 +163,11 @@ class KunenaControllerUser extends KunenaController {
 			// Delete avatar from file system
 			if (JFile::exists ( JPATH_ROOT . '/media/kunena/avatars/' . $userprofile->avatar ) && !stristr($userprofile->avatar,'gallery/')) {
 				JFile::delete ( JPATH_ROOT . '/media/kunena/avatars/' . $userprofile->avatar );
-				$avatar_deleted = $app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM') );
+				$avatar_deleted = $this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM') );
 			}
 			$user->avatar = '';
 			$user->save();
-			$app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted );
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted );
 		}
 		if (! empty ( $DelProfileInfo )) {
 			$user->personalText = '';
@@ -184,40 +194,37 @@ class KunenaControllerUser extends KunenaController {
 			$user->websiteurl = '';
 			$user->signature = '';
 			$user->save();
-			$app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO') );
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO') );
 		} elseif (! empty ( $DelSignature )) {
 			$user->signature = '';
 			$user->save();
-			$app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE') );
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE') );
 		}
 
 		if (! empty ( $banDelPosts )) {
-			// FIXME: delete user posts needs new logic (not here)
-			//select only the messages which aren't already in the trash
-/*			$db->setQuery ( "UPDATE #__kunena_messages SET hold=2 WHERE hold!=2 AND userid={$db->Quote($user->userid)}" );
-			$idusermessages = $db->loadObjectList ();
-			KunenaError::checkDatabaseError();
-			$app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES') );*/
+			list($total, $messages) = KunenaForumMessageHelper::getLatestMessages(false, 0, 0, array('starttime'=> '-1','user' => $user->userid));
+			foreach($messages as $mes) {
+				$mes->publish(KunenaForum::DELETED);
+			}
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES') );
 		}
 
-		$app->redirect ( CKunenaLink::GetProfileURL($user->userid, false) );
+		$this->app->redirect ( $user->getUrl(false) );
 	}
 
 	function cancel()
 	{
-		$app = JFactory::getApplication();
-		$app->redirect ( CKunenaLink::GetMyProfileURL(null, '', false) );
+		$this->app->redirect ( CKunenaLink::GetMyProfileURL(null, '', false) );
 	}
 
 	function login() {
-		$app = JFactory::getApplication();
-		if(!JRequest::checkToken()) {
-			$app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
+		if(!JFactory::getUser()->guest || !JRequest::checkToken()) {
+			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 		}
 
 		$username = JRequest::getString ( 'username', '', 'POST' );
-		$password = JRequest::getString ( 'password', '', 'POST' );
-		$remember = JRequest::getInt ( 'remember', 0, 'POST');
+		$password = JRequest::getString ( 'password', '', 'POST', JREQUEST_ALLOWRAW );
+		$remember = JRequest::getBool ( 'remember', false, 'POST');
 
 		$login = KunenaLogin::getInstance();
 		$login->loginUser($username, $password, $remember);
@@ -225,82 +232,77 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	function logout() {
-		$app = JFactory::getApplication();
-		if(!JRequest::checkToken()) {
-			$app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
+		if(!JRequest::checkToken('request')) {
+			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 		}
 
 		$login = KunenaLogin::getInstance();
-		$login->logoutUser();
+		if (!JFactory::getUser()->guest) $login->logoutUser();
 		$this->redirectBack ();
 	}
 
 	// Internal functions:
 
 	protected function karma($karmaDelta) {
-		$app = JFactory::getApplication ();
 		if (! JRequest::checkToken ('get')) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 		$karma_delay = '14400'; // 14400 seconds = 6 hours
 		$userid = JRequest::getInt ( 'userid', 0 );
 		$catid = JRequest::getInt ( 'catid', 0 );
 
-		$config = KunenaFactory::getConfig();
-		$me = KunenaUserHelper::getMyself();
 		$target = KunenaFactory::getUser($userid);
 
-		if (!$config->showkarma || !$me->exists() || !$target->exists() || $karmaDelta == 0) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_ERROR_KARMA' ), 'error' );
+		if (!$this->config->showkarma || !$this->me->exists() || !$target->exists() || $karmaDelta == 0) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_ERROR_KARMA' ), 'error' );
 			$this->redirectBack ();
 		}
 
 		$now = JFactory::getDate()->toUnix();
-		if (!$me->isModerator($catid) && $now - $me->karma_time < $karma_delay) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_WAIT' ), 'notice' );
+		if (!$this->me->isModerator() && $now - $this->me->karma_time < $karma_delay) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_WAIT' ), 'notice' );
 			$this->redirectBack ();
 		}
 
 		if ($karmaDelta > 0) {
-			if ($me->userid == $target->userid) {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_SELF_INCREASE' ), 'notice' );
+			if ($this->me->userid == $target->userid) {
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_SELF_INCREASE' ), 'notice' );
 				$karmaDelta = -10;
 			} else {
-				$app->enqueueMessage ( JText::_('COM_KUNENA_KARMA_INCREASED' ) );
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_KARMA_INCREASED' ) );
 			}
 		} else {
-			if ($me->userid == $target->userid) {
-				$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_SELF_DECREASE' ), 'notice' );
+			if ($this->me->userid == $target->userid) {
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_KARMA_SELF_DECREASE' ), 'notice' );
 			} else {
-				$app->enqueueMessage ( JText::_('COM_KUNENA_KARMA_DECREASED' ) );
+				$this->app->enqueueMessage ( JText::_('COM_KUNENA_KARMA_DECREASED' ) );
 			}
 		}
 
-		$me->karma_time = $now;
-		if ($me->userid != $target->userid && !$me->save()) {
-			$app->enqueueMessage($me->getError(), 'notice');
+		$this->me->karma_time = $now;
+		if ($this->me->userid != $target->userid && !$this->me->save()) {
+			$this->app->enqueueMessage($this->me->getError(), 'notice');
 			$this->redirectBack ();
 		}
 		$target->karma += $karmaDelta;
 		if (!$target->save()) {
-			$app->enqueueMessage($target->getError(), 'notice');
+			$this->app->enqueueMessage($target->getError(), 'notice');
 			$this->redirectBack ();
 		}
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
-		$activity->onAfterKarma($target->userid, $me->userid, $karmaDelta);
+		$activity->onAfterKarma($target->userid, $this->me->userid, $karmaDelta);
 		$this->redirectBack ();
 	}
 
 	// Mostly copied from Joomla 1.5
-	protected function saveUser()
-	{
-		$app = JFactory::getApplication();
-		$user = $this->user; //new JUser ( $this->user->get('id') );
-
-		// we don't want users to edit certain fields so we will ignore them
-		$ignore = array('id', 'gid', 'block', 'usertype', 'registerDate', 'activation');
+	protected function saveUser(){
+		// we only allow users to edit few fields
+		$allow = array('name', 'email', 'password', 'password2', 'params');
+		if ($this->config->usernamechange) {
+			if (version_compare(JVERSION, '2.5.5','<') || JComponentHelper::getParams('com_users')->get('change_login_name', 1)) $allow[] = 'username';
+		}
 
 		//clean request
 		$post = JRequest::get( 'post' );
@@ -309,72 +311,52 @@ class KunenaControllerUser extends KunenaController {
 		if (empty($post['password']) || empty($post['password2'])) {
 			unset($post['password'], $post['password2']);
 		}
-		if ($this->config->usernamechange) $post['username'] = JRequest::getVar('username', '', 'post', 'username');
-		else $ignore[] = 'username';
-		foreach ($ignore as $field) {
-			if (isset($post[$field]))
-				unset($post[$field]);
-		}
-
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			jimport('joomla.user.helper');
-			$result = JUserHelper::getUserGroups($user->id);
-
-			$groups = array();
-			foreach ( $result as $key => $value ) {
-				$groups[]= $key;
-			}
-
-			$post['groups'] = $groups;
-		}
+		$post = array_intersect_key($post, array_flip($allow));
 
 		// get the redirect
-		$return = CKunenaLink::GetMyProfileURL($user->id, '', false);
-		$err_return = CKunenaLink::GetMyProfileURL($user->id, 'edit', false);
+		$return = CKunenaLink::GetMyProfileURL($this->user->id, '', false);
+		$err_return = CKunenaLink::GetMyProfileURL($this->user->id, 'edit', false);
 
 		// do a password safety check
 		if ( !empty($post['password']) && !empty($post['password2']) ) {
 			if(strlen($post['password']) < 5 && strlen($post['password2']) < 5 ) {
 				if($post['password'] != $post['password2']) {
 					$msg = JText::_('COM_KUNENA_PROFILE_PASSWORD_MISMATCH');
-					$app->redirect ( $err_return, $msg, 'error' );
+					$this->app->redirect ( $err_return, $msg, 'error' );
 				}
 				$msg = JText::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM');
-				$app->redirect ( $err_return, $msg, 'error' );
+				$this->app->redirect ( $err_return, $msg, 'error' );
 			}
 		}
 
-		$username = $this->user->username;
+		$username = $this->user->get('username');
 
 		// Bind the form fields to the user table
-		if (!$user->bind($post)) {
-			$app->enqueueMessage ( $user->getError(), 'error' );
+		if (!$this->user->bind($post)) {
 			return false;
 		}
 
 		// Store user to the database
-		if (!$user->save(true)) {
-			$app->enqueueMessage ( $user->getError(), 'error' );
+		if (!$this->user->save(true)) {
 			return false;
 		}
 
 		$session = JFactory::getSession();
-		$session->set('user', $user);
+		$session->set('user', $this->user);
 
 		// update session if username has been changed
-		if ( $username && $username != $user->username )
-		{
+		if ( $username && $username != $this->user->username ){
 			$table = JTable::getInstance('session', 'JTable' );
 			$table->load($session->getId());
-			$table->username = $user->username;
+			$table->username = $this->user->username;
 			$table->store();
 		}
+		return true;
 	}
 
 	protected function saveProfile() {
 		$this->me->personalText = JRequest::getVar ( 'personaltext', '' );
-		$this->me->birthdate = JRequest::getInt ( 'birthdate1', '' ).'-'.JRequest::getInt ( 'birthdate2', '' ).'-'.JRequest::getInt ( 'birthdate3', '' );
+		$this->me->birthdate = JRequest::getInt ( 'birthdate1', '0000' ).'-'.JRequest::getInt ( 'birthdate2', '00' ).'-'.JRequest::getInt ( 'birthdate3', '00' );
 		$this->me->location = trim(JRequest::getVar ( 'location', '' ));
 		$this->me->gender = JRequest::getInt ( 'gender', '' );
 		$this->me->icq = trim(JRequest::getString ( 'icq', '' ));
@@ -399,7 +381,6 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	protected function saveAvatar() {
-		$app = JFactory::getApplication();
 		$action = JRequest::getString('avatar', 'keep');
 
 		require_once (KPATH_SITE.'/lib/kunena.upload.class.php');
@@ -431,8 +412,8 @@ class KunenaControllerUser extends KunenaController {
 			if ($fileinfo['ready'] === true) {
 				$this->me->avatar = 'users/'.$fileinfo['name'];
 			}
-			if (!$fileinfo['status']) $app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
-			else $app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
+			if (!$fileinfo['status']) $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
+			else $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
 
 		} else if ( $action == 'delete' ) {
 			//set default avatar
@@ -448,22 +429,55 @@ class KunenaControllerUser extends KunenaController {
 		$this->me->showOnline = JRequest::getInt('showonline', '', 'post', 'showonline');
 	}
 
-	function delfile() {
-		$app = JFactory::getApplication ();
+	// Reports a user to stopforumspam.com
+	protected function report($userid) {
+		if(!$this->config->stopforumspam_key || ! $userid)
+		{
+			return false;
+		}
+		$spammer = JFactory::getUser($userid);
+
+		$db = JFactory::getDBO();
+		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid=".$userid." GROUP BY ip ORDER BY `time` DESC", 0, 1 );
+		$ip = $db->loadResult();
+
+		$data = "username=".$spammer->username."&ip_addr=".$ip."&email=".$spammer->email."&api_key=".$this->config->stopforumspam_key;
+		$fp = fsockopen("www.stopforumspam.com",80);
+		fputs($fp, "POST /add.php HTTP/1.1\n" );
+		fputs($fp, "Host: www.stopforumspam.com\n" );
+		fputs($fp, "Content-type: application/x-www-form-urlencoded\n" );
+		fputs($fp, "Content-length: ".strlen($data)."\n" );
+		fputs($fp, "Connection: close\n\n" );
+		fputs($fp, $data);
+		fclose($fp);
+		return true;
+	}
+
+	public function delfile() {
 		if (! JRequest::checkToken ()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 
-		$number = count($cids);
+		if ( !empty($cids) ) {
+			$number = 0;
 
-		foreach( $cids as $id ) {
-			$attachment = KunenaForumMessageAttachmentHelper::get($id);
-			$attachment->delete();
+			foreach( $cids as $id ) {
+				$attachment = KunenaForumMessageAttachmentHelper::get($id);
+				if ($attachment->authorise('delete') && $attachment->delete()) $number++;
+			}
+
+			if ( $number > 0 ) {
+				$this->app->enqueueMessage ( JText::sprintf( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number) );
+				$this->redirectBack ();
+			} else {
+				$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_DELETE_FAILED') );
+				$this->redirectBack ();
+			}
+		} else {
+			$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ATTACHMENTS_NO_ATTACHMENTS_SELECTED') );
+			$this->redirectBack ();
 		}
-
-		$app->enqueueMessage ( JText::sprintf( 'COM_KUNENA_ATTACHMENTS_DELETE_SUCCESSFULLY', $number) );
-		$this->redirectBack ();
 	}
 }

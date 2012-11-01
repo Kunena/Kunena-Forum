@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -42,7 +42,7 @@ defined ( '_JEXEC' ) or die ();
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id) ?>" />
 		<?php echo JHTML::_( 'form.token' ) ?>
 
-		<?php if (KunenaUserHelper::getMyself()->exists() && $this->category->allow_anonymous): ?>
+		<?php if ($this->me->exists() && $this->category->allow_anonymous): ?>
 		<input type="text" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->profile->getName()) ?>" /><br />
 		<input type="checkbox" id="kanonymous<?php echo intval($this->message->id) ?>" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous<?php echo intval($this->message->id) ?>"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC') ?></label><br />
 		<?php else: ?>
@@ -55,7 +55,7 @@ defined ( '_JEXEC' ) or die ();
 		<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
 		<br />
 		<?php endif; ?>
-		<input type="submit" class="kbutton kreply-submit" name="submit" value="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
+		<input type="submit" class="kbutton kreply-submit" name="submit" value="<?php echo JText::_('COM_KUNENA_SUBMIT') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
 		<input type="reset" class="kbutton kreply-cancel" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
 		<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE') ?></small>
 	</form>

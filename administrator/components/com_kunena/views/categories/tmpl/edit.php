@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -35,9 +35,8 @@ function submitbutton(pressbutton)
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN') ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
-		<input type="hidden" name="view" value="categories" />
+	<div class="kadmin-functitle icon-adminforum"><?php echo $this->category->exists() ? JText::sprintf('COM_KUNENA_A_CATEGORY_EDIT_TITLE', $this->escape ( $this->category->name )) : JText::_('COM_KUNENA_A_CATEGORY_CREATE_TITLE') ?></div>
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="task" value="save" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
 		<?php echo JHTML::_( 'form.token' ); ?>
@@ -66,6 +65,16 @@ function submitbutton(pressbutton)
 						<td><?php echo JText::_('COM_KUNENA_A_CATEGORY_ALIAS'); ?></td>
 						<td><input class="inputbox" type="text" name="alias" size="80" value="<?php echo $this->escape ( $this->category->alias ); ?>" /></td>
 					</tr>
+					<?php if ($this->options ['aliases']) : ?>
+					<tr>
+						<td>&nbsp;</td>
+						<td><?php echo $this->options ['aliases']; ?></td>
+					</tr>
+					<?php endif ?>
+					<tr>
+						<td valign="top"><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?>:</td>
+						<td valign="top"><?php echo $this->options ['published']; ?></td>
+					</tr>
 					<tr>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 						<td>
@@ -77,6 +86,17 @@ function submitbutton(pressbutton)
 						<td>
 							<textarea class="inputbox" cols="50" rows="6" name="headerdesc" id="headerdesc" style="width: 500px"><?php echo $this->escape ( $this->category->headerdesc ); ?></textarea>
 						</td>
+					</tr>
+				</table>
+			</fieldset>
+
+			<fieldset>
+				<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>
+				<table class="kadmin-adminform">
+					<tr>
+						<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
+						<td><input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $this->escape ( $this->category->class_sfx ); ?>" /></td>
+						<td><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></td>
 					</tr>
 				</table>
 			</fieldset>
@@ -95,10 +115,10 @@ function submitbutton(pressbutton)
 						foreach ($this->options ['accesslists'] as $accesstype=>$accesslist) :
 							foreach ($accesslist as $accessinput) :
 						?>
-						<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $row->accesstype != $accesstype ? 'display:none' : '' ?>">
-							<td class="nowrap" valign="top"><?php echo $accessinput['title'] ?></td>
-							<td valign="top"><?php echo $accessinput['input'] ?></td>
-							<td valign="top"><?php echo $accessinput['desc'] ?></td>
+						<tr class="kaccess kaccess-<?php echo $accesstype ?>" style="<?php echo $this->category->accesstype != $accesstype ? 'display:none' : '' ?>">
+							<td width="30%" class="nowrap" valign="top"><?php echo $accessinput['title'] ?></td>
+							<td width="35%" valign="top"><?php echo $accessinput['input'] ?></td>
+							<td width="35%" valign="top"><?php echo $accessinput['desc'] ?></td>
 						</tr>
 						<?php endforeach; endforeach ?>
 					</table>
@@ -136,6 +156,7 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo $this->options ['allow_polls']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 						</tr>
+						<?php /* TODO: enable features
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:</td>
 							<td valign="top"><?php echo $this->options ['channels']; ?></td>
@@ -146,24 +167,12 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo $this->options ['topic_ordering']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_TOPIC_ORDERING_DESC'); ?></td>
 						</tr>
-						<?php /*
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_CATEGORY_TOPICICONSET'); ?>:</td>
 							<td valign="top"><?php echo $this->options ['category_iconset']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 						</tr>
 						*/ ?>
-					</table>
-				</fieldset>
-
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>
-					<table class="kadmin-adminform">
-						<tr>
-							<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
-							<td><input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $this->escape ( $this->category->class_sfx ); ?>" /></td>
-							<td><?php echo JText::_('COM_KUNENA_CLASS_SFXDESC'); ?></td>
-						</tr>
 					</table>
 				</fieldset>
 				</dd>

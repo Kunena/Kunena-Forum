@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,7 +33,7 @@ class KunenaUpload extends JObject {
 		if (is_file($this->fileTemp)) unlink ( $this->fileTemp );
 	}
 
-	function getInstance($extensions = null) {
+	public static function getInstance($extensions = null) {
 		return new KunenaUpload($extensions);
 	}
 	function setValidExtensions($extensions=array()) {
@@ -168,6 +168,7 @@ class KunenaUpload extends JObject {
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
 		while(@ob_end_clean());
+		ob_start();
 		$error = $this->getError();
 		if ($error) {
 			jexit('{"error" : '.$error.'", "id" : "id"}');

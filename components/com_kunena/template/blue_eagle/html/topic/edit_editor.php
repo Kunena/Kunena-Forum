@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 			<td class="kpostbuttons">
 				<ul id="kbbcode-toolbar">
 					<li>
-						<script type="text/javascript">document.write('<?php echo JText::_('COM_KUNENA_BBCODE_EDITOR_JAVASCRIPT_LOADING') ?>')</script>
+						<script type="text/javascript">document.write('<?php echo JText::_('COM_KUNENA_BBCODE_EDITOR_JAVASCRIPT_LOADING', true) ?>')</script>
 						<noscript><?php echo JText::_('COM_KUNENA_BBCODE_EDITOR_JAVASCRIPT_DISABLED') ?></noscript>
 					</li>
 				</ul>
@@ -74,7 +74,7 @@ defined ( '_JEXEC' ) or die ();
 				<input name="text2" id="kbbcode-link_text" type="text" size="30" maxlength="150"
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_LINKTEXT'); ?>')" />
 				<input type="button" name="insterLink" value="<?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?>"
-					onclick="kbbcode.replaceSelection('[url=' + document.id('kbbcode-link_url').get('value') + ']' + document.id('kbbcode-link_text').get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
+					onclick="kbbcode.focus().replaceSelection('[url=' + document.id('kbbcode-link_url').get('value') + ']' + document.id('kbbcode-link_text').get('value') + '[/url]', false); kToggleOrSwap('kbbcode-link-options');"
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_LINKAPPLY'); ?>')" />
 			</div>
 
@@ -111,8 +111,8 @@ defined ( '_JEXEC' ) or die ();
 				<?php
 				if($this->poll->exists()) {
 					$x = 1;
-					foreach ($this->poll->getOptions() as $option) {
-						echo '<div class="polloption">Option '.$x.' <input type="text" maxlength = "25" id="field_option'.$x.'" name="polloptionsID['.$option->id.']" value="'.$option->text.'" onmouseover="javascript:document.id(\'helpbox\').set(\'value\', \''.KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_OPTION').'\')" /></div>';
+					foreach ($this->poll->getOptions() as $poll_option) {
+						echo '<div class="polloption">Option '.$x.' <input type="text" maxlength = "25" id="field_option'.$x.'" name="polloptionsID['.$poll_option->id.']" value="'.$poll_option->text.'" onmouseover="javascript:document.id(\'helpbox\').set(\'value\', \''.KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_OPTION').'\')" /></div>';
 						$x++;
 					}
 				}
@@ -125,7 +125,6 @@ defined ( '_JEXEC' ) or die ();
 
 			<?php
 			if ($this->config->highlightcode) {
-				$this->config = KunenaFactory::getConfig();
 				if (version_compare(JVERSION, '1.6','>')) {
 					// Joomla 1.6+
 					$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi';
@@ -182,7 +181,7 @@ defined ( '_JEXEC' ) or die ();
 				echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER');
 				?>')">
 				<?php
-				$vid_provider = array ('', 'AnimeEpisodes', 'Biku', 'Bofunk', 'Break', 'Clip.vn', 'Clipfish', 'Clipshack', 'Collegehumor', 'Current', 'DailyMotion', 'DivX,divx]http://', 'DownloadFestival', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'Fliptrack', 'Fliqz', 'Gametrailers', 'Gamevideos', 'Glumbert', 'GMX', 'Google', 'GooglyFoogly', 'iFilm', 'Jumpcut', 'Kewego', 'LiveLeak', 'LiveVideo', 'MediaPlayer,mediaplayer]http://', 'MegaVideo', 'Metacafe', 'Mofile', 'Multiply', 'MySpace', 'MyVideo', 'QuickTime,quicktime]http://', 'Quxiu', 'RealPlayer,realplayer]http://', 'Revver', 'RuTube', 'Sapo', 'Sevenload', 'Sharkle', 'Spikedhumor', 'Stickam', 'Streetfire', 'StupidVideos', 'Toufee', 'Tudou', 'Unf-Unf', 'Uume', 'Veoh', 'VideoclipsDump', 'Videojug', 'VideoTube', 'Vidiac', 'VidiLife', 'Vimeo', 'WangYou', 'WEB.DE', 'Wideo.fr', 'YouKu', 'YouTube' );
+				$vid_provider = array ('', 'Bofunk', 'Break', 'Clipfish', 'DivX,divx]http://', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'MediaPlayer,mediaplayer]http://', 'Metacafe', 'MySpace', 'QuickTime,quicktime]http://', 'RealPlayer,realplayer]http://', 'RuTube', 'Sapo', 'Streetfire', 'Veoh', 'Videojug', 'Vimeo', 'Wideo.fr', 'YouTube' );
 				foreach ( $vid_provider as $vid_type ) {
 					$vid_type = explode ( ',', $vid_type );
 					echo '<option value = "' . (! empty ( $vid_type [1] ) ? $this->escape($vid_type [1]) : JString::strtolower ( $this->escape($vid_type [0]) ) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
@@ -191,7 +190,7 @@ defined ( '_JEXEC' ) or die ();
 			</select> <?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_ID');
 			?><input id="kvideoid"
-				name="videoid" type="text" size="11" maxlength="14"
+				name="videoid" type="text" size="11" maxlength="30"
 				onmouseover="javascript:document.id('helpbox').set('value', '<?php
 				echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_VIDEOID');
 				?>')" />
@@ -229,7 +228,7 @@ defined ( '_JEXEC' ) or die ();
 			<div id="smilie"><?php
 			$emoticons = KunenaHtmlParser::getEmoticons(0, 1);
 			foreach ( $emoticons as $emo_code=>$emo_url ) {
-				echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.insert(\' '. $emo_code .' \', \'after\', true);" style="cursor:pointer"/> ';
+				echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.focus().insert(\' '. $emo_code .' \', \'after\', false);" style="cursor:pointer"/> ';
 			}
 			?>
 			</div>
@@ -257,10 +256,8 @@ defined ( '_JEXEC' ) or die ();
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></td>
 
 	<td class="kcol-last kcol-editor-field">
-		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50"><?php echo $this->escape($this->message->message); ?></textarea>
-		<?php
-		// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
-		?>
+		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50" tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
+
 		<!-- Hidden preview placeholder -->
 		<div id="kbbcode-preview" style="display: none;"></div>
 		<?php if ($this->message->exists()) : ?>

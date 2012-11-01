@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,16 +33,11 @@ class KunenaProfile
 
 	public function getTopHits($limit=0) {
 		if (!$limit) $limit = KunenaFactory::getConfig ()->popusercount;
-		return $this->_getTopHits($limit);
+		return (array) $this->_getTopHits($limit);
 	}
-
-	// TODO: remove these when we have right event
-	public function open() {}
-	public function close() {}
-	public function trigger() {}
 
 	public function getUserListURL($action='', $xhtml = true) {}
 	public function getProfileURL($user, $task='', $xhtml = true) {}
-	public function showProfile($userid, &$msg_params) {}
-	protected function _getTopHits($limit=0) {}
+	public function showProfile($view, &$params) {}
+	protected function _getTopHits($limit=0) { return array(); }
 }

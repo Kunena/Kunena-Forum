@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage AlphaUserPoints
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -21,7 +21,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile {
 		$config = KunenaFactory::getConfig ();
 		$my = JFactory::getUser();
 		if ( $config->userlist_allowed == 1 && $my->id == 0  ) return false;
-		if (method_exists ( 'AlphaUserPointsHelper', 'getAupUsersURL' ))
+		if (class_exists('AlphaUserPointsHelper') && method_exists ( 'AlphaUserPointsHelper', 'getAupUsersURL' ))
 			return AlphaUserPointsHelper::getAupUsersURL ();
 		else {
 			// For AUP 1.5.3 etc..
@@ -44,7 +44,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile {
 		if ($user === false)
 			return false;
 		$userid = $my->id != $user->userid ? '&userid=' . AlphaUserPointsHelper::getAnyUserReferreID ( $user->userid ) : '';
-		if (method_exists ( 'AlphaUserPointsHelper', 'getItemidAupProfil' )) {
+		if (class_exists('AlphaUserPointsHelper') && method_exists ( 'AlphaUserPointsHelper', 'getItemidAupProfil' )) {
 			$AUP_itemid = AlphaUserPointsHelper::getItemidAupProfil ();
 		} else {
 			$db = JFactory::getDBO ();
@@ -57,13 +57,13 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile {
 
 	public function _getTopHits($limit=0) {
 		$db = JFactory::getDBO ();
-		$query = "SELECT userid AS id, profileviews AS count FROM #__alpha_userpoints WHERE a.profileviews>0 ORDER BY profileviews DESC";
+		$query = "SELECT userid AS id, profileviews AS count FROM #__alpha_userpoints WHERE profileviews>0 ORDER BY profileviews DESC";
 		$db->setQuery ( $query, 0, $limit );
-		$top = $db->loadObjectList ();
+		$top = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
 		return $top;
 	}
 
-	public function showProfile($userid, &$msg_params) {
+	public function showProfile($view, &$params) {
 	}
 }

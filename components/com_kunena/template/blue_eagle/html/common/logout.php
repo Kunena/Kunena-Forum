@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Common
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -30,7 +30,7 @@ defined ( '_JEXEC' ) or die ();
 				<ul class="kprofilebox-welcome">
 					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo $this->me->getLink() ?></strong></li>
 					<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo KunenaDate::getInstance($this->me->lastvisitDate)->toKunena('ago'); ?>"><?php echo KunenaDate::getInstance($this->me->lastvisitDate)->toKunena('date_today'); ?></span></li>
-					<?php if ($this->logout) : ?>
+					<?php if ($this->logout->enabled()) : ?>
 					<li>
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="login">
 						<input type="hidden" name="view" value="user" />
@@ -43,10 +43,11 @@ defined ( '_JEXEC' ) or die ();
 					<?php endif; ?>
 				</ul>
 			</td>
+			<!-- Module position -->
 			<?php if ($this->moduleHtml) : ?>
 			<td class = "kprofilebox-right">
 				<div class="kprofilebox-modul">
-					<?php $this->moduleHtml; ?>
+					<?php echo $this->moduleHtml; ?>
 				</div>
 			</td>
 			<?php endif; ?>

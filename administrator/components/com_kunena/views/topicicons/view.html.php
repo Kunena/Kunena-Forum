@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,31 +14,18 @@ defined ( '_JEXEC' ) or die ();
  * Topicicons view for Kunena backend
  */
 class KunenaAdminViewTopicicons extends KunenaView {
-  function display() {
-		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
-		switch ($this->getLayout ()) {
-			case 'add' :
-			case 'edit' :
-				$this->displayEdit ();
-				$this->setToolBarEdit();
-				break;
-			case 'default' :
-				$this->displayDefault ();
-				$this->setToolBarDefault();
-				break;
-		}
-
-		parent::display ();
-	}
-
 	function displayDefault() {
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		$this->topicicons = $this->get('Topicicons');
 		$this->state = $this->get('state');
 		$this->iconsetlist = $this->get('iconsetlist');
+
+		$this->setToolBarDefault();
+		parent::display ();
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_TOPICICON');
 		JToolBarHelper::spacer();
@@ -48,14 +35,22 @@ class KunenaAdminViewTopicicons extends KunenaView {
 		JToolBarHelper::spacer();
 	}
 
+	function displayAdd() {
+		$this->displayEdit();
+	}
+
 	function displayEdit() {
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		$this->state = $this->get('state');
 		$this->topicicon = $this->get('topicicon');
 		$this->listtopicicons = $this->get('topiciconslist');
+
+		$this->setToolBarEdit();
+		parent::display ();
 	}
 
 	protected function setToolBarEdit() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();

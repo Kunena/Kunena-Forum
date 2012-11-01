@@ -2,13 +2,12 @@
 
 /**
 * Kunena Component
-* @package Kunena
+* @package Kunena.Template.Blue_Eagle
 *
-* @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+* @Copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
-**/ 
-* 
+**/
 
 #Kunena tr.krow1 td {
 	border-left: 1px solid rgba(0, 0, 0, 0.2);

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Tables
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,46 +16,62 @@ require_once (dirname ( __FILE__ ) . '/kunena.php');
  * Kunena Categories
  * Provides access to the #__kunena_categories table
  */
-class TableKunenaCategories extends KunenaTable
-{
-	var $id = null;
-	var $parent_id = null;
-	var $name = null;
-	var $alias = null;
-	var $icon_id = null;
-	var $locked = null;
-	var $accesstype = null;
-	var $access = null;
-	var $pub_access = null;
-	var $pub_recurse = null;
-	var $admin_access = null;
-	var $admin_recurse = null;
-	var $ordering = null;
-	var $published = null;
-	var $channels = null;
-	var $checked_out = null;
-	var $checked_out_time = null;
-	var $review = null;
-	var $allow_anonymous = null;
-	var $post_anonymous = null;
-	var $hits = null;
-	var $description = null;
-	var $headerdesc = null;
-	var $class_sfx = null;
-	var $allow_polls = null;
-	var $topic_ordering = null;
-	var $numTopics = null;
-	var $numPosts = null;
-	var $last_topic_id = null;
-	var $last_post_id = null;
-	var $last_post_time = null;
-	var $params = null;
+class TableKunenaCategories extends KunenaTable {
+	public $id = null;
+	public $parent_id = null;
+	public $name = null;
+	public $alias = null;
+	public $icon_id = null;
+	public $locked = null;
+	public $accesstype = null;
+	public $access = null;
+	public $pub_access = null;
+	public $pub_recurse = null;
+	public $admin_access = null;
+	public $admin_recurse = null;
+	public $ordering = null;
+	public $published = null;
+	public $channels = null;
+	public $checked_out = null;
+	public $checked_out_time = null;
+	public $review = null;
+	public $allow_anonymous = null;
+	public $post_anonymous = null;
+	public $hits = null;
+	public $description = null;
+	public $headerdesc = null;
+	public $class_sfx = null;
+	public $allow_polls = null;
+	public $topic_ordering = null;
+	public $numTopics = null;
+	public $numPosts = null;
+	public $last_topic_id = null;
+	public $last_post_id = null;
+	public $last_post_time = null;
+	public $params = null;
 
-	function __construct($db) {
+	public function __construct($db) {
 		parent::__construct ( '#__kunena_categories', 'id', $db );
 	}
 
-	function load($id = null)
+	public function bind($array, $ignore = '') {
+		if (is_object($array)) {
+			$array = get_object_vars($array);
+		}
+		if (isset($array['params']) && !is_string($array['params'])) {
+			if ($array['params'] instanceof JRegistry) {
+				$registry = $array['params'];
+			} elseif (is_array($array['params'])) {
+				$registry = new JRegistry;
+				$registry->loadArray($array['params']);
+			}
+			// TODO: convert to J!2.5: (string) $registry
+			$array['params'] = $registry->toString();
+		}
+		return parent::bind($array, $ignore);
+	}
+
+	public function load($id = null, $reset = true)
 	{
 		$this->_exists = false;
 		$k = $this->_tbl_key;
@@ -65,7 +81,7 @@ class TableKunenaCategories extends KunenaTable
 		}
 
 		// Reset the table.
-		$this->reset();
+		if ($reset) $this->reset();
 
 		// Check for a valid id to load.
 		if ($this->$k === null || intval($this->$k) < 1) {
@@ -73,7 +89,7 @@ class TableKunenaCategories extends KunenaTable
 			return false;
 		}
 
-		// Load the user data.
+		// Load the data.
 		$query = "SELECT * FROM #__kunena_categories WHERE id = {$this->$k}";
 		$this->_db->setQuery($query);
 		$data = $this->_db->loadAssoc();
@@ -97,7 +113,7 @@ class TableKunenaCategories extends KunenaTable
 	}
 
 	// check for potential problems
-	function check() {
+	public function check() {
 		if ($this->id && $this->parent_id) {
 			if ($this->id == $this->parent_id) {
 				$this->setError ( JText::_ ( 'COM_KUNENA_FORUM_SAME_ERR' ) );
@@ -109,11 +125,14 @@ class TableKunenaCategories extends KunenaTable
 		if (!$this->name) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME' ) );
 		}
+		if ($this->params instanceof JRegistry) {
+			$this->params = $this->params->toString();
+		}
 		return ($this->getError () == '');
 	}
 
 	// check if given forum is one of its own childs
-	function isChild($id) {
+	public function isChild($id) {
 		// FIXME: when we have category cache, replace this code
 		if ($id > 0) {
 			$query = "SELECT id, parent_id FROM #__kunena_categories";
@@ -129,21 +148,35 @@ class TableKunenaCategories extends KunenaTable
 				}
 				$recurse [] = $id;
 				if (! isset ( $list [$id] )) {
-					$this->setError ( get_class ( $this ) . JText::_ ( 'COM_KUNENA_FORUM_UNKNOWN_ERR' ) );
+					$this->setError ( get_class ( $this ) . JText::_ ( 'COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_INVALID' ) );
 					return 0;
 				}
 				$id = $list [$id]->parent_id;
 				if ($id != 0 and $id == $this->id)
 					return 1;
 			}
-			;
 		}
 		return 0;
 	}
 
-	function store($updateNulls = false) {
+	public function reorder($where='') {
+		if (!$where) {
+			$db = JFactory::getDbo();
+			$query = "SELECT parent_id FROM #__kunena_categories GROUP BY parent_id";
+			$db->setQuery($query);
+			$parents = $db->loadResultArray();
+			$success = true;
+			foreach ($parents as $parent_id) {
+				$success &= parent::reorder("parent_id={$db->quote($parent_id)}");
+			}
+			return $success;
+		} else {
+			return parent::reorder($where);
+		}
+	}
+
+	public function store($updateNulls = false) {
 		$ret = parent::store ( $updateNulls );
 		return $ret;
 	}
-
 }

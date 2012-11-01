@@ -1,16 +1,15 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->setTitle(JText::_('COM_KUNENA_VIEW_USERS_DEFAULT'));
 if (version_compare(JVERSION, '1.7','>')) {
 	// Joomla 1.7+
 	JHtml::_('behavior.multiselect');
@@ -29,7 +28,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 </div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm" id="adminForm">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="task" value="delfile" />
 				<input type="hidden" name="boxchecked" value="0" />
@@ -40,16 +39,17 @@ if (version_compare(JVERSION, '1.7','>')) {
 						<th class="frst"> # </th>
 						<th width="5">
 							<?php if (version_compare(JVERSION, '1.6','>')): ?>
-							<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+							<input type="checkbox" name="checkall-toggle" value="cid" title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 							<?php else: ?>
-							<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" />
+							<input type="checkbox" name="toggle" value="cid" onclick="checkAll(<?php echo count ( $this->items ); ?>);" />
 							<?php endif; ?>
 						</th>
 						<th><?php echo JText::_('COM_KUNENA_FILETYPE'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILENAME'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILESIZE'); ?></th>
-						<th><?php echo JText::_('COM_KUNENA_FILE_PREVIEW'); ?></th>
-						<th><?php echo JText::_('COM_KUNENA_FILE_DELETE'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_ATTACHMENT_MANAGER_TOPIC'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_PREVIEW'); ?></th>
+						<th><?php echo JText::_('COM_KUNENA_DELETE'); ?></th>
 					</tr>
 
 					<?php
@@ -58,9 +58,8 @@ if (version_compare(JVERSION, '1.7','>')) {
 					else :
 					$i=0;
 					$y=1;
-					foreach ($this->items as $file) :
-						$instance = KunenaForumMessageAttachmentHelper::get($file->id);
-
+					foreach ($this->items as $item) :
+						$message = $item->getMessage();
 						$evenodd = $i % 2;
 
 						if ($evenodd == 0)	$usrl_class="row1";
@@ -69,18 +68,24 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 					<tr class="k<?php echo $usrl_class ;?>">
 						<td class="kcol-first"><?php echo $y; ?></td>
-						<td class="kcol-mid"><?php echo JHTML::_('grid.id', $i, intval($file->id)) ?></td>
-						<td align="center" class="kcol-mid"><img src="<?php echo $file->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
+						<td class="kcol-mid"><?php if ($item->authorise('delete')) echo JHTML::_('grid.id', $i, intval($item->id)) ?></td>
+						<td align="center" class="kcol-mid"><img src="<?php echo $item->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
 
-						<td class="kcol-mid"><?php echo $file->filename; ?></td>
+						<td class="kcol-mid"><?php echo $item->filename; ?></td>
 
-						<td class="kcol-mid"><?php echo number_format ( intval ( $file->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
+						<td class="kcol-mid"><?php echo number_format ( intval ( $item->size ) / 1024, 0, '', ',' ) . ' '.JText::_('COM_KUNENA_USER_ATTACHMENT_FILE_WEIGHT'); ?></td>
 
-						<td align="center" class="kcol-mid"><?php echo $instance->getThumbnailLink() ; ?></td>
+						<td class="kcol-mid"><?php echo $this->getTopicLink($message->getTopic(), $message); ?></td>
 
-						<td align="center" class="kcol-mid"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php
-						echo $i;
-						?>','delete')"><img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" /></a></td>
+						<td align="center" class="kcol-mid"><?php echo $item->getThumbnailLink() ; ?></td>
+
+						<td align="center" class="kcol-mid">
+							<?php if ($item->authorise('delete')) : ?>
+							<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','delfile')">
+								<img src="<?php echo $this->ktemplate->getImagePath('icons/publish_x.png') ?>" alt="" title="" />
+							</a>
+							<?php endif ?>
+						</td>
 
 					</tr>
 					<?php

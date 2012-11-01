@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,55 +15,11 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewSearch extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->me = KunenaUserHelper::getMyself();
-		$app = JFactory::getApplication ();
-
-		$this->assignRef ( 'message_ordering', $this->me->getMessageOrdering() );
-
-		$searchdatelist	= array();
-		$searchdatelist[] 	= JHTML::_('select.option',  'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT') );
-		$searchdatelist[] 	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_SEARCH_DATE_YESTERDAY') );
-		$searchdatelist[] 	= JHTML::_('select.option',  '7', JText::_('COM_KUNENA_SEARCH_DATE_WEEK') );
-		$searchdatelist[] 	= JHTML::_('select.option',  '14',  JText::_('COM_KUNENA_SEARCH_DATE_2WEEKS') );
-		$searchdatelist[] 	= JHTML::_('select.option',  '30', JText::_('COM_KUNENA_SEARCH_DATE_MONTH') );
-		$searchdatelist[] 	= JHTML::_('select.option',  '90', JText::_('COM_KUNENA_SEARCH_DATE_3MONTHS') );
-		$searchdatelist[] 	= JHTML::_('select.option',  '180', JText::_('COM_KUNENA_SEARCH_DATE_6MONTHS') );
-		$searchdatelist[] 	= JHTML::_('select.option',  '365', JText::_('COM_KUNENA_SEARCH_DATE_YEAR') );
-		$searchdatelist[] 	= JHTML::_('select.option',  'all', JText::_('COM_KUNENA_SEARCH_DATE_ANY') );
-		$this->searchdatelist   = JHTML::_('select.genericlist',  $searchdatelist, 'searchdate', 'class="ks"', 'value', 'text',$this->state->get('query.searchdate') );
-
-		$beforeafterlist	= array();
-		$beforeafterlist[] 	= JHTML::_('select.option',  'after', JText::_('COM_KUNENA_SEARCH_DATE_NEWER') );
-		$beforeafterlist[] 	= JHTML::_('select.option',  'before', JText::_('COM_KUNENA_SEARCH_DATE_OLDER') );
-		$this->beforeafterlist= JHTML::_('select.genericlist',  $beforeafterlist, 'beforeafter', 'class="ks"', 'value', 'text',$this->state->get('query.beforeafter') );
-
-		$sortbylist	= array();
-		$sortbylist[] 	= JHTML::_('select.option',  'title', JText::_('COM_KUNENA_SEARCH_SORTBY_TITLE') );
-		//$sortbylist[] 	= JHTML::_('select.option',  'replycount', JText::_('COM_KUNENA_SEARCH_SORTBY_POSTS') );
-		$sortbylist[] 	= JHTML::_('select.option',  'views', JText::_('COM_KUNENA_SEARCH_SORTBY_VIEWS') );
-		//$sortbylist[] 	= JHTML::_('select.option',  'threadstart', JText::_('COM_KUNENA_SEARCH_SORTBY_START') );
-		$sortbylist[] 	= JHTML::_('select.option',  'lastpost', JText::_('COM_KUNENA_SEARCH_SORTBY_POST') );
-		//$sortbylist[] 	= JHTML::_('select.option',  'postusername', JText::_('COM_KUNENA_SEARCH_SORTBY_USER') );
-		$sortbylist[] 	= JHTML::_('select.option',  'forum', JText::_('COM_KUNENA_SEARCH_SORTBY_FORUM') );
-		$this->sortbylist= JHTML::_('select.genericlist',  $sortbylist, 'sortby', 'class="ks"', 'value', 'text',$this->state->get('query.sortby') );
-
-		// Limit value list
-		$limitlist	= array();
-		$limitlist[] 	= JHTML::_('select.option',  '5', JText::_('COM_KUNENA_SEARCH_LIMIT5') );
-		$limitlist[] 	= JHTML::_('select.option',  '10', JText::_('COM_KUNENA_SEARCH_LIMIT10') );
-		$limitlist[] 	= JHTML::_('select.option',  '15', JText::_('COM_KUNENA_SEARCH_LIMIT15') );
-		$limitlist[] 	= JHTML::_('select.option',  '20', JText::_('COM_KUNENA_SEARCH_LIMIT20') );
-		$this->limitlist= JHTML::_('select.genericlist',  $limitlist, 'limit', 'class="ks"', 'value', 'text',$this->state->get('list.limit') );
-
-		//category select list
-		$options = array ();
-		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS') );
-
-		$cat_params = array ('sections'=>true);
-		$selected = $this->state->get('query.catids');
-		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, 'class="inputbox" size="8" multiple="multiple"', 'value', 'text', $selected);
+		$this->message_ordering = $this->me->getMessageOrdering();
+//TODO: Need to move the select markup outside of view.  Otherwise difficult to stylize
 
 		$this->searchwords = $this->get('SearchWords');
+		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
 		$this->results = array ();
 		$this->total = $this->get('Total');
@@ -81,6 +37,9 @@ class KunenaViewSearch extends KunenaView {
 		$this->selected=' selected="selected"';
 		$this->checked=' checked="checked"';
 		$this->error = $this->get('Error');
+
+		$this->_prepareDocument();
+
 		$this->display ();
 	}
 
@@ -90,11 +49,77 @@ class KunenaViewSearch extends KunenaView {
 		}
 	}
 
+	function displayModeList($id, $attributes = '') {
+		$options	= array();
+		$options[]	= JHTML::_('select.option',  '0', JText::_('COM_KUNENA_SEARCH_SEARCH_POSTS') );
+		$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_SEARCH_SEARCH_TITLES') );
+		echo JHTML::_('select.genericlist',  $options, 'titleonly', $attributes, 'value', 'text', $this->state->get('query.titleonly'), $id );
+	}
+	function displayDateList($id, $attributes = '') {
+		$options	= array();
+		$options[]	= JHTML::_('select.option',  'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT') );
+		$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_SEARCH_DATE_YESTERDAY') );
+		$options[]	= JHTML::_('select.option',  '7', JText::_('COM_KUNENA_SEARCH_DATE_WEEK') );
+		$options[]	= JHTML::_('select.option',  '14',  JText::_('COM_KUNENA_SEARCH_DATE_2WEEKS') );
+		$options[]	= JHTML::_('select.option',  '30', JText::_('COM_KUNENA_SEARCH_DATE_MONTH') );
+		$options[]	= JHTML::_('select.option',  '90', JText::_('COM_KUNENA_SEARCH_DATE_3MONTHS') );
+		$options[]	= JHTML::_('select.option',  '180', JText::_('COM_KUNENA_SEARCH_DATE_6MONTHS') );
+		$options[]	= JHTML::_('select.option',  '365', JText::_('COM_KUNENA_SEARCH_DATE_YEAR') );
+		$options[]	= JHTML::_('select.option',  'all', JText::_('COM_KUNENA_SEARCH_DATE_ANY') );
+		echo JHTML::_('select.genericlist',  $options, 'searchdate', $attributes, 'value', 'text', $this->state->get('query.searchdate'), $id );
+	}
+	function displayBeforeAfterList($id, $attributes = '') {
+		$options	= array();
+		$options[]	= JHTML::_('select.option',  'after', JText::_('COM_KUNENA_SEARCH_DATE_NEWER') );
+		$options[]	= JHTML::_('select.option',  'before', JText::_('COM_KUNENA_SEARCH_DATE_OLDER') );
+		echo JHTML::_('select.genericlist',  $options, 'beforeafter', $attributes, 'value', 'text', $this->state->get('query.beforeafter'), $id );
+	}
+	function displaySortByList($id, $attributes = '') {
+		$options	= array();
+		$options[]	= JHTML::_('select.option',  'title', JText::_('COM_KUNENA_SEARCH_SORTBY_TITLE') );
+//		$options[]	= JHTML::_('select.option',  'replycount', JText::_('COM_KUNENA_SEARCH_SORTBY_POSTS') );
+		$options[]	= JHTML::_('select.option',  'views', JText::_('COM_KUNENA_SEARCH_SORTBY_VIEWS') );
+//		$options[]	= JHTML::_('select.option',  'threadstart', JText::_('COM_KUNENA_SEARCH_SORTBY_START') );
+		$options[]	= JHTML::_('select.option',  'lastpost', JText::_('COM_KUNENA_SEARCH_SORTBY_POST') );
+//		$options[]	= JHTML::_('select.option',  'postusername', JText::_('COM_KUNENA_SEARCH_SORTBY_USER') );
+		$options[]	= JHTML::_('select.option',  'forum', JText::_('COM_KUNENA_CATEGORY') );
+		echo JHTML::_('select.genericlist',  $options, 'sortby', $attributes, 'value', 'text', $this->state->get('query.sortby'), $id );
+	}
+	function displayOrderList($id, $attributes = '') {
+		$options	= array();
+		$options[]	= JHTML::_('select.option',  'inc', JText::_('COM_KUNENA_SEARCH_SORTBY_INC') );
+		$options[]	= JHTML::_('select.option',  'dec', JText::_('COM_KUNENA_SEARCH_SORTBY_DEC') );
+		echo JHTML::_('select.genericlist',  $options, 'order', $attributes, 'value', 'text', $this->state->get('query.order'), $id );
+	}
+	function displayLimitList($id, $attributes = '') {
+		// Limit value list
+		$options	= array();
+		$options[]	= JHTML::_('select.option',  '5', JText::_('COM_KUNENA_SEARCH_LIMIT5') );
+		$options[]	= JHTML::_('select.option',  '10', JText::_('COM_KUNENA_SEARCH_LIMIT10') );
+		$options[]	= JHTML::_('select.option',  '15', JText::_('COM_KUNENA_SEARCH_LIMIT15') );
+		$options[]	= JHTML::_('select.option',  '20', JText::_('COM_KUNENA_SEARCH_LIMIT20') );
+		echo JHTML::_('select.genericlist',  $options, 'limit', $attributes, 'value', 'text',$this->state->get('list.limit'), $id );
+	}
+	function displayCategoryList($id, $attributes = '') {
+		//category select list
+		$options	= array ();
+		$options[]	= JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS') );
+
+		$cat_params = array ('sections'=>true);
+		echo JHTML::_('kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, $attributes, 'value', 'text', $this->state->get('query.catids'), $id);
+	}
+
 	function displayRows() {
 		$this->row(true);
-		
+
 		// Run events
-		$params = new JParameter( '' );
+		if (version_compare(JVERSION, '1.6', '>')) {
+			// Joomla 1.6+
+			$params = new JRegistry();
+		} else {
+			// Joomla 1.5
+			$params = new JParameter( '' );
+		}
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'search');
 		$params->set('kunena_layout', 'default');
@@ -102,14 +127,17 @@ class KunenaViewSearch extends KunenaView {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('kunena');
 
-		$dispatcher->trigger('onKunenaContentPrepare', array ('kunena.messages', &$this->results, &$params, 0));
-		
+		$dispatcher->trigger('onKunenaPrepare', array ('kunena.messages', &$this->results, &$params, 0));
+
 		foreach ($this->results as $this->message) {
 			$this->topic = $this->message->getTopic();
 			$this->category = $this->message->getCategory();
 			$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 			$ressubject = KunenaHtmlParser::parseText ($this->message->subject);
 			$resmessage = $this->parse ($this->message->message, 500);
+
+			$profile = KunenaFactory::getUser((int)$this->message->userid);
+			$this->useravatar = $profile->getAvatarImage('kavatar', 'post');
 
 			foreach ( $this->searchwords as $searchword ) {
 				if (empty ( $searchword )) continue;
@@ -134,7 +162,7 @@ class KunenaViewSearch extends KunenaView {
 			case 'ROW':
 				return $matches[2].$this->row().($this->topic->ordering ? " {$matches[2]}sticky" : '');
 			case 'TOPIC_ICON':
-				return $this->getTopicLink ( $this->topic, 'last', $this->topic->getIcon() );
+				return $this->topic->getIcon();
 			case 'DATE':
 				$date = new KunenaDate($matches[2]);
 				return $date->toSpan('config_post_dateformat', 'config_post_dateformat_hover');
@@ -145,5 +173,11 @@ class KunenaViewSearch extends KunenaView {
 		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
 		$pagination->setDisplay($maxpages);
 		return $pagination->getPagesLinks();
+	}
+
+	protected function _prepareDocument(){
+		$this->setTitle(JText::_('COM_KUNENA_SEARCH_ADVSEARCH'));
+
+		// TODO: set keywords and description
 	}
 }

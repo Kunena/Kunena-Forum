@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Templates
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -19,7 +19,7 @@ JHTML::_('behavior.tooltip');
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="templates" />
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
@@ -51,11 +51,12 @@ JHTML::_('behavior.tooltip');
 			<tbody>
 			<?php
 				$k = 0;
+				$i = 0;
 				foreach ( $this->templates as $id => $row) {
 			?>
 				<tr <?php echo 'class = "row' . $k . '"'; ?>>
 					<td align="center"><?php
-						echo ($id + $this->navigation->limitstart + 1);
+						echo ($i + $this->navigation->limitstart + 1);
 						?></td>
 					<td width="5">
 						<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="isChecked(this.checked);" />
@@ -96,6 +97,7 @@ JHTML::_('behavior.tooltip');
 					</td>
 				</tr>
 				<?php $k = 1 - $k;
+					$i++;
 				} ?>
 			</tbody>
 			</table>

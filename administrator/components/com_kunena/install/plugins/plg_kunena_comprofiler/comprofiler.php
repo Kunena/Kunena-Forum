@@ -4,20 +4,26 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @Copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @Copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 class plgKunenaComprofiler extends JPlugin {
+	public $minCBVersion = '1.8.1';
+
 	public function __construct(&$subject, $config) {
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::enabled())) return;
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::installed())) return;
+
+		$app = JFactory::getApplication ();
 
 		// Do not load if CommunityBuilder is not installed
 		$path = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
-		if (!is_file ( $path )) return;
+		if (!is_file ( $path )) {
+			return;
+		}
 
 		require_once ($path);
 		cbimport ( 'cb.database' );
@@ -27,24 +33,35 @@ class plgKunenaComprofiler extends JPlugin {
 		cbimport ( 'cb.field' );
 		global $ueConfig;
 
-		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR );
-
-		$app = JFactory::getApplication ();
-		if (! isset ( $ueConfig ['version'] )) {
-			$app->enqueueMessage ( COM_KUNENA_INTEGRATION_CB_WARN_GENERAL, 'notice' );
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_INTEGRATION_CB_WARN_INSTALL', '1.7' ) );
-			$app->enqueueMessage ( COM_KUNENA_INTEGRATION_CB_WARN_HIDE, 'notice' );
-			return;
-		} if (version_compare ( $ueConfig ['version'], '1.7' ) < 0) {
-			$app->enqueueMessage ( COM_KUNENA_INTEGRATION_CB_WARN_GENERAL, 'notice' );
-			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_INTEGRATION_CB_WARN_UPDATE', '1.7' ) );
-			$app->enqueueMessage ( COM_KUNENA_INTEGRATION_CB_WARN_HIDE, 'notice' );
-			return;
-		}
 		parent::__construct ( $subject, $config );
+
+		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_comprofiler.sys', KPATH_ADMIN );
 
 		$this->path = dirname ( __FILE__ ) . '/comprofiler';
 		require_once "{$this->path}/integration.php";
+
+		if ($app->isAdmin() && (! isset ( $ueConfig ['version'] ) || version_compare ( $ueConfig ['version'], $this->minCBVersion ) < 0)) {
+			$app->enqueueMessage ( JText::sprintf ( 'PLG_KUNENA_COMPROFILER_WARN_VERSION', $this->minCBVersion ), 'notice' );
+		}
+	}
+
+	public function onKunenaDisplay($type, $view = null, $params = null) {
+		$integration = KunenaFactory::getProfile();
+		if (!$integration instanceof KunenaProfileComprofiler) return;
+		switch ($type) {
+			case 'start':
+				return $integration->open();
+			case 'end':
+				return $integration->close();
+		}
+	}
+
+	public function onKunenaPrepare($context, &$item, &$params, $page = 0) {
+		if ($context == 'kunena.user') {
+			$triggerParams = array ('userid' => $item->userid, 'userinfo' => &$item );
+			$integration = KunenaFactory::getProfile();
+			if ( $integration instanceof KunenaProfileComprofiler) KunenaProfileComprofiler::trigger ( 'profileIntegration', $triggerParams );
+		}
 	}
 
 	/*

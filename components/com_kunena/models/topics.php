@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,22 +23,20 @@ class KunenaModelTopics extends KunenaModel {
 	protected $actionMove = false;
 
 	protected function populateState() {
-		$app = JFactory::getApplication ();
 		$params = $this->getParameters();
 		$this->setState ( 'params', $params );
-		$config = KunenaFactory::getConfig ();
 
 		$format = $this->getWord ( 'format', 'html' );
 		$this->setState ( 'format', $format );
 
-		$active = $app->getMenu ()->getActive ();
+		$active = $this->app->getMenu ()->getActive ();
 		$active = $active ? (int) $active->id : 0;
 		$layout = $this->getWord ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
 
 		$userid = $this->getInt ( 'userid', -1 );
 		if ($userid < 0) {
-			$userid = KunenaUserHelper::getMyself()->userid;
+			$userid = $this->me->userid;
 		} elseif($userid > 0) {
 			$userid = KunenaFactory::getUser($userid)->userid;
 		} else {
@@ -54,22 +52,41 @@ class KunenaModelTopics extends KunenaModel {
 			$latestcategory = array($catid);
 			$latestcategory_in = true;
 		} else {
-			$latestcategory = $params->get('topics_categories', $config->latestcategory );
+			if (JFactory::getDocument()->getType() != 'feed') {
+				// Get configuration from menu item
+				$latestcategory = $params->get('topics_categories', '');
+				$latestcategory_in = $params->get('topics_catselection', '');
+
+				// Make sure that category list is an array.
+				if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
+
+				// Default to global configuration
+				if (in_array('', $latestcategory, true)) $latestcategory = $this->config->latestcategory;
+				if ($latestcategory_in == '') $latestcategory_in = $this->config->latestcategory_in;
+			} else {
+				if(!empty($this->config->rss_excluded_categories)) {
+					$latestcategory = $this->config->rss_excluded_categories;
+					$latestcategory_in = 0;
+				} else {
+					$latestcategory = $this->config->rss_included_categories;
+					$latestcategory_in = 1;
+				}
+			}
 			if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
 			if (empty($latestcategory) || in_array(0, $latestcategory)) {
 				$latestcategory = false;
 			}
-			$latestcategory_in = (bool)$params->get('topics_catselection', $config->latestcategory_in);
+
 		}
 		$this->setState ( 'list.categories', $latestcategory );
 		$this->setState ( 'list.categories.in', $latestcategory_in );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $config->show_list_time), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
 		$this->setState ( 'list.time', $value );
 
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_limit", 'limit', 0, 'int' );
-		if ($value < 1 || $value > 100) $value = $config->threads_per_page;
+		if ($value < 1 || $value > 100) $value = $this->config->threads_per_page;
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_ordering", 'filter_order', 'time', 'cmd' );
@@ -242,15 +259,19 @@ class KunenaModelTopics extends KunenaModel {
 				break;
 		}
 		$this->topics = KunenaForumTopicHelper::getTopics ( $topicids, $authorise );
-		$this->_common();
+
+		$userlist = $postlist = array();
+		foreach ( $this->messages as $message ) {
+			$userlist[intval($message->userid)] = intval($message->userid);
+			$postlist[intval($message->id)] = intval($message->id);
+		}
+
+		$this->_common($userlist, $postlist);
 	}
 
-	protected function _common() {
+	protected function _common(array $userlist = array(), array $postlist = array()) {
 		if ($this->total > 0) {
-			$config = KunenaFactory::getConfig ();
-
 			// collect user ids for avatar prefetch when integrated
-			$userlist = array();
 			$lastpostlist = array();
 			foreach ( $this->topics as $topic ) {
 				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
@@ -263,11 +284,11 @@ class KunenaModelTopics extends KunenaModel {
 
 			KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
 			KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
-			$lastreadlist = KunenaForumTopicHelper::fetchNewStatus($this->topics);
+			$lastpostlist += KunenaForumTopicHelper::fetchNewStatus($this->topics);
 			// Fetch last / new post positions when user can see unapproved or deleted posts
 			$me = KunenaUserHelper::get();
-			if (($lastpostlist || $lastreadlist) && $me->userid && $me->isModerator()) {
-				KunenaForumMessageHelper::loadLocation($lastpostlist + $lastreadlist);
+			if ($postlist || ($lastpostlist && $me->userid && ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus()))) {
+				KunenaForumMessageHelper::loadLocation($postlist + $lastpostlist);
 			}
 		}
 	}
@@ -301,6 +322,10 @@ class KunenaModelTopics extends KunenaModel {
 			if (!$permdelete && $topic->authorise('permdelete')) $permdelete = true;
 		}
 		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		if ($this->getState ('list.mode') == 'subscriptions')
+			$actionDropdown[] = JHTML::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		if ($this->getState ('list.mode') == 'favorites')
+			$actionDropdown[] = JHTML::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
 		if ($move) $actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
 		if ($approve) $actionDropdown[] = JHTML::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
 		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));

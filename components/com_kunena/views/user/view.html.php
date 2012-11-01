@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,35 +17,35 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewUser extends KunenaView {
 	function displayDefault($tpl = null) {
-		// TODO: handle redirect to integrated component
+		$this->displayCommon($tpl);
+	}
+
+	function displayModerate($tpl = null) {
+		$this->layout = 'default';
+		$this->setLayout($this->layout);
 		$this->displayCommon($tpl);
 	}
 
 	function displayEdit($tpl = null) {
 		$userid = JRequest::getInt('userid');
-		$this->me = KunenaUserHelper::getMyself();
+		$this->usernamechange = $this->config->usernamechange && (version_compare(JVERSION, '2.5.5','<') || JComponentHelper::getParams('com_users')->get('change_login_name', 1));
+
 		if ($userid && $this->me->userid != $userid) {
 			$user = KunenaFactory::getUser( $userid );
-			$this->_app->enqueueMessage ( JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $user->getName()), 'notice' );
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $user->getName()), 'notice' );
 			return;
 		}
 		$this->displayCommon($tpl);
 	}
 
 	function displayList($tpl = null) {
-		$this->app = JFactory::getApplication();
-		$this->config = KunenaFactory::getConfig();
 		$this->total = $this->get ( 'Total' );
 		$this->count = $this->get ( 'Count' );
 		$this->users = $this->get ( 'Items' );
-		$this->me = KunenaUserHelper::getMyself();
 		// TODO: Deprecated:
 		$this->pageNav = $this->getPagination(7);
 
-		$page = intval($this->state->get('list.start')/$this->state->get('list.limit'))+1;
-		$pages = intval(($this->total-1)/$this->state->get('list.limit'))+1;
-
-		$this->setTitle(JText::_('COM_KUNENA_VIEW_USER_LIST'). " ({$page}/{$pages})");
+		$this->_prepareDocument('list');
 
 		parent::display($tpl);
 	}
@@ -60,19 +60,15 @@ class KunenaViewUser extends KunenaView {
 		$userid = JRequest::getInt('userid');
 
 		$this->_db = JFactory::getDBO ();
-		$this->_app = JFactory::getApplication ();
-		$this->config = KunenaFactory::getConfig ();
-		$this->my = JFactory::getUser ();
-		$this->me = KunenaUserHelper::getMyself();
 		$this->do = JRequest::getWord('layout');
 
 		if (!$userid) {
-			$this->user = $this->my;
+			$this->user = JFactory::getUser ();
 		} else {
 			$this->user = JFactory::getUser( $userid );
 		}
-		if ($this->user->id == 0|| ($this->my->id == 0 && !$this->config->pubprofile)) {
-			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice' );
+		if ($this->user->id == 0|| ($this->me->userid == 0 && !$this->config->pubprofile)) {
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice' );
 			return;
 		}
 
@@ -82,7 +78,7 @@ class KunenaViewUser extends KunenaView {
 		$this->params = $template->params;
 
 		if (get_class($integration) == 'KunenaProfileNone') {
-			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_DISABLED'), 'notice' );
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_DISABLED'), 'notice' );
 			return;
 		}
 
@@ -92,7 +88,7 @@ class KunenaViewUser extends KunenaView {
 		if (!$this->profile->exists()) {
 			$this->profile->save();
 		}
-		if ($this->profile->userid == $this->my->id) {
+		if ($this->profile->userid == $this->me->userid) {
 			if ($this->do != 'edit') $this->editLink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_EDIT').' &raquo;', 'nofollow', 'edit', 'kheader-link' );
 			else $this->editLink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow', '', 'kheader-link' );
 
@@ -117,9 +113,10 @@ class KunenaViewUser extends KunenaView {
 		$this->avatarlink = $this->profile->getAvatarImage('kavatar','profile');
 		$this->personalText = $this->profile->personalText;
 		$this->signature = $this->profile->signature;
-		$this->localtime = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->_app->getCfg ( 'offset', 0 )));
-		$this->localtime->setOffset($this->user->getParam('timezone', $this->_app->getCfg ( 'offset', 0 )));
-		$this->moderator = $this->profile->isModerator();
+		$this->signatureHtml = KunenaHtmlParser::parseBBCode($this->signature, null, $this->config->maxsig);
+		$this->localtime = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
+		$this->localtime->setOffset($this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
+		$this->moderator = KunenaAccess::getInstance()->getModeratorStatus($this->profile);
 		$this->admin = $this->profile->isAdmin();
 		switch ($this->profile->gender) {
 			case 1:
@@ -143,29 +140,37 @@ class KunenaViewUser extends KunenaView {
 		$this->showUnusedSocial = true;
 
 		$avatar = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
+		$this->editavatar = ($avatar instanceof KunenaAvatarKunena) ? true : false;
 
 		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
 		$this->canBan = $this->banInfo->canBan();
 		if ( $this->config->showbannedreason ) $this->banReason = $this->banInfo->reason_public;
 
-		$user = JFactory::getUser();
-		if ($user->id != $this->profile->userid)
-		{
+		// Which tabs to show?
+		$this->showUserPosts = true;
+		$this->showSubscriptions = $this->config->allowsubscriptions && $this->me->userid == $this->profile->userid;
+		$this->showFavorites = $this->config->allowfavorites && $this->me->userid == $this->profile->userid;
+		$this->showThankyou = $this->config->showthankyou && $this->me->exists();
+		$this->showUnapprovedPosts = $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus(); // || $this->me->userid == $this->profile->userid;
+		$this->showAttachments = $this->canManageAttachments() && ($this->me->isModerator() || $this->me->userid == $this->profile->userid);
+		$this->showBanManager = $this->me->isModerator() && $this->me->userid == $this->profile->userid;
+		$this->showBanHistory = $this->me->isModerator() && $this->me->userid != $this->profile->userid;
+		$this->showBanUser = $this->canBan;
+
+		if ($this->me->userid != $this->profile->userid) {
 			$this->profile->uhits++;
 			$this->profile->save();
 		}
 
-		$this->canManageAttachs = $this->canManageAttachments ();
-
 		$private = KunenaFactory::getPrivateMessaging();
-		if ($this->my->id == $this->user->id) {
-			$this->pmCount = $private->getUnreadCount($this->my->id);
+		if ($this->me->userid == $this->user->id) {
+			$this->pmCount = $private->getUnreadCount($this->me->userid);
 			$this->pmLink = $private->getInboxLink($this->pmCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $this->pmCount) : JText::_('COM_KUNENA_PMS_INBOX'));
 		} else {
 			$this->pmLink = $this->profile->profileIcon('private');
 		}
-		$this->setTitle(JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName()));
+
+		$this->_prepareDocument('common');
 		parent::display();
 	}
 
@@ -269,7 +274,7 @@ class KunenaViewUser extends KunenaView {
 			'limitstart' => 0,
 			'filter_order_Dir' => 'desc',
 		);
-		//KunenaForum::display('category', 'user', 'embed', $params);
+		KunenaForum::display('category', 'user', 'embed', $params);
 	}
 
 	function displayBanUser() {
@@ -283,7 +288,9 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayBanManager() {
-		$this->bannedusers = KunenaUserBan::getBannedUsers();
+		// TODO: move ban manager somewhere else and add pagination
+		$this->bannedusers = KunenaUserBan::getBannedUsers(0, 50);
+		if ( !empty($this->bannedusers) ) KunenaUserHelper::loadUsers(array_keys($this->bannedusers));
 		echo $this->loadTemplateFile('banmanager');
 	}
 
@@ -292,6 +299,13 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displayTab() {
+		$this->email = null;
+		if ( $this->config->showemail && ( !$this->profile->hideEmail || $this->me->isModerator() ) ) {
+			$this->email = JHTML::_('email.cloak', $this->user->email);
+		} else if ( $this->me->isAdmin() ) {
+			$this->email = JHTML::_('email.cloak', $this->user->email);
+		}
+
 		switch ($this->do) {
 			case 'edit':
 				$user = JFactory::getUser();
@@ -307,7 +321,7 @@ class KunenaViewUser extends KunenaView {
 		if ($this->config->showkarma && $this->profile->userid) {
 			$userkarma = '<strong>'. JText::_('COM_KUNENA_KARMA') . "</strong>: " . $this->profile->karma;
 
-			if ($this->my->id && $this->my->id != $this->profile->userid) {
+			if ($this->me->userid && $this->me->userid != $this->profile->userid) {
 				$userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'decrease', '', '', $this->profile->userid, '<span class="kkarma-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
 				$userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'increase', '', '', $this->profile->userid, '<span class="kkarma-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
 			}
@@ -334,7 +348,7 @@ class KunenaViewUser extends KunenaView {
 		}
 
 		$selected = JString::trim($this->gallery);
-		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\" onchange=\"switch_avatar_category(this.options[this.selectedIndex].value)\">\n";
+		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\">\n";
 		$str .=  "<option value=\"default\"";
 
 		if ($selected == "") {
@@ -449,8 +463,8 @@ class KunenaViewUser extends KunenaView {
 		$item->name = 'hidemail';
 		$item->label = JText::_('COM_KUNENA_USER_HIDEEMAIL');
 		$options = array();
-		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
-		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
+		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 		$item->field = JHTML::_('select.genericlist', $options, 'hidemail', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->hideEmail), 'khidemail');
 		$this->settings[] = $item;
 
@@ -458,8 +472,8 @@ class KunenaViewUser extends KunenaView {
 		$item->name = 'showonline';
 		$item->label = JText::_('COM_KUNENA_USER_SHOWONLINE');
 		$options = array();
-		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
-		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
+		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_YES'));
 		$item->field = JHTML::_('select.genericlist', $options, 'showonline', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->showOnline), 'kshowonline');
 		$this->settings[] = $item;
 
@@ -494,48 +508,57 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function canManageAttachments () {
-		$this->me = KunenaUserHelper::getMyself();
-		$this->config = KunenaFactory::getConfig();
 		if ( $this->config->show_imgfiles_manage_profile ) {
-			$file = null;
-			$image = null;
-
-			if ( $this->config->image_upload=='all' && empty($this->config->file_upload)  ) $image = 1;
-			elseif (  $this->config->file_upload=='all' && empty($this->config->image_upload) ) $file = 1;
-			elseif ( $this->config->image_upload=='all' && $this->config->file_upload=='all' ) { $file = 1; $image = 1; }
-
-			if ( $this->me->userid != 0 ) {
-				if ( $this->config->image_upload=='user' && empty($this->config->file_upload)  ) $image = 1;
-				elseif (  $this->config->file_upload=='user' && empty($this->config->image_upload) ) $file = 1;
-				elseif ( $this->config->image_upload=='user' && $this->config->file_upload=='user' ) { $file = 1; $image = 1; }
-			}
-
-			if ( $this->me->isModerator() && ($this->config->image_upload=='moderator' || $this->config->file_upload=='moderator')  ) {
-				if (  $this->config->image_upload=='moderator' && empty($this->config->file_upload)  ) $filetype = 'images';
-				elseif ( empty($this->config->image_upload) && $this->config->file_upload=='moderator' ) $filetype = 'files';
-				elseif ( $this->config->image_upload=='moderator' && $this->config->file_upload=='moderator' ) { $file = 1; $image = 1; }
-			}
-
-			if ( $this->me->isAdmin() &&  ($this->config->image_upload=='admin' || $this->config->file_upload=='admin') ) {
-				if ( $this->config->image_upload=='admin' && empty($this->config->file_upload)  ) $filetype = 'images';
-				elseif ( empty($this->config->image_upload) && $this->config->file_upload=='admin' ) $filetype = 'files';
-				elseif ( $this->config->image_upload=='admin' && $this->config->file_upload=='admin' ) { $file = 1; $image = 1; }
-			}
-
-			$params = array('file' => $file, 'image' => $image, 'orderby' => 'ASC', 'limit' => '6');
-			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->me, $params);
+			$params = array('file' => '1', 'image' => '1', 'orderby' => 'desc', 'limit' => '30');
+			$this->userattachs = KunenaForumMessageAttachmentHelper::getByUserid($this->profile, $params);
 
 			if ($this->userattachs) {
-				return true;
+				 if ( $this->me->isModerator() || $this->profile->userid == $this->me->userid ) return true;
+				 else return false;
+			} else {
+				return false;
 			}
 		}
-		return false;
 	}
 
 	function displayAttachments() {
 		$this->title = JText::_('COM_KUNENA_MANAGE_ATTACHMENTS');
 		$this->items = $this->userattachs;
 
+		if (!empty($this->userattachs)) {
+			// Preload messages
+			$attach_mesids = array();
+			foreach ($this->userattachs as $attach) {
+				$attach_mesids[] = (int)$attach->mesid;
+			}
+			$messages = KunenaForumMessageHelper::getMessages($attach_mesids, 'none');
+			// Preload topics
+			$topic_ids = array();
+			foreach ($messages as $message ) {
+				$topic_ids[] = $message->thread;
+			}
+			$topics = KunenaForumTopicHelper::getTopics($topic_ids, 'none');
+		}
+
 		echo $this->loadTemplateFile('attachments');
+	}
+
+	protected function _prepareDocument($type){
+		if ( $type == 'list' ) {
+
+			$page = intval($this->state->get('list.start')/$this->state->get('list.limit'))+1;
+			$pages = intval(($this->total-1)/$this->state->get('list.limit'))+1;
+
+			$title = JText::_('COM_KUNENA_VIEW_USER_LIST'). " ({$page}/{$pages})";
+			$this->setTitle($title);
+			// TODO: set keywords and description
+
+		} elseif ( $type == 'common' ) {
+
+			$title = JText::sprintf('COM_KUNENA_VIEW_USER_DEFAULT', $this->profile->getName());
+			$this->setTitle($title);
+			// TODO: set keywords and description
+
+		}
 	}
 }

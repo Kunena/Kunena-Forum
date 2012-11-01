@@ -4,7 +4,7 @@
  * @package Kunena.UnitTest
  * @subpackage Utilities
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -111,7 +111,7 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 		$target = self::$category[$target_id];
 		$category = $topic->getCategory();
 
-		$this->assertTrue($topic->move($target));
+		$this->assertInstanceOf('KunenaForumTopic', $topic->move($target));
 		$this->assertEquals($target->id, $topic->category_id);
 		$this->checkUser(42);
 		$this->checkCategory($category);
@@ -137,7 +137,7 @@ class PostingTest extends PHPUnit_Framework_TestCase {
 		$ctopic = clone $topic;
 		$ctarget = clone $target;
 
-		$this->assertTrue($topic->move($target), 'Check that moving topic succeeds');
+		$this->assertInstanceOf('KunenaForumTopic', $topic->move($target), 'Check that moving topic succeeds');
 		$this->assertEquals($topic->moved_id, $target->id, 'Check that topic becomes moved');
 		$this->assertEquals(2, $topic->hold, 'Check that original topic becomes deleted');
 		$this->assertEquals($ctopic->posts+$ctarget->posts, $target->posts, 'Check that all messages get moved');

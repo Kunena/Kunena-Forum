@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -20,7 +20,7 @@ $this->addStyleSheet ( 'css/kunena.manage.css' );
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" method="post" name="adminForm">
+<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" method="post" id="adminForm" name="adminForm">
 	<input type="hidden" name="view" value="category" />
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
@@ -79,8 +79,8 @@ $this->addStyleSheet ( 'css/kunena.manage.css' );
 		$i = -1;
 		$j = 0;
 		$n = count($this->categories);
-		$img_yes = '<img src="'.$this->ktemplate->getImagePath('tick.png').'" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
-		$img_no = '<img src="'.$this->ktemplate->getImagePath('publish_x.png').'" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
+		$img_yes = '<img src="'.$this->ktemplate->getImagePath('tick.png').'" alt="'.JText::_('COM_KUNENA_YES').'" />';
+		$img_no = '<img src="'.$this->ktemplate->getImagePath('publish_x.png').'" alt="'.JText::_('COM_KUNENA_NO').'" />';
 		foreach($this->categories as $category) {
 	?>
 		<tr <?php echo 'class = "row' . $k . '"';?>>

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Message
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,12 +13,10 @@ defined ( '_JEXEC' ) or die ();
 /**
  * Kunena Forum Message Helper Class
  */
-class KunenaForumMessageHelper {
+abstract class KunenaForumMessageHelper {
 	// Global for every instance
 	protected static $_instances = array();
-	protected static $_location = false;
-
-	private function __construct() {}
+	protected static $_location = array();
 
 	/**
 	 * Returns KunenaForumMessage object
@@ -58,6 +56,7 @@ class KunenaForumMessageHelper {
 
 		$list = array ();
 		foreach ( $ids as $id ) {
+			// TODO: authorisation needs topics to be loaded, make sure that they are! (performance increase)
 			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->authorise($authorise, null, true)) {
 				$list [$id] = self::$_instances [$id];
 			}
@@ -97,7 +96,8 @@ class KunenaForumMessageHelper {
 
 		$db = JFactory::getDBO();
 		// FIXME: use right config setting
-		if ($limit < 1) $limit = KunenaFactory::getConfig ()->threads_per_page;
+		if ($limit < 1 && empty($params['nolimit'])) $limit = KunenaFactory::getConfig ()->threads_per_page;
+
 		$cquery = new KunenaDatabaseQuery();
 		$cquery->select('COUNT(*)')
 			->from('#__kunena_messages AS m')
@@ -179,7 +179,7 @@ class KunenaForumMessageHelper {
 		if (KunenaError::checkDatabaseError() || !$total) return array(0, array());
 
 		// If out of range, use last page
-		if ($total < $limitstart)
+		if ($limit && $total < $limitstart)
 			$limitstart = intval($total / $limit) * $limit;
 
 		$db->setQuery ( $rquery, $limitstart, $limit );
@@ -197,12 +197,11 @@ class KunenaForumMessageHelper {
 		return array($total, $messages);
 	}
 
-	public function getLocation($mesid, $direction = null, $hold = null) {
+	public static function getLocation($mesid, $direction = null, $hold = null) {
 		if (is_null($direction)) $direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		if (!$hold) {
 			$me = KunenaUserHelper::getMyself();
-			$access = KunenaAccess::getInstance();
-			$hold = $access->getAllowedHold($me->userid, $mesid, false);
+			$hold = KunenaAccess::getInstance()->getAllowedHold($me->userid, $mesid, false);
 		}
 		if (!isset(self::$_location [$mesid])) {
 			self::loadLocation(array($mesid));
@@ -211,14 +210,14 @@ class KunenaForumMessageHelper {
 		$count = 0;
 		foreach ($location->hold as $meshold=>$values) {
 			if (isset($hold[$meshold])) {
-				$count += $values[$direction = 'asc' ? 'before' : 'after'];
+				$count += $values[$direction == 'asc' ? 'before' : 'after'];
 				if ($direction == 'both') $count += $values['before'];
 			}
 		}
 		return $count;
 	}
 
-	static function loadLocation($mesids) {
+	public static function loadLocation($mesids) {
 		// NOTE: if you already know the location using this code just takes resources
 		if (!is_array($mesids)) $mesids = explode ( ',', $mesids );
 		$list = array();
@@ -232,7 +231,7 @@ class KunenaForumMessageHelper {
 			if (!isset(self::$_location [$id])) {
 				$ids[$id] = $id;
 				self::$_location [$id] = new stdClass();
-				self::$_location [$id]->hold = array();
+				self::$_location [$id]->hold = array('before'=>0, 'after'=>0);
 			}
 		}
 		if (empty($ids))
@@ -262,7 +261,12 @@ class KunenaForumMessageHelper {
 		}
 	}
 
-	static function recount($topicids=false) {
+	public static function cleanup() {
+		self::$_instances = array();
+		self::$_location = array();
+	}
+
+	public static function recount($topicids=false) {
 		$db = JFactory::getDBO ();
 
 		if (is_array($topicids)) {
@@ -282,7 +286,7 @@ class KunenaForumMessageHelper {
 		if (KunenaError::checkDatabaseError ())
 			return false;
 		return $db->getAffectedRows ();
-		}
+	}
 
 	// Internal functions
 
@@ -324,12 +328,15 @@ class KunenaForumMessageHelper {
 		$results = (array) $db->loadAssocList ('id');
 		KunenaError::checkDatabaseError ();
 
+		$location = ($orderbyid || $ordering == 'ASC') ? $start : KunenaForumTopicHelper::get($topic_id)->getTotal($hold) - $start - 1;
+		$order = ($ordering == 'ASC') ? 1 : -1;
 		$list = array();
 		foreach ( $results as $id=>$result ) {
 			$instance = new KunenaForumMessage ($result);
 			$instance->exists(true);
 			self::$_instances [$id] = $instance;
-			$list[$orderbyid ? $id : $start++] = $instance;
+			$list[$orderbyid ? $id : $location] = $instance;
+			$location += $order;
 		}
 		unset ($results);
 		return $list;

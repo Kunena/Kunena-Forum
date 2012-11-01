@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,9 +18,7 @@ class KunenaAvatarComprofiler extends KunenaAvatar {
 	}
 
 	public function load($userlist) {
-		if (method_exists('CBuser','advanceNoticeOfUsersNeeded')) {
-			CBuser::advanceNoticeOfUsersNeeded($userlist);
-		}
+		CBuser::advanceNoticeOfUsersNeeded($userlist);
 	}
 
 	public function getEditURL()

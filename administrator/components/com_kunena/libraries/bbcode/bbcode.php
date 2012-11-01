@@ -4,13 +4,14 @@
  * @package Kunena.Framework
  * @subpackage BBCode
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_ADMIN . '/libraries/external/nbbc/nbbc.php';
+jimport('joomla.utilities.string');
 
 // TODO: add possibility to hide contents from these tags:
 // [hide], [confidential], [spoiler], [attachment], [code]
@@ -20,38 +21,243 @@ require_once KPATH_ADMIN . '/libraries/external/nbbc/nbbc.php';
  *
  * @version		2.0
  */
-class KunenaBbcode extends BBCode {
-	public $autolink_disable = false;
+class KunenaBbcode extends NBBC_BBCode {
+	public $autolink_disable = 0;
 
 	/**
 	 * Object Constructor
 	 *
 	 * @return	void
 	 */
-	function __construct() {
+	function __construct($relative = true) {
 		parent::__construct ();
+
 		$this->defaults = new KunenaBbcodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
+
+		$view = JString::strtolower ( JRequest::getCmd ( 'type', JRequest::getCmd ( 'view', '' )) );
+
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
-		$this->SetSmileyDir ( JPATH_ROOT .'/'. KPATH_COMPONENT_RELATIVE );
-		$this->SetSmileyURL ( JURI::root(true) . '/' . KPATH_COMPONENT_RELATIVE );
+		$this->SetSmileyDir ( JPATH_ROOT );
+		$this->SetSmileyURL ( $relative ? JURI::root(true) : rtrim(JURI::root(), '/') );
 		$this->SetDetectURLs ( true );
+		$this->SetURLPattern (array($this, 'parseUrl'));
+		$this->SetURLTarget('_blank');
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher->trigger( 'onKunenaBbcodeConstruct', array( $this ) );
 	}
 
 	/**
 	 * Get Singleton Instance
 	 *
 	 * @param
-	 * @return	void
+	 * @return	KunenaBbcode
 	 * @since	1.7
 	 */
-	public function &getInstance() {
+	public static function getInstance($relative = true) {
 		static $instance = false;
-		if (! $instance) {
-			$instance = new KunenaBbcode ();
+		if (!isset($instance[intval($relative)])) {
+			$instance[intval($relative)] = new KunenaBbcode ($relative);
 		}
-		return $instance;
+		$instance[intval($relative)]->autolink_disable = 0;
+		return $instance[intval($relative)];
+	}
+
+	public function parseUrl($params) {
+		$url = $params['url'];
+		$text = $params['text'];
+
+		if (preg_match('#^mailto:#ui', $url)) {
+			// Cloak email addresses
+			$email = substr($text, 7);
+			return JHTML::_('email.cloak', $email, $this->IsValidEmail($email));
+		}
+
+		// Remove http(s):// from the text
+		$text = preg_replace ( '#^http(s?)://#ui', '', $text );
+
+		$config = KunenaFactory::getConfig ();
+		if ($config->trimlongurls) {
+			// shorten URL text if they are too long
+			$text = preg_replace ( '#^(.{' . $config->trimlongurlsfront . '})(.{4,})(.{' . $config->trimlongurlsback . '})$#u', '\1...\3', $text );
+		}
+
+		if (!isset($params['query'])) $params['query'] = '';
+		if (!isset($params['path'])) $params['path'] = '';
+
+		if ($config->autoembedyoutube && empty($this->parent->forceMinimal) && isset($params['host'])) {
+			// convert youtube links to embedded player
+			parse_str($params['query'], $query);
+			$path = explode('/', $params['path']);
+
+			if (strstr($params['host'], '.youtube.') && !empty($path[1]) && $path[1]=='watch' && !empty($query['v'])) {
+				$video = $query['v'];
+			} elseif ($params['host'] == 'youtu.be' && !empty($path[1])) {
+				$video = $path[1];
+			}
+			if (isset($video)) {
+				return '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'
+					.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/'
+					.urlencode($video).'?version=3&feature=player_embedded&fs=1&cc_load_policy=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>';
+			}
+		}
+		if ($config->autoembedebay && empty($this->parent->forceMinimal) && isset($params['host']) && strstr($params['host'], '.ebay.')) {
+			parse_str($params['query'], $query);
+			$path = explode('/', $params['path']);
+
+			if ($path[1] == 'itm') {
+				if (isset($path[3]) && is_numeric($path[3])) $itemid = intval($path[3]);
+				elseif (isset($path[2]) && is_numeric($path[2])) $itemid = intval($path[2]);
+				if (isset($itemid)) {
+					// convert ebay item to embedded widget
+					return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
+						. $config->ebaylanguagecode . '&mode=normal&itemid='.$itemid.'&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
+						. $config->ebaylanguagecode . '&mode=normal&itemid='.$itemid.'&campid='.$config->ebay_affiliate_id.'"></embed></object>';
+				}
+				/*
+				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*QQitemZ([0-9]+).+#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $text );
+				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*ViewItem.+Item=([0-9]+).*#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $text );
+				*/
+			}
+			if (isset($path[1]) && $path[1] == 'sch') {
+				// convert ebay search to embedded widget
+				parse_str($params['query'], $query);
+
+				if (empty($query['_nkw'])) break;
+				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query='
+					. urlencode($query['_nkw']) .'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebaylanguagecode . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid=5336042350"></embed></object>';
+				/*
+				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*satitle=([^&]+).*#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=$2&campid=5336042350"></embed></object>', $text );
+				*/
+			}
+			if (strstr($params['host'], 'myworld.') && !empty($path[1])) {
+				// convert seller listing to embedded widget
+				return '<object width="355" height="355"><param name="movie" value="http://togo.ebay.com/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebaylanguagecode . '&seller=' . urlencode($path[1]) . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.com/togo/&lang='
+					. $config->ebaylanguagecode . '&seller=' . urlencode($path[1]) . '&campid=5336042350"></embed></object>';
+				/*
+				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*QQsassZ([^&]+).*#u', '<object width="355" height="355"><param name="movie" value="http://togo.ebay.$1/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&seller=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&seller=$2&campid=5336042350"></embed></object>', $text );
+				*/
+			}
+		}
+
+		return "<a class=\"bbcode_url\" href=\"{$url}\" target=\"_blank\" rel=\"nofollow\">{$text}</a>";
+	}
+
+	function Internal_AutoDetectURLs($string) {
+		$search = preg_split('/(?xi)
+		\b
+		(
+			(?:
+				(?:https?|ftp):\/\/
+				|
+				www\d{0,3}\.
+				|
+				[a-z0-9\.\-]+\.[a-z]{2,4}\/
+				|
+				mailto:
+				|
+				(?:[a-zA-Z0-9._-]{2,}@)
+			)
+			(?:
+				[^\s()<>]+
+				|
+				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
+			)+
+			(?:
+				\((?:[^\s()<>]+|(\(?:[^\s()<>]+\)))*\)
+				|
+				[^\s`!()\[\]{};:\'"\.,<>?«»“”‘’]
+			)
+		)/u', $string, -1, PREG_SPLIT_DELIM_CAPTURE );
+
+		$output = array();
+		foreach ($search as $index => $token) {
+			if ($index & 1) {
+				if (preg_match("/^(https?|ftp|mailto):/ui", $token)) {
+					// Protocol has been provided, so just use it as-is.
+					$url = $token;
+				} else {
+					// Add scheme to emails and raw domain URLs.
+					$url = (strpos($token, '@') ? 'mailto:' : 'http://') . $token;
+				}
+				// Never start URL from the middle of text (except for punctuation).
+				$invalid = preg_match('#[^\s`!()\[\]{};\'"\.,<>?«»“”‘’]$#u', $search[$index-1]);
+				$invalid |= !$this->IsValidURL($url, true);
+
+				// We have a full, complete, and properly-formatted URL, with protocol.
+				// Now we need to apply the $this->url_pattern template to turn it into HTML.
+				// TODO: report Joomla bug (silence it for now)
+				$params = $this->parse_url($url);
+				if (!$invalid && substr($url, 0, 7) == 'mailto:') {
+					$email = JString::substr($url, 7);
+					$output[$index] = JHTML::_('email.cloak', $email, $this->IsValidEmail($email));
+
+				} elseif ($invalid || empty($params['host']) || !empty($params['pass'])) {
+					$output[$index-1] .= $token;
+					$output[$index] = '';
+
+				} else {
+					$params['url'] = $url;
+					$params['link'] = $url;
+					$params['text'] = $token;
+					$output[$index] = $this->FillTemplate($this->url_pattern, $params);
+				}
+			} else {
+				$output[$index] = $token;
+			}
+		}
+		return $output;
+	}
+
+	/**
+	 * @see BBCode::IsValidURL()
+	 * Regular expression taken from https://gist.github.com/729294
+	 */
+	public function IsValidURL($string, $email_too = true, $local_too = false) {
+		static $re = '_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS';
+
+		if (empty($string)) return false;
+		if ($local_too && $string[0] == '/') $string = 'http://www.domain.com' . $string;
+		if ($email_too && substr($string, 0, 7) == "mailto:") return $this->IsValidEmail(substr($string, 7));
+		if (preg_match($re, $string)) return true;
+		return false;
+	}
+
+
+	/**
+	 * @see JString::parse_url()
+	 * @todo remove when dropping J!1.5 support
+	 * FYI: there's a bug in J!2.5.6 which has been fixed in GitHub
+	 */
+	public static function parse_url($url)
+	{
+		$result = false;
+
+		// Build arrays of values we need to decode before parsing
+		$entities = array('%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%24', '%2C', '%2F', '%3F', '%23', '%5B', '%5D');
+		$replacements = array('!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "$", ",", "/", "?", "#", "[", "]");
+
+		// Create encoded URL with special URL characters decoded so it can be parsed
+		// All other characters will be encoded
+		$encodedURL = str_replace($entities, $replacements, urlencode($url));
+
+		// Parse the encoded URL
+		$encodedParts = parse_url($encodedURL);
+
+		// Now, decode each value of the resulting array
+		if ($encodedParts)
+		{
+			foreach ($encodedParts as $key => $value)
+			{
+				$result[$key] = urldecode(str_replace($replacements, $entities, $value));
+			}
+		}
+		return $result;
 	}
 }
 
@@ -64,7 +270,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'class' => 'inline',
 				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 				'plain_start' => "<b>",
-				'plain_end' => "</b>"
+				'plain_end' => "</b>",
 			),
 
 			'i' => array(
@@ -73,7 +279,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'class' => 'inline',
 				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 				'plain_start' => "<i>",
-				'plain_end' => "</i>"
+				'plain_end' => "</i>",
 			),
 
 			'u' => array(
@@ -82,7 +288,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'class' => 'inline',
 				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 				'plain_start' => "<u>",
-				'plain_end' => "</u>"
+				'plain_end' => "</u>",
 			),
 
 			's' => array(
@@ -91,7 +297,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'class' => 'inline',
 				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 				'plain_start' => "<i>",
-				'plain_end' => "</i>"
+				'plain_end' => "</i>",
 			),
 
 			'strike' => array(
@@ -100,7 +306,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'class' => 'inline',
 				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 				'plain_start' => "<i>",
-				'plain_end' => "</i>"
+				'plain_end' => "</i>",
 			),
 
 			'tt' => array(
@@ -109,7 +315,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'class' => 'inline',
 				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 				'plain_start' => "<i>",
-				'plain_end' => "</i>"
+				'plain_end' => "</i>",
 			),
 
 			'pre' => array(
@@ -118,7 +324,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'class' => 'block',
 				'allow_in' => array('listitem', 'block', 'columns'),
 				'plain_start' => "<i>",
-				'plain_end' => "</i>"
+				'plain_end' => "</i>",
 			),
 
 			'font' => array(
@@ -126,7 +332,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'allow' => array('_default' => '/^[a-zA-Z0-9._ -]+$/'),
 				'method' => 'DoFont',
 				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link')
+				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 			),
 
 			'color' => array(
@@ -134,7 +340,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'allow' => array('_default' => '/^#?[a-zA-Z0-9._ -]+$/'),
 				'template' => '<span style="color:{$_default/tw}">{$_content/v}</span>',
 				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link')
+				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 			),
 
 			'size' => array(
@@ -142,14 +348,14 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'method' => 'DoSize',
 				'allow' => array('_default' => '/^[0-9.]+(px|em|pt|%)?$/D'),
 				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link')
+				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 			),
 
 			'sup' => array(
 				'simple_start' => "<sup>",
 				'simple_end' => "</sup>",
 				'class' => 'inline',
-				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link')
+				'allow_in' => array('listitem', 'block', 'columns', 'inline', 'link'),
 			),
 
 			'sub' => array(
@@ -163,21 +369,28 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'mode' => BBCODE_MODE_LIBRARY,
 				'method' => 'DoSpoiler',
 				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns')
+				'allow_in' => array('listitem', 'block', 'columns'),
+				'content' => BBCODE_REQUIRED,
+				'plain_start' => "\nSpoiler:\n<i>",
+				'plain_end' => "</i>",
 			),
 
 			'hide' => array(
 				'mode' => BBCODE_MODE_LIBRARY,
 				'method' => 'DoHide',
 				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns')
+				'allow_in' => array('listitem', 'block', 'columns'),
+				'content' => BBCODE_REQUIRED,
+				'plain_content' => array(),
 			),
 
 			'confidential' => array(
 				'mode' => BBCODE_MODE_LIBRARY,
 				'method' => 'DoConfidential',
 				'class' => 'block',
-				'allow_in' => array('listitem', 'block', 'columns')
+				'allow_in' => array('listitem', 'block', 'columns'),
+				'content' => BBCODE_REQUIRED,
+				'plain_content' => array(),
 			),
 
 			'map' => array(
@@ -186,7 +399,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'class' => 'block',
 				'allow' => array( 'type' => '/^[\w\d.-_]*$/', 'zoom' => '/^\d*$/', 'control' => '/^\d*$/' ),
 				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_PROHIBIT
+				'content' => BBCODE_VERBATIM,
 			),
 
 			'ebay' => array(
@@ -194,7 +407,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'method' => 'DoEbay',
 				'class' => 'block',
 				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_PROHIBIT
+				'content' => BBCODE_VERBATIM,
+				'plain_start' => "[ebay]",
+				'plain_end' => "",
+				'plain_content' => array(),
 			),
 
 			'article' => array(
@@ -202,7 +418,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'method' => 'DoArticle',
 				'class' => 'block',
 				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_PROHIBIT
+				'content' => BBCODE_REQUIRED,
+				'plain_start' => "\n[article]\n",
+				'plain_end' => "",
+				'plain_content' => array(),
 			),
 
 			'tableau' => array(
@@ -210,7 +429,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'method' => 'DoTableau',
 				'class' => 'block',
 				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_PROHIBIT
+				'content' => BBCODE_VERBATIM,
+				'plain_start' => "\n[tableau]\n",
+				'plain_end' => "",
+				'plain_content' => array(),
 			),
 
 			'video' => array(
@@ -219,7 +441,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'allow' => array( 'type' => '/^[\w\d.-_]*$/', 'param' => '/^[\w]*$/', 'size' => '/^\d*$/', 'width' => '/^\d*$/', 'height' => '/^\d*$/' ),
 				'class' => 'block',
 				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_PROHIBIT
+				'content' => BBCODE_VERBATIM,
+				'plain_start' => "[video]",
+				'plain_end' => "",
+				'plain_content' => array(),
 			),
 
 			'img' => array(
@@ -228,8 +453,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'allow' => array( 'size' => '/^\d*$/' ),
 				'class' => 'block',
 				'allow_in' => array('listitem', 'block', 'columns', 'link'),
-				'content' => BBCODE_PROHIBIT,
-				'plain_start' => "[image]"
+				'content' => BBCODE_VERBATIM,
+				'plain_start' => "[image]",
+				'plain_end' => "",
+				'plain_content' => array(),
 			),
 
 			'file' => array(
@@ -238,8 +465,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'allow' => array( 'size' => '/^\d*$/' ),
 				'class' => 'block',
 				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_PROHIBIT,
-				'plain_start' => "[file]"
+				'content' => BBCODE_VERBATIM,
+				'plain_start' => "\n[file]\n",
+				'plain_end' => "",
+				'plain_content' => array(),
 			),
 
 			'attachment' => array(
@@ -248,7 +477,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'allow' => array( '_default' => '/^\d*$/' ),
 				'class' => 'block',
 				'allow_in' => array('listitem', 'block', 'columns'),
-				'content' => BBCODE_PROHIBIT,
+				'content' => BBCODE_VERBATIM,
+				'plain_start' => "\n[attachment]\n",
+				'plain_end' => "",
+				'plain_content' => array(),
 			),
 
 			'highlight' => array(
@@ -284,7 +516,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'method' => 'DoEmail',
 				'class' => 'link',
 				'allow_in' => array('listitem', 'block', 'columns', 'inline'),
-				'content' => BBCODE_REQUIRED,
+				'content' => BBCODE_VERBATIM,
 				'plain_start' => "<a href=\"mailto:{\$link}\">",
 				'plain_end' => "</a>",
 				'plain_content' => array('_content', '_default'),
@@ -343,7 +575,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'content' => BBCODE_PROHIBIT,
 				'before_tag' => "s",
 				'after_tag' => "s",
-				'plain_start' => "\n",
+				'plain_start' => "\n-----\n",
 				'plain_end' => "",
 				'plain_content' => array(),
 			),
@@ -504,6 +736,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'after_tag' => "sns",
 				'before_endtag' => "sns",
 				'after_endtag' => "sns",
+				'plain_start' => "\nQuote:\n",
+				'plain_end' => "\n",
 			),
 
 			'list' => array(
@@ -580,8 +814,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				'method' => 'DoTerminal',
 				'allow_in' => array('listitem', 'block', 'columns'),
 				'class' => 'block',
-				'allow' => array( 'colortext' => '/^[\w\d.-_]*$/' ),
-				'content' => BBCODE_PROHIBIT
+				'allow' => array( 'colortext' => '/^#[0-9a-fA-F]+|[a-zA-Z]+$/' ),
+				'content' => BBCODE_PROHIBIT,
+				'plain_start' => "\nTerminal:\n",
+				'plain_end' => "\n",
 			),
 	);
 
@@ -601,13 +837,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 	function DoEmail($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK) {
-			$bbcode->autolink_disable = 1;
 			return true;
 		}
-		$bbcode->autolink_disable = 0;
-		$email = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode ( strip_tags ( $content ) );
-		$text = is_string ( $default ) ? $content : $default;
-		return JHTML::_('email.cloak', $email, $bbcode->IsValidEmail ( $email ), $text, $bbcode->IsValidEmail ( $text ));
+		$email = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode($content);
+		$text = is_string ( $default ) ? $bbcode->UnHTMLEncode($content) : $default;
+		return JHTML::_('email.cloak', htmlspecialchars ( $email ), $bbcode->IsValidEmail ( $email ), htmlspecialchars ( $text ), $bbcode->IsValidEmail ( $text ));
 	}
 
 	// Format a [url] tag by producing an <a>...</a> element.
@@ -616,23 +850,25 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		// We can't check this with BBCODE_CHECK because we may have no URL before the content
 		// has been processed.
 		if ($action == BBCODE_CHECK) {
-			$bbcode->autolink_disable = 1;
+			$bbcode->autolink_disable++;
 			return true;
 		}
 
-		$bbcode->autolink_disable = 0;
+		$bbcode->autolink_disable--;
 		$url = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode ( strip_tags ( $content ) );
-		// FIXME: add support for local (relative) URIs
-		if ($bbcode->IsValidURL ( $url )) {
+		$url = preg_replace('# #u', '%20', $url);
+		if (!preg_match('#^(/|https?:|ftp:)#ui', $url)) {
+			// Add scheme to raw domain URLs.
+			$url = "http://{$url}";
+		}
+
+		if ($bbcode->IsValidURL ( $url, false, true )) {
 			if ($bbcode->debug)
 				echo "ISVALIDURL<br />";
 			if ($bbcode->url_targetable !== false && isset ( $params ['target'] ))
 				$target = " target=\"" . htmlspecialchars ( $params ['target'] ) . "\"";
-			else
-				$target = "";
-			if ($bbcode->url_target !== false)
-				if (! ($bbcode->url_targetable == 'override' && isset ( $params ['target'] )))
-					$target = " target=\"" . htmlspecialchars ( $bbcode->url_target ) . "\"";
+			elseif ($bbcode->url_target !== false)
+				$target = " target=\"" . htmlspecialchars ( $bbcode->url_target ) . "\"";
 			return '<a href="' . htmlspecialchars ( $url ) . '" class="bbcode_url" rel="nofollow"' . $target . '>' . $content . '</a>';
 		}
 		return htmlspecialchars ( $params ['_tag'] ) . $content . htmlspecialchars ( $params ['_endtag'] );
@@ -722,42 +958,37 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
-		$config = KunenaFactory::getConfig();
-		$template = KunenaFactory::getTemplate();
-		$spoiler_image1 = $template->getImagePath('emoticons/w00t.png');
-		$spoiler_image2 = $template->getImagePath('emoticons/pinch.png');
-		if ( $config->spoiler_image ) $spoiler_image1 = $spoiler_image2 = $template->getImagePath($config->spoiler_image);
-
-		static $spoilerid = 0;
-		if (empty ( $spoilerid )) {
-			// Only need the script for the first spoiler we find
-			$document = JFactory::getDocument();
-			$document->addCustomTag (
-			'<script language = "JavaScript" type = "text/javascript">
-			function kShowDetail(srcElement) {
-				var targetID, srcElement, targetElement, imgElementID, imgElement;
-				targetID = srcElement.id + "_details";
-				imgElementID = srcElement.id + "_img";
-				targetElement = document.getElementById(targetID);
-				imgElement = document.getElementById(imgElementID);
-				if (targetElement.style.display == "none") {
-					targetElement.style.display = "";
-					imgElement.src = "' . $spoiler_image1 . '";
-				} else {
-					targetElement.style.display = "none";
-					imgElement.src = "' . $spoiler_image2 . '";
-				}
-			} </script>' );
+		if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
+			return "[{$name}]{$content}";
 		}
-		$spoilerid ++;
-		$randomid = 'spoiler_' . rand ();
-		return '<div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" class = "kspoiler" ><img id="' . $randomid . '_img"' . ' src="'.$spoiler_image2.'" border="0" alt=":pinch:" /> <strong>' . (isset ( $params ["title"] ) ? ($params ["title"]) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' ))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $content . '</span></div>';
+		// Display only spoiler text in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal)) {
+			return '[' . ($default ? $default : JText::_ ('COM_KUNENA_BBCODE_SPOILER')) . ']';
+		}
+		$document = JFactory::getDocument();
+		if (!($document instanceof JDocumentHTML)) {
+			// Static version
+			return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))
+				. '</span> <span class="kspoiler-hide">' . JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_HIDE' )
+				. '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content">' . $content . '</div></div></div>';
+		}
+
+		return '<div class="kspoiler"><div class="kspoiler-header"><span class="kspoiler-title">' . ($default ? ($default) : (JText::_ ( 'COM_KUNENA_BBCODE_SPOILER' )))
+			. '</span> <span class="kspoiler-expand">' . JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_EXPAND' ) . '</span><span class="kspoiler-hide" style="display:none">'
+			. JText::_ ( 'COM_KUNENA_LIB_BBCODE_SPOILER_HIDE' ) . '</span></div><div class="kspoiler-wrapper"><div class="kspoiler-content" style="display:none">' . $content . '</div></div></div>';
 	}
 
 	function DoHide($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
+			return "[{$name}]{$content}";
+		}
+		// Display nothing in activity streams etc..
+		if (!empty($bbcode->parent->forceSecure)) {
+			return;
+		}
 		if (JFactory::getUser ()->id == 0) {
 			// Hide between content from non registered users
 			return JText::_ ( 'COM_KUNENA_BBCODE_HIDDENTEXT' );
@@ -771,8 +1002,15 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		if (!empty($bbcode->lost_start_tags[$name]) && !$bbcode->was_limited) {
+			return "[{$name}]{$content}";
+		}
+		// Display nothing in activity streams etc..
+		if (!empty($bbcode->parent->forceSecure)) {
+			return;
+		}
 		$me = KunenaUserHelper::getMyself();
-		if (($me->userid && $bbcode->parent->message->userid == $me->userid) || $me->isModerator(isset($bbcode->parent->message->catid) ? $bbcode->parent->message->catid : 0)) {
+		if (($me->userid && $bbcode->parent->message->userid == $me->userid) || $me->isModerator(isset($bbcode->parent->message) ? $bbcode->parent->message->getCategory() : null)) {
 			// Display but highlight the fact that it is hidden from everyone except admins and mods
 			return '<b>' . JText::_ ( 'COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT' ) . '</b><div class="kmsgtext-confidential">' . $content . '</div>';
 		}
@@ -787,6 +1025,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$document = JFactory::getDocument();
 
+		// Display only link in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal) || !($document instanceof JDocumentHTML)) {
+			$url = 'https://maps.google.com/?q='.urlencode($bbcode->UnHTMLEncode($content));
+			return '<a href="'.$url.'" rel="nofollow" target="_blank">'.$content.'</a>';
+		}
+
 		if ($id === false) {
 			$document->addScript('http://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
 			$id = 0;
@@ -795,11 +1039,11 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$id ++;
 		$mapid = 'kgooglemap'.$id;
 
-		$map_type = isset($params ["type"]) ? strtoupper($params ["type"]): 'ROADMAP';
+		$map_type = isset($params ['type']) ? strtoupper($params ["type"]): 'ROADMAP';
 		$map_typeId = array('HYBRID','ROADMAP','SATELLITE','TERRAIN');
 		if ( !in_array($map_type, $map_typeId) ) $map_type = 'ROADMAP';
-		$map_zoom = isset($params ["zoom"]) ? $params ["zoom"]: '10';
-		$map_control = $params ["control"] ? $params ["control"] : 0;
+		$map_zoom = isset($params ['zoom']) ? (int) $params ['zoom']: 10;
+		$map_control = $params ['control'] ? (int) $params ['control'] : 0;
 
 		$document->addScriptDeclaration("
 		// <![CDATA[
@@ -810,9 +1054,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				geocoder = new google.maps.Geocoder();
 			var latlng = new google.maps.LatLng(37.333586,-121.894684);
 			var myOptions = {
-				zoom: 10,
+				zoom: $map_zoom,
+				disableDefaultUI: $map_control,
 				center: latlng,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
+				mapTypeId: google.maps.MapTypeId.$map_type
 			};
 			$mapid = new google.maps.Map(document.id('".$mapid."'), myOptions);
 
@@ -822,10 +1067,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				if (status == google.maps.GeocoderStatus.OK) {
 					$mapid.setCenter(results[0].geometry.location);
 					var marker = new google.maps.Marker({
-						zoom: $map_zoom,
-						disableDefaultUI: $map_control,
-						center: latlng,
-						mapTypeId: google.maps.MapTypeId.$map_type
+						position: results[0].geometry.location,
+				 		map: $mapid
 					});
 				} else {
 					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$content</i></strong></p>';
@@ -847,15 +1090,21 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 
 		$config = KunenaFactory::getConfig();
+
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal)) {
+			return '<a target="_blank" href="http://www.ebay.com/itm/'.$content.'?lang=' . $config->ebaylanguagecode . '&campid='.$config->ebay_affiliate_id.'">www.ebay.com/itm/'.$content.'</a>';
+		}
+
 		$ebay_maxwidth = (int) (($config->rtewidth * 9) / 10); // Max 90% of text width
 		$ebay_maxheight = (int) ($config->rteheight); // max. display size
 
 		if (is_numeric ( $content )) {
 			// Numeric: we have to assume this is an item id
-			return '<object width="'.$ebay_maxwidth.'" height="'.$ebay_maxheight.'"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=' . $content . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=' . $content . '&campid=5336042350"></embed></object>';
+			return '<object width="'.$ebay_maxwidth.'" height="'.$ebay_maxheight.'"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=' . $content . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=' . $content . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
 		} else {
 			// Non numeric: we have to assume this is a search
-			return '<object width="'.$ebay_maxwidth.'" height="'.$ebay_maxheight.'"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=' . $content . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=' . $content . '&campid=5336042350"></embed></object>';
+			return '<object width="'.$ebay_maxwidth.'" height="'.$ebay_maxheight.'"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=' . $content . '&campid='.$config->ebay_affiliate_id.'" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query=' . $content . '&campid='.$config->ebay_affiliate_id.'"></embed></object>';
 		}
 	}
 
@@ -966,6 +1215,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				if (version_compare(JVERSION, '1.6','>')) {
 					// Joomla 1.6+
 					$results = $dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
+
+					$article->text = JHTML::_('string.truncate', $article->text, $bbcode->output_limit-$bbcode->text_length);
+					$bbcode->text_length += strlen($article->text);
 				} else {
 					// Joomla 1.5
 					$results = $dispatcher->trigger('onPrepareContent', array (&$article, &$params, 0));
@@ -973,7 +1225,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$html = $article->text;
 			}
 		}
-		return '<div class="kmsgtext-article">' . $html . '</div>' . $link;
+		return ($html ? '<div class="kmsgtext-article">' . $html . '</div>' : '') . $link;
 	}
 
 	function DoQuote($bbcode, $action, $name, $default, $params, $content) {
@@ -981,7 +1233,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 
 		$post = isset($params["post"]) ? $params["post"] : false;
-		$user = isset($default) ? $default : false;
+		$user = isset($default) ? htmlentities($default) : false;
 		$html = '';
 		if ($user) $html .= "<b>" . $user . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":</b>\n";
 		$html .= '<div class="kmsgtext-quote">' . $content . '</div>';
@@ -990,10 +1242,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 	function DoCode($bbcode, $action, $name, $default, $params, $content) {
 		static $enabled = false;
-		static $languages = array();
 
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCODE_CHECK) {
 			return true;
+		}
 
 		$type = isset ( $params ["type"] ) ? $params ["type"] : "php";
 		if ($type == 'js') {
@@ -1001,19 +1253,20 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		} elseif ($type == 'html') {
 			$type = 'html4strict';
 		}
-		if ($enabled === false && KunenaFactory::getConfig ()->highlightcode) {
+		if (empty($bbcode->parent->forceMinimal) && $enabled === false && KunenaFactory::getConfig ()->highlightcode) {
 			$enabled = true;
 			if (version_compare(JVERSION, '1.6','>')) {
 				// Joomla 1.6+
-				// TODO: use the content plugin instead
-				require_once JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
+				$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
+				if (file_exists($path)) {
+					require_once $path;
+				}
 			} else {
 				// Joomla 1.5
 				jimport ( 'geshi.geshi' );
 			}
-			$languages = GeSHi::get_supported_languages();
 		}
-		if ($enabled && in_array ( $type, $languages )) {
+		if ($enabled && class_exists('GeSHi')) {
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
 			$geshi->enable_keyword_links ( false );
 			$code = $geshi->parse_code ();
@@ -1026,20 +1279,24 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 	function doTableau($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK) {
-			$bbcode->autolink_disable = 1;
+			$bbcode->autolink_disable++;
 			return true;
 		}
 
-		$bbcode->autolink_disable = 0;
+		$bbcode->autolink_disable--;
 		if (!$content)
 			return;
+
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal)) {
+			return '[tableau]';
+		}
 
 		$config = KunenaFactory::getConfig();
 
 		$viz_maxwidth = (int) (($config->rtewidth * 9) / 10); // Max 90% of text width
 		$viz_maxheight = (isset ( $params ["height"] ) && is_numeric($params ["height"])) ? (int) $params ["height"] : (int) $config->rteheight;
 
-		//$url_data = parse_url ( $between );
 		if(preg_match ('/(https?:\/\/.*?)\/(?:.*\/)*(.*\/.*)\?.*:toolbar=(yes|no)/', $content, $matches)){
 			$tableauserver = $matches[1];
 			$vizualization = $matches[2];
@@ -1053,11 +1310,19 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	}
 
 	function DoVideo($bbcode, $action, $name, $default, $params, $content) {
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCODE_CHECK) {
+			$bbcode->autolink_disable++;
 			return true;
+		}
 
+		$bbcode->autolink_disable--;
 		if (! $content)
 			return;
+
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal)) {
+			return '[video]';
+		}
 
 		$vid_minwidth = 200;
 		$vid_minheight = 44; // min. display size
@@ -1079,16 +1344,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			unset ( $vid_players );
 		}
 		if (! $vid ["type"]) {
-			$vid_auto = (preg_match ( '/^http:\/\/.*?([^.]*)\.[^.]*(\/|$)/', $content, $vid_regs ) > 0);
+			$vid_auto = preg_match ( '#^http://.*?([^.]*)\.[^.]*(/|$)#u', $content, $vid_regs );
 			if ($vid_auto) {
 				$vid ["type"] = JString::strtolower ( $vid_regs [1] );
 				switch ($vid ["type"]) {
-					case 'clip' :
-						$vid ["type"] = 'clip.vn';
-						break;
-					case 'web' :
-						$vid ["type"] = 'web.de';
-						break;
 					case 'wideo' :
 						$vid ["type"] = 'wideo.fr';
 						break;
@@ -1098,120 +1357,31 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		$vid_providers = array (
 
-		'animeepisodes' => array ('flash', 428, 352, 0, 0, 'http://video.animeepisodes.net/vidiac.swf', '\/([\w\-]*).htm', array (array (6, 'flashvars', 'video=%vcode%' ) ) ),
-
-		'biku' => array ('flash', 450, 364, 0, 0, 'http://www.biku.com/opus/player.swf?VideoID=%vcode%&embed=true&autoStart=false', '\/([\w\-]*).html', '' ),
-
 		'bofunk' => array ('flash', 446, 370, 0, 0, 'http://www.bofunk.com/e/%vcode%', '', '' ),
 
 		'break' => array ('flash', 464, 392, 0, 0, 'http://embed.break.com/%vcode%', '', '' ),
 
-		'clip.vn' => array ('flash', 448, 372, 0, 0, 'http://clip.vn/w/%vcode%,en,0', '\/watch\/([\w\-]*),vn', '' ),
-
 		'clipfish' => array ('flash', 464, 380, 0, 0, 'http://www.clipfish.de/videoplayer.swf?as=0&videoid=%vcode%&r=1&c=0067B3', 'videoid=([\w\-]*)', '' ),
-
-		'clipshack' => array ('flash', 430, 370, 0, 0, 'http://clipshack.com/player.swf?key=%vcode%', 'key=([\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
-
-		'collegehumor' => array ('flash', 480, 360, 0, 0, 'http://www.collegehumor.com/moogaloop/moogaloop.swf?clip_id=%vcode%&fullscreen=1', '\/video:(\d*)', '' ),
-
-		'current' => array ('flash', 400, 400, 0, 0, 'http://current.com/e/%vcode%', '\/items\/(\d*)', array (array (6, 'wmode', 'transparent' ) ) ),
-
-		'dailymotion' => array ('flash', 420, 331, 0, 0, 'http://www.dailymotion.com/swf/%vcode%', '\/video\/([a-zA-Z0-9]*)', '' ),
-
-		'downloadfestival' => array ('flash', 450, 358, 0, 0, 'http://www.downloadfestival.tv/mofo/video/player/playerb003External.swf?rid=%vcode%', '\/watch\/([\d]*)', '' ),
-
-		// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
-		//				'flashvars' => array ('flash', 480, 360, 0, 0, $content, '', array (array (6, 'flashvars', $vid ["param"] ) ) ),
-		//
-		'fliptrack' => array ('flash', 402, 302, 0, 0, 'http://www.fliptrack.com/v/%vcode%', '\/watch\/([\w\-]*)', '' ),
-
-		'fliqz' => array ('flash', 450, 392, 0, 0, 'http://content.fliqz.com/components/2d39cfef9385473c89939c2a5a7064f5.swf', 'vid=([\w]*)', array (array (6, 'flashvars', 'file=%vcode%&' ), array (6, 'wmode', 'transparent' ), array (6, 'bgcolor', '#000000' ) ) ),
-
-		'gametrailers' => array ('flash', 480, 392, 0, 0, 'http://www.gametrailers.com/remote_wrap.php?mid=%vcode%', '\/(\d*).html', '' ),
-
-		'gamevideos' => array ('flash', 420, 405, 0, 0, 'http://www.gamevideos.com/swf/gamevideos11.swf?embedded=1&fullscreen=1&autoplay=0&src=http://www.gamevideos.com/video/videoListXML%3Fid%3D%vcode%%26adPlay%3Dfalse', '\/video\/id\/(\d*)', array (array (6, 'bgcolor', '#000000' ), array (6, 'wmode', 'window' ) ) ),
-
-		'glumbert' => array ('flash', 448, 336, 0, 0, 'http://www.glumbert.com/embed/%vcode%', '\/media\/([\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
-
-		'gmx' => array ('flash', 425, 367, 0, 0, 'http://video.gmx.net/movie/%vcode%', '\/watch\/(\d*)', '' ),
-
-		'google' => array ('flash', 400, 326, 0, 0, 'http://video.google.com/googleplayer.swf?docId=%vcode%', 'docid=(\d*)', '' ),
-
-		'googlyfoogly' => array ('mediaplayer', 400, 300, 0, 25, 'http://media.googlyfoogly.com/images/videos/%vcode%.wmv', '', '' ),
-
-		'ifilm' => array ('flash', 448, 365, 0, 0, 'http://www.ifilm.com/efp', '\/video\/(\d*)', array (array (6, 'flashvars', 'flvbaseclip=%vcode%' ) ) ),
-
-		'jumpcut' => array ('flash', 408, 324, 0, 0, 'http://jumpcut.com/media/flash/jump.swf?id=%vcode%&asset_type=movie&asset_id=%vcode%&eb=1', '\/\?id=([\w\-]*)', '' ),
-
-		'kewego' => array ('flash', 400, 368, 0, 0, 'http://www.kewego.com/p/en/%vcode%.html', '\/([\w\-]*)\.html', array (array (6, 'wmode', 'transparent' ) ) ),
-
-		'liveleak' => array ('flash', 450, 370, 0, 0, 'http://www.liveleak.com/player.swf', '\/view\?i=([\w\-]*)', array (array (6, 'flashvars', 'autostart=false&token=%vcode%' ), array (6, 'wmode', 'transparent' ) ) ),
-
-		'livevideo' => array ('flash', 445, 369, 0, 0, 'http://www.livevideo.com/flvplayer/embed/%vcode%', '', '' ),
-
-		'megavideo' => array ('flash', 432, 351, 0, 0, 'http://www.megavideo.com/v/%vcode%..0', '', array (array (6, 'wmode', 'transparent' ) ) ),
 
 		'metacafe' => array ('flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
 
-		'mofile' => array ('flash', 480, 395, 0, 0, 'http://tv.mofile.com/cn/xplayer.swf', '\.com\/([\w\-]*)', array (array (6, 'flashvars', 'v=%vcode%&autoplay=0&nowSkin=0_0' ), array (6, 'wmode', 'transparent' ) ) ),
-
-		'multiply' => array ('flash', 400, 350, 0, 0, 'http://images.multiply.com/multiply/multv.swf', '', array (array (6, 'flashvars', 'first_video_id=%vcode%&base_uri=multiply.com&is_owned=1' ) ) ),
-
 		'myspace' => array ('flash', 430, 346, 0, 0, 'http://lads.myspace.com/videos/vplayer.swf', 'VideoID=(\d*)', array (array (6, 'flashvars', 'm=%vcode%&v=2&type=video' ) ) ),
-
-		'myvideo' => array ('flash', 470, 406, 0, 0, 'http://www.myvideo.de/movie/%vcode%', '\/watch\/(\d*)', '' ),
-
-		'quxiu' => array ('flash', 437, 375, 0, 0, 'http://www.quxiu.com/photo/swf/swfobj.swf?id=%vcode%', '\/play_([\d_]*)\.htm', array (array (6, 'menu', 'false' ) ) ),
-
-		'revver' => array ('flash', 480, 392, 0, 0, 'http://flash.revver.com/player/1.0/player.swf?mediaId=%vcode%', '\/video\/([\d_]*)', '' ),
 
 		'rutube' => array ('flash', 400, 353, 0, 0, 'http://video.rutube.ru/%vcode%', '\.html\?v=([\w]*)' ),
 
 		'sapo' => array ('flash', 400, 322, 0, 0, 'http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/%vcode%/mov/1', 'videos\.sapo\.pt\/([\w]*)', array (array (6, 'wmode', 'transparent' ) ) ),
 
-		'sevenload' => array ('flash', 425, 350, 0, 0, 'http://sevenload.com/pl/%vcode%/425x350/swf', '\/videos\/([\w]*)', array (array (6, 'flashvars', 'apiHost=api.sevenload.com&showFullScreen=1' ) ) ),
-
-		'sharkle' => array ('flash', 340, 310, 0, 0, 'http://sharkle.com/sharkle.swf?rnd=%vcode%&buffer=3', '', array (array (6, 'wmode', 'transparent' ) ) ),
-
-		'spikedhumor' => array ('flash', 400, 345, 0, 0, 'http://www.spikedhumor.com/player/vcplayer.swf?file=http://www.spikedhumor.com/videocodes/%vcode%/data.xml&auto_play=false', '\/articles\/([\d]*)', '' ),
-
-		'stickam' => array ('flash', 400, 300, 0, 0, 'http://player.stickam.com/flashVarMediaPlayer/%vcode%', 'mId=([\d]*)', '' ),
-
 		'streetfire' => array ('flash', 428, 352, 0, 0, 'http://videos.streetfire.net/vidiac.swf', '\/([\w-]*).htm', array (array (6, 'flashvars', 'video=%vcode%' ) ) ),
-
-		'stupidvideos' => array ('flash', 451, 433, 0, 0, 'http://img.purevideo.com/images/player/player.swf?sa=1&sk=5&si=2&i=%vcode%', '\/\?m=new#([\d_]*)', '' ),
-
-		'toufee' => array ('flash', 550, 270, 0, 0, 'http://toufee.com/movies/Movie.swf', 'u=[a-zA-Z]*(\d*)', array (array (6, 'flashvars', 'movieID=%vcode%&domainName=toufee' ) ) ),
-
-		'tudou' => array ('flash', 400, 300, 0, 0, 'http://www.tudou.com/v/%vcode%', '\/view\/([\w-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
-
-		'unf-unf' => array ('flash', 425, 350, 0, 0, 'http://www.unf-unf.de/video/flvplayer.swf?file=http://www.unf-unf.de/video/clips/%vcode%.flv', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
-
-		'uume' => array ('flash', 400, 342, 0, 0, 'http://www.uume.com/v/%vcode%_UUME', '\/play_([\w-]*)', '' ),
 
 		'veoh' => array ('flash', 540, 438, 0, 0, 'http://www.veoh.com/videodetails2.swf?player=videodetailsembedded&type=v&permalinkId=%vcode%', '\/videos\/([\w-]*)', '' ),
 
-		'videoclipsdump' => array ('flash', 480, 400, 0, 0, 'http://www.videoclipsdump.com/player/simple.swf', '', array (array (6, 'flashvars', 'url=http://www.videoclipsdump.com/files/%vcode%.flv&autoplay=0&watermark=http://www.videoclipsdump.com/flv_watermark.php&buffer=10&full=0&siteurl=http://www.videoclipsdump.com&interval=10000&totalrotate=3' ) ) ),
-
 		'videojug' => array ('flash', 400, 345, 0, 0, 'http://www.videojug.com/film/player?id=%vcode%', '', '' ),
-
-		'videotube' => array ('flash', 480, 400, 0, 0, 'http://www.videotube.de/flash/player.swf', '\/watch\/(\d*)', array (array (6, 'flashvars', 'baseURL=http://www.videotube.de/watch/%vcode%' ), array (6, 'wmode', 'transparent' ) ) ),
-
-		'vidiac' => array ('flash', 428, 352, 0, 0, 'http://www.vidiac.com/vidiac.swf', '\/([\w-]*).htm', array (array (6, 'flashvars', 'video=%vcode%' ) ) ),
-
-		'vidilife' => array ('flash', 445, 369, 0, 0, 'http://www.vidiLife.com/flash/flvplayer.swf?autoStart=0&popup=1&video=http://www.vidiLife.com/media/flash_api.cfm?id=%vcode%&version=8', '', '' ),
 
 		'vimeo' => array ('flash', 400, 321, 0, 0, 'http://www.vimeo.com/moogaloop.swf?clip_id=%vcode%&server=www.vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=', '\.com\/(\d*)', '' ),
 
-		'wangyou' => array ('flash', 441, 384, 0, 0, 'http://v.wangyou.com/images/x_player.swf?id=%vcode%', '\/p(\d*).html', array (array (6, 'wmode', 'transparent' ) ) ),
-
-		'web.de' => array ('flash', 425, 367, 0, 0, 'http://video.web.de/movie/%vcode%', '\/watch\/(\d*)', '' ),
-
 		'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 
-		'youku' => array ('flash', 480, 400, 0, 0, 'http://player.youku.com/player.php/sid/%vcode%/v.swf', '\/v_show\/id_(.*)\.html', '' ),
-
-		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1&cc_load_policy=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
 		// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
 		//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )
@@ -1328,8 +1498,10 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
-		if (! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments )) {
-			return '[Attachment]'; // TODO
+			// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal) || ! is_object ( $bbcode->parent ) && ! isset ( $bbcode->parent->attachments )) {
+			$filename = basename(trim(strip_tags($content)));
+			return '['.JText::_('COM_KUNENA_FILEATTACH').' '.basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content))).']';
 		}
 		$attachments = &$bbcode->parent->attachments;
 		$attachment = null;
@@ -1351,29 +1523,34 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		if (! $attachment && ! empty ( $bbcode->parent->inline_attachments )) {
 			foreach ( $bbcode->parent->inline_attachments as $att ) {
-				if ($att->filename == trim($bbcode->UnHTMLEncode(strip_tags($content)))) {
+				if ($att->filename == trim(strip_tags($content))) {
 					$attachment = $att;
 					break;
 				}
 			}
 		}
 
-		if (is_object ( $attachment ) && ! empty ( $attachment->disabled )) {
+		if (!is_object ( $attachment )) {
+			return htmlspecialchars($content);
+
+		} elseif ($attachment->exists() && !$attachment->authorise()) {
 			// Hide between content from non registered users
-			return '<div class="kmsgattach">' . $attachment->textLink . '</div>';
-		} else {
-			if (is_object ( $attachment ) && is_file ( JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}" )) {
-				$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
-				$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
-				$image = $attachment->getImageLink();
-				if (empty ( $image )) {
-					return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
-				} else {
-					return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
-				}
+			$link = $attachment->getTextLink();
+			return '<div class="kmsgattach">' . $link . '</div>';
+
+		} elseif ($attachment->exists() && is_file ( JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}" )) {
+			$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
+			$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
+			$image = $attachment->getImageLink();
+			if (empty ( $image )) {
+				return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
 			} else {
-				return '<div class="kmsgattach"><h4>' . JText::sprintf ( 'COM_KUNENA_ATTACHMENT_DELETED', $content ) . '</h4></div>';
+				return "<div class=\"kmsgimage\">{$attachment->getImageLink()}</div>";
 			}
+
+		} else {
+			return '<div class="kmsgattach"><h4>' . JText::sprintf ( 'COM_KUNENA_ATTACHMENT_DELETED', htmlspecialchars($content) ) . '</h4></div>';
+
 		}
 	}
 
@@ -1381,13 +1558,19 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal)) {
+			$filename = basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content)));
+			return '[ '.basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content))).' ]';
+		}
+
 		if (JFactory::getUser()->id == 0 && KunenaFactory::getConfig()->showfileforguest == 0) {
 			// Hide between content from non registered users
 			return '<b>' . JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' ) . '</b>';
 		} else {
 			jimport ( 'joomla.filesystem.file' );
 			// Make sure that filename does not contain path or URL
-			$filename = basename(! empty ( $params ["name"] ) ? $params ["name"] : trim($bbcode->UnHTMLEncode(strip_tags($content))));
+			$filename = basename(! empty ( $params ["name"] ) ? $params ["name"] : trim(strip_tags($content)));
 
 			$filepath = "attachments/legacy/files/{$filename}";
 			if (! is_file ( KPATH_MEDIA . '/' . $filepath )) {
@@ -1419,17 +1602,25 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	}
 
 	function DoImage($bbcode, $action, $name, $default, $params, $content) {
-		if ($action == BBCODE_CHECK)
+		if ($action == BBCODE_CHECK) {
 			return true;
+		}
+
+		$fileurl = trim(strip_tags($content));
+
+		// Display tag in activity streams etc..
+		if (!empty($bbcode->parent->forceMinimal)) {
+			return "<a href=\"" . $fileurl . "\" rel=\"nofollow\" target=\"_blank\">" . basename($fileurl) . '</a>';
+		}
 
 		$config = KunenaFactory::getConfig();
 		if (JFactory::getUser()->id == 0 && $config->showimgforguest == 0) {
 			// Hide between content from non registered users
 			return '<b>' . JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG' ) . '</b>';
 		}
-		$fileurl = trim($bbcode->UnHTMLEncode(strip_tags($content)));
+
 		if ($config->bbcode_img_secure != 'image') {
-			if (!preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl)) {
+			if ($bbcode->autolink_disable == 0 && !preg_match("/\\.(?:gif|jpeg|jpg|jpe|png)$/ui", $fileurl)) {
 				// If the image has not legal extension, return it as link or text
 				$fileurl = $bbcode->HTMLEncode ( $fileurl );
 				if ($config->bbcode_img_secure == 'link') {
@@ -1463,22 +1654,21 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 
 		// Make sure we add image size if specified
-		$width = ($params ['size'] ? ' width="' . $params ['size'] . '"' : '');
+		$width = ($params ['size'] ? ' width="' . (int) $params ['size'] . '"' : '');
 		$fileurl = $bbcode->HTMLEncode ( $fileurl );
 
 		// Need to check if we are nested inside a URL code
 		if ($bbcode->autolink_disable == 0 && $config->lightbox) {
-			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.($width ? ' width="'.$width.'"' : '').' style="max-height:'.$config->imageheight.'px; " alt="" /></a></div>';
+			return '<div class="kmsgimage"><a href="'.$fileurl.'" title="" rel="lightbox[gallery]"><img src="'.$fileurl.'"'.$width.' style="max-height:'.$config->imageheight.'px;" alt="" /></a></div>';
 		}
-		return '<div class="kmsgimage"><img src="' . $fileurl . ($width ? '" width="' . $width : '') .'" style="max-height:'.$config->imageheight.'px; " alt="" /></div>';
+		return '<div class="kmsgimage"><img src="' . $fileurl . $width .'" style="max-height:'.$config->imageheight.'px;" alt="" /></div>';
 	}
 
 	function DoTerminal($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK)
 			return true;
 
-		if ( !isset($params ["colortext"])) $colortext = '#ffffff';
-		else $colortext = $params ["colortext"];
+		$colortext = isset($params ["colortext"]) ? $params ["colortext"] : '#ffffff';
 
 		return "<div class=\"highlight\"><pre style=\"font-family:monospace;background-color:#444444;\"><span style=\"color:{$colortext};\">{$content}</span></pre></div>";
 	}

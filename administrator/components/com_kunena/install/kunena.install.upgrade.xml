@@ -142,7 +142,6 @@
 			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_banned_users`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` 
 				ADD `banned` DATETIME NULL DEFAULT NULL AFTER `moderator`</query>
-			<phpfile name="upgrade-1.6.0_old_mt12"></phpfile>
 		</version>
 		<version version="1.6.0-RC1" versiondate="2010-08-09" versionname="Kujadili">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `banned` ( `banned` )</query>
@@ -161,7 +160,6 @@
 		<version version="1.6.0" versiondate="2010-10-03" versionname="Spika">
 		</version>
 		<version version="1.6.1" versiondate="2010-11-06" versionname="Timu">
-			<phpfile name="upgrade-1.6.1_delfiles"></phpfile>
 		</version>
 		<version version="1.6.2" versiondate="2010-12-29" versionname="Team">
 		</version>
@@ -285,10 +283,8 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_topics` ADD INDEX `posts` ( `posts` );</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_user_read` MODIFY `time` datetime NOT NULL;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_thankyou` MODIFY `time` datetime NOT NULL;</query>
-			<phpfile name="upgrade-2.0.0_configuration"></phpfile>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` MODIFY `ip` varchar(128) NULL AFTER `time`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `topic_ordering` VARCHAR(16) NOT NULL default 'lastpost' AFTER `allow_polls`;</query>
-			<phpfile name="upgrade-2.0.0_templates"></phpfile>
 		</version>
 		<version version="2.0.0-DEV2" versiondate="2011-10-19" versionname="Internal">
 			<!-- From Kunena 1.6.5 -->
@@ -329,10 +325,72 @@
 		<version version="2.0.0-DEV8" versiondate="2011-12-18" versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `created_by` int(10) NOT NULL AFTER `title`;</query>
 		</version>
-		<version version="2.0.0-DEV9" versiondate="2011-12-18" versionname="Internal">
+		<version version="2.0.0-DEV12" versiondate="2012-02-03" versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_polls_users` CHANGE `lasttime` `lasttime` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'</query>
+		</version>
+		<version version="2.0.0-DEV13" versiondate="2012-03-15" versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` CHANGE `pub_access` `pub_access` int(11) NOT NULL default '1',
+			CHANGE `admin_access` `admin_access` int(11) NOT NULL default '1'</query>
+		</version>
+		<version version="2.0.0-DEV14" versiondate="2012-04-09" versionname="Internal">
+			<query mode="silenterror">ALTER TABLE `#__kunena_users_banned` ADD KEY `created_time` (created_time);</query>
+		</version>
+		<version version="2.0.0-DEV15" versiondate="2012-04-13" versionname="Internal">
 			<phpfile name="upgrade-2.0.0_menu"></phpfile>
 		</version>
+		<version version="2.0.0-BETA1" versiondate="2012-04-24" versionname="Newspeak">
+		</version>
+		<version version="2.0.0-RC1" versiondate="2012-05-30" versionname="Orwell">
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `accesstype` varchar(20) NOT NULL default 'joomla.level' AFTER `locked`;</query>
+			<query>UPDATE `#__kunena_categories` SET accesstype='joomla.group' WHERE accesstype='none';</query>
+			<phpfile name="upgrade-2.0.0_configuration"></phpfile>
+		</version>
+		<version version="2.0.0-RC2" versiondate="2012-06-10" versionname="E-Prime">
+			<phpfile name="upgrade-2.0.0_pubwrite"></phpfile>
+		</version>
+		<version version="2.0.0-RC3-DEV2" versiondate="2012-06-10" versionname="Internal">
+			<query>UPDATE `#__kunena_sessions` SET `allowed` = 'na';</query>
+			<phpfile name="upgrade-2.0.0_newindication"></phpfile>
+		</version>
+		<version version="2.0.0-RC3-DEV3" versiondate="2012-06-17" versionname="Internal">
+			<query>REPLACE INTO #__kunena_topics 
+				(id, category_id, subject, locked, hold, ordering, posts, hits, moved_id, 
+				first_post_id, first_post_time, first_post_userid, first_post_message, first_post_guest_name, 
+				last_post_id, last_post_time, last_post_userid, last_post_message, last_post_guest_name) 
+			SELECT m.id, m.catid AS category_id, m.subject, m.locked, m.hold, m.ordering, 1 AS posts, m.hits, th.thread AS moved_id, 
+			th.id AS first_post_id, th.time AS first_post_time, th.userid AS first_post_userid, tt.message AS first_post_message, th.name AS first_post_guest_name,
+			th.id AS last_post_id, th.time AS last_post_time, th.userid AS last_post_userid, tt.message AS last_post_message, th.name AS last_post_guest_name
+			FROM (SELECT m.*, CAST(SUBSTRING(t.message, LENGTH(t.message)+2-LOCATE('=',REVERSE(t.message))) AS UNSIGNED) AS last_post_id
+				FROM #__kunena_messages as m
+				INNER JOIN #__kunena_messages_text AS t ON m.id = t.mesid
+				WHERE m.moved=1) as m
+			INNER JOIN #__kunena_messages AS th ON m.last_post_id=th.id
+			INNER JOIN #__kunena_messages_text as tt ON th.id=tt.mesid</query>
+			<query>DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.moved>0</query>
+			<query>DELETE FROM #__kunena_messages WHERE moved>0</query>
+		</version>
+		<version version="2.0.1" versiondate="2012-07-07" versionname="Balozi">
+			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` 
+				MODIFY `created_by` int(11) NOT NULL default '0' AFTER `title`;</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` 
+				MODIFY `admin_access` int(11) NOT NULL default '0' AFTER `pub_recurse`;</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_user_read` 
+				MODIFY `time` int(11) NOT NULL AFTER `message_id`;</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_user_read` ADD KEY `time` (time);</query>
+			<query>UPDATE #__kunena_polls_options AS a 
+				INNER JOIN #__kunena_topics AS t ON t.id=a.pollid 
+				LEFT JOIN #__kunena_polls AS p ON p.id=a.pollid 
+				SET a.pollid=t.poll_id 
+				WHERE t.poll_id>0 AND p.id IS NULL</query>
+			<query>UPDATE #__kunena_polls_users AS a 
+				INNER JOIN #__kunena_topics AS t ON t.id=a.pollid 
+				LEFT JOIN #__kunena_polls AS p ON p.id=a.pollid 
+				SET a.pollid=t.poll_id 
+				WHERE t.poll_id>0 AND p.id IS NULL</query>
+		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+			<query>ALTER TABLE `#__kunena_users` MODIFY `view` varchar(8) NOT NULL default '' AFTER `userid`</query>
+			<query>UPDATE `#__kunena_users` SET view=''</query>
 		</version>
 	</upgrade>
 </comupgrade>

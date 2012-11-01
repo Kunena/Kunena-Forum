@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,14 +15,13 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewStats extends KunenaView {
 	function displayDefault($tpl = null) {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 
-		$this->config = KunenaFactory::getConfig ();
 		$document = JFactory::getDocument();
 		$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' .      $this->config->board_title);
 
 		$kunena_stats = KunenaForumStatistics::getInstance ( );
-		$kunena_stats->loadAll();
+		$kunena_stats->loadAll(true);
 		$this->assign($kunena_stats);
 
 		$this->display ();

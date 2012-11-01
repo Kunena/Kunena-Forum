@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -45,6 +45,7 @@ class KunenaActivity
 	public function onAfterUndelete($message) {}
 	public function onAfterThankyou($target, $actor, $message) {}
 	public function onAfterUnThankyou($target, $actor, $message) {}
+	public function onAfterDeleteTopic($message) {}
 
 	public function onAfterSubscribe($topicid, $action) {}
 	public function onAfterFavorite($topicid, $action) {}

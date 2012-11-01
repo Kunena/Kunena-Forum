@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,10 +28,8 @@ class KunenaAdminModelSmilies extends KunenaModel {
 	 * @since	1.6
 	 */
 	protected function populateState() {
-		$app = JFactory::getApplication ();
-
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.limit", 'limit', $app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.ordering', 'filter_order', 'ordering', 'cmd' );
@@ -82,13 +80,16 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		}
 
 		$smileypath = $template->getSmileyPath();
-		$smiley_images = (array)JFolder::Files(KPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
+		$smiley_images = (array)JFolder::Files(JPATH_SITE.'/media/kunena/emoticons',false,false,false,array('index.php','index.html'));
+		// TODO: need to add lookup for template smileys, too
+		//$smiley_images = array_merge($smiley_images, (array)JFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html')));
 
 		$smiley_list = array();
 		$i = 0;
-		foreach ( $smiley_images as $id => $row ) {
-			$smiley_list[] = JHTML::_ ( 'select.option', $smiley_images [$id], $smiley_images [$id] );
+		foreach ( $smiley_images as $row ) {
+			$smiley_list[$row] = JHTML::_ ( 'select.option', $row, $row );
 		}
+		sort($smiley_list);
 		$list = JHTML::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected) ? $selected->location : '' );
 
 		return $list;

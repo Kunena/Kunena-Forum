@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -25,7 +25,7 @@ JHTML::_('behavior.calendar');
 				<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 
-			<table id="kaddban" class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : ''; ?>">
+			<table id="kaddban">
 				<tbody>
 				<tr class="krow<?php echo ($i^=1)+1;?>">
 					<td class="kcol-first"><b><?php echo JText::_('COM_KUNENA_BAN_USERNAME'); ?></b></td>

@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -21,10 +21,6 @@ class KunenaModelSearch extends KunenaModel {
 	protected $messages = false;
 
 	protected function populateState() {
-		$this->config = KunenaFactory::getConfig ();
-		$this->me = KunenaUserHelper::getMyself();
-		$this->app = JFactory::getApplication ();
-
 		// Get search word list
 		$value = JString::trim ( JRequest::getString ( 'q', '' ) );
 		if ($value == JText::_('COM_KUNENA_GEN_SEARCH_BOX')) {
@@ -62,8 +58,11 @@ class KunenaModelSearch extends KunenaModel {
 		$value = JRequest::getWord ( 'order', 'dec' );
 		$this->setState ( 'query.order', $value );
 
-		$value = JRequest::getInt ( 'childforums', 0 );
+		$value = JRequest::getInt ( 'childforums', 1 );
 		$this->setState ( 'query.childforums', $value );
+
+		$value = JRequest::getInt ( 'topic_id', 0 );
+		$this->setState ( 'query.topic_id', $value );
 
 		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
 			$value = JRequest::getVar ( 'catids', array (0), 'post', 'array' );
@@ -85,15 +84,6 @@ class KunenaModelSearch extends KunenaModel {
 		$value = $this->getInt ( 'limit', 0 );
 		if ($value < 1 || $value > 100) $value = $this->config->messages_per_page_search;
 		$this->setState ( 'list.limit', $value );
-	}
-
-	public function setError($error) {
-		$this->error = $error;
-	}
-
-	public function getError() {
-		if ($this->error) return $this->error;
-		else return;
 	}
 
 	protected function buildWhere() {
@@ -155,6 +145,11 @@ class KunenaModelSearch extends KunenaModel {
 			} else {
 				$querystrings [] = "m.time <= '{$time}'";
 			}
+		}
+
+		$topic_id = $this->getState('query.topic_id');
+		if ( $topic_id ) {
+			$querystrings [] = "m.id = '{$topic_id}'";
 		}
 
 		return implode ( ' AND ', $querystrings );
@@ -271,7 +266,7 @@ class KunenaModelSearch extends KunenaModel {
 		// Turn internal state into URL, but ignore default values
 		$defaults = array ('titleonly' => 0, 'searchuser' => '', 'exactname' => 0, 'childforums' => 0, 'starteronly' => 0,
 			'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost',
-			'order' => 'dec', 'catids' => '0', 'show' => '0' );
+			'order' => 'dec', 'catids' => '0', 'show' => '0', 'topic_id' => 0 );
 
 		$url_params = '';
 		$state = $this->getState();
@@ -286,5 +281,17 @@ class KunenaModelSearch extends KunenaModel {
 				$url_params .= "&$param=" . urlencode ( $value );
 		}
 		return $url_params;
+	}
+
+	public function getSearchURL($view, $searchword='', $limitstart=0, $limit=0, $params = '', $xhtml=true) {
+		$config = KunenaFactory::getConfig ();
+		$limitstr = "";
+		if ($limitstart > 0)
+			$limitstr .= "&limitstart=$limitstart";
+		if ($limit > 0 && $limit != $config->messages_per_page_search)
+			$limitstr .= "&limit=$limit";
+		if ($searchword)
+			$searchword = '&q=' . urlencode ( $searchword );
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view={$view}{$searchword}{$params}{$limitstr}", $xhtml );
 	}
 }

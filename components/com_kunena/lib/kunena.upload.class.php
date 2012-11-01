@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Lib
  *
- * @copyright (C) 2008-2011 www.kunena.org All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -44,19 +44,15 @@ class CKunenaUpload {
 	protected $validFileExts = array();
 
 	function __construct() {
-		$this->_db = &JFactory::getDBO ();
-		$this->_my = &JFactory::getUser ();
-		$this->_session = &KunenaFactory::getSession ();
+		$this->_db = JFactory::getDBO ();
+		$this->_my = JFactory::getUser ();
+		$this->_session = KunenaFactory::getSession ();
 		$this->_config = KunenaFactory::getConfig ();
 		$this->_isimage = false;
 		$this->_isfile = false;
 		$me = KunenaUserHelper::getMyself();
-		if (($me->isModerator()) || ($this->_my->id && $this->_config->allowimageregupload) || (!$this->_my->id && $this->_config->allowimageupload)) {
-			$this->validImageExts = explode ( ',', $this->_config->imagetypes );
-		}
-		if (($me->isModerator()) || ($this->_my->id && $this->_config->allowfileregupload) || (!$this->_my->id && $this->_config->allowfileupload)) {
-			$this->validFileExts = explode ( ',', $this->_config->filetypes );
-		}
+		$this->validImageExts = (array) KunenaForumMessageAttachmentHelper::getImageExtensions();
+		$this->validFileExts = (array) KunenaForumMessageAttachmentHelper::getFileExtensions();
 		$this->setImageResize(intval($this->_config->imagesize)*1024, intval($this->_config->imagewidth), intval($this->_config->imageheight), intval($this->_config->imagequality));
 	}
 
@@ -110,6 +106,8 @@ class CKunenaUpload {
 			$result['width'] = $this->imageInfo->width;
 			$result['height'] = $this->imageInfo->height;
 			$result['mime'] = $this->imageInfo->mime;
+		} else {
+			$result['mime'] = '';
 		}
 		if ($this->error) {
 			$result['error'] = $this->error;
@@ -170,15 +168,15 @@ class CKunenaUpload {
 		$this->resetStatus();
 
 		// create upload directory if it does not exist
-		if (!CKunenaFolder::exists($uploadPath)) {
-			if (!CKunenaFolder::create($uploadPath)) {
+		if (!JFolder::exists($uploadPath)) {
+			if (!JFolder::create($uploadPath)) {
 				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' ));
 				return false;
 			}
 		}
 		CKunenaFolder::createIndex($uploadPath);
 
-		$this->fileName = CKunenaFile::makeSafe ( JRequest::getVar ( $input.'_name', '' ) );
+		$this->fileName = JRequest::getVar ( $input.'_name', '' );
 		$this->fileSize = 0;
 		$chunk = JRequest::getInt ( 'chunk', 0 );
 		$chunks = JRequest::getInt ( 'chunks', 0 );
@@ -195,9 +193,10 @@ class CKunenaUpload {
 			}
 			$this->fileTemp = $file ['tmp_name'];
 			$this->fileSize = $file ['size'];
-			if (! $this->fileName)
-				$this->fileName = CKunenaFile::makeSafe ( $file ['name'] );
-				//any errors the server registered on uploading
+			if (! $this->fileName) {
+				$this->fileName = $file ['name'];
+			}
+			//any errors the server registered on uploading
 			switch ($file ['error']) {
 				case 0 : // UPLOAD_ERR_OK :
 					break;
@@ -326,7 +325,7 @@ class CKunenaUpload {
 				// Re-calculate physical file size: image has been shrunk
 				$stat = stat($this->fileTemp);
 				if (! $stat) {
-					$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT').' '.$this->fileTemp);
+					$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT', $this->fileTemp));
 					return false;
 				}
 				$this->fileSize = $stat['size'];
@@ -345,6 +344,8 @@ class CKunenaUpload {
 
 		// Override filename if given in the parameter
 		if ($filename) $uploadedFileBasename = $filename;
+		$uploadedFileBasename = CKunenaFile::makeSafe ( $uploadedFileBasename );
+		if (empty($uploadedFileBasename)) $uploadedFileBasename = 'h'.substr($this->fileHash, 2, 7);
 
 		// Rename file if there is already one with the same name
 		$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;

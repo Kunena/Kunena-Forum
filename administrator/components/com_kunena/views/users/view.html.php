@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,19 +23,18 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	function displayEdit() {
 		$this->setToolBarEdit();
-		$this->config = KunenaFactory::getConfig ();
 		$this->user = $this->get('user');
 		$this->sub = $this->get('subscriptions');
 		$this->subscatslist = $this->get('catsubcriptions');
 		$this->ipslist = $this->get('IPlist');
 
 		$avatarint = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = is_a($avatarint, 'KunenaAvatarKunena') ? true : false;
+		$this->editavatar = ($avatarint instanceof KunenaAvatarKunena) ? true : false;
 		$this->avatar = $avatarint->getLink($this->user, '', 'profile');
 
 		// make the select list for the moderator flag
-		$yesnoMod [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_ANN_YES') );
-		$yesnoMod [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_ANN_NO') );
+		$yesnoMod [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_YES') );
+		$yesnoMod [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_NO') );
 		// build the html select list
 		$this->selectMod = JHTML::_ ( 'select.genericlist', $yesnoMod, 'moderator', 'class="inputbox" size="2"', 'value', 'text', $this->user->moderator );
 		// make the select list for the moderator flag
@@ -51,15 +50,13 @@ class KunenaAdminViewUsers extends KunenaView {
 	function displayMove() {
 		$this->setToolBarMove();
 		$this->catslist = $this->get('movecatslist');
-		$app = JFactory::getApplication ();
-		$this->userid = $app->getUserState ( 'kunena.usermove.userid');
-		$this->user = $this->get('moveuser');
+		$this->users = $this->get('moveuser');
 		$this->display();
 	}
 
 	protected function setToolBarDefault() {
 		// Set the titlebar text
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
 		JToolBarHelper::spacer();
@@ -75,7 +72,7 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	protected function setToolBarEdit() {
 		// Set the titlebar text
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
@@ -85,7 +82,7 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	protected function setToolBarMove() {
 		// Set the titlebar text
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 		JToolBarHelper::spacer();

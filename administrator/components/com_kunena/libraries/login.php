@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Integration
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -24,14 +24,19 @@ class KunenaLogin {
 		}
 	}
 
-	static public function getInstance($integration = null) {
+	public function enabled() {
+		// TODO: do better
+		return !empty($this->instances);
+	}
+
+	public static function getInstance($integration = null) {
 		if (self::$instance === false) {
 			self::$instance = new KunenaLogin();
 		}
 		return self::$instance;
 	}
 
-	public function loginUser($username, $password, $rememberme=false, $return=null) {
+	public function loginUser($username, $password, $rememberme=0, $return=null) {
 		foreach ($this->instances as $login) {
 			if (method_exists($login, 'loginUser')) {
 				return $login->loginUser($username, $password, $rememberme, $return);
@@ -44,6 +49,15 @@ class KunenaLogin {
 		foreach ($this->instances as $login) {
 			if (method_exists($login, 'logoutUser')) {
 				return $login->logoutUser($return);
+			}
+		}
+		return false;
+	}
+
+	public function getRememberMe() {
+		foreach ($this->instances as $login) {
+			if (method_exists($login, 'getRememberMe')) {
+				return $login->getRememberMe();
 			}
 		}
 		return false;

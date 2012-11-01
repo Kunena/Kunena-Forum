@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Categories
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -13,13 +13,13 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
+$changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->state->get('list.direction') == 'asc');
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
-		<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="adminForm">
-			<input type="hidden" name="view" value="categories" />
+		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
@@ -44,9 +44,10 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->categories ); ?>);" /></th>
 						<th class="title"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORY', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 						<th><small><?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATID', 'catid', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></small></th>
-						<th width="100" class="center nowrap"><small>
+						<th width="100" class="center nowrap">
+						<small>
 							<?php echo JHTML::_('grid.sort', 'COM_KUNENA_REORDER', 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
-							<?php echo JHTML::_('grid.order',  $this->categories ); ?></small>
+							<?php echo JHTML::_('grid.order',  $this->categories, 'filesave.png', 'saveorder' ); ?></small>
 						</th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_REVIEW'); ?></small></th>
@@ -79,14 +80,16 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<tr <?php echo 'class = "row' . $k . '"';?>>
 				<td class="right"><?php echo $i + $this->navigation->limitstart + 1; ?></td>
 				<td><?php echo JHTML::_('grid.id', $i, intval($category->id)) ?></td>
-				<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat  ( '...', $category->level  ).' '.$category->name; ?> </a></td>
+				<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat  ( '...', count($category->indent)-1 ).' '.$category->name; ?> </a></td>
 				<td class="center"><?php echo intval($category->id); ?></td>
 
 				<?php if ($category->isSection()): ?>
 
 				<td class="right nowrap">
+					<?php if ($changeOrder) : ?>
 					<span><?php echo $this->navigation->orderUpIcon ( $i, $category->up, 'orderup', 'Move Up', 1 ); ?></span>
 					<span><?php echo $this->navigation->orderDownIcon ( $i, $n, $category->down, 'orderdown', 'Move Down', 1 ); ?></span>
+					<?php endif ?>
 					<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5" value="<?php echo intval($category->ordering); ?>" class="text_area center" />
 				</td>
 				<td class="center">
@@ -99,8 +102,10 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				<?php else: ?>
 
 				<td class="right nowrap">
+					<?php if ($changeOrder) : ?>
 					<span><?php echo $this->navigation->orderUpIcon ( $i, $category->up, 'orderup', 'Move Up', 1 ); ?></span>
 					<span><?php echo $this->navigation->orderDownIcon ( $i, $n, $category->down, 'orderdown', 'Move Down', 1 ); ?></span>
+					<?php endif ?>
 					<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5" value="<?php echo $this->escape ( $category->ordering ); ?>" class="text_area" style="text-align: center" />
 				</td>
 				<td class="center">

@@ -3,14 +3,29 @@
  * Kunena Component
  * @package Kunena.Site
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 // Initialize Kunena (if Kunena System Plugin isn't enabled)
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+if (file_exists($api)) require_once $api;
+
+// Display offline message if Kunena hasn't been fully installed
+if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('2.0') || !KunenaForum::installed()) {
+	$lang = JFactory::getLanguage();
+	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena', 'en-GB');
+	$lang->load('com_kunena.install', JPATH_ADMINISTRATOR . '/components/com_kunena');
+	?>
+	<h2><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_TOPIC')?></h2>
+	<div><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_DESC')?></div>
+<?php
+	return;
+}
+
+// Load router
 require_once KPATH_SITE . '/router.php';
 
 // Display time it took to create the entire page in the footer
@@ -18,7 +33,14 @@ $kunena_profiler = KunenaProfiler::instance('Kunena');
 $kunena_profiler->start('Total Time');
 KUNENA_PROFILER ? $kunena_profiler->mark('afterLoad') : null;
 
-KunenaFactory::loadLanguage();
+KunenaFactory::loadLanguage('com_kunena.controllers');
+KunenaFactory::loadLanguage('com_kunena.models');
+KunenaFactory::loadLanguage('com_kunena.views');
+KunenaFactory::loadLanguage('com_kunena.templates');
+KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
+// Load last to get deprecated language files to work
+KunenaFactory::loadLanguage('com_kunena');
+KunenaForum::setup();
 
 // Initialize error handlers
 KunenaError::initialize ();
@@ -38,7 +60,7 @@ if ($ksession->userid > 0) {
 }
 
 // Support legacy urls (they need to be redirected)
-$view = JRequest::getWord ( 'func', JRequest::getWord ( 'view' ) );
+$view = JRequest::getWord ( 'func', JRequest::getWord ( 'view', 'home' ) );
 $task = JRequest::getCmd ( 'task' );
 
 if (is_file ( KPATH_SITE . "/controllers/{$view}.php" )) {

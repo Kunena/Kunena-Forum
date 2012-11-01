@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Controllers
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -20,20 +20,19 @@ class KunenaAdminControllerTools extends KunenaController {
 
 	public function __construct($config = array()) {
 		parent::__construct($config);
-		$this->baseurl = 'index.php?option=com_kunena&view=tools';
+		$this->baseurl = 'administrator/index.php?option=com_kunena&view=tools';
 	}
 
 	function prune() {
-		$app = JFactory::getApplication ();
 		if (!JRequest::checkToken()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
 		$categories = KunenaForumCategoryHelper::getCategories(JRequest::getVar ( 'prune_forum', array(0) ), false, 'admin');
 		if (!$categories) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CHOOSEFORUMTOPRUNE' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CHOOSEFORUMTOPRUNE' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
@@ -83,8 +82,8 @@ class KunenaAdminControllerTools extends KunenaController {
 			else $count += $category->trash($prune_date, $params);
 		}
 
-		if ( $trashdelete ) $app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
-		else $app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
+		if ( $trashdelete ) $this->app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
+		else $this->app->enqueueMessage ( "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNETRASHED') . " {$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
@@ -93,28 +92,27 @@ class KunenaAdminControllerTools extends KunenaController {
 		$userdel = JRequest::getBool ( 'userdel', 0 );
 		$userrename = JRequest::getBool ( 'userrename', 0 );
 
-		$app = JFactory::getApplication ();
 		$db = JFactory::getDBO ();
 		if (!JRequest::checkToken()) {
-			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
 		}
 
 		if ($useradd) {
-			$db->setQuery ( "INSERT INTO #__kunena_users (userid) SELECT a.id FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL" );
+			$db->setQuery ( "INSERT INTO #__kunena_users (userid, showOnline) SELECT a.id AS userid, 1 AS showOnline FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
-			$app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_ADD') . ' ' . $db->getAffectedRows () );
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_ADD') . ' ' . $db->getAffectedRows () );
 		}
 		if ($userdel) {
 			$db->setQuery ( "DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE b.username IS NULL" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
-			$app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_DEL') . ' ' . $db->getAffectedRows () );
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_DEL') . ' ' . $db->getAffectedRows () );
 		}
 		if ($userrename) {
-			$queryName = KunenaFactory::getConfig ()->username ? "username" : "name";
+			$queryName = $this->config->username ? "username" : "name";
 
 			$db = JFactory::getDBO();
 			$query = "UPDATE #__kunena_messages AS m
@@ -125,15 +123,14 @@ class KunenaAdminControllerTools extends KunenaController {
 			$db->query();
 			if (KunenaError::checkDatabaseError()) return;
 
-			$app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_RENAME') . $db->getAffectedRows() );
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_RENAME') . $db->getAffectedRows() );
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	function recount() {
-		$app = JFactory::getApplication ();
-		$state = $app->getUserState ( 'com_kunena.admin.recount', null );
+		$state = $this->app->getUserState ( 'com_kunena.admin.recount', null );
 
 		if ($state === null) {
 			// First run: get last message id (if topics were created with <K2.0)
@@ -161,7 +158,7 @@ class KunenaAdminControllerTools extends KunenaController {
 						// Update topic statistics
 						KunenaForumTopicHelper::recount(false, $state->start, $state->start+$count);
 						$state->start += $count;
-						//$app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_TOPICS', min($state->start, $state->maxId), $state->maxId) );
+						//$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_TOPICS', min($state->start, $state->maxId), $state->maxId) );
 					}
 					break;
 				case 1:
@@ -169,26 +166,26 @@ class KunenaAdminControllerTools extends KunenaController {
 						// Update usertopic statistics
 						KunenaForumTopicUserHelper::recount(false, $state->start, $state->start+$count);
 						$state->start += $count;
-						//$app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERTOPICS', min($state->start, $state->maxId), $state->maxId) );
+						//$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USERTOPICS', min($state->start, $state->maxId), $state->maxId) );
 					}
 					break;
 				case 2:
 					if ($state->categories) {
 						// Update category statistics
 						KunenaForumCategoryHelper::recount();
-						//$app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORY') );
+						//$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_CATEGORY') );
 					}
 					break;
 				case 3:
 					if ($state->users) {
 						// Update user statistics
 						KunenaUserHelper::recount();
-						//$app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USER') );
+						//$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_ADMIN_RECOUNT_USER') );
 					}
 					break;
 				default:
-					$app->setUserState ( 'com_kunena.admin.recount', null );
-					$app->enqueueMessage (JText::_('COM_KUNENA_RECOUNTFORUMS_DONE'));
+					$this->app->setUserState ( 'com_kunena.admin.recount', null );
+					$this->app->enqueueMessage (JText::_('COM_KUNENA_RECOUNTFORUMS_DONE'));
 					$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 					return;
 			}
@@ -199,35 +196,64 @@ class KunenaAdminControllerTools extends KunenaController {
 			if ($this->checkTimeout()) break;
 		}
 		$state->reload++;
-		$app->setUserState ( 'com_kunena.admin.recount', $state );
+		$this->app->setUserState ( 'com_kunena.admin.recount', $state );
 		$this->setRedirect(KunenaRoute::_("{$this->baseurl}&task=recount&i={$state->reload}", false));
 	}
 
 	public function trashmenu() {
-		$app = JFactory::getApplication ();
-		$lang = JFactory::getLanguage();
-		// Start by loading English strings and override them by current locale
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, null, true);
-
 		require_once(KPATH_ADMIN . '/install/model.php');
 		$installer = new KunenaModelInstall();
 		$installer->deleteMenu();
 		$installer->createMenu();
 
-		$app->enqueueMessage ( JText::_('COM_KUNENA_MENU_CREATED') );
+		$this->app->enqueueMessage ( JText::_('COM_KUNENA_MENU_CREATED') );
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 	}
 
 	public function fixlegacy() {
-		$app = JFactory::getApplication ();
+		if (!JRequest::checkToken()) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
+		}
 
-		$legacy = KunenaMenuHelper::getLegacy();
-		$error = KunenaMenuHelper::fixLegacy();
+		$legacy = KunenaMenuFix::getLegacy();
+		$errors = KunenaMenuFix::fixLegacy();
 
-		if ($error) $app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY_FAILED', $error ), 'notice' );
-		else $app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY', count($legacy) ) );
+		if ($errors) $this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY_FAILED', $errors[0] ), 'notice' );
+		else $this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_FIXED_LEGACY', count($legacy) ) );
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+	}
+
+	public function purgeReStatements() {
+		if (!JRequest::checkToken()) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
+		}
+
+		$re_string = JRequest::getString('re_string', null);
+
+		if ( $re_string != null ) {
+			$db	= JFactory::getDBO();
+			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING '{$re_string}' FROM subject)) WHERE subject LIKE '{$re_string}%'";
+			$db->setQuery ( $query );
+			$db->Query ();
+			KunenaError::checkDatabaseError();
+
+			$count = $db->getAffectedRows ();
+
+			if ( $count > 0 ) {
+				$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_RE_PURGED', $count, $re_string ) );
+				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			} else {
+				$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_MENU_RE_PURGE_FAILED', $re_string) );
+				$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			}
+		} else {
+			$this->app->enqueueMessage ( JText::_('COM_KUNENA_MENU_RE_PURGE_FORGOT_STATEMENT') );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		}
 	}
 
 	protected function checkTimeout($stop = false) {

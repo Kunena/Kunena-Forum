@@ -1,19 +1,14 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-?>
-<div id="Kunena">
-<?php
-$this->displayMenu ();
-$this->displayLoginBox ();
 ?>
 <div class="kblock kpollbox">
 	<div class="kheader">
@@ -23,8 +18,8 @@ $this->displayLoginBox ();
 	<div class="kcontainer" id="kpolls_tbody">
 		<div class="kbody">
 			<table class="kblocktable" id="kpoll">
-				<tr>
-					<td>
+				<tr class="krow2">
+					<td class="kcol-first km">
 						<div class="kpolldesc">
 						<div id="kpoll-text-help"></div>
 						<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="kpoll-form-vote" method="post">
@@ -37,16 +32,16 @@ $this->displayLoginBox ();
 							<fieldset>
 								<legend><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
 								<ul>
-									<?php foreach ($this->poll->getOptions() as $key=>$option) : ?>
+									<?php foreach ($this->poll->getOptions() as $key=>$poll_option) : ?>
 									<li>
-										<input class="kpoll-boxvote" type="radio" name="kpollradio" id="radio_name<?php echo intval($key) ?>" value="<?php echo intval($option->id) ?>" <?php if ($this->voted && $this->voted->lastvote == $option->id) echo 'checked="checked"' ?> />
-										<?php echo KunenaHtmlParser::parseText ($option->text ) ?>
+										<input class="kpoll-boxvote" type="radio" name="kpollradio" id="radio_name<?php echo intval($key) ?>" value="<?php echo intval($poll_option->id) ?>" <?php if ($this->voted && $this->voted->lastvote == $poll_option->id) echo 'checked="checked"' ?> />
+										<?php echo KunenaHtmlParser::parseText ($poll_option->text ) ?>
 									</li>
 									<?php endforeach; ?>
 								</ul>
 							</fieldset>
 							<div id="kpoll-btns">
-								<input id="kpoll-button-vote" class="kbutton ks" type="submit" value="<?php echo $this->voted ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE') : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
+								<input id="kpoll-button-vote" class="kbutton ks" type="submit" value="<?php echo $this->voted && $this->config->pollallowvoteone ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE') : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
 							</div>
 						</form>
 						</div>
@@ -55,6 +50,4 @@ $this->displayLoginBox ();
 			</table>
 		</div>
 	</div>
-</div>
-<?php $this->displayFooter (); ?>
 </div>

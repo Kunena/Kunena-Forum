@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -18,14 +18,21 @@ jimport ( 'joomla.application.component.helper' );
  * @since		2.0
  */
 class KunenaController extends JController {
+	public $app = null;
+	public $me = null;
+	public $config = null;
+
 	var $_escape = 'htmlspecialchars';
 	var $_redirect = null;
 	var $_message= null;
 	var $_messageType = null;
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct ();
 		$this->profiler = KunenaProfiler::instance('Kunena');
+		$this->app = JFactory::getApplication();
+		$this->me = KunenaUserHelper::getMyself();
+		$this->config = KunenaFactory::getConfig();
 	}
 
 	/**
@@ -34,22 +41,15 @@ class KunenaController extends JController {
 	 * @return	object	Kunena Controller
 	 * @since	1.6
 	 */
-	public static function getInstance($reload = false) {
+	public static function getInstance($prefix = 'Kunena', $config = array()) {
 		static $instance = null;
 
+		if (!$prefix) $prefix = 'Kunena';
 		if (! empty ( $instance ) && !isset($instance->home)) {
 			return $instance;
 		}
 
-		$view = strtolower ( JRequest::getWord ( 'view', 'none' ) );
-
-		$app = JFactory::getApplication();
-		if (!$app->isAdmin()) {
-			$home = $app->getMenu ()->getActive ();
-			if (!$reload && !empty ( $home->query ['view'] ) && $home->query ['view'] == 'home' && !JRequest::getWord ( 'task' )) {
-				$view = 'home';
-			}
-		}
+		$view = strtolower ( JRequest::getWord ( 'view', 'home' ) );
 		$path = JPATH_COMPONENT . "/controllers/{$view}.php";
 
 		// If the controller file path exists, include it ... else die with a 500 error.
@@ -60,10 +60,10 @@ class KunenaController extends JController {
 		}
 
 		// Set the name for the controller and instantiate it.
-		if ($app->isAdmin()) {
-			$class = 'KunenaAdminController' . ucfirst ( $view );
+		if (JFactory::getApplication()->isAdmin()) {
+			$class = $prefix . 'AdminController' . ucfirst ( $view );
 		} else {
-			$class = 'KunenaController' . ucfirst ( $view );
+			$class = $prefix . 'Controller' . ucfirst ( $view );
 		}
 		if (class_exists ( $class )) {
 			$instance = new $class ();
@@ -80,10 +80,19 @@ class KunenaController extends JController {
 	 * @return	void
 	 * @since	1.6
 	 */
-	public function display() {
+	public function display($cachable = false, $urlparams = false) {
 		KUNENA_PROFILER ? $this->profiler->mark('beforeDisplay') : null;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$app = JFactory::getApplication();
+
+		// Get the document object.
+		$document = JFactory::getDocument ();
+
+		// Set the default view name and format from the Request.
+		$vName = JRequest::getWord ( 'view', 'home' );
+		$lName = JRequest::getWord ( 'layout', 'default' );
+		$vFormat = $document->getType ();
+
 		if ($app->isAdmin()) {
 			// Version warning
 			require_once KPATH_ADMIN . '/install/version.php';
@@ -93,14 +102,23 @@ class KunenaController extends JController {
 				$app->enqueueMessage ( $version_warning, 'notice' );
 			}
 		} else {
-			// Initialize profile integration
-			$integration = KunenaFactory::getProfile();
-			$integration->open();
+			$menu = $app->getMenu ();
+			$active = $menu->getActive ();
 
-			/*if (!$app->getMenu ()->getActive ()) {
-				// FIXME:
+			// Check if menu item was correctly routed
+			$routed = $menu->getItem ( KunenaRoute::getItemID() );
+/*
+			if (!$active) {
+				// FIXME: we may want to resctrict access only to menu items
 				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
-			}*/
+			}
+*/
+			if ($vFormat=='html' && !empty($routed->id) && (empty($active->id) || $active->id != $routed->id)) {
+				// Routing has been changed, redirect
+				// FIXME: check possible redirect loops!
+				$app->redirect (KunenaRoute::_(null, false));
+			}
+
 			// Joomla 1.6+ multi-language support
 			/* // FIXME:
 			if (isset($active->language) && $active->language != '*') {
@@ -112,62 +130,40 @@ class KunenaController extends JController {
 			*/
 		}
 
-		// Get the document object.
-		$document = JFactory::getDocument ();
-
-		// Set the default view name and format from the Request.
-		$vName = JRequest::getWord ( 'view', 'none' );
-		$lName = JRequest::getWord ( 'layout', 'default' );
-		$vFormat = $document->getType ();
-
 		$view = $this->getView ( $vName, $vFormat );
 		if ($view) {
 			if ($app->isSite() && $vFormat=='html') {
 				$common = $this->getView ( 'common', $vFormat );
-				$common->setModel ( $this->getModel ( 'common' ), true );
+				$model = $this->getModel ( 'common' );
+				$common->setModel ( $model, true );
 				$view->ktemplate = $common->ktemplate = KunenaFactory::getTemplate();
 				$view->common = $common;
-
-				$defaultpath = KPATH_SITE."/{$view->ktemplate->getPath(true)}/html";
-				$templatepath = KPATH_SITE."/{$view->ktemplate->getPath()}/html";
-				if ($templatepath != $defaultpath) {
-					$view->addTemplatePath("{$defaultpath}/{$vName}" );
-					$view->common->addTemplatePath("{$defaultpath}/common");
-				}
-				$view->addTemplatePath("{$templatepath}/{$vName}" );
-				$view->common->addTemplatePath("{$templatepath}/common");
 			}
-
-			// Do any specific processing for the view.
-			switch ($vName) {
-				default :
-					// Get the appropriate model for the view.
-					$model = $this->getModel ( $vName );
-					break;
-			}
-
-			// Push the model into the view (as default).
-			$view->setModel ( $model, true );
 
 			// Set the view layout.
 			$view->setLayout ( $lName );
 
+			// Get the appropriate model for the view.
+			$model = $this->getModel ( $vName );
+
+			// Push the model into the view (as default).
+			$view->setModel ( $model, true );
+
 			// Push document object into the view.
-			$view->assignRef ( 'document', $document );
+			$view->document = $document;
 
 			// Render the view.
 			if ($vFormat=='html') {
+				JPluginHelper::importPlugin('kunena');
+				$dispatcher = JDispatcher::getInstance();
+				$dispatcher->trigger('onKunenaDisplay', array('start', $view));
 				$view->displayAll ();
+				$dispatcher->trigger('onKunenaDisplay', array('end', $view));
 			} else {
 				$view->displayLayout ();
 			}
 		}
 
-		if ($app->isSite()) {
-			// Close profile integration
-			$integration = KunenaFactory::getProfile();
-			$integration->close();
-		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
@@ -179,7 +175,7 @@ class KunenaController extends JController {
 	 * @param  mixed $var The output to escape.
 	 * @return mixed The escaped value.
 	 */
-	function escape($var) {
+	public function escape($var) {
 		if (in_array ( $this->_escape, array ('htmlspecialchars', 'htmlentities' ) )) {
 			return call_user_func ( $this->_escape, $var, ENT_COMPAT, 'UTF-8' );
 		}
@@ -191,17 +187,17 @@ class KunenaController extends JController {
 	 *
 	 * @param mixed $spec The callback for _escape() to use.
 	 */
-	function setEscape($spec) {
+	public function setEscape($spec) {
 		$this->_escape = $spec;
 	}
 
-	function getRedirect() {
+	public function getRedirect() {
 		return $this->_redirect;
 	}
-	function getMessage() {
+	public function getMessage() {
 		return $this->_message;
 	}
-	function getMessageType() {
+	public function getMessageType() {
 		return $this->_messageType;
 	}
 

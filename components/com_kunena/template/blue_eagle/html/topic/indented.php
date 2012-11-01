@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,19 +16,18 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
 ?>
 
-<?php $this->displayBreadcrumb () ?>
-
 <?php if ($this->category->headerdesc) : ?>
 	<div id="kforum-head" class="<?php echo isset ( $this->category->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>">
 		<?php echo KunenaHtmlParser::parseBBCode ( $this->category->headerdesc ) ?>
 	</div>
 <?php endif ?>
 
-<?php
-	$this->displayPoll();
-	$this->getModulePosition( 'kunena_poll' );
-	$this->displayTopicActions(0);
-?>
+<?php $this->displayPoll(); ?>
+
+<!-- Module position: kunena_poll -->
+<?php $this->displayModulePosition( 'kunena_poll' ); ?>
+
+<?php $this->displayTopicActions(); ?>
 
 <div class="kblock">
 	<div class="kheader">
@@ -42,11 +41,8 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 		<?php endforeach; ?>
 	</div>
 </div>
-<?php $this->displayTopicActions(1); ?>
+<?php $this->displayTopicActions(); ?>
 
-<?php $this->displayBreadcrumb () ?>
-
-<!-- B: List Actions Bottom -->
 <div class="kcontainer klist-bottom">
 	<div class="kbody">
 		<div class="kmoderatorslist-jump fltrt">
@@ -55,7 +51,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 		<?php if (!empty ( $this->moderators ) ) : ?>
 		<div class="klist-moderators">
 				<?php
-				echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
+				echo '' . JText::_('COM_KUNENA_MODERATORS') . ": ";
 				$modlinks = array();
 				foreach ( $this->moderators as $moderator ) {
 					$modlinks[] = $moderator->getLink();
@@ -66,4 +62,3 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 		<?php endif; ?>
 	</div>
 </div>
-<!-- F: List Actions Bottom -->

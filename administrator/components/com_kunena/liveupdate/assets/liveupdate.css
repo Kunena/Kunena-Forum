@@ -1,0 +1,136 @@
+/**
+ * @package LiveUpdate
+ * @copyright Copyright (c)2010-2012 Nicholas K. Dionysopoulos / AkeebaBackup.com
+ * @license GNU LGPLv3 or later <http://www.gnu.org/copyleft/lesser.html>
+ */
+@CHARSET "UTF-8";
+
+.icon-48-liveupdate { background-image: url(liveupdate-48.png) }
+
+var { font-style: italic; font-weight: bold; }
+p.liveupdate-url { font-family: "Lucida Sans Mono", "Courier New", Courier, monospace; }
+
+div.liveupdate-notsupported,
+div.liveupdate-stuck {
+	border: thin solid #990000;
+	background: #fff0f0;
+	padding: 1em;
+	color: #330000;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-border-radius: 10px;
+	-moz-box-shadow: 5px 5px 5px #f88;
+	-webkit-box-shadow: 5px 5px 5px #f88;
+	box-shadow: 5px 5px 5px #f88;
+}
+div.liveupdate-notsupported h3,
+div.liveupdate-stuck h3 {
+	background: transparent url("fail-24.png") top left no-repeat;
+	min-height: 24px;
+	padding: 2px 0 0 28px;
+	font-size: large;
+	color: red;
+	text-shadow: 1px 1px 6px #cccc00;
+}
+
+div.liveupdate-hasupdates {
+	border: thin solid #999900;
+	background: #fffff0;
+	padding: 1em;
+	color: #333300;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-border-radius: 10px;
+	-moz-box-shadow: 5px 5px 5px #ff8;
+	-webkit-box-shadow: 5px 5px 5px #ff8;
+	box-shadow: 5px 5px 5px #ff8;
+}
+
+div.liveupdate-hasupdates h3 {
+	background: transparent url("warn-24.png") top left no-repeat;
+	min-height: 24px;
+	padding: 2px 0 0 28px;
+	font-size: large;
+	color: #660;
+	text-shadow: 1px 1px 6px #ffff00;
+}
+
+div.liveupdate-noupdates {
+	border: thin solid #009900;
+	background: #f0fff0;
+	padding: 1em;
+	color: #003300;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-border-radius: 10px;
+	-moz-box-shadow: 5px 5px 5px #8f8;
+	-webkit-box-shadow: 5px 5px 5px #8f8;
+	box-shadow: 5px 5px 5px #8f8;
+}
+
+div.liveupdate-noupdates h3 {
+	background: transparent url("ok-24.png") top left no-repeat;
+	min-height: 24px;
+	padding: 2px 0 0 28px;
+	font-size: large;
+	color: #060;
+	text-shadow: 1px 1px 6px #00ff00;
+}
+
+div.liveupdate-infotable {
+	width: 620px;
+	margin: auto auto;
+	padding: 2px;
+	border: thin solid #333;
+	background: #fefefe;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-border-radius: 5px;
+}
+div.liveupdate-infotable .row0 { background: #fcfcfc }
+div.liveupdate-infotable .row1 { background: #f0f0f0 }
+div.liveupdate-row { padding: 5px 1px }
+span.liveupdate-label { display: inline-block; width: 200px; font-weight: bold; }
+span.liveupdate-data { display: inline-block; width: 400px; overflow: none }
+
+p.liveupdate-buttons { text-align: center; margin: 1em; }
+
+p.liveupdate-error-needsauth {
+	margin: 1em;
+	background: #ffcccc;
+	border: medium solid #ff0000;
+	color: #660000;
+	font-size: large;
+	font-weight: bold;
+	padding: 1em;
+	text-align: center;
+	text-shadow: 1px 1px 2px white;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-border-radius: 10px;
+	-moz-box-shadow: 5px 5px 5px #f88;
+	-webkit-box-shadow: 5px 5px 5px #f88;
+	box-shadow: 5px 5px 5px #f88;
+}
+
+p.liveupdate-poweredby { font-size: 8pt; color: silver; margin: 1em 0 0.5em 0 }
+p.liveupdate-poweredby a { color: silver; }
+div.liveupdate-ftp p { margin: 1em 2em; line-height: 140%; border: thin solid #00c; padding: 0.5em; color: #006; background-color: #f0f0ff; font-size: 12pt; text-shadow: 1px 1px 3px silver }
+
+#nagscreen {
+	margin: 1em;
+	background: #ffcccc;
+	border: medium solid #ff0000;
+	color: #660000;
+	font-size: large;
+	font-weight: bold;
+	padding: 1em;
+	text-align: center;
+	text-shadow: 1px 1px 2px white;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-border-radius: 10px;
+	-moz-box-shadow: 5px 5px 5px #f88;
+	-webkit-box-shadow: 5px 5px 5px #f88;
+	box-shadow: 5px 5px 5px #f88;
+}

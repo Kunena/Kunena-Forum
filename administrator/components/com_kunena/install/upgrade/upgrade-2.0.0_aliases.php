@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -43,7 +43,7 @@ function kunena_upgrade_200_aliases($parent) {
 	// Create SEF: id-name and id-Name (UTF8)
 	foreach ($categories as $id=>$category) {
 		$created = false;
-		if ($config->sefutf8) {
+		if ($config->get('sefutf8')) {
 			$name = $aliasUtf[$category->id];
 			if (!empty($name)) $created = kCreateCategoryAlias($category, "{$id}-{$name}", 1);
 		}
@@ -51,10 +51,10 @@ function kunena_upgrade_200_aliases($parent) {
 		if (!empty($name)) kCreateCategoryAlias($category, "{$id}-{$name}", !$created);
 	}
 	// Create SEF: name and Name (UTF8)
-	if ($config->sefcats) {
+	if ($config->get('sefcats')) {
 		foreach ($categories as $id=>$category) {
 			$created = false;
-			if ($config->sefutf8) {
+			if ($config->get('sefutf8')) {
 				$name = $aliasUtf[$category->id];
 				$keys = array_keys($aliasUtf, $name);
 				if (!empty($name)) $created = kCreateCategoryAlias($category, $name, count($keys) == 1);
@@ -64,13 +64,14 @@ function kunena_upgrade_200_aliases($parent) {
 			if (!empty($name)) kCreateCategoryAlias($category, $name, !$created && count($keys) == 1);
 		}
 	}
+
 	return array ('action' => '', 'name' => JText::_ ( 'COM_KUNENA_INSTALL_200_ALIASES' ), 'success' => true );
 }
 
 function kCreateAlias($type, $item, $alias, $state=0) {
 	$state = (int) $state;
 	$db = JFactory::getDbo();
-	$query = "INSERT INTO #__kunena_aliases (alias, type, item, state) VALUES ({$db->Quote($alias)},{$db->Quote($type)},{$db->Quote($item)},{$db->Quote($state)})";
+	$query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item, state) VALUES ({$db->Quote($alias)},{$db->Quote($type)},{$db->Quote($item)},{$db->Quote($state)})";
 	$db->setQuery ($query);
 	$success = $db->query () && $db->getAffectedRows ();
 	if ($success && $state) {
@@ -85,7 +86,7 @@ function kCreateAlias($type, $item, $alias, $state=0) {
 function kCreateCategoryAlias($category, $alias, $state=0) {
 	$state = (int) $state;
 	$db = JFactory::getDbo();
-	$query = "INSERT INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($category->id)})";
+	$query = "INSERT IGNORE INTO #__kunena_aliases (alias, type, item) VALUES ({$db->Quote($alias)},'catid',{$db->Quote($category->id)})";
 	$db->setQuery ($query);
 	$success = $db->query () && $db->getAffectedRows ();
 	if ($success && $state) {

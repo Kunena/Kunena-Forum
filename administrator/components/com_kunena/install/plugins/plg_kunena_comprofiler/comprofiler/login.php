@@ -4,7 +4,7 @@
  * @package Kunena.Plugins
  * @subpackage Comprofiler
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,7 +17,7 @@ class KunenaLoginComprofiler {
 		$this->params = $params;
 	}
 
-	public function loginUser($username, $password, $rememberme, $return) {
+	public function loginUser($username, $password, $rememberme) {
 		cbimport ( 'cb.authentication' );
 		global $ueConfig;
 
@@ -30,14 +30,10 @@ class KunenaLoginComprofiler {
 		$loginType = ( isset( $ueConfig['login_type'] ) ? $ueConfig['login_type'] : 0 );
 		$resultError = $cbAuthenticate->login ( $username, $password, $rememberme, 1, $redirect_url, $messagesToUser, $alertmessages, $loginType );
 
-		if ($resultError) {
-			return $resultError;
-		} else {
-			return null;
-		}
+		return $resultError ? $resultError : null;
 	}
 
-	public function logoutUser($return) {
+	public function logoutUser() {
 		cbimport ( 'cb.authentication' );
 
 		$cbAuthenticate = new CBAuthentication ();
@@ -45,34 +41,20 @@ class KunenaLoginComprofiler {
 		$redirect_url = KunenaRoute::current();
 		$resultError = $cbAuthenticate->logout ( $redirect_url );
 
-		if ($resultError) {
-			return $resultError;
+		return $resultError ? $resultError : null;
+	}
+
+	public function getRememberMe() {
+		$db = JFactory::getDbo();
+		if (version_compare(JVERSION, '1.7','>')) {
+			$db->setQuery( "SELECT params from #__modules WHERE module = 'mod_cblogin' ORDER BY ordering", 0, 1 );
+			$raw_params = $db->loadResult();
 		} else {
-			return null;
+			$db->setQuery( "SELECT params from #__extensions WHERE element='mod_cblogin' AND type='module'", 0, 1 );
+			$raw_params = $db->loadResult();
 		}
-	}
-
-	public function getLoginFormFields() {
-		return array (
-			'form'=>'login',
-			'field_username'=>'username',
-			'field_password'=>'passwd',
-			'field_remember'=>'remember',
-			'field_return'=>'return',
-			'option'=>'com_kunena',
-			'view'=>'user',
-			'task'=>'login'
-		);
-	}
-
-	public function getLogoutFormFields() {
-		return array (
-			'form'=>'login',
-			'field_return'=>'return',
-			'option'=>'com_kunena',
-			'view'=>'user',
-			'task'=>'logout'
-		);
+		$params = new cbParamsBase( $raw_params );
+		return $params->get( 'remember_enabled', 1);
 	}
 
 	public function getLoginURL() {

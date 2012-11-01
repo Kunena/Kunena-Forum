@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Forum.Category
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,6 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaForumCategory extends KunenaDatabaseObject {
 	public $id = null;
 	public $level = 0;
+	protected $authorised = array();
 
 	protected $_aliases = null;
 	protected $_alias = null;
@@ -32,14 +33,14 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			'read'=>array('Read'),
 			'subscribe'=>array('Read', 'CatSubscribe', 'NotBanned', 'NotSection'),
 			'moderate'=>array('Read', 'NotBanned', 'Moderate'),
-			'admin'=>array('Read', 'NotBanned', 'Admin'),
+			'admin'=>array('NotBanned', 'Admin'),
 			'topic.read'=>array('Read'),
 			'topic.create'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked', 'Channel'),
 			'topic.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
 			'topic.edit'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
 			'topic.approve'=>array('Read','NotBanned', 'Moderate'),
-			'topic.delete'=>array('Read', 'NotBanned', 'Unlocked'),
+			'topic.delete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.undelete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.permdelete'=>array('Read', 'NotBanned', 'Admin'),
 			'topic.favorite'=>array('Read','NotBanned', 'Favorite'),
@@ -63,13 +64,21 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			'topic.post.permdelete'=>array('Read', 'NotBanned', 'Admin'),
 			'topic.post.attachment.read'=>array('Read'),
 			'topic.post.attachment.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked', 'Upload'),
-			'topic.post.attachment.delete'=>array('Read', 'NotBanned', 'Unlocked'),
+			'topic.post.attachment.delete'=>array('NotBanned'), // TODO: In the future we might want to restrict this: array('Read', 'NotBanned', 'Unlocked'),
 		);
 
 	public function __construct($properties = null) {
 		if ($properties !== null) {
 			$this->setProperties($properties);
 		}
+		$registry = new JRegistry();
+		if (version_compare(JVERSION, '1.6', '>')) {
+			if (!empty($this->params)) $registry->loadString($this->params);
+		} else {
+			if (!empty($this->params)) $registry->loadINI($this->params);
+		}
+		$this->params = $registry;
+
 		$this->_alias = $this->get('alias', '');
 	}
 
@@ -106,6 +115,23 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	/**
+	 * Subscribe / Unsubscribe user to this category.
+	 *
+	 * @param boolean $value 1/true for subscribe, 0/false for unsubscribe.
+	 * @param mixed $user
+	 *
+	 * @since	2.0.0-BETA2
+	 */
+	public function subscribe($value=1, $user=null) {
+		$usercategory = KunenaForumCategoryUserHelper::get($this->id, $user);
+		$usercategory->subscribed = (int)$value;
+		if (!$usercategory->save()) {
+			$this->setError($usercategory->getError());
+		}
+		return !$this->getError();
+	}
+
+	/**
 	 * Returns new topics count from this category for current user.
 	 *
 	 * @todo Currently new topics needs to be calculated manually, make it automatic.
@@ -124,22 +150,43 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	public function getUrl($category = null, $xhtml = true, $action = null) {
-		if (!$category) $category = $this;
+		$uri = $this->getUri($category, $action);
+		return KunenaRoute::_($uri, $xhtml);
+	}
+
+	public function getUri($category = null, $action = null) {
+		if (!$category) {
+			$category = $this;
+		} else {
+			$category = KunenaForumCategoryHelper::get($category);
+		}
 		$uri = JURI::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
 		if ((string)$action === (string)(int)$action) {
 			$uri->setVar('limitstart', $action);
 		}
-		return $xhtml==='object' ? $uri : KunenaRoute::_($uri, $xhtml);
+		return $uri;
+	}
+
+	public function displayField($field) {
+		switch ($field) {
+			case 'id':
+				return intval($this->id);
+			case 'name':
+				return KunenaHtmlParser::parseText($this->name);
+			case 'description':
+			case 'headerdesc':
+				return KunenaHtmlParser::parseBBCode($this->$field);
+		}
 	}
 
 	public function getCategory() {
 		return $this;
 	}
 
-	public static function getAliases() {
+	public function getAliases() {
 		if (!isset($this->_aliases)) {
 			$db = JFactory::getDbo();
-			$query = "SELECT * FROM #__kunena_aliases WHERE alias type='catid' AND item={$db->Quote($category->id)}";
+			$query = "SELECT * FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)}";
 			$db->setQuery ($query);
 			$this->_aliases = (array) $db->loadObjectList('alias');
 		}
@@ -148,7 +195,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 	public function checkAlias($alias) {
 		// Check if category is already using the alias.
-		if (!$alias || $this->_alias == $alias) return true;
+		if ($this->_alias && $this->_alias == $alias) return true;
 
 		// Check if alias is valid in current configuration.
 		if (KunenaRoute::stringURLSafe($alias) != $alias) return false;
@@ -164,9 +211,10 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	public function addAlias($alias) {
-		if ($alias) {
-			$alias = KunenaRoute::stringURLSafe($alias);
-		} else {
+		if (!$this->exists()) return false;
+
+		$alias = KunenaRoute::stringURLSafe($alias);
+		if (!$alias) {
 			$alias = $this->id;
 		}
 		$check = $this->checkAlias($alias);
@@ -187,7 +235,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if (JString::strtolower($this->alias) == JString::strtolower($alias)) return false;
 
 		$db = JFactory::getDbo();
-		$query = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)} AND alias=={$db->Quote($alias)}";
+		$query = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->Quote($this->id)} AND alias={$db->Quote($alias)}";
 		$db->setQuery ($query);
 		$db->query ();
 		KunenaError::checkDatabaseError ();
@@ -202,6 +250,11 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	public function getPosts() {
 		$this->buildInfo();
 		return $this->_posts;
+	}
+
+	public function getReplies() {
+		$this->buildInfo();
+		return max($this->_posts - $this->_topics, 0);
 	}
 
 	public function getLastCategory() {
@@ -261,8 +314,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return new KunenaForumCategory();
 	}
 
-	public function newTopic(array $fields=null, $user=null) {
-		$catid = $this->getNewTopicCategory()->id;
+	public function newTopic(array $fields=null, $user=null, $safefields=null) {
+		$catid = isset($safefields['category_id']) ? $safefields['category_id'] : $this->getNewTopicCategory()->id;
 		$user = KunenaUserHelper::get($user);
 		$message = new KunenaForumMessage();
 		$message->catid = $catid;
@@ -270,19 +323,21 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$message->userid = $user->userid;
 		$message->ip = !empty($_SERVER ['REMOTE_ADDR']) ? $_SERVER ['REMOTE_ADDR'] : '';
 		$message->hold = $this->review ? (int)!$this->authorise ('moderate', $user, true) : 0;
-		$message->bind($fields, array ('name', 'email', 'subject', 'message'), true);
+		if ($safefields) $message->bind($safefields);
+		if ($fields) $message->bind($fields, array ('name', 'email', 'subject', 'message'), true);
 
 		$topic = new KunenaForumTopic();
 		$topic->category_id = $catid;
 		$topic->hold = $message->hold;
-		$topic->bind($fields, array ('subject','icon_id'), true);
+		if ($safefields) $topic->bind($safefields);
+		if ($fields) $topic->bind($fields, array ('subject','icon_id'), true);
 
 		$message->setTopic($topic);
 		return array($topic, $message);
 	}
 
 	public function getParent() {
-		$parent = KunenaForumCategoryHelper::get($this->parent_id);
+		$parent = KunenaForumCategoryHelper::get(intval($this->parent_id));
 		if (!$parent->exists()) {
 			$parent->name = JText::_ ( 'COM_KUNENA_TOPLEVEL' );
 			$parent->_exists = true;
@@ -298,7 +353,6 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		} elseif (!($user instanceof KunenaUser)) {
 			$user = KunenaUserHelper::get($user);
 		}
-
 		if (empty($this->_authcache[$user->userid][$action])) {
 			if (!isset(self::$actions[$action])) {
 				JError::raiseError(500, JText::sprintf ( 'COM_KUNENA_LIB_AUTHORISE_INVALID_ACTION', $action ) );
@@ -306,16 +360,21 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 				return false;
 			}
 
-			$this->_authcache[$user->userid][$action] = null;
-			foreach (self::$actions[$action] as $function) {
-				if (!isset($this->_authfcache[$user->userid][$function])) {
-					$authFunction = 'authorise'.$function;
-					$this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
-				}
-				$error = $this->_authfcache[$user->userid][$function];
-				if ($error) {
-					$this->_authcache[$user->userid][$action] = $error;
-					break;
+			if (!isset($this->authorised[$user->userid])) $this->authorised[$user->userid] = KunenaAccess::getInstance()->authoriseActions($this, $user->userid);
+			if (isset($this->authorised[$user->userid][$action]) && $this->authorised[$user->userid][$action] === false) {
+				$this->_authcache[$user->userid][$action] = JText::_ ( 'COM_KUNENA_NO_ACCESS' );
+			} else {
+				$this->_authcache[$user->userid][$action] = null;
+				foreach (self::$actions[$action] as $function) {
+					if (!isset($this->_authfcache[$user->userid][$function])) {
+						$authFunction = 'authorise'.$function;
+						$this->_authfcache[$user->userid][$function] = $this->$authFunction($user);
+					}
+					$error = $this->_authfcache[$user->userid][$function];
+					if ($error) {
+						$this->_authcache[$user->userid][$action] = $error;
+						break;
+					}
 				}
 			}
 		}
@@ -391,7 +450,21 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	public function bind(array $src = null, array $fields = null, $include = false) {
 		if (isset($src['channels']) && is_array($src['channels'])) $src['channels'] = implode(',', $src['channels']);
-		return parent::bind($src, $fields, $include);
+		$result = parent::bind($src, $fields, $include);
+
+		if (!($this->params instanceof JRegistry)) {
+			$registry = new JRegistry();
+			if (is_array($this->params)) {
+				$registry->loadArray($this->params);
+			} elseif (version_compare(JVERSION, '1.6', '>')) {
+				$registry->loadString($this->params);
+			} else {
+				$registry->loadINI($this->params);
+			}
+			$this->params = $registry;
+		}
+
+		return $result;
 	}
 
 	/**
@@ -400,7 +473,17 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	 */
 	public function load($id = null) {
 		$exists = parent::load($id);
-		$this->_alias = $this->get('alias', '');
+
+		if (!$this->_saving)
+			$this->_alias = $this->get('alias', '');
+
+		$registry = new JRegistry();
+		if (version_compare(JVERSION, '1.6', '>')) {
+			if ($this->params) $registry->loadString($this->params);
+		} else {
+			if ($this->params) $registry->loadINI($this->params);
+		}
+		$this->params = $registry;
 
 		// Register category if it exists
 		if ($exists) KunenaForumCategoryHelper::register($this);
@@ -408,17 +491,16 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	public function check() {
-		$alias = trim($this->alias);
-		if (empty($alias)) {
-			$alias = $this->name;
+		$this->alias = trim($this->alias);
+		if (empty($this->alias)) {
+			$this->alias = $this->name;
 		}
 		if ($this->alias != $this->_alias) {
-			$alias = KunenaRoute::stringURLSafe($alias);
-			if ($this->checkAlias($alias) === false) {
-				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_FORUM_CATEGORY_ERROR_ALIAS_RESERVED', $alias ) );
+			$this->alias = KunenaRoute::stringURLSafe($this->alias);
+			if ($this->checkAlias($this->alias) === false) {
+				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_FORUM_CATEGORY_ERROR_ALIAS_RESERVED', $this->alias ) );
 				return false;
 			}
-			$this->alias = $alias;
 		}
 		return true;
 	}
@@ -434,16 +516,19 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$table->exists ( $this->_exists );
 
 		// Update alias
-		$this->addAlias($this->alias);
-		$this->_alias = $this->alias;
+		$success = $this->addAlias($this->get('alias'));
+		if ($success) $this->_alias = $this->alias;
 
 		$table->reorder ();
+		$this->ordering = $table->ordering;
 
 		// Clear cache
 		$access = KunenaAccess::getInstance();
 		$access->clearCache();
+
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$cache->clean('categories');
+		// FIXME: enable caching after fixing the issues
+		//$cache->clean('categories');
 
 		return true;
 	}
@@ -526,6 +611,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$access->clearCache();
 
 		$db = JFactory::getDBO ();
+		$queries[] = "DELETE FROM #__kunena_aliases WHERE type='catid' AND item={$db->quote($this->id)}";
 		// Delete user topics
 		$queries[] = "DELETE FROM #__kunena_user_topics WHERE category_id={$db->quote($this->id)}";
 		// Delete user categories
@@ -554,6 +640,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		}
 
 		KunenaUserHelper::recount();
+		KunenaForumMessageThankyouHelper::recount();
 
 		$this->id = null;
 		KunenaForumCategoryHelper::register($this);
@@ -573,16 +660,15 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			return false;
 
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
 		$result = $table->checkout($who);
 
 		// Assuming all is well at this point lets bind the data
+		$params = $this->params;
 		$this->setProperties ( $table->getProperties () );
-
-		$cache = JFactory::getCache('com_kunena', 'output');
-		$cache->clean('categories');
+		$this->params = $params;
 
 		return $result;
 	}
@@ -605,10 +691,13 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$result = $table->checkin();
 
 		// Assuming all is well at this point lets bind the data
+		$params = $this->params;
 		$this->setProperties ( $table->getProperties () );
+		$this->params = $params;
 
 		$cache = JFactory::getCache('com_kunena', 'output');
-		$cache->clean('categories');
+		// FIXME: enable caching after fixing the issues
+		//$cache->clean('categories');
 
 		return $result;
 	}
@@ -676,6 +765,26 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		return $this->save();
 	}
 
+	/**
+	 * Get if the user has subscribed on this category.
+	 *
+	 * @param boolean $value 1/true for subscribed, 0/false for unsubscribed.
+	 * @param int $userid
+	 *
+	 * @since	2.0.0-BETA2
+	 */
+	public function getSubscribed($userid = null ) {
+		if (!$this->exists()) {
+			return false;
+		}
+
+		if (!$userid ) return false;
+
+		$usercategory = KunenaForumCategoryUserHelper::get($this->id,$userid);
+
+		return (bool) $usercategory->subscribed;
+	}
+
 	// Internal functions
 
 	protected function buildInfo() {
@@ -683,15 +792,16 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			return;
 		$this->_topics = 0;
 		$this->_posts = 0;
-		$this->_lastid = 0;
+		$this->_lastid = $this->id;
 		$categories = $this->getChannels();
 		$categories += KunenaForumCategoryHelper::getChildren($this->id);
 		foreach ($categories as $category) {
 			$category->buildInfo();
-			$this->_topics += $category->numTopics;
-			$this->_posts += $category->numPosts;
-			if (KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $category->last_post_time)
-				$this->_lastid = $category->id;
+			$lastCategory = $category->getLastCategory();
+			$this->_topics += max($category->numTopics, 0);
+			$this->_posts += max($category->numPosts, 0);
+			if ($lastCategory->last_post_time && KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $lastCategory->last_post_time)
+				$this->_lastid = $lastCategory->id;
 		}
 	}
 
@@ -705,7 +815,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if (!$this->exists()) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
-		if (empty($catids[0]) && empty($catids[$this->id])) {
+		if (empty($catids[$this->id])) {
 			return JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 		}
 	}
@@ -761,19 +871,19 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 	protected function authoriseUnlocked($user) {
 		// Check that category is not locked or that user is a moderator
-		if ($this->locked && (!$user->userid || !$user->isModerator($this->id))) {
+		if ($this->locked && (!$user->userid || !$user->isModerator($this))) {
 			return JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' );
 		}
 	}
 	protected function authoriseModerate($user) {
 		// Check that user is moderator
-		if (!$user->userid || !$user->isModerator($this->id)) {
+		if (!$user->userid || !$user->isModerator($this)) {
 			return JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' );
 		}
 	}
 	protected function authoriseAdmin($user) {
 		// Check that user is admin
-		if (!$user->userid || !$user->isAdmin($this->id)) {
+		if (!$user->userid || !$user->isAdmin($this)) {
 			return JText::_ ( 'COM_KUNENA_MODERATION_ERROR_NOT_ADMIN' );
 		}
 	}

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,20 +15,26 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewConfig extends KunenaView {
 	function displayDefault() {
-		$this->setToolBarDefault();
 		$this->lists = $this->get('Configlists');
-		$this->config = KunenaFactory::getConfig ();
+
+		// Only set the toolbar if not modal
+		if ($this->getLayout() !== 'modal') {
+			$this->setToolBarDefault();
+		}
 
 		$this->display ();
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::spacer();
+		JToolBarHelper::apply();
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
-		JToolBarHelper::custom('setdefault', 'restore.png','restore_f2.png', 'COM_KUNENA_RESET_CONFIG', false);
+		$bar = JToolBar::getInstance('toolbar');
+		$bar->appendButton('Popup', 'restore', 'COM_KUNENA_RESET_CONFIG', 'index.php?option=com_kunena&amp;view=config&amp;layout=modal&amp;tmpl=component', 450, 200);
 		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('config');
+		JToolBarHelper::back();
 	}
 }

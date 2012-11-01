@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topics
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -33,6 +33,7 @@ $this->cache = false;
 
 	<td class="kcol-mid kcol-ktopictitle">
 		<?php if ($this->topic->attachments) echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') ); ?>
+		<?php if ($this->topic->poll_id) echo $this->getIcon ( 'ktopicpoll', JText::_('COM_KUNENA_ADMIN_POLLS') ); ?>
 
 		<div class="ktopic-title-cover">
 			<?php
@@ -40,28 +41,29 @@ $this->cache = false;
 			if ($this->topic->getUserTopic()->favorite) {
 				echo $this->getIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
 			}
+			if ($this->me->exists() && $this->topic->getUserTopic()->posts) {
+				echo $this->getIcon ( 'ktopicmy', JText::_('COM_KUNENA_MYPOSTS') );
+			}
 			if ($this->topic->unread) {
 				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
-			}
-			if ($this->topic->locked != 0) {
-				echo $this->getIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
 			}
 			?>
 		</div>
 
 		<div class="ktopic-details">
-			<span class="ktopic-category"> <?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->topic->getCategory() ) ?></span>
-			<span class="divider fltlft">|</span>
+			<span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
+		</div>
+		<div class="ktopic-details-kcategory" style="clear:both;">
 			<span class="ktopic-posted-time" title="<?php echo KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat_hover'); ?>">
 				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . KunenaDate::getInstance($this->topic->first_post_time)->toKunena('config_post_dateformat');?>
 			</span>
-			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
-		</div>
-
-		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
+			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span>
+            </div>
+            <div class="ktopic-details-kcategory" style="clear:both;">
+		<?php if ($this->pages > 1) : ?>
 		<ul class="kpagination">
 			<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
-			<li><?php echo $this->getTopicLink ( $this->topic, 0, 1 ) ?></li>
+			<li><?php echo $this->GetTopicLink ( $this->topic, 0, 1 ) ?></li>
 			<?php if ($this->pages > 4) : $startPage = $this->pages - 3; ?>
 			<li class="more">...</li>
 			<?php else: $startPage = 1; endif;
@@ -70,6 +72,7 @@ $this->cache = false;
 			<?php endfor; ?>
 		</ul>
 		<?php endif; ?>
+		</div>
 
 		<?php if (!empty($this->keywords)) : ?>
 		<div class="ktopic-keywords">
@@ -78,22 +81,21 @@ $this->cache = false;
 		<?php endif; ?>
 	</td>
 
-	<td class="kcol-mid kcol-ktopicviews">
+	<td class="kcol-mid kcol-ktopicviews visible-desktop">
 		<span class="ktopic-views-number"><?php echo $this->formatLargeNumber ( $this->topic->hits );?></span>
 		<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_GEN_HITS');?> </span>
 	</td>
 
 	<td class="kcol-mid kcol-ktopiclastpost">
 		<div class="klatest-post-info">
-			<?php if ($this->topic->ordering) echo $this->getIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') ); ?>
 			<?php if (!empty($this->topic->avatar)) : ?>
-			<span class="ktopic-latest-post-avatar"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
+			<span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
 			<?php endif; ?>
 
 			<span class="ktopic-latest-post">
 			<?php
 				echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST') );
-				echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();
+				echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();
 			?>
 			</span>
 
@@ -108,6 +110,7 @@ $this->cache = false;
 	<td class="kcol-mid ktopicmoderation"><input class ="kcheck" type="checkbox" name="topics[<?php echo $this->topic->id?>]" value="1" /></td>
 <?php endif; ?>
 </tr>
+<!-- Module position -->
 <?php if ($this->module) : ?>
 <tr>
 	<td class="ktopicmodule" colspan="<?php echo empty($this->topicActions) ? 5 : 6 ?>"><?php echo $this->module; ?></td>

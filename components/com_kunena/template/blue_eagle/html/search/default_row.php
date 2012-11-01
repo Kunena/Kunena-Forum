@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Search
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,7 +23,24 @@ defined ( '_JEXEC' ) or die ();
 						<tbody>
 							<tr>
 								<td rowspan="2" valign="top" class="kprofile-left kresultauthor">
-								<p><?php echo $this->escape($this->message->name) ?></p>
+									<ul class="kpost-profile">
+										<li class="kpost-username">
+											<?php echo $this->message->getAuthor()->getLink() ?>
+										</li>
+										<li>
+											<?php
+											if ($this->useravatar) :
+											?>
+
+											<span class="kavatar">
+											<?php echo $this->message->getAuthor()->getLink( $this->useravatar ) ?>
+											</span>
+
+											<?php
+												endif;
+											?>
+										</li>
+									</ul>
 								</td>
 								<td class="kmessage-left resultmsg">
 									<div class="kmsgbody">
@@ -36,7 +53,7 @@ defined ( '_JEXEC' ) or die ();
 											<?php echo $this->messageHtml ?>
 										</div>
 										<div class="resultcat">
-											<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . $this->getCategoryLink ( $this->category, $this->escape($this->category->name))?>
+											<?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->category, $this->escape($this->category->name))) ?>
 										</div>
 									</div>
 								</td>

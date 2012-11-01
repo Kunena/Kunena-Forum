@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -39,7 +39,6 @@ class KunenaProfiler extends JProfiler {
 	public function stop($name) {
 		$item = array_pop($this->_heap);
 		if (!$item || $item->name != $name) {
-//			print_r($this->_heap);
 			trigger_error(__CLASS__.'::'.__FUNCTION__."('$name') is missing start()");
 		}
 		$delta = $item->stop($this->getmicrotime());

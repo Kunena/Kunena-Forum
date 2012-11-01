@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<!DOCTYPE jupgrade>
+<jupgrade>
+	<installer>
+		<file>administrator/components/com_kunena/install/j25upgrade.php</file>
+		<class>jUpgradeComponentKunena</class>
+	</installer>
+
+	<!-- The folders to copy to the new site. -->
+	<folders>
+		<folder>administrator/components/com_kunena</folder>
+		<folder>components/com_kunena</folder>
+		<folder>media/kunena</folder>
+	</folders>
+
+	<package>
+		<extension>
+			<name>plg_system_kunena</name>
+		</extension>
+		<extension>
+			<name>mod_kunenalatest</name>
+		</extension>
+		<extension>
+			<name>mod_kunenalogin</name>
+		</extension>
+		<extension>
+			<name>mod_kunenasearch</name>
+		</extension>
+		<extension>
+			<name>mod_kunenastats</name>
+		</extension>
+		<extension>
+			<name>plg_community_kunenagroups</name>
+		</extension>
+		<extension>
+			<name>plg_community_kunenamenu</name>
+		</extension>
+		<extension>
+			<name>plg_community_mykunena</name>
+		</extension>
+		<extension>
+			<name>plg_jxfinder_kunena</name>
+		</extension>
+		<extension>
+			<name>plg_system_kunenadiscuss</name>
+		</extension>
+		<extension>
+			<name>plg_search_kunenasearch</name>
+		</extension>
+		<extension>
+			<name>com_kunenaimporter</name>
+		</extension>
+	</package>
+</jupgrade>

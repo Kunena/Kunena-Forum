@@ -1,10 +1,9 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Site
- * @subpackage Lib
+ * @package Kunena.Framework
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  *
@@ -18,12 +17,12 @@
 defined ( '_JEXEC' ) or die ();
 
 class KunenaConfig extends JObject {
+
 	// New in Kunena 1.5.2: $id for JoomFish support
 	public $id = 0;
 	public $board_title = 'Kunena';
 	public $email = '';
 	public $board_offline = 0;
-	public $board_ofset = '0.00'; // DEPRECATED, needed in installer
 	public $offline_message = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
 	public $enablerss = 1;
 	public $threads_per_page = 20;
@@ -57,37 +56,27 @@ class KunenaConfig extends JObject {
 	public $maxsubject = 50;
 	public $maxsig = 300;
 	public $regonly = 0;
-	public $changename = 0;
 	public $pubwrite = 0;
 	public $floodprotection = 0;
 	public $mailmod = 0;
 	public $mailadmin = 0;
 	public $captcha = 0;
 	public $mailfull = 1;
-	public $allowavatar = 1; // DEPRECATED, needed in installer
 	public $allowavatarupload = 1;
 	public $allowavatargallery = 1;
-	public $avatarquality = 65;
+	public $avatarquality = 75;
 	public $avatarsize = 2048;
-	public $allowimageupload = 0; // DEPRECATED, needed in installer
-	public $allowimageregupload = 1; // DEPRECATED, needed in installer
 	public $imageheight = 800;
 	public $imagewidth = 800;
 	public $imagesize = 150;
-	public $allowfileupload = 0; // DEPRECATED, needed in installer
-	public $allowfileregupload = 1; // DEPRECATED, needed in installer
 	public $filetypes = 'txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2';
 	public $filesize = 120;
 	public $showranking = 1;
 	public $rankimages = 1;
-	public $avatar_src = 'fb'; // DEPRECATED, needed in installer
-	public $fb_profile = 'fb'; // DEPRECATED, needed in installer
-	public $pm_component = 'no'; // DEPRECATED, needed in installer
 	public $userlist_rows = 30;
 	public $userlist_online = 1;
 	public $userlist_avatar = 1;
 	public $userlist_name = 1;
-	public $userlist_username = 1;
 	public $userlist_posts = 1;
 	public $userlist_karma = 1;
 	public $userlist_email = 0;
@@ -104,10 +93,6 @@ class KunenaConfig extends JObject {
 	public $showpopsubjectstats = 1;
 	public $popsubjectcount = 5;
 	public $usernamechange = 0;
-	public $rules_infb = 1; // retired in 1.6 controlled via joommla menu
-	public $rules_cid = 1;
-	public $help_infb = 1; // retired in 1.6 controlled via joommla menu
-	public $help_cid = 1;
 	// New 1.0.5 config variables
 	// bbcode options
 	public $showspoilertag = 1;
@@ -119,7 +104,7 @@ class KunenaConfig extends JObject {
 	public $autoembedyoutube = 1;
 	public $autoembedebay = 1;
 	public $ebaylanguagecode = 'en-us';
-	public $fbsessiontimeout = 1800; // in seconds
+	public $sessiontimeout = 1800; // in seconds
 	// New 1.0.5RC2 config variables
 	public $highlightcode = 0;
 	// New 1.6 rss config vars
@@ -135,14 +120,11 @@ class KunenaConfig extends JObject {
 	public $rss_word_count = '0';
 	public $rss_old_titles = 1;
 	public $rss_cache = 900;
-	public $fbdefaultpage = 'recent';
+	public $defaultpage = 'recent';
 	// New 1.0.8 config variables
 	public $default_sort = 'asc'; // 'desc' for latest post first
-	// New 1.5.7 config variables
-	public $alphauserpointsnumchars = 0; // Integration feature for AlphaUserPoints component
 	// New 1.5.8 config variables
 	public $sef = 1;
-	public $sefcats = 0; // DEPRECATED, needed in installer
 	public $sefutf8 = 0;
 	// New for 1.6 -> Hide images and files for guests
 	public $showimgforguest = 1;
@@ -165,8 +147,6 @@ class KunenaConfig extends JObject {
 	public $post_dateformat_hover = 'datetime'; // See KunenaDate
 	// New for 1.6 -> hide IP
 	public $hide_ip = 1;
-	// New for 1.6 -> disable/enable activity stream
-	public $js_actstr_integration = 0; // DEPRECATED, used in installer
 	// New for 1.6 -> image file types
 	public $imagetypes = 'jpg,jpeg,gif,png';
 	public $checkmimetypes = 1;
@@ -176,13 +156,6 @@ class KunenaConfig extends JObject {
 	public $thumbwidth = 32;
 	// New for 1.6: hide profile info when user is deleted from joomla!
 	public $hideuserprofileinfo = 'put_empty';
-	// New for 1.6 -> New integration options
-	public $integration_access = 'auto';
-	public $integration_login = 'auto';
-	public $integration_avatar = 'auto';
-	public $integration_profile = 'auto';
-	public $integration_private = 'auto';
-	public $integration_activity = 'auto';
 	//New for 1.6: choose if you want that ghost message box checked by default
 	public $boxghostmessage = 0;
 	public $userdeletetmessage = 0;
@@ -203,8 +176,6 @@ class KunenaConfig extends JObject {
 	public $listcat_show_moderators = 1;
 	//New for 1.6.1: allow the admin to disable lightbox
 	public $lightbox = 1;
-	//New for 1.6.1: allow the admin to limit the length of the activity stream
-	public $activity_limit = 0;
 	//New for 1.6.2: choose the time since which to show the topics
 	public $show_list_time = 720;
 	//New for 1.6.2: configuration option to show online users by minutes or session time
@@ -229,7 +200,6 @@ class KunenaConfig extends JObject {
 	public $recaptcha_privatekey = '';
 	public $recaptcha_theme = 'white';
 	// New for 2.0.0
-	public $spoiler_image = '';
 	public $keywords = 1;
 	public $userkeywords = 0;
 	public $image_upload = 'registered';
@@ -240,14 +210,27 @@ class KunenaConfig extends JObject {
 	public $hold_newusers_posts = 0;
 	public $hold_guest_posts = 0;
 	public $attachment_limit = 8;
+	public $pickup_category = 0;
 	public $article_display = 'intro';
+<<<<<<< HEAD
 	public $lazyload = 0;
+=======
+	public $send_emails = 1;
+	public $stopforumspam_key = '';
+	public $fallback_english = 1;
+	public $cache = 1;
+	public $cache_time = 60; // 1 minute
+	public $ebay_affiliate_id = 5337089937;
+	public $iptracking = 1;
+	// New for 2.0.3
+	public $rss_feedburner_url = '';
+>>>>>>> upstream/master
 
 	public function __construct() {
 		parent::__construct ();
 	}
 
-	public function getInstance() {
+	public static function getInstance() {
 		static $instance = NULL;
 		if (! $instance) {
 			$instance = new KunenaConfig ();
@@ -258,6 +241,10 @@ class KunenaConfig extends JObject {
 
 	public function bind($properties) {
 		$this->setProperties($properties);
+
+		// Disable some experimental features
+		$this->keywords = 0;
+		$this->userkeywords = 0;
 	}
 
 	public function save() {
@@ -296,6 +283,22 @@ class KunenaConfig extends JObject {
 
 		// Perform custom validation of config data before we let anybody access it.
 		$this->check ();
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('kunena');
+		$plugins = array();
+		$dispatcher->trigger('onKunenaGetConfiguration', array('kunena.configuration', &$plugins));
+		$this->plugins = array();
+		foreach ($plugins as $name => $registry) {
+			if ($name && $registry instanceof JRegistry) $this->plugins[$name] = $registry;
+		}
+	}
+
+	/**
+	 * @internal
+	 */
+	public function getPlugin($name) {
+		return isset($this->plugins[$name]) ? $this->plugins[$name] : new JRegistry();
 	}
 
 	public function check() {
@@ -306,5 +309,11 @@ class KunenaConfig extends JObject {
 		$this->messages_per_page_search = max ( $this->messages_per_page_search, 2 );
 		$this->threads_per_page = max ( $this->threads_per_page, 2 );
 
+	}
+
+
+	public function getEmail() {
+		$email = $this->get('email');
+		return !empty($email) ? $email : JFactory::getApplication()->getCfg('mailfrom', '');
 	}
 }

@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage User
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -15,7 +15,7 @@ KunenaUserHelper::initialize();
 /**
  * Kunena User Helper Class
  */
-class KunenaUserHelper {
+abstract class KunenaUserHelper {
 	protected static $_instances = array ();
 	protected static $_instances_name = array ();
 	protected static $_online = null;
@@ -24,9 +24,7 @@ class KunenaUserHelper {
 	protected static $_topposters = null;
 	protected static $_me = null;
 
-	private function __construct() {}
-
-	public function initialize() {
+	public static function initialize() {
 		$id = JFactory::getUser()->id;
 		self::$_me = self::$_instances [$id] = new KunenaUser ( $id );
 	}
@@ -38,7 +36,7 @@ class KunenaUserHelper {
 	 * @return	JUser			The User object.
 	 * @since	1.6
 	 */
-	static public function get($identifier = null, $reload = false) {
+	public static function get($identifier = null, $reload = false) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if ($identifier === null || $identifier === false) {
 			KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -71,7 +69,7 @@ class KunenaUserHelper {
 		return self::$_instances [$id];
 	}
 
-	static public function getAuthor($id, $name) {
+	public static function getAuthor($id, $name) {
 		$id = (int) $id;
 		if ($id && !empty ( self::$_instances [$id] )) {
 			return self::$_instances [$id];
@@ -87,61 +85,61 @@ class KunenaUserHelper {
 		return $user;
 	}
 
-	static public function getMyself() {
+	/**
+	 * @return KunenaUser
+	 */
+	public static function getMyself() {
 		return self::$_me;
 	}
 
-	static public function loadUsers($userids = array()) {
-		if (!is_array($userids)) {
-			JError::raiseError ( 500, __CLASS__ . '::' . __FUNCTION__.'(): Parameter $userids is not array' );
-		}
-
+	public static function loadUsers(array $userids = array()) {
 		// Make sure that userids are unique and that indexes are correct
 		$e_userids = array();
 		foreach($userids as $userid){
-			if (empty ( self::$_instances [intval($userid)] )) $e_userids[intval($userid)] = intval($userid);
+			if (intval($userid) && empty ( self::$_instances [$userid] )) {
+				$e_userids[$userid] = $userid;
+			}
 		}
-		unset($e_userids[0]);
-		if (empty($e_userids)) return array();
 
-		$userlist = implode ( ',', $e_userids );
+		if (!empty($e_userids)) {
+			$userlist = implode ( ',', $e_userids );
 
-		$db = JFactory::getDBO ();
-		$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*
-			FROM #__users AS u
-			LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
-			WHERE u.id IN ({$userlist})";
-		$db->setQuery ( $query );
-		$results = $db->loadAssocList ();
-		KunenaError::checkDatabaseError ();
+			$db = JFactory::getDBO ();
+			$query = "SELECT u.name, u.username, u.email, u.block as blocked, u.registerDate, u.lastvisitDate, ku.*
+				FROM #__users AS u
+				LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
+				WHERE u.id IN ({$userlist})";
+			$db->setQuery ( $query );
+			$results = $db->loadAssocList ();
+			KunenaError::checkDatabaseError ();
+
+			foreach ( $results as $user ) {
+				$instance = new KunenaUser (false);
+				$instance->setProperties ( $user );
+				$instance->exists(true);
+				self::$_instances [$instance->userid] = $instance;
+			}
+
+			// Preload avatars if configured
+			$avatars = KunenaFactory::getAvatarIntegration();
+			$avatars->load($e_userids);
+		}
 
 		$list = array ();
-		foreach ( $results as $user ) {
-			$instance = new KunenaUser (false);
-			$instance->setProperties ( $user );
-			$instance->exists(true);
-			self::$_instances [$instance->userid] = $instance;
-		}
-
-		// Finally call integration preload as well
-		// Preload avatars if configured
-		$avatars = KunenaFactory::getAvatarIntegration();
-		$avatars->load($userids);
-
 		foreach ($userids as $userid) {
 			if (isset(self::$_instances [$userid])) $list [$userid] = self::$_instances [$userid];
 		}
 		return $list;
 	}
 
-	static public function getLastId() {
+	public static function getLastId() {
 		if (self::$_lastid === null) {
 			self::getTotalCount();
 		}
-		return self::$_lastid;
+		return (int) self::$_lastid;
 	}
 
-	static public function getTotalCount() {
+	public static function getTotalCount() {
 		if (self::$_total === null) {
 			$db = JFactory::getDBO ();
 			$config = KunenaFactory::getConfig();
@@ -153,16 +151,16 @@ class KunenaUserHelper {
 			list (self::$_total, self::$_lastid) = $db->loadRow ();
 			KunenaError::checkDatabaseError();
 		}
-		return self::$_total;
+		return (int) self::$_total;
 	}
 
-	static public function getTopPosters($limit=0) {
+	public static function getTopPosters($limit=0) {
 		$limit = $limit ? $limit : KunenaFactory::getConfig()->popusercount;
 		if (count(self::$_topposters) < $limit) {
 			$db = JFactory::getDBO ();
 			$query = "SELECT userid as id, posts AS count FROM #__kunena_users WHERE posts>0 ORDER BY posts DESC";
 			$db->setQuery ( $query, 0, $limit );
-			self::$_topposters = $db->loadObjectList ();
+			self::$_topposters = (array) $db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 		}
 		return self::$_topposters;
@@ -178,7 +176,7 @@ class KunenaUserHelper {
 				ORDER BY s.time DESC";
 
 			$db->setQuery($query);
-			self::$_online = $db->loadObjectList('userid');
+			self::$_online = (array) $db->loadObjectList('userid');
 			KunenaError::checkDatabaseError();
 		}
 		return self::$_online;
@@ -206,7 +204,7 @@ class KunenaUserHelper {
 				FROM #__session
 				WHERE client_id = 0 ' . $querytime;
 			$db->setQuery ( $query );
-			$sessions = $db->loadObjectList ();
+			$sessions = (array) $db->loadObjectList ();
 			KunenaError::checkDatabaseError ();
 
 			// need to calculate the joomla session lifetime in timestamp, to check if the sessions haven't expired
@@ -238,18 +236,19 @@ class KunenaUserHelper {
 
 	public static function isOnline($user, $yes = false, $no = 'offline') {
 		$user = self::get($user);
+		if (!$user->showOnline && !self::getMyself()->isModerator()) return $yes ? $no : false;
 		$online = false;
 		if (intval($user->userid) > 0) {
 			if (self::$_online === null) {
 				self::getOnlineUsers();
 			}
-			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time > $user->_session_timeout) : false;
+			$online = isset(self::$_online [$user->userid]) ? (self::$_online [$user->userid]->time >  time() - JFactory::getApplication()->getCfg ( 'lifetime', 15 ) * 60) : false;
 		}
 		if ($yes) return $online ? $yes : $no;
 		return $online;
 	}
 
-	function recount() {
+	public static function recount() {
 		$db = JFactory::getDBO ();
 
 		// If user has no user_topics, set posts into 0
@@ -274,6 +273,20 @@ class KunenaUserHelper {
 		if (KunenaError::checkDatabaseError ())
 			return false;
 		$rows += $db->getAffectedRows ();
+
+		// Update banned state
+		// TODO: move out of here, it's slow
+		$query = "UPDATE #__kunena_users AS u
+			LEFT JOIN (
+				SELECT userid, MAX(expiration) AS banned FROM #__kunena_users_banned GROUP BY userid
+			) AS b ON u.userid=b.userid
+			SET u.banned=b.banned";
+		$db->setQuery ($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		$rows += $db->getAffectedRows ();
+
 		return $rows;
 	}
 }

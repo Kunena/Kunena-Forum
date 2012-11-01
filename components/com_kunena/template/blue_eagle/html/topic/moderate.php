@@ -1,10 +1,10 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Default
+ * @package Kunena.Template.Blue_Eagle
  * @subpackage Topic
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -31,14 +31,21 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 				<?php echo JHTML::_( 'form.token' ); ?>
 
 				<div>
-					<?php echo JText::_('COM_KUNENA_GEN_TOPIC'); ?>:
+					<?php echo JText::_('COM_KUNENA_TOPIC'); ?>:
 					<strong><?php echo $this->escape( $this->topic->subject ); ?></strong>
 				</div>
 				<div>
-					<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?>:
+					<?php echo JText::_('COM_KUNENA_CATEGORY'); ?>:
 					<strong><?php echo $this->escape( $this->category->name ) ?></strong>
 				</div>
 
+				<div><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
+				<div class="kmoderate-topicicons">
+					<?php foreach ($this->topicIcons as $id=>$icon): ?>
+					<input type="radio" name="topic_emoticon" value="<?php echo $icon->id ?>" <?php echo ($icon->id == $this->topic->icon_id) ? ' checked="checked" ':'' ?> />
+					<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" />
+					<?php endforeach; ?>
+				</div>
 				<br />
 				<?php if (isset($this->message)) : ?>
 				<div><?php echo JText::_('COM_KUNENA_MODERATION_TITLE_SELECTED'); ?>:</div>
@@ -49,20 +56,18 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 							<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat'); ?>
 						</span>
 						<span class="kmessage-by">
-							<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . $this->message->getAuthor()->getLink() ?>
+							<?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->message->getAuthor()->getLink() ?>
 						</span>
 					</div>
 					<div class="kmessage-avatar"><?php echo $this->user->getAvatarImage('', 'list'); ?></div>
 					<div class="kmessage-msgtext"><?php echo KunenaHtmlParser::stripBBCode ($this->message->message, 300) ?></div>
 				</div>
 				<div>
-					<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER');
-					if ( $this->message->userid) : ?>:
+					<?php if ($this->userLink) :
+					echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?>:
 					<strong>
-						<?php echo CKunenaLink::GetModerateUserLink( intval($this->message->userid), $this->escape($this->message->name).' ('.intval($this->message->userid).')' ); ?>
+						<?php echo $this->userLink; ?>
 					</strong>
-					<?php else : ?>:
-					<strong><?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS'); ?></strong>
 					<?php endif; ?>
 				</div>
 				<?php if (!empty($this->replies)) : ?>
@@ -82,7 +87,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 
 				<div id="modtopicslist">
 					<?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_TOPIC' ); ?>:
-					<input id="kmod_targetid" type="text" size="7" name="targetid" value="" style="display: none"/>
+					<input id="kmod_targetid" type="text" size="7" name="targetid" value="" style="display: none" />
 					<?php echo $this->topiclist ?>
 				</div>
 
@@ -94,7 +99,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 					<input type="checkbox" name="changesubject" value="1" />
 					<?php echo JText::_ ( 'COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES' ); ?>
 				</div>
-				<?php if (0 && !isset($this->message)) : ?>
+				<?php if (!isset($this->message)) : ?>
 				<div>
 					<input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="shadow" value="1" />
 					<?php echo JText::_ ( 'COM_KUNENA_MODERATION_TOPIC_SHADOW' ); ?>

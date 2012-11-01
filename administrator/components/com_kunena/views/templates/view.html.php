@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -17,7 +17,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	function displayDefault() {
 		$this->setToolBarDefault();
 		$this->templates = $this->get('templates');
-		$this->assignRef ( 'navigation', $this->get ( 'AdminNavigation' ) );
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		$this->display();
 	}
 
@@ -28,30 +28,35 @@ class KunenaAdminViewTemplates extends KunenaView {
 
 	function displayEdit () {
 		$this->setToolBarEdit();
-		$app = JFactory::getApplication ();
 		$this->params = $this->get('editparams');
 		$this->details = $this->get('templatedetails');
-		$this->templatename = $app->getUserState ( 'kunena.edit.template');
+		$this->templatename = $this->app->getUserState ( 'kunena.edit.template');
 		$template = KunenaTemplate::getInstance($this->templatename);
 		$template->initializeBackend();
+
+		$this->templatefile = KPATH_SITE.'/template/'.$this->templatename.'/params.ini';
+
+		if ( !JFile::exists($this->templatefile))  {
+			$ourFileHandle = @fopen($this->templatefile, 'w');
+			if ($ourFileHandle) fclose($ourFileHandle);
+		}
+
 		$this->display();
 	}
 
 	function displayChoosecss() {
 		$this->setToolBarChoosecss();
-		$app = JFactory::getApplication ();
-		$this->templatename = $app->getUserState ( 'kunena.edit.template');
+		$this->templatename = $this->app->getUserState ( 'kunena.edit.template');
 		$this->dir = KPATH_SITE.'/template/'.$this->templatename.'/css';
 		jimport('joomla.filesystem.folder');
-		$this->files = JFolder::files($this->dir, '\.css$', false, false);		;
+		$this->files = JFolder::files($this->dir, '\.css$', false, false);
 		$this->display();
 	}
 
 	function displayEditcss() {
 		$this->setToolBarEditcss();
-		$app = JFactory::getApplication ();
-		$this->templatename = $app->getUserState ( 'kunena.editcss.tmpl');
-		$this->filename = $app->getUserState ( 'kunena.editcss.filename');
+		$this->templatename = $this->app->getUserState ( 'kunena.editcss.tmpl');
+		$this->filename = $this->app->getUserState ( 'kunena.editcss.filename');
 		$this->content = $this->get ( 'FileContentParsed');
 		$this->css_path = KPATH_SITE.'/template/'.$this->templatename.'/css/'.$this->filename;
 		$this->ftp = $this->get('FTPcredentials');
@@ -59,7 +64,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('publish', 'default.png', 'default_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
 		JToolBarHelper::spacer();
@@ -72,12 +77,12 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarAdd() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 	}
 
 	protected function setToolBarEdit() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::apply('apply');
 		JToolBarHelper::spacer();
@@ -90,7 +95,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarChoosecss() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('editcss', 'css.png', 'css_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
 		JToolBarHelper::spacer();
@@ -100,7 +105,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarEditcss() {
-		JToolBarHelper::title ( '&nbsp;', 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('savecss');
 		JToolBarHelper::spacer();

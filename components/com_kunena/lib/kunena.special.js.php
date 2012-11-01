@@ -4,7 +4,7 @@
  * @package Kunena.Site
  * @subpackage Lib
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -21,7 +21,7 @@ var KUNENA_POLL_OPTION_NAME = "<?php echo JText::_('COM_KUNENA_POLL_OPTION_NAME'
 var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "<?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW') ?>";
 var KUNENA_ICON_ERROR = "<?php echo KunenaFactory::getTemplate()->getImagePath('publish_x.png') ?>";
 <?php endif ?>
-<?php if ($this->my->id) : ?>
+<?php if ($this->me->userid) : ?>
 var kunena_anonymous_name = "<?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS') ?>";
 <?php endif ?>
 
@@ -39,26 +39,23 @@ window.addEvent('domready', function(){
 
 	function kunenaCheckPollallowed(catid) {
 		if ( pollcategoriesid[catid] !== undefined ) {
-			document.id('kbbcode-poll-options').setStyle('display');
 			document.id('kbbcode-poll-button').setStyle('display');
 		} else {
 			document.id('kbbcode-poll-button').setStyle('display','none');
-			document.id('kbbcode-poll-options').setStyle('display','none');
 		}
 	}
 
 	function kunenaCheckAnonymousAllowed(catid) {
-		if ( arrayanynomousbox[catid] !== undefined ) {
-			document.id('kanynomous-check').setStyle('display');
-		} else {
-			document.id('kanynomous-check').setStyle('display','none');
-			kbutton.removeProperty('checked');
+		if(document.id('kanynomous-check') !== null && document.id('kanonymous') !== null) {
+			if ( arrayanynomousbox[catid] !== undefined ) {
+				document.id('kanynomous-check').setStyle('display');
+				document.id('kanonymous').set('checked','checked');
+			} else {
+				document.id('kanynomous-check').setStyle('display','none');
+				kbutton.removeProperty('checked');
+			}
 		}
-
-		if ( arrayanynomousbox[catid] ) {
-			document.id('kanonymous').set('checked','checked');
-		}
-		<?php if ($this->my->id != 0) : ?>
+		<?php if ($this->me->userid != 0) : ?>
 		kunenaSelectUsername(kbutton,kuser);
 		<?php endif ?>
 	}
@@ -72,7 +69,7 @@ window.addEvent('domready', function(){
 	if(document.id('kauthorname') !== undefined) {
 		var kuser = document.id('kauthorname').get('value');
 		var kbutton = document.id('kanonymous');
-		<?php if ($this->my->id != 0) : ?>
+		<?php if ($this->me->userid != 0) : ?>
 		kunenaSelectUsername(kbutton, kuser);
 		kbutton.addEvent('click', function(e) {
 			kunenaSelectUsername(this, kuser);

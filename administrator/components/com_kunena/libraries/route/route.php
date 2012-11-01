@@ -4,7 +4,7 @@
  * @package Kunena.Framework
  * @subpackage Route
  *
- * @copyright (C) 2008 - 2011 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -53,6 +53,8 @@ abstract class KunenaRoute {
 	static $uris = array();
 	static $urisSave = false;
 
+	static protected $filtered = array();
+
 	public static function current($object = false) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$uri = self::prepare();
@@ -80,9 +82,13 @@ abstract class KunenaRoute {
 
 	public static function _($uri = null, $xhtml = true, $ssl=0) {
 		if (self::$adminApp) {
-			// Use default routing in administration
 			if ($uri instanceof JURI) $uri = $uri->toString ();
-			return JRoute::_($uri, $xhtml, $ssl);
+			if (substr($uri, 0, 14) == 'administrator/') {
+				// Use default routing in administration
+				return JRoute::_(substr($uri, 14), $xhtml, $ssl);
+			} else {
+				return JUri::root(true)."/{$uri}";
+			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
@@ -133,7 +139,7 @@ abstract class KunenaRoute {
 		return self::$home;
 	}
 
-	protected static function getHome($item) {
+	public static function getHome($item) {
 		if (!$item) return null;
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		$id = $item->id;
@@ -156,7 +162,8 @@ abstract class KunenaRoute {
 		$user = KunenaUserHelper::getMyself();
 		$cache = self::getCache();
 		// TODO: can use viewlevels instead of userid
-		$data = $cache->get($user->userid, 'com_kunena.route');
+		// FIXME: enable caching after fixing the issues
+		$data = false; // $cache->get($user->userid, 'com_kunena.route');
 		if ($data !== false) {
 			list(self::$subtree, self::$uris) = unserialize($data);
 		}
@@ -170,7 +177,8 @@ abstract class KunenaRoute {
 		$data = array(self::$subtree, self::$uris);
 		$cache = self::getCache();
 		// TODO: can use viewlevels instead of userid
-		$cache->store(serialize($data), $user->userid, 'com_kunena.route');
+		// FIXME: enable caching after fixing the issues
+		//$cache->store(serialize($data), $user->userid, 'com_kunena.route');
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
@@ -184,20 +192,22 @@ abstract class KunenaRoute {
 		}
 	}
 
-	function stringURLSafe($string) {
-		static $filtered = array();
+	public static function stringURLSafe($string, $default = null) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		if (!isset($filtered[$string])) {
+		if (!isset(self::$filtered[$string])) {
 			if (version_compare(JVERSION, '1.6', '>')) {
 				// Joomla 1.6+
-				$filtered[$string] = JApplication::stringURLSafe($string);
+				self::$filtered[$string] = JApplication::stringURLSafe($string);
 			} else {
 				// Joomla 1.5
-				$filtered[$string] =  self::$config->get('sefutf8') ? self::stringURLUnicodeSlug($string) : JFilterOutput::stringURLSafe($string);
+				self::$filtered[$string] = self::$config->get('sefutf8') ? self::stringURLUnicodeSlug($string) : JFilterOutput::stringURLSafe($string);
 			}
+			// Remove beginning and trailing "whitespace", fixes #1130 where category alias creation fails on error: Duplicate entry '-'.
+			self::$filtered[$string] = trim(self::$filtered[$string], '-_ ');
+			if ($default && empty(self::$filtered[$string])) self::$filtered[$string] = $default;
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
-		return $filtered[$string];
+		return self::$filtered[$string];
 	}
 
 	/**
@@ -219,7 +229,7 @@ abstract class KunenaRoute {
 		$str = str_replace('-', ' ', $str);
 
 		// Replace forbidden characters by whitespaces
-		$str = preg_replace('#[:\#\*"@+=;!&\.%()\]\/\'\\\\|\[]#', "\x20", $str);
+		$str = preg_replace('#[:\#\*"@+=;!><&\.,%()\]\/\'\\\\|\[]#', "\x20", $str);
 
 		// Delete all '?'
 		$str = str_replace('?', '', $str);
@@ -242,7 +252,7 @@ abstract class KunenaRoute {
 
 		$vars = array();
 		foreach ($aliases as $object) {
-			if ($alias == $object->alias) {
+			if (JString::strtolower($alias) == JString::strtolower($object->alias)) {
 				$var = $object->type != 'legacy' ? $object->type : 'view';
 				$vars [$var] = $object->type != 'layout' ? $object->item : preg_replace('/.*\./', '', $object->item);
 				if ($var == 'catid') $vars ['view'] = 'category';
@@ -274,15 +284,24 @@ abstract class KunenaRoute {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 	}
 
+	public static function cleanup() {
+		self::$filtered = array();
+	}
+
 	protected static function prepare($uri = null) {
 		static $current = array();
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!$uri || (is_string($uri) && $uri[0] == '&')) {
 			if (!isset($current[$uri])) {
 				$get = array();
+				// If values are both in GET and POST, they are only stored in POST
+				foreach (JRequest::get( 'post' ) as $key=>$value) {
+					if (($key == 'view' || $key == 'layout' || $key == 'task') && !preg_match('/[^a-zA-Z0-9_ ]/i', $value))
+						$get[$key] = $value;
+				}
 				// Make sure that request URI is not broken
 				foreach (JRequest::get( 'get' ) as $key=>$value) {
-					if (preg_match('/[^a-z]/', $key)) continue;
+					if (preg_match('/[^a-zA-Z]/', $key)) continue;
 					if ($key == 'q' || $key == 'searchuser') {
 						// Allow all values
 					} elseif (preg_match('/[^a-zA-Z0-9_ ]/i', $value)) {
@@ -291,12 +310,13 @@ abstract class KunenaRoute {
 					}
 					$get[$key] = $value;
 				}
-				$current[$uri] = JURI::getInstance('index.php?'.http_build_query($get).$uri);
-				$current[$uri]->delVar ( 'Itemid' );
-				$current[$uri]->delVar ( 'defaultmenu' );
-				$current[$uri]->delVar ( 'language' );
+				$uri = $current[$uri] = JURI::getInstance('index.php?'.http_build_query($get).$uri);
+				self::setItemID($uri);
+				$uri->delVar ( 'defaultmenu' );
+				$uri->delVar ( 'language' );
+			} else {
+				$uri = $current[$uri];
 			}
-			$uri = $current[$uri];
 		} elseif (is_numeric($uri)) {
 			if (!isset(self::$menu[intval($uri)])) {
 				KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -387,11 +407,13 @@ abstract class KunenaRoute {
 			$language = JFactory::getDocument()->getLanguage();
 			$cache = self::getCache();
 
-			self::$search = unserialize($cache->get('search', "com_kunena.route.{$language}.{$user->userid}"));
+			// FIXME: enable caching after fixing the issues
+			self::$search = false; //unserialize($cache->get('search', "com_kunena.route.{$language}.{$user->userid}"));
 			if (self::$search === false) {
 				self::$search['home'] = array();
 				foreach ( self::$menu as $item ) {
-					if (! is_object ( $item ))
+					// Joomla! 1.5:
+					if (! is_object ( $item ) || (isset($item->published) && $item->published < 1 ))
 						continue;
 
 					// Do not add menu items for other languages
@@ -407,7 +429,8 @@ abstract class KunenaRoute {
 						self::$search[$item->query['view']][$home ? $home->id : 0][$item->id] = $item->id;
 					}
 				}
-				$cache->store(serialize(self::$search), 'search', "com_kunena.route.{$language}.{$user->userid}");
+				// FIXME: enable caching after fixing the issues
+				//$cache->store(serialize(self::$search), 'search', "com_kunena.route.{$language}.{$user->userid}");
 			}
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -419,6 +442,7 @@ abstract class KunenaRoute {
 
 		$view = $uri->getVar('view');
 		$catid = (int) $uri->getVar('catid');
+		$Itemid = (int) $uri->getVar('Itemid');
 		$key = $view.$catid;
 		if (!isset($candidates[$key])) {
 			if (self::$search === false) self::build();
@@ -427,7 +451,7 @@ abstract class KunenaRoute {
 				// Search from the current home menu
 				$search[self::$home->id] = 1;
 				// Then search from all linked home menus
-				$search += self::$search['home'][self::$home->id];
+				if (isset(self::$search['home'][self::$home->id])) $search += self::$search['home'][self::$home->id];
 			}
 			// Finally search from other home menus
 			$search += self::$search['home'];
@@ -446,26 +470,15 @@ abstract class KunenaRoute {
 			$candidates[$key] += !empty(self::$search[$view][0]) ? self::$search[$view][0] : array();
 			if ($view == 'topic') $candidates[$key] += !empty(self::$search['category'][0]) ? self::$search['category'][0] : array();
 		}
-		$bestid = $bestcount = 0;
-		//echo "$key "; print_r($candidates[$key]);
+
+		// Check current menu item first
+		$bestcount = ($Itemid && isset(self::$menu[$Itemid])) ? self::checkItem(self::$menu[$Itemid], $uri) : 0;
+		$bestid = $bestcount ? $Itemid : 0;
+
+		// Then go through all candidates
 		foreach ($candidates[$key] as $id) {
 			$item = self::$menu[$id];
-			$authorise = isset($item->parent_id) ? self::$menus->authorise($item->id) : !empty($item->published) && (!isset ( $item->access ) || $item->access <= JFactory::getUser()->aid);
-			if (!$authorise) {
-				continue;
-			}
-
-			switch ($item->query['view']) {
-				case 'home':
-					$matchcount = 1;
-					break;
-				case 'category':
-				case 'topic':
-					$matchcount = self::checkCategory($item, $uri);
-					break;
-				default:
-					$matchcount = self::check($item, $uri);
-			}
+			$matchcount = self::checkItem($item, $uri);
 			if ($matchcount > $bestcount) {
 				// This is our best candidate this far
 				$bestid = $item->id;
@@ -477,11 +490,41 @@ abstract class KunenaRoute {
 		return $bestid;
 	}
 
+	protected static function checkItem($item, $uri) {
+		$authorise = version_compare(JVERSION, '1.6', '>') ? self::$menus->authorise($item->id) : !isset ( $item->access ) || $item->access <= JFactory::getUser()->aid;
+		if (!$authorise) {
+			return 0;
+		}
+		$catid = (int) $uri->getVar('catid');
+		if ( !empty($item->query['view']) ) {
+			switch ($item->query['view']) {
+				case 'home':
+					$matchcount = self::checkHome($item, $catid);
+					break;
+				case 'category':
+				case 'topic':
+					$matchcount = self::checkCategory($item, $uri);
+					break;
+				default:
+					$matchcount = self::check($item, $uri);
+			}
+			return $matchcount;
+		} else {
+			return 1;
+		}
+	}
+
 	protected static function checkHome($item, $catid) {
 		static $cache = array();
-		if (!$catid) return true;
+		if (!$catid) return 1;
 		if (!isset($cache[$item->id])) {
-			$params = new JParameter($item->params);
+			if (version_compare(JVERSION, '1.6', '>')) {
+				// Joomla 1.6+
+				$params = $item->params;
+			} else {
+				// Joomla 1.5
+				$params = new JParameter($item->params);
+			}
 			$catids = $params->get('catids', array());
 			if (!is_array($catids)) {
 				$catids = explode(',', $catids);
@@ -492,13 +535,14 @@ abstract class KunenaRoute {
 			unset($catids[0], $catids['']);
 			$cache[$item->id] = (array) $catids;
 		}
-		return empty($cache[$item->id]) || isset($cache[$item->id][$catid]);
+		return intval(empty($cache[$item->id]) || isset($cache[$item->id][$catid]));
 	}
 
 	protected static function checkCategory($item, $uri) {
 		static $cache = array();
 		$catid = (int) $uri->getVar('catid');
-		if (!$catid) return self::check($item, $uri);
+		$check = self::check($item, $uri);
+		if (!$check || !$catid) return $check;
 		if (!isset($cache[$item->id])) {
 			$cache[$item->id] = array();
 			if (!empty($item->query['catid'])) {
@@ -506,7 +550,7 @@ abstract class KunenaRoute {
 				$cache[$item->id][$item->query['catid']] = KunenaForumCategoryHelper::get($item->query['catid']);
 			}
 		}
-		return isset($cache[$item->id][$catid]) * 8;
+		return intval(isset($cache[$item->id][$catid])) * 8;
 	}
 
 	protected static function check($item, $uri) {

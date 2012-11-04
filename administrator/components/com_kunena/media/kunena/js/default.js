@@ -866,29 +866,10 @@ window.addEvent('domready', function(){
 	
 	if ( document.id('kunena_url_avatargallery') != undefined ) {
 		document.id('avatar_category_select').addEvent('change', function(e){
-			// we getting the name of gallery selected in drop-down by user
 			var avatar_selected= document.id('avatar_category_select').getSelected();
-			
-			var td_avatar = document.id('kgallery_avatar_list');
-			// we remove avatar which exist in td tag to allow us to put new one items
-			document.id('kgallery_avatar_list').empty(); 
-			// we getting from hidden input the url of kunena image gallery
-			var url_gallery_main = document.id('Kunena_Image_Gallery_URL').get('value');
-
-			var id_to_select = document.id('Kunena_'+avatar_selected.get('value'));
-			var name_to_select = id_to_select.getProperty('name');
-			var image_object = JSON.decode(id_to_select.get('value'));
-
-			for(var i = 0, len = image_object.length; i < len; ++i) {
-				var SpanElement  = new Element('span');
-				var LabelElement = new Element('label', {for: 'kavatar'+i});
-				var ImageElement = new Element('img', {src: url_gallery_main+'/'+name_to_select+'/'+image_object[i], alt: ''});
-				var InputElement  = new Element('input', {id: 'kavatar'+i, type: 'radio', name: 'avatar', value: 'gallery/'+name_to_select+'/'+image_object[i]});
-				SpanElement.inject(td_avatar);
-				LabelElement.inject(SpanElement);
-				ImageElement.inject(LabelElement);
-				InputElement.inject(SpanElement);
-			}
+			var url = "";
+			var urlreg = new  RegExp("_GALLERY_","g");
+			location.href=url.replace(urlreg, avatar_selected.get('value'));
 		});
 	}
 	

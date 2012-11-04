@@ -448,6 +448,30 @@ class KunenaViewUser extends KunenaView {
 		echo $this->loadTemplateFile('avatar');
 	}
 
+	function getAllImagesInGallery() {
+		$path = JPATH_ROOT . '/media/kunena/avatars/gallery';
+		$galleryFolders = JFolder::folders($path);
+
+		$files_list = array();
+		$defaultGallery = JFolder::files($path);
+		$newdefaultGallery = array();
+		foreach($defaultGallery as $image) {
+			if( $image != 'index.html' ) $newdefaultGallery[] = $image;
+		}
+
+		$files_list['default'] = json_encode($newdefaultGallery);
+		foreach($galleryFolders as $folder) {
+			$tmp = JFolder::files($path. '/' .$folder);
+			$newgalleryFolders = array();
+			foreach($tmp as $img) {
+				if( $img != 'index.html' )$newgalleryFolders[] = $img;
+			}
+			$files_list[$folder] = json_encode($newgalleryFolders);
+		}
+
+		return $files_list;
+	}
+
 	function displayEditSettings() {
 		$item = new StdClass();
 		$item->name = 'messageordering';

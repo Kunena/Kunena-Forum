@@ -370,7 +370,7 @@ PX		EM			PCT			PT
 #Kunena .klatest-avatar,
 #Kunena .ktopic-latest-post-avatar {
 	display: block;
-	height: 36px;
+	height: auto;
 	width: 36px;
 	padding: 1px;
 	margin: 4px 6px 2px 0;

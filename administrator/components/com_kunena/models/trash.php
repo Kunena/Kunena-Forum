@@ -181,14 +181,10 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$topic = $this->app->getUserState('com_kunena.topic');
 		$message = $this->app->getUserState('com_kunena.message');
 
-		$ids = implode ( ',', $ids );
-
 		if ( $topic ) {
-			$items = KunenaForumTopicHelper::getTopics($ids);
+			$items = KunenaForumTopicHelper::getTopics((array)$ids);
 		} elseif ( $message ) {
-			$items = KunenaForumMessageHelper::getMessages($ids);
-		} else {
-
+			$items = KunenaForumMessageHelper::getMessages((array)$ids);
 		}
 
 		return $items;

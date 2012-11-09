@@ -15,7 +15,7 @@ $locations = array('top','bottom');
 if (!isset($this->location)) $this->location = 0;
 $goto = '<a name="forum'.$locations[$this->location].'"></a>';
 $this->location ^= 1;
-$goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$this->location], $this->getIcon ( 'kforum'.$locations[$this->location], JText::_('COM_KUNENA_GEN_GOTO'.strtoupper($locations[$this->location] )) ), 'nofollow', 'kbuttongoto');
+$goto .= '<a class="kbuttongoto" href="#forum'.$locations[$this->location].'" rel="nofollow">' . $this->getIcon ( 'kforum'.$locations[$this->location], JText::_('COM_KUNENA_GEN_GOTO'.strtoupper($locations[$this->location] )) ) . '</a>';
 ?>
 <table class="klist-actions">
 	<tr>

@@ -88,10 +88,11 @@ abstract class KunenaHtmlParser {
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
 		$bbcode->SetAllowAmpersand($html);
-		$txt = strip_tags($bbcode->Parse($txt));
+		$txt = $bbcode->Parse($txt);
+		$txt = self::prepareContent ( $txt );
+		$txt = strip_tags($txt);
 		if (!$html)
 			$bbcode->UnHTMLEncode($txt);
-		$txt = self::prepareContent ( $txt );
 
 		return $txt;
 	}

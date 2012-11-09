@@ -28,6 +28,7 @@ class KunenaView extends JView {
 	public function __construct($config = array()){
 		$name = isset($config['name']) ? $config['name'] : $this->getName();
 		$this->document = JFactory::getDocument();
+		$this->document->setBase('');
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->app = JFactory::getApplication ();
 		$this->me = KunenaUserHelper::getMyself();

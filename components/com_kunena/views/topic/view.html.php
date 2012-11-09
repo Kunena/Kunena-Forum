@@ -760,9 +760,9 @@ class KunenaViewTopic extends KunenaView {
 
 			// Link to individual message
 			if ($this->config->ordering_system == 'replyid') {
-				$this->numLink = CKunenaLink::GetSamePageAnkerLink( $message->id, '#[K=REPLYNO]' );
+				$this->numLink = $this->getSamePageAnkerLink ( $message->id, '#[K=REPLYNO]' );
 			} else {
-				$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $message->id, '#' . $message->id );
+				$this->numLink = $this->getSamePageAnkerLink ( $message->id, '#' . $message->id );
 			}
 
 			if ($this->message->hold == 0) {
@@ -875,9 +875,9 @@ class KunenaViewTopic extends KunenaView {
 
 	public function getNumLink($mesid, $replycnt) {
 		if ($this->config->ordering_system == 'replyid') {
-			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $mesid, '#' . $replycnt );
+			$this->numLink = $this->getSamePageAnkerLink ( $mesid, '#' . $replycnt );
 		} else {
-			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $mesid, '#' . $mesid );
+			$this->numLink = $this->getSamePageAnkerLink ( $mesid, '#' . $mesid );
 		}
 
 		return $this->numLink;
@@ -961,5 +961,9 @@ class KunenaViewTopic extends KunenaView {
 			$idstring .= "&id=$id";
 		$catidstr = "&catid=$catid";
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view=poll&do={$do}{$catidstr}{$idstring}" );
+	}
+
+	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '') {
+		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker .'"'. ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
 	}
 }

@@ -444,6 +444,8 @@ class KunenaViewUser extends KunenaView {
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 
+		$this->galleryImagesList = $this->getAllImagesInGallery();
+
 		$this->row(true);
 		echo $this->loadTemplateFile('avatar');
 	}

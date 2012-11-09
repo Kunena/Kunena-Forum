@@ -864,7 +864,7 @@ window.addEvent('domready', function(){
 		});
 	}
 	
-	if ( document.id('kunena_url_avatargallery') != undefined ) {
+	if ( document.id('avatar_category_select') != undefined ) {
 		document.id('avatar_category_select').addEvent('change', function(e){
 			// we getting the name of gallery selected in drop-down by user
 			var avatar_selected= document.id('avatar_category_select').getSelected();

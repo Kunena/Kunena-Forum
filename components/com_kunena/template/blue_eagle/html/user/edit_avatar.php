@@ -58,7 +58,7 @@ $i=0;
 					<td class="kuadesc"><?php echo $this->galleries; ?></td>
 				</tr>
 				<tr>
-					<td class="kuadesc">
+					<td id="kgallery_avatar_list" class="kuadesc">
 					<?php
 					$kid = 0;
 					foreach ($this->galleryimg as $avatarimg) : ?>

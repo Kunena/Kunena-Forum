@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaForumMessageAttachment extends JObject {
 	protected $_exists = false;
 	protected $_db = null;
-	protected $_disabled = false;
+	public $disabled = false;
 
 	protected static $_directory = 'media/kunena/attachments';
 
@@ -105,17 +105,17 @@ class KunenaForumMessageAttachment extends JObject {
 					$this->_thumblink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), 'nofollow' );
 					$this->_textLink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
 			}
-			$this->_disabled = false;
+			$this->disabled = false;
 			if (! KunenaUserHelper::getMyself()->exists()) {
 				if ($this->_shorttype == 'image' && ! $config->showimgforguest) {
-					$this->_disabled = true;
+					$this->disabled = true;
 					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG' );
 				}
 				if ($this->_shorttype != 'image' && ! $config->showfileforguest) {
-					$this->_disabled = true;
+					$this->disabled = true;
 					$this->_textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' );
 				}
-				if ($this->_disabled) {
+				if ($this->disabled) {
 					$this->_thumblink = '<img src="' . JURI::root() .'media/kunena/images/attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
 					$this->_imagelink = null;
 					$this->size = 0;
@@ -234,7 +234,7 @@ class KunenaForumMessageAttachment extends JObject {
 	 */
 	public function save($updateOnly = false) {
 		// Do not save altered message
-		if ($this->_disabled) return;
+		if ($this->disabled) return;
 
 		// Create the messages table object
 		$table = $this->getTable ();
@@ -342,10 +342,13 @@ class KunenaForumMessageAttachment extends JObject {
 			return false;
 		}
 		$this->generate();
-		if ($this->_disabled) {
+		// TODO: In the future we might want to separate read and peak
+/*
+		if ($this->disabled) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			return false;
 		}
+*/
 		return true;
 	}
 

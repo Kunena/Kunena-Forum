@@ -315,7 +315,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	public function newTopic(array $fields=null, $user=null, $safefields=null) {
-		$catid = isset($safefields['category_id']) ? $safefields['category_id'] : $this->getNewTopicCategory()->id;
+		$catid = isset($safefields['category_id']) ? $safefields['category_id'] : $this->getNewTopicCategory($user)->id;
 		$user = KunenaUserHelper::get($user);
 		$message = new KunenaForumMessage();
 		$message->catid = $catid;

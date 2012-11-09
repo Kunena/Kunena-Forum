@@ -49,10 +49,5 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 		</tr>
 	</table>
 </div>
-	<?php if ( $this->config->version_check ) : ?>
-	<div class="kadmin-welcome">
-		<?php echo $this->versioncheck; ?>
-	</div>
-	<?php endif; ?>
 </div>
 </div>

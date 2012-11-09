@@ -55,7 +55,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			'topic.post.read'=>array('Read'),
 			'topic.post.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
 			'topic.post.thankyou' =>array('Read', 'NotBanned'),
-			'topic.post.unthankyou' =>array('Read', 'NotBanned', 'Admin'),
+			'topic.post.unthankyou' =>array('Read', 'NotBanned', 'Moderate'),
 			'topic.post.edit'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.post.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
 			'topic.post.approve'=>array('Read', 'NotBanned', 'Moderate'),

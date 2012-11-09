@@ -964,8 +964,6 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '') {
-		$document = JFactory::getDocument();
-		$document->setBase('');
 		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker .'"'. ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
 	}
 }

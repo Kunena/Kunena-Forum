@@ -1533,7 +1533,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if (!is_object ( $attachment )) {
 			return htmlspecialchars($content);
 
-		} elseif ($attachment->exists() && !$attachment->authorise()) {
+		} elseif ($attachment->exists() && (!$attachment->authorise() || $attachment->disabled)) {
 			// Hide between content from non registered users
 			$link = $attachment->getTextLink();
 			return '<div class="kmsgattach">' . $link . '</div>';

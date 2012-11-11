@@ -43,7 +43,7 @@ class CKunenaUpload {
 	protected $validImageExts = array();
 	protected $validFileExts = array();
 
-	function __construct() {
+	function __construct($catid=null) {
 		$this->_db = JFactory::getDBO ();
 		$this->_my = JFactory::getUser ();
 		$this->_session = KunenaFactory::getSession ();
@@ -51,8 +51,8 @@ class CKunenaUpload {
 		$this->_isimage = false;
 		$this->_isfile = false;
 		$me = KunenaUserHelper::getMyself();
-		$this->validImageExts = (array) KunenaForumMessageAttachmentHelper::getImageExtensions();
-		$this->validFileExts = (array) KunenaForumMessageAttachmentHelper::getFileExtensions();
+		$this->validImageExts = (array) KunenaForumMessageAttachmentHelper::getImageExtensions($catid,$me->userid);
+		$this->validFileExts = (array) KunenaForumMessageAttachmentHelper::getFileExtensions($catid,$me->userid);
 		$this->setImageResize(intval($this->_config->imagesize)*1024, intval($this->_config->imagewidth), intval($this->_config->imageheight), intval($this->_config->imagequality));
 	}
 

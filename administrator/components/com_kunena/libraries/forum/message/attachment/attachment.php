@@ -155,10 +155,10 @@ class KunenaForumMessageAttachment extends JObject {
 		return true;
 	}
 
-	function upload($key='kattachment') {
+	function upload($key='kattachment', $catid=null) {
 		require_once (KPATH_SITE . '/lib/kunena.upload.class.php');
 		$path = JPATH_ROOT . '/media/kunena/attachments/' . $this->userid;
-		$upload = new CKunenaUpload();
+		$upload = new CKunenaUpload($catid);
 		$upload->uploadFile($path, $key, '', false);
 		$fileinfo = $upload->getFileInfo();
 

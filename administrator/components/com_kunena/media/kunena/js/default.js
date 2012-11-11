@@ -884,8 +884,13 @@ window.addEvent('domready', function(){
 			for(var i = 0, len = image_object.length; i < len; ++i) {
 				var SpanElement  = new Element('span');
 				var LabelElement = new Element('label', {for: 'kavatar'+i});
-				var ImageElement = new Element('img', {src: url_gallery_main+'/'+name_to_select+'/'+image_object[i], alt: ''});
-				var InputElement  = new Element('input', {id: 'kavatar'+i, type: 'radio', name: 'avatar', value: 'gallery/'+name_to_select+'/'+image_object[i]});
+				if ( name_to_select != 'default' ) {
+					var ImageElement = new Element('img', {src: url_gallery_main+'/'+name_to_select+'/'+image_object[i], alt: ''});
+					var InputElement  = new Element('input', {id: 'kavatar'+i, type: 'radio', name: 'avatar', value: 'gallery/'+name_to_select+'/'+image_object[i]});
+				} else {
+					var ImageElement = new Element('img', {src: url_gallery_main+'/'+image_object[i], alt: ''});
+					var InputElement  = new Element('input', {id: 'kavatar'+i, type: 'radio', name: 'avatar', value: 'gallery/'+image_object[i]});
+				}
 				SpanElement.inject(td_avatar);
 				LabelElement.inject(SpanElement);
 				ImageElement.inject(LabelElement);

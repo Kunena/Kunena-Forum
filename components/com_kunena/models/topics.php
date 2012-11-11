@@ -106,7 +106,7 @@ class KunenaModelTopics extends KunenaModel {
 	}
 
 	public function getTopics() {
-		if ($this->topics === false) {		
+		if ($this->topics === false) {
 			$layout = $this->getState ( 'layout' );
 			$mode = $this->getState('list.mode');
 			if ($mode == 'plugin') {
@@ -118,7 +118,7 @@ class KunenaModelTopics extends KunenaModel {
 					JPluginHelper::importPlugin('kunena');
 					$dispatcher = JDispatcher::getInstance();
 					$dispatcher->trigger('onKunenaGetTopics', array($layout, $pluginmode, &$topics, &$total, $this));
-					
+
 					if(!empty($topics)) {
 						$this->topics = $topics;
 						$this->total = $total;

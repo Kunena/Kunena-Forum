@@ -47,6 +47,9 @@ class KunenaModelTopics extends KunenaModel {
 		$mode = $this->getWord ( 'mode', 'default' );
 		$this->setState ( 'list.mode', $mode );
 
+		$modetype = $this->getWord ( 'modetype', '' );
+		$this->setState ( 'list.modetype', $modetype );
+
 		$catid = $this->getInt ( 'catid' );
 		if ($catid) {
 			$latestcategory = array($catid);

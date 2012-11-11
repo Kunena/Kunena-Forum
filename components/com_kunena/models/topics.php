@@ -103,14 +103,34 @@ class KunenaModelTopics extends KunenaModel {
 	}
 
 	public function getTopics() {
-		if ($this->topics === false) {
-			$layout = $this->getState ( 'layout');
-			switch ($layout) {
-				case 'user':
-					$this->getUserTopics();
-					break;
-				default:
-					$this->getRecentTopics();
+		if ($this->topics === false) {		
+			$layout = $this->getState ( 'layout' );
+			$mode = $this->getState('list.mode');
+			if ($mode == 'plugin') {
+				$pluginmode = $this->getState('list.modetype');
+				if(!empty($pluginmode)) {
+					$total = 0;
+					$topics = false;
+
+					JPluginHelper::importPlugin('kunena');
+					$dispatcher = JDispatcher::getInstance();
+					$dispatcher->trigger('onKunenaGetTopics', array($layout, $pluginmode, &$topics, &$total, $this));
+					
+					if(!empty($topics)) {
+						$this->topics = $topics;
+						$this->total = $total;
+						$this->_common ();
+					}
+				}
+			}
+			if ($this->topics === false) {
+				switch ($layout) {
+					case 'user':
+						$this->getUserTopics();
+						break;
+					default:
+						$this->getRecentTopics();
+				}
 			}
 		}
 		return $this->topics;

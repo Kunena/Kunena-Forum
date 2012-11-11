@@ -643,6 +643,11 @@ class KunenaViewTopic extends KunenaView {
 				$this->topicButtons->set('indented', $this->getButton ( sprintf($url, 'indented'), 'indented', 'layout', 'user'));
 			}
 		}
+
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher = JDispatcher::getInstance();
+		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
+
 		return $this->loadTemplateFile('actions');
 	}
 
@@ -694,6 +699,10 @@ class KunenaViewTopic extends KunenaView {
 		} else {
 			$this->message->authorise('delete') ? $this->messageButtons->set('delete', $this->getButton ( sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		}
+
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher = JDispatcher::getInstance();
+		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
 
 		return $this->loadTemplateFile("message_actions");
 	}

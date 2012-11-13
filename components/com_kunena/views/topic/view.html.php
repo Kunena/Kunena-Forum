@@ -722,8 +722,11 @@ class KunenaViewTopic extends KunenaView {
 					$message->thankyou = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
 				}
 
+				if( $this->message->authorise('unthankyou') && $this->me->isModerator() ) $canUnthankyou = true;
+				else $canUnthankyou=false;
+
 				foreach( $message->thankyou as $userid=>$time){
-					$thankyou_delete = $this->me->isModerator() ? ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
+					$thankyou_delete = $canUnthankyou === true ?  ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
 					$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;
 				}

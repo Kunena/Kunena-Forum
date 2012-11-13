@@ -27,6 +27,7 @@
 			<filename>sq-AL.plg_kunena_joomla.sys.ini</filename>
 			<filename>sq-AL.plg_kunena_kunena.sys.ini</filename>
 			<filename>sq-AL.plg_kunena_uddeim.sys.ini</filename>
+			<filename>sq-AL.plg_quickicon_kunena.sys.ini</filename>
 			<filename>sq-AL.plg_system_kunena.sys.ini</filename>
 		</files>
 		<files folder="site" target="language/sq-AL">

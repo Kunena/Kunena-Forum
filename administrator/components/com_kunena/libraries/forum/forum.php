@@ -26,6 +26,7 @@ abstract class KunenaForum {
 	const UNAPPROVED = 1;
 	const DELETED = 2;
 	const TOPIC_DELETED = 3;
+	const TOPIC_CREATION = 4;
 
 	const MODERATOR = 1;
 	const ADMINISTRATOR = 2;
@@ -317,7 +318,7 @@ abstract class KunenaForum {
 		}
 		// Flag view as being embedded
 		$view->embedded = true;
-		
+
 		// Flag view as being teaser
 		$view->teaser = $params->get('teaser',0);
 

@@ -203,7 +203,7 @@ abstract class KunenaForumDiagnostics {
 		return $query;
 	}
 	protected static function fields_messageMissingMessageBody($query = null) {
-		if ($query) $query->select("a.id, a.parent, a.thread, a.catid, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, 'MISSING' AS message");
+		if ($query) $query->select("a.id, a.parent, a.thread, a.catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, 'MISSING' AS message");
 		return array('message'=>'invalid');
 	}
 
@@ -214,7 +214,7 @@ abstract class KunenaForumDiagnostics {
 		return $query;
 	}
 	protected static function fields_topicInSection($query = null) {
-		if ($query) $query->select('a.id, a.category_id, a.subject');
+		if ($query) $query->select('a.id, a.category_id, a.hold, a.subject');
 		return array('category_id'=>'invalid');
 	}
 
@@ -225,7 +225,7 @@ abstract class KunenaForumDiagnostics {
 		return $query;
 	}
 	protected static function fields_topicMissingCategory($query = null) {
-		if ($query) $query->select('a.id, a.category_id, a.subject');
+		if ($query) $query->select('a.id, a.category_id, a.hold, a.subject');
 		return array('category_id'=>'invalid');
 	}
 
@@ -240,18 +240,18 @@ abstract class KunenaForumDiagnostics {
 		return $query;
 	}
 	protected static function fields_topicMissingMessages($query = null) {
-		if ($query) $query->select("a.id, a.category_id, a.subject, 'MISSING' AS messages");
+		if ($query) $query->select("a.id, a.category_id, a.hold, a.subject, 'MISSING' AS messages");
 		return array('messages'=>'invalid');
 	}
 
 	protected static function query_topicMissingPoll() {
 		// Query to find topics which have missing poll
 		$query = new KunenaDatabaseQuery();
-		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.poll_id")->where("a.poll_id>0 AND p.id IS NULL");
+		$query->from("#__kunena_topics AS a")->leftJoin("#__kunena_polls AS p ON p.id=a.poll_id")->where("a.moved_id=0 AND a.poll_id>0 AND p.id IS NULL");
 		return $query;
 	}
 	protected static function fields_topicMissingPoll($query = null) {
-		if ($query) $query->select("a.id, a.category_id, a.subject, poll_id");
+		if ($query) $query->select("a.id, a.category_id, a.hold, a.subject, poll_id");
 		return array('poll_id'=>'invalid');
 	}
 
@@ -262,7 +262,7 @@ abstract class KunenaForumDiagnostics {
 		return $query;
 	}
 	protected static function fields_topicPollMismatch($query = null) {
-		if ($query) $query->select("a.id, a.category_id, a.subject, p.title AS poll_title, CONCAT(a.poll_id, ' != ', p.threadid) AS poll_id, t.subject AS real_topic_subject");
+		if ($query) $query->select("a.id, a.category_id, a.hold, a.subject, p.title AS poll_title, CONCAT(a.poll_id, ' != ', p.threadid) AS poll_id, t.subject AS real_topic_subject");
 		return array('poll_id'=>'invalid');
 	}
 
@@ -277,7 +277,7 @@ abstract class KunenaForumDiagnostics {
 		return $query;
 	}
 	protected static function fields_movedMissingTopic($query = null) {
-		if ($query) $query->select('a.id, a.category_id, a.subject, a.moved_id');
+		if ($query) $query->select('a.id, a.category_id, a.hold, a.subject, a.moved_id');
 		return array('moved_id'=>'invalid');
 	}
 
@@ -288,7 +288,7 @@ abstract class KunenaForumDiagnostics {
 		return $query;
 	}
 	protected static function fields_movedAndMessages($query = null) {
-		if ($query) $query->select('a.id, a.category_id, a.subject, m.id AS mesid, m.subject AS message_subject, t.message');
+		if ($query) $query->select('a.id, a.category_id, a.hold, a.subject, m.id AS mesid, m.subject AS message_subject, t.message');
 		return array('mesid'=>'invalid');
 	}
 
@@ -303,7 +303,7 @@ abstract class KunenaForumDiagnostics {
 		return $query;
 	}
 	protected static function fields_messageWrongCategory($query = null) {
-		if ($query) $query->select("a.id, a.parent, a.thread, CONCAT(a.catid, ' != ', t.category_id) AS catid, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, mt.message");
+		if ($query) $query->select("a.id, a.parent, a.thread, CONCAT(a.catid, ' != ', t.category_id) AS catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, mt.message");
 		return array('catid'=>'invalid');
 	}
 
@@ -318,7 +318,7 @@ abstract class KunenaForumDiagnostics {
 		return $query;
 	}
 	protected static function fields_messageOrphaned($query = null) {
-		if ($query) $query->select("a.id, a.parent, a.thread, a.catid, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, mt.message");
+		if ($query) $query->select("a.id, a.parent, a.thread, a.catid, a.hold, a.name, a.userid, a.subject, FROM_UNIXTIME(a.time) AS time, mt.message");
 		return array('thread'=>'invalid');
 	}
 

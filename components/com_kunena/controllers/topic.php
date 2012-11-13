@@ -121,6 +121,9 @@ class KunenaControllerTopic extends KunenaController {
 			$message->hold = 1;
 		}
 
+		// Prevent user abort from this point in order to maintain data integrity.
+		@ignore_user_abort(true);
+
 		// Upload new attachments
 		foreach ($_FILES as $key=>$file) {
 			$intkey = 0;

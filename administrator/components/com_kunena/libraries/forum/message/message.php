@@ -455,8 +455,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		$topic = $this->getTopic();
 		if (!$topic->exists()) {
-			// Create topic
-			if (!$topic->save()) {
+			// Create topic, but do not cascade changes to category etc..
+			if (!$topic->save(false)) {
 				$this->setError ( $topic->getError () );
 				return false;
 			}

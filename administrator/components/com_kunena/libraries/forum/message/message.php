@@ -371,11 +371,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$this->email = '';
 	}
 
-	public function uploadAttachment($tmpid, $postvar) {
+	public function uploadAttachment($tmpid, $postvar, $catid=null) {
 		$attachment = new KunenaForumMessageAttachment();
 		$attachment->mesid = $this->id;
 		$attachment->userid = $this->userid;
-		$success = $attachment->upload($postvar);
+		$success = $attachment->upload($postvar, $catid);
 		$this->_attachments_add[$tmpid] = $attachment;
 		return $success;
 	}

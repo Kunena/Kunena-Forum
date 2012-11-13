@@ -381,6 +381,8 @@ class KunenaAdminModelConfig extends KunenaModel {
 
 		$lists ['iptracking'] = JHTML::_('select.genericlist', $yesno, 'cfg_iptracking', 'class="inputbox" size="1"', 'value', 'text', $this->config->iptracking);
 
+		$lists ['lazyload'] = JHTML::_('select.genericlist', $yesno, 'cfg_lazyload', 'class="inputbox" size="1"', 'value', 'text', $this->config->lazyload);
+
 		return $lists;
 	}
 }

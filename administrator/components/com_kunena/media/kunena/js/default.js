@@ -889,4 +889,16 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
+	
+	/* Load LazyLoad instance */
+	if ( typeof lazyloader != undefined ) {
+		var lazyloader = new LazyLoad({
+			range: 200,
+			realSrcAttribute: "data-src",
+			useFade: true,
+			elements: 'img',
+			classtoApply: '.Klazyload',
+			container: window
+		}); 
+	}
 });

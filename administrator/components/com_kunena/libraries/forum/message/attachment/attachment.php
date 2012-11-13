@@ -93,11 +93,14 @@ class KunenaForumMessageAttachment extends JObject {
 						$imgsize = 'width="' . $config->thumbwidth . 'px" height="' . $config->thumbheight . 'px"';
 					}
 
-					$img = '<img title="' . $this->escape ( $this->filename ) . '" ' . $imgsize . ' src="' . JURI::ROOT () . $thumb . '" alt="' . $this->escape ( $this->filename ) . '" />';
+					if ($config->lazyload)	$img = '<img class="Klazyload" title="' . $this->escape ( $this->filename ) . '" ' . $imgsize . ' src="' . JURI::ROOT () . $thumb . '" data-src="'. JURI::ROOT () . $thumb  .'" alt="' . $this->escape ( $this->filename ) . '" />';
+					else $img = '<img title="' . $this->escape ( $this->filename ) . '" ' . $imgsize . ' src="' . JURI::ROOT () . $thumb . '" alt="' . $this->escape ( $this->filename ) . '" />';
 					$this->_thumblink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)? 'lightbox[thumb' . intval ( $this->mesid ). ']':'' );
-					$img = '<img title="' . $this->escape ( $this->filename ) . '" src="' . JURI::ROOT () . $this->escape ( $this->folder ) . '/' . $this->escape ( $this->filename ) . '" alt="' . $this->escape ( $this->filename ) . '" />';
+					if ($config->lazyload) $img = '<img class="Klazyload" title="' . $this->escape ( $this->filename ) . '" src="' . JURI::ROOT () . $this->escape ( $this->folder ) . '/' . $this->escape ( $this->filename ) . '" data-src="' . JURI::ROOT () . $this->escape ( $this->folder ) . '/' . $this->escape ( $this->filename ) . '" alt="' . $this->escape ( $this->filename ) . '" />';
+					else $img = '<img title="' . $this->escape ( $this->filename ) . '" src="' . JURI::ROOT () . $this->escape ( $this->folder ) . '/' . $this->escape ( $this->filename ) . '" alt="' . $this->escape ( $this->filename ) . '" />';
 					$this->_imagelink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $img, $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[imagelink' . intval ( $this->mesid ) .']':'' );
 					$this->_textLink = $this->_getAttachementLink ( $this->escape ( $this->folder ), $this->escape ( $this->filename ), $this->escape ( $this->_shortname ), $this->escape ( $this->filename ), ($config->lightbox)?'lightbox[simple' . $this->mesid . ']' . ' nofollow':' nofollow' ) . ' (' . number_format ( intval ( $this->size ) / 1024, 0, '', ',' ) . 'KB)';
+
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon

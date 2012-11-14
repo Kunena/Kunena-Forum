@@ -16,7 +16,7 @@ class KunenaAvatarGravatar extends KunenaAvatar {
 
 	public function __construct($params) {
 		$this->params = $params;
-		require_once dirname ( __FILE__ ) . '/gravatar/gravatar.php';
+		require_once dirname ( __FILE__ ) . '/gravatar.php';
 	}
 
 	public function getEditURL() {

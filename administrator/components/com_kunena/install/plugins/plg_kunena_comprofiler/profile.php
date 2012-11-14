@@ -51,7 +51,7 @@ class KunenaProfileComprofiler extends KunenaProfile {
 			array( 'config'=> &$view->config, 'userprofile'=> &$view->profile, 'params'=>&$params) ) ) );
 	}
 
-	public function trigger($event, &$params) {
+	public static function trigger($event, &$params) {
 		return KunenaIntegrationComprofiler::trigger($event, $params);
 	}
 
@@ -59,7 +59,7 @@ class KunenaProfileComprofiler extends KunenaProfile {
 		$db = JFactory::getDBO ();
 		$query = "SELECT user_id AS id, hits AS count FROM #__comprofiler WHERE hits>0 ORDER BY hits DESC";
 		$db->setQuery ( $query, 0, $limit );
-		$top = $db->loadObjectList ();
+		$top = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 		return $top;
 	}

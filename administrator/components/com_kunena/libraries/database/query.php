@@ -268,14 +268,10 @@ class KunenaDatabaseQuery
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
-	public function delete($table = null)
+	public function delete($tables)
 	{
 		$this->_type	= 'delete';
-		$this->_delete	= new KunenaDatabaseQueryElement('DELETE', null);
-
-		if (!empty($table)) {
-			$this->from($table);
-		}
+		$this->_delete	= new KunenaDatabaseQueryElement('DELETE', $tables);
 
 		return $this;
 	}
@@ -300,7 +296,7 @@ class KunenaDatabaseQuery
 	 * @return	KunenaDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
-	public function update($tables)
+	public function update($tables = null)
 	{
 		$this->_type = 'update';
 		$this->_update = new KunenaDatabaseQueryElement('UPDATE', $tables);
@@ -561,6 +557,14 @@ class KunenaDatabaseQuery
 
 			case 'update':
 				$query .= (string) $this->_update;
+
+				if ($this->_join) {
+					// special case for joins
+					foreach ($this->_join as $join) {
+						$query .= (string) $join;
+					}
+				}
+
 				$query .= (string) $this->_set;
 
 				if ($this->_where) {

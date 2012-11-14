@@ -328,7 +328,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 		$topic = new KunenaForumTopic();
 		$topic->category_id = $catid;
-		$topic->hold = $message->hold;
+		$topic->hold = KunenaForum::TOPIC_CREATION;
 		if ($safefields) $topic->bind($safefields);
 		if ($fields) $topic->bind($fields, array ('subject','icon_id'), true);
 

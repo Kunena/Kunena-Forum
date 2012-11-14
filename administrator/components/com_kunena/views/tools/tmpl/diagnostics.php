@@ -14,7 +14,7 @@ $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
 
-$task = JRequest::getCmd('item');
+$task = JRequest::getCmd('test');
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
@@ -65,7 +65,10 @@ $task = JRequest::getCmd('item');
 				<td><?php echo $item ?></td>
 				<?php if ($count) : ?>
 				<td style="color:red"><?php echo JText::_('TEST FAILED') ?></td>
-				<td><a href="<?php echo KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&layout=diagnostics&item=$item"); ?>"><?php echo JText::sprintf('%d issues', $count) ?></a></td>
+				<td><a href="<?php echo KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&layout=diagnostics&test={$item}"); ?>"><?php echo JText::sprintf('%s issues', "<b>{$count}</b>") ?></a></td>
+				<td>
+					<?php echo KunenaForumDiagnostics::canFix($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&fix={$item}&".JUtility::getToken().'=1').'">FIX ISSUES</a>' : '' ?>
+					<?php echo KunenaForumDiagnostics::canDelete($item) ? '<a href="'.KunenaRoute::_("administrator/index.php?option=com_kunena&view=tools&task=diagnostics&delete={$item}&".JUtility::getToken().'=1').'">DELETE BROKEN ITEMS</a>' : '' ?></td>
 				<?php else : ?>
 				<td style="color:green"><?php echo JText::_('TEST PASSED') ?></td>
 				<td><?php echo JText::_('No issues') ?></td>

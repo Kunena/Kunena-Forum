@@ -15,16 +15,22 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewStatistics extends KunenaView {
 	function displayDefault($tpl = null) {
-		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
 		$kunena_stats = KunenaForumStatistics::getInstance ( );
 		$kunena_stats->loadAll();
 
 		$this->assign($kunena_stats);
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
-		$this->userlist = CKunenaLink::GetUserlistLink('', intval($this->get('memberCount')));
+		$this->userlist = $this->_getUserListLink('', intval($this->get('memberCount')));
 
 		$this->_prepareDocument();
 		parent::display ();
+	}
+
+	protected function _getUserListLink($action, $name, $title = null, $rel = 'nofollow'){
+		$profile = KunenaFactory::getProfile ();
+		$link = $profile->getUserListURL ( $action, true );
+
+		return "<a href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
 	}
 
 	protected function _prepareDocument(){

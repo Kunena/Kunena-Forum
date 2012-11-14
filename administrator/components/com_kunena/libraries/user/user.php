@@ -451,7 +451,7 @@ class KunenaUser extends JObject {
 
 		if ($this->userid) {
 			$this->view = $layout;
-			$this->save();
+			$this->save(true);
 		}
 	}
 

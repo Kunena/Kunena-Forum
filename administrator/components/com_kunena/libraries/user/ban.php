@@ -160,10 +160,11 @@ class KunenaUserBan extends JObject
 		$c = __CLASS__;
 		$db = JFactory::getDBO ();
 		$now = new JDate();
-		$query = "SELECT *
-			FROM #__kunena_users_banned
-			WHERE (expiration = {$db->quote($db->getNullDate())} OR expiration > {$db->quote($now->toSql())})
-			ORDER BY created_time DESC";
+		$query = "SELECT b.*
+			FROM #__kunena_users_banned AS b
+			INNER JOIN #__users AS u ON u.id=b.userid
+			WHERE (b.expiration = {$db->quote($db->getNullDate())} OR b.expiration > {$db->quote($now->toSql())})
+			ORDER BY b.created_time DESC";
 		$db->setQuery ( $query, $start, $limit );
 		$results = $db->loadAssocList ();
 		KunenaError::checkDatabaseError();

@@ -27,13 +27,14 @@ class KunenaControllerUser extends KunenaController {
 			$params = $active->params;
 			$redirect = $params->get('integration', 1);
 		}
-		if ($redirect && JRequest::getCmd('format') == 'html') {
+		if ($redirect && JRequest::getCmd('format', 'html') == 'html') {
 			$profileIntegration = KunenaFactory::getProfile();
+			$layout = JRequest::getCmd('layout', 'default');
 			if ($profileIntegration instanceof KunenaProfileKunena) {
 				// Continue
-			} elseif (JRequest::getCmd('layout', 'default') == 'default') {
+			} elseif ($layout == 'default') {
 				$url = $this->me->getUrl(false);
-			} elseif (JRequest::getCmd('layout') == 'list') {
+			} elseif ($layout == 'list') {
 				$url = $profileIntegration->getUserListURL('', false);
 			}
 			if (!empty($url)) {
@@ -96,7 +97,7 @@ class KunenaControllerUser extends KunenaController {
 	function ban() {
 		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
 		if(!$user->exists() || !JSession::checkToken('post')) {
-			$this->app->redirect ( $user->getUrl(false), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( $user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 			return;
 		}
 
@@ -212,11 +213,11 @@ class KunenaControllerUser extends KunenaController {
 
 	function login() {
 		if(!JFactory::getUser()->guest || !JSession::checkToken('post')) {
-			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 		}
 
 		$username = JRequest::getString ( 'username', '', 'POST' );
-		$password = JRequest::getString ( 'password', '', 'POST' );
+		$password = JRequest::getString ( 'password', '', 'POST', JREQUEST_ALLOWRAW );
 		$remember = JRequest::getBool ( 'remember', false, 'POST');
 
 		$login = KunenaLogin::getInstance();
@@ -226,7 +227,7 @@ class KunenaControllerUser extends KunenaController {
 
 	function logout() {
 		if(!JSession::checkToken('request')) {
-			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 		}
 
 		$login = KunenaLogin::getInstance();
@@ -293,7 +294,9 @@ class KunenaControllerUser extends KunenaController {
 	protected function saveUser(){
 		// we only allow users to edit few fields
 		$allow = array('name', 'email', 'password', 'password2', 'params');
-		if ($this->config->usernamechange) $allow[] = 'username';
+		if ($this->config->usernamechange) {
+			if (version_compare(JVERSION, '2.5.5','<') || JComponentHelper::getParams('com_users')->get('change_login_name', 1)) $allow[] = 'username';
+		}
 
 		//clean request
 		$post = JRequest::get( 'post' );

@@ -189,6 +189,9 @@ abstract class KunenaRoute {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!isset(self::$filtered[$string])) {
 			self::$filtered[$string] = JApplication::stringURLSafe($string);
+
+			// Remove beginning and trailing "whitespace", fixes #1130 where category alias creation fails on error: Duplicate entry '-'.
+			self::$filtered[$string] = trim(self::$filtered[$string], '-_ ');
 			if ($default && empty(self::$filtered[$string])) self::$filtered[$string] = $default;
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
@@ -481,18 +484,22 @@ abstract class KunenaRoute {
 			return 0;
 		}
 		$catid = (int) $uri->getVar('catid');
-		switch ($item->query['view']) {
-			case 'home':
-				$matchcount = self::checkHome($item, $catid);
-				break;
-			case 'category':
-			case 'topic':
-				$matchcount = self::checkCategory($item, $uri);
-				break;
-			default:
-				$matchcount = self::check($item, $uri);
+		if ( !empty($item->query['view']) ) {
+			switch ($item->query['view']) {
+				case 'home':
+					$matchcount = self::checkHome($item, $catid);
+					break;
+				case 'category':
+				case 'topic':
+					$matchcount = self::checkCategory($item, $uri);
+					break;
+				default:
+					$matchcount = self::check($item, $uri);
+			}
+			return $matchcount;
+		} else {
+			return 1;
 		}
-		return $matchcount;
 	}
 
 	protected static function checkHome($item, $catid) {

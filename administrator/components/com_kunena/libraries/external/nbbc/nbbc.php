@@ -976,7 +976,7 @@ return true;
 }
 }
 
-class BBCode {
+class NBBC_BBCode {
 var $tag_rules;
 var $defaults;
 var $current_class;
@@ -1008,7 +1008,7 @@ var $rule_html;
 var $pre_trim;
 var $post_trim;
 var $debug;
-function BBCode() {
+function NBBC_BBCode() {
 $this->defaults = new BBCodeLibrary;
 $this->tag_rules = $this->defaults->default_tag_rules;
 $this->smileys = $this->defaults->default_smileys;
@@ -1947,6 +1947,7 @@ function Parse($string) {
 $this->lexer = new BBCodeLexer($string, $this->tag_marker);
 $this->lexer->debug = $this->debug;
 $old_output_limit = $this->output_limit;
+/** HACK >
 if ($this->output_limit > 0) {
 if (strlen($string) < $this->output_limit) {
 $this->output_limit = 0;
@@ -1960,6 +1961,7 @@ else {
 }
 }
 }
+< HACK */
 $this->stack = Array();
 $this->start_tags = Array();
 $this->lost_start_tags = Array();

@@ -17,12 +17,10 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaViewUser extends KunenaView {
 	function displayDefault($tpl = null) {
-		// TODO: handle redirect to integrated component
 		$this->displayCommon($tpl);
 	}
 
 	function displayModerate($tpl = null) {
-		// TODO: handle redirect to integrated component
 		$this->layout = 'default';
 		$this->setLayout($this->layout);
 		$this->displayCommon($tpl);
@@ -30,6 +28,8 @@ class KunenaViewUser extends KunenaView {
 
 	function displayEdit($tpl = null) {
 		$userid = JRequest::getInt('userid');
+		$this->usernamechange = $this->config->usernamechange && (version_compare(JVERSION, '2.5.5','<') || JComponentHelper::getParams('com_users')->get('change_login_name', 1));
+
 		if ($userid && $this->me->userid != $userid) {
 			$user = KunenaFactory::getUser( $userid );
 			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_VIEW_USER_EDIT_AUTH_FAILED', $user->getName()), 'notice' );
@@ -156,7 +156,7 @@ class KunenaViewUser extends KunenaView {
 		$this->showSubscriptions = $this->config->allowsubscriptions && $this->me->userid == $this->profile->userid;
 		$this->showFavorites = $this->config->allowfavorites && $this->me->userid == $this->profile->userid;
 		$this->showThankyou = $this->config->showthankyou && $this->me->exists();
-		$this->showUnapprovedPosts = KunenaAccess::getInstance()->getModeratorStatus(); // || $this->me->userid == $this->profile->userid;
+		$this->showUnapprovedPosts = $this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus(); // || $this->me->userid == $this->profile->userid;
 		$this->showAttachments = $this->canManageAttachments() && ($this->me->isModerator() || $this->me->userid == $this->profile->userid);
 		$this->showBanManager = $this->me->isModerator() && $this->me->userid == $this->profile->userid;
 		$this->showBanHistory = $this->me->isModerator() && $this->me->userid != $this->profile->userid;

@@ -44,10 +44,13 @@ class KunenaModelAnnouncement extends KunenaModel {
 
 	public function getannouncementActions() {
 		$actions = array();
-		$actions[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$actions[] = JHtml::_('select.option', 'unpublish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_UNPUBLISH'));
-		$actions[] = JHtml::_('select.option', 'publish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_PUBLISH'));
-		$actions[] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA__BULK_ANNOUNCEMENT_DELETE'));
+		$user = KunenaUserHelper::getMyself();
+		if ( $user->isModerator()) {
+			$actions[] = JHtml::_('select.option', 'unpublish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_UNPUBLISH'));
+			$actions[] = JHtml::_('select.option', 'publish', JText::_('COM_KUNENA_BULK_ANNOUNCEMENT_PUBLISH'));
+			$actions[] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA__BULK_ANNOUNCEMENT_DELETE'));
+			$actions[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		}
 
 		return $actions;
 	}

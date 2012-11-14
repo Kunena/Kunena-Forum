@@ -371,11 +371,11 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 		$this->email = '';
 	}
 
-	public function uploadAttachment($tmpid, $postvar) {
+	public function uploadAttachment($tmpid, $postvar, $catid=null) {
 		$attachment = new KunenaForumMessageAttachment();
 		$attachment->mesid = $this->id;
 		$attachment->userid = $this->userid;
-		$success = $attachment->upload($postvar);
+		$success = $attachment->upload($postvar, $catid);
 		$this->_attachments_add[$tmpid] = $attachment;
 		return $success;
 	}
@@ -455,8 +455,8 @@ class KunenaForumMessage extends KunenaDatabaseObject {
 
 		$topic = $this->getTopic();
 		if (!$topic->exists()) {
-			// Create topic
-			if (!$topic->save()) {
+			// Create topic, but do not cascade changes to category etc..
+			if (!$topic->save(false)) {
 				$this->setError ( $topic->getError () );
 				return false;
 			}

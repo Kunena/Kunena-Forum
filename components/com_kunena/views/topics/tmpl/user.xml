@@ -5,6 +5,7 @@
 		<message>COM_KUNENA_MENU_TOPICS_MYRECENT_DESC</message>
 	</layout>
 
+
 	<!-- Add fields to the request variables for the layout. -->
 	<fields name="request">
 		<fieldset name="request">
@@ -20,11 +21,13 @@
 	<fields name="params" addfieldpath="/administrator/components/com_kunena/libraries/form/fields">
 		<fieldset name="basic" label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
 			<field name="header" type="text" default="" label="COM_KUNENA_MENU_HEADER"/>
-			<field name="topics_catselection" type="radio" default="1" label="COM_KUNENA_COM_A_LATESTCATEGORY_IN" description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
+			<field name="topics_catselection" type="radio" default="" label="COM_KUNENA_COM_A_LATESTCATEGORY_IN" description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
+				<option value="">COM_KUNENA_A_USE_GLOBAL</option>
 				<option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
 				<option value="0">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>
 			</field>
-			<field name="topics_categories" type="kunenacategorylist" default="0" label="COM_KUNENA_COM_A_LATESTCATEGORY" description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"  multiple="true" size="10">
+			<field name="topics_categories" type="kunenacategorylist" default="" label="COM_KUNENA_COM_A_LATESTCATEGORY" description="COM_KUNENA_COM_A_LATESTCATEGORY_DESC"  multiple="true" size="10">
+				<option value="">COM_KUNENA_A_USE_GLOBAL</option>
 				<option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
 			</field>
 			<field name="topics_time" type="list" default="-1" label="COM_KUNENA_A_TOPICS_TIME" description="COM_KUNENA_A_TOPICS_TIME_DESC">

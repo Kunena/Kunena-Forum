@@ -124,7 +124,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$this->app->setUserState ( 'kunena.usermove.userid', $userids );
+		$this->app->setUserState ( 'kunena.usermove.userids', $userids );
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=move", false));
 	}
@@ -136,8 +136,8 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$uids = $this->app->getUserState ( 'kunena.usermove.userid' );
+		$catid = JRequest::getInt('catid');
+		$uids = (array) $this->app->getUserState ( 'kunena.usermove.userids' );
 
 		if ($uids) {
 			foreach($uids as $id) {
@@ -149,17 +149,15 @@ class KunenaAdminControllerUsers extends KunenaController {
 					if (!$object->authorise ( 'move' )) {
 						$error = $object->getError();
 					} else {
-						foreach($cids as $cid){
-							$target = KunenaForumCategoryHelper::get( $cid );
-							if (!$topic->move ( $target, false, false, '', false )) {
-								$error = $topic->getError();
-							}
+						$target = KunenaForumCategoryHelper::get( $catid );
+						if (!$topic->move ( $target, false, false, '', false )) {
+							$error = $topic->getError();
 						}
 					}
 				}
 			}
 
-		}  else {
+		} else {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_NO_USER'), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}

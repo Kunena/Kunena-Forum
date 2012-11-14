@@ -19,12 +19,14 @@ class KunenaView extends JViewLegacy {
 	public $config = null;
 	public $embedded = false;
 	public $templatefiles = array();
+	public $teaser = null;
 
 	protected $_row = 0;
 
 	public function __construct($config = array()){
 		$name = isset($config['name']) ? $config['name'] : $this->getName();
 		$this->document = JFactory::getDocument();
+		$this->document->setBase('');
 		$this->profiler = KunenaProfiler::instance('Kunena');
 		$this->app = JFactory::getApplication ();
 		$this->me = KunenaUserHelper::getMyself();
@@ -74,7 +76,7 @@ class KunenaView extends JViewLegacy {
 			$this->displayLayout();
 		} else {
 			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
-			include $this->ktemplate->getFile ('html/display.php');
+			include JPATH_SITE .'/'. $this->ktemplate->getFile ('html/display.php');
 			echo $this->poweredBy();
 		}
 	}
@@ -115,9 +117,13 @@ class KunenaView extends JViewLegacy {
 
 		$this->state = $this->get ( 'State' );
 		if (method_exists($this, $layoutFunction)) {
-			$contents = $this->$layoutFunction ($tpl ? $tpl : null);
+			$contents = $this->$layoutFunction($tpl ? $tpl : null);
+		} elseif (method_exists($this, 'displayDefault')) {
+			// TODO: should raise error instead, used just in case..
+			$contents = $this->displayDefault($tpl ? $tpl : null);
 		} else {
-			$contents = $this->display($tpl ? $tpl : null);
+			// TODO: should raise error instead..
+			$contents = '';
 		}
 		KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 		return $contents;

@@ -287,7 +287,7 @@
 	<table name="kunena_users">
 		<field primary_key="yes" name="userid" type="int(11)" null="0"
 			default="0" />
-		<field name="view" type="varchar(8)" null="0" default="flat" />
+		<field name="view" type="varchar(8)" null="0" default="" />
 		<field name="signature" type="text" null="1" />
 		<field name="moderator" type="int(11)" null="1" default="0" />
 		<field name="banned" type="datetime" null="1" />

@@ -47,12 +47,8 @@ $row = 0;
 							<li><?php if (!$this->me->exists()) : ?>
 								<?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?>
 								<?php elseif ($this->voted && !$this->config->pollallowvoteone) : ?>
-								<a href="<?php echo CKunenaLink::GetPollURL('vote', $this->topic->id, $this->category->id);?>">
+								<a href="<?php echo $this->getPollURL('vote', $this->topic->id, $this->category->id);?>">
 								<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
-								</a>
-								<?php else : ?>
-								<a href="<?php echo CKunenaLink::GetPollURL('changevote', $this->topic->id, $this->category->id); ?>">
-								<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>
 								</a>
 								<?php endif; ?>
 							</li>

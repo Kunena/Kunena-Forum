@@ -13,6 +13,8 @@ jimport( 'joomla.filesystem.folder' );
 jimport( 'joomla.filesystem.file' );
 
 class Com_KunenaInstallerScript {
+	/** @var string The component's name */
+	protected $_kunena_extension = 'com_kunena';
 	protected $versions = array(
 		'PHP' => array (
 			'5.2' => '5.2.4',

@@ -14,27 +14,14 @@ defined ( '_JEXEC' ) or die ();
  * Topicicons view for Kunena backend
  */
 class KunenaAdminViewTopicicons extends KunenaView {
-  function display() {
-		$this->navigation = $this->get ( 'AdminNavigation' );
-		switch ($this->getLayout ()) {
-			case 'add' :
-			case 'edit' :
-				$this->displayEdit ();
-				$this->setToolBarEdit();
-				break;
-			case 'default' :
-				$this->displayDefault ();
-				$this->setToolBarDefault();
-				break;
-		}
-
-		parent::display ();
-	}
-
 	function displayDefault() {
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		$this->topicicons = $this->get('Topicicons');
 		$this->state = $this->get('state');
 		$this->iconsetlist = $this->get('iconsetlist');
+
+		$this->setToolBarDefault();
+		parent::display ();
 	}
 
 	protected function setToolBarDefault() {
@@ -48,10 +35,18 @@ class KunenaAdminViewTopicicons extends KunenaView {
 		JToolBarHelper::spacer();
 	}
 
+	function displayAdd() {
+		$this->displayEdit();
+	}
+
 	function displayEdit() {
+		$this->navigation = $this->get ( 'AdminNavigation' );
 		$this->state = $this->get('state');
 		$this->topicicon = $this->get('topicicon');
 		$this->listtopicicons = $this->get('topiciconslist');
+
+		$this->setToolBarEdit();
+		parent::display ();
 	}
 
 	protected function setToolBarEdit() {

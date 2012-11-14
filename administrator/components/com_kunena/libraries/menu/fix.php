@@ -96,7 +96,7 @@ abstract class KunenaMenuFix {
 				'params' => $item->params,
 			);
 			if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
-				$errors[] = $table->getError ();
+				$errors[] = "{$item->route} (#{$item->id}): {$table->getError()}";
 			}
 		}
 		KunenaMenuHelper::cleanCache();

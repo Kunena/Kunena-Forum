@@ -33,7 +33,7 @@ defined ( '_JEXEC' ) or die ();
 	<tr>
 		<td class="klist-actions-goto">
 			<a id="forumtop"> </a>
-			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', $this->getIcon ( 'kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
+			<a class="kbuttongoto" href="#forumbottom" rel="nofollow"><?php echo $this->getIcon ( 'kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ) ?></a>
 		</td>
 		<?php $this->displayCategoryActions() ?>
 		<td class="klist-pages-all"><?php echo $this->getPagination (7); // odd number here (# - 2) ?></td>
@@ -89,7 +89,7 @@ defined ( '_JEXEC' ) or die ();
 	<tr>
 		<td class="klist-actions-goto">
 			<a id="forumbottom"> </a>
-			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', $this->getIcon ( 'kforumtop', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
+			<a  class="kbuttongoto" href="#forumtop" rel="nofollow"><?php echo $this->getIcon ( 'kforumtop', JText::_('COM_KUNENA_GEN_GOTOTOP') ) ?></a>
 		</td>
 		<?php $this->displayCategoryActions() ?>
 		<td class="klist-pages-all"><?php echo $this->getPagination (7); // odd number here (# - 2) ?></td>

@@ -427,7 +427,11 @@ class KunenaViewTopic extends KunenaView {
 		$options = array ();
 		$cat_params = array ('sections'=>0, 'catid'=>0);
 		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories');
-		if (isset($this->message)) $this->user = KunenaFactory::getUser($this->message->userid);
+		if (isset($this->message)) {
+			$this->user = KunenaFactory::getUser($this->message->userid);
+			$username = $this->message->getAuthor()->getName();
+			$this->userLink = $this->message->userid ? JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&layout=moderate&userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
+		}
 
 		if ($this->mesid) {
 			// Get thread and reply count from current message:
@@ -659,6 +663,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->message->authorise('move') ? $this->messageButtons->set('moderate', $this->getButton ( sprintf($layout, 'moderate'), 'moderate', 'message', 'moderation')) : null;
 		if ($this->message->hold == 1) {
 			$this->message->authorise('approve') ? $this->messageButtons->set('publish', $this->getButton ( sprintf($task, 'approve'), 'approve', 'message', 'moderation')) : null;
+			$this->message->authorise('delete') ? $this->messageButtons->set('delete', $this->getButton ( sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		} elseif ($this->message->hold == 2 || $this->message->hold == 3) {
 			$this->message->authorise('undelete') ? $this->messageButtons->set('undelete', $this->getButton ( sprintf($task, 'undelete'), 'undelete', 'message', 'moderation')) : null;
 			$this->message->authorise('permdelete') ? $this->messageButtons->set('permdelete', $this->getButton ( sprintf($task, 'permdelete'), 'permdelete', 'message', 'permanent')) : null;
@@ -679,7 +684,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->mmm ++;
 		$this->message = $message;
 		$this->profile = $this->message->getAuthor();
-		$this->replynum = $id+1;
+		$this->replynum = $message->replynum;
 		$usertype = $this->me->getType($this->category->id, true);
 		if ($usertype == 'user' && $this->message->userid == $this->profile->userid) $usertype = 'owner';
 
@@ -695,8 +700,11 @@ class KunenaViewTopic extends KunenaView {
 					$message->thankyou = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
 				}
 
+				if( $this->message->authorise('unthankyou') ) $canUnthankyou = true;
+				else $canUnthankyou=false;
+
 				foreach( $message->thankyou as $userid=>$time){
-					$thankyou_delete = $this->me->isModerator() ? ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
+					$thankyou_delete = $canUnthankyou === true ?  ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
 					$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;
 				}
@@ -708,21 +716,32 @@ class KunenaViewTopic extends KunenaView {
 		$cachekey = "message.{$this->getTemplateMD5()}.{$layout}.{$template}.{$usertype}.c{$this->category->id}.m{$this->message->id}.{$this->message->modified_time}";
 		$cachegroup = 'com_kunena.messages';
 
+		if ($this->config->reportmsg && $this->me->exists()) {
+			$this->reportMessageLink = JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=topic&layout=report&catid='.intval($this->category->id).'&id='.intval($this->message->thread).'&mesid='.intval($this->message->id),  JText::_('COM_KUNENA_REPORT'),  JText::_('COM_KUNENA_REPORT') );
+		} else {
+			$this->reportMessageLink = null;
+		}
+
 		$contents = false; //$cache->get($cachekey, $cachegroup);
 		if (!$contents) {
-
 			//Show admins the IP address of the user:
 			if ($this->category->authorise('admin') || ($this->category->authorise('moderate') && !$this->config->hide_ip)) {
-				$this->ipLink = $this->message->ip ? CKunenaLink::GetMessageIPLink ( $this->message->ip ) : null;
+				if ( $this->message->ip ) {
+					if ( ! empty ( $this->message->ip ) ) $this->ipLink = '<a href="http://whois.domaintools.com/' . $this->message->ip . '" target="_blank"> IP: ' . $this->message->ip . '</a>';
+					else $this->ipLink = '&nbsp;';
+				} else {
+					$this->ipLink = null;
+				}
 			}
+
 			$this->signatureHtml = KunenaHtmlParser::parseBBCode ( $this->profile->signature, null, $this->config->maxsig );
 			$this->attachments = $this->message->getAttachments();
 
 			// Link to individual message
 			if ($this->config->ordering_system == 'replyid') {
-				$this->numLink = CKunenaLink::GetSamePageAnkerLink( $message->id, '#[K=REPLYNO]' );
+				$this->numLink = $this->getSamePageAnkerLink ( $message->id, '#[K=REPLYNO]' );
 			} else {
-				$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $message->id, '#' . $message->id );
+				$this->numLink = $this->getSamePageAnkerLink ( $message->id, '#' . $message->id );
 			}
 
 			if ($this->message->hold == 0) {
@@ -829,9 +848,9 @@ class KunenaViewTopic extends KunenaView {
 
 	public function getNumLink($mesid, $replycnt) {
 		if ($this->config->ordering_system == 'replyid') {
-			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $mesid, '#' . $replycnt );
+			$this->numLink = $this->getSamePageAnkerLink ( $mesid, '#' . $replycnt );
 		} else {
-			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $mesid, '#' . $mesid );
+			$this->numLink = $this->getSamePageAnkerLink ( $mesid, '#' . $mesid );
 		}
 
 		return $this->numLink;
@@ -883,6 +902,9 @@ class KunenaViewTopic extends KunenaView {
 			$description = preg_replace('/\s+/', ' ', $description); // remove newlines
 			$description = preg_replace('/^[^\w0-9]+/', '', $description); // remove characters at the beginning that are not letters or numbers
 			$description = trim($description); // Remove trailing spaces and beginning
+			if ($page) {
+				$description .= ' - ' . $page . '/' . $pages;  //avoid the "duplicate meta description" error in google webmaster tools
+			}
 			$this->setDescription ( $description );
 
 		} elseif($type=='create') {
@@ -904,5 +926,17 @@ class KunenaViewTopic extends KunenaView {
 			// TODO: set keywords and description
 
 		}
+	}
+
+	public function getPollURL($do, $id = NULL, $catid) {
+		$idstring = '';
+		if ($id)
+			$idstring .= "&id=$id";
+		$catidstr = "&catid=$catid";
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view=poll&do={$do}{$catidstr}{$idstring}" );
+	}
+
+	public function getSamePageAnkerLink($anker, $name, $rel = 'nofollow', $class = '') {
+		return '<a ' . ($class ? 'class="' . $class . '" ' : '') . 'href="#' . $anker .'"'. ($rel ? ' rel="' . $rel . '"' : '') . '>' . $name . '</a>';
 	}
 }

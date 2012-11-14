@@ -139,14 +139,14 @@ class KunenaController extends JControllerLegacy {
 				$view->common = $common;
 			}
 
+			// Set the view layout.
+			$view->setLayout ( $lName );
+
 			// Get the appropriate model for the view.
 			$model = $this->getModel ( $vName );
 
 			// Push the model into the view (as default).
 			$view->setModel ( $model, true );
-
-			// Set the view layout.
-			$view->setLayout ( $lName );
 
 			// Push document object into the view.
 			$view->document = $document;

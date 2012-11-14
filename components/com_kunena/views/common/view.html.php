@@ -191,7 +191,7 @@ class KunenaViewCommon extends KunenaView {
 		ksort($this->onlineList);
 		ksort($this->hiddenList);
 
-		$this->usersUrl = CKunenaLink::GetUserlistURL('');
+		$this->usersUrl = $this->getUserlistURL('');
 
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
@@ -208,14 +208,13 @@ class KunenaViewCommon extends KunenaView {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		if ($cache->start("{$this->ktemplate->name}.common.statistics", 'com_kunena.template')) return;
 
-		// FIXME: refactor code
-		require_once(KPATH_SITE.'/lib/kunena.link.class.php');
 		$kunena_stats = KunenaForumStatistics::getInstance ( );
 		$kunena_stats->loadGeneral();
 
 		$this->assign($kunena_stats);
 		$this->latestMemberLink = KunenaFactory::getUser(intval($this->lastUserId))->getLink();
 		$this->statisticsUrl = KunenaRoute::_('index.php?option=com_kunena&view=statistics');
+		$this->statisticsLink = $this->getStatsLink($this->config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), '');
 
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
@@ -335,8 +334,8 @@ class KunenaViewCommon extends KunenaView {
 			}
 			if (isset ( $rss_params )) {
 				$document = JFactory::getDocument ();
-				$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_ ( 'COM_KUNENA_LISTCAT_RSS' ) . '" href="' . CKunenaLink::GetRSSURL ( $rss_params ) . '" />' );
-				$this->rss = CKunenaLink::GetRSSLink ( $this->getIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
+				$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_ ( 'COM_KUNENA_LISTCAT_RSS' ) . '" href="' . $this->getRSSURL ( $rss_params ) . '" />' );
+				$this->rss = $this->getRSSLink ( $this->getIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
 			}
 		}
 		$result = $this->loadTemplateFile($tpl);
@@ -353,5 +352,30 @@ class KunenaViewCommon extends KunenaView {
 			$count = $private->getUnreadCount($this->me->userid);
 			$this->privateMessagesLink = $private->getInboxLink($count ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $count) : JText::_('COM_KUNENA_PMS_INBOX'));
 		}
+	}
+
+	function getUserlistURL($action = '', $xhtml = true) {
+		$profile = KunenaFactory::getProfile ();
+		return $profile->getUserListURL ( $action, $xhtml );
+	}
+
+	function getRSSURL($params = '', $xhtml = true) {
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+	}
+
+	function getRSSLink($name, $rel = 'follow', $params = '') {
+		return '<a href="'.$this->getRSSURL($params).'" rel="'.$rel.'">'.$name.'</a>';
+	}
+
+	public function getStatsLink($name, $class = '', $rel = 'follow') {
+		return '<a href="'. KunenaRoute::_ ( 'index.php?option=com_kunena&view=stats' ) .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';
+	}
+
+	public function getUserlistLink($action, $name, $rel = 'nofollow', $class = '') {
+		$link = KunenaFactory::getProfile ()->getUserListURL ( $action );
+		if ($link) {
+			return '<a href="'. $link .'" rel="'.$rel.'" class="'.$class.'">'.$name.'</a>';
+		}
+		return $name;
 	}
 }

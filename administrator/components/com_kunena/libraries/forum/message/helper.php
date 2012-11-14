@@ -201,7 +201,8 @@ abstract class KunenaForumMessageHelper {
 		if (is_null($direction)) $direction = KunenaUserHelper::getMyself()->getMessageOrdering();
 		if (!$hold) {
 			$me = KunenaUserHelper::getMyself();
-			$hold = KunenaAccess::getInstance()->getAllowedHold($me->userid, $mesid, false);
+			$mes_instance = KunenaForumMessageHelper::get($mesid);
+			$hold = KunenaAccess::getInstance()->getAllowedHold($me->userid, $mes_instance->catid, false);
 		}
 		if (!isset(self::$_location [$mesid])) {
 			self::loadLocation(array($mesid));
@@ -286,7 +287,7 @@ abstract class KunenaForumMessageHelper {
 		if (KunenaError::checkDatabaseError ())
 			return false;
 		return $db->getAffectedRows ();
-		}
+	}
 
 	// Internal functions
 

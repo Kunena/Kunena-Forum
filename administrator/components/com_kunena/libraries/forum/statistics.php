@@ -54,16 +54,13 @@ class KunenaForumStatistics {
 			$this->showpoppollstats = (bool) $this->_config->showpoppollstats;
 			$this->showpopthankyoustats = (bool) $this->_config->showpopthankyoustats;
 		}
-
-		// TODO: deprecated
-		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 	}
 
-	public static function getInstance()
-	{
+	public static function getInstance() {
 		if (self::$_instance === null) {
 			self::$_instance = new KunenaForumStatistics();
 		}
+
 		return self::$_instance;
 	}
 
@@ -95,6 +92,7 @@ class KunenaForumStatistics {
 			$this->top[] = $this->loadTopThankyous();
 			if (!end($this->top)) array_pop($this->top);
 		}
+
 	}
 
 	public function loadTopicStats($override=false) {
@@ -106,6 +104,7 @@ class KunenaForumStatistics {
 			$this->top[] = $this->loadTopPolls();
 			if (!end($this->top)) array_pop($this->top);
 		}
+
 	}
 
 	public function loadLastUserId() {

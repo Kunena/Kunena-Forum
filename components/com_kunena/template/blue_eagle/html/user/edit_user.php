@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 				<label for="username"><?php echo JText::_( 'COM_KUNENA_UNAME' ); ?></label>
 			</td>
 			<td class="kcol-mid">
-				<input type="text" name="username" id="username" value="<?php echo $this->escape($this->user->get('username'));?>" <?php echo !$this->config->usernamechange ? 'disabled="disabled" ' : ''?>/>
+				<input type="text" name="username" id="username" value="<?php echo $this->escape($this->user->get('username'));?>" <?php echo !$this->usernamechange ? 'disabled="disabled" ' : '' ?>/>
 			</td>
 		</tr>
 		<tr class="krow1">

@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 								</ul>
 							</fieldset>
 							<div id="kpoll-btns">
-								<input id="kpoll-button-vote" class="kbutton ks" type="submit" value="<?php echo $this->voted ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE') : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
+								<input id="kpoll-button-vote" class="kbutton ks" type="submit" value="<?php echo $this->voted && $this->config->pollallowvoteone ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE') : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
 							</div>
 						</form>
 						</div>

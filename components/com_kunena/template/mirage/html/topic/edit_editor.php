@@ -24,7 +24,7 @@ defined ( '_JEXEC' ) or die ();
 				<div class="postbuttons">
 					<ul id="kbbcode-toolbar">
 						<li>
-							<script type="text/javascript">document.write('<?php echo JText::_('COM_KUNENA_BBCODE_EDITOR_JAVASCRIPT_LOADING') ?>')</script>
+							<script type="text/javascript">document.write('<?php echo JText::_('COM_KUNENA_BBCODE_EDITOR_JAVASCRIPT_LOADING', true) ?>')</script>
 							<noscript><?php echo JText::_('COM_KUNENA_BBCODE_EDITOR_JAVASCRIPT_DISABLED') ?></noscript>
 						</li>
 					</ul>

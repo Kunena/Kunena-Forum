@@ -19,6 +19,7 @@ class KunenaViewSearch extends KunenaView {
 //TODO: Need to move the select markup outside of view.  Otherwise difficult to stylize
 
 		$this->searchwords = $this->get('SearchWords');
+		$this->isModerator = ($this->me->isAdmin() || KunenaAccess::getInstance()->getModeratorStatus());
 
 		$this->results = array ();
 		$this->total = $this->get('Total');
@@ -128,6 +129,9 @@ class KunenaViewSearch extends KunenaView {
 			$this->categoryLink = $this->getCategoryLink($this->category->getParent()) . ' / ' . $this->getCategoryLink($this->category);
 			$ressubject = KunenaHtmlParser::parseText ($this->message->subject);
 			$resmessage = $this->parse ($this->message->message, 500);
+
+			$profile = KunenaFactory::getUser((int)$this->message->userid);
+			$this->useravatar = $profile->getAvatarImage('kavatar', 'post');
 
 			foreach ( $this->searchwords as $searchword ) {
 				if (empty ( $searchword )) continue;

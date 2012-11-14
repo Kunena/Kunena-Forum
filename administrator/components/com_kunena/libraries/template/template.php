@@ -236,7 +236,8 @@ HTML;
 		} else {
 			// For other templates use the old way
 			$filemin = $filename = $this->getFile($filename);
-			if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev ()) {
+			$filemin_path = preg_replace ( '/\.css$/u', '-min.css', $filename );
+			if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/$filemin_path")) {
 				$filemin = preg_replace ( '/\.css$/u', '-min.css', $filename );
 			}
 			if (JFile::exists(JPATH_ROOT."/$filemin")) {
@@ -383,7 +384,8 @@ HTML;
 	 * Wrapper to addScript
 	 */
 	function addScript($filename) {
-		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev ()) {
+		$filemin_path = preg_replace ( '/\.css$/u', '-min.css', $filename );
+		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/$filemin_path")) {
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		}

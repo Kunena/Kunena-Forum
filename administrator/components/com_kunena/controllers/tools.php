@@ -23,6 +23,25 @@ class KunenaAdminControllerTools extends KunenaController {
 		$this->baseurl = 'administrator/index.php?option=com_kunena&view=tools';
 	}
 
+	function diagnostics() {
+		if (!JRequest::checkToken('get')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+			return;
+		}
+
+		$fix = JRequest::getCmd('fix');
+		$delete = JRequest::getCmd('delete');
+		if ($fix) {
+			$success = KunenaForumDiagnostics::fix($fix);
+			if (!$success) $this->app->enqueueMessage ( JText::sprintf('Failed to fix %s!', $fix), 'error' );
+		} elseif ($delete) {
+			$success = KunenaForumDiagnostics::delete($delete);
+			if (!$success) $this->app->enqueueMessage ( JText::sprintf('Failed to delete %s!', $delete), 'error' );
+		}
+		$this->setRedirect(KunenaRoute::_($this->baseurl.'&layout=diagnostics', false));
+	}
+
 	function prune() {
 		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );

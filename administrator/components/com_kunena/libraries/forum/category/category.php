@@ -55,7 +55,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			'topic.post.read'=>array('Read'),
 			'topic.post.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
 			'topic.post.thankyou' =>array('Read', 'NotBanned'),
-			'topic.post.unthankyou' =>array('Read', 'NotBanned', 'Admin'),
+			'topic.post.unthankyou' =>array('Read', 'NotBanned', 'GlobalModerate'),
 			'topic.post.edit'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.post.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
 			'topic.post.approve'=>array('Read', 'NotBanned', 'Moderate'),
@@ -311,7 +311,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 	}
 
 	public function newTopic(array $fields=null, $user=null, $safefields=null) {
-		$catid = isset($safefields['category_id']) ? $safefields['category_id'] : $this->getNewTopicCategory()->id;
+		$catid = isset($safefields['category_id']) ? $safefields['category_id'] : $this->getNewTopicCategory($user)->id;
 		$user = KunenaUserHelper::get($user);
 		$message = new KunenaForumMessage();
 		$message->catid = $catid;
@@ -324,7 +324,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 
 		$topic = new KunenaForumTopic();
 		$topic->category_id = $catid;
-		$topic->hold = $message->hold;
+		$topic->hold = KunenaForum::TOPIC_CREATION;
 		if ($safefields) $topic->bind($safefields);
 		if ($fields) $topic->bind($fields, array ('subject','icon_id'), true);
 
@@ -782,15 +782,16 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			return;
 		$this->_topics = 0;
 		$this->_posts = 0;
-		$this->_lastid = 0;
+		$this->_lastid = $this->id;
 		$categories = $this->getChannels();
 		$categories += KunenaForumCategoryHelper::getChildren($this->id);
 		foreach ($categories as $category) {
 			$category->buildInfo();
+			$lastCategory = $category->getLastCategory();
 			$this->_topics += max($category->numTopics, 0);
 			$this->_posts += max($category->numPosts, 0);
-			if (KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $category->last_post_time)
-				$this->_lastid = $category->id;
+			if ($lastCategory->last_post_time && KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $lastCategory->last_post_time)
+				$this->_lastid = $lastCategory->id;
 		}
 	}
 
@@ -868,6 +869,12 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		// Check that user is moderator
 		if (!$user->userid || !$user->isModerator($this)) {
 			return JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' );
+		}
+	}
+	protected function authoriseGlobalModerate($user) {
+		// Check that user is a global moderator
+		if (!$user->userid || !$user->isModerator()) {
+			return JText::_ ( 'COM_KUNENA_POST_NOT_GLOBAL_MODERATOR' );
 		}
 	}
 	protected function authoriseAdmin($user) {

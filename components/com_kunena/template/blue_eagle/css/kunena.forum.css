@@ -2541,7 +2541,7 @@ label.kpoll-term-lbl {
 	list-style: none !important;
 }
 #kpoll-btns {
-	margin: 5px 0 20px 20px;
+	margin: 0;
 }
 #Kunena div.kpolldesc td.kpoll-option {
 	text-align: left;

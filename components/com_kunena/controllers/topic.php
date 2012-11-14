@@ -121,12 +121,15 @@ class KunenaControllerTopic extends KunenaController {
 			$message->hold = 1;
 		}
 
+		// Prevent user abort from this point in order to maintain data integrity.
+		@ignore_user_abort(true);
+
 		// Upload new attachments
 		foreach ($_FILES as $key=>$file) {
 			$intkey = 0;
 			if (preg_match('/\D*(\d+)/', $key, $matches))
 				$intkey = (int)$matches[1];
-			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key);
+			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key, $this->catid);
 		}
 
 		// Activity integration
@@ -258,7 +261,7 @@ class KunenaControllerTopic extends KunenaController {
 			$intkey = 0;
 			if (preg_match('/\D*(\d+)/', $key, $matches))
 				$intkey = (int)$matches[1];
-			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key);
+			if ($file['error'] != UPLOAD_ERR_NO_FILE) $message->uploadAttachment($intkey, $key, $this->catid);
 		}
 
 		// Set topic icon if permitted
@@ -569,8 +572,8 @@ class KunenaControllerTopic extends KunenaController {
 			$this->app->enqueueMessage ( $target->getError(), 'notice' );
 		}
 		if (!$target->authorise('read')) {
-			$target = $target->getTopic();
-			if ($target->authorise('read')) {
+			if ($target instanceof KunenaForumMessage && $target->getTopic()->authorise('read')) {
+				$target = $target->getTopic();
 				// TODO: need to get closest message
 				$target = KunenaForumMessageHelper::get($target->last_post_id);
 			} else {

@@ -55,7 +55,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			'topic.post.read'=>array('Read'),
 			'topic.post.reply'=>array('Read', 'GuestWrite', 'NotBanned', 'NotSection', 'Unlocked'),
 			'topic.post.thankyou' =>array('Read', 'NotBanned'),
-			'topic.post.unthankyou' =>array('Read', 'NotBanned', 'Moderate'),
+			'topic.post.unthankyou' =>array('Read', 'NotBanned', 'GlobalModerate'),
 			'topic.post.edit'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.post.move'=>array('Read', 'NotBanned', 'Moderate', 'Channel'),
 			'topic.post.approve'=>array('Read', 'NotBanned', 'Moderate'),
@@ -879,6 +879,12 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		// Check that user is moderator
 		if (!$user->userid || !$user->isModerator($this)) {
 			return JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' );
+		}
+	}
+	protected function authoriseGlobalModerate($user) {
+		// Check that user is a global moderator
+		if (!$user->userid || !$user->isModerator()) {
+			return JText::_ ( 'COM_KUNENA_POST_NOT_GLOBAL_MODERATOR' );
 		}
 	}
 	protected function authoriseAdmin($user) {

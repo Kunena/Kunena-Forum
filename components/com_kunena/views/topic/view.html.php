@@ -722,7 +722,7 @@ class KunenaViewTopic extends KunenaView {
 					$message->thankyou = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
 				}
 
-				if( $this->message->authorise('unthankyou') && $this->me->isModerator() ) $canUnthankyou = true;
+				if( $this->message->authorise('unthankyou') ) $canUnthankyou = true;
 				else $canUnthankyou=false;
 
 				foreach( $message->thankyou as $userid=>$time){

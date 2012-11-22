@@ -16,7 +16,9 @@
 				<option value="started">COM_KUNENA_TOPICS_MODE_OPTION_STARTED</option>
 				<option value="subscriptions">COM_KUNENA_TOPICS_MODE_OPTION_MYSUBSCRIPTIONS</option>
 				<option value="favorites">COM_KUNENA_TOPICS_MODE_OPTION_MYFAVORITES</option>
+				<option value="plugin">COM_KUNENA_TOPICS_MODE_OPTION_PLUGIN</option>
 			</param>
+			<param name="modetype" type="text" default="" label="COM_KUNENA_TOPICS_MODETYPE_DESC"/>
 		</url>
 		<params addpath="/administrator/components/com_kunena/libraries/form/elements">
 			<param name="topics_catselection" type="radio" default="" label="COM_KUNENA_COM_A_LATESTCATEGORY_IN" description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
@@ -53,7 +55,9 @@
 				<option value="started">COM_KUNENA_TOPICS_MODE_OPTION_STARTED</option>
 				<option value="subscriptions">COM_KUNENA_TOPICS_MODE_OPTION_MYSUBSCRIPTIONS</option>
 				<option value="favorites">COM_KUNENA_TOPICS_MODE_OPTION_MYFAVORITES</option>
+				<option value="plugin">COM_KUNENA_TOPICS_MODE_OPTION_PLUGIN</option>
 			</field>
+			<field name="modetype" type="text" default="" label="COM_KUNENA_TOPICS_MODETYPE_DESC"/>
 		</fieldset>
 	</fields>
 	<fields name="params" addfieldpath="/administrator/components/com_kunena/libraries/form/fields">

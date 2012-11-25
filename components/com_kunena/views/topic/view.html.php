@@ -462,6 +462,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->voted = $this->get('MyVotes');
 
 		$this->users_voted_list = array();
+		$this->users_voted_morelist = array();
 		if($this->config->pollresultsuserslist && !empty($this->usersvoted)) {
 			$i = 0;
 			foreach($this->usersvoted as $userid=>$vote) {

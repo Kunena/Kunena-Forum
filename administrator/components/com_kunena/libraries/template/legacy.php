@@ -51,7 +51,7 @@ define ('KUNENA_VERSION_NAME', KunenaForum::versionName());
 define ('KUNENA_VERSION_BUILD', 0);
 
 // Joomla URL
-define('KUNENA_JLIVEURL', JURI::base(true).'/');
+define('KUNENA_JLIVEURL', JUri::base(true).'/');
 
 // Joomla template dir
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH . "/templates/{$app->getTemplate()}");
@@ -96,7 +96,7 @@ class CKunenaTools {
 
 		// Replace edit.js and mediaboxAdv.js with the new version of the file
 		$filename = preg_replace('#^.*/(editor(-min)?.js)$#', KUNENA_DIRECTURL.'template/blue_eagle/js/\1', $filename);
-		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.js)$#', JURI::root(true).'/media/kunena/js/\1', $filename);
+		$filename = preg_replace('#^.*/(mediaboxAdv(-min)?.js)$#', JUri::root(true).'/media/kunena/js/\1', $filename);
 		// Replace everything else that points to default template with media
 		$filename = preg_replace('#/components/com_kunena/template/default/js/#', '/media/kunena/js/', $filename);
 		if (JDEBUG || $config->debug || KunenaForum::isDev()) {

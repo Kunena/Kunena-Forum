@@ -16,11 +16,7 @@ function kunena_upgrade_200_pubwrite($parent) {
 	$config = KunenaFactory::getConfig();
 	if ($config->pubwrite) {
 		$db = JFactory::getDbo();
-		if (version_compare(JVERSION, '1.6', '>')) {
-			$params = '{"access_post":["1"],"access_reply":["1"]}';
-		} else {
-			$params = "access_post=29|30\naccess_reply=29|30";
-		}
+		$params = '{"access_post":["1"],"access_reply":["1"]}';
 		$query = "UPDATE #__kunena_categories SET params={$db->quote($params)} WHERE accesstype LIKE 'joomla.%' AND params=''";
 		$db->setQuery ($query);
 		$success = (bool) $db->query ();

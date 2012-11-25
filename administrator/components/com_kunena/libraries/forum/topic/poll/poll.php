@@ -197,7 +197,7 @@ class KunenaForumTopicPoll extends JObject {
 			$votes->votes++;
 		}
 
-		$votes->lasttime = JFactory::getDate()->toMySQL();
+		$votes->lasttime = JFactory::getDate()->toSql();
 		$votes->lastvote = $option;
 		$votes->userid = (int)$user->userid;
 

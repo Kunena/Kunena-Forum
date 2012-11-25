@@ -146,7 +146,7 @@ class KunenaViewCategory extends KunenaView {
 
 		if (!$content) $content = KunenaHtmlParser::parseText($category->getLastTopic()->subject, 20);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_TOPIC_LAST_LINK_TITLE', $this->escape($category->getLastTopic()->subject));
-		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
 	public function getCategoryIcon($category, $thumb = false) {
@@ -154,14 +154,14 @@ class KunenaViewCategory extends KunenaView {
 			if ($category->getNewCount()) {
 				// Check Unread    Cat Images
 				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif" )) {
-					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					return "<img src=\"" . JUri::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
 					return $this->getIcon ( $this->ktemplate->categoryIcons[1], JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 				}
 			} else {
 				// Check Read Cat Images
 				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif" )) {
-					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
+					return "<img src=\"" . JUri::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
 				} else {
 					return $this->getIcon ( $this->ktemplate->categoryIcons[0], JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 				}
@@ -170,14 +170,14 @@ class KunenaViewCategory extends KunenaView {
 			if ($category->getNewCount()) {
 				// Check Unread    Cat Images
 				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif" )) {
-					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					return "<img src=\"" . JUri::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
 					return $this->getIcon ( $this->ktemplate->categoryIcons[1].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 				}
 			} else {
 				// Check Read Cat Images
 				if (is_file ( JPATH_ROOT."/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif" )) {
-					return "<img src=\"" . JURI::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					return "<img src=\"" . JUri::root(true) . "/media/kunena/{$this->config->catimagepath}/{$category->id}_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
 					return $this->getIcon ( $this->ktemplate->categoryIcons[0].'-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 				}
@@ -209,7 +209,7 @@ class KunenaViewCategory extends KunenaView {
 
 		$this->sectionButtons = array();
 		if ($this->me->exists()) {
-			$token = '&' . JUtility::getToken() . '=1';
+			$token = '&' . JSession::getFormToken() . '=1';
 			$this->sectionButtons['markread'] = $this->getButton(KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$this->section->id}{$token}"), 'markread', 'section', 'user');
 		}
 		echo $this->loadTemplateFile('section');
@@ -260,7 +260,7 @@ class KunenaViewCategory extends KunenaView {
 	}
 
 	function displayTopicActions($attributes='', $id=null) {
-		return JHTML::_('select.genericlist', $this->topicActions, 'task', $attributes, 'value', 'text', null, $id);
+		return JHtml::_('select.genericlist', $this->topicActions, 'task', $attributes, 'value', 'text', null, $id);
 	}
 
 	function displayCategoryActions() {
@@ -270,7 +270,7 @@ class KunenaViewCategory extends KunenaView {
 	}
 
 	function getCategoryActions() {
-		$token = '&' . JUtility::getToken() . '=1';
+		$token = '&' . JSession::getFormToken() . '=1';
 		$this->categoryButtons = array();
 
 		// Is user allowed to post new topic?
@@ -332,13 +332,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->position = 0;
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'category');
 		$params->set('kunena_layout', 'default');
@@ -432,19 +426,19 @@ function getTopicClass($prefix='k', $class='topic') {
 
 	function displayManageActions($attributes='', $id=null) {
 		$options	= array();
-		$options[]	= JHTML::_('select.option',  '', JText::_('COM_KUNENA_SELECT_BATCH_OPTION') );
-		$options[]	= JHTML::_('select.option',  'publish', JText::_('COM_KUNENA_PUBLISH') );
-		$options[]	= JHTML::_('select.option',  'unpublish', JText::_('COM_KUNENA_UNPUBLISH') );
-		$options[]	= JHTML::_('select.option',  'lock', JText::_('COM_KUNENA_LOCK') );
-		$options[]	= JHTML::_('select.option',  'unlock', JText::_('COM_KUNENA_UNLOCK') );
-		$options[]	= JHTML::_('select.option',  'review', JText::_('COM_KUNENA_ENABLE_REVIEW') );
-		$options[]	= JHTML::_('select.option',  'unreview', JText::_('COM_KUNENA_DISABLE_REVIEW') );
-		$options[]	= JHTML::_('select.option',  'allow_anomymous', JText::_('COM_KUNENA_ALLOW_ANONYMOUS') );
-		$options[]	= JHTML::_('select.option',  'deny_anonymous', JText::_('COM_KUNENA_DISALLOW_ANONYMOUS') );
-		$options[]	= JHTML::_('select.option',  'allow_polls', JText::_('COM_KUNENA_ALLOW_POLLS') );
-		$options[]	= JHTML::_('select.option',  'deny_polls', JText::_('COM_KUNENA_DISALLOW_POLLS') );
-		$options[]	= JHTML::_('select.option',  'delete', JText::_('COM_KUNENA_DELETE') );
-		return JHTML::_('select.genericlist',  $options, 'batch', $attributes, 'value', 'text', null, $id );
+		$options[]	= JHtml::_('select.option',  '', JText::_('COM_KUNENA_SELECT_BATCH_OPTION') );
+		$options[]	= JHtml::_('select.option',  'publish', JText::_('COM_KUNENA_PUBLISH') );
+		$options[]	= JHtml::_('select.option',  'unpublish', JText::_('COM_KUNENA_UNPUBLISH') );
+		$options[]	= JHtml::_('select.option',  'lock', JText::_('COM_KUNENA_LOCK') );
+		$options[]	= JHtml::_('select.option',  'unlock', JText::_('COM_KUNENA_UNLOCK') );
+		$options[]	= JHtml::_('select.option',  'review', JText::_('COM_KUNENA_ENABLE_REVIEW') );
+		$options[]	= JHtml::_('select.option',  'unreview', JText::_('COM_KUNENA_DISABLE_REVIEW') );
+		$options[]	= JHtml::_('select.option',  'allow_anomymous', JText::_('COM_KUNENA_ALLOW_ANONYMOUS') );
+		$options[]	= JHtml::_('select.option',  'deny_anonymous', JText::_('COM_KUNENA_DISALLOW_ANONYMOUS') );
+		$options[]	= JHtml::_('select.option',  'allow_polls', JText::_('COM_KUNENA_ALLOW_POLLS') );
+		$options[]	= JHtml::_('select.option',  'deny_polls', JText::_('COM_KUNENA_DISALLOW_POLLS') );
+		$options[]	= JHtml::_('select.option',  'delete', JText::_('COM_KUNENA_DELETE') );
+		return JHtml::_('select.genericlist',  $options, 'batch', $attributes, 'value', 'text', null, $id );
 	}
 
 	function getPagination($maxpages) {

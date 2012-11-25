@@ -11,9 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 
 $i=0;
-JHTML::_('behavior.calendar');
-JHTML::_('behavior.formvalidation');
-JHTML::_('behavior.tooltip');
+JHtml::_('behavior.calendar');
+JHtml::_('behavior.formvalidation');
+JHtml::_('behavior.tooltip');
 ?>
 <div class="kmodule user-default_ban">
 	<div class="kbox-wrapper kbox-full">
@@ -22,7 +22,7 @@ JHTML::_('behavior.tooltip');
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="ban" />
 				<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
-				<?php echo JHTML::_( 'form.token' ); ?>
+				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<div class="headerbox-wrapper kbox-full">
 					<div class="header">
@@ -49,10 +49,10 @@ JHTML::_('behavior.tooltip');
 						<div class="form-field">
 							<?php
 							// make the select list for the view type
-							$block[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
-							$block[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
+							$block[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
+							$block[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
 							// build the html select list
-							echo JHTML::_('select.genericlist', $block, 'block', 'class="inputbox hasTip" size="1" title="'.JText::_('COM_KUNENA_BAN_BANLEVEL').' :: Select Ban From"', 'value', 'text', $this->escape($this->baninfo->blocked));
+							echo JHtml::_('select.genericlist', $block, 'block', 'class="inputbox hasTip" size="1" title="'.JText::_('COM_KUNENA_BAN_BANLEVEL').' :: Select Ban From"', 'value', 'text', $this->escape($this->baninfo->blocked));
 							?>
 						</div>
 					</li>
@@ -66,7 +66,7 @@ JHTML::_('behavior.tooltip');
 						</div>
 						<div class="kform-field">
 							<span class="hasTip" title="<?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME') ?>::<?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC_LONG') ?>">
-								<?php echo JHTML::_('calendar', $this->escape($this->baninfo->expiration), 'expiration', 'expiration', '%Y-%m-%d',array('onclick'=>'$(\'expiration\').setStyle(\'display\')')); ?>
+								<?php echo JHtml::_('calendar', $this->escape($this->baninfo->expiration), 'expiration', 'expiration', '%Y-%m-%d',array('onclick'=>'$(\'expiration\').setStyle(\'display\')')); ?>
 							</span>
 						</div>
 					</li>

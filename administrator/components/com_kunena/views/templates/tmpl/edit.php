@@ -11,9 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
-JHTML::_('behavior.tooltip');
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
+JHtml::_('behavior.tooltip');
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
@@ -24,7 +24,7 @@ JHTML::_('behavior.tooltip');
 		<input type="hidden" name="view" value="templates" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<div class="col width-50">
 			<fieldset class="adminform">
@@ -41,7 +41,7 @@ JHTML::_('behavior.tooltip');
 					<td valign="top" class="key"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION' ); ?>:</td>
 					<td><?php $path = KPATH_SITE.'/template/'.$this->templatename. '/images/template_thumbnail.png';
 						if (file_exists ( $path )) : ?>
-						<div class="tpl-thumbnail"><img src ="<?php echo JURI::root (); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/images/template_thumbnail.png" alt="" /></div>
+						<div class="tpl-thumbnail"><img src ="<?php echo JUri::root(true); ?>/components/com_kunena/template/<?php echo $this->escape($this->templatename); ?>/images/template_thumbnail.png" alt="" /></div>
 						<?php endif; ?>
 						<div class="tpl-desc"><?php echo JText::_($this->details->description); ?></div>
 					</td>
@@ -62,9 +62,9 @@ JHTML::_('behavior.tooltip');
 				</tr>
 				<tr>
 					<td class="kparameters">
-						<?php if (!is_null($this->params) && $this->params instanceof JRegistry) : ?>
+						<?php if ($this->form instanceof JForm) : ?>
 						<table class="paramlist admintable">
-							<?php foreach ($this->params->getParams() as $item): ?>
+							<?php foreach ($this->params->toArray() as $item): ?>
 							<tr>
 								<?php if ($item[0]) : ?>
 								<td width="40%" class="paramlist_key">

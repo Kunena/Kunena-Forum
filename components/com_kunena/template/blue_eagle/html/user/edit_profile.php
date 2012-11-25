@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.tooltip');
+JHtml::_('behavior.tooltip');
 ?>
 
 <div class="kblock keditprofile">
@@ -49,11 +49,11 @@ JHTML::_('behavior.tooltip');
 			<td class="kcol-mid">
 				<?php
 				// make the select list for the view type
-				$gender[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
-				$gender[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
-				$gender[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+				$gender[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+				$gender[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+				$gender[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 				// build the html select list
-				echo JHTML::_('select.genericlist', $gender, 'gender', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->profile->gender));
+				echo JHtml::_('select.genericlist', $gender, 'gender', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->profile->gender));
 				?>
 			</td>
 		</tr>

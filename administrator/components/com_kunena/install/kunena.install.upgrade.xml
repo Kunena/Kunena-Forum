@@ -392,8 +392,10 @@
 			<query>ALTER TABLE `#__kunena_users` MODIFY `view` varchar(8) NOT NULL default '' AFTER `userid`</query>
 			<query>UPDATE `#__kunena_users` SET view=''</query>
 		</version>
-		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
+		<version version="2.0.3" versiondate="2012-11-24" versionname="Reconciliation">
 			<query>UPDATE `#__kunena_topics` SET hold='4' WHERE first_post_id='0'</query>
+		</version>
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

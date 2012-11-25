@@ -77,7 +77,7 @@ abstract class KunenaForumCategoryHelper {
 		$db = JFactory::getDBO ();
 		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$db->Quote($user->userid)} AND subscribed=1";
 		$db->setQuery ( $query );
-		$subscribed = (array) $db->loadResultArray ();
+		$subscribed = (array) $db->loadColumn ();
 		if (KunenaError::checkDatabaseError()) return;
 		return KunenaForumCategoryHelper::getCategories($subscribed);
 	}
@@ -138,7 +138,7 @@ abstract class KunenaForumCategoryHelper {
 
 		$query = "SELECT c.id FROM #__kunena_categories AS c INNER JOIN #__kunena_user_categories AS u ON u.category_id = c.id WHERE u.user_id IN ({$userids}) AND u.category_id IN ({$allowed}) AND u.subscribed=1 {$where} GROUP BY c.id ORDER BY {$orderby}";
 		$db->setQuery ( $query , $limitstart, $limit );
-		$subscribed = (array) $db->loadResultArray ();
+		$subscribed = (array) $db->loadColumn ();
 		if (KunenaError::checkDatabaseError()) return;
 
 		$list = array();

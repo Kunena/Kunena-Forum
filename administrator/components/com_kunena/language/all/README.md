@@ -1,7 +1,7 @@
 Introduction
 ============
 
-This file contains all the languages which are currently available for Kunena Forum @kunenaversion@ for Joomla! 1.5 and 2.5.
+This file contains all the languages which are currently available for Kunena Forum @kunenaversion@ for Joomla! 2.5.
 
 We recommend that you install the most recent language package every time you have upgraded Kunena.
 
@@ -10,8 +10,8 @@ Kunena distribution package itself includes translations for installation, which
 You can find the most recent language list from here:
 http://www.kunena.org/download
 
-Installing languages in Joomla! 2.5
-===================================
+Installing languages
+====================
 
 Just install this package by using Joomla installer. If you cannot install the package because of 2MB upload limit, you can either
 install the package from URL or make the file smaller by removing a few languages you do not need.
@@ -24,18 +24,6 @@ packages by going to "Extension Manager: Manage", selecting type File and filter
 
 Additionally extension manager will have a package called "Kunena Language Pack". Uninstalling this package will also uninstall
 all the languages that were added during installation.
-
-Installing languages in Joomla! 1.5
-===================================
-
-In Joomla! 1.5 you have to extract the files from the archive and install them one by one.
-
-For each language, there is a file that you need to install. Language packs are named by the language tag. For example Finnish language
-file can be found by looking for:
-
-    language/com_kunena.fi-FI.v@kunenaversion@.zip
-
-Just install the file by using the standard Joomla installation procedure.
 
 Translating languages
 =====================

@@ -40,7 +40,7 @@ class KunenaBbcode extends NBBC_BBCode {
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
 		$this->SetSmileyDir ( JPATH_ROOT );
-		$this->SetSmileyURL ( $relative ? JURI::root(true) : rtrim(JURI::root(), '/') );
+		$this->SetSmileyURL ( $relative ? JUri::root(true) : rtrim(JUri::root(), '/') );
 		$this->SetDetectURLs ( true );
 		$this->SetURLPattern (array($this, 'parseUrl'));
 		$this->SetURLTarget('_blank');
@@ -73,7 +73,7 @@ class KunenaBbcode extends NBBC_BBCode {
 		if (preg_match('#^mailto:#ui', $url)) {
 			// Cloak email addresses
 			$email = substr($text, 7);
-			return JHTML::_('email.cloak', $email, $this->IsValidEmail($email));
+			return JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
 		}
 
 		// Remove http(s):// from the text
@@ -195,7 +195,7 @@ class KunenaBbcode extends NBBC_BBCode {
 				$params = $this->parse_url($url);
 				if (!$invalid && substr($url, 0, 7) == 'mailto:') {
 					$email = JString::substr($url, 7);
-					$output[$index] = JHTML::_('email.cloak', $email, $this->IsValidEmail($email));
+					$output[$index] = JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
 
 				} elseif ($invalid || empty($params['host']) || !empty($params['pass'])) {
 					$output[$index-1] .= $token;
@@ -841,7 +841,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		$email = is_string ( $default ) ? $default : $bbcode->UnHTMLEncode($content);
 		$text = is_string ( $default ) ? $bbcode->UnHTMLEncode($content) : $default;
-		return JHTML::_('email.cloak', htmlspecialchars ( $email ), $bbcode->IsValidEmail ( $email ), htmlspecialchars ( $text ), $bbcode->IsValidEmail ( $text ));
+		return JHtml::_('email.cloak', htmlspecialchars ( $email ), $bbcode->IsValidEmail ( $email ), htmlspecialchars ( $text ), $bbcode->IsValidEmail ( $text ));
 	}
 
 	// Format a [url] tag by producing an <a>...</a> element.
@@ -1118,53 +1118,27 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$user = JFactory::getUser ();
 		$db = JFactory::getDBO ();
 		$site = JFactory::getApplication('site');
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category,
-				0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access
-				FROM #__content AS a
-				LEFT JOIN #__categories AS cc ON cc.id = a.catid
-				LEFT JOIN #__users AS u ON u.id = a.created_by
-				WHERE a.id='.$db->quote($articleid);
-			$db->setQuery($query);
-			$article = $db->loadObject();
-			if ($article) {
-				// Get credentials to check if the user has right to see the article
-				$params = $site->getParams('com_content');
-				$registry = new JRegistry();
-				$registry->loadJSON($article->attribs);
-				$article->params = clone $params;
-				$article->params->merge($registry);
-				$params = $article->params;
 
-				$viewlevels = $user->getAuthorisedViewLevels();
-				if ( !in_array($article->access, $viewlevels) ) {
-					$denied = true;
-				}
-			}
-		} else {
-			// Joomla 1.5
-			$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, s.title AS section,
-				s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access
-				FROM #__content AS a
-				LEFT JOIN #__categories AS cc ON cc.id = a.catid
-				LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = "content"
-				LEFT JOIN #__users AS u ON u.id = a.created_by
-				WHERE a.id=' . $db->quote ( $articleid );
+		$query = 'SELECT a.*, u.name AS author, cc.title AS category,
+			0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access
+			FROM #__content AS a
+			LEFT JOIN #__categories AS cc ON cc.id = a.catid
+			LEFT JOIN #__users AS u ON u.id = a.created_by
+			WHERE a.id='.$db->quote($articleid);
+		$db->setQuery($query);
+		$article = $db->loadObject();
+		if ($article) {
+			// Get credentials to check if the user has right to see the article
+			$params = $site->getParams('com_content');
+			$registry = new JRegistry();
+			$registry->loadString($article->attribs);
+			$article->params = clone $params;
+			$article->params->merge($registry);
+			$params = $article->params;
 
-			$db->setQuery ( $query );
-			$article = $db->loadObject ();
-			if ($article) {
-				// Get credentials to check if the user has right to see the article
-				$params = clone($site->getParams('com_content'));
-				$aparams = new JParameter($article->attribs);
-				$params->merge($aparams);
-
-				if (($article->catid && $article->cat_access > $user->get('aid', 0))
-					|| ($article->sectionid && $article->sec_access > $user->get('aid', 0))
-					|| ($article->access > $user->get('aid', 0))) {
-					$denied = true;
-				}
+			$viewlevels = $user->getAuthorisedViewLevels();
+			if ( !in_array($article->access, $viewlevels) ) {
+				$denied = true;
 			}
 		}
 
@@ -1175,15 +1149,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$html = JText::_( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS' );
 		} else {
 			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
-			if (version_compare(JVERSION, '1.6','>')) {
-				// Joomla 1.6+
-				$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
-				$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
-				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
-			} else {
-				// Joomla 1.5
-				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
-			}
+			$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
+			$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
+			$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
 
 			if (!$default) $default = $config->article_display;
 			switch ($default) {
@@ -1212,16 +1180,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$params->set('ksource', 'kunena');
 				JPluginHelper::importPlugin('content');
 				$dispatcher = JDispatcher::getInstance();
-				if (version_compare(JVERSION, '1.6','>')) {
-					// Joomla 1.6+
-					$results = $dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
-
-					$article->text = JHTML::_('string.truncate', $article->text, $bbcode->output_limit-$bbcode->text_length);
-					$bbcode->text_length += strlen($article->text);
-				} else {
-					// Joomla 1.5
-					$results = $dispatcher->trigger('onPrepareContent', array (&$article, &$params, 0));
-				}
+				$results = $dispatcher->trigger('onContentPrepare', array ('text', &$article, &$params, 0));
+				$article->text = JHTML::_('string.truncate', $article->text, $bbcode->output_limit-$bbcode->text_length);
+				$bbcode->text_length += strlen($article->text);
 				$html = $article->text;
 			}
 		}
@@ -1255,16 +1216,12 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		}
 		if (empty($bbcode->parent->forceMinimal) && $enabled === false && KunenaFactory::getConfig ()->highlightcode) {
 			$enabled = true;
-			if (version_compare(JVERSION, '1.6','>')) {
-				// Joomla 1.6+
-				$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
-				if (file_exists($path)) {
-					require_once $path;
-				}
-			} else {
-				// Joomla 1.5
-				jimport ( 'geshi.geshi' );
+
+			$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi.php';
+			if (file_exists($path)) {
+				require_once $path;
 			}
+
 		}
 		if ($enabled && class_exists('GeSHi')) {
 			$geshi = new GeSHi ( $bbcode->UnHTMLEncode($content), $type );
@@ -1540,7 +1497,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		} elseif ($attachment->exists() && is_file ( JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}" )) {
 			$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
-			$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
+			// TODO: use absolute / relative url depending on where BBCode is shown
+			$link = JUri::root() . "{$attachment->folder}/{$attachment->filename}";
 			$image = $attachment->getImageLink();
 			if (empty ( $image )) {
 				return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";

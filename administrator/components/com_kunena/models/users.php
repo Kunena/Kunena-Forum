@@ -63,7 +63,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 		$where = '';
 		if ( $this->getState('list.search') ) {
-		  $where = ' WHERE u.username LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.email LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false );
+		  $where = ' WHERE u.username LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.email LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.name LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search' ), true ).'%', false );
 
 		}
 
@@ -122,7 +122,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$userid = $this->app->getUserState ( 'kunena.user.userid');
 
 		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip" );
-		$iplist = implode("','", $db->loadResultArray ());
+		$iplist = implode("','", $db->loadColumn ());
 		if (KunenaError::checkDatabaseError()) return;
 
 		$list = array();
@@ -147,11 +147,11 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$modCatList = array_keys(KunenaAccess::getInstance()->getModeratorStatus($user));
 		if (empty($modCatList)) $modCatList[] = 0;
 
-		$categoryList = array(JHTML::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR')));
+		$categoryList = array(JHtml::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR')));
 		$params = array (
 			'sections' => false,
 			'action' => 'read');
-		$modCats = JHTML::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
+		$modCats = JHtml::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
 
 		return $modCats;
 	}
@@ -164,17 +164,17 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$specialRanks = $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
-		$yesnoRank [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_RANK_NO_ASSIGNED') );
+		$yesnoRank [] = JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_RANK_NO_ASSIGNED') );
 		foreach ( $specialRanks as $ranks ) {
-			$yesnoRank [] = JHTML::_ ( 'select.option', $ranks->rank_id, $ranks->rank_title );
+			$yesnoRank [] = JHtml::_ ( 'select.option', $ranks->rank_id, $ranks->rank_title );
 		}
 		//build special ranks select list
-		$selectRank = JHTML::_ ( 'select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $user->rank );
+		$selectRank = JHtml::_ ( 'select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $user->rank );
 		return $selectRank;
 	}
 
 	public function getMovecatslist() {
-		return JHTML::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox"', 'value', 'text');
+		return JHtml::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox"', 'value', 'text');
 	}
 
 	public function getMoveuser() {

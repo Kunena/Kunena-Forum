@@ -256,12 +256,12 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 			}
 			if (!$permdelete && $topic->authorise('permdelete')) $permdelete = true;
 		}
-		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		if ($move) $actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-		if ($approve) $actionDropdown[] = JHTML::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		if ($move) $actionDropdown[] = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		if ($approve) $actionDropdown[] = JHtml::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		if ($delete) $actionDropdown[] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		if ($permdelete) $actionDropdown[] = JHtml::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		if ($undelete) $actionDropdown[] = JHtml::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		if (count($actionDropdown) == 1) return null;
 		return $actionDropdown;
@@ -277,8 +277,8 @@ class KunenaModelCategory extends KunenaAdminModelCategories {
 	}
 
 	public function getCategoryActions() {
-		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		$actionDropdown[] = JHTML::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actionDropdown[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 
 		if (count($actionDropdown) == 1) return null;
 		return $actionDropdown;

@@ -37,7 +37,7 @@ class plgKunenaComprofiler extends JPlugin {
 
 		$this->loadLanguage ( 'plg_kunena_comprofiler.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_comprofiler.sys', KPATH_ADMIN );
 
-		$this->path = dirname ( __FILE__ ) . '/comprofiler';
+		$this->path = dirname ( __FILE__ );
 		require_once "{$this->path}/integration.php";
 
 		if ($app->isAdmin() && (! isset ( $ueConfig ['version'] ) || version_compare ( $ueConfig ['version'], $this->minCBVersion ) < 0)) {

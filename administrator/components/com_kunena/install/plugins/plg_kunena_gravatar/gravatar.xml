@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+	<name>plg_kunena_gravatar</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>www.kunena.org</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>PLG_KUNENA_GRAVATAR_DESCRIPTION</description>
+	<files>
+		<filename plugin="gravatar">gravatar.php</filename>
+		<filename>index.html</filename>
+		<filename>avatar.php</filename>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_GRAVATAR_AVATAR" description="PLG_KUNENA_GRAVATAR_AVATAR_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

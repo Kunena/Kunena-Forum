@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->document->addStyleSheet ( JURI::base(true).'/components/com_kunena/install/media/install.css' );
+$this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/install/media/install.css' );
 ?>
 <div id="right">
 	<div id="rightpad">

@@ -11,9 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
-JHTML::_('behavior.tooltip');
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
+JHtml::_('behavior.tooltip');
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
@@ -23,9 +23,9 @@ JHTML::_('behavior.tooltip');
 			<input type="hidden" name="view" value="templates" />
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<?php echo JHtml::_( 'form.token' ); ?>
 
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th width="5" class="title"> # </th>
@@ -61,7 +61,7 @@ JHTML::_('behavior.tooltip');
 					<td width="5">
 						<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="isChecked(this.checked);" />
 					</td>
-					<td><?php $img_path = JURI::root(true).'/components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>
+					<td><?php $img_path = JUri::root(true).'/components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>
 						<span class="editlinktip hasTip" title="<?php
 							echo $this->escape($row->name . '::<img border="1" src="' . $this->escape($img_path) . '" name="imagelib" alt="' . JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW' ) . '" width="200" height="145" />'); ?> ">
 							<a href="#edit"
@@ -72,10 +72,10 @@ JHTML::_('behavior.tooltip');
 					</td>
 					<td align="center">
 						<?php if ($row->published == 1) { ?>
-							<img src="<?php echo JURI::base(true); ?>/components/com_kunena/images/icons/default.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>" />
+							<img src="<?php echo JUri::base(true); ?>/components/com_kunena/images/icons/default.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>" />
 						<?php } else { ?>
 							<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo urlencode($row->directory);?>','publish')">
-								<img src="<?php echo JURI::base(true); ?>/components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" />
+								<img src="<?php echo JUri::base(true); ?>/components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" />
 							</a>
 						<?php } ?>
 					</td>

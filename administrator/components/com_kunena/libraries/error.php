@@ -24,15 +24,8 @@ abstract class KunenaError {
 
 			@ini_set('display_errors', 1);
 			self::$handler = true;
-			if (version_compare(JVERSION, '1.7', '>')) {
-				// Joomla 1.7+
-				@error_reporting(E_ALL || E_STRICT);
-				JFactory::getDBO()->setDebug(true);
-			} else {
-				// Joomla 1.5 and 1.6
-				@error_reporting(E_ALL & ~E_STRICT);
-				JFactory::getDBO()->debug(1);
-			}
+			@error_reporting(E_ALL | E_STRICT);
+			JFactory::getDbo()->setDebug(true);
 			set_error_handler(array('KunenaError', 'errorHandler'));
 
 			self::$enabled++;

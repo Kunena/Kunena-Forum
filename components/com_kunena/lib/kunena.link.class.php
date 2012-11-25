@@ -27,9 +27,9 @@ class CKunenaLink {
 	// Basic universal href link
 	//
 	static function GetSefHrefLink($link, $name, $title = '', $rel = 'nofollow', $class = '', $anker = '', $attr = '') {
-		$uri = $link instanceof JURI ? $link : JURI::getInstance($link);
+		$uri = $link instanceof JUri ? $link : JUri::getInstance($link);
 		if ($anker) $uri->setFragment($anker);
-		return JHTML::_('kunenaforum.link', $uri, $name, $title, $class, $rel, $attr);
+		return JHtml::_('kunenaforum.link', $uri, $name, $title, $class, $rel, $attr);
 	}
 
 	//
@@ -37,7 +37,7 @@ class CKunenaLink {
 	//
 
 	static function GetAttachmentLink($folder,$filename,$name,$title = '', $rel = 'nofollow') {
-		return self::GetHrefLink ( JURI::ROOT()."{$folder}/{$filename}", $name, $title, $rel );
+		return self::GetHrefLink ( JUri::root()."{$folder}/{$filename}", $name, $title, $rel );
 	}
 
 	static function GetRSSLink($name, $rel = 'follow', $params = '') {
@@ -54,7 +54,7 @@ class CKunenaLink {
 	}
 
 	static function GetCategoryActionLink($task, $catid, $catname, $rel = 'follow', $class = '', $title = '', $extra = '') {
-		$token = '&' . JUtility::getToken() . '=1';
+		$token = '&' . JSession::getFormToken() . '=1';
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=category&task={$task}&catid={$catid}{$extra}{$token}", $catname, $title, $rel, $class );
 	}
 
@@ -123,7 +123,7 @@ class CKunenaLink {
 	}
 
 	static function GetKarmaLink($do, $catid, $pid, $userid, $name, $rel = 'nofollow') {
-		$token = '&'.JUtility::getToken().'=1';
+		$token = '&'.JSession::getFormToken().'=1';
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=karma&do={$do}&userid={$userid}&catid={$catid}&pid={$pid}{$token}", $name, '', $rel );
 	}
 

@@ -9,7 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.controller' );
 jimport ( 'joomla.application.component.helper' );
 
 /**
@@ -17,7 +16,7 @@ jimport ( 'joomla.application.component.helper' );
  *
  * @since		2.0
  */
-class KunenaController extends JController {
+class KunenaController extends JControllerLegacy {
 	public $app = null;
 	public $me = null;
 	public $config = null;
@@ -119,7 +118,7 @@ class KunenaController extends JController {
 				$app->redirect (KunenaRoute::_(null, false));
 			}
 
-			// Joomla 1.6+ multi-language support
+			// Joomla 2.5+ multi-language support
 			/* // FIXME:
 			if (isset($active->language) && $active->language != '*') {
 				$language = JFactory::getDocument()->getLanguage();
@@ -202,7 +201,7 @@ class KunenaController extends JController {
 	}
 
 	protected function redirectBack($fragment = '') {
-		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
+		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
 		JFactory::getApplication ()->redirect ( $httpReferer.($fragment ? '#'.$fragment : '') );
 	}
 

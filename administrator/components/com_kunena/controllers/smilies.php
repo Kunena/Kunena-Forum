@@ -24,7 +24,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 	}
 
 	function add() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -33,7 +33,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 	}
 
 	function edit() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -50,7 +50,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 
 	function save() {
 		$db = JFactory::getDBO ();
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;
@@ -76,7 +76,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 	}
 
 	function smileyupload() {
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;
@@ -98,7 +98,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 	function delete() {
 		$db = JFactory::getDBO ();
 
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;

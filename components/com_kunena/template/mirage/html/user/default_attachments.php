@@ -10,16 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-if (version_compare(JVERSION, '1.7','>')) {
-	// Joomla 1.7+
-	JHtml::_('behavior.multiselect');
-} elseif (version_compare(JVERSION, '1.6','>')) {
-	// Joomla 1.6
-	JHtml::_('script','system/multiselect.js',false,true);
-} else {
-	// Joomla 1.5
-	$this->document->addScript(JURI::Root(true).'/includes/js/joomla.javascript.js');
-}
+JHtml::_('behavior.multiselect');
 ?>
 <div class="kmodule user-default_attachments">
 	<div class="kbox-wrapper kbox-full">
@@ -35,7 +26,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 						<input type="hidden" name="view" value="user" />
 						<input type="hidden" name="task" value="delfile" />
 						<input type="hidden" name="boxchecked" value="0" />
-						<?php echo JHTML::_( 'form.token' ); ?>
+						<?php echo JHtml::_( 'form.token' ); ?>
 
 						<ul class="list-unstyled">
 						<?php
@@ -59,9 +50,9 @@ if (version_compare(JVERSION, '1.7','>')) {
 											<td class="kposts-topic">
 												<h3><?php echo $y; ?></h3>
 											</td>
-											<td class="ktopic-icon"><?php echo JHTML::_('grid.id', $i, intval($file->id)) ?></td>
+											<td class="ktopic-icon"><?php echo JHtml::_('grid.id', $i, intval($file->id)) ?></td>
 											<td class="kpost-topic">
-												<img src="<?php echo $file->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" />
+												<img src="<?php echo $file->filetype != '' ? JUri::root(true).'/media/kunena/icons/image.png' : JUri::root(true).'/media/kunena/icons/file.png'; ?>" alt="" title="" />
 											</td>
 											<td class="kpost-topic">
 											 <?php echo $file->filename; ?>
@@ -85,11 +76,7 @@ if (version_compare(JVERSION, '1.7','>')) {
 							<?php $i++; $y++; endforeach; endif; ?>
 						<div id="ksection-modbox">
 							<input class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_FILES_DELETE') ?>" style="float:right;" />
-							<?php if (version_compare(JVERSION, '1.6','>')): ?>
 							<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
-							<?php else: ?>
-							<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" />
-							<?php endif; ?>
 						</div>
 					</form>
 				</div>

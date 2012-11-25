@@ -78,7 +78,7 @@ class KunenaForumMessageThankyou extends JObject {
 		$db = JFactory::getDBO ();
 		$time = JFactory::getDate();
 		$query = "INSERT INTO #__kunena_thankyou
-			SET postid={$db->quote($this->id)} , userid={$db->quote($user->userid)} , targetuserid={$db->quote($message->userid)}, time={$db->quote($time->toMySQL())}";
+			SET postid={$db->quote($this->id)} , userid={$db->quote($user->userid)} , targetuserid={$db->quote($message->userid)}, time={$db->quote($time->toSql())}";
 		$db->setQuery ( $query );
 		$db->query ();
 

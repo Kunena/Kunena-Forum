@@ -322,7 +322,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$action = 'post'.$message->id;
 		}
 
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}");
+		$uri = JUri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}");
 		if ($uri->getVar('action') !== null) {
 			$uri->delVar('action');
 			$mesid = 0;

@@ -11,12 +11,12 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 $document->addScriptDeclaration('function update_rank(newimage)
 			{
 				document.rank_image.src = "'.
-				$this->escape(JURI::root() . $this->rankpath).'" + newimage;
+				$this->escape(JUri::root() . $this->rankpath).'" + newimage;
 			}');
 ?>
 <div id="kadmin">
@@ -28,7 +28,7 @@ $document->addScriptDeclaration('function update_rank(newimage)
 			<input type="hidden" name="task" value="save" />
 			<input type="hidden" name="boxchecked" value="0" />
 			<?php if ( $this->state->get('item.id') ): ?><input type="hidden" name="rankid" value="<?php echo $this->state->get('item.id') ?>" /><?php endif; ?>
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<table class="adminform">
 
@@ -45,7 +45,7 @@ $document->addScriptDeclaration('function update_rank(newimage)
 					?></td>
 					<td><?php echo $this->listranks?> &nbsp;
 					<?php if ( !$this->state->get('item.id') ): ?><img name="rank_image" src="" border="0" alt="" />
-					<?php else: ?><img name="rank_image" src="<?php echo $this->escape(JURI::root().$this->ktemplate->getRankPath( $this->rank_selected->rank_image)); ?>" border="0" alt="" /><?php endif; ?>
+					<?php else: ?><img name="rank_image" src="<?php echo $this->escape(JUri::root(true).'/'.$this->ktemplate->getRankPath( $this->rank_selected->rank_image)); ?>" border="0" alt="" /><?php endif; ?>
 					</td>
 				</tr>
 				<tr>

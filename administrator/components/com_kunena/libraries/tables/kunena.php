@@ -69,7 +69,7 @@ abstract class KunenaTable extends JTable {
 				return false;
 			}
 			// Add the search tuple to the query.
-			$query->where($this->_db->nameQuote($field).' = '.$this->_db->quote($value));
+			$query->where($this->_db->quoteName($field).' = '.$this->_db->quote($value));
 		}
 
 		$this->_db->setQuery($query);
@@ -109,7 +109,7 @@ abstract class KunenaTable extends JTable {
 
 	protected function insertObject()
 	{
-		$fmtsql = 'INSERT INTO '.$this->_db->nameQuote($this->_tbl).' (%s) VALUES (%s) ';
+		$fmtsql = 'INSERT INTO '.$this->_db->quoteName($this->_tbl).' (%s) VALUES (%s) ';
 		$fields = array();
 
 		foreach (get_object_vars($this) as $k => $v) {
@@ -119,8 +119,8 @@ abstract class KunenaTable extends JTable {
 			if ($k[0] == '_') { // internal field
 				continue;
 			}
-			$fields[] = $this->_db->nameQuote($k);
-			$values[] = $this->_db->isQuoted($k) ? $this->_db->Quote($v) : (int) $v;
+			$fields[] = $this->_db->quoteName($k);
+			$values[] = $this->_db->Quote($v);
 		}
 		$this->_db->setQuery(sprintf($fmtsql, implode(",", $fields) ,  implode(",", $values)));
 		if (!$this->_db->query()) {
@@ -141,7 +141,7 @@ abstract class KunenaTable extends JTable {
 	 */
 	protected function updateObject($updateNulls=false)
 	{
-		$fmtsql = 'UPDATE '.$this->_db->nameQuote($this->_tbl).' SET %s WHERE %s';
+		$fmtsql = 'UPDATE '.$this->_db->quoteName($this->_tbl).' SET %s WHERE %s';
 		$tmp = array();
 
 		foreach (get_object_vars($this) as $k => $v) {
@@ -166,9 +166,9 @@ abstract class KunenaTable extends JTable {
 					continue;
 				}
 			} else {
-				$val = $this->_db->isQuoted($k) ? $this->_db->Quote($v) : (int) $v;
+				$val = $this->_db->Quote($v);
 			}
-			$tmp[] = $this->_db->nameQuote($k) . '=' . $val;
+			$tmp[] = $this->_db->quoteName($k) . '=' . $val;
 		}
 
 		// Nothing to update.
@@ -234,7 +234,7 @@ abstract class KunenaTable extends JTable {
 		$query->delete();
 		$query->from($this->_tbl);
 		foreach ($keys as $key=>$value) {
-			$query->where("{$this->_db->nameQuote($key)} = {$this->_db->quote($value)}");
+			$query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
 		}
 		$this->_db->setQuery($query);
 

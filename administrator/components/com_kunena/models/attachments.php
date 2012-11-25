@@ -52,7 +52,7 @@ class KunenaAdminModelAttachments extends KunenaModel {
 
 		$where = '';
 		if ($this->getState ( 'list.search' )) {
-			$where = ' WHERE LOWER( a.filename ) LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR LOWER( a.filetype ) LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false );
+			$where = ' WHERE LOWER( a.filename ) LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search' ), true ).'%', false ).' OR LOWER( a.filetype ) LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search' ), true ).'%', false );
 		}
 
 		$orderby = ' ORDER BY '. $this->getState ( 'list.ordering' ) .' '. $this->getState ( 'list.direction' );

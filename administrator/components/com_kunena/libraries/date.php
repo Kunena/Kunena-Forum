@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 jimport ( 'joomla.utilities.date' );
 
 class KunenaDate extends JDate {
-	public static function getInstance($date = 'now', $tzOffset = 0) {
+	public static function getInstance($date = 'now', $tzOffset = null) {
 		return new KunenaDate($date, $tzOffset);
 	}
 
@@ -117,11 +117,7 @@ class KunenaDate extends JDate {
 	}
 
 	public function toTimezone() {
-		if (version_compare(JVERSION, '1.6', '>')) {
-			$timezone = $this->getOffsetFromGMT(true);
-		} else {
-			$timezone = $this->getOffset();
-		}
+		$timezone = $this->getOffsetFromGMT(true);
 		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);
 	}
 
@@ -149,7 +145,7 @@ class KunenaDate extends JDate {
 				$yesterday_format = JText::_('COM_KUNENA_DT_DATE_YESTERDAY_FMT');
 				break;
 			case 'ago' :
-				if ($this->toFormat('%Y')<1902) return JText::_('COM_KUNENA_DT_DATETIME_UNKNOWN');
+				if ($this->format('%Y')<1902) return JText::_('COM_KUNENA_DT_DATETIME_UNKNOWN');
 				return self::toTimeAgo ( $this->toUnix() );
 				break;
 			case 'datetime':
@@ -162,30 +158,25 @@ class KunenaDate extends JDate {
 				$today_format = $mode;
 				$yesterday_format = $mode;
 		}
-		if ($this->toFormat('%Y')<1902) return JText::_('COM_KUNENA_DT_DATETIME_UNKNOWN');
+		if ($this->format('%Y')<1902) return JText::_('COM_KUNENA_DT_DATETIME_UNKNOWN');
 
 		if ($offset === false) {
 			$app = JFactory::getApplication ();
 			$my = JFactory::getUser();
-			if ($my->id) $offset = $my->getParam('timezone', $app->getCfg ( 'offset', 0 ));
-			else $offset = $app->getCfg ( 'offset', 0 );
-			if ($offset == 'utc') $offset = 0;
+			if ($my->id) $offset = $my->getParam('timezone', $app->getCfg ( 'offset', null ));
+			else $offset = $app->getCfg ( 'offset', null );
+			if ($offset == 'utc') $offset = null;
 		}
 		$now = JFactory::getDate ( 'now' );
-		if (version_compare(JVERSION, '1.6', '<') || is_numeric($offset)) {
-			// Joomla 1.5 and Kunena timezone
-			$this->setOffset($offset);
-			$now->setOffset($offset);
-		} else {
-			// Joomla 1.6 support
-			try {
-				$offset = new DateTimeZone($offset);
-			} catch (Exception $e) {
-				$offset = new DateTimeZone('UTC');
-			}
-			$this->setTimezone($offset);
-			$now->setTimezone($offset);
+		try {
+			if ($offset !== null) $offset = new DateTimeZone($offset);
+		} catch (Exception $e) {
+			trigger_error('Kunena: Timezone issue!');
+			$offset = null;
 		}
+		$this->setTimezone($offset);
+		$now->setTimezone($offset);
+
 		// Today and Yesterday?
 		if (end($modearr) == 'today') {
 			$now = @getdate ( $now->toUnix(true) );
@@ -201,6 +192,6 @@ class KunenaDate extends JDate {
 				($now ['yday'] == 0 && $then ['year'] == $now ['year'] - 1) && $then ['mon'] == 12 && $then ['mday'] == 31)
 				$usertime_format = $yesterday_format;
 		}
-		return $this->toFormat ( $usertime_format, true );
+		return $this->format ( $usertime_format, true );
 	}
 }

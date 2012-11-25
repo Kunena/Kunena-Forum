@@ -11,8 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
@@ -97,7 +97,7 @@ $k = 0;
 				<?php echo $item->link ?>
 			</td>
 			<td>
-				<img class="kstats-bar" src="<?php echo JURI::root().'media/kunena/images/bar.png' ?>" alt="" height="15" width="<?php echo $item->percent ?>%" />
+				<img class="kstats-bar" src="<?php echo JUri::root(true).'/media/kunena/images/bar.png' ?>" alt="" height="15" width="<?php echo $item->percent ?>%" />
 			</td>
 			<td>
 				<?php echo $item->count ?>

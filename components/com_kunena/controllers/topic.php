@@ -50,7 +50,7 @@ class KunenaControllerTopic extends KunenaController {
 		);
 		$this->app->setUserState('com_kunena.postfields', $fields);
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -232,7 +232,7 @@ class KunenaControllerTopic extends KunenaController {
 			'mytags' => JRequest::getString ( 'mytags', null )
 		);
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->setUserState('com_kunena.postfields', $fields);
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
@@ -358,7 +358,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	protected function setThankyou($type){
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -390,7 +390,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function subscribe() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -409,7 +409,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function unsubscribe() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -428,7 +428,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function favorite() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -447,7 +447,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function unfavorite() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -466,7 +466,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function sticky() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -487,7 +487,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function unsticky() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -508,7 +508,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function lock() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -529,7 +529,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function unlock() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -550,7 +550,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function delete() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -584,7 +584,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function undelete() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -607,7 +607,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function permdelete() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -635,7 +635,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function approve() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -657,7 +657,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function move() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -724,7 +724,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	function report() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -807,7 +807,7 @@ class KunenaControllerTopic extends KunenaController {
 					if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
 						continue;
 
-					JUtility::sendMail ( $this->config->getEmail(), $mailsender, $emailTo->email, $mailsubject, $mailmessage );
+					JMail::sendMail ( $this->config->getEmail(), $mailsender, $emailTo->email, $mailsubject, $mailmessage );
 				}
 
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );
@@ -829,7 +829,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function vote() {
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -862,7 +862,7 @@ class KunenaControllerTopic extends KunenaController {
 	}
 
 	public function resetvotes() {
-		if (!JRequest::checkToken('get')) {
+		if (!JSession::checkToken('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}

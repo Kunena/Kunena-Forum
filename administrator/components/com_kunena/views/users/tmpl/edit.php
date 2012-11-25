@@ -12,8 +12,8 @@ defined ( '_JEXEC' ) or die ();
 
 $db = JFactory::getDBO();
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 $document->addScriptDeclaration(' var current_count = '.JString::strlen($this->user->signature).'
 var max_count = '.$this->config->maxsig.'
 
@@ -25,9 +25,19 @@ function textCounter(field, target) {
 		target.value = current_count;
 	}
 }');
-// FIXME : deprecated under Joomla! 1.6
-jimport('joomla.html.pane');
-$myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
+
+$paneOptions = array(
+		'onActive' => 'function(title, description){
+		description.setStyle("display", "block");
+		title.addClass("open").removeClass("closed");
+}',
+		'onBackground' => 'function(title, description){
+		description.setStyle("display", "none");
+		title.addClass("closed").removeClass("open");
+}',
+		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
+		'useCookie' => true, // this must not be a string. Don't use quotes.
+);
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
@@ -38,12 +48,12 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="1" />
 		<input type="hidden" name="uid" value="<?php echo $this->user->userid; ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
-		<dl class="tabs" id="pane">
-
-		<dt title="<?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?>"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></dt>
-		<dd>
+		<?php
+			echo JHtml::_('tabs.start', 'pane', $paneOptions);
+			echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_BASIC_SETTINGS'), 'panel_basic');
+		?>
 		<fieldset>
 		<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
 		<table class="kadmin-adminform">
@@ -77,9 +87,9 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 	</tr>
 	</table>
 </fieldset>
-</dd>
-<dt title="<?php echo JText::_('COM_KUNENA_A_AVATARS') ?>"><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
-			<dd>
+
+<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_AVATARS'), 'panel_avatars'); ?>
+
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></legend>
 				<table class="kadmin-adminform">
@@ -107,11 +117,10 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 		</table>
 
 	</fieldset>
-</dd>
 
-	<dt title="<?php echo JText::_('COM_KUNENA_MOD_NEW') ?>"><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></dt>
-		<dd>
-			<fieldset>
+<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_MOD_NEW'), 'panel_mods'); ?>
+
+		<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></legend>
 				<table class="kadmin-adminform">
 					<tr>
@@ -130,9 +139,9 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					</tr>
 				</table>
 			</fieldset>
-		</dd>
-		<dt title="<?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') ?></dt>
-			<dd>
+
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS'), 'panel_catsubscriptions'); ?>
+
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS') ?></legend>
 				<table class="kadmin-adminform">
@@ -164,9 +173,9 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					?>
 				</table>
 			</fieldset>
-			</dd>
-			<dt title="<?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS') ?></dt>
-			<dd>
+
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS'), 'panel_subscriptions'); ?>
+
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_TOPIC_SUBSCRIPTIONS') ?></legend>
 				<table class="kadmin-adminform">
@@ -199,9 +208,9 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					?>
 				</table>
 			</fieldset>
-		</dd>
-		<dt title="<?php echo JText::_('COM_KUNENA_TRASH_IP') ?>"><?php echo JText::_('COM_KUNENA_TRASH_IP') ?></dt>
-			<dd>
+
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_TRASH_IP'), 'panel_ips'); ?>
+
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_TRASH_IP') ?></legend>
 				<table class="kadmin-adminform">
@@ -239,8 +248,8 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					?>
 				</table>
 			</fieldset>
-		</dd>
-	</dl>
+
+			<?php echo JHtml::_('tabs.end'); ?>
 	</form>
 	</div>
 	<div class="kadmin-footer">

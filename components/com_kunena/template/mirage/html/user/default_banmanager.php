@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.tooltip');
+JHtml::_('behavior.tooltip');
 $i=1;
 $j=0;
 ?>

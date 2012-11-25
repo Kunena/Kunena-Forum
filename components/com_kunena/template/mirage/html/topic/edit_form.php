@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.formvalidation');
-JHTML::_('behavior.tooltip');
-JHTML::_('kunenafile.uploader', 'kuploader');
+JHtml::_('behavior.formvalidation');
+JHtml::_('behavior.tooltip');
+JHtml::_('kunenafile.uploader', 'kuploader');
 ?>
 <div class="kmodule topic-edit_form">
 	<div class="kbox-wrapper kbox-full">
@@ -37,7 +37,7 @@ JHTML::_('kunenafile.uploader', 'kuploader');
 				<?php if ($this->catid && $this->catid != $this->message->catid) : ?>
 				<input type="hidden" name="return" value="<?php echo intval($this->catid) ?>" />
 				<?php endif ?>
-				<?php echo JHTML::_( 'form.token' ) ?>
+				<?php echo JHtml::_( 'form.token' ) ?>
 				<div class="detailsbox-wrapper innerspacer kbox-full">
 					<div class="detailsbox kbox-border kbox-border_radius kbox-shadow">
 						<ul class="list-unstyled kform postmessage-list clearfix">

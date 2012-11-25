@@ -163,7 +163,7 @@ class KunenaUserBan extends JObject
 		$query = "SELECT b.*
 			FROM #__kunena_users_banned AS b
 			INNER JOIN #__users AS u ON u.id=b.userid
-			WHERE (b.expiration = {$db->quote($db->getNullDate())} OR b.expiration > {$db->quote($now->toMysql())})
+			WHERE (b.expiration = {$db->quote($db->getNullDate())} OR b.expiration > {$db->quote($now->toSql())})
 			ORDER BY b.created_time DESC";
 		$db->setQuery ( $query, $start, $limit );
 		$results = $db->loadAssocList ();
@@ -316,7 +316,7 @@ class KunenaUserBan extends JObject
 		}
 
 		if ($this->_exists && $set) {
-			$this->modified_time = self::$_now->toMysql();
+			$this->modified_time = self::$_now->toSql();
 			$this->modified_by = self::$_my->id;
 		}
 	}
@@ -363,7 +363,7 @@ class KunenaUserBan extends JObject
 		if (is_string($comment) && !empty($comment)) {
 			$c = new stdClass();
 			$c->userid = self::$_my->id;
-			$c->time = self::$_now->toMysql();
+			$c->time = self::$_now->toSql();
 			$c->comment = $comment;
 			$this->comments[] = $c;
 		}
@@ -377,10 +377,10 @@ class KunenaUserBan extends JObject
 			$this->expiration = $this->_db->getNullDate();
 		} else {
 			$date = new JDate($expiration);
-			$this->expiration = $date->toUnix() > self::$_now->toUnix() ? $date->toMysql() : self::$_now->toMysql();
+			$this->expiration = $date->toUnix() > self::$_now->toUnix() ? $date->toSql() : self::$_now->toSql();
 		}
 		if ($this->_exists) {
-			$this->modified_time = self::$_now->toMysql();
+			$this->modified_time = self::$_now->toSql();
 			$this->modified_by = self::$_my->id;
 		}
 		$this->addComment($comment);
@@ -400,8 +400,8 @@ class KunenaUserBan extends JObject
 		// Cannot change expiration if ban is not enabled
 		if (!$this->isEnabled()) return;
 
-		$this->expiration = self::$_now->toMysql();
-		$this->modified_time = self::$_now->toMysql();
+		$this->expiration = self::$_now->toSql();
+		$this->modified_time = self::$_now->toSql();
 		$this->modified_by = self::$_my->id;
 		$this->addComment($comment);
 	}
@@ -424,7 +424,7 @@ class KunenaUserBan extends JObject
 			// If we have new ban, add creation date and user if they do not exist
 			if (!$this->created_time) {
 				$now = new JDate();
-				$this->created_time = $now->toMysql();
+				$this->created_time = $now->toSql();
 			}
 			if (!$this->created_by) {
 				$my = JFactory::getUser();

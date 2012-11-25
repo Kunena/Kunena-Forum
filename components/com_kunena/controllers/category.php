@@ -31,7 +31,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 	}
 
 	function markread() {
-		if (! JRequest::checkToken ('request')) {
+		if (! JSession::checkToken ('request')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -60,7 +60,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 				// Mark all unread topics in the category to read
 				$userinfo = $category->getUserInfo();
 				// FIXME: Joomla 2.5 ->toSql()
-				$userinfo->allreadtime = JFactory::getDate()->toMySQL();
+				$userinfo->allreadtime = JFactory::getDate()->toSql();
 				if (!$userinfo->save()) {
 					$this->app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
 				} else {
@@ -72,7 +72,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 	}
 
 	function subscribe() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -95,7 +95,7 @@ class KunenaControllerCategory extends KunenaAdminControllerCategories {
 	}
 
 	function unsubscribe() {
-		if (! JRequest::checkToken ('request') ) {
+		if (! JSession::checkToken ('request') ) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}

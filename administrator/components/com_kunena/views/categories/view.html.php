@@ -39,17 +39,13 @@ class KunenaAdminViewCategories extends KunenaView {
 	protected function setToolBarEdit() {
 		// Set the titlebar text
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
-		if (version_compare(JVERSION, '1.7','>')) {
-			JToolBarHelper::apply('apply');
-			JToolBarHelper::save('save');
-			JToolBarHelper::save2new('save2new');
+		JToolBarHelper::apply('apply');
+		JToolBarHelper::save('save');
+		JToolBarHelper::save2new('save2new');
 
-			// If an existing item, can save to a copy.
-			if ($this->category->exists()) {
-				JToolBarHelper::save2copy('save2copy');
-			}
-		} else {
-			JToolBarHelper::save();
+		// If an existing item, can save to a copy.
+		if ($this->category->exists()) {
+			JToolBarHelper::save2copy('save2copy');
 		}
 		JToolBarHelper::cancel();
 	}

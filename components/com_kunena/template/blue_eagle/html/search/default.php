@@ -29,7 +29,7 @@ document.addEvent('domready', function() {
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="searchform" id="searchform">
 	<input type="hidden" name="view" value="search" />
 	<input type="hidden" name="task" value="results" />
-	<?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<table id="kforumsearch">
 		<tbody id="advsearch"<?php echo $this->search_style; ?>>

@@ -293,14 +293,8 @@ abstract class KunenaForum {
 
 		if ($params instanceof JRegistry) {
 			// Do nothing
-		} elseif (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry($params);
 		} else {
-			// Joomla 1.5
-			$parameters = new JParameter('');
-			$parameters->bind($params);
-			$params = $parameters;
+			$params = new JRegistry($params);
 		}
 
 		$params->set('layout', $layout);
@@ -330,15 +324,14 @@ abstract class KunenaForum {
 
 	protected static function buildVersion() {
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
-			$xml = KPATH_ADMIN . '/kunena.xml';
-			$parser = JFactory::getXMLParser ( 'Simple' );
-			$parser->loadFile ( $xml );
-			self::$version = $parser->document->getElementByPath ( 'version' )->data () . '-GIT';
+			$file = KPATH_ADMIN . '/kunena.xml';
+			$manifest = simplexml_load_file($file);
+			self::$version = (string) $manifest->version . '-GIT';
 		} else {
 			self::$version = strtoupper ( '@kunenaversion@' );
 		}
 		self::$version_major = substr(self::$version, 0, 3);
-		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toMySQL() : '@kunenaversiondate@';
+		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toSql() : '@kunenaversiondate@';
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 }

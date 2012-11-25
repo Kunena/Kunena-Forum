@@ -91,7 +91,7 @@ defined ( '_JEXEC' ) or die ();
 
 			<?php if (!$this->message->parent && isset($this->poll)) : ?>
 			<div id="kbbcode-poll-options" style="display: none;">
-			<?php JHTML::_('behavior.calendar'); ?>
+			<?php JHtml::_('behavior.calendar'); ?>
 				<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 				<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
 					maxlength="100" size="40"
@@ -107,7 +107,7 @@ defined ( '_JEXEC' ) or die ();
 					onmouseover="javascript:document.id('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
 
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-				<?php echo JHTML::_('calendar', isset($this->poll->polltimetolive) ? $this->escape($this->poll->polltimetolive) : '0000-00-00', 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:document.id(\'helpbox\').set(\'value\', \''.KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN').'\')')); ?>
+				<?php echo JHtml::_('calendar', isset($this->poll->polltimetolive) ? $this->escape($this->poll->polltimetolive) : '0000-00-00', 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:document.id(\'helpbox\').set(\'value\', \''.KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN').'\')')); ?>
 				<?php
 				if($this->poll->exists()) {
 					$x = 1;
@@ -125,13 +125,7 @@ defined ( '_JEXEC' ) or die ();
 
 			<?php
 			if ($this->config->highlightcode) {
-				if (version_compare(JVERSION, '1.6','>')) {
-					// Joomla 1.6+
-					$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi';
-				} else {
-					// Joomla 1.5
-					$path = JPATH_ROOT.'/libraries/geshi/geshi';
-				}
+				$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi';
 				if ( file_exists($path) ) {
 					$files = JFolder::files($path, ".php"); ?>
 					<div id="kbbcode-code-options" style="display: none;">

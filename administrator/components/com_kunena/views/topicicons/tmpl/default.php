@@ -11,19 +11,30 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
-// FIXME : Deprecated under Joomla! 1.6
-jimport('joomla.html.pane');
-$myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
+
+$paneOptions = array(
+		'onActive' => 'function(title, description){
+		description.setStyle("display", "block");
+		title.addClass("open").removeClass("closed");
+}',
+		'onBackground' => 'function(title, description){
+		description.setStyle("display", "none");
+		title.addClass("closed").removeClass("open");
+}',
+		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
+		'useCookie' => true, // this must not be a string. Don't use quotes.
+);
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-topicicons"><?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER'); ?></div>
-		<dl class="tabs" id="pane">
-		<dt><?php echo JText::_('COM_KUNENA_A_TOPICICONS'); ?></dt>
-		<dd>
+		<?php
+			echo JHtml::_('tabs.start', 'pane', $paneOptions);
+			echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_TOPICICONS'), 'panel_topicicons');
+		?>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="topicicons" />
 			<input type="hidden" name="task" value="" />
@@ -31,10 +42,10 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<?php echo $this->iconsetlist; ?>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th width="5" align="center">#</th>
@@ -43,7 +54,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					<th width="20%" align="left"><?php echo JText::_('COM_KUNENA_TOPICICON_ID'); ?></th>
 					<th width="50%" align="left" ><?php echo JText::_('COM_KUNENA_TOPICICON_IMAGE'); ?></th>
 					<th width="10%" align="center" ><?php echo JText::_('COM_KUNENA_TOPICICON_PUBLISHED'); ?></th>
-					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_ORDERING'); ?><?php echo JHTML::_('grid.order',$this->topicicons); ?></th>
+					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_ORDERING'); ?><?php echo JHtml::_('grid.order',$this->topicicons); ?></th>
 					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_TOPICICON_DEFAULT'); ?></th>
 				</tr>
 			</thead>
@@ -74,7 +85,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					<td align="center"><?php
 						echo ($id + $this->navigation->limitstart + 1);
 						?></td>
-					<td><?php echo JHTML::_('grid.id',  $y, $y) ?></td>
+					<td><?php echo JHtml::_('grid.id',  $y, $y) ?></td>
 					<td align="center">
 					<a href="#edit"
 						onclick="return listItemTask('cb<?php
@@ -96,7 +107,7 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 						echo $y;
 						?>','edit')"><img
 						src="<?php
-						echo $this->escape(JURI::root() . $this->ktemplate->getTopicsIconPath($row->filename, 'default'))
+						echo $this->escape(JUri::root(true) .'/'. $this->ktemplate->getTopicsIconPath($row->filename, 'default'))
 						?>"
 						alt="<?php
 						echo $this->escape($row->title);
@@ -124,14 +135,14 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 					?>
 			</table>
 		</form>
-		</dd>
-		<dt title="<?php echo JText::_('COM_KUNENA_A_TOPICICON_UPLOAD'); ?>"><?php echo JText::_('COM_KUNENA_A_TOPICICON_UPLOAD'); ?></dt>
-		<dd>
+
+		<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_TOPICICON_UPLOAD'), 'panel_uploads'); ?>
+
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" id="uploadForm" method="post" enctype="multipart/form-data" >
 		<input type="hidden" name="view" value="topicicons" />
 		<input type="hidden" name="task" value="topiciconupload" />
 		<input type="hidden" name="boxchecked" value="0" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<div style="padding:10px;">
 			<input type="file" id="file-upload" name="Filedata" />
@@ -142,8 +153,8 @@ $myTabs = JPane::getInstance('tabs', array('startOffset'=>0));
 			<li style="display: none" />
 		</ul>
 		</form>
-		</dd>
-		</dl>
+
+		<?php echo JHtml::_('tabs.end'); ?>
 	</div>
 </div>
 <div class="kadmin-footer">

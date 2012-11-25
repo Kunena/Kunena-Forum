@@ -30,11 +30,11 @@ $skinner = $template->params->get('enableSkinner', 0);
 
 if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.forum.css" )) {
 	// Load css from Joomla template
-	CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}/css/kunena.forum.css" );
-	if ($skinner && file_exists ( JPATH_ROOT. "templates/{$app->getTemplate()}/css/kunena.skinner.css" )){
-		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}/css/kunena.skinner.css" );
-	} elseif (!$skinner && file_exists ( JPATH_ROOT. "templates/{$app->getTemplate()}/css/kunena.default.css" )) {
-		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/{$app->getTemplate()}/css/kunena.default.css" );
+	CKunenaTools::addStyleSheet ( JUri::root(true). "/templates/{$app->getTemplate()}/css/kunena.forum.css" );
+	if ($skinner && file_exists ( JPATH_ROOT. "/templates/{$app->getTemplate()}/css/kunena.skinner.css" )){
+		CKunenaTools::addStyleSheet ( JUri::root(true). "/templates/{$app->getTemplate()}/css/kunena.skinner.css" );
+	} elseif (!$skinner && file_exists ( JPATH_ROOT. "/templates/{$app->getTemplate()}/css/kunena.default.css" )) {
+		CKunenaTools::addStyleSheet ( JUri::root(true). "/templates/{$app->getTemplate()}/css/kunena.default.css" );
 	}
 } else {
 	// Load css from default template
@@ -45,13 +45,13 @@ if (file_exists ( JPATH_ROOT . "/templates/{$app->getTemplate()}/css/kunena.foru
 		$template->addStyleSheet ( 'css/kunena.default.css' );
 	}
 }
-$cssurl = JURI::root(true) . '/components/com_kunena/template/blue_eagle/css';
+$cssurl = JUri::root(true) . '/components/com_kunena/template/blue_eagle/css';
 ?>
 <!--[if lte IE 7]>
 <link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css" />
 <![endif]-->
 <?php
-$mediaurl = JURI::root(true) . "/components/com_kunena/template/{$template->name}/media";
+$mediaurl = JUri::root(true) . "/components/com_kunena/template/{$template->name}/media";
 
 $styles = <<<EOF
 	/* Kunena Custom CSS */

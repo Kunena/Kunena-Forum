@@ -24,13 +24,7 @@ class KunenaControllerUser extends KunenaController {
 		$active = $this->app->getMenu ()->getActive ();
 
 		if (!empty($active)) {
-			if (version_compare(JVERSION, '1.6', '>')) {
-				// Joomla 1.6+
-				$params = $active->params;
-			} else {
-				// Joomla 1.5
-				$params = new JParameter($active->params);
-			}
+			$params = $active->params;
 			$redirect = $params->get('integration', 1);
 		}
 		if ($redirect && JRequest::getCmd('format', 'html') == 'html') {
@@ -52,7 +46,7 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	public function change() {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -72,7 +66,7 @@ class KunenaControllerUser extends KunenaController {
 
 	public function save() {
 		// TODO: allow moderators to save another users profile (without account info)
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -102,7 +96,7 @@ class KunenaControllerUser extends KunenaController {
 
 	function ban() {
 		$user = KunenaFactory::getUser(JRequest::getInt ( 'userid', 0 ));
-		if(!$user->exists() || !JRequest::checkToken()) {
+		if(!$user->exists() || !JSession::checkToken('post')) {
 			$this->app->redirect ( $user->getUrl(false), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 			return;
 		}
@@ -218,7 +212,7 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	function login() {
-		if(!JFactory::getUser()->guest || !JRequest::checkToken()) {
+		if(!JFactory::getUser()->guest || !JSession::checkToken('post')) {
 			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 		}
 
@@ -232,7 +226,7 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	function logout() {
-		if(!JRequest::checkToken('request')) {
+		if(!JSession::checkToken('request')) {
 			$this->app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), JText::_('COM_KUNENA_ERROR_TOKEN'), 'error' );
 		}
 
@@ -244,7 +238,7 @@ class KunenaControllerUser extends KunenaController {
 	// Internal functions:
 
 	protected function karma($karmaDelta) {
-		if (! JRequest::checkToken ('get')) {
+		if (! JSession::checkToken ('get')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -454,7 +448,7 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	public function delfile() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}

@@ -5,26 +5,6 @@
 		<message>COM_KUNENA_MENU_HOME_DEFAULT_DESC</message>
 	</layout>
 	
-	<!-- Joomla 1.5 Support -->
-	<state>
-		<name>COM_KUNENA_MENU_HOME_DEFAULT_LONG</name>
-		<description>COM_KUNENA_MENU_HOME_DEFAULT_DESC_LONG</description>
-		<!-- Add fields to the request variables for the layout. -->
-		<url>
-			<param name="defaultmenu" type="menuitem"
-				label="COM_KUNENA_MENU_DEFAULTITEM"
-				description="COM_KUNENA_MENU_DEFAULTITEM_DESC"
-				state="1" />
-		</url>
-		<!-- Add fields to the parameters object for the layout. -->
-		<params addpath="/administrator/components/com_kunena/libraries/form/elements">
-			<param name="catids" type="kunenacategorylist" label="COM_KUNENA_MENU_ALLOWEDCAT" description="COM_KUNENA_MENU_ALLOWEDCAT_DESC" default="0" multiple="1" size="10" sections="1">
-				<option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
-			</param>
-		</params>
-	</state>
-
-	<!-- Joomla 1.6 Support -->
 	<!-- Add fields to the request variables for the layout. -->
 	<fields name="request">
 		<fieldset name="request">

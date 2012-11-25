@@ -82,7 +82,7 @@ abstract class KunenaRoute {
 
 	public static function _($uri = null, $xhtml = true, $ssl=0) {
 		if (self::$adminApp) {
-			if ($uri instanceof JURI) $uri = $uri->toString ();
+			if ($uri instanceof JUri) $uri = $uri->toString ();
 			if (substr($uri, 0, 14) == 'administrator/') {
 				// Use default routing in administration
 				return JRoute::_(substr($uri, 14), $xhtml, $ssl);
@@ -92,7 +92,7 @@ abstract class KunenaRoute {
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 
-		$key = (self::$home ? self::$home->id : 0) .'-'.(int)$xhtml.(int)$ssl. ($uri instanceof JURI ? $uri->toString () : (string) $uri);
+		$key = (self::$home ? self::$home->id : 0) .'-'.(int)$xhtml.(int)$ssl. ($uri instanceof JUri ? $uri->toString () : (string) $uri);
 		if (!$uri || (is_string($uri) && $uri[0]=='&')) {
 			$key = 'a'.(self::$active ? self::$active->id : '') . '-' . $key;
 		}
@@ -147,8 +147,7 @@ abstract class KunenaRoute {
 			if ($item->type == 'component' && $item->component == 'com_kunena' && isset($item->query['view']) && $item->query['view'] == 'home') {
 				self::$parent[$id] = $item;
 			} else {
-				// Support both Joomla 1.5 and 1.6
-				$parentid = isset($item->parent_id) ? $item->parent_id : $item->parent;
+				$parentid = $item->parent_id;
 				$parent = isset(self::$menu[$parentid]) ? self::$menu[$parentid] : null;
 				self::$parent[$id] = self::getHome($parent);
 			}
@@ -183,25 +182,14 @@ abstract class KunenaRoute {
 	}
 
 	protected static function getCache() {
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			return JFactory::getCache('mod_menu', 'output');
-		} else {
-			// Joomla 1.5
-			return JFactory::getCache('_system', 'output');
-		}
+		return JFactory::getCache('mod_menu', 'output');
 	}
 
 	public static function stringURLSafe($string, $default = null) {
 		KUNENA_PROFILER ? KunenaProfiler::instance()->start('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		if (!isset(self::$filtered[$string])) {
-			if (version_compare(JVERSION, '1.6', '>')) {
-				// Joomla 1.6+
-				self::$filtered[$string] = JApplication::stringURLSafe($string);
-			} else {
-				// Joomla 1.5
-				self::$filtered[$string] = self::$config->get('sefutf8') ? self::stringURLUnicodeSlug($string) : JFilterOutput::stringURLSafe($string);
-			}
+			self::$filtered[$string] = JApplication::stringURLSafe($string);
+
 			// Remove beginning and trailing "whitespace", fixes #1130 where category alias creation fails on error: Duplicate entry '-'.
 			self::$filtered[$string] = trim(self::$filtered[$string], '-_ ');
 			if ($default && empty(self::$filtered[$string])) self::$filtered[$string] = $default;
@@ -310,7 +298,7 @@ abstract class KunenaRoute {
 					}
 					$get[$key] = $value;
 				}
-				$uri = $current[$uri] = JURI::getInstance('index.php?'.http_build_query($get).$uri);
+				$uri = $current[$uri] = JUri::getInstance('index.php?'.http_build_query($get).$uri);
 				self::setItemID($uri);
 				$uri->delVar ( 'defaultmenu' );
 				$uri->delVar ( 'language' );
@@ -323,11 +311,11 @@ abstract class KunenaRoute {
 				return false;
 			}
 			$item = self::$menu[intval($uri)];
-			$uri = JURI::getInstance ( "{$item->link}&Itemid={$item->id}" );
-		} elseif ($uri instanceof JURI) {
+			$uri = JUri::getInstance ( "{$item->link}&Itemid={$item->id}" );
+		} elseif ($uri instanceof JUri) {
 			// Nothing to do
 		} else {
-			$uri = JURI::getInstance ( (string)$uri );
+			$uri = JUri::getInstance ( (string)$uri );
 		}
 		$option = $uri->getVar('option');
 		$Itemid = $uri->getVar('Itemid');
@@ -491,7 +479,7 @@ abstract class KunenaRoute {
 	}
 
 	protected static function checkItem($item, $uri) {
-		$authorise = version_compare(JVERSION, '1.6', '>') ? self::$menus->authorise($item->id) : !isset ( $item->access ) || $item->access <= JFactory::getUser()->aid;
+		$authorise = self::$menus->authorise($item->id);
 		if (!$authorise) {
 			return 0;
 		}
@@ -518,13 +506,7 @@ abstract class KunenaRoute {
 		static $cache = array();
 		if (!$catid) return 1;
 		if (!isset($cache[$item->id])) {
-			if (version_compare(JVERSION, '1.6', '>')) {
-				// Joomla 1.6+
-				$params = $item->params;
-			} else {
-				// Joomla 1.5
-				$params = new JParameter($item->params);
-			}
+			$params = $item->params;
 			$catids = $params->get('catids', array());
 			if (!is_array($catids)) {
 				$catids = explode(',', $catids);

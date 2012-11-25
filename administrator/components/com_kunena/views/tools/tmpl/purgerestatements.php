@@ -11,8 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
@@ -20,7 +20,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 	<div class="kadmin-functitle icon-purgerestatements"><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></div>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="task" value="purgeReStatements" />
-				<?php echo JHTML::_( 'form.token' ); ?>
+				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></legend>

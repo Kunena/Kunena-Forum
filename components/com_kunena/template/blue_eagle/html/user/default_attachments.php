@@ -10,16 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-if (version_compare(JVERSION, '1.7','>')) {
-	// Joomla 1.7+
-	JHtml::_('behavior.multiselect');
-} elseif (version_compare(JVERSION, '1.6','>')) {
-	// Joomla 1.6
-	JHtml::_('script','system/multiselect.js',false,true);
-} else {
-	// Joomla 1.5
-	$this->document->addScript(JURI::Root(true).'/includes/js/joomla.javascript.js');
-}
+JHtml::_('behavior.multiselect');
 ?>
 
 <div class="kblock">
@@ -32,17 +23,13 @@ if (version_compare(JVERSION, '1.7','>')) {
 				<input type="hidden" name="view" value="user">
 				<input type="hidden" name="task" value="delfile" />
 				<input type="hidden" name="boxchecked" value="0" />
-				<?php echo JHTML::_( 'form.token' ); ?>
+				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<table>
 					<tr class="ksth">
 						<th class="frst"> # </th>
 						<th width="5">
-							<?php if (version_compare(JVERSION, '1.6','>')): ?>
 							<input type="checkbox" name="checkall-toggle" value="cid" title="<?php echo JText::_('COM_KUNENA_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
-							<?php else: ?>
-							<input type="checkbox" name="toggle" value="cid" onclick="checkAll(<?php echo count ( $this->items ); ?>);" />
-							<?php endif; ?>
 						</th>
 						<th><?php echo JText::_('COM_KUNENA_FILETYPE'); ?></th>
 						<th><?php echo JText::_('COM_KUNENA_FILENAME'); ?></th>
@@ -68,8 +55,8 @@ if (version_compare(JVERSION, '1.7','>')) {
 
 					<tr class="k<?php echo $usrl_class ;?>">
 						<td class="kcol-first"><?php echo $y; ?></td>
-						<td class="kcol-mid"><?php if ($item->authorise('delete')) echo JHTML::_('grid.id', $i, intval($item->id)) ?></td>
-						<td align="center" class="kcol-mid"><img src="<?php echo $item->filetype != '' ? JURI::root().'media/kunena/icons/image.png' : JURI::root().'media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
+						<td class="kcol-mid"><?php if ($item->authorise('delete')) echo JHtml::_('grid.id', $i, intval($item->id)) ?></td>
+						<td align="center" class="kcol-mid"><img src="<?php echo $item->filetype != '' ? JUri::root(true).'/media/kunena/icons/image.png' : JUri::root(true).'/media/kunena/icons/file.png'; ?>" alt="" title="" /></td>
 
 						<td class="kcol-mid"><?php echo $item->filename; ?></td>
 

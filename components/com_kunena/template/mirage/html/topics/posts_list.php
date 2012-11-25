@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmodule topics-posts_list">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=topics') ?>" method="post">
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<div class="kbox-wrapper">
 		<div class="topics-posts_list-kbox kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
@@ -67,7 +67,7 @@ defined ( '_JEXEC' ) or die ();
 				<div class="modbox-wrapper innerspacer-bottom">
 					<div class="modbox">
 						<button class="kbutton button-type-mod fr" type="submit"><span><?php echo JText::_('COM_KUNENA_TOPICS_MODERATION_PERFORM'); ?></span></button>
-						<?php echo JHTML::_('select.genericlist', $this->postActions, 'task', 'class="kinputbox form-horizontal fr" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
+						<?php echo JHtml::_('select.genericlist', $this->postActions, 'task', 'class="kinputbox form-horizontal fr" size="1"', 'value', 'text', 0, 'kmoderate-select'); ?>
 					</div>
 				</div>
 			<?php endif; ?>

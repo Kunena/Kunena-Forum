@@ -22,7 +22,7 @@ $this->displayAnnouncement ();
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" name="markAllForumsRead" method="post">
 				<input type="hidden" name="view" value="category" />
 				<input type="hidden" name="task" value="markread" />
-				<?php echo JHTML::_( 'form.token' ); ?>
+				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<input type="submit" class="kbutton ks" value="<?php echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ'); ?>" />
 			</form>

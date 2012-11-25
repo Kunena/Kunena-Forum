@@ -15,17 +15,17 @@ jimport( 'joomla.filesystem.file' );
 class Com_KunenaInstallerScript {
 	protected $versions = array(
 		'PHP' => array (
-			'5.2' => '5.2.4',
-			'0' => '5.3.10' // Preferred version
+			'5.3' => '5.3.1',
+			'0' => '5.4.9' // Preferred version
 		),
 		'MySQL' => array (
-			'5.0' => '5.0.4',
-			'0' => '5.1' // Preferred version
+			'5.1' => '5.1',
+			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'1.5' => '1.5.25',
-			'1.6' => '2.5.3',
-			'0' => '2.5.4' // Preferred version
+			'2.5' => '2.5.8',
+			'3.0' => '3.0.2',
+			'0' => '2.5.8' // Preferred version
 		)
 	);
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');

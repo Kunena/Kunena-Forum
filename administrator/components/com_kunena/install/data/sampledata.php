@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 // This file contains initial sample data for the forum
 
 class KText {
-	function _($string) {
+	public static function _($string) {
 		return str_replace('\n', "\n", html_entity_decode(JText::_($string), ENT_COMPAT, 'UTF-8'));
 	}
 }

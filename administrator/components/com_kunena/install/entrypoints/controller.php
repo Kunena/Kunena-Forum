@@ -9,6 +9,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+jimport('joomla.filesystem.file');
+jimport('joomla.filesystem.folder');
+jimport('joomla.filesystem.archive');
+
 /**
  * The Kunena Installer Controller
  *
@@ -42,8 +46,6 @@ class KunenaControllerInstall extends JControllerLegacy {
 
 	public function prepare() {
 		// Start our main installer
-		jimport('joomla.filesystem.file');
-		jimport('joomla.filesystem.archive');
 		if (file_exists(JPATH_COMPONENT.'/bak')) JFolder::delete(JPATH_COMPONENT.'/bak');
 		if (file_exists(JPATH_COMPONENT.'/new')) {
 			$md5 = md5_file(JPATH_COMPONENT.'/new/install/entrypoints/api.php');

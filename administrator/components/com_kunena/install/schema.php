@@ -201,7 +201,7 @@ class KunenaModelSchema extends JModelLegacy
 		$schema[$filename] = new DOMDocument('1.0', 'utf-8');
 		$schema[$filename]->formatOutput = true;
 		$schema[$filename]->preserveWhiteSpace = false;
-		$dom->validateOnParse = false;
+		$schema[$filename]->validateOnParse = false;
 		$schema[$filename]->load($filename);
 		return $schema[$filename];
 	}

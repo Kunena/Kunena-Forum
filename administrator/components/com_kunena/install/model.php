@@ -1544,26 +1544,27 @@ class KunenaModelInstall extends JModelLegacy {
 	 */
 	function createMenu() {
 		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_FORUM' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' ), 'forum'),
-			'link'=>'index.php?option=com_kunena&view=home', 'access'=>0, 'params'=>array('catids'=>0));
+			'link'=>'index.php?option=com_kunena&view=home', 'access'=>1, 'params'=>array('catids'=>0));
 		$submenu = array(
 			'index'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_INDEX' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' ), 'index'),
-				'link'=>'index.php?option=com_kunena&view=category&layout=list', 'access'=>0, 'default'=>'categories', 'params'=>array()),
+				'link'=>'index.php?option=com_kunena&view=category&layout=list', 'access'=>1, 'default'=>'categories', 'params'=>array()),
 			'recent'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_RECENT' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' ), 'recent'),
-				'link'=>'index.php?option=com_kunena&view=topics&mode=replies', 'access'=>0, 'default'=>'recent', 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>720)),
+				'link'=>'index.php?option=com_kunena&view=topics&mode=replies', 'access'=>1, 'default'=>'recent', 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>720)),
 			'newtopic'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_NEWTOPIC' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' ), 'newtopic'),
-				'link'=>'index.php?option=com_kunena&view=topic&layout=create', 'access'=>1, 'params'=>array()),
+				'link'=>'index.php?option=com_kunena&view=topic&layout=create', 'access'=>2, 'params'=>array()),
 			'noreplies'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_NOREPLIES' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' ), 'noreplies'),
-				'link'=>'index.php?option=com_kunena&view=topics&mode=noreplies', 'access'=>1, 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>-1)),
+				'link'=>'index.php?option=com_kunena&view=topics&mode=noreplies', 'access'=>2, 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>-1)),
 			'mylatest'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_MYLATEST' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' ), 'mylatest'),
-				'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>1, 'default'=>'my' , 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>-1)),
+				'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>2, 'default'=>'my' , 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>-1)),
 			'profile'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_PROFILE' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' ), 'profile'),
-				'link'=>'index.php?option=com_kunena&view=user', 'access'=>1, 'params'=>array('integration'=>1)),
+				'link'=>'index.php?option=com_kunena&view=user', 'access'=>2, 'params'=>array('integration'=>1)),
 			'help'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_HELP' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' ), 'help'),
-				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>2, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_HELP_BODY' ), 'body_format'=>'bbcode')),
+				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>3, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_HELP_BODY' ), 'body_format'=>'bbcode')),
 			'search'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_SEARCH' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' ), 'search'),
-				'link'=>'index.php?option=com_kunena&view=search', 'access'=>0, 'params'=>array()),
+				'link'=>'index.php?option=com_kunena&view=search', 'access'=>1, 'params'=>array()),
 		);
 
+		// Disable language debugging while creating menu items.
 		$lang = JFactory::getLanguage();
 		$debug = $lang->setDebug(false);
 
@@ -1629,13 +1630,14 @@ class KunenaModelInstall extends JModelLegacy {
 			'published' => 1,
 			'parent_id' => 1,
 			'component_id' => $component_id,
-			'access' => $menu ['access'] + 1,
+			'access' => $menu ['access'],
 			'params' => (string) $params,
 			'home' => 0,
 			'language' => '*',
 			'client_id' => 0
 		);
-		if (! $table->setLocation ( 1, 'last-child' ) || ! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
+		$table->setLocation(1, 'last-child');
+		if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
 			$table->alias = 'kunena';
 			if (! $table->check () || ! $table->store ()) {
 				throw new KunenaInstallerException ( $table->getError () );
@@ -1657,14 +1659,14 @@ class KunenaModelInstall extends JModelLegacy {
 				'published' => 1,
 				'parent_id' => $parent->id,
 				'component_id' => $component_id,
-				'access' => $menuitem ['access'] + 1,
+				'access' => $menuitem ['access'],
 				'params' => (string) $params,
 				'home' => 0,
 				'language' => '*',
 				'client_id' => 0
 			);
-
-			if (! $table->setLocation ( $parent->id, 'last-child' ) || ! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
+			$table->setLocation($parent->id, 'last-child');
+			if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
 				throw new KunenaInstallerException ( $table->getError () );
 			}
 			if (! $defaultmenu || (isset ( $menuitem ['default'] ) && $config->defaultpage == $menuitem ['default'])) {
@@ -1699,9 +1701,7 @@ class KunenaModelInstall extends JModelLegacy {
 				'language' => '*',
 				'client_id' => 0
 			);
-			if (! $table->setLocation ( 1, 'last-child' )) {
-				throw new KunenaInstallerException ( $table->getError () );
-			}
+			$table->setLocation(1, 'last-child');
 		} else {
 			$data = array (
 				'alias' => 'kunena-'.JFactory::getDate()->format('Y-m-d'),

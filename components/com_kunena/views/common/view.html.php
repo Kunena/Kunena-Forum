@@ -46,7 +46,7 @@ class KunenaViewCommon extends KunenaView {
 
 		if ($this->config->showannouncement > 0) {
 			$new = new KunenaForumAnnouncement;
-			$items = KunenaForumAnnouncementHelper::getAnnouncements();
+			list($total,$items) = KunenaForumAnnouncementHelper::getAnnouncements();
 			$this->announcement = array_pop($items);
 			if (!$this->announcement) {
 				echo ' ';
@@ -57,7 +57,7 @@ class KunenaViewCommon extends KunenaView {
 			$annCache = $cache->get('announcement', 'global');
 			if (!$annCache) $cache->remove("{$this->ktemplate->name}.common.announcement", 'com_kunena.template');
 			if ($cache->start("{$this->ktemplate->name}.common.announcement", 'com_kunena.template')) return;
-            
+
 			if ($this->announcement && $this->announcement->authorise('read')) {
 				$this->annListUrl = KunenaForumAnnouncementHelper::getUri('list');
 				$this->showdate = $this->announcement->showdate;

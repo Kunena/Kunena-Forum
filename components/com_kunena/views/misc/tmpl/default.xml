@@ -5,21 +5,6 @@
 		<message>COM_KUNENA_MENU_MISC_DEFAULT_DESC</message>
 	</layout>
 
-	<!-- Joomla 1.5 Support -->
-	<state>
-		<name>COM_KUNENA_MENU_MISC_DEFAULT_LONG</name>
-		<description>COM_KUNENA_MENU_MISC_DEFAULT_DESC_LONG</description>
-		<params>
-			<param name="body" type="textarea" rows="10" cols="40" label="COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY" />
-			<param name="body_format" type="radio" default="bbcode" label="COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_FORMAT" description="">
-				<option value="text">COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_FORMAT_TEXT</option>
-				<option value="bbcode">COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_FORMAT_BBCODE</option>
-				<option value="html">COM_KUNENA_MENU_MISC_DEFAULT_FIELD_BODY_FORMAT_HTML</option>
-			</param>
-		</params>
-	</state>
-
-	<!-- Joomla 1.6 Support -->
 	<!-- Add fields to the request variables for the layout. -->
 	<fields name="params">
 		<fieldset name="basic" label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">

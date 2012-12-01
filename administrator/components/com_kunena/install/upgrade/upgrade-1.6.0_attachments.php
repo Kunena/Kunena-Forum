@@ -14,7 +14,7 @@ function kunena_upgrade_160_attachments($parent) {
 	$db = JFactory::getDbo();
 
 	// First check if attachments table has legacy field
-	$fields = array_pop ( $db->getTableFields ( '#__kunena_attachments' ) );
+	$fields = array_pop ( $db->getTableColumns ( '#__kunena_attachments' ) );
 	if (! isset ( $fields ['filelocation'] )) {
 		// Already converted, there is nothing to do
 		return;

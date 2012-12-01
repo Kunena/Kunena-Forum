@@ -28,7 +28,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$id = array_shift($cid);
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -45,7 +45,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function add() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -81,7 +81,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$dest = KPATH_SITE . '/template/';
 		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -134,7 +134,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$id = array_shift($cid);
 		$template	= $id;
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -198,7 +198,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$filename		= JRequest::getVar('filename', '', 'post', 'cmd');
 		$filecontent	= JRequest::getVar('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -241,7 +241,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$default= JRequest::getBool('default');
 		JArrayHelper::toInteger($menus);
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -279,7 +279,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$default= JRequest::getBool('default');
 		JArrayHelper::toInteger($menus);
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}

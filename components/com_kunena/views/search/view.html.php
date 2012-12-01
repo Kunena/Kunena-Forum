@@ -51,75 +51,69 @@ class KunenaViewSearch extends KunenaView {
 
 	function displayModeList($id, $attributes = '') {
 		$options	= array();
-		$options[]	= JHTML::_('select.option',  '0', JText::_('COM_KUNENA_SEARCH_SEARCH_POSTS') );
-		$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_SEARCH_SEARCH_TITLES') );
-		echo JHTML::_('select.genericlist',  $options, 'titleonly', $attributes, 'value', 'text', $this->state->get('query.titleonly'), $id );
+		$options[]	= JHtml::_('select.option',  '0', JText::_('COM_KUNENA_SEARCH_SEARCH_POSTS') );
+		$options[]	= JHtml::_('select.option',  '1', JText::_('COM_KUNENA_SEARCH_SEARCH_TITLES') );
+		echo JHtml::_('select.genericlist',  $options, 'titleonly', $attributes, 'value', 'text', $this->state->get('query.titleonly'), $id );
 	}
 	function displayDateList($id, $attributes = '') {
 		$options	= array();
-		$options[]	= JHTML::_('select.option',  'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT') );
-		$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_SEARCH_DATE_YESTERDAY') );
-		$options[]	= JHTML::_('select.option',  '7', JText::_('COM_KUNENA_SEARCH_DATE_WEEK') );
-		$options[]	= JHTML::_('select.option',  '14',  JText::_('COM_KUNENA_SEARCH_DATE_2WEEKS') );
-		$options[]	= JHTML::_('select.option',  '30', JText::_('COM_KUNENA_SEARCH_DATE_MONTH') );
-		$options[]	= JHTML::_('select.option',  '90', JText::_('COM_KUNENA_SEARCH_DATE_3MONTHS') );
-		$options[]	= JHTML::_('select.option',  '180', JText::_('COM_KUNENA_SEARCH_DATE_6MONTHS') );
-		$options[]	= JHTML::_('select.option',  '365', JText::_('COM_KUNENA_SEARCH_DATE_YEAR') );
-		$options[]	= JHTML::_('select.option',  'all', JText::_('COM_KUNENA_SEARCH_DATE_ANY') );
-		echo JHTML::_('select.genericlist',  $options, 'searchdate', $attributes, 'value', 'text', $this->state->get('query.searchdate'), $id );
+		$options[]	= JHtml::_('select.option',  'lastvisit', JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT') );
+		$options[]	= JHtml::_('select.option',  '1', JText::_('COM_KUNENA_SEARCH_DATE_YESTERDAY') );
+		$options[]	= JHtml::_('select.option',  '7', JText::_('COM_KUNENA_SEARCH_DATE_WEEK') );
+		$options[]	= JHtml::_('select.option',  '14',  JText::_('COM_KUNENA_SEARCH_DATE_2WEEKS') );
+		$options[]	= JHtml::_('select.option',  '30', JText::_('COM_KUNENA_SEARCH_DATE_MONTH') );
+		$options[]	= JHtml::_('select.option',  '90', JText::_('COM_KUNENA_SEARCH_DATE_3MONTHS') );
+		$options[]	= JHtml::_('select.option',  '180', JText::_('COM_KUNENA_SEARCH_DATE_6MONTHS') );
+		$options[]	= JHtml::_('select.option',  '365', JText::_('COM_KUNENA_SEARCH_DATE_YEAR') );
+		$options[]	= JHtml::_('select.option',  'all', JText::_('COM_KUNENA_SEARCH_DATE_ANY') );
+		echo JHtml::_('select.genericlist',  $options, 'searchdate', $attributes, 'value', 'text', $this->state->get('query.searchdate'), $id );
 	}
 	function displayBeforeAfterList($id, $attributes = '') {
 		$options	= array();
-		$options[]	= JHTML::_('select.option',  'after', JText::_('COM_KUNENA_SEARCH_DATE_NEWER') );
-		$options[]	= JHTML::_('select.option',  'before', JText::_('COM_KUNENA_SEARCH_DATE_OLDER') );
-		echo JHTML::_('select.genericlist',  $options, 'beforeafter', $attributes, 'value', 'text', $this->state->get('query.beforeafter'), $id );
+		$options[]	= JHtml::_('select.option',  'after', JText::_('COM_KUNENA_SEARCH_DATE_NEWER') );
+		$options[]	= JHtml::_('select.option',  'before', JText::_('COM_KUNENA_SEARCH_DATE_OLDER') );
+		echo JHtml::_('select.genericlist',  $options, 'beforeafter', $attributes, 'value', 'text', $this->state->get('query.beforeafter'), $id );
 	}
 	function displaySortByList($id, $attributes = '') {
 		$options	= array();
-		$options[]	= JHTML::_('select.option',  'title', JText::_('COM_KUNENA_SEARCH_SORTBY_TITLE') );
-//		$options[]	= JHTML::_('select.option',  'replycount', JText::_('COM_KUNENA_SEARCH_SORTBY_POSTS') );
-		$options[]	= JHTML::_('select.option',  'views', JText::_('COM_KUNENA_SEARCH_SORTBY_VIEWS') );
-//		$options[]	= JHTML::_('select.option',  'threadstart', JText::_('COM_KUNENA_SEARCH_SORTBY_START') );
-		$options[]	= JHTML::_('select.option',  'lastpost', JText::_('COM_KUNENA_SEARCH_SORTBY_POST') );
-//		$options[]	= JHTML::_('select.option',  'postusername', JText::_('COM_KUNENA_SEARCH_SORTBY_USER') );
-		$options[]	= JHTML::_('select.option',  'forum', JText::_('COM_KUNENA_CATEGORY') );
-		echo JHTML::_('select.genericlist',  $options, 'sortby', $attributes, 'value', 'text', $this->state->get('query.sortby'), $id );
+		$options[]	= JHtml::_('select.option',  'title', JText::_('COM_KUNENA_SEARCH_SORTBY_TITLE') );
+//		$options[]	= JHtml::_('select.option',  'replycount', JText::_('COM_KUNENA_SEARCH_SORTBY_POSTS') );
+		$options[]	= JHtml::_('select.option',  'views', JText::_('COM_KUNENA_SEARCH_SORTBY_VIEWS') );
+//		$options[]	= JHtml::_('select.option',  'threadstart', JText::_('COM_KUNENA_SEARCH_SORTBY_START') );
+		$options[]	= JHtml::_('select.option',  'lastpost', JText::_('COM_KUNENA_SEARCH_SORTBY_POST') );
+//		$options[]	= JHtml::_('select.option',  'postusername', JText::_('COM_KUNENA_SEARCH_SORTBY_USER') );
+		$options[]	= JHtml::_('select.option',  'forum', JText::_('COM_KUNENA_CATEGORY') );
+		echo JHtml::_('select.genericlist',  $options, 'sortby', $attributes, 'value', 'text', $this->state->get('query.sortby'), $id );
 	}
 	function displayOrderList($id, $attributes = '') {
 		$options	= array();
-		$options[]	= JHTML::_('select.option',  'inc', JText::_('COM_KUNENA_SEARCH_SORTBY_INC') );
-		$options[]	= JHTML::_('select.option',  'dec', JText::_('COM_KUNENA_SEARCH_SORTBY_DEC') );
-		echo JHTML::_('select.genericlist',  $options, 'order', $attributes, 'value', 'text', $this->state->get('query.order'), $id );
+		$options[]	= JHtml::_('select.option',  'inc', JText::_('COM_KUNENA_SEARCH_SORTBY_INC') );
+		$options[]	= JHtml::_('select.option',  'dec', JText::_('COM_KUNENA_SEARCH_SORTBY_DEC') );
+		echo JHtml::_('select.genericlist',  $options, 'order', $attributes, 'value', 'text', $this->state->get('query.order'), $id );
 	}
 	function displayLimitList($id, $attributes = '') {
 		// Limit value list
 		$options	= array();
-		$options[]	= JHTML::_('select.option',  '5', JText::_('COM_KUNENA_SEARCH_LIMIT5') );
-		$options[]	= JHTML::_('select.option',  '10', JText::_('COM_KUNENA_SEARCH_LIMIT10') );
-		$options[]	= JHTML::_('select.option',  '15', JText::_('COM_KUNENA_SEARCH_LIMIT15') );
-		$options[]	= JHTML::_('select.option',  '20', JText::_('COM_KUNENA_SEARCH_LIMIT20') );
-		echo JHTML::_('select.genericlist',  $options, 'limit', $attributes, 'value', 'text',$this->state->get('list.limit'), $id );
+		$options[]	= JHtml::_('select.option',  '5', JText::_('COM_KUNENA_SEARCH_LIMIT5') );
+		$options[]	= JHtml::_('select.option',  '10', JText::_('COM_KUNENA_SEARCH_LIMIT10') );
+		$options[]	= JHtml::_('select.option',  '15', JText::_('COM_KUNENA_SEARCH_LIMIT15') );
+		$options[]	= JHtml::_('select.option',  '20', JText::_('COM_KUNENA_SEARCH_LIMIT20') );
+		echo JHtml::_('select.genericlist',  $options, 'limit', $attributes, 'value', 'text',$this->state->get('list.limit'), $id );
 	}
 	function displayCategoryList($id, $attributes = '') {
 		//category select list
 		$options	= array ();
-		$options[]	= JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS') );
+		$options[]	= JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS') );
 
 		$cat_params = array ('sections'=>true);
-		echo JHTML::_('kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, $attributes, 'value', 'text', $this->state->get('query.catids'), $id);
+		echo JHtml::_('kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, $attributes, 'value', 'text', $this->state->get('query.catids'), $id);
 	}
 
 	function displayRows() {
 		$this->row(true);
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'search');
 		$params->set('kunena_layout', 'default');

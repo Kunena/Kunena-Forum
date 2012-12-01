@@ -30,15 +30,10 @@ define ( 'KPATH_MEDIA', JPATH_ROOT .'/media/'. KUNENA_NAME );
 
 // URLs
 define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
-define ( 'KURL_SITE', JURI::Root () . KPATH_COMPONENT_RELATIVE . '/' );
-define ( 'KURL_MEDIA', JURI::Root () . 'media/' . KUNENA_NAME . '/' );
+define ( 'KURL_SITE', JUri::Root () . KPATH_COMPONENT_RELATIVE . '/' );
+define ( 'KURL_MEDIA', JUri::Root () . 'media/' . KUNENA_NAME . '/' );
 
 // We need following when upgrading from Kunena 1.6.5:
-// Joomla 1.7 compatibility (class already exists)
-if (!class_exists('JVersion')) {
-	// Joomla 1.5 and 1.6 compatibility (jimport needed)
-	jimport ( 'joomla.version' );
-}
 $jversion = new JVersion();
 define ( 'KUNENA_JOOMLA_COMPAT', $jversion->RELEASE);
 
@@ -49,9 +44,9 @@ spl_autoload_register('KunenaAutoload');
 // Give access to all Kunena tables
 jimport('joomla.database.table');
 JTable::addIncludePath(KPATH_ADMIN.'/libraries/tables');
-// Give access to all JHTML functions
+// Give access to all JHtml functions
 jimport('joomla.html.html');
-JHTML::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
+JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
 
 /**
  * Intelligent library importer.
@@ -72,7 +67,8 @@ function KunenaAutoload($class) {
 	if (substr($class, 0, 6) != 'Kunena') return;
 	$file = KPATH_ADMIN . '/libraries/' . strtolower(preg_replace( '/([A-Z])/', '/\\1', substr($class, 6)));
 	if (is_dir($file)) {
-		$file .= '/'.array_pop( explode( '/', $file ) );
+		$fileparts = explode( '/', $file );
+		$file .= '/'.array_pop( $fileparts );
 	}
 	$file .= '.php';
 	if (file_exists($file)) {

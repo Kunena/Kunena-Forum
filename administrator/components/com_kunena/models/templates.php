@@ -66,8 +66,9 @@ class KunenaAdminModelTemplates extends KunenaModel {
 		} else {
 			$content = null;
 		}
-		// FIXME: Joomla 1.6+: Deprecated JParameter
-		$params = new JParameter($content, $xml, 'template');
+		// FIXME: Joomla 3.0: need to use JForm
+		$params = new JRegistry();
+		$params->loadString($content,'INI');
 		return $params;
 	}
 

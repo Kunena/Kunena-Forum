@@ -5,19 +5,6 @@
 		<message>COM_KUNENA_MENU_USER_LIST_DESC</message>
 	</layout>
 
-	<!-- Joomla 1.5 Support -->
-	<state>
-		<name>COM_KUNENA_MENU_USER_LIST_LONG</name>
-		<description>COM_KUNENA_MENU_USER_LIST_DESC</description>
-		<params>
-			<param name="integration" type="radio" default="1" label="COM_KUNENA_MENU_INTEGRATION" description="COM_KUNENA_MENU_INTEGRATION_DESC">
-				<option value="1">Yes</option>
-				<option value="0">No</option>
-			</param>
-		</params>
-	</state>
-	
-	<!-- Joomla 1.6 Support -->
 	<!-- Add fields to the parameters object for the layout. -->
 	<fields name="params">
 		<!-- Basic options. -->

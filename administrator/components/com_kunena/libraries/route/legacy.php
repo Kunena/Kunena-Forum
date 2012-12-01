@@ -67,8 +67,8 @@ abstract class KunenaRouteLegacy {
 	}
 
 	public static function convert($uri, $showstart = 1) {
-		// Make sure that input is JURI to legacy Kunena func=xxx
-		if (!($uri instanceof JURI)) {
+		// Make sure that input is JUri to legacy Kunena func=xxx
+		if (!($uri instanceof JUri)) {
 			return;
 		}
 		if ($uri->getVar('option') != 'com_kunena') {
@@ -544,16 +544,10 @@ abstract class KunenaRouteLegacy {
 	}
 
 	public static function convertMenuItem($item) {
-		$uri = JURI::getInstance($item->link);
+		$uri = JUri::getInstance($item->link);
 		$view = $uri->getVar('func', $uri->getVar('view'));
 
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry($item->params);
-		} else {
-			// Joomla 1.5
-			$params = new JParameter($item->params);
-		}
+		$params = new JRegistry($item->params);
 
 		if (self::convert($uri, 0)) {
 

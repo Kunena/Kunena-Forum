@@ -177,9 +177,6 @@ function KunenaParseRoute($segments) {
 		$vars['view'] = '';
 	}
 
-	// Fix bug in Joomla 1.5 when using /components/kunena instead /component/kunena
-	if (!$active && $segments[0] == 'kunena') array_shift ( $segments );
-
 	// Use category SEF feature?
 	$sefcats = isset(KunenaRoute::$sefviews[$vars['view']]) && empty($vars ['id']);
 

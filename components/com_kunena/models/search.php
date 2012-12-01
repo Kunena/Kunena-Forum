@@ -89,7 +89,7 @@ class KunenaModelSearch extends KunenaModel {
 	protected function buildWhere() {
 		$db = JFactory::getDBO ();
 		foreach ( $this->getSearchWords() as $searchword ) {
-			$searchword = $db->getEscaped ( JString::trim ( $searchword ) );
+			$searchword = $db->escape ( JString::trim ( $searchword ) );
 			if (empty ( $searchword ))
 				continue;
 			$not = '';
@@ -112,9 +112,9 @@ class KunenaModelSearch extends KunenaModel {
 		$username = $this->getState('query.searchuser');
 		if ($username) {
 			if ($this->getState('query.exactname') == '1') {
-				$querystrings [] = "m.name LIKE '" . $db->getEscaped ( $username ) . "'";
+				$querystrings [] = "m.name LIKE '" . $db->escape ( $username ) . "'";
 			} else {
-				$querystrings [] = "m.name LIKE '%" . $db->getEscaped ( $username ) . "%'";
+				$querystrings [] = "m.name LIKE '%" . $db->escape ( $username ) . "%'";
 			}
 		}
 

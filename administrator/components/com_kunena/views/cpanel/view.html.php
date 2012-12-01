@@ -17,10 +17,8 @@ class KunenaAdminViewCpanel extends KunenaView {
 	function displayDefault() {
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 
-		if (version_compare(JVERSION, '1.6', '>')) {
-			if (JFactory::getUser()->authorise('core.admin', 'com_kunena')) {
-				JToolBarHelper::preferences('com_kunena');
-			}
+		if (JFactory::getUser()->authorise('core.admin', 'com_kunena')) {
+			JToolBarHelper::preferences('com_kunena');
 		}
 		$this->display ();
 	}

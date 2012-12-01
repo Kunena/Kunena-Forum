@@ -51,9 +51,8 @@ class KunenaAccess {
 				$this->moderatorsByUserid = (array)$data['mu'];
 			}
 		}
-		//$my = JFactory::getUser();
 		// If values were not cached (or users permissions have been changed), force reload
-		if (!isset($this->adminsByCatid)) { // || ($my->id && $my->authorize('com_kunena', 'administrator') == empty($this->adminsByUserid[$my->id][0]) )) {
+		if (!isset($this->adminsByCatid)) {
 			$this->clearCache();
 		}
 	}
@@ -159,7 +158,7 @@ window.addEvent('domready', function(){
 			foreach ($list as $access) {
 				if (method_exists($access, 'getAccessOptions')) {
 					$string = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.preg_replace('/[^\w\d]/', '_', $type));
-					$accesstypes [$string] = JHTML::_ ( 'select.option', $type, $string );
+					$accesstypes [$string] = JHtml::_ ( 'select.option', $type, $string );
 					$exists |= $type == $category->accesstype;
 					break;
 				}
@@ -169,9 +168,9 @@ window.addEvent('domready', function(){
 		// User has disabled access control
 		if (!$exists) {
 			$string = JText::sprintf('COM_KUNENA_INTEGRATION_UNKNOWN', $category->accesstype);
-			$accesstypes [$string] = JHTML::_ ( 'select.option', $category->accesstype, $string );
+			$accesstypes [$string] = JHtml::_ ( 'select.option', $category->accesstype, $string );
 		}
-		return JHTML::_ ( 'select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="'.count($accesstypes).'" onchange="javascript:kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype );
+		return JHtml::_ ( 'select.genericlist', $accesstypes, 'accesstype', 'class="inputbox" size="'.count($accesstypes).'" onchange="javascript:kShowAccessType(\'kaccess\', $(this))"', 'value', 'text', $category->accesstype );
 	}
 
 
@@ -340,7 +339,7 @@ window.addEvent('domready', function(){
 	/**
 	 * Authorise user actions in a category.
 	 *
-	 * Function returns a list of authorized actions. Missing actions are threaded as inherit.
+	 * Function returns a list of authorised actions. Missing actions are threaded as inherit.
 	 *
 	 * @param KunenaForumCategory $category
 	 * @param int $userid
@@ -502,7 +501,7 @@ window.addEvent('domready', function(){
 		}
 		$query = implode(' UNION ', $query);
 		$db->setQuery ($query);
-		$userids = (array) $db->loadResultArray();
+		$userids = (array) $db->loadColumn();
 		KunenaError::checkDatabaseError();
 		return $userids;
 	}

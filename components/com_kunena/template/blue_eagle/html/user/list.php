@@ -30,7 +30,7 @@ document.addEvent('domready', function() {
 			<div class="search-user">
 				<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" name="usrlform" method="post">
 					<input type="hidden" name="view" value="user" />
-					<?php echo JHTML::_( 'form.token' ); ?>
+					<?php echo JHtml::_( 'form.token' ); ?>
 
 					<input id="kusersearch" type="text" name="search" class="inputbox"
 						value="<?php echo $this->escape($this->state->get('list.search', JText::_('COM_KUNENA_USRL_SEARCH'))); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>';" onfocus="if(this.value=='<?php echo $this->escape(JText::_('COM_KUNENA_USRL_SEARCH')); ?>') this.value='';" />
@@ -53,7 +53,7 @@ document.addEvent('domready', function() {
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" method="post" id="kuserlist-form" name="kuserlist-form">
 				<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>" />
 				<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>" />
-				<?php echo JHTML::_( 'form.token' ); ?>
+				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<table>
 					<tr class="ksth userlist">
@@ -68,37 +68,37 @@ document.addEvent('domready', function() {
 						<?php endif; ?>
 
 						<?php if ($this->config->username) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'kunenagrid.sort', 'COM_KUNENA_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
+						<th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
 						<?php else : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'kunenagrid.sort', 'COM_KUNENA_REALNAME', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
+						<th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_REALNAME', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_posts) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
+						<th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_POSTS', 'posts', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_karma) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
+						<th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_KARMA', 'karma', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_email) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
+						<th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_usertype) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_USERTYPE', 'usertype', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
+						<th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_USERTYPE', 'usertype', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_joindate) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
+						<th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_lastvisitdate) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
+						<th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_userhits) : ?>
-						<th class="usersortable"><?php echo JHTML::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
+						<th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_HITS', 'uhits', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
 						<?php endif; ?>
 					</tr>
 
@@ -150,11 +150,11 @@ document.addEvent('domready', function() {
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_email) : ?>
-						<td class="kcol-mid"><?php echo $user->email ? JHTML::_('email.cloak', $user->email) : '' ?></td>
+						<td class="kcol-mid"><?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?></td>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_usertype) : ?>
-						<td class="kcol-mid"><?php echo $this->escape($user->usertype) ?></td>
+						<td class="kcol-mid"><?php echo JText::_($profile->getType()) ?></td>
 						<?php endif; ?>
 
 						<?php if ($this->config->userlist_joindate) : ?>
@@ -173,7 +173,7 @@ document.addEvent('domready', function() {
 				</table>
 			</form>
 			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list') ?>" name="usrlform" method="post" onsubmit="return false;">
-				<?php echo JHTML::_( 'form.token' ); ?>
+				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<table class="kblocktable" id="kuserlist-bottom">
 					<tr>

@@ -116,20 +116,20 @@ class KunenaAdminModelTopicicons extends KunenaModel {
 
 		$icons =  array ();
 		foreach($topicons as $icon) {
-			$icons [] = JHTML::_ ( 'select.option', $icon->filename, $icon->filename );
+			$icons [] = JHtml::_ ( 'select.option', $icon->filename, $icon->filename );
 		}
-		return JHTML::_ ( 'select.genericlist', $icons, 'topiciconslist', 'class="inputbox" onchange="update_topicicon(this.options[selectedIndex].value);" onmousemove="update_topicicon(this.options[selectedIndex].value);"', 'value', 'text', isset($topiciconselected) ? $topiciconselected : '' );
+		return JHtml::_ ( 'select.genericlist', $icons, 'topiciconslist', 'class="inputbox" onchange="update_topicicon(this.options[selectedIndex].value);" onmousemove="update_topicicon(this.options[selectedIndex].value);"', 'value', 'text', isset($topiciconselected) ? $topiciconselected : '' );
 	}
 
 	public function getIconsetlist() {
 	  jimport( 'joomla.filesystem.folder' );
 	  $topicicons = array ();
     $topiciconslist = JFolder::folders(JPATH_ROOT.'/media/kunena/topicicons');
-    $topicicons[] = JHTML::_ ( 'select.option', '', JText::_('COM_KUNENA_A_ICONSET_LIST') );
+    $topicicons[] = JHtml::_ ( 'select.option', '', JText::_('COM_KUNENA_A_ICONSET_LIST') );
     foreach( $topiciconslist as $icon ) {
-			$topicicons[] = JHTML::_ ( 'select.option', $icon, $icon );
+			$topicicons[] = JHtml::_ ( 'select.option', $icon, $icon );
 		}
-		return JHTML::_ ( 'select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1" onchange="document.adminForm.submit( );"', 'value', 'text' );
+		return JHtml::_ ( 'select.genericlist', $topicicons, 'iconset', 'class="inputbox" size="1" onchange="document.adminForm.submit( );"', 'value', 'text' );
   }
 
 	public function getAdminNavigation() {

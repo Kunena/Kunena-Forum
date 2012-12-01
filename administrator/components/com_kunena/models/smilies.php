@@ -87,10 +87,10 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		$smiley_list = array();
 		$i = 0;
 		foreach ( $smiley_images as $row ) {
-			$smiley_list[$row] = JHTML::_ ( 'select.option', $row, $row );
+			$smiley_list[$row] = JHtml::_ ( 'select.option', $row, $row );
 		}
 		sort($smiley_list);
-		$list = JHTML::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected) ? $selected->location : '' );
+		$list = JHtml::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected) ? $selected->location : '' );
 
 		return $list;
 	}

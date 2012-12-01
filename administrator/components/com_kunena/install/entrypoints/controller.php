@@ -9,14 +9,16 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport('joomla.application.component.controller');
+jimport('joomla.filesystem.file');
+jimport('joomla.filesystem.folder');
+jimport('joomla.filesystem.archive');
 
 /**
  * The Kunena Installer Controller
  *
  * @since		1.6
  */
-class KunenaControllerInstall extends JController {
+class KunenaControllerInstall extends JControllerLegacy {
 	public function remind() {
 		// User wants to continue using the old version
 		$app = JFactory::getApplication();
@@ -44,8 +46,6 @@ class KunenaControllerInstall extends JController {
 
 	public function prepare() {
 		// Start our main installer
-		jimport('joomla.filesystem.file');
-		jimport('joomla.filesystem.archive');
 		if (file_exists(JPATH_COMPONENT.'/bak')) JFolder::delete(JPATH_COMPONENT.'/bak');
 		if (file_exists(JPATH_COMPONENT.'/new')) {
 			$md5 = md5_file(JPATH_COMPONENT.'/new/install/entrypoints/api.php');
@@ -275,7 +275,7 @@ class KunenaControllerInstall extends JController {
 		$table = str_replace('_', '\_', "{$db->getPrefix()}%_version");
 		$query = "SHOW TABLES LIKE {$db->quote($table)}";
 		$db->setQuery ( $query );
-		$tables = (array)$db->loadResultArray();
+		$tables = (array) $db->loadColumn();
 		if (in_array("{$db->getPrefix()}kunena_version", $tables)) {
 			$table = '#__kunena_version';
 		} elseif (in_array("{$db->getPrefix()}fb_version", $tables)) {
@@ -285,7 +285,7 @@ class KunenaControllerInstall extends JController {
 		}
 
 		// Load Kunena version
-		$query = "SELECT version FROM {$db->nameQuote($table)} ORDER BY `id` DESC";
+		$query = "SELECT version FROM {$db->quoteName($table)} ORDER BY `id` DESC";
 		$db->setQuery($query, 0, 1);
 		$version = $db->loadResult();
 		// Ignore FireBoard
@@ -320,6 +320,6 @@ class KunenaControllerInstall extends JController {
 	}
 
 	protected function getUrl() {
-		return 'index.php?option=com_kunena&view=install&task=prepare&start=1&'.JUtility::getToken().'=1';
+		return 'index.php?option=com_kunena&view=install&task=prepare&start=1&'.JSession::getFormToken().'=1';
 	}
 }

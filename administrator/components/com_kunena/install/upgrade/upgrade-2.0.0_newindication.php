@@ -15,7 +15,7 @@ function kunena_upgrade_200_newindication($parent) {
 	$now = JFactory::getDate()->toUnix();
 
 	// First remove old session information (not used anyway, speeds up conversion)
-	$lasttime = $now - max(intval(JFactory::getConfig()->getValue( 'config.lifetime' ))*60, intval(KunenaFactory::getConfig ()->sessiontimeout)) - 60;
+	$lasttime = $now - max(intval(JFactory::getConfig()->get( 'config.lifetime' ))*60, intval(KunenaFactory::getConfig ()->sessiontimeout)) - 60;
 	$query = "UPDATE #__kunena_sessions SET readtopics='0' WHERE currvisit<{$db->quote($lasttime)}";
 	$db->setQuery ( $query );
 	$db->query ();

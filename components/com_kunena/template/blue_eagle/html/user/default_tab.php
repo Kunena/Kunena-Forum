@@ -10,8 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.calendar');
-JHTML::_('behavior.tooltip');
+JHtml::_('behavior.calendar');
+JHtml::_('behavior.tooltip');
 ?>
 <div id="kprofile-rightcoltop">
 	<div class="kprofile-rightcol2">

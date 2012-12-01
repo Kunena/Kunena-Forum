@@ -51,15 +51,12 @@ class KunenaModelUser extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.users_{$active}_list_search", 'search', '' );
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH')) $this->setState ( 'list.search', $value );
 
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla! 2.5:
-			$db = JFactory::getDBO();
-			$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
-			$db->setQuery ( $query );
-			$superadmins = (array) $db->loadResultArray();
-			if (!$superadmins) $superadmins = array(0);
-			$this->setState ( 'list.exclude', implode(',', $superadmins));
-		}
+		$db = JFactory::getDBO();
+		$query = "SELECT user_id FROM `#__user_usergroup_map` WHERE group_id =8";
+		$db->setQuery ( $query );
+		$superadmins = (array) $db->loadColumn();
+		if (!$superadmins) $superadmins = array(0);
+		$this->setState ( 'list.exclude', implode(',', $superadmins));
 	}
 
 	public function getQueryWhere() {
@@ -68,7 +65,7 @@ class KunenaModelUser extends KunenaModel {
 		elseif ($this->config->userlist_count_users == '3' ) $where = 'u.block=0';
 		else $where = '1';
 		// Hide super admins from the list
-		$where .= version_compare(JVERSION, '1.6','>') ? ' AND u.id NOT IN ('.$this->getState ( 'list.exclude' ).')' : ' AND u.gid!=25';
+		$where .= ' AND u.id NOT IN ('.$this->getState ( 'list.exclude' ).')';
 		return $where;
 	}
 
@@ -78,8 +75,8 @@ class KunenaModelUser extends KunenaModel {
 		$where = array();
 		if ($search) {
 			$db = JFactory::getDBO();
-			if ($this->config->username) $where[] = "u.username LIKE '%{$db->getEscaped($search)}%'";
-			else $where[] = "u.name LIKE '%{$db->getEscaped($search)}%'";
+			if ($this->config->username) $where[] = "u.username LIKE '%{$db->escape($search)}%'";
+			else $where[] = "u.name LIKE '%{$db->escape($search)}%'";
 			$where = 'AND ('.implode(' OR ', $where).')';
 		} else {
 			$where = '';
@@ -138,7 +135,7 @@ class KunenaModelUser extends KunenaModel {
 				FROM #__users AS u
 				INNER JOIN #__kunena_users AS ku ON ku.userid = u.id
 				WHERE {$where} {$search}";
-			$query .= " ORDER BY {$db->nameQuote($this->getState ( 'list.ordering'))} {$this->getState ( 'list.direction')}";
+			$query .= " ORDER BY {$db->quoteName($this->getState ( 'list.ordering'))} {$this->getState ( 'list.direction')}";
 
 			$db->setQuery ( $query, $limitstart, $limit );
 			$items = $db->loadObjectList ('id');

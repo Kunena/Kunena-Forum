@@ -22,7 +22,7 @@ $this->displayAnnouncement ();
 		</td>
 
 		<td class="klist-times-all">
-			<form action="<?php echo $this->escape(JURI::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
+			<form action="<?php echo $this->escape(JUri::getInstance()->toString());?>" id="timeselect" name="timeselect" method="post" target="_self">
 			<?php $this->displayTimeFilter('sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"') ?>
 			</form>
 		</td>

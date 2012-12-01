@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+	<name>plg_kunena_comprofiler</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>www.kunena.org</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>PLG_KUNENA_COMPROFILER_DESCRIPTION</description>
+	<files>
+		<filename plugin="comprofiler">comprofiler.php</filename>
+		<filename>access.php</filename>
+		<filename>activity.php</filename>
+		<filename>avatar.php</filename>
+		<filename>login.php</filename>
+		<filename>private.php</filename>
+		<filename>profile.php</filename>
+		<filename>index.html</filename>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="access" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_ACCESS" description="PLG_KUNENA_COMPROFILER_ACCESS_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="login" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_LOGIN" description="PLG_KUNENA_COMPROFILER_LOGIN_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="activity" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_ACTIVITY" description="PLG_KUNENA_COMPROFILER_ACTIVITY_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_AVATAR" description="PLG_KUNENA_COMPROFILER_AVATAR_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="profile" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_PROFILE" description="PLG_KUNENA_COMPROFILER_PROFILE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="private" type="radio" default="1" label="PLG_KUNENA_COMPROFILER_PRIVATE" description="PLG_KUNENA_COMPROFILER_PRIVATE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

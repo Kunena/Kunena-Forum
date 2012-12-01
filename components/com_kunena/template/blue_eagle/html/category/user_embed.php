@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="kcategoryform">
 	<input type="hidden" name="view" value="category" />
-	<?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHtml::_( 'form.token' ); ?>
 
 <div class="kblock kflat">
 	<div class="kheader">
@@ -40,7 +40,7 @@ defined ( '_JEXEC' ) or die ();
 						<td colspan="<?php echo empty($this->categoryActions) ? 5 : 6 ?>" class="kcol krowmoderation">
 							<?php if (!empty($this->moreUri)) echo JHtml::_('kunenaforum.link', $this->moreUri, JText::_('COM_KUNENA_MORE'), null, null, 'follow'); ?>
 							<?php if (!empty($this->categoryActions)) : ?>
-							<?php echo JHTML::_('select.genericlist', $this->categoryActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+							<?php echo JHtml::_('select.genericlist', $this->categoryActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 
 							<input type="submit" name="kcheckgo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 							<?php endif; ?>

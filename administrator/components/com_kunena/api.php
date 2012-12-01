@@ -30,8 +30,8 @@ define ( 'KPATH_MEDIA', JPATH_ROOT .'/media/'. KUNENA_NAME );
 
 // URLs
 define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
-define ( 'KURL_SITE', JURI::Root () . KPATH_COMPONENT_RELATIVE . '/' );
-define ( 'KURL_MEDIA', JURI::Root () . 'media/' . KUNENA_NAME . '/' );
+define ( 'KURL_SITE', JUri::Root () . KPATH_COMPONENT_RELATIVE . '/' );
+define ( 'KURL_MEDIA', JUri::Root () . 'media/' . KUNENA_NAME . '/' );
 
 // Register Joomla and Kunena autoloader
 if (function_exists('__autoload')) spl_autoload_register('__autoload');
@@ -40,9 +40,9 @@ spl_autoload_register('KunenaAutoload');
 // Give access to all Kunena tables
 jimport('joomla.database.table');
 JTable::addIncludePath(KPATH_ADMIN.'/libraries/tables');
-// Give access to all JHTML functions
+// Give access to all JHtml functions
 jimport('joomla.html.html');
-JHTML::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
+JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
 
 /**
  * Intelligent library importer.

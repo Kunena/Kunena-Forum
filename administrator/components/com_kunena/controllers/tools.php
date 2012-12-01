@@ -43,7 +43,7 @@ class KunenaAdminControllerTools extends KunenaController {
 	}
 
 	function prune() {
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
@@ -112,7 +112,7 @@ class KunenaAdminControllerTools extends KunenaController {
 		$userrename = JRequest::getBool ( 'userrename', 0 );
 
 		$db = JFactory::getDBO ();
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
@@ -230,7 +230,7 @@ class KunenaAdminControllerTools extends KunenaController {
 	}
 
 	public function fixlegacy() {
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;
@@ -245,7 +245,7 @@ class KunenaAdminControllerTools extends KunenaController {
 	}
 
 	public function purgeReStatements() {
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return;

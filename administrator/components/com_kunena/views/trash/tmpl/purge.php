@@ -11,8 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
+$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
+if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
@@ -22,10 +22,10 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 			<input type="hidden" name="task" value="purge" />
 			<input type="hidden" name="boxchecked" value="1" />
 			<input type="hidden" name="md5" value="<?php echo $this->md5Calculated ?>" />
-			<?php echo JHTML::_( 'form.token' ); ?>
+			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<table class="adminheading"></table>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 				<tr>
 					<td><strong><?php echo JText::_('COM_KUNENA_NUMBER_ITEMS'); ?>:</strong>
 						<br />

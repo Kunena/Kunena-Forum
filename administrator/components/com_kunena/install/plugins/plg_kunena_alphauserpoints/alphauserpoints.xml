@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+	<name>plg_kunena_alphauserpoints</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>www.kunena.org</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>PLG_KUNENA_ALPHAUSERPOINTS_DESCRIPTION</description>
+	<files>
+		<filename plugin="alphauserpoints">alphauserpoints.php</filename>
+		<filename>activity.php</filename>
+		<filename>profile.php</filename>
+		<filename>index.html</filename>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="activity" type="radio" default="1" label="PLG_KUNENA_ALPHAUSERPOINTS_ACTIVITY" description="PLG_KUNENA_ALPHAUSERPOINTS_ACTIVITY_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_ALPHAUSERPOINTS_AVATAR" description="PLG_KUNENA_ALPHAUSERPOINTS_AVATAR_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="profile" type="radio" default="1" label="PLG_KUNENA_ALPHAUSERPOINTS_PROFILE" description="PLG_KUNENA_ALPHAUSERPOINTS_PROFILE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="activity_points_limit" type="text" default="0" label="PLG_KUNENA_ALPHAUSERPOINTS_ACTIVITY_POINTS_LIMIT" description="PLG_KUNENA_ALPHAUSERPOINTS_ACTIVITY_POINTS_LIMIT_DESC"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

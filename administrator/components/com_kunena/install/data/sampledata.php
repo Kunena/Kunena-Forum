@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 // This file contains initial sample data for the forum
 
 class KText {
-	function _($string) {
+	public static function _($string) {
 		return str_replace('\n', "\n", html_entity_decode(JText::_($string), ENT_COMPAT, 'UTF-8'));
 	}
 }
@@ -153,21 +153,11 @@ function installSampleData()
 		({$db->quote($cat1_alias)}, 'catid', '2', 1),
 		({$db->quote($cat2_alias)}, 'catid', '3', 1);";
 
-	if (version_compare(JVERSION, '1.6','>')) {
-		// Joomla 1.6+
-		$query="INSERT INTO `#__kunena_categories`
+	$query="INSERT INTO `#__kunena_categories`
 		(`id`, `parent_id`, `name`, `alias`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`, `last_topic_id`, `last_post_id`, `last_post_time`, `accesstype`) VALUES
 		(1, 0, {$db->quote($section)}, {$db->quote($section_alias)}, 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0, 0, 0, 0, 'joomla.group'),
 		(2, 1, {$db->quote($cat1)}, {$db->quote($cat1_alias)}, 1, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).", 1 , 1, 0, 1, 1, {$posttime->toUnix()}, 'joomla.group'),
 		(3, 1, {$db->quote($cat2)}, {$db->quote($cat2_alias)}, 1, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).", 0 , 0, 1, 0, 0, 0, 'joomla.group');";
-	} else {
-		// Joomla 1.5
-		$query="INSERT INTO `#__kunena_categories`
-		(`id`, `parent_id`, `name`, `alias`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`, `last_topic_id`, `last_post_id`, `last_post_time`) VALUES
-		(1, 0, {$db->quote($section)}, {$db->quote($section_alias)}, 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0, 0, 0, 0),
-		(2, 1, {$db->quote($cat1)}, {$db->quote($cat1_alias)}, 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).", 1 , 1, 0, 1, 1, {$posttime->toUnix()}),
-		(3, 1, {$db->quote($cat2)}, {$db->quote($cat2_alias)}, 0, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).", 0 , 0, 1, 0, 0, 0);";
-	}
 
 	$queries[] = array ('kunena_categories', $query);
 
@@ -193,7 +183,7 @@ function installSampleData()
 	foreach ($queries as $query)
 	{
 		// Only insert sample/default data if table is empty
-		$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$query[0]), 0, 1);
+		$db->setQuery("SELECT * FROM ".$db->quoteName($db->getPrefix().$query[0]), 0, 1);
 		$filled = $db->loadObject();
 
 		if (!$filled) {

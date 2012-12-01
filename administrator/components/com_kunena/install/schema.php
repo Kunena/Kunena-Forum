@@ -20,7 +20,7 @@ jimport('joomla.application.component.model');
  *
  * @since		1.6
  */
-class KunenaModelSchema extends JModel
+class KunenaModelSchema extends JModelLegacy
 {
 	/**
 	 * Flag to indicate model state initialization.
@@ -173,7 +173,7 @@ class KunenaModelSchema extends JModel
 			return $this->tables[$prefix];
 		}
 		$this->db->setQuery("SHOW TABLES LIKE ".$this->db->quote($this->db->getPrefix().$prefix.'%'));
-		$list = $this->db->loadResultArray();
+		$list = $this->db->loadColumn();
 		if ($this->db->getErrorNum()) throw new KunenaSchemaException($this->db->getErrorMsg(), $this->db->getErrorNum());
 		$this->tables[$prefix] = array();
 		foreach ($list as $table) {
@@ -201,7 +201,7 @@ class KunenaModelSchema extends JModel
 		$schema[$filename] = new DOMDocument('1.0', 'utf-8');
 		$schema[$filename]->formatOutput = true;
 		$schema[$filename]->preserveWhiteSpace = false;
-		$dom->validateOnParse = false;
+		$schema[$filename]->validateOnParse = false;
 		$schema[$filename]->load($filename);
 		return $schema[$filename];
 	}
@@ -225,7 +225,7 @@ class KunenaModelSchema extends JModel
 
 			$tableNode->setAttribute("name", $table);
 
-			$this->db->setQuery( "SHOW COLUMNS FROM ".$this->db->nameQuote($this->db->getPrefix().$table));
+			$this->db->setQuery( "SHOW COLUMNS FROM ".$this->db->quoteName($this->db->getPrefix().$table));
 			$fields = $this->db->loadObjectList();
 			if ($this->db->getErrorNum()) throw new KunenaSchemaException($this->db->getErrorMsg(), $this->db->getErrorNum());
 			foreach ($fields as $row) {
@@ -240,7 +240,7 @@ class KunenaModelSchema extends JModel
 				if ($row->Extra != '') $fieldNode->setAttribute("extra", $row->Extra);
 			}
 
-			$this->db->setQuery( "SHOW KEYS FROM ".$this->db->nameQuote($this->db->getPrefix().$table));
+			$this->db->setQuery( "SHOW KEYS FROM ".$this->db->quoteName($this->db->getPrefix().$table));
 			$keys = $this->db->loadObjectList();
 			if ($this->db->getErrorNum()) throw new KunenaSchemaException($this->db->getErrorMsg(), $this->db->getErrorNum());
 
@@ -411,15 +411,15 @@ class KunenaModelSchema extends JModel
 				case 'unknown':
 					if (!$drop) break;
 				case 'drop':
-					$str .= 'DROP TABLE '.$this->db->nameQuote($tablename).';';
+					$str .= 'DROP TABLE '.$this->db->quoteName($tablename).';';
 					break;
 //				case 'rename':
 				case 'alter':
-					if ($action == 'alter') $str .= 'ALTER TABLE '.$this->db->nameQuote($tablename).' '."\n";
-//					else $str .= 'ALTER TABLE '.$this->db->nameQuote($field->getAttribute('from')).' RENAME '.$this->db->nameQuote($tablename).' '."\n";
+					if ($action == 'alter') $str .= 'ALTER TABLE '.$this->db->quoteName($tablename).' '."\n";
+//					else $str .= 'ALTER TABLE '.$this->db->quoteName($field->getAttribute('from')).' RENAME '.$this->db->quoteName($tablename).' '."\n";
 					foreach ($table->childNodes as $field)
 					{
-						if ($field->hasAttribute('after')) $after = ' AFTER '.$this->db->nameQuote($field->getAttribute('after'));
+						if ($field->hasAttribute('after')) $after = ' AFTER '.$this->db->quoteName($field->getAttribute('after'));
 						else $after = ' FIRST';
 
 						switch ($action2 = $field->getAttribute('action'))
@@ -443,15 +443,15 @@ class KunenaModelSchema extends JModel
 								}
 							case 'rename':
 								if ($field->tagName == 'key') {
-									$fields[] = '	DROP KEY '.$this->db->nameQuote($field->getAttribute('from'));
+									$fields[] = '	DROP KEY '.$this->db->quoteName($field->getAttribute('from'));
 									$fields[] = '	ADD '.$this->getSchemaSQLField($field);
 								} else {
-									$fields[] = '	CHANGE '.$this->db->nameQuote($field->getAttribute('from')).' '.$this->getSchemaSQLField($field, $after);
+									$fields[] = '	CHANGE '.$this->db->quoteName($field->getAttribute('from')).' '.$this->getSchemaSQLField($field, $after);
 								}
 								break;
 							case 'alter':
 								if ($field->tagName == 'key') {
-									$fields[] = '	DROP KEY '.$this->db->nameQuote($field->getAttribute('name'));
+									$fields[] = '	DROP KEY '.$this->db->quoteName($field->getAttribute('name'));
 									$fields[] = '	ADD '.$this->getSchemaSQLField($field);
 								} else {
 									$fields[] = '	MODIFY '.$this->getSchemaSQLField($field, $after);
@@ -471,7 +471,7 @@ class KunenaModelSchema extends JModel
 				case 'create':
 				case '':
 					$action = 'create';
-					$str .= 'CREATE TABLE '.$this->db->nameQuote($tablename).' ('."\n";
+					$str .= 'CREATE TABLE '.$this->db->quoteName($tablename).' ('."\n";
 					foreach ($table->childNodes as $field)
 					{
 						$sqlpart = $this->getSchemaSQLField($field);
@@ -497,7 +497,7 @@ class KunenaModelSchema extends JModel
 		$str = '';
 		if ($field->tagName == 'field')
 		{
-			$str .= $this->db->nameQuote($field->getAttribute('name'));
+			$str .= $this->db->quoteName($field->getAttribute('name'));
 			if ($field->getAttribute('action') != 'drop')
 			{
 				$str .= ' '.$field->getAttribute('type');
@@ -510,8 +510,8 @@ class KunenaModelSchema extends JModel
 		else if ($field->tagName == 'key')
 		{
 			if ($field->getAttribute('name') == 'PRIMARY') $str .= 'PRIMARY KEY';
-			else if ($field->getAttribute('unique') == 1) $str .= 'UNIQUE KEY '.$this->db->nameQuote($field->getAttribute('name'));
-			else $str .= 'KEY '.$this->db->nameQuote($field->getAttribute('name'));
+			else if ($field->getAttribute('unique') == 1) $str .= 'UNIQUE KEY '.$this->db->quoteName($field->getAttribute('name'));
+			else $str .= 'KEY '.$this->db->quoteName($field->getAttribute('name'));
 			if ($field->getAttribute('action') != 'drop')
 			{
 				$str .= ($field->hasAttribute('type')) ? ' USING '.$field->getAttribute('type') : '';

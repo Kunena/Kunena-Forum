@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 			<input type="hidden" name="task" value="post" />
 			<input type="hidden" name="parentid" value="<?php echo $this->displayMessageField('id') ?>" />
 			<input type="hidden" name="catid" value="<?php echo $this->displayCategoryField('id') ?>" />
-			<?php echo JHTML::_( 'form.token' ) ?>
+			<?php echo JHtml::_( 'form.token' ) ?>
 
 			<?php if ($this->me->exists() && $this->category->allow_anonymous): ?>
 				<input type="text" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->profile->getName()) ?>" /><br />

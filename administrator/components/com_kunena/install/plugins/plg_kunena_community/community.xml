@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="2.5" type="plugin" group="kunena" method="upgrade">
+	<name>plg_kunena_community</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>www.kunena.org</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>PLG_KUNENA_COMMUNITY_DESCRIPTION</description>
+	<files>
+		<filename plugin="community">community.php</filename>
+		<filename>access.php</filename>
+		<filename>activity.php</filename>
+		<filename>avatar.php</filename>
+		<filename>login.php</filename>
+		<filename>private.php</filename>
+		<filename>profile.php</filename>
+		<filename>index.html</filename>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="access" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_ACCESS" description="PLG_KUNENA_COMMUNITY_ACCESS_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="login" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_LOGIN" description="PLG_KUNENA_COMMUNITY_LOGIN_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="activity" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_ACTIVITY" description="PLG_KUNENA_COMMUNITY_ACTIVITY_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="avatar" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_AVATAR" description="PLG_KUNENA_COMMUNITY_AVATAR_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="profile" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_PROFILE" description="PLG_KUNENA_COMMUNITY_PROFILE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="private" type="radio" default="1" label="PLG_KUNENA_COMMUNITY_PRIVATE" description="PLG_KUNENA_COMMUNITY_PRIVATE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="activity_points_limit" type="text" default="0" label="PLG_KUNENA_COMMUNITY_ACTIVITY_POINTS_LIMIT" description="PLG_KUNENA_COMMUNITY_ACTIVITY_POINTS_LIMIT_DESC"/>
+				<field name="activity_stream_limit" type="text" default="0" label="PLG_KUNENA_COMMUNITY_ACTIVITY_STREAM_LIMIT" description="PLG_KUNENA_COMMUNITY_ACTIVITY_STREAM_LIMIT_DESC"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

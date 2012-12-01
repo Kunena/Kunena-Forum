@@ -84,9 +84,9 @@ class KunenaAdminModelRanks extends KunenaModel {
 		$rank_list = array();
 		$i = 0;
 		foreach ( $rank_images as $id => $row ) {
-			$rank_list[] = JHTML::_ ( 'select.option', $rank_images [$id], $rank_images [$id] );
+			$rank_list[] = JHtml::_ ( 'select.option', $rank_images [$id], $rank_images [$id] );
 		}
-		$list = JHTML::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected) ? $selected->rank_image : '' );
+		$list = JHtml::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected) ? $selected->rank_image : '' );
 
 		return $list;
 	}

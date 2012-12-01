@@ -30,7 +30,7 @@ defined ( '_JEXEC' ) or die ();
 					<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" id="adminForm" name="adminForm">
 						<input type="hidden" name="boxchecked" value="0" />
 						<input type="hidden" name="task" value="" />
-						<?php echo JHTML::_( 'form.token' ) ?>
+						<?php echo JHtml::_( 'form.token' ) ?>
 						<ul class="announcements-list list-unstyled list-header">
 							<li class="header kbox-hover_header-row">
 								<dl class="announcements-list list-unstyled">
@@ -87,7 +87,7 @@ defined ( '_JEXEC' ) or die ();
 						<?php  if ( !empty($this->announcementActions) ) : ?>
 						<div class="modbox-wrapper innerspacer-bottom">
 							<div class="modbox">
-								<?php echo JHTML::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+								<?php echo JHtml::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 								<input type="submit" name="kcheckgo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 							</div>
 						</div>

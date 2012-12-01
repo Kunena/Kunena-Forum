@@ -543,8 +543,25 @@ class KunenaUser extends JObject {
 			return '';
 	}
 
-	public function escape($var)
-	{
+	public function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	/**
+	* Returns a string which contains the url of the user profile.
+	*
+	* @access  public
+	* @param  int  $id  The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+	* @return  String      The User object.
+	* @since  2.0
+	*/
+	public function getProfileUrl($task = '', $xhtml = true, $extra = '') {
+		$my = JFactory::getUser();
+		if ($this->userid && $this->userid!=$my->id) $userid = "&userid=$this->userid";
+		else $userid = '';
+
+		if ($task) $task = "&do=$task";
+
+		return KunenaRoute::_ ( "index.php?option=com_kunena&view=profile{$userid}{$task}{$extra}", $xhtml );
 	}
 }

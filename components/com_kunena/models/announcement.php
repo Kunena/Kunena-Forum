@@ -49,7 +49,13 @@ class KunenaModelAnnouncement extends KunenaModel {
 		$start = $this->getState ( 'list.start');
 		$limit = $this->getState ( 'list.limit');
 
-		list($this->total, $announces) = KunenaForumAnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
+		$this->total = KunenaForumAnnouncementHelper::getCount(!$this->me->isModerator());
+
+		// If out of range, use last page
+		if ($limit && $this->total < $start)
+			$start = intval($this->total / $limit) * $limit;
+
+		$announces = KunenaForumAnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
 
 		if ($this->total < $start)
 			$this->setState('list.start', intval($this->total / $limit) * $limit);

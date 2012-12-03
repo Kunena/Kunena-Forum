@@ -46,7 +46,7 @@ class KunenaViewCommon extends KunenaView {
 
 		if ($this->config->showannouncement > 0) {
 			$new = new KunenaForumAnnouncement;
-			list($total,$items) = KunenaForumAnnouncementHelper::getAnnouncements();
+			$items = KunenaForumAnnouncementHelper::getAnnouncements();
 			$this->announcement = array_pop($items);
 			if (!$this->announcement) {
 				echo ' ';

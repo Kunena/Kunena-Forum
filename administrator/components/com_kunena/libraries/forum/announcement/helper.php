@@ -62,21 +62,10 @@ class KunenaForumAnnouncementHelper {
 		$db = JFactory::getDBO ();
 		$where = $filter ? "WHERE published=1" : '';
 
-		$query = "SELECT COUNT(*) FROM #__kunena_announcement {$where} ORDER BY created DESC";
-		$db->setQuery ( $query );
-		$total = (int) $db->loadResult ();
-
-		if (KunenaError::checkDatabaseError () || !$total) return array(0, array());
-
-		// If out of range, use last page
-		if ($limit && $total < $start)
-			$start = intval($total / $limit) * $limit;
-
-
 		$query = "SELECT * FROM #__kunena_announcement {$where} ORDER BY created DESC";
 		$db->setQuery ( $query, $start, $limit );
 		$results = (array) $db->loadAssocList ();
-		if (KunenaError::checkDatabaseError ()) return array(0, array());
+		KunenaError::checkDatabaseError ();
 
 		self::$_instances = array();
 		$announces = array();
@@ -88,6 +77,19 @@ class KunenaForumAnnouncementHelper {
 			$announces[] = $instance;
 		}
 		unset ($results);
-		return array($total, $announces);
+		return $announces;
+	}
+
+	static public function getCount($filter = true) {
+		$db = JFactory::getDBO ();
+		$where = $filter ? "WHERE published=1" : '';
+
+		$query = "SELECT COUNT(*) FROM #__kunena_announcement {$where} ORDER BY created DESC";
+		$db->setQuery ( $query );
+		$total = (int) $db->loadResult ();
+
+		if (KunenaError::checkDatabaseError () || !$total) return 0;
+
+		return $total;
 	}
 }

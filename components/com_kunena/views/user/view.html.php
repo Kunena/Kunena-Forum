@@ -89,12 +89,8 @@ class KunenaViewUser extends KunenaView {
 			$this->profile->save();
 		}
 		if ($this->profile->userid == $this->me->userid) {
-			if ($this->do != 'edit') $this->editLink = $this->_getMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_EDIT').' &raquo;', 'nofollow', 'edit', 'kheader-link' );
-			else $this->editLink = $this->_getMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow', '', 'kheader-link' );
-
-			// TODO: Deprecated
-			if ($this->do != 'edit') $this->editlink = $this->_getMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
-			else $this->editlink = $this->_getMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK'), 'nofollow' );
+			if ($this->do != 'edit') $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_EDIT').' &raquo;', JText::_('COM_KUNENA_EDIT').' &raquo;', 'nofollow', 'edit' );
+			else $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_BACK').' &raquo;', JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow' );
 		}
 		$this->name = $this->user->username;
 		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
@@ -543,19 +539,5 @@ class KunenaViewUser extends KunenaView {
 			// TODO: set keywords and description
 
 		}
-	}
-
-	protected function _getMyProfileLink($userid, $name = null, $rel = 'nofollow', $task = '', $class = '') {
-		$my = JFactory::getUser();
-		if ($userid && $userid!=$my->id) $userid = "&userid=$userid";
-		else $userid = '';
-
-		if ($task) $task = "&do=$task";
-		if (!$name) {
-			$profile = KunenaFactory::getUser($userid);
-			$name = htmlspecialchars($profile->getName(), ENT_COMPAT, 'UTF-8');
-		}
-
-		return '<a href="'.KunenaRoute::_ ( "index.php?option=com_kunena&view=profile{$userid}{$task}", true ).'" class="'.$class.'" rel="'.$rel.'">'.$name.'</a>';
 	}
 }

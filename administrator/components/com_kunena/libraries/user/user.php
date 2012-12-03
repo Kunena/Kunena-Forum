@@ -282,7 +282,7 @@ class KunenaUser extends JObject {
 		return $avatars->getURL ( $this, $sizex, $sizey );
 	}
 
-	public function getLink($name = null, $title = null, $rel = 'nofollow') {
+	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '') {
 		if (!$name) {
 			$name = $this->getName();
 		}
@@ -292,7 +292,7 @@ class KunenaUser extends JObject {
 				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
 			}
 			$uclass = $this->getType(0, 'class');
-			$link = $this->getURL ();
+			$link = $this->getURL (true, $task);
 			if (! empty ( $link ))
 				$this->_link[$key] = "<a class=\"{$uclass}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
 			else
@@ -301,9 +301,9 @@ class KunenaUser extends JObject {
 		return $this->_link[$key];
 	}
 
-	public function getURL($xhtml = true) {
+	public function getURL($xhtml = true, $task = '') {
 		if (!$this->exists()) return;
-		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, '', $xhtml );
+		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, $task, $xhtml );
 	}
 
 	public function getType($catid = 0, $code=false) {
@@ -545,23 +545,5 @@ class KunenaUser extends JObject {
 
 	public function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
-	}
-
-	/**
-	* Returns a string which contains the url of the user profile.
-	*
-	* @access  public
-	* @param  int  $id  The user to load - Can be an integer or string - If string, it is converted to ID automatically.
-	* @return  String      The User object.
-	* @since  2.0
-	*/
-	public function getProfileUrl($task = '', $xhtml = true, $extra = '') {
-		$my = JFactory::getUser();
-		if ($this->userid && $this->userid!=$my->id) $userid = "&userid=$this->userid";
-		else $userid = '';
-
-		if ($task) $task = "&do=$task";
-
-		return KunenaRoute::_ ( "index.php?option=com_kunena&view=profile{$userid}{$task}{$extra}", $xhtml );
 	}
 }

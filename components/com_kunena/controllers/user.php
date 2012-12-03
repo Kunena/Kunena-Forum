@@ -207,7 +207,8 @@ class KunenaControllerUser extends KunenaController {
 	}
 
 	function cancel() {
-		$this->app->redirect ( KunenaRoute::_ ( "index.php?option=com_kunena&view=profile", false ) );
+		$user = KunenaFactory::getUser();
+		$this->app->redirect ( $user->getUrl(false) );
 	}
 
 	function login() {
@@ -309,8 +310,8 @@ class KunenaControllerUser extends KunenaController {
 		$post = array_intersect_key($post, array_flip($allow));
 
 		// get the redirect
-		$return = $user->getProfileUrl($this->user->id, '', false);
-		$err_return = $user->getProfileUrl($this->user->id, 'edit', false);
+		$return = $user->getUrl(false);
+		$err_return = $user->getUrl(false, 'edit');
 
 		// do a password safety check
 		if ( !empty($post['password']) && !empty($post['password2']) ) {

@@ -98,7 +98,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		$fields['title'] = JRequest::getString ( 'title', '', 'post', JREQUEST_ALLOWRAW );
 		$fields['description'] = JRequest::getString ( 'description', '', 'post', JREQUEST_ALLOWRAW );
 		$fields['sdescription'] = JRequest::getString ( 'sdescription', '', 'post', JREQUEST_ALLOWRAW );
-		$fields['created'] = JRequest::getString ( 'created', $now->toMysql() );
+		$fields['created'] = JRequest::getString ( 'created', $now->toSql() );
 		$fields['published'] = JRequest::getInt ( 'published', 1 );
 		$fields['showdate'] = JRequest::getInt ( 'showdate', 1 );
 

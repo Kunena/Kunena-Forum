@@ -1233,7 +1233,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 
 		$post = isset($params["post"]) ? $params["post"] : false;
-		$user = isset($default) ? htmlentities($default) : false;
+		$user = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 		$html = '';
 		if ($user) $html .= "<b>" . $user . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":</b>\n";
 		$html .= '<div class="kmsgtext-quote">' . $content . '</div>';

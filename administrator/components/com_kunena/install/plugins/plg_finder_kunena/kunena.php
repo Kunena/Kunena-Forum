@@ -108,7 +108,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	public function onFinderAfterSave($context, $row, $isNew) {
 		//If a category has been changed, we want to check if the access has been changed
 		if(($row instanceof TableKunenaCategories) && !$isNew){
-			//Access type of Category is still not the joomla access level system. 
+			//Access type of Category is still not the joomla access level system.
 			//We didn't show them before and we don't show them now. No reindex necessary
 			if($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level') return true;
 			//Access level did not change. We do not need to reindex
@@ -129,10 +129,10 @@ class plgFinderKunena extends FinderIndexerAdapter {
 
 		return true;
 	}
-	
+
 	/**
 	 * Method to remove the link information for items that have been deleted.
-	 * Since Messages are getting deleted in process of deleting categories or messages, we 
+	 * Since Messages are getting deleted in process of deleting categories or messages, we
 	 * delete the finderresults before those objects are deleted.
 	 *
 	 * @param   string  $context  The context of the action being performed.
@@ -499,7 +499,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 			$results = $db->loadAssocList();
 			$list = array();
 			foreach($results as $result){
-				$list[] = new KunenaFormMessage($result);
+				$list[] = new KunenaForumMessage($result);
 			}
 			$messages[$topic_id] = $list;
 		}

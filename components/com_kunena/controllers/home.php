@@ -32,11 +32,15 @@ class KunenaControllerHome extends KunenaController {
 			$default = $this->_getDefaultMenuItem($menu, $home);
 			if (!$default || $default->id == $home->id) {
 				// There is no default menu item, use category view instead
-				$default = clone $menu->getItem ( KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list") );
-				$defhome = KunenaRoute::getHome($default);
-				if (!$defhome || $defhome->id != $home->id) $default = clone $home;
-				$default->query['view'] = 'category';
-				$default->query['layout'] = 'list';
+
+				$default = $menu->getItem ( KunenaRoute::getItemID("index.php?option=com_kunena&view=category&layout=list") );
+				if ($default) {
+					$default = clone $default;
+					$defhome = KunenaRoute::getHome($default);
+					if (!$defhome || $defhome->id != $home->id) $default = clone $home;
+					$default->query['view'] = 'category';
+					$default->query['layout'] = 'list';
+				}
 			}
 			if (!$default) {
 				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );

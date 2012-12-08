@@ -9,8 +9,6 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-// FIXME: add pagination
 ?>
 <div class="kblock">
 	<div class="kheader">
@@ -46,6 +44,13 @@ defined ( '_JEXEC' ) or die ();
 			<?php endif; ?>
 		</tr>
 		<?php $this->displayItems() ?>
+		<tr class="krow0">
+			<td colspan="<?php echo empty($this->announcementActions) ? 5 : 7 ?>" class="kcol kannoncepagingation">
+			<?php if ($this->total > $this->state->get('list.limit')) : ?>
+				<?php echo $this->getPagination(5); ?>
+			<?php endif; ?>
+			</td>
+		</tr>
 
 		<?php  if ( !empty($this->announcementActions) ) : ?>
 		<!-- Bulk Actions -->

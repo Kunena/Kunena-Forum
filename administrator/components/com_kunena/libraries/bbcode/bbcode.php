@@ -1061,7 +1061,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			};
 			$mapid = new google.maps.Map(document.id('".$mapid."'), myOptions);
 
-			var address = '$content';
+			var address = ".json_encode($content).";
 			if (geocoder) {
 				geocoder.geocode( { 'address': address}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
@@ -1071,7 +1071,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				 		map: $mapid
 					});
 				} else {
-					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$content</i></strong></p>';
+					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>".json_encode($content)."</i></strong></p>';
 					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
 						infowindow$mapid.open($mapid);
 				}

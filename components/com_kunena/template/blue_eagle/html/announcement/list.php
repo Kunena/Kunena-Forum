@@ -44,20 +44,20 @@ defined ( '_JEXEC' ) or die ();
 			<?php endif; ?>
 		</tr>
 		<?php $this->displayItems() ?>
-		
-		<?php  if ( $this->total > $this->state->get('list.limit') || !empty($this->announcementActions) ) : ?>
+
 		<!-- Bulk Actions -->
 		<tr class="krow1">
-			<td colspan="3" class="kcol kannoncepagingation">
+			<td colspan="3" class="kcol krowmoderation">
 				<?php echo $pagination = $this->getPagination(5); ?>
 			</td>
-			<td colspan="<?php echo 7 - isset($pagination)*3; ?>" class="kcol krowmoderation">
+			<?php  if ( !empty($this->announcementActions) ) : ?>
+			<td colspan="4" class="kcol krowmoderation">
 				<?php echo JHTML::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
 				<input type="submit" name="kcheckgo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 			</td>
+			<?php endif; ?>
 		</tr>
 		<!-- /Bulk Actions -->
-		<?php endif; ?>
 	</tbody>
 </table>
 

@@ -29,6 +29,7 @@ defined ( '_JEXEC' ) or die ();
 							<input type="hidden" name="id" value="<?php echo $this->topic->id ?>" />
 							<?php echo JHTML::_( 'form.token' ); ?>
 
+							<?php if ( $this->me->userid > 0 ) : ?>
 							<fieldset>
 								<legend><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
 								<ul>
@@ -43,6 +44,9 @@ defined ( '_JEXEC' ) or die ();
 							<div id="kpoll-btns">
 								<input id="kpoll-button-vote" class="kbutton ks" type="submit" value="<?php echo $this->voted && $this->config->pollallowvoteone ? JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE') : JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
 							</div>
+							<?php else: ?>
+								<span><?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?></span>
+							<?php endif; ?>
 						</form>
 						</div>
 					</td>

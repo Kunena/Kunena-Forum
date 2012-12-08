@@ -61,34 +61,32 @@ class KunenaForumAnnouncementHelper {
 	static public function getAnnouncements($start = 0, $limit = 1, $filter = true) {
 		$db = JFactory::getDBO ();
 		$where = $filter ? "WHERE published=1" : '';
-
 		$query = "SELECT * FROM #__kunena_announcement {$where} ORDER BY created DESC";
 		$db->setQuery ( $query, $start, $limit );
 		$results = (array) $db->loadAssocList ();
 		KunenaError::checkDatabaseError ();
 
 		self::$_instances = array();
-		$announces = array();
+		$list = array();
 		foreach ( $results as $announcement ) {
 			if (isset(self::$_instances [$announcement['id']])) continue;
 			$instance = new KunenaForumAnnouncement ($announcement);
 			$instance->exists (true);
 			self::$_instances [$instance->id] = $instance;
-			$announces[] = $instance;
+			$list[] = $instance;
 		}
 		unset ($results);
-		return $announces;
+		return $list;
 	}
 
 	static public function getCount($filter = true) {
 		$db = JFactory::getDBO ();
 		$where = $filter ? "WHERE published=1" : '';
 
-		$query = "SELECT COUNT(*) FROM #__kunena_announcement {$where} ORDER BY created DESC";
+		$query = "SELECT COUNT(*) FROM #__kunena_announcement {$where}";
 		$db->setQuery ( $query );
 		$total = (int) $db->loadResult ();
-
-		if (KunenaError::checkDatabaseError () || !$total) return 0;
+		KunenaError::checkDatabaseError ();
 
 		return $total;
 	}

@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->document->addScriptDeclaration("// <![CDATA[
-kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw")."';
+kunena_url_ajax= ".json_encode(KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw")).";
 // ]]>");
 ?>
 <div class="kblock">

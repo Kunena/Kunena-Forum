@@ -14,7 +14,7 @@ if ($this->me->exists()) {
 	$this->document->addScriptDeclaration( "// <![CDATA[
 document.addEvent('domready', function() {
 	// Attach auto completer to the following ids:
-	new Autocompleter.Request.JSON('kusername', '" . KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&format=raw') . "', { 'postVar': 'search' });
+	new Autocompleter.Request.JSON('kusername', " . json_encode(KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&format=raw')) . ", { 'postVar': 'search' });
 });
 // ]]>");
 }

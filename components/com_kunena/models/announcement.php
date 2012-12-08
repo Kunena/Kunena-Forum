@@ -16,13 +16,14 @@ defined ( '_JEXEC' ) or die ();
  * @since		2.0
  */
 class KunenaModelAnnouncement extends KunenaModel {
+	protected $total = false;
 
 	protected function populateState() {
 		$id = $this->getInt ( 'id', 0 );
 		$this->setState ( 'item.id', $id );
 
 		$value = $this->getInt ( 'limit', 0 );
-		if ($value < 1) $value = 20;
+		if ($value < 1 || $value > 100) $value = 20;
 		$this->setState ( 'list.limit', $value );
 
 		$value = $this->getInt ( 'limitstart', 0 );
@@ -38,8 +39,28 @@ class KunenaModelAnnouncement extends KunenaModel {
 		return KunenaForumAnnouncementHelper::get($this->getState ( 'item.id' ));
 	}
 
+	public function getTotal() {
+		if ($this->total === false) return null;
+
+		return $this->total;
+	}
+
 	function getAnnouncements() {
-		return KunenaForumAnnouncementHelper::getAnnouncements($this->getState ( 'list.start'), $this->getState ( 'list.limit'), !$this->me->isModerator());
+		$start = $this->getState ( 'list.start');
+		$limit = $this->getState ( 'list.limit');
+
+		$this->total = KunenaForumAnnouncementHelper::getCount(!$this->me->isModerator());
+
+		// If out of range, use last page
+		if ($limit && $this->total < $start)
+			$start = intval($this->total / $limit) * $limit;
+
+		$announces = KunenaForumAnnouncementHelper::getAnnouncements($start, $limit, !$this->me->isModerator());
+
+		if ($this->total < $start)
+			$this->setState('list.start', intval($this->total / $limit) * $limit);
+
+		return $announces;
 	}
 
 	public function getannouncementActions() {

@@ -903,6 +903,10 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		if (!$this->allow_polls) {
 			return JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED' );
 		}
+		// Check if user is guest
+		if ($user->userid == 0) {
+			return JText::_ ( 'COM_KUNENA_POLL_NOT_LOGGED' );
+		}
 	}
 
 	protected function authoriseUpload($user) {

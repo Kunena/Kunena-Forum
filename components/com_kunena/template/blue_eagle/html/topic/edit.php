@@ -14,7 +14,7 @@ JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 JHTML::_('behavior.keepalive');
 
-$this->document->addScriptDeclaration('config_attachment_limit = '.$this->config->attachment_limit );
+$this->document->addScriptDeclaration('config_attachment_limit = '.(int) $this->config->attachment_limit );
 
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');

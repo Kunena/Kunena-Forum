@@ -57,16 +57,23 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		}
 
 		$smiley_code = JRequest::getString ( 'smiley_code' );
-		$smiley_location = JRequest::getVar ( 'smiley_url' );
+		$smiley_location = JRequest::getString ( 'smiley_url' );
 		$smiley_emoticonbar = JRequest::getInt ( 'smiley_emoticonbar', 0 );
 		$smileyid = JRequest::getInt( 'smileyid', 0 );
 
 		if ( !$smileyid ) {
-			$db->setQuery ( "INSERT INTO #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar'" );
+			$db->setQuery ( "INSERT INTO #__kunena_smileys SET
+					code={$db->quote($smiley_code)},
+					location={$db->quote($smiley_location)},
+					emoticonbar={$db->quote($smiley_emoticonbar)}" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 		} else {
-			$db->setQuery ( "UPDATE #__kunena_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar' WHERE id = '$smileyid'" );
+			$db->setQuery ( "UPDATE #__kunena_smileys SET
+					code={$db->quote($smiley_code)},
+					location={$db->quote($smiley_location)},
+					emoticonbar={$db->quote($smiley_emoticonbar)}
+				WHERE id = '$smileyid'" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 		}
@@ -96,6 +103,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 	}
 
 	function delete() {
+		jimport('joomla.utilities.arrayhelper');
 		$db = JFactory::getDBO ();
 
 		if (!JRequest::checkToken()) {
@@ -105,6 +113,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		}
 
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		JArrayHelper::toInteger($cids);
 		$cids = implode ( ',', $cids );
 		if ($cids) {
 			$db->setQuery ( "DELETE FROM #__kunena_smileys WHERE id IN ($cids)" );

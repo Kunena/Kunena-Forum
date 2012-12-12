@@ -49,14 +49,13 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$newview = JRequest::getVar ( 'newview' );
-		$newrank = JRequest::getVar ( 'newrank' );
-		$signature = JRequest::getVar ( 'signature' );
-		$deleteSig = JRequest::getVar ( 'deleteSig' );
+		$newview = JRequest::getString ( 'newview' );
+		$newrank = JRequest::getString ( 'newrank' );
+		$signature = JRequest::getString ( 'signature', '', 'POST', JREQUEST_ALLOWRAW );
+		$deleteSig = JRequest::getInt ( 'deleteSig' );
 		$moderator = JRequest::getInt ( 'moderator' );
 		$uid = JRequest::getInt ( 'uid' );
-		$avatar = JRequest::getVar ( 'avatar' );
-		$deleteAvatar = JRequest::getVar ( 'deleteAvatar' );
+		$deleteAvatar = JRequest::getInt ( 'deleteAvatar' );
 		$neworder = JRequest::getInt ( 'neworder' );
 		$modCatids = $moderator ? JRequest::getVar ( 'catid', array () ) : array();
 
@@ -68,7 +67,13 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$avatar = ",avatar=''";
 		}
 
-		$db->setQuery ( "UPDATE #__kunena_users SET signature={$db->quote($signature)}, view='$newview', ordering='$neworder', rank='$newrank' $avatar WHERE userid='$uid'" );
+		$db->setQuery ( "UPDATE #__kunena_users SET
+				signature={$db->quote($signature)},
+				view={$db->quote($newview)},
+				ordering={$db->quote($neworder)},
+				rank={$db->quote($newrank)}
+				$avatar
+			WHERE userid={$db->quote($uid)}" );
 		$db->query ();
 		if (KunenaError::checkDatabaseError()) return;
 

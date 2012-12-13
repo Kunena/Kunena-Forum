@@ -3,7 +3,6 @@
 <extension type="module" version="2.5" client="site" method="upgrade">
 	<name>mod_kunenamenu</name>
 	<version>@kunenaversion@</version>
-	<versionname>@kunenaversionname@</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>

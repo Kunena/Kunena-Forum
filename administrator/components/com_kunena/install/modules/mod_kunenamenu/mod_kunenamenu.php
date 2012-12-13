@@ -11,8 +11,7 @@
 defined('_JEXEC') or die;
 
 // Kunena detection and version check
-$minKunenaVersion = '2.0';
-if (!class_exists('KunenaForum') || !KunenaForum::installed() || !KunenaForum::isCompatible($minKunenaVersion)) {
+if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.0') || !KunenaForum::installed()) {
 	return;
 }
 

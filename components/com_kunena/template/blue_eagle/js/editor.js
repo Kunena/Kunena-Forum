@@ -240,7 +240,7 @@ var kbbcode = new Class({
 				}.bind(this),
 
 				'blur': function(event) {
-					this.timer = $clear(this.timer);
+					this.timer = clearInterval(this.timer);
 				}.bind(this),
 				
 				// Fixing IE
@@ -270,7 +270,7 @@ var kbbcode = new Class({
 
 		}
 
-		if(! $defined(list) || list == "") {
+		if(list == null || list == "") {
 			list = new Element('li');
 			list.inject(this.el, 'before');
 			this.list = list;
@@ -316,9 +316,7 @@ var kbbcode = new Class({
 				Gets focus in IE7-10
 	*/
 	focus: function() {
-		// Mootools 1.3+
-		//if (Browser.ie) {
-		if (Browser.Engine.trident) {
+		if (Browser.ie) {
 			this.el.selectRange(this.selection.start, this.selection.end);
 		}
 		return this;
@@ -484,7 +482,7 @@ var kbbcode = new Class({
 		var itemlink = new Element('a', {
 			'events': {
 				'click': function(e){
-					new Event(e).stop();
+					e.stop();
 					callback.attempt(null, this);
 				}.bind(this)
 			},
@@ -493,9 +491,7 @@ var kbbcode = new Class({
 		itemlink.set('html', '<span>' + name + '</span>');
 		itemlink.setProperties(args || {});
 		itemlink.inject(item, 'bottom');
-		item.injectInside(this.list);
-	}
-
+		item.inject(this.list, 'inside');
 });
 
 //A few variable we use in some of the functions
@@ -694,7 +690,7 @@ function bindAttachments() {
 //
 function IEcompatibility() {
 	// Only do anything if this is IE
-	if(Browser.Engine.trident){
+	if(Browser.ie){
 		var __fix = $$("#kbbcode-size-options", "#kbbcode-size-options span", 
 						"#kbbcode-colortable", "#kbbcode-colortable td");
 		if (__fix) {
@@ -710,9 +706,9 @@ function IEcompatibility() {
 //
 
 //This selector can be re-used for the dropdwown list, to get the item selected easily
-Selectors.Pseudo.selected = function(){
+Slick.definePseudo(this, function(value){
 	return (this.selected && this.get('tag') == 'option');
-};
+})
 
 function kInsertVideo1() {
 	var videosize = document.id('kvideosize').get('value');

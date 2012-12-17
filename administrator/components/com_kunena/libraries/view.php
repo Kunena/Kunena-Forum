@@ -109,7 +109,7 @@ class KunenaView extends JViewLegacy {
 				return;
 			} elseif (!method_exists($this, $layoutFunction) && !file_exists(KPATH_SITE."/views/{$view}/{$layout}.php")) {
 				// Layout was not found (don't allow Joomla to raise an error)
-				echo $this->displayNoAccess(array(JText::_('COM_KUNENA_NO_ACCESS')));
+				echo $this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 'notfound');
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
 			}
@@ -252,15 +252,36 @@ class KunenaView extends JViewLegacy {
 		return KunenaFactory::getTemplate()->addScript ( $filename );
 	}
 
-	public function displayNoAccess($errors = array()) {
+	public function displayError($messages = array(), $error = 'compat') {
+		$title = JText::_('COM_KUNENA_ACCESS_DENIED');	// can be overriden
+
+		switch ($error) {
+			case 'notfound':
+				header("HTTP/1.0 404 Not Found");
+				break;
+			case 'noaccess':
+				header('HTTP/1.1 403 Forbidden');
+				break;
+			default:
+				// Compatability
+		}
+
 		$output = '';
-		foreach ($errors as $error) $output .= "<p>{$error}</p>";
-		$this->common->setLayout ( 'default' );
-		$this->common->header = JText::_('COM_KUNENA_ACCESS_DENIED');
+		foreach ($messages as $message) {
+			$output .= "<p>{$message}</p>";
+		}
+
+		$this->common->setLayout('default');
+		$this->common->header = $title;
 		$this->common->body = $output;
 		$this->common->html = true;
 		$this->common->display();
-		$this->setTitle(JText::_('COM_KUNENA_ACCESS_DENIED'));
+
+		$this->setTitle($title);
+	}
+
+	public function displayNoAccess($errors = array()) {
+		$this->displayError($errors);
 	}
 
 	public function displayMenu() {

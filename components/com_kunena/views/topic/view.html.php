@@ -58,7 +58,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		if (!KunenaForumMessageHelper::get($this->topic->first_post_id)->exists()) {
-			return $this->displayNoAccess(array(JText::_('COM_KUNENA_NO_ACCESS')));
+			return $this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 'notfound');
 		}
 
 		$errors = $this->getErrors();

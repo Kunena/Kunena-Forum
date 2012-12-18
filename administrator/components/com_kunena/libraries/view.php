@@ -111,7 +111,7 @@ class KunenaView extends JView {
 				return;
 			} elseif (!method_exists($this, $layoutFunction) && !file_exists(KPATH_SITE."/views/{$view}/{$layout}.php")) {
 				// Layout was not found (don't allow Joomla to raise an error)
-				echo $this->displayNoAccess(array(JText::_('COM_KUNENA_NO_ACCESS')));
+				echo $this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
 			}

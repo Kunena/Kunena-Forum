@@ -254,15 +254,36 @@ class KunenaView extends JView {
 		return KunenaFactory::getTemplate()->addScript ( $filename );
 	}
 
-	public function displayNoAccess($errors = array()) {
+	public function displayError($messages = array(), $code = 200) {
+		$title = JText::_('COM_KUNENA_ACCESS_DENIED');	// can be overriden
+
+		switch ((int) $code) {
+			case 404:
+				header("HTTP/1.0 404 Not Found");
+				break;
+			case 403:
+				header('HTTP/1.1 403 Forbidden');
+				break;
+			default:
+				// Compatability
+		}
+
 		$output = '';
-		foreach ($errors as $error) $output .= "<p>{$error}</p>";
-		$this->common->setLayout ( 'default' );
-		$this->common->header = JText::_('COM_KUNENA_ACCESS_DENIED');
+		foreach ($messages as $message) {
+			$output .= "<p>{$message}</p>";
+		}
+
+		$this->common->setLayout('default');
+		$this->common->header = $title;
 		$this->common->body = $output;
 		$this->common->html = true;
 		$this->common->display();
-		$this->setTitle(JText::_('COM_KUNENA_ACCESS_DENIED'));
+
+		$this->setTitle($title);
+	}
+
+	public function displayNoAccess($errors = array()) {
+		$this->displayError($errors);
 	}
 
 	public function displayMenu() {

@@ -52,7 +52,7 @@ class KunenaViewTopic extends KunenaView {
 			}
 			$message = KunenaForumMessageHelper::get($mesid);
 			// Redirect to correct location (no redirect in embedded mode).
-			if (empty($view->embedded) && $message->exists()) {
+			if (empty($this->embedded) && $message->exists()) {
 				while (@ob_end_clean());
 				$this->app->redirect($message->getUrl(null, false));
 			}
@@ -71,7 +71,7 @@ class KunenaViewTopic extends KunenaView {
 		$this->total	= $this->get ( 'Total' );
 
 		// If page does not exist, redirect to the last page (no redirect in embedded mode).
-		if (empty($view->embedded) && $this->total && $this->total <= $this->state->get('list.start')) {
+		if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start')) {
 			while (@ob_end_clean());
 			$this->app->redirect($this->topic->getUrl(null, false, (int)($this->total / $this->state->get('list.limit'))));
 		}

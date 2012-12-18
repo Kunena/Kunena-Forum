@@ -291,7 +291,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	public function getReplies($hold=null) {
-		return max($this->getTotal() - 1, 0);
+		return max($this->getTotal($hold) - 1, 0);
 	}
 
 	public function getUrl($category = null, $xhtml = true, $action = null) {

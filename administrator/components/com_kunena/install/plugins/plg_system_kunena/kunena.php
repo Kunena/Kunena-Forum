@@ -28,7 +28,7 @@ class plgSystemKunena extends JPlugin {
 		require_once $api;
 
 		// Do not load if Kunena version is not supported or Kunena is not installed
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::installed())) return false;
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed())) return;
 
 		$this->loadLanguage('plg_system_kunena.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_system_kunena.sys', KPATH_ADMIN);
 

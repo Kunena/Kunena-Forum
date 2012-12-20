@@ -16,7 +16,7 @@ jimport('joomla.filesystem.archive');
 /**
  * The Kunena Installer Controller
  *
- * @since		1.6
+ * @since		2.0
  */
 class KunenaControllerInstall extends JControllerLegacy {
 	public function remind() {

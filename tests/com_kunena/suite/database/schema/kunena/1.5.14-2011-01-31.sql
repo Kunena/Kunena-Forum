@@ -232,3 +232,12 @@ KEY `time` (`time`),
 KEY `locked` (`locked`),
 KEY `hold_time` (`hold`,`time`),
 KEY `parent_hits` (`parent`,`hits`) ) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `#__fb_version` (
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+	`version` VARCHAR(20) NOT NULL,
+	`versiondate` DATE NOT NULL,
+	`installdate` DATE NOT NULL,
+	`build` VARCHAR(20) NOT NULL,
+	`versionname` VARCHAR(40) NULL,
+	PRIMARY KEY(`id`) );

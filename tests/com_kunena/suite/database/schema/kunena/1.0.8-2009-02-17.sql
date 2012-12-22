@@ -230,4 +230,12 @@ INSERT INTO `#__fb_ranks` (`rank_id`, `rank_title`, `rank_min`, `rank_special`, 
 	(7, 'Administrator', 0, 1, 'rankadmin.gif'),
 	(8, 'Moderator', 0, 1, 'rankmod.gif'),
 	(9, 'Spammer', 0, 1, 'rankspammer.gif');
-	
+
+CREATE TABLE `#__fb_version` (
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+	`version` VARCHAR(20) NOT NULL,
+	`versiondate` DATE NOT NULL,
+	`installdate` DATE NOT NULL,
+	`build` VARCHAR(20) NOT NULL,
+	`versionname` VARCHAR(40) NULL,
+	PRIMARY KEY(`id`) );

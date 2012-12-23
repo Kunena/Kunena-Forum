@@ -92,7 +92,7 @@ abstract class KunenaHtmlParser {
 		$txt = self::prepareContent ( $txt );
 		$txt = strip_tags($txt);
 		if (!$html)
-			$bbcode->UnHTMLEncode($txt);
+			$txt = $bbcode->UnHTMLEncode($txt);
 
 		return $txt;
 	}

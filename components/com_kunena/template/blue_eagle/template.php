@@ -36,8 +36,8 @@ class KunenaTemplateBlue_Eagle extends KunenaTemplate {
 
 		// Toggler language strings
 		JFactory::getDocument()->addScriptDeclaration('// <![CDATA[
-var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
-var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
+var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE', true).'";
+var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND', true).'";
 // ]]>');
 
 	}

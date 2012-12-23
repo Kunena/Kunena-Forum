@@ -33,6 +33,5 @@ class KunenaControllerMisc extends KunenaController {
 			setcookie ( 'kunena_template', null, time () - 3600, JURI::root(true).'/' );
 		}
 		$this->setRedirect ( KunenaRoute::_('index.php?option=com_kunena', false) );
-		break;
 	}
 }

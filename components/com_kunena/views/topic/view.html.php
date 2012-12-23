@@ -51,14 +51,15 @@ class KunenaViewTopic extends KunenaView {
 				$mesid = $this->topic->first_post_id;
 			}
 			$message = KunenaForumMessageHelper::get($mesid);
-			if ($message->exists()) {
+			// Redirect to correct location (no redirect in embedded mode).
+			if (empty($this->embedded) && $message->exists()) {
 				while (@ob_end_clean());
 				$this->app->redirect($message->getUrl(null, false));
 			}
 		}
 
 		if (!KunenaForumMessageHelper::get($this->topic->first_post_id)->exists()) {
-			return $this->displayNoAccess(array(JText::_('COM_KUNENA_NO_ACCESS')));
+			return $this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
 		}
 
 		$errors = $this->getErrors();
@@ -69,8 +70,8 @@ class KunenaViewTopic extends KunenaView {
 		$this->messages	= $this->get ( 'Messages' );
 		$this->total	= $this->get ( 'Total' );
 
-		// If page does not exist, redirect to the last page
-		if ($this->total && $this->total <= $this->state->get('list.start')) {
+		// If page does not exist, redirect to the last page (no redirect in embedded mode).
+		if (empty($this->embedded) && $this->total && $this->total <= $this->state->get('list.start')) {
 			while (@ob_end_clean());
 			$this->app->redirect($this->topic->getUrl(null, false, (int)($this->total / $this->state->get('list.limit'))));
 		}
@@ -360,8 +361,13 @@ class KunenaViewTopic extends KunenaView {
 		$this->category = $this->get ( 'Category' );
 		$this->topic = $this->get ( 'Topic' );
 
-		if (!$this->config->pollenabled || !$this->topic->poll_id || !$this->category->allow_polls) {
-			return false;
+		if (!$this->topic->authorise('poll.vote')) {
+			$this->setError($this->topic->getError());
+		}
+
+		$errors = $this->getErrors();
+		if ($errors) {
+			return $this->displayNoAccess($errors);
 		}
 
 		$this->poll = $this->get('Poll');
@@ -490,7 +496,7 @@ class KunenaViewTopic extends KunenaView {
 			}
 		}
 
-		if ($this->voted) echo $this->loadTemplateFile("pollresults");
+		if ($this->voted || !$this->topic->authorise('poll.vote', null, true)) echo $this->loadTemplateFile("pollresults");
 		else echo $this->loadTemplateFile("poll");
 	}
 

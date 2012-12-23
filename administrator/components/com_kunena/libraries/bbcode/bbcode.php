@@ -1061,7 +1061,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			};
 			$mapid = new google.maps.Map(document.id('".$mapid."'), myOptions);
 
-			var address = '$content';
+			var address = ".json_encode($content).";
 			if (geocoder) {
 				geocoder.geocode( { 'address': address}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
@@ -1071,7 +1071,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				 		map: $mapid
 					});
 				} else {
-					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$content</i></strong></p>';
+					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>".json_encode($content)."</i></strong></p>';
 					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
 						infowindow$mapid.open($mapid);
 				}
@@ -1111,6 +1111,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 	function DoArticle($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK)
 			return true;
+
+		$lang = JFactory::getLanguage();
+		$lang->load('com_content');
 
 		$articleid = intval($content);
 
@@ -1171,21 +1174,23 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$html = $link = '';
 		if (!$article || (!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
 			$html = JText::_ ( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_UNPUBLISHED' );
-		} elseif (!empty($denied)) {
+		} elseif (!empty($denied) && !$params->get('show_noauth')) {
 			$html = JText::_( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS' );
 		} else {
 			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
+			$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
+			$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
 			if (version_compare(JVERSION, '1.6','>')) {
 				// Joomla 1.6+
-				$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
-				$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
 				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
 			} else {
 				// Joomla 1.5
-				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
+				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug, $article->sectionid));
 			}
 
 			if (!$default) $default = $config->article_display;
+			// Do not display full text if there's no permissions to display the full article.
+			if (!empty($denied) && $default == 'full') $default = 'intro';
 			switch ($default) {
 				case 'full':
 					if ( !empty($article->fulltext) ) {
@@ -1224,6 +1229,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				}
 				$html = $article->text;
 			}
+			if (!empty($denied)) {
+				$link = '<span class="readon">'.(version_compare(JVERSION, '1.6','>') ? JText::_('COM_CONTENT_REGISTER_TO_READ_MORE') : JText::_('Register to read more...')) .'</span>';
+			}
 		}
 		return ($html ? '<div class="kmsgtext-article">' . $html . '</div>' : '') . $link;
 	}
@@ -1233,7 +1241,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 
 		$post = isset($params["post"]) ? $params["post"] : false;
-		$user = isset($default) ? htmlentities($default) : false;
+		$user = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 		$html = '';
 		if ($user) $html .= "<b>" . $user . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":</b>\n";
 		$html .= '<div class="kmsgtext-quote">' . $content . '</div>';

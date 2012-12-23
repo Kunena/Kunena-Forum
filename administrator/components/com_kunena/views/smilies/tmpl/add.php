@@ -13,11 +13,10 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
-$document->addScriptDeclaration('function update_smiley(newimage)
-			{
-				document.smiley_image.src = "'.
-				$this->escape(JURI::root(true) . '/media/kunena/emoticons/').'" + newimage;
-			}');
+$iconPath = json_encode(JURI::root(true) . '/media/kunena/emoticons/');
+$document->addScriptDeclaration("function update_smiley(newimage) {
+	document.smiley_image.src = {$iconPath} + newimage;
+}");
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>

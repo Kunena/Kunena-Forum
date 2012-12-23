@@ -19,8 +19,9 @@ if (version_compare(JVERSION, '1.6','>')) {
 	JHtml::_('behavior.mootools');
 }
 $this->document = JFactory::getDocument();
-$this->document->addScriptDeclaration(" // <![CDATA[
-window.addEvent('domready', function() {window.location='".JRoute::_($this->getUrl(), false)."';});
+$locationUrl = json_encode(JRoute::_($this->getUrl(), false));
+$this->document->addScriptDeclaration("// <![CDATA[
+window.addEvent('domready', function() {window.location={$locationUrl};});
 // ]]>");
 
 JToolBarHelper::title('<span>Kunena '.'@kunenaversion@'.'</span> '. JText::_( 'COM_KUNENA_INSTALLER' ), 'kunena.png' );

@@ -20,8 +20,10 @@ if ($this->go == 'next') {
 		JHtml::_('behavior.mootools');
 	}
 	$this->document = JFactory::getDocument();
-	$this->document->addScriptDeclaration(" // <![CDATA[
-window.addEvent('domready', function() {window.location='".JRoute::_("index.php?option=com_kunena&view=install&task=run&n={$this->cnt}&".JUtility::getToken() .'=1', false)."';});
+
+	$locationUrl = json_encode(JRoute::_("index.php?option=com_kunena&view=install&task=run&n={$this->cnt}&".JUtility::getToken() .'=1', false));
+	$this->document->addScriptDeclaration("// <![CDATA[
+window.addEvent('domready', function() {window.location={$locationUrl};});
 // ]]>");
 }
 ?>

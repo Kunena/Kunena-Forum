@@ -69,7 +69,7 @@ class KunenaViewCommon extends KunenaView {
 			} else {
 				echo ' ';
 			}
-			$cache->set($this->announcement->id, 'announcement', 'global');
+			$cache->store($this->announcement->id, 'announcement', 'global');
 			$cache->end();
 		} else echo ' ';
 	}

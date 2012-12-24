@@ -1112,6 +1112,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		$lang = JFactory::getLanguage();
+		$lang->load('com_content');
+
 		$articleid = intval($content);
 
 		$config = KunenaFactory::getConfig();
@@ -1171,21 +1174,23 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$html = $link = '';
 		if (!$article || (!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
 			$html = JText::_ ( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_UNPUBLISHED' );
-		} elseif (!empty($denied)) {
+		} elseif (!empty($denied) && !$params->get('show_noauth')) {
 			$html = JText::_( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS' );
 		} else {
 			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
+			$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
+			$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
 			if (version_compare(JVERSION, '1.6','>')) {
 				// Joomla 1.6+
-				$article->slug = !empty($article->alias) ? ($article->id.':'.$article->alias) : $article->id;
-				$article->catslug = !empty($article->category_alias) ? ($article->catid.':'.$article->category_alias) : $article->catid;
 				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
 			} else {
 				// Joomla 1.5
-				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
+				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug, $article->sectionid));
 			}
 
 			if (!$default) $default = $config->article_display;
+			// Do not display full text if there's no permissions to display the full article.
+			if (!empty($denied) && $default == 'full') $default = 'intro';
 			switch ($default) {
 				case 'full':
 					if ( !empty($article->fulltext) ) {
@@ -1223,6 +1228,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 					$results = $dispatcher->trigger('onPrepareContent', array (&$article, &$params, 0));
 				}
 				$html = $article->text;
+			}
+			if (!empty($denied)) {
+				$link = '<span class="readon">'.(version_compare(JVERSION, '1.6','>') ? JText::_('COM_CONTENT_REGISTER_TO_READ_MORE') : JText::_('Register to read more...')) .'</span>';
 			}
 		}
 		return ($html ? '<div class="kmsgtext-article">' . $html . '</div>' : '') . $link;

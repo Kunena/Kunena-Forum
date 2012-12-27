@@ -11,18 +11,31 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 $document->addScriptDeclaration('function update_rank(newimage)
 			{
 				document.rank_image.src = "'.
 				$this->escape(JUri::root() . $this->rankpath).'" + newimage;
 			}');
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('dropdown.init');
+JHtml::_('formbehavior.chosen', 'select');
+
+$changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->state->get('list.direction') == 'asc');
+
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
-	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-ranks"><?php if ( !$this->state->get('item.id') ): ?><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?><?php else: ?><?php echo JText::_('COM_KUNENA_RANKS_EDIT'); ?><?php endif; ?></div>
+<!-- Main page container -->
+<div class="container-fluid">
+<div class="row-fluid">
+ <div class="span2">
+	<div><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+		</div>
+		<!-- Right side -->
+			<div class="span10">	
+             <div class="well well-small" style="min-height:120px;">
+                       <div class="nav-header"><?php if ( !$this->state->get('item.id') ): ?><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?><?php else: ?><?php echo JText::_('COM_KUNENA_RANKS_EDIT'); ?><?php endif; ?></div>
+                         <div class="row-striped">
+                         <br />
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="ranks" />
 			<input type="hidden" name="task" value="save" />
@@ -66,6 +79,7 @@ $document->addScriptDeclaration('function update_rank(newimage)
 			</table>
 		</form>
 	</div>
+    </div>
 	<div class="kadmin-footer">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>

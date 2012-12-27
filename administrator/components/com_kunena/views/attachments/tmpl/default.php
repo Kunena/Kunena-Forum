@@ -9,15 +9,22 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-$document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('dropdown.init');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
-	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-files"><?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW'); ?></div>
+<div class="container-fluid">
+<div class="row-fluid">
+ <div class="span2">
+ <div><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+	</div>
+		<!-- Right side -->
+			<div class="span10">	
+            <div class="well well-small" style="min-height:120px;">
+                       <div class="nav-header">attachments</div>
+                         <div class="row-striped">
+                         <br />
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="attachments" />
 			<input type="hidden" name="task" value="" />
@@ -26,7 +33,34 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 			<input type="hidden" name="boxchecked" value="0" />
 			<?php echo JHtml::_( 'form.token' ); ?>
-
+<div class="filter-search btn-group pull-left">
+				<label for="filter_search" class="element-invisible"><?php echo 'Search in';?></label>
+				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo 'Search File'; ?>" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo 'Search File'; ?>" />
+			</div>
+			<div class="btn-group pull-left">
+				<button class="btn" rel="tooltip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
+				<button class="btn" rel="tooltip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
+			</div>
+			<div class="btn-group pull-right hidden-phone">
+				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+				<?php echo  $this->navigation->getLimitBox (); ?>
+			</div>
+			<div class="btn-group pull-right hidden-phone">
+				<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
+				<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+					<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
+					<option value="asc" <?php if ($listDirn == 'asc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_ASCENDING');?></option>
+					<option value="desc" <?php if ($listDirn == 'desc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_DESCENDING');?></option>
+				</select>
+			</div>
+			<div class="btn-group pull-right">
+				<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+				<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+					<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+					<?php echo  $this->navigation->getLimitBox (); ?>
+				</select>
+			</div>
+		<div class="clr">&nbsp;</div>
 			<table class="kadmin-sort">
 			<tr>
 						<!--<td class="left" width="90%">
@@ -55,9 +89,8 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					<tr>
 						<td colspan="14">
 							<div class="pagination">
-								<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->navigation->getLimitBox (); ?></div>
+								
 								<?php echo $this->navigation->getPagesLinks (); ?>
-								<div class="limit"><?php echo $this->navigation->getResultsCounter (); ?></div>
 							</div>
 						</td>
 					</tr>
@@ -92,8 +125,9 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 
 		</form>
 	</div>
+    </div>
 	<div class="kadmin-footer">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>
 </div>
-
+</div>

@@ -9,85 +9,128 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-$document = JFactory::getDocument();
-$document->addStyleSheet( JUri::base(true).'/components/com_kunena/media/css/cpanel.css' );
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
-	<div class="kadmin-right">
-<div class="kadmin-welcome">
-	<h3><?php echo JText::_('COM_KUNENA_WELCOME');?></h3>
-	<p><?php echo JText::_('COM_KUNENA_WELCOME_DESC');?></p>
-</div>
-<div style="border:1px solid #ddd; background:#FBFBFB;">
-	<table class="thisform">
-		<tr class="thisform">
-			<td width="100%" valign="top" class="thisform">
-				<div id="cpanel">
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=config') ?>" title="<?php echo JText::_('COM_KUNENA_C_KCONFIGDESC');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/config.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_KCONFIG'); ?> </span></a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>" title="<?php echo JText::_('COM_KUNENA_C_FORUMDESC');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/categories.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_FORUM'); ?> </span></a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" title="<?php echo JText::_('COM_KUNENA_C_USERDESC');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/users.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_USER'); ?> </span> </a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" title="<?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/templates.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> </span></a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=smilies') ?>" title="<?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/smileys.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER');?> </span></a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=ranks') ?>" title="<?php echo JText::_('COM_KUNENA_A_RANK_MANAGER');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/ranks.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_A_RANK_MANAGER'); ?> </span></a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=attachments') ?>" title="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/files.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_ATTACHMENTS_VIEW'); ?> </span></a> </div>
-					</div>
-					<!-- div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=topicicons') ?>" title="<?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/topicicons.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER'); ?> </span></a> </div>
-					</div -->
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trash') ?>" title="<?php echo JText::_('COM_KUNENA_TRASH_VIEW');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/trash.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?> </span></a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=tools') ?>" title="<?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/prune.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_A_VIEW_TOOLS'); ?> </span></a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=stats') ?>" title="<?php echo JText::_('COM_KUNENA_STATS_GEN_STATS');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/stats.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?> </span></a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=report') ?>" title="<?php echo JText::_('COM_KUNENA_REPORT_SYSTEM');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/report.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?> </span></a> </div>
-					</div>
-					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo JRoute::_('index.php?option=com_plugins&view=plugins&filter_folder=kunena') ?>" title="<?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/pluginsmanager.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_PLUGINS_MANAGER'); ?> </span></a> </div>
-					</div>
-					<?php if ( $this->config->version_check && JFactory::getUser()->authorise('core.manage', 'com_installer')) : ?>
-					<div class="icon-container">
-					<?php
-					// FIXME: add LiveUpdate back
-					/*
-						require_once KPATH_ADMIN.'/liveupdate/liveupdate.php';
-						echo LiveUpdate::getIcon();
-					*/
-					?>
-					</div>
-					<?php endif ?>
-					<div class="icon-container">
-						<div class="icon"> <a href="http://www.kunena.org" target="_blank" title="<?php echo JText::_('COM_KUNENA_C_SUPPORTDESC');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/support.png" align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?> </span></a> </div>
-					</div>
-				</div>
-			</td>
-		</tr>
-	</table>
-	</div>
-	</div>
 
-	<div class="kadmin-footer">
-		<?php echo KunenaVersion::getLongVersionHTML (); ?>
-	</div>
-</div>
+<!-- Main page container -->
+<div class="container-fluid">
+<div class="row-fluid">
+ <div class="span2">
+	<div><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+		<!-- Right side -->
+         </div>
+		<!-- Right side -->
+			<div class="span10">
+			<section class="content-block" role="main">				
+						<div class="alert alert-info">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<strong>Welcome on the New Kunena Environment!!!</strong> Its all about Bootstrap.
+						</div>
+				<div class="row-fluid">					
+					<div class="span7">
+					<div class="well well-small" style="min-height:140px;">
+                       <div class="nav-header"><?php echo 'FAQs'; ?></div>
+		<div class="row-striped">
+           <div class="pull-left"><div><img src="components/com_kunena/media/icons/kunena_logo.png" alt=""  /></div></div>
+           <div class="pull-left">
+			<ul>
+            <li> <a href="http://docs.kunena.org/index.php/K_2.0_Installation_Guide" target="_blank">Faq: How to Setup </a></li>
+            <li> <a href="http://www.kunena.org/forum/K-2-0-Support/125990-kunena-2-0-3-known-issues" target="_blank">Faq: What are the knowing errors </a></li>
+            <li> <a href="http://www.kunena.org/forum" target="_blank">Faq: Free or Paid Support </a></li>
+            </ul>
+		    </div>
+                    </div>
+                    </div>
+                    
+                    <div class="well well-small" style="min-height:120px;">
+                       <div class="nav-header">Dashboard</div>
+                         <div class="row-striped">
+                         <br />
+                  <div class="btn-group">
+                <div class="btn" style="float:left;background-color: white !important;background-image:none;">
+			         <div class="icon" style="text-align:center;">
+                     <a href="index.php?option=com_admintools&view=seoandlink">
+					<img
+					src="components/com_kunena/media/icons/large/templates.png"
+					border="0" alt="Plugin Manager" /><br/>
+                    <span>
+						Plugin Manager
+					</span></a>
+					 </div>
+                     </div>
+                     <div class="btn" style="float:left;background-color: white !important;background-image:none;">
+			         <div class="icon" style="text-align:center;">
+				<a href="index.php?option=com_kunena&view=templates">
+					<img src="components/com_kunena/media/icons/large/templates.png" alt="Templates" /><br/>			                    
+                    <span>
+						Templates
+					</span>
+				</a>
+			</div>
+            </div>
+            <div class="btn" style="float:left;background-color: white !important;background-image:none;">
+			         <div class="icon" style="text-align:center;">
+                     <a href="index.php?option=com_plugins&view=plugins&filter_folder=kunena">
+					<img
+					src="components/com_kunena/media/icons/large/pluginsmanager.png"
+					border="0" alt="Plugin Manager" /><br/>
+					<span>
+						Plugin Manager
+					</span></a>
+					 </div>
+                     </div>
+                     <div class="btn" style="float:left;background-color: white !important;background-image:none;">
+			         <div class="icon" style="text-align:center;">
+				<a href="index.php?option=com_kunena&view=tools">
+					<img src="components/com_kunena/media/icons/large/purgerestatements.png" alt="Installer" /><br/>
+                    <span>
+						Tools
+					</span></a>
+			</div>
+            	</div>
+            </div>
+            </div>
+			 </div>	
+             </div>					
+					<div class="span5">
+							
+							<div class="well well-small">
+                            <div class="module-title nav-header">Kunena v3</div>
+                            <div>
+                            <table class="table table-striped" border="0" cellpadding="0" cellspacing="0" style="margin-bottom:0px;">
+			<tr>
+				<td>Version:</td>
+				<td style="color:green">3.0.0</td>
+			</tr>
+			<tr>
+				<td>Name:</td>
+				<td><?php echo KunenaForum::versionName(); ?></td>
+			</tr>
+			<tr>
+				<td>Author:</td>
+				<td><a href="http://www.kunena.org" target="_blank">Kunena Team</a></td>
+			</tr>
+			<tr>
+				<td>Copyright:</td>
+				<td>&copy; Kunena, All rights reserved.</td>
+			</tr>
+			<tr>
+				<td>License:</td>
+				<td>GNU General Public License</td>
+			</tr>
+			<tr>
+				<td>More info:</td>
+				<td><a href="http://www.kunena.org/terms-of-use" target="_blank">http://www.kunena.org/terms-of-use</a></td>
+			</tr>
+		</table>
+        </div>
+        </div>
+        	</div>
+
+					</div>
+				</div>				
+			</section>
+			<div class="kadmin-footer center">
+	         <?php echo KunenaVersion::getLongVersionHTML (); ?>
+	        </div>
+		</div>
+		<!-- /Main page container -->

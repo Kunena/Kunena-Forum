@@ -10,19 +10,22 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
-$document->addScriptDeclaration("	window.addEvent('domready', function(){
-	$('link_sel_all').addEvent('click', function(e){
-		$('report_final').select();
-	});
-});");
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('dropdown.init');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
-	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-systemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
+<div class="container-fluid">
+<div class="row-fluid">
+ <div class="span2">
+	<div><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+	</div>
+		<!-- Right side -->
+			<div class="span10">
+            <div class="well well-small" style="min-height:120px;">
+                       <div class="nav-header"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
+                         <div class="row-striped">
+                         <br />	
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="1" />
@@ -34,7 +37,10 @@ $document->addScriptDeclaration("	window.addEvent('domready', function(){
 		</fieldset>
 		</form>
 		</div>
+        </div>
 	<div class="kadmin-footer">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>
+</div>
+</div>
 </div>

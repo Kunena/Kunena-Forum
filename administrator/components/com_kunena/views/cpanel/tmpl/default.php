@@ -30,6 +30,7 @@ defined ( '_JEXEC' ) or die ();
 					<div class="well well-small" style="min-height:140px;">
                        <div class="nav-header"><?php echo 'FAQs'; ?></div>
 		<div class="row-striped">
+		<div class="clr">&nbsp;</div>
            <div class="pull-left"><div><img src="components/com_kunena/media/icons/kunena_logo.png" alt=""  /></div></div>
            <div class="pull-left">
 			<ul>

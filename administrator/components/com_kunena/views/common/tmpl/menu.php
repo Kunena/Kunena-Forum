@@ -30,6 +30,7 @@ $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/st
 						<li><a href="<?php JUri::base(true)?>index.php?option=com_kunena&view=categories"><i class="icon-list-view"></i>Categories</a></li>		
                        <!-- <li><a href="<?php JUri::base(true)?>index.php?option=com_kunena&view=messages"><i class="icon-list-view"></i>Messages</a></li>		-->
                         <li><a href="<?php JUri::base(true)?>index.php?option=com_kunena&view=users"><i class="icon-user"></i>Users</a></li>
+                        <li><a href="<?php JUri::base(true)?>index.php?option=com_kunena&view=trash"><i class="icon-trash"></i>Trash</a></li>
 						<li><a href="<?php JUri::base(true)?>index.php?option=com_kunena&view=attachments"><i class="icon-folder-open"></i>File explorer</a></li>
 						<li><a href="<?php JUri::base(true)?>index.php?option=com_kunena&view=smilies"><i class="icon-basket"></i>Smilies</a></li>
                         <li><a href="<?php JUri::base(true)?>index.php?option=com_kunena&view=ranks"><i class="icon-basket"></i>Ranks</a></li>

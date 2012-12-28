@@ -48,12 +48,12 @@ defined ( '_JEXEC' ) or die ();
                   <div class="btn-group">
                 <div class="btn" style="float:left;background-color: white !important;background-image:none;">
 			         <div class="icon" style="text-align:center;">
-                     <a href="index.php?option=com_admintools&view=seoandlink">
+                     <a href="index.php?option=com_kunena&view=categories">
 					<img
-					src="components/com_kunena/media/icons/large/templates.png"
-					border="0" alt="Plugin Manager" /><br/>
+					src="components/com_kunena/media/icons/large/categories.png"
+					border="0" alt="Categories" /><br/>
                     <span>
-						Plugin Manager
+						Categories
 					</span></a>
 					 </div>
                      </div>
@@ -99,7 +99,7 @@ defined ( '_JEXEC' ) or die ();
                             <table class="table table-striped" border="0" cellpadding="0" cellspacing="0" style="margin-bottom:0px;">
 			<tr>
 				<td>Version:</td>
-				<td style="color:green">3.0.0</td>
+				<td style="color:green"><?php echo KunenaForum::version(); ?></td>
 			</tr>
 			<tr>
 				<td>Name:</td>
@@ -107,11 +107,11 @@ defined ( '_JEXEC' ) or die ();
 			</tr>
 			<tr>
 				<td>Author:</td>
-				<td><a href="http://www.kunena.org" target="_blank">Kunena Team</a></td>
+				<td><a href="http://www.kunena.org/team" target="_blank">Kunena Team</a></td>
 			</tr>
 			<tr>
 				<td>Copyright:</td>
-				<td>&copy; Kunena, All rights reserved.</td>
+				<td>&copy; 2008 - 2012 Kunena, All rights reserved.</td>
 			</tr>
 			<tr>
 				<td>License:</td>
@@ -129,7 +129,7 @@ defined ( '_JEXEC' ) or die ();
 					</div>
 				</div>				
 			</section>
-			<div class="kadmin-footer center">
+			<div class="center">
 	         <?php echo KunenaVersion::getLongVersionHTML (); ?>
 	        </div>
 		</div>

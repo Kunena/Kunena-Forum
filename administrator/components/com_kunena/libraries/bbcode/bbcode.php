@@ -122,11 +122,11 @@ class KunenaBbcode extends NBBC_BBCode {
 				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*ViewItem.+Item=([0-9]+).*#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $text );
 				*/
 			}
-			if (isset($path[1]) && $path[1] == 'sch') {
-				// convert ebay search to embedded widget
-				parse_str($params['query'], $query);
 
-				if (empty($query['_nkw'])) break;
+			parse_str($params['query'], $query);
+
+			if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw'])) {
+				// convert ebay search to embedded widget
 				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query='
 					. urlencode($query['_nkw']) .'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
 					. $config->ebaylanguagecode . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid=5336042350"></embed></object>';

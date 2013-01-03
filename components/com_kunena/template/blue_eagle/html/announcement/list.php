@@ -9,6 +9,13 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$this->document->addScriptDeclaration("Joomla.submitbutton = function(task) {
+	form = document.getElementById('adminForm');
+	form.task.value = task;
+	form.submit();
+};");
+
 ?>
 <div class="kblock">
 	<div class="kheader">

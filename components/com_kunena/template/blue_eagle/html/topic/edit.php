@@ -170,7 +170,6 @@ $this->k=0;
 				<strong><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></strong>
 			</td>
 			<td class="kcol-mid">
-				<input type="checkbox" name="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1) echo 'checked="checked"' ?> />
 				<input type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1) echo 'checked="checked"' ?> />
 				<label for="subscribeMe"><i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i></label>
 			</td>

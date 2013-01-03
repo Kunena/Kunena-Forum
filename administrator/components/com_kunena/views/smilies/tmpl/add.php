@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
-$iconPath = json_encode(JURI::root(true) . '/media/kunena/emoticons/');
+$iconPath = json_encode(JURI::root(true) . '/');
 $document->addScriptDeclaration("function update_smiley(newimage) {
 	document.smiley_image.src = {$iconPath} + newimage;
 }");
@@ -37,7 +37,7 @@ $document->addScriptDeclaration("function update_smiley(newimage) {
 					<td width="200"><input class="post" type="text" name="smiley_code"
 						value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>" /></td>
 					<td rowspan="3" width="50"><img name="smiley_image"
-						src="<?php echo isset($this->smiley_selected) ? $this->escape(JURI::root().$this->ktemplate->getSmileyPath($this->smiley_selected->location)) : '' ?>" border="0" alt="" /> &nbsp;</td>
+						src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>" border="0" alt="" /> &nbsp;</td>
 					<td rowspan="3">&nbsp;</td>
 				</tr>
 				<tr align="center">

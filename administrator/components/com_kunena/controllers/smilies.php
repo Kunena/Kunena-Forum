@@ -57,7 +57,7 @@ class KunenaAdminControllerSmilies extends KunenaController {
 		}
 
 		$smiley_code = JRequest::getString ( 'smiley_code' );
-		$smiley_location = JRequest::getString ( 'smiley_url' );
+		$smiley_location = basename(JRequest::getString ( 'smiley_url' ));
 		$smiley_emoticonbar = JRequest::getInt ( 'smiley_emoticonbar', 0 );
 		$smileyid = JRequest::getInt( 'smileyid', 0 );
 
@@ -91,9 +91,8 @@ class KunenaAdminControllerSmilies extends KunenaController {
 
 		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
 		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
-		$view 			= JRequest::getVar( 'view', '' );
 
-		$upload = KunenaUploadHelper::upload($file, 'emoticons', $format, $view);
+		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT.'/'.KunenaFactory::getTemplate()->getSmileyPath(), $format);
 		if ( $upload ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS') );
 		} else {

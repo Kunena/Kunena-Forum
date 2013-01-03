@@ -107,8 +107,7 @@ Element.implement({
 
 	insertAroundCursor: function(options, select) {
 		// Mootools 1.3+
-		//options = Object.append({
-		options = $extend({
+		options = Object.append({
 			before: '',
 			defaultMiddle: '',
 			after: ''
@@ -256,7 +255,7 @@ var kbbcode = new Class({
 					this.selection = this.el.getSelectedRange();
 				}.bind(this)
 				// End fixing IE
-});
+			});
 		}
 		if(this.options.interceptTabs) {
 
@@ -492,6 +491,7 @@ var kbbcode = new Class({
 		itemlink.setProperties(args || {});
 		itemlink.inject(item, 'bottom');
 		item.inject(this.list, 'inside');
+	}
 });
 
 //A few variable we use in some of the functions

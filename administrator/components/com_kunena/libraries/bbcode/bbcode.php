@@ -833,6 +833,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$this->default_smileys [$smiley->code] = $template->getSmileyPath($smiley->location);
 			}
 		}
+		// Translate plain text "Quote:"
+		$this->default_tag_rules['quote']['plain_start'] = "\n".JText::_('COM_KUNENA_LIB_BBCODE_QUOTE_TITLE')."\n";
 	}
 
 	function DoEmail($bbcode, $action, $name, $default, $params, $content) {

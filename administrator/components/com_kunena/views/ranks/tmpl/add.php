@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.rtl.css' );
-$iconPath = json_encode(JURI::root() . $this->rankpath);
+$iconPath = json_encode(JURI::root(true).'/');
 $document->addScriptDeclaration("function update_rank(newimage) {
 	document.rank_image.src = {$iconPath} + newimage;
 }");
@@ -44,7 +44,7 @@ $document->addScriptDeclaration("function update_rank(newimage) {
 					?></td>
 					<td><?php echo $this->listranks?> &nbsp;
 					<?php if ( !$this->state->get('item.id') ): ?><img name="rank_image" src="" border="0" alt="" />
-					<?php else: ?><img name="rank_image" src="<?php echo $this->escape(JURI::root().$this->ktemplate->getRankPath( $this->rank_selected->rank_image)); ?>" border="0" alt="" /><?php endif; ?>
+					<?php else: ?><img name="rank_image" src="<?php echo $this->escape($this->ktemplate->getRankPath( $this->rank_selected->rank_image, true)); ?>" border="0" alt="" /><?php endif; ?>
 					</td>
 				</tr>
 				<tr>

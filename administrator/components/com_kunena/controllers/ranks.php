@@ -58,7 +58,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 		}
 
 		$rank_title = JRequest::getString ( 'rank_title' );
-		$rank_image = JRequest::getString ( 'rank_image' );
+		$rank_image = basename(JRequest::getString ( 'rank_image' ));
 		$rank_special = JRequest::getInt ( 'rank_special' );
 		$rank_min = JRequest::getInt ( 'rank_min' );
 		$rankid = JRequest::getInt( 'rankid', 0 );
@@ -95,9 +95,8 @@ class KunenaAdminControllerRanks extends KunenaController {
 
 		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
 		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
-		$view			= JRequest::getVar( 'view', '');
 
-		$upload = KunenaUploadHelper::upload($file, 'ranks', $format, $view);
+		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT.'/'.KunenaFactory::getTemplate()->getRankPath(), $format);
 		if ( $upload ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_RANKS_UPLOAD_SUCCESS') );
 		} else {

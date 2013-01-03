@@ -115,6 +115,7 @@
 #Kunena .kfile-input {
 	display: block;
 	overflow: hidden;
+	visibility: visible;
 }
 
 #Kunena #jumpto .inputbox {

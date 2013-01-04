@@ -176,7 +176,8 @@ class CKunenaUpload {
 		}
 		CKunenaFolder::createIndex($uploadPath);
 
-		$this->fileName = JRequest::getVar ( $input.'_name', '' );
+		// Get file name and validate with path type
+		$this->fileName = JRequest::getVar ( $input.'_name', '', 'post', 'path' );
 		$this->fileSize = 0;
 		$chunk = JRequest::getInt ( 'chunk', 0 );
 		$chunks = JRequest::getInt ( 'chunks', 0 );
@@ -194,7 +195,8 @@ class CKunenaUpload {
 			$this->fileTemp = $file ['tmp_name'];
 			$this->fileSize = $file ['size'];
 			if (! $this->fileName) {
-				$this->fileName = $file ['name'];
+				// Need to add additonal path type check as array getVar does not
+				$this->fileName = JFilterInput::clean($file ['name'], 'path');
 			}
 			//any errors the server registered on uploading
 			switch ($file ['error']) {

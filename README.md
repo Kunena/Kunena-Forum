@@ -1,6 +1,5 @@
 
-[![Kunena](http://www.kunena.org/images/kunena.png)](http://www.kunena.org)
-
+[![Kunena](http://www.kunena.org/images/logo.png)](http://www.kunena.org)
 
 
 ## ABOUT

@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <?php
 $this->document->addScriptDeclaration('// <![CDATA[
-var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
+var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS', true).'";
 // ]]>');
 ?>
 

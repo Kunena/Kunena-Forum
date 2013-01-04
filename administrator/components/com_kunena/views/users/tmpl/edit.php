@@ -15,7 +15,7 @@ $document = JFactory::getDocument();
 $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 $document->addScriptDeclaration(' var current_count = '.JString::strlen($this->user->signature).'
-var max_count = '.$this->config->maxsig.'
+var max_count = '.(int) $this->config->maxsig.'
 
 function textCounter(field, target) {
 	if (field.value.length > max_count) {

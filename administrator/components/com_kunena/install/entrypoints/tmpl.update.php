@@ -14,8 +14,9 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/instal
 JHtml::_('behavior.framework', true);
 
 $this->document = JFactory::getDocument();
-$this->document->addScriptDeclaration(" // <![CDATA[
-window.addEvent('domready', function() {window.location='".JRoute::_($this->getUrl(), false)."';});
+$locationUrl = json_encode(JRoute::_($this->getUrl(), false));
+$this->document->addScriptDeclaration("// <![CDATA[
+window.addEvent('domready', function() {window.location={$locationUrl};});
 // ]]>");
 
 JToolBarHelper::title('<span>Kunena '.'@kunenaversion@'.'</span> '. JText::_( 'COM_KUNENA_INSTALLER' ), 'kunena.png' );

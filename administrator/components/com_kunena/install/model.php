@@ -1555,7 +1555,7 @@ class KunenaModelInstall extends JModelLegacy {
 			'noreplies'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_NOREPLIES' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' ), 'noreplies'),
 				'link'=>'index.php?option=com_kunena&view=topics&mode=noreplies', 'access'=>2, 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>-1)),
 			'mylatest'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_MYLATEST' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' ), 'mylatest'),
-				'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>2, 'default'=>'my' , 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>-1)),
+				'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>2, 'default'=>'my' , 'params'=>array('topics_catselection'=>'2', 'topics_categories'=>'0', 'topics_time'=>-1)),
 			'profile'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_PROFILE' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' ), 'profile'),
 				'link'=>'index.php?option=com_kunena&view=user', 'access'=>2, 'params'=>array('integration'=>1)),
 			'help'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_HELP' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' ), 'help'),

@@ -78,4 +78,16 @@ class KunenaForumAnnouncementHelper {
 		unset ($results);
 		return $list;
 	}
+
+	static public function getCount($filter = true) {
+		$db = JFactory::getDBO ();
+		$where = $filter ? "WHERE published=1" : '';
+
+		$query = "SELECT COUNT(*) FROM #__kunena_announcement {$where}";
+		$db->setQuery ( $query );
+		$total = (int) $db->loadResult ();
+		KunenaError::checkDatabaseError ();
+
+		return $total;
+	}
 }

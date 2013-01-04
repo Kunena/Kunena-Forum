@@ -30,7 +30,8 @@
 				<option value="">COM_KUNENA_A_USE_GLOBAL</option>
 				<option value="0">COM_KUNENA_A_ALL_CATEGORIES</option>
 			</field>
-			<field name="topics_time" type="list" default="-1" label="COM_KUNENA_A_TOPICS_TIME" description="COM_KUNENA_A_TOPICS_TIME_DESC">
+			<field name="topics_time" type="list" default="" label="COM_KUNENA_A_TOPICS_TIME" description="COM_KUNENA_A_TOPICS_TIME_DESC">
+				<option value="">COM_KUNENA_A_USE_GLOBAL</option>
 				<option value="-1">COM_KUNENA_SHOW_ALL</option>
 				<option value="0">COM_KUNENA_SHOW_LASTVISIT</option>
 				<option value="4">COM_KUNENA_SHOW_4_HOURS</option>

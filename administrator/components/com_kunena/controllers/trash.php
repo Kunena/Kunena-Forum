@@ -30,41 +30,39 @@ class KunenaAdminControllerTrash extends KunenaController {
 		}
 
 		$cids = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$type = JRequest::getCmd ( 'type', 'topics', 'post' );
 		$md5 = JRequest::getString ( 'md5', null );
-		$topic = JRequest::getInt ( 'topics', 0, 'post' );
-		$message = JRequest::getInt ( 'messages', 0, 'post' );
 
 		if ( !empty($cids) ) {
 			$this->app->setUserState('com_kunena.purge', $cids);
-			$this->app->setUserState('com_kunena.topic', $topic);
-			$this->app->setUserState('com_kunena.message', $message);
+			$this->app->setUserState('com_kunena.type', $type);
+
 		} elseif ( $md5 ) {
-			$ids = $this->app->getUserState('com_kunena.purge');
-			$md5calculated = md5(serialize($ids));
-			// FIXME : unset the userstate
-			if ( $md5 == $md5calculated ) {
-				$topic = $this->app->getUserState('com_kunena.topic');
-				$message = $this->app->getUserState('com_kunena.message');
-				if ( $topic ) {
-					$topics = KunenaForumTopicHelper::getTopics($ids);
+			$ids = (array) $this->app->getUserState('com_kunena.purge');
+			$type = (string) $this->app->getUserState('com_kunena.type');
+			if ( $md5 == md5(serialize($ids)) ) {
+				if ( $type=='topics' ) {
+					$topics = KunenaForumTopicHelper::getTopics($ids, 'none');
 					foreach ( $topics as $topic ) {
-						$topic->authorise('delete');
-						$topic->delete();
+						$success = $topic->delete();
+						if (!$success) $this->app->enqueueMessage ($topic->getError());
 					}
 					$this->app->enqueueMessage (JText::_('COM_KUNENA_TRASH_DELETE_TOPICS_DONE'));
-					$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
-				} elseif ( $message ) {
-					$messages = KunenaForumMessageHelper::getMessages($ids);
+				} elseif ( $type=='messages' ) {
+					$messages = KunenaForumMessageHelper::getMessages($ids, 'none');
 					foreach ( $messages as $message ) {
-						$message->authorise('delete');
-						$message->delete();
+						$success = $message->delete();
+						if (!$success) $this->app->enqueueMessage ($message->getError());
 					}
 					$this->app->enqueueMessage (JText::_('COM_KUNENA_TRASH_DELETE_MESSAGES_DONE'));
-					$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
-				} else {
-					// error
 				}
+			} else {
+				// Error...
 			}
+			$this->app->setUserState('com_kunena.purge', null);
+			$this->app->setUserState('com_kunena.type', null);
+			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+
 		} else {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_MESSAGES_SELECTED' ), 'notice' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
@@ -79,10 +77,8 @@ class KunenaAdminControllerTrash extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$kunena_db = JFactory::getDBO ();
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
-		$topics = JRequest::getInt ( 'topics', 0, 'post' );
-		$messages = JRequest::getInt ( 'messages', 0, 'post' );
+		$type = JRequest::getCmd ( 'type', 'topics', 'post' );
 
 		if (empty ( $cid )) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_MESSAGES_SELECTED' ), 'notice' );
@@ -91,8 +87,8 @@ class KunenaAdminControllerTrash extends KunenaController {
 
 		$msg = JText::_('COM_KUNENA_TRASH_RESTORE_DONE');
 
-		if ( $messages ) {
-			$messages = KunenaForumMessageHelper::getMessages($cid);
+		if ( $type=='messages' ) {
+			$messages = KunenaForumMessageHelper::getMessages($cid, 'none');
 			foreach ( $messages as $target ) {
 				if ( $target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED) ) {
 					$this->app->enqueueMessage ( $msg );
@@ -100,8 +96,8 @@ class KunenaAdminControllerTrash extends KunenaController {
 					$this->app->enqueueMessage ( $target->getError(), 'notice' );
 				}
 			}
-		} elseif ( $topics ) {
-			$topics = KunenaForumTopicHelper::getTopics($cid);
+		} elseif ( $type=='topics' ) {
+			$topics = KunenaForumTopicHelper::getTopics($cid, 'none');
 			foreach ( $topics as $target ) {
 				if ( $target->authorise('undelete') && $target->publish(KunenaForum::PUBLISHED) ) {
 					$this->app->enqueueMessage ( $msg );
@@ -110,7 +106,7 @@ class KunenaAdminControllerTrash extends KunenaController {
 				}
 			}
 		} else {
-			// error
+			// Error...
 		}
 
 		KunenaUserHelper::recount();

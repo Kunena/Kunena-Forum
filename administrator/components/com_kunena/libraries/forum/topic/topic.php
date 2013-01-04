@@ -291,7 +291,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 	}
 
 	public function getReplies($hold=null) {
-		return max($this->getTotal() - 1, 0);
+		return max($this->getTotal($hold) - 1, 0);
 	}
 
 	public function getUrl($category = null, $xhtml = true, $action = null) {
@@ -1090,6 +1090,9 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		$config = KunenaFactory::getConfig();
 		$poll = $this->getPoll();
 		$votes = $poll->getMyVotes($user);
+		if (!$poll->exists()) {
+			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_NO_POLL' );
+		}
 		if ($votes && $config->pollallowvoteone) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_ONLY_ONCE' );
 		}

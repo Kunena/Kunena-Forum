@@ -57,20 +57,27 @@ class KunenaAdminControllerRanks extends KunenaController {
 			return;
 		}
 
-		$rank_title = JRequest::getVar ( 'rank_title' );
-		$rank_image = JRequest::getVar ( 'rank_image' );
-		$rank_special = JRequest::getVar ( 'rank_special' );
-		$rank_min = JRequest::getVar ( 'rank_min' );
+		$rank_title = JRequest::getString ( 'rank_title' );
+		$rank_image = basename(JRequest::getString ( 'rank_image' ));
+		$rank_special = JRequest::getInt ( 'rank_special' );
+		$rank_min = JRequest::getInt ( 'rank_min' );
 		$rankid = JRequest::getInt( 'rankid', 0 );
 
-
-
 		if ( !$rankid ) {
-			$db->setQuery ( "INSERT INTO #__kunena_ranks SET rank_title = '$rank_title', rank_image = '$rank_image', rank_special = '$rank_special', rank_min = '$rank_min'" );
+			$db->setQuery ( "INSERT INTO #__kunena_ranks SET
+					rank_title={$db->quote($rank_title)},
+					rank_image={$db->quote($rank_image)},
+					rank_special={$db->quote($rank_special)},
+					rank_min={$db->quote($rank_min)}" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 		} else {
-			$db->setQuery ( "UPDATE #__kunena_ranks SET rank_title = '$rank_title', rank_image = '$rank_image', rank_special = '$rank_special', rank_min = '$rank_min' WHERE rank_id = '$rankid'" );
+			$db->setQuery ( "UPDATE #__kunena_ranks SET
+					rank_title={$db->quote($rank_title)},
+					rank_image={$db->quote($rank_image)},
+					rank_special={$db->quote($rank_special)},
+					rank_min={$db->quote($rank_min)}
+				WHERE rank_id={$db->quote($rankid)}" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 		}
@@ -88,9 +95,8 @@ class KunenaAdminControllerRanks extends KunenaController {
 
 		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
 		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
-		$view			= JRequest::getVar( 'view', '');
 
-		$upload = KunenaUploadHelper::upload($file, 'ranks', $format, $view);
+		$upload = KunenaUploadHelper::upload($file, JPATH_ROOT.'/'.KunenaFactory::getTemplate()->getRankPath(), $format);
 		if ( $upload ) {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_RANKS_UPLOAD_SUCCESS') );
 		} else {

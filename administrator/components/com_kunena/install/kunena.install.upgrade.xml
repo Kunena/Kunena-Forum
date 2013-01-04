@@ -3,6 +3,8 @@
 <comupgrade version="1.0">
 	<upgrade>
 		<version version="1.0.0" versiondate="2007-04-15" versionname="">
+		</version>
+		<version version="1.0.1" versiondate="2007-05-20" versionname="">
 			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD KEY `mesid`(`mesid`)</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD PRIMARY KEY(`id`)</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD KEY `parent`(`parent`)</query>
@@ -24,7 +26,7 @@
 			<query mode="silenterror">UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&lt;br>&lt;br>", "\n\n")</query>
 			<query mode="silenterror">INSERT INTO `#__kunena_groups` VALUES ('1', 'Registered User')</query>
 		</version>
-		<version version="1.0.1" versiondate="2007-05-20" versionname="">
+		<version version="1.0.2" versiondate="2007-08-03" versionname="">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `moderated` tinyint(4) NOT NULL default '1' AFTER `alert_admin`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `id_last_msg` int(10) NOT NULL DEFAULT '0' AFTER `description`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `numTopics` mediumint(8) NOT NULL DEFAULT '0' AFTER `id_last_msg`</query>
@@ -52,50 +54,48 @@
 
 			<query>UPDATE `#__kunena_categories` SET `moderated` = '1';</query>
 		</version>
-		<version version="1.0.2" versiondate="2007-08-03" versionname="">
+		<version version="1.0.3" versiondate="2007-09-04" versionname="">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `headerdesc` text NOT NULL AFTER `description`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `class_sfx` varchar(20) NOT NULL AFTER `headerdesc`</query>
 		</version>
-		<version version="1.0.3" versiondate="2007-09-04" versionname="">
+		<version version="1.0.4" versiondate="2007-12-23" versionname="">
 			<query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD COLUMN `currvisit` int(11) NOT NULL default '0' AFTER `readtopics`</query>
 		</version>
-		<version version="1.0.4" versiondate="2007-12-23" versionname="">
+		<version version="1.0.5" versiondate="2008-12-01" versionname="Redwood">
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` MODIFY `title` tinytext NOT NULL AFTER `id`;</query>
-		</version>
-		<version version="1.0.5" versiondate="2008-12-1" versionname="Redwood">
 			<query>UPDATE `#__kunena_users` SET `rank`=8 WHERE `moderator`=1 AND `rank`=0</query>
 			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;#039;", "'")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;quot;", '"')</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;nbsp;", " ")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;lt;br />", "\n")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;lt;br>", "\n")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;lt;", "&lt;")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;gt;", "&gt;")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;amp;", "&amp;")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[IMG", "[img")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/IMG]", "[/img]")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[URL", "[url")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/URL]", "[/url]")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[QUOTE", "[quote")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/QUOTE]", "[/quote]")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[CODE", "[code")</query>
-            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/CODE", "[/code")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;#039;", "'")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;quot;", '"')</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;nbsp;", " ")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;lt;br />", "\n")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;lt;br>", "\n")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;lt;", "&lt;")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;gt;", "&gt;")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;amp;", "&amp;")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[IMG", "[img")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/IMG]", "[/img]")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[URL", "[url")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/URL]", "[/url]")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[QUOTE", "[quote")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/QUOTE]", "[/quote]")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[CODE", "[code")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/CODE", "[/code")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;quot;", '"')</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;nbsp;", " ")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;lt;br />", "\n")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;lt;br>", "\n")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;lt;", "&lt;")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;gt;", "&gt;")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;amp;", "&amp;")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[IMG", "[img")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/IMG]", "[/img]")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[URL", "[url")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/URL]", "[/url]")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[QUOTE", "[quote")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/QUOTE]", "[/quote]")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[CODE", "[code")</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/CODE", "[/code")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;#039;", "'")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;quot;", '"')</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;nbsp;", " ")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;lt;br />", "\n")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;lt;br>", "\n")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;lt;", "&lt;")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;gt;", "&gt;")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;amp;", "&amp;")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[IMG", "[img")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/IMG]", "[/img]")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[URL", "[url")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/URL]", "[/url]")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[QUOTE", "[quote")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/QUOTE]", "[/quote]")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[CODE", "[code")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/CODE", "[/code")</query>
 		</version>
 		<version version="1.0.6" versiondate="2009-01-10" versionname="Communicate">
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD KEY `parent_hits`(`parent`,`hits`)</query>

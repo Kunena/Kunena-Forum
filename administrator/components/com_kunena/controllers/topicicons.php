@@ -62,6 +62,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		$ordering = JRequest::getInt ( 'ordering', 0 );
 		$topiciconid = JRequest::getInt( 'topiciconid', 0 );
 
+		// TODO: escape all variables going to SQL query
 		/*if ( !$topiciconid ) {
 			$db->setQuery ( "INSERT INTO #__kunena_topics_icons SET name = '$iconname', filename = '$filename', published = '$published', ordering ='$ordering'" );
 			$db->query ();
@@ -333,7 +334,7 @@ class KunenaAdminControllerTopicicons extends KunenaController {
 		$db = JFactory::getDBO ();
 		$row = new TableKunenaTopicsIcons ( $db );
 
-		$cids = implode(',',$cid);
+		$cids = implode(',',$cid); // TODO: Convert all values in array to integers.
 		$query = "SELECT id,ordering FROM #__kunena_topics_icons WHERE id IN ($cids)";
 		$db->setQuery ( $query );
 		$topicicons = $db->loadObjectlist();

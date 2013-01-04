@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
-$document->addScriptDeclaration("	window.addEvent('domready', function(){
+$document->addScriptDeclaration("window.addEvent('domready', function(){
 	$('link_sel_all').addEvent('click', function(e){
 		$('report_final').select();
 	});

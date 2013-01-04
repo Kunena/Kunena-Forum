@@ -122,11 +122,11 @@ class KunenaBbcode extends NBBC_BBCode {
 				$text = preg_replace ( '#.*\.ebay\.([^/]+)/.*ViewItem.+Item=([0-9]+).*#u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $text );
 				*/
 			}
-			if (isset($path[1]) && $path[1] == 'sch') {
-				// convert ebay search to embedded widget
-				parse_str($params['query'], $query);
 
-				if (empty($query['_nkw'])) break;
+			parse_str($params['query'], $query);
+
+			if (isset($path[1]) && $path[1] == 'sch' && !empty($query['_nkw'])) {
+				// convert ebay search to embedded widget
 				return '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $config->ebaylanguagecode . '&mode=search&query='
 					. urlencode($query['_nkw']) .'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='
 					. $config->ebaylanguagecode . '&mode=search&query=' . urlencode($query['_nkw']) . '&campid=5336042350"></embed></object>';
@@ -833,6 +833,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$this->default_smileys [$smiley->code] = $template->getSmileyPath($smiley->location);
 			}
 		}
+		// Translate plain text "Quote:"
+		$this->default_tag_rules['quote']['plain_start'] = "\n".JText::_('COM_KUNENA_LIB_BBCODE_QUOTE_TITLE')."\n";
 	}
 
 	function DoEmail($bbcode, $action, $name, $default, $params, $content) {
@@ -1061,7 +1063,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			};
 			$mapid = new google.maps.Map(document.id('".$mapid."'), myOptions);
 
-			var address = '$content';
+			var address = ".json_encode($content).";
 			if (geocoder) {
 				geocoder.geocode( { 'address': address}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
@@ -1071,7 +1073,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				 		map: $mapid
 					});
 				} else {
-					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$content</i></strong></p>';
+					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>".json_encode($content)."</i></strong></p>';
 					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
 						infowindow$mapid.open($mapid);
 				}
@@ -1112,6 +1114,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
+		$lang = JFactory::getLanguage();
+		$lang->load('com_content');
+
 		$articleid = intval($content);
 
 		$config = KunenaFactory::getConfig();
@@ -1145,7 +1150,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		$html = $link = '';
 		if (!$article || (!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
 			$html = JText::_ ( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_UNPUBLISHED' );
-		} elseif (!empty($denied)) {
+		} elseif (!empty($denied) && !$params->get('show_noauth')) {
 			$html = JText::_( 'COM_KUNENA_LIB_BBCODE_ARTICLE_ERROR_NO_PERMISSIONS' );
 		} else {
 			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
@@ -1154,6 +1159,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catslug));
 
 			if (!$default) $default = $config->article_display;
+			// Do not display full text if there's no permissions to display the full article.
+			if (!empty($denied) && $default == 'full') $default = 'intro';
 			switch ($default) {
 				case 'full':
 					if ( !empty($article->fulltext) ) {
@@ -1185,6 +1192,9 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 				$bbcode->text_length += strlen($article->text);
 				$html = $article->text;
 			}
+			if (!empty($denied)) {
+				$link = '<span class="readon">'. JText::_('COM_CONTENT_REGISTER_TO_READ_MORE') .'</span>';
+			}
 		}
 		return ($html ? '<div class="kmsgtext-article">' . $html . '</div>' : '') . $link;
 	}
@@ -1194,7 +1204,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 			return true;
 
 		$post = isset($params["post"]) ? $params["post"] : false;
-		$user = isset($default) ? htmlentities($default) : false;
+		$user = isset($default) ? htmlspecialchars($default, ENT_COMPAT, 'UTF-8') : false;
 		$html = '';
 		if ($user) $html .= "<b>" . $user . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":</b>\n";
 		$html .= '<div class="kmsgtext-quote">' . $content . '</div>';

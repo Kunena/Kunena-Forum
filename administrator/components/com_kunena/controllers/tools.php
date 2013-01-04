@@ -119,13 +119,20 @@ class KunenaAdminControllerTools extends KunenaController {
 		}
 
 		if ($useradd) {
-			$db->setQuery ( "INSERT INTO #__kunena_users (userid, showOnline) SELECT a.id AS userid, 1 AS showOnline FROM #__users AS a LEFT JOIN #__kunena_users AS b ON b.userid=a.id WHERE b.userid IS NULL" );
+			$db->setQuery ( "INSERT INTO #__kunena_users (userid, showOnline)
+					SELECT a.id AS userid, 1 AS showOnline
+					FROM #__users AS a
+					LEFT JOIN #__kunena_users AS b ON b.userid=a.id
+					WHERE b.userid IS NULL" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_ADD') . ' ' . $db->getAffectedRows () );
 		}
 		if ($userdel) {
-			$db->setQuery ( "DELETE a FROM #__kunena_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE b.username IS NULL" );
+			$db->setQuery ( "DELETE a
+					FROM #__kunena_users AS a
+					LEFT JOIN #__users AS b ON a.userid=b.id
+					WHERE b.username IS NULL" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_DEL') . ' ' . $db->getAffectedRows () );
@@ -133,7 +140,6 @@ class KunenaAdminControllerTools extends KunenaController {
 		if ($userrename) {
 			$queryName = $this->config->username ? "username" : "name";
 
-			$db = JFactory::getDBO();
 			$query = "UPDATE #__kunena_messages AS m
 					INNER JOIN #__users AS u
 					SET m.name = u.{$queryName}
@@ -255,7 +261,7 @@ class KunenaAdminControllerTools extends KunenaController {
 
 		if ( $re_string != null ) {
 			$db	= JFactory::getDBO();
-			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING '{$re_string}' FROM subject)) WHERE subject LIKE '{$re_string}%'";
+			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {{$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string.'%')}";
 			$db->setQuery ( $query );
 			$db->Query ();
 			KunenaError::checkDatabaseError();

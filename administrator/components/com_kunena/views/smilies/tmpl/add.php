@@ -13,11 +13,10 @@ defined ( '_JEXEC' ) or die ();
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
-$document->addScriptDeclaration('function update_smiley(newimage)
-			{
-				document.smiley_image.src = "'.
-				$this->escape(JUri::root() . 'media/kunena/emoticons/').'" + newimage;
-			}');
+$iconPath = json_encode(JUri::root(true) . '/');
+$document->addScriptDeclaration("function update_smiley(newimage) {
+	document.smiley_image.src = {$iconPath} + newimage;
+}");
 ?>
 <div id="kadmin">
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
@@ -38,7 +37,7 @@ $document->addScriptDeclaration('function update_smiley(newimage)
 					<td width="200"><input class="post" type="text" name="smiley_code"
 						value="<?php echo isset($this->smiley_selected) ? $this->smiley_selected->code : '' ?>" /></td>
 					<td rowspan="3" width="50"><img name="smiley_image"
-						src="<?php echo isset($this->smiley_selected) ? $this->escape(JUri::root(true).'/'.$this->ktemplate->getSmileyPath($this->smiley_selected->location)) : '' ?>" border="0" alt="" /> &nbsp;</td>
+						src="<?php echo isset($this->smiley_selected) ? $this->escape($this->ktemplate->getSmileyPath($this->smiley_selected->location, true)) : '' ?>" border="0" alt="" /> &nbsp;</td>
 					<td rowspan="3">&nbsp;</td>
 				</tr>
 				<tr align="center">

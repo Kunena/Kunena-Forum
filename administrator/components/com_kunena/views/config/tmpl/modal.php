@@ -6,12 +6,9 @@ defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.modal');
 
-$script = array();
-$script[] = '    function RestoreConfig() {';
-$script[] = '        document.getElementById(\'adminFormModal\').submit();';
-$script[] = '    }';
+$script = "function RestoreConfig() { document.getElementById('adminFormModal').submit(); }";
  // Add to document head
-JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
+JFactory::getDocument()->addScriptDeclaration($script);
 ?>
 <fieldset>
 	<legend> <?php echo JText::_('COM_KUNENA_CONFIG_MODAL_TITLE') ?> </legend>

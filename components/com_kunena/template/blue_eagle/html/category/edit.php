@@ -20,7 +20,7 @@ function submitbutton(pressbutton)
 	// do field validation
 	if (typeof form.onsubmit == 'function') form.onsubmit();
 	if (form.name.value == '') {
-		alert('".JText::_('COM_KUNENA_ERROR1')."');
+		alert('".JText::_('COM_KUNENA_ERROR1', true)."');
 	} else {
 		submitform(pressbutton);
 	}

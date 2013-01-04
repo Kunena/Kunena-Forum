@@ -15,14 +15,14 @@ ob_start();
 if (!empty($this->poll)) :
 	$this->addScript('js/poll.js');
 ?>
-var KUNENA_POLL_CATS_NOT_ALLOWED = "<?php echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED') ?>";
-var KUNENA_EDITOR_HELPLINE_OPTION = "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION') ?>";
-var KUNENA_POLL_OPTION_NAME = "<?php echo JText::_('COM_KUNENA_POLL_OPTION_NAME') ?>";
-var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "<?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW') ?>";
-var KUNENA_ICON_ERROR = "<?php echo KunenaFactory::getTemplate()->getImagePath('publish_x.png') ?>";
+var KUNENA_POLL_CATS_NOT_ALLOWED = "<?php echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED', true) ?>";
+var KUNENA_EDITOR_HELPLINE_OPTION = "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION', true) ?>";
+var KUNENA_POLL_OPTION_NAME = "<?php echo JText::_('COM_KUNENA_POLL_OPTION_NAME', true) ?>";
+var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "<?php echo JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW', true) ?>";
+var KUNENA_ICON_ERROR = <?php echo json_encode(KunenaFactory::getTemplate()->getImagePath('publish_x.png')) ?>;
 <?php endif ?>
 <?php if ($this->me->userid) : ?>
-var kunena_anonymous_name = "<?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS') ?>";
+var kunena_anonymous_name = "<?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS', true) ?>";
 <?php endif ?>
 
 window.addEvent('domready', function(){

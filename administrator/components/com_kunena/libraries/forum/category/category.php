@@ -783,13 +783,15 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$this->_topics = 0;
 		$this->_posts = 0;
 		$this->_lastid = $this->id;
-		$categories = $this->getChannels();
+		$categories[$this->id] = $this;
+		// TODO: support channels
+		//$categories += $this->getChannels();
 		$categories += KunenaForumCategoryHelper::getChildren($this->id);
 		foreach ($categories as $category) {
 			$category->buildInfo();
 			$lastCategory = $category->getLastCategory();
-			$this->_topics += max($category->numTopics, 0);
-			$this->_posts += max($category->numPosts, 0);
+			$this->_topics += $category->_topics ? $category->_topics : max($category->numTopics, 0);
+			$this->_posts += $category->_posts ? $category->_posts: max($category->numPosts, 0);
 			if ($lastCategory->last_post_time && KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $lastCategory->last_post_time)
 				$this->_lastid = $lastCategory->id;
 		}
@@ -892,6 +894,10 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		// Check if polls are not enabled in this category
 		if (!$this->allow_polls) {
 			return JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED' );
+		}
+		// Check if user is guest
+		if ($user->userid == 0) {
+			return JText::_ ( 'COM_KUNENA_POLL_NOT_LOGGED' );
 		}
 	}
 

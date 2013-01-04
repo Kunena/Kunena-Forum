@@ -53,17 +53,23 @@ class KunenaModelTopics extends KunenaModel {
 			$latestcategory_in = true;
 		} else {
 			if (JFactory::getDocument()->getType() != 'feed') {
-				// Get configuration from menu item
+				// Get configuration from menu item.
 				$latestcategory = $params->get('topics_categories', '');
 				$latestcategory_in = $params->get('topics_catselection', '');
 
 				// Make sure that category list is an array.
 				if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
 
-				// Default to global configuration
+				// Default to global configuration.
 				if (in_array('', $latestcategory, true)) $latestcategory = $this->config->latestcategory;
 				if ($latestcategory_in == '') $latestcategory_in = $this->config->latestcategory_in;
+
+				// Selection time from user state / menu item / url parameter / configuration.
+				$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
+				$this->setState ( 'list.time', $value );
+
 			} else {
+				// Use RSS configuration.
 				if(!empty($this->config->rss_excluded_categories)) {
 					$latestcategory = $this->config->rss_excluded_categories;
 					$latestcategory_in = 0;
@@ -71,6 +77,11 @@ class KunenaModelTopics extends KunenaModel {
 					$latestcategory = $this->config->rss_included_categories;
 					$latestcategory_in = 1;
 				}
+
+				// Selection time.
+				$value = $this->getInt ('sel', $this->config->rss_timelimit);
+				$this->setState ( 'list.time', $value );
+
 			}
 			if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
 			if (empty($latestcategory) || in_array(0, $latestcategory)) {
@@ -80,9 +91,6 @@ class KunenaModelTopics extends KunenaModel {
 		}
 		$this->setState ( 'list.categories', $latestcategory );
 		$this->setState ( 'list.categories.in', $latestcategory_in );
-
-		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
-		$this->setState ( 'list.time', $value );
 
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_limit", 'limit', 0, 'int' );

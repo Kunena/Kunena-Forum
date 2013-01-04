@@ -79,12 +79,22 @@ class KunenaAdminModelRanks extends KunenaModel {
 		}
 
 		$rankpath = $template->getRankPath();
-		$rank_images = (array)JFolder::Files(JPATH_SITE.'/'.$rankpath,false,false,false,array('index.php','index.html'));
+		$files1 = (array) JFolder::Files(JPATH_SITE.'/'.$rankpath,false,false,false,array('index.php','index.html'));
+		$files1 = (array) array_flip($files1);
+		foreach ($files1 as $key=>&$path) $path = $rankpath.$key;
+
+		$rankpath = 'media/kunena/ranks/';
+		$files2 = (array) JFolder::Files(JPATH_SITE.'/'.$rankpath,false,false,false,array('index.php','index.html'));
+		$files2 = (array) array_flip($files2);
+		foreach ($files2 as $key=>&$path) $path = $rankpath.$key;
+
+		$rank_images = $files1 + $files2;
+		ksort($rank_images);
 
 		$rank_list = array();
 		$i = 0;
-		foreach ( $rank_images as $id => $row ) {
-			$rank_list[] = JHtml::_ ( 'select.option', $rank_images [$id], $rank_images [$id] );
+		foreach ( $rank_images as $file => $path ) {
+			$rank_list[] = JHtml::_ ( 'select.option', $path, $file );
 		}
 		$list = JHtml::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected) ? $selected->rank_image : '' );
 

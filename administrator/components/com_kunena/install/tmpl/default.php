@@ -15,8 +15,10 @@ if ($this->go == 'next') {
 	JHtml::_('behavior.framework', true);
 
 	$this->document = JFactory::getDocument();
-	$this->document->addScriptDeclaration(" // <![CDATA[
-window.addEvent('domready', function() {window.location='".JRoute::_("index.php?option=com_kunena&view=install&task=run&n={$this->cnt}&".JSession::getFormToken() .'=1', false)."';});
+
+	$locationUrl = json_encode(JRoute::_("index.php?option=com_kunena&view=install&task=run&n={$this->cnt}&".JSession::getFormToken() .'=1', false));
+	$this->document->addScriptDeclaration("// <![CDATA[
+window.addEvent('domready', function() {window.location={$locationUrl};});
 // ]]>");
 }
 ?>

@@ -18,14 +18,13 @@ class KunenaUploadHelper {
 
 	private function __construct() {}
 
-	public static function upload($file, $uploadfolder, $format, $view) {
+	public static function upload($file, $uploadfolder, $format) {
 		jimport( 'joomla.filesystem.folder' );
 		$config = KunenaFactory::getConfig ();
 		// load language fo component media
 		JPlugin::loadLanguage( 'com_media' );
 		$params = JComponentHelper::getParams('com_media');
 		require_once( JPATH_ADMINISTRATOR.'/components/com_media/helpers/media.php' );
-		$path = KPATH_MEDIA;
 
 		$err			= null;
 
@@ -37,10 +36,10 @@ class KunenaUploadHelper {
 		jimport('joomla.filesystem.file');
 		$file['name']	= JFile::makeSafe($file['name']);
 
-		if ( !JFolder::exists($path.'/'.$uploadfolder) ) return false;
+		if ( !JFolder::exists($uploadfolder) ) return false;
 
 		if (isset($file['name'])) {
-			$filepath = JPath::clean($path.'/'.$uploadfolder.'/'.strtolower($file['name']));
+			$filepath = JPath::clean($uploadfolder.'/'.strtolower($file['name']));
 
 			if (!MediaHelper::canUpload( $file, $err )) {
 				if ($format == 'json') {

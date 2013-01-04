@@ -85,6 +85,8 @@ class KunenaViewAnnouncement extends KunenaView {
 
 		$this->_prepareDocument();
 
+		$this->total = $this->get('Total');
+
 		$errors = $this->getErrors();
 		if ($errors) {
 			return $this->displayNoAccess($errors);
@@ -157,6 +159,13 @@ class KunenaViewAnnouncement extends KunenaView {
 	}
 	function canDelete() {
 		return $this->announcement->authorise('delete');
+	}
+
+	function getPagination($maxpages) {
+		$pagination = new KunenaHtmlPagination ( $this->total, $this->state->get('list.start'), $this->state->get('list.limit') );
+		$pagination->setDisplay($maxpages);
+
+		return $pagination->getPagesLinks();
 	}
 
 	protected function _prepareDocument(){

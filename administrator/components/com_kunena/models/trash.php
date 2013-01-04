@@ -30,9 +30,9 @@ class KunenaAdminModelTrash extends KunenaModel {
 		static $t_ordering = array('tt.id', 'tt.subject', 'm.ip', 'tt.first_post_userid', 'tt.first_post_guest_name', 'tt.first_post_time');
 		static $m_ordering = array('m.id', 'm.subject', 'm.ip', 'm.userid', 'm.name', 'm.time');
 
-		$mode = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.view_selected", 'view_selected', 0, 'int' );
+		$mode = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.view_selected", 'view_selected', 'messages', 'cmd' );
 		// Set default view on messages
-		if ( $mode=='none' ) $mode=0;
+		if ($mode != 'messages') $mode='topics';
 		$this->setState ( 'list.view_selected', $mode );
 
 		// List state information
@@ -42,8 +42,8 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.start", 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.ordering', 'filter_order', '', 'cmd' );
-		if ($mode) {
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.ordering', 'filter_order', 'tt.id', 'cmd' );
+		if ($mode != 'messages') {
 			if (!in_array($value, $t_ordering)) $value = 'tt.id';
 		} else {
 			if (!in_array($value, $m_ordering)) $value = 'm.id';
@@ -69,7 +69,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * @since	1.6
 	 */
 	public function getTrashItems() {
-		if ( $this->state->get( 'list.view_selected') ) {
+		if ( $this->state->get( 'list.view_selected') == 'topics') {
 			// Get topics
 			$trash_items = $this->_getTopicsItems();
 		} else {
@@ -92,13 +92,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 			$where = '( m.subject LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ).' OR m.name LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ).' OR m.id LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ) . ' )';
 		}
 
-		$orderby = '';
-		$ordering = $this->state->get('list.ordering');
-		if ( !empty($ordering) ) {
-			$orderby = $this->state->get('list.ordering').' '.$this->state->get('list.direction');
-		} else {
-			$orderby = 'm.id '.$this->state->get('list.direction');
-		}
+		$orderby = $this->state->get('list.ordering').' '.$this->state->get('list.direction');
 
 		$params = array ('starttime'=> '-1',
 			'orderby' => $orderby,
@@ -125,9 +119,8 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 */
 	public function getViewOptions() {
 		$view_options = array();
-		$view_options[] = JHtml::_ ( 'select.option', 'none',JText::_('COM_KUNENA_SELECT_VIEW'));
-		$view_options[] = JHtml::_ ( 'select.option', '0',JText::_( 'COM_KUNENA_TRASH_MESSAGES'));
-		$view_options[] = JHtml::_ ( 'select.option', '1',JText::_( 'COM_KUNENA_TRASH_TOPICS' ));
+		$view_options[] = JHtml::_ ( 'select.option', 'topics',JText::_( 'COM_KUNENA_TRASH_TOPICS' ));
+		$view_options[] = JHtml::_ ( 'select.option', 'messages',JText::_( 'COM_KUNENA_TRASH_MESSAGES'));
 		$this->view_options_list = JHtml::_ ( 'select.genericlist', $view_options, 'view_selected', 'class="inputbox" size="1" onchange="this.form.submit()"', 'value', 'text', $this->state->get('list.view_selected') );
 
 		return $this->view_options_list;
@@ -146,13 +139,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 			$where = ' AND (tt.subject LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.first_post_userid LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ).' OR tt.id LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search'), true ).'%', false ) . ')';
 		}
 
-		$orderby = '';
-		$ordering = $this->state->get('list.ordering');
-		if ( !empty($ordering) ) {
-			$orderby = $this->state->get('list.ordering').' '.$this->state->get('list.direction');
-		} else {
-			$orderby = 'tt.id '.$this->state->get('list.direction');
-		}
+		$orderby = $this->state->get('list.ordering').' '.$this->state->get('list.direction');
 
 		$params = array ('hold' => '2,3',
 			'orderby' => $orderby,
@@ -177,14 +164,14 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * @since	1.6
 	 */
 	public function getPurgeItems() {
-		$ids = $this->app->getUserState ( 'com_kunena.purge' );
-		$topic = $this->app->getUserState('com_kunena.topic');
-		$message = $this->app->getUserState('com_kunena.message');
+		$ids = (array) $this->app->getUserState('com_kunena.purge');
+		$type = (string) $this->app->getUserState('com_kunena.type');
 
-		if ( $topic ) {
-			$items = KunenaForumTopicHelper::getTopics((array)$ids);
-		} elseif ( $message ) {
-			$items = KunenaForumMessageHelper::getMessages((array)$ids);
+		$items = array();
+		if ( $type=='topics' ) {
+			$items = KunenaForumTopicHelper::getTopics($ids, 'none');
+		} elseif ( $type=='messages' ) {
+			$items = KunenaForumMessageHelper::getMessages($ids, 'none');
 		}
 
 		return $items;
@@ -197,7 +184,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 	 * @since	1.6
 	 */
 	public function getMd5() {
-		$ids = $this->app->getUserState ( 'com_kunena.purge' );
+		$ids = (array) $this->app->getUserState ( 'com_kunena.purge' );
 
 		return md5(serialize($ids));
 	}

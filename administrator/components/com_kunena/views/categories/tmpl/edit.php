@@ -11,8 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 
 $document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 $errormsg = JText::_('COM_KUNENA_ERROR1', true);
 $document->addScriptDeclaration("
 function submitbutton(pressbutton)
@@ -35,31 +33,47 @@ function submitbutton(pressbutton)
 $paneOptions = array(
 		'onActive' => 'function(title, description){
 		description.setStyle("display", "block");
-		title.addClass("open").removeClass("closed");
+		title.addClass("tab-pane active").removeClass("tab-pane");
 }',
 		'onBackground' => 'function(title, description){
 		description.setStyle("display", "none");
-		title.addClass("closed").removeClass("open");
+		title.addClass("tab-pane").removeClass("tab-pane active");
 }',
 		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
 		'useCookie' => true, // this must not be a string. Don't use quotes.
 );
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('dropdown.init');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
-	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-adminforum"><?php echo $this->category->exists() ? JText::sprintf('COM_KUNENA_A_CATEGORY_EDIT_TITLE', $this->escape ( $this->category->name )) : JText::_('COM_KUNENA_A_CATEGORY_CREATE_TITLE') ?></div>
+<div class="container-fluid">
+<div class="row-fluid">
+ <div class="span2">
+	<div><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+	</div>
+		<!-- Right side -->
+			<div class="span10">
+            <div class="well well-small" style="min-height:120px;">
+                       <div class="nav-header"><?php echo JText::_('COM_KUNENA_A_CATEGORY_CREATE_TITLE'); ?></div>
+                         <div class="row-striped">
+                         <br />	
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="task" value="save" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
 		<?php echo JHtml::_( 'form.token' ); ?>
-
-		<?php
-			echo JHtml::_('tabs.start', 'pane', $paneOptions);
-			echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_CATEGORY_INFO'), 'panel_catinfo');
-		?>
-			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_BASICSFORUMINFO'); ?></legend>
+           <article class="data-block">
+				<div class="data-container " style="margin-bottom: 18px;">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab1" data-toggle="tab"><?php echo JText::_('COM_KUNENA_BASICSFORUMINFO'); ?></a></li>
+                <li><a href="#tab2" data-toggle="tab"><?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></a></li>
+                <li><a href="#tab3" data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></a></li>
+                <li><a href="#tab4" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></a></li>
+              </ul>
+              <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
+                <div class="tab-pane active" id="tab1">
+                  <fieldset>
+				
 				<table class="kadmin-adminform">
 					<tr>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_PARENT'); ?></td>
@@ -112,11 +126,11 @@ $paneOptions = array(
 					</tr>
 				</table>
 			</fieldset>
-
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_PERMISSIONS'), 'panel_catperms'); ?>
+</div>
+			<div class="tab-pane" id="tab2">
 
 			<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></legend>
+					
 					<table class="kadmin-adminform">
 						<tr>
 							<td class="nowrap" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_TITLE'); ?></td>
@@ -135,12 +149,10 @@ $paneOptions = array(
 						<?php endforeach; endforeach ?>
 					</table>
 			</fieldset>
-
-			<?php if (!$this->category->id || !$this->category->isSection()): ?>
-
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_ADVANCEDDESC'), 'panel_advanced'); ?>
-			<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
+                </div>
+                <div class="tab-pane" id="tab3">
+                  <fieldset>
+					
 					<table class="kadmin-adminform">
 						<tr>
 							<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
@@ -167,7 +179,7 @@ $paneOptions = array(
 							<td valign="top"><?php echo $this->options ['allow_polls']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 						</tr>
-						<?php /* TODO: enable features
+						
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:</td>
 							<td valign="top"><?php echo $this->options ['channels']; ?></td>
@@ -183,14 +195,13 @@ $paneOptions = array(
 							<td valign="top"><?php echo $this->options ['category_iconset']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 						</tr>
-						*/ ?>
+						
 					</table>
 			</fieldset>
-
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_MODNEWDESC'), 'panel_catmods'); ?>
-
-			<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></legend>
+                </div>
+                <div class="tab-pane" id="tab4">
+                  <fieldset>
+					
 
 					<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
 
@@ -230,12 +241,17 @@ $paneOptions = array(
 						</tbody>
 					</table>
 				</fieldset>
-				<?php endif; ?>
-
-				<?php echo JHtml::_('tabs.end'); ?>
+                </div>
+              </div>
+</article>
+</div>
+</div>
+		
 		</form>
 	</div>
-	<div class="kadmin-footer">
+    </div>
+	<div class="kadmin-footer center">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>
-</div>
+
+    </div>

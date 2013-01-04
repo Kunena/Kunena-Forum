@@ -9,142 +9,184 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('dropdown.init');
+JHtml::_('formbehavior.chosen', 'select');
 
-$document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->state->get('list.direction') == 'asc');
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
-	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="task" value="" />
-			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
-			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
-			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHtml::_( 'form.token' ); ?>
-
-			<table class="kadmin-sort">
+<script type="text/javascript">
+	Joomla.orderTable = function() {
+		table = document.getElementById("sortTable");
+		direction = document.getElementById("directionTable");
+		order = table.options[table.selectedIndex].value;
+		if (order != '<?php echo $listOrder; ?>') {
+			dirn = 'asc';
+		} else {
+			dirn = direction.options[direction.selectedIndex].value;
+		}
+		Joomla.tableOrdering(order, dirn, '');
+	}
+</script>
+ <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'); ?>" method="post" name="adminForm" id="adminForm">
+ <!-- Main page container -->
+<div class="container-fluid">
+<div class="row-fluid">
+ <div class="span2">
+	<div><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+    <div class="clr">&nbsp;</div>
+    <div><?php echo $this->sidebar; ?></div>
+		<!-- Right side -->
+ </div>
+ <div class="span10">
+ <div class="well well-small" style="min-height:120px;">
+                       <div class="nav-header">Categories</div>
+                         <div class="row-striped">
+                         <br />			
+			<div class="filter-search btn-group pull-left">
+				<label for="filter_search" class="element-invisible"><?php echo 'Search in';?></label>
+				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo 'Search categorie'; ?>" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo 'Search categorie'; ?>" />
+			</div>
+			<div class="btn-group pull-left">
+				<button class="btn" rel="tooltip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-search"></i></button>
+				<button class="btn" rel="tooltip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
+			</div>
+			<div class="btn-group pull-right hidden-phone">
+				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+				<?php echo  $this->navigation->getLimitBox (); ?>
+			</div>
+			<div class="btn-group pull-right hidden-phone">
+				<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
+				<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+					<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
+					<option value="asc" <?php if ($listDirn == 'asc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_ASCENDING');?></option>
+					<option value="desc" <?php if ($listDirn == 'desc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_DESCENDING');?></option>
+				</select>
+			</div>
+			<div class="btn-group pull-right">
+				<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+				<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+					<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+                    <option value="type" <?php if ($listDirn == 'type') echo 'selected="selected"'; ?>><?php echo JText::_('Type');?></option>
+				</select>
+			</div>
+		
+        
+		<table class="table table-striped adminlist">
+			<thead>
 				<tr>
-					<td class="left" width="90%">
-						<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
-						<input type="text" name="search" id="search" value="<?php echo $this->escape ( $this->state->get('list.search') );?>" class="text_area" onchange="document.adminForm.submit();" />
-						<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
-						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
+					<th width="20" class="nowrap center hidden-phone">
+						<?php echo JText::_( 'Num' ); ?>
+					</th>
+					<th width="1%" class="hidden-phone">
+						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count ( $this->categories ); ?>);" />
+					</th>
+					<th width="5%" class="nowrap center">
+						<?php echo JHTML::_('grid.sort', JText::_('JSTATUS'), 'p.published', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+					</th>
+					<th class="nowrap">
+						<?php echo JHTML::_('grid.sort', JText::_('JGLOBAL_TITLE'), 'p.title', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+					</th>
+                    <th width="10%" class="nowrap hidden-phone">
+						<?php echo JHTML::_('grid.sort', 'Type', 'p.type', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+					</th>
+					<th width="10%" class="nowrap hidden-phone">
+						<?php echo JHTML::_('grid.sort', 'Access', 'p.access', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+					</th>
+					<th width="1%" class="nowrap center hidden-phone">
+						<?php echo JHTML::_('grid.sort', JText::_('JGRID_HEADING_ID'), 'p.id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+					</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<td colspan="6">
+                    
+								<div class="pagination"><?php echo $this->navigation->getPagesLinks (); ?></div>
 					</td>
 				</tr>
-			</table>
-			<table class="adminlist table table-striped">
-				<thead>
-					<tr>
-						<th align="center" width="5">#</th>
-						<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->categories ); ?>);" /></th>
-						<th class="title"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-						<th><small><?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATID', 'catid', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></small></th>
-						<th width="100" class="center nowrap">
-						<small>
-							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REORDER', 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
-							<?php echo JHtml::_('grid.order',  $this->categories, 'filesave.png', 'saveorder' ); ?></small>
-						</th>
-						<th class="center"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>
-						<th class="center"><small><?php echo JText::_('COM_KUNENA_REVIEW'); ?></small></th>
-						<th class="center"><small><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'); ?></small></th>
-						<th class="center"><small><?php echo JText::_('COM_KUNENA_ADMIN_POLLS'); ?></small></th>
-						<th class="center"><small><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?></small></th>
-						<th class="center"><small><?php echo JText::_('COM_KUNENA_ACCESS'); ?></small></th>
-						<th class="center"><small><?php echo JText::_('COM_KUNENA_CHECKEDOUT'); ?></small></th>
-					</tr>
-				</thead>
-				<tfoot>
-					<tr>
-						<td colspan="14">
-							<div class="pagination">
-								<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->navigation->getLimitBox (); ?></div>
-								<?php echo $this->navigation->getPagesLinks (); ?>
-								<div class="limit"><?php echo $this->navigation->getResultsCounter (); ?></div>
-							</div>
-						</td>
-					</tr>
-				</tfoot>
-		<?php
+			</tfoot>
+			<tbody>
+				<?php
 			$k = 0;
 			$i = 0;
-			$n = count($this->categories);
-			$img_yes = '<img src="'.JUri::base(true).'/components/com_kunena/images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
-			$img_no = '<img src="'.JUri::base(true).'/components/com_kunena/images/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
 			foreach($this->categories as $category) {
 		?>
-			<tr <?php echo 'class = "row' . $k . '"';?>>
-				<td class="right"><?php echo $i + $this->navigation->limitstart + 1; ?></td>
-				<td><?php echo JHtml::_('grid.id', $i, intval($category->id)) ?></td>
-				<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat  ( '...', count($category->indent)-1 ).' '.$category->name; ?> </a></td>
-				<td class="center"><?php echo intval($category->id); ?></td>
+				<tr <?php echo 'class = "row' . $k . '"';?>>
+					<td class="center hidden-phone">
+						<?php echo $i + $this->navigation->limitstart + 1; ?>
+					</td>
+					<td class="center hidden-phone">
+						<?php echo JHtml::_('grid.id', $i, intval($category->id)) ?>
+					</td>
+					<td class="center">
+						<?php echo JHtml::_('jgrid.published', $category->published, $i, 'publish','cb'); ?>
+					</td>
+					<td class="has-context">
+						<div class="pull-left">
+							
+								<a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')">
+									<?php echo str_repeat  ( '...', count($category->indent)-1 ).' '.$category->name; ?></a>
+							(Alias: <?php echo $category->alias  ?>)
+						</div>
+						<div class="pull-left">
+							<?php
+								// Create dropdown items
+								if ($category) :
+									JHtml::_('dropdown.edit','cb' . $i, '&view=categories#edit');
+									JHtml::_('dropdown.divider');
+								endif;
 
-				<?php if ($category->isSection()): ?>
+								if( $category ) :
+									if ($category->published) :
+										JHtml::_('dropdown.unpublish', 'cb' . $i, 'list.');
+									else :
+										JHtml::_('dropdown.publish', 'cb' . $i, 'list.');
+									endif;
+								endif;								
 
-				<td class="right nowrap">
-					<?php if ($changeOrder) : ?>
-					<span><?php echo $this->navigation->orderUpIcon ( $i, $category->up, 'orderup', 'Move Up', 1 ); ?></span>
-					<span><?php echo $this->navigation->orderDownIcon ( $i, $n, $category->down, 'orderdown', 'Move Down', 1 ); ?></span>
-					<?php endif ?>
-					<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5" value="<?php echo intval($category->ordering); ?>" class="text_area center" />
-				</td>
-				<td class="center">
-					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->locked ? 'un':'').'lock'; ?>')">
-						<?php echo ($category->locked == 1 ? $img_yes : $img_no); ?>
-					</a>
-				</td>
-				<td colspan="3" class="center"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
-
-				<?php else: ?>
-
-				<td class="right nowrap">
-					<?php if ($changeOrder) : ?>
-					<span><?php echo $this->navigation->orderUpIcon ( $i, $category->up, 'orderup', 'Move Up', 1 ); ?></span>
-					<span><?php echo $this->navigation->orderDownIcon ( $i, $n, $category->down, 'orderdown', 'Move Down', 1 ); ?></span>
-					<?php endif ?>
-					<input type="text" name="order[<?php echo intval($category->id) ?>]" size="5" value="<?php echo $this->escape ( $category->ordering ); ?>" class="text_area" style="text-align: center" />
-				</td>
-				<td class="center">
-					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->locked ? 'un':'').'lock'; ?>')">
-						<?php echo ($category->locked == 1 ? $img_yes : $img_no); ?>
-					</a>
-				</td>
-				<td class="center">
-					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->review ? 'un':'').'review'; ?>')">
-						<?php echo ($category->review == 1 ? $img_yes : $img_no); ?>
-					</a>
-				</td>
-				<td class="center">
-					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_anonymous ? 'deny':'allow').'_anonymous'; ?>')">
-						<?php echo ($category->allow_anonymous == 1 ? $img_yes : $img_no); ?>
-					</a>
-				</td>
-				<td class="center">
-					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_polls ? 'deny':'allow').'_polls'; ?>')">
-						<?php echo ($category->allow_polls == 1 ? $img_yes : $img_no); ?>
-					</a>
-				</td>
-
-				<?php endif; ?>
-
-				<td class="center"><?php echo JHtml::_('grid.published', $category, $i) ?></td>
-				<td width="" align="center"><?php echo $this->escape ( $category->accessname ); ?></td>
-				<td width="15%" align="center"><?php echo $this->escape ( $category->editor ); ?></td>
-			</tr>
-				<?php
+								// Render dropdown list
+								echo JHtml::_('dropdown.render');
+							?>
+						</div>
+					</td>
+					<td class="hidden-phone">
+                    <?php if ($category->isSection()): ?>
+						<?php echo JText::_('COM_KUNENA_SECTION') ?>
+                        <?php else: ?>
+                        <?php echo JText::_('...Categorie') ?>
+                        <?php endif; ?>
+					</td>
+					<td class="hidden-phone">
+						<?php echo $this->escape ( $category->accessname ); ?>
+					</td>
+					<td class="center hidden-phone">
+						<?php echo intval($category->id); ?>
+					</td>
+				</tr>
+<?php
 				$i++;
 				$k = 1 - $k;
 				}
 				?>
+                </tbody>
 		</table>
-
-		</form>
+		
 	</div>
-	<div class="kadmin-footer">
+    <input type="hidden" name="task" value="" />
+		<input type="hidden" name="boxchecked" value="0" />
+		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
+		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
+		<?php echo JHtml::_('form.token'); ?>
+</form>
+	</div>
+
+	</div>
+
+	<div class="kadmin-footer center">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>
+    </div>
+    </div>
 </div>

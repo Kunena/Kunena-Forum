@@ -9,62 +9,89 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('dropdown.init');
+JHtml::_('formbehavior.chosen', 'select');
 
-$document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
+$changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->state->get('list.direction') == 'asc');
+
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
-	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_FUM'); ?></div>
+<!-- Main page container -->
+<div class="container-fluid">
+<div class="row-fluid">
+ <div class="span2">
+	<div><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+		</div>
+		<!-- Right side -->
+			<div class="span10">	
+             <div class="well well-small" style="min-height:120px;">
+                       <div class="nav-header">Users</div>
+                         <div class="row-striped">
+                         <br />
+				
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=users') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="view" value="users" />
 		<input type="hidden" name="task" value="" />
+        <input type="hidden" name="type" value="list" />
 		<input type="hidden" name="filter_order" value="<?php echo $this->escape ( $this->state->get('list.ordering') ) ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 		<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo JHtml::_( 'form.token' ); ?>
-
-		<table class="kadmin-sort">
-			<tr>
-				<td class="left" width="90%">
-					<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
-					<input type="text" name="search" id="search" value="<?php echo $this->escape ($this->state->get('list.search'));?>" class="text_area" onchange="document.adminForm.submit();" />
-					<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
-					<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
-				</td>
-			</tr>
-		</table>
+             <article class="data-block">
+                <div class="filter-search btn-group pull-left">
+				<label for="filter_search" class="element-invisible"><?php echo 'Search in';?></label>
+				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo 'Search user'; ?>" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo 'Search user'; ?>" />
+			</div>
+			<div class="btn-group pull-left">
+				<button class="btn" rel="tooltip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
+				<button class="btn" rel="tooltip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
+			</div>
+			<div class="btn-group pull-right hidden-phone">
+				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+				<?php echo  $this->navigation->getLimitBox (); ?>
+			</div>
+			<div class="btn-group pull-right hidden-phone">
+				<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
+				<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+					<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
+					<option value="asc" <?php if ($listDirn == 'asc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_ASCENDING');?></option>
+					<option value="desc" <?php if ($listDirn == 'desc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_DESCENDING');?></option>
+				</select>
+			</div>
+			<div class="btn-group pull-right hidden-phone">
+				<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+				<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+					<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+					<?php echo  $this->navigation->getLimitBox (); ?>
+				</select>
+			</div>
+		<div class="clr">&nbsp;</div>
 		<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th align="center" width="5">#</th>
 					<th align="center" width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->users ); ?>);" /></th>
-					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
+					<th align="center" class="hidden-phone"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
 					<th class="title" align="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th align="left"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th align="left"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_REALNAME', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_LOGGEDIN'); ?></th>
-					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_ENABLED'); ?></th>
-					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_BANNED'); ?></th>
-<?php /*
-					<th align="left"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></th>
-					<th align="left"><?php echo JText::_('COM_KUNENA_GEN_USERGROUP'); ?></th>
-*/ ?>
-					<th align="left"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-					<th align="left"><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?></th>
+					<th align="center" class="hidden-phone"><?php echo JText::_('COM_KUNENA_USRL_LOGGEDIN'); ?></th>
+					<th align="center" class="hidden-phone"><?php echo JText::_('COM_KUNENA_USRL_ENABLED'); ?></th>
+					<th align="center" class="hidden-phone"><?php echo JText::_('COM_KUNENA_USRL_BANNED'); ?></th>
+					<th align="left" class="hidden-phone"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></th>
+					<th align="left" class="hidden-phone hidden-tablet"><?php echo JText::_('COM_KUNENA_GEN_USERGROUP'); ?></th>
+					<th align="left" class="hidden-phone hidden-tablet"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th align="left" class="hidden-phone hidden-tablet"><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?></th>
 				</tr>
 			</thead>
 			<tfoot>
 				<tr>
 					<td colspan="14">
 							<div class="pagination">
-								<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->navigation->getLimitBox (); ?></div>
-								<?php echo $this->navigation->getPagesLinks (); ?>
-								<div class="limit"><?php echo $this->navigation->getResultsCounter (); ?></div>
-							</div>
+								<div class="center"><?php echo $this->navigation->getPagesLinks (); ?></div>
+						    </div>
 						</td>
 				</tr>
 			</tfoot>
@@ -81,6 +108,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 						$altUserEnabled = $kunena_user->isBlocked() ? JText::_( 'Blocked' ) : JText::_( 'Enabled' );
 						$userBlockTask =  $kunena_user->isBlocked() ? 'unblock' : 'block';
 						$userbanned = $kunena_user->isBanned() ? 'tick.png' : 'publish_x.png';
+
 						$userBannedTask = $kunena_user->isBanned() ? 'ban' : 'ban';
 						$altUserBanned = $kunena_user->isBanned() ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
 					?>
@@ -89,28 +117,29 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 				<td align="center">
 					<?php echo JHtml::_('grid.id', $i, intval($user->id)) ?>
 				</td>
-				<td align="center" width="1%"><?php echo $kunena_user->getAvatarImage('kavatar', 36, 36); ?></td>
+				<td align="center" width="1%" class="hidden-phone"><?php echo $kunena_user->getAvatarImage('kavatar', 36, 36); ?></td>
 				<td align="center" width="1%"><?php echo $this->escape($kunena_user->userid); ?></td>
 				<td>
 					<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->username); ?></a>
 				</td>
 				<td>
 					<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->name); ?></a></td>
-				<td align="center"><?php echo $userLogged; ?></td>
-				<td align="center">
+				<td class="hidden-phone" align="center"><?php echo $userLogged; ?></td>
+				<td class="hidden-phone" align="center">
 					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
-						<img src="<?php echo JUri::base(true) ?>/components/com_kunena/images/<?php echo $userEnabled;?>" width="16" height="16" border="0" alt="<?php echo $altUserEnabled; ?>" />
+						<i class="icon-checkmark"></i>
 					</a></td>
-				<td align="center">
+				<td class="hidden-phone" align="center">
 					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBannedTask; ?>')">
-						<img src="<?php echo JUri::base(true) ?>/components/com_kunena/images/<?php echo $userbanned;?>" width="16" height="16" border="0" alt="<?php echo $altUserBanned; ?>" />
+						<i class="icon-cancel"></i>
 					</a>
 				</td>
-<?php /*
-				<td width="100"><?php echo $this->escape($kunena_user->email);
+				<td class="hidden-phone" width="100"><?php echo $this->escape($kunena_user->email);
 						?>&nbsp;</td>
-*/ ?>
-				<td align="center">
+                <td class="hidden-phone hidden-tablet" align="center" >
+                <?php echo $this->escape($kunena_user->group_id);?>
+                </td>
+				<td class="hidden-phone hidden-tablet" align="center">
 					<?php
 					if ($kunena_user->moderator) {
 						echo JText::_('COM_KUNENA_YES');
@@ -119,16 +148,18 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					}
 					?>
 				</td>
-				<td width="*"><?php echo $this->escape ( $kunena_user->signature ); ?></td>
+				<td class="hidden-phone hidden-tablet" width="*"><?php echo $this->escape ( $kunena_user->signature ); ?></td>
 			</tr>
 		<?php $i++; }
 		} else { ?>
 			<tr><td colspan="11"><?php echo JText::_('COM_KUNENA_NOUSERSFOUND') ?></td></tr>
 		<?php } ?>
 		</table>
+        </article>
 		</form>
 	</div>
-	<div class="kadmin-footer">
-		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>
+	<div class="kadmin-footer center">
+		<?php echo KunenaVersion::getLongVersionHTML (); ?>
+    </div>
 </div>

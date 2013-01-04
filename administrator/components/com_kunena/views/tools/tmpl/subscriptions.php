@@ -73,4 +73,3 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>
 </div>
-<?php

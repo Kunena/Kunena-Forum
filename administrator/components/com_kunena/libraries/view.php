@@ -35,8 +35,15 @@ class KunenaView extends JViewLegacy {
 		// Set the default template search path
 		if ($this->app->isSite() && !isset($config['template_path'])) $config['template_path'] = $this->ktemplate->getTemplatePaths("html/$name", true);
 
-		// Joomla 2.5 template:
-		if ($this->app->isAdmin() && version_compare(JVERSION, '3', '<')) $config['template_path'] = array(KPATH_ADMIN.'/template/joomla25/'.$name);
+		if ($this->app->isAdmin()) {
+			if (version_compare(JVERSION, '3', '>')) {
+				// Joomla 3.0+ template:
+				$config['template_path'] = array(KPATH_ADMIN.'/template/joomla30/'.$name);
+			} else {
+				// Joomla 2.5 template:
+				$config['template_path'] = array(KPATH_ADMIN.'/template/joomla25/'.$name);
+			}
+		}
 
 		parent::__construct($config);
 

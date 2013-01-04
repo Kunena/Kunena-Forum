@@ -162,6 +162,9 @@ abstract class KunenaForum {
 		if (version_compare($version, '2.0', '<')) {
 			return false;
 		}
+		// TODO: remove after Kunena 3.0 has been released.
+		if ($version == '3.0') return true;
+
 		// Check if future version is needed (remove GIT and DEVn from the current version)
 		if (version_compare($version, preg_replace('/(-DEV\d*)?(-GIT)?/i', '', self::version()), '>')) {
 			return false;

@@ -24,8 +24,8 @@ ob_start();
 function kPreviewHelper()
 {
 	if (_previewActive == true){
-		previewRequest = new Request.JSON({url: <?php echo json_encode(KunenaRoute::_('index.php?option=com_kunena&view=topic&layout=edit&format=raw'));?>,
-				  							onSuccess: function(response){
+		previewRequest = new Request.JSON({url: <?php echo json_encode('index.php?option=com_kunena&view=topic&layout=edit&format=raw');?>,
+				onSuccess: function(response){
 			var __message = document.id("kbbcode-preview");
 			if (__message) {
 				__message.set("html", response.preview);

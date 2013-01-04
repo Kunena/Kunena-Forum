@@ -23,7 +23,7 @@ class Com_KunenaInstallerScript {
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'2.5' => '2.5.8',
+			'2.5' => '2.5.6',
 			'3.0' => '3.0.2',
 			'0' => '2.5.8' // Preferred version
 		)

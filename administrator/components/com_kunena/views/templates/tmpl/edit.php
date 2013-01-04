@@ -9,24 +9,33 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-$document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 JHtml::_('behavior.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('dropdown.init');
+JHtml::_('formbehavior.chosen', 'select');
+
+$changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->state->get('list.direction') == 'asc');
+
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
-	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_TEMPLATE'); ?> - <?php echo JText::_($this->details->name); ?></div>
-		<div style="border: 1px solid #ccc; padding: 10px 0 0;">
+<!-- Main page container -->
+<div class="container-fluid">
+<div class="row-fluid">
+ <div class="span2">
+	<div><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
+		</div>
+		<!-- Right side -->
+			<div class="span10">	
+             <div class="well well-small" style="min-height:120px;">
+                       <div class="nav-header"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_TEMPLATE'); ?> - <?php echo JText::_($this->details->name);  ?></div>
+                         <div class="row-striped">
+                         <br />
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="view" value="templates" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="templatename" value="<?php echo $this->escape($this->templatename); ?>">
 		<?php echo JHtml::_( 'form.token' ); ?>
 
-		<div class="col width-50">
+		<p class="pull-left">
 			<fieldset class="adminform">
 				<legend><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DETAILS' ); ?></legend>
 				<table class="admintable">
@@ -48,15 +57,15 @@ JHtml::_('behavior.tooltip');
 				</tr>
 				</table>
 			</fieldset>
-		</div>
-		<div class="col width-50">
+		</p>
+		<p class="pull-right">
 			<fieldset class="adminform">
 				<legend><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMETERS' ); ?></legend>
 				<table class="admintable">
 				<tr>
 					<td colspan="2" class="key" style="text-align:left; padding: 10px">
-						<?php
-							echo is_writable($this->templatefile) ? JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($this->templatefile)):JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($this->templatefile));
+						<?php $templatefile = KPATH_SITE.'/template/'.$this->templatename.'/params.ini';
+							echo is_writable($templatefile) ? JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $this->escape($templatefile)):JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $this->escape($templatefile));
 						?>
 					</td>
 				</tr>
@@ -90,12 +99,11 @@ JHtml::_('behavior.tooltip');
 				</tr>
 				</table>
 			</fieldset>
-		</div>
-		<div class="clr"></div>
+		</p>
 		</form>
 		</div>
-	</div>
-	<div class="kadmin-footer">
+        </div>
+	<div class="kadmin-footer center">
 		<?php echo KunenaVersion::getLongVersionHTML (); ?>
 	</div>
-</div>
+	</div>

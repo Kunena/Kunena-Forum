@@ -47,17 +47,12 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 JHtml::_('formbehavior.chosen', 'select');
 ?>
-<div class="container-fluid">
-<div class="row-fluid">
- <div class="span2">
-	<div><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+	<div id="j-sidebar-container" class="span2">
+		<div id="sidebar">
+			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+		</div>
 	</div>
-		<!-- Right side -->
-			<div class="span10">
-            <div class="well well-small" style="min-height:120px;">
-                       <div class="nav-header"><?php echo JText::_('COM_KUNENA_A_CATEGORY_CREATE_TITLE'); ?></div>
-                         <div class="row-striped">
-                         <br />	
+	<div id="j-main-container" class="span10">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="task" value="save" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
@@ -73,7 +68,7 @@ JHtml::_('formbehavior.chosen', 'select');
               <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
                 <div class="tab-pane active" id="tab1">
                   <fieldset>
-				
+
 				<table class="kadmin-adminform">
 					<tr>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_PARENT'); ?></td>
@@ -130,7 +125,7 @@ JHtml::_('formbehavior.chosen', 'select');
 			<div class="tab-pane" id="tab2">
 
 			<fieldset>
-					
+
 					<table class="kadmin-adminform">
 						<tr>
 							<td class="nowrap" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_TITLE'); ?></td>
@@ -152,7 +147,7 @@ JHtml::_('formbehavior.chosen', 'select');
                 </div>
                 <div class="tab-pane" id="tab3">
                   <fieldset>
-					
+
 					<table class="kadmin-adminform">
 						<tr>
 							<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
@@ -179,7 +174,7 @@ JHtml::_('formbehavior.chosen', 'select');
 							<td valign="top"><?php echo $this->options ['allow_polls']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 						</tr>
-						
+
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_CHANNELS'); ?>:</td>
 							<td valign="top"><?php echo $this->options ['channels']; ?></td>
@@ -195,13 +190,13 @@ JHtml::_('formbehavior.chosen', 'select');
 							<td valign="top"><?php echo $this->options ['category_iconset']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORY_TOPICICONSET_DESC'); ?></td>
 						</tr>
-						
+
 					</table>
 			</fieldset>
                 </div>
                 <div class="tab-pane" id="tab4">
                   <fieldset>
-					
+
 
 					<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
 
@@ -244,14 +239,9 @@ JHtml::_('formbehavior.chosen', 'select');
                 </div>
               </div>
 </article>
+	</form>
 </div>
-</div>
-		
-		</form>
-	</div>
-    </div>
-	<div class="kadmin-footer center">
-		<?php echo KunenaVersion::getLongVersionHTML (); ?>
-	</div>
 
-    </div>
+<div class="pull-right small">
+	<?php echo KunenaVersion::getLongVersionHTML(); ?>
+</div>

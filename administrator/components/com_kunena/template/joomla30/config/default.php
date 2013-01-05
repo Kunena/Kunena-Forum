@@ -27,9 +27,12 @@ $paneOptions = array(
 		'useCookie' => true, // this must not be a string. Don't use quotes.
 );
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php' ?></div>
-	<div class="kadmin-right">
+	<div id="j-sidebar-container" class="span2">
+		<div id="sidebar">
+			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+		</div>
+	</div>
+	<div id="j-main-container" class="span10">
 	<div class="kadmin-functitle icon-config"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
 		<div id="kadmin-configtabs">
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
@@ -1035,7 +1038,8 @@ $paneOptions = array(
 			</form>
 		</div>
 	</div>
-	<div class="kadmin-footer">
-		<?php echo KunenaVersion::getLongVersionHTML () ?>
-	</div>
+
+<div class="pull-right small">
+	<?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>
+

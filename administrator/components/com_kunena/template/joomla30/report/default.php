@@ -24,17 +24,17 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 JHtml::_('formbehavior.chosen', 'select');
 ?>
-<div class="container-fluid">
-<div class="row-fluid">
- <div class="span2">
-	<div><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+	<div id="j-sidebar-container" class="span2">
+		<div id="sidebar">
+			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+		</div>
 	</div>
-		<!-- Right side -->
-			<div class="span10">
+	<div id="j-main-container" class="span10">
+
             <div class="well well-small" style="min-height:120px;">
                        <div class="nav-header"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
                          <div class="row-striped">
-                         <br />	
+                         <br />
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="1" />
@@ -47,9 +47,9 @@ JHtml::_('formbehavior.chosen', 'select');
 		</form>
 		</div>
         </div>
-	<div class="kadmin-footer">
-		<?php echo KunenaVersion::getLongVersionHTML (); ?>
-	</div>
+
 </div>
-</div>
+
+<div class="pull-right small">
+	<?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>

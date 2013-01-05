@@ -45,7 +45,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.search', 'search', '', 'string' );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.search', 'filter_search', '', 'string' );
 		$this->setState ( 'list.search', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.categories.list.levels", 'levellimit', 10, 'int' );

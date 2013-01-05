@@ -116,7 +116,7 @@ $this->document->addScriptDeclaration($javascript);
 			<tfoot>
 				<tr>
 					<td colspan="6">
-						<div class="pagination"><?php echo $this->navigation->getPagesLinks(); ?></div>
+						<?php echo $this->navigation->getListFooter(); ?>
 					</td>
 				</tr>
 			</tfoot>

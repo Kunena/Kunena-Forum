@@ -12,7 +12,6 @@ defined ( '_JEXEC' ) or die ();
 
 $db = JFactory::getDBO();
 $document = JFactory::getDocument();
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 $document->addScriptDeclaration(' var current_count = '.JString::strlen($this->user->signature).'
 var max_count = '.(int) $this->config->maxsig.'
 
@@ -42,17 +41,18 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 JHtml::_('formbehavior.chosen', 'select');
 ?>
-<div class="container-fluid">
-<div class="row-fluid">
- <div class="span2">
-	<div><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+	<div id="j-sidebar-container" class="span2">
+		<div id="sidebar">
+			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+			<div><?php echo $this->sidebar; ?></div>
+		</div>
 	</div>
-		<!-- Right side -->
-			<div class="span10">
+	<div id="j-main-container" class="span10">
+
             <div class="well well-small" style="min-height:120px;">
                        <div class="nav-header"><?php echo JText::_('COM_KUNENA_PROFFOR'); ?>: <?php echo $this->escape($this->user->name) .' ('. $this->escape($this->user->username) .')'; ?></div>
                          <div class="row-striped">
-                         <br />				
+                         <br />
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="view" value="users" />
 		<input type="hidden" name="task" value="" />
@@ -82,7 +82,7 @@ JHtml::_('formbehavior.chosen', 'select');
 				<td class="contentpane">
                 <div class="img-polaroid">
 				<?php echo $this->avatar;
-				
+
 				if ($this->editavatar) { ?></div>
 					<p><input type="checkbox" value="1"
 					name="deleteAvatar" /> <em><?php echo JText::_('COM_KUNENA_DELAV'); ?></em></p></td>
@@ -439,14 +439,13 @@ JHtml::_('formbehavior.chosen', 'select');
              </article>
 </div>
 </div>
-	
-    
+
+
     </form>
     </div>
     </div>
     </div>
-	<div class="kadmin-footer center">
-		<?php echo KunenaVersion::getLongVersionHTML (); ?>
-	</div>
-   </div>
-    </div>
+
+<div class="pull-right small">
+	<?php echo KunenaVersion::getLongVersionHTML(); ?>
+</div>

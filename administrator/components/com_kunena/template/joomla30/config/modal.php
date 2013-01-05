@@ -24,6 +24,3 @@ JFactory::getDocument()->addScriptDeclaration($script);
 			<?php echo JHTML::_( 'form.token' ) ?>
 		</form>
 </fieldset>
-<div class="kadmin-footer">
-	<?php echo KunenaVersion::getLongVersionHTML () ?>
-</div>

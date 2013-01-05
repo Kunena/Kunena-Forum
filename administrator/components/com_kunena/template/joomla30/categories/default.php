@@ -43,7 +43,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
  <div class="well well-small" style="min-height:120px;">
                        <div class="nav-header">Categories</div>
                          <div class="row-striped">
-                         <br />			
+                         <br />
 			<div class="filter-search btn-group pull-left">
 				<label for="filter_search" class="element-invisible"><?php echo 'Search in';?></label>
 				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo 'Search categorie'; ?>" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo 'Search categorie'; ?>" />
@@ -71,8 +71,8 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
                     <option value="type" <?php if ($listDirn == 'type') echo 'selected="selected"'; ?>><?php echo JText::_('Type');?></option>
 				</select>
 			</div>
-		
-        
+
+
 		<table class="table table-striped adminlist">
 			<thead>
 				<tr>
@@ -102,7 +102,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 			<tfoot>
 				<tr>
 					<td colspan="6">
-                    
+
 								<div class="pagination"><?php echo $this->navigation->getPagesLinks (); ?></div>
 					</td>
 				</tr>
@@ -125,7 +125,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 					</td>
 					<td class="has-context">
 						<div class="pull-left">
-							
+
 								<a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')">
 									<?php echo str_repeat  ( '...', count($category->indent)-1 ).' '.$category->name; ?></a>
 							(Alias: <?php echo $category->alias  ?>)
@@ -144,7 +144,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 									else :
 										JHtml::_('dropdown.publish', 'cb' . $i, 'list.');
 									endif;
-								endif;								
+								endif;
 
 								// Render dropdown list
 								echo JHtml::_('dropdown.render');
@@ -172,7 +172,9 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 				?>
                 </tbody>
 		</table>
-		
+		<?php //Load the batch processing form. ?>
+		<?php echo $this->loadTemplate('batch'); ?>
+
 	</div>
     <input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />

@@ -141,6 +141,8 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 				}
 				?>
 		</table>
+		<?php //Load the batch processing form. ?>
+		<?php echo $this->loadTemplate('batch'); ?>
 
 		</form>
 	</div>

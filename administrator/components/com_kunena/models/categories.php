@@ -245,4 +245,19 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$moderators = $category->getModerators(false);
 		return $moderators;
 	}
+
+	function getBatchCategories() {
+		$categories = $this->getAdminCategories();
+
+		$batch_categories = array ();
+		$batch_categories [] = JHtml::_ ( 'select.option', 'select', JText::_('JSELECT') );
+
+		foreach($categories as $category) {
+			$batch_categories [] = JHtml::_ ( 'select.option', $category->id, str_repeat  ( '...', count($category->indent)-1 ).' '.$category->name );
+		}
+
+		$list = JHtml::_ ( 'select.genericlist', $batch_categories, 'batch[category_id]', 'class="inputbox" size="1"', 'value', 'text', 'select' );
+		return $list;
+
+	}
 }

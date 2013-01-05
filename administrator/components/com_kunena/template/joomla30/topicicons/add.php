@@ -10,17 +10,18 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 $iconPath = json_encode(JUri::root().'media/kunena/topic_icons/');
 $document->addScriptDeclaration("function update_topicicon(newimage) {
 	document.topicicon_image.src = {$iconPath} + newimage;
 }");
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
-	<div class="kadmin-right">
+	<div id="j-sidebar-container" class="span2">
+		<div id="sidebar">
+			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+		</div>
+	</div>
+	<div id="j-main-container" class="span10">
+
 	<div class="kadmin-functitle icon-topicicons"><?php if ( !$this->state->get('item.id') ): ?><?php echo JText::_('COM_KUNENA_A_NEW_TOPICICON'); ?><?php else: ?><?php echo JText::_('COM_KUNENA_A_EDIT_TOPICICON'); ?><?php endif; ?></div>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="topicicons" />
@@ -64,7 +65,9 @@ $document->addScriptDeclaration("function update_topicicon(newimage) {
 			</table>
 		</form>
 	</div>
-	<div class="kadmin-footer">
-		<?php echo KunenaVersion::getLongVersionHTML (); ?>
-	</div>
+
+</div>
+
+<div class="pull-right small">
+	<?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>

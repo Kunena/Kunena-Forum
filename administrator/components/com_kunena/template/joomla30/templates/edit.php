@@ -17,14 +17,13 @@ JHtml::_('formbehavior.chosen', 'select');
 $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->state->get('list.direction') == 'asc');
 
 ?>
-<!-- Main page container -->
-<div class="container-fluid">
-<div class="row-fluid">
- <div class="span2">
-	<div><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+	<div id="j-sidebar-container" class="span2">
+		<div id="sidebar">
+			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
 		</div>
-		<!-- Right side -->
-			<div class="span10">	
+	</div>
+	<div id="j-main-container" class="span10">
+
              <div class="well well-small" style="min-height:120px;">
                        <div class="nav-header"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_TEMPLATE'); ?> - <?php echo JText::_($this->details->name);  ?></div>
                          <div class="row-striped">
@@ -103,7 +102,9 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 		</form>
 		</div>
         </div>
-	<div class="kadmin-footer center">
-		<?php echo KunenaVersion::getLongVersionHTML (); ?>
+
 	</div>
-	</div>
+
+<div class="pull-right small">
+	<?php echo KunenaVersion::getLongVersionHTML(); ?>
+</div>

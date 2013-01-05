@@ -14,9 +14,13 @@ $document = JFactory::getDocument();
 $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
-	<div class="kadmin-right">
+	<div id="j-sidebar-container" class="span2">
+		<div id="sidebar">
+			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+		</div>
+	</div>
+	<div id="j-main-container" class="span10">
+
 	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></div>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" enctype="multipart/form-data" id="adminForm" name="adminForm">
 			<input type="hidden" name="view" value="templates" />
@@ -40,7 +44,9 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			</table>
 		</form>
 	</div>
-	<div class="kadmin-footer">
-		<?php echo KunenaVersion::getLongVersionHTML (); ?>
-	</div>
+
+</div>
+
+<div class="pull-right small">
+	<?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>

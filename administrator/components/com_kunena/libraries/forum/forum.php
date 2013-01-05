@@ -334,7 +334,7 @@ abstract class KunenaForum {
 			self::$version = strtoupper ( '@kunenaversion@' );
 		}
 		self::$version_major = substr(self::$version, 0, 3);
-		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toSql() : '@kunenaversiondate@';
+		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 }

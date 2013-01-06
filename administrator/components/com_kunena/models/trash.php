@@ -55,7 +55,7 @@ class KunenaAdminModelTrash extends KunenaModel {
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.search', 'search', '', 'string' );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.search', 'filter_search', '', 'string' );
 		$this->setState ( 'list.search', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.levels", 'levellimit', 10, 'int' );

@@ -10,40 +10,40 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
-
-$paneOptions = array(
-		'onActive' => 'function(title, description){
-		description.setStyle("display", "block");
-		title.addClass("open").removeClass("closed");
-}',
-		'onBackground' => 'function(title, description){
-		description.setStyle("display", "none");
-		title.addClass("closed").removeClass("open");
-}',
-		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
-		'useCookie' => true, // this must not be a string. Don't use quotes.
-);
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.multiselect');
+JHtml::_('dropdown.init');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
-	<div id="j-sidebar-container" class="span2">
-		<div id="sidebar">
-			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
-		</div>
+<div id="j-sidebar-container" class="span2">
+	<div id="sidebar">
+		<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
 	</div>
-	<div id="j-main-container" class="span10">
-	<div class="kadmin-functitle icon-config"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
-		<div id="kadmin-configtabs">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
-			<input type="hidden" name="view" value="config" />
-			<input type="hidden" name="task" value="" />
-			<?php echo JHtml::_( 'form.token' ) ?>
+</div>
+<div id="j-main-container" class="span10">
+	<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
+		<input type="hidden" name="view" value="config" />
+		<input type="hidden" name="task" value="" />
+		<?php echo JHtml::_( 'form.token' ) ?>
 
-			<?php
-				echo JHtml::_('tabs.start', 'pane', $paneOptions);
-				echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_BASICS'), 'panel_basics');
-			?>
+		<article class="data-block">
+			<div class="data-container">
+				<div class="tabbable">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#tab_basics" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BASICS'); ?></a></li>
+						<li><a href="#tab_frontend" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_FRONTEND'); ?></a></li>
+						<li><a href="#tab_users" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_USERS'); ?></a></li>
+						<li><a href="#tab_security" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_SECURITY'); ?></a></li>
+						<li><a href="#tab_avatars" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_AVATARS'); ?></a></li>
+						<li><a href="#tab_uploads" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_UPLOADS'); ?></a></li>
+						<li><a href="#tab_ranking" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_RANKING'); ?></a></li>
+						<li><a href="#tab_bbcode" data-toggle="tab"><?php echo JText::_('COM_KUNENA_A_BBCODE'); ?></a></li>
+						<li><a href="#tab_rss" data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_RSS'); ?></a></li>
+						<li><a href="#tab_extra" data-toggle="tab"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_EXTRA'); ?></a></li>
+					</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="tab_basics">
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
 
@@ -138,9 +138,9 @@ $paneOptions = array(
 					</tr>
 				</table>
 			</fieldset>
+		</div>
 
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_FRONTEND'), 'panel_frontend'); ?>
-
+		<div class="tab-pane" id="tab_frontend">
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_LOOKS') ?></legend>
 				<table class="kadmin-adminform">
@@ -331,9 +331,9 @@ $paneOptions = array(
 					</tr>
 				</table>
 			</fieldset>
+		</div>
 
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_USERS'), 'panel_users'); ?>
-
+		<div class="tab-pane" id="tab_users">
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_USER_RELATED') ?></legend>
 				<table class="kadmin-adminform">
@@ -459,9 +459,9 @@ $paneOptions = array(
 					</tr>
 				</table>
 			</fieldset>
+		</div>
 
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_SECURITY'), 'panel_security'); ?>
-
+		<div class="tab-pane" id="tab_security">
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_SECURITY_SETTINGS') ?></legend>
 				<table class="kadmin-adminform">
@@ -572,9 +572,9 @@ $paneOptions = array(
 					</tr>
 				</table>
 			</fieldset>
+		</div>
 
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_AVATARS'), 'panel_avatars'); ?>
-
+		<div class="tab-pane" id="tab_avatars">
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATAR_SETTINGS') ?></legend>
 				<table class="kadmin-adminform">
@@ -598,9 +598,9 @@ $paneOptions = array(
 					</tr>
 				</table>
 			</fieldset>
+		</div>
 
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_UPLOADS'), 'panel_uploads'); ?>
-
+		<div class="tab-pane" id="tab_uploads">
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_IMAGE') ?></legend>
 				<table class="kadmin-adminform">
@@ -698,9 +698,9 @@ $paneOptions = array(
 					</tr>
 				</table>
 			</fieldset>
+		</div>
 
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_RANKING'), 'panel_ranking'); ?>
-
+		<div class="tab-pane" id="tab_ranking">
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_RANKING_SETTINGS') ?></legend>
 				<table class="kadmin-adminform">
@@ -716,9 +716,9 @@ $paneOptions = array(
 					</tr>
 				</table>
 			</fieldset>
+		</div>
 
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_A_BBCODE'), 'panel_bbcode'); ?>
-
+		<div class="tab-pane" id="tab_bbcode">
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_BBCODE_SETTINGS') ?></legend>
 				<table class="kadmin-adminform">
@@ -802,9 +802,9 @@ $paneOptions = array(
 					*/ ?>
 				</table>
 			</fieldset>
+		</div>
 
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_ADMIN_RSS'), 'panel_rss'); ?>
-
+		<div class="tab-pane" id="tab_rss">
 			<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_RSS_SETTINGS') ?></legend>
 					<table class="kadmin-adminform">
@@ -875,9 +875,9 @@ $paneOptions = array(
 						</tr>
 					</table>
 			</fieldset>
+		</div>
 
-			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_ADMIN_CONFIG_EXTRA'), 'panel_extra'); ?>
-
+		<div class="tab-pane" id="tab_extra">
 			<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>
 					<table class="kadmin-adminform">
@@ -1033,11 +1033,14 @@ $paneOptions = array(
 						</tr>
 					</table>
 				</fieldset>
-
-				<?php echo JHtml::_('tabs.end'); ?>
-			</form>
+			</div>
 		</div>
-	</div>
+				</div>
+			</div>
+		</article>
+	</form>
+</div>
+
 
 <div class="pull-right small">
 	<?php echo KunenaVersion::getLongVersionHTML(); ?>

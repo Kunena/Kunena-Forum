@@ -21,9 +21,9 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" id="adminForm" name="adminForm">
 		<input type="hidden" name="view" value="templates" />
 		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="id" value="<?php echo $this->templatename; ?>" />
-		<input type="hidden" name="cid[]" value="<?php echo $this->templatename; ?>" />
-		<input type="hidden" name="filename" value="<?php echo $this->filename; ?>" />
+		<input type="hidden" name="id" value="<?php echo $this->escape($this->templatename); ?>" />
+		<input type="hidden" name="cid[]" value="<?php echo $this->escape($this->templatename); ?>" />
+		<input type="hidden" name="filename" value="<?php echo $this->escape($this->filename); ?>" />
 		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<?php if($this->ftp): ?>

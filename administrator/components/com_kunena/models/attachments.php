@@ -43,7 +43,7 @@ class KunenaAdminModelAttachments extends KunenaModel {
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.attachments.list.search', 'search', '', 'string' );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.attachments.list.search', 'filter_search', '', 'string' );
 		$this->setState ( 'list.search', $value );
 	}
 

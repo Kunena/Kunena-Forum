@@ -71,7 +71,7 @@ $this->document->addScriptDeclaration($javascript);
 			</div>
 			<div class="btn-group pull-right hidden-phone">
 				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-				<?php echo $this->navigation->getLimitBox (); ?>
+				<?php echo $this->navigation->getListFooter(); ?>
 			</div>
 			<div class="btn-group pull-right hidden-phone">
 				<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>

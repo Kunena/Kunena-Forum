@@ -43,7 +43,7 @@ class KunenaAdminModelUsers extends KunenaModel {
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.search', 'search', '', 'string' );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.search', 'filter_search', '', 'string' );
 		$this->setState ( 'list.search', $value );
 	}
 

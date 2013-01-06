@@ -4,7 +4,7 @@
  * @package Kunena.Administrator.Template
  * @subpackage Report
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -41,7 +41,7 @@ JHtml::_('formbehavior.chosen', 'select');
 					<td>
 						<p><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?></p>
 						<p><a href="#" id="link_sel_all" ><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a></p>
-						<textarea id="report_final" name="report_final" cols="80" rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
+						<textarea id="report_final" class="input-xxlarge" name="report_final" cols="80" rows="15"><?php echo $this->escape($this->systemreport); ?></textarea>
 					</td>
 				</tr>
 			</table>

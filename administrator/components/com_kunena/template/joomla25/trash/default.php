@@ -25,7 +25,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 				<tr>
 					<td class="left" width="90%">
 						<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
-						<input type="text" name="search" id="search" value="<?php echo $this->escape($this->state->get('list.search'));?>" class="text_area" onchange="document.adminForm.submit();" />
+						<input type="text" name="filter_search" id="search" value="<?php echo $this->escape($this->state->get('list.search'));?>" class="text_area" onchange="document.adminForm.submit();" />
 						<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
 						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
 					</td>
@@ -90,7 +90,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					<td ><?php
 						echo isset($row->subject) ? $this->escape($row->subject) : $this->escape($row->title);
 						?></td>
-					<td ><?php if ($this->state->get( 'list.view_selected')) {
+					<td ><?php if ($this->state->get( 'list.view_selected') == 'topics') {
 						$cat = KunenaForumCategoryHelper::get($row->category_id);
 						echo $this->escape($cat->name);
 					} else {
@@ -99,15 +99,15 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					}
 						?></td>
 					<td ><?php
-						if ($this->state->get( 'list.view_selected')) {
+						if ($this->state->get( 'list.view_selected') == 'topics') {
 							$message = KunenaForumMessageHelper::get($row->id);
-							echo $message->ip;
+							echo $this->escape($message->ip);
 						} else {
 							echo $this->escape($row->ip);
 						}
 						?></td>
 					<td ><?php
-					if ($this->state->get( 'list.view_selected')) {
+					if ($this->state->get( 'list.view_selected') == 'topics') {
 						echo intval($row->first_post_userid);
 					} else {
 						echo intval($row->userid);
@@ -118,7 +118,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 						echo $this->escape($row->getAuthor()->getName());
 						?></td>
 					<td ><?php
-					if ($this->state->get( 'list.view_selected') ) {
+					if ($this->state->get( 'list.view_selected') == 'topics') {
 						echo strftime('%Y-%m-%d %H:%M:%S',$row->last_post_time);
 					} else {
 						echo strftime('%Y-%m-%d %H:%M:%S',$row->time);

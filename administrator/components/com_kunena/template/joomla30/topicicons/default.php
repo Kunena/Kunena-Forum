@@ -10,10 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
-
 $paneOptions = array(
 		'onActive' => 'function(title, description){
 		description.setStyle("display", "block");
@@ -27,9 +23,13 @@ $paneOptions = array(
 		'useCookie' => true, // this must not be a string. Don't use quotes.
 );
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
-	<div class="kadmin-right">
+	<div id="j-sidebar-container" class="span2">
+		<div id="sidebar">
+			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+		</div>
+	</div>
+	<div id="j-main-container" class="span10">
+
 	<div class="kadmin-functitle icon-topicicons"><?php echo JText::_('COM_KUNENA_A_TOPICICONS_MANAGER'); ?></div>
 		<?php
 			echo JHtml::_('tabs.start', 'pane', $paneOptions);
@@ -156,7 +156,8 @@ $paneOptions = array(
 
 		<?php echo JHtml::_('tabs.end'); ?>
 	</div>
-</div>
-<div class="kadmin-footer">
-	<?php echo KunenaVersion::getLongVersionHTML (); ?>
+
+
+<div class="pull-right small">
+	<?php echo KunenaVersion::getLongVersionHTML(); ?>
 </div>

@@ -51,8 +51,8 @@ class KunenaAdminViewCategories extends KunenaView {
 		JToolBarHelper::cancel();
 	}
 	protected function setToolBarDefault() {
-		// Set the titlebar text
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_ADMIN'));
+
 		JToolBarHelper::publish ();
 		JToolBarHelper::unpublish ();
 		JToolBarHelper::addNew ();
@@ -61,7 +61,9 @@ class KunenaAdminViewCategories extends KunenaView {
 		//JToolBarHelper::back ( JText::_ ( 'Home' ), 'index.php?option=com_kunena' );
 
 		// Joomla 3.0+
-		if (version_compare(JVERSION, '3', '>')) {
+		$this->sidebar = '';
+		if (0 && version_compare(JVERSION, '3', '>')) {
+			// TODO: not implemented in model
 			JHtmlSidebar::setAction('index.php?option=com_kunena&view=categories');
 
 			JHtmlSidebar::addFilter(

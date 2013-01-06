@@ -91,7 +91,6 @@ class KunenaAdminModelSmilies extends KunenaModel {
 
 		$smiley_images = $files1 + $files2;
 		ksort($smiley_images);
-		print_r($smiley_images);
 
 		$smiley_list = array();
 		$i = 0;

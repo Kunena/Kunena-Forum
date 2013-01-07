@@ -77,11 +77,11 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 				<td><?php echo JHTML::_('grid.id', $i, intval($attachment->id)) ?></td>
 				<td class="left" width="70%"><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->filename, 10, 15) ?></td>
 				<td class="center"><?php echo intval($attachment->id); ?></td>
-				<td class="center"><?php echo $attachment->filetype; ?></td>
+				<td class="center"><?php echo $this->escape($attachment->filetype); ?></td>
 				<td class="center"><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
 				<td class="center"><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
-				<td class="center"><?php echo $message->name; ?></td>
-				<td class="center"><?php echo $message->subject; ?></td>
+				<td class="center"><?php echo $this->escape($message->name); ?></td>
+				<td class="center"><?php echo $this->escape($message->subject); ?></td>
 			</tr>
 				<?php
 				$i++;

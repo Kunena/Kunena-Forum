@@ -1,6 +1,6 @@
 [main]
 host = https://www.transifex.net
-lang_map = ar:ar-AA, az_AZ:az-AZ, bg_BG:bg-BG, bs_BA:bs-BA, ca_ES:ca-ES, cs:cs-CZ, cy_GB:cy-GB, da_DK:da-DK, de_DE:de-DE, el_GR:el-GR, en_GB:en-GB, eo:eo-XX, es_ES:es-ES, et_EE:et-EE, fa_IR:fa-IR, fi_FI:fi-FI, fr:fr-FR, he_IL:he-IL, hr_HR:hr-HR, hu_HU:hu-HU, id_ID:id-ID, it_IT:it-IT, ja_JP:ja-JP, kk:kz-KZ, km_KH:km-KH, ko_KR:ko-KR, ku_IQ:ckb-IQ, lt_LT:lt-LT, lv_LV:lv-LV, mk_MK:mk-MK, nb_NO:nb-NO, nl_NL:nl-NL, pl:pl-PL, pt_BR:pt-BR, pt_PT:pt-PT, ro:ro-RO, ru_RU:ru-RU, sk_SK:sk-SK, sl_SI:sl-SI, sl_SL:sl-SL, sq_AL:sq-AL, sr_RS:sr-RS, sr@latin:sr-YU, sv_SE:sv-SE, th_TH:th-TH, tr_TR:tr-TR, ug:ug-CN, uk_UA:uk-UA, ur_PK:ur-PK, vi_VN:vi-VN, zh_CN:zh-CN, zh_TW:zh-TW
+lang_map = ar:ar-AA, az_AZ:az-AZ, bg_BG:bg-BG, bs_BA:bs-BA, ca_ES:ca-ES, cs:cs-CZ, cy_GB:cy-GB, da_DK:da-DK, de_DE:de-DE, el_GR:el-GR, en_GB:en-GB, eo:eo-XX, es_ES:es-ES, et_EE:et-EE, fa_IR:fa-IR, fi_FI:fi-FI, fr:fr-FR, he_IL:he-IL, hi_IN:hi-IN, hr_HR:hr-HR, hu_HU:hu-HU, id_ID:id-ID, it_IT:it-IT, ja_JP:ja-JP, kk:kz-KZ, km_KH:km-KH, ko_KR:ko-KR, ku_IQ:ckb-IQ, lt_LT:lt-LT, lv_LV:lv-LV, mk_MK:mk-MK, nb_NO:nb-NO, nl_NL:nl-NL, pl:pl-PL, pt_BR:pt-BR, pt_PT:pt-PT, ro:ro-RO, ru_RU:ru-RU, sk_SK:sk-SK, sl_SI:sl-SI, sl_SL:sl-SL, sq_AL:sq-AL, sr_RS:sr-RS, sr@latin:sr-YU, sv_SE:sv-SE, th_TH:th-TH, tr_TR:tr-TR, ug:ug-CN, uk_UA:uk-UA, ur_PK:ur-PK, vi_VN:vi-VN, zh_CN:zh-CN, zh_TW:zh-TW
 
 [Kunena.kunena-controllers]
 file_filter = administrator/components/com_kunena/language/<lang>/<lang>.com_kunena.controllers.ini

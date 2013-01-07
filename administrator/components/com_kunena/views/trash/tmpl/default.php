@@ -90,16 +90,16 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					<td ><?php
 						echo isset($row->subject) ? $this->escape($row->subject) : $this->escape($row->title);
 						?></td>
-					<td ><?php if ($this->state->get( 'list.view_selected')) {
+					<td ><?php if ($this->state->get( 'list.view_selected') == 'topics') {
 						$cat = KunenaForumCategoryHelper::get($row->category_id);
 						echo $this->escape($cat->name);
 					} else {
-						 $cat = KunenaForumCategoryHelper::get($row->catid);
+						$cat = KunenaForumCategoryHelper::get($row->catid);
 						echo $this->escape($cat->name);
 					}
 						?></td>
 					<td ><?php
-						if ($this->state->get( 'list.view_selected')) {
+						if ($this->state->get( 'list.view_selected') == 'topics') {
 							$message = KunenaForumMessageHelper::get($row->id);
 							echo $message->ip;
 						} else {
@@ -107,7 +107,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						}
 						?></td>
 					<td ><?php
-					if ($this->state->get( 'list.view_selected')) {
+					if ($this->state->get( 'list.view_selected') == 'topics') {
 						echo intval($row->first_post_userid);
 					} else {
 						echo intval($row->userid);
@@ -118,7 +118,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 						echo $this->escape($row->getAuthor()->getName());
 						?></td>
 					<td ><?php
-					if ($this->state->get( 'list.view_selected') ) {
+					if ($this->state->get( 'list.view_selected') == 'topics') {
 						echo strftime('%Y-%m-%d %H:%M:%S',$row->last_post_time);
 					} else {
 						echo strftime('%Y-%m-%d %H:%M:%S',$row->time);
@@ -129,7 +129,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JURI::base().'c
 					}
 					?>
 			</table>
-			<input type="hidden" name="type" value="<?php echo $this->escape ($this->state->get('list.view_selected')) ?>" />
+			<input type="hidden" name="type" value="<?php echo $this->escape ($this->state->get('list.view_selected') == 'topics') ?>" />
 			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />

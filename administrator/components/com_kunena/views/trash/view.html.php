@@ -33,7 +33,7 @@ class KunenaAdminViewTrash extends KunenaView {
 
 	protected function setToolBarDefault() {
 		// Set the titlebar text
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TRASH_MANAGER'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('restore','restore.png','restore_f2.png', 'COM_KUNENA_TRASH_RESTORE');
 		JToolBarHelper::spacer();

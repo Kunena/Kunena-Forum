@@ -60,7 +60,7 @@ class KunenaAdminViewTools extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_FORUM_TOOLS'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::back();
 	}

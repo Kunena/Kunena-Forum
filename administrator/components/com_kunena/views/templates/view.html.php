@@ -66,7 +66,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('publish', 'default.png', 'default_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
 		JToolBarHelper::spacer();

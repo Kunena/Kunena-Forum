@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewCpanel extends KunenaView {
 	function displayDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_DASHBOARD'), 'kunena.png' );
 
 		if (JFactory::getUser()->authorise('core.admin', 'com_kunena')) {
 			JToolBarHelper::preferences('com_kunena');

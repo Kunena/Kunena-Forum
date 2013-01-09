@@ -24,7 +24,6 @@ defined ( '_JEXEC' ) or die ();
 		<div class="row-fluid">
 			<div class="span7">
 				<div class="well well-small">
-					<img class="pull-left" src="components/com_kunena/media/icons/kunena_logo.png" alt="" />
 					<ul class="pull-left">
 						<li><a href="http://docs.kunena.org/index.php/K_2.0_Installation_Guide" target="_blank">Faq: How to Setup </a></li>
 						<li><a href="http://www.kunena.org/forum/K-2-0-Support/125990-kunena-2-0-3-known-issues" target="_blank">Faq: What are the knowing errors </a></li>
@@ -74,7 +73,9 @@ defined ( '_JEXEC' ) or die ();
 
 			<div class="span5">
 				<div class="well well-small">
-					<img class="pull-right" src="<?php JUri::root(true); ?>/media/kunena/images/icons/kunena-logo-110.png"/>
+					<div class="center">
+						<img src="components/com_kunena/media/icons/kunena_logo.png" />
+					</div>
 					<dl class="dl-horizontal">
 						<dt>Version:</dt>
 						<dd><?php echo KunenaForum::version(); ?></dd>

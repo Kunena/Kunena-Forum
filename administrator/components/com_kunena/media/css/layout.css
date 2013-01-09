@@ -1,0 +1,14 @@
+/**
+ * Kunena Component
+ * @package Kunena.Administrator.Joomla30
+ *
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+
+.center {
+    float: none;
+    margin-left: 0px;
+    margin-right: 0px;
+}

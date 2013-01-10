@@ -76,6 +76,7 @@ defined ( '_JEXEC' ) or die ();
 					<div class="center">
 						<img src="components/com_kunena/media/icons/kunena_logo.png" />
 					</div>
+					<hr class="hr-condensed">
 					<dl class="dl-horizontal">
 						<dt>Version:</dt>
 						<dd><?php echo KunenaForum::version(); ?></dd>

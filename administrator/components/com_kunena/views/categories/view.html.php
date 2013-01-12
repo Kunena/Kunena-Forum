@@ -50,7 +50,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		JToolBarHelper::cancel();
 	}
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_ADMIN'));
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_CATEGORY_MANAGER'));
 
 		JToolBarHelper::publish ();
 		JToolBarHelper::unpublish ();

@@ -54,7 +54,7 @@ JHtml::_('formbehavior.chosen', 'select');
 			<?php foreach ( $this->templates as $id => $row) : ?>
 			<tr>
 				<td>
-					<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="isChecked(this.checked);" />
+					<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="Joomla.isChecked(this.checked);" />
 				</td>
 				<td>
 					<?php $img_path = JUri::root(true).'/components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>

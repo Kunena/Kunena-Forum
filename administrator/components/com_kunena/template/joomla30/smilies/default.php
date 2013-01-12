@@ -63,7 +63,7 @@ JHtml::_('formbehavior.chosen', 'select');
 								<?php echo ($id + $this->navigation->limitstart + 1); ?>
 							</td>
 							<td>
-								<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->id); ?>" onclick="isChecked(this.checked);" />
+								<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->id); ?>" onclick="Joomla.isChecked(this.checked);" />
 							</td>
 							<td>
 								<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">

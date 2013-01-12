@@ -26,7 +26,7 @@ class KunenaAdminViewConfig extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_CONFIGURATION'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::apply();
 		JToolBarHelper::spacer();

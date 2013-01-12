@@ -41,7 +41,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php foreach ($this->files as $id => $file) : ?>
 				<tr>
 					<td>
-						<input type="radio" id="cb<?php echo $id;?>" name="filename" value="<?php echo $this->escape($file); ?>" onclick="isChecked(this.checked);" />
+						<input type="radio" id="cb<?php echo $id;?>" name="filename" value="<?php echo $this->escape($file); ?>" onclick="Joomla.isChecked(this.checked);" />
 					</td>
 					<td>
 						<?php echo $this->escape($file); ?>

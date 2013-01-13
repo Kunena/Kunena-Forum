@@ -26,7 +26,11 @@ class KunenaAdminViewAttachments extends KunenaView {
 		// Set the titlebar text
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
-		JToolBarHelper::custom('delete','restore.png','restore_f2.png', 'COM_KUNENA_GEN_DELETE');
+		if (version_compare(JVERSION, '3', '>')) {
+			JToolBarHelper::custom('delete','trash.png','trash_f2.png', 'COM_KUNENA_GEN_DELETE');
+		} else {
+			JToolBarHelper::custom('delete','delete.png','delete_f2.png', 'COM_KUNENA_GEN_DELETE');
+		}
 		JToolBarHelper::spacer();
 	}
 }

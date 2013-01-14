@@ -51,11 +51,11 @@ class KunenaAdminViewCategories extends KunenaView {
 	}
 	protected function setToolBarDefault() {
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_CATEGORY_MANAGER'));
-
+		//TODO STRING
+		JToolBarHelper::addNew ('add', 'New Category');
+		JToolBarHelper::editList ();
 		JToolBarHelper::publish ();
 		JToolBarHelper::unpublish ();
-		JToolBarHelper::addNew ();
-		JToolBarHelper::editList ();
 		JToolBarHelper::deleteList ();
 		//JToolBarHelper::back ( JText::_ ( 'Home' ), 'index.php?option=com_kunena' );
 
@@ -132,23 +132,68 @@ class PluginsHelper
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'JENABLED');
-		$options[]	= JHtml::_('select.option', '0', 'JDISABLED');
+		$options[]	= JHtml::_('select.option', '1', 'On');
+		$options[]	= JHtml::_('select.option', '0', 'Off');
 
 		return $options;
 	}
 
 	/**
-	 * Returns an array of standard published state filter options.
-	 *
-	 * @return	string			The HTML code for the select tag
-	 */
+ * Returns an array of standard published state filter options.
+ *
+ * @return	string			The HTML code for the select tag
+ */
 	public static function typeOptions()
 	{
 		// Build the active state filter options.
 		$options	= array();
 		$options[]	= JHtml::_('select.option', '1', 'Sections');
 		$options[]	= JHtml::_('select.option', '0', 'Categories');
+
+		return $options;
+	}
+
+	/**
+	 * Returns an array of locked filter options.
+	 *
+	 * @return	string			The HTML code for the select tag
+	 */
+	public static function lockOptions()
+	{
+		// Build the active state filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '1', 'On');
+		$options[]	= JHtml::_('select.option', '0', 'Off');
+
+		return $options;
+	}
+
+	/**
+	 * Returns an array of review filter options.
+	 *
+	 * @return	string			The HTML code for the select tag
+	 */
+	public static function reviewOptions()
+	{
+		// Build the active state filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '1', 'On');
+		$options[]	= JHtml::_('select.option', '0', 'Off');
+
+		return $options;
+	}
+
+	/**
+	 * Returns an array of type filter options.
+	 *
+	 * @return	string			The HTML code for the select tag
+	 */
+	public static function anonymousOptions()
+	{
+		// Build the active state filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '1', 'On');
+		$options[]	= JHtml::_('select.option', '0', 'Off');
 
 		return $options;
 	}

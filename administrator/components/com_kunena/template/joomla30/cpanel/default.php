@@ -17,22 +17,16 @@ defined ( '_JEXEC' ) or die ();
 </div>
 <div id="j-main-container" class="span10">
 	<section class="content-block" role="main">
-		<div class="alert alert-info">
+		<!--<div class="alert alert-info">
 			<button type="button" class="close" data-dismiss="alert">×</button>
 			<strong>Welcome on the New Kunena Environment!!!</strong> Its all about Bootstrap.
-		</div>
+		</div>-->
 		<div class="row-fluid">
 			<div class="span7">
-				<div class="well well-small">
-					<ul class="pull-left">
-						<li><a href="http://docs.kunena.org/index.php/K_2.0_Installation_Guide" target="_blank">Faq: How to Setup </a></li>
-						<li><a href="http://www.kunena.org/forum/K-2-0-Support/125990-kunena-2-0-3-known-issues" target="_blank">Faq: What are the knowing errors </a></li>
-						<li><a href="http://www.kunena.org/forum" target="_blank">Faq: Free or Paid Support </a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
 
 				<div class="well well-small">
+					<div class="module-title nav-header">Welcome to Kunena!</div>
+					<hr class="hr-condensed">
 					<div class="btn-group">
 						<div class="btn">
 							<div class="icon">
@@ -92,6 +86,18 @@ defined ( '_JEXEC' ) or die ();
 						<dd>GNU General Public License</dd>
 					</dl>
 				</div>
+
+				<div class="well well-small">
+					<div class="module-title nav-header">Getting Started</div>
+					<hr class="hr-condensed">
+					<ul class="pull-left">
+						<li><a href="http://docs.kunena.org/index.php/K_2.0_Installation_Guide" target="_blank">Faq: How to Setup </a></li>
+						<li><a href="http://www.kunena.org/forum/K-2-0-Support/125990-kunena-2-0-3-known-issues" target="_blank">Faq: What are the knowing errors </a></li>
+						<li><a href="http://www.kunena.org/forum" target="_blank">Faq: Free or Paid Support </a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
 			</div>
 		</div>
 	</section>

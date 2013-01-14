@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-JHtml::_('formbehavior.chosen', 'select');
+//JHtml::_('formbehavior.chosen', '');
 
 $sortFields = array();
 $sortFields[] = JHtml::_('select.option', 'p.published', JText::_('JSTATUS'));
@@ -28,8 +28,16 @@ $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DES
 
 $user			= JFactory::getUser();
 $filterSearch	= $this->escape($this->state->get('list.search'));
+$filterTitle	= $this->escape($this->state->get('list.filter_title'));
+$filterType	= $this->escape($this->state->get('list.filter_type'));
+$filterAccess	= $this->escape($this->state->get('list.filter_access'));
+$filterLocked	= $this->escape($this->state->get('list.filter_locked'));
+$filterReview	= $this->escape($this->state->get('list.filter_review'));
+$filterAnonymous = $this->escape($this->state->get('list.filter_anonymous'));
 $listOrdering	= $this->escape($this->state->get('list.ordering'));
 $listDirection	= $this->escape($this->state->get('list.direction'));
+
+$this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
 
 $javascript = <<<END
 Joomla.orderTable = function() {
@@ -78,7 +86,7 @@ $this->document->addScriptDeclaration($javascript);
 				<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 					<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
 					<?php echo JHtml::_('select.options', $sortDirection, 'value', 'text', $listDirection);?>
-					</select>
+				</select>
 			</div>
 			<div class="btn-group pull-right">
 				<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
@@ -93,36 +101,125 @@ $this->document->addScriptDeclaration($javascript);
 		<table class="table table-striped adminlist" id="categoryList">
 			<thead>
 				<tr>
+					<th width="1%" class="nowrap center hidden-phone">
+						<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
+					</th>
 					<th width="1%" class="hidden-phone">
-						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="checkAll(<?php echo count($this->categories); ?>);" />
+						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 					</th>
 					<th width="5%" class="nowrap center">
-						<?php echo JHTML::_('grid.sort', JText::_('JSTATUS'), 'p.published', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', JText::_('JSTATUS'), 'p.published', $listDirection, $listOrdering); ?>
 					</th>
 					<th class="nowrap">
-						<?php echo JHTML::_('grid.sort', JText::_('JGLOBAL_TITLE'), 'p.title', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', JText::_('JGLOBAL_TITLE'), 'p.title', $listDirection, $listOrdering); ?>
 					</th>
-					<th width="10%" class="nowrap hidden-phone">
-						<?php echo JHTML::_('grid.sort', 'Type', 'p.type', $listDirection, $listOrdering); ?>
+					<th width="7%" class="nowrap center hidden-phone">
+						<?php /*TODO: STRING Text */ echo JHTML::_('grid.sort', 'Type', 'p.type', $listDirection, $listOrdering); ?>
 					</th>
-					<th width="10%" class="nowrap hidden-phone">
-						<?php echo JHTML::_('grid.sort', 'Access', 'p.access', $listDirection, $listOrdering); ?>
+					<th width="7%" class="nowrap center hidden-phone">
+						<?php /*TODO: STRING Text */ echo JHTML::_('grid.sort', 'Access', 'p.access', $listDirection, $listOrdering); ?>
+					</th>
+					<th width="5%" class="nowrap center">
+						<?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_LOCKED'), 'p.locked', $listDirection, $listOrdering); ?>
+					</th>
+					<th width="5%" class="nowrap center">
+						<?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_REVIEW'), 'p.review', $listDirection, $listOrdering); ?>
+					</th>
+					<th width="5%" class="nowrap center">
+						<?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'), 'p.anonymous', $listDirection, $listOrdering); ?>
 					</th>
 					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo JHTML::_('grid.sort', JText::_('JGRID_HEADING_ID'), 'p.id', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', JText::_('JGRID_HEADING_ID'), 'p.id', $listDirection, $listOrdering); ?>
 					</th>
+				</tr>
+				<tr>
+					<td class="hidden-phone">
+					</td>
+					<td class="hidden-phone">
+					</td>
+					<td class="nowrap center">
+						<label for="filter_publish" class="element-invisible"><?php echo JText::_('All');?></label>
+						<select name="filter_publish" id="filter_publish" class="select-filter" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('All');?></option>
+							<?php echo JHtml::_('select.options', PluginsHelper::publishedOptions(), 'value', 'text', $this->state->get('jgrid.published'), true); ?>
+						</select>
+					</td>
+					<td class="nowrap">
+						<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
+						<input class="input-block-level input-filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTitle; ?>" title="<?php echo 'Filter'; ?>" />
+					</td>
+					<td class="nowrap center hidden-phone">
+						<label for="filter_type" class="element-invisible"><?php echo JText::_('All');?></label>
+						<select name="filter_type" id="filter_type" class="select-filter" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('All');?></option>
+							<?php echo JHtml::_('select.options', PluginsHelper::typeOptions(), 'value', 'text', $filterTitle); ?>
+						</select>
+					</td>
+					<td class="nowrap center hidden-phone">
+						<label for="filter_access" class="element-invisible"><?php echo JText::_('All');?></label>
+						<select name="filter_access" id="filter_access" class="select-filter" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('All');?></option>
+							<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $filterAccess); ?>
+						</select>
+					</td>
+					<td class="nowrap center">
+						<label for="filter_locked" class="element-invisible"><?php echo JText::_('All');?></label>
+						<select name="filter_locked" id="filter_locked" class="select-filter" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('All');?></option>
+							<?php echo JHtml::_('select.options', PluginsHelper::lockOptions(), 'value', 'text', $filterLocked); ?>
+						</select>
+					</td>
+					<td class="nowrap center">
+						<label for="filter_review" class="element-invisible"><?php echo JText::_('All');?></label>
+						<select name="filter_review" id="filter_review" class="select-filter" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('All');?></option>
+							<?php echo JHtml::_('select.options', PluginsHelper::reviewOptions(), 'value', 'text', $filterReview); ?>
+						</select>
+					</td>
+					<td class="nowrap center">
+						<label for="filter_anonymous" class="element-invisible"><?php echo JText::_('All');?></label>
+						<select name="filter_anonymous" id="filter_anonymous" class="select-filter" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('All');?></option>
+							<?php echo JHtml::_('select.options', PluginsHelper::anonymousOptions(), 'value', 'text', $filterAnonymous); ?>
+						</select>
+					</td>
+					<td class="nowrap center hidden-phone">
+					</td>
 				</tr>
 			</thead>
 			<tfoot>
 				<tr>
-					<td colspan="6">
+					<td colspan="10">
 						<?php echo $this->navigation->getListFooter(); ?>
 					</td>
 				</tr>
 			</tfoot>
 			<tbody>
-			<?php $i = 0; foreach($this->categories as $item) : ?>
+			<?php
+				$img_no = '<i class="icon-cancel"></i>';
+				$img_yes = '<i class="icon-checkmark"></i>';
+				$i = 0;
+				foreach($this->categories as $item) : ?>
 				<tr>
+					<td class="order nowrap center hidden-phone">
+						<?php if ($canChange) :
+							$disableClassName = '';
+							$disabledLabel	  = '';
+
+							if (!$saveOrder) :
+								$disabledLabel    = JText::_('JORDERINGDISABLED');
+								$disableClassName = 'inactive tip-top';
+							endif; ?>
+							<span class="sortable-handler hasTooltip <?php echo $disableClassName; ?>" title="<?php echo $disabledLabel; ?>">
+							<i class="icon-menu"></i>
+						</span>
+							<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $item->ordering; ?>" class="width-20 text-area-order " />
+						<?php else : ?>
+							<span class="sortable-handler inactive" >
+							<i class="icon-menu"></i>
+						</span>
+						<?php endif; ?>
+					</td>
 					<td class="center hidden-phone">
 						<?php echo JHtml::_('grid.id', $i, (int) $item->id); ?>
 					</td>
@@ -145,11 +242,26 @@ $this->document->addScriptDeclaration($javascript);
 							<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias));?>
 						</small>
 					</td>
-					<td class="hidden-phone">
+					<td class="center hidden-phone">
 						<?php echo $item->isSection() ? JText::_('COM_KUNENA_SECTION') : JText::_('COM_KUNENA_CATEGORY'); ?>
 					</td>
-					<td class="hidden-phone">
+					<td class="center hidden-phone">
 						<?php echo $this->escape($item->accessname); ?>
+					</td>
+					<td class="center hidden-phone">
+						<a class ="btn btn-micro <?php echo ($item->locked ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->locked ? 'un':'').'lock'; ?>')">
+							<?php echo ($item->locked == 1 ? $img_yes : $img_no); ?>
+						</a>
+					</td>
+					<td class="center hidden-phone">
+						<a class ="btn btn-micro <?php echo ($item->review ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un':'').'review'; ?>')">
+							<?php echo ($item->review == 1 ? $img_yes : $img_no); ?>
+						</a>
+					</td>
+					<td class="center hidden-phone">
+						<a class ="btn btn-micro <?php echo ($item->allow_anonymous ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_anonymous ? 'deny':'allow').'_anonymous'; ?>')">
+							<?php echo ($item->allow_anonymous == 1 ? $img_yes : $img_no); ?>
+						</a>
 					</td>
 					<td class="center hidden-phone">
 						<?php echo (int) $item->id; ?>

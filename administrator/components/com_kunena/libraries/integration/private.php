@@ -54,5 +54,5 @@ class KunenaPrivate
 
 	public function getInboxLink($text) {}
 
-	public function getUnreadCount() {}
+	public function getUnreadCount($userid) {}
 }

@@ -86,6 +86,8 @@ abstract class KunenaRouteLegacy {
 			return;
 		}
 
+		$legacy = clone $uri;
+
 		// Turn &do=xxx into &layout=xxx
 		if ($uri->getVar('do')) {
 			$uri->setVar('layout', $uri->getVar('do'));
@@ -539,6 +541,7 @@ abstract class KunenaRouteLegacy {
 				break;
 
 		}
+		if ($changed) JLog::add("Legacy URI {$legacy->toString(array('path', 'query'))} was converted to {$uri->toString(array('path', 'query'))}", JLog::DEBUG, 'kunena');
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $changed;
 	}

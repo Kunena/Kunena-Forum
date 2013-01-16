@@ -60,27 +60,62 @@ class KunenaAdminModelCategories extends KunenaModel {
 		}
 		$this->setState ( 'item.id', $catid );
 		$this->setState ( 'item.parent_id', $parent_id );
+
+		$access = $this->getUserStateFromRequest('com_kunena.admin.categories.filter.access', 'filter_access', 0, 'int');
+		$this->setState('filter.access', $access);
+
+		$published = $this->getUserStateFromRequest('com_kunena.admin.categories.jgrid.published', 'filter_published', '');
+		$this->setState('filter.published', $published);
+
+		$type = $this->getUserStateFromRequest('com_kunena.admin.categories.filter.type', 'filter_type', '');
+		$this->setState('filter.type', $type);
 	}
 
 	public function getAdminCategories() {
 		if ( $this->_admincategories === false ) {
+			$type=$this->getState('filter.type');
+			$getparents = true;
+			if ( $type ) $getparents = false;
+
 			$params = array (
 				'ordering'=>$this->getState ( 'list.ordering' ),
 				'direction'=>$this->getState ( 'list.direction' ) == 'asc' ? 1 : -1,
 				'search'=>$this->getState ( 'list.search' ),
 				'unpublished'=>1,
-				'action'=>'admin');
+				'action'=>'admin',
+				'parents'=>$getparents);
 			$catid = $this->getState ( 'item.id', 0 );
 			$categories = array();
 			$orphans = array();
-			if ($catid) {
-				$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'list.levels' ), array('unpublished'=>1, 'action'=>'none'));
-				$categories[] = KunenaForumCategoryHelper::get($catid);
+
+			if ( $this->getState('filter.access') != 0 ) {
+				$categories = KunenaForumCategoryHelper::getCategoriesByAccess('joomla.level',$this->getState('filter.access'));
 			} else {
-				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'list.levels' ), $params);
+				if ($catid) {
+					$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'list.levels' ), array('unpublished'=>1, 'action'=>'none'));
+					$categories[] = KunenaForumCategoryHelper::get($catid);
+				} else {
+					$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'list.levels' ), $params);
+ 				}
+
+				$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'list.levels' ), $params));
+				$categories = array_merge($orphans, $categories);
 			}
-			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'list.levels' ), $params));
-			$categories = array_merge($orphans, $categories);
+
+			$published = $this->getState('filter.published');
+
+			$getcategories=0;
+			if ( $type== 2 ) $getcategories=1;
+
+			if ( !empty($published)  || $getcategories ) {
+				$list = array ();
+				foreach($categories as $cat) {
+
+					if ( $this->getState('filter.published') == $cat->published ) $list[] = $cat;
+					if ($getcategories && $cat->parent_id > 0 ) $list[] = $cat;
+				}
+				$categories = $list;
+			}
 
 			$categories = KunenaForumCategoryHelper::getIndentation($categories);
 			$this->setState ( 'list.total', count($categories) );

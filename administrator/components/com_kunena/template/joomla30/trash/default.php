@@ -35,9 +35,16 @@ $sortDirection = array();
 $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
-$filterSearch	= $this->escape($this->state->get('list.search'));
-$listOrdering	= $this->escape($this->state->get('list.ordering'));
-$listDirection	= $this->escape($this->state->get('list.direction'));
+$filterSearch = $this->escape($this->state->get('list.search'));
+$filterTitle = $this->escape($this->state->get('list.filter_title'));
+$filterCategory	= $this->escape($this->state->get('list.filter_category'));
+$filterIp = $this->escape($this->state->get('list.filter_ip'));
+$filterAuthor = $this->escape($this->state->get('list.filter_author'));
+$filterDate	= $this->escape($this->state->get('list.filter_date'));
+$listOrdering = $this->escape($this->state->get('list.ordering'));
+$listDirection = $this->escape($this->state->get('list.direction'));
+
+$this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
 
 $javascript = <<<END
 Joomla.orderTable = function() {
@@ -105,30 +112,56 @@ $this->document->addScriptDeclaration($javascript);
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th width="1%">
+						<th width="1%" class="nowrap center">
 							<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->trash_items ); ?>);" />
 						</th>
 						<th>
 							<?php echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'tt.subject', $this->state->get('list.direction'), $this->state->get('list.ordering')) : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'm.subject', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 						</th>
 						<th>
-							<?php echo JText::_('COM_KUNENA_TRASH_CATEGORY'); ?>
+							<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'm.category', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 						</th>
-						<th>
+						<th width="15%" class="nowrap center">
 							<?php echo $this->state->get( 'list.view_selected') == 'topics' ? JText::_('COM_KUNENA_TRASH_IP') : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_IP', 'm.ip', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 						</th>
-						<th>
-							<?php echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR_USERID', 'tt.first_post_userid', $this->state->get('list.direction'), $this->state->get('list.ordering')) : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR_USERID', 'm.userid', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
-						</th>
-						<th>
+						<!--<th width="5%" class="nowrap center">
+							<?php //echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR_USERID', 'tt.first_post_userid', $this->state->get('list.direction'), $this->state->get('list.ordering')) : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR_USERID', 'm.userid', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+						</th>-->
+						<th width="10%" class="nowrap center">
 							<?php echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'tt.first_post_guest_name', $this->state->get('list.direction'), $this->state->get('list.ordering')) : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'm.name', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 						</th>
-						<th>
+						<th width="10%" class="nowrap center">
 							<?php echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'tt.first_post_time', $this->state->get('list.direction'), $this->state->get('list.ordering')) : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'm.time', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 						</th>
-						<th width="1%">
+						<th width="1%" class="nowrap center">
 							<?php echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'tt.id', $this->state->get('list.direction'), $this->state->get('list.ordering')) :  JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'm.id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 						</th>
+					</tr>
+					<tr>
+						<td class="hidden-phone">
+						</td>
+						<td class="hidden-phone">
+							<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
+							<input class="input-block-level input-filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTitle; ?>" title="<?php echo 'Filter'; ?>" />
+						</td>
+						<td class="hidden-phone">
+							<label for="filter_category" class="element-invisible"><?php echo 'Search in';?></label>
+							<input class="input-block-level input-filter" type="text" name="filter_category" id="filter_category" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterCategory; ?>" title="<?php echo 'Filter'; ?>" />
+						</td>
+						<td class="nowrap">
+							<label for="filter_ip" class="element-invisible"><?php echo 'Search in';?></label>
+							<input class="input-block-level input-filter" type="text" name="filter_ip" id="filter_ip" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterIp; ?>" title="<?php echo 'Filter'; ?>" />
+						</td>
+						<td class="nowrap center">
+							<label for="filter_author" class="element-invisible"><?php echo 'Search in';?></label>
+							<input class="input-block-level input-filter" type="text" name="filter_author" id="filter_author" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterAuthor; ?>" title="<?php echo 'Filter'; ?>" />
+						</td>
+						<td class="nowrap center">
+							<label for="filter_date" class="element-invisible"><?php echo 'Search in';?></label>
+							<input class="input-block-level input-filter" type="text" name="filter_date" id="filter_date" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterDate; ?>" title="<?php echo 'Filter'; ?>" />
+						</td>
+						<td class="nowrap center">
+						</td>
 					</tr>
 				</thead>
 				<tfoot>
@@ -163,14 +196,14 @@ $this->document->addScriptDeclaration($javascript);
 						}
 					?>
 					</td>
-					<td ><?php
-						if ($this->state->get('list.view_selected') == 'topics') {
+					<!--<td><?php
+						/*if ($this->state->get('list.view_selected') == 'topics') {
 							echo intval($row->first_post_userid);
 						} else {
 							echo intval($row->userid);
-						}
+						}*/
 						?>
-					</td>
+					</td>-->
 					<td><?php echo $this->escape($row->getAuthor()->getName()); ?>
 					</td>
 					<td><?php

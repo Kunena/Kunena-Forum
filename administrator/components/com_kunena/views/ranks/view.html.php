@@ -54,3 +54,54 @@ class KunenaAdminViewRanks extends KunenaView {
 		JToolBarHelper::cancel('ranks');
 	}
 }
+
+// TODO: what is this?!?
+class PluginsHelper
+{
+	public static $extension = 'com_kunena';
+
+	/**
+	 * Configure the Linkbar.
+	 *
+	 * @param	string	The name of the active view.
+	 */
+	public static function addSubmenu($vName)
+	{
+		// No submenu for this component.
+	}
+
+	/**
+	 * Gets a list of the actions that can be performed.
+	 *
+	 * @return	JObject
+	 */
+	public static function getActions()
+	{
+		$user		= JFactory::getUser();
+		$result		= new JObject;
+		$assetName	= 'com_kunena';
+
+		$actions = JAccess::getActions($assetName);
+
+		foreach ($actions as $action) {
+			$result->set($action->name,	$user->authorise($action->name, $assetName));
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Returns an array of standard published state filter options.
+	 *
+	 * @return	string			The HTML code for the select tag
+	 */
+	public static function specialOptions()
+	{
+		// Build the active state filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '1', 'Yes');
+		$options[]	= JHtml::_('select.option', '0', 'No');
+
+		return $options;
+	}
+}

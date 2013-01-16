@@ -12,7 +12,16 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-JHtml::_('formbehavior.chosen', 'select');
+//JHtml::_('formbehavior.chosen', 'select');
+
+$filterTitle = $this->escape($this->state->get('list.filter_title'));
+$filterSpecial	= $this->escape($this->state->get('list.filter_special'));
+$filterMinPostCount = $this->escape($this->state->get('list.filter_min_post_count'));
+
+$listOrdering	= $this->escape($this->state->get('list.ordering'));
+$listDirection	= $this->escape($this->state->get('list.direction'));
+
+$this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
 ?>
 <div id="j-sidebar-container" class="span2">
 	<div id="sidebar">
@@ -43,11 +52,34 @@ JHtml::_('formbehavior.chosen', 'select');
 					<thead>
 						<tr>
 							<th width="1%" align="center">#</th>
-							<th width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->ranks); ?>);" /></th>
-							<th width="20%"><?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?></th>
-							<th width="58%"><?php echo JText::_('COM_KUNENA_RANKS'); ?></th>
-							<th width="10%"><?php echo JText::_('COM_KUNENA_RANKS_SPECIAL'); ?></th>
-							<th width="10%" class="nowrap"><?php echo JText::_('COM_KUNENA_RANKSMIN'); ?></th>
+							<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
+							<th width="10%"><?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?></th>
+							<th width="58%"><?php echo JHtml::_('grid.sort', 'Title', 'rank_title', $listDirection, $listOrdering ); ?></th>
+							<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'rank_special', $listDirection, $listOrdering ); ?></th>
+							<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'rank_min', $listDirection, $listOrdering ); ?></th>
+						</tr>
+						<tr>
+							<td class="hidden-phone">
+							</td>
+							<td class="hidden-phone">
+							</td>
+							<td class="hidden-phone">
+							</td>
+							<td class="nowrap">
+								<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
+								<input class="input-block-level input-filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTitle; ?>" title="<?php echo 'Filter'; ?>" />
+							</td>
+							<td class="nowrap center">
+								<label for="filter_special" class="element-invisible"><?php echo JText::_('All');?></label>
+								<select name="filter_special" id="filter_special" class="select-filter" onchange="Joomla.orderTable()">
+									<option value=""><?php echo JText::_('All');?></option>
+									<?php echo JHtml::_('select.options', PluginsHelper::specialOptions(), 'value', 'text', $filterSpecial); ?>
+								</select>
+							</td>
+							<td class="nowrap center">
+								<label for="filter_min_post_count" class="element-invisible"><?php echo 'Search in';?></label>
+								<input class="input-block-level input-filter" type="text" name="filter_min_post_count" id="filter_min_post_count" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterMinPostCount; ?>" title="<?php echo 'Filter'; ?>" />
+							</td>
 						</tr>
 					</thead>
 					<tfoot>
@@ -75,10 +107,10 @@ JHtml::_('formbehavior.chosen', 'select');
 								<?php echo $this->escape($row->rank_title); ?>
 							</a>
 						</td>
-						<td>
+						<td class="nowrap center">
 							<?php echo $row->rank_special == 1 ? JText::_('COM_KUNENA_YES') : JText::_('COM_KUNENA_NO'); ?>
 						</td>
-						<td>
+						<td class="nowrap center">
 							<?php echo $this->escape($row->rank_min); ?>
 						</td>
 					</tr>

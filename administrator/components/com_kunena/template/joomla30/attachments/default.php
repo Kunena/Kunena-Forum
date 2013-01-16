@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-JHtml::_('formbehavior.chosen', 'select');
+//JHtml::_('formbehavior.chosen', 'select');
 
 $sortFields = array();
 $sortFields[] = JHtml::_('select.option', 'a.filename', JText::_('COM_KUNENA_FILENAME'));
@@ -26,8 +26,16 @@ $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCE
 $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 $filterSearch	= $this->escape($this->state->get('list.search'));
+$filterName	= $this->escape($this->state->get('list.filter_name'));
+$filterType	= $this->escape($this->state->get('list.filter_type'));
+$filterSize	= $this->escape($this->state->get('list.filter_size'));
+$filterDimensions	= $this->escape($this->state->get('list.filter_dimensions'));
+$filterUsername = $this->escape($this->state->get('list.filter_username'));
+$filterPost	= $this->escape($this->state->get('list.filter_post'));
 $listOrdering	= $this->escape($this->state->get('list.ordering'));
 $listDirection	= $this->escape($this->state->get('list.direction'));
+
+$this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
 
 $javascript = <<<END
 Joomla.orderTable = function() {
@@ -92,14 +100,44 @@ $this->document->addScriptDeclaration($javascript);
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->items); ?>);" /></th>
-				<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_FILENAME', 'a.filename', $listDirection, $listOrdering ); ?></th>
-				<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FILETYPE', 'a.filetype', $listDirection, $listOrdering ); ?></th>
-				<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_FILESIZE', 'a.size', $listDirection, $listOrdering ); ?>
-				<th><?php echo JText::_('COM_KUNENA_A_IMGB_DIMS'); ?>	</th>
-				<th><?php echo JText::_('COM_KUNENA_ATTACHMENTS_USERNAME'); ?></th>
-				<th><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></th>
+				<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
+				<th><?php echo JHtml::_('grid.sort', 'Name', 'a.filename', $listDirection, $listOrdering ); ?></th>
+				<th><?php echo JHtml::_('grid.sort', 'Type', 'a.filetype', $listDirection, $listOrdering ); ?></th>
+				<th><?php echo JHtml::_('grid.sort', 'Size', 'a.size', $listDirection, $listOrdering ); ?>
+				<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_A_IMGB_DIMS', 'a.img_dims', $listDirection, $listOrdering ); ?></th>
+				<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'a.username', $listDirection, $listOrdering ); ?></th>
+				<th><?php echo JHtml::_('grid.sort', 'Post', 'a.post', $listDirection, $listOrdering ); ?></th>
 				<th><?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirection, $listOrdering ); ?></th>
+			</tr>
+			<tr>
+				<td class="hidden-phone">
+				</td>
+				<td class="nowrap">
+					<label for="filter_name" class="element-invisible"><?php echo 'Search in';?></label>
+					<input class="input-block-level input-filter" type="text" name="filter_name" id="filter_name" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterName; ?>" title="<?php echo 'Filter'; ?>" />
+				</td>
+				<td class="nowrap">
+					<label for="filter_type" class="element-invisible"><?php echo 'Search in';?></label>
+					<input class="input-block-level input-filter" type="text" name="filter_type" id="filter_type" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterType; ?>" title="<?php echo 'Filter'; ?>" />
+				</td>
+				<td class="nowrap">
+					<label for="filter_size" class="element-invisible"><?php echo 'Search in';?></label>
+					<input class="input-block-level input-filter" type="text" name="filter_size" id="filter_size" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterSize; ?>" title="<?php echo 'Filter'; ?>" />
+				</td>
+				<td class="nowrap">
+					<label for="filter_dims" class="element-invisible"><?php echo 'Search in';?></label>
+					<input class="input-block-level input-filter" type="text" name="filter_dims" id="filter_dims" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterDimensions; ?>" title="<?php echo 'Filter'; ?>" />
+				</td>
+				<td class="nowrap">
+					<label for="filter_username" class="element-invisible"><?php echo 'Search in';?></label>
+					<input class="input-block-level input-filter" type="text" name="filter_username" id="filter_username" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterUsername; ?>" title="<?php echo 'Filter'; ?>" />
+				</td>
+				<td class="nowrap">
+					<label for="filter_post" class="element-invisible"><?php echo 'Search in';?></label>
+					<input class="input-block-level input-filter" type="text" name="filter_post" id="filter_post" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterPost; ?>" title="<?php echo 'Filter'; ?>" />
+				</td>
+				<td class="nowrap center hidden-phone">
+				</td>
 			</tr>
 		</thead>
 		<tfoot>

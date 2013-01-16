@@ -12,7 +12,16 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-JHtml::_('formbehavior.chosen', 'select');
+//JHtml::_('formbehavior.chosen', 'select');
+
+$filterCode	= $this->escape($this->state->get('list.filter_code'));
+$filterUrl	= $this->escape($this->state->get('list.filter_url'));
+
+$listOrdering	= $this->escape($this->state->get('list.ordering'));
+$listDirection	= $this->escape($this->state->get('list.direction'));
+
+$this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
+
 ?>
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
@@ -43,11 +52,27 @@ JHtml::_('formbehavior.chosen', 'select');
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th width="1%" align="center">#</th>
-								<th width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->smileys); ?>);" /></th>
-								<th width="10%"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
-								<th width="10%"><?php echo JText::_('COM_KUNENA_EMOTICONS_CODE'); ?></th>
-								<th><?php echo JText::_('COM_KUNENA_EMOTICONS_URL'); ?></th>
+								<th width="1%" class="center">#</th>
+								<th width="1%" class="center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
+								<th width="5%" class="center"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
+								<th width="8%" class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'emoticon_code', $listDirection, $listOrdering ); ?></th>
+								<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'emoticon_url', $listDirection, $listOrdering ); ?></th>
+							</tr>
+							<tr>
+								<td class="hidden-phone center">
+								</td>
+								<td class="hidden-phone center">
+								</td>
+								<td class="hidden-phone center">
+								</td>
+								<td class="nowrap center">
+									<label for="filter_code" class="element-invisible"><?php echo 'Search in';?></label>
+									<input class="input-block-level input-filter" type="text" name="filter_code" id="filter_code" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterCode; ?>" title="<?php echo 'Filter'; ?>" />
+								</td>
+								<td class="nowrap center">
+									<label for="filter_url" class="element-invisible"><?php echo 'Search in';?></label>
+									<input class="input-block-level input-filter" type="text" name="filter_url" id="filter_url" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterUrl; ?>" title="<?php echo 'Filter'; ?>" />
+								</td>
 							</tr>
 						</thead>
 						<tfoot>
@@ -59,18 +84,18 @@ JHtml::_('formbehavior.chosen', 'select');
 						</tfoot>
 						<?php $i = 0; foreach ( $this->smileys as $id => $row ) : ?>
 						<tr>
-							<td>
+							<td class="hidden-phone center">
 								<?php echo ($id + $this->navigation->limitstart + 1); ?>
 							</td>
-							<td>
+							<td class="hidden-phone center">
 								<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->id); ?>" onclick="Joomla.isChecked(this.checked);" />
 							</td>
-							<td>
+							<td class="hidden-phone center">
 								<a href="#edit" onclick="return listItemTask('cb<?php echo $id; ?>','edit')">
 									<img src="<?php echo $this->escape($this->ktemplate->getSmileyPath($row->location, true)); ?>" alt="<?php echo $this->escape($row->location); ?>" />
 								</a>
 							</td>
-							<td>
+							<td class="hidden-phone center">
 								<?php echo $this->escape($row->code); ?>
 							</td>
 							<td>

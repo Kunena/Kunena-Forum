@@ -142,6 +142,7 @@
 		
 		<!-- Remove Mirage template -->
 		<delete dir="${tmp_dir}/site/template/mirage" />
+		<delete dir="${tmp_dir}/site/template/rockettheme" />
 
 		<!-- Move media files -->
 		<move todir="${tmp_dir}/media">
@@ -276,7 +277,7 @@
 		
 		<mkdir dir="${tmp_dir}/languages" />
 		<copy file="${project_dir}/${kunena.admin}/language/index.html" todir="${build_dir}/language/" />
-		<language tag="ar-AA" include="all" />
+		<!--language tag="ar-AA" include="all" />
 		<language tag="az-AZ" />
 		<language tag="bg-BG" />
 		<language tag="bs-BA" />
@@ -286,18 +287,18 @@
 		<language tag="cy-GB" />
 		<language tag="da-DK" />
 		<language tag="de-DE" />
-		<language tag="el-GR" />
+		<language tag="el-GR" /-->
 		<language tag="en-GB" include="true" />
-		<language tag="eo-XX" />
+		<!--language tag="eo-XX" />
 		<language tag="es-ES" />
 		<language tag="et-EE" />
 		<language tag="fa-IR" />
 		<language tag="fi-FI" />
-		<language tag="fr-FR" />
+		<language tag="fr-FR" /-->
 		<!--language tag="gl-ES" /-->
-		<language tag="he-IL" />
+		<!--language tag="he-IL" /-->
 		<!--language tag="hi-IN" /-->
-		<language tag="hr-HR" />
+		<!--language tag="hr-HR" />
 		<language tag="hu-HU" />
 		<language tag="id-ID" />
 		<language tag="it-IT" />
@@ -328,7 +329,7 @@
 		<language tag="ur-PK" />
 		<language tag="vi-VN" />
 		<language tag="zh-CN" />
-		<language tag="zh-TW" />
+		<language tag="zh-TW" /-->
 		<archive destfile="${build_dir}/archive/com_kunena-install" basedir="${tmp_dir}/install" />
 		<archive destfile="${build_dir}/archive/com_kunena-admin" basedir="${tmp_dir}/admin" />
 		<archive destfile="${build_dir}/archive/com_kunena-site" basedir="${tmp_dir}/site" />

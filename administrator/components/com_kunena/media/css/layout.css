@@ -1,0 +1,28 @@
+/**
+ * Kunena Component
+ * @package Kunena.Administrator.Joomla30
+ *
+ * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+
+.com_kunena.admin .center {
+    float: none;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.com_kunena.admin .select-filter {
+    margin-bottom: 0px;
+    width: auto;
+}
+
+.com_kunena.admin .input-filter {
+     margin-bottom: 0px;
+ }
+
+.com_kunena.admin .kavatar {
+    height: 24px;
+    width: 24px;
+}

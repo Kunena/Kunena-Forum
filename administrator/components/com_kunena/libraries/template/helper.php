@@ -48,7 +48,7 @@ abstract class KunenaTemplateHelper {
 			return false;
 		}
 		$data = self::parseKunenaInstallFile($templateBaseDir.'/'.$templateDir.'/template.xml');
-		if ($data->type != 'kunena-template') {
+		if (!$data || $data->type != 'kunena-template') {
 			return false;
 		}
 		$data->directory = basename($templateDir);

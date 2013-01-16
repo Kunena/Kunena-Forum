@@ -35,8 +35,6 @@ class KunenaBbcode extends NBBC_BBCode {
 		$this->defaults = new KunenaBbcodeLibrary;
 		$this->tag_rules = $this->defaults->default_tag_rules;
 
-		$view = JString::strtolower ( JRequest::getCmd ( 'type', JRequest::getCmd ( 'view', '' )) );
-
 		$this->smileys = $this->defaults->default_smileys;
 		if (empty($this->smileys)) $this->SetEnableSmileys(false);
 		$this->SetSmileyDir ( JPATH_ROOT );

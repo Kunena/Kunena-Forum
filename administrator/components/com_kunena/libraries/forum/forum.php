@@ -133,6 +133,13 @@ abstract class KunenaForum {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		if (!$config->get('cache')) $cache->setCaching(0);
 		$cache->setLifeTime($config->get('cache_time', 60));
+
+		// Setup error logging.
+		jimport('joomla.error.log');
+		$options = array('logger'=>'w3c', 'text_file'=>'kunena.php');
+		$categories = array('kunena');
+		JLog::addLogger($options, JLog::ALL, $categories);
+
 	}
 
 	/**

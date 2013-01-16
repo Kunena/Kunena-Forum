@@ -107,6 +107,7 @@ class KunenaViewUser extends KunenaView {
 			$this->userpoints = $activityIntegration->getUserPoints($this->profile->userid);
 			$this->usermedals = $activityIntegration->getUserMedals($this->profile->userid);
 		}
+		$this->lastvisitdate = JText::_('COM_KUNENA_VIEW_USER_UNKNOWN_DATE');
 		if ($this->config->userlist_joindate || $this->me->isModerator()) $this->registerdate = $this->user->registerDate;
 		if ($this->config->userlist_lastvisitdate || $this->me->isModerator()) $this->lastvisitdate = $this->user->lastvisitDate;
 		if ($this->lastvisitdate == "0000-00-00 00:00:00") $this->lastvisitdate = null;

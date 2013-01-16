@@ -68,9 +68,10 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
 		}
 
-		$this->app->setUserState ( 'kunena.edit.template', $template );
+		$template = JPath::clean($template);
+		$this->app->setUserState ( 'kunena.edit.template', $template);
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=edit", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=edit&name={$template}", false));
 	}
 
 	function install() {

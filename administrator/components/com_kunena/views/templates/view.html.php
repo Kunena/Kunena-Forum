@@ -29,7 +29,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	function displayEdit () {
 		$this->setToolBarEdit();
 		// FIXME: enable template parameters
-		$this->form = null;
+		$this->form = $this->get('Form');
 		$this->params = $this->get('editparams');
 		$this->details = $this->get('templatedetails');
 		$this->templatename = $this->app->getUserState ( 'kunena.edit.template');

@@ -62,24 +62,14 @@ JHtml::_('behavior.tooltip');
 				</tr>
 				<tr>
 					<td class="kparameters">
-						<?php if ($this->form instanceof JForm) : ?>
+						<?php if (count($this->form->getFieldset())) : ?>
 						<table class="paramlist admintable">
-							<?php foreach ($this->params->toArray() as $item): ?>
+						<?php foreach($this->form->getFieldset() as $field) : if (!$field->hidden) : ?>
 							<tr>
-								<?php if ($item[0]) : ?>
-								<td width="40%" class="paramlist_key">
-									<?php echo $item[0] ?>
-								</td>
-								<td class="paramlist_value">
-									<?php echo $item[1] ?>
-								</td>
-								<?php else : ?>
-								<td class="paramlist_value" colspan="2">
-									<?php echo $item[1] ?>
-								</td>
-								<?php endif ?>
+								<td width="40%" class="paramlist_key"><?php echo $field->label; ?></td>
+								<td class="paramlist_value"><?php echo $field->input; ?></td>
 							</tr>
-							<?php endforeach ?>
+							<?php endif; endforeach; ?>
 						</table>
 						<?php
 							else :

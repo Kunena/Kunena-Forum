@@ -38,6 +38,12 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.start", 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
+		$filterCode = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_code', 'filter_code', '', 'string' );
+		$this->setState ( 'list.filter_code', $filterCode );
+
+		$filterUrl = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_url', 'filter_url', '', 'string' );
+		$this->setState ( 'list.filter_url', $filterUrl );
+
 		$id = $this->getInt ( 'id', 0 );
 		$this->setState ( 'item.id', $id );
 	}

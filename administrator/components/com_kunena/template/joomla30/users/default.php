@@ -24,34 +24,35 @@ $sortDirection = array();
 $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
-$user			= JFactory::getUser();
-$filterSearch	= $this->escape($this->state->get('list.search'));
+$user = JFactory::getUser();
+$filterSearch = $this->escape($this->state->get('list.search'));
 $filterUsername	= $this->escape($this->state->get('list.filter_username'));
-$filterEmail	= $this->escape($this->state->get('list.filter_email'));
-$filterModerator	= $this->escape($this->state->get('list.filter_moderator'));
-$filterSignature	= $this->escape($this->state->get('list.filter_signature'));
+$filterEmail = $this->escape($this->state->get('list.filter_email'));
+$filterModerator = $this->escape($this->state->get('list.filter_moderator'));
+$filterSignature = $this->escape($this->state->get('list.filter_signature'));
 $filterLoggedin	= $this->escape($this->state->get('list.filter_loggedin'));
-$filterBanned	= $this->escape($this->state->get('list.filter_banned'));
-$listOrdering	= $this->escape($this->state->get('list.ordering'));
-$listDirection	= $this->escape($this->state->get('list.direction'));
+$filterBanned = $this->escape($this->state->get('list.filter_banned'));
+$listOrdering = $this->escape($this->state->get('list.ordering'));
+$listDirection = $this->escape($this->state->get('list.direction'));
 
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
 
-$javascript = <<<END
-Joomla.orderTable = function() {
-	table = document.getElementById("sortTable");
-	direction = document.getElementById("directionTable");
-	order = table.options[table.selectedIndex].value;
-	if (order != '{$listOrdering}') {
-		dirn = 'asc';
-	} else {
-		dirn = direction.options[direction.selectedIndex].value;
-	}
-	Joomla.tableOrdering(order, dirn, '');
-}
-END;
-$this->document->addScriptDeclaration($javascript);
 ?>
+
+<script type="text/javascript">
+	Joomla.orderTable = function() {
+		table = document.getElementById("sortTable");
+		direction = document.getElementById("directionTable");
+		order = table.options[table.selectedIndex].value;
+		if (order != '<?php echo $listOrder; ?>') {
+			dirn = 'asc';
+		} else {
+			dirn = direction.options[direction.selectedIndex].value;
+		}
+		Joomla.tableOrdering(order, dirn, '');
+	}
+</script>
+
 <div id="j-sidebar-container" class="span2">
 	<div id="sidebar">
 		<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
@@ -179,7 +180,7 @@ $this->document->addScriptDeclaration($javascript);
 						$userLogged = $kunena_user->isOnline() ? '<img src="components/com_kunena/images/tick.png" width="16" height="16" border="0" alt="" />': '';
 						$userEnabled = $kunena_user->isBlocked() ? 'publish_x.png' : 'tick.png';
 						$altUserEnabled = $kunena_user->isBlocked() ? JText::_( 'Blocked' ) : JText::_( 'Enabled' );
-						$userBlockTask =  $kunena_user->isBlocked() ? 'unblock' : 'block';
+						$userBlockTask = $kunena_user->isBlocked() ? 'unblock' : 'block';
 						$userbanned = $kunena_user->isBanned() ? 'tick.png' : 'publish_x.png';
 
 						$userBannedTask = $kunena_user->isBanned() ? 'ban' : 'ban';

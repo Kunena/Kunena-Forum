@@ -38,6 +38,15 @@ class KunenaAdminModelRanks extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.ranks.list.start", 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
+		$filterTitle = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_title', 'filter_title', '', 'string' );
+		$this->setState ( 'list.filter_title', $filterTitle );
+
+		$filterSpecial = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_special', 'filter_special', '', 'string' );
+		$this->setState ( 'list.filter_special', $filterSpecial );
+
+		$filterMin = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_min', 'filter_min', '', 'string' );
+		$this->setState ( 'list.filter_min', $filterMin );
+
 		$id = $this->getInt ( 'id', 0 );
 		$this->setState ( 'item.id', $id );
 	}

@@ -45,6 +45,24 @@ class KunenaAdminModelUsers extends KunenaModel {
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.search', 'filter_search', '', 'string' );
 		$this->setState ( 'list.search', $value );
+
+		$filterUsername = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_username', 'filter_username', '', 'string' );
+		$this->setState ( 'list.filter_username', $filterUsername );
+
+		$filterEmail = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_email', 'filter_email', '', 'string' );
+		$this->setState ( 'list.filter_email', $filterEmail );
+
+		$filterModerator = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_moderator', 'filter_moderator', '', 'string' );
+		$this->setState ( 'list.filter_moderator', $filterModerator );
+
+		$filterSignature = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_signature', 'filter_signature', '', 'string' );
+		$this->setState ( 'list.filter_signature', $filterSignature );
+
+		$filterLoggedin = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_loggedin', 'filter_loggedin', '', 'string' );
+		$this->setState ( 'list.filter_loggedin', $filterLoggedin );
+
+		$filterBanned = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_banned', 'filter_banned', '', 'string' );
+		$this->setState ( 'list.filter_banned', $filterBanned );
 	}
 
 	public function getUsers() {

@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-JHtml::_('formbehavior.chosen', 'select');
+//JHtml::_('formbehavior.chosen', 'select');
 
 $sortFields = array();
 if ($this->state->get( 'list.view_selected') == 'topics') {
@@ -46,21 +46,22 @@ $listDirection = $this->escape($this->state->get('list.direction'));
 
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
 
-$javascript = <<<END
-Joomla.orderTable = function() {
-	table = document.getElementById("sortTable");
-	direction = document.getElementById("directionTable");
-	order = table.options[table.selectedIndex].value;
-	if (order != '{$listOrdering}') {
-		dirn = 'asc';
-	} else {
-		dirn = direction.options[direction.selectedIndex].value;
-	}
-	Joomla.tableOrdering(order, dirn, '');
-}
-END;
-$this->document->addScriptDeclaration($javascript);
 ?>
+
+<script type="text/javascript">
+	Joomla.orderTable = function() {
+		table = document.getElementById("sortTable");
+		direction = document.getElementById("directionTable");
+		order = table.options[table.selectedIndex].value;
+		if (order != '<?php echo $listOrder; ?>') {
+			dirn = 'asc';
+		} else {
+			dirn = direction.options[direction.selectedIndex].value;
+		}
+		Joomla.tableOrdering(order, dirn, '');
+	}
+</script>
+
 <div id="j-sidebar-container" class="span2">
 	<div id="sidebar">
 		<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>

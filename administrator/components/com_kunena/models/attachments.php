@@ -45,6 +45,24 @@ class KunenaAdminModelAttachments extends KunenaModel {
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.attachments.list.search', 'filter_search', '', 'string' );
 		$this->setState ( 'list.search', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.attachments.list.filter_name', 'filter_name', '', 'string' );
+		$this->setState ( 'list.filter_name', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.attachments.list.filter_type', 'filter_type', '', 'string' );
+		$this->setState ( 'list.filter_type', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.attachments.list.filter_size', 'filter_size', '', 'string' );
+		$this->setState ( 'list.filter_size', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.attachments.list.filter_dims', 'filter_dims', '', 'string' );
+		$this->setState ( 'list.filter_dims', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.attachments.list.filter_username', 'filter_username', '', 'string' );
+		$this->setState ( 'list.filter_username', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.attachments.list.filter_post', 'filter_post', '', 'string' );
+		$this->setState ( 'list.filter_post', $value );
 	}
 
 	public function getItems() {

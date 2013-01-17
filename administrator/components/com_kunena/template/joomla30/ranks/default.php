@@ -15,14 +15,29 @@ JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
 $filterTitle = $this->escape($this->state->get('list.filter_title'));
-$filterSpecial	= $this->escape($this->state->get('list.filter_special'));
+$filterSpecial = $this->escape($this->state->get('list.filter_special'));
 $filterMinPostCount = $this->escape($this->state->get('list.filter_min_post_count'));
 
-$listOrdering	= $this->escape($this->state->get('list.ordering'));
-$listDirection	= $this->escape($this->state->get('list.direction'));
+$listOrdering = $this->escape($this->state->get('list.ordering'));
+$listDirection = $this->escape($this->state->get('list.direction'));
 
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
 ?>
+
+<script type="text/javascript">
+	Joomla.orderTable = function() {
+		table = document.getElementById("sortTable");
+		direction = document.getElementById("directionTable");
+		order = table.options[table.selectedIndex].value;
+		if (order != '<?php echo $listOrder; ?>') {
+			dirn = 'asc';
+		} else {
+			dirn = direction.options[direction.selectedIndex].value;
+		}
+		Joomla.tableOrdering(order, dirn, '');
+	}
+</script>
+
 <div id="j-sidebar-container" class="span2">
 	<div id="sidebar">
 		<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
@@ -73,12 +88,12 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 								<label for="filter_special" class="element-invisible"><?php echo JText::_('All');?></label>
 								<select name="filter_special" id="filter_special" class="select-filter" onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('All');?></option>
-									<?php echo JHtml::_('select.options', PluginsHelper::specialOptions(), 'value', 'text', $filterSpecial); ?>
+									<?php echo JHtml::_('select.options', $this->specialOptions(), 'value', 'text', $filterSpecial); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
-								<label for="filter_min_post_count" class="element-invisible"><?php echo 'Search in';?></label>
-								<input class="input-block-level input-filter" type="text" name="filter_min_post_count" id="filter_min_post_count" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterMinPostCount; ?>" title="<?php echo 'Filter'; ?>" />
+								<label for="filter_min_" class="element-invisible"><?php echo 'Search in';?></label>
+								<input class="input-block-level input-filter" type="text" name="filter_min" id="filter_min" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterMinPostCount; ?>" title="<?php echo 'Filter'; ?>" />
 							</td>
 						</tr>
 					</thead>

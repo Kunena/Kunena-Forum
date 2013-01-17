@@ -26,35 +26,36 @@ $sortDirection = array();
 $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
-$user			= JFactory::getUser();
-$filterSearch	= $this->escape($this->state->get('list.search'));
-$filterTitle	= $this->escape($this->state->get('list.filter_title'));
+$user = JFactory::getUser();
+$filterSearch = $this->escape($this->state->get('list.search'));
+$filterTitle = $this->escape($this->state->get('list.filter_title'));
 $filterType	= $this->escape($this->state->get('list.filter_type'));
-$filterAccess	= $this->escape($this->state->get('list.filter_access'));
-$filterLocked	= $this->escape($this->state->get('list.filter_locked'));
-$filterReview	= $this->escape($this->state->get('list.filter_review'));
+$filterAccess = $this->escape($this->state->get('list.filter_access'));
+$filterLocked = $this->escape($this->state->get('list.filter_locked'));
+$filterReview = $this->escape($this->state->get('list.filter_review'));
 $filterAnonymous = $this->escape($this->state->get('list.filter_anonymous'));
-$listOrdering	= $this->escape($this->state->get('list.ordering'));
-$listDirection	= $this->escape($this->state->get('list.direction'));
+$listOrdering = $this->escape($this->state->get('list.ordering'));
+$listDirection = $this->escape($this->state->get('list.direction'));
 $canChange = $saveOrder = false;
 
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
 
-$javascript = <<<END
-Joomla.orderTable = function() {
-	table = document.getElementById("sortTable");
-	direction = document.getElementById("directionTable");
-	order = table.options[table.selectedIndex].value;
-	if (order != '{$listOrdering}') {
-		dirn = 'asc';
-	} else {
-		dirn = direction.options[direction.selectedIndex].value;
-	}
-	Joomla.tableOrdering(order, dirn, '');
-}
-END;
-$this->document->addScriptDeclaration($javascript);
 ?>
+
+<script type="text/javascript">
+	Joomla.orderTable = function() {
+		table = document.getElementById("sortTable");
+		direction = document.getElementById("directionTable");
+		order = table.options[table.selectedIndex].value;
+		if (order != '<?php echo $listOrder; ?>') {
+			dirn = 'asc';
+		} else {
+			dirn = direction.options[direction.selectedIndex].value;
+		}
+		Joomla.tableOrdering(order, dirn, '');
+	}
+</script>
+
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'); ?>" method="post" name="adminForm" id="adminForm">
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="boxchecked" value="0" />

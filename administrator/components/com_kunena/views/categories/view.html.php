@@ -58,46 +58,12 @@ class KunenaAdminViewCategories extends KunenaView {
 		JToolBarHelper::unpublish ();
 		JToolBarHelper::deleteList ();
 		//JToolBarHelper::back ( JText::_ ( 'Home' ), 'index.php?option=com_kunena' );
-
-		// Joomla 3.0+
-		$this->sidebar = '';
-		if ( version_compare(JVERSION, '3', '>')) {
-			JHtmlSidebar::setAction('index.php?option=com_kunena&view=categories');
-
-			$publishedOptions	= array();
-			$publishedOptions[]	= JHtml::_('select.option', '1', 'JENABLED');
-			$publishedOptions[]	= JHtml::_('select.option', '0', 'JDISABLED');
-
-			JHtmlSidebar::addFilter(
-					JText::_('JOPTION_SELECT_PUBLISHED'),
-					'jgrid.published',
-					JHtml::_('select.options', $publishedOptions, 'value', 'text', $this->state->get('jgrid.published'), true)
-			);
-
-			$typeOptions	= array();
-			$typeOptions[]	= JHtml::_('select.option', '1', 'Sections');
-			$typeOptions[]	= JHtml::_('select.option', '2', 'Categories');
-
-			JHtmlSidebar::addFilter(
-					JText::_('- Select Type -'),
-					'filter_type',
-					JHtml::_('select.options', $typeOptions, 'value', 'text', $this->state->get('filter.type'))
-			);
-
-			JHtmlSidebar::addFilter(
-					JText::_('JOPTION_SELECT_ACCESS'),
-					'filter_access',
-					JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->state->get('filter.access'))
-			);
-
-			$this->sidebar = JHtmlSidebar::render();
-		}
 	}
 
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
-	 * @return	string			The HTML code for the select tag
+	 * @return	string	The HTML code for the select tag
 	 */
 	public function publishedOptions()
 	{
@@ -112,7 +78,7 @@ class KunenaAdminViewCategories extends KunenaView {
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
-	 * @return	string			The HTML code for the select tag
+	 * @return	string	The HTML code for the select tag
 	 */
 	public function typeOptions()
 	{
@@ -127,7 +93,7 @@ class KunenaAdminViewCategories extends KunenaView {
 	/**
 	 * Returns an array of locked filter options.
 	 *
-	 * @return	string			The HTML code for the select tag
+	 * @return	string	The HTML code for the select tag
 	 */
 	public function lockOptions()
 	{
@@ -142,7 +108,7 @@ class KunenaAdminViewCategories extends KunenaView {
 	/**
 	 * Returns an array of review filter options.
 	 *
-	 * @return	string			The HTML code for the select tag
+	 * @return	string	The HTML code for the select tag
 	 */
 	public function reviewOptions()
 	{
@@ -157,7 +123,7 @@ class KunenaAdminViewCategories extends KunenaView {
 	/**
 	 * Returns an array of type filter options.
 	 *
-	 * @return	string			The HTML code for the select tag
+	 * @return	string	The HTML code for the select tag
 	 */
 	public function anonymousOptions()
 	{

@@ -42,7 +42,7 @@ var KunenaTabs = new Class({
 			description.inject(this.content);
 		}
 
-		if ($chk(this.options.display)) this.display(this.options.display);
+		if (this.options.display!=null) this.display(this.options.display);
 
 		if (this.options.initialize) this.options.initialize.call(this);
 	},
@@ -357,7 +357,7 @@ var Autocompleter = new Class({
 
 	choiceOver: function(choice, selection) {
 		if (!choice || choice == this.selected) return;
-		if (this.selected) this.selected.removeClass('autocompleter-selected')
+		if (this.selected) this.selected.removeClass('autocompleter-selected');
 		this.selected = choice.addClass('autocompleter-selected');
 		this.fireEvent('onSelect', [this.element, this.selected, selection]);
 		if (!this.selectMode) this.opted = this.element.value;

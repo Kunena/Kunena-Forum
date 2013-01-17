@@ -2,7 +2,7 @@
 <!DOCTYPE extension>
 <extension type="component" version="2.5" method="upgrade">
 	<name>com_kunena</name>
-	<version>2.9.91-DEV</version>
+	<version>2.9.92-DEV</version>
 	<versionname>Wanga</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>

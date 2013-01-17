@@ -58,6 +58,21 @@ class KunenaAdminModelTrash extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.search', 'filter_search', '', 'string' );
 		$this->setState ( 'list.search', $value );
 
+		$filterTitle = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_title', 'filter_title', '', 'string' );
+		$this->setState ( 'list.filter_title', $filterTitle );
+
+		$filterCategory = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_category', 'filter_category', '', 'string' );
+		$this->setState ( 'list.filter_category', $filterCategory );
+
+		$filterIp = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_ip', 'filter_ip', '', 'string' );
+		$this->setState ( 'list.filter_ip', $filterIp );
+
+		$filterAuthor = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_author', 'filter_author', '', 'string' );
+		$this->setState ( 'list.filter_author', $filterAuthor );
+
+		$filterDate = $this->getUserStateFromRequest ( 'com_kunena.admin.trash.list.filter_date', 'filter_date', '', 'string' );
+		$this->setState ( 'list.filter_date', $filterDate );
+
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.trash.list.levels", 'levellimit', 10, 'int' );
 		$this->setState ( 'list.levels', $value );
 	}

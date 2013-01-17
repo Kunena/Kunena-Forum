@@ -93,7 +93,7 @@ class KunenaAdminViewUsers extends KunenaView {
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
-	 * @return	string			The HTML code for the select tag
+	 * @return	string	The HTML code for the select tag
 	 */
 	public function statusOptions()
 	{
@@ -108,7 +108,7 @@ class KunenaAdminViewUsers extends KunenaView {
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
-	 * @return	string			The HTML code for the select tag
+	 * @return	string	The HTML code for the select tag
 	 */
 	public function moderatorOptions()
 	{
@@ -123,7 +123,7 @@ class KunenaAdminViewUsers extends KunenaView {
 	/**
 	 * Returns an array of locked filter options.
 	 *
-	 * @return	string			The HTML code for the select tag
+	 * @return	string	The HTML code for the select tag
 	 */
 	public function signatureOptions()
 	{
@@ -138,7 +138,7 @@ class KunenaAdminViewUsers extends KunenaView {
 	/**
 	 * Returns an array of review filter options.
 	 *
-	 * @return	string			The HTML code for the select tag
+	 * @return	string	The HTML code for the select tag
 	 */
 	public function loggedinOptions()
 	{
@@ -153,7 +153,7 @@ class KunenaAdminViewUsers extends KunenaView {
 	/**
 	 * Returns an array of type filter options.
 	 *
-	 * @return	string			The HTML code for the select tag
+	 * @return	string	The HTML code for the select tag
 	 */
 	public function bannedOptions()
 	{

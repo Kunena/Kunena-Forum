@@ -73,11 +73,11 @@ class KunenaTemplate extends JObject
 		// Find configuration file.
 		$this->xml_path = KPATH_SITE . "/template/{$name}/config.xml";
 		if (file_exists($this->xml_path)) {
-			$xpath = 'fieldset/field';
+			$xpath = '//field';
 		} else {
 			// Configuration file was not found - legacy template support.
 			$this->xml_path = KPATH_SITE . "/template/{$name}/template.xml";
-			$xpath = 'params/param';
+			$xpath = '//param';
 		}
 
 		// TODO: move configuration out of filesystem (keep on legacy).
@@ -99,7 +99,7 @@ class KunenaTemplate extends JObject
 			}
 			// Generate CSS variables for less compiler.
 			foreach ($this->params->toArray() as $key=>$value)  {
-				if (substr($key,0,5) == 'style') {
+				if (substr($key,0,5) == 'style' && $value) {
 					$this->style_variables[$key] = $value;
 				}
 			}

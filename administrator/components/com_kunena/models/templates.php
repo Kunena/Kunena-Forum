@@ -61,7 +61,7 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		$xml = KunenaTemplate::getInstance($template)->getConfigXml();
 
 		// Get the form.
-		$form = $this->loadForm('com_kunena_template', $xml, array('control' => 'jform', 'load_data' => $loadData, 'file'=>false), true, 'config');
+		$form = $this->loadForm('com_kunena_template', $xml, array('control' => 'jform', 'load_data' => $loadData, 'file'=>false), true, '//config');
 		if (empty($form)) {
 			return false;
 		}

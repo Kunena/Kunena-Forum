@@ -88,7 +88,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 								<label for="filter_special" class="element-invisible"><?php echo JText::_('All');?></label>
 								<select name="filter_special" id="filter_special" class="select-filter" onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('All');?></option>
-									<?php echo JHtml::_('select.options', PluginsHelper::specialOptions(), 'value', 'text', $filterSpecial); ?>
+									<?php echo JHtml::_('select.options', $this->specialOptions(), 'value', 'text', $filterSpecial); ?>
 								</select>
 							</td>
 							<td class="nowrap center">

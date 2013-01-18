@@ -1328,6 +1328,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 
 		'clipfish' => array ('flash', 464, 380, 0, 0, 'http://www.clipfish.de/videoplayer.swf?as=0&videoid=%vcode%&r=1&c=0067B3', 'videoid=([\w\-]*)', '' ),
 
+		'dailymotion' => array('flash', 464, 380, 0, 0, 'http://www.dailymotion.com/swf/video/%vcode%?autoPlay=0', '\/([\w]*)_', array (array (6, 'wmode', 'transparent' ) )),
+
 		'metacafe' => array ('flash', 400, 345, 0, 0, 'http://www.metacafe.com/fplayer/%vcode%/.swf', '\/watch\/(\d*\/[\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ),
 
 		'myspace' => array ('flash', 430, 346, 0, 0, 'http://lads.myspace.com/videos/vplayer.swf', 'VideoID=(\d*)', array (array (6, 'flashvars', 'm=%vcode%&v=2&type=video' ) ) ),
@@ -1347,6 +1349,8 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 
 		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1&cc_load_policy=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+				
+		'youku' => array ('flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
 		// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
 		//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )

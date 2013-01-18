@@ -61,6 +61,7 @@ PX		EM			PCT			PT
 	font-size: 1em;
 	line-height: auto;
 }
+
 #Kunena sup {
 	vertical-align: super;
 }
@@ -72,6 +73,29 @@ PX		EM			PCT			PT
 	background: none;
 	margin: 0;
 	padding: 0;
+}
+
+/* Fix .visible-desktop in Bootstrap based templates */
+#Kunena td.visible-desktop {
+	display: table-cell !important;
+}
+/* Fix form layout issues in Bootstrap based templates */
+#Kunena form,
+#Kunena select, 
+#Kunena textarea, 
+#Kunena input {
+	margin: 0;
+	width: auto;
+	height: auto;
+}
+/* Resets for Gantry */
+#Kunena h1,
+#Kunena h2,
+#Kunena h3,
+#Kunena h4 {
+	border: 0;
+	box-shadow: none;
+	text-shadow: none;
 }
 
 #Kunena .clr { clear:both; height:1px; overflow:hidden;}

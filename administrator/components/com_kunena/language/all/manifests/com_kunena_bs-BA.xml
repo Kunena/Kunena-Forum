@@ -16,7 +16,7 @@
 		<files folder="admin" target="administrator/language/bs-BA">
 			<filename>bs-BA.com_kunena.controllers.ini</filename>
 			<filename>bs-BA.com_kunena.ini</filename>
-			<filename>bs-BA.com_kunena.extension.ini</filename>
+			<filename>bs-BA.com_kunena.libraries.ini</filename>
 			<filename>bs-BA.com_kunena.models.ini</filename>
 			<filename>bs-BA.com_kunena.sys.ini</filename>
 			<filename>bs-BA.com_kunena.views.ini</filename>

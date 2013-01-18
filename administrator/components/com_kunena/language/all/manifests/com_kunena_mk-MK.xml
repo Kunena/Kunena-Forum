@@ -27,7 +27,7 @@
 			<filename>mk-MK.plg_kunena_joomla.sys.ini</filename>
 			<filename>mk-MK.plg_kunena_kunena.sys.ini</filename>
 			<filename>mk-MK.plg_kunena_uddeim.sys.ini</filename>
-			<filename>lv-LV.plg_quickicon_kunena.sys.ini</filename>
+			<filename>mk-MK.plg_quickicon_kunena.sys.ini</filename>
 			<filename>mk-MK.plg_system_kunena.sys.ini</filename>
 		</files>
 		<files folder="site" target="language/mk-MK">

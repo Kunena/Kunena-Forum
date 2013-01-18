@@ -9,12 +9,12 @@
 
 ## REQUIREMENTS
 
-*Kunena* 2.0 requires (this section is work in progress until Kunena 2.0 has been released)
+*Kunena* 2.0 requires
 
     Joomla! 1.5: version 1.5.25 or greater (>= 1.5.26 recommended)
     Joomla! 2.5: version 2.5.3 or greater (>= 2.5.8 recommended)
     Joomla! 3.0: NOT SUPPORTED
-    PHP: version 5.2.4 or greater (>= 5.3.19 recommended)
+    PHP: version 5.2.4 or greater (>= 5.3.21 recommended)
     MySQL: version 5.0.4 or greater (>= 5.1 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.
@@ -68,7 +68,7 @@ The *Kunena* projects thrives on contributions from the community. Our dedicated
 ## CONTRIBUTE
 
 1. [Create an account on kunena.org](http://www.kunena.org/registration)
-2. [Create a topic (unless there already is one)](http://www.kunena.org/forum/newtopic)
+2. [Participate in our forum](http://www.kunena.org/forum)
 3. [Checkout our Git repository on github](https://github.com/Kunena)
 4. [Read our documentation](http://www.kunena.org/docs)
 5. [Read our developer wiki](https://github.com/Kunena/Kunena-2.0/wiki)

@@ -12,7 +12,8 @@
 /* Layout */
 
 #Kunena .kpagination span {
-	border:solid 1px;
+	border-style:solid;
+	border-width: 1px;
 	font-weight:bold;
 	padding:1px 5px;
 	margin: 2px;
@@ -22,14 +23,6 @@
 	background-position:-400px 0;
 	width: 8px;
 	cursor: default;
-}
-
-/* Colors */
-
-#Kunena .kpagination span {
-	border-color:#5388B4;
-	background-color:#5388B4;
-	color:#FFFFFF;
 }
 
 #Kunena .kheader h2,

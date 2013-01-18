@@ -383,19 +383,19 @@ class KunenaControllerUser extends KunenaController {
 
 		$db = JFactory::getDBO();
 		if ( $upload->uploaded('avatarfile') ) {
-			$filename = 'avatar'.$this->profile->userid;
+			$filename = 'avatar'.$this->me->userid;
 
-			if (preg_match('|^users/|' , $this->profile->avatar)) {
+			if (preg_match('|^users/|' , $this->me->avatar)) {
 				// Delete old uploaded avatars:
 				if ( JFolder::exists( KPATH_MEDIA.'/avatars/resized' ) ) {
 					$deletelist = JFolder::folders(KPATH_MEDIA.'/avatars/resized', '.', false, true);
 					foreach ($deletelist as $delete) {
-						if (is_file($delete.'/'.$this->profile->avatar))
-							JFile::delete($delete.'/'.$this->profile->avatar);
+						if (is_file($delete.'/'.$this->me->avatar))
+							JFile::delete($delete.'/'.$this->me->avatar);
 					}
 				}
-				if ( JFile::exists( KPATH_MEDIA.'/avatars/'.$this->profile->avatar ) ) {
-					JFile::delete(KPATH_MEDIA.'/avatars/'.$this->profile->avatar);
+				if ( JFile::exists( KPATH_MEDIA.'/avatars/'.$this->me->avatar ) ) {
+					JFile::delete(KPATH_MEDIA.'/avatars/'.$this->me->avatar);
 				}
 			}
 

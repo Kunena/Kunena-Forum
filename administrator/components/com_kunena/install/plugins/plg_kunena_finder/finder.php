@@ -30,7 +30,6 @@ class plgKunenaFinder extends JPlugin
 	{
 		JLog::add('onKunenaAfterSave context: '.$context, JLog::INFO);
 		ob_start();
-		print_r($table);
 		$table_content = ob_get_contents();
 		ob_end_clean();
 		JLog::add('onKunenaAfterSave table: '.$table_content, JLog::INFO);
@@ -55,12 +54,11 @@ class plgKunenaFinder extends JPlugin
 	{
 		JLog::add('onKunenaBeforeSave context: '.$context, JLog::INFO);
 		ob_start();
-		print_r($table);
 		$table_content = ob_get_contents();
 		ob_end_clean();
 		JLog::add('onKunenaBeforeSave table: '.$table_content, JLog::INFO);
 		JLog::add('onKunenaBeforeSave isNew: '.($isNew)?'Yes':'No', JLog::INFO);
-		
+
 		$dispatcher	= JDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
@@ -79,11 +77,10 @@ class plgKunenaFinder extends JPlugin
 	{
 		JLog::add('onKunenaAfterDelete context: '.$context, JLog::INFO);
 		ob_start();
-		print_r($table);
 		$table_content = ob_get_contents();
 		ob_end_clean();
 		JLog::add('onKunenaAfterDelete table: '.$table_content, JLog::INFO);
-		
+
 		$dispatcher	= JDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 
@@ -101,7 +98,6 @@ class plgKunenaFinder extends JPlugin
 	{
 		JLog::add('onKunenaBeforeDelete context: '.$context, JLog::INFO);
 		ob_start();
-		print_r($table);
 		$table_content = ob_get_contents();
 		ob_end_clean();
 		JLog::add('onKunenaBeforeDelete table: '.$table_content, JLog::INFO);

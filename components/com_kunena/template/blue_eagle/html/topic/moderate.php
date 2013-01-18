@@ -39,6 +39,7 @@ kunena_url_ajax= ".json_encode(KunenaRoute::_("index.php?option=com_kunena&view=
 					<strong><?php echo $this->escape( $this->category->name ) ?></strong>
 				</div>
 
+				<?php if ($this->config->topicicons) : ?>
 				<div><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
 				<div class="kmoderate-topicicons">
 					<?php foreach ($this->topicIcons as $id=>$icon): ?>
@@ -46,6 +47,7 @@ kunena_url_ajax= ".json_encode(KunenaRoute::_("index.php?option=com_kunena&view=
 					<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" />
 					<?php endforeach; ?>
 				</div>
+				<?php endif; ?>
 				<br />
 				<?php if (isset($this->message)) : ?>
 				<div><?php echo JText::_('COM_KUNENA_MODERATION_TITLE_SELECTED'); ?>:</div>

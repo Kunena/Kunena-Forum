@@ -590,12 +590,13 @@ Autocompleter.Request = new Class({
 });
 
 Autocompleter.Request.JSON = new Class({
-
 	Extends: Autocompleter.Request,
 
+	secure: false, 
 	initialize: function(el, url, options) {
 		this.parent(el, options);
 		this.request = new Request.JSON($merge({
+			'secure': false, 
 			'url': url,
 			'link': 'cancel'
 		}, this.options.ajaxOptions)).addEvent('onComplete', this.queryResponse.bind(this));
@@ -701,7 +702,7 @@ function kRequestGetTopics(el)
 {
 	var catid = el.get("value");
 	var select = document.id('kmod_topics');
-	request = new Request.JSON({url: kunena_url_ajax,
+	request = new Request.JSON({secure: false, url: kunena_url_ajax,
 	onSuccess: function(response){
 		kRequestShowTopics(catid, select, response.topiclist);
 		}}).post({'catid': catid});

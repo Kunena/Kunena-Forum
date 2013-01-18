@@ -261,7 +261,7 @@ class KunenaAdminControllerTools extends KunenaController {
 
 		if ( $re_string != null ) {
 			$db	= JFactory::getDBO();
-			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {{$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string.'%')}";
+			$query = "UPDATE #__kunena_messages SET subject=TRIM(TRIM(LEADING {$db->quote($re_string)} FROM subject)) WHERE subject LIKE {$db->quote($re_string.'%')}";
 			$db->setQuery ( $query );
 			$db->Query ();
 			KunenaError::checkDatabaseError();

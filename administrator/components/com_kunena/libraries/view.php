@@ -79,7 +79,7 @@ class KunenaView extends JView {
 		} else {
 			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
 			include JPATH_SITE .'/'. $this->ktemplate->getFile ('html/display.php');
-			echo $this->poweredBy();
+			if ($this->config->get('credits', 1)) echo $this->poweredBy();
 		}
 	}
 

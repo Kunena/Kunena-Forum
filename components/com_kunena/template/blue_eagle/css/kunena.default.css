@@ -79,6 +79,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	background-color: #FFFFFF;
 }
 #Kunena .kblock div.kheader {
+	background: #5388B4 !important;
 	border-bottom-color:#D9D9D9;
 	color: #FFFFFF;
 }
@@ -117,6 +118,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 }
 #Kunena div.kblock div.kactions a {
 	color:#FFFFFF !important;
+	background-color:transparent !important;
 }
 #Kunena tr.krow1 td {
 	background-color: #F2F1EE;
@@ -220,6 +222,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 }
 
 #Kunena #ktab a {
+	color: #fff !important;
 	background-color: #737373;
 }
 
@@ -337,6 +340,11 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	background-color: #ffffff !important;
 }
 #Kunena .kpagination .active {
+	border-color:#5388B4;
+	background-color:#5388B4;
+	color:#FFFFFF;
+}
+#Kunena .kpagination span {
 	border-color:#5388B4;
 	background-color:#5388B4;
 	color:#FFFFFF;
@@ -872,7 +880,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	border-color: #BFC3C6;
 }
 #Kunena tr.userlist th a {
-	color: #FFFFFF;
+	color: #FFFFFF !important;
 }
 
 /* 		WHO IS ONLINE
@@ -895,7 +903,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 #Kunena div.kmoderate-message {
 	border-color:#CCCCCC;
 }
-}
+
 /*       PROFILE
 -------------------------------------------------------------------- */
 

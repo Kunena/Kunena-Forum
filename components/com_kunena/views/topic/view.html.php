@@ -329,9 +329,9 @@ class KunenaViewTopic extends KunenaView {
 			// Update message contents
 			$this->message->edit ( $saved );
 		}
-		$this->post_anonymous = $saved ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
-		$this->subscriptionschecked = $saved ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
-		$this->modified_reason = $saved ? $saved['modified_reason'] : '';
+		$this->post_anonymous = isset($saved['anonymous']) ? $saved['anonymous'] : ! empty ( $this->category->post_anonymous );
+		$this->subscriptionschecked = isset($saved['subscribe']) ? $saved['subscribe'] : $this->config->subscriptionschecked == 1;
+		$this->modified_reason = isset($saved['modified_reason']) ? $saved['modified_reason'] : '';
 		$this->app->setUserState('com_kunena.postfields', null);
 
 		$this->display($tpl);

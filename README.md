@@ -13,7 +13,7 @@
 
     Joomla! 2.5: version 2.5.6 or greater (>= 2.5.8 recommended)
     Joomla! 3.0: version 3.0.2 or greater (>= 3.0.2 recommended)
-    PHP: version 5.3.1 or greater (>= 5.4.9 recommended)
+    PHP: version 5.3.1 or greater (>= 5.4.11 recommended)
     MySQL: version 5.1 or greater (>= 5.5 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.

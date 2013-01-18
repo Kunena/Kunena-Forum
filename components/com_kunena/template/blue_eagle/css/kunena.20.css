@@ -138,10 +138,32 @@
 	height: 10px;
 }
 
-/* Fix statistics in Bootstrap based templates */
+/* Bootstrap Tweaks
+---------------------------------------------------- */
 #Kunena img[height="10"] {
 	height: 10px;
 	max-width: none;
+}
+#Kunena .kprofileboxcnt .input span input[type="checkbox"] {
+	margin-top: 0px !important;
+}
+#Kunena .kprofileboxcnt .kbutton {
+	margin-top: 0px !important;
+}
+#Kunena sup.knewchar {
+	position: static;
+}
+#Kunena .kcol-mid label {
+	display: inline;
+}
+#subscribeMe {
+	margin-top: 0px;
+}
+#Kunena .kfile-hide input {
+	vertical-align: baseline;
+}
+#Kunena #ktab li a::before	{
+	content:"";
 }
 
 /* Menu fixes for Gantry */

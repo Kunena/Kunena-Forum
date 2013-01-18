@@ -47,7 +47,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 		table = document.getElementById("sortTable");
 		direction = document.getElementById("directionTable");
 		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrder; ?>') {
+		if (order != '<?php echo $listOrdering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;
@@ -66,7 +66,6 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 	<div id="j-sidebar-container" class="span2">
 		<div id="sidebar">
 			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
-			<div><?php echo $this->sidebar; ?></div>
 		</div>
 	</div>
 	<div id="j-main-container" class="span10">

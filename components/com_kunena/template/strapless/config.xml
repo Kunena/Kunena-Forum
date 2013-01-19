@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!DOCTYPE config>
+<config>
+	<fieldset name="advanced">
+		<field name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
+			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
+		</field>
+		<field name="templatebyText" type="hidden" default="" />
+		<field name="templatebyName" type="hidden" default="" />
+		<field name="templatebyLink" type="hidden" default="" />
+		
+		<!-- Required avatar sizes -->
+		<field name="avatarSizeXThumb" type="hidden" default="36" />
+		<field name="avatarSizeYThumb" type="hidden" default="36" />
+		<field name="avatarSizeXWelcome" type="hidden" default="72" />
+		<field name="avatarSizeYWelcome" type="hidden" default="72" />
+		<field name="avatarSizeXList" type="hidden" default="36" />
+		<field name="avatarSizeYList" type="hidden" default="36" />
+		<field name="avatarSizeXPost" type="hidden" default="144" />
+		<field name="avatarSizeYPost" type="hidden" default="144" />
+		<field name="avatarSizeXProfile" type="hidden" default="200" />
+		<field name="avatarSizeYProfile" type="hidden" default="200" />
+	</fieldset>
+</config>

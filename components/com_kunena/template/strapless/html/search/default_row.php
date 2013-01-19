@@ -1,0 +1,45 @@
+<?php
+/**
+ * Kunena Component
+ * @package Kunena.Template.Strapless
+ * @subpackage Search
+ *
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.org
+ **/
+defined ( '_JEXEC' ) or die ();
+?>
+
+<table class="table">
+  <thead>
+    <tr class="ksth">
+      <th colspan="2"> <span class="kmsgdate"> <?php echo KunenaDate::getInstance($this->message->time)->toSpan() ?> </span> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2" valign="top" class="kprofile-left kresultauthor">
+        <ul class="kpost-profile">
+          <li class="kpost-username"> <?php echo $this->message->getAuthor()->getLink() ?> </li>
+          <li>
+            <?php
+											if ($this->useravatar) :
+											?>
+            <span class="kavatar"> <?php echo $this->message->getAuthor()->getLink( $this->useravatar ) ?> </span>
+            <?php
+												endif;
+											?>
+          </li>
+        </ul>
+      </td>
+      <td class="kmessage-left resultmsg">
+        <div class="kmsgbody">
+          <div class="kmsgtitle kresult-title"> <span class="kmsgtitle"> <?php echo $this->getTopicLink($this->topic, $this->message, $this->subjectHtml); ?> </span> </div>
+          <div class="kmsgtext resultmsg"> <?php echo $this->messageHtml ?> </div>
+          <div class="resultcat"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->category, $this->escape($this->category->name))) ?> </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<kinstall type="kunena-template" version="2.0">
+	<name>Strapless</name>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<author>Kunena Team</author>
+	<authorEmail>team@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>Kunena Team</copyright>
+	<license>GNU/GPL</license>
+	<description>COM_KUNENA_TEMPLATE_STRAPLESS_DESC</description>
+	<thumbnail>template_thumbnail.png</thumbnail>
+</kinstall>

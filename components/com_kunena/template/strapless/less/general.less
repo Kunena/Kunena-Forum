@@ -1,0 +1,149 @@
+@charset "utf-8";
+/**
+* Kunena Component
+* @package Kunena.Template.Bootstrap
+*
+* @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+**/ 
+
+/* FORUM ICON BUTTONS
+----------------------------------------------------------------------------------------------- */
+
+.kicon-button {
+	text-transform: uppercase;
+	font-size: 11px;
+	text-decoration: none;
+	cursor: pointer;
+	line-height: 145%;
+	display: inline-block;
+	background-repeat: repeat-x;
+	border: none;
+	margin: 0 5px;
+	span {
+		background-color: inherit;
+		background-image: inherit;
+		background-repeat: no-repeat;
+		border: 0;
+		display: inline-block;
+		margin: 0 -5px;
+		span {
+			height: 18px;
+			display: inline-block;
+			margin: 0;
+			padding: 0 7px 0 20px;
+			background-repeat: no-repeat;
+		}
+	}
+}
+a.kicon-button {
+	span {
+		span:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+
+/*		WHO IS ONLINE
+------------------------------------------------------------------- */
+
+.kwhoonline {
+	border-bottom: 1px solid #E3E3E3;
+	width: 100%;
+	padding-bottom: 5px;
+}
+#kwhoispage {
+	td.td-3 {
+		text-align: left;
+	}
+}
+.kwhoicon {
+	background: url("../images/icons/who_is_online.png") no-repeat center top;
+	width: 32px;
+	height: 32px;
+}
+.kwholegend {
+	border-top: 1px solid #E3E3E3;
+	width: 100%;
+	margin-top: 5px;
+	padding-top: 5px;
+}
+
+
+/* MISC
+----------------------------------------------------------------------------------------------- */
+
+.kgooglemap {
+	width: 100%;
+	display: block;
+	height: 480px;
+	overflow: hidden;
+	position: relative;
+	img {
+		max-width: none !important;
+	}
+}
+.kfrontend:hover .btn, 
+.kprofile:hover .kinfo, 
+.kprofile:hover .kinfo1 {
+	visibility: visible;
+}
+a:focus {
+	outline: none !important;
+	outline-offset: 0px !important;
+}
+.knewchar {
+	padding-left: 3px;
+}
+.row-fluid {
+	[class*="span"] {
+		min-height: 0 !important;
+	}
+}
+.kfrontend .btn, 
+.kprofile .kinfo, 
+.kprofile .kinfo1 {
+	visibility: hidden;
+}
+.select[multiple], 
+select[size] {
+	height: auto !important;
+}
+input, 
+textarea {
+	width: auto !important;
+}
+.navbar-inner, 
+.nav-list > .active > a, 
+.nav-list > .active > a:hover, 
+.dropdown-menu li > a:hover, 
+.dropdown-menu .active > a, 
+.dropdown-menu .active > a:hover, 
+.nav-pills > .active > a, 
+.nav-pills > .active > a:hover {
+	box-shadow: none !important;
+	background: #F5F5F5 !important;
+	padding:0 !important;;
+}
+form {
+	margin: 0 !important;
+}
+.table th,
+.table td {
+	vertical-align: middle !important;
+}
+.navbar {
+	.nav {
+		> {
+			li {
+				> {
+					a {
+						padding: 11px 10px !important;
+					}
+				}
+			}
+		}
+	}
+}

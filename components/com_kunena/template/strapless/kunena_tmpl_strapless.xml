@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="2.5" type="file">
+	<name>kunena_tmpl_strapless</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>team@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>Kunena Team</copyright>
+	<license>GNU/GPL</license>
+	<description>COM_KUNENA_TEMPLATE_STRAPLESS_DESC</description>
+	<files>
+		<filename>index.html</filename>
+		<filename>template.php</filename>
+		<filename>kunena_tmpl_strapless.xml</filename>
+		<folder>css</folder>
+		<folder>html</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<folder>media</folder>
+	</files>
+</extension>

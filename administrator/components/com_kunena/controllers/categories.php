@@ -197,6 +197,15 @@ class KunenaAdminControllerCategories extends KunenaController {
 				foreach ($aliases as $alias) $category->deleteAlias($alias);
 			}
 
+			// Update moderators
+			$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+			if ( !empty($cid) ) {
+				foreach($cid as $id) {
+					$user = KunenaUserHelper::get($id);
+					$category->removeModerator($user);
+				}
+			}
+
 			// Update read access
 			$read = $this->app->getUserState("com_kunena.user{$this->me->userid}_read");
 			$read[$category->id] = $category->id;

@@ -260,7 +260,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						</a>
 					</td>
 					<td class="center hidden-phone">
-						<a class ="btn btn-micro <?php echo ($item->allow_anonymous ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_anonymous ? 'deny':'allow').'_anonymous'; ?>')">
+						<a class ="btn btn-micro <?php echo ($item->allow_anonymous ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_anonymous ? 'deny':'allow').'_anonymous'; ?>')">
 							<?php echo ($item->allow_anonymous == 1 ? $img_yes : $img_no); ?>
 						</a>
 					</td>

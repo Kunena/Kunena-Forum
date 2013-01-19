@@ -73,8 +73,12 @@ abstract class KunenaTemplateHelper {
 		$data->description = (string) $xml->description;
 		$data->thumbnail = (string) $xml->thumbnail;
 
+		if ($data->version == '@kunenaversion@') $data->version = KunenaForum::version();
+		if ($data->creationdate == '@kunenaversiondate@') $data->creationdate = KunenaForum::versionDate();
+
+		if (!$data->version) $data->version = JText::_('Unknown');
 		if (!$data->creationdate) $data->creationdate = JText::_('Unknown');
-		if (!$data->author) JText::_('Unknown');
+		if (!$data->author) $data->author = JText::_('Unknown');
 
 		return $data;
 	}

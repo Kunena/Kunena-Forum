@@ -107,7 +107,11 @@ class KunenaAdminViewTemplates extends KunenaView {
 	protected function setToolBarChoosecss() {
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
 		JToolBarHelper::spacer();
-		JToolBarHelper::custom('editcss', 'css.png', 'css_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		if (version_compare(JVERSION, '3', '>')) {
+			JToolBarHelper::custom('editcss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		} else {
+			JToolBarHelper::custom('editcss', 'css.png', 'css_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		}
 		JToolBarHelper::spacer();
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel('templates');

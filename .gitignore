@@ -2,6 +2,7 @@
 .project
 .settings
 components/com_kunena/template/**/params.ini
+components/com_kunena/template/strapless/css/
 .externalToolBuilders/build.kunena.2.0.launch
 /build
 .idea/

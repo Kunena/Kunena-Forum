@@ -95,7 +95,7 @@ class KunenaAdminViewUsers extends KunenaView {
 	 *
 	 * @return	string	The HTML code for the select tag
 	 */
-	public function statusOptions()
+	public function stateOptions()
 	{
 		// Build the active state filter options.
 		$options	= array();

@@ -46,23 +46,26 @@ class KunenaAdminModelUsers extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.search', 'filter_search', '', 'string' );
 		$this->setState ( 'list.search', $value );
 
-		$filterUsername = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_username', 'filter_username', '', 'string' );
-		$this->setState ( 'list.filter_username', $filterUsername );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_state', 'filter_state', '', 'string' );
+		$this->setState ( 'list.filter_state', $value );
 
-		$filterEmail = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_email', 'filter_email', '', 'string' );
-		$this->setState ( 'list.filter_email', $filterEmail );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_username', 'filter_username', '', 'string' );
+		$this->setState ( 'list.filter_username', $value );
 
-		$filterModerator = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_moderator', 'filter_moderator', '', 'string' );
-		$this->setState ( 'list.filter_moderator', $filterModerator );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_email', 'filter_email', '', 'string' );
+		$this->setState ( 'list.filter_email', $value );
 
-		$filterSignature = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_signature', 'filter_signature', '', 'string' );
-		$this->setState ( 'list.filter_signature', $filterSignature );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_moderator', 'filter_moderator', '', 'string' );
+		$this->setState ( 'list.filter_moderator', $value );
 
-		$filterLoggedin = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_loggedin', 'filter_loggedin', '', 'string' );
-		$this->setState ( 'list.filter_loggedin', $filterLoggedin );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_signature', 'filter_signature', '', 'string' );
+		$this->setState ( 'list.filter_signature', $value );
 
-		$filterBanned = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_banned', 'filter_banned', '', 'string' );
-		$this->setState ( 'list.filter_banned', $filterBanned );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_loggedin', 'filter_loggedin', '', 'string' );
+		$this->setState ( 'list.filter_loggedin', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.filter_banned', 'filter_banned', '', 'string' );
+		$this->setState ( 'list.filter_banned', $value );
 	}
 
 	public function getUsers() {

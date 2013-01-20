@@ -26,6 +26,7 @@ $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DES
 
 $user = JFactory::getUser();
 $filterSearch = $this->escape($this->state->get('list.search'));
+$filterState = $this->escape($this->state->get('list.filter_state'));
 $filterUsername	= $this->escape($this->state->get('list.filter_username'));
 $filterEmail = $this->escape($this->state->get('list.filter_email'));
 $filterModerator = $this->escape($this->state->get('list.filter_moderator'));
@@ -118,10 +119,10 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<td class="hidden-phone">
 					</td>
 					<td class="nowrap center">
-						<label for="filter_status" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_status" id="filter_status" class="select-filter" onchange="Joomla.orderTable()">
+						<label for="filter_state" class="element-invisible"><?php echo JText::_('All');?></label>
+						<select name="filter_state" id="filter_state" class="select-filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->statusOptions(), 'value', 'text', $this->state->get('filter.status'), true); ?>
+							<?php echo JHtml::_('select.options', $this->stateOptions(), 'value', 'text', $filterState, true); ?>
 						</select>
 					</td>
 					<td class="nowrap"></td>

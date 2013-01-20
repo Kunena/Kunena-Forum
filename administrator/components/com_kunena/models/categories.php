@@ -48,23 +48,26 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.search', 'filter_search', '', 'string' );
 		$this->setState ( 'list.search', $value );
 
-		$filterTitle = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_title', 'filter_title', '', 'string' );
-		$this->setState ( 'list.filter_title', $filterTitle );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_published', 'filter_published', '', 'string' );
+		$this->setState ( 'list.filter_published', $value );
 
-		$filterType = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_type', 'filter_type', '', 'string' );
-		$this->setState ( 'list.filter_type', $filterType );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_title', 'filter_title', '', 'string' );
+		$this->setState ( 'list.filter_title', $value );
 
-		$filterAccess = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_access', 'filter_access', '', 'string' );
-		$this->setState ( 'list.filter_access', $filterAccess );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_type', 'filter_type', '', 'string' );
+		$this->setState ( 'list.filter_type', $value );
 
-		$filterLocked = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_locked', 'filter_locked', '', 'string' );
-		$this->setState ( 'list.filter_locked', $filterLocked );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_access', 'filter_access', '', 'string' );
+		$this->setState ( 'list.filter_access', $value );
 
-		$filterReview = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_review', 'filter_review', '', 'string' );
-		$this->setState ( 'list.filter_review', $filterReview );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_locked', 'filter_locked', '', 'string' );
+		$this->setState ( 'list.filter_locked', $value );
 
-		$filterAnonymous = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_anonymous', 'filter_anonymous', '', 'string' );
-		$this->setState ( 'list.filter_anonymous', $filterAnonymous );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_review', 'filter_review', '', 'string' );
+		$this->setState ( 'list.filter_review', $value );
+
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_anonymous', 'filter_anonymous', '', 'string' );
+		$this->setState ( 'list.filter_anonymous', $value );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.categories.list.levels", 'levellimit', 10, 'int' );
 		$this->setState ( 'list.levels', $value );

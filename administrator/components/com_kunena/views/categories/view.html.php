@@ -32,6 +32,7 @@ class KunenaAdminViewCategories extends KunenaView {
 	function displayDefault() {
 		$this->categories = $this->get ( 'AdminCategories' );
 		$this->navigation = $this->get ( 'AdminNavigation' );
+		$this->batch_categories = $this->get ( 'BatchCategories' );
 		$this->setToolBarDefault();
 		$this->display();
 	}

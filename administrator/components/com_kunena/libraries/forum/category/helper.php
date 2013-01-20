@@ -394,12 +394,12 @@ abstract class KunenaForumCategoryHelper {
 		$query = "UPDATE #__kunena_categories AS c
 			INNER JOIN (
 					SELECT t.category_id AS id, COUNT( * ) AS numTopics, SUM( t.posts ) AS numPosts, t2.id as last_topic_id
-					FROM #__kunena_topics AS t INNER JOIN (SELECT t.id, t.category_id, t.last_post_time 
-															FROM #__kunena_topics AS t, 
+					FROM #__kunena_topics AS t INNER JOIN (SELECT t.id, t.category_id, t.last_post_time
+															FROM #__kunena_topics AS t,
 																	(SELECT category_id ,  max(last_post_time) as last_post_time
 																	FROM  `#__kunena_topics`
 																	WHERE hold =0
-																	AND moved_id =0 
+																	AND moved_id =0
 															GROUP BY category_id) AS temp
 															WHERE temp.last_post_time = t.last_post_time
 															{$categories}
@@ -480,7 +480,7 @@ abstract class KunenaForumCategoryHelper {
 	 */
 	static public function getAlias($category_id, $alias) {
 		$db = JFactory::getDbo();
-		$query = "SELECT * FROM #__kunena_categories WHERE id = {$db->quote($category_id)} AND alias = {$db->quote($alias)}";
+		$query = "SELECT * FROM #__kunena_aliases WHERE type = {$db->quote("catid")} AND alias = {$db->quote($alias)}";
 		$db->setQuery($query);
 		$category_items = $db->loadAssoc();
 

@@ -428,4 +428,55 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		return array($name, $alias);
 	}
+
+	/**
+	* Method to do batch process on selected categories, to move or copy them.
+	*
+	* @return  boolean  Return true if success.
+	*
+	* @since  3.0.0
+	*/
+
+	public function batch_categories() {
+		if (! JSession::checkToken('post')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			return;
+		}
+
+		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
+		$cat_parent = JRequest::getInt('batch_category_id', 0);
+		$task = JRequest::getString('move_copy');
+
+		if ( $cat_parent == 0 || empty($cid) ) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_BATCH_CATEGORY_NOT_EXIST') );
+			return false;
+		}
+
+		if ( $task == 'copy' ) {
+			foreach($cid as $cat) {
+				$category = KunenaForumCategoryHelper::get (intval ( $cat ) );
+				list($title, $alias) = $this->_generateNewTitle($cat, $category->alias, $category->name);
+				$_POST['name']  = $title;
+				$_POST['alias']  = $alias;
+				$_POST['parent_id'] = intval($cat_parent);
+				$_POST['catid'] = 0;
+				$this->_save();
+			}
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_BATCH_CATEGORY_COPY_SUCCESS') );
+		} elseif ( $task == 'move' ) {
+			$db = JFactory::getDBO ();
+			foreach($cid as $cat) {
+				if ( $category!=$cat ) {
+					$query ="UPDATE #__kunena_categories SET parent_id={$db->quote(intval($cat_parent))} WHERE id={$db->quote($cat)}";
+					$db->setQuery((string)$query);
+					$db->query();
+					KunenaError::checkDatabaseError ();
+				}
+			}
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_BATCH_CATEGORY_MOVE_SUCCESS') );
+
+		}
+		$this->setRedirect(KunenaRoute::_($this->baseurl, false));
+		return true;
+	}
 }

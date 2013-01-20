@@ -28,6 +28,7 @@ $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DES
 
 $user = JFactory::getUser();
 $filterSearch = $this->escape($this->state->get('list.search'));
+$filterPublished = $this->escape($this->state->get('list.filter_published'));
 $filterTitle = $this->escape($this->state->get('list.filter_title'));
 $filterType	= $this->escape($this->state->get('list.filter_type'));
 $filterAccess = $this->escape($this->state->get('list.filter_access'));
@@ -139,10 +140,10 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<td class="hidden-phone">
 					</td>
 					<td class="nowrap center">
-						<label for="filter_publish" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_publish" id="filter_publish" class="select-filter" onchange="Joomla.orderTable()">
+						<label for="filter_published" class="element-invisible"><?php echo JText::_('All');?></label>
+						<select name="filter_published" id="filter_published" class="select-filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $this->state->get('jgrid.published'), true); ?>
+							<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $filterPublished, true); ?>
 						</select>
 					</td>
 					<td class="nowrap">
@@ -153,7 +154,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<label for="filter_type" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_type" id="filter_type" class="select-filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->typeOptions(), 'value', 'text', $filterTitle); ?>
+							<?php echo JHtml::_('select.options', $this->typeOptions(), 'value', 'text', $filterType); ?>
 						</select>
 					</td>
 					<td class="nowrap center hidden-phone">

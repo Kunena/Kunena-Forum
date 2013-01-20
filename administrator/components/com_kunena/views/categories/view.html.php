@@ -32,6 +32,7 @@ class KunenaAdminViewCategories extends KunenaView {
 	function displayDefault() {
 		$this->categories = $this->get ( 'AdminCategories' );
 		$this->navigation = $this->get ( 'AdminNavigation' );
+		$this->batch_categories = $this->get ( 'BatchCategories' );
 		$this->setToolBarDefault();
 		$this->display();
 	}
@@ -57,6 +58,17 @@ class KunenaAdminViewCategories extends KunenaView {
 		JToolBarHelper::publish ();
 		JToolBarHelper::unpublish ();
 		JToolBarHelper::deleteList ();
+		if (version_compare(JVERSION, '3', '>')) {
+			// Get the toolbar object instance
+			$bar = JToolBar::getInstance('toolbar');
+
+			JHtml::_('bootstrap.modal', 'collapseModal');
+			$title = JText::_('JTOOLBAR_BATCH');
+			$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">
+			<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
+			$title</button>";
+			$bar->appendButton('Custom', $dhtml, 'batch');
+		}
 		//JToolBarHelper::back ( JText::_ ( 'Home' ), 'index.php?option=com_kunena' );
 	}
 

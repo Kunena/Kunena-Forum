@@ -272,6 +272,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			<?php $i++; endforeach; ?>
 			</tbody>
 		</table>
+		<?php //Load the batch processing form. ?>
+		<?php echo $this->loadTemplate('batch'); ?>
 	</div>
 </form>
 

@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-//JHtml::_('formbehavior.chosen', 'select');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
 <div id="j-sidebar-container" class="span2">
 	<div id="sidebar">
@@ -177,7 +177,7 @@ JHtml::_('dropdown.init');
 										<th class="span1"><input type="checkbox" name="checkall-toggle" value="" title="Unset moderator" onclick="Joomla.checkAll(this)" /></th>
 									</tr>
 								</thead>
-
+								<?php echo $this->UserNotModerators; ?>
 								<tbody>
 								<?php $i=0; if (empty($this->moderators)) : ?>
 									<tr>

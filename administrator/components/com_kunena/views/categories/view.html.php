@@ -25,6 +25,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		if (!$this->category) return;
 		$this->options = $this->get ( 'AdminOptions' );
 		$this->moderators = $this->get ( 'AdminModerators' );
+		$this->UserNotModerators = $this->get( 'UserNotModerators' );
 		$this->setToolBarEdit();
 		$this->display();
 	}

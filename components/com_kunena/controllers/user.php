@@ -206,9 +206,9 @@ class KunenaControllerUser extends KunenaController {
 		$this->app->redirect ( $user->getUrl(false) );
 	}
 
-	function cancel()
-	{
-		$this->app->redirect ( CKunenaLink::GetMyProfileURL(null, '', false) );
+	function cancel() {
+		$user = KunenaFactory::getUser();
+		$this->app->redirect ( $user->getUrl(false) );
 	}
 
 	function login() {
@@ -292,6 +292,8 @@ class KunenaControllerUser extends KunenaController {
 
 	// Mostly copied from Joomla 1.5
 	protected function saveUser(){
+		$user = KunenaUserHelper::get($this->user->id);
+
 		// we only allow users to edit few fields
 		$allow = array('name', 'email', 'password', 'password2', 'params');
 		if ($this->config->usernamechange) {
@@ -308,8 +310,8 @@ class KunenaControllerUser extends KunenaController {
 		$post = array_intersect_key($post, array_flip($allow));
 
 		// get the redirect
-		$return = CKunenaLink::GetMyProfileURL($this->user->id, '', false);
-		$err_return = CKunenaLink::GetMyProfileURL($this->user->id, 'edit', false);
+		$return = $user->getUrl(false);
+		$err_return = $user->getUrl(false, 'edit');
 
 		// do a password safety check
 		if ( !empty($post['password']) && !empty($post['password2']) ) {

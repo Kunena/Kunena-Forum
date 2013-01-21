@@ -34,7 +34,5 @@ class KunenaAdminViewConfig extends KunenaView {
 		JToolBarHelper::spacer();
 		$bar = JToolBar::getInstance('toolbar');
 		$bar->appendButton('Popup', 'restore', 'COM_KUNENA_RESET_CONFIG', 'index.php?option=com_kunena&amp;view=config&amp;layout=modal&amp;tmpl=component', 450, 200);
-		JToolBarHelper::spacer();
-		JToolBarHelper::back();
 	}
 }

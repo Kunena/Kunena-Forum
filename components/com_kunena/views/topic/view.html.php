@@ -507,8 +507,8 @@ class KunenaViewTopic extends KunenaView {
 			if ($this->config->showkarma && $this->profile->userid) {
 				$this->userkarma_title = JText::_ ( 'COM_KUNENA_KARMA' ) . ": " . $this->profile->karma;
 				if ($this->me->userid && $this->me->userid != $this->profile->userid) {
-					$this->userkarma_minus = ' ' .JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=karma&task=karmadown&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
-					$this->userkarma_plus = ' ' .JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=karma&task=karmaup&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
+					$this->userkarma_minus = ' ' .JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
+					$this->userkarma_plus = ' ' .JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
 				}
 			}
 

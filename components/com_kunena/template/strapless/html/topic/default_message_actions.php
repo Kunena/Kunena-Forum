@@ -24,7 +24,7 @@ if ($this->message->modified_time) {
 <?php endif ?>
 <?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
 <div class="kmessage-editmarkup-cover">
-  
+
   <span class="alert" <?php echo $datehover ?>> <?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
   <?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
   </span> <br />
@@ -35,7 +35,7 @@ if ($this->message->modified_time) {
   <?php if (!empty($this->ipLink)) : ?>
   <span class="kmessage-informmarkup"><?php echo $this->ipLink ?></span>
   <?php endif ?>
-  
+
 </div>
 <?php endif ?>
 
@@ -43,7 +43,7 @@ if ($this->message->modified_time) {
 <div class="btn-toolbar" style="margin: 0;">
   <div class="kmessage-buttons-cover">
     <div class="kmessage-buttons-row">
-    <input type="button" class="btn" name="kreply-form" value="Quick Reply" onclick="document.getElementById('kreply<?php echo intval($this->message->id) ?>_form').style.display = 'block';this.form.submit();" />
+    <input type="button" class="btn" name="kreply-form" value="Quick Reply" onclick="document.getElementById('kreply<?php echo intval($this->message->id) ?>_form').style.display = 'block';" />
       <div class="btn-group">
         <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
         <ul class="dropdown-menu">
@@ -62,7 +62,7 @@ if ($this->message->modified_time) {
         </ul>
       </div>
       <?php endif?>
-      
+
     </div>
     <?php else : ?>
     <?php echo $this->message_closed; ?> </div>

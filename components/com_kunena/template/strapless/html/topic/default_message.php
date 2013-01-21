@@ -54,7 +54,7 @@ defined ( '_JEXEC' ) or die ();
     <?php endif; ?>
     <br />
     <input type="submit" class="btn btn-primary" name="submit" value="<?php echo JText::_('COM_KUNENA_SUBMIT') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
-    <input type="reset" class="btn" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" onclick="document.getElementById('kreply<?php echo intval($this->message->id) ?>_form').style.display = 'none';this.form.submit();" />
+    <input type="reset" class="btn" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" onclick="document.getElementById('kreply<?php echo intval($this->message->id) ?>_form').style.display = 'none';" />
     <small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE') ?></small>
   </form>
 </div>

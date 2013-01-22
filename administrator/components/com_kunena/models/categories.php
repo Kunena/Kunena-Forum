@@ -49,25 +49,25 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$this->setState ( 'list.search', $value );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_published', 'filter_published', '', 'string' );
-		$this->setState ( 'list.filter_published', $value );
+		$this->setState ( 'list.filter_published', $value !== '' ? (int) $value : null );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_title', 'filter_title', '', 'string' );
-		$this->setState ( 'list.filter_title', $value );
+		$this->setState ( 'list.filter_title', $value !== '' ? $value : null );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_type', 'filter_type', '', 'string' );
-		$this->setState ( 'list.filter_type', $value );
+		$this->setState ( 'list.filter_type', $value !== '' ? $value : null );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_access', 'filter_access', '', 'string' );
-		$this->setState ( 'list.filter_access', $value );
+		$this->setState ( 'list.filter_access', $value !== '' ? (int) $value : null );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_locked', 'filter_locked', '', 'string' );
-		$this->setState ( 'list.filter_locked', $value );
+		$this->setState ( 'list.filter_locked', $value !== '' ? (int) $value : null );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_review', 'filter_review', '', 'string' );
-		$this->setState ( 'list.filter_review', $value );
+		$this->setState ( 'list.filter_review', $value !== '' ? (int) $value : null );
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_anonymous', 'filter_anonymous', '', 'string' );
-		$this->setState ( 'list.filter_anonymous', $value );
+		$this->setState ( 'list.filter_anonymous', $value !== '' ? (int) $value : null );
 
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.categories.list.levels", 'levellimit', 10, 'int' );
 		$this->setState ( 'list.levels', $value );
@@ -81,62 +81,37 @@ class KunenaAdminModelCategories extends KunenaModel {
 		}
 		$this->setState ( 'item.id', $catid );
 		$this->setState ( 'item.parent_id', $parent_id );
-
-		$access = $this->getUserStateFromRequest('com_kunena.admin.categories.filter.access', 'filter_access', 0, 'int');
-		$this->setState('filter.access', $access);
-
-		$published = $this->getUserStateFromRequest('com_kunena.admin.categories.jgrid.published', 'filter_published', '');
-		$this->setState('filter.published', $published);
-
-		$type = $this->getUserStateFromRequest('com_kunena.admin.categories.filter.type', 'filter_type', '');
-		$this->setState('filter.type', $type);
 	}
 
 	public function getAdminCategories() {
 		if ( $this->_admincategories === false ) {
-			$type=$this->getState('filter.type');
-			$getparents = true;
-			if ( $type ) $getparents = false;
-
 			$params = array (
 				'ordering'=>$this->getState ( 'list.ordering' ),
 				'direction'=>$this->getState ( 'list.direction' ) == 'asc' ? 1 : -1,
 				'search'=>$this->getState ( 'list.search' ),
 				'unpublished'=>1,
-				'action'=>'admin',
-				'parents'=>$getparents);
+				'published'=>$this->getState ( 'list.filter_published'),
+				'filter_title'=>$this->getState ( 'list.filter_title'),
+				'filter_type'=>$this->getState ( 'list.filter_type'),
+				'filter_access'=>$this->getState ( 'list.filter_access'),
+				'filter_locked'=>$this->getState ( 'list.filter_locked'),
+				'filter_review'=>$this->getState ( 'list.filter_review'),
+				'filter_anonymous'=>$this->getState ( 'list.filter_anonymous'),
+				'action'=>'admin');
+
 			$catid = $this->getState ( 'item.id', 0 );
 			$categories = array();
 			$orphans = array();
 
-			if ( $this->getState('filter.access') != 0 ) {
-				$categories = KunenaForumCategoryHelper::getCategoriesByAccess('joomla.level',$this->getState('filter.access'));
+			if ($catid) {
+				$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'list.levels' ), array('unpublished'=>1, 'action'=>'none'));
+				$categories[] = KunenaForumCategoryHelper::get($catid);
 			} else {
-				if ($catid) {
-					$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'list.levels' ), array('unpublished'=>1, 'action'=>'none'));
-					$categories[] = KunenaForumCategoryHelper::get($catid);
-				} else {
-					$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'list.levels' ), $params);
- 				}
-
-				$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'list.levels' ), $params));
-				$categories = array_merge($orphans, $categories);
+				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'list.levels' ), $params);
 			}
 
-			$published = $this->getState('filter.published');
-
-			$getcategories=0;
-			if ( $type== 2 ) $getcategories=1;
-
-			if ( !empty($published)  || $getcategories ) {
-				$list = array ();
-				foreach($categories as $cat) {
-
-					if ( $this->getState('filter.published') == $cat->published ) $list[] = $cat;
-					if ($getcategories && $cat->parent_id > 0 ) $list[] = $cat;
-				}
-				$categories = $list;
-			}
+			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'list.levels' ), $params));
+			$categories = array_merge($orphans, $categories);
 
 			$categories = KunenaForumCategoryHelper::getIndentation($categories);
 			$this->setState ( 'list.total', count($categories) );

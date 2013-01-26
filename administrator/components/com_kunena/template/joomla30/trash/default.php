@@ -114,7 +114,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<thead>
 					<tr>
 						<th width="1%" class="nowrap center">
-							<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->trash_items ); ?>);" />
+							<input type="checkbox"  name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this);" />
 						</th>
 						<th>
 							<?php echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'tt.subject', $this->state->get('list.direction'), $this->state->get('list.ordering')) : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'm.subject', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>

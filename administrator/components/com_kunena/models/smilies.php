@@ -18,8 +18,23 @@ jimport( 'joomla.html.pagination' );
  *
  * @since 2.0
  */
-class KunenaAdminModelSmilies extends KunenaModel {
-	protected $__state_set = false;
+class KunenaAdminModelSmilies extends JModelList {
+
+	public function __construct($config = array())
+	{
+		if (empty($config['filter_fields']))
+		{
+			$config['filter_fields'] = array(
+				'id', 'a.id',
+				'code', 'a.code',
+				'location', 'a.location',
+				'greylocaktion', 'a.greylocation',
+				'emoticonbar', 'a.emoticonbar',
+			);
+		}
+
+		parent::__construct($config);
+	}
 
 	/**
 	 * Method to auto-populate the model state.
@@ -27,41 +42,100 @@ class KunenaAdminModelSmilies extends KunenaModel {
 	 * @return	void
 	 * @since	1.6
 	 */
-	protected function populateState() {
-		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
-		$this->setState ( 'list.limit', $value );
+	protected function populateState($ordering = null, $direction = null) {
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.ordering', 'filter_order', 'ordering', 'cmd' );
-		$this->setState ( 'list.ordering', $value );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.filter_code', 'filter_code', '', 'string' );
+		$this->setState ( 'list.filter_code', $value !== '' ? $value : null );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.start", 'limitstart', 0, 'int' );
-		$this->setState ( 'list.start', $value );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.filter_url', 'filter_url', '', 'string' );
+		$this->setState ( 'list.filter_url', $value !== '' ? $value : null );
 
-		$filterCode = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_code', 'filter_code', '', 'string' );
-		$this->setState ( 'list.filter_code', $filterCode );
-
-		$filterUrl = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_url', 'filter_url', '', 'string' );
-		$this->setState ( 'list.filter_url', $filterUrl );
-
-		$id = $this->getInt ( 'id', 0 );
-		$this->setState ( 'item.id', $id );
+		// List state information.
+		parent::populateState('a.id', 'asc');
 	}
 
-	public function getSmileys() {
-		$db = JFactory::getDBO ();
+	protected function getStoreId($id = '')
+	{
+		// Compile the store id.
+		$id	.= ':'.$this->getState('list.filter_code');
+		$id	.= ':'.$this->getState('list.filter_url');
 
-		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_smileys" );
-		$total = $db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return;
+		return parent::getStoreId($id);
+	}
 
-		$this->setState ( 'list.total',$total );
+	protected function getListQuery()
+	{
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
 
-		$db->setQuery ( "SELECT * FROM #__kunena_smileys", $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		$smileys = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+		$query->select(
+			$this->getState(
+				'list.select',
+				'a.id, a.code, a.location, a.greylocation, a.emoticonbar'
+			)
+		);
 
-		return $smileys;
+		$query->from('#__kunena_smileys AS a');
+
+		// Filter by access level.
+		$code = $this->getState ( 'list.filter_code');
+		if (!empty($code))
+		{
+			$code = $db->Quote('%'.$db->escape($code, true).'%');
+			$query->where('(a.code LIKE '.$code.')');
+		}
+
+		// Filter by access level.
+		$url = $this->getState ( 'list.filter_url');
+		if (!empty($code))
+		{
+			$url = $db->Quote('%'.$db->escape($url, true).'%');
+			$query->where('(a.location LIKE '.$url.')');
+		}
+
+		// Add the list ordering clause.
+		$orderCol = $this->state->get('list.ordering', 'a.name');
+		$orderDirn = $this->state->get('list.direction', 'asc');
+
+		$query->order($db->escape($orderCol.' '.$orderDirn));
+
+		//echo nl2br(str_replace('#__','jos_',$query));
+		return $query;
+	}
+
+	/*public function getSmileys() {
+		$rlist = array();
+		$list = array();
+		if (self::$_instances === false) {
+			self::loadSmileys();
+			$rlist = self::$_instances;
+		}
+
+		$params = array (
+			'filter_code'=>$this->getState ( 'list.filter_code'),
+			'filter_url'=>$this->getState ( 'list.filter_url'),
+			'action'=>'admin');
+
+		$action = isset($params['action']) ? (string) $params['action'] : 'read';
+
+		foreach ( $rlist as $id => $instance ) {
+
+			if (! isset ( self::$_instances [$id] ))
+				continue;
+
+			$instance = self::$_instances [$id];
+			//print_r($instance);
+
+			$filtered = isset($params['filter_code']) && (JString::stristr($instance->code, (string) $params['filter_code']) === false);
+			$filtered |= isset($params['filter_url']) && (JString::stristr($instance->location, (string) $params['filter_url']) === false);
+
+			if ($filtered && $action != 'admin') continue;
+
+			//print_r($instance);
+
+			if (!$filtered) $list [$id] = $instance;
+		}
+		return $list;
 	}
 
 	public function getSmiley() {
@@ -76,7 +150,7 @@ class KunenaAdminModelSmilies extends KunenaModel {
 			return $selected;
 		}
 		return null;
-	}
+	}*/
 
 	public function getSmileyspaths() {
 		$template = KunenaFactory::getTemplate();
@@ -112,4 +186,5 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
 		return $navigation;
 	}
+
 }

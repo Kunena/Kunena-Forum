@@ -76,8 +76,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo 'Search categories'; ?>" value="<?php echo $filterSearch; ?>" title="<?php echo 'Search categories'; ?>" />
 			</div>
 			<div class="btn-group pull-left">
-				<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
-				<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
+				<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"> </i>Filter</button>
+				<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"> </i>Clear</button>
 			</div>
 			<div class="btn-group pull-right hidden-phone">
 				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
@@ -141,46 +141,46 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					</td>
 					<td class="nowrap center">
 						<label for="filter_published" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_published" id="filter_published" class="select-filter" onchange="Joomla.orderTable()">
+						<select name="filter_published" id="filter_published" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
 							<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $filterPublished, true); ?>
 						</select>
 					</td>
 					<td class="nowrap">
 						<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTitle; ?>" title="<?php echo 'Filter'; ?>" />
+						<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTitle; ?>" title="<?php echo 'Filter'; ?>" />
 					</td>
 					<td class="nowrap center hidden-phone">
 						<label for="filter_type" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_type" id="filter_type" class="select-filter" onchange="Joomla.orderTable()">
+						<select name="filter_type" id="filter_type" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
 							<?php echo JHtml::_('select.options', $this->typeOptions(), 'value', 'text', $filterType); ?>
 						</select>
 					</td>
 					<td class="nowrap center hidden-phone">
 						<label for="filter_access" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_access" id="filter_access" class="select-filter" onchange="Joomla.orderTable()">
+						<select name="filter_access" id="filter_access" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
 							<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $filterAccess); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
 						<label for="filter_locked" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_locked" id="filter_locked" class="select-filter" onchange="Joomla.orderTable()">
+						<select name="filter_locked" id="filter_locked" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
 							<?php echo JHtml::_('select.options', $this->lockOptions(), 'value', 'text', $filterLocked); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
 						<label for="filter_review" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_review" id="filter_review" class="select-filter" onchange="Joomla.orderTable()">
+						<select name="filter_review" id="filter_review" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
 							<?php echo JHtml::_('select.options', $this->reviewOptions(), 'value', 'text', $filterReview); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
 						<label for="filter_anonymous" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_anonymous" id="filter_anonymous" class="select-filter" onchange="Joomla.orderTable()">
+						<select name="filter_anonymous" id="filter_anonymous" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
 							<?php echo JHtml::_('select.options', $this->anonymousOptions(), 'value', 'text', $filterAnonymous); ?>
 						</select>

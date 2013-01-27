@@ -20,6 +20,7 @@ jimport( 'joomla.html.pagination' );
  */
 class KunenaAdminModelRanks extends KunenaModel {
 	protected $__state_set = false;
+	protected static $_instances = false;
 
 	/**
 	 * Method to auto-populate the model state.
@@ -38,33 +39,54 @@ class KunenaAdminModelRanks extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.ranks.list.start", 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
-		$filterTitle = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_title', 'filter_title', '', 'string' );
-		$this->setState ( 'list.filter_title', $filterTitle );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.ranks.list.filter_title', 'filter_title', '', 'string' );
+		$this->setState ( 'list.filter_title', $value !== '' ? $value : null );
 
-		$filterSpecial = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_special', 'filter_special', '', 'string' );
-		$this->setState ( 'list.filter_special', $filterSpecial );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.ranks.list.filter_special', 'filter_special', '', 'string' );
+		$this->setState ( 'list.filter_special', $value !== '' ? (int) $value : null );
 
-		$filterMin = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_min', 'filter_min', '', 'string' );
-		$this->setState ( 'list.filter_min', $filterMin );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.ranks.list.filter_min', 'filter_min', '', 'string' );
+		$this->setState ( 'list.filter_min', $value !== '' ? $value : null );
 
 		$id = $this->getInt ( 'id', 0 );
 		$this->setState ( 'item.id', $id );
 	}
 
 	public function getRanks() {
-		$db = JFactory::getDBO ();
+		$rlist = array();
+		$list = array();
+		if (self::$_instances === false) {
+			self::loadRanks();
+			$rlist = self::$_instances;
+		}
 
-		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_ranks" );
-		$total = $db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return;
+		$params = array (
+			'filter_title'=>$this->getState ( 'list.filter_title'),
+			'filter_special'=>$this->getState ( 'list.filter_special'),
+			'filter_min'=>$this->getState ( 'list.filter_min'),
+			'action'=>'admin');
 
-		$this->setState ( 'list.total',$total );
+		$action = isset($params['action']) ? (string) $params['action'] : 'read';
 
-		$db->setQuery ( "SELECT * FROM #__kunena_ranks", $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		$ranks = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+		foreach ( $rlist as $id => $instance ) {
 
-		return $ranks;
+			if (! isset ( self::$_instances [$id] ))
+				continue;
+
+			$instance = self::$_instances [$id];
+			//print_r($instance);
+
+			$filtered = isset($params['filter_title']) && (JString::stristr($instance->rank_title, (string) $params['filter_title']) === false);
+			$filtered |= isset($params['filter_special']) && $instance->rank_special != (int) $params['filter_special'];
+			$filtered |= isset($params['filter_min']) && (JString::stristr($instance->rank_min, (string) $params['filter_min']) === false);
+
+			if ($filtered && $action != 'admin') continue;
+
+			//print_r($instance);
+
+			if (!$filtered) $list [$id] = $instance;
+		}
+		return $list;
 	}
 
 	public function getRank() {
@@ -113,5 +135,29 @@ class KunenaAdminModelRanks extends KunenaModel {
 	public function getAdminNavigation() {
 		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
 		return $navigation;
+	}
+
+	public function loadRanks() {
+
+		$db = JFactory::getDBO ();
+
+		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_ranks" );
+		$total = $db->loadResult ();
+		KunenaError::checkDatabaseError();
+
+		$this->setState ( 'list.total',$total );
+
+		$db->setQuery ( "SELECT * FROM #__kunena_ranks", $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
+		$results = $db->loadObjectList ();
+
+		KunenaError::checkDatabaseError();
+
+		self::$_instances = array();
+
+		foreach ( $results as $rank ) {
+			self::$_instances [$rank->rank_id] = $rank;
+		}
+		unset ($results);
+
 	}
 }

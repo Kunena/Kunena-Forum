@@ -14,9 +14,16 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
+$sortFields = array();
+$sortFields[] = JHtml::_('select.option', 'p.code', JText::_('Code'));
+$sortFields[] = JHtml::_('select.option', 'p.url', JText::_('URL'));
+
+$sortDirection = array();
+$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
 $filterCode	= $this->escape($this->state->get('list.filter_code'));
 $filterUrl = $this->escape($this->state->get('list.filter_url'));
-
 $listOrdering = $this->escape($this->state->get('list.ordering'));
 $listDirection = $this->escape($this->state->get('list.direction'));
 
@@ -56,15 +63,35 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<input type="hidden" name="task" value="" />
 				<input type="hidden" name="boxchecked" value="0" />
 				<input type="hidden" name="limitstart" value="<?php echo intval($this->navigation->limitstart); ?>" />
+				<input type="hidden" name="filter_order" value="<?php echo $listOrdering; ?>" />
+				<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirection; ?>" />
 				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<div id="filter-bar" class="btn-toolbar">
+					<div class="btn-group pull-left">
+						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"> </i>Filter</button>
+						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"> </i>Clear</button>
+					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<?php echo $this->navigation->getLimitBox (); ?>
 					</div>
+					<div class="btn-group pull-right hidden-phone">
+						<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
+						<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
+							<?php echo JHtml::_('select.options', $sortDirection, 'value', 'text', $listDirection);?>
+						</select>
+					</div>
+					<div class="btn-group pull-right">
+						<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+						<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+							<?php echo JHtml::_('select.options', $sortFields, 'value', 'text', $listOrdering);?>
+						</select>
+					</div>
 				</div>
 
-				<table class="table table-striped">
+				<table class="table table-striped adminlist" id="smileyList">
 					<thead>
 						<tr>
 							<th width="1%" class="center">#</th>
@@ -82,11 +109,11 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							</td>
 							<td class="nowrap center">
 								<label for="filter_code" class="element-invisible"><?php echo 'Search in';?></label>
-								<input class="input-block-level input-filter" type="text" name="filter_code" id="filter_code" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterCode; ?>" title="<?php echo 'Filter'; ?>" />
+								<input class="input-block-level input-filter filter" type="text" name="filter_code" id="filter_code" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterCode; ?>" title="<?php echo 'Filter'; ?>" />
 							</td>
 							<td class="nowrap center">
 								<label for="filter_url" class="element-invisible"><?php echo 'Search in';?></label>
-								<input class="input-block-level input-filter" type="text" name="filter_url" id="filter_url" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterUrl; ?>" title="<?php echo 'Filter'; ?>" />
+								<input class="input-block-level input-filter filter" type="text" name="filter_url" id="filter_url" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterUrl; ?>" title="<?php echo 'Filter'; ?>" />
 							</td>
 						</tr>
 					</thead>
@@ -129,8 +156,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			<input type="hidden" name="boxchecked" value="0" />
 			<?php echo JHtml::_( 'form.token' ); ?>
 
-			<input type="file" id="file-upload" name="Filedata" />
-			<input type="submit" id="file-upload-submit" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
+			<input type="file" id="file-upload" class="btn" name="Filedata" />
+			<input type="submit" id="file-upload-submit" class="btn btn-primary" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
 		</form>
 	</div>
 </div>

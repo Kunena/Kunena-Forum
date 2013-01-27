@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-
-
 // Show one topic row
 ?>
 <?php if ($this->spacing) : ?>
@@ -26,78 +24,39 @@ defined ( '_JEXEC' ) or die ();
     <div class="pull-left"><?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?></div>
     <div class="clearfix"></div>
   </td>
-  <td class="span6">
-    <div class="row-fluid column-row pull-left">
-      <div class="span12 column-item">
-        <?php if ($this->topic->attachments) echo $this->getIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') ); ?>
-        <?php if ($this->topic->poll_id) echo $this->getIcon ( 'ktopicpoll', JText::_('COM_KUNENA_ADMIN_POLLS') ); ?>
-        <div class="ktopic-title-cover">
-          <?php
-			echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'ktopic-title km' );
-			if ($this->topic->getUserTopic()->favorite) {
-				echo $this->getIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
-			}
-			if ($this->me->exists() && $this->topic->getUserTopic()->posts) {
-				echo $this->getIcon ( 'ktopicmy', JText::_('COM_KUNENA_MYPOSTS') );
-			}
-			if ($this->topic->unread) {
-				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
-			}
+  <td class="span7">
+    <div class="ItemContent Discussion">
+      <div class="Title"><a href="#"><?php echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'hasTooltip' ) ;?></a></div>
+      <div class="Meta"> <span class="CommentCount"><i class="icon-comments-2"></i> <?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ).' '. JText::_('COM_KUNENA_GEN_REPLIES')?></span> <i class="icon-eye"></i><span class="LastCommentBy"> <?php echo $this->formatLargeNumber ( $this->topic->hits ).' '.  JText::_('COM_KUNENA_GEN_HITS');?></span> <i class="icon-user"></i> <span>Started by <a class="tip" title="admin" href="#">
+        <?php
+				echo $this->topic->getFirstPostAuthor()->getLink();
 			?>
+      </a></span> <i class="icon-calendar"></i> <span><?php echo KunenaDate::getInstance($this->topic->first_post_time);?></span> </div>
+      <div id="one">
+        <div id="tow">
+          <div class="well"> <?php echo KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 100)  ;?></div>
         </div>
-        <div class="ktopic-details-kcategory pull-left">
-          <?php if (!isset($this->category) || $this->category->id != $this->topic->getCategory()->id) : ?>
-          <span class="ktopic-category"> <?php echo JText::sprintf('COM_KUNENA_CATEGORY_X', $this->getCategoryLink ( $this->topic->getCategory() ) ) ?></span>
-          <?php endif; ?>
-          <span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getFirstPostAuthor()->getLink() ?></span> </div>
-        <div class="ktopic-details-kcategory" style="clear: both;">
-          <?php if ($this->pages > 1) : ?>
-          <ul class="pagination">
-            <li><?php echo $this->GetTopicLink ( $this->topic, 0, 1 ) ?></li>
-            <?php if ($this->pages > 4) : $startPage = $this->pages - 3; ?>
-            <li class="more">...</li>
-            <?php else: $startPage = 1; endif;
-			for($hopPage = $startPage; $hopPage < $this->pages; $hopPage ++) : ?>
-            <li><?php echo $this->getTopicLink ( $this->topic, $hopPage, $hopPage+1 ) ?></li>
-            <?php endfor; ?>
-          </ul>
-          <?php endif; ?>
-        </div>
-        <?php if (!empty($this->keywords)) : ?>
-        <div class="ktopic-keywords"> <?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?> </div>
-        <?php endif; ?>
       </div>
     </div>
+  </td>
+  <td width="2%">
+    <div class="pull-right kfrontend"> <a class="btn btn-micro" id="test1"  href="javascript:void(0);" onclick="javascript:showMessage();" title="Show Message"><i class="icon-downarrow"></i></a> <a class="btn btn-micro" id="test2" href="javascript:void(0);" onclick="javascript:hideMessage();" title="Hide Message"><i class="icon-uparrow"></i></a> </div>
     <div class="clearfix"></div>
   </td>
-  <td class="span2"><span class="kcat-topics-number"><?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ); ?></span> <span class="kcat-topics"><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?></span> <br />
-    <span class="kcat-replies-number"><?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ); ?></span> <span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_HITS');?> </span> </td>
-  <td></td>
-  <td class="span2">
-    <div class="klatest-post-info pull-right img-polaroid">
-      <?php if (!empty($this->topic->avatar)) : ?>
-      <span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
-      <?php endif; ?>
-    </div>
+  <td class="span1">
+    <?php if (!empty($this->topic->avatar)) : ?>
+    <span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
+    <?php endif; ?>
   </td>
-  <td class="span2">
-    <div class="klatest-post-info pull-right"> <span class="ktopic-latest-post">
-      <?php
-			echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST') ); ?>
-      <br />
-      <?php
-			echo ' ' . JText::_('COM_KUNENA_BY') . ' ' . $this->topic->getLastPostAuthor()->getLink();
+  <td width="10%"> <span class="ktopic-latest-post hasTooltip" title="<?php echo $this->topic->getLastPostAuthor() ;?>">
+    <?php
+				echo $this->topic->getLastPostAuthor()->getLink();
 			?>
-      </span> </div>
-    <div class="clearfix"></div>
-  </td>
+    </span> <br />
+    <span class="ktopic-date hasTooltip" title="<?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?>"><?php echo $this->getTopicLink ( $this->topic, 'last', JText::_('COM_KUNENA_GEN_LAST_POST') ); ?></span> </td>
   <?php if (!empty($this->topicActions)) : ?>
-  <td class="kcol-mid ktopicmoderation" width="5%">
-    <div
-			class="pull-right">
-      <input class="kcheck" type="checkbox"
-				name="topics[<?php echo $this->topic->id?>]" value="1" />
-    </div>
+  <td  width="1%">
+    <input class ="kcheck" type="checkbox" name="topics[<?php echo $this->topic->id?>]" value="1" />
   </td>
   <?php endif; ?>
 </tr>

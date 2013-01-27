@@ -124,7 +124,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							</td>
 						</tr>
 					</tfoot>
-					<?php $i = 0; foreach ( $this->smileys as $id => $row ) : ?>
+					<?php $i = 0; foreach ( $this->items as $id => $row ) : ?>
 					<tr>
 						<td class="hidden-phone center">
 							<?php echo ($id + $this->navigation->limitstart + 1); ?>

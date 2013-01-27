@@ -18,9 +18,23 @@ jimport( 'joomla.html.pagination' );
  *
  * @since 2.0
  */
-class KunenaAdminModelRanks extends KunenaModel {
-	protected $__state_set = false;
-	protected static $_instances = false;
+class KunenaAdminModelRanks extends JModelList {
+
+	public function __construct($config = array())
+	{
+		if (empty($config['filter_fields']))
+		{
+			$config['filter_fields'] = array(
+				'rank_id', 'a.rank_id',
+				'rank_title', 'a.rank_title',
+				'rank_min', 'a.rank_min',
+				'rank_special', 'a.rank_special',
+				'rank_image', 'a.rank_image',
+			);
+		}
+
+		parent::__construct($config);
+	}
 
 	/**
 	 * Method to auto-populate the model state.
@@ -28,17 +42,9 @@ class KunenaAdminModelRanks extends KunenaModel {
 	 * @return	void
 	 * @since	1.6
 	 */
-	protected function populateState() {
+	protected function populateState($ordering = null, $direction = null) {
+
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.ranks.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
-		$this->setState ( 'list.limit', $value );
-
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.ranks.list.ordering', 'filter_order', 'ordering', 'cmd' );
-		$this->setState ( 'list.ordering', $value );
-
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.ranks.list.start", 'limitstart', 0, 'int' );
-		$this->setState ( 'list.start', $value );
-
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.ranks.list.filter_title', 'filter_title', '', 'string' );
 		$this->setState ( 'list.filter_title', $value !== '' ? $value : null );
 
@@ -48,11 +54,70 @@ class KunenaAdminModelRanks extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.ranks.list.filter_min', 'filter_min', '', 'string' );
 		$this->setState ( 'list.filter_min', $value !== '' ? $value : null );
 
-		$id = $this->getInt ( 'id', 0 );
-		$this->setState ( 'item.id', $id );
+		// List state information.
+		parent::populateState('a.rank_id', 'asc');
 	}
 
-	public function getRanks() {
+	protected function getStoreId($id = '')
+	{
+		// Compile the store id.
+		$id	.= ':'.$this->getState('list.filter_title');
+		$id	.= ':'.$this->getState('list.filter_special');
+		$id	.= ':'.$this->getState('list.filter_min');
+
+		return parent::getStoreId($id);
+	}
+
+	protected function getListQuery()
+	{
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select(
+			$this->getState(
+					'list.select',
+					'a.rank_id, a.rank_title, a.rank_min, a.rank_special, a.rank_image'
+			)
+		);
+
+		$query->from('#__kunena_ranks AS a');
+
+		// Filter by access level.
+		$title = $this->getState ( 'list.filter_title');
+		if (!empty($title))
+		{
+			$title = $db->Quote('%'.$db->escape($title, true).'%');
+			$query->where('(a.rank_title LIKE '.$title.')');
+		}
+
+		$special = $this->getState('list.filter_special');
+		if (is_numeric($special))
+		{
+			$query->where('a.rank_special = ' . (int) $special);
+		}
+		elseif ($special === '')
+		{
+			$query->where('(a.rank_special = 0 OR a.rank_special = 1)');
+		}
+
+		$min = $this->getState ( 'list.filter_min');
+		if (!empty($min))
+		{
+			$min = $db->Quote('%'.$db->escape($min, true).'%');
+			$query->where('(a.rank_min LIKE '.$min.')');
+		}
+
+		// Add the list ordering clause.
+		$orderCol = $this->state->get('list.ordering', 'a.name');
+		$orderDirn = $this->state->get('list.direction', 'asc');
+
+		$query->order($db->escape($orderCol.' '.$orderDirn));
+
+		//echo nl2br(str_replace('#__','jos_',$query));
+		return $query;
+	}
+
+	/*public function getRanks() {
 		$rlist = array();
 		$list = array();
 		if (self::$_instances === false) {
@@ -100,7 +165,7 @@ class KunenaAdminModelRanks extends KunenaModel {
 			return $selected;
 		}
 		return null;
-	}
+	}*/
 
 	public function getRankspaths() {
 		$template = KunenaFactory::getTemplate();
@@ -137,27 +202,4 @@ class KunenaAdminModelRanks extends KunenaModel {
 		return $navigation;
 	}
 
-	public function loadRanks() {
-
-		$db = JFactory::getDBO ();
-
-		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_ranks" );
-		$total = $db->loadResult ();
-		KunenaError::checkDatabaseError();
-
-		$this->setState ( 'list.total',$total );
-
-		$db->setQuery ( "SELECT * FROM #__kunena_ranks", $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		$results = $db->loadObjectList ();
-
-		KunenaError::checkDatabaseError();
-
-		self::$_instances = array();
-
-		foreach ( $results as $rank ) {
-			self::$_instances [$rank->rank_id] = $rank;
-		}
-		unset ($results);
-
-	}
 }

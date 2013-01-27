@@ -18,9 +18,23 @@ jimport( 'joomla.html.pagination' );
  *
  * @since 2.0
  */
-class KunenaAdminModelSmilies extends KunenaModel {
-	protected $__state_set = false;
-	protected static $_instances = false;
+class KunenaAdminModelSmilies extends JModelList {
+
+	public function __construct($config = array())
+	{
+		if (empty($config['filter_fields']))
+		{
+			$config['filter_fields'] = array(
+				'id', 'a.id',
+				'code', 'a.code',
+				'location', 'a.location',
+				'greylocaktion', 'a.greylocation',
+				'emoticonbar', 'a.emoticonbar',
+			);
+		}
+
+		parent::__construct($config);
+	}
 
 	/**
 	 * Method to auto-populate the model state.
@@ -28,16 +42,7 @@ class KunenaAdminModelSmilies extends KunenaModel {
 	 * @return	void
 	 * @since	1.6
 	 */
-	protected function populateState() {
-		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
-		$this->setState ( 'list.limit', $value );
-
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.ordering', 'filter_order', 'ordering', 'cmd' );
-		$this->setState ( 'list.ordering', $value );
-
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.start", 'limitstart', 0, 'int' );
-		$this->setState ( 'list.start', $value );
+	protected function populateState($ordering = null, $direction = null) {
 
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.filter_code', 'filter_code', '', 'string' );
 		$this->setState ( 'list.filter_code', $value !== '' ? $value : null );
@@ -45,11 +50,60 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.filter_url', 'filter_url', '', 'string' );
 		$this->setState ( 'list.filter_url', $value !== '' ? $value : null );
 
-		$id = $this->getInt ( 'id', 0 );
-		$this->setState ( 'item.id', $id );
+		// List state information.
+		parent::populateState('a.id', 'asc');
 	}
 
-	public function getSmileys() {
+	protected function getStoreId($id = '')
+	{
+		// Compile the store id.
+		$id	.= ':'.$this->getState('list.filter_code');
+		$id	.= ':'.$this->getState('list.filter_url');
+
+		return parent::getStoreId($id);
+	}
+
+	protected function getListQuery()
+	{
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select(
+			$this->getState(
+				'list.select',
+				'a.id, a.code, a.location, a.greylocation, a.emoticonbar'
+			)
+		);
+
+		$query->from('#__kunena_smileys AS a');
+
+		// Filter by access level.
+		$code = $this->getState ( 'list.filter_code');
+		if (!empty($code))
+		{
+			$code = $db->Quote('%'.$db->escape($code, true).'%');
+			$query->where('(a.code LIKE '.$code.')');
+		}
+
+		// Filter by access level.
+		$url = $this->getState ( 'list.filter_url');
+		if (!empty($code))
+		{
+			$url = $db->Quote('%'.$db->escape($url, true).'%');
+			$query->where('(a.location LIKE '.$url.')');
+		}
+
+		// Add the list ordering clause.
+		$orderCol = $this->state->get('list.ordering', 'a.name');
+		$orderDirn = $this->state->get('list.direction', 'asc');
+
+		$query->order($db->escape($orderCol.' '.$orderDirn));
+
+		//echo nl2br(str_replace('#__','jos_',$query));
+		return $query;
+	}
+
+	/*public function getSmileys() {
 		$rlist = array();
 		$list = array();
 		if (self::$_instances === false) {
@@ -96,7 +150,7 @@ class KunenaAdminModelSmilies extends KunenaModel {
 			return $selected;
 		}
 		return null;
-	}
+	}*/
 
 	public function getSmileyspaths() {
 		$template = KunenaFactory::getTemplate();
@@ -133,24 +187,4 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		return $navigation;
 	}
 
-	public function loadSmileys() {
-		$db = JFactory::getDBO ();
-
-		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_smileys" );
-		$total = $db->loadResult ();
-		if (KunenaError::checkDatabaseError());
-
-		$this->setState ( 'list.total',$total );
-
-		$db->setQuery ( "SELECT * FROM #__kunena_smileys", $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		$results = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError());
-
-		self::$_instances = array();
-
-		foreach ( $results as $smiley ) {
-			self::$_instances [$smiley->id] = $smiley;
-		}
-		unset ($results);
-	}
 }

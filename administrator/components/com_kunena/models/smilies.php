@@ -20,6 +20,7 @@ jimport( 'joomla.html.pagination' );
  */
 class KunenaAdminModelSmilies extends KunenaModel {
 	protected $__state_set = false;
+	protected static $_instances = false;
 
 	/**
 	 * Method to auto-populate the model state.
@@ -38,30 +39,49 @@ class KunenaAdminModelSmilies extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.start", 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
-		$filterCode = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_code', 'filter_code', '', 'string' );
-		$this->setState ( 'list.filter_code', $filterCode );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.filter_code', 'filter_code', '', 'string' );
+		$this->setState ( 'list.filter_code', $value !== '' ? $value : null );
 
-		$filterUrl = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_url', 'filter_url', '', 'string' );
-		$this->setState ( 'list.filter_url', $filterUrl );
+		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.filter_url', 'filter_url', '', 'string' );
+		$this->setState ( 'list.filter_url', $value !== '' ? $value : null );
 
 		$id = $this->getInt ( 'id', 0 );
 		$this->setState ( 'item.id', $id );
 	}
 
 	public function getSmileys() {
-		$db = JFactory::getDBO ();
+		$rlist = array();
+		$list = array();
+		if (self::$_instances === false) {
+			self::loadSmileys();
+			$rlist = self::$_instances;
+		}
 
-		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_smileys" );
-		$total = $db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return;
+		$params = array (
+			'filter_code'=>$this->getState ( 'list.filter_code'),
+			'filter_url'=>$this->getState ( 'list.filter_url'),
+			'action'=>'admin');
 
-		$this->setState ( 'list.total',$total );
+		$action = isset($params['action']) ? (string) $params['action'] : 'read';
 
-		$db->setQuery ( "SELECT * FROM #__kunena_smileys", $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		$smileys = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+		foreach ( $rlist as $id => $instance ) {
 
-		return $smileys;
+			if (! isset ( self::$_instances [$id] ))
+				continue;
+
+			$instance = self::$_instances [$id];
+			//print_r($instance);
+
+			$filtered = isset($params['filter_code']) && (JString::stristr($instance->code, (string) $params['filter_code']) === false);
+			$filtered |= isset($params['filter_url']) && (JString::stristr($instance->location, (string) $params['filter_url']) === false);
+
+			if ($filtered && $action != 'admin') continue;
+
+			//print_r($instance);
+
+			if (!$filtered) $list [$id] = $instance;
+		}
+		return $list;
 	}
 
 	public function getSmiley() {
@@ -111,5 +131,26 @@ class KunenaAdminModelSmilies extends KunenaModel {
 	public function getAdminNavigation() {
 		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
 		return $navigation;
+	}
+
+	public function loadSmileys() {
+		$db = JFactory::getDBO ();
+
+		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_smileys" );
+		$total = $db->loadResult ();
+		if (KunenaError::checkDatabaseError());
+
+		$this->setState ( 'list.total',$total );
+
+		$db->setQuery ( "SELECT * FROM #__kunena_smileys", $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
+		$results = $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError());
+
+		self::$_instances = array();
+
+		foreach ( $results as $smiley ) {
+			self::$_instances [$smiley->id] = $smiley;
+		}
+		unset ($results);
 	}
 }

@@ -11,10 +11,6 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 
-<hr />
-<div>
-  <h4> <span> <?php echo $this->displayMessageField('subject') ?> </span> <span class="pull-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"> <?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> <?php echo $this->numLink ?> </span> </h4>
-</div>
 <table class="table" style="border:none;" >
   <tbody>
     <tr>

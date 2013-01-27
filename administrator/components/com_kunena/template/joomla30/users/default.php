@@ -16,7 +16,11 @@ JHtml::_('dropdown.init');
 
 $sortFields = array();
 $sortFields[] = JHtml::_('select.option', 'username', JText::_('COM_KUNENA_USRL_USERNAME'));
-$sortFields[] = JHtml::_('select.option', 'name', JText::_('COM_KUNENA_USRL_REALNAME'));
+//$sortFields[] = JHtml::_('select.option', 'name', JText::_('COM_KUNENA_USRL_REALNAME'));
+$sortFields[] = JHtml::_('select.option', 'email', JText::_('COM_KUNENA_USRL_EMAIL'));
+$sortFields[] = JHtml::_('select.option', 'signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
+$sortFields[] = JHtml::_('select.option', 'enabled', JText::_('COM_KUNENA_USRL_ENABLED'));
+$sortFields[] = JHtml::_('select.option', 'banned', JText::_('COM_KUNENA_USRL_BANNED'));
 $sortFields[] = JHtml::_('select.option', 'moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
 $sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
 
@@ -24,15 +28,13 @@ $sortDirection = array();
 $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
-$user = JFactory::getUser();
-$filterSearch = $this->escape($this->state->get('list.search'));
-$filterState = $this->escape($this->state->get('list.filter_state'));
-$filterUsername	= $this->escape($this->state->get('list.filter_username'));
-$filterEmail = $this->escape($this->state->get('list.filter_email'));
-$filterModerator = $this->escape($this->state->get('list.filter_moderator'));
-$filterSignature = $this->escape($this->state->get('list.filter_signature'));
-$filterLoggedin	= $this->escape($this->state->get('list.filter_loggedin'));
-$filterBanned = $this->escape($this->state->get('list.filter_banned'));
+$filterSearch = $this->escape($this->state->get('filter.search'));
+$filterUsername	= $this->escape($this->state->get('filter.username'));
+$filterEmail = $this->escape($this->state->get('filter.email'));
+$filterSignature = $this->escape($this->state->get('filter.signature'));
+$filterBlock = $this->escape($this->state->get('filter.block'));
+$filterBanned = $this->escape($this->state->get('filter.banned'));
+$filterModerator = $this->escape($this->state->get('filter.moderator'));
 $listOrdering = $this->escape($this->state->get('list.ordering'));
 $listDirection = $this->escape($this->state->get('list.direction'));
 
@@ -66,7 +68,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 		<input type="hidden" name="type" value="list" />
 		<input type="hidden" name="filter_order" value="<?php echo $this->escape ( $this->state->get('list.ordering') ) ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-		<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
+		<input type="hidden" name="limitstart" value="<?php echo intval ( $this->pagination->limitstart ) ?>" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo JHtml::_( 'form.token' ); ?>
 
@@ -81,7 +83,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			</div>
 			<div class="btn-group pull-right hidden-phone">
 				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-				<?php echo $this->navigation->getListFooter(); ?>
+				<?php echo $this->pagination->getListFooter(); ?>
 			</div>
 			<div class="btn-group pull-right hidden-phone">
 				<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -104,28 +106,17 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			<thead>
 				<tr>
 					<th width="1%" class="nowrap center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
-					<th width="5%" class="nowrap center hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_ENABLED', 'status', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-					<th width="5%" class="nowrap hidden-phone"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
 					<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th class="hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-					<!--<th class="center hidden-phone hidden-tablet"><?php //echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_USERGROUP', 'usergroup', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>-->
-					<th width="5%" class="nowrap center hidden-phone hidden-tablet"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th width="5%" class="nowrap center hidden-phone hidden-tablet"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_SIGNATURE', 'signature', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-					<th width="5%" class="nowrap center hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_LOGGEDIN', 'loggedin', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="5%" class="nowrap center hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_ENABLED', 'enabled', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th width="5%" class="nowrap center hidden-phone"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_BANNED', 'banned', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="5%" class="nowrap center hidden-phone hidden-tablet"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th width="1%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 				</tr>
 				<tr>
 					<td class="hidden-phone">
 					</td>
-					<td class="nowrap center">
-						<label for="filter_state" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_state" id="filter_state" class="select-filter" onchange="Joomla.orderTable()">
-							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->stateOptions(), 'value', 'text', $filterState, true); ?>
-						</select>
-					</td>
-					<td class="nowrap"></td>
 					<td class="nowrap">
 						<label for="filter_username" class="element-invisible"><?php echo 'Search in';?></label>
 						<input class="input-block-level input-filter" type="text" name="filter_username" id="filter_username" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterUsername; ?>" title="<?php echo 'Filter'; ?>" />
@@ -134,13 +125,6 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<label for="filter_email" class="element-invisible"><?php echo 'Search in';?></label>
 						<input class="input-block-level input-filter" type="text" name="filter_email" id="filter_email" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterEmail; ?>" title="<?php echo 'Filter'; ?>" />
 					</td>
-					<td class="nowrap center">
-						<label for="filter_moderator" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_moderator" id="filter_moderator" class="select-filter" onchange="Joomla.orderTable()">
-							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->moderatorOptions(), 'value', 'text', $filterModerator); ?>
-						</select>
-					</td>
 					<td class="nowrap center hidden-phone">
 						<label for="filter_signature" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_signature" id="filter_signature" class="select-filter" onchange="Joomla.orderTable()">
@@ -148,11 +132,11 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							<?php echo JHtml::_('select.options', $this->signatureOptions(), 'value', 'text', $filterSignature); ?>
 						</select>
 					</td>
-					<td class="nowrap center hidden-phone">
-						<label for="filter_loggedin" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_loggedin" id="filter_loggedin" class="select-filter" onchange="Joomla.orderTable()">
+					<td class="nowrap center">
+						<label for="filter_state" class="element-invisible"><?php echo JText::_('All');?></label>
+						<select name="filter_block" id="filter_block" class="select-filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->loggedinOptions(), 'value', 'text', $filterLoggedin); ?>
+							<?php echo JHtml::_('select.options', $this->blockOptions(), 'value', 'text', $filterBlock, true); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
@@ -162,64 +146,69 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							<?php echo JHtml::_('select.options', $this->bannedOptions(), 'value', 'text', $filterBanned); ?>
 						</select>
 					</td>
+					<td class="nowrap center">
+						<label for="filter_moderator" class="element-invisible"><?php echo JText::_('All');?></label>
+						<select name="filter_moderator" id="filter_moderator" class="select-filter" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('All');?></option>
+							<?php echo JHtml::_('select.options', $this->moderatorOptions(), 'value', 'text', $filterModerator); ?>
+						</select>
+					</td>
 					<td class="nowrap center hidden-phone">
 					</td>
 				</tr>
 			</thead>
 			<tfoot>
 				<tr>
-					<td colspan="12">
-						<?php echo $this->navigation->getListFooter(); ?>
+					<td colspan="8">
+						<?php echo $this->pagination->getListFooter(); ?>
 					</td>
 				</tr>
 			</tfoot>
 			<?php
-				if (!empty($this->users)) :
+				$img_no = '<i class="icon-cancel"></i>';
+				$img_yes = '<i class="icon-checkmark"></i>';
+				if (!empty($this->items)) :
 					$i = 0;
-					foreach($this->users as $user) :
-						$kunena_user = KunenaFactory::getUser($user->id);
-						$userLogged = $kunena_user->isOnline() ? '<img src="components/com_kunena/images/tick.png" width="16" height="16" border="0" alt="" />': '';
-						$userEnabled = $kunena_user->isBlocked() ? 'publish_x.png' : 'tick.png';
-						$altUserEnabled = $kunena_user->isBlocked() ? JText::_( 'Blocked' ) : JText::_( 'Enabled' );
+					foreach($this->items as $item) :
+						$kunena_user = KunenaFactory::getUser($item->id);
 						$userBlockTask = $kunena_user->isBlocked() ? 'unblock' : 'block';
-						$userbanned = $kunena_user->isBanned() ? 'tick.png' : 'publish_x.png';
-
-						$userBannedTask = $kunena_user->isBanned() ? 'ban' : 'ban';
-						$altUserBanned = $kunena_user->isBanned() ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
+						$userBannedTask = $kunena_user->isBanned() ? 'unban' : 'ban';
 					?>
 			<tr>
 				<td>
-					<?php echo JHtml::_('grid.id', $i, intval($user->id)) ?>
+					<?php echo JHtml::_('grid.id', $i, intval($item->id)) ?>
 				</td>
-				<td class="center hidden-phone">
-					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
-						<i class="icon-checkmark"></i>
-					</a>
-				</td>
-				<td class="hidden-phone"><?php echo $kunena_user->getAvatarImage('kavatar', 36, 36); ?></td>
 				<td>
-					<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->username); ?></a>
+					<?php echo $kunena_user->getAvatarImage('kavatar', 36, 36); ?>
+					<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($item->username); ?></a>
 					<small>
-						<?php echo JText::sprintf('(Name: %s)', $this->escape($kunena_user->name));?>
+						<?php echo JText::sprintf('(Name: %s)', $this->escape($item->name));?>
 					</small>
 				</td>
-				<td class="hidden-phone"><?php echo $this->escape($kunena_user->email); ?></td>
-				<!--<td class="center hidden-phone hidden-tablet"><?php //echo $this->escape($kunena_user->group_id);?></td>-->
+				<td class="hidden-phone"><?php echo $this->escape($item->email); ?></td>
 				<td class="center hidden-phone hidden-tablet">
-					<?php echo $kunena_user->moderator ? JText::_('COM_KUNENA_YES') : JText::_('COM_KUNENA_NO'); ?>
+					<?php echo $this->escape ( $kunena_user->signature ); ?>
 				</td>
-				<td class="center hidden-phone hidden-tablet"><?php echo $this->escape ( $kunena_user->signature ); ?></td>
-				<td class="center hidden-phone"><?php echo $userLogged; ?></td>
 				<td class="center hidden-phone">
-					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBannedTask; ?>')">
-						<i class="icon-cancel"></i>
+					<a class ="btn btn-micro <?php echo (!$item->block ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">
+						<?php echo (!$item->block ? $img_yes : $img_no); ?>
 					</a>
 				</td>
-				<td class="center"><?php echo $this->escape($kunena_user->userid); ?></td>
+				<td class="center hidden-phone">
+					<a class ="btn btn-micro <?php echo ($kunena_user->isBanned() ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBannedTask ?>')">
+						<?php echo ($kunena_user->isBanned() ? $img_yes : $img_no); ?>
+					</a>
+				</td>
+				<td class="center hidden-phone hidden-tablet">
+					<span class ="btn btn-micro <?php echo ($kunena_user->moderator ? 'active':''); ?>">
+						<?php echo ($kunena_user->moderator ? $img_yes : $img_no); ?>
+					</span>
+				</td>
+				<td class="center"><?php echo $this->escape($item->id); ?></td>
 			</tr>
 		<?php $i++; endforeach; else : ?>
 			<tr>
-				<td colspan="12"><?php echo JText::_('COM_KUNENA_NOUSERSFOUND') ?></td>
+				<td colspan="8"><?php echo JText::_('COM_KUNENA_NOUSERSFOUND') ?></td>
 			</tr>
 		<?php endif; ?>
 		</table>

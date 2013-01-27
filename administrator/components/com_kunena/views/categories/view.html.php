@@ -76,21 +76,6 @@ class KunenaAdminViewCategories extends KunenaView {
 	}
 
 	/**
-	 * Returns an array of standard published state filter options.
-	 *
-	 * @return	string	The HTML code for the select tag
-	 */
-	public function typeOptions()
-	{
-		// Build the active state filter options.
-		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'Sections');
-		$options[]	= JHtml::_('select.option', '0', 'Categories');
-
-		return $options;
-	}
-
-	/**
 	 * Returns an array of locked filter options.
 	 *
 	 * @return	string	The HTML code for the select tag

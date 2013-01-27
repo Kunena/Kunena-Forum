@@ -15,15 +15,16 @@ JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
 $sortFields = array();
-$sortFields[] = JHtml::_('select.option', 'p.code', JText::_('Code'));
-$sortFields[] = JHtml::_('select.option', 'p.url', JText::_('URL'));
+$sortFields[] = JHtml::_('select.option', 'id', JText::_('ID'));
+$sortFields[] = JHtml::_('select.option', 'code', JText::_('Code'));
+$sortFields[] = JHtml::_('select.option', 'location', JText::_('URL'));
 
 $sortDirection = array();
 $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
-$filterCode	= $this->escape($this->state->get('list.filter_code'));
-$filterUrl = $this->escape($this->state->get('list.filter_url'));
+$filterCode	= $this->escape($this->state->get('filter.code'));
+$filterUrl = $this->escape($this->state->get('filter.url'));
 $listOrdering = $this->escape($this->state->get('list.ordering'));
 $listDirection = $this->escape($this->state->get('list.direction'));
 
@@ -62,18 +63,18 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=smilies') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="task" value="" />
 				<input type="hidden" name="boxchecked" value="0" />
-				<input type="hidden" name="limitstart" value="<?php echo intval($this->navigation->limitstart); ?>" />
+				<input type="hidden" name="limitstart" value="<?php echo intval($this->pagination->limitstart); ?>" />
 				<input type="hidden" name="filter_order" value="<?php echo $listOrdering; ?>" />
 				<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirection; ?>" />
 				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="btn-group pull-left">
-						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"> </i>Filter</button>
-						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"> </i>Clear</button>
+						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> Filter</button>
+						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> Clear</button>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
-						<?php echo $this->navigation->getLimitBox (); ?>
+						<?php echo $this->pagination->getLimitBox (); ?>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -120,14 +121,14 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<tfoot>
 						<tr>
 							<td colspan="5">
-								<?php echo $this->navigation->getListFooter(); ?>
+								<?php echo $this->pagination->getListFooter(); ?>
 							</td>
 						</tr>
 					</tfoot>
 					<?php $i = 0; foreach ( $this->items as $id => $row ) : ?>
 					<tr>
 						<td class="hidden-phone center">
-							<?php echo ($id + $this->navigation->limitstart + 1); ?>
+							<?php echo ($id + $this->pagination->limitstart + 1); ?>
 						</td>
 						<td class="hidden-phone center">
 							<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->id); ?>" onclick="Joomla.isChecked(this.checked);" />
@@ -146,19 +147,20 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					</tr>
 					<?php endforeach; ?>
 				</table>
-		</form>
-	</div>
+			</form>
+		</div>
 
-	<div class="tab-pane" id="tab2">
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" id="uploadForm" method="post" enctype="multipart/form-data" >
-			<input type="hidden" name="view" value="smilies" />
-			<input type="hidden" name="task" value="smileyupload" />
-			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHtml::_( 'form.token' ); ?>
+		<div class="tab-pane" id="tab2">
+			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" id="uploadForm" method="post" enctype="multipart/form-data" >
+				<input type="hidden" name="view" value="smilies" />
+				<input type="hidden" name="task" value="smileyupload" />
+				<input type="hidden" name="boxchecked" value="0" />
+				<?php echo JHtml::_( 'form.token' ); ?>
 
-			<input type="file" id="file-upload" class="btn" name="Filedata" />
-			<input type="submit" id="file-upload-submit" class="btn btn-primary" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
-		</form>
+				<input type="file" id="file-upload" class="btn" name="Filedata" />
+				<input type="submit" id="file-upload-submit" class="btn btn-primary" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
+			</form>
+		</div>
 	</div>
 </div>
 

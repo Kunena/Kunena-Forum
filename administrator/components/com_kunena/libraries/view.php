@@ -133,7 +133,7 @@ class KunenaView extends JViewLegacy {
 			$contents = $this->displayDefault($tpl ? $tpl : null);
 		} else {
 			// TODO: should raise error instead..
-			$contents = '';
+			$contents = $this->display($tpl ? $tpl : null);
 		}
 		KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 		return $contents;

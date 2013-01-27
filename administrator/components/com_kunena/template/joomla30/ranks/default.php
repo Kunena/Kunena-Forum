@@ -14,10 +14,18 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
+$sortFields = array();
+$sortFields[] = JHtml::_('select.option', 'p.title', JText::_('JGLOBAL_TITLE'));
+$sortFields[] = JHtml::_('select.option', 'p.special', JText::_('Special'));
+$sortFields[] = JHtml::_('select.option', 'p.min', JText::_('Min Post Count'));
+
+$sortDirection = array();
+$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
 $filterTitle = $this->escape($this->state->get('list.filter_title'));
 $filterSpecial = $this->escape($this->state->get('list.filter_special'));
-$filterMinPostCount = $this->escape($this->state->get('list.filter_min_post_count'));
-
+$filterMinPostCount = $this->escape($this->state->get('list.filter_min'));
 $listOrdering = $this->escape($this->state->get('list.ordering'));
 $listDirection = $this->escape($this->state->get('list.direction'));
 
@@ -55,15 +63,35 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<input type="hidden" name="task" value="" />
 				<input type="hidden" name="boxchecked" value="0" />
 				<input type="hidden" name="limitstart" value="<?php echo intval($this->navigation->limitstart) ?>" />
+				<input type="hidden" name="filter_order" value="<?php echo $listOrdering; ?>" />
+				<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirection; ?>" />
 				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<div id="filter-bar" class="btn-toolbar">
+					<div class="btn-group pull-left">
+						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"> </i>Filter</button>
+						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"> </i>Clear</button>
+					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<?php echo $this->navigation->getLimitBox (); ?>
 					</div>
+					<div class="btn-group pull-right hidden-phone">
+						<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
+						<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
+							<?php echo JHtml::_('select.options', $sortDirection, 'value', 'text', $listDirection);?>
+						</select>
+					</div>
+					<div class="btn-group pull-right">
+						<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+						<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+							<?php echo JHtml::_('select.options', $sortFields, 'value', 'text', $listOrdering);?>
+						</select>
+					</div>
 				</div>
 
-				<table class="table table-striped">
+				<table class="table table-striped adminlist" id="rankList">
 					<thead>
 						<tr>
 							<th width="1%" align="center">#</th>
@@ -82,18 +110,18 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							</td>
 							<td class="nowrap">
 								<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
-								<input class="input-block-level input-filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTitle; ?>" title="<?php echo 'Filter'; ?>" />
+								<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTitle; ?>" title="<?php echo 'Filter'; ?>" />
 							</td>
 							<td class="nowrap center">
 								<label for="filter_special" class="element-invisible"><?php echo JText::_('All');?></label>
-								<select name="filter_special" id="filter_special" class="select-filter" onchange="Joomla.orderTable()">
+								<select name="filter_special" id="filter_special" class="select-filter filter" onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('All');?></option>
 									<?php echo JHtml::_('select.options', $this->specialOptions(), 'value', 'text', $filterSpecial); ?>
 								</select>
 							</td>
 							<td class="nowrap center">
-								<label for="filter_min_" class="element-invisible"><?php echo 'Search in';?></label>
-								<input class="input-block-level input-filter" type="text" name="filter_min" id="filter_min" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterMinPostCount; ?>" title="<?php echo 'Filter'; ?>" />
+								<label for="filter_min" class="element-invisible"><?php echo 'Search in';?></label>
+								<input class="input-block-level input-filter filter" type="text" name="filter_min" id="filter_min" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterMinPostCount; ?>" title="<?php echo 'Filter'; ?>" />
 							</td>
 						</tr>
 					</thead>
@@ -104,7 +132,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							</td>
 						</tr>
 					</tfoot>
-					<?php $i = 0; foreach ( $this->ranks as $id => $row ) : ?>
+					<?php $i = 0; foreach ( $this->items as $id => $row ) : ?>
 					<tr>
 						<td>
 							<?php echo ($id + $this->navigation->limitstart + 1); ?>
@@ -141,8 +169,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<input type="hidden" name="boxchecked" value="0" />
 				<?php echo JHtml::_( 'form.token' ); ?>
 
-				<input type="file" id="file-upload" name="Filedata" />
-				<input type="submit" id="file-upload-submit" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
+				<input type="file" id="file-upload" class="btn" name="Filedata" />
+				<input type="submit" id="file-upload-submit" class="btn btn-primary" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
 			</form>
 		</div>
 	</div>

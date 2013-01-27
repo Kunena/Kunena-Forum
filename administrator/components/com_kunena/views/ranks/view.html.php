@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 class KunenaAdminViewRanks extends KunenaView {
 	function displayDefault() {
 		$this->setToolBarDefault();
-		$this->ranks = $this->get('Ranks');
+		$this->items = $this->get('Items');
 		$this->state = $this->get('state');
 		$this->navigation = $this->get ( 'AdminNavigation' );
 		$this->display ();

@@ -28,7 +28,7 @@ $this->displayBreadcrumb ();
   </div>
   <div class="clearfix"></div>
   <?php if ($this->total >1) : ?>
-  <div class="pull-right" style="margin-top:-40px;"><?php echo $this->getPagination (4); // odd number here (# - 2) ?></div>
+  <div class="pull-right" style="margin-top:-40px;"><?php echo $this->getPagination (5); // odd number here (# - 5) ?></div>
   <div class="clearfix"></div>
   <?php endif; ?>
 </div>
@@ -82,7 +82,7 @@ $this->displayBreadcrumb ();
   </div>
   <div class="clearfix"></div>
   <?php if ($this->total >1) : ?>
-  <div class="pull-right" style="margin-top:-40px;"><?php echo $this->getPagination (7); // odd number here (# - 2) ?></div>
+  <div class="pull-right" style="margin-top:-40px;"><?php echo $this->getPagination (5); // odd number here (# - 5) ?></div>
   <div class="clearfix"></div>
   <?php endif; ?>
 </div>

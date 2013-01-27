@@ -23,7 +23,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="filter_order" value="<?php echo $this->escape ( $this->state->get('list.ordering') ) ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-		<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
+		<input type="hidden" name="limitstart" value="<?php echo intval ( $this->pagination->limitstart ) ?>" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo JHtml::_( 'form.token' ); ?>
 
@@ -31,7 +31,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			<tr>
 				<td class="left" width="90%">
 					<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
-					<input type="text" name="filter_search" id="search" value="<?php echo $this->escape ($this->state->get('list.search'));?>" class="text_area" onchange="document.adminForm.submit();" />
+					<input type="text" name="filter_search" id="search" value="<?php echo $this->escape ($this->state->get('filter.search'));?>" class="text_area" onchange="document.adminForm.submit();" />
 					<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
 					<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
 				</td>
@@ -41,7 +41,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			<thead>
 				<tr>
 					<th align="center" width="5">#</th>
-					<th align="center" width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->users ); ?>);" /></th>
+					<th align="center" width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
 					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
 					<th class="title" align="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th align="left"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
@@ -59,21 +59,21 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			</thead>
 			<tfoot>
 				<tr>
-					<td colspan="14">
+					<td colspan="11">
 							<div class="pagination">
-								<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->navigation->getLimitBox (); ?></div>
-								<?php echo $this->navigation->getPagesLinks (); ?>
-								<div class="limit"><?php echo $this->navigation->getResultsCounter (); ?></div>
+								<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->pagination->getLimitBox (); ?></div>
+								<?php echo $this->pagination->getPagesLinks (); ?>
+								<div class="limit"><?php echo $this->pagination->getResultsCounter (); ?></div>
 							</div>
 						</td>
 				</tr>
 			</tfoot>
 			<?php
-			if (!empty($this->users)) {
+			if (!empty($this->items)) {
 					$k = 1;
 					//foreach ($profileList as $pl)
 					$i = 0;
-					foreach($this->users as $user) {
+					foreach($this->items as $user) {
 						$kunena_user = KunenaFactory::getUser($user->id);
 						$k = 1 - $k;
 						$userLogged = $kunena_user->isOnline() ? '<img src="components/com_kunena/images/tick.png" width="16" height="16" border="0" alt="" />': '';
@@ -85,7 +85,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 						$altUserBanned = $kunena_user->isBanned() ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
 					?>
 			<tr class="row<?php echo $k; ?>">
-			<td class="right"><?php echo $i + $this->navigation->limitstart + 1; ?></td>
+			<td class="right"><?php echo $i + $this->pagination->limitstart + 1; ?></td>
 				<td align="center">
 					<?php echo JHtml::_('grid.id', $i, intval($user->id)) ?>
 				</td>

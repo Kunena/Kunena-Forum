@@ -15,17 +15,18 @@ JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
 $sortFields = array();
-$sortFields[] = JHtml::_('select.option', 'p.title', JText::_('JGLOBAL_TITLE'));
-$sortFields[] = JHtml::_('select.option', 'p.special', JText::_('Special'));
-$sortFields[] = JHtml::_('select.option', 'p.min', JText::_('Min Post Count'));
+$sortFields[] = JHtml::_('select.option', 'id', JText::_('Id'));
+$sortFields[] = JHtml::_('select.option', 'title', JText::_('JGLOBAL_TITLE'));
+$sortFields[] = JHtml::_('select.option', 'special', JText::_('Special'));
+$sortFields[] = JHtml::_('select.option', 'min', JText::_('Min Post Count'));
 
 $sortDirection = array();
 $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
-$filterTitle = $this->escape($this->state->get('list.filter_title'));
-$filterSpecial = $this->escape($this->state->get('list.filter_special'));
-$filterMinPostCount = $this->escape($this->state->get('list.filter_min'));
+$filterTitle = $this->escape($this->state->get('filter.title'));
+$filterSpecial = $this->escape($this->state->get('filter.special'));
+$filterMinPostCount = $this->escape($this->state->get('filter.min'));
 $listOrdering = $this->escape($this->state->get('list.ordering'));
 $listDirection = $this->escape($this->state->get('list.direction'));
 
@@ -62,18 +63,18 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=ranks') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="task" value="" />
 				<input type="hidden" name="boxchecked" value="0" />
-				<input type="hidden" name="limitstart" value="<?php echo intval($this->navigation->limitstart) ?>" />
+				<input type="hidden" name="limitstart" value="<?php echo intval($this->pagination->limitstart) ?>" />
 				<input type="hidden" name="filter_order" value="<?php echo $listOrdering; ?>" />
 				<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirection; ?>" />
 				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="btn-group pull-left">
-						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"> </i>Filter</button>
-						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"> </i>Clear</button>
+						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> Filter</button>
+						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> Clear</button>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
-						<?php echo $this->navigation->getLimitBox (); ?>
+						<?php echo $this->pagination->getLimitBox (); ?>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -97,9 +98,9 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							<th width="1%" align="center">#</th>
 							<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
 							<th width="10%"><?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?></th>
-							<th width="58%"><?php echo JHtml::_('grid.sort', 'Title', 'rank_title', $listDirection, $listOrdering ); ?></th>
-							<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'rank_special', $listDirection, $listOrdering ); ?></th>
-							<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'rank_min', $listDirection, $listOrdering ); ?></th>
+							<th width="58%"><?php echo JHtml::_('grid.sort', 'Title', 'title', $listDirection, $listOrdering ); ?></th>
+							<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $listDirection, $listOrdering ); ?></th>
+							<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $listDirection, $listOrdering ); ?></th>
 						</tr>
 						<tr>
 							<td class="hidden-phone">
@@ -128,14 +129,14 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<tfoot>
 						<tr>
 							<td colspan="6">
-								<?php echo $this->navigation->getListFooter(); ?>
+								<?php echo $this->pagination->getListFooter(); ?>
 							</td>
 						</tr>
 					</tfoot>
 					<?php $i = 0; foreach ( $this->items as $id => $row ) : ?>
 					<tr>
 						<td>
-							<?php echo ($id + $this->navigation->limitstart + 1); ?>
+							<?php echo ($id + $this->pagination->limitstart + 1); ?>
 						</td>
 						<td>
 							<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->rank_id); ?>" onclick="Joomla.isChecked(this.checked);" />

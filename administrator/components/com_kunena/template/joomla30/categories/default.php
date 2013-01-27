@@ -76,8 +76,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo 'Search categories'; ?>" value="<?php echo $filterSearch; ?>" title="<?php echo 'Search categories'; ?>" />
 			</div>
 			<div class="btn-group pull-left">
-				<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"> </i>Filter</button>
-				<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"> </i>Clear</button>
+				<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> Filter</button>
+				<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> Clear</button>
 			</div>
 			<div class="btn-group pull-right hidden-phone">
 				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
@@ -116,9 +116,6 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<?php echo JHtml::_('grid.sort', JText::_('JGLOBAL_TITLE'), 'p.title', $listDirection, $listOrdering); ?>
 					</th>
 					<th width="7%" class="nowrap center hidden-phone">
-						<?php /*TODO: STRING Text */ echo JHTML::_('grid.sort', 'Type', 'p.type', $listDirection, $listOrdering); ?>
-					</th>
-					<th width="7%" class="nowrap center hidden-phone">
 						<?php /*TODO: STRING Text */ echo JHTML::_('grid.sort', 'Access', 'p.access', $listDirection, $listOrdering); ?>
 					</th>
 					<th width="5%" class="nowrap center">
@@ -149,13 +146,6 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<td class="nowrap">
 						<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
 						<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTitle; ?>" title="<?php echo 'Filter'; ?>" />
-					</td>
-					<td class="nowrap center hidden-phone">
-						<label for="filter_type" class="element-invisible"><?php echo JText::_('All');?></label>
-						<select name="filter_type" id="filter_type" class="select-filter filter" onchange="Joomla.orderTable()">
-							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->typeOptions(), 'value', 'text', $filterType); ?>
-						</select>
 					</td>
 					<td class="nowrap center hidden-phone">
 						<label for="filter_access" class="element-invisible"><?php echo JText::_('All');?></label>
@@ -245,9 +235,6 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						</small>
 					</td>
 					<td class="center hidden-phone">
-						<?php echo $item->isSection() ? JText::_('COM_KUNENA_SECTION') : JText::_('COM_KUNENA_CATEGORY'); ?>
-					</td>
-					<td class="center hidden-phone">
 						<?php echo $this->escape($item->accessname); ?>
 					</td>
 					<td class="center hidden-phone">
@@ -255,6 +242,11 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							<?php echo ($item->locked == 1 ? $img_yes : $img_no); ?>
 						</a>
 					</td>
+					<?php if ($item->isSection()) : ?>
+					<td class="center hidden-phone" colspan="2">
+						<?php echo JText::_('COM_KUNENA_SECTION'); ?>
+					</td>
+					<?php else : ?>
 					<td class="center hidden-phone">
 						<a class ="btn btn-micro <?php echo ($item->review ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un':'').'review'; ?>')">
 							<?php echo ($item->review == 1 ? $img_yes : $img_no); ?>
@@ -265,6 +257,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							<?php echo ($item->allow_anonymous == 1 ? $img_yes : $img_no); ?>
 						</a>
 					</td>
+					<?php endif; ?>
 					<td class="center hidden-phone">
 						<?php echo (int) $item->id; ?>
 					</td>

@@ -29,7 +29,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=add", false));
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=rank&layout=add', false));
 	}
 
 	function edit() {
@@ -44,7 +44,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_RANKS_SELECTED' ), 'notice' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		} else {
-			$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=add&id={$id}", false));
+			$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=rank&layout=edit&id={$id}", false));
 		}
 	}
 

@@ -39,14 +39,14 @@ $paneOptions = array(
 			<input type="hidden" name="view" value="smilies" />
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
-			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
+			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->pagination->limitstart ) ?>" />
 			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th width="5" align="center">#</th>
-					<th align="center" width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->smileys ); ?>);" /></th>
+					<th align="center" width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
 					<th align="center" width="50"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
 					<th align="center" width="50"><?php echo JText::_('COM_KUNENA_EMOTICONS_CODE'); ?></th>
 					<th align="left" width="80%"><?php echo JText::_('COM_KUNENA_EMOTICONS_URL'); ?></th>
@@ -56,9 +56,9 @@ $paneOptions = array(
 				<tr>
 					<td colspan="14">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY')?><?php echo $this->navigation->getLimitBox (); ?></div>
-							<?php echo $this->navigation->getPagesLinks (); ?>
-							<div class="limit"><?php echo $this->navigation->getResultsCounter (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY')?><?php echo $this->pagination->getLimitBox (); ?></div>
+							<?php echo $this->pagination->getPagesLinks (); ?>
+							<div class="limit"><?php echo $this->pagination->getResultsCounter (); ?></div>
 						</div>
 					</td>
 				</tr>
@@ -66,12 +66,12 @@ $paneOptions = array(
 				<?php
 					$k = 1;
 					$i = 0;
-					foreach ( $this->smileys as $id => $row ) {
+					foreach ( $this->items as $id => $row ) {
 						$k = 1 - $k;
 				?>
 				<tr class="row<?php echo $k; ?>" align="center">
 					<td align="center"><?php
-						echo ($id + $this->navigation->limitstart + 1);
+						echo ($id + $this->pagination->limitstart + 1);
 						?></td>
 					<td align="center"><input type="checkbox"
 						id="cb<?php

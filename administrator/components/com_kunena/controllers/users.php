@@ -39,7 +39,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		$this->app->setUserState ( 'kunena.user.userid', $userid );
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=edit&userid={$userid}", false));
+		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=user&layout=edit&userid={$userid}", false));
 	}
 
 	function save() {
@@ -131,7 +131,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 
 		$this->app->setUserState ( 'kunena.usermove.userids', $userids );
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=move", false));
+		$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=user&layout=move", false));
 	}
 
 	function movemessages () {

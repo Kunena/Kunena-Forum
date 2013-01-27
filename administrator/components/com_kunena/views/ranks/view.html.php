@@ -14,28 +14,15 @@ defined ( '_JEXEC' ) or die ();
  * About view for Kunena ranks backend
  */
 class KunenaAdminViewRanks extends KunenaView {
-	function displayDefault() {
-		$this->setToolBarDefault();
+	function display($tpl = null) {
+		$this->setToolbar();
 		$this->items = $this->get('Items');
 		$this->state = $this->get('state');
-		$this->navigation = $this->get ( 'AdminNavigation' );
-		$this->display ();
+		$this->pagination = $this->get ( 'Pagination' );
+		return parent::display($tpl);
 	}
 
-	function displayAdd() {
-		$this->displayEdit();
-	}
-
-	function displayEdit() {
-		$this->setToolBarEdit();
-		$this->state = $this->get('state');
-		$this->rank_selected = $this->get('rank');
-		$this->rankpath = $this->ktemplate->getRankPath();
-		$this->listranks = $this->get('Rankspaths');
-		$this->display ();
-	}
-
-	protected function setToolBarDefault() {
+	protected function setToolbar() {
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_RANK_MANAGER'), 'kunena.png' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
@@ -44,14 +31,6 @@ class KunenaAdminViewRanks extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('delete', 'delete.png', 'delete_f2.png', 'COM_KUNENA_GEN_DELETE');
 		JToolBarHelper::spacer();
-	}
-
-	protected function setToolBarEdit() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
-		JToolBarHelper::spacer();
-		JToolBarHelper::save('save');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('ranks');
 	}
 
 	/**

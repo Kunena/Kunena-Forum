@@ -11,11 +11,23 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 
-<div class="well" style="min-height:150px;width:auto;">
-  <div class="row-fluid column-row" >
-    <div class="span9 column-item">
-      <p> <?php echo KunenaHtmlParser::parseBBCode ($this->message->message, $this) ?></p>
-    </div>
+<div class="chat">
+  <div class="bubble me span11 column-item">
+  <div style="border-bottom:1px solid #e5e5e5;">
+  
+    <h5><?php echo $this->profile->getLink() ?> <small>
+      <?php if($this->topic->first_post_message == $this->message->id >1){
+     echo 'Created a new topic.';
+}
+else {
+     echo 'Replied the topic.';
+}
+ ?>
+      </small>
+       <small><span class="pull-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"><?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> <?php echo $this->numLink ?> </span></small></h5>
+       <h4><?php echo $this->displayMessageField('subject') ?></h4></div>
+    <p> <?php echo KunenaHtmlParser::parseBBCode ($this->message->message, $this) ?></p>
+    
   </div>
 </div>
 <?php if (!empty($this->attachments)) : ?>
@@ -54,7 +66,7 @@ defined ( '_JEXEC' ) or die ();
     <?php endif; ?>
     <br />
     <input type="submit" class="btn btn-primary" name="submit" value="<?php echo JText::_('COM_KUNENA_SUBMIT') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
-    <input type="reset" class="btn" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" onclick="document.getElementById('kreply<?php echo intval($this->message->id) ?>_form').style.display = 'none';" />
+    <input type="reset" class="btn" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" onclick="document.getElementById('kreply<?php echo intval($this->message->id) ?>_form').style.display = 'none';this.form.submit();" />
     <small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE') ?></small>
   </form>
 </div>

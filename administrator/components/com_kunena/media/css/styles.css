@@ -9,6 +9,12 @@
 
 @CHARSET "UTF-8";
 
-.well {
+/*.well {
 	background-color: white !important;
+}*/
+
+.com_kunena.admin.view-cpanel #dashboard-icons .btn {
+    background-image: none;
+    border-color: transparent;
+    box-shadow: none;
 }

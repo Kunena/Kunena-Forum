@@ -98,8 +98,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							<th width="1%" class="center">#</th>
 							<th width="1%" class="center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
 							<th width="5%" class="center"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
-							<th width="8%" class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'emoticon_code', $listDirection, $listOrdering ); ?></th>
-							<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'emoticon_url', $listDirection, $listOrdering ); ?></th>
+							<th width="8%" class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $listDirection, $listOrdering ); ?></th>
+							<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $listDirection, $listOrdering ); ?></th>
 						</tr>
 						<tr>
 							<td class="hidden-phone center">

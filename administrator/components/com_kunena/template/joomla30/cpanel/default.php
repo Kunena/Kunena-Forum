@@ -9,6 +9,9 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+
+$this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
+$this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/styles.css' );
 ?>
 <div id="j-sidebar-container" class="span2">
 	<div id="sidebar">
@@ -27,7 +30,7 @@ defined ( '_JEXEC' ) or die ();
 				<div class="well well-small">
 					<div class="module-title nav-header">Welcome to Kunena!</div>
 					<hr class="hr-condensed">
-					<div class="btn-group">
+					<div id="dashboard-icons" class="btn-group">
 						<div class="btn">
 							<div class="icon">
 								<a href="index.php?option=com_kunena&view=categories">

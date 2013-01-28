@@ -73,7 +73,7 @@ class KunenaAdminModelRank extends KunenaModel {
 		foreach ( $rank_images as $file => $path ) {
 			$rank_list[] = JHtml::_ ( 'select.option', $path, $file );
 		}
-		$list = JHtml::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($rank_images[$selected->rank_image]) ? $rank_images[$selected->rank_image] : '' );
+		$list = JHtml::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected->rank_image) ? $rank_images[$selected->rank_image] : '' );
 
 		return $list;
 	}

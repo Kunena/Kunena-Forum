@@ -26,7 +26,7 @@ JHtml::_('formbehavior.chosen', 'select');
 		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<div class="btn-group pull-right hidden-phone">
-			<?php echo  $this->navigation->getListFooter(); ?>
+			<?php echo  $this->pagination->getListFooter(); ?>
 		</div>
 
 		<table class="table table-striped">
@@ -45,7 +45,7 @@ JHtml::_('formbehavior.chosen', 'select');
 			<tr>
 				<td colspan="7">
 					<div class="pagination">
-						<?php echo $this->navigation->getPagesLinks (); ?>
+						<?php echo $this->pagination->getPagesLinks (); ?>
 					</div>
 				</td>
 			</tr>

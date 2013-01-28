@@ -15,7 +15,7 @@ JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
 $sortFields = array();
-$sortFields[] = JHtml::_('select.option', 'id', JText::_('Id'));
+$sortFields[] = JHtml::_('select.option', 'id', JText::_('ID'));
 $sortFields[] = JHtml::_('select.option', 'title', JText::_('JGLOBAL_TITLE'));
 $sortFields[] = JHtml::_('select.option', 'special', JText::_('Special'));
 $sortFields[] = JHtml::_('select.option', 'min', JText::_('Min Post Count'));

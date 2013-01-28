@@ -94,12 +94,10 @@ $this->k=0;
             </div>
           </div>
           <?php endif; ?>
-          <div class="span12">
-            <?php
+          <?php
 		// Show bbcode editor
 		$this->displayTemplateFile('topic', 'edit', 'editor');
 	?>
-          </div>
           <?php if ($this->allowedExtensions) : ?>
           <div class="control-group">
             <label class="control-label"><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS') ?></label>
@@ -107,7 +105,6 @@ $this->k=0;
               <div id="kattachment-id" class="kattachment"> <span class="kattachment-id-container"></span>
                 <input class="kfile-input-textbox" type="text" readonly="readonly" />
                 <div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape(implode(', ', $this->allowedExtensions)) ?>" >
-                  <input type="button" value="<?php echo  JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button btn" />
                   <input id="kupload" class="kfile-input" name="kattachment" type="file" />
                 </div>
                 <a href="#" class="kattachment-remove kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a> <a href="#" class="kattachment-insert kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a> </div>
@@ -135,7 +132,7 @@ $this->k=0;
           <div class="control-group">
             <label class="control-label"><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></label>
             <div class="controls">
-              <input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1) echo 'checked="checked"' ?>>
+              <input style="float: left; margin-right: 10px;" type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1) echo 'checked="checked"' ?> />
               <label class="string optional" for="subscribeMe"><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></label>
             </div>
           </div>

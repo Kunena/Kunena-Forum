@@ -239,7 +239,7 @@ defined ( '_JEXEC' ) or die ();
 <!-- end of extendable secondary toolbar -->
 <div class="control-group">
   <div class="controls">
-    <input type="text" name="helpbox" id="helpbox" size="65" class="kinputbox" disabled="disabled" maxlength="100"
+    <input type="text" name="helpbox" id="helpbox" size="88" class="kinputbox" disabled="disabled" maxlength="100"
 value="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')); ?>" />
   </div>
 </div>
@@ -249,7 +249,7 @@ value="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')); ?>" />
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?></span>&nbsp;/&nbsp; <span class="center" onclick="kGrowShrinkMessage(-100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></div>
   <div class="controls span5">
-    <textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="60"  tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
+    <textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="90"  tabindex="3"><?php echo $this->escape($this->message->message); ?></textarea>
   </div>
 </div>
 

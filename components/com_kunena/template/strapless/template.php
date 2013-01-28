@@ -42,7 +42,7 @@ class KunenaTemplateStrapless extends KunenaTemplate {
 		JHtml::_('behavior.tooltip');
 
 		// New Kunena JS for default template
-		$this->addScript ( 'js/default.js' );
+		$this->addScript ( 'js/plugins.js' );
 
 		$this->compileLess('main.less', 'kunena.css');
 		$this->addStyleSheet ( 'css/kunena.css' );
@@ -90,7 +90,7 @@ HTML;
 		return '<img src="'.$this->getImagePath($image).'" alt="'.$alt.'" />';
 	}
 	public function getPaginationListRender($list) {
-		$html = '<div class="pagination" ><ul class="pagination" style="margin:0;">';
+		$html = '<div class="pagination pagination-small" ><ul class="pagination-small">';
 		$last = 0;
 		foreach($list['pages'] as $i=>$page) {
 			if ($last+1 != $i) $html .= '<li>...</li>';

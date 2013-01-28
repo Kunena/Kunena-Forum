@@ -13,7 +13,6 @@ defined ( '_JEXEC' ) or die ();
 
 <div class="kprofile" style="width:auto; height:auto;">
   <ul class="kpost-profile" style="list-style:none;text-align:center;margin:5px;">
-    <li class="kpost-username"> <?php echo $this->profile->getLink() ?> </li>
     <?php if (!empty($this->usertype)) : ?>
     <li class="kpost-usertype"> <span class = "kmsgusertype">( <?php echo JText::_($this->usertype) ?> )</span> </li>
     <?php endif ?>

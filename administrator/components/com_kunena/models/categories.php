@@ -31,21 +31,22 @@ class KunenaAdminModelCategories extends KunenaModel {
 
 		// Adjust the context to support modal layouts.
 		$layout = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.categories';
 		if ($layout) {
 			$this->context .= '.'.$layout;
 		}
 
 		// List state information.
-		$value = $this->getUserStateFromRequest ( $this->context.'com_kunena.admin.categories.list.start', 'limitstart', 0, 'int' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.start', 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'com_kunena.admin.categories.list.limit', 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.limit', 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'com_kunena.admin.categories.list.ordering', 'filter_order', 'ordering', 'cmd' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.ordering', 'filter_order', 'ordering', 'cmd' );
 		$this->setState ( 'list.ordering', $value );
 
-		$value = $this->getUserStateFromRequest ( $this->context.'com_kunena.admin.categories.list.direction', 'filter_order_Dir', 'asc', 'word' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.direction', 'filter_order_Dir', 'asc', 'word' );
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );

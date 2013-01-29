@@ -324,7 +324,6 @@ class KunenaViewCommon extends KunenaView {
 	function displayFooter($tpl = null) {
 		if ($this->offline) return;
 
-		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$catid = 0;
 		if ($this->config->enablerss) {
 			if ($catid > 0) {

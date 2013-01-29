@@ -79,7 +79,6 @@ class KunenaView extends JViewLegacy {
 		}
 
 		$this->state = $this->get ( 'State' );
-		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$this->ktemplate->initialize();
 
 		if (JFactory::getApplication()->isAdmin()) {

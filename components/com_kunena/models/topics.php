@@ -320,14 +320,16 @@ class KunenaModelTopics extends KunenaModel {
 			$this->getTopics();
 		}
 		$delete = $approve = $undelete = $move = $permdelete = false;
-		foreach ($this->topics as $topic) {
-			if (!$delete && $topic->authorise('delete')) $delete = true;
-			if (!$approve && $topic->authorise('approve')) $approve = true;
-			if (!$undelete && $topic->authorise('undelete')) $undelete = true;
-			if (!$move && $topic->authorise('move')) {
-				$move = $this->actionMove = true;
+		if ($this->topics !== false) {
+			foreach ($this->topics as $topic) {
+				if (!$delete && $topic->authorise('delete')) $delete = true;
+				if (!$approve && $topic->authorise('approve')) $approve = true;
+				if (!$undelete && $topic->authorise('undelete')) $undelete = true;
+				if (!$move && $topic->authorise('move')) {
+					$move = $this->actionMove = true;
+				}
+				if (!$permdelete && $topic->authorise('permdelete')) $permdelete = true;
 			}
-			if (!$permdelete && $topic->authorise('permdelete')) $permdelete = true;
 		}
 		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		if ($this->getState ('list.mode') == 'subscriptions')

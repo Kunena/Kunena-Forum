@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
-//JHtml::_('formbehavior.chosen', 'select');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
 <div id="j-sidebar-container" class="span2">
 	<div id="sidebar">
@@ -166,17 +166,18 @@ JHtml::_('dropdown.init');
 					</div>
 					<div class="tab-pane" id="tab4">
 						<fieldset>
-							<legend><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></legend>
 
+							<legend><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></legend>
 							<table class="table table-bordered table-striped">
 								<thead>
 									<tr>
 										<th><?php echo JText::_('COM_KUNENA_USERNAME'); ?></th>
 										<th><?php echo JText::_('COM_KUNENA_USRL_REALNAME'); ?></th>
 										<th class="span1"><?php echo JText::_('JGRID_HEADING_ID'); ?></th>
+										<th class="span1"><input type="checkbox" name="checkall-toggle" value="" title="Unset moderator" onclick="Joomla.checkAll(this)" /></th>
 									</tr>
 								</thead>
-
+								<?php echo $this->UserNotModerators; ?>
 								<tbody>
 								<?php $i=0; if (empty($this->moderators)) : ?>
 									<tr>
@@ -187,6 +188,7 @@ JHtml::_('dropdown.init');
 										<td><?php echo $this->escape($ml->username); ?></td>
 										<td><?php echo $this->escape($ml->name); ?></td>
 										<td><?php echo $this->escape($ml->userid); ?></td>
+										<td><?php echo JHtml::_('grid.id', $i, (int) $ml->userid); ?></td>
 									</tr>
 									<?php endforeach; endif; ?>
 								</tbody>

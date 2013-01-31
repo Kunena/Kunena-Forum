@@ -276,4 +276,39 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$moderators = $category->getModerators(false);
 		return $moderators;
 	}
+
+	/**
+	 * Method to get users to be moderators in a specific category
+	 *
+	 * @return	html list
+	 * @since	3.0
+	 */
+	function getUserNotModerators() {
+		$cat_id = (int)$this->getState('item.id');
+
+		$db = JFactory::getDBO ();
+		$query = "SELECT u.username, ku.userid
+			FROM #__kunena_users AS ku
+			INNER JOIN #__users AS u ON ku.userid=u.id
+			LEFT JOIN #__kunena_user_categories AS ucat ON ucat.user_id=ku.userid
+			WHERE ucat.category_id!='0' AND ucat.category_id!={$db->quote($cat_id)}";
+		$db->setQuery ( $query );
+		$modCatList = $db->loadObjectList ();
+		KunenaError::checkDatabaseError ();
+
+		if ( !empty($modCatList) ) {
+			$userid = array();
+			$userid[] = JHtml::_ ( 'select.option', 0, JText::_('COM_KUNENA_CATEGORY_SELECT_MODERATORS') );
+
+			foreach ($modCatList as $mod) {
+				$userid[] = JHtml::_ ( 'select.option', $mod->userid, $mod->username );
+			}
+
+			$modCats  = JHtml::_ ( 'select.genericlist', $userid, 'mod_userid[]', 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', 0 );
+
+			return $modCats;
+		} else {
+			return;
+		}
+	}
 }

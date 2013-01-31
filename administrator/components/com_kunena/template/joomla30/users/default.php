@@ -212,6 +212,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			</tr>
 		<?php endif; ?>
 		</table>
+		<?php //Load the batch processing form. ?>
+		<?php echo $this->loadTemplateFile('moderators'); ?>
 	</form>
 </div>
 

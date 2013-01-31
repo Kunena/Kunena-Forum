@@ -18,6 +18,7 @@ class KunenaAdminViewUsers extends KunenaView {
 		$this->setToolbar();
 		$this->items = $this->get('items');
 		$this->pagination = $this->get('Pagination');
+		$this->modcatlist = $this->get('Modcatslist');
 		return parent::display($tpl);
 	}
 
@@ -35,6 +36,17 @@ class KunenaAdminViewUsers extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('delete','delete.png','delete_f2.png', 'COM_KUNENA_USER_DELETE');
 		JToolBarHelper::spacer();
+		if (version_compare(JVERSION, '3', '>')) {
+			// Get the toolbar object instance
+			$bar = JToolBar::getInstance('toolbar');
+			JHtml::_('bootstrap.modal', 'collapseModal');
+			$title = JText::_('JTOOLBAR_BATCH');
+			$dhtml = "<button data-toggle=\"modal\" data-target=\"#collapseModal\" class=\"btn btn-small\">
+			<i class=\"icon-checkbox-partial\" title=\"$title\"></i>
+			$title</button>";
+			$bar->appendButton('Custom', $dhtml, 'batch');
+			JToolBarHelper::spacer();
+		}
 	}
 
 	/**

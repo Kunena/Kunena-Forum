@@ -58,6 +58,9 @@ if ($this->message->modified_time) {
         <ul class="dropdown-menu">
           <li><?php echo $this->messageButtons->get('moderate'); ?></li>
           <li><?php echo $this->messageButtons->get('delete'); ?></li>
+          <?php if($this->message->authorise('permdelete')) : ?><li><?php echo $this->messageButtons->get('permdelete'); ?></li><?php endif; ?>
+          <?php if($this->message->authorise('undelete')) : ?><li><?php echo $this->messageButtons->get('undelete'); ?></li><?php endif; ?>
+          <?php if($this->message->authorise('approve')) : ?><li><?php echo $this->messageButtons->get('publish'); ?></li><?php endif; ?>
           <li><?php echo $this->messageButtons->get('spam'); ?></li>
         </ul>
       </div>

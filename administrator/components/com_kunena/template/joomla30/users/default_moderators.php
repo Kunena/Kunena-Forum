@@ -22,7 +22,6 @@ defined('_JEXEC') or die;
 		<div class="control-group">
 			<div class="controls">
 				<?php echo $this->modcatlist; ?>
-				</fieldset>
 			</div>
 		</div>
 	</div>

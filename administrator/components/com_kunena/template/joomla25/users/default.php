@@ -126,6 +126,8 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			<tr><td colspan="11"><?php echo JText::_('COM_KUNENA_NOUSERSFOUND') ?></td></tr>
 		<?php } ?>
 		</table>
+		<?php //Load the batch processing form. ?>
+		<?php echo $this->loadTemplateFile('moderators'); ?>
 		</form>
 	</div>
 	<div class="kadmin-footer">

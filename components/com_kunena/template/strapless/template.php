@@ -53,6 +53,24 @@ class KunenaTemplateStrapless extends KunenaTemplate {
 			$this->addStyleSheet ( 'css/mediaboxAdv.css');
 		}
 
+		// We load lazyload library only if configuration setting allow it
+		if ( KunenaFactory::getConfig()->use_lazyload ) {
+			$this->addScript( 'js/lazyload.js' );
+			JFactory::getDocument()->addScriptDeclaration('// <![CDATA[
+			window.addEvent(\'domready\', function(){
+					if ( typeof lazyloader != undefined ) {
+				var lazyloader = new LazyLoad({
+					range: 200,
+					realSrcAttribute: "data-src",
+					useFade: true,
+					elements: \'.Klazyload\',
+					container: window
+				});
+			}
+					});
+			// ]]>');
+		}
+
 		// Toggler language strings
 		JFactory::getDocument()->addScriptDeclaration('// <![CDATA[
 var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";

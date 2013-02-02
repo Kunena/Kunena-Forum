@@ -220,6 +220,8 @@ class KunenaConfig extends JObject {
 	public $iptracking = 1;
 	// New for 2.0.3
 	public $rss_feedburner_url = '';
+	// New for 3.0.0
+	public $use_lazyload = 0;
 
 	public function __construct() {
 		parent::__construct ();

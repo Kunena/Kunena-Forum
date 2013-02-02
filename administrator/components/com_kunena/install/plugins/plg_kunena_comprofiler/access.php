@@ -152,6 +152,8 @@ class KunenaAccessComprofiler {
 	protected function loadCategories() {
 		if ($this->categories === false) {
 			$this->categories = array();
+			$params = array ('categories'=>&$this->categories,'groups'=>$this->groups);
+			KunenaIntegrationComprofiler::trigger ( 'loadCategories', $params );
 			$this->tree = new KunenaTree($this->categories);
 			if ($this->groups !== false) $this->tree->add($this->groups);
 		}
@@ -159,6 +161,8 @@ class KunenaAccessComprofiler {
 	protected function loadGroups() {
 		if ($this->groups === false) {
 			$this->groups = array();
+			$params = array ('groups'=>&$this->groups,'categories'=>$this->categories);
+			KunenaIntegrationComprofiler::trigger ( 'loadGroups', $params );
 			if ($this->categories !== false) $this->tree->add($this->groups);
 		}
 	}

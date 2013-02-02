@@ -124,6 +124,17 @@ class KunenaModelTopics extends KunenaModel {
 		return $this->topics;
 	}
 
+	protected function _checkIfAllowed() {
+		$mode = $this->getState ( 'list.mode' );
+		if ( $mode == 'unapproved' ) $allowed = KunenaForumCategoryHelper::getCategories(false, false, 'topic.approve');
+		elseif( $mode == 'deleted' ) $allowed = KunenaForumCategoryHelper::getCategories(false, false, 'topic.undelete');
+
+		if (empty($allowed)) {
+			return false;
+		}
+		return $allowed;
+	}
+
 	protected function getRecentTopics() {
 		$catid = $this->getState ( 'item.id' );
 		$limitstart = $this->getState ( 'list.start' );
@@ -158,8 +169,8 @@ class KunenaModelTopics extends KunenaModel {
 				$where = 'AND tt.posts=1';
 				break;
 			case 'unapproved' :
-				$allowed = KunenaForumCategoryHelper::getCategories(false, false, 'topic.approve');
-				if (empty($allowed)) {
+				$allowed = $this->_checkIfAllowed();
+				if (!$allowed) {
 					return array(0, array());
 				}
 				$allowed = implode(',', array_keys($allowed));
@@ -167,8 +178,8 @@ class KunenaModelTopics extends KunenaModel {
 				$where = "AND tt.category_id IN ({$allowed})";
 				break;
 			case 'deleted' :
-				$allowed = KunenaForumCategoryHelper::getCategories(false, false, 'topic.undelete');
-				if (empty($allowed)) {
+				$allowed = $this->_checkIfAllowed();
+				if (!$allowed) {
 					return array(0, array());
 				}
 				$allowed = implode(',', array_keys($allowed));
@@ -316,21 +327,21 @@ class KunenaModelTopics extends KunenaModel {
 	}
 
 	public function getTopicActions() {
+		if ( !$this->_checkIfAllowed() ) return;
 		if ($this->topics === false) {
 			$this->getTopics();
 		}
 		$delete = $approve = $undelete = $move = $permdelete = false;
-		if ($this->topics !== false) {
-			foreach ($this->topics as $topic) {
-				if (!$delete && $topic->authorise('delete')) $delete = true;
-				if (!$approve && $topic->authorise('approve')) $approve = true;
-				if (!$undelete && $topic->authorise('undelete')) $undelete = true;
-				if (!$move && $topic->authorise('move')) {
-					$move = $this->actionMove = true;
-				}
-				if (!$permdelete && $topic->authorise('permdelete')) $permdelete = true;
+		foreach ($this->topics as $topic) {
+			if (!$delete && $topic->authorise('delete')) $delete = true;
+			if (!$approve && $topic->authorise('approve')) $approve = true;
+			if (!$undelete && $topic->authorise('undelete')) $undelete = true;
+			if (!$move && $topic->authorise('move')) {
+				$move = $this->actionMove = true;
 			}
+			if (!$permdelete && $topic->authorise('permdelete')) $permdelete = true;
 		}
+		
 		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		if ($this->getState ('list.mode') == 'subscriptions')
 			$actionDropdown[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));

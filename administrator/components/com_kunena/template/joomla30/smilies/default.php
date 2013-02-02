@@ -63,7 +63,6 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=smilies') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="task" value="" />
 				<input type="hidden" name="boxchecked" value="0" />
-				<input type="hidden" name="limitstart" value="<?php echo intval($this->pagination->limitstart); ?>" />
 				<input type="hidden" name="filter_order" value="<?php echo $listOrdering; ?>" />
 				<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirection; ?>" />
 				<?php echo JHtml::_( 'form.token' ); ?>

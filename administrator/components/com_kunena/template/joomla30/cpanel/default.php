@@ -31,38 +31,22 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<div class="module-title nav-header">Welcome to Kunena!</div>
 					<hr class="hr-condensed">
 					<div id="dashboard-icons" class="btn-group">
-						<div class="btn">
-							<div class="icon">
-								<a href="index.php?option=com_kunena&view=categories">
-									<img src="components/com_kunena/media/icons/large/categories.png" alt="Categories" /><br />
-									<span>Categories</span>
-								</a>
-							</div>
-						</div>
-						<div class="btn">
-							<div class="icon">
-								<a href="index.php?option=com_kunena&view=templates">
-									<img src="components/com_kunena/media/icons/large/templates.png" alt="Templates" /><br />
-									<span>Templates</span>
-								</a>
-							</div>
-						</div>
-						<div class="btn">
-							<div class="icon">
-								<a href="index.php?option=com_plugins&view=plugins&filter_folder=kunena">
-									<img src="components/com_kunena/media/icons/large/pluginsmanager.png" alt="Plugin Manager" /><br/>
-									<span>Plugin Manager</span>
-								</a>
-							</div>
-						</div>
-						<div class="btn">
-							<div class="icon">
-								<a href="index.php?option=com_kunena&view=tools">
-									<img src="components/com_kunena/media/icons/large/purgerestatements.png" alt="Installer" /><br/>
-									<span>Tools</span>
-								</a>
-							</div>
-						</div>
+						<a class="btn" href="index.php?option=com_kunena&view=categories">
+							<img src="components/com_kunena/media/icons/large/categories.png" alt="Categories" /><br />
+							<span>Categories</span>
+						</a>
+						<a class="btn" href="index.php?option=com_kunena&view=templates">
+							<img src="components/com_kunena/media/icons/large/templates.png" alt="Templates" /><br />
+							<span>Templates</span>
+						</a>
+						<a class="btn" href="index.php?option=com_plugins&view=plugins&filter_folder=kunena">
+							<img src="components/com_kunena/media/icons/large/pluginsmanager.png" alt="Plugin Manager" /><br/>
+							<span>Plugin Manager</span>
+						</a>
+						<a class="btn" href="index.php?option=com_kunena&view=tools">
+							<img src="components/com_kunena/media/icons/large/purgerestatements.png" alt="Installer" /><br/>
+							<span>Tools</span>
+						</a>
 					</div>
 					<div class="clearfix"></div>
 				</div>

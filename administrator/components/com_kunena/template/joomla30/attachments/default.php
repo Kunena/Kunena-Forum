@@ -105,9 +105,9 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<th><?php echo JHtml::_('grid.sort', 'Name', 'a.filename', $listDirection, $listOrdering ); ?></th>
 				<th><?php echo JHtml::_('grid.sort', 'Type', 'a.filetype', $listDirection, $listOrdering ); ?></th>
 				<th><?php echo JHtml::_('grid.sort', 'Size', 'a.size', $listDirection, $listOrdering ); ?>
-				<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_A_IMGB_DIMS', 'a.img_dims', $listDirection, $listOrdering ); ?></th>
-				<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'a.username', $listDirection, $listOrdering ); ?></th>
-				<th><?php echo JHtml::_('grid.sort', 'Post', 'a.post', $listDirection, $listOrdering ); ?></th>
+				<th><?php echo JText::_('COM_KUNENA_A_IMGB_DIMS'); ?></th>
+				<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'b.name', $listDirection, $listOrdering ); ?></th>
+				<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_MESSAGE', 'b.subject', $listDirection, $listOrdering ); ?></th>
 				<th><?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirection, $listOrdering ); ?></th>
 			</tr>
 			<tr>

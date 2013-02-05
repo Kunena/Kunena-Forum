@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,23 +28,28 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 	/**
 	 * Method to auto-populate the model state.
-	 *
-	 * @return	void
-	 * @since	1.6
 	 */
 	protected function populateState() {
+		$app = JFactory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
+		if ($layout) {
+			$this->context .= '.'.$layout;
+		}
+
 		// Edit state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.template.edit", 'name', '', 'cmd' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.edit', 'name', '', 'cmd' );
 		$this->setState ( 'template', $value );
 
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.templates.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.limit', 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.templates.list.ordering', 'filter_order', 'ordering', 'cmd' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.ordering', 'filter_order', 'ordering', 'cmd' );
 		$this->setState ( 'list.ordering', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.templates.list.start", 'limitstart', 0, 'int' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.start', 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 	}
 
@@ -143,11 +148,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		$ftp = JClientHelper::setCredentialsFromRequest('ftp');
 
 		return $ftp;
-	}
-
-	public function getAdminNavigation() {
-		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		return $navigation;
 	}
 
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)

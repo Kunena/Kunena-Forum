@@ -41,9 +41,9 @@ JHtml::_('behavior.tooltip');
 				<tr>
 					<td colspan="14">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY')?><?php echo $this->navigation->getLimitBox (); ?></div>
-							<?php echo $this->navigation->getPagesLinks (); ?>
-							<div class="limit"><?php echo $this->navigation->getResultsCounter (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY')?><?php echo $this->pagination->getLimitBox (); ?></div>
+							<?php echo $this->pagination->getPagesLinks (); ?>
+							<div class="limit"><?php echo $this->pagination->getResultsCounter (); ?></div>
 						</div>
 					</td>
 				</tr>
@@ -56,7 +56,7 @@ JHtml::_('behavior.tooltip');
 			?>
 				<tr <?php echo 'class = "row' . $k . '"'; ?>>
 					<td align="center"><?php
-						echo ($i + $this->navigation->limitstart + 1);
+						echo ($i + $this->pagination->limitstart + 1);
 						?></td>
 					<td width="5">
 						<input type="radio" id="cb<?php echo $this->escape($row->directory);?>" name="cid[]" value="<?php echo $this->escape($row->directory); ?>" onclick="isChecked(this.checked);" />

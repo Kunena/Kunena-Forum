@@ -47,6 +47,7 @@
 			<folder>language</folder>
 			<folder>media</folder>
 			<folder>models</folder>
+			<folder>template</folder>
 			<folder>views</folder>
 		</files>
 	</administration>

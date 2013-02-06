@@ -16,7 +16,7 @@
 		</fieldset>
 	</fields>
 	<!-- Add fields to the parameters object for the layout. -->
-	<fields name="params" addfieldpath="/administrator/components/com_kunena/libraries/form/fields">
+	<fields name="params">
 		<!-- Basic options. -->
 		<fieldset name="basic" label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
 			<field name="catids" type="kunenacategorylist" label="COM_KUNENA_MENU_ALLOWEDCAT" description="COM_KUNENA_MENU_ALLOWEDCAT_DESC" default="0" multiple="1" size="10" sections="1">

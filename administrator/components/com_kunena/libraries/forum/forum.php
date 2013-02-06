@@ -42,8 +42,8 @@ abstract class KunenaForum {
 	 *
 	 * <code>
 	 *	// Check if Kunena Forum has been installed and compatible with your code
-	 *	if (class_exists('KunenaForum') && KunenaForum::installed() && KunenaForum::isCompatible('2.0.0-BETA2')) {
-	 *		// Initialize the framework (new in 2.0.0-BETA2)
+	 *	if (class_exists('KunenaForum') && KunenaForum::installed() && KunenaForum::isCompatible('2.0.0')) {
+	 *		// Initialize the framework (new in 2.0.0)
 	 *		KunenaForum::setup();
 	 *		// Start using the framework
 	 *	}
@@ -53,10 +53,10 @@ abstract class KunenaForum {
 	 * @see KunenaForum::isCompatible()
 	 * @see KunenaForum::setup()
 	 *
-	 * @return boolean True.
+	 * @return boolean True if Kunena has been fully installed.
 	 */
 	public static function installed() {
-		return true;
+		return !is_file(KPATH_ADMIN . '/install.php');
 	}
 
 	/**
@@ -74,8 +74,8 @@ abstract class KunenaForum {
 	 *
 	 * <code>
 	 * // Check if Kunena Forum has been installed, online and compatible with your code
-	 *	if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0-BETA2')) {
-	 *		// Initialize the framework (new in 2.0.0-BETA2)
+	 *	if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0')) {
+	 *		// Initialize the framework (new in 2.0.0)
 	 *		KunenaForum::setup();
 	 *		// It's now safe to display something or to save Kunena objects
 	 *}
@@ -110,7 +110,7 @@ abstract class KunenaForum {
 	 * <code>
 	 *	// We have already checked that Kunena 2.0+ has been installed and is online
 	 *
-	 *	if (KunenaForum::isCompatible('2.0.0-BETA2')) {
+	 *	if (KunenaForum::isCompatible('2.0.0')) {
 	 *		KunenaForum::setup();
 	 *	} else {
 	 *		KunenaFactory::loadLanguage();

@@ -1,18 +1,22 @@
 <?php
 /**
- * Kunena Component
- * @package Kunena.Installer
+ * Kunena Package
+ * @package Kunena.Package
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport( 'joomla.filesystem.folder' );
-jimport( 'joomla.filesystem.file' );
-
-class Com_KunenaInstallerScript {
+/**
+ * Kunena package installer script.
+ */
+class Pkg_KunenaInstallerScript {
+	/**
+	 * List of supported versions. Newest version first!
+	 * @var array
+	 */
 	protected $versions = array(
 		'PHP' => array (
 			'5.3' => '5.3.1',
@@ -23,11 +27,15 @@ class Com_KunenaInstallerScript {
 			'0' => '5.5' // Preferred version
 		),
 		'Joomla!' => array (
-			'2.5' => '2.5.6',
 			'3.0' => '3.0.2',
+			'2.5' => '2.5.6',
 			'0' => '2.5.8' // Preferred version
 		)
 	);
+	/**
+	 * List of required PHP extensions.
+	 * @var array
+	 */
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	public function install($parent) {
@@ -43,13 +51,6 @@ class Com_KunenaInstallerScript {
 	}
 
 	public function uninstall($parent) {
-		$adminpath = $parent->getParent()->getPath('extension_administrator');
-		$model = "{$adminpath}/install/model.php";
-		if (file_exists($model)) {
-			require_once($model);
-			$installer = new KunenaModelInstall();
-			$installer->uninstall();
-		}
 		return true;
 	}
 
@@ -63,11 +64,6 @@ class Com_KunenaInstallerScript {
 	}
 
 	public function postflight($type, $parent) {
-		$installer = $parent->getParent();
-
-		// Set redirect.
-		//$installer->set('redirect_url', JRoute::_('index.php?option=com_kunena', false));
-
 		return true;
 	}
 
@@ -122,6 +118,7 @@ class Com_KunenaInstallerScript {
 
 	protected function checkKunena($version) {
 		$app = JFactory::getApplication();
+		$db = JFactory::getDbo();
 
 		// Always load Kunena API if it exists.
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
@@ -134,22 +131,20 @@ class Com_KunenaInstallerScript {
 			return false;
 		}
 
-		$db = JFactory::getDBO();
-
-		// Check if Kunena can be found from the database
+		// Check if Kunena can be found from the database.
 		$table = $db->getPrefix().'kunena_version';
 		$db->setQuery ( "SHOW TABLES LIKE {$db->quote($table)}" );
 		if ($db->loadResult () != $table) return true;
 
-		// Get installed Kunena version
+		// Get installed Kunena version.
 		$db->setQuery("SELECT version FROM {$table} ORDER BY `id` DESC", 0, 1);
 		$installed = $db->loadResult();
 		if (!$installed) return true;
 
-		// Always allow upgrade to the newer version
+		// Always allow upgrade to the newer version.
 		if (version_compare($version, $installed, '>=')) return true;
 
-		// Check if we can downgrade to the current version
+		// Check if we can downgrade to the current version.
 		if (class_exists('KunenaInstaller')) {
 			if (KunenaInstaller::canDowngrade($version)) return true;
 		} else {

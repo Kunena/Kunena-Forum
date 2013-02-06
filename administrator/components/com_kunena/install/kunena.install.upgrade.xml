@@ -103,13 +103,18 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `uhits` ( `uhits` )</query>
 		</version>
 		<version version="1.0.8" versiondate="2009-02-17" versionname="Speakup!">
-			<phpfile name="upgrade-1.0.8_favorites" />
 			<!-- query mode="silenterror">ALTER TABLE `#__kunena_config` CHANGE `annmodid` `annmodid` TEXT NULL DEFAULT NULL</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_config` CHANGE `latestcategory` `latestcategory` TEXT NULL DEFAULT NULL</query>
 			<query mode="silenterror">UPDATE `#__kunena_config` SET `latestcategory`=''</query -->
 			<query>UPDATE `#__kunena_users` SET `view`='flat'</query>
 			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "com_fireboard", "com_kunena")</query>
 			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
+			<query>ALTER TABLE			`#__kunena_favorites`		DROP INDEX `thread`;</query>
+			<query>ALTER IGNORE TABLE	`#__kunena_favorites`		ADD UNIQUE `thread`(`thread`,`userid`);</query>
+			<query>DELETE FROM			`#__kunena_favorites`		WHERE `userid`=0;</query>
+			<query>ALTER TABLE			`#__kunena_subscriptions`	DROP INDEX `thread`;</query>
+			<query>ALTER IGNORE TABLE	`#__kunena_subscriptions`	ADD UNIQUE `thread`(`thread`,`userid`);</query>
+			<query>DELETE FROM			`#__kunena_subscriptions`	WHERE `userid`=0;</query>
 		</version>
 		<version version="1.0.10" versiondate="2009-05-21" versionname="Parier!">
 			<!-- query mode="silenterror">UPDATE `#__kunena_config` SET `jmambot`='0'</query -->
@@ -132,7 +137,6 @@
 				ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `allow_anonymous` </query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD KEY `currvisit` ( `currvisit` )</query>
 			<query>UPDATE `#__kunena_messages` SET thread=id WHERE parent=0</query>
-			<query mode="silenterror">UPDATE `#__kunena_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.id=u.userid AND j.gid IN (24, 25)</query>
 			<phpfile name="upgrade-1.6.0_attachments"></phpfile>
 			<phpfile name="upgrade-1.6.0_configuration"></phpfile>
 			<phpfile name="upgrade-1.6.0_polls"></phpfile>

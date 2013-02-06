@@ -9,8 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-
 /**
  * The Kunena Installer Controller
  *
@@ -23,7 +21,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 
 	public function __construct() {
 		parent::__construct ();
-		require_once(KPATH_ADMIN.'/install/model.php');
+		require_once __DIR__.'/model.php';
 		$this->model = $this->getModel ( 'Install' );
 		$this->step = $this->model->getStep ();
 		$this->steps = $this->model->getSteps ();
@@ -38,27 +36,12 @@ class KunenaControllerInstall extends JControllerLegacy {
 
 		$start = JRequest::getBool('start', false);
 
-		// Workaround situation where KunenaForum class doesn't exist (api.php was cached)
-		if (!class_exists('KunenaForum')) {
-			// TODO: add version check
-			$app = JFactory::getApplication();
-			$try = $app->getUserState('kunena-prepare', 0) + 1;
-			clearstatcache();
-			if (function_exists('apc_clear_cache')) apc_clear_cache('system');
-			sleep(1);
-			$app->setUserState('kunena-prepare', $try);
-			$start = $start? '&start=1' : '';
-			$this->setRedirect('index.php?option=com_kunena&view=install&task=prepare&try='.$try.$start.'&'.JSession::getFormToken().'=1');
-			$this->redirect();
-		}
-
 		$this->model->install ();
 
 		if ($start) {
-			// Make sure that the code is identical to the installer (we can improve it later on)
 			$versions = $this->model->getDetectVersions();
 			$version = reset($versions);
-			if (!empty($version->state) || ($version->version == KunenaForum::version() && $version->versiondate == KunenaForum::versionDate())) {
+			if (!empty($version->state)) {
 				unset($version);
 			}
 		}
@@ -70,11 +53,11 @@ class KunenaControllerInstall extends JControllerLegacy {
 	}
 
 	public function display($cachable = false, $urlparams = false) {
-		require_once(KPATH_ADMIN.'/install/view.php');
+		require_once(__DIR__.'/view.php');
 		$view = $this->getView('install', 'html');
 		if ($view)
 		{
-			$view->addTemplatePath(KPATH_ADMIN.'/install/tmpl');
+			$view->addTemplatePath(__DIR__.'/tmpl');
 			$view->setModel($this->model, true);
 			$view->setLayout(JRequest::getWord('layout', 'default'));
 			$view->document = JFactory::getDocument();
@@ -204,7 +187,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$this->model->deleteTables('kunena_');
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
-		if (!KunenaForum::isDev()) {
+		if (class_exists('KunenaForum') && !KunenaForum::isDev()) {
 			jimport('joomla.filesystem.folder');
 			JFolder::delete(KPATH_MEDIA);
 			jimport('joomla.installer.installer');

@@ -70,7 +70,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaAvatar
 	 */
 	public static function getAvatarIntegration() {
-		require_once KPATH_ADMIN . '/libraries/integration/avatar.php';
 		return KunenaAvatar::getInstance();
 	}
 
@@ -82,7 +81,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaPrivate
 	 */
 	public static function getPrivateMessaging() {
-		require_once KPATH_ADMIN . '/libraries/integration/private.php';
 		return KunenaPrivate::getInstance();
 	}
 
@@ -94,7 +92,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaActivity
 	 */
 	public static function getActivityIntegration() {
-		require_once KPATH_ADMIN . '/libraries/integration/activity.php';
 		return KunenaActivity::getInstance();
 	}
 
@@ -106,7 +103,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaProfile
 	 */
 	public static function getProfile() {
-		require_once KPATH_ADMIN . '/libraries/integration/profile.php';
 		return KunenaProfile::getInstance();
 	}
 

@@ -15,7 +15,10 @@ jimport ( 'joomla.filesystem.path' );
 jimport ( 'joomla.filesystem.archive' );
 jimport ( 'joomla.installer.installer' );
 
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+define('KUNENA_INSTALLER_PATH', __DIR__);
+define('KUNENA_INSTALLER_ADMINPATH', dirname(KUNENA_INSTALLER_PATH));
+define('KUNENA_INSTALLER_SITEPATH', JPATH_SITE.'/components/'.basename(KUNENA_INSTALLER_ADMINPATH));
+define('KUNENA_INSTALLER_MEDIAPATH', JPATH_SITE.'/media/kunena');
 
 /**
  * Install Model for Kunena
@@ -46,10 +49,10 @@ class KunenaModelInstall extends JModelLegacy {
 	public function __construct() {
 		// Load installer language file only from the component
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
-		$lang->load('com_kunena.install',KPATH_ADMIN);
-		$lang->load('com_kunena.libraries',KPATH_ADMIN, 'en-GB');
-		$lang->load('com_kunena.libraries',KPATH_ADMIN);
+		$lang->load('com_kunena.install',KUNENA_INSTALLER_ADMINPATH, 'en-GB');
+		$lang->load('com_kunena.install',KUNENA_INSTALLER_ADMINPATH);
+		$lang->load('com_kunena.libraries',KUNENA_INSTALLER_ADMINPATH, 'en-GB');
+		$lang->load('com_kunena.libraries',KUNENA_INSTALLER_ADMINPATH);
 
 		parent::__construct ();
 		$this->db = JFactory::getDBO ();
@@ -59,11 +62,14 @@ class KunenaModelInstall extends JModelLegacy {
 		@set_time_limit ( 300 );
 		$this->setState ( 'max_time', @ini_get ( 'max_execution_time' ) );
 
+		// TODO: move to migration
 		$this->_versiontablearray = array (array ('prefix' => 'kunena_', 'table' => 'kunena_version' ), array ('prefix' => 'fb_', 'table' => 'fb_version' ) );
 
+		// TODO: move to migration
 		$this->_kVersions = array (
 			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
 
+		// TODO: move to migration
 		$this->_fbVersions = array (
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.4', 'date' => '2007-12-23', 'table' => 'fb_sessions', 'column' => 'currvisit' ),
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.3', 'date' => '2007-09-04', 'table' => 'fb_categories', 'column' => 'headerdesc' ),
@@ -72,6 +78,7 @@ class KunenaModelInstall extends JModelLegacy {
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_messages' ),
 			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
 
+		// TODO: move to migration
 		$this->_sbVersions = array (
 			array('component'=>'JoomlaBoard','prefix'=> 'sb_', 'version' =>'v1.0.5', 'date' => '0000-00-00', 'table' => 'sb_messages'),
 			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
@@ -108,8 +115,6 @@ class KunenaModelInstall extends JModelLegacy {
 		$this->uninstallPlugin('kunena', 'kunena');
 		$this->uninstallPlugin('kunena', 'uddeim');
 		$this->uninstallPlugin('finder', 'kunena');
-		$this->uninstallPlugin('quickicon', 'kunena');
-		$this->uninstallPlugin('system', 'kunena');
 
 		$this->uninstallModule('mod_kunenamenu');
 
@@ -245,8 +250,6 @@ class KunenaModelInstall extends JModelLegacy {
 			if ($success) $success = JArchive::extract ( $file, $dest );
 			if (! $success) {
 				$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file);
-
-				$text .= $this->_getJoomlaArchiveError($file);
 			}
 		} else {
 			$success = true;
@@ -258,6 +261,7 @@ class KunenaModelInstall extends JModelLegacy {
 		return $success;
 	}
 
+	// TODO: move to migration
 	function installLanguage($tag, $name = '') {
 		$exists = false;
 		$success = true;
@@ -298,21 +302,21 @@ class KunenaModelInstall extends JModelLegacy {
 
 		$dest = JPATH_ROOT."/tmp/kinstall_mod_{$name}";
 		if (file_exists($dest)) JFolder::delete($dest);
-			if (is_dir(KPATH_ADMIN .'/'. $path)) {
+			if (is_dir(KUNENA_INSTALLER_ADMINPATH .'/'. $path)) {
 			// Copy path
-			$success = JFolder::copy(KPATH_ADMIN .'/'. $path, $dest);
-		} elseif (is_file(KPATH_ADMIN .'/'. $path)) {
+			$success = JFolder::copy(KUNENA_INSTALLER_ADMINPATH .'/'. $path, $dest);
+		} elseif (is_file(KUNENA_INSTALLER_ADMINPATH .'/'. $path)) {
 			// Extract file
-			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
+			$success = $this->extract ( KUNENA_INSTALLER_ADMINPATH, $path, $dest );
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
-		if ($success) $success = JFile::copy(KPATH_SITE."/language/index.html", "{$dest}/language/en-GB/index.html");
-		if ($success && is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.ini")) {
-			$success = JFile::copy(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
+		if ($success) $success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/index.html", "{$dest}/language/en-GB/index.html");
+		if ($success && is_file(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.ini")) {
+			$success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
 		}
-		if ($success && is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.sys.ini")) {
-			$success = JFile::copy(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.sys.ini");
+		if ($success && is_file(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.sys.ini")) {
+			$success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.sys.ini");
 		}
 
 		// Only install module if it can be used in current Joomla version (manifest exists)
@@ -332,21 +336,21 @@ class KunenaModelInstall extends JModelLegacy {
 
 		$dest = JPATH_ROOT."/tmp/kinstall_plg_{$group}_{$name}";
 		if (file_exists($dest)) JFolder::delete($dest);
-		if (is_dir(KPATH_ADMIN .'/'. $path)) {
+		if (is_dir(KUNENA_INSTALLER_ADMINPATH .'/'. $path)) {
 			// Copy path
-			$success = JFolder::copy(KPATH_ADMIN .'/'. $path, $dest);
-		} elseif (is_file(KPATH_ADMIN .'/'. $path)) {
+			$success = JFolder::copy(KUNENA_INSTALLER_ADMINPATH .'/'. $path, $dest);
+		} elseif (is_file(KUNENA_INSTALLER_ADMINPATH .'/'. $path)) {
 			// Extract file
-			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
+			$success = $this->extract ( KUNENA_INSTALLER_ADMINPATH, $path, $dest );
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
-		if ($success) $success = JFile::copy(KPATH_ADMIN."/language/index.html", "{$dest}/language/en-GB/index.html");
-		if ($success && is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
-			$success = JFile::copy(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
+		if ($success) $success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/index.html", "{$dest}/language/en-GB/index.html");
+		if ($success && is_file(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
+			$success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
 		}
-		if ($success && is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini")) {
-			$success = JFile::copy(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini");
+		if ($success && is_file(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini")) {
+			$success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini");
 		}
 
 		// Only install plugin if it can be used in current Joomla version (manifest exists)
@@ -438,7 +442,7 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 		$this->setVersion($version);
 
-		require_once KPATH_ADMIN.'/install/schema.php';
+		require_once KUNENA_INSTALLER_PATH.'/schema.php';
 		$schema = new KunenaModelSchema();
 		$results[] = $schema->updateSchemaTable('kunena_version');
 
@@ -464,20 +468,20 @@ class KunenaModelInstall extends JModelLegacy {
 			// Git install
 			$dir = JPATH_ADMINISTRATOR.'/components/com_kunena/media/kunena';
 			if (is_dir($dir)) {
-				JFolder::copy($dir, KPATH_MEDIA, false, true);
+				JFolder::copy($dir, KUNENA_INSTALLER_MEDIAPATH, false, true);
 			}
 			$this->setStep($this->getStep()+1);
 			return;
 		}
 		$ext = file_get_contents("{$path}/fileformat");
 		static $files = array(
-			array('name'=>'com_kunena-admin', 'dest'=>KPATH_ADMIN),
-			array('name'=>'com_kunena-site', 'dest'=>KPATH_SITE),
-			array('name'=>'com_kunena-media', 'dest'=>KPATH_MEDIA)
+			array('name'=>'com_kunena-admin', 'dest'=>KUNENA_INSTALLER_ADMINPATH),
+			array('name'=>'com_kunena-site', 'dest'=>KUNENA_INSTALLER_SITEPATH),
+			array('name'=>'com_kunena-media', 'dest'=>KUNENA_INSTALLER_MEDIAPATH)
 		);
 		static $ignore = array(
-			KPATH_ADMIN => array('index.html', 'kunena.xml', 'kunena.j25.xml', 'kunena.php', 'api.php', 'archive', 'install', 'language'),
-			KPATH_SITE => array('index.html', 'kunena.php', 'router.php', 'COPYRIGHT.php', 'template', 'language')
+			KUNENA_INSTALLER_ADMINPATH => array('index.html', 'kunena.xml', 'kunena.j25.xml', 'kunena.php', 'api.php', 'archive', 'install', 'language'),
+			KUNENA_INSTALLER_SITEPATH => array('index.html', 'kunena.php', 'router.php', 'COPYRIGHT.php', 'template', 'language')
 		);
 		$task = $this->getTask();
 
@@ -489,7 +493,7 @@ class KunenaModelInstall extends JModelLegacy {
 				if (!empty($ignore[$dest])) {
 					// Delete all files and folders (cleanup)
 					$this->deleteFolder($dest, $ignore[$dest]);
-					if ($dest == KPATH_SITE) {
+					if ($dest == KUNENA_INSTALLER_SITEPATH) {
 						$this->deleteFolder("$dest/template/blue_eagle", array('params.ini'));
 						$this->deleteFolder("$dest/template/mirage", array('params.ini'));
 					}
@@ -509,8 +513,6 @@ class KunenaModelInstall extends JModelLegacy {
 	}
 
 	public function stepPlugins() {
-		$this->installPlugin('install/plugins/plg_system_kunena', 'system', 'kunena', true);
-		$this->installPlugin('install/plugins/plg_quickicon_kunena', 'quickicon', 'kunena', true);
 		// TODO: Complete smart search support
 		$this->uninstallPlugin('finder', 'kunena');
 		//$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
@@ -584,35 +586,22 @@ class KunenaModelInstall extends JModelLegacy {
 	public function stepFinish() {
 		KunenaForum::setup();
 
-		$entryfiles = array(
-			array(KPATH_ADMIN, 'api', 'php'),
-		);
-
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_SITE) || $lang->load('com_kunena', KPATH_SITE);
+		$lang->load('com_kunena', JPATH_SITE) || $lang->load('com_kunena', KUNENA_INSTALLER_SITEPATH);
 
 		$this->createMenu(false);
 
 		// Fix broken category aliases (workaround for < 2.0-DEV12 bug)
 		$count = KunenaForumCategoryHelper::fixAliases();
 
-		$md5 = md5_file(KPATH_ADMIN.'/api.new.php');
-		foreach ($entryfiles as $fileparts) {
-			list($path, $filename, $ext) = $fileparts;
-			if (is_file("{$path}/{$filename}.new.{$ext}")) {
-				$success = JFile::delete("{$path}/{$filename}.{$ext}");
-				if (!$success) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_DELETE_STATUS_FAIL')." {$filename}.{$ext}", false, '' );
-				$success = JFile::move("{$path}/{$filename}.new.{$ext}", "{$path}/{$filename}.{$ext}");
-				if (!$success) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_RENAMING_FAIL')." {$filename}.new.{$ext}", false, '' );
-			}
-		}
-
 		// Clean cache, just in case
 		KunenaMenuHelper::cleanCache();
 		JFactory::getCache('com_kunena')->clean();
 
-		// Test if api file has been fully copied
-		$this->waitFile(KPATH_ADMIN."/api.php", $md5);
+		// Delete installer file (only if not using GIT build).
+		if (!KunenaForum::isDev()) {
+			JFile::delete(KPATH_ADMIN.'/install.php');
+		}
 
 		if (! $this->getInstallError ()) {
 			$this->updateVersionState ( '' );
@@ -622,16 +611,7 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 	}
 
-	protected function waitFile($file, $md5) {
-		// Test if file has been fully copied and wait if not
-		for ($i=0; $i<10; $i++) {
-			if (is_file($file) && md5_file($file) == $md5) return true;
-			sleep(1);
-			clearstatcache();
-		}
-		return false;
-	}
-
+	// TODO: move to migration
 	public function migrateDatabase() {
 		$version = $this->getVersion();
 		if (! empty ( $version->prefix )) {
@@ -674,7 +654,7 @@ class KunenaModelInstall extends JModelLegacy {
 		static $tables = null;
 		if ($schema === null) {
 			// Run only once: get table creation SQL and existing tables
-			require_once KPATH_ADMIN.'/install/schema.php';
+			require_once KUNENA_INSTALLER_PATH.'/schema.php';
 			$schema = new KunenaModelSchema();
 			$create = $schema->getCreateSQL();
 			$tables = $this->listTables ( 'kunena_', true );
@@ -712,6 +692,7 @@ class KunenaModelInstall extends JModelLegacy {
 		return true;
 	}
 
+	// TODO: move to migration
 	function migrateConfig() {
 		$config = KunenaFactory::getConfig();
 		$version = $this->getVersion();
@@ -747,7 +728,7 @@ class KunenaModelInstall extends JModelLegacy {
 
 		if ($xml === null) {
 			// Run only once: Get migration SQL from our XML file
-			$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
+			$xml = simplexml_load_file(KUNENA_INSTALLER_PATH.'/kunena.install.upgrade.xml');
 		}
 		if ($xml === false) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_DB_UPGRADE_FAILED_XML'), false, '', 'upgrade' );
 
@@ -811,7 +792,7 @@ class KunenaModelInstall extends JModelLegacy {
 		switch($nodeName) {
 			case 'phpfile':
 				$filename = $action['name'];
-				$include = KPATH_ADMIN . "/install/upgrade/$filename.php";
+				$include = KUNENA_INSTALLER_PATH . "/upgrade/{$filename}.php";
 				$function = 'kunena_'.strtr($filename, array('.'=>'', '-'=>'_'));
 				if(file_exists($include)) {
 					require( $include );
@@ -854,12 +835,13 @@ class KunenaModelInstall extends JModelLegacy {
 */
 
 	public function installSampleData() {
-		require_once ( KPATH_ADMIN.'/install/data/sampledata.php' );
+		require_once ( KUNENA_INSTALLER_PATH.'/data/sampledata.php' );
 		if (installSampleData ())
 			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SAMPLEDATA'), true );
 		return true;
 	}
 
+	// TODO: move to migration
 	protected function setAvatarStatus($stats = null) {
 		if (!$stats) {
 			$stats = new stdClass();
@@ -869,6 +851,7 @@ class KunenaModelInstall extends JModelLegacy {
 		$app->setUserState ( 'com_kunena.install.avatars', $stats );
 	}
 
+	// TODO: move to migration
 	protected function getAvatarStatus() {
 		$app = JFactory::getApplication ();
 		$stats = new stdClass();
@@ -877,6 +860,7 @@ class KunenaModelInstall extends JModelLegacy {
 		return $stats;
 	}
 
+	// TODO: move to migration
 	public function migrateAvatars() {
 		$app = JFactory::getApplication ();
 		$stats = $this->getAvatarStatus();
@@ -921,7 +905,7 @@ class KunenaModelInstall extends JModelLegacy {
 					$ext = JString::strtolower($matches[1]);
 					// Use new format: users/avatar62.jpg
 					$newfile = "users/avatar{$userid}.{$ext}";
-					$destpath = (KPATH_MEDIA ."/avatars/{$newfile}");
+					$destpath = (KUNENA_INSTALLER_MEDIAPATH ."/avatars/{$newfile}");
 					if (JFile::exists($destpath)) {
 						$success = true;
 					} else {
@@ -962,12 +946,13 @@ class KunenaModelInstall extends JModelLegacy {
 		return !$count;
 	}
 
+	// TODO: move to migration
 	public function migrateAvatarGalleries() {
 		$action = $this->getAction();
 		if ($action != 'migrate') return true;
 
 		$srcpath = JPATH_ROOT.'/images/fbfiles/avatars/gallery';
-		$dstpath = KPATH_MEDIA.'/avatars/gallery';
+		$dstpath = KUNENA_INSTALLER_MEDIAPATH.'/avatars/gallery';
 		if (JFolder::exists($srcpath)) {
 			if (!JFolder::delete($dstpath) || !JFolder::copy($srcpath, $dstpath)) {
 				$this->addStatus ( "Could not copy avatar galleries from $srcpath to $dstpath", true );
@@ -978,12 +963,13 @@ class KunenaModelInstall extends JModelLegacy {
 		return true;
 	}
 
+	// TODO: move to migration
 	public function migrateCategoryImages() {
 		$action = $this->getAction();
 		if ($action != 'migrate') return true;
 
 		$srcpath = JPATH_ROOT.'/images/fbfiles/category_images';
-		$dstpath = KPATH_MEDIA.'/category_images';
+		$dstpath = KUNENA_INSTALLER_MEDIAPATH.'/category_images';
 		if (JFolder::exists($srcpath)) {
 			if (!JFolder::delete($dstpath) || !JFolder::copy($srcpath, $dstpath)) {
 				$this->addStatus ( "Could not copy category images from $srcpath to $dstpath", true );
@@ -994,6 +980,7 @@ class KunenaModelInstall extends JModelLegacy {
 		return true;
 	}
 
+	// TODO: move to migration
 	protected function setAttachmentStatus($stats = null) {
 		if (!$stats) {
 			$stats = new stdClass();
@@ -1003,6 +990,7 @@ class KunenaModelInstall extends JModelLegacy {
 		$app->setUserState ( 'com_kunena.install.attachments', $stats );
 	}
 
+	// TODO: move to migration
 	protected function getAttachmentStatus() {
 		$app = JFactory::getApplication ();
 		$stats = new stdClass();
@@ -1011,6 +999,7 @@ class KunenaModelInstall extends JModelLegacy {
 		return $stats;
 	}
 
+	// TODO: move to migration
 	public function migrateAttachments() {
 		// Only perform this stage if we are upgrading from older version
 		$version = $this->getVersion();
@@ -1035,7 +1024,7 @@ class KunenaModelInstall extends JModelLegacy {
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		if (!$stats->current && !$count) return true;
 
-		$destpath = KPATH_MEDIA . '/attachments/legacy';
+		$destpath = KUNENA_INSTALLER_MEDIAPATH . '/attachments/legacy';
 		if (!JFolder::exists($destpath.'/images')) {
 			if (!JFolder::create($destpath.'/images')) {
 				$this->addStatus ( "Could not create directory for legacy attachments in {$destpath}/images", true );
@@ -1204,6 +1193,7 @@ class KunenaModelInstall extends JModelLegacy {
 		return $this->_versionprefix;
 	}
 
+	// TODO: move to migration
 	public function getDetectVersions() {
 		if (!empty($this->_versions)) {
 			return $this->_versions;
@@ -1265,6 +1255,7 @@ class KunenaModelInstall extends JModelLegacy {
 		return true;
 	}
 
+	// TODO: move to migration
 	public function getInstalledVersion($prefix, $versionlist, $state = false) {
 		if (!$state && isset($this->_installed[$prefix])) {
 			return $this->_installed[$prefix];
@@ -1427,6 +1418,7 @@ class KunenaModelInstall extends JModelLegacy {
 	}
 
 	// helper function to migrate table
+	// TODO: move to migration
 	protected function migrateTable($oldprefix, $oldtable, $newtable) {
 		$tables = $this->listTables ( 'kunena_' );
 		$oldtables = $this->listTables ( $oldprefix );
@@ -1460,6 +1452,7 @@ class KunenaModelInstall extends JModelLegacy {
 		return array ('name' => $oldtable, 'action' => 'migrate', 'sql' => $sql );
 	}
 
+	// TODO: move to migration
 	function selectWithStripslashes($table) {
 		$fields = array_pop($this->db->getTableColumns($table));
 		$select = array();
@@ -1757,14 +1750,7 @@ class KunenaModelInstall extends JModelLegacy {
 
 		return true;
 	}
-
-	protected function _getJoomlaArchiveError($archive) {
-		$error = '';
-		// J2.5 and beyond - Not yet implemented
-
-		return $error;
-	}
-
 }
+
 class KunenaInstallerException extends Exception {
 }

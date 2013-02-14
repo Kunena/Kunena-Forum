@@ -31,7 +31,7 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 				<tr>
 					<td class="left" width="90%">
 						<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
-						<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape ( $this->state->get('list.search') );?>" class="text_area" onchange="document.adminForm.submit();" />
+						<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape ( $this->state->get('filter.search') );?>" class="text_area" onchange="document.adminForm.submit();" />
 						<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
 						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
 					</td>

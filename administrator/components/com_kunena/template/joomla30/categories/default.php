@@ -27,14 +27,14 @@ $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCE
 $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 $user = JFactory::getUser();
-$filterSearch = $this->escape($this->state->get('list.search'));
-$filterPublished = $this->escape($this->state->get('list.filter_published'));
-$filterTitle = $this->escape($this->state->get('list.filter_title'));
-$filterType	= $this->escape($this->state->get('list.filter_type'));
-$filterAccess = $this->escape($this->state->get('list.filter_access'));
-$filterLocked = $this->escape($this->state->get('list.filter_locked'));
-$filterReview = $this->escape($this->state->get('list.filter_review'));
-$filterAnonymous = $this->escape($this->state->get('list.filter_anonymous'));
+$filterSearch = $this->escape($this->state->get('filter.search'));
+$filterPublished = $this->escape($this->state->get('filter.published'));
+$filterTitle = $this->escape($this->state->get('filter.title'));
+$filterType	= $this->escape($this->state->get('filter.type'));
+$filterAccess = $this->escape($this->state->get('filter.access'));
+$filterLocked = $this->escape($this->state->get('filter.locked'));
+$filterReview = $this->escape($this->state->get('filter.review'));
+$filterAnonymous = $this->escape($this->state->get('filter.anonymous'));
 $listOrdering = $this->escape($this->state->get('list.ordering'));
 $listDirection = $this->escape($this->state->get('list.direction'));
 $canChange = $saveOrder = false;

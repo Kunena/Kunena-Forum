@@ -65,7 +65,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$this->setRedirect(JRoute::_($this->getUrl(), false));
 	}
 
-	public function display() {
+	public function display($cachable = false, $urlparams = Array()) {
 		$view = JRequest::getCmd ( 'view' );
 		$task = JRequest::getCmd ( 'task' );
 

@@ -10,7 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once(KPATH_SITE.'/lib/kunena.link.class.php');
 $tabclass = array ("row1", "row2" );
 $mmm=0;
 foreach ( $this->sections as $section ) :

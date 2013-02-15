@@ -13,34 +13,32 @@ defined ( '_JEXEC' ) or die ();
 
 <div class="chat">
   <div class="bubble me span11 column-item">
-  <div style="border-bottom:1px solid #e5e5e5;">
-  
-    <h5><?php echo $this->profile->getLink() ?> <small>
-      <?php if($this->topic->first_post_message == $this->message->id >1){
+    <div style="border-bottom:1px solid #e5e5e5;">
+      <h5><?php echo $this->profile->getLink() ?> <small>
+        <?php if($this->topic->first_post_message == $this->message->id >1){
      echo 'Created a new topic.';
 }
 else {
      echo 'Replied the topic.';
 }
  ?>
-      </small>
-       <small><span class="pull-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"><?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> <?php echo $this->numLink ?> </span></small></h5>
-       <h4><?php echo $this->displayMessageField('subject') ?></h4></div>
+        </small> <small><span class="pull-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"><?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> <?php echo $this->numLink ?> </span></small></h5>
+      <h4><?php echo $this->displayMessageField('subject') ?></h4>
+    </div>
     <p> <?php echo KunenaHtmlParser::parseBBCode ($this->message->message, $this) ?></p>
-    
   </div>
 </div>
 <?php if (!empty($this->attachments)) : ?>
 <div class="well kmsgattach"> <?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
   <ul>
     <?php foreach($this->attachments as $attachment) : ?>
-    <li style="list-style:none; margin-bottom:5px;"> <span> <?php echo $attachment->getThumbnailLink(); ?> </span> <span> <?php echo $attachment->getTextLink(); ?> </span> </li>
+    <li style="list-style:none;padding-left:25px; margin-bottom:5px;"> <span> <?php echo $attachment->getThumbnailLink(); ?> </span> <span> <?php echo $attachment->getTextLink(); ?> </span> </li>
     <?php endforeach; ?>
   </ul>
 </div>
 <?php endif; ?>
 <?php if ( $this->quickreply ) : ?>
-<div id="kreply<?php echo intval($this->message->id) ?>_form" class="kreply-form" style="display: none">
+<div id="kreply<?php echo intval($this->message->id) ?>_form" class="kreply-form" style="display: none;padding-left:20px;">
   <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" enctype="multipart/form-data" name="postform" id="postform">
     <input type="hidden" name="view" value="topic" />
     <input type="hidden" name="task" value="post" />

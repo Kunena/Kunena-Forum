@@ -22,31 +22,42 @@ $this->cache = false;
 </tr>
 <?php endif; ?>
 <tr >
-  <td class="kcol-mid kcol-ktopicicon hidden-phone span1"> <?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?> </td>
+  <td class="kcol-mid kcol-ktopicicon hidden-phone span1">
+    <?php if ($this->topic->unread) { ?>
+    <span class="badge badge-info" style="padding:1px 6px 2px; margin:0px 0px 0px 20px;"><?php echo  $this->topic->unread ;?></span>
+    <?php }
+	  ?>
+    <?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?> </td>
   <td class="kcol-mid kcol-ktopictitle span6">
-      <div class="hasTooltip"><span class="Title">
-        <?php
+    <div class="hasTooltip"><span class="Title">
+      <?php
 			 echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'hasTooltip' ) ;
 			if ($this->topic->getUserTopic()->favorite) {
-				?> <i class="icon-star hasTooltip"><?php JText::_('COM_KUNENA_FAVORITE') ?></i>
-                <?php
+				?>
+      <i class="icon-star hasTooltip">
+      <?php JText::_('COM_KUNENA_FAVORITE') ?>
+      </i>
+      <?php
 			}
 			if ($this->me->exists() && $this->topic->getUserTopic()->posts) {
-				?> <i class="icon-flag hasTooltip" ><?php JText::_('COM_KUNENA_MYPOSTS') ?></i>
-                <?php
-			}
-			if ($this->topic->unread) {
-				echo $this->getTopicLink ( $this->topic, 'unread', '<sup dir="ltr" class="knewchar">(' . $this->topic->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>' );
-			}
-			?>
-        </span> </div>
-      <div class="hasTooltip"> <span class="label label-info">Question</span> <?php if ($this->topic->locked != 0) {
-				?> <span class="label label-important"><i class="icon-locked"><?php JText::_('COM_KUNENA_LOCKED') ?></i></span>
-                <?php
+				?>
+      <i class="icon-flag hasTooltip" >
+      <?php JText::_('COM_KUNENA_MYPOSTS') ?>
+      </i>
+      <?php
 			}
 			?>
-            in <?php echo $this->getCategoryLink ( $this->topic->getCategory() ,null, null, 'hasTooltip' ) ?></div>
-            
+      </span> </div>
+    <div class="hasTooltip"> <span class="label label-info">Question</span>
+      <?php if ($this->topic->locked != 0) {
+				?>
+      <span class="label label-important"><i class="icon-locked">
+      <?php JText::_('COM_KUNENA_LOCKED') ?>
+      </i></span>
+      <?php
+			}
+			?>
+      <span>in <?php echo $this->getCategoryLink ( $this->topic->getCategory() ,null, null, 'hasTooltip' ) ?></span></div>
     <?php if (!empty($this->keywords)) : ?>
     <div class="ktopic-keywords"> <?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?> </div>
     <?php endif; ?>

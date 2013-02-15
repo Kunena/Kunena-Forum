@@ -27,21 +27,16 @@ $this->displayBreadcrumb ();
     <?php $this->displayCategoryActions() ?>
   </div>
   <div class="clearfix"></div>
-  <?php if ($this->total >1) : ?>
-  <div class="pull-right" style="margin-top:-40px;"><?php echo $this->getPagination (5); // odd number here (# - 5) ?></div>
-  <div class="clearfix"></div>
-  <?php endif; ?>
 </div>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="ktopicsform" id="ktopicsform">
   <input type="hidden" name="view" value="topics" />
   <?php echo JHtml::_( 'form.token' ); ?>
-  <div class="well">
+  <div class="well"> <span class="pull-right ">
     <?php if (!empty($this->topicActions)) : ?>
-    <span class="pull-right ">
     <input class="kcheckall" type="checkbox" name="toggle" value="" />
-    </span>
     <?php endif; ?>
-    <h2><span><?php echo $this->escape($this->headerText); ?></span></h2>
+    <?php echo $this->getPagination (5); // odd number here (# - 5) ?> </span>
+    <h2 style="padding-left:10px;"><span><?php echo $this->escape($this->headerText); ?></span></h2>
     <div class="clearfix"></div>
     <div class="row-fluid column-row">
       <div class="span12 column-item">
@@ -74,6 +69,8 @@ $this->displayBreadcrumb ();
         </table>
       </div>
     </div>
+    <div class="pull-right" style="margin-top:-20px;"><?php echo $this->getPagination (5); // odd number here (# - 5) ?></div>
+    <div class="clearfix"></div>
   </div>
 </form>
 <div>
@@ -81,10 +78,6 @@ $this->displayBreadcrumb ();
     <?php $this->displayCategoryActions() ?>
   </div>
   <div class="clearfix"></div>
-  <?php if ($this->total >1) : ?>
-  <div class="pull-right" style="margin-top:-40px;"><?php echo $this->getPagination (5); // odd number here (# - 5) ?></div>
-  <div class="clearfix"></div>
-  <?php endif; ?>
 </div>
 <div class="kmoderatorslist-jump fltrt">
   <?php $this->displayForumJump (); ?>

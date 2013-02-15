@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 ?>
 
-<div class="well well-small">
+<div class="well well-small" style="padding-bottom:-20px !important;">
   <h2 class="page-header"> <span><?php echo $this->displayField('title') ?></span> </h2>
   <div class="row-fluid column-row"> <?php echo $this->displayActions() ?>
     <div class="span12 column-item">

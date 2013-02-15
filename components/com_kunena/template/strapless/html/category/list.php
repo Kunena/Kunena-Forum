@@ -9,14 +9,16 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
+?>
 
-$this->displayAnnouncement ();
-$this->displayBreadcrumb (); 
-
+<div style="margin-bottom:-10px !important;">
+  <?php $this->displayAnnouncement ();
+?>
+</div>
+<?php $this->displayBreadcrumb (); 
 ?>
 <!-- Module position: kunena_announcement -->
 <?php $this->displayModulePosition ( 'kunena_announcement' ) ?>
-
 <div class="pull-right hidden-phone" style="margin:-42px 4px 0 0;" >
   <?php $this->displayForumjump(); ?>
 </div>

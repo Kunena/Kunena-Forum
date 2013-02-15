@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Strapless
+ * @package Kunena.Template.Bootlicker
  * @subpackage Topic
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
@@ -15,7 +15,8 @@ defined ( '_JEXEC' ) or die ();
 <div class="btn-toolbar" style="margin: 0;">
   <?php if ($this->topicButtons->get('reply') || $this->topicButtons->get('subscribe') || $this->topicButtons->get('favorite') ) : ?>
   <div class="btn-group">
-    <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+    <button class="btn dropdown-toggle" data-toggle="dropdown" style="line-height:19px;border-radius:4px 0px 0px 4px;">Action</button>
+    <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
     <ul class="dropdown-menu">
       <li><?php echo $this->topicButtons->get('reply') ?></li>
       <li><?php echo $this->topicButtons->get('subscribe') ?></li>
@@ -26,7 +27,8 @@ defined ( '_JEXEC' ) or die ();
   <?php endif ?>
   <?php if ($this->topicButtons->get('delete') || $this->topicButtons->get('moderate') || $this->topicButtons->get('sticky') || $this->topicButtons->get('lock')) : ?>
   <div class="btn-group">
-    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Moderation <span class="caret"></span></button>
+    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="line-height:19px;border-radius:4px 0px 0px 4px;">Moderation</button>
+    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
     <ul class="dropdown-menu">
       <li><a href="#"><?php echo $this->topicButtons->get('delete') ?></a></li>
       <li><a href="#"><?php echo $this->topicButtons->get('moderate') ?></a></li>
@@ -38,7 +40,8 @@ defined ( '_JEXEC' ) or die ();
   <?php endif ?>
   <?php if ($this->topicButtons->get('flat') || $this->topicButtons->get('threaded') || $this->topicButtons->get('indented')) : ?>
   <div class="btn-group">
-    <button class="btn dropdown-toggle" data-toggle="dropdown">View <span class="caret"></span></button>
+    <button class="btn dropdown-toggle" data-toggle="dropdown" style="line-height:19px;border-radius:4px 0px 0px 4px;">View</button>
+    <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
     <ul class="dropdown-menu">
       <?php echo $this->topicButtons->get('flat') ?> <?php echo $this->topicButtons->get('threaded') ?> <?php echo $this->topicButtons->get('indented') ?>
     </ul>

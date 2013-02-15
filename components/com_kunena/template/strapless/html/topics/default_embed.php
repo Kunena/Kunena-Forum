@@ -22,7 +22,7 @@ defined ( '_JEXEC' ) or die ();
     <input class="kcheckall" type="checkbox" name="toggle" value="" />
     </span>
     <?php endif; ?>
-    <h3 class="page-header"><span><?php echo $this->escape($this->headerText); ?></span></h3>
+    <h3 class="page-header" style="padding-left:10px;"><span><?php echo $this->escape($this->headerText); ?></span></h3>
     <div class="clearfix"></div>
     <div class="row-fluid column-row">
       <div class="span12 column-item">

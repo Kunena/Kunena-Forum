@@ -37,6 +37,12 @@ class KunenaTemplateStrapless extends KunenaTemplate {
 	}
 
 	public function initialize() {
+		$this->compileLess('main.less', 'kunena.css');
+		$this->addStyleSheet ( 'css/kunena.css' );
+
+		// Load mediaxboxadvanced css if enabled in configuration
+		if ( KunenaFactory::getConfig()->lightbox == 1 ) $this->addStyleSheet ( 'css/mediaboxAdv.css');
+
 		// Template requires Mootools 1.4+ framework
 		$this->loadMootools();
 		JHtml::_('behavior.tooltip');
@@ -44,14 +50,8 @@ class KunenaTemplateStrapless extends KunenaTemplate {
 		// New Kunena JS for default template
 		$this->addScript ( 'js/plugins.js' );
 
-		$this->compileLess('main.less', 'kunena.css');
-		$this->addStyleSheet ( 'css/kunena.css' );
-
-		if ( KunenaFactory::getConfig()->lightbox == 1 ) {
-			// Load mediaxboxadvanced library if enabled in configuration
-			$this->addScript( 'js/mediaboxAdv.js' );
-			$this->addStyleSheet ( 'css/mediaboxAdv.css');
-		}
+		// Load mediaxboxadvanced library if enabled in configuration
+		if ( KunenaFactory::getConfig()->lightbox == 1 ) $this->addScript( 'js/mediaboxAdv.js' );
 
 		// Toggler language strings
 		JFactory::getDocument()->addScriptDeclaration('// <![CDATA[

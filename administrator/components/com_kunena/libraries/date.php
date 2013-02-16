@@ -33,10 +33,10 @@ class KunenaDate extends JDate {
 		foreach ($diff as $name=>$count) {
 			if ($name == 'd') {
 				// Days are special case as we want to break it into weeks and days.
-				$weeks = (int) $count / 7;
+				$weeks = (int) ($count / 7);
 				if ($weeks) {
-					$count = $count % 7;
-					$output .= ($count == 1) ? " 1 {$chunks['w'][0]}" : " {$count} {$chunks['w'][1]}";
+					$count %= 7;
+					$output .= ($weeks == 1) ? " 1 {$chunks['w'][0]}" : " {$weeks} {$chunks['w'][1]}";
 					if (2 == ++$tick) break;
 				}
 			}

@@ -14,15 +14,16 @@ defined ( '_JEXEC' ) or die ();
  * Attachments view for Kunena backend
  */
 class KunenaAdminViewAttachments extends KunenaView {
-	function displayDefault() {
+	function display($tpl = null) {
+		$this->setToolbar();
 		$this->items = $this->get('Items');
-		$this->navigation = $this->get ( 'AdminNavigation' );
-		$this->setToolBarDefault();
+		$this->state = $this->get('state');
+		$this->pagination = $this->get ( 'Pagination' );
+		return parent::display($tpl);
 
-		$this->display ();
 	}
 
-	protected function setToolBarDefault() {
+	protected function setToolbar() {
 		// Set the titlebar text
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_FILE_MANAGER'), 'kunena.png' );
 		JToolBarHelper::spacer();

@@ -211,11 +211,11 @@
 			<option
 					value="none">COM_KUNENA_SYS_FIELD_OPTION_DATEFORMATNONE</option>
 			<option
-					value="ago">COM_KUNENA_SYS_FIELD_OPTION_</option>
+					value="ago">COM_KUNENA_SYS_FIELD_OPTION_POSTAGO</option>
 			<option
-					value="datetime_today">COM_KUNENA_SYS_FIELD_OPTION_</option>
+					value="datetime_today">COM_KUNENA_SYS_FIELD_OPTION_POSTDATETIMETODAY</option>
 			<option
-					value="datetime">COM_KUNENA_SYS_FIELD_OPTION_</option>
+					value="datetime">COM_KUNENA_SYS_FIELD_OPTION_POSTDATETIME</option>
 		</field>
 		<field
 				name="cfg_post_dateformat_hover"
@@ -226,11 +226,11 @@
 			<option
 					value="none">COM_KUNENA_SYS_FIELD_OPTION_DATEFORMATNONE</option>
 			<option
-					value="ago">COM_KUNENA_SYS_FIELD_OPTION_</option>
+					value="ago">COM_KUNENA_SYS_FIELD_OPTION_POSTAGO</option>
 			<option
-					value="datetime_today">COM_KUNENA_SYS_FIELD_OPTION_</option>
+					value="datetime_today">COM_KUNENA_SYS_FIELD_OPTION_POSTDATETIMETODAY</option>
 			<option
-					value="datetime">COM_KUNENA_SYS_FIELD_OPTION_</option>
+					value="datetime">COM_KUNENA_SYS_FIELD_OPTION_POSTDATETIME</option>
 		</field>
 		<field
 				name="cfg_display_new"
@@ -1055,7 +1055,7 @@
 			<option
 					value="everybody">COM_KUNENA_SYS_FIELD_OPTION_EVERYBODY</option>
 			<option
-					value="registered">COM_KUNENA_SYS_FIELD_OPTION_REGISTEREDUSERS</option>
+					value="registered">COM_KUNENA_SYS_FIELD_OPTION_REGISTERED</option>
 			<option
 					value="moderator">COM_KUNENA_SYS_FIELD_OPTION_MODERATORS</option>
 			<option

@@ -18,8 +18,8 @@ JHtml::_('dropdown.init');
 $sortFields = array();
 $sortFields[] = JHtml::_('select.option', 'p.published', JText::_('JSTATUS'));
 $sortFields[] = JHtml::_('select.option', 'p.title', JText::_('JGLOBAL_TITLE'));
-$sortFields[] = JHtml::_('select.option', 'p.type', JText::_('Type'));
-$sortFields[] = JHtml::_('select.option', 'p.access', JText::_('Access'));
+$sortFields[] = JHtml::_('select.option', 'p.type', JText::_('COM_KUNENA_CATEGORIES_LABEL_TYPE'));
+$sortFields[] = JHtml::_('select.option', 'p.access', JText::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
 $sortFields[] = JHtml::_('select.option', 'p.id', JText::_('JGRID_HEADING_ID'));
 
 $sortDirection = array();
@@ -72,12 +72,12 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 	<div id="j-main-container" class="span10">
 		<div id="filter-bar" class="btn-toolbar">
 			<div class="filter-search btn-group pull-left">
-				<label for="filter_search" class="element-invisible"><?php echo 'Search in';?></label>
-				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo 'Search categories'; ?>" value="<?php echo $filterSearch; ?>" title="<?php echo 'Search categories'; ?>" />
+				<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
+				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>" value="<?php echo $filterSearch; ?>" title="<?php echo JText::_('COM_KUNENA_CATEGORIES=_FIELD_INPUT_SEARCHCATEGORIES'); ?>" />
 			</div>
 			<div class="btn-group pull-left">
-				<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> Filter</button>
-				<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> Clear</button>
+				<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('JSEARCH_FILTER_LABEL') ?></button>
+				<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> <?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 			</div>
 			<div class="btn-group pull-right hidden-phone">
 				<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
@@ -110,25 +110,25 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 					</th>
 					<th width="5%" class="nowrap center">
-						<?php echo JHtml::_('grid.sort', JText::_('JSTATUS'), 'p.published', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'JSTATUS', 'p.published', $listDirection, $listOrdering); ?>
 					</th>
 					<th class="nowrap">
-						<?php echo JHtml::_('grid.sort', JText::_('JGLOBAL_TITLE'), 'p.title', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $listDirection, $listOrdering); ?>
 					</th>
 					<th width="7%" class="nowrap center hidden-phone">
-						<?php /*TODO: STRING Text */ echo JHTML::_('grid.sort', 'Access', 'p.access', $listDirection, $listOrdering); ?>
+						<?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $listDirection, $listOrdering); ?>
 					</th>
 					<th width="5%" class="nowrap center">
-						<?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_LOCKED'), 'p.locked', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $listDirection, $listOrdering); ?>
 					</th>
 					<th width="5%" class="nowrap center">
-						<?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_REVIEW'), 'p.review', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $listDirection, $listOrdering); ?>
 					</th>
 					<th width="5%" class="nowrap center">
-						<?php echo JHtml::_('grid.sort', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'), 'p.anonymous', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $listDirection, $listOrdering); ?>
 					</th>
 					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo JHtml::_('grid.sort', JText::_('JGRID_HEADING_ID'), 'p.id', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $listDirection, $listOrdering); ?>
 					</th>
 				</tr>
 				<tr>
@@ -145,7 +145,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					</td>
 					<td class="nowrap">
 						<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTitle; ?>" title="<?php echo 'Filter'; ?>" />
+						<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 					</td>
 					<td class="nowrap center hidden-phone">
 						<label for="filter_access" class="element-invisible"><?php echo JText::_('All');?></label>

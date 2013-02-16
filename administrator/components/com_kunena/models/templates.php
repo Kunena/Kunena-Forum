@@ -33,6 +33,7 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		$app = JFactory::getApplication();
 
 		// Adjust the context to support modal layouts.
+		$this->context = 'com_kunena.admin.categories';
 		$layout = $app->input->get('layout');
 		if ($layout) {
 			$this->context .= '.'.$layout;
@@ -100,6 +101,14 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		$this->setState ( 'list.total', count($rows) );
 		if ($this->getState ( 'list.limit')) $rows = array_slice($rows, $this->getState ( 'list.start'), $this->getState ( 'list.limit'));
 		return $rows;
+	}
+
+	function getTotal() {
+		return $this->getState ('list.total');
+	}
+
+	function getStart() {
+		return $this->getState ('list.start');
 	}
 
 	function getEditparams() {
@@ -175,4 +184,37 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 		return $new_state;
 	}
+
+	public function getPagination()
+	{
+		// Get a storage key.
+		$store = $this->getStoreId('getPagination');
+
+		// Try to load the data from internal storage.
+		if (isset($this->cache[$store]))
+		{
+			return $this->cache[$store];
+		}
+
+		// Create the pagination object.
+		$limit = (int) $this->getState('list.limit') - (int) $this->getState('list.links');
+		$page = new JPagination($this->getTotal(), $this->getStart(), $limit);
+
+		// Add the object to the internal cache.
+		$this->cache[$store] = $page;
+
+		return $this->cache[$store];
+	}
+
+	protected function getStoreId($id = '')
+	{
+		// Add the list state to the store id.
+		$id .= ':' . $this->getState('list.start');
+		$id .= ':' . $this->getState('list.limit');
+		$id .= ':' . $this->getState('list.ordering');
+		$id .= ':' . $this->getState('list.direction');
+
+		return md5($this->context . ':' . $id);
+	}
+
 }

@@ -65,6 +65,7 @@ defined ( '_JEXEC' ) or die ();
 				</a>
 			</div>
 		</div>
+		<?php if (KunenaForum::isDev()) : ?>
 		<div class="btn">
 			<div class="icon">
 				<a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=install&task=prepare&start=1&'.JSession::getFormToken().'=1') ?>" title="<?php echo JText::_('COM_KUNENA_GIT_INSTALL');?>">
@@ -73,6 +74,7 @@ defined ( '_JEXEC' ) or die ();
 				</a>
 			</div>
 		</div>
+		<?php endif; ?>
 	</div>
 </div>
 <div class="clearfix"></div>

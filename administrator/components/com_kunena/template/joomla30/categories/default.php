@@ -27,6 +27,8 @@ $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCE
 $sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
 
 $user = JFactory::getUser();
+$me = KunenaUserHelper::getMyself();
+$userId		= $user->get('id');
 $filterSearch = $this->escape($this->state->get('filter.search'));
 $filterPublished = $this->escape($this->state->get('filter.published'));
 $filterTitle = $this->escape($this->state->get('filter.title'));
@@ -37,10 +39,15 @@ $filterReview = $this->escape($this->state->get('filter.review'));
 $filterAnonymous = $this->escape($this->state->get('filter.anonymous'));
 $listOrdering = $this->escape($this->state->get('list.ordering'));
 $listDirection = $this->escape($this->state->get('list.direction'));
-$canChange = $saveOrder = false;
+
+$saveOrder 	= ($listOrdering == 'a.ordering' && $listDirection == 'asc');
+if ($saveOrder)
+{
+	$saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=saveOrderAjax&tmpl=component';
+	JHtml::_('sortablelist.sortable', 'categoryList', 'adminForm', $listDirection, $saveOrderingUrl, false, true);
+}
 
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
-
 ?>
 
 <script type="text/javascript">
@@ -104,7 +111,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			<thead>
 				<tr>
 					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirection, $listOrdering, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
+						<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', 'asc', '', null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
 					</th>
 					<th width="1%" class="hidden-phone">
 						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
@@ -191,8 +198,34 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				$img_no = '<i class="icon-cancel"></i>';
 				$img_yes = '<i class="icon-checkmark"></i>';
 				$i = 0;
-				foreach($this->categories as $item) : ?>
-				<tr>
+				foreach($this->categories as $item) :
+					$orderkey   = array_search($item->id, $this->ordering[$item->parent_id]);
+					$canEdit    = $me->isAdmin($item);
+					$canCheckin = $user->authorise('core.admin', 'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
+					$canEditOwn = $canEdit;
+					$canChange  = $canEdit && $canCheckin;
+
+					// Get the parents of item for sorting
+					if ($item->level > 0) {
+						$parentsStr = "";
+						$_currentParentId = $item->parent_id;
+						$parentsStr = " " . $_currentParentId;
+						for ($i2 = 0; $i2 < $item->level; $i2++) {
+							foreach ($this->ordering as $k => $v) {
+							$v = implode("-", $v);
+							$v = "-".$v."-";
+								if (strpos($v, "-" . $_currentParentId . "-") !== false) {
+									$parentsStr .= " " . $k;
+									$_currentParentId = $k;
+									break;
+								}
+							}
+						}
+					} else {
+						$parentsStr = "";
+					}
+				?>
+				<tr sortable-group-id="<?php echo $item->parent_id;?>" item-id="<?php echo $item->id?>" parents="<?php echo $parentsStr?>" level="<?php echo $item->level?>">
 					<td class="order nowrap center hidden-phone">
 						<?php if ($canChange) :
 							$disableClassName = '';
@@ -205,7 +238,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							<span class="sortable-handler hasTooltip <?php echo $disableClassName; ?>" title="<?php echo $disabledLabel; ?>">
 							<i class="icon-menu"></i>
 						</span>
-							<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $item->ordering; ?>" class="width-20 text-area-order " />
+							<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $orderkey; ?>" />
 						<?php else : ?>
 							<span class="sortable-handler inactive" >
 							<i class="icon-menu"></i>

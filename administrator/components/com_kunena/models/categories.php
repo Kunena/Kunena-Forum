@@ -283,4 +283,58 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$moderators = $category->getModerators(false);
 		return $moderators;
 	}
+
+	protected function getReorderConditions($table) {
+		$condition = array();
+		$condition[] = 'parent_id = '.(int) $table->parent_id;
+		return $condition;
+	}
+
+	public function saveorder($pks = null, $order = null) {
+		$table = JTable::getInstance('KunenaCategories', 'Table');
+		$conditions = array();
+
+		if (empty($pks)) return false;
+
+		// Update ordering values
+		foreach ($pks as $i => $pk) {
+			$table->load((int) $pk);
+
+			if ($table->ordering != $order[$i]) {
+				$table->ordering = $order[$i];
+
+				if (!$table->store()) {
+					$this->setError($table->getError());
+					return false;
+				}
+
+				// Remember to reorder within position and client_id
+				$condition = $this->getReorderConditions($table);
+				$found = false;
+
+				foreach ($conditions as $cond) {
+					if ($cond[1] == $condition) {
+						$found = true;
+						break;
+					}
+				}
+
+				if (!$found) {
+					$key = $table->getKeyName();
+					$conditions[] = array($table->$key, $condition);
+				}
+			}
+		}
+
+		// Execute reorder for each category.
+		foreach ($conditions as $cond) {
+			$table->load($cond[0]);
+			$table->reorder($cond[1]);
+		}
+
+		// Clear the component's cache
+		$this->cleanCache();
+
+		return true;
+	}
 }

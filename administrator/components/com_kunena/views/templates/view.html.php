@@ -94,12 +94,15 @@ class KunenaAdminViewTemplates extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
+// TODO: figure out how to do css/less editing so that the distribution files don't get overridden
+/*
 		if (version_compare(JVERSION, '3', '>')) {
 			JToolBarHelper::custom('choosecss', 'edit.png','edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS', false, false );
 		} else {
 			JToolBarHelper::custom('choosecss', 'css.png','css_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS', false, false );
 		}
 		JToolBarHelper::spacer();
+*/
 		JToolBarHelper::cancel('templates');
 		JToolBarHelper::spacer();
 	}

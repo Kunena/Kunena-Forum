@@ -35,17 +35,41 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							<img src="components/com_kunena/media/icons/large/categories.png" alt="Categories" /><br />
 							<span>Categories</span>
 						</a>
+						<a class="btn" href="index.php?option=com_kunena&view=users">
+							<img src="components/com_kunena/media/icons/large/users.png" alt="Users" /><br />
+							<span>Users</span>
+						</a>
+						<a class="btn" href="index.php?option=com_kunena&view=attachments">
+							<img src="components/com_kunena/media/icons/large/files.png" alt="Files" /><br />
+							<span>Files</span>
+						</a>
+						<a class="btn" href="index.php?option=com_kunena&view=smilies">
+							<img src="components/com_kunena/media/icons/large/smileys.png" alt="Emoticons" /><br />
+							<span>Emoticons</span>
+						</a>
+						<a class="btn" href="index.php?option=com_kunena&view=ranks">
+							<img src="components/com_kunena/media/icons/large/ranks.png" alt="Ranks" /><br />
+							<span>Ranks</span>
+						</a>
 						<a class="btn" href="index.php?option=com_kunena&view=templates">
 							<img src="components/com_kunena/media/icons/large/templates.png" alt="Templates" /><br />
 							<span>Templates</span>
 						</a>
+						<a class="btn" href="index.php?option=com_kunena&view=config">
+							<img src="components/com_kunena/media/icons/large/prune.png" alt="Configuration" /><br />
+							<span>Config</span>
+						</a>
 						<a class="btn" href="index.php?option=com_plugins&view=plugins&filter_folder=kunena">
-							<img src="components/com_kunena/media/icons/large/pluginsmanager.png" alt="Plugin Manager" /><br/>
-							<span>Plugin Manager</span>
+							<img src="components/com_kunena/media/icons/large/pluginsmanager.png" alt="Plugins" /><br/>
+							<span>Plugins</span>
 						</a>
 						<a class="btn" href="index.php?option=com_kunena&view=tools">
-							<img src="components/com_kunena/media/icons/large/purgerestatements.png" alt="Installer" /><br/>
+							<img src="components/com_kunena/media/icons/large/config.png" alt="Tools" /><br/>
 							<span>Tools</span>
+						</a>
+						<a class="btn" href="index.php?option=com_kunena&view=trash">
+							<img src="components/com_kunena/media/icons/large/trash.png" alt="Trash" /><br/>
+							<span>Trash</span>
 						</a>
 					</div>
 					<div class="clearfix"></div>
@@ -68,7 +92,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<dt>Author:</dt>
 						<dd><a href="http://www.kunena.org/team" target="_blank">Kunena Team</a></dd>
 						<dt>Copyright:</dt>
-						<dd>&copy; 2008 - 2012 Kunena, All rights reserved.</dd>
+						<dd>&copy; 2008 - 2013 Kunena, All rights reserved.</dd>
 						<dt>License:</dt>
 						<dd>GNU General Public License</dd>
 					</dl>

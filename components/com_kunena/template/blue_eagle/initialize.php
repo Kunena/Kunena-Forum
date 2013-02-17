@@ -22,6 +22,11 @@ if ( KunenaFactory::getConfig()->lightbox == 1 ) {
 	$template->addScript( 'js/mediaboxAdv.js' );
 }
 
+// We load lazyload library only if configuration setting allow it
+if ( KunenaFactory::getConfig()->use_lazyload ) {
+	$template->addScript( 'js/lazyload.js' );
+}
+
 // New Kunena JS for default template
 $template->addScript ( 'js/default.js' );
 

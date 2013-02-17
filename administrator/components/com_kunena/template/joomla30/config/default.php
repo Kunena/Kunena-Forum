@@ -309,6 +309,11 @@ JHtml::_('formbehavior.chosen', 'select');
 						<td align="left" valign="top"><?php echo $this->lists ['default_sort'] ?></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CFG_DEFAULT_SORT_DESC') ?></td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LAZY_LOAD_IMAGES') ?></td>
+						<td align="left" valign="top"><?php echo $this->lists ['use_lazyload']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LAZY_LOAD_IMAGES_DESC') ?></td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>

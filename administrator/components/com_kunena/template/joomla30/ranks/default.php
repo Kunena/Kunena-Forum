@@ -15,10 +15,10 @@ JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
 $sortFields = array();
-$sortFields[] = JHtml::_('select.option', 'id', JText::_('ID'));
-$sortFields[] = JHtml::_('select.option', 'title', JText::_('JGLOBAL_TITLE'));
-$sortFields[] = JHtml::_('select.option', 'special', JText::_('Special'));
-$sortFields[] = JHtml::_('select.option', 'min', JText::_('Min Post Count'));
+$sortFields[] = JHtml::_('select.option', 'a.title', JText::_('JGLOBAL_TITLE'));
+$sortFields[] = JHtml::_('select.option', 'a.special', JText::_('COM_KUNENA_RANKS_SPECIAL'));
+$sortFields[] = JHtml::_('select.option', 'a.min', JText::_('COM_KUNENA_RANKSMIN'));
+$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
 
 $sortDirection = array();
 $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
@@ -69,8 +69,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 
 				<div id="filter-bar" class="btn-toolbar">
 					<div class="btn-group pull-left">
-						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> Filter</button>
-						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> Clear</button>
+						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('JSEARCH_FILTER_LABEL') ?></button>
+						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> <?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<?php echo $this->pagination->getLimitBox (); ?>
@@ -97,7 +97,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							<th width="1%" align="center">#</th>
 							<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
 							<th width="10%"><?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?></th>
-							<th width="58%"><?php echo JHtml::_('grid.sort', 'Title', 'title', $listDirection, $listOrdering ); ?></th>
+							<th width="58%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $listDirection, $listOrdering ); ?></th>
 							<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $listDirection, $listOrdering ); ?></th>
 							<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $listDirection, $listOrdering ); ?></th>
 						</tr>
@@ -110,7 +110,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							</td>
 							<td class="nowrap">
 								<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTitle; ?>" title="<?php echo 'Filter'; ?>" />
+								<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 							</td>
 							<td class="nowrap center">
 								<label for="filter_special" class="element-invisible"><?php echo JText::_('All');?></label>
@@ -120,8 +120,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 								</select>
 							</td>
 							<td class="nowrap center">
-								<label for="filter_min" class="element-invisible"><?php echo 'Search in';?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_min" id="filter_min" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterMinPostCount; ?>" title="<?php echo 'Filter'; ?>" />
+								<label for="filter_min" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+								<input class="input-block-level input-filter filter" type="text" name="filter_min" id="filter_min" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterMinPostCount; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 							</td>
 						</tr>
 					</thead>

@@ -26,3 +26,14 @@
     height: 24px;
     width: 24px;
 }
+
+.com_kunena.admin.view-cpanel #dashboard-icons.btn-group {
+    white-space: normal;
+}
+
+.com_kunena.admin.view-cpanel #dashboard-icons .btn {
+    border-radius: 3px;
+    min-height: 64px;
+    min-width: 64px;
+    overflow: hidden;
+}

@@ -32,6 +32,12 @@ class KunenaAdminViewCategories extends KunenaView {
 	function displayDefault() {
 		$this->categories = $this->get ( 'AdminCategories' );
 		$this->navigation = $this->get ( 'AdminNavigation' );
+
+		// Preprocess the list of items to find ordering divisions.
+		$this->ordering = array();
+		foreach ($this->categories as &$item) {
+			$this->ordering[$item->parent_id][] = $item->id;
+		}
 		$this->setToolBarDefault();
 		$this->display();
 	}
@@ -69,8 +75,8 @@ class KunenaAdminViewCategories extends KunenaView {
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'On');
-		$options[]	= JHtml::_('select.option', '0', 'Off');
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -84,8 +90,8 @@ class KunenaAdminViewCategories extends KunenaView {
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'On');
-		$options[]	= JHtml::_('select.option', '0', 'Off');
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -99,8 +105,8 @@ class KunenaAdminViewCategories extends KunenaView {
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'On');
-		$options[]	= JHtml::_('select.option', '0', 'Off');
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -114,8 +120,8 @@ class KunenaAdminViewCategories extends KunenaView {
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'On');
-		$options[]	= JHtml::_('select.option', '0', 'Off');
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}

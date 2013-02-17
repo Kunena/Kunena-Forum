@@ -46,7 +46,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 						<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_ID', 'a.id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 						<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FILETYPE', 'a.filetype', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 						<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_FILESIZE', 'a.size', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
-						<th class="center"><?php echo JText::_('COM_KUNENA_A_IMGB_DIMS'); ?>	</th>
+						<th class="center"><?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_IMAGEDIMENSIONS'); ?>	</th>
 						<th class="center"><?php echo JText::_('COM_KUNENA_ATTACHMENTS_USERNAME'); ?></th>
 						<th class="center"><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></th>
 					</tr>

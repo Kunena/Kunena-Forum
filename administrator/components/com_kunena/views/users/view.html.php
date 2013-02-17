@@ -46,8 +46,8 @@ class KunenaAdminViewUsers extends KunenaView {
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'Yes');
-		$options[]	= JHtml::_('select.option', '0', 'No');
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
 
 		return $options;
 	}
@@ -61,8 +61,8 @@ class KunenaAdminViewUsers extends KunenaView {
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '0', 'On');
-		$options[]	= JHtml::_('select.option', '1', 'Off');
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -76,8 +76,8 @@ class KunenaAdminViewUsers extends KunenaView {
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'On');
-		$options[]	= JHtml::_('select.option', '0', 'Off');
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
 
 		return $options;
 	}
@@ -91,8 +91,8 @@ class KunenaAdminViewUsers extends KunenaView {
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'Yes');
-		$options[]	= JHtml::_('select.option', '0', 'No');
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
 
 		return $options;
 	}

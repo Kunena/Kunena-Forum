@@ -84,20 +84,20 @@ class KunenaAdminModelRanks extends JModelList {
 		$query->from('#__kunena_ranks AS a');
 
 		// Filter by access level.
-		$title = $this->getState ( 'filter.title');
-		if (!empty($title)) {
-			$title = $db->Quote('%'.$db->escape($title, true).'%');
+		$filter = $this->getState ( 'filter.title');
+		if (!empty($filter)) {
+			$title = $db->Quote('%'.$db->escape($filter, true).'%');
 			$query->where('(a.rank_title LIKE '.$title.')');
 		}
 
-		$special = $this->getState('filter.special');
-		if (is_numeric($special)) {
-			$query->where('a.rank_special = ' . (int) $special);
+		$filter = $this->getState('filter.special');
+		if (is_numeric($filter)) {
+			$query->where('a.rank_special = ' . (int) $filter);
 		}
 
-		$min = $this->getState ( 'filter.min');
-		if (!empty($min)) {
-			$query->where('a.rank_min > ' . (int) $min);
+		$filter = $this->getState ( 'filter.min');
+		if (!empty($filter)) {
+			$query->where('a.rank_min > ' . (int) $filter);
 		}
 
 		// Add the list ordering clause.

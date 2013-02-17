@@ -104,7 +104,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TITLE', 'filename', $listDirection, $listOrdering ); ?></th>
 					<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_TYPE', 'filetype', $listDirection, $listOrdering ); ?></th>
 					<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_SIZE', 'size', $listDirection, $listOrdering ); ?>
-					<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_IMAGEDIMENSIONS', 'img_dims', $listDirection, $listOrdering ); ?></th>
+					<th><?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_IMAGEDIMENSIONS'); ?></th>
 					<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_USERNAME', 'username', $listDirection, $listOrdering ); ?></th>
 					<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FIELD_LABEL_MESSAGE', 'post', $listDirection, $listOrdering ); ?></th>
 					<th><?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $listDirection, $listOrdering ); ?></th>
@@ -125,8 +125,10 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<input class="input-block-level input-filter filter" type="text" name="filter_size" id="filter_size" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterSize; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 					</td>
 					<td class="nowrap">
+					<?php /*
 						<label for="filter_dims" class="element-invisible"><?php echo 'Search in';?></label>
 						<input class="input-block-level input-filter filter" type="text" name="filter_dims" id="filter_dims" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterDimensions; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					*/ ?>
 					</td>
 					<td class="nowrap">
 						<label for="filter_username" class="element-invisible"><?php echo 'Search in';?></label>

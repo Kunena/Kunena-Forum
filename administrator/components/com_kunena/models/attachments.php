@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -23,8 +23,8 @@ class KunenaAdminModelAttachments extends JModelList {
 		if (empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id',
-				'mesid',
-				'userid',
+				'post',
+				'username',
 				'size',
 				'folder',
 				'filetype',
@@ -108,8 +108,7 @@ class KunenaAdminModelAttachments extends JModelList {
 
 		//$query->join('LEFT', '#__kunena_messages AS u ON u.userid = a.userid');
 
-		// Filter by access level.
-				$filter = $this->getState('filter.title');
+		$filter = $this->getState('filter.title');
 		if (!empty($filter)) {
 			$title = $db->Quote('%'.$db->escape($filter, true).'%');
 			$query->where('(a.filename LIKE '.$title.')');
@@ -121,6 +120,7 @@ class KunenaAdminModelAttachments extends JModelList {
 			$query->where('(a.filetype LIKE '.$type.')');
 		}
 
+		// TODO: support < > and ranges
 		$filter = $this->getState('filter.size');
 		if (!empty($filter)) {
 			$size = $db->Quote('%'.$db->escape($filter, true).'%');
@@ -138,8 +138,6 @@ class KunenaAdminModelAttachments extends JModelList {
 			$post = $db->Quote('%'.$db->escape($filter, true).'%');
 			$query->where('(m.subject LIKE '.$post.')');
 		}
-
-
 
 		// Add the list ordering clause.
 		$direction	= strtoupper($this->state->get('list.direction'));
@@ -166,33 +164,4 @@ class KunenaAdminModelAttachments extends JModelList {
 		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
 	}
-
-	/*public function getItems() {
-		$db = JFactory::getDBO ();
-
-		$where = '';
-		if ($this->getState ( 'list.search' )) {
-			$where = ' WHERE LOWER( a.filename ) LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search' ), true ).'%', false ).' OR LOWER( a.filetype ) LIKE '.$db->Quote( '%'.$db->escape( $this->getState ( 'list.search' ), true ).'%', false );
-		}
-
-		$orderby = ' ORDER BY '. $this->getState ( 'list.ordering' ) .' '. $this->getState ( 'list.direction' );
-
-		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS b ON a.mesid=b.id".$where.$orderby);
-		$total = $db->loadResult ();
-		KunenaError::checkDatabaseError();
-
-		$this->setState ( 'list.total', $total );
-
-		$query = "SELECT a.*, b.catid, b.thread FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS b ON a.mesid=b.id".$where.$orderby;
-		$db->setQuery ( $query, $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		$uploaded = $db->loadObjectlist();
-		if (KunenaError::checkDatabaseError()) return;
-
-		return $uploaded;
-	}*/
-
-	/*public function getAdminNavigation() {
-		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		return $navigation;
-	}*/
 }

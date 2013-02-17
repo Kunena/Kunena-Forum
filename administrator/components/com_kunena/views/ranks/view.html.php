@@ -42,8 +42,8 @@ class KunenaAdminViewRanks extends KunenaView {
 	{
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'Yes');
-		$options[]	= JHtml::_('select.option', '0', 'No');
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
 
 		return $options;
 	}

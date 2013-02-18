@@ -98,16 +98,16 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					</dl>
 				</div>
 
-				<div class="well well-small">
-					<div class="module-title nav-header"><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_GETTINGSTARTED') ?></div>
+				<!--<div class="well well-small">
+					<div class="module-title nav-header"><?php //echo JText::_('COM_KUNENA_CPANEL_LABEL_GETTINGSTARTED') ?></div>
 					<hr class="hr-condensed">
 					<ul class="pull-left">
-						<li><a href="http://docs.kunena.org/index.php/K_2.0_Installation_Guide" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a></li>
-						<li><a href="http://www.kunena.org/forum/K-2-0-Support/125990-kunena-2-0-3-known-issues" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_KNOWNINGERRORS') ?> </a></li>
-						<li><a href="http://www.kunena.org/forum" target="_blank"><?php echo JText::_('COM_KUNENA_CPANEL_DESC_FREEORPAIDSUPPORT') ?> </a></li>
+						<li><a href="http://docs.kunena.org/index.php/K_2.0_Installation_Guide" target="_blank"><?php //echo JText::_('COM_KUNENA_CPANEL_DESC_HOWTOSETUP') ?> </a></li>
+						<li><a href="http://www.kunena.org/forum/K-2-0-Support/125990-kunena-2-0-3-known-issues" target="_blank"><?php //echo JText::_('COM_KUNENA_CPANEL_DESC_KNOWNINGERRORS') ?> </a></li>
+						<li><a href="http://www.kunena.org/forum" target="_blank"><?php //echo JText::_('COM_KUNENA_CPANEL_DESC_FREEORPAIDSUPPORT') ?> </a></li>
 					</ul>
 					<div class="clearfix"></div>
-				</div>
+				</div>-->
 
 			</div>
 		</div>

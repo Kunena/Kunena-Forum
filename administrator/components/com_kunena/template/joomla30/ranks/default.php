@@ -94,16 +94,16 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<table class="table table-striped adminlist" id="rankList">
 					<thead>
 						<tr>
-							<th width="1%" align="center">#</th>
 							<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
 							<th width="10%"><?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?></th>
 							<th width="58%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $listDirection, $listOrdering ); ?></th>
 							<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $listDirection, $listOrdering ); ?></th>
 							<th width="10%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $listDirection, $listOrdering ); ?></th>
+							<th width="1%" class="nowrap center hidden-phone">
+								<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $listDirection, $listOrdering); ?>
+							</th>
 						</tr>
 						<tr>
-							<td class="hidden-phone">
-							</td>
 							<td class="hidden-phone">
 							</td>
 							<td class="hidden-phone">
@@ -123,6 +123,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 								<label for="filter_min" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
 								<input class="input-block-level input-filter filter" type="text" name="filter_min" id="filter_min" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterMinPostCount; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 							</td>
+							<td class="hidden-phone">
+							</td>
 						</tr>
 					</thead>
 					<tfoot>
@@ -134,9 +136,6 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					</tfoot>
 					<?php $i = 0; foreach ( $this->items as $id => $row ) : ?>
 					<tr>
-						<td>
-							<?php echo ($id + $this->pagination->limitstart + 1); ?>
-						</td>
 						<td>
 							<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->rank_id); ?>" onclick="Joomla.isChecked(this.checked);" />
 						</td>
@@ -155,6 +154,9 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						</td>
 						<td class="nowrap center">
 							<?php echo $this->escape($row->rank_min); ?>
+						</td>
+						<td class="nowrap center">
+							<?php echo $this->escape($row->rank_id); ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>

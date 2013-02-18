@@ -19,6 +19,15 @@ class KunenaAdminViewRanks extends KunenaView {
 		$this->items = $this->get('Items');
 		$this->state = $this->get('state');
 		$this->pagination = $this->get ( 'Pagination' );
+		$this->sortFields = $this->getSortFields();
+		$this->sortDirectionFields = $this->getSortDirectionFields();
+
+		$this->filterTitle = $this->escape($this->state->get('filter.title'));
+		$this->filterSpecial = $this->escape($this->state->get('filter.special'));
+		$this->filterMinPostCount = $this->escape($this->state->get('filter.min'));
+		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
+		$this->listDirection = $this->escape($this->state->get('list.direction'));
+
 		return parent::display($tpl);
 	}
 
@@ -38,13 +47,30 @@ class KunenaAdminViewRanks extends KunenaView {
 	 *
 	 * @return	string	The HTML code for the select tag
 	 */
-	public static function specialOptions()
-	{
+	public static function specialOptions() {
 		// Build the active state filter options.
 		$options	= array();
 		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
 		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
 
 		return $options;
+	}
+
+	protected function getSortFields() {
+		$sortFields = array();
+		$sortFields[] = JHtml::_('select.option', 'a.title', JText::_('JGLOBAL_TITLE'));
+		$sortFields[] = JHtml::_('select.option', 'a.special', JText::_('COM_KUNENA_RANKS_SPECIAL'));
+		$sortFields[] = JHtml::_('select.option', 'a.min', JText::_('COM_KUNENA_RANKSMIN'));
+		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
+
+		return $sortFields;
+	}
+
+	protected function getSortDirectionFields() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
+		return $sortDirection;
 	}
 }

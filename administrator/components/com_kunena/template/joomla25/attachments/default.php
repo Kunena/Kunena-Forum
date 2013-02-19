@@ -23,7 +23,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering') ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
-			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
+			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->pagination->limitstart ) ?>" />
 			<input type="hidden" name="boxchecked" value="0" />
 			<?php echo JHtml::_( 'form.token' ); ?>
 
@@ -55,9 +55,9 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					<tr>
 						<td colspan="14">
 							<div class="pagination">
-								<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->navigation->getLimitBox (); ?></div>
-								<?php echo $this->navigation->getPagesLinks (); ?>
-								<div class="limit"><?php echo $this->navigation->getResultsCounter (); ?></div>
+								<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $this->pagination->getLimitBox (); ?></div>
+								<?php echo $this->pagination->getPagesLinks (); ?>
+								<div class="limit"><?php echo $this->pagination->getResultsCounter (); ?></div>
 							</div>
 						</td>
 					</tr>
@@ -73,7 +73,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 				if ( $instance->isImage($attachment->filetype) && is_file($path)) list($width, $height) =	getimagesize( $path );
 		?>
 			<tr <?php echo 'class = "row' . $k . '"';?>>
-				<td class="right"><?php echo $i + $this->navigation->limitstart + 1; ?></td>
+				<td class="right"><?php echo $i + $this->pagination->limitstart + 1; ?></td>
 				<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
 				<td class="left" width="70%"><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->filename, 10, 15) ?></td>
 				<td class="center"><?php echo intval($attachment->id); ?></td>

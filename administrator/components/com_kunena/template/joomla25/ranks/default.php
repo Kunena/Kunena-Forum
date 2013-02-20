@@ -42,15 +42,35 @@ $paneOptions = array(
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->pagination->limitstart ) ?>" />
 			<?php echo JHtml::_( 'form.token' ); ?>
 
+			<fieldset id="filter-bar">
+				<div class="filter-search fltlft">
+					<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('COM_KUNENA_FILTER'); ?>:</label>
+					<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
+
+					<button type="submit" class="btn"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+					<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+				</div>
+				<div class="filter-select fltrt">
+					<select name="filter_order_Dir" class="inputbox" onchange="this.form.submit()">
+						<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
+						<?php echo JHtml::_('select.options', $this->sortDirectionOrdering, 'value', 'text', $this->escape ($this->state->get('list.direction')));?>
+					</select>
+				</div>
+				</fieldset>
+			<div class="clr"> </div>
+
 			<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th width="5" align="center">#</th>
 					<th width="5" align="left"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
-					<th width="20%" align="left"><?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?></th>
-					<th width="50%" align="left" ><?php echo JText::_('COM_KUNENA_RANKS'); ?></th>
-					<th width="10%" align="center" ><?php echo JText::_('COM_KUNENA_RANKS_SPECIAL'); ?></th>
-					<th width="10%" align="center" class="nowrap" ><?php echo JText::_('COM_KUNENA_RANKSMIN'); ?></th>
+					<th width="10%"><?php echo JText::_('COM_KUNENA_RANKSIMAGE'); ?></th>
+					<th width="58%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_LABEL_TITLE', 'title', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="10%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKS_SPECIAL', 'special', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="10%"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_RANKSMIN', 'min', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="1%">
+						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+					</th>
 				</tr>
 			</thead>
 			<tfoot>
@@ -110,6 +130,9 @@ $paneOptions = array(
 					<td align="center"><?php
 						echo $this->escape($row->rank_min);
 						?></td>
+					<td class="nowrap center">
+						<?php echo $this->escape($row->rank_id); ?>
+					</td>
 				</tr>
 				<?php
 					}

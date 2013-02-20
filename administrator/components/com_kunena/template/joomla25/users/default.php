@@ -27,34 +27,51 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo JHtml::_( 'form.token' ); ?>
 
-		<table class="kadmin-sort">
-			<tr>
-				<td class="left" width="90%">
-					<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
-					<input type="text" name="filter_search" id="search" value="<?php echo $this->escape ($this->state->get('filter.search'));?>" class="text_area" onchange="document.adminForm.submit();" />
-					<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
-					<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
-				</td>
-			</tr>
-		</table>
+		<fieldset id="filter-bar">
+			<div class="filter-search fltlft">
+				<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('COM_KUNENA_FILTER'); ?>:</label>
+				<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
+
+				<button type="submit" class="btn"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+				<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+			</div>
+			<div class="filter-select fltrt">
+				<select name="filter_order_Dir" id="filter_order_Dir" class="inputbox" onchange="this.form.submit()">
+						<option value=""><?php echo JText::_('All');?></option>
+						<?php echo JHtml::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filterSignature); ?>
+				</select>
+
+				<select name="filter_block" id="filter_block" class="inputbox" onchange="this.form.submit()">
+						<option value=""><?php echo JText::_('All');?></option>
+						<?php echo JHtml::_('select.options', $this->blockOptions(), 'value', 'text', $this->filterBlock, true); ?>
+				</select>
+
+				<select name="filter_banned" id="filter_banned" class="inputbox" onchange="this.form.submit()">
+						<option value=""><?php echo JText::_('All');?></option>
+						<?php echo JHtml::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filterBanned); ?>
+				</select>
+
+				<select name="filter_moderator" id="filter_moderator" class="inputbox" onchange="this.form.submit()">
+					<option value=""><?php echo JText::_('All');?></option>
+					<?php echo JHtml::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filterModerator); ?>
+				</select>
+			</div>
+			</fieldset>
+		<div class="clr"> </div>
+
 		<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th align="center" width="5">#</th>
 					<th align="center" width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
 					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
-					<th class="title" align="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th align="left"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-					<th align="left"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_REALNAME', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_LOGGEDIN'); ?></th>
-					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_ENABLED'); ?></th>
-					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_BANNED'); ?></th>
-<?php /*
-					<th align="left"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></th>
-					<th align="left"><?php echo JText::_('COM_KUNENA_GEN_USERGROUP'); ?></th>
-*/ ?>
-					<th align="left"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-					<th align="left"><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?></th>
+					<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="5%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_GEN_SIGNATURE', 'signature', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="5%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_ENABLED', 'enabled', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="5%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_BANNED', 'banned', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="5%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="1%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 				</tr>
 			</thead>
 			<tfoot>
@@ -76,7 +93,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					foreach($this->items as $user) {
 						$kunena_user = KunenaFactory::getUser($user->id);
 						$k = 1 - $k;
-						$userLogged = $kunena_user->isOnline() ? '<img src="components/com_kunena/images/tick.png" width="16" height="16" border="0" alt="" />': '';
 						$userEnabled = $kunena_user->isBlocked() ? 'publish_x.png' : 'tick.png';
 						$altUserEnabled = $kunena_user->isBlocked() ? JText::_( 'Blocked' ) : JText::_( 'Enabled' );
 						$userBlockTask =  $kunena_user->isBlocked() ? 'unblock' : 'block';
@@ -90,13 +106,14 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					<?php echo JHtml::_('grid.id', $i, intval($user->id)) ?>
 				</td>
 				<td align="center" width="1%"><?php echo $kunena_user->getAvatarImage('kavatar', 36, 36); ?></td>
-				<td align="center" width="1%"><?php echo $this->escape($kunena_user->userid); ?></td>
 				<td>
 					<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->username); ?></a>
 				</td>
 				<td>
-					<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->name); ?></a></td>
-				<td align="center"><?php echo $userLogged; ?></td>
+					<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->email); ?></a></td>
+				<td>
+					<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->signature); ?></a>
+				</td>
 				<td align="center">
 					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
 						<img src="<?php echo JUri::base(true) ?>/components/com_kunena/images/<?php echo $userEnabled;?>" width="16" height="16" border="0" alt="<?php echo $altUserEnabled; ?>" />
@@ -119,7 +136,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					}
 					?>
 				</td>
-				<td width="*"><?php echo $this->escape ( $kunena_user->signature ); ?></td>
+				<td align="center" width="1%"><?php echo $this->escape($kunena_user->userid); ?></td>
 			</tr>
 		<?php $i++; }
 		} else { ?>

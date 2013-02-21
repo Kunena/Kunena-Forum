@@ -71,6 +71,24 @@ $paneOptions = array(
 						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 					</th>
 				</tr>
+				<tr>
+					<td class="center">
+					</td>
+					<td class="center">
+					</td>
+					<td class="center">
+					</td>
+					<td class="nowrap center">
+						<label for="filter_code" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?>:</label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_code" id="filter_code" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterCode; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="nowrap center">
+						<label for="filter_url" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?>:</label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_url" id="filter_url" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterUrl; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="center">
+					</td>
+				</tr>
 			</thead>
 			<tfoot>
 				<tr>

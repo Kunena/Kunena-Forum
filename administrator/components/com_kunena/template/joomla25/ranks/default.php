@@ -72,6 +72,30 @@ $paneOptions = array(
 						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 					</th>
 				</tr>
+				<tr>
+					<td class="center">
+					</td>
+					<td class="center">
+					</td>
+					<td class="center">
+					</td>
+					<td class="nowrap">
+						<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="nowrap center">
+						<select name="filter_special" id="filter_special" class="select-filter filter">
+							<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+							<?php echo JHtml::_('select.options', $this->specialOptions(), 'value', 'text', $this->filterSpecial); ?>
+						</select>
+					</td>
+					<td class="nowrap center">
+						<label for="filter_min" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN') ?>:</label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_min" id="filter_min" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterMinPostCount; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td>
+					</td>
+				</tr>
 			</thead>
 			<tfoot>
 				<tr>

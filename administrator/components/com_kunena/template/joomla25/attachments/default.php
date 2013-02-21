@@ -50,12 +50,46 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 						<th align="center" width="5">#</th>
 						<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
 						<th class="title"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_FILENAME', 'a.filename', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-						<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_ID', 'a.id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 						<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_FILETYPE', 'a.filetype', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 						<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_FILESIZE', 'a.size', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
 						<th class="center"><?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_LABEL_IMAGEDIMENSIONS'); ?>	</th>
 						<th class="center"><?php echo JText::_('COM_KUNENA_ATTACHMENTS_USERNAME'); ?></th>
 						<th class="center"><?php echo JText::_('COM_KUNENA_MESSAGE'); ?></th>
+						<th class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ATTACHMENTS_ID', 'a.id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					</tr>
+					<tr>
+						<td class="center">
+						</td>
+						<td class="center">
+						</td>
+						<td class="nowrap">
+							<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+							<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						</td>
+						<td class="nowrap">
+							<label for="filter_type" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+							<input class="input-block-level input-filter filter" type="text" name="filter_type" id="filter_type" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterType; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						</td>
+						<td class="nowrap">
+							<label for="filter_size" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+							<input class="input-block-level input-filter filter" type="text" name="filter_size" id="filter_size" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterSize; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						</td>
+						<td class="nowrap">
+						<?php /*
+							<label for="filter_dims" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+							<input class="input-block-level input-filter filter" type="text" name="filter_dims" id="filter_dims" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterDimensions; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						*/ ?>
+						</td>
+						<td class="nowrap">
+							<label for="filter_username" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+							<input class="input-block-level input-filter filter" type="text" name="filter_username" id="filter_username" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterUsername; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						</td>
+						<td class="nowrap">
+							<label for="filter_post" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+							<input class="input-block-level input-filter filter" type="text" name="filter_post" id="filter_post" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterPost; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						</td>
+						<td class="nowrap center hidden-phone">
+						</td>
 					</tr>
 				</thead>
 				<tfoot>
@@ -83,12 +117,12 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 				<td class="right"><?php echo $i + $this->pagination->limitstart + 1; ?></td>
 				<td><?php echo JHtml::_('grid.id', $i, intval($attachment->id)) ?></td>
 				<td class="left" width="70%"><?php echo $instance->getThumbnailLink() . ' ' . KunenaForumMessageAttachmentHelper::shortenFileName($attachment->filename, 10, 15) ?></td>
-				<td class="center"><?php echo intval($attachment->id); ?></td>
 				<td class="center"><?php echo $this->escape($attachment->filetype); ?></td>
 				<td class="center"><?php echo number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB'; ?></td>
 				<td class="center"><?php echo isset($width) && isset($height) ? $width . ' x ' . $height  : '' ?></td>
 				<td class="center"><?php echo $this->escape($message->name); ?></td>
 				<td class="center"><?php echo $this->escape($message->subject); ?></td>
+				<td class="center"><?php echo intval($attachment->id); ?></td>
 			</tr>
 				<?php
 				$i++;

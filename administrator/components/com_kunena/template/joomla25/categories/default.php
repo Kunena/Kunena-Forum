@@ -36,29 +36,9 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 					<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 				</div>
 				<div class="filter-select fltrt">
-					<select name="filter_published" id="filter_published" class="inputbox" onchange="this.form.submit()">
-						<option value="">-<?php echo JText::_('COM_KUNENA_CATEGORIES_FIELD_LABEL_PUBLISHED');?>-</option>
-						<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
-					</select>
-
-					<select name="filter_access" id="filter_access" class="inputbox" onchange="this.form.submit()">
-						<option value="">-<?php echo JText::_('COM_KUNENA_CATEGORIES_FIELD_LABEL_ACCESS');?>-</option>
-						<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $$this->filterAccess); ?>
-					</select>
-
-					<select name="filter_locked" id="filter_locked" class="inputbox" onchange="this.form.submit()">
-							<option value="">-<?php echo JText::_('COM_KUNENA_CATEGORIES_FIELD_LABEL_LOCKED');?>-</option>
-							<?php echo JHtml::_('select.options', $this->lockOptions(), 'value', 'text', $this->filterLocked); ?>
-					</select>
-
-					<select name="filter_review" id="filter_review" class="inputbox" onchange="this.form.submit()">
-						<option value="">-<?php echo JText::_('COM_KUNENA_CATEGORIES_FIELD_LABEL_REVIEW');?>-</option>
-						<?php echo JHtml::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
-					</select>
-
-					<select name="filter_anonymous" id="filter_anonymous" class="inputbox" onchange="this.form.submit()">
-						<option value="">-<?php echo JText::_('COM_KUNENA_CATEGORIES_FIELD_LABEL_ANONYMOUS');?>-</option>
-						<?php echo JHtml::_('select.options', $this->anonymousOptions(), 'value', 'text', $this->filterAnonymous); ?>
+					<select name="filter_order_Dir" class="inputbox" onchange="this.form.submit()">
+						<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
+						<?php echo JHtml::_('select.options', $this->sortDirectionOrdering, 'value', 'text', $this->escape ($this->state->get('list.direction')));?>
 					</select>
 				</div>
 				</fieldset>
@@ -96,6 +76,50 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 						<th width="1%" class="center hidden-phone">
 							<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 						</th>
+					</tr>
+					<tr>
+						<td>
+						</td>
+						<td>
+						</td>
+						<td class="nowrap center">
+							<select name="filter_published" id="filter_published" class="select-filter filter">
+								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+								<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
+							</select>
+						</td>
+						<td>
+						</td>
+						<td class="nowrap">
+							<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+							<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						</td>
+						<td class="nowrap center">
+							<select name="filter_access" id="filter_access" class="select-filter filter">
+								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+								<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->filterAccess); ?>
+							</select>
+						</td>
+						<td class="nowrap center">
+							<select name="filter_locked" id="filter_locked" class="select-filter filter">
+								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+								<?php echo JHtml::_('select.options', $this->lockOptions(), 'value', 'text', $this->filterLocked); ?>
+							</select>
+						</td>
+						<td class="nowrap center">
+							<select name="filter_review" id="filter_review" class="select-filter filter">
+								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+								<?php echo JHtml::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
+							</select>
+						</td>
+						<td class="nowrap center">
+							<select name="filter_anonymous" id="filter_anonymous" class="select-filter filter">
+								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+								<?php echo JHtml::_('select.options', $this->anonymousOptions(), 'value', 'text', $this->filterAnonymous); ?>
+							</select>
+						</td>
+						<td class="nowrap center">
+						</td>
 					</tr>
 				</thead>
 				<tfoot>

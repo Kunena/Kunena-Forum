@@ -35,27 +35,6 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 				<button type="submit" class="btn"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
 				<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 			</div>
-			<div class="filter-select fltrt">
-				<select name="filter_order_Dir" id="filter_order_Dir" class="inputbox" onchange="this.form.submit()">
-						<option value=""><?php echo JText::_('All');?></option>
-						<?php echo JHtml::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filterSignature); ?>
-				</select>
-
-				<select name="filter_block" id="filter_block" class="inputbox" onchange="this.form.submit()">
-						<option value=""><?php echo JText::_('All');?></option>
-						<?php echo JHtml::_('select.options', $this->blockOptions(), 'value', 'text', $this->filterBlock, true); ?>
-				</select>
-
-				<select name="filter_banned" id="filter_banned" class="inputbox" onchange="this.form.submit()">
-						<option value=""><?php echo JText::_('All');?></option>
-						<?php echo JHtml::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filterBanned); ?>
-				</select>
-
-				<select name="filter_moderator" id="filter_moderator" class="inputbox" onchange="this.form.submit()">
-					<option value=""><?php echo JText::_('All');?></option>
-					<?php echo JHtml::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filterModerator); ?>
-				</select>
-			</div>
 			</fieldset>
 		<div class="clr"> </div>
 
@@ -72,6 +51,46 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					<th width="5%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_USRL_BANNED', 'banned', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th width="5%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
 					<th width="1%" class="nowrap center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td class="nowrap">
+						<label for="filter_username" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_username" id="filter_username" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterUsername; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="nowrap">
+						<label for="filter_email" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_email" id="filter_email" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterEmail; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="nowrap center">
+						<select name="filter_signature" id="filter_signature" class="select-filter filter">
+							<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+							<?php echo JHtml::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filterSignature); ?>
+						</select>
+					</td>
+					<td class="nowrap center">
+						<select name="filter_block" id="filter_block" class="select-filter filter">
+							<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+							<?php echo JHtml::_('select.options', $this->blockOptions(), 'value', 'text', $this->filterBlock, true); ?>
+						</select>
+					</td>
+					<td class="nowrap center">
+						<select name="filter_banned" id="filter_banned" class="select-filter filter">
+							<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+							<?php echo JHtml::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filterBanned); ?>
+						</select>
+					</td>
+					<td class="nowrap center">
+						<select name="filter_moderator" id="filter_moderator" class="select-filter filter">
+							<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+							<?php echo JHtml::_('select.options', $this->moderatorOptions(), 'value', 'text', $this->filterModerator); ?>
+						</select>
+					</td>
+					<td class="nowrap center">
+					</td>
 				</tr>
 			</thead>
 			<tfoot>

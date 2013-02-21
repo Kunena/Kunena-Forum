@@ -70,6 +70,38 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'tt.id', $this->state->get('list.direction'), $this->state->get('list.ordering')) :  JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'm.id', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 				</tr>
+				<tr>
+					<td>
+					</td>
+					<td>
+						<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+						<input class="input-block-level input-filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<?php if ($this->state->get( 'list.view_selected') != 'topics') : ?>
+					<td>
+						<label for="filter_topic" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+						<input class="input-block-level input-filter" type="text" name="filter_topic" id="filter_topic" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $this->filterTopic; ?>" title="<?php echo 'Filter'; ?>" />
+					</td>
+					<?php endif; ?>
+					<td>
+						<label for="filter_category" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+						<input class="input-block-level input-filter" type="text" name="filter_category" id="filter_category" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterCategory; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="nowrap">
+						<label for="filter_ip" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+						<input class="input-block-level input-filter" type="text" name="filter_ip" id="filter_ip" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterIp; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="nowrap center">
+						<label for="filter_author" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+						<input class="input-block-level input-filter" type="text" name="filter_author" id="filter_author" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterAuthor; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="nowrap center">
+						<label for="filter_date" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
+						<input class="input-block-level input-filter" type="text" name="filter_date" id="filter_date" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterDate; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="nowrap center">
+					</td>
+				</tr>
 			</thead>
 			<tfoot>
 				<tr>

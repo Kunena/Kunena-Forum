@@ -18,6 +18,7 @@ class KunenaAdminViewTrash extends KunenaView {
 		$this->trash_items = $this->get('Trashitems');
 		$this->navigation = $this->get ( 'Navigation' );
 		$this->view_options_list = $this->get ( 'ViewOptions' );
+
 		$this->sortFields = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
@@ -30,6 +31,8 @@ class KunenaAdminViewTrash extends KunenaView {
 		$this->filterDate	= $this->escape($this->state->get('list.filter_date'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
+
+		$this->sortDirectionOrdering = $this->getSortDirectionOrdering();
 
 		$this->setToolBarDefault();
 		$this->display();
@@ -89,6 +92,15 @@ class KunenaAdminViewTrash extends KunenaView {
 		$sortDirection = array();
 		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
 		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
+		return $sortDirection;
+	}
+
+	// TODO: remove it when J2.5 support is dropped
+	protected function getSortDirectionOrdering() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
 
 		return $sortDirection;
 	}

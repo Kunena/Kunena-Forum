@@ -53,6 +53,10 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<div id="filter-bar" class="btn-toolbar">
+					<div class="filter-search btn-group pull-left">
+						<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
+						<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>" value="<?php echo $this->filterSearch; ?>" title="<?php echo JText::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>" />
+					</div>
 					<div class="btn-group pull-left">
 						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('JSEARCH_FILTER_LABEL') ?></button>
 						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> <?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
@@ -64,7 +68,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 						<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-							<?php echo JHtml::_('select.options', $this->sortDirection, 'value', 'text', $this->listDirection);?>
+							<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection);?>
 						</select>
 					</div>
 					<div class="btn-group pull-right">
@@ -94,11 +98,11 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							</td>
 							<td class="nowrap center">
 								<label for="filter_code" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_code" id="filter_code" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterCode; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+								<input class="input-block-level input-filter filter" type="text" name="filter_code" id="filter_code" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" value="<?php echo $this->filterCode; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" />
 							</td>
 							<td class="nowrap center">
 								<label for="filter_url" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_url" id="filter_url" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterUrl; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+								<input class="input-block-level input-filter filter" type="text" name="filter_url" id="filter_url" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" value="<?php echo $this->filterUrl; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" />
 							</td>
 							<td class="hidden-phone center">
 							</td>

@@ -18,7 +18,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/template/joomla25/common/menu.php'; ?></div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-trash">
-		<?php echo $this->state->get( 'list.view_selected') == 'topics' ? JText::_('COM_KUNENA_TRASH_VIEW').' '.JText::_( 'COM_KUNENA_TRASH_TOPICS' ) : JText::_('COM_KUNENA_TRASH_VIEW').' '.JText::_( 'COM_KUNENA_TRASH_MESSAGES') ?>
+		<?php echo JText::_('COM_KUNENA_TRASH_VIEW').' '.JText::_( 'COM_KUNENA_TRASH_MESSAGES') ?>
 	</div>
 		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=trash') ?>" method="post" id="adminForm" name="adminForm">
 
@@ -44,30 +44,25 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 				<tr>
 					<th width="5" align="left"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->trash_items ); ?>);" /></th>
 					<th align="left" ><?php
-					echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'tt.subject', $this->state->get('list.direction'), $this->state->get('list.ordering')) : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'm.subject', $this->state->get('list.direction'), $this->state->get('list.ordering'));
+					echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'm.subject', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
-					<?php if ($this->state->get( 'list.view_selected') != 'topics') : ?>
 					<th align="left">
 						<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_MENU_TOPIC', 'tt.id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 					</th>
-					<?php endif; ?>
 					<th align="left" >
 					<?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'm.category', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 					</th>
 					<th align="left" ><?php
-					echo $this->state->get( 'list.view_selected') == 'topics' ? JText::_('COM_KUNENA_TRASH_IP') : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_IP', 'm.ip', $this->state->get('list.direction'), $this->state->get('list.ordering'));
+					echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_IP', 'm.ip', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th align="left" ><?php
-					echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR_USERID', 'tt.first_post_userid', $this->state->get('list.direction'), $this->state->get('list.ordering')) : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR_USERID', 'm.userid', $this->state->get('list.direction'), $this->state->get('list.ordering'));
+					echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'm.name', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th align="left" ><?php
-					echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'tt.first_post_guest_name', $this->state->get('list.direction'), $this->state->get('list.ordering')) : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'm.name', $this->state->get('list.direction'), $this->state->get('list.ordering'));
-					?></th>
-					<th align="left" ><?php
-					echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'tt.first_post_time', $this->state->get('list.direction'), $this->state->get('list.ordering')) : JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'm.time', $this->state->get('list.direction'), $this->state->get('list.ordering'));
+					echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'm.time', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 					<th width="5" align="left"><?php
-					echo $this->state->get( 'list.view_selected') == 'topics' ? JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'tt.id', $this->state->get('list.direction'), $this->state->get('list.ordering')) :  JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'm.id', $this->state->get('list.direction'), $this->state->get('list.ordering'));
+					echo JHtml::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'm.id', $this->state->get('list.direction'), $this->state->get('list.ordering'));
 					?></th>
 				</tr>
 				<tr>
@@ -77,12 +72,10 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 						<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
 						<input class="input-block-level input-filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 					</td>
-					<?php if ($this->state->get( 'list.view_selected') != 'topics') : ?>
 					<td>
 						<label for="filter_topic" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
 						<input class="input-block-level input-filter" type="text" name="filter_topic" id="filter_topic" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $this->filterTopic; ?>" title="<?php echo 'Filter'; ?>" />
 					</td>
-					<?php endif; ?>
 					<td>
 						<label for="filter_category" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCH_IN');?>:</label>
 						<input class="input-block-level input-filter" type="text" name="filter_category" id="filter_category" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterCategory; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
@@ -125,42 +118,21 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 						?>">
 					<td align="center"><?php echo JHtml::_('grid.id', $i++, intval($row->id)) ?></td>
 					<td ><?php
-						echo isset($row->subject) ? $this->escape($row->subject) : $this->escape($row->title);
+						echo $this->escape($row->subject);
 						?></td>
 					<td><?php echo $this->escape($row->getTopic()->subject); ?></td>
-					<td ><?php if ($this->state->get( 'list.view_selected') == 'topics') {
-						$cat = KunenaForumCategoryHelper::get($row->category_id);
+					<td ><?php
+						$cat = KunenaForumCategoryHelper::get($row->catid);
 						echo $this->escape($cat->name);
-					} else {
-						 $cat = KunenaForumCategoryHelper::get($row->catid);
-						echo $this->escape($cat->name);
-					}
 						?></td>
 					<td ><?php
-						if ($this->state->get( 'list.view_selected') == 'topics') {
-							$message = KunenaForumMessageHelper::get($row->id);
-							echo $this->escape($message->ip);
-						} else {
 							echo $this->escape($row->ip);
-						}
-						?></td>
-					<td ><?php
-					if ($this->state->get( 'list.view_selected') == 'topics') {
-						echo intval($row->first_post_userid);
-					} else {
-						echo intval($row->userid);
-					}
-
 						?></td>
 					<td ><?php
 						echo $this->escape($row->getAuthor()->getName());
 						?></td>
 					<td ><?php
-					if ($this->state->get( 'list.view_selected') == 'topics') {
-						echo strftime('%Y-%m-%d %H:%M:%S',$row->last_post_time);
-					} else {
 						echo strftime('%Y-%m-%d %H:%M:%S',$row->time);
-					}
 						?></td>
 					<td ><?php
 						echo intval($row->id) ?></td>
@@ -169,7 +141,8 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					}
 					?>
 			</table>
-			<input type="hidden" name="type" value="<?php echo $this->escape ($this->state->get('list.view_selected')) ?>" />
+			<input type="hidden" name="type" value="<?php echo $this->escape ($this->state->get('layout')) ?>" />
+			<input type="hidden" name="layout" value="<?php echo $this->escape ($this->state->get('layout')) ?>" />
 			<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
 			<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />

@@ -15,6 +15,7 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewTrash extends KunenaView {
 	function displayDefault() {
+		$this->setLayout($this->state->get('layout'));
 		$this->trash_items = $this->get('Trashitems');
 		$this->navigation = $this->get ( 'Navigation' );
 		$this->view_options_list = $this->get ( 'ViewOptions' );
@@ -23,12 +24,12 @@ class KunenaAdminViewTrash extends KunenaView {
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
 		$this->filterSearch = $this->escape($this->state->get('list.search'));
-		$this->filterTitle = $this->escape($this->state->get('list.filter_title'));
-		$this->filterTopic	= $this->escape($this->state->get('list.filter_topic'));
-		$this->filterCategory	= $this->escape($this->state->get('list.filter_category'));
-		$this->filterIp = $this->escape($this->state->get('list.filter_ip'));
-		$this->filterAuthor = $this->escape($this->state->get('list.filter_author'));
-		$this->filterDate	= $this->escape($this->state->get('list.filter_date'));
+		$this->filterTitle = $this->escape($this->state->get('filter.title'));
+		$this->filterTopic	= $this->escape($this->state->get('filter.topic'));
+		$this->filterCategory	= $this->escape($this->state->get('filter.category'));
+		$this->filterIp = $this->escape($this->state->get('filter.ip'));
+		$this->filterAuthor = $this->escape($this->state->get('filter.author'));
+		$this->filterDate	= $this->escape($this->state->get('filter.date'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
 		$this->listDirection = $this->escape($this->state->get('list.direction'));
 
@@ -70,20 +71,20 @@ class KunenaAdminViewTrash extends KunenaView {
 
 	protected function getSortFields() {
 		$sortFields = array();
-		if ($this->state->get( 'list.view_selected') == 'topics') {
-			$sortFields[] = JHtml::_('select.option', 'tt.subject', JText::_('COM_KUNENA_TRASH_TITLE'));
-			$sortFields[] = JHtml::_('select.option', 'm.ip', JText::_('COM_KUNENA_TRASH_IP'));
-			$sortFields[] = JHtml::_('select.option', 'tt.first_post_userid', JText::_('COM_KUNENA_TRASH_AUTHOR_USERID'));
-			$sortFields[] = JHtml::_('select.option', 'tt.first_post_guest_name', JText::_('COM_KUNENA_TRASH_AUTHOR'));
-			$sortFields[] = JHtml::_('select.option', 'tt.first_post_time', JText::_('COM_KUNENA_TRASH_DATE'));
+		if ($this->state->get('layout') == 'topics') {
+			$sortFields[] = JHtml::_('select.option', 'title', JText::_('COM_KUNENA_TRASH_TITLE'));
+			$sortFields[] = JHtml::_('select.option', 'category', JText::_('COM_KUNENA_TRASH_CATEGORY'));
+			$sortFields[] = JHtml::_('select.option', 'author', JText::_('COM_KUNENA_TRASH_AUTHOR'));
+			$sortFields[] = JHtml::_('select.option', 'time', JText::_('COM_KUNENA_TRASH_DATE'));
 		} else {
-			$sortFields[] = JHtml::_('select.option', 'm.subject', JText::_('COM_KUNENA_TRASH_TITLE'));
-			$sortFields[] = JHtml::_('select.option', 'm.ip', JText::_('COM_KUNENA_TRASH_IP'));
-			$sortFields[] = JHtml::_('select.option', 'm.userid', JText::_('COM_KUNENA_TRASH_AUTHOR_USERID'));
-			$sortFields[] = JHtml::_('select.option', 'm.name', JText::_('COM_KUNENA_TRASH_AUTHOR'));
-			$sortFields[] = JHtml::_('select.option', 'm.time', JText::_('COM_KUNENA_TRASH_DATE'));
+			$sortFields[] = JHtml::_('select.option', 'title', JText::_('COM_KUNENA_TRASH_TITLE'));
+			$sortFields[] = JHtml::_('select.option', 'topic', JText::_('COM_KUNENA_MENU_TOPIC'));
+			$sortFields[] = JHtml::_('select.option', 'category', JText::_('COM_KUNENA_TRASH_CATEGORY'));
+			$sortFields[] = JHtml::_('select.option', 'ip', JText::_('COM_KUNENA_TRASH_IP'));
+			$sortFields[] = JHtml::_('select.option', 'author', JText::_('COM_KUNENA_TRASH_AUTHOR'));
+			$sortFields[] = JHtml::_('select.option', 'time', JText::_('COM_KUNENA_TRASH_DATE'));
 		}
-		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
 
 		return $sortFields;
 	}

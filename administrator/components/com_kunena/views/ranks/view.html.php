@@ -19,6 +19,7 @@ class KunenaAdminViewRanks extends KunenaView {
 		$this->items = $this->get('Items');
 		$this->state = $this->get('state');
 		$this->pagination = $this->get ( 'Pagination' );
+		$this->sortDirectionOrdering = $this->getSortDirectionOrdering();
 		return parent::display($tpl);
 	}
 
@@ -46,5 +47,14 @@ class KunenaAdminViewRanks extends KunenaView {
 		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
 
 		return $options;
+	}
+
+	// TODO: remove it when J2.5 support is dropped
+	protected function getSortDirectionOrdering() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+
+		return $sortDirection;
 	}
 }

@@ -23,6 +23,7 @@ class KunenaAdminViewRanks extends KunenaView {
 		$this->sortFields = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
+		$this->filterSearch = $this->escape($this->state->get('filter.search'));
 		$this->filterTitle = $this->escape($this->state->get('filter.title'));
 		$this->filterSpecial = $this->escape($this->state->get('filter.special'));
 		$this->filterMinPostCount = $this->escape($this->state->get('filter.min'));

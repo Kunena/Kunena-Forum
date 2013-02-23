@@ -23,6 +23,7 @@ class KunenaAdminViewSmilies extends KunenaView {
 		$this->sortFields = $this->getSortFields();
 		$this->sortDirectionFields = $this->getSortDirectionFields();
 
+		$this->filterSearch = $this->escape($this->state->get('filter.search'));
 		$this->filterCode	= $this->escape($this->state->get('filter.code'));
 		$this->filterUrl = $this->escape($this->state->get('filter.url'));
 		$this->listOrdering = $this->escape($this->state->get('list.ordering'));

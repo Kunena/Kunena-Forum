@@ -15,9 +15,9 @@ JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
 $sortFields = array();
-$sortFields[] = JHtml::_('select.option', 'id', JText::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
-$sortFields[] = JHtml::_('select.option', 'code', JText::_('COM_KUNENA_EMOTICONS_CODE'));
-$sortFields[] = JHtml::_('select.option', 'location', JText::_('COM_KUNENA_EMOTICONS_URL'));
+$sortFields[] = JHtml::_('select.option', 'a.code', JText::_('COM_KUNENA_EMOTICONS_CODE'));
+$sortFields[] = JHtml::_('select.option', 'a.location', JText::_('COM_KUNENA_EMOTICONS_URL'));
+$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
 
 $sortDirection = array();
 $sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
@@ -94,15 +94,15 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<table class="table table-striped adminlist" id="smileyList">
 					<thead>
 						<tr>
-							<th width="1%" class="center">#</th>
 							<th width="1%" class="center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
 							<th width="5%" class="center"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
 							<th width="8%" class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $listDirection, $listOrdering ); ?></th>
 							<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $listDirection, $listOrdering ); ?></th>
+							<th width="1%" class="nowrap center hidden-phone">
+								<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $listDirection, $listOrdering); ?>
+							</th>
 						</tr>
 						<tr>
-							<td class="hidden-phone center">
-							</td>
 							<td class="hidden-phone center">
 							</td>
 							<td class="hidden-phone center">
@@ -114,6 +114,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							<td class="nowrap center">
 								<label for="filter_url" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
 								<input class="input-block-level input-filter filter" type="text" name="filter_url" id="filter_url" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterUrl; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+							</td>
+							<td class="hidden-phone center">
 							</td>
 						</tr>
 					</thead>
@@ -127,9 +129,6 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<?php $i = 0; foreach ( $this->items as $id => $row ) : ?>
 					<tr>
 						<td class="hidden-phone center">
-							<?php echo ($id + $this->pagination->limitstart + 1); ?>
-						</td>
-						<td class="hidden-phone center">
 							<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->id); ?>" onclick="Joomla.isChecked(this.checked);" />
 						</td>
 						<td class="hidden-phone center">
@@ -142,6 +141,9 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						</td>
 						<td>
 							<?php echo $this->escape($row->location); ?>
+						</td>
+						<td>
+							<?php echo $this->escape($row->id); ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>

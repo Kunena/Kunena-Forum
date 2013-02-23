@@ -19,6 +19,7 @@ class KunenaAdminViewAttachments extends KunenaView {
 		$this->items = $this->get('Items');
 		$this->state = $this->get('state');
 		$this->pagination = $this->get ( 'Pagination' );
+		$this->sortDirectionOrdering = $this->getSortDirectionOrdering();
 		return parent::display($tpl);
 
 	}
@@ -33,5 +34,14 @@ class KunenaAdminViewAttachments extends KunenaView {
 			JToolBarHelper::custom('delete','delete.png','delete_f2.png', 'COM_KUNENA_GEN_DELETE');
 		}
 		JToolBarHelper::spacer();
+	}
+
+	// TODO: remove it when J2.5 support is dropped
+	protected function getSortDirectionOrdering() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+
+		return $sortDirection;
 	}
 }

@@ -58,7 +58,7 @@ class KunenaAdminModelRanks extends JModelList {
 		$this->setState ( 'filter.min', $value !== '' ? (int) $value : null );
 
 		// List state information.
-		parent::populateState('rank_id', 'asc');
+		parent::populateState('id', 'asc');
 	}
 
 	protected function getStoreId($id = '') {

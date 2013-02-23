@@ -15,6 +15,7 @@
 		<filename>access.php</filename>
 		<filename>activity.php</filename>
 		<filename>avatar.php</filename>
+		<filename>integration.php</filename>
 		<filename>login.php</filename>
 		<filename>private.php</filename>
 		<filename>profile.php</filename>

@@ -230,9 +230,8 @@ abstract class KunenaTable extends JTable {
 		}
 
 		// Delete the row by primary key.
-		$query	= new KunenaDatabaseQuery();
+		$query = $this->_db->getQuery(true);
 		$query->delete($this->_tbl);
-		$query->from($this->_tbl);
 		foreach ($keys as $key=>$value) {
 			$query->where("{$this->_db->quoteName($key)} = {$this->_db->quote($value)}");
 		}

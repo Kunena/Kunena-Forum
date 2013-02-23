@@ -15,38 +15,7 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
-$sortFields = array();
-if ($this->state->get( 'list.view_selected') == 'topics') {
-	$sortFields[] = JHtml::_('select.option', 'tt.subject', JText::_('COM_KUNENA_TRASH_TITLE'));
-	$sortFields[] = JHtml::_('select.option', 'm.ip', JText::_('COM_KUNENA_TRASH_IP'));
-	$sortFields[] = JHtml::_('select.option', 'tt.first_post_userid', JText::_('COM_KUNENA_TRASH_AUTHOR_USERID'));
-	$sortFields[] = JHtml::_('select.option', 'tt.first_post_guest_name', JText::_('COM_KUNENA_TRASH_AUTHOR'));
-	$sortFields[] = JHtml::_('select.option', 'tt.first_post_time', JText::_('COM_KUNENA_TRASH_DATE'));
-} else {
-	$sortFields[] = JHtml::_('select.option', 'm.subject', JText::_('COM_KUNENA_TRASH_TITLE'));
-	$sortFields[] = JHtml::_('select.option', 'm.ip', JText::_('COM_KUNENA_TRASH_IP'));
-	$sortFields[] = JHtml::_('select.option', 'm.userid', JText::_('COM_KUNENA_TRASH_AUTHOR_USERID'));
-	$sortFields[] = JHtml::_('select.option', 'm.name', JText::_('COM_KUNENA_TRASH_AUTHOR'));
-	$sortFields[] = JHtml::_('select.option', 'm.time', JText::_('COM_KUNENA_TRASH_DATE'));
-}
-$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
-
-$sortDirection = array();
-$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
-
-$filterSearch = $this->escape($this->state->get('list.search'));
-$filterTitle = $this->escape($this->state->get('list.filter_title'));
-$filterTopic	= $this->escape($this->state->get('list.filter_topic'));
-$filterCategory	= $this->escape($this->state->get('list.filter_category'));
-$filterIp = $this->escape($this->state->get('list.filter_ip'));
-$filterAuthor = $this->escape($this->state->get('list.filter_author'));
-$filterDate	= $this->escape($this->state->get('list.filter_date'));
-$listOrdering = $this->escape($this->state->get('list.ordering'));
-$listDirection = $this->escape($this->state->get('list.direction'));
-
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
-
 ?>
 
 <script type="text/javascript">
@@ -54,7 +23,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 		table = document.getElementById("sortTable");
 		direction = document.getElementById("directionTable");
 		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrdering; ?>') {
+		if (order != '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;
@@ -84,7 +53,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			<div id="filter-bar" class="btn-toolbar">
 				<div class="filter-search btn-group pull-left">
 					<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-					<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterSearch; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterSearch; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 				</div>
 				<div class="btn-group pull-left">
 					<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
@@ -98,14 +67,14 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 					<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 						<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-						<?php echo JHtml::_('select.options', $sortDirection, 'value', 'text', $listDirection);?>
+						<?php echo JHtml::_('select.options', $this->sortDirection, 'value', 'text', $this->listDirection);?>
 						</select>
 				</div>
 				<div class="btn-group pull-right">
 					<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
 					<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 						<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
-						<?php echo JHtml::_('select.options', $sortFields, 'value', 'text', $listOrdering);?>
+						<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 					</select>
 				</div>
 				<div class="clearfix"></div>
@@ -149,29 +118,29 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						</td>
 						<td class="hidden-phone">
 							<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
-							<input class="input-block-level input-filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+							<input class="input-block-level input-filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 						</td>
 						<?php if ($this->state->get( 'list.view_selected') != 'topics') : ?>
 						<td class="hidden-phone">
 							<label for="filter_topic" class="element-invisible"><?php echo 'Search in';?></label>
-							<input class="input-block-level input-filter" type="text" name="filter_topic" id="filter_topic" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterTopic; ?>" title="<?php echo 'Filter'; ?>" />
+							<input class="input-block-level input-filter" type="text" name="filter_topic" id="filter_topic" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $this->filterTopic; ?>" title="<?php echo 'Filter'; ?>" />
 						</td>
 						<?php endif; ?>
 						<td class="hidden-phone">
 							<label for="filter_category" class="element-invisible"><?php echo 'Search in';?></label>
-							<input class="input-block-level input-filter" type="text" name="filter_category" id="filter_category" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterCategory; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+							<input class="input-block-level input-filter" type="text" name="filter_category" id="filter_category" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterCategory; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 						</td>
 						<td class="nowrap">
 							<label for="filter_ip" class="element-invisible"><?php echo 'Search in';?></label>
-							<input class="input-block-level input-filter" type="text" name="filter_ip" id="filter_ip" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterIp; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+							<input class="input-block-level input-filter" type="text" name="filter_ip" id="filter_ip" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterIp; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 						</td>
 						<td class="nowrap center">
 							<label for="filter_author" class="element-invisible"><?php echo 'Search in';?></label>
-							<input class="input-block-level input-filter" type="text" name="filter_author" id="filter_author" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterAuthor; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+							<input class="input-block-level input-filter" type="text" name="filter_author" id="filter_author" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterAuthor; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 						</td>
 						<td class="nowrap center">
 							<label for="filter_date" class="element-invisible"><?php echo 'Search in';?></label>
-							<input class="input-block-level input-filter" type="text" name="filter_date" id="filter_date" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterDate; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+							<input class="input-block-level input-filter" type="text" name="filter_date" id="filter_date" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterDate; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 						</td>
 						<td class="nowrap center">
 						</td>

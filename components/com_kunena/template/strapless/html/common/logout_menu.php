@@ -27,17 +27,17 @@ JHtml::_('bootstrap.tooltip');
       <li>
         <form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" id="login-form" class="form-inline">
           <div class="center">
-            <div style="width:70px; padding-left:40px" ><a href="index.php?option=com_kunena&amp;view=user" class="thumbnail"><?php echo $this->me->getAvatarImage('kavatar'); ?></a></div>
+            <div style="width:70px; padding-left:40px" ><a href="<?php  echo $this->me->getURL() ?>" class="thumbnail"><?php echo $this->me->getAvatarImage('kavatar'); ?></a></div>
             <p><strong><?php echo $this->escape($this->me->get('name'));?></strong></p>
           </div>
           <div class="divider"></div>
           <?php if( $this->me->isModerator() ) : ?>
-          <div><a href="index.php?option=com_kunena&amp;view=announcement&amp;layout=list"><i class="icon-pencil-2"></i> Annoucement</a></div>
+          <div><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&amp;view=announcement&amp;layout=list') ?>"><i class="icon-pencil-2"></i> <?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?></a></div>
           <?php endif; ?>
           <?php if (!empty($this->privateMessagesLink)) : ?>
           <div> <a href="index.php?option=com_uddeim&amp;task=inbox" rel="follow"><i class="icon-mail"></i> Inbox: </a> </div>
           <?php endif ?>
-          <div><a href="index.php?option=com_kunena&amp;view=user&amp;layout=edit"><i class="icon-cog"></i> Preferences</a></div>
+          <div><a href="<?php echo $this->me->getUrl (false, 'edit') ?>"><i class="icon-cog"></i> Preferences</a></div>
           <!-- <li><a href="/help/support"><i class="icon-envelope"></i> Inbox</a></div> -->
           <div><a href="http://www.kunena.org/docs/"><i class="icon-help"></i> Help</a></div>
           <div class="divider"></div>
@@ -52,5 +52,5 @@ JHtml::_('bootstrap.tooltip');
     </ul>
   </li>
 </ul>
-<!-- ./ user dropdown --> 
+<!-- ./ user dropdown -->
 

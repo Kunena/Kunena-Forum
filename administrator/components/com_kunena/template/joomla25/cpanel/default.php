@@ -19,7 +19,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 	<div class="kadmin-left"><?php include KPATH_ADMIN.'/template/joomla25/common/menu.php'; ?></div>
 	<div class="kadmin-right">
 <div class="kadmin-welcome">
-	<h3><?php echo JText::_('COM_KUNENA_WELCOME');?></h3>
+	<h3><?php echo JText::_('COM_KUNENA_CPANEL_DESC_WELCOME');?></h3>
 	<p><?php echo JText::_('COM_KUNENA_WELCOME_DESC');?></p>
 </div>
 <div style="border:1px solid #ddd; background:#FBFBFB;">

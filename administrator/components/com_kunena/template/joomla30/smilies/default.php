@@ -14,22 +14,7 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
-$sortFields = array();
-$sortFields[] = JHtml::_('select.option', 'id', JText::_('ID'));
-$sortFields[] = JHtml::_('select.option', 'code', JText::_('Code'));
-$sortFields[] = JHtml::_('select.option', 'location', JText::_('URL'));
-
-$sortDirection = array();
-$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
-
-$filterCode	= $this->escape($this->state->get('filter.code'));
-$filterUrl = $this->escape($this->state->get('filter.url'));
-$listOrdering = $this->escape($this->state->get('list.ordering'));
-$listDirection = $this->escape($this->state->get('list.direction'));
-
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
-
 ?>
 
 <script type="text/javascript">
@@ -37,7 +22,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 		table = document.getElementById("sortTable");
 		direction = document.getElementById("directionTable");
 		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrdering; ?>') {
+		if (order != '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;
@@ -63,14 +48,18 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 			<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=smilies') ?>" method="post" id="adminForm" name="adminForm">
 				<input type="hidden" name="task" value="" />
 				<input type="hidden" name="boxchecked" value="0" />
-				<input type="hidden" name="filter_order" value="<?php echo $listOrdering; ?>" />
-				<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirection; ?>" />
+				<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>" />
+				<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>" />
 				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<div id="filter-bar" class="btn-toolbar">
+					<div class="filter-search btn-group pull-left">
+						<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
+						<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>" value="<?php echo $this->filterSearch; ?>" title="<?php echo JText::_('COM_KUNENA_SMILIES_FIELD_INPUT_SEARCHSMILIES'); ?>" />
+					</div>
 					<div class="btn-group pull-left">
-						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> Filter</button>
-						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> Clear</button>
+						<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('JSEARCH_FILTER_LABEL') ?></button>
+						<button class="btn tip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="jQuery('.filter').val('');jQuery('#adminForm').submit();"><i class="icon-remove"></i> <?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
 					</div>
 					<div class="btn-group pull-right hidden-phone">
 						<?php echo $this->pagination->getLimitBox (); ?>
@@ -79,14 +68,14 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 						<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-							<?php echo JHtml::_('select.options', $sortDirection, 'value', 'text', $listDirection);?>
+							<?php echo JHtml::_('select.options', $this->sortDirectionFields, 'value', 'text', $this->listDirection);?>
 						</select>
 					</div>
 					<div class="btn-group pull-right">
 						<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
 						<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
-							<?php echo JHtml::_('select.options', $sortFields, 'value', 'text', $listOrdering);?>
+							<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 						</select>
 					</div>
 				</div>
@@ -94,26 +83,28 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<table class="table table-striped adminlist" id="smileyList">
 					<thead>
 						<tr>
-							<th width="1%" class="center">#</th>
 							<th width="1%" class="center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
 							<th width="5%" class="center"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
-							<th width="8%" class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $listDirection, $listOrdering ); ?></th>
-							<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $listDirection, $listOrdering ); ?></th>
+							<th width="8%" class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->listDirection, $this->listOrdering ); ?></th>
+							<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->listDirection, $this->listOrdering ); ?></th>
+							<th width="1%" class="nowrap center hidden-phone">
+								<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->listDirection, $this->listOrdering); ?>
+							</th>
 						</tr>
 						<tr>
 							<td class="hidden-phone center">
 							</td>
 							<td class="hidden-phone center">
 							</td>
+							<td class="nowrap center">
+								<label for="filter_code" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+								<input class="input-block-level input-filter filter" type="text" name="filter_code" id="filter_code" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" value="<?php echo $this->filterCode; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" />
+							</td>
+							<td class="nowrap center">
+								<label for="filter_url" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+								<input class="input-block-level input-filter filter" type="text" name="filter_url" id="filter_url" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" value="<?php echo $this->filterUrl; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" />
+							</td>
 							<td class="hidden-phone center">
-							</td>
-							<td class="nowrap center">
-								<label for="filter_code" class="element-invisible"><?php echo 'Search in';?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_code" id="filter_code" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterCode; ?>" title="<?php echo 'Filter'; ?>" />
-							</td>
-							<td class="nowrap center">
-								<label for="filter_url" class="element-invisible"><?php echo 'Search in';?></label>
-								<input class="input-block-level input-filter filter" type="text" name="filter_url" id="filter_url" placeholder="<?php echo 'Filter'; ?>" value="<?php echo $filterUrl; ?>" title="<?php echo 'Filter'; ?>" />
 							</td>
 						</tr>
 					</thead>
@@ -127,9 +118,6 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<?php $i = 0; foreach ( $this->items as $id => $row ) : ?>
 					<tr>
 						<td class="hidden-phone center">
-							<?php echo ($id + $this->pagination->limitstart + 1); ?>
-						</td>
-						<td class="hidden-phone center">
 							<input type="checkbox" id="cb<?php echo $id; ?>" name="cid[]" value="<?php echo $this->escape($row->id); ?>" onclick="Joomla.isChecked(this.checked);" />
 						</td>
 						<td class="hidden-phone center">
@@ -142,6 +130,9 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						</td>
 						<td>
 							<?php echo $this->escape($row->location); ?>
+						</td>
+						<td>
+							<?php echo $this->escape($row->id); ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>

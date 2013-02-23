@@ -15,9 +15,25 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewTrash extends KunenaView {
 	function displayDefault() {
+		$this->setLayout($this->state->get('layout'));
 		$this->trash_items = $this->get('Trashitems');
 		$this->navigation = $this->get ( 'Navigation' );
 		$this->view_options_list = $this->get ( 'ViewOptions' );
+
+		$this->sortFields = $this->getSortFields();
+		$this->sortDirectionFields = $this->getSortDirectionFields();
+
+		$this->filterSearch = $this->escape($this->state->get('list.search'));
+		$this->filterTitle = $this->escape($this->state->get('filter.title'));
+		$this->filterTopic	= $this->escape($this->state->get('filter.topic'));
+		$this->filterCategory	= $this->escape($this->state->get('filter.category'));
+		$this->filterIp = $this->escape($this->state->get('filter.ip'));
+		$this->filterAuthor = $this->escape($this->state->get('filter.author'));
+		$this->filterDate	= $this->escape($this->state->get('filter.date'));
+		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
+		$this->listDirection = $this->escape($this->state->get('list.direction'));
+
+		$this->sortDirectionOrdering = $this->getSortDirectionOrdering();
 
 		$this->setToolBarDefault();
 		$this->display();
@@ -51,5 +67,42 @@ class KunenaAdminViewTrash extends KunenaView {
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('purge','delete.png','delete_f2.png', 'COM_KUNENA_DELETE_PERMANENTLY');
 		JToolBarHelper::spacer();
+	}
+
+	protected function getSortFields() {
+		$sortFields = array();
+		if ($this->state->get('layout') == 'topics') {
+			$sortFields[] = JHtml::_('select.option', 'title', JText::_('COM_KUNENA_TRASH_TITLE'));
+			$sortFields[] = JHtml::_('select.option', 'category', JText::_('COM_KUNENA_TRASH_CATEGORY'));
+			$sortFields[] = JHtml::_('select.option', 'author', JText::_('COM_KUNENA_TRASH_AUTHOR'));
+			$sortFields[] = JHtml::_('select.option', 'time', JText::_('COM_KUNENA_TRASH_DATE'));
+		} else {
+			$sortFields[] = JHtml::_('select.option', 'title', JText::_('COM_KUNENA_TRASH_TITLE'));
+			$sortFields[] = JHtml::_('select.option', 'topic', JText::_('COM_KUNENA_MENU_TOPIC'));
+			$sortFields[] = JHtml::_('select.option', 'category', JText::_('COM_KUNENA_TRASH_CATEGORY'));
+			$sortFields[] = JHtml::_('select.option', 'ip', JText::_('COM_KUNENA_TRASH_IP'));
+			$sortFields[] = JHtml::_('select.option', 'author', JText::_('COM_KUNENA_TRASH_AUTHOR'));
+			$sortFields[] = JHtml::_('select.option', 'time', JText::_('COM_KUNENA_TRASH_DATE'));
+		}
+		$sortFields[] = JHtml::_('select.option', 'id', JText::_('JGRID_HEADING_ID'));
+
+		return $sortFields;
+	}
+
+	protected function getSortDirectionFields() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
+		return $sortDirection;
+	}
+
+	// TODO: remove it when J2.5 support is dropped
+	protected function getSortDirectionOrdering() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+
+		return $sortDirection;
 	}
 }

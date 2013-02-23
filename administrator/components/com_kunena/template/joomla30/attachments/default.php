@@ -92,30 +92,30 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<td class="hidden-phone">
 					</td>
 					<td class="nowrap">
-						<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						<label for="filter_title" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" />
 					</td>
 					<td class="nowrap">
-						<label for="filter_type" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter filter" type="text" name="filter_type" id="filter_type" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterType; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						<label for="filter_type" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_type" id="filter_type" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" value="<?php echo $this->filterType; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" />
 					</td>
 					<td class="nowrap">
-						<label for="filter_size" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter filter" type="text" name="filter_size" id="filter_size" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterSize; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						<label for="filter_size" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_size" id="filter_size" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" value="<?php echo $this->filterSize; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" />
 					</td>
 					<td class="nowrap">
 					<?php /*
-						<label for="filter_dims" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter filter" type="text" name="filter_dims" id="filter_dims" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterDimensions; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						<label for="filter_dims" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_dims" id="filter_dims" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" value="<?php echo $this->filterDimensions; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" />
 					*/ ?>
 					</td>
 					<td class="nowrap">
-						<label for="filter_username" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter filter" type="text" name="filter_username" id="filter_username" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterUsername; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						<label for="filter_username" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_username" id="filter_username" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" value="<?php echo $this->filterUsername; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" />
 					</td>
 					<td class="nowrap">
-						<label for="filter_post" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter filter" type="text" name="filter_post" id="filter_post" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterPost; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						<label for="filter_post" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_post" id="filter_post" placeholder="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" value="<?php echo $this->filterPost; ?>" title="<?php echo JText::_('COM_KUNENA_FIELD_LABEL_FILTER') ?>" />
 					</td>
 					<td class="nowrap center hidden-phone">
 					</td>

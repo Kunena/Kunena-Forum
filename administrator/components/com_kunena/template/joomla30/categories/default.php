@@ -15,36 +15,8 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', '');
 
-$sortFields = array();
-$sortFields[] = JHtml::_('select.option', 'p.published', JText::_('JSTATUS'));
-$sortFields[] = JHtml::_('select.option', 'p.title', JText::_('JGLOBAL_TITLE'));
-$sortFields[] = JHtml::_('select.option', 'p.type', JText::_('COM_KUNENA_CATEGORIES_LABEL_TYPE'));
-$sortFields[] = JHtml::_('select.option', 'p.access', JText::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
-$sortFields[] = JHtml::_('select.option', 'p.id', JText::_('JGRID_HEADING_ID'));
-
-$sortDirection = array();
-$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
-
-$user = JFactory::getUser();
-$me = KunenaUserHelper::getMyself();
-$userId		= $user->get('id');
-$filterSearch = $this->escape($this->state->get('filter.search'));
-$filterPublished = $this->escape($this->state->get('filter.published'));
-$filterTitle = $this->escape($this->state->get('filter.title'));
-$filterType	= $this->escape($this->state->get('filter.type'));
-$filterAccess = $this->escape($this->state->get('filter.access'));
-$filterLocked = $this->escape($this->state->get('filter.locked'));
-$filterReview = $this->escape($this->state->get('filter.review'));
-$filterAnonymous = $this->escape($this->state->get('filter.anonymous'));
-$listOrdering = $this->escape($this->state->get('list.ordering'));
-$listDirection = $this->escape($this->state->get('list.direction'));
-
-$saveOrder 	= ($listOrdering == 'a.ordering' && $listDirection == 'asc');
-if ($saveOrder)
-{
-	$saveOrderingUrl = 'index.php?option=com_kunena&view=categories&task=saveOrderAjax&tmpl=component';
-	JHtml::_('sortablelist.sortable', 'categoryList', 'adminForm', $listDirection, $saveOrderingUrl, false, true);
+if ($this->saveOrder) {
+	JHtml::_('sortablelist.sortable', 'categoryList', 'adminForm', $this->listDirection, $this->saveOrderingUrl, false, true);
 }
 
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
@@ -55,7 +27,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 		table = document.getElementById("sortTable");
 		direction = document.getElementById("directionTable");
 		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrdering; ?>') {
+		if (order != '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;
@@ -67,8 +39,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 <form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=categories'); ?>" method="post" name="adminForm" id="adminForm">
 	<input type="hidden" name="task" value="" />
 	<input type="hidden" name="boxchecked" value="0" />
-	<input type="hidden" name="filter_order" value="<?php echo $listOrdering; ?>" />
-	<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirection; ?>" />
+	<input type="hidden" name="filter_order" value="<?php echo $this->listOrdering; ?>" />
+	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->listDirection; ?>" />
 	<?php echo JHtml::_('form.token'); ?>
 
 	<div id="j-sidebar-container" class="span2">
@@ -80,7 +52,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 		<div id="filter-bar" class="btn-toolbar">
 			<div class="filter-search btn-group pull-left">
 				<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
-				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>" value="<?php echo $filterSearch; ?>" title="<?php echo JText::_('COM_KUNENA_CATEGORIES=_FIELD_INPUT_SEARCHCATEGORIES'); ?>" />
+				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('COM_KUNENA_CATEGORIES_FIELD_INPUT_SEARCHCATEGORIES'); ?>" value="<?php echo $this->filterSearch; ?>" title="<?php echo JText::_('COM_KUNENA_CATEGORIES=_FIELD_INPUT_SEARCHCATEGORIES'); ?>" />
 			</div>
 			<div class="btn-group pull-left">
 				<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('JSEARCH_FILTER_LABEL') ?></button>
@@ -94,14 +66,14 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 				<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 					<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-					<?php echo JHtml::_('select.options', $sortDirection, 'value', 'text', $listDirection);?>
+					<?php echo JHtml::_('select.options', $this->sortDirection, 'value', 'text', $this->listDirection);?>
 				</select>
 			</div>
 			<div class="btn-group pull-right">
 				<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
 				<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 					<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
-					<?php echo JHtml::_('select.options', $sortFields, 'value', 'text', $listOrdering);?>
+					<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 				</select>
 			</div>
 			<div class="clearfix"></div>
@@ -117,25 +89,25 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 					</th>
 					<th width="5%" class="nowrap center">
-						<?php echo JHtml::_('grid.sort', 'JSTATUS', 'p.published', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'JSTATUS', 'p.published', $this->listDirection, $this->listOrdering); ?>
 					</th>
 					<th class="nowrap">
-						<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'JGLOBAL_TITLE', 'p.title', $this->listDirection, $this->listOrdering); ?>
 					</th>
 					<th width="7%" class="nowrap center hidden-phone">
-						<?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $listDirection, $listOrdering); ?>
+						<?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_ACCESS', 'p.access', $this->listDirection, $this->listOrdering); ?>
 					</th>
 					<th width="5%" class="nowrap center">
-						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_LOCKED', 'p.locked', $this->listDirection, $this->listOrdering); ?>
 					</th>
 					<th width="5%" class="nowrap center">
-						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->listDirection, $this->listOrdering); ?>
 					</th>
 					<th width="5%" class="nowrap center">
-						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->listDirection, $this->listOrdering); ?>
 					</th>
 					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $listDirection, $listOrdering); ?>
+						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'p.id', $this->listDirection, $this->listOrdering); ?>
 					</th>
 				</tr>
 				<tr>
@@ -147,39 +119,39 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<label for="filter_published" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_published" id="filter_published" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $filterPublished, true); ?>
+							<?php echo JHtml::_('select.options', $this->publishedOptions(), 'value', 'text', $this->filterPublished, true); ?>
 						</select>
 					</td>
 					<td class="nowrap">
 						<label for="filter_title" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						<input class="input-block-level input-filter filter" type="text" name="filter_title" id="filter_title" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterTitle; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 					</td>
 					<td class="nowrap center hidden-phone">
 						<label for="filter_access" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_access" id="filter_access" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $filterAccess); ?>
+							<?php echo JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->filterAccess); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
 						<label for="filter_locked" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_locked" id="filter_locked" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->lockOptions(), 'value', 'text', $filterLocked); ?>
+							<?php echo JHtml::_('select.options', $this->lockOptions(), 'value', 'text', $this->filterLocked); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
 						<label for="filter_review" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_review" id="filter_review" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->reviewOptions(), 'value', 'text', $filterReview); ?>
+							<?php echo JHtml::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
 						<label for="filter_anonymous" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_anonymous" id="filter_anonymous" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->anonymousOptions(), 'value', 'text', $filterAnonymous); ?>
+							<?php echo JHtml::_('select.options', $this->anonymousOptions(), 'value', 'text', $this->filterAnonymous); ?>
 						</select>
 					</td>
 					<td class="nowrap center hidden-phone">
@@ -200,8 +172,8 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				$i = 0;
 				foreach($this->categories as $item) :
 					$orderkey   = array_search($item->id, $this->ordering[$item->parent_id]);
-					$canEdit    = $me->isAdmin($item);
-					$canCheckin = $user->authorise('core.admin', 'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
+					$canEdit    = $this->me->isAdmin($item);
+					$canCheckin = $this->user->authorise('core.admin', 'com_checkin') || $item->checked_out == $this->userId || $item->checked_out == 0;
 					$canEditOwn = $canEdit;
 					$canChange  = $canEdit && $canCheckin;
 
@@ -231,7 +203,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 							$disableClassName = '';
 							$disabledLabel	  = '';
 
-							if (!$saveOrder) :
+							if (!$this->saveOrder) :
 								$disabledLabel    = JText::_('JORDERINGDISABLED');
 								$disableClassName = 'inactive tip-top';
 							endif; ?>
@@ -255,7 +227,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<?php
 							echo str_repeat('<span class="gi">&mdash;</span>', $item->level);
 							if ($item->checked_out) {
-								$canCheckin = $item->checked_out == 0 || $item->checked_out == $user->id || $user->authorise('core.admin', 'com_checkin');
+								$canCheckin = $item->checked_out == 0 || $item->checked_out == $this->user->id || $this->user->authorise('core.admin', 'com_checkin');
 								$editor = KunenaFactory::getUser($item->editor)->getName();
 								echo JHtml::_('jgrid.checkedout', $i, $editor, $item->checked_out_time, 'categories.', $canCheckin);
 							}

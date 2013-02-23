@@ -14,32 +14,7 @@ JHtml::_('behavior.multiselect');
 JHtml::_('dropdown.init');
 //JHtml::_('formbehavior.chosen', 'select');
 
-$sortFields = array();
-$sortFields[] = JHtml::_('select.option', 'a.username', JText::_('COM_KUNENA_USRL_USERNAME'));
-//$sortFields[] = JHtml::_('select.option', 'a.name', JText::_('COM_KUNENA_USRL_REALNAME'));
-$sortFields[] = JHtml::_('select.option', 'a.email', JText::_('COM_KUNENA_USRL_EMAIL'));
-$sortFields[] = JHtml::_('select.option', 'ku.signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
-$sortFields[] = JHtml::_('select.option', 'a.block', JText::_('COM_KUNENA_USRL_ENABLED'));
-$sortFields[] = JHtml::_('select.option', 'ku.banned', JText::_('COM_KUNENA_USRL_BANNED'));
-$sortFields[] = JHtml::_('select.option', 'ku.moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
-$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
-
-$sortDirection = array();
-$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
-$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
-
-$filterSearch = $this->escape($this->state->get('filter.search'));
-$filterUsername	= $this->escape($this->state->get('filter.username'));
-$filterEmail = $this->escape($this->state->get('filter.email'));
-$filterSignature = $this->escape($this->state->get('filter.signature'));
-$filterBlock = $this->escape($this->state->get('filter.block'));
-$filterBanned = $this->escape($this->state->get('filter.banned'));
-$filterModerator = $this->escape($this->state->get('filter.moderator'));
-$listOrdering = $this->escape($this->state->get('list.ordering'));
-$listDirection = $this->escape($this->state->get('list.direction'));
-
 $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/layout.css' );
-
 ?>
 
 <script type="text/javascript">
@@ -47,7 +22,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 		table = document.getElementById("sortTable");
 		direction = document.getElementById("directionTable");
 		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrdering; ?>') {
+		if (order != '<?php echo $this->listOrdering; ?>') {
 			dirn = 'asc';
 		} else {
 			dirn = direction.options[direction.selectedIndex].value;
@@ -74,7 +49,7 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 		<div id="filter-bar" class="btn-toolbar">
 			<div class="filter-search btn-group pull-left">
 				<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?></label>
-				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo 'Search Users'; ?>" value="<?php echo $filterSearch; ?>" title="<?php echo 'Search Users'; ?>" />
+				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo 'Search Users'; ?>" value="<?php echo $this->filterSearch; ?>" title="<?php echo 'Search Users'; ?>" />
 			</div>
 			<div class="btn-group pull-left">
 				<button class="btn tip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i> <?php echo JText::_('JSEARCH_FILTER_LABEL') ?></button>
@@ -88,14 +63,14 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 				<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 				<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 					<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-					<?php echo JHtml::_('select.options', $sortDirection, 'value', 'text', $listDirection);?>
+					<?php echo JHtml::_('select.options', $this->sortDirection, 'value', 'text', $this->listDirection);?>
 					</select>
 			</div>
 			<div class="btn-group pull-right">
 				<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
 				<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
 					<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
-					<?php echo JHtml::_('select.options', $sortFields, 'value', 'text', $listOrdering);?>
+					<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 				</select>
 			</div>
 			<div class="clearfix"></div>
@@ -118,38 +93,38 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					</td>
 					<td class="nowrap">
 						<label for="filter_username" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter filter" type="text" name="filter_username" id="filter_username" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterUsername; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						<input class="input-block-level input-filter filter" type="text" name="filter_username" id="filter_username" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterUsername; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 					</td>
 					<td class="nowrap">
 						<label for="filter_email" class="element-invisible"><?php echo 'Search in';?></label>
-						<input class="input-block-level input-filter filter" type="text" name="filter_email" id="filter_email" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $filterEmail; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+						<input class="input-block-level input-filter filter" type="text" name="filter_email" id="filter_email" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterEmail; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
 					</td>
 					<td class="nowrap center hidden-phone">
 						<label for="filter_signature" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_signature" id="filter_signature" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->signatureOptions(), 'value', 'text', $filterSignature); ?>
+							<?php echo JHtml::_('select.options', $this->signatureOptions(), 'value', 'text', $this->filterSignature); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
 						<label for="filter_block" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_block" id="filter_block" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->blockOptions(), 'value', 'text', $filterBlock, true); ?>
+							<?php echo JHtml::_('select.options', $this->blockOptions(), 'value', 'text', $this->filterBlock, true); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
 						<label for="filter_banned" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_banned" id="filter_banned" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->bannedOptions(), 'value', 'text', $filterBanned); ?>
+							<?php echo JHtml::_('select.options', $this->bannedOptions(), 'value', 'text', $this->filterBanned); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
 						<label for="filter_moderator" class="element-invisible"><?php echo JText::_('All');?></label>
 						<select name="filter_moderator" id="filter_moderator" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('All');?></option>
-							<?php echo JHtml::_('select.options', $this->moderatorOptions(), 'value', 'text', $filterModerator); ?>
+							<?php echo JHtml::_('select.options', $this->moderatorOptions(), 'value', 'text',  $this->filterModerator); ?>
 						</select>
 					</td>
 					<td class="nowrap center hidden-phone">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!DOCTYPE config>
 <config>
-	<fieldset name="basics" label="COM_KUNENA_SYS_FIELDSET_LABEL_BASICS" description="JCONFIG_PERMISSIONS_DESC">
+	<!--<fieldset name="basics" label="COM_KUNENA_SYS_FIELDSET_LABEL_BASICS" description="JCONFIG_PERMISSIONS_DESC">
 		<field
 			   name="cfg_board_title"
 			   type="text"
@@ -1788,7 +1788,7 @@
 			<option
 					value="1">JYES</option>
 		</field>
-	</fieldset>
+	</fieldset>-->
 	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
 		<field name="rules" type="rules" label="JCONFIG_PERMISSIONS_LABEL" class="inputbox" filter="rules" validate="rules" component="com_kunena" section="component" />
 	</fieldset>

@@ -73,7 +73,7 @@ class KunenaAdminModelAttachments extends JModelList {
 		$this->setState ( 'filter.post', $value );
 
 		// List state information.
-		parent::populateState('a.id', 'asc');
+		parent::populateState('filename', 'asc');
 	}
 
 	protected function getStoreId($id = '') {

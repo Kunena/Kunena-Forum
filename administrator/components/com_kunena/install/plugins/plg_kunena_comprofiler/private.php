@@ -64,6 +64,8 @@ class KunenaPrivateComprofiler extends KunenaPrivate {
 
 		$cbUser = CBuser::getInstance( (int) $userid );
 		if($cbUser === null) return;
+
+		return $userid;
 	}
 
 	public function getInboxURL () {

@@ -42,14 +42,52 @@ $paneOptions = array(
 			<input type="hidden" name="limitstart" value="<?php echo intval ( $this->pagination->limitstart ) ?>" />
 			<?php echo JHtml::_( 'form.token' ); ?>
 
+			<fieldset id="filter-bar">
+				<div class="filter-search fltlft">
+					<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('COM_KUNENA_FILTER'); ?>:</label>
+					<input type="text" name="filter_search" id="filter_search" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
+
+					<button type="submit" class="btn"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+					<button type="button" onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?></button>
+				</div>
+				<div class="filter-select fltrt">
+					<select name="filter_order_Dir" class="inputbox" onchange="this.form.submit()">
+						<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
+						<?php echo JHtml::_('select.options', $this->sortDirectionOrdering, 'value', 'text', $this->escape ($this->state->get('list.direction')));?>
+					</select>
+				</div>
+				</fieldset>
+			<div class="clr"> </div>
+
 			<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th width="5" align="center">#</th>
 					<th align="center" width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
-					<th align="center" width="50"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
-					<th align="center" width="50"><?php echo JText::_('COM_KUNENA_EMOTICONS_CODE'); ?></th>
-					<th align="left" width="80%"><?php echo JText::_('COM_KUNENA_EMOTICONS_URL'); ?></th>
+					<th width="5%" class="center"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
+					<th width="8%" class="center"><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_CODE', 'code', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th><?php echo JHtml::_('grid.sort', 'COM_KUNENA_EMOTICONS_URL', 'location', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+					<th width="1%">
+						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+					</th>
+				</tr>
+				<tr>
+					<td class="center">
+					</td>
+					<td class="center">
+					</td>
+					<td class="center">
+					</td>
+					<td class="nowrap center">
+						<label for="filter_code" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?>:</label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_code" id="filter_code" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterCode; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="nowrap center">
+						<label for="filter_url" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN') ?>:</label>
+						<input class="input-block-level input-filter filter" type="text" name="filter_url" id="filter_url" placeholder="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" value="<?php echo $this->filterUrl; ?>" title="<?php echo JText::_('JSEARCH_FILTER_LABEL') ?>" />
+					</td>
+					<td class="center">
+					</td>
 				</tr>
 			</thead>
 			<tfoot>
@@ -93,6 +131,9 @@ $paneOptions = array(
 						?>" border="0" /></a></td>
 					<td width="50" align="center"><?php echo $this->escape($row->code); ?>&nbsp;</td>
 					<td width="80%" align="left"><?php echo $this->escape($row->location); ?>&nbsp;</td>
+					<td class="nowrap center">
+							<?php echo $this->escape($row->id); ?>
+					</td>
 				</tr>
 				<?php
 					}

@@ -706,6 +706,8 @@ class KunenaViewTopic extends KunenaView {
 
 		// Thank you info and buttons
 		$this->thankyou = array();
+		$this->total_thankyou = 0;
+		$this->more_thankyou= 0;
 
 		if ( isset($message->thankyou) ) {
 			if ($this->config->showthankyou && $this->profile->userid) {
@@ -713,6 +715,8 @@ class KunenaViewTopic extends KunenaView {
 
 				// for normal users, show only limited number of thankyou (config->thankyou_max)
 				if ( !$this->me->isAdmin() || !$this->me->isModerator() ) {
+					if (count($message->thankyou) > $this->config->thankyou_max) $this->more_thankyou = count($message->thankyou) - $this->config->thankyou_max;
+					$this->total_thankyou =count($message->thankyou);
 					$message->thankyou = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
 				}
 
@@ -724,6 +728,8 @@ class KunenaViewTopic extends KunenaView {
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
 					$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;
 				}
+
+				$this->thankyou = implode(', ', $this->thankyou);
 			}
 		}
 

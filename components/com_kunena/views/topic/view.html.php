@@ -713,13 +713,13 @@ class KunenaViewTopic extends KunenaView {
 
 				// for normal users, show only limited number of thankyou (config->thankyou_max)
 				if ( !$this->me->isAdmin() || !$this->me->isModerator() ) {
-					$message->thankyou = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
+					$thankyous = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
 				}
 
 				if( $this->message->authorise('unthankyou') ) $canUnthankyou = true;
 				else $canUnthankyou=false;
 
-				foreach( $message->thankyou as $userid=>$time){
+				foreach( $thankyous as $userid=>$time){
 					$thankyou_delete = $canUnthankyou === true ?  ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
 					$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;

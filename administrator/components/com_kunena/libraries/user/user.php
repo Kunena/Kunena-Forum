@@ -282,10 +282,11 @@ class KunenaUser extends JObject {
 		return $avatars->getURL ( $this, $sizex, $sizey );
 	}
 
-	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '') {
+	public function getLink($name = null, $title = null, $rel = null, $task = '') {
 		if (!$name) {
 			$name = $this->getName();
 		}
+
 		$key = "{$name}.{$title}.{$rel}";
 		if (empty($this->_link[$key])) {
 			if (!$title) {
@@ -293,8 +294,20 @@ class KunenaUser extends JObject {
 			}
 			$uclass = $this->getType(0, 'class');
 			$link = $this->getURL (true, $task);
+			$list['href'] = $link;
+			if ($title) $list['title'] = $title;
+			if ($uclass) $list['class'] = $uclass;
+			if ($rel) $list['rel'] = $rel;
+
+			// Parse attributes
+			$attr = array();
+			foreach ($list as $key=>$value) {
+				$attr[] = "{$key}=\"{$value}\"";
+			}
+
+			$attributes = implode (' ', $attr);
 			if (! empty ( $link ))
-				$this->_link[$key] = "<a class=\"{$uclass}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
+				$this->_link[$key] = "<a {$attributes}>{$name}</a>";
 			else
 				$this->_link[$key] = "<span class=\"{$uclass}\">{$name}</span>";
 		}

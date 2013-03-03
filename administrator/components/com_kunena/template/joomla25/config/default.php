@@ -914,11 +914,6 @@ $paneOptions = array(
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_EMAIL_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE') ?></td>
-							<td align="left" valign="top"><?php echo $this->lists ['userlist_usertype'] ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE') ?></td>
 							<td align="left" valign="top"><?php echo $this->lists ['userlist_joindate'] ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE_DESC') ?></td>

@@ -73,9 +73,6 @@ document.addEvent('domready', function() {
           <?php if ($this->config->userlist_email) : ?>
           <th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_EMAIL', 'email', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
           <?php endif; ?>
-          <?php if ($this->config->userlist_usertype) : ?>
-          <th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_USERTYPE', 'usertype', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
-          <?php endif; ?>
           <?php if ($this->config->userlist_joindate) : ?>
           <th class="usersortable"><?php echo JHtml::_( 'kunenagrid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate', $this->state->get('list.direction'), $this->state->get('list.ordering'), '', '', 'kuserlist-form'); ?></th>
           <?php endif; ?>
@@ -126,9 +123,6 @@ document.addEvent('domready', function() {
           <?php endif; ?>
           <?php if ($this->config->userlist_email) : ?>
           <td class="kcol-mid"><?php echo $user->email ? JHtml::_('email.cloak', $user->email) : '' ?></td>
-          <?php endif; ?>
-          <?php if ($this->config->userlist_usertype) : ?>
-          <td class="kcol-mid"><?php echo JText::_($profile->getType()) ?></td>
           <?php endif; ?>
           <?php if ($this->config->userlist_joindate) : ?>
           <td class="kcol-mid" title="<?php echo KunenaDate::getInstance($user->registerDate)->toKunena('ago') ?>"><?php echo KunenaDate::getInstance($user->registerDate)->toKunena('datetime_today') ?></td>

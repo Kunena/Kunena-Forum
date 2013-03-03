@@ -526,11 +526,6 @@ class KunenaViewTopic extends KunenaView {
 				$this->userkarma = "{$this->userkarma_title} {$this->userkarma_minus} {$this->userkarma_plus}";
 				// Use kunena profile
 				if ($this->config->showuserstats) {
-					if ($this->config->userlist_usertype) {
-						$this->usertype = $this->profile->getType ( $this->topic->category_id );
-					} else {
-						$this->usertype = null;
-					}
 					$this->userrankimage = $this->profile->getRank ( $this->topic->category_id, 'image' );
 					$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
 					$this->userposts = $this->profile->posts;
@@ -539,7 +534,6 @@ class KunenaViewTopic extends KunenaView {
 					$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
 					$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
 				} else {
-					$this->usertype = null;
 					$this->userrankimage = null;
 					$this->userranktitle = null;
 					$this->userposts = null;

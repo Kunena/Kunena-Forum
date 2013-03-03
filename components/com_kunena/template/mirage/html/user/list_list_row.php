@@ -45,14 +45,6 @@
 		</dd>
 	<?php endif; ?>
 
-	<?php if ($this->config->userlist_usertype) : ?>
-		<dd class="user-usertype item-column">
-			<div class="innerspacer-column">
-				<?php echo JText::_($user->getType()) ?>
-			</div>
-		</dd>
-	<?php endif; ?>
-
 	<?php if ($this->config->userlist_joindate) : ?>
 		<dd class="user-joindate item-column" title="<?php echo KunenaDate::getInstance($user->registerDate)->toKunena('ago') ?>">
 			<div class="innerspacer-column">

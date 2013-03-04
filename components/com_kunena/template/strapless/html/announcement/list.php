@@ -55,7 +55,7 @@ defined ( '_JEXEC' ) or die ();
             <!-- Bulk Actions -->
             <tr class="krow1">
               <td colspan="<?php echo empty($this->announcementActions) ? 5 : 7 ?>" class="kcol krowmoderation"> <?php echo JHtml::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
-                <input type="submit" name="kcheckgo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+                <input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
               </td>
             </tr>
             <!-- /Bulk Actions -->

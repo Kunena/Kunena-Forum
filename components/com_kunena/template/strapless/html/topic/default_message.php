@@ -12,22 +12,27 @@ defined ( '_JEXEC' ) or die ();
 ?>
 
 <div class="chat">
-  <div class="bubble me span11 column-item">
-  <div style="border-bottom:1px solid #e5e5e5;">
-  
-    <h5><?php echo $this->profile->getLink() ?> <small>
-      <?php if($this->topic->first_post_message == $this->message->id >1){
+  <div class="bubble me span12">
+    <div style="border-bottom:1px solid #e5e5e5;">
+      <h5><?php echo $this->profile->getLink() ?> <small>
+        <?php if($this->topic->first_post_message == $this->message->id >1){
      echo 'Created a new topic.';
 }
 else {
      echo 'Replied the topic.';
 }
  ?>
-      </small>
-       <small><span class="pull-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"><?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> <?php echo $this->numLink ?> </span></small></h5>
-       <h4><?php echo $this->displayMessageField('subject') ?></h4></div>
+        </small> <small><span class="pull-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"><?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> <?php echo $this->numLink ?> </span></small></h5>
+      <h4><?php echo $this->displayMessageField('subject') ?></h4>
+    </div>
     <p> <?php echo KunenaHtmlParser::parseBBCode ($this->message->message, $this) ?></p>
-    
+    <h6>
+      <?php if ($this->signatureHtml) : ?>
+      <div>
+        <div class="kmsgsignature"> <?php echo $this->signatureHtml ?> </div>
+      </div>
+      <?php endif ?>
+    </h6>
   </div>
 </div>
 <?php if (!empty($this->attachments)) : ?>

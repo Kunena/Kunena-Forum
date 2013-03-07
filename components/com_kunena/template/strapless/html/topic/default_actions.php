@@ -31,10 +31,10 @@ defined ( '_JEXEC' ) or die ();
       <button class="btn btn-primary dropdown-toggle dropdown-border" data-toggle="dropdown">Moderation</button>
       <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
       <ul class="dropdown-menu">
-        <li><a href="#"><?php echo $this->topicButtons->get('delete') ?></a></li>
-        <li><a href="#"><?php echo $this->topicButtons->get('moderate') ?></a></li>
-        <li><a href="#"><?php echo $this->topicButtons->get('sticky') ?></a></li>
-        <li><a href="#"><?php echo $this->topicButtons->get('lock') ?></a></li>
+        <li><?php echo $this->topicButtons->get('delete') ?></li>
+        <li><?php echo $this->topicButtons->get('moderate') ?></li>
+        <li><?php echo $this->topicButtons->get('sticky') ?></li>
+        <li><?php echo $this->topicButtons->get('lock') ?></li>
       </ul>
     </div>
     <!-- /btn-group -->
@@ -44,12 +44,13 @@ defined ( '_JEXEC' ) or die ();
       <button class="btn dropdown-toggle dropdown-border" data-toggle="dropdown">View</button>
       <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
       <ul class="dropdown-menu">
-        <?php echo $this->topicButtons->get('flat') ?> <?php echo $this->topicButtons->get('threaded') ?> <?php echo $this->topicButtons->get('indented') ?>
+        <li><?php echo $this->topicButtons->get('flat') ?></li>
+        <li> <?php echo $this->topicButtons->get('threaded') ?></li>
+        <li><?php echo $this->topicButtons->get('indented') ?></li>
       </ul>
     </div>
+    <!-- /btn-group -->
+    <?php endif ?>
   </div>
-  <!-- /btn-group -->
-  <?php endif ?>
-</div>
 </div>
 <div class="clearfix"></div>

@@ -16,22 +16,16 @@ if ($this->message->modified_time) {
 	$dateshown = KunenaDate::getInstance($this->message->modified_time)->toKunena('config_post_dateformat' ).' ';
 }
 ?>
-
 <div class="kmessagereply">
   <?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
-  <div class="kmessage-editmarkup-cover hidden-phone"> <span class="alert" <?php echo $datehover ?>> <?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
-    <?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
-    </span> <br />
-    <?php endif ?>
-    <?php if (!empty($this->reportMessageLink)) :?>
-    <span class="kmessage-informmarkup"><?php echo $this->reportMessageLink ?></span>
-    <?php if (!empty($this->ipLink)) : ?>
-    <br />
-    <span class="kmessage-informmarkup"><?php echo $this->ipLink ?></span>
-    <?php endif ?>
-  </div>
+<div class="kmessage-editmarkup-cover">
+
+  <span class="alert" <?php echo $datehover ?>> <?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
+  <?php if ($this->message->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->message->modified_reason ); ?>
+  </span> <br />
+  <br />
   <?php endif ?>
-  <?php if (empty($this->message_closed)) : ?>
+   <?php if (empty($this->message_closed)) : ?>
   <div class="btn-toolbar btn-marging">
     <div class="kmessage-buttons-cover">
       <div class="kmessage-buttons-row">

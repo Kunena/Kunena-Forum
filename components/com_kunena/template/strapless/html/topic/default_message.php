@@ -25,14 +25,21 @@ else {
         </small> <small><span class="pull-right" title="<?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat_hover') ?>"><?php echo KunenaDate::getInstance($this->message->time)->toKunena('config_post_dateformat') ?> <?php echo $this->numLink ?> </span></small></h5>
       <h4><?php echo $this->displayMessageField('subject') ?></h4>
     </div>
-    <p> <?php echo KunenaHtmlParser::parseBBCode ($this->message->message, $this) ?></p>
-    <h6>
+    <p class="kmsg"> <?php echo KunenaHtmlParser::parseBBCode ($this->message->message, $this) ?></p>
+    <h5>
       <?php if ($this->signatureHtml) : ?>
-      <div>
-        <div class="kmsgsignature"> <?php echo $this->signatureHtml ?> </div>
-      </div>
+      <span class="kmsgsignature pull-left"><small> <?php echo $this->signatureHtml ?></small> </span>
       <?php endif ?>
-    </h6>
+      <?php if (!empty($this->reportMessageLink)) :?>
+      <span class="pull-right"><small><?php echo $this->reportMessageLink ?></small>
+      <?php if (!empty($this->ipLink)) : ?>
+      <br />
+      <small><?php echo $this->ipLink ?></small>
+      <?php endif ?>
+      </span> </span>
+      <div class="clearfix"></div>
+      <?php endif ?>
+    </h5>
   </div>
 </div>
 <?php if (!empty($this->attachments)) : ?>

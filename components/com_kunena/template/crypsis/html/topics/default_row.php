@@ -9,7 +9,10 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-JHtml::_('bootstrap.tooltip');
+if (version_compare(JVERSION, '3.0','>')) {
+			JHtml::_('bootstrap.tooltip');
+}
+
 // Disable caching
 $this->cache = false;
 

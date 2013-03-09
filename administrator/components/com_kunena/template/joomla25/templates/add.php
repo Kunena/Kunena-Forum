@@ -9,38 +9,37 @@
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
-
-$document = JFactory::getDocument();
-$document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.css' );
-if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/template/joomla25/common/menu.php'; ?></div>
-	<div class="kadmin-right">
-	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></div>
-		<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena') ?>" method="post" enctype="multipart/form-data" id="adminForm" name="adminForm">
-			<input type="hidden" name="view" value="templates" />
-			<input type="hidden" name="task" value="install" />
-			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHtml::_( 'form.token' ); ?>
+<div id="kunena" class="admin override">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<div id="j-sidebar-container" class="span2">
+					<div id="sidebar">
+						<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla30/common/menu.php'; ?></div>
+					</div>
+				</div>
+				<div id="j-main-container" class="span10">
+					<form action="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=templates') ?>" method="post" enctype="multipart/form-data" id="adminForm" name="adminForm">
+						<input type="hidden" name="task" value="install" />
+						<?php echo JHtml::_( 'form.token' ); ?>
 
-			<table class="adminform">
-				<tr>
-					<th colspan="2"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD' ); ?></th>
-				</tr>
-				<tr>
-					<td width="120">
-						<label for="install_package"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PACKAGE_FILE' ); ?>:</label>
-					</td>
-					<td>
-						<input class="input_box" name="install_package" type="file" size="57" />
-						<input class="button" type="submit" name="submit" value="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE' ); ?> &amp; <?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL' ); ?>" />
-					</td>
-				</tr>
-			</table>
-		</form>
-	</div>
-	<div class="kadmin-footer">
-		<?php echo KunenaVersion::getLongVersionHTML (); ?>
+						<fieldset>
+							<legend><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></legend>
+
+							<div>
+								<label for="install_package"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD' ); ?>:</label>
+								<input class="input_box" name="install_package" type="file" />
+								<input class="btn" type="submit" name="submit" value="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE' ); ?> &amp; <?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL' ); ?>" />
+							</div>
+						</fieldset>
+					</form>
+				</div>
+
+				<div class="pull-right small">
+					<?php echo KunenaVersion::getLongVersionHTML(); ?>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

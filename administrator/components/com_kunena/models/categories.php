@@ -69,6 +69,9 @@ class KunenaAdminModelCategories extends KunenaModel {
 		$value = $this->getUserStateFromRequest ( $this->context.'.filter.locked', 'filter_locked', '', 'string' );
 		$this->setState ( 'filter.locked', $value !== '' ? (int) $value : null );
 
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.allow_polls', 'filter_allow_polls', '', 'string' );
+		$this->setState ( 'filter.allow_polls', $value !== '' ? (int) $value : null );
+
 		$value = $this->getUserStateFromRequest ( $this->context.'.filter.review', 'filter_review', '', 'string' );
 		$this->setState ( 'filter.review', $value !== '' ? (int) $value : null );
 
@@ -102,6 +105,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 				'filter_type'=>$this->getState ( 'filter.type'),
 				'filter_access'=>$this->getState ( 'filter.access'),
 				'filter_locked'=>$this->getState ( 'filter.locked'),
+				'filter_allow_polls'=>$this->getState ( 'filter.allow_polls'),
 				'filter_review'=>$this->getState ( 'filter.review'),
 				'filter_anonymous'=>$this->getState ( 'filter.anonymous'),
 				'action'=>'admin');

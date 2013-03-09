@@ -71,6 +71,9 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 						</th>
 						<th width="5%" class="center">
+							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+						</th>
+						<th width="5%" class="center">
 							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 						</th>
 						<th width="1%" class="center hidden-phone">
@@ -110,6 +113,12 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 							<select name="filter_review" id="filter_review" class="select-filter filter">
 								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 								<?php echo JHtml::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
+							</select>
+						</td>
+						<td class="nowrap center">
+							<select name="filter_allow_polls" id="filter_allow_polls" class="select-filter filter">
+								<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+								<?php echo JHtml::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filterAllow_polls); ?>
 							</select>
 						</td>
 						<td class="nowrap center">
@@ -183,6 +192,11 @@ $changeOrder 	= ($this->state->get('list.ordering') == 'ordering' && $this->stat
 				<td class="center">
 					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->review ? 'un':'').'review'; ?>')">
 						<?php echo ($category->review == 1 ? $img_yes : $img_no); ?>
+					</a>
+				</td>
+				<td class="center">
+					<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_polls ? 'deny':'allow').'_polls'; ?>')">
+						<?php echo ($category->allow_polls == 1 ? $img_yes : $img_no); ?>
 					</a>
 				</td>
 				<td class="center">

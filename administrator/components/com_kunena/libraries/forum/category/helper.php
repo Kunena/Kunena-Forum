@@ -346,6 +346,7 @@ abstract class KunenaForumCategoryHelper {
 				$filtered |= isset($params['filter_type']);
 				$filtered |= isset($params['filter_access']) && ($instance->accesstype != 'joomla.level' || $instance->access != $params['filter_access']);
 				$filtered |= isset($params['filter_locked']) && $instance->locked != (int) $params['filter_locked'];
+				$filtered |= isset($params['filter_allow_polls']) && $instance->allow_polls != (int) $params['filter_allow_polls'];
 				$filtered |= isset($params['filter_review']) && $instance->review != (int) $params['filter_review'];
 				$filtered |= isset($params['filter_anonymous']) && $instance->allow_anonymous != (int) $params['filter_anonymous'];
 				if ($filtered && $action != 'admin') continue;

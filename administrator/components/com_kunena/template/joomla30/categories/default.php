@@ -103,6 +103,9 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<th width="5%" class="nowrap center">
 						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->listDirection, $this->listOrdering); ?>
 					</th>
+					<th width="5%" class="center">
+							<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->listDirection, $this->listOrdering); ?>
+						</th>
 					<th width="5%" class="nowrap center">
 						<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->listDirection, $this->listOrdering); ?>
 					</th>
@@ -145,6 +148,13 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 						<select name="filter_review" id="filter_review" class="select-filter filter" onchange="Joomla.orderTable()">
 							<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 							<?php echo JHtml::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
+						</select>
+					</td>
+					<td class="nowrap center">
+						<label for="filter_allow_polls" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></label>
+						<select name="filter_allow_polls" id="filter_allow_polls" class="select-filter filter" onchange="Joomla.orderTable()">
+							<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+							<?php echo JHtml::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filterAllow_polls); ?>
 						</select>
 					</td>
 					<td class="nowrap center">
@@ -255,6 +265,11 @@ $this->document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/
 					<td class="center hidden-phone">
 						<a class ="btn btn-micro <?php echo ($item->review ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->review ? 'un':'').'review'; ?>')">
 							<?php echo ($item->review == 1 ? $img_yes : $img_no); ?>
+						</a>
+					</td>
+					<td class="center hidden-phone">
+						<a class ="btn btn-micro <?php echo ($item->allow_polls ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($item->allow_polls ? 'deny':'allow').'_polls'; ?>')">
+							<?php echo ($item->allow_polls == 1 ? $img_yes : $img_no); ?>
 						</a>
 					</td>
 					<td class="center hidden-phone">

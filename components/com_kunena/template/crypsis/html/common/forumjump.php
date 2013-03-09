@@ -11,8 +11,11 @@
 defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
-JHtml::_('formbehavior.chosen', 'select');
+if (version_compare(JVERSION, '3.0','>')) {
+			JHtml::_('dropdown.init');
+			JHtml::_('formbehavior.chosen', 'select');
+}
+
 ?>
 
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" id="jumpto" name="jumpto" method="post" target="_self">

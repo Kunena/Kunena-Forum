@@ -43,7 +43,7 @@ else {
   </div>
 </div>
 <?php if (!empty($this->attachments)) : ?>
-<div class="well kmsgattach"> <?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
+<div class="span12 kmsgattach"> <?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
   <ul>
     <?php foreach($this->attachments as $attachment) : ?>
     <li style="list-style:none; margin-bottom:5px;"> <span> <?php echo $attachment->getThumbnailLink(); ?> </span> <span> <?php echo $attachment->getTextLink(); ?> </span> </li>

@@ -11,8 +11,9 @@
 defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.multiselect');
-JHtml::_('dropdown.init');
-
+if (version_compare(JVERSION, '3.0','>')) {
+			JHtml::_('dropdown.init');
+}
 $this->displayBreadcrumb ();
 
 if (!$this->me->exists()) {

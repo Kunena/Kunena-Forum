@@ -23,7 +23,7 @@ class KunenaAdminViewUser extends KunenaView {
 
 		$avatarint = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = ($avatarint instanceof KunenaAvatarKunena) ? true : false;
-		$this->avatar = $avatarint->getLink($this->user, '', 'profile');
+		$this->avatar = $avatarint->getLink($this->user, '', 'users');
 
 		// make the select list for the moderator flag
 		$yesnoMod [] = JHtml::_ ( 'select.option', '1', JText::_('COM_KUNENA_YES') );
@@ -49,7 +49,7 @@ class KunenaAdminViewUser extends KunenaView {
 
 	protected function setToolBarEdit() {
 		// Set the titlebar text
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'users' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
@@ -59,7 +59,7 @@ class KunenaAdminViewUser extends KunenaView {
 
 	protected function setToolBarMove() {
 		// Set the titlebar text
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'users' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
 		JToolBarHelper::spacer();

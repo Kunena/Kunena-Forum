@@ -23,7 +23,7 @@ class KunenaAdminViewUsers extends KunenaView {
 
 	protected function setToolbar() {
 		// Set the titlebar text
-		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_USER_MANAGER'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_USER_MANAGER'), 'users' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
 		JToolBarHelper::spacer();

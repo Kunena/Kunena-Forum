@@ -17,7 +17,7 @@ defined ( '_JEXEC' ) or die ();
   <h2 class="page-header"><span> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
     <?php
 				if (!empty($this->actions['add']))
-					echo '<div class="btn-group pull-right"><a class="btn dropdown-toggle" data-toggle="dropdown" href=""> <i class="icon-cog"></i> <span class="caret"></span> </a>
+					echo '<div class="btn-group pull-right"><a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <i class="icon-cog"></i> <span class="caret"></span> </a>
 								<ul class="dropdown-menu actions" style="min-width:0 !important;">
 									<li> <a href="index.php?option=com_kunena&view=announcement&layout=create" ><i class="hasTip icon-plus tip" title="Add"></i> Add</a> </li>
 									<li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-delete tip" title="Delete"></i> Delete</a> </li>

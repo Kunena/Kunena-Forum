@@ -713,6 +713,8 @@ class KunenaViewTopic extends KunenaView {
 					if (count($message->thankyou) > $this->config->thankyou_max) $this->more_thankyou = count($message->thankyou) - $this->config->thankyou_max;
 					$this->total_thankyou =count($message->thankyou);
 					$thankyous = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
+				} else {
+					$thankyous = $message->thankyou;
 				}
 
 				if( $this->message->authorise('unthankyou') ) $canUnthankyou = true;
@@ -723,8 +725,6 @@ class KunenaViewTopic extends KunenaView {
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
 					$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;
 				}
-
-				$this->thankyou = implode(', ', $this->thankyou);
 			}
 		}
 

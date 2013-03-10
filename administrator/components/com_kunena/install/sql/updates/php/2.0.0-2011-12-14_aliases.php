@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 jimport('joomla.filter.output');
 
 // Kunena 2.0.0: Create category aliases (all that K1.7 accepts)
-function kunena_upgrade_200_aliases($parent) {
+function kunena_200_2011_12_14_aliases($parent) {
 	$config = KunenaFactory::getConfig ();
 
 	// Create views

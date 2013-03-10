@@ -792,7 +792,7 @@ class KunenaModelInstall extends JModelLegacy {
 		switch($nodeName) {
 			case 'phpfile':
 				$filename = $action['name'];
-				$include = KUNENA_INSTALLER_PATH . "/upgrade/{$filename}.php";
+				$include = KUNENA_INSTALLER_PATH . "/sql/updates/{$filename}.php";
 				$function = 'kunena_'.strtr($filename, array('.'=>'', '-'=>'_'));
 				if(file_exists($include)) {
 					require( $include );
@@ -823,16 +823,6 @@ class KunenaModelInstall extends JModelLegacy {
 		}
 		return $result;
 	}
-/*
-	public function upgradeDatabase() {
-		$schema = new KunenaModelSchema ();
-		$results = $schema->updateSchema ();
-		foreach ( $results as $i => $r )
-			if ($r)
-				$this->addStatus ( $r ['action'] . ' ' . $r ['name'], true );
-		$this->updateVersionState ( 'installSampleData' );
-	}
-*/
 
 	public function installSampleData() {
 		require_once ( KUNENA_INSTALLER_PATH.'/data/sampledata.php' );

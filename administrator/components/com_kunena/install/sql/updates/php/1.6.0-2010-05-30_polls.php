@@ -3,14 +3,14 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 // Kunena 1.6.0: Migrate polls hack from K1.5
-function kunena_upgrade_160_polls($parent) {
+function kunena_160_2010_05_30_polls($parent) {
 	//Import filesystem libraries.
 	jimport ( 'joomla.filesystem.folder' );
 	$db = JFactory::getDbo();

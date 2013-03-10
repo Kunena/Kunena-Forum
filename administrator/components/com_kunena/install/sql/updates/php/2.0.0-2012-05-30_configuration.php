@@ -3,14 +3,14 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
 // Kunena 2.0.0: Convert deprecated configuration options
-function kunena_upgrade_200_configuration($parent) {
+function kunena_200_2012_05_30_configuration($parent) {
 	$config = KunenaFactory::getConfig ();
 
 	// Unset deprecated configuration options which have been migrated earlier

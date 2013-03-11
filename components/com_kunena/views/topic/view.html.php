@@ -709,7 +709,7 @@ class KunenaViewTopic extends KunenaView {
 				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JSession::getFormToken() . '=1';
 
 				// for normal users, show only limited number of thankyou (config->thankyou_max)
-				if ( (!$this->me->isAdmin() && !$this->me->isModerator() ) || !$this->me->isModerator() ) {
+				if ( !$this->me->isAdmin() && !$this->me->isModerator() ) {
 					if (count($message->thankyou) > $this->config->thankyou_max) $this->more_thankyou = count($message->thankyou) - $this->config->thankyou_max;
 					$this->total_thankyou =count($message->thankyou);
 					$thankyous = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);

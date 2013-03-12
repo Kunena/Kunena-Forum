@@ -33,7 +33,7 @@ var KunenaTabs = new Class({
 		console.debug(this.content);
 		//this.titles = this.options.title.getChildren(this.options.titleSelector);
 		//this.descriptions =  this.description.getChildren(this.options.descriptionSelector);
-		this.storageName = 'jpanetabs_'+this.list.id;
+		this.storageName = 'ktabs_'+this.list.id;
 
 		if (this.options.useStorage) {
 			if (Browser.Features.localstorage) {
@@ -53,11 +53,10 @@ var KunenaTabs = new Class({
 			var itemList = this.list[i];
 			var itemContent = this.content[i];
 			itemList.setStyle('cursor', 'pointer');
+			itemList.addEventListener('click', function(event) {
+			    event.preventDefault();
+			});
 			itemList.addEvent('click', this.display.bind(this, i));
-			itemList.addEvent('click', function(event) {
-				this.display.bind(this, i);
-				event.preventDefault();
-			})
 		}
 
 		this.display(this.options.display);

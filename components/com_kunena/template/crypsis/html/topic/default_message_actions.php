@@ -17,7 +17,7 @@ if ($this->message->modified_time) {
 }
 ?>
 <div class="kmessagereply">
-  <?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
+	<?php if ($this->message->modified_by && $this->config->editmarkup) : ?>
 <div class="kmessage-editmarkup-cover">
 
   <span class="alert" <?php echo $datehover ?>> <?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown . JText::_('COM_KUNENA_BY') . ' ' . $this->message->getModifier()->getLink() . '.'; ?>
@@ -56,7 +56,7 @@ if ($this->message->modified_time) {
     <?php endif ?>
   </div>
   <?php if($this->messageButtons->get('thankyou')): ?>
-  <div class="kpost-thankyou"> <?php echo $this->messageButtons->get('thankyou'); ?> </div>
+  <?php echo $this->messageButtons->get('thankyou'); ?>
   <?php endif; ?>
   <?php if(!empty($this->thankyou)): ?>
   <div class="kmessage-thankyou">
@@ -66,5 +66,6 @@ if ($this->message->modified_time) {
 	if (count($this->thankyou) > 9) echo '...';
 ?>
   </div>
+</div>
 </div>
 <?php endif; ?>

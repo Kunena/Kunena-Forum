@@ -119,7 +119,7 @@ if (version_compare(JVERSION, '3.0', '<')) : ?>
 		<button id="kunena-toggle" class="btn" style="float: left;">Details</button>
 		<div class="pull-right">
 			<button id="kunena-component" class="btn kunena-close" disabled="disabled">To Kunena</button>
-			<button id="kunena-installer" class="btn kunena-close" disabled="disabled">Close</button>
+			<button id="kunena-installer" class="btn kunena-close" disabled="disabled" data-dismiss="modal" aria-hidden="true">Close</button>
 		</div>
 		<div id="kunena-container" class="hidden">
 			<p class="clr clearfix"></p>
@@ -197,15 +197,18 @@ window.addEvent('domready', function() {
 			window.parent.SqueezeBox.resize({y: height}, true);
 			window.parent.SqueezeBox.asset.set('height', height).set('scrolling', height==140 ? 'no' : 'auto');
 		}
+		e.preventDefault();
 	});
 	$$('.kunena-close').addEvent('click', function(e) {
 		var win = window.parent.SqueezeBox ? window.parent : window;
 		if (this.get('id') == 'kunena-component') win.location.href='<?php echo JRoute::_('index.php?option=com_kunena', false)?>';
 		if (window.parent.SqueezeBox) {
 			window.parent.SqueezeBox.close();
+		} else if (document.id('kunena-modal')) {
 		} else if (this.get('id') == 'kunena-installer') {
 			win.location.href='<?php echo JRoute::_('index.php?option=com_installer&view=install', false)?>';
 		}
+		e.preventDefault();
 	});
 	window.kunenainstall();
 });

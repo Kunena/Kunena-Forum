@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Strapless
+ * @package Kunena.Template.Crypsis
  * @subpackage Misc
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
@@ -12,8 +12,8 @@ defined ( '_JEXEC' ) or die ();
 ?>
 
 <div class="well">
-  <h2 class="page-header"><?php echo $this->header ?></h2>
-  <div class="row-fluid column-row">
-    <div class="span12 column-item"> <?php echo $this->body ?> </div>
-  </div>
+	<h2 class="page-header"><?php echo $this->header ?></h2>
+	<div class="row-fluid column-row">
+		<div class="span12 column-item"> <?php echo $this->body ?> </div>
+	</div>
 </div>

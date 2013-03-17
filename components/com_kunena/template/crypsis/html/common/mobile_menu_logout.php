@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Strapless
+ * @package Kunena.Template.Crypsis
  * @subpackage Common
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
@@ -12,7 +12,7 @@
 defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.keepalive');
 if (version_compare(JVERSION, '3.0','>')) {
-			JHtml::_('bootstrap.tooltip');
+	JHtml::_('bootstrap.tooltip');
 }
 // Basic logic has been taken from Joomla! 2.5 (mod_menu)
 // HTML output emulates default Joomla! 1.5 (mod_mainmenu), but only first level is supported
@@ -22,12 +22,12 @@ if (version_compare(JVERSION, '3.0','>')) {
 
 <!-- user dropdown -->
 
-<div class="kcontainer"> 
- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
-	<span class="icon-bar"></span> 
-	<span class="icon-bar"></span> 
-	<span class="icon-bar"></span> 
- </a>
-  <div class="nav-collapse collapse"> <?php echo $this->getMenu() ?>
-  </div>
+<div class="kcontainer">
+	<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	</a>
+	<div class="nav-collapse collapse"> <?php echo $this->getMenu() ?>
+	</div>
 </div>

@@ -35,14 +35,14 @@ defined ( '_JEXEC' ) or die ();
 	<div class="tabs-left">
 		<ul id="myTab" class="nav nav-tabs">
 			<li class="active"><a href="#home" data-toggle="tab"><?php echo JText::_('COM_KUNENA_USERPOSTS'); ?></a></li>
-			<li><a href="#subscriptions" data-toggle="tab"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></a></li>
-			<li><a href="#favorites" data-toggle="tab"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></a></li>
-			<li><a href="#thankyou" data-toggle="tab"><?php echo JText::_('COM_KUNENA_THANK_YOU'); ?></a></li>
-			<li><a href="#unapproved" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?></a></li>
-			<li><a href="#attachments" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MANAGE_ATTACHMENTS'); ?></a></li>
-			<li><a href="#banmanager" data-toggle="tab"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></a></li>
-			<li><a href="#banhistory" data-toggle="tab"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?></a></li>
-			<li><a href="#banuser" data-toggle="tab"><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></a></li>
+			<?php if ($this->showSubscriptions) :?><li><a href="#subscriptions" data-toggle="tab"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></a></li><?php endif; ?>
+			<?php if ($this->showFavorites) : ?><li><a href="#favorites" data-toggle="tab"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></a></li><?php endif; ?>
+			<?php if ($this->showThankyou) : ?><li><a href="#thankyou" data-toggle="tab"><?php echo JText::_('COM_KUNENA_THANK_YOU'); ?></a></li><?php endif; ?>
+			<?php if ($this->showUnapprovedPosts): ?><li><a href="#unapproved" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?></a></li><?php endif; ?>
+			<?php if ($this->showAttachments): ?><li><a href="#attachments" data-toggle="tab"><?php echo JText::_('COM_KUNENA_MANAGE_ATTACHMENTS'); ?></a></li><?php endif; ?>
+			<?php if ($this->showBanManager): ?><li><a href="#banmanager" data-toggle="tab"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></a></li><?php endif; ?>
+			<?php if ($this->showBanHistory):?><li><a href="#banhistory" data-toggle="tab"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?></a></li><?php endif; ?>
+			<?php if ($this->showBanUser) : ?><li><a href="#banuser" data-toggle="tab"><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></a></li><?php endif; ?>
 		</ul>
 		<div id="myTabContent" class="tab-content">
 			<div class="tab-pane fade in active" id="home">
@@ -68,7 +68,7 @@ defined ( '_JEXEC' ) or die ();
 				<?php endif; ?>
 			</div>
 			<div class="tab-pane fade" id="thankyou">
-				<?php if ($this->showFavorites) : ?>
+				<?php if ($this->showThankyou) : ?>
 					<div>
 						<?php $this->displayGotThankyou(); ?>
 						<?php $this->displaySaidThankyou(); ?>

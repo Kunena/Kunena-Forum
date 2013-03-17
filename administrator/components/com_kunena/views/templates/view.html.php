@@ -66,7 +66,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_TEMPLATES_FIELD_LABEL_ADD');
 		JToolBarHelper::spacer();
@@ -83,12 +83,12 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarAdd() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
 	}
 
 	protected function setToolBarEdit() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::apply('apply');
 		JToolBarHelper::spacer();
@@ -108,7 +108,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarChoosecss() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
 		if (version_compare(JVERSION, '3', '>')) {
 			JToolBarHelper::custom('editcss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
@@ -122,7 +122,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarEditcss() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('savecss');
 		JToolBarHelper::spacer();

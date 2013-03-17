@@ -13,8 +13,15 @@
 	background-color: white !important;
 }*/
 
-.com_kunena.admin.view-cpanel #dashboard-icons .btn {
+#kunena.admin.override #dashboard-icons .btn {
     background-image: none;
     border-color: transparent;
+    box-shadow: none;
+}
+
+
+#kunena.admin.override .order > .btn {
+    border: none;
+    background: transparent;
     box-shadow: none;
 }

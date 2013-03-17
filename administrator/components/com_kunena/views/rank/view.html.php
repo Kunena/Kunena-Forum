@@ -25,7 +25,7 @@ class KunenaAdminViewRank extends KunenaView {
 	}
 
 	protected function setToolbar() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_RANK_MANAGER'), 'ranks' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();

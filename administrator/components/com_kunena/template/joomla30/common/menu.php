@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 $view = JRequest::getCmd('view', 'cpanel');
 ?>
 <!-- Main navigation -->
-<ul id="submenu" class="nav nav-list">
+<ul class="nav nav-list">
 	<li<?php if ($view == 'cpanel') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena'); ?>"><i class="icon-dashboard"></i> <?php echo JText::_('COM_KUNENA_MENU_DESC_DASHBOARD'); ?></a></li>
 	<li<?php if ($view == 'categories' || $view == 'category') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=categories'); ?>"><i class="icon-list-view"></i> <?php echo JText::_('COM_KUNENA_C_FORUM'); ?></a></li>
 	<li<?php if ($view == 'users' || $view == 'user') echo ' class="active"';?>><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=users'); ?>"><i class="icon-user"></i> <?php echo JText::_('COM_KUNENA_C_USER'); ?></a></li>

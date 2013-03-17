@@ -1575,18 +1575,6 @@
 					value="1">JSHOW</option>
 		</field>
 		<field
-				name="cfg_display_userlistusertype"
-				type="radio"
-				class="btn-group"
-				default="0"
-				label="COM_KUNENA_SYS_FIELD_LABEL_USERLISTUSERTYPE"
-				description="COM_KUNENA_SYS_FIELD_DESC_USERLISTUSERTYPE">
-			<option
-					value="0">JHIDE</option>
-			<option
-					value="1">JSHOW</option>
-		</field>
-		<field
 				name="cfg_display_userlistjoindate"
 				type="radio"
 				class="btn-group"

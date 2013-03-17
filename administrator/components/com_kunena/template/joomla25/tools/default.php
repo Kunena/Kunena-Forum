@@ -41,7 +41,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 					</div>
 					<?php if (KunenaForum::isDev()) { ?>
 					<div class="icon-container">
-						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=install&task=prepare&start=1&'.JSession::getFormToken().'=1') ?>" title="<?php echo JText::_('COM_KUNENA_GIT_INSTALL');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/install.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?> </span></a> </div>
+						<div class="icon"> <a href="<?php echo KunenaRoute::_('administrator/index.php?option=com_kunena&view=install') ?>" title="<?php echo JText::_('COM_KUNENA_GIT_INSTALL');?>"> <img src="<?php echo JUri::base(true); ?>/components/com_kunena/media/icons/large/install.png"  align="middle" border="0" alt="" /> <span> <?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?> </span></a> </div>
 					</div>
 					<?php } ?>
 				</div>

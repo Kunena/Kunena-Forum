@@ -3,7 +3,7 @@
  * Kunena Component
  * @package Kunena.Installer
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -31,6 +31,8 @@ class Com_KunenaInstallerScript {
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
 	public function install($parent) {
+		$app = JFactory::getApplication();
+		$app->enqueueMessage("Please wait... Installing Kunena.<script>window.addEvent('domready',function(){SqueezeBox.open('index.php?option=com_kunena&view=install&tmpl=component',{size:{x:320,y:140},sizeLoading:{x:320,y:140},closable:false,handler:'iframe'});});SqueezeBox.closeBtn.setStyle('display','none');</script>");
 		return true;
 	}
 
@@ -88,8 +90,8 @@ class Com_KunenaInstallerScript {
 		$app = JFactory::getApplication();
 
 		foreach ($this->versions[$name] as $major=>$minor) {
-			if (!$major || version_compare ( $version, $major, "<" )) continue;
-			if (version_compare ( $version, $minor, ">=" )) return true;
+			if (!$major || version_compare($version, $major, '<')) continue;
+			if (version_compare($version, $minor, '>=')) return true;
 			break;
 		}
 		$recommended = end($this->versions[$name]);
@@ -125,7 +127,7 @@ class Com_KunenaInstallerScript {
 
 		// Always load Kunena API if it exists.
 		$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-		if (file_exists ( $api )) require_once $api;
+		if (file_exists($api)) require_once $api;
 
 		// Do not install over Git repository (K1.6+).
 		if ((class_exists('Kunena') && method_exists('Kunena', 'isSvn') && Kunena::isSvn())
@@ -138,11 +140,11 @@ class Com_KunenaInstallerScript {
 
 		// Check if Kunena can be found from the database
 		$table = $db->getPrefix().'kunena_version';
-		$db->setQuery ( "SHOW TABLES LIKE {$db->quote($table)}" );
-		if ($db->loadResult () != $table) return true;
+		$db->setQuery("SHOW TABLES LIKE {$db->quote($table)}");
+		if ($db->loadResult() != $table) return true;
 
 		// Get installed Kunena version
-		$db->setQuery("SELECT version FROM {$table} ORDER BY `id` DESC", 0, 1);
+		$db->setQuery("SELECT version FROM {$db->quoteName($table)} ORDER BY `id` DESC", 0, 1);
 		$installed = $db->loadResult();
 		if (!$installed) return true;
 

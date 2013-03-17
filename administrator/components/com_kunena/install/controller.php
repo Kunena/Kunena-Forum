@@ -27,31 +27,6 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$this->steps = $this->model->getSteps ();
 	}
 
-	// Run from administrator installer
-	function prepare() {
-		if (!JSession::checkToken( 'get' )) {
-			$this->setRedirect('index.php?option=com_kunena');
-			return;
-		}
-
-		$start = JRequest::getBool('start', false);
-
-		$this->model->install ();
-
-		if ($start) {
-			$versions = $this->model->getDetectVersions();
-			$version = reset($versions);
-			if (!empty($version->state)) {
-				unset($version);
-			}
-		}
-		if (isset($version)) {
-			$this->setRedirect($version->link);
-		} else {
-			$this->setRedirect('index.php?option=com_kunena&view=install');
-		}
-	}
-
 	public function display($cachable = false, $urlparams = false) {
 		require_once(__DIR__.'/view.php');
 		$view = $this->getView('install', 'html');
@@ -72,13 +47,13 @@ class KunenaControllerInstall extends JControllerLegacy {
 	}
 
 	public function run() {
-		if (!JSession::checkToken( 'get' )) {
-			$this->setRedirect('index.php?option=com_kunena');
+		if (!JSession::checkToken( 'post' )) {
+			echo json_encode(array('success'=>false, 'html'=>'Invalid token!'));
 			return;
 		}
 
-		set_exception_handler('kunenaInstallerExceptionHandler');
-		//set_error_handler('kunenaInstallerErrorHandler');
+		set_exception_handler(array(__CLASS__, 'exceptionHandler'));
+		set_error_handler(array(__CLASS__, 'errorHandler'));
 
 		$session = JFactory::getSession();
 
@@ -87,14 +62,14 @@ class KunenaControllerInstall extends JControllerLegacy {
 		if (!$action) {
 			$this->model->setAction ( null );
 			$this->model->setStep ( 0 );
-			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
+			echo json_encode(array('success'=>false, 'html'=>'No action defined!'));
 			return;
 		}
 		if (!isset($this->steps[$this->step+1])) {
 			// Installation complete: reset and exit installer
 			$this->model->setAction ( null );
 			$this->model->setStep ( 0 );
-			$this->setRedirect ( 'index.php?option=com_kunena' );
+			echo json_encode(array('success'=>true, 'status'=>'100%', 'html'=>'Installation complete!'));
 			return;
 		}
 
@@ -122,62 +97,12 @@ class KunenaControllerInstall extends JControllerLegacy {
 		$session->set('kunena.newqueue', $newqueue);
 
 		if ( isset($this->steps[$this->step+1]) && ! $error ) {
-			$cnt = $session->get('kunena.reload', 1);
-			$this->setRedirect ( 'index.php?option=com_kunena&view=install&go=next&n='.$cnt );
-			$session->set('kunena.reload', $cnt+1);
+			echo json_encode(array('success'=>true, 'status'=>"{$this->step}%", 'html'=>'Installer running...'));
 		} else {
-			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
+			echo json_encode(array('success'=>true, 'status'=>'100%', 'html'=>'Installation complete!'));
 		}
 	}
 
-	public function restart() {
-		if (!JSession::checkToken( 'get' )) {
-			$this->setRedirect('index.php?option=com_kunena');
-			return;
-		}
-		$this->model->setStep ( 0 );
-		$this->run();
-	}
-	function install() {
-		if (!JSession::checkToken( 'get' )) {
-			$this->setRedirect('index.php?option=com_kunena');
-			return;
-		}
-		$this->model->setAction ( 'install' );
-		$this->run();
-	}
-	function upgrade() {
-		if (!JSession::checkToken( 'get' )) {
-			$this->setRedirect('index.php?option=com_kunena');
-			return;
-		}
-		$this->model->setAction ( 'upgrade' );
-		$this->run();
-	}
-	function downgrade() {
-		if (!JSession::checkToken( 'get' )) {
-			$this->setRedirect('index.php?option=com_kunena');
-			return;
-		}
-		$this->model->setAction ( 'downgrade' );
-		$this->run();
-	}
-	function reinstall() {
-		if (!JSession::checkToken( 'get' )) {
-			$this->setRedirect('index.php?option=com_kunena');
-			return;
-		}
-		$this->model->setAction ( 'reinstall' );
-		$this->run();
-	}
-	function migrate() {
-		if (!JSession::checkToken( 'get' )) {
-			$this->setRedirect('index.php?option=com_kunena');
-			return;
-		}
-		$this->model->setAction ( 'migrate' );
-		$this->run();
-	}
 	function uninstall() {
 		if (!JSession::checkToken( 'get' )) {
 			$this->setRedirect('index.php?option=com_kunena');
@@ -200,47 +125,33 @@ class KunenaControllerInstall extends JControllerLegacy {
 			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
 		}
 	}
-	function restore() {
-		if (!JSession::checkToken( 'get' )) {
-			$this->setRedirect('index.php?option=com_kunena');
-			return;
-		}
-		$this->model->setAction ( 'restore' );
-		$this->uninstall();
-	}
-
-	function abort() {
-		$app = JFactory::getApplication();
-		$app->setUserState('com_kunena.install.step', 0);
-		$this->setRedirect ( 'index.php?option=com_kunena' );
-	}
 
 	function runStep() {
 		if (empty ( $this->steps [$this->step] ['step'] ))
 			return;
 		return call_user_func ( array ($this->model, "step" . $this->steps [$this->step] ['step'] ) );
 	}
-}
 
-function kunenaInstallerError($type, $errstr) {
-	$model = JModelLegacy::getInstance('Install', 'KunenaModel');
-	$model->addStatus($type, false, $errstr);
-	$app = JFactory::getApplication();
-	$app->redirect ( 'index.php?option=com_kunena&view=install' );
-}
+	static public function error($type, $errstr) {
+		$model = JModelLegacy::getInstance('Install', 'KunenaModel');
+		$model->addStatus($type, false, $errstr);
+		$app = JFactory::getApplication();
+		$app->redirect ( 'index.php?option=com_kunena&view=install' );
+	}
 
-function kunenaInstallerExceptionHandler($exception) {
-	kunenaInstallerError('', 'Uncaught Exception: '.$exception->getMessage());
-	return true;
-}
+	static public function exceptionHandler($exception) {
+		self::$error('', 'Uncaught Exception: '.$exception->getMessage());
+		return true;
+	}
 
-function kunenaInstallerErrorHandler($errno, $errstr, $errfile, $errline) {
-	kunenaInstallerError('', "Fatal Error: $errstr in $errfile on line $errline");
-	switch ($errno) {
-		case E_ERROR:
-		case E_USER_ERROR:
-			kunenaInstallerError('', "Fatal Error: $errstr in $errfile on line $errline");
-			return true;
+	static public function errorHandler($errno, $errstr, $errfile, $errline) {
+		self::$error('', "Fatal Error: $errstr in $errfile on line $errline");
+		switch ($errno) {
+			case E_ERROR:
+			case E_USER_ERROR:
+				self::$error('', "Fatal Error: $errstr in $errfile on line $errline");
+				return true;
 		}
-	return false;
+		return false;
+	}
 }

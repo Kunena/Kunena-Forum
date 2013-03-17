@@ -86,7 +86,6 @@ class KunenaModelInstall extends JModelLegacy {
 		$this->steps = array (
 			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_INSTALL') ),
 			array ('step' => 'Prepare', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PREPARE') ),
-			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
 			array ('step' => 'Plugins', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PLUGINS') ),
 			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
 			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
@@ -261,7 +260,7 @@ class KunenaModelInstall extends JModelLegacy {
 		return $success;
 	}
 
-	// TODO: move to migration
+	// TODO: move to migration (exists in 2.0)
 	function installLanguage($tag, $name = '') {
 		$exists = false;
 		$success = true;
@@ -462,6 +461,7 @@ class KunenaModelInstall extends JModelLegacy {
 		$this->checkTimeout(true);
 	}
 
+	// TODO: remove after making sure that all the old files get deleted (already disabled).
 	public function stepExtract() {
 		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
 		if (KunenaForum::isDev() || !is_file("{$path}/fileformat")) {
@@ -514,7 +514,6 @@ class KunenaModelInstall extends JModelLegacy {
 
 	public function stepPlugins() {
 		// TODO: Complete smart search support
-		$this->uninstallPlugin('finder', 'kunena');
 		//$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
 		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 1);
 		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false, 2);
@@ -525,7 +524,6 @@ class KunenaModelInstall extends JModelLegacy {
 		$this->installPlugin('install/plugins/plg_kunena_joomla', 'kunena', 'joomla', true, 7);
 
 		// TODO: install also menu module
-		$this->uninstallModule('mod_kunenamenu');
 		//$this->installModule('install/modules/mod_kunenamenu', 'kunenamenu');
 
 		if (function_exists('apc_clear_cache')) apc_clear_cache('system');
@@ -825,7 +823,7 @@ class KunenaModelInstall extends JModelLegacy {
 	}
 
 	public function installSampleData() {
-		require_once ( KUNENA_INSTALLER_PATH.'/data/sampledata.php' );
+		require_once ( KUNENA_INSTALLER_PATH.'/sql/install/php/sampledata.php' );
 		if (installSampleData ())
 			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SAMPLEDATA'), true );
 		return true;

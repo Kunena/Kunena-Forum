@@ -38,21 +38,7 @@ class Pkg_KunenaInstallerScript {
 	 */
 	protected $extensions = array ('dom', 'gd', 'json', 'pcre', 'SimpleXML');
 
-	protected $modal = <<<EOS
-<script>
-window.addEvent('domready', function() {
-	SqueezeBox.initialize({
-		size: {x: 875, y: 550},
-		onClose: function() {}
-	});
-	SqueezeBox.open('http://kunena3025/administrator/index.php?option=com_kunena&tmpl=component', {handler: 'iframe'});
-});
-</script>
-EOS;
-
 	public function install($parent) {
-		$app = JFactory::getApplication();
-		$app->enqueueMessage("Please wait... Installing Kunena. {$this->modal}");
 		return true;
 	}
 

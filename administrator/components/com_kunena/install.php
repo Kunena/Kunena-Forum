@@ -22,7 +22,7 @@ if ($view != 'install' && class_exists('KunenaForum') && KunenaForum::isDev()) {
 	require_once __DIR__ . '/install/version.php';
 	$kversion = new KunenaVersion();
 	if (!$kversion->checkVersion()) {
-		JFactory::getApplication()->redirect(JUri::base(true).'/index.php?option=com_kunena&view=install&task=prepare&'.JSession::getFormToken().'=1');
+		JFactory::getApplication()->redirect(JUri::base(true).'/index.php?option=com_kunena&view=install');
 	}
 	return;
 }

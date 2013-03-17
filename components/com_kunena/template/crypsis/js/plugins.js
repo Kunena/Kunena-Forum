@@ -25,4 +25,16 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
+	
+	$$('input.kcheckall').addEvent('click', function(e){
+		this.getParent('form').getElements('input.kcheck').each(function(el){
+			if(el.get('checked')==false){
+				el.set('checked',true);
+				el.set('value','1');
+			} else {
+				el.set('value','0');
+				el.set('checked',false);
+			}
+		}); 
+	});
 });

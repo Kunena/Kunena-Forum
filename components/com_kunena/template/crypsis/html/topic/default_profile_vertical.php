@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Strapless
+ * @package Kunena.Template.Crypsis
  * @subpackage Topic
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
@@ -12,16 +12,16 @@ defined ( '_JEXEC' ) or die ();
 ?>
 
 <div class="kprofile" style="width:auto; height:auto;">
-  <ul class="kpost-profile" id="messages" style="list-style:none;text-align:center;margin:5px;">
-    <li class="kpost-avatar">
-      <div class="pros">
-        <?php $avatar = $this->profile->getAvatarImage ('', 'post'); if ($avatar) : ?>
-        <span class="kavatar"><?php echo $this->profile->getLink( $avatar ); ?></span>
-        <?php endif; ?>
-        <div class="infos">
-          <div class="kinfo"> <a href="http://twitter.com/kunena" class="sprite twitter">@kunena</a> <a href="http://www.facebook.com/kunena" class="sprite facebook">kunena</a> <a href="http://github.com/kunena" class="sprite github">@kunena</a> <a href="skype" class="sprite skype">@skype</a> <a href="pm" class="sprite email">@PM</a> </div>
-        </div>
-      </div>
-    </li>
-  </ul>
+	<ul class="kpost-profile" id="messages" style="list-style:none;text-align:center;margin:5px;">
+		<li class="kpost-avatar">
+			<div class="pros">
+				<?php $avatar = $this->profile->getAvatarImage ('', 'post'); if ($avatar) : ?>
+					<span class="kavatar"><?php echo $this->profile->getLink( $avatar ); ?></span>
+				<?php endif; ?>
+				<div class="infos">
+					<div class="kinfo"> <a href="http://twitter.com/kunena" class="sprite twitter">@kunena</a> <a href="http://www.facebook.com/kunena" class="sprite facebook">kunena</a> <a href="http://github.com/kunena" class="sprite github">@kunena</a> <a href="skype" class="sprite skype">@skype</a> <a href="pm" class="sprite email">@PM</a> </div>
+				</div>
+			</div>
+		</li>
+	</ul>
 </div>

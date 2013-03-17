@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Strapless
+ * @package Kunena.Template.Crypsis
  * @subpackage Common
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.

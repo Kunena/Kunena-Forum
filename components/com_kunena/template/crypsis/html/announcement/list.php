@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Strapless
+ * @package Kunena.Template.Crypsis
  * @subpackage Announcement
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
@@ -14,8 +14,9 @@ defined ( '_JEXEC' ) or die ();
 ?>
 
 <div class="well well-small">
-  <h2 class="page-header"><span> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
-    <?php
+	<h2 class="page-header">
+		<span> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
+			<?php
 				if (!empty($this->actions['add']))
 					echo '<div class="btn-group pull-right"><a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <i class="icon-cog"></i> <span class="caret"></span> </a>
 								<ul class="dropdown-menu actions" style="min-width:0 !important;">
@@ -24,45 +25,46 @@ defined ( '_JEXEC' ) or die ();
 									<li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-edit tip" title="Edit"></i> Edit</a> </li>
 									<li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-ok tip" title="Edit"></i> Publish</a> </li>
 									<li> <a href="index.php?option=com_kunena&view=category&layout=manage" ><i class="hasTip icon-remove tip" title="Edit"></i> Unpublished</a> </li>
-									</ul>
+								</ul>
 			</div>';
 				?>
-    </span> </h2>
-  <div class="row-fluid column-row">
-    <div class="span12 column-item">
-      <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" id="adminForm" name="adminForm">
-        <input type="hidden" name="boxchecked" value="0" />
-        <?php echo JHtml::_( 'form.token' ); ?>
-        <table class="kannouncement">
-          <tbody id="kannouncement_body">
-            <tr class="ksth">
-              <?php if ($this->actions): ?>
-              <th class="kcol-annid">
-                <input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
-              </th>
-              <?php endif; ?>
-              <th class="kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
-              <th class="kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
-              <th class="kcol-anntitle"><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></th>
-              <?php if ($this->actions): ?>
-              <th class="kcol-annpublish"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
-              <th class="kcol-annedit"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
-              <th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
-              <?php endif; ?>
-            </tr>
-            <?php $this->displayItems() ?>
-            <?php  if ( !empty($this->announcementActions) ) : ?>
-            <!-- Bulk Actions -->
-            <tr class="krow1">
-              <td colspan="<?php echo empty($this->announcementActions) ? 5 : 7 ?>" class="kcol krowmoderation"> <?php echo JHtml::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
-                <input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-              </td>
-            </tr>
-            <!-- /Bulk Actions -->
-            <?php endif; ?>
-          </tbody>
-        </table>
-      </form>
-    </div>
-  </div>
+		</span>
+	</h2>
+	<div class="row-fluid column-row">
+		<div class="span12 column-item">
+			<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=announcement') ?>" method="post" id="adminForm" name="adminForm">
+				<input type="hidden" name="boxchecked" value="0" />
+				<?php echo JHtml::_( 'form.token' ); ?>
+				<table class="kannouncement">
+					<tbody id="kannouncement_body">
+						<tr class="ksth">
+							<?php if ($this->actions): ?>
+								<th class="kcol-annid">
+									<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+								</th>
+							<?php endif; ?>
+							<th class="kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
+							<th class="kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
+							<th class="kcol-anntitle"><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></th>
+							<?php if ($this->actions): ?>
+								<th class="kcol-annpublish"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
+								<th class="kcol-annedit"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
+								<th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
+							<?php endif; ?>
+						</tr>
+						<?php $this->displayItems() ?>
+							<?php  if ( !empty($this->announcementActions) ) : ?>
+								<!-- Bulk Actions -->
+								<tr class="krow1">
+									<td colspan="<?php echo empty($this->announcementActions) ? 5 : 7 ?>" class="kcol krowmoderation"> <?php echo JHtml::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
+										<input type="submit" name="kcheckgo" class="btn" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+									</td>
+								</tr>
+								<!-- /Bulk Actions -->
+							<?php endif; ?>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
 </div>

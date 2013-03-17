@@ -58,14 +58,14 @@ if ($this->message->modified_time) {
   <?php if($this->messageButtons->get('thankyou')): ?>
   <?php echo $this->messageButtons->get('thankyou'); ?>
   <?php endif; ?>
-  <?php if(!empty($this->thankyou)): ?>
+</div>
+<?php if(!empty($this->thankyou)): ?>
   <div class="kmessage-thankyou">
     <?php
-	echo JText::_('COM_KUNENA_THANKYOU').': ';
-	echo implode(', ', $this->thankyou);
-	if (count($this->thankyou) > 9) echo '...';
+	echo JText::_('COM_KUNENA_THANKYOU').': '.implode(', ', $this->thankyou).' ';
+	if ($this->more_thankyou) echo JText::sprintf('COM_KUNENA_THANKYOU_MORE_USERS',$this->more_thankyou);
 ?>
   </div>
+  <?php endif; ?>
 </div>
-</div>
-<?php endif; ?>
+

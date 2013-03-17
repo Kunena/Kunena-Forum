@@ -11,8 +11,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.keepalive');
-JHtml::_('bootstrap.tooltip');
-
+if (version_compare(JVERSION, '3.0','>')) {
+			JHtml::_('bootstrap.tooltip');
+}
 // Basic logic has been taken from Joomla! 2.5 (mod_menu)
 // HTML output emulates default Joomla! 1.5 (mod_mainmenu), but only first level is supported
 
@@ -25,7 +26,7 @@ JHtml::_('bootstrap.tooltip');
   <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-large icon-user"></i> <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li>
-        <form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" id="login-form" class="form-inline">
+        <form action="<?php echo JRoute::_('index.php?option=com_kunena'); ?>" method="post" id="logout-form" class="form-inline">
           <div class="center">
             <div style="width:70px; padding-left:40px" ><a href="<?php  echo $this->me->getURL() ?>" class="thumbnail"><?php echo $this->me->getAvatarImage('kavatar'); ?></a></div>
             <p><strong><?php echo $this->escape($this->me->get('name'));?></strong></p>
@@ -42,7 +43,7 @@ JHtml::_('bootstrap.tooltip');
           <div><a href="http://www.kunena.org/docs/"><i class="icon-help"></i> Help</a></div>
           <div class="divider"></div>
           <div style="padding-left:8px;">
-            <button class="btn btn-link" name="submit" type="submit" style="color:#5388B4 !important"><i class="icon-out"></i> <?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?></button>
+            <button class="btn btn-link" name="submit" type="submit"><i class="icon-out"></i> <?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?></button>
           </div>
           <input type="hidden" name="view" value="user" />
           <input type="hidden" name="task" value="logout" />
@@ -52,5 +53,4 @@ JHtml::_('bootstrap.tooltip');
     </ul>
   </li>
 </ul>
-<!-- ./ user dropdown -->
-
+<!-- ./ user dropdown --> 

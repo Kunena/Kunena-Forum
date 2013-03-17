@@ -14,10 +14,10 @@ defined ( '_JEXEC' ) or die ();
 <table class="table" style="border:none;" >
   <tbody>
     <tr>
-      <td rowspan="2" class="span3" style="border:none;vertical-align:top !important;">
+      <td rowspan="2" class="span3 hidden-phone" style="border:none;vertical-align:top !important;">
         <?php $this->displayMessageProfile('vertical') ?>
       </td>
-      <td class="span9" style="border:none;">
+      <td class="span9" style="border:none;vertical-align:top !important;">
         <?php $this->displayMessageContents() ?>
       </td>
     </tr>

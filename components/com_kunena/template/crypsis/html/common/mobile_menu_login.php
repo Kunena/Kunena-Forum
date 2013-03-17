@@ -11,7 +11,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 JHtml::_('behavior.keepalive');
-JHtml::_('bootstrap.tooltip');
+if (version_compare(JVERSION, '3.0','>')) {
+			JHtml::_('bootstrap.tooltip');
+}
 // Basic logic has been taken from Joomla! 2.5 (mod_menu)
 // HTML output emulates default Joomla! 1.5 (mod_mainmenu), but only first level is supported
 

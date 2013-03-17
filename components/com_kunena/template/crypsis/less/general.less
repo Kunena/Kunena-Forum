@@ -136,8 +136,9 @@ form {
 .nav-pills > .active > a, 
 .nav-pills > .active > a:hover ,
 .dropdown-menu a,
-.navbar .nav > li > a {
-	  color: #08c;
+.navbar .nav > li > a,
+.btn-link:hover {
+  color: #08c;
 }
 
 .navbar .nav > li > a {
@@ -147,12 +148,15 @@ padding:11px 8px 11px;
 .jr-forum-stat-bar {
 height:6px;
 }
+
 #tow {
  display: none; 
 }
 
-.well {
-padding:5px;
+.kfrontend .row-fluid {
+padding-left:-13px;
+width:102.5%;
+margin-left:-9px;
 }
 
 .pagination-mini ul > li:first-child > a,
@@ -237,10 +241,11 @@ padding:5px;
 .chat {
     width: auto;
 	min-height: 150px;
+	margin-right:10px;
 }
 
 .bubble{
-    background-color: #F2F2F2;
+    background-color: #FFF;
     border-radius: 5px;
     box-shadow: 0 0 6px #B2B2B2;
     display: inline-block;
@@ -250,7 +255,7 @@ padding:5px;
 }
 
 .bubble::before {
-    background-color: #F2F2F2;
+    background-color: #FFF;
     content: "\00a0";
     display: block;
     height: 16px;
@@ -283,4 +288,192 @@ padding:5px;
 .you::before {
     box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
     right: -9px;    
+}
+.navbar-inner {
+border:1px solid #E3E3E3;
+}
+.navbar .nav {
+margin:0 20px 10px 10px !important;
+}
+
+#messages li {
+  float: left;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+   }
+
+#messages li:nth-child(2n) .infos {
+  float: right;
+  margin-left: 20px; }
+
+#messages li:nth-child(2n) .infos a {
+  -webkit-box-shadow: 1px 1px 0 1px rgba(90, 81, 15, 0.2);
+  -moz-box-shadow: 1px 1px 0 1px rgba(90, 81, 15, 0.2);
+  box-shadow: 1px 1px 0 1px rgba(90, 81, 15, 0.2);
+  left: inherit; }
+
+#messages li:nth-child(2n) .content { border-width: 1px 3px 4px 4px; }
+
+#messages li:nth-child(2n) .content:after,
+#messages li:nth-child(2n) .content:before {
+  right: -9px;
+  left: inherit;
+  -webkit-transform: rotate(41deg);
+  -moz-transform: rotate(41deg);
+  -o-transform: rotate(41deg);
+  transform: rotate(41deg); }
+
+#messages li:nth-child(2n) .facebook { right: -10px; }
+
+#messages li:nth-child(2n) .twitter { right: -5%; }
+
+#messages li:nth-child(2n) .github { right: -1%; }
+
+#messages .infos {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  float: left;
+  width: 130px;
+  height: 130px;
+  padding:3px;
+  border: 5px solid #E9E9E9;
+  margin-top:-138px;
+  margin-left:-10px;
+}
+
+#messages .pros {
+  position: relative;
+  float: left;
+  padding: 3px;
+  width: 130px;
+  height: 130px;
+   }
+
+#messages .infos a {
+  -webkit-border-radius: 17px;
+  -moz-border-radius: 17px;
+  -ms-border-radius: 17px;
+  -o-border-radius: 17px;
+  border-radius: 17px;
+  -webkit-box-shadow: -1px 1px 0 1px rgba(90, 81, 15, 0.2);
+  -moz-box-shadow: -1px 1px 0 1px rgba(90, 81, 15, 0.2);
+  box-shadow: -1px 1px 0 1px rgba(90, 81, 15, 0.2);
+  position: absolute;
+  width: 20px;
+  height: 22px;
+  color: #000;
+  text-decoration: none;
+  text-indent: -10000px;
+  font-size: 11px;
+}
+
+#messages .infos a:hover {
+  padding: 0 10px 0 18px;
+  width: auto;
+  border: none;
+  text-indent: 0;
+  opacity: 0.95; }
+
+#messages img {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  width: 100%; }
+  
+.sprite {
+  background: url("http://www.depotwebdesigner.com/images/1/sprite.svg") no-repeat;
+  background-size: 23px;
+  color:#FFF !important;
+ }
+
+.twitter {
+  background-position: -1px 5px;
+  top: 16%;
+  left: -5%;
+  background-color: #2094dd !important;
+  }
+
+.twitter:hover { background-color: #2094dd !important; }
+
+.facebook {
+  background-position: -2px -27px;
+  top: 42%;
+  left: -10%;
+  background-color: #3b5998 !important; }
+
+.facebook:hover { background-color: #3b5998 !important; }
+
+.github {
+  background-position: -2px -10px;
+  bottom: 17%;
+  left: -1%;
+  background-color:#444 !important;
+   }
+
+.github:hover { background-color: #444 !important; }
+
+.skype {
+  background-position: -1px 5px;
+  bottom: 88%;
+  left: 13%;
+  background-color:#00AAE8 !important;
+   }
+
+.skype:hover { background-color: #00AAE8 !important; }
+
+.email {
+  background-position: -1px -30px;
+  bottom: -1%;
+  left: 15%;
+  background-color:#000 !important;
+   }
+
+.email:hover { background-color: #000 !important; }
+
+.kmessagereply {
+ padding-left:30px;
+}
+
+.btn-marging {
+ margin: 0;
+}
+.kmessage-buttons-row .btn  {
+ height:28px;
+}
+
+.kmessage-buttons-row .dropdown-border  {
+ line-height:19px;
+ border-radius:4px 0px 0px 4px;
+}
+
+.kmessage-buttons-row .dropdown-menu a:hover {
+ color:#fff;
+}
+.kreply-form {
+display: none;
+padding-left:20px;
+}
+.kmsg {
+border-bottom:1px solid #e5e5e5;
+}
+.kmsgattach {
+ padding-left:30px;
+ padding-top:10px;
+}
+.button:before, .readon:before, .readmore:before, button.validate:before, #member-profile a:before, #member-registration a:before, .formelm-buttons button:before, #k2Container .k2ReadMore:before, #k2Container #submitCommentButton:before, .btn-primary:before {
+content:"";
+}
+h2:before {
+background:none;
+box-shadow:none;
+text-shadow:none;
+content:"";
+}
+h2 {
+padding-left:0px;
 }

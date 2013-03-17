@@ -24,31 +24,44 @@ defined ( '_JEXEC' ) or die ();
     <div class="pull-left"><?php echo $this->getTopicLink ( $this->topic, 'unread', $this->topic->getIcon() ) ?></div>
     <div class="clearfix"></div>
   </td>
-  <td class="span7">
+  <td width="80%">
     <div class="ItemContent Discussion">
       <div class="Title"><a href="#"><?php echo $this->getTopicLink ( $this->topic, null, null, KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 500), 'hasTooltip' ) ;?></a></div>
-      <div class="Meta"> <span class="CommentCount"><i class="icon-comments-2"></i> <?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ).' '. JText::_('COM_KUNENA_GEN_REPLIES')?></span> <i class="icon-eye"></i><span class="LastCommentBy"> <?php echo $this->formatLargeNumber ( $this->topic->hits ).' '.  JText::_('COM_KUNENA_GEN_HITS');?></span> <i class="icon-user"></i> <span>Started by <a class="tip" title="admin" href="#">
+      <div class="Meta"> <span><i class="icon-comments-2"></i> <?php echo $this->formatLargeNumber ( max(0,$this->topic->getTotal()-1) ).' '. JText::_('COM_KUNENA_GEN_REPLIES')?></span> <i class="icon-eye"></i><span class="LastCommentBy"> <?php echo $this->formatLargeNumber ( $this->topic->hits ).' '.  JText::_('COM_KUNENA_GEN_HITS');?></span> <span> <i class="icon-user"></i> Started by <a class="tip" title="admin" href="#">
         <?php
 				echo $this->topic->getFirstPostAuthor()->getLink();
 			?>
-      </a></span> <i class="icon-calendar"></i> <span><?php echo KunenaDate::getInstance($this->topic->first_post_time);?></span> </div>
+        </a></span> <i class="icon-calendar"></i> <span><?php echo KunenaDate::getInstance($this->topic->first_post_time);?></span> </div>
       <div id="one">
         <div id="tow">
-          <div class="well"> <?php echo KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 100)  ;?></div>
+          <div class="well">
+            <div class="avatar"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?> by
+              <?php
+				echo $this->topic->getLastPostAuthor()->getLink();
+			?>
+              <div class="info_title pull-right"> <?php echo KunenaDate::getInstance($this->topic->last_post_time)->toKunena('config_post_dateformat_hover'); ?> </div>
+              <div class="post_msg"> <?php echo KunenaHtmlParser::stripBBCode ( $this->topic->first_post_message, 100)  ;?></div>
+              <div class="clear"></div>
+            </div>
+          </div>
+          <div class="jfku_useractions"> <a href="" rel="nofollow" title="View Topic 'Test'"><span class="gototopic" >
+            <button class="btn btn-small">Go To Topic</button>
+            </span></a> <span class="jf_ku_preview_close"><a class="btn btn-micro" id="test2" href="javascript:void(0);" onclick="javascript:hideMessage();" title="Hide Message"><i class="icon-uparrow"></i></a></span> </div>
+          <div class="clear"></div>
         </div>
       </div>
     </div>
   </td>
-  <td width="2%">
-    <div class="pull-right kfrontend"> <a class="btn btn-micro" id="test1"  href="javascript:void(0);" onclick="javascript:showMessage();" title="Show Message"><i class="icon-downarrow"></i></a> <a class="btn btn-micro" id="test2" href="javascript:void(0);" onclick="javascript:hideMessage();" title="Hide Message"><i class="icon-uparrow"></i></a> </div>
+  <td class="hidden-phone" width="2%">
+    <div class="kfrontend" id="test2"> <a class="btn icon-eye" id="test1"  href="javascript:void(0);" onclick="javascript:showMessage();" title="Show Message"></a> </div>
     <div class="clearfix"></div>
   </td>
-  <td class="span1">
+  <td class="span1 hidden-phone">
     <?php if (!empty($this->topic->avatar)) : ?>
     <span class="ktopic-latest-post-avatar hidden-phone"> <?php echo $this->topic->getLastPostAuthor()->getLink( $this->topic->avatar ) ?></span>
     <?php endif; ?>
   </td>
-  <td width="10%"> <span class="ktopic-latest-post hasTooltip" title="<?php echo $this->topic->getLastPostAuthor() ;?>">
+  <td width="11%"> <span class="ktopic-latest-post hasTooltip" title="<?php echo $this->topic->getLastPostAuthor() ;?>">
     <?php
 				echo $this->topic->getLastPostAuthor()->getLink();
 			?>

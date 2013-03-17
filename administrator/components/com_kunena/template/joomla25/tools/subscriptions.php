@@ -15,7 +15,11 @@ $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/ad
 if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true).'/components/com_kunena/media/css/admin.rtl.css' );
 ?>
 <div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/template/joomla25/common/menu.php'; ?></div>
+	<div class="kadmin-left">
+		<div id="sidebar">
+			<div class="sidebar-nav"><?php include KPATH_ADMIN.'/template/joomla25/common/menu.php'; ?></div>
+		</div>
+	</div>
 	<div class="kadmin-right">
 	<div class="kadmin-functitle icon-config"><?php echo JText::_('Subscriptions'); ?></div>
 			<table class="adminform">

@@ -62,7 +62,7 @@ class KunenaAdminViewCategories extends KunenaView {
 
 	protected function setToolBarEdit() {
 		// Set the titlebar text
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'categories' );
 		JToolBarHelper::apply('apply');
 		JToolBarHelper::save('save');
 		JToolBarHelper::save2new('save2new');
@@ -74,7 +74,7 @@ class KunenaAdminViewCategories extends KunenaView {
 		JToolBarHelper::cancel();
 	}
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_CATEGORY_MANAGER'));
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_CATEGORY_MANAGER'), 'categories');
 		//TODO STRING
 		JToolBarHelper::addNew ('add', 'New Category');
 		JToolBarHelper::editList ();

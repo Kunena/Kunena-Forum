@@ -73,7 +73,7 @@ class Pkg_KunenaInstallerScript {
 		if (version_compare(JVERSION, '3.0', '>')) {
 ?>
 <div id="kunena-modal" class="modal hide fade"><div class="modal-body"></div></div>
-<script>jQuery('#kunena-modal').modal({backdrop: false, keyboard: false, remote: 'index.php?option=com_kunena&view=install&format=raw'})</script>
+<script>jQuery('#kunena-modal').modal({backdrop: 'static', keyboard: false, remote: 'index.php?option=com_kunena&view=install&format=raw'})</script>
 <?php
 		} else {
 			echo("<script>window.addEvent('domready',function(){SqueezeBox.open('index.php?option=com_kunena&view=install&tmpl=component',{size:{x:400,y:140},sizeLoading:{x:400,y:140},closable:false,handler:'iframe'});});</script>");

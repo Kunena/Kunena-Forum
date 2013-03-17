@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Strapless
+ * @package Kunena.Template.Crypsis
  * @subpackage Common
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
@@ -14,14 +14,14 @@ $item = array_shift($this->pathway);
  if ($item) : ?>
 
 <div class="row-fluid column-row">
-  <div class="span12 column-item">
-    <ul class="breadcrumb" style="border:1px solid #E3E3E3;">
-      <li class="active"><span class="divider"><i class="icon-location hasTooltip"></i><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></span></li>
-      <?php foreach($this->pathway as $item) : ?>
-      <li class="divider">/</li>
-      <li><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
-      <?php endforeach; ?>
-    </ul>
-  </div>
+	<div class="span12 column-item">
+		<ul class="breadcrumb" style="border:1px solid #E3E3E3;">
+			<li class="active"><span class="divider"><i class="icon-location hasTooltip"></i><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></span></li>
+			<?php foreach($this->pathway as $item) : ?>
+				<li class="divider">/</li>
+				<li><a href="<?php echo $item->link ?>"><?php echo $item->name ?></a></li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
 </div>
 <?php endif ?>

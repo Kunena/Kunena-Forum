@@ -1,7 +1,7 @@
 <?php
 /**
  * Kunena Component
- * @package Kunena.Template.Strapless
+ * @package Kunena.Template.Crypsis
  * @subpackage Common
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
@@ -23,11 +23,11 @@ if (version_compare(JVERSION, '3.0','>')) {
 <!-- user dropdown -->
 
 
-<div class="kcontainer"> 
- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
-	<span class="icon-bar"></span> 
-	<span class="icon-bar"></span> 
-	<span class="icon-bar"></span> 
- </a>
-  <div class="nav-collapse collapse"><?php echo $this->getMenu() ?></div>
+<div class="kcontainer">
+	<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	</a>
+	<div class="nav-collapse collapse"><?php echo $this->getMenu() ?></div>
 </div>

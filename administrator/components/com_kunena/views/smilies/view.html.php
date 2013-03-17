@@ -33,7 +33,7 @@ class KunenaAdminViewSmilies extends KunenaView {
 		return parent::display($tpl);
 	}
 	protected function setToolbar() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'smilies' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
 		JToolBarHelper::spacer();

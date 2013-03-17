@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
   <div class="bubble me span12">
     <div style="border-bottom:1px solid #e5e5e5;">
       <h5><?php echo $this->profile->getLink() ?> <small>
-        <?php if($this->topic->first_post_message == $this->message->id >1){
+        <?php if($this->topic->first_post_id  == $this->message->id){
      echo 'Created a new topic.';
 }
 else {
@@ -36,7 +36,7 @@ else {
       <br />
       <small><?php echo $this->ipLink ?></small>
       <?php endif ?>
-      </span> </span>
+      </span>
       <div class="clearfix"></div>
       <?php endif ?>
     </h5>

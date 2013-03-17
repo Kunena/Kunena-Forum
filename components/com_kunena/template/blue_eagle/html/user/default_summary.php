@@ -10,13 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$private = KunenaFactory::getPrivateMessaging();
-if ($this->me->userid == $this->user->id) {
-	$PMCount = $private->getUnreadCount($this->me->userid);
-	$PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
-} else {
-	$PMlink = $this->profile->profileIcon('private');
-}
 ?>
 <?php if ($this->avatarlink) : ?>
 <div class="kavatar-lg"><?php echo $this->avatarlink; ?></div>
@@ -38,8 +31,8 @@ if ($this->me->userid == $this->user->id) {
 	<?php if (!empty($this->usermedals)) : ?><li><?php foreach ( $this->usermedals as $medal ) : echo $medal,' '; endforeach ?></li><?php endif ?>
 	<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_PROFILEVIEW'); ?>:</strong> <?php echo intval($this->profile->uhits); ?></li>
 	<li><?php echo $this->displayKarma(); ?></li>
-	<?php if ($PMlink) : ?>
-	<li><?php if( $this->me->userid != $this->user->id): ?><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_SEND_MESSAGE'); ?>:</strong> <?php  endif ?><?php echo $PMlink; ?></li>
+	<?php if ($this->PMlink) : ?>
+	<li><?php if( $this->me->userid != $this->user->id): ?><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_SEND_MESSAGE'); ?>:</strong> <?php  endif ?><?php echo $this->PMlink; ?></li>
 	<?php  endif ?>
 	<?php if( !empty($this->personalText) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong> <?php echo KunenaHtmlParser::parseText($this->personalText); ?></li><?php } ?>
 </ul>

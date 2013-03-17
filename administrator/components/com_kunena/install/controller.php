@@ -28,19 +28,17 @@ class KunenaControllerInstall extends JControllerLegacy {
 	}
 
 	public function display($cachable = false, $urlparams = false) {
-		require_once(__DIR__.'/view.php');
+		require_once __DIR__ . '/view.php';
 		$view = $this->getView('install', 'html');
-		if ($view)
-		{
-			$view->addTemplatePath(__DIR__.'/tmpl');
+		if ($view) {
+			$view->addTemplatePath(__DIR__ . '/tmpl');
 			$view->setModel($this->model, true);
 			$view->setLayout(JRequest::getWord('layout', 'default'));
 			$view->document = JFactory::getDocument();
 			$view->display();
 
 			// Display Toolbar. View must have setToolBar method
-			if( method_exists( $view , 'setToolBar') )
-			{
+			if (method_exists($view , 'setToolBar')) {
 				$view->setToolBar();
 			}
 		}
@@ -57,18 +55,18 @@ class KunenaControllerInstall extends JControllerLegacy {
 
 		$session = JFactory::getSession();
 
-		$this->model->checkTimeout ();
+		$this->model->checkTimeout();
 		$action = $this->model->getAction();
 		if (!$action) {
-			$this->model->setAction ( null );
-			$this->model->setStep ( 0 );
+			$this->model->setAction(null);
+			$this->model->setStep(0);
 			echo json_encode(array('success'=>false, 'html'=>'No action defined!'));
 			return;
 		}
 		if (!isset($this->steps[$this->step+1])) {
 			// Installation complete: reset and exit installer
-			$this->model->setAction ( null );
-			$this->model->setStep ( 0 );
+			$this->model->setAction(null);
+			$this->model->setStep(0);
 			echo json_encode(array('success'=>true, 'status'=>'100%', 'html'=>'Installation complete!'));
 			return;
 		}
@@ -78,25 +76,25 @@ class KunenaControllerInstall extends JControllerLegacy {
 			$session->set('kunena.reload', 1);
 			$session->set('kunena.queue', null);
 			$session->set('kunena.newqueue', null);
-			$this->model->setStep ( ++ $this->step );
+			$this->model->setStep(++$this->step);
 		}
 		do {
-			$this->runStep ();
-			$error = $this->model->getInstallError ();
-			$this->step = $this->model->getStep ();
-			$stop = ($this->model->checkTimeout () || !isset($this->steps[$this->step+1]));
-		} while ( ! $stop && ! $error );
+			$this->runStep();
+			$error = $this->model->getInstallError();
+			$this->step = $this->model->getStep();
+			$stop = ($this->model->checkTimeout() || !isset($this->steps[$this->step+1]));
+		} while (!$stop && !$error);
 
 		// Store queued messages so that they won't get lost
-		$session->set('kunena.queue', array_merge( (array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue') ));
+		$session->set('kunena.queue', array_merge((array) $session->get('kunena.queue'), (array) $session->get('kunena.newqueue')));
 		$newqueue = array();
-		$app = JFactory::getApplication ();
+		$app = JFactory::getApplication();
 		foreach ($app->getMessageQueue() as $item) {
 			if (!empty($item['message'])) $newqueue[] = $item;
 		}
 		$session->set('kunena.newqueue', $newqueue);
 
-		if ( isset($this->steps[$this->step+1]) && ! $error ) {
+		if (isset($this->steps[$this->step+1]) && ! $error) {
 			echo json_encode(array('success'=>true, 'status'=>"{$this->step}%", 'html'=>'Installer running...'));
 		} else {
 			echo json_encode(array('success'=>true, 'status'=>'100%', 'html'=>'Installation complete!'));
@@ -116,27 +114,26 @@ class KunenaControllerInstall extends JControllerLegacy {
 			jimport('joomla.filesystem.folder');
 			JFolder::delete(KPATH_MEDIA);
 			jimport('joomla.installer.installer');
-			$installer = new JInstaller ( );
+			$installer = new JInstaller();
 			jimport('joomla.application.component.helper');
 			$component = JComponentHelper::getComponent('com_kunena');
 			$installer->uninstall ( 'component', $component->id );
-			$this->setRedirect ( 'index.php?option=com_installer' );
+			$this->setRedirect('index.php?option=com_installer');
 		} else {
-			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
+			$this->setRedirect('index.php?option=com_kunena&view=install');
 		}
 	}
 
 	function runStep() {
-		if (empty ( $this->steps [$this->step] ['step'] ))
+		if (empty($this->steps[$this->step]['step']))
 			return;
-		return call_user_func ( array ($this->model, "step" . $this->steps [$this->step] ['step'] ) );
+		return call_user_func(array($this->model, "step" . $this->steps[$this->step]['step']));
 	}
 
 	static public function error($type, $errstr) {
 		$model = JModelLegacy::getInstance('Install', 'KunenaModel');
 		$model->addStatus($type, false, $errstr);
-		$app = JFactory::getApplication();
-		$app->redirect ( 'index.php?option=com_kunena&view=install' );
+		echo json_encode(array('success'=>false, 'html'=>$errstr));
 	}
 
 	static public function exceptionHandler($exception) {
@@ -145,7 +142,7 @@ class KunenaControllerInstall extends JControllerLegacy {
 	}
 
 	static public function errorHandler($errno, $errstr, $errfile, $errline) {
-		self::$error('', "Fatal Error: $errstr in $errfile on line $errline");
+		//self::$error('', "Fatal Error: $errstr in $errfile on line $errline");
 		switch ($errno) {
 			case E_ERROR:
 			case E_USER_ERROR:

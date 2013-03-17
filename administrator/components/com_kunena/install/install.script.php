@@ -32,7 +32,7 @@ class Com_KunenaInstallerScript {
 
 	public function install($parent) {
 		$app = JFactory::getApplication();
-		$app->enqueueMessage("Please wait... Installing Kunena.<script>window.addEvent('domready',function(){SqueezeBox.open('index.php?option=com_kunena&view=install&tmpl=component',{size:{x:320,y:140},sizeLoading:{x:320,y:140},closable:false,handler:'iframe'});});SqueezeBox.closeBtn.setStyle('display','none');</script>");
+		$app->enqueueMessage("Please wait... Installing Kunena.<script>window.addEvent('domready',function(){SqueezeBox.open('index.php?option=com_kunena&view=install&tmpl=component',{size:{x:400,y:140},sizeLoading:{x:400,y:140},closable:false,handler:'iframe'});});</script>");
 		return true;
 	}
 

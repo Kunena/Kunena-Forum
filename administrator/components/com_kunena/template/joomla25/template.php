@@ -25,7 +25,7 @@ class KunenaAdminTemplate25 {
 
 	public function compileLess($inputFile, $outputFile) {
 		if ( !class_exists( 'lessc' ) ) {
-			require_once KPATH_ADMIN . '/libraries/external/lessc/lessc.php';
+			require_once KPATH_FRAMEWORK . '/external/lessc/lessc.php';
 		}
 
 		// Load the cache.

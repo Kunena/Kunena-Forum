@@ -28,7 +28,7 @@ if (JRequest::getCmd('view') == 'install' || !class_exists('KunenaForum') || !Ku
 	require_once __DIR__ . '/install/controller.php';
 	$controller = new KunenaControllerInstall();
 	// TODO: execute special task that checks what's wrong
-	$controller->execute(null);
+	$controller->execute(JRequest::getCmd('task'));
 	$controller->redirect();
 	return;
 }

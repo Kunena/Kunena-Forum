@@ -64,7 +64,21 @@ class Pkg_KunenaInstallerScript {
 	}
 
 	public function postflight($type, $parent) {
+		if ($type == 'uninstall') return true;
+
+		$this->enablePlugin('system', 'kunena');
+		$this->enablePlugin('quickicon', 'kunena');
+
 		return true;
+	}
+
+	function enablePlugin($group, $element) {
+		$plugin = JTable::getInstance('extension');
+		if (!$plugin->load(array('type'=>'plugin', 'folder'=>$group, 'element'=>$element))) {
+			return false;
+		}
+		$plugin->enabled = 1;
+		return $plugin->store();
 	}
 
 	public function checkRequirements($version) {

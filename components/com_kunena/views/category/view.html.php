@@ -447,6 +447,14 @@ function getTopicClass($prefix='k', $class='topic') {
 		return $pagination->getPagesLinks();
 	}
 
+	public function getCategoryRSSURL($catid, $xhtml = true) {
+		if ($this->config->enablerss) {
+			$params = '&catid=' . ( int ) $catid;
+			return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+		}
+		return;
+	}
+
 	protected function _prepareDocument($type){
 		if ( $type=='default' ) {
 			$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;

@@ -63,6 +63,10 @@ class Pkg_KunenaInstallerScript {
 		return true;
 	}
 
+	public function makeRoute($uri) {
+		return JRoute::_($uri, false);
+	}
+
 	public function postflight($type, $parent) {
 		if ($type == 'uninstall') return true;
 
@@ -71,13 +75,14 @@ class Pkg_KunenaInstallerScript {
 
 		$app = JFactory::getApplication();
 		if (version_compare(JVERSION, '3.0', '>')) {
-?>
-<div id="kunena-modal" class="modal hide fade"><div class="modal-body"></div></div>
-<script>jQuery('#kunena-modal').modal({backdrop: 'static', keyboard: false, remote: 'index.php?option=com_kunena&view=install&format=raw'})</script>
-<?php
+			$modal = <<<EOS
+<div id="kunena-modal" class="modal hide fade"><div class="modal-body"></div></div><script>jQuery('#kunena-modal').remove().prependTo('body').modal({backdrop: 'static', keyboard: false, remote: '{$this->makeRoute('index.php?option=com_kunena&view=install&format=raw')}'})</script>
+EOS;
+
 		} else {
-			echo("<script>window.addEvent('domready',function(){SqueezeBox.open('index.php?option=com_kunena&view=install&tmpl=component',{size:{x:400,y:140},sizeLoading:{x:400,y:140},closable:false,handler:'iframe'});});</script>");
+			$modal = "<script>window.addEvent('domready',function(){SqueezeBox.open('{$this->makeRoute('index.php?option=com_kunena&view=install&tmpl=component')}',{size:{x:530,y:140},sizeLoading:{x:530,y:140},closable:false,handler:'iframe'});});</script>";
 		}
+		$app->enqueueMessage('Installing Kunena... '.$modal);
 
 		return true;
 	}

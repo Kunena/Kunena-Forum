@@ -105,7 +105,7 @@ if (version_compare(JVERSION, '3.0', '<')) : ?>
 </style>
 <?php endif; ?>
 
-<div id="kunena" style="max-width:600px">
+<div id="kunena" style="max-width:530px">
 	<div id="kunena-install">
 		<h2>Installing Kunena, please wait...</h2>
 		<div>

@@ -26,13 +26,10 @@ abstract class JHtmlKunenaGrid
 	 * @param   string        $task            The task to fire
 	 * @param   string|array  $prefix          An optional task prefix or an array of options
 	 * @param   string        $text            An optional text to display
-	 * @param   string        $active_title    An optional active tooltip to display if $enable is true
-	 * @param   string        $inactive_title  An optional inactive tooltip to display if $enable is true
-	 * @param   boolean       $tip             An optional setting for tooltip
-	 * @param   string        $active_class    An optional active HTML class
-	 * @param   string        $inactive_class  An optional inactive HTML class
-	 * @param   boolean       $enabled         An optional setting for access control on the action.
-	 * @param   boolean       $translate       An optional setting for translation.
+	 * @param   string        $title           An optional title
+	 * @param   string        $class           An optional active HTML class
+	 * @param   boolean       $bootstrap       An optional setting for to know if it the link will be used in bootstrap.
+	 * @param   string        $img             An optinal img HTML tag
 	 * @param   string        $checkbox	       An optional prefix for checkboxes.
 	 *
 	 * @return string         The Html code

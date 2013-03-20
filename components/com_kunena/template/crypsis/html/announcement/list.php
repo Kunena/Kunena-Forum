@@ -50,6 +50,7 @@ defined ( '_JEXEC' ) or die ();
 								<th class="kcol-annpublish"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
 								<th class="kcol-annedit"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
 								<th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
+								<th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_AUTHOR'); ?></th>
 							<?php endif; ?>
 						</tr>
 						<?php $this->displayItems() ?>

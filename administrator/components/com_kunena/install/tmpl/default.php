@@ -128,9 +128,8 @@ if (version_compare(JVERSION, '3.0', '<')) : ?>
 	</div>
 </div>
 <script>
-window.kunenaAddItems = function(html) {
-	var el = new Element('div', {html: html});
-	document.id('kunena-details').grab(el);
+window.kunenaAddItems = function(log) {
+	document.id('kunena-details').set('html', log);
 };
 window.kunenainstall = function() {
 	var kunenaInstall = document.id('kunena-install');
@@ -153,11 +152,11 @@ window.kunenainstall = function() {
 			if (responseJSON.status) {
 				kunenaProgress.setStyle('width', responseJSON.status);
 			}
-			if (responseJSON.html) {
-				window.kunenaAddItems(responseJSON.html);
+			if (responseJSON.log) {
+				window.kunenaAddItems(responseJSON.log);
 			}
 			if (responseJSON.success) {
-				kunenaDescription.set('html', responseJSON.html);
+				kunenaDescription.set('html', responseJSON.current);
 				if (responseJSON.status != '100%') {
 					window.kunenainstall();
 					return;

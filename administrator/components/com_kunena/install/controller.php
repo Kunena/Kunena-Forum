@@ -94,10 +94,18 @@ class KunenaControllerInstall extends JControllerLegacy {
 		}
 		$session->set('kunena.newqueue', $newqueue);
 
+		$this->status = $this->model->getStatus();
+		ob_start();
+		include __DIR__.'/tmpl/install.php';
+		$log = ob_get_contents();
+		ob_end_clean();
+
 		if (isset($this->steps[$this->step+1]) && ! $error) {
-			echo json_encode(array('success'=>true, 'status'=>"{$this->step}%", 'html'=>'Installer running...'));
+			$current = end($this->status);
+			$percent = $this->step / count($this->steps);
+			echo json_encode(array('success'=>true, 'status'=>"{$percent}%", 'current'=>$current['task'], 'log'=>$log));
 		} else {
-			echo json_encode(array('success'=>true, 'status'=>'100%', 'html'=>'Installation complete!'));
+			echo json_encode(array('success'=>true, 'status'=>'100%', 'current'=>'Installation complete!', 'log'=>$log));
 		}
 	}
 

@@ -25,12 +25,17 @@ defined('_JEXEC') or die;
 				<?php echo JText::_('COM_KUNENA_BATCH_CATEGORY_LABEL'); ?>
 				</label>
 				<fieldset id="batch-choose-action" class="combo">
-					<?php echo $this->batch_categories; ?><input type="radio" name="move_copy" value="copy" />
-					<label><?php echo JText::_('COM_KUNENA_BATCH_CATEGORY_COPY') ?></label>
-					<input type="radio" name="move_copy" value="move" />
-					<label>
-						<?php echo JText::_('COM_KUNENA_BATCH_CATEGORY_MOVE') ?>
-					</label>
+					<?php echo $this->batch_categories; ?>
+					<div id="batch-move-copy" class="control-group radio">
+						<div class="controls">
+							<input type="radio" name="move_copy" value="copy" />
+							<label><?php echo JText::_('COM_KUNENA_BATCH_CATEGORY_COPY') ?></label>
+							<input type="radio" name="move_copy" value="move" />
+							<label>
+								<?php echo JText::_('COM_KUNENA_BATCH_CATEGORY_MOVE') ?>
+							</label>
+						</div>
+					</div>
 				</fieldset>
 			</div>
 		</div>

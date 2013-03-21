@@ -89,17 +89,12 @@ class KunenaViewUser extends KunenaView {
 			$this->profile->save();
 		}
 		if ($this->profile->userid == $this->me->userid) {
-			if ($this->do != 'edit') $this->editLink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_EDIT').' &raquo;', 'nofollow', 'edit', 'kheader-link' );
-			else $this->editLink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow', '', 'kheader-link' );
-
-			// TODO: Deprecated
-			if ($this->do != 'edit') $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
-			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK'), 'nofollow' );
+			if ($this->do != 'edit') $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_EDIT').' &raquo;', JText::_('COM_KUNENA_EDIT').' &raquo;', 'nofollow', 'edit' );
+			else $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_BACK').' &raquo;', JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow' );
 		}
 		$this->name = $this->user->username;
 		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
 		if ($this->config->showuserstats) {
-			$this->usertype = $this->config->userlist_usertype ? $this->user->getType() : null;
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');
 			$this->posts = $this->profile->posts;
@@ -300,6 +295,14 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displaySummary() {
+		$private = KunenaFactory::getPrivateMessaging();
+		if ($this->me->userid == $this->user->id) {
+			$PMCount = $private->getUnreadCount($this->me->userid);
+			$this->PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
+		} else {
+			$this->PMlink = $this->profile->profileIcon('private');
+		}
+
 		echo $this->loadTemplateFile('summary');
 	}
 
@@ -327,8 +330,8 @@ class KunenaViewUser extends KunenaView {
 			$userkarma = '<strong>'. JText::_('COM_KUNENA_KARMA') . "</strong>: " . $this->profile->karma;
 
 			if ($this->me->userid && $this->me->userid != $this->profile->userid) {
-				$userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'decrease', '', '', $this->profile->userid, '<span class="kkarma-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
-				$userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'increase', '', '', $this->profile->userid, '<span class="kkarma-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
+				$userkarma .= ' '.JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
+				$userkarma .= ' '.JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
 			}
 		}
 
@@ -380,6 +383,7 @@ class KunenaViewUser extends KunenaView {
 
 	function displayEditUser() {
 		$this->user = JFactory::getUser();
+		$this->me = KunenaUserHelper::get();
 
 		// check to see if Frontend User Params have been enabled
 		if (JComponentHelper::getParams('com_users')->get('frontend_userparams')) {

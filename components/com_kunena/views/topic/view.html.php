@@ -507,8 +507,8 @@ class KunenaViewTopic extends KunenaView {
 			if ($this->config->showkarma && $this->profile->userid) {
 				$this->userkarma_title = JText::_ ( 'COM_KUNENA_KARMA' ) . ": " . $this->profile->karma;
 				if ($this->me->userid && $this->me->userid != $this->profile->userid) {
-					$this->userkarma_minus = ' ' . CKunenaLink::GetKarmaLink ( 'decrease', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_ ( 'COM_KUNENA_KARMA_SMITE' ) . '"> </span>' );
-					$this->userkarma_plus = ' ' . CKunenaLink::GetKarmaLink ( 'increase', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_ ( 'COM_KUNENA_KARMA_APPLAUD' ) . '"> </span>' );
+					$this->userkarma_minus = ' ' .JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
+					$this->userkarma_plus = ' ' .JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
 				}
 			}
 
@@ -526,11 +526,6 @@ class KunenaViewTopic extends KunenaView {
 				$this->userkarma = "{$this->userkarma_title} {$this->userkarma_minus} {$this->userkarma_plus}";
 				// Use kunena profile
 				if ($this->config->showuserstats) {
-					if ($this->config->userlist_usertype) {
-						$this->usertype = $this->profile->getType ( $this->topic->category_id );
-					} else {
-						$this->usertype = null;
-					}
 					$this->userrankimage = $this->profile->getRank ( $this->topic->category_id, 'image' );
 					$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
 					$this->userposts = $this->profile->posts;
@@ -539,7 +534,6 @@ class KunenaViewTopic extends KunenaView {
 					$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
 					$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
 				} else {
-					$this->usertype = null;
 					$this->userrankimage = null;
 					$this->userranktitle = null;
 					$this->userposts = null;
@@ -706,20 +700,27 @@ class KunenaViewTopic extends KunenaView {
 
 		// Thank you info and buttons
 		$this->thankyou = array();
+		$this->total_thankyou = 0;
+		$this->more_thankyou= 0;
+		$thankyous = array();
 
 		if ( isset($message->thankyou) ) {
 			if ($this->config->showthankyou && $this->profile->userid) {
 				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JSession::getFormToken() . '=1';
 
 				// for normal users, show only limited number of thankyou (config->thankyou_max)
-				if ( !$this->me->isAdmin() || !$this->me->isModerator() ) {
-					$message->thankyou = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
+				if ( !$this->me->isAdmin() && !$this->me->isModerator() ) {
+					if (count($message->thankyou) > $this->config->thankyou_max) $this->more_thankyou = count($message->thankyou) - $this->config->thankyou_max;
+					$this->total_thankyou =count($message->thankyou);
+					$thankyous = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
+				} else {
+					$thankyous = $message->thankyou;
 				}
 
 				if( $this->message->authorise('unthankyou') ) $canUnthankyou = true;
 				else $canUnthankyou=false;
 
-				foreach( $message->thankyou as $userid=>$time){
+				foreach( $thankyous as $userid=>$time){
 					$thankyou_delete = $canUnthankyou === true ?  ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
 					$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;

@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -25,52 +25,59 @@ class KunenaAdminModelCategories extends KunenaModel {
 
 	/**
 	 * Method to auto-populate the model state.
-	 *
-	 * @return	void
-	 * @since	1.6
 	 */
 	protected function populateState() {
-		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.categories.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
-		$this->setState ( 'list.limit', $value );
+		$app = JFactory::getApplication();
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.ordering', 'filter_order', 'ordering', 'cmd' );
-		$this->setState ( 'list.ordering', $value );
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
+		$this->context = 'com_kunena.admin.categories';
+		if ($layout) {
+			$this->context .= '.'.$layout;
+		}
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.categories.list.start", 'limitstart', 0, 'int' );
+		// List state information.
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.start', 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.direction', 'filter_order_Dir', 'asc', 'word' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.limit', 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
+		$this->setState ( 'list.limit', $value );
+
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.ordering', 'filter_order', 'ordering', 'cmd' );
+		$this->setState ( 'list.ordering', $value );
+
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.direction', 'filter_order_Dir', 'asc', 'word' );
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.search', 'filter_search', '', 'string' );
-		$this->setState ( 'list.search', $value );
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.search', 'filter_search', '', 'string' );
+		$this->setState ( 'filter.search', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_published', 'filter_published', '', 'string' );
-		$this->setState ( 'list.filter_published', $value );
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.published', 'filter_published', '', 'string' );
+		$this->setState ( 'filter.published', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_title', 'filter_title', '', 'string' );
-		$this->setState ( 'list.filter_title', $value );
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.title', 'filter_title', '', 'string' );
+		$this->setState ( 'filter.title', $value !== '' ? $value : null );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_type', 'filter_type', '', 'string' );
-		$this->setState ( 'list.filter_type', $value );
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.type', 'filter_type', '', 'string' );
+		$this->setState ( 'filter.type', $value !== '' ? $value : null );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_access', 'filter_access', '', 'string' );
-		$this->setState ( 'list.filter_access', $value );
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.access', 'filter_access', '', 'string' );
+		$this->setState ( 'filter.access', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_locked', 'filter_locked', '', 'string' );
-		$this->setState ( 'list.filter_locked', $value );
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.locked', 'filter_locked', '', 'string' );
+		$this->setState ( 'filter.locked', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_review', 'filter_review', '', 'string' );
-		$this->setState ( 'list.filter_review', $value );
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.review', 'filter_review', '', 'string' );
+		$this->setState ( 'filter.review', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.categories.list.filter_anonymous', 'filter_anonymous', '', 'string' );
-		$this->setState ( 'list.filter_anonymous', $value );
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.anonymous', 'filter_anonymous', '', 'string' );
+		$this->setState ( 'filter.anonymous', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.categories.list.levels", 'levellimit', 10, 'int' );
-		$this->setState ( 'list.levels', $value );
+		// TODO: implement
+		$value = $this->getUserStateFromRequest ( $this->context.".filter.levels", 'levellimit', 10, 'int' );
+		$this->setState ( 'filter.levels', $value );
 
 		$catid = $this->getInt ( 'catid', 0 );
 		$layout = $this->getWord ( 'layout', 'edit' );
@@ -81,62 +88,37 @@ class KunenaAdminModelCategories extends KunenaModel {
 		}
 		$this->setState ( 'item.id', $catid );
 		$this->setState ( 'item.parent_id', $parent_id );
-
-		$access = $this->getUserStateFromRequest('com_kunena.admin.categories.filter.access', 'filter_access', 0, 'int');
-		$this->setState('filter.access', $access);
-
-		$published = $this->getUserStateFromRequest('com_kunena.admin.categories.jgrid.published', 'filter_published', '');
-		$this->setState('filter.published', $published);
-
-		$type = $this->getUserStateFromRequest('com_kunena.admin.categories.filter.type', 'filter_type', '');
-		$this->setState('filter.type', $type);
 	}
 
 	public function getAdminCategories() {
 		if ( $this->_admincategories === false ) {
-			$type=$this->getState('filter.type');
-			$getparents = true;
-			if ( $type ) $getparents = false;
-
 			$params = array (
 				'ordering'=>$this->getState ( 'list.ordering' ),
 				'direction'=>$this->getState ( 'list.direction' ) == 'asc' ? 1 : -1,
-				'search'=>$this->getState ( 'list.search' ),
+				'search'=>$this->getState ( 'filter.search' ),
 				'unpublished'=>1,
-				'action'=>'admin',
-				'parents'=>$getparents);
+				'published'=>$this->getState ( 'filter.published'),
+				'filter_title'=>$this->getState ( 'filter.title'),
+				'filter_type'=>$this->getState ( 'filter.type'),
+				'filter_access'=>$this->getState ( 'filter.access'),
+				'filter_locked'=>$this->getState ( 'filter.locked'),
+				'filter_review'=>$this->getState ( 'filter.review'),
+				'filter_anonymous'=>$this->getState ( 'filter.anonymous'),
+				'action'=>'admin');
+
 			$catid = $this->getState ( 'item.id', 0 );
 			$categories = array();
 			$orphans = array();
 
-			if ( $this->getState('filter.access') != 0 ) {
-				$categories = KunenaForumCategoryHelper::getCategoriesByAccess('joomla.level',$this->getState('filter.access'));
+			if ($catid) {
+				$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'filter.levels' ), array('unpublished'=>1, 'action'=>'none'));
+				$categories[] = KunenaForumCategoryHelper::get($catid);
 			} else {
-				if ($catid) {
-					$categories = KunenaForumCategoryHelper::getParents($catid, $this->getState ( 'list.levels' ), array('unpublished'=>1, 'action'=>'none'));
-					$categories[] = KunenaForumCategoryHelper::get($catid);
-				} else {
-					$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'list.levels' ), $params);
- 				}
-
-				$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'list.levels' ), $params));
-				$categories = array_merge($orphans, $categories);
+				$orphans = KunenaForumCategoryHelper::getOrphaned($this->getState ( 'filter.levels' ), $params);
 			}
 
-			$published = $this->getState('filter.published');
-
-			$getcategories=0;
-			if ( $type== 2 ) $getcategories=1;
-
-			if ( !empty($published)  || $getcategories ) {
-				$list = array ();
-				foreach($categories as $cat) {
-
-					if ( $this->getState('filter.published') == $cat->published ) $list[] = $cat;
-					if ($getcategories && $cat->parent_id > 0 ) $list[] = $cat;
-				}
-				$categories = $list;
-			}
+			$categories = array_merge($categories, KunenaForumCategoryHelper::getChildren($catid, $this->getState ( 'filter.levels' ), $params));
+			$categories = array_merge($orphans, $categories);
 
 			$categories = KunenaForumCategoryHelper::getIndentation($categories);
 			$this->setState ( 'list.total', count($categories) );
@@ -153,7 +135,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 				// FIXME: stop creating access names manually
 				if ($category->accesstype == 'joomla.level') {
 					$groupname = $acl->getGroupName($category->accesstype, $category->access);
-					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_JOOMLA_LEVEL').': '.($groupname ? $groupname : JText::_('COM_KUNENA_NOBODY'));
+					$category->accessname = $groupname ? $groupname : JText::_('COM_KUNENA_NOBODY');
 				} elseif ($category->accesstype != 'joomla.group') {
 					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype))).': '.$acl->getGroupName($category->accesstype, $category->access);
 				} else {
@@ -169,6 +151,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 				} else {
 					$category->admin_group = JText::_ ( $acl->getGroupName($category->accesstype, $category->admin_access ));
 				}
+
 				if ($this->me->isAdmin($category) && $category->isCheckedOut(0)) {
 					$category->editor = KunenaFactory::getUser($category->checked_out)->getName();
 				} else {
@@ -320,5 +303,59 @@ class KunenaAdminModelCategories extends KunenaModel {
 
 		$list = JHtml::_ ( 'select.genericlist', $batch_categories, 'batch_category_id', 'class="inputbox" size="1"', 'value', 'text', 'select' );
 		return $list;
+	}
+
+	protected function getReorderConditions($table) {
+		$condition = array();
+		$condition[] = 'parent_id = '.(int) $table->parent_id;
+		return $condition;
+	}
+
+	public function saveorder($pks = null, $order = null) {
+		$table = JTable::getInstance('KunenaCategories', 'Table');
+		$conditions = array();
+
+		if (empty($pks)) return false;
+
+		// Update ordering values
+		foreach ($pks as $i => $pk) {
+			$table->load((int) $pk);
+
+			if ($table->ordering != $order[$i]) {
+				$table->ordering = $order[$i];
+
+				if (!$table->store()) {
+					$this->setError($table->getError());
+					return false;
+				}
+
+				// Remember to reorder within position and client_id
+				$condition = $this->getReorderConditions($table);
+				$found = false;
+
+				foreach ($conditions as $cond) {
+					if ($cond[1] == $condition) {
+						$found = true;
+						break;
+					}
+				}
+
+				if (!$found) {
+					$key = $table->getKeyName();
+					$conditions[] = array($table->$key, $condition);
+				}
+			}
+		}
+
+		// Execute reorder for each category.
+		foreach ($conditions as $cond) {
+			$table->load($cond[0]);
+			$table->reorder($cond[1]);
+		}
+
+		// Clear the component's cache
+		$this->cleanCache();
+
+		return true;
 	}
 }

@@ -328,6 +328,36 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$this->redirectBack();
 	}
 
+	/**
+	 * Method to save the submitted ordering values for records via AJAX.
+	 *
+	 * @return  void
+	 *
+	 * @since   3.0
+	 */
+	public function saveOrderAjax()
+	{
+		if (!JSession::checkToken('post')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack();
+		}
+
+		// Get the arrays from the Request
+		$pks   = $this->input->post->get('cid', null, 'array');
+		$order = $this->input->post->get('order', null, 'array');
+
+		// Get the model
+		$model = $this->getModel('categories');
+		// Save the ordering
+		$return = $model->saveorder($pks, $order);
+		if ($return) {
+			echo "1";
+		}
+
+		// Close the application
+		JFactory::getApplication()->close();
+	}
+
 	function orderup() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->orderUpDown ( array_shift($cid), -1 );
@@ -436,7 +466,6 @@ class KunenaAdminControllerCategories extends KunenaController {
 	*
 	* @since  3.0.0
 	*/
-
 	public function batch_categories() {
 		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
@@ -448,7 +477,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$task = JRequest::getString('move_copy');
 
 		if ( $cat_parent == 0 || empty($cid) ) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_BATCH_CATEGORY_NOT_EXIST') );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORIES_LABEL_BATCH_NOT_EXIST') );
 			return false;
 		}
 
@@ -463,7 +492,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 				$this->_save();
 			}
 
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_BATCH_CATEGORY_COPY_SUCCESS') );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORIES_LABEL_BATCH_COPY_SUCCESS') );
 		} elseif ( $task == 'move' ) {
 			$db = JFactory::getDBO ();
 			foreach($cid as $cat) {
@@ -475,7 +504,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 				}
 			}
 
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_BATCH_CATEGORY_MOVE_SUCCESS') );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORIES_LABEL_BATCH_MOVE_SUCCESS') );
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));

@@ -60,13 +60,11 @@ class KunenaAdminViewTools extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_FORUM_TOOLS'), 'kunena.png' );
-		JToolBarHelper::spacer();
-		JToolBarHelper::back();
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_FORUM_TOOLS'), 'tools' );
 	}
 
 	protected function setToolBarPrune() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('prune', 'delete.png', 'delete_f2.png', 'COM_KUNENA_PRUNE', false);
 		JToolBarHelper::spacer();
@@ -75,7 +73,7 @@ class KunenaAdminViewTools extends KunenaView {
 	}
 
 	protected function setToolBarSyncUsers() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('syncusers', 'apply.png', 'apply_f2.png', 'COM_KUNENA_SYNC', false);
 		JToolBarHelper::spacer();
@@ -84,7 +82,7 @@ class KunenaAdminViewTools extends KunenaView {
 	}
 
 	protected function setToolBarRecount() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('recount', 'apply.png', 'apply_f2.png', 'COM_KUNENA_A_RECOUNT', false);
 		JToolBarHelper::spacer();
@@ -93,7 +91,7 @@ class KunenaAdminViewTools extends KunenaView {
 	}
 
 	protected function setToolBarMenu() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
 		JToolBarHelper::spacer();
 		if (!empty($this->legacy)) JToolBarHelper::custom('fixlegacy', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_MENU_TOOLBAR_FIXLEGACY', false);
 		if (version_compare(JVERSION, '3', '>')) {
@@ -107,7 +105,7 @@ class KunenaAdminViewTools extends KunenaView {
 	}
 
 	protected function setToolBarPurgeReStatements() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::trash('purgerestatements', 'COM_KUNENA_A_PURGE_RE_MENU_VALIDATE', false);
 		JToolBarHelper::spacer();

@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once KPATH_SITE . '/lib/kunena.link.class.php';
-
 /**
  * Kunena Topic Controller
  *
@@ -807,7 +805,12 @@ class KunenaControllerTopic extends KunenaController {
 					if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
 						continue;
 
-					JMail::sendMail ( $this->config->getEmail(), $mailsender, $emailTo->email, $mailsubject, $mailmessage );
+					$mail = JFactory::getMailer();
+					$mail->setSender(array($this->me->username,$this->me->email));
+					$mail->setBody($mailmessage);
+					$mail->setSubject($mailsubject);
+					$mail->addRecipient($emailTo->email);
+					$mail->send();
 				}
 
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );

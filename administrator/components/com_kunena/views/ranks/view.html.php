@@ -14,29 +14,28 @@ defined ( '_JEXEC' ) or die ();
  * About view for Kunena ranks backend
  */
 class KunenaAdminViewRanks extends KunenaView {
-	function displayDefault() {
-		$this->setToolBarDefault();
-		$this->ranks = $this->get('Ranks');
+	function display($tpl = null) {
+		$this->setToolbar();
+		$this->items = $this->get('Items');
 		$this->state = $this->get('state');
-		$this->navigation = $this->get ( 'AdminNavigation' );
-		$this->display ();
+		$this->pagination = $this->get ( 'Pagination' );
+
+		$this->sortFields = $this->getSortFields();
+		$this->sortDirectionFields = $this->getSortDirectionFields();
+
+		$this->filterSearch = $this->escape($this->state->get('filter.search'));
+		$this->filterTitle = $this->escape($this->state->get('filter.title'));
+		$this->filterSpecial = $this->escape($this->state->get('filter.special'));
+		$this->filterMinPostCount = $this->escape($this->state->get('filter.min'));
+		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
+		$this->listDirection = $this->escape($this->state->get('list.direction'));
+
+		$this->sortDirectionOrdering = $this->getSortDirectionOrdering();
+		return parent::display($tpl);
 	}
 
-	function displayAdd() {
-		$this->displayEdit();
-	}
-
-	function displayEdit() {
-		$this->setToolBarEdit();
-		$this->state = $this->get('state');
-		$this->rank_selected = $this->get('rank');
-		$this->rankpath = $this->ktemplate->getRankPath();
-		$this->listranks = $this->get('Rankspaths');
-		$this->display ();
-	}
-
-	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_RANK_MANAGER'), 'kunena.png' );
+	protected function setToolbar() {
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_RANK_MANAGER'), 'ranks' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_RANK');
 		JToolBarHelper::spacer();
@@ -46,26 +45,44 @@ class KunenaAdminViewRanks extends KunenaView {
 		JToolBarHelper::spacer();
 	}
 
-	protected function setToolBarEdit() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
-		JToolBarHelper::spacer();
-		JToolBarHelper::save('save');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('ranks');
-	}
-
 	/**
 	 * Returns an array of standard published state filter options.
 	 *
 	 * @return	string	The HTML code for the select tag
 	 */
-	public static function specialOptions()
-	{
+	public static function specialOptions() {
 		// Build the active state filter options.
 		$options	= array();
-		$options[]	= JHtml::_('select.option', '1', 'Yes');
-		$options[]	= JHtml::_('select.option', '0', 'No');
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
 
 		return $options;
+	}
+
+	protected function getSortFields() {
+		$sortFields = array();
+		$sortFields[] = JHtml::_('select.option', 'a.title', JText::_('JGLOBAL_TITLE'));
+		$sortFields[] = JHtml::_('select.option', 'a.special', JText::_('COM_KUNENA_RANKS_SPECIAL'));
+		$sortFields[] = JHtml::_('select.option', 'a.min', JText::_('COM_KUNENA_RANKSMIN'));
+		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
+
+		return $sortFields;
+	}
+
+	protected function getSortDirectionFields() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
+		return $sortDirection;
+	}
+
+	// TODO: remove it when J2.5 support is dropped
+	protected function getSortDirectionOrdering() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+
+		return $sortDirection;
 	}
 }

@@ -297,7 +297,7 @@ abstract class KunenaForumCategoryHelper {
 		$ordering = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
 		$direction = isset($params['direction']) ? (int) $params['direction'] : 1;
 		$search = isset($params['search']) ? (string) $params['search'] : '';
-		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : false;
+		$published = isset($params['published']) ? (int) $params['published'] : (empty($params['unpublished']) ? 1 : null);
 		$action = isset($params['action']) ? (string) $params['action'] : 'read';
 		$selected = isset($params['selected']) ? (int) $params['selected'] : 0;
 		$getparents = isset($params['parents']) ? (bool) $params['parents'] : true;
@@ -335,18 +335,30 @@ abstract class KunenaForumCategoryHelper {
 			foreach ( $cats as $id => $children ) {
 				if (! isset ( self::$_instances [$id] ))
 					continue;
-				if (! $unpublished && ! self::$_instances [$id]->published)
-					continue;
 				if ($id == $selected)
 					continue;
+
+				$instance = self::$_instances [$id];
+
+				$filtered  = isset($published) && $instance->published != $published;
+				$filtered |= isset($params['filter_title']) && (JString::stristr($instance->name, (string) $params['filter_title']) === false
+						&& JString::stristr($instance->alias, (string) $params['filter_title']) === false);
+				$filtered |= isset($params['filter_type']);
+				$filtered |= isset($params['filter_access']) && ($instance->accesstype != 'joomla.level' || $instance->access != $params['filter_access']);
+				$filtered |= isset($params['filter_locked']) && $instance->locked != (int) $params['filter_locked'];
+				$filtered |= isset($params['filter_review']) && $instance->review != (int) $params['filter_review'];
+				$filtered |= isset($params['filter_anonymous']) && $instance->allow_anonymous != (int) $params['filter_anonymous'];
+				if ($filtered && $action != 'admin') continue;
+
 				$clist = array ();
 				if ($levels && ! empty ( $children )) {
 					$clist = self::getChildren ( $id, $levels - 1, $params );
 				}
-				if (empty ( $clist ) && $action != 'none' && ! self::$_instances [$id]->authorise ( $action, null, true ))
+				if (empty ( $clist ) && $action != 'none' && ! $instance->authorise ( $action, null, true ))
 					continue;
-				if (! empty ( $clist ) || ! $search || intval ( $search ) == $id || JString::stristr ( self::$_instances [$id]->name, ( string ) $search )) {
-					if (empty ( $clist ) || $getparents) $list [$id] = self::$_instances [$id];
+
+				if (! empty ( $clist ) || ! $search || intval ( $search ) == $id || JString::stristr ( $instance->name, ( string ) $search )) {
+					if (!$filtered && (empty ( $clist ) || $getparents)) $list [$id] = $instance;
 					$list += $clist;
 				}
 			}
@@ -388,7 +400,7 @@ abstract class KunenaForumCategoryHelper {
 	static public function recount($categories = '') {
 		$db = JFactory::getDBO ();
 		if (is_array($categories)) $categories = implode(',', $categories);
-		$categories = !empty($categories) ? "AND category_id IN ({$categories})" : '';
+		$categories = !empty($categories) ? "AND t.category_id IN ({$categories})" : '';
 
 		// Update category post count and last post info on categories which have published topics
 		$query = "UPDATE #__kunena_categories AS c

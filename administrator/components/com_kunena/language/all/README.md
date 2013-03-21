@@ -25,6 +25,23 @@ packages by going to "Extension Manager: Manage", selecting type File and filter
 Additionally extension manager will have a package called "Kunena Language Pack". Uninstalling this package will also uninstall
 all the languages that were added during installation.
 
+How to make translations keys
+=====================
+
+The translations keys in language files need to follow the following rule:
+
+<package-type>_<package-name>_<lang-type>_<object>_<atribute-in-object>_<preprefix(categorization in plural casses)-uniquename>
+
+Which give by example :
+
+COM_KUNENA_SYS_FIELDSET_LABEL_BASICS
+COM_KUNENA_SYS_FIELD_LABEL_BASICSTIMETOCREATE
+COM_KUNENA_SYS_FIELD_DESC_BASICSTIMETOCREATE
+COM_KUNENA_LIB_FIELDSET_LABEL_BASICS
+
+The unique name is bunched at the end of the key and the first part of the key take his name by following the directory structure
+where the key is used.
+
 Translating languages
 =====================
 

@@ -70,13 +70,6 @@ defined ( '_JEXEC' ) or die ();
 						</div>
 					</dd>
 				<?php endif; ?>
-				<?php if ($this->config->userlist_usertype) : ?>
-					<dd class="user-usertype">
-						<div class="innerspacer-header">
-							<span class="bold"><?php echo JHtml::_( 'grid.sort', 'COM_KUNENA_USRL_USERTYPE', 'usertype', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?></span>
-						</div>
-					</dd>
-				<?php endif; ?>
 				<?php if ($this->config->userlist_joindate) : ?>
 					<dd class="user-joindate">
 						<div class="innerspacer-header">

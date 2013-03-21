@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once KPATH_SITE.'/lib/kunena.link.class.php';
-
 /**
  * Category View
  */

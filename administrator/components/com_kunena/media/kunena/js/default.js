@@ -409,8 +409,8 @@ var Autocompleter = new Class({
 	 */
 	addChoiceEvents: function(el) {
 		return el.addEvents({
-			'mouseover': this.choiceOver.bind(this, [el]),
-			'click': this.choiceSelect.bind(this, [el])
+			'mouseover': this.choiceOver.bind(this, el),
+			'click': this.choiceSelect.bind(this, el)
 		});
 	}
 });

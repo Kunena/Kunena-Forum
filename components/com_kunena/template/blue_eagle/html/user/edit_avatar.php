@@ -51,7 +51,7 @@ $i=0;
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
 			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
-			<input id="kunena_url_avatargallery" type="hidden" value="<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' )?>" />
+			<input id="kunena_url_avatargallery" type="hidden" value="<?php echo $this->me->getUrl(true, 'edit') ?>" />
 		</td>
 		<td class="kcol-mid">
 			<table class="kblocktable" id ="kforumua_gal">

@@ -482,17 +482,17 @@ abstract class KunenaForumCategoryHelper {
 	}
 
 	/**
-	 * Method to the alias of category to generate a new title
+	 * Method to get similars aliases corresponding to an alias given
 	 *
 	 * @access	public
 	 * @param	integer	$category_id
-	 * @param string $alias
-	 * @return	boolean	True if something is found in categories
-	 * @since 2.0.0-BETA2
+	 * @param   string $alias
+	 * @return	object
+	 * @since 3.0.0
 	 */
-	static public function getAlias($category_id, $alias) {
+	static public function getSimilarsAliases($category_id, $alias) {
 		$db = JFactory::getDbo();
-		$query = "SELECT * FROM #__kunena_aliases WHERE type = {$db->quote("catid")} AND alias = {$db->quote($alias)}";
+		$query = "SELECT * FROM #__kunena_aliases WHERE type='catid' AND alias LIKE '%{$alias}%'";
 		$db->setQuery($query);
 		$category_items = $db->loadAssoc();
 

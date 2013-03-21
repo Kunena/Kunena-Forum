@@ -451,7 +451,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	 * @since	2.0.0-BETA2
 	 */
 	protected function _generateNewTitle($category_id, $alias, $name) {
-		while (  KunenaForumCategoryHelper::getAlias($category_id, $alias) ) {
+		while (  KunenaForumCategoryHelper::getSimilarsAliases($category_id, $alias) ) {
 			$name = JString::increment($name);
 			$alias = JString::increment($alias, 'dash');
 		}
@@ -477,7 +477,8 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$task = JRequest::getString('move_copy');
 
 		if ( $cat_parent == 0 || empty($cid) ) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORIES_LABEL_BATCH_NOT_EXIST') );
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORIES_LABEL_BATCH_NOT_SELECTED') );
+			$this->setRedirect(KunenaRoute::_($this->baseurl, false));
 			return false;
 		}
 

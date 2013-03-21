@@ -139,7 +139,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 				// FIXME: stop creating access names manually
 				if ($category->accesstype == 'joomla.level') {
 					$groupname = $acl->getGroupName($category->accesstype, $category->access);
-					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_JOOMLA_LEVEL').': '.($groupname ? $groupname : JText::_('COM_KUNENA_NOBODY'));
+					$category->accessname = $groupname ? $groupname : JText::_('COM_KUNENA_NOBODY');
 				} elseif ($category->accesstype != 'joomla.group') {
 					$category->accessname = JText::_('COM_KUNENA_INTEGRATION_TYPE_'.strtoupper(preg_replace('/[^\w\d]+/', '_', $category->accesstype))).': '.$acl->getGroupName($category->accesstype, $category->access);
 				} else {
@@ -155,6 +155,7 @@ class KunenaAdminModelCategories extends KunenaModel {
 				} else {
 					$category->admin_group = JText::_ ( $acl->getGroupName($category->accesstype, $category->admin_access ));
 				}
+
 				if ($this->me->isAdmin($category) && $category->isCheckedOut(0)) {
 					$category->editor = KunenaFactory::getUser($category->checked_out)->getName();
 				} else {

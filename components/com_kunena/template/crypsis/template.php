@@ -1,7 +1,7 @@
 <?php
 /**
 * Kunena Component
-* @package Kunena.Template.Strapless
+* @package Kunena.Template.Crypsis
 *
 * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -76,8 +76,9 @@ var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 
 
 		return <<<HTML
-<a $id class="" style="" href="{$link}" rel="nofollow" title="{$title}">
-	<span class="{$name}"><span>{$text}</span></span>
+<a $id class="btn" style="" href="{$link}" rel="nofollow" title="{$title}">
+	<span class="{$name}"></span>
+	{$text}
 </a>
 HTML;
 	}

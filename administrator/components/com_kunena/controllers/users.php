@@ -215,6 +215,8 @@ class KunenaAdminControllerUsers extends KunenaController {
 			$user->delete();
 		}
 
+		KunenaUserHelper::recountOnDelete();
+
 		$this->app->enqueueMessage (JText::_('COM_KUNENA_A_USER_DELETE_DONE'));
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}

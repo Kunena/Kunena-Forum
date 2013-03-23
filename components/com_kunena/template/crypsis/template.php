@@ -40,6 +40,8 @@ class KunenaTemplateCrypsis extends KunenaTemplate {
 		// Template requires Mootools 1.4+ framework
 		$this->loadMootools();
 		JHtml::_('behavior.tooltip');
+		JHtml::_('bootstrap.framework');
+		JHtml::_('formbehavior.chosen');
 
 		// New Kunena JS for default template
 		$this->addScript ( 'js/plugins.js' );

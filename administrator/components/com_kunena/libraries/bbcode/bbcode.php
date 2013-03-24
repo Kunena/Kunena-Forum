@@ -155,8 +155,6 @@ class KunenaBbcode extends NBBC_BBCode {
 				|
 				www\d{0,3}\.
 				|
-				[a-z0-9\.\-]+\.[a-z]{2,4}\/
-				|
 				mailto:
 				|
 				(?:[a-zA-Z0-9._-]{2,}@)

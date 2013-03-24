@@ -13,8 +13,6 @@ defined ( '_JEXEC' ) or die ();
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
-JHtml::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
-
 class JFormFieldKunenaCategoryList extends JFormField {
 	protected $type = 'KunenaCategoryList';
 

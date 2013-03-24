@@ -144,8 +144,10 @@ class KunenaAdminViewCategories extends KunenaView {
 		$sortFields = array();
 		$sortFields[] = JHtml::_('select.option', 'p.published', JText::_('JSTATUS'));
 		$sortFields[] = JHtml::_('select.option', 'p.title', JText::_('JGLOBAL_TITLE'));
-		$sortFields[] = JHtml::_('select.option', 'p.type', JText::_('COM_KUNENA_CATEGORIES_LABEL_TYPE'));
 		$sortFields[] = JHtml::_('select.option', 'p.access', JText::_('COM_KUNENA_CATEGORIES_LABEL_ACCESS'));
+		$sortFields[] = JHtml::_('select.option', 'p.locked', JText::_('COM_KUNENA_LOCKED'));
+		$sortFields[] = JHtml::_('select.option', 'p.review', JText::_('COM_KUNENA_REVIEW'));
+		$sortFields[] = JHtml::_('select.option', 'p.anonymous', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS'));
 		$sortFields[] = JHtml::_('select.option', 'p.id', JText::_('JGRID_HEADING_ID'));
 
 		return $sortFields;

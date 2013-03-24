@@ -83,7 +83,7 @@ $paneOptions = array(
 									<div class="clearfix"></div>
 								</div>
 
-								<table class="adminlist table table-striped">
+								<table class="table table-striped">
 									<thead>
 										<tr>
 											<th class="nowrap center" width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>

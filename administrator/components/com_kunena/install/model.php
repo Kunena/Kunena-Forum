@@ -599,7 +599,7 @@ class KunenaModelInstall extends JModelLegacy {
 		// Delete installer file (only if not using GIT build).
 		if (!KunenaForum::isDev()) {
 			JFile::delete(KPATH_ADMIN.'/install.php');
-			$contents = '<?php die(); // Kunena has been installed!';
+			$contents = '<?php // Kunena has been installed!';
 			JFile::write(KPATH_ADMIN.'/install.php', $contents);
 		}
 

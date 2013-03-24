@@ -7,6 +7,10 @@
  * @link http://www.kunena.org
  **/
 
+#kunena.admin.override {
+    font-size: 13px;
+}
+
 #kunena.admin.override select,
 #kunena.admin.override input[type="file"] {
     height: auto;

@@ -83,7 +83,7 @@ $paneOptions = array(
 									<div class="clearfix"></div>
 								</div>
 
-								<table class="adminlist table table-striped">
+								<table class="table table-striped">
 									<thead>
 										<tr>
 											<th width="5%" class="nowrap">
@@ -188,7 +188,7 @@ $paneOptions = array(
 
 								<div style="padding:10px;">
 									<input type="file" id="file-upload" name="Filedata" />
-									<input type="submit" id="file-upload-submit" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>" />
+									<button type="submit" id="file-upload-submit" class="btn"><?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?></button>
 									<span id="upload-clear"></span>
 								</div>
 								<ul class="upload-queue" id="upload-queue">

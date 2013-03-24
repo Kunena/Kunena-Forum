@@ -335,12 +335,12 @@ class KunenaModelInstall extends JModelLegacy {
 
 		$dest = JPATH_ROOT."/tmp/kinstall_plg_{$group}_{$name}";
 		if (file_exists($dest)) JFolder::delete($dest);
-		if (is_dir(KUNENA_INSTALLER_ADMINPATH .'/'. $path)) {
+		if (is_dir(KUNENA_INSTALLER_PATH .'/'. $path)) {
 			// Copy path
-			$success = JFolder::copy(KUNENA_INSTALLER_ADMINPATH .'/'. $path, $dest);
-		} elseif (is_file(KUNENA_INSTALLER_ADMINPATH .'/'. $path)) {
+			$success = JFolder::copy(KUNENA_INSTALLER_PATH .'/'. $path, $dest);
+		} elseif (is_file(KUNENA_INSTALLER_PATH .'/'. $path)) {
 			// Extract file
-			$success = $this->extract ( KUNENA_INSTALLER_ADMINPATH, $path, $dest );
+			$success = $this->extract ( KUNENA_INSTALLER_PATH, $path, $dest );
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
@@ -514,14 +514,14 @@ class KunenaModelInstall extends JModelLegacy {
 
 	public function stepPlugins() {
 		// TODO: Complete smart search support
-		//$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
-		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 1);
-		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false, 2);
-		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 3);
-		$this->installPlugin('install/plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false, 4);
-		$this->installPlugin('install/plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false, 5);
-		$this->installPlugin('install/plugins/plg_kunena_kunena', 'kunena', 'kunena', true, 6);
-		$this->installPlugin('install/plugins/plg_kunena_joomla', 'kunena', 'joomla', true, 7);
+		//$this->installPlugin('plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
+		$this->installPlugin('plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 1);
+		$this->installPlugin('plugins/plg_kunena_community', 'kunena', 'community', false, 2);
+		$this->installPlugin('plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 3);
+		$this->installPlugin('plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false, 4);
+		$this->installPlugin('plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false, 5);
+		$this->installPlugin('plugins/plg_kunena_kunena', 'kunena', 'kunena', true, 6);
+		$this->installPlugin('plugins/plg_kunena_joomla', 'kunena', 'joomla', true, 7);
 
 		// TODO: install also menu module
 		//$this->installModule('install/modules/mod_kunenamenu', 'kunenamenu');
@@ -599,6 +599,8 @@ class KunenaModelInstall extends JModelLegacy {
 		// Delete installer file (only if not using GIT build).
 		if (!KunenaForum::isDev()) {
 			JFile::delete(KPATH_ADMIN.'/install.php');
+			$contents = '<?php die(); // Kunena has been installed!';
+			JFile::write(KPATH_ADMIN.'/install.php', $contents);
 		}
 
 		if (! $this->getInstallError ()) {

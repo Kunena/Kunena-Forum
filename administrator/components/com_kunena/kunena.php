@@ -14,13 +14,9 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_kunena')) {
 	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
-// Check if installation hasn't been completed or Git version is being used.
-$installer = __DIR__ . '/install.php';
-if (is_file($installer)) {
-	require_once $installer;
-	// Do nothing more if installer was run.
-	if (class_exists('KunenaControllerInstall')) return;
-}
+// Check if installation hasn't been completed.
+require_once __DIR__ . '/install.php';
+if (class_exists('KunenaControllerInstall')) return;
 
 // Safety check to prevent fatal error if 'System - Kunena Forum' plug-in has been disabled.
 if (JRequest::getCmd('view') == 'install' || !class_exists('KunenaForum') || !KunenaForum::isCompatible('3.0')) {

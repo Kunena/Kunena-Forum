@@ -54,10 +54,15 @@ class Com_KunenaInstallerScript {
 	}
 
 	public function preflight($type, $parent) {
-		$manifest = $parent->getParent()->getManifest();
+		$parent = $parent->getParent();
+		$manifest = $parent->getManifest();
 
 		// Prevent installation if requirements are not met.
 		if (!$this->checkRequirements($manifest->version)) return false;
+
+		if (is_dir($parent->getPath('extension_administrator').'/install')) {
+			JFolder::delete($parent->getPath('extension_administrator').'/install');
+		}
 
 		return true;
 	}

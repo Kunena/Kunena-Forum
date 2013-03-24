@@ -2,8 +2,8 @@
 <!DOCTYPE extension>
 <extension type="component" version="2.5" method="upgrade">
 	<name>com_kunena</name>
-	<version>2.9.92-DEV</version>
-	<versionname>Wanga</versionname>
+	<version>@kunenaversion@</version>
+	<versionname>@kunenaversionname@</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
@@ -12,8 +12,16 @@
 	<license>GNU/GPLv3 or later</license>
 	<description>COM_KUNENA_XML_DESCRIPTION</description>
 	<scriptfile>install/install.script.php</scriptfile>
-	<files>
-		<filename>COPYRIGHT.php</filename>
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>kunena.php</filename>
+		<filename>router.php</filename>
+		<folder>controllers</folder>
+		<folder>language</folder>
+		<folder>lib</folder>
+		<folder>models</folder>
+		<folder>template</folder>
+		<folder>views</folder>
 	</files>
 	<administration>
 		<menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA</menu>
@@ -27,9 +35,20 @@
 			<menu view="trash" img="components/com_kunena/media/icons/favicons/kunena-trash.png">COM_KUNENA_TRASH_MANAGER</menu>
 		</submenu>
 		<files>
+			<filename>index.html</filename>
+			<filename>api.php</filename>
+			<filename>install.php</filename>
+			<filename>kunena.php</filename>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<folder>controllers</folder>
+			<folder>images</folder>
 			<folder>install</folder>
-			<folder>archive</folder>
 			<folder>language</folder>
+			<folder>media</folder>
+			<folder>models</folder>
+			<folder>template</folder>
+			<folder>views</folder>
 		</files>
 	</administration>
 	<updateservers>

@@ -16,7 +16,7 @@ if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.0') || !Kunena
 }
 
 // Include the class only once
-require_once dirname ( __FILE__ ) . '/class.php';
+require_once __DIR__ . '/class.php';
 
 $params = (object) $params;
 $menu = new modKunenaMenu($params);

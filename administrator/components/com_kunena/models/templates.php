@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -28,23 +28,29 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 	/**
 	 * Method to auto-populate the model state.
-	 *
-	 * @return	void
-	 * @since	1.6
 	 */
 	protected function populateState() {
+		$app = JFactory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		$this->context = 'com_kunena.admin.categories';
+		$layout = $app->input->get('layout');
+		if ($layout) {
+			$this->context .= '.'.$layout;
+		}
+
 		// Edit state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.template.edit", 'name', '', 'cmd' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.edit', 'name', '', 'cmd' );
 		$this->setState ( 'template', $value );
 
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.templates.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.limit', 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
 		$this->setState ( 'list.limit', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.templates.list.ordering', 'filter_order', 'ordering', 'cmd' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.ordering', 'filter_order', 'ordering', 'cmd' );
 		$this->setState ( 'list.ordering', $value );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.templates.list.start", 'limitstart', 0, 'int' );
+		$value = $this->getUserStateFromRequest ( $this->context.'.list.start', 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 	}
 
@@ -97,6 +103,14 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		return $rows;
 	}
 
+	function getTotal() {
+		return $this->getState ('list.total');
+	}
+
+	function getStart() {
+		return $this->getState ('list.start');
+	}
+
 	function getEditparams() {
 		jimport('joomla.filesystem.file');
 
@@ -145,11 +159,6 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 		return $ftp;
 	}
 
-	public function getAdminNavigation() {
-		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		return $navigation;
-	}
-
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
 	{
 		$app = JFactory::getApplication();
@@ -175,4 +184,37 @@ class KunenaAdminModelTemplates extends JModelAdmin {
 
 		return $new_state;
 	}
+
+	public function getPagination()
+	{
+		// Get a storage key.
+		$store = $this->getStoreId('getPagination');
+
+		// Try to load the data from internal storage.
+		if (isset($this->cache[$store]))
+		{
+			return $this->cache[$store];
+		}
+
+		// Create the pagination object.
+		$limit = (int) $this->getState('list.limit') - (int) $this->getState('list.links');
+		$page = new JPagination($this->getTotal(), $this->getStart(), $limit);
+
+		// Add the object to the internal cache.
+		$this->cache[$store] = $page;
+
+		return $this->cache[$store];
+	}
+
+	protected function getStoreId($id = '')
+	{
+		// Add the list state to the store id.
+		$id .= ':' . $this->getState('list.start');
+		$id .= ':' . $this->getState('list.limit');
+		$id .= ':' . $this->getState('list.ordering');
+		$id .= ':' . $this->getState('list.direction');
+
+		return md5($this->context . ':' . $id);
+	}
+
 }

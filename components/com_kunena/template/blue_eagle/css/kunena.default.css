@@ -976,6 +976,15 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	color:					#9FCFFF;
 }
 
+.autocompleter-choices .autocompleter-selected {
+	background: none repeat scroll 0 0 #3366FF;
+	color: #FFFFFF;
+}
+
+ul.autocompleter-choices li {
+	border-bottom: 1px solid #DDDDDD;
+}
+
 /* CSS suffix support for category specific styling (Leave this section at the bottom)
 ----------------------------------------------------------------------------------------------- */
 

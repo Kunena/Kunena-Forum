@@ -400,7 +400,7 @@ abstract class KunenaForumCategoryHelper {
 	static public function recount($categories = '') {
 		$db = JFactory::getDBO ();
 		if (is_array($categories)) $categories = implode(',', $categories);
-		$categories = !empty($categories) ? "AND category_id IN ({$categories})" : '';
+		$categories = !empty($categories) ? "AND t.category_id IN ({$categories})" : '';
 
 		// Update category post count and last post info on categories which have published topics
 		$query = "UPDATE #__kunena_categories AS c

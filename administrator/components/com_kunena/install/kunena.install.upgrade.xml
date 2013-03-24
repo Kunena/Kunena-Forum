@@ -103,13 +103,18 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `uhits` ( `uhits` )</query>
 		</version>
 		<version version="1.0.8" versiondate="2009-02-17" versionname="Speakup!">
-			<phpfile name="upgrade-1.0.8_favorites" />
 			<!-- query mode="silenterror">ALTER TABLE `#__kunena_config` CHANGE `annmodid` `annmodid` TEXT NULL DEFAULT NULL</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_config` CHANGE `latestcategory` `latestcategory` TEXT NULL DEFAULT NULL</query>
 			<query mode="silenterror">UPDATE `#__kunena_config` SET `latestcategory`=''</query -->
 			<query>UPDATE `#__kunena_users` SET `view`='flat'</query>
 			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "com_fireboard", "com_kunena")</query>
 			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
+			<query>ALTER TABLE			`#__kunena_favorites`		DROP INDEX `thread`;</query>
+			<query>ALTER IGNORE TABLE	`#__kunena_favorites`		ADD UNIQUE `thread`(`thread`,`userid`);</query>
+			<query>DELETE FROM			`#__kunena_favorites`		WHERE `userid`=0;</query>
+			<query>ALTER TABLE			`#__kunena_subscriptions`	DROP INDEX `thread`;</query>
+			<query>ALTER IGNORE TABLE	`#__kunena_subscriptions`	ADD UNIQUE `thread`(`thread`,`userid`);</query>
+			<query>DELETE FROM			`#__kunena_subscriptions`	WHERE `userid`=0;</query>
 		</version>
 		<version version="1.0.10" versiondate="2009-05-21" versionname="Parier!">
 			<!-- query mode="silenterror">UPDATE `#__kunena_config` SET `jmambot`='0'</query -->
@@ -132,11 +137,10 @@
 				ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `allow_anonymous` </query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD KEY `currvisit` ( `currvisit` )</query>
 			<query>UPDATE `#__kunena_messages` SET thread=id WHERE parent=0</query>
-			<query mode="silenterror">UPDATE `#__kunena_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.id=u.userid AND j.gid IN (24, 25)</query>
-			<phpfile name="upgrade-1.6.0_attachments"></phpfile>
-			<phpfile name="upgrade-1.6.0_configuration"></phpfile>
-			<phpfile name="upgrade-1.6.0_polls"></phpfile>
-			<phpfile name="upgrade-1.6.0_timezone"></phpfile>
+			<phpfile name="1.6.0-2010-05-30_attachments"></phpfile>
+			<phpfile name="1.6.0-2010-05-30_configuration"></phpfile>
+			<phpfile name="1.6.0-2010-05-30_polls"></phpfile>
+			<phpfile name="1.6.0-2010-05-30_timezone"></phpfile>
 		</version>
 		<version version="1.6.0-ALPHA2" versiondate="2010-06-21" versionname="Gespraech">
 			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_banned_users`</query>
@@ -320,7 +324,7 @@
 				DROP `last_post_message`,
 				DROP `last_post_guest_name`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `alias` varchar(255) NOT NULL AFTER `name`;</query>
-			<phpfile name="upgrade-2.0.0_aliases"></phpfile>
+			<phpfile name="2.0.0-2011-12-14_aliases"></phpfile>
 		</version>
 		<version version="2.0.0-DEV8" versiondate="2011-12-18" versionname="Internal">
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` ADD `created_by` int(10) NOT NULL AFTER `title`;</query>
@@ -336,21 +340,21 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_users_banned` ADD KEY `created_time` (created_time);</query>
 		</version>
 		<version version="2.0.0-DEV15" versiondate="2012-04-13" versionname="Internal">
-			<phpfile name="upgrade-2.0.0_menu"></phpfile>
+			<phpfile name="2.0.0-2012-04-13_menu"></phpfile>
 		</version>
 		<version version="2.0.0-BETA1" versiondate="2012-04-24" versionname="Newspeak">
 		</version>
 		<version version="2.0.0-RC1" versiondate="2012-05-30" versionname="Orwell">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` MODIFY `accesstype` varchar(20) NOT NULL default 'joomla.level' AFTER `locked`;</query>
 			<query>UPDATE `#__kunena_categories` SET accesstype='joomla.group' WHERE accesstype='none';</query>
-			<phpfile name="upgrade-2.0.0_configuration"></phpfile>
+			<phpfile name="2.0.0-2012-05-30_configuration"></phpfile>
 		</version>
 		<version version="2.0.0-RC2" versiondate="2012-06-10" versionname="E-Prime">
-			<phpfile name="upgrade-2.0.0_pubwrite"></phpfile>
+			<phpfile name="2.0.0-2012-06-10_pubwrite"></phpfile>
 		</version>
 		<version version="2.0.0-RC3-DEV2" versiondate="2012-06-10" versionname="Internal">
 			<query>UPDATE `#__kunena_sessions` SET `allowed` = 'na';</query>
-			<phpfile name="upgrade-2.0.0_newindication"></phpfile>
+			<phpfile name="2.0.0-2012-06-10_newindication"></phpfile>
 		</version>
 		<version version="2.0.0-RC3-DEV3" versiondate="2012-06-17" versionname="Internal">
 			<query>REPLACE INTO #__kunena_topics 

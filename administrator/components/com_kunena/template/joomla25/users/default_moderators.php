@@ -23,7 +23,7 @@ defined('_JEXEC') or die;
 	</fieldset>
 
 	<button type="submit" onclick="Joomla.submitbutton('batch_moderators');">
-	<?php echo JText::_('COM_KUNENA_BATCH_PROCESS'); ?>
+	<?php echo JText::_('COM_KUNENA_USERS_LABEL_BATCH_PROCESS'); ?>
 	</button>
 	<button type="button" onclick="document.id('catid').value='';">
 	<?php echo JText::_('COM_KUNENA_FILTER_CLEAR'); ?>

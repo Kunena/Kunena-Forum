@@ -19,7 +19,7 @@
 			</field>
 		</fieldset>
 	</fields>
-	<fields name="params" addfieldpath="/administrator/components/com_kunena/libraries/form/fields">
+	<fields name="params">
 		<fieldset name="basic" label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
 			<field name="topics_catselection" type="radio" default="" label="COM_KUNENA_COM_A_LATESTCATEGORY_IN" description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
 				<option value="">COM_KUNENA_A_USE_GLOBAL</option>

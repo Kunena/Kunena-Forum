@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once KPATH_ADMIN . '/libraries/external/nbbc/nbbc.php';
+require_once KPATH_FRAMEWORK . '/external/nbbc/nbbc.php';
 jimport('joomla.utilities.string');
 
 // TODO: add possibility to hide contents from these tags:

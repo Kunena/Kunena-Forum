@@ -82,7 +82,7 @@ class KunenaModelSchema extends JModelLegacy
 
 	public function getUpgradeSchema($input=KUNENA_UPGRADE_SCHEMA_FILE)
 	{
-		if ($this->upgradeschema == null) $this->upgradeschema = $this->getSchemaFromFile($input);
+		if ($this->upgradeschema == null) $this->upgradeschema = $this->createSchema(); // $this->getSchemaFromFile($input);
 		return $this->upgradeschema;
 	}
 

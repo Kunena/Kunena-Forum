@@ -439,7 +439,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @return	string		The URL of the item.
 	 */
 	protected function getUrl($id, $extension, $view) {
-		require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/message/helper.php';
 		$item = KunenaForumMessageHelper::get($id);
 		return "index.php?option=com_kunena&view={$view}&catid={$item->catid}&id={$item->thread}&mesid={$item->id}";
 	}
@@ -472,7 +471,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	protected function getMessagesByCategory($cat_id){
 		static $messages = array();
 		if(!$messages[$cat_id]){
-			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/message/helper.php';
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('m.id');
@@ -488,7 +486,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	protected function getMessagesByTopic($topic_id){
 		static $messages = array();
 		if(!$messages[$topic_id]){
-			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/message/message.php';
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('m.*, t.message');
@@ -510,7 +507,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 			if(!$item->catid){
 				return 0;
 			}
-			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/category/helper.php';
 			$category = KunenaForumCategoryHelper::get($item->catid);
 			//@TODO We can't quite handle access restrictions by joomla group or other plugins yet. So we set the access level to 0
 			//This is a todo
@@ -519,7 +515,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 			}
 			return $category->access;
 		}elseif(($item instanceof TableKunenaCategories) || ($item instanceof KunenaForumCategory)){
-			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/category/helper.php';
 			$category = KunenaForumCategoryHelper::get($item->id);
 			if($category->accesstype != 'joomla.level'){
 				return 0;

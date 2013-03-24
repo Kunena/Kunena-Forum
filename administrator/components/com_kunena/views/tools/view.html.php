@@ -59,6 +59,11 @@ class KunenaAdminViewTools extends KunenaView {
 		$this->display ();
 	}
 
+	function displayCleanIPAdresses() {
+		$this->setToolCleanIPAdresses();
+		$this->display ();
+	}
+
 	protected function setToolBarDefault() {
 		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_FORUM_TOOLS'), 'tools' );
 	}
@@ -108,6 +113,15 @@ class KunenaAdminViewTools extends KunenaView {
 		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::trash('purgerestatements', 'COM_KUNENA_A_PURGE_RE_MENU_VALIDATE', false);
+		JToolBarHelper::spacer();
+		JToolBarHelper::cancel();
+		JToolBarHelper::spacer();
+	}
+
+	protected function setToolCleanIPAdresses() {
+		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'tools' );
+		JToolBarHelper::spacer();
+		JToolBarHelper::custom('cleanipadresses', 'apply.png', 'apply_f2.png', 'COM_KUNENA_TOOLS_LABEL_CLEAN_IP_ADRESSES', false);
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel();
 		JToolBarHelper::spacer();

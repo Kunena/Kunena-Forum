@@ -74,7 +74,7 @@ JHtml::_('dropdown.init');
 				<div class="clearfix"></div>
 			</div>
 
-			<table class="table table-striped adminlist" id="userList">
+			<table class="table table-striped" id="userList">
 				<thead>
 					<tr>
 						<th width="1%" class="nowrap center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>
@@ -162,7 +162,13 @@ JHtml::_('dropdown.init');
 					</td>
 					<td class="hidden-phone"><?php echo $this->escape($item->email); ?></td>
 					<td class="center hidden-phone hidden-tablet">
-						<?php echo $this->escape ( $kunena_user->signature ); ?>
+						<span class="editlinktip <?php echo ($kunena_user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($kunena_user->signature); ?> ">
+							<?php if ($kunena_user->signature) { ?>
+								<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
+							<?php } else { ?>
+								<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
+							<?php } ?>
+						</span>
 					</td>
 					<td class="center hidden-phone">
 						<a class ="btn btn-micro <?php echo (!$item->block ? 'active':''); ?>" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $userBlockTask ?>')">

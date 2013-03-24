@@ -456,7 +456,13 @@ function getTopicClass($prefix='k', $class='topic') {
 
 			return $url;
 		}
+	}
 
+	public function getCategoryRSSURL($catid, $xhtml = true) {
+		if ($this->config->enablerss) {
+			$params = '&catid=' . ( int ) $catid;
+			return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss&format=feed{$params}", $xhtml );
+		}
 		return;
 	}
 

@@ -1102,6 +1102,12 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		if ($config->polltimebtvotes && $poll->getMyTime($user) + $config->polltimebtvotes > JFactory::getDate()->toUnix()) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY' );
 		}
+		if ($this->locked ) {
+			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_TOPIC_LOCKED' );
+		}
+		if ($poll->getTimeToLive() < JFactory::getDate()->toUnix() ) {
+			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_EXPIRED' );
+		}
 	}
 	protected function authoriseNoVotes($user) {
 		$poll = $this->getPoll();

@@ -66,7 +66,7 @@ foreach ( $this->sections as $section ) :
 										}
 										?>
 										<?php if ( $this->getMarkReadButtonURL($category->id, $category->numTopics) ): ?><a href="<?php echo $this->getMarkReadButtonURL($category->id, $category->numTopics) ?>" rel="follow"><span class="kicon kmark-read" title="mark category read"></span></a><?php endif; ?>
-										<a href="" rel="follow"><span class="kicon krss-small" title="get the latest posts directly to your desktop"></span></a>
+										<?php if($this->getCategoryRSSURL($category->id)): ?><a href="<?php echo $this->getCategoryRSSURL($category->id) ?>" rel="follow"><span class="kicon krss-small" title="get the latest posts directly to your desktop"></span></a><?php endif; ?>
 									</span>
 								</div>
 									<?php if (!empty($category->description)) : ?>

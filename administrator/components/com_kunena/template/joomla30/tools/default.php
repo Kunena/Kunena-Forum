@@ -42,6 +42,10 @@ defined ( '_JEXEC' ) or die ();
 					<img src="components/com_kunena/media/icons/large/purgerestatements.png" alt="<?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?>" /><br />
 					<span><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></span>
 				</a>
+				<a class="btn" href="index.php?option=com_kunena&view=tools&layout=cleanipadresses">
+					<img src="components/com_kunena/media/icons/large/cleanadressesip.png" alt="<?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CLEAN_IP_ADRESSES'); ?>" /><br />
+					<span><?php echo JText::_('COM_KUNENA_CPANEL_LABEL_CLEAN_IP_ADRESSES'); ?></span>
+				</a>
 				<?php if (KunenaForum::isDev()) { ?>
 					<a class="btn" href="index.php?option=com_kunena&view=install&task=prepare&start=1&<?php echo JSession::getFormToken().'=1'; ?>">
 						<img src="components/com_kunena/media/icons/large/install.png" alt="<?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?>" /><br />

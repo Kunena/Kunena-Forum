@@ -289,4 +289,39 @@ abstract class KunenaUserHelper {
 
 		return $rows;
 	}
+
+	/**
+	 * Delete entries in polls and thankyou tables where the user has been deleted.
+	 *
+	 * @access	public
+	 * @return	int			The number of rows deleted.
+	 * @since	3.0
+	 */
+	public static function recountOnDelete() {
+		$db = JFactory::getDBO ();
+
+		// Delete entries in polls
+		$query = "DELETE pu.* FROM `#__kunena_polls_users` AS pu
+			LEFT JOIN `#__kunena_users`
+			u ON pu.userid=u.userid
+			WHERE u.userid IS NULL";
+		$db->setQuery ($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		$rows = $db->getAffectedRows ();
+
+		// Delete entries in thank you
+		$query = "DELETE t.* FROM `#__kunena_thankyou` AS t
+			LEFT JOIN `#__kunena_users`
+			u ON t.userid=u.userid
+			WHERE u.userid IS NULL";
+		$db->setQuery ($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		$rows += $db->getAffectedRows ();
+
+		return $rows;
+	}
 }

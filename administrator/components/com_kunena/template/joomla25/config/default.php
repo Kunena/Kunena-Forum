@@ -61,7 +61,7 @@ $paneOptions = array(
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
 
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE') ?></td>
 													<td align="left" valign="top" width="25%"><input type="text" name="cfg_board_title" value="<?php echo $this->escape ( $this->config->board_title ) ?>" /></td>
@@ -128,7 +128,7 @@ $paneOptions = array(
 
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_SEO_SETTINGS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_SEF') ?></td>
 													<td align="left" valign="top" width="25%"><?php echo $this->lists ['sef'] ?></td>
@@ -139,7 +139,7 @@ $paneOptions = array(
 
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_CACHING_SETTINGS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_CFG_CACHE') ?></td>
 													<td align="left" valign="top" width="25%"><?php echo $this->lists ['cache'] ?></td>
@@ -157,7 +157,7 @@ $paneOptions = array(
 									<div class="tab-pane" id="tab_frontend">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_LOOKS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_THREADS') ?></td>
 													<td align="left" valign="top" width="25%"><input type="text" name="cfg_threads_per_page" value="<?php echo $this->escape($this->config->threads_per_page) ?>" /></td>
@@ -327,7 +327,7 @@ $paneOptions = array(
 										</fieldset>
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_LENGTHS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" width="25%" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH') ?></td>
 													<td align="left" width="25%" valign="top"><input type="text" name="cfg_maxsubject" value="<?php echo $this->escape($this->config->maxsubject) ?>" /></td>
@@ -350,7 +350,7 @@ $paneOptions = array(
 									<div class="tab-pane" id="tab_users">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_USER_RELATED') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_DISPLAY_NAME') ?></td>
 													<td align="left" valign="top" width="25%"><?php echo $this->lists ['username'] ?></td>
@@ -430,7 +430,7 @@ $paneOptions = array(
 										</fieldset>
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS') ?></td>
 													<td align="left" valign="top"><?php echo $this->lists ['allowsubscriptions'] ?></td>
@@ -478,7 +478,7 @@ $paneOptions = array(
 									<div class="tab-pane" id="tab_security">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_SECURITY_SETTINGS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE') ?></td>
 													<td align="left" valign="top"><?php echo $this->lists ['pubwrite'] ?></td>
@@ -548,7 +548,7 @@ $paneOptions = array(
 										</fieldset>
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_CAPTCHA_CONFIGURATION') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_CAPTCHA_GUESTS') ?></td>
 													<td align="left" valign="top" width="25%"><?php echo $this->lists ['captcha'] ?></td>
@@ -578,7 +578,7 @@ $paneOptions = array(
 										</fieldset>
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_CONFIGURATION') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_STOP_FORUM_SPAM_KEY') ?></td>
 													<td align="left" valign="top" width="25%"><input type="text" name="cfg_stopforumspam_key" class="ksm-field-large" value="<?php echo $this->escape($this->config->stopforumspam_key) ?>" /></td>
@@ -591,7 +591,7 @@ $paneOptions = array(
 									<div class="tab-pane" id="tab_avatars">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_AVATAR_SETTINGS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVATARUPLOAD') ?></td>
 													<td align="left" valign="top"><?php echo $this->lists ['allowavatarupload'] ?></td>
@@ -617,7 +617,7 @@ $paneOptions = array(
 									<div class="tab-pane" id="tab_uploads">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_IMAGE') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_IMAGE_UPLOAD') ?></td>
 													<td align="left" valign="top" width="25%"><?php echo $this->lists ['image_upload'] ?></td>
@@ -683,7 +683,7 @@ $paneOptions = array(
 										</fieldset>
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_FILE') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_FILE_UPLOAD') ?></td>
 													<td align="left" valign="top" width="25%"><?php echo $this->lists ['file_upload'] ?></td>
@@ -717,7 +717,7 @@ $paneOptions = array(
 									<div class="tab-pane" id="tab_ranking">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_RANKING_SETTINGS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RANKING') ?></td>
 													<td align="left" valign="top" width="25%"><?php echo $this->lists ['showranking'] ?></td>
@@ -735,7 +735,7 @@ $paneOptions = array(
 									<div class="tab-pane" id="tab_bbcode">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_BBCODE_SETTINGS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISEMOTICONS') ?></td>
 													<td align="left" valign="top"><?php echo $this->lists ['disemoticons'] ?></td>
@@ -821,7 +821,7 @@ $paneOptions = array(
 									<div class="tab-pane" id="tab_rss">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_ADMIN_RSS_SETTINGS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_TYPE') ?></td>
 													<td align="left" valign="top" width="25%"><?php echo $this->lists ['rss_type'] ?></td>
@@ -894,7 +894,7 @@ $paneOptions = array(
 									<div class="tab-pane" id="tab_extra">
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS') ?></td>
 													<td align="left" valign="top" width="25%"><input type="text" name="cfg_userlist_rows" value="<?php echo $this->escape($this->config->userlist_rows) ?>" /></td>
@@ -949,7 +949,7 @@ $paneOptions = array(
 										</fieldset>
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_STATS') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOWWHOIS') ?></td>
 													<td align="left" valign="top"><?php echo $this->lists ['showwhoisonline'] ?></td>
@@ -1009,7 +1009,7 @@ $paneOptions = array(
 										</fieldset>
 										<fieldset>
 											<legend><?php echo JText::_('COM_KUNENA_A_POLL_TITLE') ?></legend>
-											<table class="kadmin-adminform">
+											<table class="table table-striped">
 												<tr align="center" valign="middle">
 													<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_POLL_ENABLED') ?></td>
 													<td align="left" valign="top" width="25%"><?php echo $this->lists ['pollenabled'] ?></td>

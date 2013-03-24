@@ -29,7 +29,7 @@ if (JFactory::getLanguage()->isRTL()) $document->addStyleSheet ( JUri::base(true
 			<?php echo JHtml::_( 'form.token' ); ?>
 
 			<table class="adminheading"></table>
-			<table class="adminlist table table-striped">
+			<table class="table table-striped">
 				<tr>
 					<td><strong><?php echo JText::_('COM_KUNENA_NUMBER_ITEMS'); ?>:</strong>
 						<br />

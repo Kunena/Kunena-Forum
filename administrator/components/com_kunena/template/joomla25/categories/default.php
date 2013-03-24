@@ -68,7 +68,7 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 							<div class="clearfix"></div>
 						</div>
 
-						<table class="table table-striped adminlist ">
+						<table class="table table-striped ">
 							<thead>
 								<tr>
 									<th width="5%" class="nowrap">

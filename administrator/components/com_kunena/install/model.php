@@ -106,6 +106,10 @@ class KunenaModelInstall extends JModelLegacy {
 	 * Uninstall Kunena, run from Joomla installer.
 	 */
 	public function uninstall() {
+		// Put back file that was removed during installation.
+		JFile::write(KPATH_ADMIN.'/install.php', '');
+
+		// Uninstall all plugins.
 		$this->uninstallPlugin('kunena', 'alphauserpoints');
 		$this->uninstallPlugin('kunena', 'community');
 		$this->uninstallPlugin('kunena', 'comprofiler');
@@ -115,6 +119,7 @@ class KunenaModelInstall extends JModelLegacy {
 		$this->uninstallPlugin('kunena', 'uddeim');
 		$this->uninstallPlugin('finder', 'kunena');
 
+		// Uninstall menu module.
 		$this->uninstallModule('mod_kunenamenu');
 
 		// Remove all Kunena related menu items, including aliases
@@ -599,8 +604,6 @@ class KunenaModelInstall extends JModelLegacy {
 		// Delete installer file (only if not using GIT build).
 		if (!KunenaForum::isDev()) {
 			JFile::delete(KPATH_ADMIN.'/install.php');
-			$contents = '<?php // Kunena has been installed!';
-			JFile::write(KPATH_ADMIN.'/install.php', $contents);
 		}
 
 		if (! $this->getInstallError ()) {

@@ -79,7 +79,7 @@ if ($this->saveOrder) {
 				<div class="clearfix"></div>
 			</div>
 
-			<table class="table table-striped adminlist" id="categoryList">
+			<table class="table table-striped" id="categoryList">
 				<thead>
 					<tr>
 						<th width="1%" class="nowrap center hidden-phone">

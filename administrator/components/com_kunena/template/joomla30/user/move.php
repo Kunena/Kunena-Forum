@@ -26,11 +26,20 @@ defined ( '_JEXEC' ) or die ();
 
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_MOVE_USERMESSAGES'); ?></legend>
-				<table class="adminform">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th width="25%">Ttitle</th>
+							<th width="25%">Opiton</th>
+							<th>Description</th>
+						</tr>
+					</thead>
 					<tbody>
 						<tr>
 							<td>
-								<strong><?php echo JText::_('COM_KUNENA_CATEGORY_TARGET'); ?></strong>
+								<?php echo JText::_('COM_KUNENA_CATEGORY_TARGET'); ?>
+							</td>
+							<td>
 								<?php
 									echo $this->catslist;
 								?>

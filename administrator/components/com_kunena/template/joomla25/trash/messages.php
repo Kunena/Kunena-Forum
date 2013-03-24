@@ -68,7 +68,7 @@ defined ( '_JEXEC' ) or die ();
 							<div class="clearfix"></div>
 						</div>
 
-						<table class="adminlist table table-striped">
+						<table class="table table-striped">
 							<thead>
 								<tr>
 									<th width="1%" class="nowrap">

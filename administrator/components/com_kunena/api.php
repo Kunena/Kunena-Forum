@@ -33,45 +33,12 @@ define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
 define ( 'KURL_SITE', JUri::Root () . KPATH_COMPONENT_RELATIVE . '/' );
 define ( 'KURL_MEDIA', JUri::Root () . 'media/' . KUNENA_NAME . '/' );
 
-// Register Joomla and Kunena autoloader
-if (function_exists('__autoload')) spl_autoload_register('__autoload');
-spl_autoload_register('KunenaAutoload');
-
-// Give access to all Kunena tables
-jimport('joomla.database.table');
-JTable::addIncludePath(KPATH_ADMIN.'/libraries/tables');
-// Give access to all JHtml functions
-jimport('joomla.html.html');
-JHtml::addIncludePath(KPATH_ADMIN.'/libraries/html/html');
-
-/**
- * Intelligent library importer.
- *
- * @param	string	A dot syntax path.
- * @return	boolean	True on success
- * @since	1.6
- * @deprecated 2.0
- */
-function kimport($path) {}
-
-/**
- * Kunena auto loader
- *
- * @param string $class Class to be registered (case sensitive)
- */
-function KunenaAutoload($class) {
-	if (substr($class, 0, 6) != 'Kunena') return;
-	$file = KPATH_ADMIN . '/libraries' . strtolower(preg_replace( '/([A-Z])/', '/\\1', substr($class, 6)));
-	if (is_dir($file)) {
-		$fileparts = explode( '/', $file );
-		$file .= '/'.array_pop( $fileparts );
-	}
-	$file .= '.php';
-	if (file_exists($file)) {
-		require_once $file;
-		return true;
-	}
-	return false;
+$libraryFile = JPATH_PLATFORM . '/kunena/bootstrap.php';
+if (!file_exists($libraryFile)) {
+	$libraryFile = __DIR__ . '/libraries/bootstrap.php';
+}
+if (file_exists($libraryFile)) {
+	require_once $libraryFile;
 }
 
 // Kunena has been initialized

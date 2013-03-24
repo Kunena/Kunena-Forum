@@ -43,7 +43,7 @@ defined ( '_JEXEC' ) or die ();
 					<span><?php echo JText::_('COM_KUNENA_A_PURGE_RE_STATEMENTS'); ?></span>
 				</a>
 				<?php if (KunenaForum::isDev()) { ?>
-					<a class="btn" href="index.php?option=com_kunena&view=install&task=prepare&start=1&<?php echo JSession::getFormToken().'=1'; ?>">
+					<a class="btn" href="index.php?option=com_kunena&view=install">
 						<img src="components/com_kunena/media/icons/large/install.png" alt="<?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?>" /><br />
 						<span><?php echo JText::_('COM_KUNENA_GIT_INSTALL'); ?></span>
 					</a>

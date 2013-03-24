@@ -351,6 +351,17 @@ class KunenaForumTopicPoll extends JObject {
 	}
 
 	/**
+	 * Method to get the poll time to live
+	 *
+	 * @access	public
+	 * @return	datetime
+	 * @since 3.0
+	 */
+	public function getTimeToLive() {
+		return JFactory::getDate($this->polltimetolive)->toUnix();
+	}
+
+	/**
 	 * Method to save the KunenaForumTopicPoll object to the database
 	 *
 	 * @access	public

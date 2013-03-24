@@ -32,7 +32,8 @@ class plgQuickiconKunena extends JPlugin {
 		}
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 
-		if (KunenaForum::installed() && KunenaFactory::getConfig()->version_check && JFactory::getUser()->authorise('core.manage', 'com_installer')) {
+		// TODO: replace LiveUpdate with something else...
+		if (0 && KunenaForum::installed() && KunenaFactory::getConfig()->version_check && JFactory::getUser()->authorise('core.manage', 'com_installer')) {
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true)
 				->select($db->qn('params'))

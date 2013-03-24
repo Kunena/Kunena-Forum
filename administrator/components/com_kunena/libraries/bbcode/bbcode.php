@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once KPATH_ADMIN . '/libraries/external/nbbc/nbbc.php';
+require_once KPATH_FRAMEWORK . '/external/nbbc/nbbc.php';
 jimport('joomla.utilities.string');
 
 // TODO: add possibility to hide contents from these tags:
@@ -189,8 +189,7 @@ class KunenaBbcode extends NBBC_BBCode {
 
 				// We have a full, complete, and properly-formatted URL, with protocol.
 				// Now we need to apply the $this->url_pattern template to turn it into HTML.
-				// TODO: report Joomla bug (silence it for now)
-				$params = $this->parse_url($url);
+				$params = JString::parse_url($url);
 				if (!$invalid && substr($url, 0, 7) == 'mailto:') {
 					$email = JString::substr($url, 7);
 					$output[$index] = JHtml::_('email.cloak', $email, $this->IsValidEmail($email));
@@ -224,38 +223,6 @@ class KunenaBbcode extends NBBC_BBCode {
 		if ($email_too && substr($string, 0, 7) == "mailto:") return $this->IsValidEmail(substr($string, 7));
 		if (preg_match($re, $string)) return true;
 		return false;
-	}
-
-
-	/**
-	 * @see JString::parse_url()
-	 * @todo remove when dropping J!1.5 support
-	 * FYI: there's a bug in J!2.5.6 which has been fixed in GitHub
-	 */
-	public static function parse_url($url)
-	{
-		$result = false;
-
-		// Build arrays of values we need to decode before parsing
-		$entities = array('%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%24', '%2C', '%2F', '%3F', '%23', '%5B', '%5D');
-		$replacements = array('!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "$", ",", "/", "?", "#", "[", "]");
-
-		// Create encoded URL with special URL characters decoded so it can be parsed
-		// All other characters will be encoded
-		$encodedURL = str_replace($entities, $replacements, urlencode($url));
-
-		// Parse the encoded URL
-		$encodedParts = parse_url($encodedURL);
-
-		// Now, decode each value of the resulting array
-		if ($encodedParts)
-		{
-			foreach ($encodedParts as $key => $value)
-			{
-				$result[$key] = urldecode(str_replace($replacements, $entities, $value));
-			}
-		}
-		return $result;
 	}
 }
 
@@ -1349,7 +1316,7 @@ class KunenaBbcodeLibrary extends BBCodeLibrary {
 		'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 
 		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1&cc_load_policy=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
-				
+
 		'youku' => array ('flash', 425, 355, 0, 0, 'http://player.youku.com/player.php/Type/Folder/Fid/18787874/Ob/1/sid/%vcode%/v.swf', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
 		// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files

@@ -702,10 +702,12 @@ $paneOptions = array(
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_A_AVSIZE') ?></td>
 														<td><input type="text" name="cfg_avatarsize" class="ksm-field" value="<?php echo $this->escape($this->config->avatarsize) ?>" /> kB</td>
+														<td></td>
 													</tr>
 													<tr>
 														<td><?php echo JText::_('COM_KUNENA_AVATAR_QUALITY') ?></td>
 														<td class="nowrap"><input type="text" name="cfg_avatarquality" class="ksm-field" value="<?php echo $this->escape($this->config->avatarquality) ?>" /> %</td>
+														<td></td>
 													</tr>
 												</tbody>
 											</table>

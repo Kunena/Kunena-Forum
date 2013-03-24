@@ -220,7 +220,7 @@ class KunenaAdminControllerUsers extends KunenaController {
 				$error = true;
 			}
 
-			if ( in_array(7,$groups) || in_array(8,$groups) )  {
+			if ( $my->authorise('core.admin') )  {
 				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'));
 				$error = true;
 			}

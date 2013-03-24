@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension type="file" version="2.5" method="upgrade">
+	<name>Kunena Media Files</name>
+	<version>@kunenaversion@</version>
+	<versionname>@kunenaversionname@</versionname>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>(C) 2008 - 2013 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>Kunena media files.</description>
+	<fileset>
+		<files target="media/kunena">
+			<folder>attachments</folder>
+			<folder>avatars</folder>
+			<folder>category_images</folder>
+			<folder>emoticons</folder>
+			<folder>icons</folder>
+			<folder>images</folder>
+			<folder>js</folder>
+			<folder>less</folder>
+			<folder>ranks</folder>
+			<folder>topicicons</folder>
+			<filename>index.html</filename>
+		</files>
+	</fileset>
+</extension>

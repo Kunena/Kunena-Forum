@@ -75,7 +75,7 @@ JHtml::_('dropdown.init');
 						</div>
 					</div>
 
-					<table class="table table-striped adminlist" id="smileyList">
+					<table class="table table-striped" id="smileyList">
 						<thead>
 							<tr>
 								<th width="1%" class="center"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this)" /></th>

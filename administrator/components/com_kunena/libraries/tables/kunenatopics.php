@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once (dirname ( __FILE__ ) . '/kunena.php');
+require_once (__DIR__ . '/kunena.php');
 
 /**
  * Kunena Topics
@@ -98,23 +98,5 @@ class TableKunenaTopics extends KunenaTable {
 			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_SUBJECT' ) );
 		}
 		return ($this->getError () == '');
-	}
-
-	// TODO: Remove hit() when we get rid of J1.5 support
-	public function hit($pk = null) {
-		$k = $this->_tbl_key;
-		$pk = (is_null($pk)) ? $this->$k : $pk;
-
-		$query = "UPDATE #__kunena_topics SET hits=hits+1 WHERE id = {$pk}";
-		$this->_db->setQuery($query);
-		$this->_db->Query();
-
-		// Check for an error message.
-		if ($this->_db->getErrorNum()) {
-			$this->setError($this->_db->getErrorMsg());
-			return false;
-		}
-
-		return true;
 	}
 }

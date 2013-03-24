@@ -49,7 +49,7 @@ defined ( '_JEXEC' ) or die ();
 							<div class="clearfix"></div>
 						</div>
 
-						<table class="adminlist table table-striped">
+						<table class="table table-striped">
 							<thead>
 								<tr>
 									<th align="center" width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
@@ -145,8 +145,14 @@ defined ( '_JEXEC' ) or die ();
 											<td>
 												<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->email); ?></a>
 											</td>
-											<td>
-												<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->signature); ?></a>
+											<td class="center">
+												<span class="editlinktip <?php echo ($kunena_user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($kunena_user->signature); ?> ">
+												<?php if ($kunena_user->signature) { ?>
+													<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
+												<?php } else { ?>
+													<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
+												<?php } ?>
+												</span>
 											</td>
 											<td class="center">
 												<a class="jgrid" title="<?php echo $titleUserBlock ?>" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">

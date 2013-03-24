@@ -34,6 +34,10 @@
 .pagetitle.icon-48-pluginsmanager { background-image:url("../../icons/large/pluginsmanager.png"); }
 
 
+#kunena.admin.override {
+    font-size: 13px;
+}
+
 /*Kunena Classes*/
 #kunena.admin.override .current .adminlist input,
 #kunena.admin.override .current .adminlist textarea,

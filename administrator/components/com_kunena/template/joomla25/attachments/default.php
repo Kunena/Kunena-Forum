@@ -54,10 +54,21 @@ defined ( '_JEXEC' ) or die ();
 								<button class="btn tip" type="button"  onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 							</div>
 							<div class="btn-group pull-right hidden-phone">
+								<label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
+								<?php echo $this->pagination->getLimitBox(); ?>
+							</div>
+							<div class="btn-group pull-right hidden-phone">
 								<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 								<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 									<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
 									<?php echo JHtml::_('select.options', $this->sortDirectionOrdering, 'value', 'text', $this->escape($this->state->get('list.direction')));?>
+								</select>
+							</div>
+							<div class="btn-group pull-right">
+								<label for="sortTable" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+								<select name="sortTable" id="sortTable" class="input-medium" onchange="Joomla.orderTable()">
+									<option value=""><?php echo JText::_('JGLOBAL_SORT_BY');?></option>
+									<?php echo JHtml::_('select.options', $this->sortFields, 'value', 'text', $this->listOrdering);?>
 								</select>
 							</div>
 							<div class="clearfix"></div>

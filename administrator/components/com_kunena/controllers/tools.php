@@ -148,7 +148,7 @@ class KunenaAdminControllerTools extends KunenaController {
 			$db->query();
 			if (KunenaError::checkDatabaseError()) return;
 
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_RENAME') . $db->getAffectedRows() );
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_SYNC_USERS_DO_RENAME', $db->getAffectedRows()) );
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));

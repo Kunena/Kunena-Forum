@@ -42,3 +42,6 @@
     min-width: 64px;
     overflow: hidden;
 }
+#kunena.admin.override label {
+    display: inline !important;
+}

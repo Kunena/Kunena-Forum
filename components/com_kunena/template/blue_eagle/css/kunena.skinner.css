@@ -128,8 +128,11 @@
 #Kunena select,
 #Kunena select:focus,
 #Kunena select:hover {
-	border-color: rgba(0, 0, 0, 0.2);
-	background-color: inherit;
+    background:  0 0 no-repeat;
+	background-color:transparent !important;
+	border:1px solid;
+	border-color:rgba(0, 0, 0, 0.2);
+
 }
 #Kunena option {
 	background-color: rgba(0, 0, 0, 0.01);
@@ -145,8 +148,12 @@
 #Kunena .kbutton-back {
 	color: inherit;
 }
-#Kunena input.kinput {
-	border-color: rgba(0, 0, 0, 0.2);
+#Kunena input.kinput,
+#Kunena .kfile-input-textbox {
+	background:  0 0 no-repeat;
+	background-color:transparent !important;
+	border:1px solid;
+	border-color:rgba(0, 0, 0, 0.2);
 }
 #Kunena .kbutton:hover,
 #Kunena .kbutton:focus {
@@ -322,8 +329,8 @@
 	border-top: 0 none;
 }
 #Kunena .kreply-form .inputbox {
-	background-color: rgba(0, 0, 0, 0.01);
-	border: 0 none;
+	background-color: none;
+	border: 1px solid;
 }
 #Kunena div.kmsgtext-article,
 #Kunena div.kmsgtext-quote,
@@ -363,9 +370,10 @@
 #Kunena #kpost-message .postinput:hover,
 #Kunena #kpost-message .postinput:focus,
 #Kunena #kpostmessage tr.krow2 td.kcol-ktopicicons td	{
-	background-color: rgba(0, 0, 0, 0.01);
-	border: 0 none;
-	color: inherit
+	background:  0 0 no-repeat;
+	background-color:transparent !important;
+	border:1px solid;
+	border-color:rgba(0, 0, 0, 0.2);
 }
 #Kunena #kpostmessage tr.krow1 .kpostbuttonset td.kposthint {
 	background: rgba(255, 255, 255, 0.2);
@@ -432,7 +440,8 @@
 #Kunena #kprofilebox-toggle,
 #Kunena #kpost-message .invalid,
 #lbImage {
-	border: 0 none;
+	border:1px solid;
+	border-color:rgba(0, 0, 0, 0.2);
 }
 #Kunena div.kavatar-lg { 
 	border: 0 none;
@@ -497,4 +506,12 @@ ul.autocompleter-choices,
 #Kunena .kwho-blocked,
 #Kunena a.kwho-blocked {
 	color: #ff0000 !important;
+}
+
+/* Template Hack
+----------------------------------------------------------------------------------------------- */
+
+#main a:hover {
+background-color: transparent !important;
+color:inherit !important;
 }

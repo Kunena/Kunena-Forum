@@ -126,7 +126,7 @@ class KunenaAdminControllerTools extends KunenaController {
 					WHERE b.userid IS NULL" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_ADD') . ' ' . $db->getAffectedRows () );
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_SYNC_USERS_ADD_DONE',$db->getAffectedRows ()) );
 		}
 		if ($userdel) {
 			$db->setQuery ( "DELETE a
@@ -135,7 +135,7 @@ class KunenaAdminControllerTools extends KunenaController {
 					WHERE b.username IS NULL" );
 			$db->query ();
 			if (KunenaError::checkDatabaseError()) return;
-			$this->app->enqueueMessage ( JText::_('COM_KUNENA_SYNC_USERS_DO_DEL') . ' ' . $db->getAffectedRows () );
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_SYNC_USERS_DELETE_DONE',$db->getAffectedRows ()) );
 		}
 		if ($userrename) {
 			$queryName = $this->config->username ? "username" : "name";
@@ -148,7 +148,7 @@ class KunenaAdminControllerTools extends KunenaController {
 			$db->query();
 			if (KunenaError::checkDatabaseError()) return;
 
-			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_SYNC_USERS_DO_RENAME', $db->getAffectedRows()) );
+			$this->app->enqueueMessage ( JText::sprintf('COM_KUNENA_SYNC_USERS_RENAME_DONE', $db->getAffectedRows()) );
 		}
 
 		$this->setRedirect(KunenaRoute::_($this->baseurl, false));

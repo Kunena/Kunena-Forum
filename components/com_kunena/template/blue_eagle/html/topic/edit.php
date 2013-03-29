@@ -10,11 +10,11 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.formvalidation');
-JHTML::_('behavior.tooltip');
-JHTML::_('behavior.keepalive');
+JHtml::_('behavior.formvalidation');
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.keepalive');
 
-$this->document->addScriptDeclaration('config_attachment_limit = '.$this->config->attachment_limit );
+$this->document->addScriptDeclaration('config_attachment_limit = '.(int) $this->config->attachment_limit );
 
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize('id');
@@ -37,7 +37,7 @@ $this->k=0;
 	<?php if (!isset($this->selectcatlist)) : ?>
 	<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>" />
 	<?php endif; ?>
-	<?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHtml::_( 'form.token' ); ?>
 
 <div class="kblock">
 	<div class="kheader">
@@ -170,8 +170,8 @@ $this->k=0;
 				<strong><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></strong>
 			</td>
 			<td class="kcol-mid">
-				<input type="checkbox" name="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1) echo 'checked="checked"' ?> />
-				<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
+				<input type="checkbox" name="subscribeMe" id="subscribeMe" value="1" <?php if ($this->subscriptionschecked == 1) echo 'checked="checked"' ?> />
+				<label for="subscribeMe"><i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i></label>
 			</td>
 		</tr>
 		<?php endif; ?>

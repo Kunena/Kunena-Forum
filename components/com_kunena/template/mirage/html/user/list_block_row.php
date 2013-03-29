@@ -30,9 +30,6 @@ defined ( '_JEXEC' ) or die ();
 		<?php if (!empty($this->email)) : ?>
 		<li class="kdetails-joindate"><span><?php echo JText::_('COM_KUNENA_USRL_EMAIL') ?>:</span> <?php echo $this->email ?></li>
 		<?php endif; ?>
-		<?php if ($this->config->userlist_usertype) : ?>
-		<li class="kdetails-usertype"><span><?php echo JText::_('COM_KUNENA_USRL_USERTYPE') ?>:</span> <?php echo $this->escape($this->user->usertype) ?></li>
-		<?php endif; ?>
 		<?php if ($this->config->userlist_joindate) : ?>
 		<li class="kdetails-usertype"><span><?php echo JText::_('COM_KUNENA_USRL_JOIN_DATE') ?>:</span> <?php echo KunenaDate::getInstance($this->user->registerDate)->toSpan('date_today', 'ago') ?></li>
 		<?php endif; ?>

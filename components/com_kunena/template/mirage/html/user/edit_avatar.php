@@ -66,7 +66,7 @@ defined ( '_JEXEC' ) or die ();
 							<div class="form-label">
 								<div class="innerspacer-left kbox-full">
 									<label for="avatar_category_select"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY') ?></label>
-									<input id="kunena_url_avatargallery" type="hidden" value="<?php echo CKunenaLink::GetMyProfileUrl ( intval($this->user->id), 'edit', false, '&gallery=_GALLERY_' )?>" />
+									<input id="kunena_url_avatargallery" type="hidden" value="<?php echo $this->me->getUrl(true, 'edit') ?>" />
 								</div>
 							</div>
 							<div class="form-field">

@@ -17,7 +17,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	function displayDefault() {
 		$this->setToolBarDefault();
 		$this->templates = $this->get('templates');
-		$this->navigation = $this->get ( 'AdminNavigation' );
+		$this->pagination = $this->get ( 'Pagination' );
 		$this->display();
 	}
 
@@ -28,6 +28,8 @@ class KunenaAdminViewTemplates extends KunenaView {
 
 	function displayEdit () {
 		$this->setToolBarEdit();
+		// FIXME: enable template parameters
+		$this->form = $this->get('Form');
 		$this->params = $this->get('editparams');
 		$this->details = $this->get('templatedetails');
 		$this->templatename = $this->app->getUserState ( 'kunena.edit.template');
@@ -64,11 +66,15 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
-		JToolBarHelper::custom('publish', 'default.png', 'default_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
+		JToolBarHelper::addNew('add', 'COM_KUNENA_TEMPLATES_FIELD_LABEL_ADD');
 		JToolBarHelper::spacer();
-		JToolBarHelper::addNew('add', 'COM_KUNENA_A_TEMPLATE_MANAGER_ADD');
+		if (version_compare(JVERSION, '3', '>')) {
+			JToolBarHelper::custom('publish', 'star.png', 'star_f2.png', 'COM_KUNENA_TEMPLATES_FIELD_LABEL_MAKE_DEFAULT');
+		} else {
+			JToolBarHelper::custom('publish', 'default.png', 'default_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT');
+		}
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
 		JToolBarHelper::spacer();
@@ -77,27 +83,38 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarAdd() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
 	}
 
 	protected function setToolBarEdit() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::apply('apply');
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('save');
 		JToolBarHelper::spacer();
-		JToolBarHelper::custom('choosecss', 'css.png','css_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS', false, false );
+// TODO: figure out how to do css/less editing so that the distribution files don't get overridden
+/*
+		if (version_compare(JVERSION, '3', '>')) {
+			JToolBarHelper::custom('choosecss', 'edit.png','edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS', false, false );
+		} else {
+			JToolBarHelper::custom('choosecss', 'css.png','css_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS', false, false );
+		}
 		JToolBarHelper::spacer();
+*/
 		JToolBarHelper::cancel('templates');
 		JToolBarHelper::spacer();
 	}
 
 	protected function setToolBarChoosecss() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
-		JToolBarHelper::custom('editcss', 'css.png', 'css_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		if (version_compare(JVERSION, '3', '>')) {
+			JToolBarHelper::custom('editcss', 'edit.png', 'edit_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		} else {
+			JToolBarHelper::custom('editcss', 'css.png', 'css_f2.png', 'COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS');
+		}
 		JToolBarHelper::spacer();
 		JToolBarHelper::spacer();
 		JToolBarHelper::cancel('templates');
@@ -105,7 +122,7 @@ class KunenaAdminViewTemplates extends KunenaView {
 	}
 
 	protected function setToolBarEditcss() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_TEMPLATE_MANAGER'), 'templates' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('savecss');
 		JToolBarHelper::spacer();

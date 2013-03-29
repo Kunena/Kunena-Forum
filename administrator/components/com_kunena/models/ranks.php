@@ -4,95 +4,122 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.model' );
-jimport( 'joomla.html.pagination' );
+jimport ( 'joomla.application.component.modellist' );
 
 /**
  * Ranks Model for Kunena
  *
- * @since 2.0
+ * @since 3.0
  */
-class KunenaAdminModelRanks extends KunenaModel {
-	protected $__state_set = false;
+class KunenaAdminModelRanks extends JModelList {
+
+	public function __construct($config = array()) {
+		if (empty($config['filter_fields'])) {
+			$config['filter_fields'] = array(
+				'id',
+				'title',
+				'min',
+				'special',
+				'image',
+			);
+		}
+
+		parent::__construct($config);
+	}
 
 	/**
 	 * Method to auto-populate the model state.
 	 *
 	 * @return	void
-	 * @since	1.6
 	 */
-	protected function populateState() {
+	protected function populateState($ordering = null, $direction = null) {
+		$app = JFactory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
+		if ($layout) {
+			$this->context .= '.'.$layout;
+		}
+
 		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.ranks.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
-		$this->setState ( 'list.limit', $value );
+		$value = $this->getUserStateFromRequest ( $this->context .'.filter.title', 'filter_title', '', 'string' );
+		$this->setState ( 'filter.title', $value );
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.ranks.list.ordering', 'filter_order', 'ordering', 'cmd' );
-		$this->setState ( 'list.ordering', $value );
+		$value = $this->getUserStateFromRequest ( $this->context .'.filter.special', 'filter_special', '', 'string' );
+		$this->setState ( 'filter.special', $value !== '' ? (int) $value : null );
 
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.ranks.list.start", 'limitstart', 0, 'int' );
-		$this->setState ( 'list.start', $value );
+		$value = $this->getUserStateFromRequest ( $this->context .'.filter.min', 'filter_min', '', 'string' );
+		$this->setState ( 'filter.min', $value !== '' ? (int) $value : null );
 
-		$id = $this->getInt ( 'id', 0 );
-		$this->setState ( 'item.id', $id );
+		// List state information.
+		parent::populateState('id', 'asc');
 	}
 
-	public function getRanks() {
-		$db = JFactory::getDBO ();
+	protected function getStoreId($id = '') {
+		// Compile the store id.
+		$id	.= ':'.$this->getState('filter.title');
+		$id	.= ':'.$this->getState('filter.special');
+		$id	.= ':'.$this->getState('filter.min');
 
-		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_ranks" );
-		$total = $db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		$this->setState ( 'list.total',$total );
-
-		$db->setQuery ( "SELECT * FROM #__kunena_ranks", $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		$ranks = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		return $ranks;
+		return parent::getStoreId($id);
 	}
 
-	public function getRank() {
-		$db = JFactory::getDBO ();
+	protected function getListQuery() {
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
 
-		if ( $this->getState('item.id') ) {
-			$db->setQuery ( "SELECT * FROM #__kunena_ranks WHERE rank_id = '{$this->getState('item.id')}'" );
-			$selected = $db->loadObject ();
-			if (KunenaError::checkDatabaseError()) return;
+		$query->select(
+			$this->getState(
+					'list.select',
+					'a.rank_id, a.rank_title, a.rank_min, a.rank_special, a.rank_image'
+			)
+		);
 
-			return $selected;
-		}
-		return null;
-	}
+		$query->from('#__kunena_ranks AS a');
 
-	public function getRankspaths() {
-		$template = KunenaFactory::getTemplate();
-
-		if ( $this->getState('item.id') ) {
-			$selected = $this->getRank();
+		// Filter by access level.
+		$filter = $this->getState ( 'filter.title');
+		if (!empty($filter)) {
+			$title = $db->Quote('%'.$db->escape($filter, true).'%');
+			$query->where('(a.rank_title LIKE '.$title.')');
 		}
 
-		$rankpath = $template->getRankPath();
-		$rank_images = (array)JFolder::Files(JPATH_SITE.'/'.$rankpath,false,false,false,array('index.php','index.html'));
-
-		$rank_list = array();
-		$i = 0;
-		foreach ( $rank_images as $id => $row ) {
-			$rank_list[] = JHTML::_ ( 'select.option', $rank_images [$id], $rank_images [$id] );
+		$filter = $this->getState('filter.special');
+		if (is_numeric($filter)) {
+			$query->where('a.rank_special = ' . (int) $filter);
 		}
-		$list = JHTML::_('select.genericlist', $rank_list, 'rank_image', 'class="inputbox" onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);"', 'value', 'text', isset($selected) ? $selected->rank_image : '' );
 
-		return $list;
-	}
+		$filter = $this->getState ( 'filter.min');
+		if (!empty($filter)) {
+			$query->where('a.rank_min > ' . (int) $filter);
+		}
 
-	public function getAdminNavigation() {
-		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		return $navigation;
+		// Add the list ordering clause.
+		$direction	= strtoupper($this->state->get('list.direction'));
+		switch ($this->state->get('list.ordering')) {
+			case 'title':
+				$query->order('a.rank_title ' . $direction);
+				break;
+			case 'min':
+				$query->order('a.rank_min ' . $direction);
+				break;
+			case 'special':
+				$query->order('a.rank_special ' . $direction);
+				break;
+			case 'image':
+				$query->order('a.rank_image ' . $direction);
+				break;
+			default:
+				$query->order('a.rank_id ' . $direction);
+		}
+
+		//echo nl2br(str_replace('#__','jos_',$query));
+		return $query;
 	}
 }

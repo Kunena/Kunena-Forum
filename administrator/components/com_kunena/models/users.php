@@ -4,195 +4,213 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.model' );
-jimport( 'joomla.html.pagination' );
+jimport ( 'joomla.application.component.modellist' );
 
 /**
  * Users Model for Kunena
  *
  * @since 2.0
  */
-class KunenaAdminModelUsers extends KunenaModel {
-	protected $__state_set = false;
+class KunenaAdminModelUsers extends JModelList {
+
+	/**
+	 * Constructor.
+	 *
+	 * @param	array	An optional associative array of configuration settings.
+	 * @see		JController
+	 */
+	public function __construct($config = array())
+	{
+		if (empty($config['filter_fields'])) {
+			$config['filter_fields'] = array(
+					'id',
+					'username',
+					'name',
+					'email',
+					'signature',
+					'enabled',
+					'banned',
+					'moderator'
+			);
+		}
+
+		parent::__construct($config);
+	}
 
 	/**
 	 * Method to auto-populate the model state.
-	 *
-	 * @return	void
-	 * @since	1.6
 	 */
-	protected function populateState() {
-		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.users.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
-		$this->setState ( 'list.limit', $value );
+	protected function populateState($ordering = null, $direction = null) {
+		$app = JFactory::getApplication();
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.ordering', 'filter_order', 'username', 'cmd' );
-		$this->setState ( 'list.ordering', $value );
-
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.users.list.start", 'limitstart', 0, 'int' );
-		$this->setState ( 'list.start', $value );
-
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.direction', 'filter_order_Dir', 'asc', 'word' );
-		if ($value != 'asc')
-			$value = 'desc';
-		$this->setState ( 'list.direction', $value );
-
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.users.list.search', 'search', '', 'string' );
-		$this->setState ( 'list.search', $value );
-	}
-
-	public function getUsers() {
-		$db = JFactory::getDBO ();
-
-		$order = '';
-		if ($this->getState('list.ordering') == 'id') {
-			$order = ' ORDER BY u.id '. $this->getState('list.direction');
-		} else if ($this->getState('list.ordering') == 'username') {
-			$order = ' ORDER BY u.username '. $this->getState('list.direction');
-		} else if ($this->getState('list.ordering') == 'name') {
-			$order = ' ORDER BY u.name '. $this->getState('list.direction');
-		} else if ($this->getState('list.ordering') == 'moderator') {
-			$order = ' ORDER BY ku.moderator '. $this->getState('list.direction');
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
+		if ($layout) {
+			$this->context .= '.'.$layout;
 		}
 
-		$where = '';
-		if ( $this->getState('list.search') ) {
-		  $where = ' WHERE u.username LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.email LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false ).' OR u.name LIKE '.$db->Quote( '%'.$db->getEscaped( $this->getState ( 'list.search' ), true ).'%', false );
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.search', 'filter_search', '', 'string' );
+		$this->setState ( 'filter.search', $value );
 
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.username', 'filter_username', '', 'string' );
+		$this->setState ( 'filter.username', $value );
+
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.email', 'filter_email', '', 'string' );
+		$this->setState ( 'filter.email', $value );
+
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.signature', 'filter_signature', '', 'string' );
+		$this->setState ( 'filter.signature', $value );
+
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.block', 'filter_block', '', 'string' );
+		$this->setState ( 'filter.block', $value );
+
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.banned', 'filter_banned', '', 'string' );
+		$this->setState ( 'filter.banned', $value );
+
+		$value = $this->getUserStateFromRequest ( $this->context.'.filter.moderator', 'filter_moderator', '', 'string' );
+		$this->setState ( 'filter.moderator', $value );
+
+		// List state information.
+		parent::populateState('username', 'asc');
+	}
+
+	/**
+	 * Method to get a store id based on model configuration state.
+	 *
+	 * This is necessary because the model is used by the component and
+	 * different modules that might need different sets of data or different
+	 * ordering requirements.
+	 *
+	 * @param	string		$id	A prefix for the store id.
+	 *
+	 * @return	string		A store id.
+	 */
+	protected function getStoreId($id = '')
+	{
+		// Compile the store id.
+		$id	.= ':'.$this->getState('filter.search');
+		$id	.= ':'.$this->getState('filter.username');
+		$id	.= ':'.$this->getState('filter.email');
+		$id	.= ':'.$this->getState('filter.signature');
+		$id	.= ':'.$this->getState('filter.block');
+		$id	.= ':'.$this->getState('filter.banned');
+		$id	.= ':'.$this->getState('filter.moderator');
+
+		return parent::getStoreId($id);
+	}
+
+	/**
+	 * Build an SQL query to load the list data.
+	 *
+	 * @return	JDatabaseQuery
+	 */
+	protected function getListQuery()
+	{
+		// Create a new query object.
+		$db		= $this->getDbo();
+		$query	= $db->getQuery(true);
+
+		// Select the required fields from the table.
+		$query->select(
+			$this->getState(
+				'list.select',
+				'a.*'
+			)
+		);
+		$query->from('#__users AS a');
+
+		// Join over the users for the linked user.
+		$query->select('ku.*');
+		$query->join('LEFT', '#__kunena_users AS ku ON a.id=ku.userid');
+
+		// Filter by search.
+		$search = $this->getState('filter.search');
+		if (!empty($search)) {
+			if (stripos($search, 'id:') === 0) {
+				$query->where('a.id = '.(int) substr($search, 3));
+			}
+			else {
+				$search = $db->Quote('%'.$db->escape($search, true).'%');
+				$query->where('(a.username LIKE '.$search.' OR a.name LIKE '.$search.' OR a.email LIKE '.$search.')');
+			}
 		}
 
-		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_users AS ku
-		INNER JOIN #__users AS u ON ku.userid=u.id {$where}
-		");
-		$total = $db->loadResult ();
-		KunenaError::checkDatabaseError();
-
-		$this->setState ( 'list.total', $total );
-
-		$db->setQuery ( "SELECT u.id, u.username, u.name, ku.moderator
-		FROM #__kunena_users AS ku
-		INNER JOIN #__users AS u ON ku.userid=u.id {$where}
-		{$order}
-		", $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-
-		$users = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		return $users;
-	}
-
-	public function getUser() {
-		$userid = $this->app->getUserState ( 'kunena.user.userid');
-
-		$user = KunenaUserHelper::get($userid);
-
-		return $user;
-	}
-
-	public function getSubscriptions() {
-		$db = JFactory::getDBO ();
-		$userid = $this->app->getUserState ( 'kunena.user.userid');
-
-		$db->setQuery ( "SELECT topic_id AS thread FROM #__kunena_user_topics WHERE user_id='$userid' AND subscribed=1" );
-		$subslist = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		return $subslist;
-	}
-
-	public function getCatsubcriptions() {
-		$db = JFactory::getDBO ();
-		$userid = $this->app->getUserState ( 'kunena.user.userid');
-
-		$db->setQuery ( "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$userid}" );
-		$subscatslist = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		return $subscatslist;
-	}
-
-	public function getIPlist() {
-		$db = JFactory::getDBO ();
-		$userid = $this->app->getUserState ( 'kunena.user.userid');
-
-		$db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid='$userid' GROUP BY ip" );
-		$iplist = implode("','", $db->loadResultArray ());
-		if (KunenaError::checkDatabaseError()) return;
-
-		$list = array();
-		if ($iplist) {
-			$iplist = "'{$iplist}'";
-			$db->setQuery ( "SELECT m.ip,m.userid,u.username,COUNT(*) as mescnt FROM #__kunena_messages AS m INNER JOIN #__users AS u ON m.userid=u.id WHERE m.ip IN ({$iplist}) GROUP BY m.userid,m.ip" );
-			$list = $db->loadObjectlist ();
-		if (KunenaError::checkDatabaseError()) return;
-		}
-		$useripslist = array();
-		foreach ($list as $item) {
-			$useripslist[$item->ip][] = $item;
+		// Filter by username or name.
+		$search = $this->getState('filter.username');
+		if (!empty($search)) {
+			$search = $db->Quote('%'.$db->escape($search, true).'%');
+			$query->where('a.username LIKE '.$search . 'OR a.name LIKE '.$search);
 		}
 
-		return $useripslist;
-	}
-
-	public function getListmodcats() {
-		$db = JFactory::getDBO ();
-		$user = $this->getUser();
-
-		$modCatList = array_keys(KunenaAccess::getInstance()->getModeratorStatus($user));
-		if (empty($modCatList)) $modCatList[] = 0;
-
-		$categoryList = array(JHTML::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR')));
-		$params = array (
-			'sections' => false,
-			'action' => 'read');
-		$modCats = JHTML::_('kunenaforum.categorylist', 'catid[]', 0, $categoryList, $params, 'class="inputbox" multiple="multiple" size="15"', 'value', 'text', $modCatList, 'kforums');
-
-		return $modCats;
-	}
-
-	public function getListuserranks() {
-		$db = JFactory::getDBO ();
-		$user = $this->getUser();
-		//grab all special ranks
-		$db->setQuery ( "SELECT * FROM #__kunena_ranks WHERE rank_special = '1'" );
-		$specialRanks = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		$yesnoRank [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_RANK_NO_ASSIGNED') );
-		foreach ( $specialRanks as $ranks ) {
-			$yesnoRank [] = JHTML::_ ( 'select.option', $ranks->rank_id, $ranks->rank_title );
+		// Filter by email.
+		$search = $this->getState('filter.email');
+		if (!empty($search)) {
+			$search = $db->Quote('%'.$db->escape($search, true).'%');
+			$query->where('a.email LIKE '.$search);
 		}
-		//build special ranks select list
-		$selectRank = JHTML::_ ( 'select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $user->rank );
-		return $selectRank;
-	}
 
-	public function getMovecatslist() {
-		return JHTML::_('kunenaforum.categorylist', 'catid', 0, array(), array(), 'class="inputbox"', 'value', 'text');
-	}
+		// Filter by signature.
+		$filter = $this->getState('filter.signature');
+		if ($filter != '') {
+			if ($filter) $query->where("ku.signature!={$db->quote('')} AND ku.signature IS NOT NULL");
+			else $query->where("ku.signature={$db->quote('')} OR ku.signature IS NULL");
+		}
 
-	public function getMoveuser() {
-		$db = JFactory::getDBO ();
+		// Filter by block state.
+		$filter = $this->getState('filter.block');
+		if ($filter != '') {
+			$query->where('a.block='.(int) $filter);
+		}
 
-		$userids = (array) $this->app->getUserState ( 'kunena.usermove.userids');
-		if (!$userids) return $userids;
+		// Filter by banned state.
+		$filter = $this->getState('filter.banned');
+		if ($filter != '') {
+			$now = new JDate ();
+			if ($filter) $query->where("ku.banned={$db->quote($db->getNullDate())} OR ku.banned>{$db->quote($now->toSql())}");
+			else $query->where("ku.banned IS NULL OR (ku.banned>{$db->quote($db->getNullDate())} AND ku.banned<{$db->quote($now->toSql())})");
+		}
 
-		$userids = implode(',', $userids);
-		$db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userids.")" );
-		$userids = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+		// Filter by moderator state.
+		$filter = $this->getState('filter.moderator');
+		if ($filter != '') {
+			$query->where('ku.moderator ='.(int) $filter);
+		}
 
-		return $userids;
-	}
+		// Add the list ordering clause.
+		$direction	= strtoupper($this->state->get('list.direction'));
+		switch ($this->state->get('list.ordering')) {
+			case 'id':
+				$query->order('a.id ' . $direction);
+				break;
+			case 'email':
+				$query->order('a.email ' . $direction);
+				break;
+			case 'signature':
+				$query->order('ku.signature ' . $direction);
+				break;
+			case 'enabled':
+				$query->order('a.block ' . $direction);
+				break;
+			case 'banned':
+				$query->order('ku.banned ' . $direction);
+				break;
+			case 'moderator':
+				$query->order('ku.moderator ' . $direction);
+				break;
+			case 'name':
+				$query->order('a.name ' . $direction);
+			case 'username':
+			default:
+				$query->order('a.username ' . $direction);
+		}
 
-	public function getAdminNavigation() {
-		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		return $navigation;
+		//echo nl2br(str_replace('#__','jos_',$query));
+		return $query;
 	}
 }

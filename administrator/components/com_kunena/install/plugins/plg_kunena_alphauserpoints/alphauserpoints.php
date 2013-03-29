@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 class plgKunenaAlphaUserPoints extends JPlugin {
 	public function __construct(&$subject, $config) {
 		// Do not load if Kunena version is not supported or Kunena is offline
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::installed())) return;
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed())) return;
 
 		$aup = JPATH_SITE . '/components/com_alphauserpoints/helper.php';
 		if (! file_exists ( $aup ))
@@ -23,8 +23,6 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 		parent::__construct ( $subject, $config );
 
 		$this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', JPATH_ADMINISTRATOR ) || $this->loadLanguage ( 'plg_kunena_alphauserpoints.sys', KPATH_ADMIN );
-
-		$this->path = dirname ( __FILE__ ) . '/alphauserpoints';
 	}
 
 	/*
@@ -35,7 +33,7 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 	public function onKunenaGetAvatar() {
 		if (!$this->params->get('avatar', 1)) return;
 
-		require_once "{$this->path}/avatar.php";
+		require_once __DIR__ . "/avatar.php";
 		return new KunenaAvatarAlphaUserPoints($this->params);
 	}
 
@@ -47,7 +45,7 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 	public function onKunenaGetProfile() {
 		if (!$this->params->get('profile', 1)) return;
 
-		require_once "{$this->path}/profile.php";
+		require_once __DIR__ . "/profile.php";
 		return new KunenaProfileAlphaUserPoints($this->params);
 	}
 
@@ -59,7 +57,7 @@ class plgKunenaAlphaUserPoints extends JPlugin {
 	public function onKunenaGetActivity() {
 		if (!$this->params->get('activity', 1)) return;
 
-		require_once "{$this->path}/activity.php";
+		require_once __DIR__ . "/activity.php";
 		return new KunenaActivityAlphaUserPoints($this->params);
 	}
 }

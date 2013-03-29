@@ -286,24 +286,25 @@ abstract class KunenaForumTopicHelper {
 	public static function recount($ids=false, $start=0, $end=0) {
 		$db = JFactory::getDBO ();
 
-		if ($start < 1) $start = 1;
 		if (is_array($ids)) {
-			$threads = 'm.thread IN ('.implode(',', $ids).')';
+			$threads = 'AND m.thread IN ('.implode(',', $ids).')';
 		} elseif ((int)$ids) {
-			$threads = 'm.thread='.(int)$ids;
+			$threads = 'AND m.thread='.(int)$ids;
 		} else {
 			$threads = '';
 		}
-		$where = '';
-		if ($threads) $where = "AND {$threads}";
+
 		if ($end) {
-			$where .= " AND (tt.id BETWEEN {$start} AND {$end})";
+			if ($start < 1) $start = 1;
+			$topics = " AND (tt.id BETWEEN {$start} AND {$end})";
+		} else {
+			$topics = '';
 		}
 
 		// Mark all empty topics as deleted
 		$query ="UPDATE #__kunena_topics AS tt
 			LEFT JOIN #__kunena_messages AS m ON m.thread=tt.id AND tt.hold=m.hold
-			SET tt.hold = 3,
+			SET tt.hold = 4,
 				tt.posts = 0,
 				tt.attachments = 0,
 				tt.first_post_id = 0,
@@ -316,7 +317,20 @@ abstract class KunenaForumTopicHelper {
 				tt.last_post_userid = 0,
 				tt.last_post_message = '',
 				tt.last_post_guest_name = ''
-			WHERE tt.moved_id=0 AND tt.hold!=3 AND m.id IS NULL {$where}";
+			WHERE tt.moved_id=0 AND tt.hold!=4 AND m.id IS NULL {$topics} {$threads}";
+		$db->setQuery($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return false;
+		$rows = $db->getAffectedRows ();
+
+		// Find out if there are deleted topics with visible replies.
+		$query ="UPDATE #__kunena_topics AS tt
+			INNER JOIN (
+				SELECT m.thread, MIN(m.hold) AS hold FROM #__kunena_messages AS m WHERE m.hold IN (0,1) {$threads} GROUP BY thread
+			) AS c ON tt.id=c.thread
+			SET tt.hold = c.hold
+			WHERE tt.moved_id=0 {$topics}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
@@ -329,6 +343,7 @@ abstract class KunenaForumTopicHelper {
 				SELECT m.thread, m.hold, COUNT(DISTINCT m.id) AS posts, COUNT(a.id) as attachments, MIN(m.time) AS mintime, MAX(m.time) AS maxtime
 				FROM #__kunena_messages AS m
 				LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
+				WHERE m.moved=0 {$threads}
 				GROUP BY m.thread, m.hold
 			) AS c ON tt.id=c.thread
 			INNER JOIN #__kunena_messages AS mmin ON c.thread=mmin.thread AND mmin.hold=tt.hold AND mmin.time=c.mintime
@@ -347,7 +362,7 @@ abstract class KunenaForumTopicHelper {
 				tt.last_post_userid = mmax.userid,
 				tt.last_post_message = tmax.message,
 				tt.last_post_guest_name = mmax.name
-			WHERE moved_id=0 {$where}";
+			WHERE moved_id=0 {$topics}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())

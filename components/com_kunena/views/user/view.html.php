@@ -89,17 +89,12 @@ class KunenaViewUser extends KunenaView {
 			$this->profile->save();
 		}
 		if ($this->profile->userid == $this->me->userid) {
-			if ($this->do != 'edit') $this->editLink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_EDIT').' &raquo;', 'nofollow', 'edit', 'kheader-link' );
-			else $this->editLink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow', '', 'kheader-link' );
-
-			// TODO: Deprecated
-			if ($this->do != 'edit') $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
-			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK'), 'nofollow' );
+			if ($this->do != 'edit') $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_EDIT').' &raquo;', JText::_('COM_KUNENA_EDIT').' &raquo;', 'nofollow', 'edit' );
+			else $this->editlink = $this->profile->getLink ( JText::_('COM_KUNENA_BACK').' &raquo;', JText::_('COM_KUNENA_BACK').' &raquo;', 'nofollow' );
 		}
 		$this->name = $this->user->username;
 		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
 		if ($this->config->showuserstats) {
-			if ($this->config->userlist_usertype) $this->usertype = $this->user->usertype;
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');
 			$this->posts = $this->profile->posts;
@@ -109,13 +104,18 @@ class KunenaViewUser extends KunenaView {
 		}
 		if ($this->config->userlist_joindate || $this->me->isModerator()) $this->registerdate = $this->user->registerDate;
 		if ($this->config->userlist_lastvisitdate || $this->me->isModerator()) $this->lastvisitdate = $this->user->lastvisitDate;
-		if ($this->lastvisitdate == "0000-00-00 00:00:00") $this->lastvisitdate = null;
+		if (!isset($this->lastvisitdate) || $this->lastvisitdate == "0000-00-00 00:00:00") $this->lastvisitdate = null;
 		$this->avatarlink = $this->profile->getAvatarImage('kavatar','profile');
 		$this->personalText = $this->profile->personalText;
 		$this->signature = $this->profile->signature;
 		$this->signatureHtml = KunenaHtmlParser::parseBBCode($this->signature, null, $this->config->maxsig);
-		$this->localtime = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
-		$this->localtime->setOffset($this->user->getParam('timezone', $this->app->getCfg ( 'offset', 0 )));
+		$this->localtime = KunenaDate::getInstance('now', $this->user->getParam('timezone', $this->app->getCfg ( 'offset', null )));
+		try {
+			$offset = new DateTimeZone($this->user->getParam('timezone', $this->app->getCfg ( 'offset', null )));
+		} catch (Exception $e) {
+			$offset = null;
+		}
+		$this->localtime->setTimezone($offset);
 		$this->moderator = KunenaAccess::getInstance()->getModeratorStatus($this->profile);
 		$this->admin = $this->profile->isAdmin();
 		switch ($this->profile->gender) {
@@ -295,15 +295,23 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function displaySummary() {
+		$private = KunenaFactory::getPrivateMessaging();
+		if ($this->me->userid == $this->user->id) {
+			$PMCount = $private->getUnreadCount($this->me->userid);
+			$this->PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
+		} else {
+			$this->PMlink = $this->profile->profileIcon('private');
+		}
+
 		echo $this->loadTemplateFile('summary');
 	}
 
 	function displayTab() {
 		$this->email = null;
 		if ( $this->config->showemail && ( !$this->profile->hideEmail || $this->me->isModerator() ) ) {
-			$this->email = JHTML::_('email.cloak', $this->user->email);
+			$this->email = JHtml::_('email.cloak', $this->user->email);
 		} else if ( $this->me->isAdmin() ) {
-			$this->email = JHTML::_('email.cloak', $this->user->email);
+			$this->email = JHtml::_('email.cloak', $this->user->email);
 		}
 
 		switch ($this->do) {
@@ -322,8 +330,8 @@ class KunenaViewUser extends KunenaView {
 			$userkarma = '<strong>'. JText::_('COM_KUNENA_KARMA') . "</strong>: " . $this->profile->karma;
 
 			if ($this->me->userid && $this->me->userid != $this->profile->userid) {
-				$userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'decrease', '', '', $this->profile->userid, '<span class="kkarma-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
-				$userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'increase', '', '', $this->profile->userid, '<span class="kkarma-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
+				$userkarma .= ' '.JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-minus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
+				$userkarma .= ' '.JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-plus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
 			}
 		}
 
@@ -375,10 +383,10 @@ class KunenaViewUser extends KunenaView {
 
 	function displayEditUser() {
 		$this->user = JFactory::getUser();
+		$this->me = KunenaUserHelper::get();
 
 		// check to see if Frontend User Params have been enabled
-		if (version_compare(JVERSION, '1.6','>') && JComponentHelper::getParams('com_users')->get('frontend_userparams')) {
-			// Joomla 1.6
+		if (JComponentHelper::getParams('com_users')->get('frontend_userparams')) {
 			$usersConfig = JComponentHelper::getParams( 'com_users' );
 			if ($usersConfig->get('frontend_userparams', 0)) {
 				$lang = JFactory::getLanguage();
@@ -398,20 +406,6 @@ class KunenaViewUser extends KunenaView {
 				// this get only the fields for user settings (template, editor, language...)
 				$this->userparameters = $form->getFieldset('params');
 			}
-		} elseif (version_compare(JVERSION, '1.6','<') && JComponentHelper::getParams('com_users')->get('frontend_userparams')) {
-			// Joomla 1.5
-			$lang = JFactory::getLanguage();
-			$lang->load('com_user', JPATH_SITE);
-			$params = $this->user->getParameters(true);
-			// Legacy template support:
-			$this->userparams = $params->renderToArray();
-			$i=0;
-			// New templates use this:
-			foreach ($this->userparams as $userparam) {
-				$this->userparameters[$i]->input = $userparam[1];
-				$this->userparameters[$i]->label = '<label for="params'.$userparam[5].'" title="'.$userparam[2].'">'.$userparam[0].'</label>';
-				$i++;
-			}
 		}
 		echo $this->loadTemplateFile('user');
 	}
@@ -423,9 +417,9 @@ class KunenaViewUser extends KunenaView {
 		$this->birthdate["month"] = $bd[1];
 		$this->birthdate["day"] = $bd[2];
 
-		$this->genders[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
-		$this->genders[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
-		$this->genders[] = JHTML::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+		$this->genders[] = JHtml::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+		$this->genders[] = JHtml::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+		$this->genders[] = JHtml::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
 
 		$this->social = array('twitter', 'facebook', 'myspace', 'skype', 'linkedin', 'delicious',
 			'friendfeed', 'digg', 'yim', 'aim', 'gtalk', 'icq', 'msn', 'blogspot', 'flickr', 'bebo');
@@ -440,12 +434,37 @@ class KunenaViewUser extends KunenaView {
 			$this->gallery = '';
 		}
 		$path = JPATH_ROOT . '/media/kunena/avatars/gallery';
-		$this->galleryurl = JURI::root(true) . '/media/kunena/avatars/gallery';
+		$this->galleryurl = JUri::root(true) . '/media/kunena/avatars/gallery';
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 
+		$this->galleryImagesList = $this->getAllImagesInGallery();
+
 		$this->row(true);
 		echo $this->loadTemplateFile('avatar');
+	}
+
+	function getAllImagesInGallery() {
+		$path = JPATH_ROOT . '/media/kunena/avatars/gallery';
+		$galleryFolders = JFolder::folders($path);
+		$files_list = array();
+		$defaultGallery = JFolder::files($path);
+		$newdefaultGallery = array();
+
+		foreach($defaultGallery as $image) {
+			if( $image != 'index.html' ) $newdefaultGallery[] = $image;
+		}
+		$files_list['default'] = json_encode($newdefaultGallery);
+
+		foreach($galleryFolders as $folder) {
+			$tmp = JFolder::files($path. '/' .$folder);
+			$newgalleryFolders = array();
+			foreach($tmp as $img) {
+				if( $img != 'index.html' )$newgalleryFolders[] = $img;
+			}
+			$files_list[$folder] = json_encode($newgalleryFolders);
+		}
+		return $files_list;
 	}
 
 	function displayEditSettings() {
@@ -453,28 +472,28 @@ class KunenaViewUser extends KunenaView {
 		$item->name = 'messageordering';
 		$item->label = JText::_('COM_KUNENA_USER_ORDER');
 		$options = array();
-		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
-		$options[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_USER_ORDER_ASC'));
-		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_DESC'));
-		$item->field = JHTML::_('select.genericlist', $options, 'messageordering', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->ordering), 'kmessageordering');
+		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
+		$options[] = JHtml::_('select.option', 2, JText::_('COM_KUNENA_USER_ORDER_ASC'));
+		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_DESC'));
+		$item->field = JHtml::_('select.genericlist', $options, 'messageordering', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->ordering), 'kmessageordering');
 		$this->settings[] = $item;
 
 		$item = new StdClass();
 		$item->name = 'hidemail';
 		$item->label = JText::_('COM_KUNENA_USER_HIDEEMAIL');
 		$options = array();
-		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-		$item->field = JHTML::_('select.genericlist', $options, 'hidemail', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->hideEmail), 'khidemail');
+		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$item->field = JHtml::_('select.genericlist', $options, 'hidemail', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->hideEmail), 'khidemail');
 		$this->settings[] = $item;
 
 		$item = new StdClass();
 		$item->name = 'showonline';
 		$item->label = JText::_('COM_KUNENA_USER_SHOWONLINE');
 		$options = array();
-		$options[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_NO'));
-		$options[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_YES'));
-		$item->field = JHTML::_('select.genericlist', $options, 'showonline', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->showOnline), 'kshowonline');
+		$options[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_NO'));
+		$options[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_YES'));
+		$item->field = JHtml::_('select.genericlist', $options, 'showonline', 'class="kinputbox" size="1"', 'value', 'text', $this->escape($this->profile->showOnline), 'kshowonline');
 		$this->settings[] = $item;
 
 		$this->row(true);
@@ -488,7 +507,7 @@ class KunenaViewUser extends KunenaView {
 	function displayUserRow($user) {
 		$this->user = KunenaFactory::getUser($user->id);
 		if ($this->config->userlist_email && (!$this->user->hideEmail || $this->me->isModerator())) {
-			$this->email = JHTML::_('email.cloak', $this->user->email);
+			$this->email = JHtml::_('email.cloak', $this->user->email);
 		}
 		$this->rank_image = $this->user->getRank (0, 'image');
 		$this->rank_title = $this->user->getRank (0, 'title');
@@ -496,14 +515,7 @@ class KunenaViewUser extends KunenaView {
 	}
 
 	function getLastvisitdate($date) {
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$lastvisit = JHTML::_('date', $date, 'Y-m-d\TH:i:sP ');
-		} else {
-			// Joomla 1.5
-			$lastvisit = JHTML::_('date', $date, '%Y-%m-%d %H:%M:%S');
-		}
-
+		$lastvisit = JHtml::_('date', $date, 'Y-m-d\TH:i:sP ');
 		return $lastvisit;
 	}
 

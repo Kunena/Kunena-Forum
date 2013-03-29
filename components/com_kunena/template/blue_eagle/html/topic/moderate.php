@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 $this->document->addScriptDeclaration("// <![CDATA[
-kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw")."';
+kunena_url_ajax= ".json_encode(KunenaRoute::_("index.php?option=com_kunena&view=category&format=raw")).";
 // ]]>");
 ?>
 <div class="kblock">
@@ -28,7 +28,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 <?php if (isset($this->message)) : ?>
 				<input type="hidden" name="mesid" value="<?php echo $this->message->id; ?>" />
 <?php endif; ?>
-				<?php echo JHTML::_( 'form.token' ); ?>
+				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<div>
 					<?php echo JText::_('COM_KUNENA_TOPIC'); ?>:
@@ -39,6 +39,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 					<strong><?php echo $this->escape( $this->category->name ) ?></strong>
 				</div>
 
+				<?php if ($this->config->topicicons) : ?>
 				<div><?php echo JText::_('COM_KUNENA_MODERATION_CHANGE_TOPIC_ICON'); ?>:</div>
 				<div class="kmoderate-topicicons">
 					<?php foreach ($this->topicIcons as $id=>$icon): ?>
@@ -46,6 +47,7 @@ kunena_url_ajax= '".KunenaRoute::_("index.php?option=com_kunena&view=category&fo
 					<img src="<?php echo $this->ktemplate->getTopicIconIndexPath($icon->id, true);?>" alt="" border="0" />
 					<?php endforeach; ?>
 				</div>
+				<?php endif; ?>
 				<br />
 				<?php if (isset($this->message)) : ?>
 				<div><?php echo JText::_('COM_KUNENA_MODERATION_TITLE_SELECTED'); ?>:</div>

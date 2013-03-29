@@ -23,7 +23,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 	}
 
 	public function publish() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -43,7 +43,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 	}
 
 	public function unpublish() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -70,7 +70,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 	}
 
 	public function delete() {
-		if (! JRequest::checkToken ('request')) {
+		if (! JSession::checkToken ('request')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -88,7 +88,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 	}
 
 	public function save() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack ();
 		}
@@ -98,7 +98,7 @@ class KunenaControllerAnnouncement extends KunenaController {
 		$fields['title'] = JRequest::getString ( 'title', '', 'post', JREQUEST_ALLOWRAW );
 		$fields['description'] = JRequest::getString ( 'description', '', 'post', JREQUEST_ALLOWRAW );
 		$fields['sdescription'] = JRequest::getString ( 'sdescription', '', 'post', JREQUEST_ALLOWRAW );
-		$fields['created'] = JRequest::getString ( 'created', $now->toMysql() );
+		$fields['created'] = JRequest::getString ( 'created', $now->toSql() );
 		$fields['published'] = JRequest::getInt ( 'published', 1 );
 		$fields['showdate'] = JRequest::getInt ( 'showdate', 1 );
 

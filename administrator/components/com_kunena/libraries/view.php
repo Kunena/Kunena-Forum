@@ -9,12 +9,10 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.view' );
-
 /**
  * Kunena View Class
  */
-class KunenaView extends JView {
+class KunenaView extends JViewLegacy {
 	public $document = null;
 	public $app = null;
 	public $me = null;
@@ -36,6 +34,22 @@ class KunenaView extends JView {
 		$this->ktemplate = KunenaFactory::getTemplate();
 		// Set the default template search path
 		if ($this->app->isSite() && !isset($config['template_path'])) $config['template_path'] = $this->ktemplate->getTemplatePaths("html/$name", true);
+
+		if ($this->app->isAdmin()) {
+			if (version_compare(JVERSION, '3', '>')) {
+				// Joomla 3.0+ template:
+				$config['template_path'] = array(KPATH_ADMIN.'/template/joomla30/'.$name);
+				require_once KPATH_ADMIN.'/template/joomla30/template.php';
+				$templateAdmin = new KunenaAdminTemplate30;
+				$templateAdmin->initialize();
+			} else {
+				// Joomla 2.5 template:
+				$config['template_path'] = array(KPATH_ADMIN.'/template/joomla25/'.$name);
+				require_once KPATH_ADMIN.'/template/joomla25/template.php';
+				$templateAdmin = new KunenaAdminTemplate25;
+				$templateAdmin->initialize();
+			}
+		}
 
 		parent::__construct($config);
 
@@ -71,7 +85,6 @@ class KunenaView extends JView {
 		}
 
 		$this->state = $this->get ( 'State' );
-		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$this->ktemplate->initialize();
 
 		if (JFactory::getApplication()->isAdmin()) {
@@ -79,7 +92,7 @@ class KunenaView extends JView {
 		} else {
 			$this->document->addHeadLink( KunenaRoute::_(), 'canonical', 'rel', '' );
 			include JPATH_SITE .'/'. $this->ktemplate->getFile ('html/display.php');
-			echo $this->poweredBy();
+			if ($this->config->get('credits', 1)) echo $this->poweredBy();
 		}
 	}
 
@@ -111,7 +124,7 @@ class KunenaView extends JView {
 				return;
 			} elseif (!method_exists($this, $layoutFunction) && !file_exists(KPATH_SITE."/views/{$view}/{$layout}.php")) {
 				// Layout was not found (don't allow Joomla to raise an error)
-				echo $this->displayNoAccess(array(JText::_('COM_KUNENA_NO_ACCESS')));
+				echo $this->displayError(array(JText::_('COM_KUNENA_NO_ACCESS')), 404);
 				KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 				return;
 			}
@@ -125,7 +138,7 @@ class KunenaView extends JView {
 			$contents = $this->displayDefault($tpl ? $tpl : null);
 		} else {
 			// TODO: should raise error instead..
-			$contents = '';
+			$contents = $this->display($tpl ? $tpl : null);
 		}
 		KUNENA_PROFILER ? $this->profiler->stop("display {$viewName}/{$layoutName}") : null;
 		return $contents;
@@ -136,15 +149,15 @@ class KunenaView extends JView {
 	}
 
 	public function isModulePosition($position) {
-		$doc = JFactory::getDocument();
-		return method_exists($doc, 'countModules') ? $doc->countModules ( $position ) : 0;
+		$document = JFactory::getDocument();
+		return method_exists($document, 'countModules') ? $document->countModules ( $position ) : 0;
 	}
 
 	public function getModulePosition($position) {
 		$html = '';
-		$doc = JFactory::getDocument();
-		if (method_exists($doc, 'countModules') && $doc->countModules ( $position )) {
-			$renderer = $doc->loadRenderer ( 'modules' );
+		$document = JFactory::getDocument();
+		if (method_exists($document, 'countModules') && $document->countModules ( $position )) {
+			$renderer = $document->loadRenderer ( 'modules' );
 			$options = array ('style' => 'xhtml' );
 			$html .= '<div class="'.$position.'">';
 			$html .= $renderer->render ( $position, $options, null );
@@ -218,7 +231,7 @@ class KunenaView extends JView {
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null) {
 		if (!$content) $content = $this->escape($category->name);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
-		return JHTML::_('kunenaforum.link', $category->getUri(), $content, $title, $class, 'follow');
+		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class, 'follow');
 	}
 
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL) {
@@ -243,7 +256,7 @@ class KunenaView extends JView {
 				}
 			}
 		}
-		return JHTML::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
 	}
 
 	public function addStyleSheet($filename) {
@@ -254,15 +267,37 @@ class KunenaView extends JView {
 		return KunenaFactory::getTemplate()->addScript ( $filename );
 	}
 
-	public function displayNoAccess($errors = array()) {
+	public function displayError($messages = array(), $code = 404) {
+		$title = JText::_('COM_KUNENA_ACCESS_DENIED');	// can be overriden
+
+		// TODO: should we use header function from Joomla instead?
+		switch ((int) $code) {
+			case 404:
+				header("HTTP/1.0 404 Not Found");
+				break;
+			case 403:
+				header('HTTP/1.1 403 Forbidden');
+				break;
+			default:
+		}
+
 		$output = '';
-		foreach ($errors as $error) $output .= "<p>{$error}</p>";
-		$this->common->setLayout ( 'default' );
-		$this->common->header = JText::_('COM_KUNENA_ACCESS_DENIED');
+		foreach ($messages as $message) {
+			$output .= "<p>{$message}</p>";
+		}
+
+		$this->common->setLayout('default');
+		$this->common->header = $title;
 		$this->common->body = $output;
 		$this->common->html = true;
 		$this->common->display();
-		$this->setTitle(JText::_('COM_KUNENA_ACCESS_DENIED'));
+
+		$this->setTitle($title);
+	}
+
+	public function displayNoAccess($errors = array()) {
+		// Backward compatability
+		$this->displayError($errors, 200);
 	}
 
 	public function displayMenu() {
@@ -400,7 +435,7 @@ class KunenaView extends JView {
 
 	final public function poweredBy() {
 			$credits = '<div style="text-align:center">';
-			$credits .= JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=credits', JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow', array('style'=>'display: inline; visibility: visible; text-decoration: none;'));
+			$credits .= JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=credits', JText::_('COM_KUNENA_POWEREDBY'), '', '', 'follow', array('style'=>'display: inline; visibility: visible; text-decoration: none;'));
 			$credits .= ' <a href="http://www.kunena.org" rel="follow" target="_blank" style="display: inline; visibility: visible; text-decoration: none;">'.JText::_('COM_KUNENA').'</a>';
 			if ($this->ktemplate->params->get('templatebyText')) {
 				$credits .= ' :: <a href ="'. $this->ktemplate->params->get('templatebyLink').'" rel="follow" target="_blank" style="text-decoration: none;">' . $this->ktemplate->params->get('templatebyText') .' '. $this->ktemplate->params->get('templatebyName') .'</a>';
@@ -439,7 +474,7 @@ class KunenaView extends JView {
 	public function setDescription($description) {
 		if (!$this->state->get('embedded')) {
 			// TODO: allow translations/overrides
-			$this->document->setMetadata ( 'description', $this->document->get ( 'description' ) . '. ' . $description );
+			$this->document->setMetadata ( 'description', $this->document->getDescription() . '. ' . $description );
 		}
 	}
 }

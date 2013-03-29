@@ -10,7 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once(KPATH_SITE.'/lib/kunena.link.class.php');
 $tabclass = array ("row1", "row2" );
 $mmm=0;
 foreach ( $this->sections as $section ) :
@@ -95,7 +94,7 @@ foreach ( $this->sections as $section ) :
 		<?php endif; ?>
 		<?php if (! empty ( $this->pending [$category->id] )) : ?>
 			<div class="ks kalert">
-				<?php echo CKunenaLink::GetCategoryReviewListLink ( intval($category->id), intval($this->pending [$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'), 'nofollow' ); ?>
+				<?php echo JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=topics&layout=posts&mode=unapproved&userid=0&catid='.intval($category->id), intval($this->pending [$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'), '', '', 'nofollow'); ?>
 			</div>
 		<?php endif; ?>
 			</td>

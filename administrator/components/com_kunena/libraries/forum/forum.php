@@ -42,8 +42,8 @@ abstract class KunenaForum {
 	 *
 	 * <code>
 	 *	// Check if Kunena Forum has been installed and compatible with your code
-	 *	if (class_exists('KunenaForum') && KunenaForum::installed() && KunenaForum::isCompatible('2.0.0-BETA2')) {
-	 *		// Initialize the framework (new in 2.0.0-BETA2)
+	 *	if (class_exists('KunenaForum') && KunenaForum::installed() && KunenaForum::isCompatible('2.0.0')) {
+	 *		// Initialize the framework (new in 2.0.0)
 	 *		KunenaForum::setup();
 	 *		// Start using the framework
 	 *	}
@@ -53,10 +53,10 @@ abstract class KunenaForum {
 	 * @see KunenaForum::isCompatible()
 	 * @see KunenaForum::setup()
 	 *
-	 * @return boolean True.
+	 * @return boolean True if Kunena has been fully installed.
 	 */
 	public static function installed() {
-		return true;
+		return !is_file(KPATH_ADMIN . '/install.php');
 	}
 
 	/**
@@ -74,8 +74,8 @@ abstract class KunenaForum {
 	 *
 	 * <code>
 	 * // Check if Kunena Forum has been installed, online and compatible with your code
-	 *	if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0-BETA2')) {
-	 *		// Initialize the framework (new in 2.0.0-BETA2)
+	 *	if (class_exists('KunenaForum') && KunenaForum::enabled() && KunenaForum::isCompatible('2.0.0')) {
+	 *		// Initialize the framework (new in 2.0.0)
 	 *		KunenaForum::setup();
 	 *		// It's now safe to display something or to save Kunena objects
 	 *}
@@ -110,7 +110,7 @@ abstract class KunenaForum {
 	 * <code>
 	 *	// We have already checked that Kunena 2.0+ has been installed and is online
 	 *
-	 *	if (KunenaForum::isCompatible('2.0.0-BETA2')) {
+	 *	if (KunenaForum::isCompatible('2.0.0')) {
 	 *		KunenaForum::setup();
 	 *	} else {
 	 *		KunenaFactory::loadLanguage();
@@ -133,6 +133,13 @@ abstract class KunenaForum {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		if (!$config->get('cache')) $cache->setCaching(0);
 		$cache->setLifeTime($config->get('cache_time', 60));
+
+		// Setup error logging.
+		jimport('joomla.error.log');
+		$options = array('logger'=>'w3c', 'text_file'=>'kunena.php');
+		$categories = array('kunena');
+		JLog::addLogger($options, JLog::ALL, $categories);
+
 	}
 
 	/**
@@ -162,6 +169,9 @@ abstract class KunenaForum {
 		if (version_compare($version, '2.0', '<')) {
 			return false;
 		}
+		// TODO: remove after Kunena 3.0 has been released.
+		if ($version == '3.0') return true;
+
 		// Check if future version is needed (remove GIT and DEVn from the current version)
 		if (version_compare($version, preg_replace('/(-DEV\d*)?(-GIT)?/i', '', self::version()), '>')) {
 			return false;
@@ -293,14 +303,8 @@ abstract class KunenaForum {
 
 		if ($params instanceof JRegistry) {
 			// Do nothing
-		} elseif (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry($params);
 		} else {
-			// Joomla 1.5
-			$parameters = new JParameter('');
-			$parameters->bind($params);
-			$params = $parameters;
+			$params = new JRegistry($params);
 		}
 
 		$params->set('layout', $layout);
@@ -330,15 +334,14 @@ abstract class KunenaForum {
 
 	protected static function buildVersion() {
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
-			$xml = KPATH_ADMIN . '/kunena.xml';
-			$parser = JFactory::getXMLParser ( 'Simple' );
-			$parser->loadFile ( $xml );
-			self::$version = $parser->document->getElementByPath ( 'version' )->data () . '-GIT';
+			$file = KPATH_ADMIN . '/kunena.xml';
+			$manifest = simplexml_load_file($file);
+			self::$version = (string) $manifest->version . '-GIT';
 		} else {
 			self::$version = strtoupper ( '@kunenaversion@' );
 		}
 		self::$version_major = substr(self::$version, 0, 3);
-		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->toMySQL() : '@kunenaversiondate@';
+		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? JFactory::getDate()->format('Y-m-d') : '@kunenaversiondate@';
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'Git Repository' : '@kunenaversionname@';
 	}
 }

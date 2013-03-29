@@ -32,7 +32,8 @@ class plgQuickiconKunena extends JPlugin {
 		}
 		KunenaFactory::loadLanguage('com_kunena.sys', 'admin');
 
-		if (KunenaForum::installed() && KunenaFactory::getConfig()->version_check && JFactory::getUser()->authorise('core.manage', 'com_installer')) {
+		// TODO: replace LiveUpdate with something else...
+		if (0 && KunenaForum::installed() && KunenaFactory::getConfig()->version_check && JFactory::getUser()->authorise('core.manage', 'com_installer')) {
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true)
 				->select($db->qn('params'))
@@ -50,7 +51,7 @@ class plgQuickiconKunena extends JPlugin {
 
 			if (!$valid) {
 				// If information is not valid, update it asynchronously.
-				$ajax_url = JURI::base().'index.php?option=com_kunena&view=liveupdate&task=ajax';
+				$ajax_url = json_encode(JUri::base().'index.php?option=com_kunena&view=liveupdate&task=ajax');
 				$script = "window.addEvent('domready', function() {
 	var com_kunena_updatecheck_ajax_structure = {
 		onSuccess: function(msg, responseXML) {
@@ -61,7 +62,7 @@ class plgQuickiconKunena extends JPlugin {
 				document.id('com_kunena_icon').getElement('a').set('href', updateInfo.link);
 			}
 		},
-		url: '{$ajax_url}'
+		url: {$ajax_url}
 	};
 	ajax_object = new Request(com_kunena_updatecheck_ajax_structure);
 	ajax_object.send();

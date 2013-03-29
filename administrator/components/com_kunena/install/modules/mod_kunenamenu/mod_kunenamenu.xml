@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension type="module" version="2.5" client="site" method="upgrade">
+	<name>mod_kunenamenu</name>
+	<version>@kunenaversion@</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>(C) 2008 - 2012 Kunena Team. All rights reserved.</copyright>
+	<license>GNU/GPLv3 or later</license>
+	<description>MOD_KUNENAMENU_XML_DESCRIPTION</description>
+	<files>
+		<filename module="mod_kunenamenu">mod_kunenamenu.php</filename>
+		<folder>tmpl</folder>
+		<folder>language</folder>
+		<filename>class.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="menutype" type="menu" label="MOD_KUNENAMENU_FIELD_MENUTYPE_LABEL" description="MOD_KUNENAMENU_FIELD_MENUTYPE_DESC" />
+				<field name="startLevel" type="list" default="1" label="MOD_KUNENAMENU_FIELD_STARTLEVEL_LABEL" description="MOD_KUNENAMENU_FIELD_STARTLEVEL_DESC">
+					<option value="1">J1</option>
+					<option value="2">J2</option>
+					<option value="3">J3</option>
+					<option value="4">J4</option>
+					<option value="5">J5</option>
+					<option value="6">J6</option>
+					<option value="7">J7</option>
+					<option value="8">J8</option>
+					<option value="9">J9</option>
+					<option value="10">J10</option>
+				</field>
+
+				<field name="endLevel" type="list" default="0" label="MOD_KUNENAMENU_FIELD_ENDLEVEL_LABEL" description="MOD_KUNENAMENU_FIELD_ENDLEVEL_DESC">
+					<option value="0">JALL</option>
+					<option value="1">J1</option>
+					<option value="2">J2</option>
+					<option value="3">J3</option>
+					<option value="4">J4</option>
+					<option value="5">J5</option>
+					<option value="6">J6</option>
+					<option value="7">J7</option>
+					<option value="8">J8</option>
+					<option value="9">J9</option>
+					<option value="10">J10</option>
+				</field>
+
+				<field name="showAllChildren" type="radio" default="0" label="MOD_KUNENAMENU_FIELD_ALLCHILDREN_LABEL" description="MOD_KUNENAMENU_FIELD_ALLCHILDREN_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+
+			<fieldset name="advanced">
+				<field name="tag_id" type="text" label="MOD_KUNENAMENU_FIELD_TAG_ID_LABEL" description="MOD_KUNENAMENU_FIELD_TAG_ID_DESC" />
+
+				<field name="class_sfx" type="text" label="MOD_KUNENAMENU_FIELD_CLASS_LABEL" description="MOD_KUNENAMENU_FIELD_CLASS_DESC" />
+
+				<field name="window_open" type="text" label="MOD_KUNENAMENU_FIELD_TARGET_LABEL" description="MOD_KUNENAMENU_FIELD_TARGET_DESC" />
+
+				<field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+
+				<field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
+				<field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field name="cachemode" type="hidden" default="itemid">
+					<option value="itemid"></option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

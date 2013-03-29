@@ -70,7 +70,17 @@ class KunenaTemplate extends JObject
 		array_unshift($this->default, $name);
 		$this->default = array_unique($this->default);
 
-		$this->xml_path = KPATH_SITE . "/template/{$name}/template.xml";
+		// Find configuration file.
+		$this->xml_path = KPATH_SITE . "/template/{$name}/config.xml";
+		if (file_exists($this->xml_path)) {
+			$xpath = '//field';
+		} else {
+			// Configuration file was not found - legacy template support.
+			$this->xml_path = KPATH_SITE . "/template/{$name}/template.xml";
+			$xpath = '//param';
+		}
+
+		// TODO: move configuration out of filesystem (keep on legacy).
 		$ini = KPATH_SITE . "/template/{$name}/params.ini";
 		$content = '';
 		if (is_readable( $ini ) ) {
@@ -79,26 +89,40 @@ class KunenaTemplate extends JObject
 		}
 		$this->name = $name;
 
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$this->params = new JRegistry($content);
-		} else {
-			// Joomla 1.5
-			$this->params = new JParameter($content);
-		}
-		// Load default values
+		$this->params = new JRegistry($content);
+
+		// Load default values from configuration definition file.
 		$this->xml = simplexml_load_file($this->xml_path);
 		if ($this->xml) {
-			foreach ($this->xml->xpath('params/param') as $node) {
+			foreach ($this->xml->xpath($xpath) as $node) {
 				if (isset($node['name']) && isset($node['default'])) $this->params->def($node['name'], $node['default']);
 			}
-			// Generate CSS variables
+			// Generate CSS variables for less compiler.
 			foreach ($this->params->toArray() as $key=>$value)  {
-				if (substr($key,0,5) == 'style') {
+				if (substr($key,0,5) == 'style' && $value) {
 					$this->style_variables[$key] = $value;
 				}
 			}
 		}
+	}
+
+	public function getConfigXml() {
+		// Find configuration file.
+		$this->xml_path = KPATH_SITE . "/template/{$this->name}/config.xml";
+		if (!file_exists($this->xml_path)) {
+			$this->xml_path = KPATH_SITE . "/template/{$this->name}/template.xml";
+		}
+		if (!file_exists($this->xml_path)) return false;
+
+		$xml = file_get_contents($this->xml_path);
+		if (!strstr($xml, '<config>')) {
+			// Update old template files to new format.
+			$xml = preg_replace(
+					array('|<params>|', '|</params>|', '|<param\s+|', '|</param>|'),
+					array('<config><fieldset>', '</fieldset></config>','<field ', '</field>'),
+					$xml);
+		}
+		return $xml;
 	}
 
 	public function loadLanguage() {
@@ -114,12 +138,10 @@ class KunenaTemplate extends JObject
 	}
 
 	public function initialize() {
-		$this->createStyleSheets();
 		$this->loadLanguage();
 	}
 
 	public function initializeBackend() {
-		$this->createStyleSheets();
 		$this->loadLanguage();
 	}
 
@@ -128,8 +150,6 @@ class KunenaTemplate extends JObject
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {
-		if ($link instanceof JUri && version_compare(JVERSION, '2.5', '<')) $link = $link->toString();
-
 		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod');
 		$names = array('unsubscribe'=>'subscribe', 'unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
 				'quickreply'=>'reply', 'quote'=>'kquote', 'edit'=>'kedit');
@@ -194,30 +214,7 @@ HTML;
 	}
 
 	public function loadMootools() {
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			JHTML::_ ( 'behavior.framework', true );
-		} else {
-			// Joomla 1.5
-			jimport ( 'joomla.plugin.helper' );
-			$mtupgrade = JPluginHelper::isEnabled ( 'system', 'mtupgrade' );
-			if (! $mtupgrade) {
-				$app = JFactory::getApplication ();
-				if (!class_exists ( 'JHTMLBehavior' )) {
-					if (is_dir ( JPATH_PLUGINS . '/system/mtupgrade' )) {
-						JHTML::addIncludePath ( JPATH_PLUGINS . '/system/mtupgrade' );
-					} else {
-						KunenaError::warning ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_NO_UPGRADE').' '.JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_WARNING') );
-					}
-				}
-			}
-			JHTML::_ ( 'behavior.mootools' );
-			// Get the MooTools version string
-			$mtversion = preg_replace('/[^\d\.]/','', JFactory::getApplication()->get('MooToolsVersion'));
-			if (version_compare($mtversion, '1.2.4', '<')) {
-				KunenaError::warning ( JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_LEGACY').' '.JText::_('COM_KUNENA_LIB_TEMPLATE_MOOTOOLS_WARNING') );
-			}
-		}
+		JHtml::_ ( 'behavior.framework', true );
 
 		if (JDEBUG || KunenaFactory::getConfig()->debug) {
 			// Debugging Mootools issues
@@ -226,17 +223,7 @@ HTML;
 	}
 
 	public function getStyleVariables() {
-		if ($this->compiled_style_variables === null) {
-			$variables = array();
-			foreach ($this->style_variables as $name=>$value)  {
-				if ($value != '')
-					$variables[] = "\t{$name}:{$value};";
-			}
-			if ($variables) $this->compiled_style_variables = "@variables {\n".implode("\n", $variables)."\n}\n\n";
-			else $this->compiled_style_variables = '';
-
-		}
-		return $this->compiled_style_variables;
+		return $this->style_variables;
 	}
 
 	public function getStyleVariable($name, $default='') {
@@ -249,32 +236,15 @@ HTML;
 	}
 
 	public function addStyleSheet($filename, $group='forum') {
-		if ($this->css_compile) {
-			// If template supports CSS compiler
-			$source = $this->getFile($filename);
-			if (!file_exists(JPATH_ROOT.'/'.$source)) return false;
-			$sourcetime = filemtime(JPATH_ROOT.'/'.$source);
-			$filename = $this->getCachePath($filename);
-			if (!JFile::exists(JPATH_ROOT.'/'.$filename)
-				|| $sourcetime > filemtime(JPATH_ROOT.'/'.$filename)
-				|| ($this->paramstime && $this->paramstime > filemtime(JPATH_ROOT.'/'.$filename) )) {
-				$this->compileStyleSheet($source, $filename);
-			}
-			$group = $group ? $group : '_none_';
-			$this->stylesheets[$group][$filename] = $sourcetime;
-			return true;
-		} else {
-			// For other templates use the old way
-			$filemin = $filename = $this->getFile($filename);
-			$filemin_path = preg_replace ( '/\.css$/u', '-min.css', $filename );
-			if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/$filemin_path")) {
-				$filemin = preg_replace ( '/\.css$/u', '-min.css', $filename );
-			}
-			if (JFile::exists(JPATH_ROOT."/$filemin")) {
-				$filename = $filemin;
-			}
+		$filemin = $filename = $this->getFile($filename);
+		$filemin_path = preg_replace ( '/\.css$/u', '-min.css', $filename );
+		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/$filemin_path")) {
+			$filemin = preg_replace ( '/\.css$/u', '-min.css', $filename );
 		}
-		return JFactory::getDocument ()->addStyleSheet ( JURI::root(true)."/{$filename}" );
+		if (JFile::exists(JPATH_ROOT."/$filemin")) {
+			$filename = $filemin;
+		}
+		return JFactory::getDocument ()->addStyleSheet ( JUri::root(true)."/{$filename}" );
 	}
 
 	public function addIEStyleSheet($filename, $condition='IE') {
@@ -284,50 +254,6 @@ HTML;
 		$stylelink .= "<![endif]-->\n";
 		JFactory::getDocument()->addCustomTag($stylelink);
 	}
-
-	public function createStyleSheets() {
-		if (empty($this->stylesheets)) return;
-		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
-			foreach ($this->stylesheets as $list) {
-				foreach ($list as $stylesheet=>$time) {
-					JFactory::getDocument ()->addStyleSheet ( JURI::root(true)."/{$stylesheet}" );
-				}
-			}
-		} else {
-			$path = $this->getCachePath();
-			foreach ($this->stylesheets as $group=>$list) {
-				if ($group[0] == '_') {
-					foreach ($list as $stylesheet=>$time) {
-						JFactory::getDocument ()->addStyleSheet ( JURI::root(true)."/{$stylesheet}" );
-					}
-				} else {
-					$cssfile = "{$path}/{$group}.css";
-					$hashfile = JPATH_ROOT."/{$path}/forum_hash.txt";
-					$hash = md5(serialize($this->stylesheets).'-'.$this->paramstime);
-					if (!JFile::exists($hashfile) || file_get_contents($hashfile) != $hash) {
-						$buffer = '@charset "utf-8";
-		/* This file is automatically generated. Please enable debug mode to see the uncompressed files. */
-
-		';
-						foreach ($list as $stylesheet=>$time) {
-							$buffer .= file_get_contents(JPATH_ROOT.'/'.$stylesheet);
-						}
-						if ($buffer) {
-							JFile::write(JPATH_ROOT.'/'.$cssfile, $buffer);
-							JFile::write($hashfile, $hash);
-						}
-					}
-					JFactory::getDocument ()->addStyleSheet ( JURI::root(true).'/'.$cssfile );
-				}
-			}
-		}
-	}
-
-/*
-	public function addStyleSheetDeclaration($string) {
-		$this->stylesheets[] = $string;
-	}
-*/
 
 	public function clearCache() {
 		$path = JPATH_ROOT."/media/kunena/cache/{$this->name}";
@@ -344,64 +270,6 @@ HTML;
 		return $filename;
 	}
 
-	public function compileStyleSheet($source, $dest) {
-		$buffer = $this->getStyleVariables();
-		$buffer .= JFile::read(JPATH_ROOT.'/'.$source);
-
-		if (JDEBUG || KunenaFactory::getConfig ()->debug) {
-			$filters = array (
-				'ImportImports' => array ('BasePath' => JPATH_ROOT.'/'.dirname($source) ),
-				'RemoveComments' => false,
-				'RemoveEmptyRulesets' => false,
-				'RemoveEmptyAtBlocks' => false,
-				'ConvertLevel3Properties' => true,
-				'ConvertLevel3AtKeyframes' => array ('RemoveSource' => false ),
-				'Variables' => true,
-				'RemoveLastDelarationSemiColon' => false
-			);
-			$plugins = array (
-				'Variables' => true,
-				'ConvertFontWeight' => false,
-				'ConvertHslColors' => false,
-				'ConvertRgbColors' => false,
-				'ConvertNamedColors' => false,
-				'CompressColorValues' => false,
-				'CompressUnitValues' => false,
-				'CompressExpressionValues' => false
-			);
-			CssMin::setVerbose(1);
-			$tokens = CssMin::minify($buffer, $filters, $plugins, false);
-			$buffer = new CssKunenaFormatter($tokens, "\t");
-		} else {
-			$filters = array (
-				'ImportImports' => array ('BasePath' => JPATH_ROOT.'/'.dirname($source) ),
-				'RemoveComments' => true,
-				'RemoveEmptyRulesets' => true,
-				'RemoveEmptyAtBlocks' => true,
-				'ConvertLevel3Properties' => true,
-				'ConvertLevel3AtKeyframes' => array ('RemoveSource' => false ),
-				'Variables' => true,
-				'RemoveLastDelarationSemiColon' => true
-			);
-			$plugins = array (
-				'Variables' => true,
-				'ConvertFontWeight' => true,
-				'ConvertHslColors' => true,
-				'ConvertRgbColors' => true,
-				'ConvertNamedColors' => true,
-				'CompressColorValues' => true,
-				'CompressUnitValues' => false, // There seems to be a bug with background-position: 0 0 -> 0 50%
-				'CompressExpressionValues' => true
-			);
-			$buffer = CssMin::minify($buffer, $filters, $plugins);
-		}
-
-		$buffer = preg_replace_callback ( '/url\(([^\)]+)\)/u', array($this, 'findUrl'), $buffer );
-		JFile::write(JPATH_ROOT.'/'.$dest, $buffer);
-		unset($tokens, $buffer, $filters, $plugins);
-		return $dest;
-	}
-
 	function findUrl($matches) {
 		$file = trim($matches[1],' \'"');
 		if (preg_match('#^../#', $file)) {
@@ -414,23 +282,13 @@ HTML;
 	 * Wrapper to addScript
 	 */
 	function addScript($filename) {
-		$filemin_path = preg_replace ( '/\.css$/u', '-min.css', $filename );
+		$filemin_path = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		if (!JDEBUG && !KunenaFactory::getConfig ()->debug && !KunenaForum::isDev () && JFile::exists(JPATH_ROOT."/$filemin_path")) {
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		}
 		return JFactory::getDocument ()->addScript ( $this->getFile($filename, true, '', 'media/kunena', 'default') );
 	}
-
-	/*
-	public function addScript($filename, $namespace='default') {
-		$this->scripts[$namespace][] = file_get_contents(KPATH_SITE.'/'.$this->getFile($filename));
-	}
-
-	public function addScriptDeclaration($string, $namespace='default') {
-		$this->scripts[$namespace][] = $string;
-	}
-	*/
 
 	public function getTemplatePaths($path = '', $fullpath = false) {
 		if ($path) $path = JPath::clean("/$path");
@@ -455,7 +313,7 @@ HTML;
 				}
 			}
 		}
-		return ($url ? JURI::root(true).'/' : '').$this->filecache[$filepath];
+		return ($url ? JUri::root(true).'/' : '').$this->filecache[$filepath];
 	}
 
 	public function getSmileyPath($filename='', $url = false) {
@@ -582,6 +440,30 @@ HTML;
 		return $this->xml;
 	}
 
+	function compileLess($inputFile, $outputFile) {
+		if ( !class_exists( 'lessc' ) ) {
+			require_once KPATH_FRAMEWORK . '/external/lessc/lessc.php';
+		}
+
+		// Load the cache.
+		$cacheFile = JPATH_CACHE."/kunena.{$this->name}.{$inputFile}.cache";
+		if ( file_exists( $cacheFile ) ) {
+			$cache = unserialize( file_get_contents( $cacheFile ) );
+		} else {
+			$cache = JPATH_SITE.'/'.$this->getFile($inputFile, false, 'less');
+		}
+		$outputFile = KPATH_SITE."/template/{$this->name}/css/{$outputFile}";
+
+		$less = new lessc;
+		$less->setVariables($this->style_variables);
+		$newCache = $less->cachedCompile( $cache );
+		if ( !is_array( $cache ) || $newCache['updated'] > $cache['updated'] || !is_file($outputFile) ) {
+			$cache = serialize( $newCache );
+			JFile::write( $cacheFile, $cache );
+			JFile::write( $outputFile, $newCache['compiled'] );
+		}
+	}
+
 	/**
 	 * Returns the global KunenaTemplate object, only creating it if it doesn't already exist.
 	 *
@@ -600,7 +482,8 @@ HTML;
 			// Find overridden template class (use $templatename to avoid creating new objects if the template doesn't exist)
 			$templatename = $name;
 			$classname = "KunenaTemplate{$templatename}";
-			if (!file_exists(KPATH_SITE . "/template/{$templatename}/template.xml")) {
+			if (!file_exists(KPATH_SITE . "/template/{$templatename}/template.xml")
+				&& !file_exists(KPATH_SITE . "/template/{$templatename}/config.xml")) {
 				// If template xml doesn't exist, raise warning and use blue eagle instead
 				$templatename = 'blue_eagle';
 				$classname = "KunenaTemplate{$templatename}";
@@ -625,58 +508,5 @@ HTML;
 		}
 
 		return self::$_instances [$name];
-	}
-}
-
-require_once KPATH_ADMIN.'/libraries/external/cssmin/jsmin.php';
-require_once KPATH_ADMIN.'/libraries/external/cssmin/cssmin.php';
-
-class CssKunenaFormatter extends aCssFormatter {
-	public function __toString() {
-		$r = array ();
-		$level = 0;
-		for($i = 0, $l = count ( $this->tokens ); $i < $l; $i ++) {
-			$token = $this->tokens [$i];
-			$class = get_class ( $token );
-			$indent = str_repeat ( $this->indent, $level );
-			if ($class === "CssCommentToken") {
-				$lines = array_map ( "trim", explode ( "\n", $token->Comment ) );
-				for($ii = 0, $ll = count ( $lines ); $ii < $ll; $ii ++) {
-					$r [] = $indent . (substr ( $lines [$ii], 0, 1 ) == "*" ? " " : "") . $lines [$ii];
-				}
-			} elseif ($class === "CssAtCharsetToken") {
-				$r [] = $indent . "@charset " . $token->Charset . ";";
-			} elseif ($class === "CssAtFontFaceStartToken") {
-				$r [] = $indent . "@font-face {";
-				$level ++;
-			} elseif ($class === "CssAtImportToken") {
-				$r [] = $indent . "@import " . $token->Import . " " . implode ( ", ", $token->MediaTypes ) . ";";
-			} elseif ($class === "CssAtKeyframesStartToken") {
-				$r [] = $indent . "@keyframes \"" . $token->Name . "\" {";
-				$level ++;
-			} elseif ($class === "CssAtMediaStartToken") {
-				$r [] = $indent . "@media " . implode ( ", ", $token->MediaTypes ) . " {";
-				$level ++;
-			} elseif ($class === "CssAtPageStartToken") {
-				$r [] = $indent . "@page {";
-				$level ++;
-			} elseif ($class === "CssAtVariablesStartToken") {
-				$r [] = $indent . "@variables " . implode ( ", ", $token->MediaTypes ) . " {";
-				$level ++;
-			} elseif ($class === "CssRulesetStartToken" || $class === "CssAtKeyframesRulesetStartToken") {
-				$r [] = $indent . implode ( ",\n", $token->Selectors ) . " {";
-				$level ++;
-			} elseif ($class == "CssAtFontFaceDeclarationToken" || $class === "CssAtKeyframesRulesetDeclarationToken" || $class === "CssAtPageDeclarationToken" || $class == "CssAtVariablesDeclarationToken" || $class === "CssRulesetDeclarationToken") {
-				$declaration = $indent . $token->Property . ": ";
-				if ($this->padding) {
-					$declaration = str_pad ( $declaration, $this->padding, " ", STR_PAD_RIGHT );
-				}
-				$r [] = $declaration . $token->Value . ($token->IsImportant ? " !important" : "") . ";";
-			} elseif ($class === "CssAtFontFaceEndToken" || $class === "CssAtMediaEndToken" || $class === "CssAtKeyframesEndToken" || $class === "CssAtKeyframesRulesetEndToken" || $class === "CssAtPageEndToken" || $class === "CssAtVariablesEndToken" || $class === "CssRulesetEndToken") {
-				$level--;
-				$r[] = str_repeat($indent, $level) . "}";
-			}
-		}
-		return implode("\n", $r);
 	}
 }

@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.formvalidation');
-JHTML::_('behavior.tooltip');
-JHTML::_('behavior.keepalive');
+JHtml::_('behavior.formvalidation');
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.keepalive');
 
 $editor = KunenaBbcodeEditor::getInstance();
 $editor->initialize();

@@ -108,7 +108,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	public function onFinderAfterSave($context, $row, $isNew) {
 		//If a category has been changed, we want to check if the access has been changed
 		if(($row instanceof TableKunenaCategories) && !$isNew){
-			//Access type of Category is still not the joomla access level system. 
+			//Access type of Category is still not the joomla access level system.
 			//We didn't show them before and we don't show them now. No reindex necessary
 			if($row->accesstype != 'joomla.level' && $this->old_cataccesstype != 'joomla.level') return true;
 			//Access level did not change. We do not need to reindex
@@ -129,10 +129,10 @@ class plgFinderKunena extends FinderIndexerAdapter {
 
 		return true;
 	}
-	
+
 	/**
 	 * Method to remove the link information for items that have been deleted.
-	 * Since Messages are getting deleted in process of deleting categories or messages, we 
+	 * Since Messages are getting deleted in process of deleting categories or messages, we
 	 * delete the finderresults before those objects are deleted.
 	 *
 	 * @param   string  $context  The context of the action being performed.
@@ -285,7 +285,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 		}
 
 		// Check if Kunena has been installed.
-		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible('2.0') || ! KunenaForum::installed()) {
+		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible('3.0') || ! KunenaForum::installed()) {
 			return false;
 		}
 		KunenaForum::setup();
@@ -439,7 +439,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	 * @return	string		The URL of the item.
 	 */
 	protected function getUrl($id, $extension, $view) {
-		require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/message/helper.php';
 		$item = KunenaForumMessageHelper::get($id);
 		return "index.php?option=com_kunena&view={$view}&catid={$item->catid}&id={$item->thread}&mesid={$item->id}";
 	}
@@ -472,7 +471,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	protected function getMessagesByCategory($cat_id){
 		static $messages = array();
 		if(!$messages[$cat_id]){
-			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/message/helper.php';
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('m.id');
@@ -488,7 +486,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 	protected function getMessagesByTopic($topic_id){
 		static $messages = array();
 		if(!$messages[$topic_id]){
-			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/message/message.php';
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
 			$query->select('m.*, t.message');
@@ -499,7 +496,7 @@ class plgFinderKunena extends FinderIndexerAdapter {
 			$results = $db->loadAssocList();
 			$list = array();
 			foreach($results as $result){
-				$list[] = new KunenaFormMessage($result);
+				$list[] = new KunenaForumMessage($result);
 			}
 			$messages[$topic_id] = $list;
 		}
@@ -510,7 +507,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 			if(!$item->catid){
 				return 0;
 			}
-			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/category/helper.php';
 			$category = KunenaForumCategoryHelper::get($item->catid);
 			//@TODO We can't quite handle access restrictions by joomla group or other plugins yet. So we set the access level to 0
 			//This is a todo
@@ -519,7 +515,6 @@ class plgFinderKunena extends FinderIndexerAdapter {
 			}
 			return $category->access;
 		}elseif(($item instanceof TableKunenaCategories) || ($item instanceof KunenaForumCategory)){
-			require_once JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/forum/category/helper.php';
 			$category = KunenaForumCategoryHelper::get($item->id);
 			if($category->accesstype != 'joomla.level'){
 				return 0;

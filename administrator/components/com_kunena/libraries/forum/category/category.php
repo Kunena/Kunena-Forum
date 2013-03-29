@@ -72,11 +72,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			$this->setProperties($properties);
 		}
 		$registry = new JRegistry();
-		if (version_compare(JVERSION, '1.6', '>')) {
-			if (!empty($this->params)) $registry->loadString($this->params);
-		} else {
-			if (!empty($this->params)) $registry->loadINI($this->params);
-		}
+		if (!empty($this->params)) $registry->loadString($this->params);
 		$this->params = $registry;
 
 		$this->_alias = $this->get('alias', '');
@@ -160,7 +156,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		} else {
 			$category = KunenaForumCategoryHelper::get($category);
 		}
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
+		$uri = JUri::getInstance("index.php?option=com_kunena&view=category&catid={$category->id}");
 		if ((string)$action === (string)(int)$action) {
 			$uri->setVar('limitstart', $action);
 		}
@@ -456,10 +452,8 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			$registry = new JRegistry();
 			if (is_array($this->params)) {
 				$registry->loadArray($this->params);
-			} elseif (version_compare(JVERSION, '1.6', '>')) {
-				$registry->loadString($this->params);
 			} else {
-				$registry->loadINI($this->params);
+				$registry->loadString($this->params);
 			}
 			$this->params = $registry;
 		}
@@ -478,11 +472,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 			$this->_alias = $this->get('alias', '');
 
 		$registry = new JRegistry();
-		if (version_compare(JVERSION, '1.6', '>')) {
-			if ($this->params) $registry->loadString($this->params);
-		} else {
-			if ($this->params) $registry->loadINI($this->params);
-		}
+		if ($this->params) $registry->loadString($this->params);
 		$this->params = $registry;
 
 		// Register category if it exists
@@ -550,7 +540,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$db = JFactory::getDBO ();
 		$query ="SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} {$where} ORDER BY tt.last_post_time ASC";
 		$db->setQuery($query, 0, $limit);
-		$ids = $db->loadResultArray();
+		$ids = $db->loadColumn();
 		KunenaError::checkDatabaseError ();
 		if (empty($ids)) return 0;
 
@@ -580,7 +570,7 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$db = JFactory::getDBO ();
 		$query ="SELECT id FROM #__kunena_topics AS tt WHERE tt.category_id={$this->id} AND tt.hold!=2 {$where} ORDER BY tt.last_post_time ASC";
 		$db->setQuery($query, 0, $limit);
-		$ids = $db->loadResultArray();
+		$ids = $db->loadColumn();
 		KunenaError::checkDatabaseError ();
 		if (empty($ids)) return 0;
 
@@ -793,13 +783,15 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		$this->_topics = 0;
 		$this->_posts = 0;
 		$this->_lastid = $this->id;
-		$categories = $this->getChannels();
+		$categories[$this->id] = $this;
+		// TODO: support channels
+		//$categories += $this->getChannels();
 		$categories += KunenaForumCategoryHelper::getChildren($this->id);
 		foreach ($categories as $category) {
 			$category->buildInfo();
 			$lastCategory = $category->getLastCategory();
-			$this->_topics += max($category->numTopics, 0);
-			$this->_posts += max($category->numPosts, 0);
+			$this->_topics += $category->_topics ? $category->_topics : max($category->numTopics, 0);
+			$this->_posts += $category->_posts ? $category->_posts: max($category->numPosts, 0);
 			if ($lastCategory->last_post_time && KunenaForumCategoryHelper::get($this->_lastid)->last_post_time < $lastCategory->last_post_time)
 				$this->_lastid = $lastCategory->id;
 		}
@@ -902,6 +894,10 @@ class KunenaForumCategory extends KunenaDatabaseObject {
 		// Check if polls are not enabled in this category
 		if (!$this->allow_polls) {
 			return JText::_ ( 'COM_KUNENA_LIB_CATEGORY_AUTHORISE_FAILED_POLLS_NOT_ALLOWED' );
+		}
+		// Check if user is guest
+		if ($user->userid == 0) {
+			return JText::_ ( 'COM_KUNENA_POLL_NOT_LOGGED' );
 		}
 	}
 

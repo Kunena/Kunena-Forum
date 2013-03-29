@@ -53,7 +53,7 @@ class KunenaForumAnnouncementHelper {
 	}
 
 	static public function getUri($layout = null) {
-		$uri = new JURI('index.php?option=com_kunena&view=announcement');
+		$uri = new JUri('index.php?option=com_kunena&view=announcement');
 		if ($layout) $uri->setVar('layout', $layout);
 		return $uri;
 	}
@@ -77,5 +77,17 @@ class KunenaForumAnnouncementHelper {
 		}
 		unset ($results);
 		return $list;
+	}
+
+	static public function getCount($filter = true) {
+		$db = JFactory::getDBO ();
+		$where = $filter ? "WHERE published=1" : '';
+
+		$query = "SELECT COUNT(*) FROM #__kunena_announcement {$where}";
+		$db->setQuery ( $query );
+		$total = (int) $db->loadResult ();
+		KunenaError::checkDatabaseError ();
+
+		return $total;
 	}
 }

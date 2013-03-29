@@ -63,7 +63,7 @@ class KunenaVersion
 		$query = "SHOW TABLES LIKE {$db->quote($db->getPrefix().$prefix.'version')}";
 		$db->setQuery ( $query );
 		if ($db->loadResult ()) {
-			$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$prefix.'version')." ORDER BY `id` DESC", 0, 1);
+			$db->setQuery("SELECT * FROM ".$db->quoteName($db->getPrefix().$prefix.'version')." ORDER BY `id` DESC", 0, 1);
 			$version = $db->loadObject();
 		}
 		if (!isset($version) || !is_object($version) || !isset($version->state)) {
@@ -88,11 +88,11 @@ class KunenaVersion
 	/**
 	* Retrieve copyright information as string.
 	*
-	* @return string "© 2008 - 2012 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	* @return string "© 2008 - 2013 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	*/
 	static function getCopyrightHTML()
 	{
-		return ': &copy; 2008 - 2012 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.org" target = "_blank">'
+		return ': &copy; 2008 - 2013 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.org" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_TEAM').'</a>  | '.JText::_('COM_KUNENA_VERSION_LICENSE')
 			.': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_GPL').'</a>';
@@ -101,7 +101,7 @@ class KunenaVersion
 	/**
 	* Retrieve installed Kunena version, copyright and license as string.
 	*
-	* @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2012 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	* @return string "Kunena X.Y.Z | YYYY-MM-DD | © 2008 - 2013 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	*/
 	static function getLongVersionHTML()
 	{

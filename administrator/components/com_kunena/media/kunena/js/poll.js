@@ -22,7 +22,8 @@ window.addEvent('domready', function() {
 			maxlength:'25',
 			onmouseover: 'document.id("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
 		});
-		mydiv.injectInside(polldiv).injectBefore(hide_input);
+		mydiv.inject(polldiv);
+		mydiv.inject(hide_input, 'before');
 		input.inject(mydiv);
 	}
 
@@ -37,11 +38,12 @@ window.addEvent('domready', function() {
 		var myimg = new Element('img', {
 			'src':KUNENA_ICON_ERROR
 		});
-		mydiv.injectInside(polldiv).injectBefore(hide_input);
+		mydiv.inject(polldiv);
+		mydiv.inject(hide_input, 'before');
 		mydiv.set('id','option_error');
-		myimg.injectInside(mydiv);
+		myimg.inject(mydiv);
 
-		span.injectInside(mydiv);
+		span.inject(mydiv);
 		span.set('text', textString);
 	}
 

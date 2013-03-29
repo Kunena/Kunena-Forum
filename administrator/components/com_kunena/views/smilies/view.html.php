@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,29 +14,26 @@ defined ( '_JEXEC' ) or die ();
  * About view for Kunena smilies backend
  */
 class KunenaAdminViewSmilies extends KunenaView {
-	function displayDefault() {
-		$this->setToolBarDefault();
-		$this->smileys = $this->get('Smileys');
-		$this->state = $this->get('state');
-		$this->navigation = $this->get ( 'AdminNavigation' );
-		$this->display();
-	}
+	function display($tpl = null) {
+		$this->setToolbar();
+		$this->items = $this->get('Items');
+		$this->state = $this->get('State');
+		$this->pagination = $this->get ( 'Pagination' );
 
-	function displayAdd() {
-		return $this->displayEdit();
-	}
+		$this->sortFields = $this->getSortFields();
+		$this->sortDirectionFields = $this->getSortDirectionFields();
 
-	function displayEdit() {
-		$this->setToolBarEdit();
-		$this->state = $this->get('state');
-		$this->smiley_selected = $this->get('smiley');
-		$this->smileypath = $this->ktemplate->getSmileyPath();
-		$this->listsmileys = $this->get('Smileyspaths');
-		$this->display();
-	}
+		$this->filterSearch = $this->escape($this->state->get('filter.search'));
+		$this->filterCode	= $this->escape($this->state->get('filter.code'));
+		$this->filterUrl = $this->escape($this->state->get('filter.url'));
+		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
+		$this->listDirection = $this->escape($this->state->get('list.direction'));
 
-	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		$this->sortDirectionOrdering = $this->getSortDirectionOrdering();
+		return parent::display($tpl);
+	}
+	protected function setToolbar() {
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_EMOTICON_MANAGER'), 'smilies' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::addNew('add', 'COM_KUNENA_NEW_SMILIE');
 		JToolBarHelper::spacer();
@@ -46,11 +43,29 @@ class KunenaAdminViewSmilies extends KunenaView {
 		JToolBarHelper::spacer();
 	}
 
-	protected function setToolBarEdit() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
-		JToolBarHelper::spacer();
-		JToolBarHelper::save('save');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('smileys');
+	protected function getSortFields() {
+		$sortFields = array();
+		$sortFields[] = JHtml::_('select.option', 'a.code', JText::_('COM_KUNENA_EMOTICONS_CODE'));
+		$sortFields[] = JHtml::_('select.option', 'a.location', JText::_('COM_KUNENA_EMOTICONS_URL'));
+		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('COM_KUNENA_EMOTICONS_FIELD_LABEL_ID'));
+
+		return $sortFields;
+	}
+
+	protected function getSortDirectionFields() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
+		return $sortDirection;
+	}
+
+	// TODO: remove it when J2.5 support is dropped
+	protected function getSortDirectionOrdering() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('COM_KUNENA_FIELD_LABEL_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('COM_KUNENA_FIELD_LABEL_DESCENDING'));
+
+		return $sortDirection;
 	}
 }

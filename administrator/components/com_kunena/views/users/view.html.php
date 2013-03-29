@@ -4,7 +4,7 @@
  * @package Kunena.Administrator
  * @subpackage Views
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -14,49 +14,28 @@ defined ( '_JEXEC' ) or die ();
  * Users view for Kunena backend
  */
 class KunenaAdminViewUsers extends KunenaView {
-	function displayDefault() {
-		$this->setToolBarDefault();
-		$this->users = $this->get('users');
-		$this->navigation = $this->get ( 'AdminNavigation' );
-		$this->display();
+	public function display($tpl = null) {
+		$this->setToolbar();
+		$this->items = $this->get('items');
+		$this->pagination = $this->get('Pagination');
+		$this->sortFields = $this->getSortFields();
+		$this->sortDirectionFields = $this->getSortDirectionFields();
+
+		$this->filterSearch = $this->escape($this->state->get('filter.search'));
+		$this->filterUsername	= $this->escape($this->state->get('filter.username'));
+		$this->filterEmail = $this->escape($this->state->get('filter.email'));
+		$this->filterSignature = $this->escape($this->state->get('filter.signature'));
+		$this->filterBlock = $this->escape($this->state->get('filter.block'));
+		$this->filterBanned = $this->escape($this->state->get('filter.banned'));
+		$this->filterModerator = $this->escape($this->state->get('filter.moderator'));
+		$this->listOrdering = $this->escape($this->state->get('list.ordering'));
+		$this->listDirection = $this->escape($this->state->get('list.direction'));
+		return parent::display($tpl);
 	}
 
-	function displayEdit() {
-		$this->setToolBarEdit();
-		$this->user = $this->get('user');
-		$this->sub = $this->get('subscriptions');
-		$this->subscatslist = $this->get('catsubcriptions');
-		$this->ipslist = $this->get('IPlist');
-
-		$avatarint = KunenaFactory::getAvatarIntegration();
-		$this->editavatar = ($avatarint instanceof KunenaAvatarKunena) ? true : false;
-		$this->avatar = $avatarint->getLink($this->user, '', 'profile');
-
-		// make the select list for the moderator flag
-		$yesnoMod [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_YES') );
-		$yesnoMod [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_NO') );
-		// build the html select list
-		$this->selectMod = JHTML::_ ( 'select.genericlist', $yesnoMod, 'moderator', 'class="inputbox" size="2"', 'value', 'text', $this->user->moderator );
-		// make the select list for the moderator flag
-		$yesnoOrder [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_USER_ORDER_ASC') );
-		$yesnoOrder [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_USER_ORDER_DESC') );
-		// build the html select list
-		$this->selectOrder = JHTML::_ ( 'select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $this->user->ordering );
-		$this->modCats = $this->get('listmodcats');
-		$this->selectRank = $this->get('listuserranks');
-		$this->display();
-	}
-
-	function displayMove() {
-		$this->setToolBarMove();
-		$this->catslist = $this->get('movecatslist');
-		$this->users = $this->get('moveuser');
-		$this->display();
-	}
-
-	protected function setToolBarDefault() {
+	protected function setToolbar() {
 		// Set the titlebar text
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_USER_MANAGER'), 'users' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::custom('edit', 'edit.png', 'edit_f2.png', 'COM_KUNENA_EDIT');
 		JToolBarHelper::spacer();
@@ -70,23 +49,81 @@ class KunenaAdminViewUsers extends KunenaView {
 		JToolBarHelper::spacer();
 	}
 
-	protected function setToolBarEdit() {
-		// Set the titlebar text
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
-		JToolBarHelper::spacer();
-		JToolBarHelper::save('save');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('users', 'COM_KUNENA_CANCEL');
-		JToolBarHelper::spacer();
+	/**
+	 * Returns an array of locked filter options.
+	 *
+	 * @return	string	The HTML code for the select tag
+	 */
+	public function signatureOptions() {
+		// Build the active state filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
+
+		return $options;
 	}
 
-	protected function setToolBarMove() {
-		// Set the titlebar text
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
-		JToolBarHelper::spacer();
-		JToolBarHelper::custom('movemessages', 'save.png', 'save_f2.png', 'COM_KUNENA_MOVE_USERMESSAGES');
-		JToolBarHelper::spacer();
-		JToolBarHelper::cancel('users');
-		JToolBarHelper::spacer();
+	/**
+	 * Returns an array of standard published state filter options.
+	 *
+	 * @return	string	The HTML code for the select tag
+	 */
+	public function blockOptions() {
+		// Build the active state filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+
+		return $options;
+	}
+
+	/**
+	 * Returns an array of type filter options.
+	 *
+	 * @return	string	The HTML code for the select tag
+	 */
+	public function bannedOptions() {
+		// Build the active state filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_ON'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_OFF'));
+
+		return $options;
+	}
+
+	/**
+	 * Returns an array of standard published state filter options.
+	 *
+	 * @return	string	The HTML code for the select tag
+	 */
+	public function moderatorOptions() {
+		// Build the active state filter options.
+		$options	= array();
+		$options[]	= JHtml::_('select.option', '1', JText::_('COM_KUNENA_FIELD_LABEL_YES'));
+		$options[]	= JHtml::_('select.option', '0', JText::_('COM_KUNENA_FIELD_LABEL_NO'));
+
+		return $options;
+	}
+
+	protected function getSortFields() {
+		$sortFields = array();
+		$sortFields[] = JHtml::_('select.option', 'a.username', JText::_('COM_KUNENA_USRL_USERNAME'));
+		//$sortFields[] = JHtml::_('select.option', 'a.name', JText::_('COM_KUNENA_USRL_REALNAME'));
+		$sortFields[] = JHtml::_('select.option', 'a.email', JText::_('COM_KUNENA_USRL_EMAIL'));
+		$sortFields[] = JHtml::_('select.option', 'ku.signature', JText::_('COM_KUNENA_GEN_SIGNATURE'));
+		$sortFields[] = JHtml::_('select.option', 'a.block', JText::_('COM_KUNENA_USRL_ENABLED'));
+		$sortFields[] = JHtml::_('select.option', 'ku.banned', JText::_('COM_KUNENA_USRL_BANNED'));
+		$sortFields[] = JHtml::_('select.option', 'ku.moderator', JText::_('COM_KUNENA_VIEW_MODERATOR'));
+		$sortFields[] = JHtml::_('select.option', 'a.id', JText::_('JGRID_HEADING_ID'));
+
+		return $sortFields;
+	}
+
+	protected function getSortDirectionFields() {
+		$sortDirection = array();
+		$sortDirection[] = JHtml::_('select.option', 'asc', JText::_('JGLOBAL_ORDER_ASCENDING'));
+		$sortDirection[] = JHtml::_('select.option', 'desc', JText::_('JGLOBAL_ORDER_DESCENDING'));
+
+		return $sortDirection;
 	}
 }

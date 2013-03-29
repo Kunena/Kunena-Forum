@@ -12,7 +12,8 @@
 /* Layout */
 
 #Kunena .kpagination span {
-	border:solid 1px;
+	border-style:solid;
+	border-width: 1px;
 	font-weight:bold;
 	padding:1px 5px;
 	margin: 2px;
@@ -22,14 +23,6 @@
 	background-position:-400px 0;
 	width: 8px;
 	cursor: default;
-}
-
-/* Colors */
-
-#Kunena .kpagination span {
-	border-color:#5388B4;
-	background-color:#5388B4;
-	color:#FFFFFF;
 }
 
 #Kunena .kheader h2,
@@ -115,6 +108,7 @@
 #Kunena .kfile-input {
 	display: block;
 	overflow: hidden;
+	visibility: visible;
 }
 
 #Kunena #jumpto .inputbox {
@@ -135,4 +129,45 @@
 
 #Kunena .jr-forum-stat-bar {
 	height: 10px;
+}
+
+/* Bootstrap Tweaks
+---------------------------------------------------- */
+#Kunena img[height="10"] {
+	height: 10px;
+	max-width: none;
+}
+#Kunena .kprofileboxcnt .input span input[type="checkbox"] {
+	margin-top: 0px !important;
+}
+#Kunena .kprofileboxcnt .kbutton {
+	margin-top: 0px !important;
+}
+#Kunena sup.knewchar {
+	position: static;
+}
+#Kunena .kcol-mid label {
+	display: inline;
+}
+#subscribeMe {
+	margin-top: 0px;
+}
+#Kunena .kfile-hide input {
+	vertical-align: baseline;
+}
+#Kunena #ktab li a::before	{
+	content:"";
+}
+
+/* Menu fixes for Gantry */
+#Kunena ul.menu li#current.active > a:before, 
+#Kunena ul.menu li#current.active > .item:before, 
+#Kunena ul.menu li#current.active > .separator:before,
+#Kunena ul.menu li a:before, 
+#Kunena ul.menu li .item:before, 
+#Kunena ul.menu li .separator:before {
+	content: "";
+	margin: 0;
+	width: 0;
+	height: 0;
 }

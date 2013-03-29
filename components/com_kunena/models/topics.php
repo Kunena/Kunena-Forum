@@ -53,17 +53,23 @@ class KunenaModelTopics extends KunenaModel {
 			$latestcategory_in = true;
 		} else {
 			if (JFactory::getDocument()->getType() != 'feed') {
-				// Get configuration from menu item
+				// Get configuration from menu item.
 				$latestcategory = $params->get('topics_categories', '');
 				$latestcategory_in = $params->get('topics_catselection', '');
 
 				// Make sure that category list is an array.
 				if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
 
-				// Default to global configuration
+				// Default to global configuration.
 				if (in_array('', $latestcategory, true)) $latestcategory = $this->config->latestcategory;
 				if ($latestcategory_in == '') $latestcategory_in = $this->config->latestcategory_in;
+
+				// Selection time from user state / menu item / url parameter / configuration.
+				$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
+				$this->setState ( 'list.time', $value );
+
 			} else {
+				// Use RSS configuration.
 				if(!empty($this->config->rss_excluded_categories)) {
 					$latestcategory = $this->config->rss_excluded_categories;
 					$latestcategory_in = 0;
@@ -71,6 +77,11 @@ class KunenaModelTopics extends KunenaModel {
 					$latestcategory = $this->config->rss_included_categories;
 					$latestcategory_in = 1;
 				}
+
+				// Selection time.
+				$value = $this->getInt ('sel', $this->config->rss_timelimit);
+				$this->setState ( 'list.time', $value );
+
 			}
 			if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
 			if (empty($latestcategory) || in_array(0, $latestcategory)) {
@@ -80,9 +91,6 @@ class KunenaModelTopics extends KunenaModel {
 		}
 		$this->setState ( 'list.categories', $latestcategory );
 		$this->setState ( 'list.categories.in', $latestcategory_in );
-
-		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_time", 'sel', $params->get('topics_time', $this->config->show_list_time), 'int' );
-		$this->setState ( 'list.time', $value );
 
 		// List state information
 		$value = $this->getUserStateFromRequest ( "com_kunena.topics_{$active}_{$layout}_{$mode}_list_limit", 'limit', 0, 'int' );
@@ -321,16 +329,16 @@ class KunenaModelTopics extends KunenaModel {
 			}
 			if (!$permdelete && $topic->authorise('permdelete')) $permdelete = true;
 		}
-		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		if ($this->getState ('list.mode') == 'subscriptions')
-			$actionDropdown[] = JHTML::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+			$actionDropdown[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 		if ($this->getState ('list.mode') == 'favorites')
-			$actionDropdown[] = JHTML::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
-		if ($move) $actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-		if ($approve) $actionDropdown[] = JHTML::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+			$actionDropdown[] = JHtml::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
+		if ($move) $actionDropdown[] = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		if ($approve) $actionDropdown[] = JHtml::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		if ($delete) $actionDropdown[] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		if ($permdelete) $actionDropdown[] = JHtml::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		if ($undelete) $actionDropdown[] = JHtml::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		if (count($actionDropdown) == 1) return null;
 		return $actionDropdown;
@@ -348,11 +356,11 @@ class KunenaModelTopics extends KunenaModel {
 			if (!$undelete && $message->authorise('undelete')) $undelete = true;
 			if (!$permdelete && $message->authorise('permdelete')) $permdelete = true;
 		}
-		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		if ($approve) $actionDropdown[] = JHTML::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		if ($approve) $actionDropdown[] = JHtml::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		if ($delete) $actionDropdown[] = JHtml::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		if ($permdelete) $actionDropdown[] = JHtml::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		if ($undelete) $actionDropdown[] = JHtml::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		if (count($actionDropdown) == 1) return null;
 		return $actionDropdown;

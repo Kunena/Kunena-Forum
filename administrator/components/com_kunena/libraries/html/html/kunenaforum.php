@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 jimport('joomla.html.html');
 
-abstract class JHTMLKunenaForum {
+abstract class JHtmlKunenaForum {
 	public static function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false) {
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
 		$sections = isset($params['sections']) ? (bool) $params['sections'] : 0;
@@ -61,7 +61,7 @@ abstract class JHTMLKunenaForum {
 		if ($topleveltxt) {
 			$me = KunenaUserHelper::getMyself();
 			$disabled = ($action == 'admin' && !$me->isAdmin());
-			$options [] = JHTML::_ ( 'select.option', '0', JText::_ ( $topleveltxt ), 'value', 'text', $disabled );
+			$options [] = JHtml::_ ( 'select.option', '0', JText::_ ( $topleveltxt ), 'value', 'text', $disabled );
 			if (empty($selected) && !$disabled) {
 				$selected[] = 0;
 			}
@@ -75,14 +75,14 @@ abstract class JHTMLKunenaForum {
 			if (empty($selected) && !$disabled) {
 				$selected[] = $category->id;
 			}
-			$options [] = JHTML::_ ( 'select.option', $category->id, str_repeat  ( '- ', $category->level+$toplevel  ).' '.$category->name, 'value', 'text', $disabled );
+			$options [] = JHtml::_ ( 'select.option', $category->id, str_repeat  ( '- ', $category->level+$toplevel  ).' '.$category->name, 'value', 'text', $disabled );
 		}
 		$disabled = false;
 		foreach ( $channels as $category ) {
 			if (empty($selected)) {
 				$selected[] = $category->id;
 			}
-			$options [] = JHTML::_ ( 'select.option', $category->id, '+ '. $category->getParent()->name.' / '.$category->name, 'value', 'text', $disabled );
+			$options [] = JHtml::_ ( 'select.option', $category->id, '+ '. $category->getParent()->name.' / '.$category->name, 'value', 'text', $disabled );
 		}
 
 		reset ( $options );
@@ -99,7 +99,7 @@ abstract class JHTMLKunenaForum {
 		$html = '';
 		if (!empty($options)) {
 			$html .= '<select name="' . $name . '" id="' . $id . '" ' . $attribs . '>';
-			$html .= JHTML::_ ( 'select.options', $options, $key, $text, $selected, $translate );
+			$html .= JHtml::_ ( 'select.options', $options, $key, $text, $selected, $translate );
 			$html .= '</select>';
 		}
 
@@ -110,7 +110,7 @@ abstract class JHTMLKunenaForum {
 	 *
 	 * Creates link pointing to a Kunena page
 	 *
-	 * @param mixed $uri Kunena URI, either as string, JURI or array
+	 * @param mixed $uri Kunena URI, either as string, JUri or array
 	 * @param string $content
 	 * @param string $class Link class
 	 * @param string $title Link title

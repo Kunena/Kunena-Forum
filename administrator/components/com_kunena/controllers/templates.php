@@ -28,7 +28,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$id = array_shift($cid);
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -45,7 +45,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 	}
 
 	function add() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -68,9 +68,10 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
 		}
 
-		$this->app->setUserState ( 'kunena.edit.template', $template );
+		$template = JPath::clean($template);
+		$this->app->setUserState ( 'kunena.edit.template', $template);
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=edit", false));
+		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=edit&name={$template}", false));
 	}
 
 	function install() {
@@ -81,7 +82,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$dest = KPATH_SITE . '/template/';
 		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -134,7 +135,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$id = array_shift($cid);
 		$template	= $id;
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -198,7 +199,7 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$filename		= JRequest::getVar('filename', '', 'post', 'cmd');
 		$filecontent	= JRequest::getVar('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -237,11 +238,10 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$task = JRequest::getCmd('task');
 		$template= JRequest::getVar('templatename', '', 'method', 'cmd');
 		$menus= JRequest::getVar('selections', array(), 'post', 'array');
-		$params= JRequest::getVar('params', array(), 'post', 'array');
 		$default= JRequest::getBool('default');
 		JArrayHelper::toInteger($menus);
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -250,22 +250,8 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
-		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
-		$ftp = JClientHelper::getCredentials('ftp');
-		$file = KPATH_SITE.'/template/'.$template.'/params.ini';
-		jimport('joomla.filesystem.file');
-		if ( count($params) ) {
-			$registry = new JRegistry();
-			$registry->loadArray($params);
-			$txt = $registry->toString();
-			$return = JFile::write($file, $txt);
-			if (!$return) {
-				$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE.', $file));
-				$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
-			}
-		}
+
+		$this->_saveParamFile($template);
 
 		$this->app->enqueueMessage (JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
 		$this->app->redirect ( KunenaRoute::_($this->baseurl.'&layout=edit&cid[]='.$template, false) );
@@ -275,11 +261,10 @@ class KunenaAdminControllerTemplates extends KunenaController {
 		$task = JRequest::getCmd('task');
 		$template= JRequest::getVar('templatename', '', 'method', 'cmd');
 		$menus= JRequest::getVar('selections', array(), 'post', 'array');
-		$params= JRequest::getVar('params', array(), 'post', 'array');
 		$default= JRequest::getBool('default');
 		JArrayHelper::toInteger($menus);
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -288,6 +273,24 @@ class KunenaAdminControllerTemplates extends KunenaController {
 			$this->app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
+
+		$this->_saveParamFile($template);
+
+		$this->app->enqueueMessage (JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
+		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
+	}
+
+	/**
+	 * Method to save param.ini file on filesystem.
+	 *
+	 * @param   string  $template  The name of the template.
+	 *
+	 *
+	 * @since	3.0.0
+	 */
+	protected function _saveParamFile($template) {
+		$params= JRequest::getVar('jform', array(), 'post', 'array');
+
 		// Set FTP credentials, if given
 		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
@@ -304,9 +307,5 @@ class KunenaAdminControllerTemplates extends KunenaController {
 				$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			}
 		}
-
-		$this->app->enqueueMessage (JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
-		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
-
 }

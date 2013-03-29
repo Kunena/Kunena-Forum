@@ -42,7 +42,7 @@ var KunenaTabs = new Class({
 			description.inject(this.content);
 		}
 
-		if ($chk(this.options.display)) this.display(this.options.display);
+		if (this.options.display!=null) this.display(this.options.display);
 
 		if (this.options.initialize) this.options.initialize.call(this);
 	},
@@ -124,7 +124,7 @@ var Autocompleter = new Class({
 		this.element = document.id(element);
 		this.setOptions(options);
 		this.build();
-		this.observer = new Observer(this.element, this.prefetch.bind(this), $merge({
+		this.observer = new Observer(this.element, this.prefetch.bind(this), Object.merge({
 			'delay': this.options.delay
 		}, this.options.observerOptions));
 		this.queryValue = null;
@@ -161,16 +161,16 @@ var Autocompleter = new Class({
 		if (!this.options.separator.test(this.options.separatorSplit)) {
 			this.options.separatorSplit = this.options.separator;
 		}
-		this.fx = (!this.options.fxOptions) ? null : new Fx.Tween(this.choices, $merge({
+		this.fx = (!this.options.fxOptions) ? null : new Fx.Tween(this.choices, Object.merge({
 			'property': 'opacity',
 			'link': 'cancel',
 			'duration': 200
 		}, this.options.fxOptions)).addEvent('onStart', Chain.prototype.clearChain).set(0);
 		this.element.setProperty('autocomplete', 'off')
-			.addEvent((Browser.Engine.trident || Browser.Engine.webkit) ? 'keydown' : 'keypress', this.onCommand.bind(this))
+			.addEvent((Browser.ie || Browser.safari || Browser.chrome) ? 'keydown' : 'keypress', this.onCommand.bind(this))
 			.addEvent('click', this.onCommand.bind(this, [false]))
-			.addEvent('focus', this.toggleFocus.create({bind: this, arguments: true, delay: 100}))
-			.addEvent('blur', this.toggleFocus.create({bind: this, arguments: false, delay: 100}));
+			.addEvent('focus', this.toggleFocus.pass({bind: this, arguments: true, delay: 100}))
+			.addEvent('blur', this.toggleFocus.pass({bind: this, arguments: false, delay: 100}));
 	},
 
 	destroy: function() {
@@ -341,7 +341,7 @@ var Autocompleter = new Class({
 	update: function(tokens) {
 		this.choices.empty();
 		this.cached = tokens;
-		var type = tokens && $type(tokens);
+		var type = tokens && typeOf(tokens);
 		if (!type || (type == 'array' && !tokens.length) || (type == 'hash' && !tokens.getLength())) {
 			(this.options.emptyChoices || this.hideChoices).call(this);
 		} else {
@@ -409,8 +409,8 @@ var Autocompleter = new Class({
 	 */
 	addChoiceEvents: function(el) {
 		return el.addEvents({
-			'mouseover': this.choiceOver.bind(this, [el]),
-			'click': this.choiceSelect.bind(this, [el])
+			'mouseover': this.choiceOver.bind(this, el),
+			'click': this.choiceSelect.bind(this, el)
 		});
 	}
 });
@@ -418,7 +418,7 @@ var Autocompleter = new Class({
 var OverlayFix = new Class({
 
 	initialize: function(el) {
-		if (Browser.Engine.trident) {
+		if (Browser.ie) {
 			this.element = document.id(el);
 			this.relative = this.element.getOffsetParent();
 			this.fix = new Element('iframe', {
@@ -440,7 +440,7 @@ var OverlayFix = new Class({
 			var coords = this.element.getCoordinates(this.relative);
 			delete coords.right;
 			delete coords.bottom;
-			this.fix.setStyles($extend(coords, {
+			this.fix.setStyles(Object.append(coords, {
 				'display': '',
 				'zIndex': (this.element.getStyle('zIndex') || 1) - 1
 			}));
@@ -462,7 +462,7 @@ var OverlayFix = new Class({
 Element.implement({
 
 	getSelectedRange: function() {
-		if (!Browser.Engine.trident) return {start: this.selectionStart, end: this.selectionEnd};
+		if (!Browser.ie) return {start: this.selectionStart, end: this.selectionEnd};
 		var pos = {start: 0, end: 0};
 		var range = this.getDocument().selection.createRange();
 		if (!range || range.parentElement() != this) return pos;
@@ -483,7 +483,7 @@ Element.implement({
 	},
 
 	selectRange: function(start, end) {
-		if (Browser.Engine.trident) {
+		if (Browser.ie) {
 			var diff = this.value.substr(start, end - start).replace(/\r/g, '').length;
 			start = this.value.substr(0, start).replace(/\r/g, '').length;
 			var range = this.createTextRange();
@@ -564,7 +564,7 @@ Autocompleter.Request = new Class({
 	},
 
 	query: function(){
-		var data = $unlink(this.options.postData) || {};
+		var data = Object.clone(this.options.postData) || {};
 		data[this.options.postVar] = this.queryValue;
 		var indicator = document.id(this.options.indicator);
 		if (indicator) indicator.setStyle('display', '');
@@ -590,12 +590,13 @@ Autocompleter.Request = new Class({
 });
 
 Autocompleter.Request.JSON = new Class({
-
 	Extends: Autocompleter.Request,
 
+	secure: false, 
 	initialize: function(el, url, options) {
 		this.parent(el, options);
-		this.request = new Request.JSON($merge({
+		this.request = new Request.JSON(Object.merge({
+			'secure': false, 
 			'url': url,
 			'link': 'cancel'
 		}, this.options.ajaxOptions)).addEvent('onComplete', this.queryResponse.bind(this));
@@ -663,12 +664,12 @@ var Observer = new Class({
 	},
 
 	clear: function() {
-		$clear(this.timeout || null);
+		clearInterval(this.timeout || null);
 		return this;
 	},
 
 	pause: function(){
-		if (this.timer) $clear(this.timer);
+		if (this.timer) clearInterval(this.timer);
 		else this.element.removeEvent('keyup', this.bound);
 		return this.clear();
 	},
@@ -701,7 +702,7 @@ function kRequestGetTopics(el)
 {
 	var catid = el.get("value");
 	var select = document.id('kmod_topics');
-	request = new Request.JSON({url: kunena_url_ajax,
+	request = new Request.JSON({secure: false, url: kunena_url_ajax,
 	onSuccess: function(response){
 		kRequestShowTopics(catid, select, response.topiclist);
 		}}).post({'catid': catid});
@@ -864,12 +865,39 @@ window.addEvent('domready', function(){
 		});
 	}
 	
-	if ( document.id('kunena_url_avatargallery') != undefined ) {
+	if ( document.id('avatar_category_select') != undefined ) { 
 		document.id('avatar_category_select').addEvent('change', function(e){
+			// we getting the name of gallery selected in drop-down by user 
 			var avatar_selected= document.id('avatar_category_select').getSelected();
-			var url = "";
-			var urlreg = new  RegExp("_GALLERY_","g");
-			location.href=url.replace(urlreg, avatar_selected.get('value'));
+			
+			var td_avatar = document.id('kgallery_avatar_list');
+			
+			// we remove avatar which exist in td tag to allow us to put new one items
+			document.id('kgallery_avatar_list').empty(); 
+			// we getting from hidden input the url of kunena image gallery
+			var url_gallery_main = document.id('Kunena_Image_Gallery_URL').get('value');
+			var id_to_select = document.id('Kunena_'+avatar_selected.get('value'));
+			var name_to_select = id_to_select.getProperty('name');
+			// Convert JSON to object
+			var image_object = JSON.decode(id_to_select.get('value'));
+			
+			// Re-create all HTML items with avatars images from gallery selected by user
+			for(var i = 0, len = image_object.length; i < len; ++i) {
+				var SpanElement  = new Element('span');
+				var LabelElement = new Element('label');
+				LabelElement.setProperty('for','kavatar'+i);
+				if ( name_to_select != 'default' ) {
+					var ImageElement = new Element('img', {src: url_gallery_main+'/'+name_to_select+'/'+image_object[i], alt: ''});
+					var InputElement  = new Element('input', {id: 'kavatar'+i, type: 'radio', name: 'avatar', value: 'gallery/'+name_to_select+'/'+image_object[i]});
+				} else {
+					var ImageElement = new Element('img', {src: url_gallery_main+'/'+image_object[i], alt: ''});
+					var InputElement  = new Element('input', {id: 'kavatar'+i, type: 'radio', name: 'avatar', value: 'gallery/'+image_object[i]});
+				}
+				SpanElement.inject(td_avatar);
+				LabelElement.inject(SpanElement);
+				ImageElement.inject(LabelElement);
+				InputElement.inject(SpanElement);
+			}
 		});
 	}
 	

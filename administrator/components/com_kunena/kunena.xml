@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install>
-<install type="component" version="1.5.0" method="upgrade">
-	<name>Kunena</name>
-	<version>2.0.3</version>
-	<versionname>Reconciliation</versionname>
+<!DOCTYPE extension>
+<extension type="component" version="2.5" method="upgrade">
+	<name>com_kunena</name>
+	<version>@kunenaversion@</version>
+	<versionname>@kunenaversionname@</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
-	<copyright>(C) 2008 - 2012 Kunena Team. All rights reserved.</copyright>
+	<copyright>(C) 2008 - 2013 Kunena Team. All rights reserved.</copyright>
 	<license>GNU/GPLv3 or later</license>
-	<description>Kunena Forum</description>
-	<installfile>install/install.kunena.php</installfile>
-	<uninstallfile>install/uninstall.kunena.php</uninstallfile>
-	<files>
-		<filename>COPYRIGHT.php</filename>
+	<description>COM_KUNENA_XML_DESCRIPTION</description>
+	<scriptfile>install/install.script.php</scriptfile>
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>kunena.php</filename>
+		<filename>router.php</filename>
+		<folder>controllers</folder>
+		<folder>language</folder>
+		<folder>lib</folder>
+		<folder>models</folder>
+		<folder>template</folder>
+		<folder>views</folder>
 	</files>
 	<administration>
 		<menu view="cpanel" img="components/com_kunena/media/icons/favicons/kunena-logo-white.png">COM_KUNENA</menu>
@@ -28,10 +35,23 @@
 			<menu view="trash" img="components/com_kunena/media/icons/favicons/kunena-trash.png">COM_KUNENA_TRASH_MANAGER</menu>
 		</submenu>
 		<files>
-			<filename>kunena.j25.xml</filename>
+			<filename>index.html</filename>
+			<filename>api.php</filename>
+			<filename>install.php</filename>
+			<filename>kunena.php</filename>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<folder>controllers</folder>
+			<folder>images</folder>
 			<folder>install</folder>
-			<folder>archive</folder>
 			<folder>language</folder>
+			<folder>media</folder>
+			<folder>models</folder>
+			<folder>template</folder>
+			<folder>views</folder>
 		</files>
 	</administration>
-</install>
+	<updateservers>
+		<server type="collection" priority="1" name="Kunena 3.0 Update Site">http://update.kunena.org/3.0</server>
+	</updateservers>
+</extension>

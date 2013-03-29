@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ();
 	<input type="hidden" name="view" value="user" />
 	<input type="hidden" name="task" value="save" />
 	<input type="hidden" name="userid" value="<?php echo $this->user->id ?>" />
-	<?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHtml::_( 'form.token' ); ?>
 
 <div id="kprofile-edit">
 	<dl class="tabs">

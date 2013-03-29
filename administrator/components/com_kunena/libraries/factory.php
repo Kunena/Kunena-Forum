@@ -70,7 +70,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaAvatar
 	 */
 	public static function getAvatarIntegration() {
-		require_once KPATH_ADMIN . '/libraries/integration/avatar.php';
 		return KunenaAvatar::getInstance();
 	}
 
@@ -82,7 +81,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaPrivate
 	 */
 	public static function getPrivateMessaging() {
-		require_once KPATH_ADMIN . '/libraries/integration/private.php';
 		return KunenaPrivate::getInstance();
 	}
 
@@ -94,7 +92,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaActivity
 	 */
 	public static function getActivityIntegration() {
-		require_once KPATH_ADMIN . '/libraries/integration/activity.php';
 		return KunenaActivity::getInstance();
 	}
 
@@ -106,7 +103,6 @@ abstract class KunenaFactory {
 	 * @return object KunenaProfile
 	 */
 	public static function getProfile() {
-		require_once KPATH_ADMIN . '/libraries/integration/profile.php';
 		return KunenaProfile::getInstance();
 	}
 
@@ -130,39 +126,17 @@ abstract class KunenaFactory {
 		}
 		if (empty($loaded["{$client}/{$file}"])) {
 			$lang = JFactory::getLanguage();
-			if (version_compare(JVERSION, '1.6','<')) {
-				// Joomla 1.5 hack to make languages to load faster
-				if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
-						&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english')) {
-					$filename = JLanguage::getLanguagePath( $lookup2, 'en-GB')."/en-GB.{$file}.ini";
-					$loaded[$file] = self::parseLanguage($lang, $filename);
-				}
-				$filename = JLanguage::getLanguagePath( $lookup1, $lang->_lang)."/{$lang->_lang}.{$file}.ini";
-				$loaded[$file] = self::parseLanguage($lang, $filename);
-				if (!$loaded[$file]) {
-					$filename = JLanguage::getLanguagePath( $lookup2, $lang->_lang)."/{$lang->_lang}.{$file}.ini";
-					$loaded[$file] = self::parseLanguage($lang, $filename);
-				}
-				if (!$loaded[$file]) {
-					$filename = JLanguage::getLanguagePath( $lookup1, $lang->_default)."/{$lang->_default}.{$file}.ini";
-					$loaded[$file] = self::parseLanguage($lang, $filename);
-				}
-				if (!$loaded[$file]) {
-					$filename = JLanguage::getLanguagePath( $lookup2, $lang->_default)."/{$lang->_default}.{$file}.ini";
-					$loaded[$file] = self::parseLanguage($lang, $filename);
-				}
-			} else {
-				$english = false;
-				if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
-						&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english')) {
-					$lang->load($file, $lookup2, 'en-GB', true, false);
-					$english = true;
-				}
-				$loaded[$file] = $lang->load($file, $lookup1, null, $english, false)
-					|| $lang->load($file, $lookup2, null, $english, false)
-					|| $lang->load($file, $lookup1, $lang->getDefault(), $english, false)
-					|| $lang->load($file, $lookup2, $lang->getDefault(), $english, false);
+
+			$english = false;
+			if ($lang->getTag() != 'en-GB' && !JDEBUG && !$lang->getDebug()
+					&& !KunenaFactory::getConfig()->get('debug') && KunenaFactory::getConfig()->get('fallback_english')) {
+				$lang->load($file, $lookup2, 'en-GB', true, false);
+				$english = true;
 			}
+			$loaded[$file] = $lang->load($file, $lookup1, null, $english, false)
+				|| $lang->load($file, $lookup2, null, $english, false)
+				|| $lang->load($file, $lookup1, $lang->getDefault(), $english, false)
+				|| $lang->load($file, $lookup2, $lang->getDefault(), $english, false);
 		}
 		KUNENA_PROFILER ? KunenaProfiler::instance()->stop('function '.__CLASS__.'::'.__FUNCTION__.'()') : null;
 		return $loaded[$file];

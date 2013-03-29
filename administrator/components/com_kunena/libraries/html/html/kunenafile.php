@@ -35,7 +35,7 @@ abstract class JHtmlKunenaFile
 		$config = KunenaFactory::getConfig();
 		$fileSize = max($config->imagesize, $config->filesize);
 
-		$uploadUri = json_encode(KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&'.JUtility::getToken().'=1'));
+		$uploadUri = json_encode(KunenaRoute::_('index.php?option=com_kunena&view=topic&task=upload&'.JSession::getFormToken().'=1'));
 		$textRemove = JText::_('COM_KUNENA_GEN_REMOVE_FILE');
 		$textInsert = JText::_('COM_KUNENA_EDITOR_INSERT');
 

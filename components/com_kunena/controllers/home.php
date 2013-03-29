@@ -19,7 +19,6 @@ class KunenaControllerHome extends KunenaController {
 	public $home = 1;
 
 	public function display($cachable = false, $urlparams = false) {
-		global $Itemid;
 		$menu = $this->app->getMenu ();
 		$home = $menu->getActive ();
 		if (!$home) {
@@ -56,9 +55,6 @@ class KunenaControllerHome extends KunenaController {
 
 			// Set active menu item to point the real page
 			$menu->setActive ( $default->id );
-
-			// Joomla 1.5 hack:
-			$Itemid = $default->id;
 		}
 
 		// Reset our router

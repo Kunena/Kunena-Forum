@@ -24,16 +24,16 @@ class KunenaAdminControllerRanks extends KunenaController {
 	}
 
 	function add() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=add", false));
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=rank&layout=add', false));
 	}
 
 	function edit() {
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
@@ -44,14 +44,14 @@ class KunenaAdminControllerRanks extends KunenaController {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_A_NO_RANKS_SELECTED' ), 'notice' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		} else {
-			$this->setRedirect(KunenaRoute::_($this->baseurl."&layout=add&id={$id}", false));
+			$this->setRedirect(JRoute::_("index.php?option=com_kunena&view=rank&layout=edit&id={$id}", false));
 		}
 	}
 
 	function save() {
 		$db = JFactory::getDBO ();
 
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;
@@ -87,7 +87,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 	}
 
 	function rankupload() {
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;
@@ -108,7 +108,7 @@ class KunenaAdminControllerRanks extends KunenaController {
 	function delete() {
 		$db = JFactory::getDBO ();
 
-		if (!JRequest::checkToken()) {
+		if (!JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 			return;

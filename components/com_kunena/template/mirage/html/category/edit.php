@@ -10,14 +10,14 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.formvalidation');
+JHtml::_('behavior.formvalidation');
 ?>
 <div class="ksection">
 	<h2 class="kheader"><?php echo $this->category->exists() ? JText::_('COM_KUNENA_EDIT_CATEGORY') : JText::_('COM_KUNENA_NEW_CATEGORY') ?></h2>
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category') ?>" enctype="multipart/form-data" id="adminForm" name="adminForm" method="post" class="adminForm form-validate">
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="catid" value="<?php echo $this->category->id ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<ul class="kposthead clearfix">
 			<li><h3><?php echo JText::_('COM_KUNENA_BASIC_INFO') ?></h3></li>

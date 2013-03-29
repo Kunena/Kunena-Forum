@@ -39,20 +39,9 @@ class AlphaUserPointsHelper {}
 // UddeIM
 class uddeIMAPI {}
 
-// Joomla 1.5
-class MenusModelMenutype {}
-
-// JXtended
-function jximport() {}
-function juimport() {}
-class JxAcl {};
-
 // JUpgrage
 class jUpgrade {};
 class jUpgradeExtensions {};
-
-// PHP 5.3
-function parse_ini_string($str) {}
 
 // PHPUnit
 class PHP_CodeCoverage_Filter {}

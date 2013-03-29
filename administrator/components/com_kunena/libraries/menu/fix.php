@@ -39,27 +39,15 @@ abstract class KunenaMenuFix {
 		// Initialise variables.
 		$db = JFactory::getDbo();
 
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$query = $db->getQuery(true);
-			$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level, m.language');
-			$query->select('m.browserNav, m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parent_id');
-			$query->select('e.element as component, m.published');
-			$query->from('#__menu AS m');
-			$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
-			$query->where('m.parent_id > 0');
-			$query->where('m.client_id = 0');
-			$query->order('m.lft');
-
-		} else {
-			// Joomla 1.5
-			$query = "SELECT m.id, m.menutype, m.name AS title, m.alias, '' AS route, m.link, m.type, m.sublevel AS level, '*' AS language,
-				m.browserNav, m.access, m.params, m.home, '' AS img, '' AS template_style_id, m.componentid AS component_id, m.parent AS parent_id,
-				c.option AS component, m.published
-				FROM #__menu AS m
-				LEFT JOIN #__components AS c ON m.componentid = c.id
-				ORDER BY m.sublevel, m.parent, m.ordering";
-		}
+		$query = $db->getQuery(true);
+		$query->select('m.id, m.menutype, m.title, m.alias, m.path AS route, m.link, m.type, m.level, m.language');
+		$query->select('m.browserNav, m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parent_id');
+		$query->select('e.element as component, m.published');
+		$query->from('#__menu AS m');
+		$query->leftJoin('#__extensions AS e ON m.component_id = e.extension_id');
+		$query->where('m.parent_id > 0');
+		$query->where('m.client_id = 0');
+		$query->order('m.lft');
 
 		// Set the query
 		$db->setQuery($query);
@@ -71,23 +59,8 @@ abstract class KunenaMenuFix {
 		foreach(self::$items as &$item) {
 			// Get parent information.
 			$parent_tree = array();
-			if (version_compare(JVERSION, '1.6', '>')) {
-				// Joomla 1.6+
-				if (isset(self::$items[$item->parent_id])) {
-					$parent_tree = self::$items[$item->parent_id]->tree;
-				}
-
-			} else {
-				// Joomla 1.5
-				$parent_route = '';
-				if(($parent = $item->parent_id) && (isset(self::$items[$parent])) &&
-					(is_object(self::$items[$parent])) && (isset(self::$items[$parent]->route)) && isset(self::$items[$parent]->tree)) {
-					$parent_route = self::$items[$parent]->route.'/';
-					$parent_tree  = self::$items[$parent]->tree;
-				}
-
-				// Create route
-				$item->route = $parent_route . $item->alias;
+			if (isset(self::$items[$item->parent_id])) {
+				$parent_tree = self::$items[$item->parent_id]->tree;
 			}
 
 			// Create tree
@@ -163,15 +136,11 @@ abstract class KunenaMenuFix {
 		return $items;
 	}
 
+	/**
+	 * @deprecated in Kunena 3.0
+	 */
 	public static function getConflicts() {
-		$items = array();
-		foreach (self::$same as $alias=>$list) {
-			// There are no conflicts in J1.6+ (only multi-lang support)
-			if (count($list)>1 && version_compare(JVERSION, '1.6', '<')) {
-				$items += $list;
-			}
-		}
-		return $items;
+		return array();
 	}
 
 	protected static function build() {

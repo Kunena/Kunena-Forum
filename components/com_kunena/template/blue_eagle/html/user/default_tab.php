@@ -10,8 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.calendar');
-JHTML::_('behavior.tooltip');
+JHtml::_('behavior.calendar');
+JHtml::_('behavior.tooltip');
 ?>
 <div id="kprofile-rightcoltop">
 	<div class="kprofile-rightcol2">
@@ -34,11 +34,17 @@ JHTML::_('behavior.tooltip');
 <div class="clrline"></div>
 <div id="kprofile-rightcolbot">
 	<div class="kprofile-rightcol2">
-		<ul>
-			<?php if ( $this->email ): ?><li><span class="kicon-profile kicon-profile-email"></span><?php echo $this->email ?></li><?php endif; ?>
-			<?php // FIXME: we need a better way to add http/https ?>
-			<li><?php if (!empty($this->profile->websiteurl)):?><span class="kicon-profile kicon-profile-website"></span><?php endif;?><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename); ?></a></li>
-		</ul>
+		<?php if ($this->email || !empty($this->profile->websiteurl)): ?>
+			<ul>
+				<?php if ($this->email): ?>
+					<li><span class="kicon-profile kicon-profile-email"></span><?php echo $this->email; ?></li>
+				<?php endif; ?>
+				<?php if (!empty($this->profile->websiteurl)): ?>
+					<?php // FIXME: we need a better way to add http/https ?>
+					<li><span class="kicon-profile kicon-profile-website"></span><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaHtmlParser::parseText($this->profile->websitename); ?></a></li>
+				<?php endif; ?>
+			</ul>
+		<?php endif;?>
 	</div>
 	<div class="kprofile-rightcol1">
 		<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?></h4>

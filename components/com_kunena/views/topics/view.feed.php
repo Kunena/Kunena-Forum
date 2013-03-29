@@ -155,7 +155,6 @@ class KunenaViewTopics extends KunenaView {
 	}
 
 	function displayTopicRows() {
-		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 		$firstpost = $this->state->get ( 'list.mode' ) == 'topics';
 		foreach ( $this->topics as $topic ) {
 			if ($firstpost) {
@@ -182,7 +181,6 @@ class KunenaViewTopics extends KunenaView {
 	}
 
 	function displayPostRows() {
-		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 		foreach ( $this->messages as $message ) {
 			if (!isset($this->topics[$message->thread])) {
 				// TODO: INTERNAL ERROR
@@ -221,7 +219,7 @@ class KunenaViewTopics extends KunenaView {
 		$item->title		= $title;
 		$item->link			= $url;
 		$item->description	= $description;
-		$item->date			= $date->toMySQL();
+		$item->date			= $date->toSql();
 		$item->author		= $username;
 		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
 		if ($this->config->rss_author_format != 'name') $item->authorEmail = JFactory::getUser($userid)->email;

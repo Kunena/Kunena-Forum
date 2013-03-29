@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 $i=0;
-JHTML::_('behavior.calendar');
+JHtml::_('behavior.calendar');
 ?>
 <div class="kblock">
 	<div class="kheader">
@@ -23,7 +23,7 @@ JHTML::_('behavior.calendar');
 				<input type="hidden" name="view" value="user" />
 				<input type="hidden" name="task" value="ban" />
 				<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
-				<?php echo JHTML::_( 'form.token' ); ?>
+				<?php echo JHtml::_( 'form.token' ); ?>
 
 			<table id="kaddban">
 				<tbody>
@@ -39,10 +39,10 @@ JHTML::_('behavior.calendar');
 					<td class="kcol-first" ><b><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL'); ?></b></td>
 					<td class="kcol-mid"><?php
 						// make the select list for the view type
-						$block[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
-						$block[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
+						$block[] = JHtml::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
+						$block[] = JHtml::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
 						// build the html select list
-						echo JHTML::_('select.genericlist', $block, 'block', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->baninfo->blocked));
+						echo JHtml::_('select.genericlist', $block, 'block', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->baninfo->blocked));
 						?>
 					</td>
 				</tr>
@@ -51,7 +51,7 @@ JHTML::_('behavior.calendar');
 						<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></span>
 					</td>
 					<td class="kcol-mid">
-						<?php echo JHTML::_('calendar', $this->escape($this->baninfo->expiration), 'expiration', 'expiration', '%Y-%m-%d',array('onclick'=>'$(\'expiration\').setStyle(\'display\')')); ?>
+						<?php echo JHtml::_('calendar', $this->escape($this->baninfo->expiration), 'expiration', 'expiration', '%Y-%m-%d',array('onclick'=>'$(\'expiration\').setStyle(\'display\')')); ?>
 					</td>
 				</tr>
 				<tr class="krow<?php echo ($i^=1)+1;?>">

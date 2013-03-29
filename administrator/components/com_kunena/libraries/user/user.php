@@ -282,7 +282,7 @@ class KunenaUser extends JObject {
 		return $avatars->getURL ( $this, $sizex, $sizey );
 	}
 
-	public function getLink($name = null, $title = null, $rel = 'nofollow') {
+	public function getLink($name = null, $title = null, $rel = 'nofollow', $task = '') {
 		if (!$name) {
 			$name = $this->getName();
 		}
@@ -292,7 +292,7 @@ class KunenaUser extends JObject {
 				$title = JText::sprintf('COM_KUNENA_VIEW_USER_LINK_TITLE', $this->getName());
 			}
 			$uclass = $this->getType(0, 'class');
-			$link = $this->getURL ();
+			$link = $this->getURL (true, $task);
 			if (! empty ( $link ))
 				$this->_link[$key] = "<a class=\"{$uclass}\" href=\"{$link}\" title=\"{$title}\" rel=\"{$rel}\">{$name}</a>";
 			else
@@ -301,9 +301,9 @@ class KunenaUser extends JObject {
 		return $this->_link[$key];
 	}
 
-	public function getURL($xhtml = true) {
+	public function getURL($xhtml = true, $task = '') {
 		if (!$this->exists()) return;
-		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, '', $xhtml );
+		return KunenaFactory::getProfile ()->getProfileURL ( $this->userid, $task, $xhtml );
 	}
 
 	public function getType($catid = 0, $code=false) {
@@ -473,8 +473,8 @@ class KunenaUser extends JObject {
 				break;
 			case 'birthdate' :
 				if ($this->birthdate) {
-					$date = new JDate ( $this->birthdate, 0 );
-					if ($date->toFormat('%Y')<1902) break;
+					$date = new JDate ( $this->birthdate );
+					if ($date->format('%Y')<1902) break;
 					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . KunenaDate::getInstance($this->birthdate)->toKunena( 'date', 0 ) . '"></span>';
 				}
 				break;
@@ -543,8 +543,7 @@ class KunenaUser extends JObject {
 			return '';
 	}
 
-	public function escape($var)
-	{
+	public function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 }

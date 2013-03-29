@@ -65,7 +65,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	 * @param string $layout
 	 */
 	public function getUri($layout = 'default') {
-		$uri = new JURI('index.php?option=com_kunena&view=announcement');
+		$uri = new JUri('index.php?option=com_kunena&view=announcement');
 		if ($layout) $uri->setVar('layout', $layout);
 		if ($this->id) $uri->setVar('id', $this->id);
 		return $uri;
@@ -88,10 +88,10 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 	 * @param string $layout
 	 */
 	public function getTaskUri($task = null) {
-		$uri = new JURI('index.php?option=com_kunena&view=announcement');
+		$uri = new JUri('index.php?option=com_kunena&view=announcement');
 		if ($task) $uri->setVar('task', $task);
 		if ($this->id) $uri->setVar('id', $this->id);
-		if ($task) $uri->setVar(JUtility::getToken(), 1);
+		if ($task) $uri->setVar(JSession::getFormToken(), 1);
 		return $uri;
 	}
 

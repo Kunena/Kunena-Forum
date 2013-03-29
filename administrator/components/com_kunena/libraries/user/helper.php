@@ -200,7 +200,7 @@ abstract class KunenaUserHelper {
 				$querytime = 'AND time > '.$time;
 			}
 
-			$query = 'SELECT guest, time, usertype, client_id
+			$query = 'SELECT guest, time, client_id
 				FROM #__session
 				WHERE client_id = 0 ' . $querytime;
 			$db->setQuery ( $query );
@@ -215,7 +215,7 @@ abstract class KunenaUserHelper {
 					// we check that the session hasn't expired
 					if ( $kunena_config->show_session_type == 0 || $kunena_config->show_session_type == 2 || ($session->time > $j_session_lifetime && $kunena_config->show_session_type == 1 ) ) {
 						// if guest increase guest count by 1
-						if ($session->guest == 1 && !$session->usertype) {
+						if ($session->guest == 1) {
 							$guest_array ++;
 						}
 						// if member increase member count by 1

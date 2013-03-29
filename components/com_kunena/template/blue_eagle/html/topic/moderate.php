@@ -28,7 +28,7 @@ kunena_url_ajax= ".json_encode(KunenaRoute::_("index.php?option=com_kunena&view=
 <?php if (isset($this->message)) : ?>
 				<input type="hidden" name="mesid" value="<?php echo $this->message->id; ?>" />
 <?php endif; ?>
-				<?php echo JHTML::_( 'form.token' ); ?>
+				<?php echo JHtml::_( 'form.token' ); ?>
 
 				<div>
 					<?php echo JText::_('COM_KUNENA_TOPIC'); ?>:

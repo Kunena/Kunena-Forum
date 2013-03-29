@@ -69,7 +69,7 @@ class KunenaViewCommon extends KunenaView {
 			} else {
 				echo ' ';
 			}
-			$cache->set($this->announcement->id, 'announcement', 'global');
+			$cache->store($this->announcement->id, 'announcement', 'global');
 			$cache->end();
 		} else echo ' ';
 	}
@@ -78,9 +78,9 @@ class KunenaViewCommon extends KunenaView {
 		if ($this->offline) return;
 
 		$options = array ();
-		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
+		$options [] = JHtml::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
 		$cat_params = array ('sections'=>1, 'catid'=>0);
-		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
+		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
@@ -245,13 +245,8 @@ class KunenaViewCommon extends KunenaView {
 		$this->parameters = new JRegistry();
 		$this->parameters->set('showAllChildren', $this->ktemplate->params->get('menu_showall', 0));
 		$this->parameters->set('menutype', $basemenu->menutype);
-		if (version_compare(JVERSION, '1.6', '>')) {
-			$this->parameters->set('startLevel', $basemenu->level + 1);
-			$this->parameters->set('endLevel', $basemenu->level + $this->ktemplate->params->get('menu_levels', 1));
-		} else {
-			$this->parameters->set('startLevel', $basemenu->sublevel + 1);
-			$this->parameters->set('endLevel', $basemenu->sublevel + $this->ktemplate->params->get('menu_levels', 1));
-		}
+		$this->parameters->set('startLevel', $basemenu->level + 1);
+		$this->parameters->set('endLevel', $basemenu->level + $this->ktemplate->params->get('menu_levels', 1));
 
 		$this->list = KunenaMenuHelper::getList($this->parameters);
 		$this->menu = $this->app->getMenu();
@@ -320,7 +315,7 @@ class KunenaViewCommon extends KunenaView {
 			case 'RETURN_URL':
 				return base64_encode ( JFactory::getURI ()->toString ( array ('path', 'query', 'fragment' ) ) );
 			case 'TOKEN':
-				return JHTML::_ ( 'form.token' );
+				return JHtml::_ ( 'form.token' );
 			case 'MODULE':
 				return $this->getModulePosition('kunena_profilebox');
 		}
@@ -329,7 +324,6 @@ class KunenaViewCommon extends KunenaView {
 	function displayFooter($tpl = null) {
 		if ($this->offline) return;
 
-		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$catid = 0;
 		if ($this->config->enablerss) {
 			if ($catid > 0) {

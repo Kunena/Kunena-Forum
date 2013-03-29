@@ -10,8 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once KPATH_SITE.'/lib/kunena.link.class.php';
-
 /**
  * Category View
  */
@@ -33,7 +31,7 @@ class KunenaViewCategory extends KunenaView {
 		$title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 		$this->setTitle ( $title );
 
-		$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$this->category->name} - {$this->config->board_title}" );
+		$metaDesc = $this->document->getDescription() . '. ' . $this->escape ( "{$this->category->name} - {$this->config->board_title}" );
 		$this->document->setDescription ( $metaDesc );
 
 		// Create image for feed
@@ -79,7 +77,7 @@ class KunenaViewCategory extends KunenaView {
 		$item->title		= $title;
 		$item->link			= $url;
 		$item->description	= $description;
-		$item->date			= $date->toMySQL();
+		$item->date			= $date->toSql();
 		$item->author		= $username;
 		// FIXME: inefficient to load users one by one -- also vulnerable to J! 2.5 user is NULL bug
 		if ($this->config->rss_author_format != 'name') $item->authorEmail = JFactory::getUser($userid)->email;

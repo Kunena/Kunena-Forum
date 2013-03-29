@@ -28,9 +28,9 @@ class KunenaControllerMisc extends KunenaController {
 			if (!is_readable ( KPATH_SITE . "/template/{$name}/template.xml" )) {
 				$name = 'blue_eagle';
 			}
-			setcookie ( 'kunena_template', $name, 0, JURI::root(true).'/' );
+			setcookie ( 'kunena_template', $name, 0, JUri::root(true).'/' );
 		} else {
-			setcookie ( 'kunena_template', null, time () - 3600, JURI::root(true).'/' );
+			setcookie ( 'kunena_template', null, time () - 3600, JUri::root(true).'/' );
 		}
 		$this->setRedirect ( KunenaRoute::_('index.php?option=com_kunena', false) );
 	}

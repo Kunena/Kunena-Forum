@@ -48,7 +48,7 @@ abstract class KunenaTemplateHelper {
 			return false;
 		}
 		$data = self::parseKunenaInstallFile($templateBaseDir.'/'.$templateDir.'/template.xml');
-		if ($data->type != 'kunena-template') {
+		if (!$data || $data->type != 'kunena-template') {
 			return false;
 		}
 		$data->directory = basename($templateDir);
@@ -56,45 +56,29 @@ abstract class KunenaTemplateHelper {
 	}
 
 	public static function parseKunenaInstallFile($path) {
-		// FIXME : deprecated under Joomla! 1.6
-		$xml = JFactory::getXMLParser ( 'Simple' );
-		if (! $xml->loadFile ( $path )) {
-			unset ( $xml );
-			return false;
-		}
-		if (! is_object ( $xml->document ) || ($xml->document->name () != 'kinstall')) {
-			unset ( $xml );
+		$xml = simplexml_load_file($path);
+		if (!$xml || $xml->getName() != 'kinstall') {
 			return false;
 		}
 
-		$data = new stdClass ();
-		$element = & $xml->document->name [0];
-		$data->name = $element ? $element->data () : '';
-		$data->type = $element ? $xml->document->attributes ( "type" ) : '';
+		$data = new stdClass();
+		$data->name = (string) $xml->name;
+		$data->type = (string) $xml->attributes()->type;
+		$data->creationdate = (string) $xml->creationDate;
+		$data->author = (string) $xml->author;
+		$data->copyright = (string) $xml->copyright;
+		$data->authorEmail = (string) $xml->authorEmail;
+		$data->authorUrl = (string) $xml->authorUrl;
+		$data->version = (string) $xml->version;
+		$data->description = (string) $xml->description;
+		$data->thumbnail = (string) $xml->thumbnail;
 
-		$element = & $xml->document->creationDate [0];
-		$data->creationdate = $element ? $element->data () : JText::_ ( 'Unknown' );
+		if ($data->version == '@kunenaversion@') $data->version = KunenaForum::version();
+		if ($data->creationdate == '@kunenaversiondate@') $data->creationdate = KunenaForum::versionDate();
 
-		$element = & $xml->document->author [0];
-		$data->author = $element ? $element->data () : JText::_ ( 'Unknown' );
-
-		$element = & $xml->document->copyright [0];
-		$data->copyright = $element ? $element->data () : '';
-
-		$element = & $xml->document->authorEmail [0];
-		$data->authorEmail = $element ? $element->data () : '';
-
-		$element = & $xml->document->authorUrl [0];
-		$data->authorUrl = $element ? $element->data () : '';
-
-		$element = & $xml->document->version [0];
-		$data->version = $element ? $element->data () : '';
-
-		$element = & $xml->document->description [0];
-		$data->description = $element ? $element->data () : '';
-
-		$element = & $xml->document->thumbnail [0];
-		$data->thumbnail = $element ? $element->data () : '';
+		if (!$data->version) $data->version = JText::_('Unknown');
+		if (!$data->creationdate) $data->creationdate = JText::_('Unknown');
+		if (!$data->author) $data->author = JText::_('Unknown');
 
 		return $data;
 	}

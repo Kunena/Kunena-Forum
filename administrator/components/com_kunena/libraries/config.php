@@ -80,7 +80,6 @@ class KunenaConfig extends JObject {
 	public $userlist_posts = 1;
 	public $userlist_karma = 1;
 	public $userlist_email = 0;
-	public $userlist_usertype = 0;
 	public $userlist_joindate = 1;
 	public $userlist_lastvisitdate = 1;
 	public $userlist_userhits = 1;
@@ -125,7 +124,6 @@ class KunenaConfig extends JObject {
 	public $default_sort = 'asc'; // 'desc' for latest post first
 	// New 1.5.8 config variables
 	public $sef = 1;
-	public $sefutf8 = 0;
 	// New for 1.6 -> Hide images and files for guests
 	public $showimgforguest = 1;
 	public $showfileforguest = 1;

@@ -329,16 +329,16 @@ class KunenaModelTopics extends KunenaModel {
 			}
 			if (!$permdelete && $topic->authorise('permdelete')) $permdelete = true;
 		}
-		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
 		if ($this->getState ('list.mode') == 'subscriptions')
-			$actionDropdown[] = JHTML::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
+			$actionDropdown[] = JHtml::_('select.option', 'unsubscribe', JText::_('COM_KUNENA_UNSUBSCRIBE_SELECTED'));
 		if ($this->getState ('list.mode') == 'favorites')
-			$actionDropdown[] = JHTML::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
-		if ($move) $actionDropdown[] = JHTML::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
-		if ($approve) $actionDropdown[] = JHTML::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+			$actionDropdown[] = JHtml::_('select.option', 'unfavorite', JText::_('COM_KUNENA_UNFAVORITE_SELECTED'));
+		if ($move) $actionDropdown[] = JHtml::_('select.option', 'move', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		if ($approve) $actionDropdown[] = JHtml::_('select.option', 'approve', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		if ($delete) $actionDropdown[] = JHtml::_('select.option', 'delete', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		if ($permdelete) $actionDropdown[] = JHtml::_('select.option', 'permdel', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		if ($undelete) $actionDropdown[] = JHtml::_('select.option', 'restore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		if (count($actionDropdown) == 1) return null;
 		return $actionDropdown;
@@ -356,11 +356,11 @@ class KunenaModelTopics extends KunenaModel {
 			if (!$undelete && $message->authorise('undelete')) $undelete = true;
 			if (!$permdelete && $message->authorise('permdelete')) $permdelete = true;
 		}
-		$actionDropdown[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
-		if ($approve) $actionDropdown[] = JHTML::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
-		if ($delete) $actionDropdown[] = JHTML::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
-		if ($permdelete) $actionDropdown[] = JHTML::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-		if ($undelete) $actionDropdown[] = JHTML::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		$actionDropdown[] = JHtml::_('select.option', 'none', JText::_('COM_KUNENA_BULK_CHOOSE_ACTION'));
+		if ($approve) $actionDropdown[] = JHtml::_('select.option', 'approve_posts', JText::_('COM_KUNENA_APPROVE_SELECTED'));
+		if ($delete) $actionDropdown[] = JHtml::_('select.option', 'delete_posts', JText::_('COM_KUNENA_DELETE_SELECTED'));
+		if ($permdelete) $actionDropdown[] = JHtml::_('select.option', 'permdel_posts', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+		if ($undelete) $actionDropdown[] = JHtml::_('select.option', 'restore_posts', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 
 		if (count($actionDropdown) == 1) return null;
 		return $actionDropdown;

@@ -26,7 +26,7 @@ class KunenaAdminControllerAttachments extends KunenaController {
 	function delete() {
 		$db = JFactory::getDBO ();
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}

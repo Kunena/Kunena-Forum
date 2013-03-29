@@ -101,10 +101,10 @@ class plgKunenaFinder extends JPlugin
 		$table_content = ob_get_contents();
 		ob_end_clean();
 		JLog::add('onKunenaBeforeDelete table: '.$table_content, JLog::INFO);
-
+	
 		$dispatcher	= JDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
-
+	
 		// Trigger the onFinderAfterDelete event.
 		$results = $dispatcher->trigger('onFinderBeforeDelete', array($context, $table));
 	}

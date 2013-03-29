@@ -9,14 +9,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.model' );
-
 /**
  * Model for Kunena
  *
  * @since		2.0
  */
-class KunenaModel extends JModel {
+class KunenaModel extends JModelLegacy {
 	public $app = null;
 	public $me = null;
 	public $config = null;
@@ -73,14 +71,7 @@ class KunenaModel extends JModel {
 		if ($params instanceof JRegistry) {
 			$this->params = $params;
 		} else {
-			if (version_compare(JVERSION, '1.6', '>')) {
-				// Joomla 1.6+
-				$this->params = new JRegistry($params);
-			} else {
-				// Joomla 1.5
-				$this->params = new JParameter('');
-				$this->params->bind($params);
-			}
+			$this->params = new JRegistry($params);
 		}
 	}
 

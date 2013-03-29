@@ -4,106 +4,112 @@
  * @package Kunena.Administrator
  * @subpackage Models
  *
- * @copyright (C) 2008 - 2012 Kunena Team. All rights reserved.
+ * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.model' );
-jimport( 'joomla.html.pagination' );
+jimport ( 'joomla.application.component.modellist' );
 
 /**
  * Smileys Model for Kunena
  *
- * @since 2.0
+ * @since 3.0
  */
-class KunenaAdminModelSmilies extends KunenaModel {
-	protected $__state_set = false;
+class KunenaAdminModelSmilies extends JModelList {
+
+	public function __construct($config = array()) {
+		if (empty($config['filter_fields'])) {
+			$config['filter_fields'] = array(
+				'id',
+				'code',
+				'location',
+				'greylocation',
+				'emoticonbar',
+			);
+		}
+
+		parent::__construct($config);
+	}
 
 	/**
 	 * Method to auto-populate the model state.
 	 *
 	 * @return	void
-	 * @since	1.6
 	 */
-	protected function populateState() {
-		// List state information
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.limit", 'limit', $this->app->getCfg ( 'list_limit' ), 'int' );
-		$this->setState ( 'list.limit', $value );
+	protected function populateState($ordering = null, $direction = null) {
+		$app = JFactory::getApplication();
 
-		$value = $this->getUserStateFromRequest ( 'com_kunena.admin.smilies.list.ordering', 'filter_order', 'ordering', 'cmd' );
-		$this->setState ( 'list.ordering', $value );
-
-		$value = $this->getUserStateFromRequest ( "com_kunena.admin.smilies.list.start", 'limitstart', 0, 'int' );
-		$this->setState ( 'list.start', $value );
-
-		$id = $this->getInt ( 'id', 0 );
-		$this->setState ( 'item.id', $id );
-	}
-
-	public function getSmileys() {
-		$db = JFactory::getDBO ();
-
-		$db->setQuery ( "SELECT COUNT(*) FROM #__kunena_smileys" );
-		$total = $db->loadResult ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		$this->setState ( 'list.total',$total );
-
-		$db->setQuery ( "SELECT * FROM #__kunena_smileys", $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		$smileys = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		return $smileys;
-	}
-
-	public function getSmiley() {
-		$db = JFactory::getDBO ();
-
-		if ($this->getState ( 'item.id' )) {
-			$db->setQuery ( "SELECT * FROM #__kunena_smileys WHERE id = '{$this->getState('item.id')}'" );
-			$selected = $db->loadObject ();
-			if (KunenaError::checkDatabaseError ())
-				return;
-
-			return $selected;
-		}
-		return null;
-	}
-
-	public function getSmileyspaths() {
-		$template = KunenaFactory::getTemplate();
-
-		if ( $this->getState('item.id') ) {
-			$selected = $this->getSmiley();
+		// Adjust the context to support modal layouts.
+		$layout = $app->input->get('layout');
+		if ($layout) {
+			$this->context .= '.'.$layout;
 		}
 
-		$smileypath = $template->getSmileyPath();
-		$files1 = (array) JFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
-		$files1 = (array) array_flip($files1);
-		foreach ($files1 as $key=>&$path) $path = $smileypath.$key;
+		$value = $this->getUserStateFromRequest ( $this->context .'.filter.code', 'filter_code', '', 'string' );
+		$this->setState ( 'filter.code', $value !== '' ? $value : null );
 
-		$smileypath = 'media/kunena/emoticons/';
-		$files2 = (array) JFolder::Files(JPATH_SITE.'/'.$smileypath,false,false,false,array('index.php','index.html'));
-		$files2 = (array) array_flip($files2);
-		foreach ($files2 as $key=>&$path) $path = $smileypath.$key;
+		$value = $this->getUserStateFromRequest ( $this->context .'.filter.location', 'filter_location', '', 'string' );
+		$this->setState ( 'filter.location', $value !== '' ? $value : null );
 
-		$smiley_images = $files1 + $files2;
-		ksort($smiley_images);
-
-		$smiley_list = array();
-		$i = 0;
-		foreach ( $smiley_images as $file => $path ) {
-			$smiley_list[] = JHTML::_ ( 'select.option', $path, $file );
-		}
-		$list = JHTML::_('select.genericlist', $smiley_list, 'smiley_url', 'class="inputbox" onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);"', 'value', 'text', !empty($selected) ? $selected->location : '' );
-
-		return $list;
+		// List state information.
+		parent::populateState('id', 'asc');
 	}
 
-	public function getAdminNavigation() {
-		$navigation = new JPagination ($this->getState ( 'list.total'), $this->getState ( 'list.start'), $this->getState ( 'list.limit') );
-		return $navigation;
+	protected function getStoreId($id = '') {
+		// Compile the store id.
+		$id	.= ':'.$this->getState('filter.code');
+		$id	.= ':'.$this->getState('filter.url');
+
+		return parent::getStoreId($id);
+	}
+
+	protected function getListQuery() {
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select(
+			$this->getState(
+				'list.select',
+				'a.id, a.code, a.location, a.greylocation, a.emoticonbar'
+			)
+		);
+
+		$query->from('#__kunena_smileys AS a');
+
+		$filter = $this->getState ('filter.code');
+		if (!empty($filter)) {
+			$code = $db->Quote('%'.$db->escape($filter, true).'%');
+			$query->where('(a.code LIKE '.$code.')');
+		}
+
+		$filter = $this->getState ('filter.location');
+		if (!empty($filter)) {
+			$location = $db->Quote('%'.$db->escape($filter, true).'%');
+			$query->where('(a.location LIKE '.$location.')');
+		}
+
+		// Add the list ordering clause.
+		$direction	= strtoupper($this->state->get('list.direction'));
+		switch ($this->state->get('list.ordering')) {
+			case 'code':
+				$query->order('a.code ' . $direction);
+				break;
+			case 'location':
+				$query->order('a.location ' . $direction);
+				break;
+			case 'greylocation':
+				$query->order('a.greylocation ' . $direction);
+				break;
+			case 'emoticonbar':
+				$query->order('a.emoticonbar ' . $direction);
+				break;
+			default:
+				$query->order('a.id ' . $direction);
+		}
+
+		//echo nl2br(str_replace('#__','jos_',$query));
+		return $query;
 	}
 }

@@ -9,10 +9,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-// Initialize Kunena (if Kunena System Plugin isn't enabled).
-$api = JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
-if (file_exists($api)) require_once $api;
-
 jimport('joomla.error.profiler');
 
 /**
@@ -36,7 +32,7 @@ function KunenaBuildRoute(&$query) {
 	$segments = array ();
 
 	// If Kunena Forum isn't installed or SEF is not enabled, do nothing
-	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('2.0') || !KunenaForum::installed() || !KunenaRoute::$config->sef) {
+	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.0') || !KunenaForum::installed() || !KunenaRoute::$config->sef) {
 		return $segments;
 	}
 
@@ -162,7 +158,7 @@ function KunenaBuildRoute(&$query) {
 
 function KunenaParseRoute($segments) {
 	// If Kunena Forum isn't installed do nothing
-	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('2.0') || !KunenaForum::installed()) {
+	if (!class_exists('KunenaForum') || !KunenaForum::isCompatible('3.0') || !KunenaForum::installed()) {
 		return array();
 	}
 
@@ -176,9 +172,6 @@ function KunenaParseRoute($segments) {
 	if (empty($vars['view']) || $vars['view']=='home' || $vars['view']=='entrypage') {
 		$vars['view'] = '';
 	}
-
-	// Fix bug in Joomla 1.5 when using /components/kunena instead /component/kunena
-	if (!$active && $segments[0] == 'kunena') array_shift ( $segments );
 
 	// Use category SEF feature?
 	$sefcats = isset(KunenaRoute::$sefviews[$vars['view']]) && empty($vars ['id']);

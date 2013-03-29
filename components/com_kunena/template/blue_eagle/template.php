@@ -43,8 +43,6 @@ var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND', true).'";
 	}
 
 	public function getButton($link, $name, $scope, $type, $id = null) {
-		if ($link instanceof JUri && version_compare(JVERSION, '2.5', '<')) $link = $link->toString();
-
 		$types = array('communication'=>'comm', 'user'=>'user', 'moderation'=>'mod', 'permanent'=>'mod');
 		$names = array('unsubscribe'=>'subscribe', 'unfavorite'=>'favorite', 'unsticky'=>'sticky', 'unlock'=>'lock', 'create'=>'newtopic',
 				'quickreply'=>'reply', 'quote'=>'quote', 'edit'=>'edit', 'permdelete'=>'delete',

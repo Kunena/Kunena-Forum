@@ -322,7 +322,7 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 			$action = 'post'.$message->id;
 		}
 
-		$uri = JURI::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}");
+		$uri = JUri::getInstance("index.php?option=com_kunena&view=topic&catid={$category->id}&id={$this->id}&action={$action}");
 		if ($uri->getVar('action') !== null) {
 			$uri->delVar('action');
 			$mesid = 0;
@@ -1101,6 +1101,12 @@ class KunenaForumTopic extends KunenaDatabaseObject {
 		}
 		if ($config->polltimebtvotes && $poll->getMyTime($user) + $config->polltimebtvotes > JFactory::getDate()->toUnix()) {
 			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_TOO_EARLY' );
+		}
+		if ($this->locked ) {
+			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_TOPIC_LOCKED' );
+		}
+		if ($poll->polltimetolive!='0000-00-00 00:00:00' && $poll->getTimeToLive() < JFactory::getDate()->toUnix() ) {
+			return JText::_ ( 'COM_KUNENA_LIB_TOPIC_AUTHORISE_FAILED_VOTE_POLL_EXPIRED' );
 		}
 	}
 	protected function authoriseNoVotes($user) {

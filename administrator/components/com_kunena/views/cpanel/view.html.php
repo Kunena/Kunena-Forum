@@ -15,12 +15,10 @@ defined ( '_JEXEC' ) or die ();
  */
 class KunenaAdminViewCpanel extends KunenaView {
 	function displayDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_DASHBOARD'), 'cp' );
 
-		if (version_compare(JVERSION, '1.6', '>')) {
-			if (JFactory::getUser()->authorise('core.admin', 'com_kunena')) {
-				JToolBarHelper::preferences('com_kunena');
-			}
+		if (JFactory::getUser()->authorise('core.admin', 'com_kunena')) {
+			JToolBarHelper::preferences('com_kunena');
 		}
 		$this->display ();
 	}

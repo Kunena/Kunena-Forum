@@ -23,7 +23,7 @@ document.addEvent('domready', function() {
 <div class="kmodule search-default">
 	<form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=search') ?>" name="adminForm" id="adminForm" method="post">
 		<input type="hidden" name="task" value="results" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 		<div class="kbox-wrapper kbox-full">
 			<div class="search_adv-kbox kbox kbox-full kbox-color kbox-border kbox-border_radius kbox-border_radius-vchild kbox-shadow kbox-animate">
 				<div class="headerbox-wrapper kbox-full">

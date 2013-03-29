@@ -26,7 +26,7 @@ class KunenaAdminViewConfig extends KunenaView {
 	}
 
 	protected function setToolBarDefault() {
-		JToolBarHelper::title ( JText::_('COM_KUNENA'), 'kunena.png' );
+		JToolBarHelper::title ( JText::_('COM_KUNENA').': '.JText::_('COM_KUNENA_CONFIGURATION'), 'config' );
 		JToolBarHelper::spacer();
 		JToolBarHelper::apply();
 		JToolBarHelper::spacer();
@@ -34,7 +34,5 @@ class KunenaAdminViewConfig extends KunenaView {
 		JToolBarHelper::spacer();
 		$bar = JToolBar::getInstance('toolbar');
 		$bar->appendButton('Popup', 'restore', 'COM_KUNENA_RESET_CONFIG', 'index.php?option=com_kunena&amp;view=config&amp;layout=modal&amp;tmpl=component', 450, 200);
-		JToolBarHelper::spacer();
-		JToolBarHelper::back();
 	}
 }

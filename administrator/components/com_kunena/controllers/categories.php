@@ -79,7 +79,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function add() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
@@ -92,7 +92,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function edit() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
@@ -143,7 +143,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	protected function _save() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
@@ -230,7 +230,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function remove() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
@@ -269,7 +269,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function cancel() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
@@ -290,7 +290,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	function saveorder() {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$this->redirectBack();
 		}
@@ -328,6 +328,36 @@ class KunenaAdminControllerCategories extends KunenaController {
 		$this->redirectBack();
 	}
 
+	/**
+	 * Method to save the submitted ordering values for records via AJAX.
+	 *
+	 * @return  void
+	 *
+	 * @since   3.0
+	 */
+	public function saveOrderAjax()
+	{
+		if (!JSession::checkToken('post')) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->redirectBack();
+		}
+
+		// Get the arrays from the Request
+		$pks   = $this->input->post->get('cid', null, 'array');
+		$order = $this->input->post->get('order', null, 'array');
+
+		// Get the model
+		$model = $this->getModel('categories');
+		// Save the ordering
+		$return = $model->saveorder($pks, $order);
+		if ($return) {
+			echo "1";
+		}
+
+		// Close the application
+		JFactory::getApplication()->close();
+	}
+
 	function orderup() {
 		$cid = JRequest::getVar ( 'cid', array (), 'post', 'array' );
 		$this->orderUpDown ( array_shift($cid), -1 );
@@ -345,7 +375,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 
 		if (!$id) return;
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return;
 		}
@@ -373,7 +403,7 @@ class KunenaAdminControllerCategories extends KunenaController {
 	protected function setVariable($cid, $variable, $value) {
 		KunenaFactory::loadLanguage('com_kunena', 'admin');
 
-		if (! JRequest::checkToken ()) {
+		if (! JSession::checkToken('post')) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return;
 		}

@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.formvalidation');
-JHTML::_('behavior.tooltip');
-JHTML::_('behavior.keepalive');
+JHtml::_('behavior.formvalidation');
+JHtml::_('behavior.tooltip');
+JHtml::_('behavior.keepalive');
 
 $this->document->addScriptDeclaration('config_attachment_limit = '.(int) $this->config->attachment_limit );
 
@@ -37,7 +37,7 @@ $this->k=0;
 	<?php if (!isset($this->selectcatlist)) : ?>
 	<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>" />
 	<?php endif; ?>
-	<?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHtml::_( 'form.token' ); ?>
 
 <div class="kblock">
 	<div class="kheader">

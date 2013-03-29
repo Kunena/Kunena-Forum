@@ -28,31 +28,9 @@ class plgSystemKunena extends JPlugin {
 		require_once $api;
 
 		// Do not load if Kunena version is not supported or Kunena is not installed
-		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('2.0') && KunenaForum::installed())) return false;
+		if (!(class_exists('KunenaForum') && KunenaForum::isCompatible('3.0') && KunenaForum::installed())) return;
 
 		$this->loadLanguage('plg_system_kunena.sys', JPATH_ADMINISTRATOR) || $this->loadLanguage('plg_system_kunena.sys', KPATH_ADMIN);
-
-		if (version_compare(JVERSION, '1.6','<')) {
-			// Joomla 1.5: Fix bugs and bad performance
-			$lang = JFactory::getLanguage();
-			if (JFactory::getApplication()->isAdmin()) {
-				// Load the missing language files in administration
-				$lang->load('com_kunena.menu', JPATH_ADMINISTRATOR) || $lang->load('com_kunena.menu', KPATH_ADMIN);
-				$lang->load('com_kunena.sys', JPATH_ADMINISTRATOR) || $lang->load('com_kunena.sys', KPATH_ADMIN);
-				if (JRequest::getCmd('option')=='com_plugins' && JRequest::getCmd('view')=='plugin' && JRequest::getCmd('task')=='edit') {
-					// Support for J!1.7 .sys language files
-					$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
-					$row = JTable::getInstance('plugin');
-					$row->load( (int) $cid[0] );
-					$lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', JPATH_ADMINISTRATOR )
-						|| $lang->load( 'plg_' . trim( $row->folder ) . '_' . trim( $row->element ) . '.sys', KPATH_ADMIN );
-				}
-			} else {
-				// Never load language file
-				$filename = JLanguage::getLanguagePath( JPATH_BASE, $lang->_lang)."/{$lang->_lang}.com_kunena.ini";
-				$lang->_paths['com_kunena'][$filename] = 1;
-			}
-		}
 
 		parent::__construct ( $subject, $config );
 	}
@@ -175,26 +153,13 @@ class plgSystemKunena extends JPlugin {
 		$row = new stdClass();
 		$row->text =& $text;
 
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
-
-		} else {
-			// Joomla 1.5
-			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
-		}
+		$results = $dispatcher->trigger('onContentPrepare', array ('text', &$row, &$params, 0));
 
 		$text =& $row->text;
 
 		return $text;
 	}
 
-	// Joomla 1.5 support
-	public function onAfterStoreUser($user, $isnew, $success, $msg) {
-		if (version_compare(JVERSION, '1.6', '>')) return;
-		return $this->onUserAfterSave($user, $isnew, $success, $msg);
-	}
-	// Joomla 1.6+ support
 	public function onUserAfterSave($user, $isnew, $success, $msg) {
 		//Don't continue if the user wasn't stored succesfully
 		if (! $success) {

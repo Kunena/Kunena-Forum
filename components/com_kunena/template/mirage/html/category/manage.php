@@ -10,8 +10,8 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-JHTML::_('behavior.formvalidation');
-JHTML::_('behavior.tooltip');
+JHtml::_('behavior.formvalidation');
+JHtml::_('behavior.tooltip');
 ?>
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena&view=category&layout=manage') ?>" enctype="multipart/form-data" id="adminForm" name="adminForm" method="post" class="adminForm form-validate">
 	<input type="hidden" name="task" value="" />
@@ -19,7 +19,7 @@ JHTML::_('behavior.tooltip');
 	<input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction') ?>" />
 	<input type="hidden" name="limitstart" value="<?php echo $this->navigation->limitstart ?>" />
 	<input type="hidden" name="boxchecked" value="0" />
-	<?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHtml::_( 'form.token' ); ?>
 
 <div class="kmodule category-manage">
 	<div class="kbox-wrapper kbox-full">
@@ -31,11 +31,11 @@ JHTML::_('behavior.tooltip');
 				<thead>
 					<tr>
 						<th class="kgrid-num">#</th>
-						<th class="kgrid-name"><?php echo JHTML::_('kunenagrid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ) ?></th>
-						<th class="kgrid-id"><?php echo JHTML::_('kunenagrid.sort', JText::_('COM_KUNENA_CATID'), 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ) ?></th>
+						<th class="kgrid-name"><?php echo JHtml::_('kunenagrid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ) ?></th>
+						<th class="kgrid-id"><?php echo JHtml::_('kunenagrid.sort', JText::_('COM_KUNENA_CATID'), 'id', $this->state->get('list.direction'), $this->state->get('list.ordering') ) ?></th>
 						<th class="kgrid-order">
-							<?php echo JHTML::_('kunenagrid.sort', JText::_('COM_KUNENA_REORDER'), 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ) ?>
-							<?php echo JHTML::_('kunenagrid.order', $this->state->get('list.count.admin') ) ?>
+							<?php echo JHtml::_('kunenagrid.sort', JText::_('COM_KUNENA_REORDER'), 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ) ?>
+							<?php echo JHtml::_('kunenagrid.order', $this->state->get('list.count.admin') ) ?>
 						</th>
 						<th class="kgrid-lock"><?php echo JText::_('COM_KUNENA_LOCKED') ?></th>
 						<th class="kgrid-review"><?php echo JText::_('COM_KUNENA_REVIEW') ?></th>
@@ -72,11 +72,11 @@ JHTML::_('behavior.tooltip');
 					<?php else : // authorise ?>
 
 					<td class="kgrid-order">
-						<span><?php echo JHTML::_('kunenagrid.orderUp', $i, 'orderup', $category->up ) ?></span>
-						<span><?php echo JHTML::_('kunenagrid.orderDown', $i, 'orderdown', $category->down ) ?></span>
+						<span><?php echo JHtml::_('kunenagrid.orderUp', $i, 'orderup', $category->up ) ?></span>
+						<span><?php echo JHtml::_('kunenagrid.orderDown', $i, 'orderdown', $category->down ) ?></span>
 						<input type="text" name="order[<?php echo $category->id ?>]" size="4" value="<?php echo $category->ordering ?>" class="hasTip" title="Order :: Category Order" />
 					</td>
-					<td class="kgrid-lock"><?php echo JHTML::_('kunenagrid.boolean', $i, $category->locked, 'lock', 'unlock') ?></td>
+					<td class="kgrid-lock"><?php echo JHtml::_('kunenagrid.boolean', $i, $category->locked, 'lock', 'unlock') ?></td>
 
 					<?php if ($category->isSection()): ?>
 
@@ -84,15 +84,15 @@ JHTML::_('behavior.tooltip');
 
 					<?php else : // !isSection ?>
 
-					<td class="kgrid-review"><?php echo JHTML::_('kunenagrid.boolean', $i, $category->review, 'review', 'unreview') ?></td>
-					<td class="kgrid-anonymous"><?php echo JHTML::_('kunenagrid.boolean', $i, $category->allow_anonymous, 'allow_anonymous', 'deny_anonymous') ?></td>
-					<td class="kgrid-polls"><?php echo JHTML::_('kunenagrid.boolean', $i, $category->allow_polls, 'allow_polls', 'deny_polls') ?></td>
+					<td class="kgrid-review"><?php echo JHtml::_('kunenagrid.boolean', $i, $category->review, 'review', 'unreview') ?></td>
+					<td class="kgrid-anonymous"><?php echo JHtml::_('kunenagrid.boolean', $i, $category->allow_anonymous, 'allow_anonymous', 'deny_anonymous') ?></td>
+					<td class="kgrid-polls"><?php echo JHtml::_('kunenagrid.boolean', $i, $category->allow_polls, 'allow_polls', 'deny_polls') ?></td>
 
 					<?php endif // isSection ?>
 
-					<td class="kgrid-publish"><?php echo JHTML::_('kunenagrid.published', $i, $category) ?></td>
+					<td class="kgrid-publish"><?php echo JHtml::_('kunenagrid.published', $i, $category) ?></td>
 					<td class="kgrid-access"><?php echo $this->escape ( $category->accessname ) ?></td>
-					<td class="kgrid-checkbox"><?php echo JHTML::_('kunenagrid.checkedOut', $category, $i, 'id') ?></td>
+					<td class="kgrid-checkbox"><?php echo JHtml::_('kunenagrid.checkedOut', $category, $i, 'id') ?></td>
 
 					<?php endif // authorise ?>
 

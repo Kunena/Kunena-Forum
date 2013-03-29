@@ -77,13 +77,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'default');
@@ -209,12 +203,12 @@ class KunenaViewTopic extends KunenaView {
 		$options = array();
 		$selected = $this->topic->category_id;
 		if ( $this->config->pickup_category ) {
-			$options[] = JHTML::_ ( 'select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text' );
+			$options[] = JHtml::_ ( 'select.option', '', JText::_('COM_KUNENA_SELECT_CATEGORY'), 'value', 'text' );
 			$selected = 0;
 		}
 		if ($saved) $selected = $saved['catid'];
 
-		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', $this->catid, $options, $cat_params, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
+		$this->selectcatlist = JHtml::_('kunenaforum.categorylist', 'catid', $this->catid, $options, $cat_params, 'class="inputbox required"', 'value', 'text', $selected, 'postcatid');
 
 		$this->_prepareDocument('create');
 
@@ -261,13 +255,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -314,13 +302,7 @@ class KunenaViewTopic extends KunenaView {
 		}
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'reply');
@@ -432,11 +414,11 @@ class KunenaViewTopic extends KunenaView {
 
 		$options =array ();
 		if (!$this->mesid) {
-			$options [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_MOVE_TOPIC' ) );
+			$options [] = JHtml::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_MOVE_TOPIC' ) );
 		} else {
-			$options [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_CREATE_TOPIC' ) );
+			$options [] = JHtml::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_CREATE_TOPIC' ) );
 		}
-		$options [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
+		$options [] = JHtml::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
 
 		$db = JFactory::getDBO();
 		$params = array(
@@ -444,17 +426,17 @@ class KunenaViewTopic extends KunenaView {
 			'where'=>" AND tt.id != {$db->Quote($this->topic->id)} ");
 		list ($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->catid, 0, 30, $params);
 		foreach ( $topics as $cur ) {
-			$options [] = JHTML::_ ( 'select.option', $cur->id, $this->escape ( $cur->subject ) );
+			$options [] = JHtml::_ ( 'select.option', $cur->id, $this->escape ( $cur->subject ) );
 		}
-		$this->topiclist = JHTML::_ ( 'select.genericlist', $options, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_topics' );
+		$this->topiclist = JHtml::_ ( 'select.genericlist', $options, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_topics' );
 
 		$options = array ();
 		$cat_params = array ('sections'=>0, 'catid'=>0);
-		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories');
+		$this->categorylist = JHtml::_('kunenaforum.categorylist', 'targetcategory', 0, $options, $cat_params, 'class="inputbox kmove_selectbox"', 'value', 'text', $this->catid, 'kmod_categories');
 		if (isset($this->message)) {
 			$this->user = KunenaFactory::getUser($this->message->userid);
 			$username = $this->message->getAuthor()->getName();
-			$this->userLink = $this->message->userid ? JHTML::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&layout=moderate&userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
+			$this->userLink = $this->message->userid ? JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&layout=moderate&userid='.$this->message->userid, $username.' ('.$this->message->userid.')' ,$username.' ('.$this->message->userid.')' ) : null;
 		}
 
 		if ($this->mesid) {
@@ -510,13 +492,7 @@ class KunenaViewTopic extends KunenaView {
 		$key = $this->profile->userid.'.'.$this->profile->username;
 		if (! isset ( $profiles [$key] )) {
 			// Run events
-			if (version_compare(JVERSION, '1.6', '>')) {
-				// Joomla 1.6+
-				$params = new JRegistry();
-			} else {
-				// Joomla 1.5
-				$params = new JParameter( '' );
-			}
+			$params = new JRegistry();
 			// Modify profile values by integration
 			$params->set('ksource', 'kunena');
 			$params->set('kunena_view', 'topic');
@@ -531,8 +507,8 @@ class KunenaViewTopic extends KunenaView {
 			if ($this->config->showkarma && $this->profile->userid) {
 				$this->userkarma_title = JText::_ ( 'COM_KUNENA_KARMA' ) . ": " . $this->profile->karma;
 				if ($this->me->userid && $this->me->userid != $this->profile->userid) {
-					$this->userkarma_minus = ' ' . CKunenaLink::GetKarmaLink ( 'decrease', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_ ( 'COM_KUNENA_KARMA_SMITE' ) . '"> </span>' );
-					$this->userkarma_plus = ' ' . CKunenaLink::GetKarmaLink ( 'increase', $this->topic->category_id, $this->message->id, $this->profile->userid, '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_ ( 'COM_KUNENA_KARMA_APPLAUD' ) . '"> </span>' );
+					$this->userkarma_minus = ' ' .JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmadown&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-minus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
+					$this->userkarma_plus = ' ' .JHtml::_('kunenaforum.link', 'index.php?option=com_kunena&view=user&task=karmaup&userid='.$this->profile->userid.'&'.JSession::getFormToken().'=1', '<span class="kkarma-plus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
 				}
 			}
 
@@ -550,11 +526,6 @@ class KunenaViewTopic extends KunenaView {
 				$this->userkarma = "{$this->userkarma_title} {$this->userkarma_minus} {$this->userkarma_plus}";
 				// Use kunena profile
 				if ($this->config->showuserstats) {
-					if ($this->config->userlist_usertype) {
-						$this->usertype = $this->profile->getType ( $this->topic->category_id );
-					} else {
-						$this->usertype = null;
-					}
 					$this->userrankimage = $this->profile->getRank ( $this->topic->category_id, 'image' );
 					$this->userranktitle = $this->profile->getRank ( $this->topic->category_id, 'title' );
 					$this->userposts = $this->profile->posts;
@@ -563,7 +534,6 @@ class KunenaViewTopic extends KunenaView {
 					$this->userpoints = $activityIntegration->getUserPoints ( $this->profile->userid );
 					$this->usermedals = $activityIntegration->getUserMedals ( $this->profile->userid );
 				} else {
-					$this->usertype = null;
 					$this->userrankimage = null;
 					$this->userranktitle = null;
 					$this->userposts = null;
@@ -597,7 +567,7 @@ class KunenaViewTopic extends KunenaView {
 		$catid = $this->state->get('item.catid');
 		$id = $this->state->get('item.id');
 
-		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . JUtility::getToken() . '=1';
+		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&" . JSession::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}";
 
 		$this->topicButtons = new JObject();
@@ -639,7 +609,7 @@ class KunenaViewTopic extends KunenaView {
 
 		if ($this->config->enable_threaded_layouts) {
 
-			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . JUtility::getToken() . '=1';
+			$url = "index.php?option=com_kunena&view=user&task=change&topic_layout=%s&" . JSession::getFormToken() . '=1';
 			if ($this->layout != 'default') {
 				$this->topicButtons->set('flat', $this->getButton ( sprintf($url, 'flat'), 'flat', 'layout', 'user'));
 			}
@@ -650,6 +620,11 @@ class KunenaViewTopic extends KunenaView {
 				$this->topicButtons->set('indented', $this->getButton ( sprintf($url, 'indented'), 'indented', 'layout', 'user'));
 			}
 		}
+
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher = JDispatcher::getInstance();
+		$dispatcher->trigger('onKunenaGetButtons', array('topic.action', $this->topicButtons, $this));
+
 		return $this->loadTemplateFile('actions');
 	}
 
@@ -662,7 +637,7 @@ class KunenaViewTopic extends KunenaView {
 		$id = $this->topic->id;
 		$mesid = $this->message->id;
 
-		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&" . JUtility::getToken() . '=1';
+		$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$catid}&id={$id}&mesid={$mesid}&" . JSession::getFormToken() . '=1';
 		$layout = "index.php?option=com_kunena&view=topic&layout=%s&catid={$catid}&id={$id}&mesid={$mesid}";
 
 		$this->messageButtons = new JObject();
@@ -702,6 +677,10 @@ class KunenaViewTopic extends KunenaView {
 			$this->message->authorise('delete') ? $this->messageButtons->set('delete', $this->getButton ( sprintf($task, 'delete'), 'delete', 'message', 'moderation')) : null;
 		}
 
+		JPluginHelper::importPlugin('kunena');
+		$dispatcher = JDispatcher::getInstance();
+		$dispatcher->trigger('onKunenaGetButtons', array('message.action', $this->messageButtons, $this));
+
 		return $this->loadTemplateFile("message_actions");
 	}
 
@@ -721,20 +700,27 @@ class KunenaViewTopic extends KunenaView {
 
 		// Thank you info and buttons
 		$this->thankyou = array();
+		$this->total_thankyou = 0;
+		$this->more_thankyou= 0;
+		$thankyous = array();
 
 		if ( isset($message->thankyou) ) {
 			if ($this->config->showthankyou && $this->profile->userid) {
-				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JUtility::getToken() . '=1';
+				$task = "index.php?option=com_kunena&view=topic&task=%s&catid={$this->category->id}&id={$this->topic->id}&mesid={$this->message->id}&" . JSession::getFormToken() . '=1';
 
 				// for normal users, show only limited number of thankyou (config->thankyou_max)
-				if ( !$this->me->isAdmin() || !$this->me->isModerator() ) {
-					$message->thankyou = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
+				if ( !$this->me->isAdmin() && !$this->me->isModerator() ) {
+					if (count($message->thankyou) > $this->config->thankyou_max) $this->more_thankyou = count($message->thankyou) - $this->config->thankyou_max;
+					$this->total_thankyou =count($message->thankyou);
+					$thankyous = array_slice($message->thankyou, 0, $this->config->thankyou_max, true);
+				} else {
+					$thankyous = $message->thankyou;
 				}
 
 				if( $this->message->authorise('unthankyou') ) $canUnthankyou = true;
 				else $canUnthankyou=false;
 
-				foreach( $message->thankyou as $userid=>$time){
+				foreach( $thankyous as $userid=>$time){
 					$thankyou_delete = $canUnthankyou === true ?  ' <a title="'.JText::_('COM_KUNENA_BUTTON_THANKYOU_REMOVE_LONG').'" href="'
 					. KunenaRoute::_(sprintf($task, "unthankyou&userid={$userid}")).'"><img src="'.$this->ktemplate->getImagePath('icons/publish_x.png').'" title="" alt="" /></a>' : '';
 					$this->thankyou[] = KunenaFactory::getUser(intval($userid))->getLink().$thankyou_delete;
@@ -858,13 +844,7 @@ class KunenaViewTopic extends KunenaView {
 		KunenaUserHelper::loadUsers($userlist);
 
 		// Run events
-		if (version_compare(JVERSION, '1.6', '>')) {
-			// Joomla 1.6+
-			$params = new JRegistry();
-		} else {
-			// Joomla 1.5
-			$params = new JParameter( '' );
-		}
+		$params = new JRegistry();
 		$params->set('ksource', 'kunena');
 		$params->set('kunena_view', 'topic');
 		$params->set('kunena_layout', 'history');
@@ -878,7 +858,7 @@ class KunenaViewTopic extends KunenaView {
 	}
 
 	function redirectBack() {
-		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
+		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JUri::base ( true ), 'server' );
 		while (@ob_end_clean());
 		$this->app->redirect ( $httpReferer );
 	}

@@ -95,7 +95,7 @@ abstract class JHtmlKunenaGrid
 			return '';
 		}
 		else {
-			return '<input type="checkbox" id="cb'.$rowNum.'" name="'.$name.'[]" value="'.$recId.'" onclick="isChecked(this.checked);" title="'.JText::sprintf('COM_KUNENA_LIB_CHECKBOX_ROW_N', ($rowNum + 1)).'" />';
+			return '<input type="checkbox" id="cb'.$rowNum.'" name="'.$name.'[]" value="'.$recId.'" onclick="Joomla.isChecked(this.checked);" title="'.JText::sprintf('COM_KUNENA_LIB_CHECKBOX_ROW_N', ($rowNum + 1)).'" />';
 		}
 	}
 
@@ -248,7 +248,8 @@ abstract class JHtmlKunenaGrid
 
 		if (!$loaded)
 		{
-			JHTML::_('behavior.tooltip');
+			JHtml::_('behavior.tooltip');
+			// FIXME: is this needed in J!2.5?
 			KunenaTemplate::getInstance()->addScript ( 'js/grid.js' );
 
 			// Build the behavior script.

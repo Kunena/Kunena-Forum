@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once (dirname ( __FILE__ ) . '/kunena.php');
+require_once (__DIR__ . '/kunena.php');
 /**
  * Kunena Announcements
  * Provides access to the #__kunena_announcements table
@@ -39,7 +39,7 @@ class TableKunenaAnnouncements extends KunenaTable {
 		} else {
 			$this->created_by = KunenaUserHelper::getMyself()->userid;
 		}
-		if (!$this->created) $this->created = JFactory::getDate()->toMySQL();
+		if (!$this->created) $this->created = JFactory::getDate()->toSql();
 		$this->title = trim($this->title);
 		if (!$this->title) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_ANNOUNCEMENTS_ERROR_NO_TITLE' ) );

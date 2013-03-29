@@ -9,14 +9,12 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport('joomla.application.component.view');
-
 /**
  * The HTML Kunena configuration view.
  *
  * @version		1.6
  */
-class KunenaViewInstall extends JView
+class KunenaViewInstall extends JViewLegacy
 {
 	/**
 	 * Method to display the view.
@@ -28,7 +26,8 @@ class KunenaViewInstall extends JView
 	 */
 	public function display($tpl = null)
 	{
-		if ($this->getLayout() == 'schema') {
+		$layout = $this->getLayout();
+		if ($layout == 'schema') {
 			parent::display($tpl);
 			return;
 		}
@@ -37,41 +36,13 @@ class KunenaViewInstall extends JView
 
 		// Load the view data.
 		$this->model = $this->get('Model');
-		$this->state = $this->get('State');
-		$this->step = $this->get('Step');
-		$this->steps = $this->get('Steps');
-		$this->status = $this->get('Status');
 
-		$this->error = $this->get('Error');
-		$this->requirements = $this->get('Requirements');
-		$this->versions = $this->get('DetectVersions');
+		$versions = $this->model->getDetectVersions();
+		$version = reset($versions);
+		$this->model->setAction(strtolower($version->action));
+		$this->model->setStep(0);
 
-		require_once(KPATH_ADMIN.'/install/version.php');
-		$version = new KunenaVersion();
-		$this->versionWarning = $version->getVersionWarning('COM_KUNENA_INSTALL_WARNING');
-
-		// Render the layout.
-		$app = JFactory::getApplication();
-		if (!empty($this->requirements->fail) || !empty($this->error)) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_FAILED'), 'error');
-		else if ($this->step && isset($this->steps[$this->step+1])) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_DO_NOT_INTERRUPT'), 'notice');
-		else if (!isset($this->steps[$this->step+1])) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_SUCCESS'));
-		else if (!empty($this->versionWarning)) $app->enqueueMessage($this->versionWarning, 'notice');
 		JRequest::setVar('hidemainmenu', 1);
-
-		$this->go = JRequest::getCmd('go', '');
-
-		$session = JFactory::getSession();
-		$this->cnt = $session->get('kunena.reload', 1);
-
-		if ($this->step) {
-			// Output enqueued messages from previous reloads (to show Joomla warnings)
-			$queue = (array) $session->get('kunena.queue');
-			foreach ($queue as $item) {
-				if (is_array($item) && $item['type'] != 'message') {
-					$app->enqueueMessage($item['message'], $item['type']);
-				}
-			}
-		}
 
 		parent::display($tpl);
 	}
@@ -88,27 +59,6 @@ class KunenaViewInstall extends JView
 		// Set the titlebar text
 		JToolBarHelper::title('<span>Kunena '.KunenaForum::version().'</span> '. JText::_( 'COM_KUNENA_INSTALLER' ), 'kunena.png' );
 
-	}
-
-	function showSteps() {
-		foreach ($this->steps as $key=>$value) {
-			if (empty($value['step'])) continue;
-			echo '<div class="step'.($key <= $this->step ? "-on" : "-off").'">'.$key.'. '.$value['menu'].'</div>';
-		}
-	}
-
-	function getAction() {
-		if (!$this->step) return JText::_('COM_KUNENA_BUTTON_INSTALL');
-		return JText::_($this->error ? 'COM_KUNENA_BUTTON_RETRY' : ($this->step == count($this->steps)-1 ? 'COM_KUNENA_BUTTON_FINISH' : 'COM_KUNENA_BUTTON_NEXT'));
-	}
-
-	function getActionURL() {
-		if ($this->error) return "location.replace('index.php?option=com_kunena&view=install&task=restart&".JUtility::getToken()."=1');";
-		return "location.replace('index.php?option=com_kunena&view=install&task=run&n={$this->cnt}&".JUtility::getToken()."=1');";
-	}
-
-	function getActionText($version, $type='', $action=null) {
-		return $this->model->getActionText($version, $type, $action);
 	}
 
 	function displaySchema() {

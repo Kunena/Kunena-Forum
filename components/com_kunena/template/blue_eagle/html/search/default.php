@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 if ($this->me->exists()) {
 	$this->document->addScriptDeclaration( "// <![CDATA[
-document.addEvent('domready', function() {
+window.addEvent('domready', function() {
 	// Attach auto completer to the following ids:
 	new Autocompleter.Request.JSON('kusername', " . json_encode(KunenaRoute::_('index.php?option=com_kunena&view=user&layout=list&format=raw')) . ", { 'postVar': 'search' });
 });
@@ -29,7 +29,7 @@ document.addEvent('domready', function() {
 <form action="<?php echo KunenaRoute::_('index.php?option=com_kunena') ?>" method="post" name="searchform" id="searchform">
 	<input type="hidden" name="view" value="search" />
 	<input type="hidden" name="task" value="results" />
-	<?php echo JHTML::_( 'form.token' ); ?>
+	<?php echo JHtml::_( 'form.token' ); ?>
 
 	<table id="kforumsearch">
 		<tbody id="advsearch"<?php echo $this->search_style; ?>>

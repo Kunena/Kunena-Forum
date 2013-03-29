@@ -1,7 +1,7 @@
 Introduction
 ============
 
-This file contains all the languages which are currently available for Kunena Forum @kunenaversion@ for Joomla! 1.5 and 2.5.
+This file contains all the languages which are currently available for Kunena Forum @kunenaversion@ for Joomla! 2.5.
 
 We recommend that you install the most recent language package every time you have upgraded Kunena.
 
@@ -10,8 +10,8 @@ Kunena distribution package itself includes translations for installation, which
 You can find the most recent language list from here:
 http://www.kunena.org/download
 
-Installing languages in Joomla! 2.5
-===================================
+Installing languages
+====================
 
 Just install this package by using Joomla installer. If you cannot install the package because of 2MB upload limit, you can either
 install the package from URL or make the file smaller by removing a few languages you do not need.
@@ -25,17 +25,22 @@ packages by going to "Extension Manager: Manage", selecting type File and filter
 Additionally extension manager will have a package called "Kunena Language Pack". Uninstalling this package will also uninstall
 all the languages that were added during installation.
 
-Installing languages in Joomla! 1.5
-===================================
+How to make translations keys
+=====================
 
-In Joomla! 1.5 you have to extract the files from the archive and install them one by one.
+The translations keys in language files need to follow the following rule:
 
-For each language, there is a file that you need to install. Language packs are named by the language tag. For example Finnish language
-file can be found by looking for:
+<package-type>_<package-name>_<lang-type>_<object>_<atribute-in-object>_<preprefix(categorization in plural casses)-uniquename>
 
-    language/com_kunena.fi-FI.v@kunenaversion@.zip
+Which give by example :
 
-Just install the file by using the standard Joomla installation procedure.
+COM_KUNENA_SYS_FIELDSET_LABEL_BASICS
+COM_KUNENA_SYS_FIELD_LABEL_BASICSTIMETOCREATE
+COM_KUNENA_SYS_FIELD_DESC_BASICSTIMETOCREATE
+COM_KUNENA_LIB_FIELDSET_LABEL_BASICS
+
+The unique name is bunched at the end of the key and the first part of the key take his name by following the directory structure
+where the key is used.
 
 Translating languages
 =====================

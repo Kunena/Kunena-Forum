@@ -26,6 +26,19 @@ function submitbutton(pressbutton)
 	}
 }
 ");
+
+$paneOptions = array(
+		'onActive' => 'function(title, description){
+		description.setStyle("display", "block");
+		title.addClass("open").removeClass("closed");
+}',
+		'onBackground' => 'function(title, description){
+		description.setStyle("display", "none");
+		title.addClass("closed").removeClass("open");
+}',
+		'startOffset' => 0,  // 0 starts on the first tab, 1 starts the second, etc...
+		'useCookie' => true, // this must not be a string. Don't use quotes.
+);
 ?>
 <div class="kblock kmanage">
 	<div class="kheader">
@@ -38,17 +51,16 @@ function submitbutton(pressbutton)
 		<input type="hidden" name="view" value="category" />
 		<input type="hidden" name="task" value="save" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php echo JHtml::_( 'form.token' ); ?>
 
 		<div class="kbuttons">
 			<button onclick="javascript: submitbutton('save')"><?php echo JText::_( 'Save' ); ?></button>
 			<button onclick="javascript: submitbutton('cancel')"><?php echo JText::_( 'Cancel' ); ?></button>
 		</div>
-		<?php jimport('joomla.html.pane');
-		$myTabs = JPane::getInstance('tabs', array('startOffset'=>0)); ?>
-		<dl class="tabs" id="pane">
-		<dt title="<?php echo JText::_('COM_KUNENA_CATEGORY_INFO'); ?>"><?php echo JText::_('COM_KUNENA_CATEGORY_INFO'); ?></dt>
-		<dd>
+		<?php
+			echo JHtml::_('tabs.start', 'pane', $paneOptions);
+			echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_CATEGORY_INFO'), 'panel_catinfo');
+		?>
 		<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_BASICSFORUMINFO'); ?></legend>
 				<table class="kadmin-adminform">
@@ -89,10 +101,10 @@ function submitbutton(pressbutton)
 					</tr>
 				</table>
 			</fieldset>
-			</dd>
+
 			<?php if ($this->me->isAdmin()) : ?>
-			<dt title="<?php echo JText::_('COM_KUNENA_PERMISSIONS'); ?>"><?php echo JText::_('COM_KUNENA_PERMISSIONS'); ?></dt>
-			<dd>
+
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_PERMISSIONS'), 'panel_catperms'); ?>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_CATEGORY_PERMISSIONS'); ?></legend>
 					<table class="kadmin-adminform">
@@ -113,10 +125,9 @@ function submitbutton(pressbutton)
 						<?php endforeach; endforeach ?>
 					</table>
 				</fieldset>
-			</dd>
+
 			<?php endif ?>
-			<dt title="<?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?>"><?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?></dt>
-			<dd>
+			<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_ADVANCEDDESC'), 'panel_advanced'); ?>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
 					<table class="kadmin-adminform">
@@ -161,15 +172,15 @@ function submitbutton(pressbutton)
 				</fieldset>
 
 				<?php if (!$this->category->id || !$this->category->isSection()): ?>
-				</dd>
-				<dt title="<?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?>"><?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?></dt>
-				<dd>
+
+				<?php echo JHtml::_('tabs.panel', JText::_('COM_KUNENA_MODNEWDESC'), 'panel_catmods'); ?>
+
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></legend>
 
 					<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
 
-					<table class="adminlist">
+					<table class="adminlist table table-striped">
 						<thead>
 							<tr>
 								<th width="5">#</th>
@@ -206,8 +217,8 @@ function submitbutton(pressbutton)
 					</table>
 				</fieldset>
 				<?php endif; ?>
-			</dd>
-		</dl>
+
+				<?php echo JHtml::_('tabs.end'); ?>
 		</form>
 		</div>
 	</div>

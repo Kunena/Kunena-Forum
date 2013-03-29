@@ -175,7 +175,7 @@ class KunenaForumStatistics {
 			foreach ($this->topTopics as &$item) {
 				$item = clone $item;
 				$item->count = $item->posts;
-				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
+				$item->link = JHtml::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
 				$item->percent = round(100 * $item->count / $top->posts);
 			}
 		}
@@ -246,7 +246,7 @@ class KunenaForumStatistics {
 			foreach ($this->topPolls as &$item) {
 				$item = clone $item;
 				$item->count = $polls[$item->id]->count;
-				$item->link = JHTML::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
+				$item->link = JHtml::_('kunenaforum.link', $item->getUri(), KunenaHtmlParser::parseText ($item->subject));
 				$item->percent = round(100 * $item->count / $top->count);
 			}
 		}

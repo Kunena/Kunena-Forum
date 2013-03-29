@@ -137,17 +137,17 @@ class KunenaViewAnnouncement extends KunenaView {
 			case 'description':
 				return '<textarea name="description" $attributes>'.$this->escape($this->announcement->description).'</textarea>';
 			case 'created':
-				return JHTML::_('calendar', $this->escape($this->announcement->created), 'created', $id);
+				return JHtml::_('calendar', $this->escape($this->announcement->created), 'created', $id);
 			case 'showdate':
 				$options	= array();
-				$options[]	= JHTML::_('select.option',  '0', JText::_('COM_KUNENA_NO') );
-				$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_YES') );
-				return JHTML::_('select.genericlist',  $options, 'showdate', $attributes, 'value', 'text', $this->announcement->showdate, $id );
+				$options[]	= JHtml::_('select.option',  '0', JText::_('COM_KUNENA_NO') );
+				$options[]	= JHtml::_('select.option',  '1', JText::_('COM_KUNENA_YES') );
+				return JHtml::_('select.genericlist',  $options, 'showdate', $attributes, 'value', 'text', $this->announcement->showdate, $id );
 			case 'published':
 				$options	= array();
-				$options[]	= JHTML::_('select.option',  '0', JText::_('COM_KUNENA_NO') );
-				$options[]	= JHTML::_('select.option',  '1', JText::_('COM_KUNENA_YES') );
-				return JHTML::_('select.genericlist',  $options, 'published', $attributes, 'value', 'text', $this->announcement->published, $id );
+				$options[]	= JHtml::_('select.option',  '0', JText::_('COM_KUNENA_NO') );
+				$options[]	= JHtml::_('select.option',  '1', JText::_('COM_KUNENA_YES') );
+				return JHtml::_('select.genericlist',  $options, 'published', $attributes, 'value', 'text', $this->announcement->published, $id );
 		}
 	}
 

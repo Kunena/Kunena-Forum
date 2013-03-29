@@ -197,7 +197,7 @@ class KunenaForumTopicPoll extends JObject {
 			$votes->votes++;
 		}
 
-		$votes->lasttime = JFactory::getDate()->toMySQL();
+		$votes->lasttime = JFactory::getDate()->toSql();
 		$votes->lastvote = $option;
 		$votes->userid = (int)$user->userid;
 
@@ -348,6 +348,17 @@ class KunenaForumTopicPoll extends JObject {
 		}
 
 		return $success;
+	}
+
+	/**
+	 * Method to get the poll time to live
+	 *
+	 * @access	public
+	 * @return	datetime
+	 * @since 3.0
+	 */
+	public function getTimeToLive() {
+		return JFactory::getDate($this->polltimetolive)->toUnix();
 	}
 
 	/**

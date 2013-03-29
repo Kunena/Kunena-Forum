@@ -9,21 +9,23 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.model' );
 jimport ( 'joomla.filesystem.folder' );
 jimport ( 'joomla.filesystem.file' );
 jimport ( 'joomla.filesystem.path' );
 jimport ( 'joomla.filesystem.archive' );
 jimport ( 'joomla.installer.installer' );
 
-require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
+define('KUNENA_INSTALLER_PATH', __DIR__);
+define('KUNENA_INSTALLER_ADMINPATH', dirname(KUNENA_INSTALLER_PATH));
+define('KUNENA_INSTALLER_SITEPATH', JPATH_SITE.'/components/'.basename(KUNENA_INSTALLER_ADMINPATH));
+define('KUNENA_INSTALLER_MEDIAPATH', JPATH_SITE.'/media/kunena');
 
 /**
  * Install Model for Kunena
  *
  * @since		1.6
  */
-class KunenaModelInstall extends JModel {
+class KunenaModelInstall extends JModelLegacy {
 	/**
 	 * Flag to indicate model state initialization.
 	 *
@@ -47,10 +49,10 @@ class KunenaModelInstall extends JModel {
 	public function __construct() {
 		// Load installer language file only from the component
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
-		$lang->load('com_kunena.install',KPATH_ADMIN);
-		$lang->load('com_kunena.libraries',KPATH_ADMIN, 'en-GB');
-		$lang->load('com_kunena.libraries',KPATH_ADMIN);
+		$lang->load('com_kunena.install',KUNENA_INSTALLER_ADMINPATH, 'en-GB');
+		$lang->load('com_kunena.install',KUNENA_INSTALLER_ADMINPATH);
+		$lang->load('com_kunena.libraries',KUNENA_INSTALLER_ADMINPATH, 'en-GB');
+		$lang->load('com_kunena.libraries',KUNENA_INSTALLER_ADMINPATH);
 
 		parent::__construct ();
 		$this->db = JFactory::getDBO ();
@@ -60,11 +62,14 @@ class KunenaModelInstall extends JModel {
 		@set_time_limit ( 300 );
 		$this->setState ( 'max_time', @ini_get ( 'max_execution_time' ) );
 
+		// TODO: move to migration
 		$this->_versiontablearray = array (array ('prefix' => 'kunena_', 'table' => 'kunena_version' ), array ('prefix' => 'fb_', 'table' => 'fb_version' ) );
 
+		// TODO: move to migration
 		$this->_kVersions = array (
 			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
 
+		// TODO: move to migration
 		$this->_fbVersions = array (
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.4', 'date' => '2007-12-23', 'table' => 'fb_sessions', 'column' => 'currvisit' ),
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.3', 'date' => '2007-09-04', 'table' => 'fb_categories', 'column' => 'headerdesc' ),
@@ -73,6 +78,7 @@ class KunenaModelInstall extends JModel {
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_messages' ),
 			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
 
+		// TODO: move to migration
 		$this->_sbVersions = array (
 			array('component'=>'JoomlaBoard','prefix'=> 'sb_', 'version' =>'v1.0.5', 'date' => '0000-00-00', 'table' => 'sb_messages'),
 			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
@@ -80,7 +86,6 @@ class KunenaModelInstall extends JModel {
 		$this->steps = array (
 			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_INSTALL') ),
 			array ('step' => 'Prepare', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PREPARE') ),
-			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
 			array ('step' => 'Plugins', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PLUGINS') ),
 			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
 			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
@@ -101,6 +106,10 @@ class KunenaModelInstall extends JModel {
 	 * Uninstall Kunena, run from Joomla installer.
 	 */
 	public function uninstall() {
+		// Put back file that was removed during installation.
+		JFile::write(KPATH_ADMIN.'/install.php', '');
+
+		// Uninstall all plugins.
 		$this->uninstallPlugin('kunena', 'alphauserpoints');
 		$this->uninstallPlugin('kunena', 'community');
 		$this->uninstallPlugin('kunena', 'comprofiler');
@@ -109,9 +118,8 @@ class KunenaModelInstall extends JModel {
 		$this->uninstallPlugin('kunena', 'kunena');
 		$this->uninstallPlugin('kunena', 'uddeim');
 		$this->uninstallPlugin('finder', 'kunena');
-		$this->uninstallPlugin('quickicon', 'kunena');
-		$this->uninstallPlugin('system', 'kunena');
 
+		// Uninstall menu module.
 		$this->uninstallModule('mod_kunenamenu');
 
 		// Remove all Kunena related menu items, including aliases
@@ -246,8 +254,6 @@ class KunenaModelInstall extends JModel {
 			if ($success) $success = JArchive::extract ( $file, $dest );
 			if (! $success) {
 				$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file);
-
-				$text .= $this->_getJoomlaArchiveError($file);
 			}
 		} else {
 			$success = true;
@@ -259,6 +265,7 @@ class KunenaModelInstall extends JModel {
 		return $success;
 	}
 
+	// TODO: move to migration (exists in 2.0)
 	function installLanguage($tag, $name = '') {
 		$exists = false;
 		$success = true;
@@ -289,66 +296,31 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function loadPlugin($group, $element) {
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$query = $this->db->getQuery(true);
-			$query->select($query->qn('extension_id'))->from($query->qn('#__extensions'));
-			$query->where($query->qn('folder') . ' = ' . $query->q($group));
-			$query->where($query->qn('element') . ' = ' . $query->q($element));
-			$plugin = JTable::getInstance('extension');
-		} else {
-			// Joomla 1.5
-			$query = "SELECT id FROM #__plugins WHERE folder='{$group}' AND element='{$element}'";
-			$plugin = JTable::getInstance('plugin');
-		}
-		$this->db->setQuery($query);
-		$id = $this->db->loadResult();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		$plugin->load($id);
+		$plugin = JTable::getInstance('extension');
+		$plugin->load(array('type'=>'plugin', 'folder'=>$group, 'element'=>$element));
 		return $plugin;
 	}
-
 
 	function installModule($path, $name) {
 		$success = false;
 
 		$dest = JPATH_ROOT."/tmp/kinstall_mod_{$name}";
 		if (file_exists($dest)) JFolder::delete($dest);
-			if (is_dir(KPATH_ADMIN .'/'. $path)) {
+			if (is_dir(KUNENA_INSTALLER_ADMINPATH .'/'. $path)) {
 			// Copy path
-			$success = JFolder::copy(KPATH_ADMIN .'/'. $path, $dest);
-		} elseif (is_file(KPATH_ADMIN .'/'. $path)) {
+			$success = JFolder::copy(KUNENA_INSTALLER_ADMINPATH .'/'. $path, $dest);
+		} elseif (is_file(KUNENA_INSTALLER_ADMINPATH .'/'. $path)) {
 			// Extract file
-			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
-		}
-
-		// We need to have only one manifest which is named as kunena.xml
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 2.5+
-			if ($success && is_file("{$dest}/mod_{$name}.j15.xml")) {
-				$success = JFile::delete("{$dest}/mod_{$name}.j15.xml");
-			}
-			if ($success && is_file("{$dest}/mod_{$name}.j25.xml")) {
-				$success = JFile::move("{$dest}/mod_{$name}.j25.xml", "{$dest}/mod_{$name}.xml");
-			}
-		} else {
-			// Joomla 1.5
-			if ($success && is_file("{$dest}/mod_{$name}.j25.xml")) {
-				$success = JFile::delete("{$dest}/mod_{$name}.j25.xml");
-			}
-			if ($success && is_file("{$dest}/mod_{$name}.j15.xml")) {
-				$success = JFile::move("{$dest}/mod_{$name}.j15.xml", "{$dest}/mod_{$name}.xml");
-			}
+			$success = $this->extract ( KUNENA_INSTALLER_ADMINPATH, $path, $dest );
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
-		if ($success) $success = JFile::copy(KPATH_SITE."/language/index.html", "{$dest}/language/en-GB/index.html");
-		if ($success && is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.ini")) {
-			$success = JFile::copy(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
+		if ($success) $success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/index.html", "{$dest}/language/en-GB/index.html");
+		if ($success && is_file(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.ini")) {
+			$success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.ini");
 		}
-		if ($success && is_file(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.sys.ini")) {
-			$success = JFile::copy(KPATH_SITE."/language/en-GB/en-GB.mod_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.sys.ini");
+		if ($success && is_file(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.sys.ini")) {
+			$success = JFile::copy(KUNENA_INSTALLER_SITEPATH."/language/en-GB/en-GB.mod_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.mod_{$name}.sys.ini");
 		}
 
 		// Only install module if it can be used in current Joomla version (manifest exists)
@@ -368,40 +340,21 @@ class KunenaModelInstall extends JModel {
 
 		$dest = JPATH_ROOT."/tmp/kinstall_plg_{$group}_{$name}";
 		if (file_exists($dest)) JFolder::delete($dest);
-		if (is_dir(KPATH_ADMIN .'/'. $path)) {
+		if (is_dir(KUNENA_INSTALLER_PATH .'/'. $path)) {
 			// Copy path
-			$success = JFolder::copy(KPATH_ADMIN .'/'. $path, $dest);
-		} elseif (is_file(KPATH_ADMIN .'/'. $path)) {
+			$success = JFolder::copy(KUNENA_INSTALLER_PATH .'/'. $path, $dest);
+		} elseif (is_file(KUNENA_INSTALLER_PATH .'/'. $path)) {
 			// Extract file
-			$success = $this->extract ( KPATH_ADMIN, $path, $dest );
-		}
-
-		// We need to have only one manifest which is named as xxx.xml
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			if ($success && is_file("{$dest}/{$name}.j15.xml")) {
-				$success = JFile::delete("{$dest}/{$name}.j15.xml");
-			}
-			if ($success && is_file("{$dest}/{$name}.j25.xml")) {
-				$success = JFile::move("{$dest}/{$name}.j25.xml", "{$dest}/{$name}.xml");
-			}
-		} else {
-			// Joomla 1.5
-			if ($success && is_file("{$dest}/{$name}.j25.xml")) {
-				$success = JFile::delete("{$dest}/{$name}.j25.xml");
-			}
-			if ($success && is_file("{$dest}/{$name}.j15.xml")) {
-				$success = JFile::move("{$dest}/{$name}.j15.xml", "{$dest}/{$name}.xml");
-			}
+			$success = $this->extract ( KUNENA_INSTALLER_PATH, $path, $dest );
 		}
 
 		if ($success) $success = JFolder::create($dest.'/language/en-GB');
-		if ($success) $success = JFile::copy(KPATH_ADMIN."/language/index.html", "{$dest}/language/en-GB/index.html");
-		if ($success && is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
-			$success = JFile::copy(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
+		if ($success) $success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/index.html", "{$dest}/language/en-GB/index.html");
+		if ($success && is_file(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.ini")) {
+			$success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.ini");
 		}
-		if ($success && is_file(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini")) {
-			$success = JFile::copy(KPATH_ADMIN."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini");
+		if ($success && is_file(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini")) {
+			$success = JFile::copy(KUNENA_INSTALLER_ADMINPATH."/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini", "{$dest}/language/en-GB/en-GB.plg_{$group}_{$name}.sys.ini");
 		}
 
 		// Only install plugin if it can be used in current Joomla version (manifest exists)
@@ -415,13 +368,7 @@ class KunenaModelInstall extends JModel {
 					$plugin->ordering = $ordering;
 				}
 				if ($publish) {
-					if (version_compare(JVERSION, '1.6','>')) {
-						// Joomla 1.6+
-						$plugin->enabled = $publish;
-					} else {
-						// Joomla 1.5
-						$plugin->published = $publish;
-					}
+					$plugin->enabled = $publish;
 				}
 				$success = $plugin->store();
 			}
@@ -434,13 +381,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function uninstallModule($name) {
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$query = "SELECT extension_id FROM #__extensions WHERE type='module' AND element='{$name}'";
-		} else {
-			// Joomla 1.5
-			$query = "SELECT id FROM #__modules WHERE module='{$name}'";
-		}
+		$query = "SELECT extension_id FROM #__extensions WHERE type='module' AND element='{$name}'";
 		$this->db->setQuery ( $query );
 		$moduleid = $this->db->loadResult ();
 		if ($moduleid) {
@@ -450,13 +391,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function uninstallPlugin($folder, $name) {
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$query = "SELECT extension_id FROM #__extensions WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
-		} else {
-			// Joomla 1.5
-			$query = "SELECT id FROM #__plugins WHERE folder='{$folder}' AND element='{$name}'";
-		}
+		$query = "SELECT extension_id FROM #__extensions WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
 		$this->db->setQuery ( $query );
 		$pluginid = $this->db->loadResult ();
 		if ($pluginid) {
@@ -511,7 +446,7 @@ class KunenaModelInstall extends JModel {
 		}
 		$this->setVersion($version);
 
-		require_once KPATH_ADMIN.'/install/schema.php';
+		require_once KUNENA_INSTALLER_PATH.'/schema.php';
 		$schema = new KunenaModelSchema();
 		$results[] = $schema->updateSchemaTable('kunena_version');
 
@@ -531,26 +466,27 @@ class KunenaModelInstall extends JModel {
 		$this->checkTimeout(true);
 	}
 
+	// TODO: remove after making sure that all the old files get deleted (already disabled).
 	public function stepExtract() {
 		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
 		if (KunenaForum::isDev() || !is_file("{$path}/fileformat")) {
 			// Git install
 			$dir = JPATH_ADMINISTRATOR.'/components/com_kunena/media/kunena';
 			if (is_dir($dir)) {
-				JFolder::copy($dir, KPATH_MEDIA, false, true);
+				JFolder::copy($dir, KUNENA_INSTALLER_MEDIAPATH, false, true);
 			}
 			$this->setStep($this->getStep()+1);
 			return;
 		}
 		$ext = file_get_contents("{$path}/fileformat");
 		static $files = array(
-			array('name'=>'com_kunena-admin', 'dest'=>KPATH_ADMIN),
-			array('name'=>'com_kunena-site', 'dest'=>KPATH_SITE),
-			array('name'=>'com_kunena-media', 'dest'=>KPATH_MEDIA)
+			array('name'=>'com_kunena-admin', 'dest'=>KUNENA_INSTALLER_ADMINPATH),
+			array('name'=>'com_kunena-site', 'dest'=>KUNENA_INSTALLER_SITEPATH),
+			array('name'=>'com_kunena-media', 'dest'=>KUNENA_INSTALLER_MEDIAPATH)
 		);
 		static $ignore = array(
-			KPATH_ADMIN => array('index.html', 'kunena.xml', 'kunena.j25.xml', 'admin.kunena.php', 'api.php', 'archive', 'install', 'language'),
-			KPATH_SITE => array('index.html', 'kunena.php', 'router.php', 'COPYRIGHT.php', 'template', 'language')
+			KUNENA_INSTALLER_ADMINPATH => array('index.html', 'kunena.xml', 'kunena.j25.xml', 'kunena.php', 'api.php', 'archive', 'install', 'language'),
+			KUNENA_INSTALLER_SITEPATH => array('index.html', 'kunena.php', 'router.php', 'COPYRIGHT.php', 'template', 'language')
 		);
 		$task = $this->getTask();
 
@@ -562,7 +498,7 @@ class KunenaModelInstall extends JModel {
 				if (!empty($ignore[$dest])) {
 					// Delete all files and folders (cleanup)
 					$this->deleteFolder($dest, $ignore[$dest]);
-					if ($dest == KPATH_SITE) {
+					if ($dest == KUNENA_INSTALLER_SITEPATH) {
 						$this->deleteFolder("$dest/template/blue_eagle", array('params.ini'));
 						$this->deleteFolder("$dest/template/mirage", array('params.ini'));
 					}
@@ -582,22 +518,17 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepPlugins() {
-		$this->installPlugin('install/plugins/plg_system_kunena', 'system', 'kunena', true);
-		$this->installPlugin('install/plugins/plg_quickicon_kunena', 'quickicon', 'kunena', true);
 		// TODO: Complete smart search support
-		$this->uninstallPlugin('finder', 'kunena');
-		//$this->installPlugin('install/plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
-		$this->installPlugin('install/plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 1);
-		$this->installPlugin('install/plugins/plg_kunena_community', 'kunena', 'community', false, 2);
-		$this->installPlugin('install/plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 3);
-		$this->installPlugin('install/plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false, 4);
-		$this->installPlugin('install/plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false, 5);
-		$this->installPlugin('install/plugins/plg_kunena_kunena', 'kunena', 'kunena', true, 6);
-		$this->installPlugin('install/plugins/plg_kunena_joomla15', 'kunena', 'joomla', true, 7);
-		$this->installPlugin('install/plugins/plg_kunena_joomla25', 'kunena', 'joomla', true, 7);
+		//$this->installPlugin('plugins/plg_finder_kunena', 'finder', 'kunena', false, 1);
+		$this->installPlugin('plugins/plg_kunena_alphauserpoints', 'kunena', 'alphauserpoints', false, 1);
+		$this->installPlugin('plugins/plg_kunena_community', 'kunena', 'community', false, 2);
+		$this->installPlugin('plugins/plg_kunena_comprofiler', 'kunena', 'comprofiler', false, 3);
+		$this->installPlugin('plugins/plg_kunena_gravatar', 'kunena', 'gravatar', false, 4);
+		$this->installPlugin('plugins/plg_kunena_uddeim', 'kunena', 'uddeim', false, 5);
+		$this->installPlugin('plugins/plg_kunena_kunena', 'kunena', 'kunena', true, 6);
+		$this->installPlugin('plugins/plg_kunena_joomla', 'kunena', 'joomla', true, 7);
 
 		// TODO: install also menu module
-		$this->uninstallModule('mod_kunenamenu');
 		//$this->installModule('install/modules/mod_kunenamenu', 'kunenamenu');
 
 		if (function_exists('apc_clear_cache')) apc_clear_cache('system');
@@ -658,38 +589,22 @@ class KunenaModelInstall extends JModel {
 	public function stepFinish() {
 		KunenaForum::setup();
 
-		$entryfiles = array(
-			array(KPATH_ADMIN, 'api', 'php'),
-			array(KPATH_ADMIN, 'admin.kunena', 'php'),
-			array(KPATH_SITE, 'router', 'php'),
-			array(KPATH_SITE, 'kunena', 'php'),
-		);
-
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_SITE) || $lang->load('com_kunena', KPATH_SITE);
+		$lang->load('com_kunena', JPATH_SITE) || $lang->load('com_kunena', KUNENA_INSTALLER_SITEPATH);
 
 		$this->createMenu(false);
 
 		// Fix broken category aliases (workaround for < 2.0-DEV12 bug)
 		$count = KunenaForumCategoryHelper::fixAliases();
 
-		$md5 = md5_file(KPATH_ADMIN.'/api.new.php');
-		foreach ($entryfiles as $fileparts) {
-			list($path, $filename, $ext) = $fileparts;
-			if (is_file("{$path}/{$filename}.new.{$ext}")) {
-				$success = JFile::delete("{$path}/{$filename}.{$ext}");
-				if (!$success) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_DELETE_STATUS_FAIL')." {$filename}.{$ext}", false, '' );
-				$success = JFile::move("{$path}/{$filename}.new.{$ext}", "{$path}/{$filename}.{$ext}");
-				if (!$success) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_RENAMING_FAIL')." {$filename}.new.{$ext}", false, '' );
-			}
-		}
-
 		// Clean cache, just in case
 		KunenaMenuHelper::cleanCache();
 		JFactory::getCache('com_kunena')->clean();
 
-		// Test if api file has been fully copied
-		$this->waitFile(KPATH_ADMIN."/api.php", $md5);
+		// Delete installer file (only if not using GIT build).
+		if (!KunenaForum::isDev()) {
+			JFile::delete(KPATH_ADMIN.'/install.php');
+		}
 
 		if (! $this->getInstallError ()) {
 			$this->updateVersionState ( '' );
@@ -699,16 +614,7 @@ class KunenaModelInstall extends JModel {
 		}
 	}
 
-	protected function waitFile($file, $md5) {
-		// Test if file has been fully copied and wait if not
-		for ($i=0; $i<10; $i++) {
-			if (is_file($file) && md5_file($file) == $md5) return true;
-			sleep(1);
-			clearstatcache();
-		}
-		return false;
-	}
-
+	// TODO: move to migration
 	public function migrateDatabase() {
 		$version = $this->getVersion();
 		if (! empty ( $version->prefix )) {
@@ -751,7 +657,7 @@ class KunenaModelInstall extends JModel {
 		static $tables = null;
 		if ($schema === null) {
 			// Run only once: get table creation SQL and existing tables
-			require_once KPATH_ADMIN.'/install/schema.php';
+			require_once KUNENA_INSTALLER_PATH.'/schema.php';
 			$schema = new KunenaModelSchema();
 			$create = $schema->getCreateSQL();
 			$tables = $this->listTables ( 'kunena_', true );
@@ -789,6 +695,7 @@ class KunenaModelInstall extends JModel {
 		return true;
 	}
 
+	// TODO: move to migration
 	function migrateConfig() {
 		$config = KunenaFactory::getConfig();
 		$version = $this->getVersion();
@@ -824,7 +731,7 @@ class KunenaModelInstall extends JModel {
 
 		if ($xml === null) {
 			// Run only once: Get migration SQL from our XML file
-			$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
+			$xml = simplexml_load_file(KUNENA_INSTALLER_PATH.'/kunena.install.upgrade.xml');
 		}
 		if ($xml === false) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_DB_UPGRADE_FAILED_XML'), false, '', 'upgrade' );
 
@@ -840,13 +747,7 @@ class KunenaModelInstall extends JModel {
 		}
 
 		// Allow queries to fail
-		if (version_compare(JVERSION, '1.7', '>')) {
-			// Joomla 1.7+
-			$this->db->setDebug(false);
-		} else {
-			// Joomla 1.5 and 1.6
-			$this->db->debug(0);
-		}
+		$this->db->setDebug(false);
 
 		$results = array();
 		foreach ($xml->upgrade[0] as $version) {
@@ -894,7 +795,7 @@ class KunenaModelInstall extends JModel {
 		switch($nodeName) {
 			case 'phpfile':
 				$filename = $action['name'];
-				$include = KPATH_ADMIN . "/install/upgrade/$filename.php";
+				$include = KUNENA_INSTALLER_PATH . "/sql/updates/{$filename}.php";
 				$function = 'kunena_'.strtr($filename, array('.'=>'', '-'=>'_'));
 				if(file_exists($include)) {
 					require( $include );
@@ -925,24 +826,15 @@ class KunenaModelInstall extends JModel {
 		}
 		return $result;
 	}
-/*
-	public function upgradeDatabase() {
-		$schema = new KunenaModelSchema ();
-		$results = $schema->updateSchema ();
-		foreach ( $results as $i => $r )
-			if ($r)
-				$this->addStatus ( $r ['action'] . ' ' . $r ['name'], true );
-		$this->updateVersionState ( 'installSampleData' );
-	}
-*/
 
 	public function installSampleData() {
-		require_once ( KPATH_ADMIN.'/install/data/sampledata.php' );
+		require_once ( KUNENA_INSTALLER_PATH.'/sql/install/php/sampledata.php' );
 		if (installSampleData ())
 			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SAMPLEDATA'), true );
 		return true;
 	}
 
+	// TODO: move to migration
 	protected function setAvatarStatus($stats = null) {
 		if (!$stats) {
 			$stats = new stdClass();
@@ -952,6 +844,7 @@ class KunenaModelInstall extends JModel {
 		$app->setUserState ( 'com_kunena.install.avatars', $stats );
 	}
 
+	// TODO: move to migration
 	protected function getAvatarStatus() {
 		$app = JFactory::getApplication ();
 		$stats = new stdClass();
@@ -960,6 +853,7 @@ class KunenaModelInstall extends JModel {
 		return $stats;
 	}
 
+	// TODO: move to migration
 	public function migrateAvatars() {
 		$app = JFactory::getApplication ();
 		$stats = $this->getAvatarStatus();
@@ -1004,7 +898,7 @@ class KunenaModelInstall extends JModel {
 					$ext = JString::strtolower($matches[1]);
 					// Use new format: users/avatar62.jpg
 					$newfile = "users/avatar{$userid}.{$ext}";
-					$destpath = (KPATH_MEDIA ."/avatars/{$newfile}");
+					$destpath = (KUNENA_INSTALLER_MEDIAPATH ."/avatars/{$newfile}");
 					if (JFile::exists($destpath)) {
 						$success = true;
 					} else {
@@ -1045,12 +939,13 @@ class KunenaModelInstall extends JModel {
 		return !$count;
 	}
 
+	// TODO: move to migration
 	public function migrateAvatarGalleries() {
 		$action = $this->getAction();
 		if ($action != 'migrate') return true;
 
 		$srcpath = JPATH_ROOT.'/images/fbfiles/avatars/gallery';
-		$dstpath = KPATH_MEDIA.'/avatars/gallery';
+		$dstpath = KUNENA_INSTALLER_MEDIAPATH.'/avatars/gallery';
 		if (JFolder::exists($srcpath)) {
 			if (!JFolder::delete($dstpath) || !JFolder::copy($srcpath, $dstpath)) {
 				$this->addStatus ( "Could not copy avatar galleries from $srcpath to $dstpath", true );
@@ -1061,12 +956,13 @@ class KunenaModelInstall extends JModel {
 		return true;
 	}
 
+	// TODO: move to migration
 	public function migrateCategoryImages() {
 		$action = $this->getAction();
 		if ($action != 'migrate') return true;
 
 		$srcpath = JPATH_ROOT.'/images/fbfiles/category_images';
-		$dstpath = KPATH_MEDIA.'/category_images';
+		$dstpath = KUNENA_INSTALLER_MEDIAPATH.'/category_images';
 		if (JFolder::exists($srcpath)) {
 			if (!JFolder::delete($dstpath) || !JFolder::copy($srcpath, $dstpath)) {
 				$this->addStatus ( "Could not copy category images from $srcpath to $dstpath", true );
@@ -1077,6 +973,7 @@ class KunenaModelInstall extends JModel {
 		return true;
 	}
 
+	// TODO: move to migration
 	protected function setAttachmentStatus($stats = null) {
 		if (!$stats) {
 			$stats = new stdClass();
@@ -1086,6 +983,7 @@ class KunenaModelInstall extends JModel {
 		$app->setUserState ( 'com_kunena.install.attachments', $stats );
 	}
 
+	// TODO: move to migration
 	protected function getAttachmentStatus() {
 		$app = JFactory::getApplication ();
 		$stats = new stdClass();
@@ -1094,6 +992,7 @@ class KunenaModelInstall extends JModel {
 		return $stats;
 	}
 
+	// TODO: move to migration
 	public function migrateAttachments() {
 		// Only perform this stage if we are upgrading from older version
 		$version = $this->getVersion();
@@ -1118,7 +1017,7 @@ class KunenaModelInstall extends JModel {
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		if (!$stats->current && !$count) return true;
 
-		$destpath = KPATH_MEDIA . '/attachments/legacy';
+		$destpath = KUNENA_INSTALLER_MEDIAPATH . '/attachments/legacy';
 		if (!JFolder::exists($destpath.'/images')) {
 			if (!JFolder::create($destpath.'/images')) {
 				$this->addStatus ( "Could not create directory for legacy attachments in {$destpath}/images", true );
@@ -1287,6 +1186,7 @@ class KunenaModelInstall extends JModel {
 		return $this->_versionprefix;
 	}
 
+	// TODO: move to migration
 	public function getDetectVersions() {
 		if (!empty($this->_versions)) {
 			return $this->_versions;
@@ -1320,7 +1220,7 @@ class KunenaModelInstall extends JModel {
 			$version->description = $this->getActionText($version, 'desc');
 			$version->hint = $this->getActionText($version, 'hint');
 			$version->warning = $this->getActionText($version, 'warn');
-			$version->link = JURI::root(true).'/administrator/index.php?option=com_kunena&view=install&task='.strtolower($version->action).'&'.JUtility::getToken() .'=1';
+			$version->link = JUri::base(true).'/index.php?option=com_kunena&view=install&task='.strtolower($version->action).'&'.JSession::getFormToken() .'=1';
 		}
 		if ($migrate) {
 			$kunena->warning = $this->getActionText($fireboard, 'warn', 'upgrade');
@@ -1348,6 +1248,7 @@ class KunenaModelInstall extends JModel {
 		return true;
 	}
 
+	// TODO: move to migration
 	public function getInstalledVersion($prefix, $versionlist, $state = false) {
 		if (!$state && isset($this->_installed[$prefix])) {
 			return $this->_installed[$prefix];
@@ -1364,7 +1265,7 @@ class KunenaModelInstall extends JModel {
 		if ($versionprefix) {
 			// Version table exists, try to get installed version
 			$state = $state ? " WHERE state=''" : "";
-			$this->db->setQuery ( "SELECT * FROM " . $this->db->nameQuote ( $this->db->getPrefix () . $versionprefix . 'version' ) . $state . " ORDER BY `id` DESC", 0, 1 );
+			$this->db->setQuery ( "SELECT * FROM " . $this->db->quoteName ( $this->db->getPrefix () . $versionprefix . 'version' ) . $state . " ORDER BY `id` DESC", 0, 1 );
 			$version = $this->db->loadObject ();
 			if ($this->db->getErrorNum ())
 				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
@@ -1413,7 +1314,7 @@ class KunenaModelInstall extends JModel {
 
 	protected function updateVersionState($state) {
 		// Insert data from the new version
-		$this->db->setQuery ( "UPDATE " . $this->db->nameQuote ( $this->db->getPrefix () . 'kunena_version' ) . " SET state = " . $this->db->Quote ( $state ) . " ORDER BY id DESC LIMIT 1" );
+		$this->db->setQuery ( "UPDATE " . $this->db->quoteName ( $this->db->getPrefix () . 'kunena_version' ) . " SET state = " . $this->db->Quote ( $state ) . " ORDER BY id DESC LIMIT 1" );
 		$this->db->query ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
@@ -1494,7 +1395,7 @@ class KunenaModelInstall extends JModel {
 			if ($found && isset ( $detect ['column'] )) {
 				if (! isset ( $fields [$table] )) // Not cached
 				{
-					$this->db->setQuery ( "SHOW COLUMNS FROM " . $this->db->nameQuote ( $table ) );
+					$this->db->setQuery ( "SHOW COLUMNS FROM " . $this->db->quoteName ( $table ) );
 					$result = $this->db->loadObjectList ( 'Field' );
 					if ($this->db->getErrorNum ())
 						throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
@@ -1510,6 +1411,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	// helper function to migrate table
+	// TODO: move to migration
 	protected function migrateTable($oldprefix, $oldtable, $newtable) {
 		$tables = $this->listTables ( 'kunena_' );
 		$oldtables = $this->listTables ( $oldprefix );
@@ -1535,7 +1437,7 @@ class KunenaModelInstall extends JModel {
 		$this->tables ['kunena_'] [$newtable] = $newtable;
 
 		// And copy data into it
-		$sql = "INSERT INTO " . $this->db->nameQuote ( $this->db->getPrefix () . $newtable ) . ' ' . $this->selectWithStripslashes($this->db->getPrefix () . $oldtable );
+		$sql = "INSERT INTO " . $this->db->quoteName ( $this->db->getPrefix () . $newtable ) . ' ' . $this->selectWithStripslashes($this->db->getPrefix () . $oldtable );
 		$this->db->setQuery ( $sql );
 		$this->db->query ();
 		if ($this->db->getErrorNum ())
@@ -1543,12 +1445,13 @@ class KunenaModelInstall extends JModel {
 		return array ('name' => $oldtable, 'action' => 'migrate', 'sql' => $sql );
 	}
 
+	// TODO: move to migration
 	function selectWithStripslashes($table) {
-		$fields = array_pop($this->db->getTableFields($table));
+		$fields = array_pop($this->db->getTableColumns($table));
 		$select = array();
 		foreach ($fields as $field=>$type) {
 			$isString = preg_match('/text|char/', $type);
-			$select[] = ($isString ? "REPLACE(REPLACE(REPLACE({$this->db->nameQuote($field)}, {$this->db->Quote('\\\\')}, {$this->db->Quote('\\')}),{$this->db->Quote('\\\'')} ,{$this->db->Quote('\'')}),{$this->db->Quote('\"')} ,{$this->db->Quote('"')}) AS " : '') . $this->db->nameQuote($field);
+			$select[] = ($isString ? "REPLACE(REPLACE(REPLACE({$this->db->quoteName($field)}, {$this->db->Quote('\\\\')}, {$this->db->Quote('\\')}),{$this->db->Quote('\\\'')} ,{$this->db->Quote('\'')}),{$this->db->Quote('\"')} ,{$this->db->Quote('"')}) AS " : '') . $this->db->quoteName($field);
 		}
 		$select = implode(', ', $select);
 		return "SELECT {$select} FROM {$table}";
@@ -1597,7 +1500,7 @@ class KunenaModelInstall extends JModel {
 			return $this->tables [$prefix];
 		}
 		$this->db->setQuery ( "SHOW TABLES LIKE " . $this->db->quote ( $this->db->getPrefix () . $prefix . '%' ) );
-		$list = (array)$this->db->loadResultArray ();
+		$list = (array) $this->db->loadColumn ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		$this->tables [$prefix] = array ();
@@ -1611,7 +1514,7 @@ class KunenaModelInstall extends JModel {
 	function deleteTables($prefix) {
 		$tables = $this->listTables($prefix);
 		foreach ($tables as $table) {
-			$this->db->setQuery ( "DROP TABLE IF EXISTS " . $this->db->nameQuote ( $this->db->getPrefix () . $table ) );
+			$this->db->setQuery ( "DROP TABLE IF EXISTS " . $this->db->quoteName ( $this->db->getPrefix () . $table ) );
 			$this->db->query ();
 			if ($this->db->getErrorNum ())
 				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
@@ -1627,150 +1530,33 @@ class KunenaModelInstall extends JModel {
 	 */
 	function createMenu() {
 		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_FORUM' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' ), 'forum'),
-			'link'=>'index.php?option=com_kunena&view=home', 'access'=>0, 'params'=>array('catids'=>0));
+			'link'=>'index.php?option=com_kunena&view=home', 'access'=>1, 'params'=>array('catids'=>0));
 		$submenu = array(
 			'index'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_INDEX' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' ), 'index'),
-				'link'=>'index.php?option=com_kunena&view=category&layout=list', 'access'=>0, 'default'=>'categories', 'params'=>array()),
+				'link'=>'index.php?option=com_kunena&view=category&layout=list', 'access'=>1, 'default'=>'categories', 'params'=>array()),
 			'recent'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_RECENT' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' ), 'recent'),
-				'link'=>'index.php?option=com_kunena&view=topics&mode=replies', 'access'=>0, 'default'=>'recent', 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>720)),
+				'link'=>'index.php?option=com_kunena&view=topics&mode=replies', 'access'=>1, 'default'=>'recent', 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>720)),
 			'newtopic'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_NEWTOPIC' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' ), 'newtopic'),
-				'link'=>'index.php?option=com_kunena&view=topic&layout=create', 'access'=>1, 'params'=>array()),
+				'link'=>'index.php?option=com_kunena&view=topic&layout=create', 'access'=>2, 'params'=>array()),
 			'noreplies'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_NOREPLIES' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' ), 'noreplies'),
-				'link'=>'index.php?option=com_kunena&view=topics&mode=noreplies', 'access'=>1, 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>-1)),
+				'link'=>'index.php?option=com_kunena&view=topics&mode=noreplies', 'access'=>2, 'params'=>array('topics_catselection'=>'', 'topics_categories'=>'', 'topics_time'=>-1)),
 			'mylatest'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_MYLATEST' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' ), 'mylatest'),
-				'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>1, 'default'=>'my' , 'params'=>array('topics_catselection'=>'1', 'topics_categories'=>'0', 'topics_time'=>-1)),
+				'link'=>'index.php?option=com_kunena&view=topics&layout=user&mode=default', 'access'=>2, 'default'=>'my' , 'params'=>array('topics_catselection'=>'2', 'topics_categories'=>'0', 'topics_time'=>-1)),
 			'profile'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_PROFILE' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' ), 'profile'),
-				'link'=>'index.php?option=com_kunena&view=user', 'access'=>1, 'params'=>array('integration'=>1)),
+				'link'=>'index.php?option=com_kunena&view=user', 'access'=>2, 'params'=>array('integration'=>1)),
 			'help'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_HELP' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' ), 'help'),
-				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>2, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_HELP_BODY' ), 'body_format'=>'bbcode')),
+				'link'=>'index.php?option=com_kunena&view=misc', 'access'=>3, 'params'=>array('body'=>JText::_ ( 'COM_KUNENA_MENU_HELP_BODY' ), 'body_format'=>'bbcode')),
 			'search'=>array('name'=>JText::_ ( 'COM_KUNENA_MENU_ITEM_SEARCH' ), 'alias'=>KunenaRoute::stringURLSafe(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' ), 'search'),
-				'link'=>'index.php?option=com_kunena&view=search', 'access'=>0, 'params'=>array()),
+				'link'=>'index.php?option=com_kunena&view=search', 'access'=>1, 'params'=>array()),
 		);
 
+		// Disable language debugging while creating menu items.
 		$lang = JFactory::getLanguage();
 		$debug = $lang->setDebug(false);
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$this->createMenuJ25($menu, $submenu);
-		} else {
-			// Joomla 1.5
-			$this->createMenuJ15($menu, $submenu);
-		}
+
+		$this->createMenuJ25($menu, $submenu);
 		KunenaMenuHelper::cleanCache();
 		$lang->setDebug($debug);
-	}
-
-	function createMenuJ15($menu, $submenu) {
-		jimport( 'joomla.utilities.string' );
-		jimport( 'joomla.application.component.helper' );
-
-		$config = KunenaFactory::getConfig();
-
-		$component_id = JComponentHelper::getComponent('com_kunena')->id;
-
-		// First fix all broken menu items
-		$query = "UPDATE #__menu SET componentid={$this->db->quote($component_id)} WHERE type = 'component' AND link LIKE '%option=com_kunena%'";
-		$this->db->setQuery ( $query );
-		$this->db->query ();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-
-		// Find out if menu exists
-		$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
-		$this->db->setQuery ( $query );
-		$moduleid = ( int ) $this->db->loadResult ();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-
-		// Do not touch existing menu
-		if ($moduleid) {
-			return;
-		}
-
-		// Create new Joomla menu for Kunena
-		if (! $moduleid) {
-			// Create a menu type for the Kunena menu
-			$query = "REPLACE INTO `#__menu_types` (`id`, `menutype`, `title`, `description`) VALUES
-							($moduleid, 'kunenamenu', {$this->db->Quote( JText::_ ( 'COM_KUNENA_MENU_TITLE' ))} , {$this->db->Quote(JText::_ ( 'COM_KUNENA_MENU_TITLE_DESC' ))} )";
-			$this->db->setQuery ( $query );
-			$this->db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		}
-
-		// Forum
-		$query = "SELECT id FROM `#__menu` WHERE `link`={$this->db->quote($menu['link'])} AND `menutype`='kunenamenu';";
-		$this->db->setQuery ( $query );
-		$parentid = ( int ) $this->db->loadResult ();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		if (! $parentid) {
-			$params = new JParameter('');
-			$params->bind($menu['params']);
-			$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							($parentid, 'kunenamenu', {$this->db->quote($menu['name'])}, {$this->db->quote($menu['alias'])}, {$this->db->quote($menu['link'])}, 'component', 1, 0, $component_id, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, {$this->db->quote($params->toString('INI'))}, 0, 0, 0);";
-			$this->db->setQuery ( $query );
-			$this->db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-			$parentid = ( int ) $this->_db->insertId ();
-		}
-
-		// Submenu (shown in Kunena)
-		$defaultmenu = 0;
-		$ordering = 0;
-		foreach ($submenu as $menuitem) {
-			$ordering++;
-//			$query = "SELECT id FROM `#__menu` WHERE `link`={$this->db->quote($menuitem['link'])} AND `menutype`='kunenamenu';";
-//			$this->db->setQuery ( $query );
-//			$id = ( int ) $this->db->loadResult ();
-//			if ($this->db->getErrorNum ())
-//				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-			$id = 0;
-			if (! $id) {
-				$params = new JParameter('');
-				$params->bind($menuitem['params']);
-				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-								($id, 'kunenamenu', {$this->db->quote($menuitem['name'])}, {$this->db->quote($menuitem['alias'])}, {$this->db->quote($menuitem['link'])},'component', 1, $parentid, $component_id, 1, $ordering, 0, '0000-00-00 00:00:00', 0, 0, {$menuitem['access']}, 0, {$this->db->quote($params->toString('INI'))}, 0, 0, 0);";
-				$this->db->setQuery ( $query );
-				$this->db->query ();
-				if ($this->db->getErrorNum ())
-					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-				$id = ( int ) $this->_db->insertId ();
-				if (!$defaultmenu || (isset($menuitem['default']) && $config->defaultpage == $menuitem['default'])) {
-					$defaultmenu = $id;
-				}
-			}
-		}
-		if ($defaultmenu) {
-			$query = "UPDATE `#__menu` SET `link`={$this->db->quote($menu['link']."&defaultmenu=$defaultmenu")} WHERE id={$parentid}";
-			$this->db->setQuery ( $query );
-			$this->db->query ();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		}
-
-		// Finally add forum menu link to default menu
-		$jmenu = JMenu::getInstance('site');
-		$dmenu = $jmenu->getDefault();
-		$query = "SELECT id, name, type, link, published FROM `#__menu` WHERE `alias` IN ('forum', 'kunenaforum', {$this->db->quote(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' ))}) AND `menutype`={$this->db->quote($dmenu->menutype)}";
-		$this->db->setQuery ( $query, 0, 1 );
-		$menualias = $this->db->loadObject ();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		// We do not want to replace users own menu items (just alias or deprecated link to Kunena)
-		if (!$menualias || $menualias->type == 'menulink' || $menualias->link == 'index.php?option=com_kunena') {
-			$id = $menualias ? intval($menualias->id) : 0;
-			// Keep state (default=unpublished) and name (default=Forum)
-			$published = $menualias ? intval($menualias->published) : 0;
-			$name = $menualias ? $menualias->name : $menu['name'];
-			$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-						($id, {$this->db->quote($dmenu->menutype)}, {$this->db->quote($name)}, 'kunenaforum', 'index.php?Itemid={$parentid}', 'menulink', {$published}, 0, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_item=$parentid{$menu['params']}\r\n\r\n', 0, 0, 0);";
-			$this->db->setQuery ( $query );
-			$this->db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		}
 	}
 
 	function createMenuJ25($menu, $submenu) {
@@ -1788,7 +1574,7 @@ class KunenaModelInstall extends JModel {
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
-		$table = JTable::getInstance ( 'menutype' );
+		$table = JTable::getInstance ( 'MenuType' );
 		$data = array (
 			'menutype' => 'kunenamenu',
 			'title' => JText::_ ( 'COM_KUNENA_MENU_TITLE' ),
@@ -1830,13 +1616,14 @@ class KunenaModelInstall extends JModel {
 			'published' => 1,
 			'parent_id' => 1,
 			'component_id' => $component_id,
-			'access' => $menu ['access'] + 1,
+			'access' => $menu ['access'],
 			'params' => (string) $params,
 			'home' => 0,
 			'language' => '*',
 			'client_id' => 0
 		);
-		if (! $table->setLocation ( 1, 'last-child' ) || ! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
+		$table->setLocation(1, 'last-child');
+		if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
 			$table->alias = 'kunena';
 			if (! $table->check () || ! $table->store ()) {
 				throw new KunenaInstallerException ( $table->getError () );
@@ -1858,14 +1645,14 @@ class KunenaModelInstall extends JModel {
 				'published' => 1,
 				'parent_id' => $parent->id,
 				'component_id' => $component_id,
-				'access' => $menuitem ['access'] + 1,
+				'access' => $menuitem ['access'],
 				'params' => (string) $params,
 				'home' => 0,
 				'language' => '*',
 				'client_id' => 0
 			);
-
-			if (! $table->setLocation ( $parent->id, 'last-child' ) || ! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
+			$table->setLocation($parent->id, 'last-child');
+			if (! $table->bind ( $data ) || ! $table->check () || ! $table->store ()) {
 				throw new KunenaInstallerException ( $table->getError () );
 			}
 			if (! $defaultmenu || (isset ( $menuitem ['default'] ) && $config->defaultpage == $menuitem ['default'])) {
@@ -1900,9 +1687,7 @@ class KunenaModelInstall extends JModel {
 				'language' => '*',
 				'client_id' => 0
 			);
-			if (! $table->setLocation ( 1, 'last-child' )) {
-				throw new KunenaInstallerException ( $table->getError () );
-			}
+			$table->setLocation(1, 'last-child');
 		} else {
 			$data = array (
 				'alias' => 'kunena-'.JFactory::getDate()->format('Y-m-d'),
@@ -1916,31 +1701,7 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function deleteMenu() {
-		if (version_compare(JVERSION, '1.6','>')) {
-			// Joomla 1.6+
-			$this->DeleteMenuJ25();
-		} else {
-			// Joomla 1.5
-			$this->DeleteMenuJ15();
-		}
-
-		// Can be called before installation starts (don't use library):
-		if (version_compare(JVERSION, '1.6', '>')) {
-			$cache = JFactory::getCache('mod_menu');
-			$cache->clean();
-		} else {
-			// clean system cache
-			$cache = JFactory::getCache('_system');
-			$cache->clean();
-
-			// clean mod_mainmenu cache
-			$cache = JFactory::getCache('mod_mainmenu');
-			$cache->clean();
-		}
-	}
-
-	function deleteMenuJ25() {
-		$table = JTable::getInstance ( 'menutype' );
+		$table = JTable::getInstance ( 'MenuType' );
 		$table->load(array('menutype'=>'kunenamenu'));
 		if ($table->id) {
 			$success = $table->delete();
@@ -1948,20 +1709,8 @@ class KunenaModelInstall extends JModel {
 				JFactory::getApplication()->enqueueMessage($table->getError(), 'error');
 			}
 		}
-	}
-
-	function deleteMenuJ15() {
-		$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
-		$this->db->setQuery ( $query );
-		$menuid = $this->db->loadResult ();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		if (!$menuid) return;
-
-		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/helpers/helper.php');
-		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/models/menutype.php');
-		$menuhelper = new MenusModelMenutype ();
-		$menuhelper->delete ( $menuid );
+		$cache = JFactory::getCache('mod_menu');
+		$cache->clean();
 	}
 
 	function checkTimeout($stop = false) {
@@ -1994,49 +1743,7 @@ class KunenaModelInstall extends JModel {
 
 		return true;
 	}
-
-	protected function _getJoomlaArchiveError($archive) {
-		$error = '';
-		if (version_compare(JVERSION, '1.6','<')) {
-			// Joomla 1.5: Unfortunately we need this rather ugly hack to get the error message
-			$ext = JFile::getExt(strtolower($archive));
-			$adapter = null;
-
-			switch ($ext)
-			{
-				case 'zip':
-					$adapter = JArchive::getAdapter('zip');
-					break;
-				case 'tar':
-					$adapter = JArchive::getAdapter('tar');
-					break;
-				case 'tgz'  :
-				case 'gz'   :	// This may just be an individual file (e.g. sql script)
-				case 'gzip' :
-					$adapter = JArchive::getAdapter('gzip');
-					break;
-				case 'tbz2' :
-				case 'bz2'  :	// This may just be an individual file (e.g. sql script)
-				case 'bzip2':
-					$adapter = JArchive::getAdapter('bzip2');
-					break;
-				default:
-					$adapter = null;
-					break;
-			}
-
-			if ($adapter) {
-				$error .= $adapter->get('error.message'). ': ' . $archive;
-			}
-
-			// End of Joomla 1.5 error message hackathon
-		} else {
-			// J1.6 and beyond - Not yet implemented
-		}
-
-		return $error;
-	}
-
 }
+
 class KunenaInstallerException extends Exception {
 }

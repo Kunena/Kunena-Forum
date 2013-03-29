@@ -4,13 +4,4 @@
 	<layout title="COM_KUNENA_MENU_SEARCH_DEFAULT">
 		<message>COM_KUNENA_MENU_SEARCH_DEFAULT_DESC</message>
 	</layout>
-
-	<!-- Joomla 1.5 Support -->
-	<state>
-		<name>COM_KUNENA_MENU_SEARCH_DEFAULT</name>
-		<description>COM_KUNENA_MENU_SEARCH_DEFAULT_DESC</description>
-	</state>
-	
-	<!-- Joomla 1.6 Support -->
-	
 </metadata>

@@ -9,13 +9,12 @@
 
 ## REQUIREMENTS
 
-*Kunena* 2.0 requires
+*Kunena* 3.0 requires
 
-    Joomla! 1.5: version 1.5.25 or greater (>= 1.5.26 recommended)
-    Joomla! 2.5: version 2.5.3 or greater (>= 2.5.8 recommended)
-    Joomla! 3.0: NOT SUPPORTED
-    PHP: version 5.2.4 or greater (>= 5.3.21 recommended)
-    MySQL: version 5.0.4 or greater (>= 5.1 recommended)
+    Joomla! 2.5: version 2.5.6 or greater (>= 2.5.8 recommended)
+    Joomla! 3.0: version 3.0.2 or greater (>= 3.0.2 recommended)
+    PHP: version 5.3.1 or greater (>= 5.4.11 recommended)
+    MySQL: version 5.1 or greater (>= 5.5 recommended)
 
 Our installer will check for minimal version requirements and will abort the install if they are no met.
 
@@ -29,8 +28,8 @@ In addition we recommend the following PHP settings:
 
 *Kunena* requires the following Joomla settings:
 
-    * Mootools 1.2 or 1.4 compatible template
-    * Upgraded to latest versions all extensions that claim to integrate with Kunena 2.0
+    * Mootools 1.4+ compatible template
+    * Upgraded to latest versions all extensions that claim to integrate with Kunena 2.0 or 3.0
     * No plugins or modules that were developed for previous versions of Kunena or Fireboard
 
 

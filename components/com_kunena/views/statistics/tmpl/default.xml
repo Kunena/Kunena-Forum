@@ -4,10 +4,4 @@
 	<layout title="COM_KUNENA_MENU_STATISTICS_DEFAULT">
 		<message>COM_KUNENA_MENU_STATISTICS_DEFAULT_DESC</message>
 	</layout>
-	
-	<!-- Joomla 1.5 Support -->
-	<state>
-		<name>COM_KUNENA_MENU_STATISTICS_DEFAULT_LONG</name>
-		<description>COM_KUNENA_MENU_STATISTICS_DEFAULT_DESC_LONG</description>
-	</state>
 </metadata>

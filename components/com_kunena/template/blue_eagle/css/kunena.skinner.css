@@ -75,6 +75,12 @@
 #Kunena tr.krow2 td {
 	background-color: rgba(44, 44, 44, 0.05);
 }
+#Kunena .kunapproved td {
+	background-color: rgba(0, 0, 0, 0.2) !important;
+}
+#Kunena .kdeleted td {
+	background-color: rgba(0, 0, 0, 0.2) !important; 
+}
 #Kunena .klist-actions-forum {
 	border-left-color: rgba(0, 0, 0, 0.2);
 }
@@ -515,3 +521,6 @@ ul.autocompleter-choices,
 background-color: transparent !important;
 color:inherit !important;
 }
+Kunena tr, #Kunena td {  
+border: solid 1px rgba(0, 0, 0, 0.1) !important;  
+}  

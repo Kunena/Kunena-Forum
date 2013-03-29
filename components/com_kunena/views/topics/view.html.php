@@ -316,6 +316,9 @@ class KunenaViewTopics extends KunenaView {
 				case 'subscriptions' :
 					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_SUBSCRIPTIONS');
 					break;
+				case 'plugin' :
+					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_PLUGIN_' . strtoupper($this->state->get ( 'list.modetype' )));
+					break;
 				default :
 					$this->headerText =  JText::_('COM_KUNENA_VIEW_TOPICS_USERS_MODE_DEFAULT');
 			}

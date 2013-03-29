@@ -917,4 +917,7 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
+	
+	/* For profile tabs */
+	$$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); });
 });

@@ -117,7 +117,7 @@ abstract class JHtmlKunenaForum {
 	 * @param string $rel Link relationship, see: http://www.w3.org/TR/html401/types.html#type-links
 	 * @param mixed $attributes Tag attributes as: 'accesskey="a" lang="en"' or array('accesskey'=>'a', 'lang'=>'en')
 	 */
-	public static function link($uri, $content, $title = '', $class = '', $rel = 'nofollow', $attributes = '') {
+	public static function link($uri, $content, $title = '', $class = '', $rel = null, $attributes = '') {
 		$list['href'] = KunenaRoute::_($uri);
 		if ($title) $list['title'] = $title;
 		if ($class) $list['class'] = $class;

@@ -231,7 +231,7 @@ class KunenaView extends JViewLegacy {
 	public function getCategoryLink(KunenaForumCategory $category, $content = null, $title = null, $class = null) {
 		if (!$content) $content = $this->escape($category->name);
 		if ($title === null) $title = JText::sprintf('COM_KUNENA_VIEW_CATEGORY_LIST_CATEGORY_TITLE', $this->escape($category->name));
-		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class, 'follow');
+		return JHtml::_('kunenaforum.link', $category->getUri(), $content, $title, $class);
 	}
 
 	public function getTopicLink(KunenaForumTopic $topic, $action = null, $content = null, $title = null, $class = null, KunenaForumCategory $category = NULL) {
@@ -256,7 +256,7 @@ class KunenaView extends JViewLegacy {
 				}
 			}
 		}
-		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class, 'nofollow');
+		return JHtml::_('kunenaforum.link', $uri, $content, $title, $class);
 	}
 
 	public function addStyleSheet($filename) {

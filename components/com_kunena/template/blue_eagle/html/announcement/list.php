@@ -10,12 +10,6 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->document->addScriptDeclaration("Joomla.submitbutton = function(task) {
-	form = document.getElementById('adminForm');
-	form.task.value = task;
-	form.submit();
-};");
-
 ?>
 <div class="kblock">
 	<div class="kheader">
@@ -60,7 +54,7 @@ $this->document->addScriptDeclaration("Joomla.submitbutton = function(task) {
 			<?php  if ( !empty($this->announcementActions) ) : ?>
 			<td colspan="4" class="kcol krowmoderation">
 				<?php echo JHtml::_('select.genericlist', $this->announcementActions, 'task', 'class="inputbox kchecktask" size="1"', 'value', 'text', 0, 'kchecktask'); ?>
-				<input type="submit" name="kcheckgo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+				<input type="submit" name="kcheckgo" onClick="Joomla.submitbutton()" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 			</td>
 			<?php endif; ?>
 		</tr>

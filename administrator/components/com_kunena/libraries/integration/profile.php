@@ -40,4 +40,6 @@ class KunenaProfile
 	public function getProfileURL($user, $task='', $xhtml = true) {}
 	public function showProfile($view, &$params) {}
 	protected function _getTopHits($limit=0) { return array(); }
+
+	public function getEditProfileURL($userid, $xhtml = true) {}
 }

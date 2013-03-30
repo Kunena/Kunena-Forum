@@ -211,11 +211,32 @@ class KunenaAdminControllerUsers extends KunenaController {
 		}
 
 		foreach ( $cids as $userid ) {
-			$user = KunenaUserHelper::get($userid);
-			$user->delete();
+			$my = JFactory::getUser();
+			$groups = JUserHelper::getUserGroups($userid);
+			$error = false;
+
+			if ( $my->id == $userid ) {
+				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_YOURSELF'));
+				$error = true;
+			}
+
+			if ( $my->authorise('core.admin') )  {
+				$this->app->enqueueMessage (JText::_('COM_KUNENA_USER_ERROR_CANNOT_DELETE_ADMINS'));
+				$error = true;
+			}
+
+			if ( !$error ) {
+				$user = KunenaUserHelper::get($userid);
+				$user->delete();
+
+				// Delete the user too from Joomla!
+				$instance = JUser::getInstance($userid);
+				$instance->delete();
+
+				$this->app->enqueueMessage (JText::sprintf('COM_KUNENA_USER_DELETE_DONE', $userid));
+			}
 		}
 
-		$this->app->enqueueMessage (JText::_('COM_KUNENA_A_USER_DELETE_DONE'));
 		$this->app->redirect ( KunenaRoute::_($this->baseurl, false) );
 	}
 

@@ -35,8 +35,8 @@ if (version_compare(JVERSION, '3.0','>')) {
 					<?php if( $this->me->isModerator() ) : ?>
 						<div><a href="<?php echo KunenaRoute::_('index.php?option=com_kunena&amp;view=announcement&amp;layout=list') ?>"><i class="icon-pencil-2"></i> <?php echo JText::_('COM_KUNENA_VIEW_COMMON_ANNOUNCE_LIST') ?></a></div>
 					<?php endif; ?>
-					<?php if (!empty($this->privateMessagesLink)) : ?>
-						<div> <a href="index.php?option=com_uddeim&amp;task=inbox" rel="follow"><i class="icon-mail"></i> Inbox: </a> </div>
+					<?php if (!empty($this->pm_link)) : ?>
+						<div> <a href="<?php echo $this->pm_link ?>" rel="follow"><i class="icon-mail"></i> Inbox: </a> </div>
 					<?php endif ?>
 					<div><a href="<?php echo $this->me->getUrl (false, 'edit') ?>"><i class="icon-cog"></i> Preferences</a></div>
 					<!-- <li><a href="/help/support"><i class="icon-envelope"></i> Inbox</a></div> -->

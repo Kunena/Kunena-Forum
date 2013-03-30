@@ -41,4 +41,8 @@ class KunenaPrivateCommunity extends KunenaPrivate {
 		if (!$text) $text = JText::_('COM_KUNENA_PMS_INBOX');
 		return '<a href="'. CRoute::_('index.php?option=com_community&view=inbox').'" rel="follow">'. $text.'</a>';
 	}
+
+	public function getInboxURL () {
+		return CRoute::_('index.php?option=com_community&view=inbox');
+	}
 }

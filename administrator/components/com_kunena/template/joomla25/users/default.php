@@ -33,11 +33,11 @@ defined ( '_JEXEC' ) or die ();
 						<div id="filter-bar" class="btn-toolbar">
 							<div class="filter-search btn-group pull-left">
 								<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
-								<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
+								<input type="text" name="filter_search" id="filter_search" class="filter" placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
 							</div>
 							<div class="btn-group pull-left">
-								<button class="btn tip" type="button" ><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></button>
-								<button class="btn tip" type="button"  onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
+								<button class="btn tip" type="submit" ><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></button>
+								<button class="btn tip" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 							</div>
 							<div class="btn-group pull-right hidden-phone">
 								<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -49,7 +49,7 @@ defined ( '_JEXEC' ) or die ();
 							<div class="clearfix"></div>
 						</div>
 
-						<table class="adminlist table table-striped">
+						<table class="table table-striped">
 							<thead>
 								<tr>
 									<th align="center" width="1%"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->items ); ?>);" /></th>
@@ -145,8 +145,14 @@ defined ( '_JEXEC' ) or die ();
 											<td>
 												<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->email); ?></a>
 											</td>
-											<td>
-												<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo $this->escape($kunena_user->signature); ?></a>
+											<td class="center">
+												<span class="editlinktip <?php echo ($kunena_user->signature ? 'hasTip':''); ?>" title="<?php echo $this->escape($kunena_user->signature); ?> ">
+												<?php if ($kunena_user->signature) { ?>
+													<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_YES'); ?></a>
+												<?php } else { ?>
+													<a href="#edit" onclick="return listItemTask('cb<?php echo $i; ?>','edit')"><?php echo JText::_('COM_KUNENA_NO'); ?></a>
+												<?php } ?>
+												</span>
 											</td>
 											<td class="center">
 												<a class="jgrid" title="<?php echo $titleUserBlock ?>" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">

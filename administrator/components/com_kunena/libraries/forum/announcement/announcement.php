@@ -115,8 +115,7 @@ class KunenaForumAnnouncement extends KunenaDatabaseObject {
 
 	public function getAuthor() {
 		if (!$this->_author)
-			$kunenaUser = KunenaUser::getInstance((int)$this->created_by);
-			$this->_author = $kunenaUser->username;
+			$this->_author = KunenaUser::getInstance((int)$this->created_by);
 		return $this->_author;
 	}
 

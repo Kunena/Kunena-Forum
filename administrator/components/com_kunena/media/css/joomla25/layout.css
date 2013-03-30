@@ -34,6 +34,10 @@
 .pagetitle.icon-48-pluginsmanager { background-image:url("../../icons/large/pluginsmanager.png"); }
 
 
+#kunena.admin.override {
+    font-size: 13px;
+}
+
 /*Kunena Classes*/
 #kunena.admin.override .current .adminlist input,
 #kunena.admin.override .current .adminlist textarea,
@@ -161,3 +165,6 @@
 #kunena.admin.override .icon-22-support { background-image: url("../../icons/small/support.png"); }
 #kunena.admin.override .icon-22-editcss { background-image: url("../../icons/small/css.png"); }
 #kunena.admin.override .icon-22-pluginsmanager { background-image: url("../../icons/small/pluginsmanager.png"); }
+#kunena.admin.override label {
+    display: inline !important;
+}

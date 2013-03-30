@@ -7,6 +7,10 @@
  * @link http://www.kunena.org
  **/
 
+#kunena.admin.override {
+    font-size: 13px;
+}
+
 #kunena.admin.override select,
 #kunena.admin.override input[type="file"] {
     height: auto;
@@ -37,4 +41,7 @@
     min-height: 64px;
     min-width: 64px;
     overflow: hidden;
+}
+#kunena.admin.override label {
+    display: inline !important;
 }

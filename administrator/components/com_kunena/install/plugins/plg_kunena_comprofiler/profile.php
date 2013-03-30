@@ -63,4 +63,8 @@ class KunenaProfileComprofiler extends KunenaProfile {
 		KunenaError::checkDatabaseError();
 		return $top;
 	}
+
+	public function getEditProfileURL($userid, $xhtml = true) {
+		return cbSef( 'index.php?option=com_comprofiler&task=userDetails'. getCBprofileItemid(), $xhtml );
+	}
 }

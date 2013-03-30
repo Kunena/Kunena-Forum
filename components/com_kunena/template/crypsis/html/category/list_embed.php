@@ -54,19 +54,21 @@ foreach ( $this->sections as $section ) :
 									echo $this->getCategoryLink($category);
 									?>
 									<span class="kinfo1">
-									<?php
-									if ($category->getNewCount()) {
-										echo '<sup class="knewchar">(' . $category->getNewCount() . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
-									}
-									if ($category->locked) {
-										echo $this->getIcon ( 'kforumlocked', JText::_('COM_KUNENA_LOCKED_CATEGORY') );
-									}
-									if ($category->review) {
-										echo $this->getIcon ( 'kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED') );
-									}
-									?>
-									<a href="" rel="follow"><span class="kicon kmark-read" title="mark category read"></span></a>
-									<?php if($this->getCategoryRSSURL($category->id)): ?><a href="<?php echo $this->getCategoryRSSURL($category->id) ?>" rel="follow"><span class="kicon krss-small" title="get the latest posts directly to your desktop"></span></a> </span> </div><?php endif; ?>
+										<?php
+										if ($category->getNewCount()) {
+											echo '<sup class="knewchar">(' . $category->getNewCount() . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
+										}
+										if ($category->locked) {
+											echo $this->getIcon ( 'kforumlocked', JText::_('COM_KUNENA_LOCKED_CATEGORY') );
+										}
+										if ($category->review) {
+											echo $this->getIcon ( 'kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED') );
+										}
+										?>
+										<?php if ( $this->getMarkReadButtonURL($category->id, $category->numTopics) ): ?><a href="<?php echo $this->getMarkReadButtonURL($category->id, $category->numTopics) ?>" rel="follow"><span class="kicon kmark-read" title="mark category read"></span></a><?php endif; ?>
+										<?php if($this->getCategoryRSSURL($category->id)): ?><a href="<?php echo $this->getCategoryRSSURL($category->id) ?>" rel="follow"><span class="kicon krss-small" title="get the latest posts directly to your desktop"></span></a><?php endif; ?>
+									</span>
+								</div>
 									<?php if (!empty($category->description)) : ?>
 										<div class="kthead-desc km hidden-phone ktest"><?php echo KunenaHtmlParser::parseBBCode ($category->description) ?> </div>
 									<?php endif; ?>

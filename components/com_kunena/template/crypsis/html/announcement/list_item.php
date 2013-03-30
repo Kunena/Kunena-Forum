@@ -33,7 +33,7 @@ defined ( '_JEXEC' ) or die ();
 			<?php if ($this->canDelete()) echo JHtml::_('kunenagrid.task', $this->row, 'publish_x.png', JText::_('COM_KUNENA_ANN_DELETE'), 'delete', '', true) ?>
 		</td>
 		<td class="center">
-			<?php echo $this->announcement->getAuthor() ?>
+			<?php echo $this->announcement->getAuthor()->username ?>
 		</td>
 	<?php endif; ?>
 </tr>

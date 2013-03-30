@@ -230,7 +230,8 @@ class KunenaViewCommon extends KunenaView {
 		if ($this->offline) return;
 
 		$this->params = $this->state->get('params');
-		$this->getPrivateMessageLink();
+		$private = KunenaFactory::getPrivateMessaging();
+		$this->pm_link = $private->getInboxURL();
 		$result = $this->loadTemplateFile($tpl);
 		if (JError::isError($result)) {
 			return $result;

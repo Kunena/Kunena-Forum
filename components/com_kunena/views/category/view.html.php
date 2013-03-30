@@ -447,6 +447,17 @@ function getTopicClass($prefix='k', $class='topic') {
 		return $pagination->getPagesLinks();
 	}
 
+	public function getMarkReadButtonURL($category_id, $numTopics) {
+		// Is user allowed to mark forums as read?
+		if ($this->me->exists() && $numTopics) {
+			$token = '&' . JSession::getFormToken() . '=1';
+
+			$url = KunenaRoute::_("index.php?option=com_kunena&view=category&task=markread&catid={$category_id}{$token}");
+
+			return $url;
+		}
+	}
+
 	public function getCategoryRSSURL($catid, $xhtml = true) {
 		if ($this->config->enablerss) {
 			$params = '&catid=' . ( int ) $catid;

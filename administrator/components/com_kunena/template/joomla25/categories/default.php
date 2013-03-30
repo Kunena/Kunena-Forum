@@ -52,11 +52,11 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 						<div id="filter-bar" class="btn-toolbar">
 							<div class="filter-search btn-group pull-left">
 								<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_KUNENA_FIELD_LABEL_SEARCHIN');?></label>
-								<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
+								<input type="text" name="filter_search" id="filter_search" class="filter" placeholder="<?php echo JText::_('COM_KUNENA_ATTACHMENTS_FIELD_INPUT_SEARCHFILE'); ?>" value="<?php echo $this->escape($this->state->get('list.search')); ?>" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" />
 							</div>
 							<div class="btn-group pull-left">
-								<button class="btn tip" type="button" ><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></button>
-								<button class="btn tip" type="button"  onclick="document.id('filter_search').value='';this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
+								<button class="btn tip" type="submit" ><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERSUBMIT'); ?></button>
+								<button class="btn tip" type="button"  onclick="document.getElements('.filter').set('value', '');this.form.submit();"><?php echo JText::_('COM_KUNENA_SYS_BUTTON_FILTERRESET'); ?></button>
 							</div>
 							<div class="btn-group pull-right hidden-phone">
 								<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -68,7 +68,7 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 							<div class="clearfix"></div>
 						</div>
 
-						<table class="table table-striped adminlist ">
+						<table class="table table-striped ">
 							<thead>
 								<tr>
 									<th width="5%" class="nowrap">
@@ -94,6 +94,9 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 									</th>
 									<th width="5%" class="nowrap center">
 										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_REVIEW', 'p.review', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+									</th>
+									<th width="5%" class="center">
+										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORIES_LABEL_POLL', 'p.allow_polls', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 									</th>
 									<th width="5%" class="nowrap center">
 										<?php echo JHtml::_('grid.sort', 'COM_KUNENA_CATEGORY_ANONYMOUS', 'p.anonymous', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
@@ -133,6 +136,12 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 										<select name="filter_review" id="filter_review" class="select-filter filter">
 											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
 											<?php echo JHtml::_('select.options', $this->reviewOptions(), 'value', 'text', $this->filterReview); ?>
+										</select>
+									</td>
+									<td class="nowrap center">
+										<select name="filter_allow_polls" id="filter_allow_polls" class="select-filter filter">
+											<option value=""><?php echo JText::_('COM_KUNENA_FIELD_LABEL_ALL');?></option>
+											<?php echo JHtml::_('select.options', $this->allowpollsOptions(), 'value', 'text', $this->filterAllow_polls); ?>
 										</select>
 									</td>
 									<td class="nowrap center">
@@ -238,6 +247,11 @@ $changeOrder = ($this->state->get('list.ordering') == 'ordering' && $this->state
 										<td class="center hidden-phone">
 											<a class="jgrid" href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->review ? 'un':'').'review'; ?>')">
 												<?php echo ($category->review == 1 ? $img_yes : $img_no); ?>
+											</a>
+										</td>
+										<td class="center">
+											<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo ($category->allow_polls ? 'deny':'allow').'_polls'; ?>')">
+												<?php echo ($category->allow_polls == 1 ? $img_yes : $img_no); ?>
 											</a>
 										</td>
 										<td class="center hidden-phone">

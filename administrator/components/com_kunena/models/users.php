@@ -213,4 +213,14 @@ class KunenaAdminModelUsers extends JModelList {
 		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
 	}
+
+	/**
+	 * Method to get html list of Kunena categories
+	 *
+	 * @return  html list
+	 * @since  3.0
+	 */
+	public function getModcatslist() {
+		return JHtml::_('kunenaforum.categorylist', 'catid[]', 0, array(), array(), 'class="inputbox" multiple="multiple" size="5"', 'value', 'text');
+	}
 }

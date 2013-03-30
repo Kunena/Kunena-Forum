@@ -194,6 +194,8 @@ JHtml::_('dropdown.init');
 			<?php endif; ?>
 				</tbody>
 			</table>
+			<?php //Load the batch processing form. ?>
+			<?php echo $this->loadTemplateFile('moderators'); ?>
 		</form>
 	</div>
 	<div class="pull-right small">

@@ -76,12 +76,10 @@ class KunenaControllerUser extends KunenaController {
 		}
 
 		$this->user = JFactory::getUser();
-		$avatar_success = $this->saveAvatar();
-		$success = $this->saveUser();
-		if (!$success) {
+		if (!$this->saveUser()) {
 			$this->app->enqueueMessage($this->user->getError(), 'notice');
-		} elseif (!$avatar_success) {
-			$this->app->enqueueMessage( JText::_( 'COM_KUNENA_PROFILE_AVATAR_NOT_SAVED' ), 'error' );
+		} elseif (!$this->saveAvatar()) {
+			$this->app->enqueueMessage( JText::_( 'COM_KUNENA_PROFILE_AVATAR_NOT_SAVED' ), 'notice' );
 		} else {
 			$this->saveProfile();
 			$this->saveSettings();
@@ -379,7 +377,7 @@ class KunenaControllerUser extends KunenaController {
 
 	protected function saveAvatar() {
 		$action = JRequest::getString('avatar', 'keep');
-		$actual_avatar = $this->me->avatar;
+		$current_avatar = $this->me->avatar;
 
 		require_once (KPATH_SITE.'/lib/kunena.upload.class.php');
 		$upload = new CKunenaUpload();
@@ -411,7 +409,7 @@ class KunenaControllerUser extends KunenaController {
 				$this->me->avatar = 'users/'.$fileinfo['name'];
 			}
 			if (!$fileinfo['status']) {
-				$this->me->avatar = $actual_avatar;
+				$this->me->avatar = $current_avatar;
 				if (!$fileinfo['not_valid_img_ext']) $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.JText::sprintf('COM_KUNENA_AVATAR_UPLOAD_NOT_VALID_EXTENSIONS', 'gif, jpeg, jpg, png'), 'error' );
 				else $this->app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
 				return false;
